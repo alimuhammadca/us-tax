@@ -1,0 +1,133 @@
+# Form 1116 — Foreign Tax Credit (spouse) intake YAML.
+# Approach: spouse form is additive — only supplements with spouse-specific foreign income
+# that the taxpayer form does not cover.
+# Taxpayer form owns statement imports and the simplified exception gate.
+# This form is available only on MFJ returns; all controls are disabled otherwise.
+# Section order: screening → spouseForeignIncomeSources → importedStatementFields
+name: foreign-tax-credit-spouse
+title: Form 1116 — Foreign Tax Credit (spouse)
+multiplicity: single
+formName: 1116
+category: deductions
+instructions:
+  - This form is only applicable on married filing jointly (MFJ) returns.
+  - Statement imports are handled on the taxpayer Foreign tax credit form.
+  - Enter only your spouse's additional foreign income here that is not covered by
+    the taxpayer form entries.
+  - MFJ returns file one Form 1116 per income category combining both spouses' data.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: spouseHasForeignTaxCredit
+        type: boolean
+        required: false
+        label: >
+          Does your spouse have additional foreign income taxes not covered by the
+          taxpayer Foreign tax credit form?
+        help: >
+          Select Yes if your spouse had foreign taxes not already reflected on the
+          taxpayer form. This field is disabled and hidden when filing status is not MFJ.
+
+  - name: spouseForeignIncomeSources
+    title: Spouse foreign income sources
+    multiplicity: multiple
+    showIf: spouseHasForeignTaxCredit == true
+    instructions:
+      - One entry per income category. Use the same categories as the taxpayer form.
+      - These entries will be merged with taxpayer entries of the same category by the backend.
+    fields:
+      - name: incomeCategory
+        type: dropdown
+        required: true
+        label: Income category
+        options:
+          - passive
+          - general
+          - section951a
+          - foreignBranch
+          - treatyResourced
+          - lumpSum
+          - section901j
+        help: Select the income category. Must match the corresponding taxpayer category to be combined.
+      - name: creditBasis
+        type: dropdown
+        required: true
+        label: Credit basis
+        options:
+          - paid
+          - accrued
+        help: Select paid or accrued basis for the spouse's foreign taxes.
+      - name: skipPartI
+        type: boolean
+        required: false
+        label: Skip Part I (lump-sum distribution category only)
+        help: Check only for the lump-sum distribution category.
+      - name: countryEntries
+        type: nested
+        multiplicity: multiple
+        label: Countries (up to 3 — same columns as taxpayer form)
+        fields:
+          - name: countryOrTerritory
+            type: text
+            required: true
+            label: Country or U.S. possession
+            help: Enter the country name (e.g., Canada, Germany, France).
+          - name: grossForeignIncome
+            type: amount
+            required: false
+            label: Spouse's gross income from this country in this category
+            placeholder: 0.00
+            help: Enter gross foreign income for the spouse from this country.
+          - name: definitivelyRelatedDeds
+            type: amount
+            required: false
+            label: Deductions directly related to the spouse's foreign income (optional)
+            placeholder: 0.00
+            help: Enter deductions directly related to the spouse's foreign income.
+          - name: otherInterestExpense
+            type: amount
+            required: false
+            label: Deductible interest expense allocated to this country for the spouse (optional)
+            placeholder: 0.00
+            help: Enter deductible interest expense allocated to this country.
+          - name: foreignSourceLosses
+            type: amount
+            required: false
+            label: Capital losses or other losses from foreign sources for the spouse (optional)
+            placeholder: 0.00
+            help: Enter any losses from foreign sources for the spouse.
+          - name: foreignTaxesPaidUsd
+            type: amount
+            required: false
+            label: Spouse's foreign taxes paid or accrued (in U.S. dollars)
+            placeholder: 0.00
+            help: Enter the USD equivalent of spouse's foreign taxes for this country.
+          - name: datePaidOrAccrued
+            type: text
+            required: false
+            label: Date the spouse's foreign taxes were paid or accrued (YYYY-MM-DD)
+            help: Enter the date foreign taxes were paid or accrued, YYYY-MM-DD format.
+      - name: priorYearCarryover
+        type: amount
+        required: false
+        label: Spouse's unused foreign tax credit carried forward from prior years (optional)
+        placeholder: 0.00
+        help: >
+          Enter spouse's prior year unused FTC carryforward. Combined with taxpayer
+          carryforward for the same category.
+
+  # Backend-only imported statement fields. Not rendered in the UI form component.
+  - name: importedStatementFields
+    title: Imported statement fields (backend only — not rendered)
+    multiplicity: single
+    showIf: spouseHasForeignTaxCredit == true
+    fields:
+      - name: spouseImportedPassiveForeignTax
+        type: amount
+        required: false
+        readOnly: true
+        label: >
+          Imported spouse's portion of 1099-DIV box 7 foreign tax (from spouse-attributed
+          dividend statements)

@@ -1,0 +1,441 @@
+# Form 1040 lines 4a/4b/4c (taxpayer/family head) workflow.
+# Approach: keep user questions + imported statement fields + computed outputs in one YAML.
+# NOTE: Sections marked as backend-only are NOT supposed to be rendered in the actual form component.
+name: ira-income-taxpayer
+title: Form 1040 - IRA distributions (taxpayer, lines 4a, 4b, and 4c)
+multiplicity: single
+formName: 1040
+category: income
+instructions:
+  - Start here only if the taxpayer had IRA distributions for Form 1040 lines 4a/4b/4c.
+  - Upload validation is mandatory before entering supplemental details.
+  - At least one IRA-related 1099-R statement must be uploaded before continue.
+  - This taxpayer form owns return-level line 4c statement-gating to avoid spouse conflicts.
+  - Self-employment income is out of scope and excluded.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: hadIraDistributions
+        type: boolean
+        required: true
+        label: Did you have any IRA distributions during the tax year?
+        help: If No, stop here and do not continue this interview.
+
+  - name: statementUploadCheck
+    title: Statement upload check
+    multiplicity: single
+    showIf: hadIraDistributions == true
+    instructions:
+      - At least one 1099-R with IRA/SEP/SIMPLE activity must be uploaded to continue.
+      - Component must block continue when required uploads are missing.
+    fields:
+      - name: hasUploadedAtLeastOneIra1099RStatement
+        type: boolean
+        required: true
+        label: Have you uploaded at least one IRA-related Form 1099-R statement?
+        help: Select Yes only after at least one applicable 1099-R is uploaded.
+      - name: received1099R
+        type: boolean
+        required: false
+        label: Did you receive Form 1099-R?
+        help: Select Yes if any payer issued you Form 1099-R for retirement distributions.
+      - name: uploaded1099R
+        type: boolean
+        required: false
+        label: If you received 1099-R, did you upload it?
+        help: Select Yes only if all received 1099-R statements were uploaded.
+      - name: confirmAllReceived1099RUploaded
+        type: boolean
+        required: true
+        label: I confirm all received 1099-R statements are uploaded
+        help: You must confirm this before saving the IRA distribution form.
+
+  - name: exceptionAnd8606TriggerScreening
+    title: Exception and Form 8606 trigger screening
+    multiplicity: single
+    showIf: hadIraDistributions == true
+    fields:
+      - name: hasNondeductibleTraditionalBasis
+        type: boolean
+        required: false
+        label: Do you have nondeductible basis in any traditional/SEP/SIMPLE IRA?
+        help: Select Yes if prior-year Form 8606 line 14 basis exists or you made nondeductible contributions.
+      - name: hasTraditionalToRothConversion
+        type: boolean
+        required: false
+        label: Did you convert any traditional/SEP/SIMPLE IRA amount to Roth IRA?
+        help: Select Yes if any conversion to Roth IRA occurred during the year.
+      - name: hasRothIraDistributions
+        type: boolean
+        required: false
+        label: Did you have Roth IRA distributions requiring basis analysis?
+        help: Select Yes if Roth IRA distribution taxable analysis may be required.
+      - name: hadIraRollover
+        type: boolean
+        required: false
+        label: Did you roll over any IRA distribution?
+        help: Select Yes if any IRA distribution was rolled over and may be non-taxable.
+      - name: hadQcd
+        type: boolean
+        required: false
+        label: Did you make any qualified charitable distribution (QCD) from IRA?
+        help: Select Yes if IRA amounts were paid directly to a qualifying charity.
+      - name: hadHfd
+        type: boolean
+        required: false
+        label: Did you make an HSA funding distribution (HFD) from IRA?
+        help: Select Yes for one-time HSA funding distribution treatment from IRA.
+      - name: hadReturnOfContributionOrRecharacterization
+        type: boolean
+        required: false
+        label: Did you have return of IRA contribution or recharacterization events?
+        help: Select Yes if contribution return or recharacterization affects line 4 and Form 8606 treatment.
+      - name: hasAnyTaxableAmountNotDeterminedIra1099R
+        type: boolean
+        required: false
+        label: Did any IRA 1099-R mark taxable amount not determined (box 2b)?
+        help: Select Yes if any applicable 1099-R has box 2b taxable amount not determined checked.
+
+  - name: exceptionAmountsAndAttachmentFacts
+    title: Exception amounts and attachment facts
+    multiplicity: single
+    showIf: hadIraDistributions == true
+    instructions:
+      - Enter only amounts not reliably determined from uploaded 1099-R statements.
+    fields:
+      - name: totalIraRolloverAmount
+        type: amount
+        required: false
+        label: Total IRA rollover amount (Exception 1)
+        placeholder: 0.00
+        help: Enter total IRA distribution amount rolled over during the year.
+      - name: totalQcdAmount
+        type: amount
+        required: false
+        label: Total qualified charitable distribution amount (Exception 3)
+        placeholder: 0.00
+        help: Enter total IRA amount paid directly to charities as QCD.
+      - name: inheritedIraQcdAmount
+        type: amount
+        required: false
+        label: Of that QCD total, how much came from an inherited IRA?
+        placeholder: 0.00
+        help: QCDs from an inherited IRA are not subject to the post-70½ deductible contribution reduction. Enter the inherited IRA portion separately so the reduction is applied only to your own IRA QCDs.
+      - name: deductibleIraContributionsAfterAge70Half
+        type: amount
+        required: false
+        label: Deductible IRA contributions made after age 70½ (reduces QCD exclusion)
+        placeholder: 0.00
+        help: IRS Pub. 590-B requires reducing the QCD exclusion dollar-for-dollar by any deductible IRA contributions made after age 70½. Enter the deductible amount here if applicable.
+      - name: totalHfdAmount
+        type: amount
+        required: false
+        label: Total HSA funding distribution amount (Exception 4)
+        placeholder: 0.00
+        help: Enter total IRA amount treated as HSA funding distribution.
+      - name: returnOfContributionAmount
+        type: amount
+        required: false
+        label: Total amount returned to you as a corrective distribution or recharacterization
+        placeholder: 0.00
+        help: Enter the total IRA amount returned by the custodian as an excess contribution return or recharacterized to a different IRA type. This is excluded from the Form 8606 basis calculation.
+      - name: inheritedTraditionalIraDistributionAmount
+        type: amount
+        required: false
+        label: Of your total traditional IRA distributions, how much came from an IRA you inherited?
+        placeholder: 0.00
+        help: Enter the amount you received from a traditional IRA inherited from a deceased person. Inherited IRA distributions are excluded from the Form 8606 basis calculation — it applies only to your own IRAs.
+      - name: hasOtherLine4cWriteInCode
+        type: boolean
+        required: false
+        label: Is there another line 4c box 3 write-in code required?
+        help: Select Yes if instructions require a write-in word/code next to line 4b via line 4c box 3.
+      - name: line4cOtherWriteInText
+        type: text
+        required: false
+        label: Line 4c box 3 write-in text
+        placeholder: Enter write-in code or text
+        help: Enter the exact code or word required for line 4c box 3.
+      - name: line4cOtherWriteInAmount
+        type: amount
+        required: false
+        label: Amount associated with line 4c other write-in
+        placeholder: 0.00
+        help: Enter the amount tied to the line 4c other write-in code if applicable.
+      - name: rolloverIntoQualifiedPlanOrCompletedInFollowingYear
+        type: boolean
+        required: false
+        label: Was rollover into qualified plan or completed in the following year?
+        help: Select Yes if rollover statement attachment is required for these facts.
+      - name: hasOneTimeQcdToSplitInterestEntity
+        type: boolean
+        required: false
+        label: Did QCD include a one-time split-interest entity transfer?
+        help: Select Yes if QCD statement attachment for split-interest entity is required.
+      - name: splitInterestEntityQcdAmount
+        type: amount
+        required: false
+        showIf: hasOneTimeQcdToSplitInterestEntity == true
+        label: Amount of QCD allocated to a split-interest entity
+        placeholder: 0.00
+        help: Enter the portion of your Qualified Charitable Distribution (QCD) sent to a split-interest entity (such as a charitable remainder trust or charitable gift annuity). Internal Revenue Code §408(d)(8)(F) caps this allocation at $54,000 per person for 2025 (lifetime, annually inflation-indexed); the amount also counts toward the $108,000 annual QCD cap.
+
+  - name: form8606PartIandPartIIInputs
+    title: Form 8606 Part I and Part II inputs (traditional basis and conversions)
+    multiplicity: single
+    showIf: hadIraDistributions == true
+    fields:
+      - name: basisPrevFromPriorYear8606Line14
+        type: amount
+        required: false
+        label: Prior-year Form 8606 line 14 basis carryforward
+        placeholder: 0.00
+        help: Enter traditional IRA basis carryforward from prior-year Form 8606 line 14.
+      - name: nondeductibleContributionsCurrentYear
+        type: amount
+        required: false
+        label: Nondeductible traditional IRA contributions for current year
+        placeholder: 0.00
+        help: Enter current-year nondeductible contributions for Form 8606 line 1.
+      - name: nondeductibleContributionsMadeAfterYearEndForTaxYear
+        type: amount
+        required: false
+        label: Nondeductible contributions made after year-end for this tax year
+        placeholder: 0.00
+        help: Enter Form 8606 line 4 amount if contributions were made in the following calendar year for this tax year.
+      - name: valueAllTraditionalSepSimpleIrasAtYearEnd
+        type: amount
+        required: false
+        label: Year-end value of all traditional/SEP/SIMPLE IRAs
+        placeholder: 0.00
+        help: Enter Form 8606 line 6 value including outstanding rollovers.
+      - name: totalTraditionalIraConvertedToRothFor8606Line8
+        type: amount
+        required: false
+        label: Traditional IRA amount converted to Roth for Form 8606 line 8
+        placeholder: 0.00
+        help: Enter total conversion amount from traditional/SEP/SIMPLE IRA to Roth IRA.
+      - name: qualifiedDisasterRepaymentsTraditionalFor8606Line15b
+        type: amount
+        required: false
+        label: Qualified disaster repayments for Form 8606 line 15b
+        placeholder: 0.00
+        help: Enter repayments amount used in line 15c worksheet flow, if applicable.
+
+  - name: form8606PartIIIInputs
+    title: Form 8606 Part III inputs (Roth IRA distributions)
+    multiplicity: single
+    showIf: hadIraDistributions == true
+    fields:
+      - name: totalNonqualifiedRothDistributionsFor8606Line19
+        type: amount
+        required: false
+        label: Nonqualified Roth IRA distributions for Form 8606 line 19
+        placeholder: 0.00
+        help: Enter total nonqualified Roth distributions after excluding items not included on line 19.
+      - name: qualifiedFirstTimeHomebuyerExpensesFor8606Line20
+        type: amount
+        required: false
+        label: Qualified first-time homebuyer expenses for Form 8606 line 20
+        placeholder: 0.00
+        help: Enter qualified first-time homebuyer amount used in Part III.
+      - name: rothContributionBasisFor8606Line22
+        type: amount
+        required: false
+        label: Roth contribution basis for Form 8606 line 22
+        placeholder: 0.00
+        help: Enter basis in Roth IRA contributions.
+      - name: rothConversionBasisFor8606Line24
+        type: amount
+        required: false
+        label: Roth conversion/rollover basis for Form 8606 line 24
+        placeholder: 0.00
+        help: Enter basis in Roth conversions and rollovers.
+      - name: qualifiedDisasterRepaymentsRothFor8606Line25b
+        type: amount
+        required: false
+        label: Qualified disaster repayments for Form 8606 line 25b
+        placeholder: 0.00
+        help: Enter Roth-side qualified disaster repayments if applicable.
+
+  - name: line4cReturnLevelStatementGating
+    title: Line 4c return-level statement gating (family head only)
+    multiplicity: single
+    showIf: hadIraDistributions == true
+    instructions:
+      - These questions are return-level and intentionally kept only on taxpayer form to avoid spouse conflicts.
+    fields:
+      - name: moreThanOneLine4ExceptionAppliesOnReturn
+        type: boolean
+        required: false
+        label: Do more than one line 4 exception categories apply on this return?
+        help: Select Yes if rollover, QCD, HFD, or other write-in categories overlap on the same return.
+      - name: onlyException2AndOneOtherAppliesOnReturn
+        type: boolean
+        required: false
+        label: Is it only Exception 2 plus one other exception on this return?
+        help: Select Yes to identify the IRS waiver case where multi-exception breakout statement may be waived.
+      - name: exceptionBreakoutStatementPrepared
+        type: boolean
+        required: false
+        label: Have you prepared the required line 4b exception breakout statement?
+        help: Select Yes after preparing statement lines such as rollover, QCD, HFD, or other code amounts when required.
+
+  # Backend-only statement imports. Not rendered in form component.
+  - name: importedStatementFields
+    title: Imported statement fields (backend only)
+    multiplicity: single
+    showIf: hadIraDistributions == true
+    fields:
+      - name: imported1099RIraRecordCount
+        type: integer
+        required: false
+        readOnly: true
+        label: Number of IRA 1099-R statements (imported)
+      - name: imported1099RIraBox1GrossTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: 1099-R IRA box 1 total (imported)
+      - name: imported1099RIraBox2aTaxableTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: 1099-R IRA box 2a total (imported)
+      - name: imported1099RIraTaxableAmountNotDeterminedCount
+        type: integer
+        required: false
+        readOnly: true
+        label: 1099-R IRA box 2b taxable not determined count (imported)
+      - name: imported1099RIraRothDistributionCodeCount
+        type: integer
+        required: false
+        readOnly: true
+        label: 1099-R IRA Roth code count (imported)
+      - name: imported1099RIraFederalWithholdingBox4Total
+        type: amount
+        required: false
+        readOnly: true
+        label: 1099-R IRA box 4 total (imported)
+      - name: importedPriorYear8606Line14Basis
+        type: amount
+        required: false
+        readOnly: true
+        label: Prior-year Form 8606 line 14 (imported)
+
+  # Backend-only computed values. Not rendered in form component.
+  - name: computedOutputs
+    title: Computed outputs (backend only)
+    multiplicity: single
+    showIf: hadIraDistributions == true
+    fields:
+      - name: computedLine4aGrossIraContributionTaxpayer
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed taxpayer contribution to Form 1040 line 4a
+      - name: computedLine4bTaxableIraContributionTaxpayer
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed taxpayer contribution to Form 1040 line 4b
+      - name: computedTaxpayerExceptionFlagRollover
+        type: boolean
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed taxpayer rollover exception flag
+      - name: computedTaxpayerExceptionFlagQcd
+        type: boolean
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed taxpayer QCD exception flag
+      - name: computedTaxpayerExceptionFlagBox3Other
+        type: boolean
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed taxpayer line 4c box 3 exception flag
+      - name: computedTaxpayerLine4cBox3Text
+        type: text
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed taxpayer line 4c box 3 text
+      - name: computedForm8606RequiredForTaxpayer
+        type: boolean
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Form 8606 required flag for taxpayer
+      - name: computedForm8606TaxpayerPartILine15c
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed taxpayer Form 8606 Part I line 15c
+      - name: computedForm8606TaxpayerPartIILine18
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed taxpayer Form 8606 Part II line 18
+      - name: computedForm8606TaxpayerPartIIILine25c
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed taxpayer Form 8606 Part III line 25c
+      - name: computedReturnLine4aGrossIra
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Form 1040 line 4a
+      - name: computedReturnLine4bTaxableIra
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Form 1040 line 4b
+      - name: computedReturnLine4cBox1Rollover
+        type: boolean
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Form 1040 line 4c box 1
+      - name: computedReturnLine4cBox2Qcd
+        type: boolean
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Form 1040 line 4c box 2
+      - name: computedReturnLine4cBox3Other
+        type: boolean
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Form 1040 line 4c box 3
+      - name: computedReturnLine4cBox3Text
+        type: text
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Form 1040 line 4c box 3 text
+      - name: computedReturnExceptionBreakoutStatementRequired
+        type: boolean
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed line 4b exception breakout statement required
+      - name: computedReturnForm8606Count
+        type: integer
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed number of Form 8606 outputs on return

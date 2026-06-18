@@ -1,0 +1,17 @@
+<mxfile host='app.diagrams.net' modified='2026-03-07T17:17:00.0000000Z' agent='Codex' version='20.8.16' type='device'>
+  <diagram id='6c-flow-lump-sum-election' name='Line 6c - Lump-sum election checkbox'>
+    <mxGraphModel dx='1400' dy='900' grid='1' gridSize='10' guides='1' tooltips='1' connect='1' arrows='1' fold='1' page='1' pageScale='1' pageWidth='1200' pageHeight='900' math='0' shadow='0'>
+      <root>
+        <mxCell id='0'/>
+        <mxCell id='1' parent='0'/>
+        <mxCell id='2' value='Inputs (Taxpayer form)&#xa;hasLumpSumBackPaymentForPriorYears&#xa;electsLumpSumElectionMethod&#xa;lumpSumDetails[] by prior year&#xa;priorYearTaxableBenefitsPreviouslyReported' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='20' y='70' width='360' height='220' as='geometry'/></mxCell>
+        <mxCell id='3' value='Computation&#xa;taxableNormal from worksheet&#xa;taxableLump = taxableNormal - reduction from details&#xa;If election selected and taxableLump &lt; taxableNormal&#xa;  line6b = taxableLump&#xa;  line6c = true&#xa;Else line6c = false' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='420' y='130' width='410' height='240' as='geometry'/></mxCell>
+        <mxCell id='4' value='Validation / Flags&#xa;If election selected but no usable details&#xa;flag SOCIAL_SECURITY_LUMP_SUM_ALLOCATION_REQUIRED (blocking)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#fff7ed;strokeColor=#f59e0b;fontSize=12;' vertex='1' parent='1'><mxGeometry x='420' y='390' width='410' height='130' as='geometry'/></mxCell>
+        <mxCell id='5' value='Outputs&#xa;Form 1040 line 6c checkbox&#xa;Persisted as income.line6cLumpSumElection&#xa;May reduce line 6b taxable amount' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='860' y='190' width='320' height='190' as='geometry'/></mxCell>
+        <mxCell id='6' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='2' target='3'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='7' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='3' target='5'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='8' style='endArrow=block;html=1;strokeColor=#f59e0b;' edge='1' parent='1' source='2' target='4'><mxGeometry relative='1' as='geometry'/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

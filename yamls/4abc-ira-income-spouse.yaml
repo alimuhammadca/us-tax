@@ -1,0 +1,340 @@
+# Form 1040 lines 4a/4b/4c spouse workflow.
+# Approach: keep spouse-specific user questions + imported statement fields + computed outputs in one YAML.
+# NOTE: Sections marked as backend-only are NOT supposed to be rendered in the actual form component.
+# NOTE: Return-level line 4c statement-gating questions are intentionally kept on ira-income-taxpayer to avoid spouse conflict.
+name: ira-income-spouse
+title: Form 1040 - IRA distributions (spouse, lines 4a, 4b, and 4c)
+multiplicity: single
+formName: 1040
+category: income
+instructions:
+  - Use this only for spouse-specific IRA distribution inputs for Form 1040 lines 4a/4b/4c.
+  - Return-level upload and line 4c statement gating stay on ira-income-taxpayer.
+  - Self-employment income is out of scope and excluded.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: hadIraDistributions
+        type: boolean
+        required: true
+        label: Did your spouse have any IRA distributions during the tax year?
+        help: If No, stop here and do not continue this spouse interview.
+
+  - name: exceptionAnd8606TriggerScreening
+    title: Exception and Form 8606 trigger screening
+    multiplicity: single
+    showIf: hadIraDistributions == true
+    fields:
+      - name: hasNondeductibleTraditionalBasis
+        type: boolean
+        required: false
+        label: Does your spouse have nondeductible basis in any traditional/SEP/SIMPLE IRA?
+        help: Select Yes if spouse prior-year Form 8606 line 14 basis exists or spouse made nondeductible contributions.
+      - name: hasTraditionalToRothConversion
+        type: boolean
+        required: false
+        label: Did your spouse convert any traditional/SEP/SIMPLE IRA amount to Roth IRA?
+        help: Select Yes if spouse conversion to Roth IRA occurred during the year.
+      - name: hasRothIraDistributions
+        type: boolean
+        required: false
+        label: Did your spouse have Roth IRA distributions requiring basis analysis?
+        help: Select Yes if spouse Roth IRA distribution taxable analysis may be required.
+      - name: hadIraRollover
+        type: boolean
+        required: false
+        label: Did your spouse roll over any IRA distribution?
+        help: Select Yes if spouse IRA distribution was rolled over and may be non-taxable.
+      - name: hadQcd
+        type: boolean
+        required: false
+        label: Did your spouse make any qualified charitable distribution (QCD) from IRA?
+        help: Select Yes if spouse IRA amounts were paid directly to qualifying charity.
+      - name: hadHfd
+        type: boolean
+        required: false
+        label: Did your spouse make an HSA funding distribution (HFD) from IRA?
+        help: Select Yes for spouse one-time HSA funding distribution treatment from IRA.
+      - name: hadReturnOfContributionOrRecharacterization
+        type: boolean
+        required: false
+        label: Did your spouse have return of IRA contribution or recharacterization events?
+        help: Select Yes if spouse contribution return or recharacterization affects line 4 and Form 8606 treatment.
+      - name: hasAnyTaxableAmountNotDeterminedIra1099R
+        type: boolean
+        required: false
+        label: Did any spouse IRA 1099-R mark taxable amount not determined (box 2b)?
+        help: Select Yes if any spouse applicable 1099-R has box 2b taxable amount not determined checked.
+
+  - name: exceptionAmountsAndAttachmentFacts
+    title: Exception amounts and attachment facts
+    multiplicity: single
+    showIf: hadIraDistributions == true
+    instructions:
+      - Enter spouse-specific amounts not reliably determined from uploaded 1099-R statements.
+    fields:
+      - name: totalIraRolloverAmount
+        type: amount
+        required: false
+        label: Spouse total IRA rollover amount (Exception 1)
+        placeholder: 0.00
+        help: Enter spouse total IRA distribution amount rolled over during the year.
+      - name: totalQcdAmount
+        type: amount
+        required: false
+        label: Spouse total qualified charitable distribution amount (Exception 3)
+        placeholder: 0.00
+        help: Enter spouse total IRA amount paid directly to charities as QCD.
+      - name: inheritedIraQcdAmount
+        type: amount
+        required: false
+        label: Of your spouse's QCD total, how much came from an inherited IRA?
+        placeholder: 0.00
+        help: QCDs from an inherited IRA are not subject to the post-70½ deductible contribution reduction. Enter the spouse's inherited IRA portion separately.
+      - name: deductibleIraContributionsAfterAge70Half
+        type: amount
+        required: false
+        label: Spouse deductible IRA contributions made after age 70½ (reduces QCD exclusion)
+        placeholder: 0.00
+        help: IRS Pub. 590-B requires reducing the spouse's QCD exclusion dollar-for-dollar by any deductible IRA contributions made after age 70½.
+      - name: totalHfdAmount
+        type: amount
+        required: false
+        label: Spouse total HSA funding distribution amount (Exception 4)
+        placeholder: 0.00
+        help: Enter spouse total IRA amount treated as HSA funding distribution.
+      - name: returnOfContributionAmount
+        type: amount
+        required: false
+        label: Total amount returned to your spouse as a corrective distribution or recharacterization
+        placeholder: 0.00
+        help: Enter the total IRA amount returned by the custodian as an excess contribution return or recharacterized to a different IRA type. This is excluded from the Form 8606 basis calculation.
+      - name: inheritedTraditionalIraDistributionAmount
+        type: amount
+        required: false
+        label: Of your spouse's total traditional IRA distributions, how much came from an IRA they inherited?
+        placeholder: 0.00
+        help: Enter the amount your spouse received from a traditional IRA inherited from a deceased person. Inherited IRA distributions are excluded from the Form 8606 basis calculation — it applies only to their own IRAs.
+      - name: hasOtherLine4cWriteInCode
+        type: boolean
+        required: false
+        label: Does spouse have another line 4c box 3 write-in code required?
+        help: Select Yes if spouse requires another write-in word/code through line 4c box 3.
+      - name: line4cOtherWriteInText
+        type: text
+        required: false
+        label: Spouse line 4c box 3 write-in text
+        placeholder: Enter write-in code or text
+        help: Enter spouse exact code or word required for line 4c box 3.
+      - name: line4cOtherWriteInAmount
+        type: amount
+        required: false
+        label: Spouse amount associated with line 4c other write-in
+        placeholder: 0.00
+        help: Enter spouse amount tied to the line 4c other write-in code if applicable.
+      - name: rolloverIntoQualifiedPlanOrCompletedInFollowingYear
+        type: boolean
+        required: false
+        label: Was spouse rollover into qualified plan or completed in the following year?
+        help: Select Yes if spouse rollover statement attachment facts are present.
+      - name: hasOneTimeQcdToSplitInterestEntity
+        type: boolean
+        required: false
+        label: Did spouse QCD include a one-time split-interest entity transfer?
+        help: Select Yes if spouse QCD statement attachment for split-interest entity is required.
+      - name: splitInterestEntityQcdAmount
+        type: amount
+        required: false
+        showIf: hasOneTimeQcdToSplitInterestEntity == true
+        label: Spouse amount of QCD allocated to a split-interest entity
+        placeholder: 0.00
+        help: Enter the portion of spouse's Qualified Charitable Distribution (QCD) sent to a split-interest entity (such as a charitable remainder trust or charitable gift annuity). Internal Revenue Code §408(d)(8)(F) caps this allocation at $54,000 per person for 2025 (lifetime, annually inflation-indexed); the amount also counts toward the $108,000 annual QCD cap.
+
+  - name: form8606PartIandPartIIInputs
+    title: Form 8606 Part I and Part II inputs (traditional basis and conversions)
+    multiplicity: single
+    showIf: hadIraDistributions == true
+    fields:
+      - name: basisPrevFromPriorYear8606Line14
+        type: amount
+        required: false
+        label: Spouse prior-year Form 8606 line 14 basis carryforward
+        placeholder: 0.00
+        help: Enter spouse traditional IRA basis carryforward from prior-year Form 8606 line 14.
+      - name: nondeductibleContributionsCurrentYear
+        type: amount
+        required: false
+        label: Spouse nondeductible traditional IRA contributions for current year
+        placeholder: 0.00
+        help: Enter spouse current-year nondeductible contributions for Form 8606 line 1.
+      - name: nondeductibleContributionsMadeAfterYearEndForTaxYear
+        type: amount
+        required: false
+        label: Spouse nondeductible contributions made after year-end for this tax year
+        placeholder: 0.00
+        help: Enter spouse Form 8606 line 4 amount if contributions were made in following calendar year for this tax year.
+      - name: valueAllTraditionalSepSimpleIrasAtYearEnd
+        type: amount
+        required: false
+        label: Spouse year-end value of all traditional/SEP/SIMPLE IRAs
+        placeholder: 0.00
+        help: Enter spouse Form 8606 line 6 value including outstanding rollovers.
+      - name: totalTraditionalIraConvertedToRothFor8606Line8
+        type: amount
+        required: false
+        label: Spouse traditional IRA amount converted to Roth for Form 8606 line 8
+        placeholder: 0.00
+        help: Enter spouse total conversion amount from traditional/SEP/SIMPLE IRA to Roth IRA.
+      - name: qualifiedDisasterRepaymentsTraditionalFor8606Line15b
+        type: amount
+        required: false
+        label: Spouse qualified disaster repayments for Form 8606 line 15b
+        placeholder: 0.00
+        help: Enter spouse repayments amount used in line 15c worksheet flow, if applicable.
+
+  - name: form8606PartIIIInputs
+    title: Form 8606 Part III inputs (Roth IRA distributions)
+    multiplicity: single
+    showIf: hadIraDistributions == true
+    fields:
+      - name: totalNonqualifiedRothDistributionsFor8606Line19
+        type: amount
+        required: false
+        label: Spouse nonqualified Roth IRA distributions for Form 8606 line 19
+        placeholder: 0.00
+        help: Enter spouse total nonqualified Roth distributions after excluding items not included on line 19.
+      - name: qualifiedFirstTimeHomebuyerExpensesFor8606Line20
+        type: amount
+        required: false
+        label: Spouse qualified first-time homebuyer expenses for Form 8606 line 20
+        placeholder: 0.00
+        help: Enter spouse qualified first-time homebuyer amount used in Part III.
+      - name: rothContributionBasisFor8606Line22
+        type: amount
+        required: false
+        label: Spouse Roth contribution basis for Form 8606 line 22
+        placeholder: 0.00
+        help: Enter spouse basis in Roth IRA contributions.
+      - name: rothConversionBasisFor8606Line24
+        type: amount
+        required: false
+        label: Spouse Roth conversion/rollover basis for Form 8606 line 24
+        placeholder: 0.00
+        help: Enter spouse basis in Roth conversions and rollovers.
+      - name: qualifiedDisasterRepaymentsRothFor8606Line25b
+        type: amount
+        required: false
+        label: Spouse qualified disaster repayments for Form 8606 line 25b
+        placeholder: 0.00
+        help: Enter spouse Roth-side qualified disaster repayments if applicable.
+
+  # Backend-only statement imports. Not rendered in form component.
+  - name: importedStatementFields
+    title: Imported statement fields (backend only)
+    multiplicity: single
+    showIf: hadIraDistributions == true
+    fields:
+      - name: imported1099RIraRecordCount
+        type: integer
+        required: false
+        readOnly: true
+        label: Number of spouse IRA 1099-R statements (imported)
+      - name: imported1099RIraBox1GrossTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Spouse 1099-R IRA box 1 total (imported)
+      - name: imported1099RIraBox2aTaxableTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Spouse 1099-R IRA box 2a total (imported)
+      - name: imported1099RIraTaxableAmountNotDeterminedCount
+        type: integer
+        required: false
+        readOnly: true
+        label: Spouse 1099-R IRA box 2b taxable not determined count (imported)
+      - name: imported1099RIraRothDistributionCodeCount
+        type: integer
+        required: false
+        readOnly: true
+        label: Spouse 1099-R IRA Roth code count (imported)
+      - name: imported1099RIraFederalWithholdingBox4Total
+        type: amount
+        required: false
+        readOnly: true
+        label: Spouse 1099-R IRA box 4 total (imported)
+      - name: importedPriorYear8606Line14Basis
+        type: amount
+        required: false
+        readOnly: true
+        label: Spouse prior-year Form 8606 line 14 (imported)
+
+  # Backend-only computed values. Not rendered in form component.
+  - name: computedOutputs
+    title: Computed outputs (backend only)
+    multiplicity: single
+    showIf: hadIraDistributions == true
+    fields:
+      - name: computedLine4aGrossIraContributionSpouse
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed spouse contribution to Form 1040 line 4a
+      - name: computedLine4bTaxableIraContributionSpouse
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed spouse contribution to Form 1040 line 4b
+      - name: computedSpouseExceptionFlagRollover
+        type: boolean
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed spouse rollover exception flag
+      - name: computedSpouseExceptionFlagQcd
+        type: boolean
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed spouse QCD exception flag
+      - name: computedSpouseExceptionFlagBox3Other
+        type: boolean
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed spouse line 4c box 3 exception flag
+      - name: computedSpouseLine4cBox3Text
+        type: text
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed spouse line 4c box 3 text
+      - name: computedForm8606RequiredForSpouse
+        type: boolean
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Form 8606 required flag for spouse
+      - name: computedForm8606SpousePartILine15c
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed spouse Form 8606 Part I line 15c
+      - name: computedForm8606SpousePartIILine18
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed spouse Form 8606 Part II line 18
+      - name: computedForm8606SpousePartIIILine25c
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed spouse Form 8606 Part III line 25c

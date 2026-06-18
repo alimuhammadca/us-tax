@@ -1,0 +1,19 @@
+<mxfile host='app.diagrams.net' modified='2026-03-07T10:30:00.0000000Z' agent='Codex' version='20.8.16' type='device'>
+  <diagram id='5a-flow-pension-gross' name='Line 5a - Pensions and annuities (gross amount)'>
+    <mxGraphModel dx='1400' dy='900' grid='1' gridSize='10' guides='1' tooltips='1' connect='1' arrows='1' fold='1' page='1' pageScale='1' pageWidth='1200' pageHeight='900' math='0' shadow='0'>
+      <root>
+        <mxCell id='0'/>
+        <mxCell id='1' parent='0'/>
+        <mxCell id='2' value='Inputs (User)&#xa;pension-annuity-income-taxpayer / pension-annuity-income-spouse&#xa;hadPensionOrAnnuityIncome&#xa;rollover and PSO election indicators&#xa;taxable-method flags (Simplified Method / General Rule)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='20' y='20' width='360' height='230' as='geometry'/></mxCell>
+        <mxCell id='3' value='Inputs (Statements/Imports)&#xa;Non-IRA 1099-R entries only (iraSepSimple=false)&#xa;RRB-1099-R entries&#xa;Owner split by recipientTIN/SSN: taxpayer vs spouse&#xa;Gross source per owner: 1099-R box1 + RRB gross paid amount' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='20' y='270' width='360' height='230' as='geometry'/></mxCell>
+        <mxCell id='4' value='Reference/Derived Inputs&#xa;5abc.md IRS 2025 rule:&#xa;if pension/annuity is fully taxable, report total on line 5b only and leave line 5a blank&#xa;if any exception path applies (rollover, PSO, method-based taxable calc), line 5a carries gross total' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='20' y='520' width='360' height='210' as='geometry'/></mxCell>
+        <mxCell id='5' value='Computation&#xa;grossTP = sum(non-IRA 1099-R box1 + RRB gross, taxpayer owner)&#xa;grossSP = sum(non-IRA 1099-R box1 + RRB gross, spouse owner)&#xa;grossTotal = grossTP + grossSP&#xa;fullyTaxableOverall = taxableTotal == grossTotal and no exception flags&#xa;line5a = null when fullyTaxableOverall&#xa;line5a = roundMoney(grossTotal) otherwise' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='420' y='230' width='390' height='300' as='geometry'/></mxCell>
+        <mxCell id='6' value='Outputs&#xa;Form 1040 line 5a (gross pensions and annuities)&#xa;Emitted only when non-fully-taxable reporting path applies&#xa;Persisted in tax-return computation payload for preview and generated return' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='840' y='250' width='350' height='250' as='geometry'/></mxCell>
+        <mxCell id='7' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='2' target='5'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='8' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='3' target='5'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='9' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='4' target='5'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='10' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='5' target='6'><mxGeometry relative='1' as='geometry'/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

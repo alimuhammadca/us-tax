@@ -1,0 +1,107 @@
+<mxGraphModel><root><mxCell id="0"/><mxCell id="1" parent="0"/>
+
+<!-- Title -->
+<mxCell id="2" value="Form 1040 Lines 25a–25d — Federal Income Tax Withheld (2025)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="50" y="10" width="1000" height="40" as="geometry"/></mxCell>
+
+<!-- LEGEND -->
+<mxCell id="leg1" value="LEGEND" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="50" y="58" width="80" height="20" as="geometry"/></mxCell>
+<mxCell id="leg2" value="Input (statement)" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="78" width="110" height="22" as="geometry"/></mxCell>
+<mxCell id="leg3" value="Computation" style="rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;" vertex="1" parent="1"><mxGeometry x="170" y="78" width="110" height="22" as="geometry"/></mxCell>
+<mxCell id="leg4" value="Output / consumer" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;" vertex="1" parent="1"><mxGeometry x="290" y="78" width="120" height="22" as="geometry"/></mxCell>
+<mxCell id="leg5" value="Gap" style="rounded=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=9;" vertex="1" parent="1"><mxGeometry x="420" y="78" width="80" height="22" as="geometry"/></mxCell>
+<mxCell id="leg6" value="Out of scope" style="rounded=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=9;" vertex="1" parent="1"><mxGeometry x="510" y="78" width="90" height="22" as="geometry"/></mxCell>
+
+<!-- ===== COLUMN 1: LINE 25a INPUTS ===== -->
+
+<mxCell id="w2" value="W-2 box 2&#xa;federalIncomeTaxWithheldAmount&#xa;(all entries, all SSNs)" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="130" width="180" height="55" as="geometry"/></mxCell>
+
+<!-- ===== LINE 25a COMPUTATION ===== -->
+
+<mxCell id="calc25a" value="Line 25a computation&#xa;sumFederalWithholdingFromEntries(w2Entries)&#xa;TaxReturnComputeService.java line 15173" style="rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;" vertex="1" parent="1"><mxGeometry x="280" y="130" width="240" height="55" as="geometry"/></mxCell>
+
+<mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="w2" target="calc25a" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- ===== LINE 25a OUTPUT ===== -->
+
+<mxCell id="out25a" value="Line 25a&#xa;Payments.withholdingW2&#xa;W-2 federal withholding" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="570" y="130" width="180" height="55" as="geometry"/></mxCell>
+
+<mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="calc25a" target="out25a" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- ===== COLUMN 1: LINE 25b INPUTS ===== -->
+
+<mxCell id="src1099r" value="1099-R box 4&#xa;1099-INT/DIV/B/OID&#xa;1099-G/NEC/K/MISC box 4&#xa;federalIncomeTaxWithheldAmount" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="230" width="180" height="70" as="geometry"/></mxCell>
+
+<mxCell id="srcRrb" value="RRB-1099 box 10&#xa;RRB-1099-R box 9&#xa;federalIncomeTaxWithheldAmount" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="315" width="180" height="55" as="geometry"/></mxCell>
+
+<mxCell id="srcSsa" value="SSA-1099 box 6&#xa;voluntaryFederalIncomeTax&#xa;WithheldAmount&#xa;(non-standard field name)" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="385" width="180" height="65" as="geometry"/></mxCell>
+
+<!-- G1 GAP: 1099-DA -->
+<mxCell id="gap1099da" value="G1 — GAP (MEDIUM)&#xa;1099-DA box 2a&#xa;form1099DaEntries LOADED&#xa;but NOT in aggregation&#xa;(new 2025 form)" style="rounded=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="465" width="180" height="75" as="geometry"/></mxCell>
+
+<!-- ===== LINE 25b COMPUTATION ===== -->
+
+<mxCell id="calc25b" value="Line 25b computation&#xa;sumFederalWithholdingFromMultipleLists(&#xa;  form1099REntries, formRrb1099REntries,&#xa;  form1099Int/Div/B/Oid/G/Nec/K/Misc,&#xa;  formRrb1099Entries)&#xa;+ sumSsa1099Withholding(formSsa1099Entries)&#xa;TaxReturnComputeService.java lines 15180–15186" style="rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;" vertex="1" parent="1"><mxGeometry x="280" y="250" width="240" height="120" as="geometry"/></mxCell>
+
+<mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="src1099r" target="calc25b" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="srcRrb" target="calc25b" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="srcSsa" target="calc25b" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e5b" style="edgeStyle=orthogonalEdgeStyle;dashed=1;strokeColor=#b85450;" edge="1" source="gap1099da" target="calc25b" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- ===== LINE 25b OUTPUT ===== -->
+
+<mxCell id="out25b" value="Line 25b&#xa;Payments.withholding1099&#xa;1099-series federal withholding" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="570" y="280" width="180" height="60" as="geometry"/></mxCell>
+
+<mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="calc25b" target="out25b" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- ===== COLUMN 1: LINE 25c INPUTS ===== -->
+
+<mxCell id="srcW2G" value="W-2G box 4&#xa;federalIncomeTaxWithheldAmount&#xa;gambling winnings withholding" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="570" width="180" height="55" as="geometry"/></mxCell>
+
+<mxCell id="src8959" value="Form 8959 Part V line 24&#xa;line24TotalAmtWithheld&#xa;line22 = max(0, W-2 box 6 − 1.45%×wages)&#xa;line23 = Form 4137 RRTA withholding&#xa;line24 = line22 + line23" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="640" width="180" height="75" as="geometry"/></mxCell>
+
+<!-- OOS sources -->
+<mxCell id="oos25c" value="Out of scope:&#xa;K-1 pass-through&#xa;Form 1042-S&#xa;Form 8805&#xa;Form 8288-A" style="rounded=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="720" width="180" height="75" as="geometry"/></mxCell>
+
+<!-- ===== LINE 25c COMPUTATION ===== -->
+
+<mxCell id="calc25c" value="Line 25c computation&#xa;sumFederalWithholdingFromEntries(formW2gEntries)&#xa;+ form8959.line24TotalAmtWithheld (if set)&#xa;TaxReturnComputeService.java lines 15191–15199" style="rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;" vertex="1" parent="1"><mxGeometry x="280" y="590" width="240" height="85" as="geometry"/></mxCell>
+
+<mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="srcW2G" target="calc25c" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e8" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="src8959" target="calc25c" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- ===== LINE 25c OUTPUT ===== -->
+
+<mxCell id="out25c" value="Line 25c&#xa;Payments.withholdingOther&#xa;other federal withholding" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="570" y="610" width="180" height="55" as="geometry"/></mxCell>
+
+<mxCell id="e9" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="calc25c" target="out25c" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- ===== LINE 25d COMPUTATION ===== -->
+
+<mxCell id="calc25d" value="Line 25d computation&#xa;totalWithholding = roundMoney(&#xa;  safeAmount(withholdingW2)&#xa;  + safeAmount(withholding1099)&#xa;  + safeAmount(withholdingOther))&#xa;Set null if zero.&#xa;TaxReturnComputeService.java lines 15201–15205" style="rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;" vertex="1" parent="1"><mxGeometry x="790" y="340" width="220" height="120" as="geometry"/></mxCell>
+
+<mxCell id="e10" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="out25a" target="calc25d" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e11" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="out25b" target="calc25d" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e12" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="out25c" target="calc25d" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- ===== LINE 25d OUTPUT ===== -->
+
+<mxCell id="out25d" value="Line 25d&#xa;Payments.totalWithholding&#xa;total federal income tax withheld" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="790" y="510" width="220" height="60" as="geometry"/></mxCell>
+
+<mxCell id="e13" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="calc25d" target="out25d" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- ===== DOWNSTREAM CONSUMERS ===== -->
+
+<mxCell id="line33" value="Line 33 — Total Payments&#xa;line33 = line25d + line26 + line32&#xa;computeLine31ThroughLine38() ~line 15285" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;" vertex="1" parent="1"><mxGeometry x="790" y="620" width="220" height="60" as="geometry"/></mxCell>
+
+<mxCell id="e14" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="out25d" target="line33" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<mxCell id="frontend" value="Frontend PDF fill&#xa;form-tax-return-1040.component.ts&#xa;line25dTotalWithholding() re-computes&#xa;25d from sub-lines client-side" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;" vertex="1" parent="1"><mxGeometry x="790" y="180" width="220" height="65" as="geometry"/></mxCell>
+
+<mxCell id="e15" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="out25a" target="frontend" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e16" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="out25b" target="frontend" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e17" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="out25c" target="frontend" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- ===== GAPS BOX ===== -->
+<mxCell id="gapsBox" value="Gaps (audited 2026-04-19; all fixed 2026-04-19)&#xa;&#xa;G1 MEDIUM FIXED — 1099-DA added to sumFederalWithholdingFromMultipleLists(); unit test + E2E Test 7&#xa;G2 LOW FIXED — E2E Test 8: Form 8959 Part V line 24 ($450) → withholdingOther verified&#xa;G3 LOW FIXED — E2E Test 9: 1099-NEC backup withholding $650 → withholding1099 verified&#xa;G4 OOS — K-1/1042-S/8805/8288-A: out of scope (unchanged)" style="text;html=1;strokeColor=#82b366;fillColor=#d5e8d4;align=left;fontSize=9;whiteSpace=wrap;" vertex="1" parent="1"><mxGeometry x="50" y="820" width="480" height="100" as="geometry"/></mxCell>
+
+</root></mxGraphModel>

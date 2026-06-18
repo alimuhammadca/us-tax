@@ -1,0 +1,111 @@
+name: tip-income-taxpayer
+title: Unreported tip income
+multiplicity: single
+formName: 4137
+category: tipIncome
+instructions:
+  - Enter employer information and details of tips you received and reported (or didn't report) by employer. This is an input form for calculating Social Security and Medicare tax on unreported tips.
+  - If married, each spouse completes a separate Form 4137; this file is for the taxpayer.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: hasUnreportedTips
+        type: boolean
+        required: false
+        label: Did you receive tip income that was not fully reported to your employer in 2025?
+        help: Answer Yes if you received cash tips, charge tips, allocated tips (W-2 box 8), or non-cash tips (property at fair market value) that were not already included in W-2 box 1.
+
+  - name: unreportedTipsByEmployer
+    title: Tips by employer
+    multiplicity: multiple
+    showIf: hasUnreportedTips == true
+    instructions:
+      - Add one row for each employer to whom you were required to report tips but did not report all tips.
+    fields:
+      - name: employerName
+        type: text
+        required: true
+        placeholder: Employer legal name
+        label: Employer name (col. a)
+        help: Enter the employer to whom tips should have been reported.
+      - name: employerEIN
+        type: text
+        required: false
+        placeholder: 12-3456789
+        label: Employer identification number (col. b)
+        help: Enter the employer's EIN if known. Recommended when Form 4137 applies for this employer.
+      - name: totalTipsReceived
+        type: amount
+        required: true
+        placeholder: Total cash and charge tips received
+        label: Total tips you received including unreported tips (col. c)
+        help: Include all cash and charge tips received for this employer.
+      - name: totalTipsReportedToEmployer
+        type: amount
+        required: true
+        placeholder: Total tips you reported to this employer
+        label: Total tips you reported (col. d)
+        help: Enter the amount of tips you reported to this employer.
+      - name: allocatedTipsW2Box8
+        type: amount
+        required: false
+        placeholder: Enter amount from W-2 Box 8
+        label: Allocated tips from W-2 Box 8
+        help: Box 8 on your W-2 shows tips your employer allocated to you. If present, this amount overrides your calculated unreported tips unless you have adequate records showing the actual unreported amount is lower.
+      - name: hasAdequateRecordsUnreportedLessThanAllocated
+        type: boolean
+        required: false
+        showIf: allocatedTipsW2Box8 > 0
+        label: Do you have adequate records showing your actual unreported tips are less than the allocated tips?
+        help: Use this only if allocated tips (W-2 box 8) are greater than your actual unreported tips for this employer.
+      - name: substantiatedUnreportedTipsIfLessThanAllocated
+        type: amount
+        required: false
+        showIf: hasAdequateRecordsUnreportedLessThanAllocated == true
+        placeholder: Actual unreported cash/charge tips (if lower than box 8)
+        label: Substantiated unreported tips (if lower than allocated tips)
+        help: Enter your actual unreported cash/charge tips only if you have adequate records and they are less than the allocated tips.
+      - name: line5Under20PerMonthTips
+        type: amount
+        required: false
+        placeholder: Total tips under $20 in any calendar month
+        label: Line 5 — Total tips not reported because under $20 per month
+        help: Enter total tips you received but didn't report because monthly total was less than $20. These reduce Form 4137 line 6 (the Social Security and Medicare tax base) but are still included as income on line 1c.
+      - name: medicareOnlyGovernmentTips
+        type: amount
+        required: false
+        placeholder: Tips subject only to 1.45% Medicare tax
+        label: Medicare-only government tips ("1.45% tips")
+        help: Enter the portion of tips received as a federal, state, or local government employee where your pay was subject only to the 1.45% Medicare tax, not the 6.2% Social Security tax. These tips are excluded from Form 4137 line 10 but remain in line 6.
+      - name: nonCashTipsFmv
+        type: amount
+        required: false
+        placeholder: Fair market value of property tips
+        label: Non-cash tips — fair market value
+        help: Enter the fair market value of tips received as property (tickets, passes, merchandise, etc.). Non-cash tips are taxable income included in line 1c but are not subject to Social Security or Medicare tax and do not appear on Form 4137 lines 2–12.
+      - name: rRTACompensationW2Box14
+        type: amount
+        required: false
+        placeholder: Enter amount from W-2 Box 14 if RRTA comp
+        label: RRTA compensation (W-2 box 14)
+        help: If your W-2 box 14 shows Railroad Retirement Tax Act (RRTA) compensation, enter the amount here. It is added to the Social Security wage base on Form 4137 line 8 to prevent your tips from being taxed twice on the portion already covered by railroad retirement taxes.
+      - name: rRTACompensationW2Box14Notes
+        type: text
+        required: false
+        placeholder: RRTA Medicare Tax withheld amount from box 14
+        label: RRTA Medicare Tax withheld (W-2 box 14 notes)
+        help: Enter the RRTA Additional Medicare Tax withheld amount reported in W-2 box 14 (labeled "RRTA Medicare Tax" or similar). This flows to Form 8959 Part V line 23 and Form 1040 line 25c.
+      - name: socialSecurityWagesW2Box3
+        type: amount
+        required: false
+        placeholder: Enter amount from W-2 Box 3
+        label: Social Security wages (W-2 box 3) — fallback only
+        help: Enter the amount from W-2 box 3 for this employer. Used to calculate Form 4137 line 8 — the portion of the Social Security wage base already used — so tips are not taxed on wages already subject to the 6.2% SS tax. Only enter this when no W-2 for this employer is on file in your Statements.
+      - name: socialSecurityTipsW2Box7
+        type: amount
+        required: false
+        placeholder: Enter amount from W-2 Box 7
+        label: Social Security tips (W-2 box 7) — fallback only
+        help: Enter the amount from W-2 box 7 (Social Security tips already reported to this employer). Together with box 3, this makes up Form 4137 line 8. Only enter this when no W-2 for this employer is on file in your Statements.

@@ -1,0 +1,48 @@
+<mxGraphModel><root><mxCell id="0"/><mxCell id="1" parent="0"/>
+<!-- Title -->
+<mxCell id="2" value="Form 1040 Line 18 — Total Tax Before Credits (2025)&#xa;Formula: line18 = line16 + line17" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="100" y="20" width="700" height="50" as="geometry"/></mxCell>
+<!-- Inputs -->
+<mxCell id="3" value="Line 16 (TaxAndCredits.tax)&#xa;Regular tax + Form8814 + Form4972&#xa;+ Box3 write-ins (ECR, 962, 1291TAX, ...)" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1"><mxGeometry x="60" y="100" width="250" height="70" as="geometry"/></mxCell>
+<mxCell id="4" value="Line 17 (TaxAndCredits.additionalTaxSchedule2)&#xa;Schedule2.line3 = line1z + Form6251.line11&#xa;(line1z = 0 in current scope → equals AMT)&#xa;G1 fix: use additionalTaxSchedule2, not alternativeMinimumTax" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1"><mxGeometry x="380" y="100" width="270" height="80" as="geometry"/></mxCell>
+<!-- computeLine18 -->
+<mxCell id="5" value="computeLine18()&#xa;line18 = line16 + line17&#xa;(null treated as zero)" style="rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" vertex="1" parent="1"><mxGeometry x="230" y="220" width="220" height="60" as="geometry"/></mxCell>
+<mxCell id="6" value="" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="3" target="5" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="7" value="" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="4" target="5" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<!-- Output -->
+<mxCell id="8" value="TaxAndCredits.totalTaxBeforeCredits&#xa;= Form 1040 Line 18&#xa;PDF: line18_total_tax_add_lines16_17" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1"><mxGeometry x="230" y="330" width="220" height="65" as="geometry"/></mxCell>
+<mxCell id="9" value="line18 = line16 + line17" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="5" target="8" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<!-- FTC Correction path -->
+<mxCell id="10" value="FTC Applied?" style="rhombus;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" vertex="1" parent="1"><mxGeometry x="265" y="440" width="150" height="60" as="geometry"/></mxCell>
+<mxCell id="11" value="" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="8" target="10" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="12" value="correctLine17ForFtc():&#xa;1. line10 −= FTC&#xa;2. line11 recalculated&#xa;3. wireLine17ToOutputs()&#xa;4. computeLine18() again ← G-new-1 fix" style="rounded=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=10;" vertex="1" parent="1"><mxGeometry x="480" y="435" width="210" height="75" as="geometry"/></mxCell>
+<mxCell id="13" value="yes" style="edgeLabel;" vertex="1" connectable="0" parent="14"><mxGeometry relative="0.5" as="geometry"/></mxCell>
+<mxCell id="14" value="" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="10" target="12" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="15" value="totalTaxBeforeCredits&#xa;(refreshed after FTC)" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1"><mxGeometry x="480" y="555" width="210" height="50" as="geometry"/></mxCell>
+<mxCell id="16" value="" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="12" target="15" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<!-- No FTC path -->
+<mxCell id="17" value="totalTaxBeforeCredits&#xa;(final, no FTC correction)" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1"><mxGeometry x="60" y="455" width="170" height="50" as="geometry"/></mxCell>
+<mxCell id="18" value="no" style="edgeLabel;" vertex="1" connectable="0" parent="19"><mxGeometry relative="0.5" as="geometry"/></mxCell>
+<mxCell id="19" value="" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="10" target="17" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<!-- Downstream consumers -->
+<mxCell id="20" value="Downstream CLWs read totalTaxBeforeCredits" style="rounded=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="130" y="640" width="420" height="35" as="geometry"/></mxCell>
+<mxCell id="21" value="" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="17" target="20" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="145" y="530"/><mxPoint x="145" y="657"/></Array></mxGeometry></mxCell>
+<mxCell id="22" value="" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="15" target="20" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="585" y="620"/><mxPoint x="585" y="657"/></Array></mxGeometry></mxCell>
+<!-- CLW consumers -->
+<mxCell id="23" value="Form 2441&#xa;Child/Dep Care CLW" style="rounded=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=9;" vertex="1" parent="1"><mxGeometry x="30" y="710" width="120" height="45" as="geometry"/></mxCell>
+<mxCell id="24" value="Form 8880&#xa;Saver's Credit CLW" style="rounded=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=9;" vertex="1" parent="1"><mxGeometry x="162" y="710" width="120" height="45" as="geometry"/></mxCell>
+<mxCell id="25" value="Schedule 8812&#xa;CTC / ODC / ACTC" style="rounded=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=9;" vertex="1" parent="1"><mxGeometry x="294" y="710" width="120" height="45" as="geometry"/></mxCell>
+<mxCell id="26" value="Form 8863&#xa;Education Credits CLW" style="rounded=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=9;" vertex="1" parent="1"><mxGeometry x="426" y="710" width="130" height="45" as="geometry"/></mxCell>
+<mxCell id="27" value="Form 1116&#xa;FTC CLW" style="rounded=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=9;" vertex="1" parent="1"><mxGeometry x="568" y="710" width="100" height="45" as="geometry"/></mxCell>
+<mxCell id="28" value="" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="20" target="23" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="29" value="" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="20" target="24" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="30" value="" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="20" target="25" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="31" value="" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="20" target="26" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="32" value="" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="20" target="27" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<!-- Downstream line 22 -->
+<mxCell id="33" value="line22 = max(0, line18 − line21)&#xa;line23 = Schedule2.line21&#xa;line24 = line22 + line23  (Total Tax)" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1"><mxGeometry x="200" y="790" width="280" height="60" as="geometry"/></mxCell>
+<mxCell id="34" value="" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="25" target="33" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<!-- G1 note -->
+<mxCell id="35" value="G1 FIXED 2026-04-18&#xa;computeLine18() now reads additionalTaxSchedule2&#xa;(Schedule2.line3 = line1z + Form6251.line11)&#xa;instead of alternativeMinimumTax (Form6251.line11 only).&#xa;Both equal while line1z = 0; fix is future-safe." style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;" vertex="1" parent="1"><mxGeometry x="30" y="210" width="185" height="100" as="geometry"/></mxCell>
+<!-- Implementation note -->
+<mxCell id="36" value="IRS 2025 label: &#xa;'Add lines 16 and 17.'&#xa;Tax-before-credits subtotal.&#xa;Verified correct for 2025." style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;" vertex="1" parent="1"><mxGeometry x="700" y="210" width="155" height="75" as="geometry"/></mxCell>
+</root></mxGraphModel>

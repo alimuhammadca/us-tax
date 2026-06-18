@@ -1,0 +1,27 @@
+# Form 1040 header - taxpayer digital asset question.
+# Approach: this taxpayer form owns the return-level digital asset answer.
+name: digital-assets-taxpayer
+title: Form 1040 - Digital assets (taxpayer / family head)
+multiplicity: single
+formName: 1040
+category: personal
+instructions:
+  - Every Form 1040 filer must answer the digital asset question Yes or No.
+  - Do not leave this question blank.
+
+sections:
+  - name: digitalAssets
+    title: Digital assets
+    multiplicity: single
+    fields:
+      - name: digitalAssetsYes
+        type: boolean
+        required: true
+        label: >
+          At any time during 2025, did you receive, sell, exchange, or otherwise
+          dispose of any digital asset (such as cryptocurrency or an NFT)?
+        help: >
+          All filers must answer Yes or No. Digital assets include cryptocurrency
+          (Bitcoin, Ether, etc.), non-fungible tokens (NFTs), and other digital
+          representations of value recorded on a distributed ledger. Leaving this
+          blank is not permitted.

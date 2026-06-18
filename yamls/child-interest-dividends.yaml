@@ -1,0 +1,161 @@
+formId: child-interest-dividends
+title: "Child's Interest and Dividends (Form 8814)"
+description: >
+  Use this form if you elect to include a qualifying child's interest and dividend income
+  on your return so the child does not have to file a separate return.
+  One entry per qualifying child. The child's gross income (lines 1a + 2a + 3) must be
+  under $13,500, the child must have no federal withholding on the income, and no estimated
+  tax payments (including prior-year overpayment applied forward).
+type: statement-entries
+
+sections:
+  - name: childIdentification
+    title: "Child identification"
+    fields:
+      - name: childFirstName
+        type: text
+        label: "Child's first name"
+        required: true
+
+      - name: childLastName
+        type: text
+        label: "Child's last name"
+        required: true
+
+      - name: childSsn
+        type: text
+        label: "Child's SSN"
+        placeholder: "xxx-xx-xxxx"
+        required: true
+
+  - name: partI
+    title: "Part I — Child's income"
+    description: >
+      Enter amounts from the child's 1099-INT, 1099-OID, 1099-DIV, and any pass-through statements.
+      Do not include nominee amounts that belong to others.
+    fields:
+      - name: line1aTaxableInterest
+        type: amount
+        label: "Line 1a — Taxable interest"
+        description: "From child's 1099-INT box 1 and 1099-OID. Do not include tax-exempt interest."
+
+      - name: line1bTaxExemptInterest
+        type: amount
+        label: "Line 1b — Tax-exempt interest (informational)"
+        description: >
+          Enter child's tax-exempt interest. If any came from private activity bonds, it may
+          affect AMT. This line is informational only and does not add to the parent's income.
+
+      - name: line2aOrdinaryDividends
+        type: amount
+        label: "Line 2a — Ordinary dividends"
+        description: "From child's 1099-DIV box 1a, including Alaska Permanent Fund dividends and pass-through ordinary dividends."
+
+      - name: line2bQualifiedDividends
+        type: amount
+        label: "Line 2b — Qualified dividends"
+        description: "From child's 1099-DIV box 1b. Used to compute the proportional qualified-dividend portion (line 9) that flows to the parent's Schedule B and Form 1040 lines 3a/3b."
+
+      - name: line3CapGainDistributions
+        type: amount
+        label: "Line 3 — Capital gain distributions"
+        description: "From child's 1099-DIV box 2a. Used to compute the proportional capital-gain portion (line 10) that flows to the parent's Schedule D or Form 1040 line 7a."
+
+  - name: electionEligibility
+    title: "Less-common situations (election eligibility)"
+    description: >
+      The 2025 Form 8814 instructions list four situations that disqualify the parent's
+      election. Closes 7b.md gaps G3 (joint-return-by-child) and G4 (estimated tax,
+      backup withholding, prior-year overpayment applied). When any is true the
+      application emits a blocking flag at compute time and the child must file their
+      own return.
+    fields:
+      - name: childFiledJointReturnForTaxYear
+        type: boolean
+        label: "The child filed a joint return for the tax year"
+
+      - name: childHadEstimatedTaxPayments
+        type: boolean
+        label: "Estimated tax payments were made in the child's name during the year"
+
+      - name: childHadBackupWithholding
+        type: boolean
+        label: "Backup withholding was taken from the child's income"
+
+      - name: childHadPriorYearOverpaymentApplied
+        type: boolean
+        label: "A prior-year refund was applied to the child's current-year estimated tax"
+
+  - name: nomineeAdjustments
+    title: "Nominee adjustments (per-child)"
+    description: >
+      Closes 7b.md gap G5. Form 8814 line 1a / 2a / 3 captions all read "If your child
+      received any... as a nominee, see the instructions". Enter the portion of each
+      line that actually belongs to someone else; the application subtracts the nominee
+      amount before computing the parent's reported amount.
+    fields:
+      - name: childNomineeAdjustmentLine1a
+        type: amount
+        label: "Nominee portion of taxable interest (line 1a)"
+
+      - name: childNomineeAdjustmentLine2a
+        type: amount
+        label: "Nominee portion of ordinary dividends (line 2a)"
+
+      - name: childNomineeAdjustmentLine3
+        type: amount
+        label: "Nominee portion of capital gain distributions (line 3)"
+
+  - name: alaskaPermanentFundDividends
+    title: "Alaska Permanent Fund dividends (informational)"
+    description: >
+      Closes 7b.md gap G6. Informational only — Alaska PFD is already included in line
+      2a per the 2025 Form 8814 caption. This field lets the user disclose the slice
+      separately for personal record-keeping.
+    fields:
+      - name: childAlaskaPermanentFundDividendsPortion
+        type: amount
+        label: "Alaska Permanent Fund portion of line 2a"
+
+  - name: computedOutputs
+    title: "Computed outputs"
+    readOnly: true
+    description: "These fields are computed by the backend and not entered by the user."
+    fields:
+      - name: line4Total
+        type: amount
+        label: "Line 4 — Total (1a + 2a + 3)"
+        readOnly: true
+        description: >
+          If line 4 >= $13,500 the child must file a separate return and Form 8814 cannot be used.
+          If line 4 <= $2,700 only Part II (extra tax) applies.
+
+      - name: line6AboveBase
+        type: amount
+        label: "Line 6 — Amount above $2,700 base"
+        readOnly: true
+
+      - name: line9QualifiedDividends
+        type: amount
+        label: "Line 9 — Qualified dividends flowing to parent return"
+        readOnly: true
+        description: "Reports to parent Form 1040 lines 3a and 3b (Schedule B line 5 if Schedule B required)."
+
+      - name: line10CapGainDistributions
+        type: amount
+        label: "Line 10 — Capital gain distributions flowing to parent return"
+        readOnly: true
+        description: "Reports to parent Schedule D line 13, or Form 1040 line 7a if Schedule D not required."
+
+      - name: line12OtherIncomeToSchedule1
+        type: amount
+        label: "Line 12 — Other income to Schedule 1 line 8z"
+        readOnly: true
+        description: "Reported as 'Form 8814' on Schedule 1 line 8z."
+
+      - name: line15ExtraTax
+        type: amount
+        label: "Line 15 — Extra tax (Form 1040 line 16, check box 1)"
+        readOnly: true
+        description: >
+          Capped at $135. Pending Form 1040 line 16 implementation; stored for display only.

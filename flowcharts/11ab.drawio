@@ -1,0 +1,141 @@
+<mxfile host='app.diagrams.net' modified='2026-04-17T00:00:00.000Z' agent='Claude' version='20.8.16' type='device'>
+  <diagram id='line11ab-computation' name='Lines 11a/11b AGI Flowchart'>
+    <mxGraphModel dx='1400' dy='900' grid='1' gridSize='10' guides='1' tooltips='1' connect='1' arrows='1' fold='1' page='1' pageScale='1' pageWidth='1500' pageHeight='2000' math='0' shadow='0'>
+      <root>
+        <mxCell id='0'/>
+        <mxCell id='1' parent='0'/>
+
+        <!-- LEGEND -->
+        <mxCell id='leg1' value='Start / End' style='ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1130' y='80' width='130' height='40' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg2' value='Process / Action' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1130' y='130' width='130' height='40' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg3' value='Decision' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1130' y='180' width='130' height='50' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg4' value='Output / Result' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1130' y='240' width='130' height='40' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg5' value='Gap / Tech Debt' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1130' y='290' width='130' height='40' as='geometry'/>
+        </mxCell>
+
+        <!-- NOTES -->
+        <mxCell id='notes' value='2025 Notes&#xa;&#xa;Line 11a formula (IRS printed instruction):&#xa;"Subtract line 10 from line 9.&#xa; This is your adjusted gross income."&#xa;&#xa;Line 11b label:&#xa;"Amount from line 11a (adjusted gross income)"&#xa;&#xa;KEY RULES:&#xa;• line11a = line9 − line10 (may be negative)&#xa;• line11b = line11a exactly (IRS copy line)&#xa;• Neither line is floored to zero&#xa;• line11b is NOT a universal MAGI&#xa;• Each downstream benefit defines its own MAGI&#xa;  starting from line11b plus benefit-specific add-backs&#xa;&#xa;HELPER METHOD: subtractNonNegativeAllowNegative()&#xa;Used at line 4147 of TaxReturnComputeService.java&#xa;Preserves negative results unlike subtractNonNegative()&#xa;&#xa;Sources: 2025 Form 1040, 2025 Form 1040 Instructions,&#xa;i1040gi_2025.txt, J.K. Lasser&apos;s Income Tax 2025' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#388e3c;fontSize=11;align=left;spacingLeft=8;' vertex='1' parent='1'>
+          <mxGeometry x='1120' y='360' width='310' height='380' as='geometry'/>
+        </mxCell>
+
+        <!-- IMPLEMENTATION STATUS -->
+        <mxCell id='status' value='Implementation Status (2026-04-17)&#xa;&#xa;IMPLEMENTED:&#xa;&#x2713; line11a = subtractNonNegativeAllowNegative(line9, line10)&#xa;&#x2713; line11b = line11a (exact copy)&#xa;&#x2713; No zero-floor (negative AGI preserved)&#xa;&#x2713; adjustments.setLine11aAdjustedGrossIncome()&#xa;&#x2713; adjustments.setLine11bAmountFromLine11aAdjustedGrossIncome()&#xa;&#x2713; Legacy: adjustments.setAdjustedGrossIncome() (= line11a)&#xa;&#x2713; PDF: line11 (page1) + line11b (page2) fields filled&#xa;&#x2713; Frontend display: form-tax-return-1040.component.ts&#xa;&#x2713; Unit test: allowsNegativeAdjustedGrossIncome...&#xa;&#x2713; E2E test: 1 scenario (wages + educator → 875)&#xa;&#xa;GAPS (all low severity):&#xa;&#x26A0; G1: Legacy adjustedGrossIncome field — tech debt&#xa;   AMT (line 8200) + Schedule A use legacy getter&#xa;&#x26A0; G2: Only 1 E2E scenario — no MFJ, no negative AGI test&#xa;&#x26A0; G3: No unit test asserting line11a == line11b invariant&#xa;&#x26A0; G4: CSV field named "line11" not "line11a" (page 1)&#xa;&#x26A0; G5: computeScheduleAgi() uses line11a getter, not line11b' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;align=left;spacingLeft=8;' vertex='1' parent='1'>
+          <mxGeometry x='1120' y='760' width='310' height='380' as='geometry'/>
+        </mxCell>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- MAIN FLOW -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+
+        <!-- START -->
+        <mxCell id='n01' value='START — computeAdjustments()&#xa;&#xa;Called from buildForm1040() after:&#xa;  • buildIncome() → income.totalIncome (line 9)&#xa;  • computeIncomeAdjustments() → line10FromSchedule1Line26 (line 10)&#xa;&#xa;Parameters:&#xa;  income     — Income object containing line 9&#xa;  incomeAdjustments — IncomeAdjustments containing line 10' style='ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;' vertex='1' parent='1'>
+          <mxGeometry x='230' y='40' width='520' height='110' as='geometry'/>
+        </mxCell>
+
+        <!-- Extract line 9 -->
+        <mxCell id='n02' value='Extract upstream values&#xa;&#xa;line9  = income == null ? null : roundMoney(income.getTotalIncome())&#xa;line10 = incomeAdjustments == null ? null&#xa;         : roundMoney(incomeAdjustments.line10FromSchedule1Line26())&#xa;&#xa;(line10 may be null if taxpayer had no adjustments)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='230' y='210' width='520' height='100' as='geometry'/>
+        </mxCell>
+        <mxCell id='e01' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n01' target='n02' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Both null? -->
+        <mxCell id='n03' value='line10 == null&#xa;AND line9 == null?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='320' y='380' width='340' height='60' as='geometry'/>
+        </mxCell>
+        <mxCell id='e02' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n02' target='n03' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Return null -->
+        <mxCell id='n03b' value='return null&#xa;&#xa;(No income and no adjustments —&#xa; Adjustments object not created)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='720' y='388' width='220' height='55' as='geometry'/>
+        </mxCell>
+        <mxCell id='e02b' value='Yes' style='edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5;exitDx=0;exitDy=0;' edge='1' source='n03' target='n03b' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Compute line11a -->
+        <mxCell id='n04' value='Compute line 11a — AGI&#xa;&#xa;line11a = line9 == null ? null&#xa;          : roundMoney(subtractNonNegativeAllowNegative(line9, line10))&#xa;&#xa;subtractNonNegativeAllowNegative(a, b):&#xa;  • treats null b as 0&#xa;  • returns a − b&#xa;  • result may be negative (no floor)&#xa;&#xa;Examples:&#xa;  line9=50000, line10=125   → line11a=49875&#xa;  line9=1000,  line10=2000  → line11a=−1000  (negative preserved)&#xa;  line9=60000, line10=null  → line11a=60000  (null adj treated as 0)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='230' y='510' width='520' height='160' as='geometry'/>
+        </mxCell>
+        <mxCell id='e03' value='No' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n03' target='n04' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Set line11b -->
+        <mxCell id='n05' value='Set line 11b — IRS copy line&#xa;&#xa;line11b = line11a&#xa;&#xa;This is not a separate computation.&#xa;It is the IRS&apos;s mechanism for carrying AGI&#xa;from page 1 to page 2 of Form 1040.' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='230' y='740' width='520' height='110' as='geometry'/>
+        </mxCell>
+        <mxCell id='e04' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n04' target='n05' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Build Adjustments object -->
+        <mxCell id='n06' value='Build Adjustments object&#xa;&#xa;adjustments.setAdjustmentsSchedule1(line10)&#xa;adjustments.setLine11aAdjustedGrossIncome(line11a)&#xa;adjustments.setLine11bAmountFromLine11aAdjustedGrossIncome(line11b)&#xa;adjustments.setAdjustedGrossIncome(line11a)  ← LEGACY FIELD&#xa;&#xa;(Legacy field kept for backward UI compat per comment at line 4157)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='230' y='920' width='520' height='120' as='geometry'/>
+        </mxCell>
+        <mxCell id='e05' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n05' target='n06' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- OUTPUTS -->
+        <mxCell id='n07' value='OUTPUTS (JSON: form1040.adjustments)&#xa;&#xa;adjustmentsSchedule1                       → line 10&#xa;line11aAdjustedGrossIncome                 → line 11a (AGI)&#xa;line11bAmountFromLine11aAdjustedGrossIncome → line 11b (AGI carryforward)&#xa;adjustedGrossIncome                        → legacy alias for line 11a&#xa;&#xa;PDF exports:&#xa;  f1_77[0]  → line11_adjusted_gross_income       (page 1)&#xa;  f2_01[0]  → line11b_adjusted_gross_income_repeat (page 2)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;fontStyle=1;' vertex='1' parent='1'>
+          <mxGeometry x='205' y='1110' width='570' height='140' as='geometry'/>
+        </mxCell>
+        <mxCell id='e06' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n06' target='n07' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- DOWNSTREAM USES -->
+        <mxCell id='n08' value='Downstream consumers of line 11b (AGI)&#xa;&#xa;Line 15: line15 = max(0, line11b − line14) — floored at zero&#xa;Line 13a QBI: taxableIncomeBeforeQbi = AGI − line12e − line13b&#xa;Schedule 1-A MAGI: starts from line11b + Form2555 + PR exclusion add-backs&#xa;Schedule A: agi for medical floor (7.5%) and SALT sales-tax worksheet&#xa;Schedule 8812 CTC: phaseout starts at $400k MFJ / $200k others&#xa;Form 8863 AOTC/LLC: MAGI = line11b + Form2555 exclusion amounts&#xa;Form 6251 AMT: reads legacy adjustedGrossIncome field (≡ line11a)&#xa;Form 8962 PTC: computeScheduleAgi() reads line11a getter' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='205' y='1320' width='570' height='160' as='geometry'/>
+        </mxCell>
+        <mxCell id='e07' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n07' target='n08' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- END -->
+        <mxCell id='n09' value='END&#xa;&#xa;Lines 11a and 11b are pure arithmetic — no worksheets, no alternate paths.&#xa;Implementation complete. Gaps are test coverage and tech debt only.' style='ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;' vertex='1' parent='1'>
+          <mxGeometry x='290' y='1550' width='400' height='80' as='geometry'/>
+        </mxCell>
+        <mxCell id='e08' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n08' target='n09' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- GAP NODES -->
+        <mxCell id='gap1' value='&#x26A0; G1: Tech debt — legacy adjustedGrossIncome field&#xa;AMT (line 8200) and Schedule A read getAdjustedGrossIncome()&#xa;instead of getLine11bAmountFromLine11aAdjustedGrossIncome().&#xa;No functional bug (values always equal) but removes field eventually.' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='800' y='930' width='280' height='80' as='geometry'/>
+        </mxCell>
+        <mxCell id='egap1' style='edgeStyle=orthogonalEdgeStyle;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;' edge='1' source='n06' target='gap1' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <mxCell id='gap2' value='&#x26A0; G2: E2E sparse — only 1 scenario&#xa;Missing: MFJ test, zero-adjustments test,&#xa;negative AGI E2E test.' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='800' y='520' width='240' height='65' as='geometry'/>
+        </mxCell>
+        <mxCell id='egap2' style='edgeStyle=orthogonalEdgeStyle;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;' edge='1' source='n04' target='gap2' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <mxCell id='gap3' value='&#x26A0; G4: CSV names "line11" not "line11a"&#xa;page-1 AGI field label is line11_adjusted_gross_income&#xa;not line11a — naming inconsistency only, no bug.' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='800' y='1120' width='250' height='65' as='geometry'/>
+        </mxCell>
+        <mxCell id='egap3' style='edgeStyle=orthogonalEdgeStyle;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;' edge='1' source='n07' target='gap3' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

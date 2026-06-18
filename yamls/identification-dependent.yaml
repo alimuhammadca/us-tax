@@ -1,0 +1,177 @@
+# Form 1040 header — dependents workflow.
+# Approach: one repeatable section per dependent. Each entry captures the fields
+# required in the Form 1040 Dependents table plus the CTC/ODC eligibility checkboxes.
+# The taxpayer form owns the return-level claim decision; this form captures per-dependent facts.
+name: identification-dependent
+title: Form 1040 - Dependents
+multiplicity: single
+formName: 1040
+category: personal
+instructions:
+  - List every person you are claiming as a dependent on this return.
+  - Each dependent must have a valid SSN, ATIN, or ITIN issued before the return due date.
+  - A dependent without a valid SSN cannot qualify for the Child Tax Credit or the Additional Child Tax Credit.
+  - You may list more than four dependents; all will flow to the continuation statement attached to Form 1040.
+
+sections:
+  - name: dependent
+    title: Dependent identity
+    multiplicity: single
+    instructions:
+      - Add one entry for each dependent. Click Add Dependent to add another row.
+      - All fields marked required must be completed for the dependent to be recognised on the return.
+    fields:
+      - name: dependentFirstName
+        type: text
+        required: true
+        label: First name
+        placeholder: e.g. Emma
+        help: Enter the dependent's legal first name as it appears on their Social Security card or ITIN letter.
+
+      - name: dependentMiddleInitial
+        type: text
+        required: false
+        label: Middle initial
+        placeholder: e.g. C
+        help: Enter the dependent's middle initial if applicable.
+
+      - name: dependentLastName
+        type: text
+        required: true
+        label: Last name
+        placeholder: e.g. Smith
+        help: Enter the dependent's legal last name as it appears on their Social Security card or ITIN letter.
+
+      - name: dependentSSN
+        type: text
+        required: true
+        label: Dependent's Social Security Number (SSN), ITIN, or ATIN
+        placeholder: "###-##-####"
+        help: >
+          A dependent's SSN, ITIN, or ATIN is mandatory. You cannot claim a dependent
+          without a valid taxpayer identification number. A dependent without an SSN
+          (only an ITIN or ATIN) is ineligible for the Child Tax Credit and Additional
+          Child Tax Credit but may still qualify as a dependent for other purposes.
+
+      - name: dependentDateOfBirth
+        type: date
+        required: true
+        label: Dependent's date of birth
+        placeholder: "YYYY-MM-DD"
+        help: >
+          The dependent's date of birth is used to determine age-based eligibility
+          for the Child Tax Credit (under 17 at year-end), EIC qualifying child rules,
+          kiddie tax (Form 8615), and education credits (Form 8863).
+
+      - name: relationship
+        type: text
+        required: true
+        label: Relationship to you
+        placeholder: e.g. Son
+        help: >
+          Select the dependent's relationship to you (or your spouse on MFJ returns).
+          For non-relative household members, the person must have lived with you the
+          entire year to qualify as a dependent.
+
+  - name: credits
+    title: Dependent credits
+    multiplicity: single
+    fields:
+      - name: qualifiesForCTC
+        type: boolean
+        required: true
+        label: Does the dependent qualifies for Child Tax Credit (CTC)?
+        help: >
+          Select yes if this dependent is your qualifying child for the Child Tax Credit.
+          The child must be under age 17 on December 31, 2025, have an SSN (not ITIN/ATIN),
+          and meet the relationship, residency, support, and joint-return tests.
+          A $2,200 credit applies per qualifying child (2025).
+
+      - name: qualifiesForODC
+        type: boolean
+        required: true
+        label: Does the dependent qualifies for Other Dependent Credit (ODC)?
+        help: >
+          Select yes if this dependent qualifies for the $500 Other Dependent Credit but
+          does not qualify for the Child Tax Credit (e.g. a qualifying relative, or a
+          child with an ITIN/ATIN instead of an SSN). CTC and ODC are mutually exclusive
+          for the same dependent.
+
+  - name: student
+    title: Dependent in school
+    multiplicity: single
+    fields:
+      - name: isFullTimeStudent
+        type: boolean
+        required: true
+        label: Was the dependent a full-time student during the tax year?
+        help: >
+          A full-time student is enrolled for at least 5 months of the year at a school
+          that has a regular teaching staff and enrolled student body. Relevant for kiddie
+          tax (Form 8615) age rules and EIC qualifying child age exceptions.
+
+  - name: disabled
+    title: Disabled dependent
+    multiplicity: single
+    fields:
+      - name: isPermanentlyAndTotallyDisabled
+        type: boolean
+        required: true
+        label: Is the dependent permanently and totally disabled?
+        help: >
+          If yes, there is no age limit for qualifying child status for EIC purposes.
+          A person is permanently and totally disabled if they cannot engage in any
+          substantial gainful activity due to a physical or mental condition.
+
+  - name: livedWith
+    title: Living arrangement
+    multiplicity: single
+    fields:
+      - name: childLivedWithTaxpayer
+        type: boolean
+        required: true
+        label: Did the dependent live with you more than half of the tax year?
+        help: >
+          Select yes if the dependent lived with you more than half of the tax year.
+
+      - name: monthsLivedWithTaxpayer
+        type: integer
+        required: true
+        label: How many months the dependent lived with you during the tax year?
+        placeholder: "1-12"
+        help: >
+          Enter the number of months the dependent lived with you in the United States.
+          Temporary absences for school, illness, business, vacation, or military service
+          count as time lived with you. Must be more than 6 months for a qualifying child.
+          Enter 12 if the dependent lived with you the entire year.
+
+      - name: childLivedWithTaxpayerInUSA
+        type: boolean
+        required: true
+        label: Did the dependent live with you more than half of the tax year within USA?
+        help: >
+          Select yes if the dependent lived with you more than half of the tax year within USA.
+
+  - name: custody
+    title: Dependent's custody
+    multiplicity: single
+    fields:
+      - name: childLivedWithOtherParent
+        type: boolean
+        required: true
+        label: Did the dependent also live with the other parent during the tax year?
+        help: >
+          If the child lived with both parents during the year, the custodial parent
+          generally claims the dependency exemption. Check Yes if a Form 8332 release
+          applies or if there is a divorce/separation agreement allocating this dependent
+          to the other parent.
+
+      - name: isQualifyingChildOfAnotherTaxpayer
+        type: boolean
+        required: true
+        label: Is the dependent a qualifying child of another taxpayer?
+        help: >
+          If this person can be claimed as a qualifying child by another taxpayer (such
+          as the other parent), special tiebreaker rules apply. This field is used to
+          determine EIC and CTC eligibility. Check Yes only if you believe another
+          taxpayer could also claim this person.

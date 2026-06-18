@@ -1,0 +1,170 @@
+# Form 8880 — Credit for Qualified Retirement Savings Contributions (Saver's Credit) — taxpayer.
+# One form per return; taxpayer form owns screening, disqualifier gates, and statement imports.
+# Spouse column (b) data lives in savings-credit-spouse.yaml (MFJ only).
+# Section order: screening → statementUploadCheck → disqualifiers → taxpayerContributions →
+#   importedStatementFields → computedOutputs
+name: savings-credit-taxpayer
+title: Form 8880 — Savings credit (taxpayer)
+multiplicity: single
+formName: 8880
+category: deductions
+instructions:
+  - The Saver's Credit rewards contributions to IRAs, ABLE accounts, and employer retirement plans.
+  - Maximum credit is $1,000 per person ($2,000 combined on a joint return).
+  - The credit is non-refundable and is limited by your tax liability.
+  - For married filing jointly, enter your (taxpayer) amounts here and spouse amounts on the spouse form.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: hasSavingsCredit
+        type: boolean
+        required: true
+        label: Did you contribute to an IRA, ABLE account, or employer retirement plan in 2025?
+        help: >
+          Select Yes if you contributed to a traditional IRA, Roth IRA, ABLE account,
+          401(k), 403(b), 457(b), SEP, SIMPLE, TSP, or other qualified employer plan in 2025.
+
+  - name: statementUploadCheck
+    title: Statement upload check
+    multiplicity: single
+    showIf: hasSavingsCredit == true
+    instructions:
+      - Confirm whether your W-2 and 1099-R statements are uploaded.
+      - W-2 box 12 elective deferrals (codes D, E, F, G, H, S) are auto-imported.
+      - 1099-R distributions are auto-imported to help compute the distribution offset.
+    fields:
+      - name: confirmsW2Uploaded
+        type: boolean
+        required: false
+        label: Is your W-2 uploaded?
+        help: >
+          Select Yes if you have uploaded your W-2. The backend will automatically read
+          box 12 codes D, E, F, G, H, S as elective deferrals and apply them to your
+          contribution total.
+      - name: confirms1099RUploaded
+        type: boolean
+        required: false
+        label: Did you receive a 1099-R? If so, is it uploaded?
+        help: >
+          Select Yes if you have uploaded 1099-R statements showing distributions.
+          Only distributions after 12/31/2022 and before the due date of your 2025 return
+          (including extensions) reduce your qualified contributions.
+
+  - name: disqualifiers
+    title: Eligibility check
+    multiplicity: single
+    showIf: hasSavingsCredit == true
+    instructions:
+      - A person cannot use their column if any of these apply. Answer for yourself (the taxpayer).
+      - Spouse eligibility is entered on the spouse Savings credit form.
+    fields:
+      - name: bornAfter2007
+        type: boolean
+        required: false
+        label: Were you born after January 1, 2008? (i.e., age 17 or younger as of January 1, 2026)
+        help: >
+          The credit requires you to be age 18 or older as of January 1, 2026.
+          If born after January 1, 2008, you are disqualified from column (a).
+      - name: isFullTimeStudent
+        type: boolean
+        required: false
+        label: >
+          Were you a full-time student during any part of 5 or more calendar months of 2025?
+        help: >
+          Full-time student means enrolled full-time at a school (including technical,
+          trade, or mechanical schools). Does not include on-the-job training, correspondence
+          schools, or internet-only courses.
+      - name: isClaimedAsDependent
+        type: boolean
+        required: false
+        label: Can you be claimed as a dependent on someone else's 2025 tax return?
+        help: >
+          If another taxpayer is eligible to claim you as a dependent on their 2025 return,
+          you are disqualified from the credit even if they choose not to claim you.
+
+  - name: taxpayerContributions
+    title: Your contributions and distributions (column a)
+    multiplicity: single
+    showIf: hasSavingsCredit == true
+    instructions:
+      - Enter your 2025 IRA, ABLE, and employer plan contributions.
+      - Do not include rollovers, conversions, or returned contributions.
+      - Enter distributions you received after December 31, 2022 and before the due date
+        (including extensions) of your 2025 return from any qualified retirement account.
+      - If filing MFJ, also enter your spouse's distributions here — the IRS requires
+        both spouses' distributions in both columns on a joint return.
+    fields:
+      - name: iraContributions
+        type: amount
+        required: false
+        label: Traditional and Roth IRA contributions (exclude rollovers)
+        placeholder: 0.00
+        help: >
+          Enter total 2025 traditional IRA and Roth IRA contributions. Do not include
+          direct rollovers, transfers, or contributions returned before the tax deadline.
+      - name: ableContributions
+        type: amount
+        required: false
+        label: ABLE account contributions you made as the designated beneficiary
+        placeholder: 0.00
+        help: >
+          Enter 2025 contributions you made to your own ABLE account as the designated
+          beneficiary. Do not include contributions made by others to your ABLE account.
+      - name: employerPlanDeferrals
+        type: amount
+        required: false
+        label: >
+          Additional employer plan deferrals not already captured from your W-2 (SEP, SIMPLE,
+          and other plans)
+        placeholder: 0.00
+        help: >
+          Enter elective deferrals not already captured by W-2 box 12 auto-import.
+          Includes SEP-IRA contributions, SIMPLE contributions, 501(c)(18)(D) plan contributions,
+          and voluntary after-tax contributions to qualified plans.
+          Do not enter amounts already reported in W-2 box 12 codes D, E, F, G, H, or S.
+      - name: distributions2023to2025
+        type: amount
+        required: false
+        label: >
+          Distributions you received from any retirement account after 12/31/2022 and before
+          your 2025 return due date
+        placeholder: 0.00
+        help: >
+          Include distributions from traditional IRAs, Roth IRAs, ABLE accounts, 401(k),
+          403(b), 457(b), SEP, SIMPLE, TSP, and other qualified plans received in this window.
+          If filing MFJ, include BOTH your and your spouse's distributions (IRS cross-column rule).
+          Do not include: non-taxable rollovers, direct trustee-to-trustee transfers,
+          in-plan Roth rollovers, returned excess contributions, or inherited IRA distributions
+          received by a non-spousal beneficiary.
+
+  # Backend-only imported statement fields. Not rendered in the UI form component.
+  - name: importedStatementFields
+    title: Imported statement fields (backend only — not rendered)
+    multiplicity: single
+    showIf: hasSavingsCredit == true
+    fields:
+      - name: w2ElectiveDeferrals
+        type: amount
+        required: false
+        readOnly: true
+        label: Auto-imported W-2 box 12 elective deferrals (codes D, E, F, G, H, S)
+      - name: distributions1099R
+        type: amount
+        required: false
+        readOnly: true
+        label: Auto-imported 1099-R gross distributions (excluding rollover codes G, H)
+
+  # Backend-only computed outputs. Not rendered in the UI form component.
+  - name: computedOutputs
+    title: Computed outputs (backend only — not rendered)
+    multiplicity: single
+    showIf: hasSavingsCredit == true
+    fields:
+      - name: form8880Line12
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed — Form 8880 line 12 final credit (→ Schedule 3 line 4)

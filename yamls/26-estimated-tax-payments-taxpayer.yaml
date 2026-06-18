@@ -1,0 +1,72 @@
+name: estimated-tax-payments-taxpayer
+title: Estimated Tax Payments (Taxpayer)
+multiplicity: single
+category: applications
+person: taxpayer
+
+sections:
+  - name: screening
+    title: Estimated Tax Payments
+    fields:
+      - name: madeEstimatedTaxPayments
+        type: boolean
+        label: Did you make any 2025 estimated tax payments, or apply a 2024 refund toward 2025 taxes?
+        help: Estimated tax payments are amounts you send directly to the IRS to cover taxes not withheld from your paychecks. This also includes any portion of your 2024 tax refund you chose to apply toward 2025 taxes rather than receiving as a check.
+        required: false
+
+  - name: installments
+    title: 2025 Quarterly Payments
+    showIf: madeEstimatedTaxPayments == true
+    fields:
+      - name: installment1Amount
+        type: decimal
+        label: Payment for January – March 2025
+        help: Due April 15, 2025. Enter the amount you actually paid to the IRS for this period. Leave blank if no payment was made.
+        placeholder: "0.00"
+        required: false
+      - name: installment2Amount
+        type: decimal
+        label: Payment for April – May 2025
+        help: Due June 16, 2025 (June 15 was a Sunday). Leave blank if no payment was made for this period.
+        placeholder: "0.00"
+        required: false
+      - name: installment3Amount
+        type: decimal
+        label: Payment for June – August 2025
+        help: Due September 15, 2025. Leave blank if no payment was made for this period.
+        placeholder: "0.00"
+        required: false
+      - name: installment4Amount
+        type: decimal
+        label: Payment for September – December 2025
+        help: Due January 15, 2026. Not required if you file your return and pay your full balance by February 2, 2026.
+        placeholder: "0.00"
+        required: false
+
+  - name: priorYearCredits
+    title: 2024 Refund Applied to 2025
+    showIf: madeEstimatedTaxPayments == true
+    fields:
+      - name: priorYearOverpaymentCredited
+        type: decimal
+        label: 2024 refund applied to 2025 taxes
+        help: If your 2024 return showed a refund and you elected to apply it toward 2025 taxes rather than receive a check, enter that amount here.
+        placeholder: "0.00"
+        required: false
+      - name: amendedReturnOverpaymentCredited
+        type: decimal
+        label: Additional refund from a corrected 2024 return applied to 2025
+        help: If you filed a corrected 2024 return and the extra refund from that correction was applied toward 2025 taxes instead of being paid out, enter it here.
+        placeholder: "0.00"
+        required: false
+
+  - name: divorceAnnotation
+    title: Payments Made Jointly with a Former Spouse (Optional)
+    showIf: madeEstimatedTaxPayments == true
+    fields:
+      - name: divorceFormerSpouseSSN
+        type: string
+        label: Former spouse's Social Security number
+        help: If you and a former spouse made estimated tax payments together before your divorce in 2025, enter their Social Security number so the IRS can match those payments to your return. Leave blank if this does not apply.
+        placeholder: "e.g. 222-22-2222"
+        required: false

@@ -1,0 +1,139 @@
+<mxGraphModel dx='1400' dy='900' grid='1' gridSize='10' guides='1' tooltips='1' connect='1' arrows='1' fold='1' page='1' pageScale='1' pageWidth='1654' pageHeight='1169' math='0' shadow='0'>
+  <root>
+    <mxCell id='0'/>
+    <mxCell id='1' parent='0'/>
+
+    <!-- ══ TITLE ══ -->
+    <mxCell id='title' value='Form 1040 Line 1d — Medicaid Waiver Payments Not Reported on W-2 Box 1&#xa;computeMedicaidForPerson() — per taxpayer / per spouse' style='text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1' vertex='1' parent='1'>
+      <mxGeometry x='200' y='20' width='900' height='50' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ START ══ -->
+    <mxCell id='n01' value='START: computeMedicaidForPerson(data, w2Entries, ssn, flags, label, uid)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='340' y='90' width='440' height='45' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ GATE 1: data null ══ -->
+    <mxCell id='n02' value='data == null?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='430' y='155' width='220' height='70' as='geometry'/>
+    </mxCell>
+    <mxCell id='n02x' value='return (null, null)&#xa;[no personal form saved]' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8d7da;strokeColor=#842029;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='710' y='163' width='235' height='55' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ GATE 2: receivedMedicaidWaiverPayments ══ -->
+    <mxCell id='n03' value='receivedMedicaidWaiverPayments&#xa;== true?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='420' y='250' width='240' height='70' as='geometry'/>
+    </mxCell>
+    <mxCell id='n03x' value='return (null, null)&#xa;[taxpayer answered No or not saved]' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8d7da;strokeColor=#842029;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='710' y='258' width='235' height='55' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ READ FLAGS + ENTRIES ══ -->
+    <mxCell id='n04' value='Read: election = includeQualifiedPaymentsInEarnedIncomeForEIC_ACTC&#xa;Read: business = hasTradeOrBusinessProvidingHomeCare&#xa;Load: entries = medicaidWaiverPayments[]' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+      <mxGeometry x='320' y='348' width='480' height='60' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ GATE 3: entries empty ══ -->
+    <mxCell id='n05' value='entries list&#xa;empty?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='430' y='435' width='220' height='70' as='geometry'/>
+    </mxCell>
+    <mxCell id='n05x' value='return (null, null)&#xa;[no payment entries provided]' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8d7da;strokeColor=#842029;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='710' y='443' width='235' height='55' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ LOOP HEADER ══ -->
+    <mxCell id='n06' value='FOR EACH entry in medicaidWaiverPayments[]:' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;fontStyle=1' vertex='1' parent='1'>
+      <mxGeometry x='350' y='535' width='430' height='35' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ READ PER-ENTRY FIELDS ══ -->
+    <mxCell id='n07' value='Read per-entry fields:&#xa;payerName, payerTIN, sourceType&#xa;isW2 = (sourceType == &quot;W-2&quot;)&#xa;codeIIAmount   = w2Box12CodeIIAmount&#xa;qualifiedAmount = qualifiedNotice2014_7Amount&#xa;includedInW2   = qualifiedAmountIncludedInW2Box1&#xa;taxableNonW2entry = taxablePaymentsNotInW2Box1' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+      <mxGeometry x='310' y='590' width='460' height='105' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ DIAMOND: isW2 source ══ -->
+    <mxCell id='n08' value='isW2&#xa;source?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='440' y='715' width='200' height='70' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ W-2 RESOLUTION BLOCK (right branch) ══ -->
+    <mxCell id='n09' value='findMatchingW2Entry(w2Entries, ssn, payerTIN, payerName)&#xa;w2Box1 = W-2 wagesTipsOtherCompAmount&#xa;&#xa;If includedInW2 not provided by user:&#xa;  w2Box1 ≤ 0 → set includedInW2 = 0&#xa;  w2Box1 &gt; 0 → emit MEDICAID_WAIVER_W2_BOX1_UNSPECIFIED_{LABEL} [blocking]&#xa;                set missingIncludedAmount = true' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+      <mxGeometry x='710' y='705' width='400' height='120' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ VALIDATE + ACCUMULATE ══ -->
+    <mxCell id='n10' value='Validate per-entry:&#xa;  codeIIAmount present AND qualifiedAmount absent&#xa;    → emit MEDICAID_WAIVER_CODE_II_MISSING_QUALIFIED_{LABEL} [blocking]&#xa;  includedInW2 &gt; qualifiedAmount&#xa;    → emit MEDICAID_WAIVER_W2_OVERAGE_{LABEL} [blocking]&#xa;&#xa;if !missingIncludedAmount:&#xa;  qualifiedNotIncluded = max(0, qualifiedAmount − includedInW2)&#xa;&#xa;Accumulate:&#xa;  qualifiedTotal        += qualifiedAmount&#xa;  qualifiedIncludedInW2 += includedInW2&#xa;  qualifiedNotInW2      += qualifiedNotIncluded&#xa;  taxableNonW2          += taxableNonW2entry' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+      <mxGeometry x='280' y='850' width='520' height='185' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ END LOOP ══ -->
+    <mxCell id='n11' value='END LOOP' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;fontStyle=1' vertex='1' parent='1'>
+      <mxGeometry x='430' y='1060' width='220' height='35' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ BUSINESS GATE ══ -->
+    <mxCell id='n12' value='business == true AND&#xa;(qualifiedTotal &gt; 0 OR taxableNonW2 &gt; 0)?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='390' y='1115' width='300' height='80' as='geometry'/>
+    </mxCell>
+    <mxCell id='n12x' value='Emit MEDICAID_WAIVER_SCHEDULE_C_{LABEL} [blocking]&#xa;return (null, null)&#xa;[Sole-proprietor path — report on Schedule C&#xa; with &quot;Notice 2014-7&quot; expense offset, not line 1d]' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8d7da;strokeColor=#842029;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='740' y='1120' width='295' height='70' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ LINE 1D BASE ══ -->
+    <mxCell id='n13' value='line1d = taxableNonW2&#xa;[taxable MW payments not in W-2 box 1 always flow to line 1d]' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='330' y='1225' width='440' height='50' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ ELECTION GATE ══ -->
+    <mxCell id='n14' value='election == true?&#xa;(includeQualifiedPaymentsInEarnedIncomeForEIC_ACTC)' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='380' y='1300' width='330' height='80' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ ELECTION YES BLOCK (left branch) ══ -->
+    <mxCell id='n15' value='Earned-income election is active — all-or-none per spouse:&#xa;&#xa;qualifiedTotal ≤ 0?&#xa;  → emit MEDICAID_WAIVER_ELECTION_NO_QUALIFIED_{LABEL} [blocking]&#xa;&#xa;line1d += qualifiedNotInW2&#xa;  [nontaxable qualified payments not in W-2 box 1 added to line 1d]&#xa;&#xa;offset = qualifiedIncludedInW2 + qualifiedNotInW2&#xa;&#xa;offset != null:&#xa;  offset &gt; qualifiedTotal → emit LINE8S_EXCEEDS_QUALIFIED_{LABEL} [blocking]&#xa;  line8s = −offset   (negative entry per IRS instructions)&#xa;&#xa;offset == null:&#xa;  → emit MEDICAID_WAIVER_LINE8S_MISSING_{LABEL} [blocking]' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+      <mxGeometry x='30' y='1290' width='330' height='230' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ RETURN ══ -->
+    <mxCell id='n16' value='return MedicaidResult(line1d, line8s)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='330' y='1555' width='440' height='45' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ AGGREGATION ══ -->
+    <mxCell id='n17' value='computeMedicaidWaiverPayments() aggregates both spouses:&#xa;line1d = taxpayer.line1d + spouse.line1d&#xa;line8s = taxpayer.line8s + spouse.line8s&#xa;→ MedicaidComputation(line1d, line8s)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#d1e7dd;strokeColor=#0f5132;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+      <mxGeometry x='290' y='1625' width='520' height='85' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ DOWNSTREAM WIRING ══ -->
+    <mxCell id='n18' value='Downstream wiring:&#xa;→ form1040.income.medicaidWaiverPayments          (Form 1040 line 1d)&#xa;→ schedule1.additionalIncome.otherIncomeMedicaidWaiverPayments   (Schedule 1 line 8s, stored negative)&#xa;→ line1d contributes to line1z (sum of 1a–1z)  → line9 (total income)&#xa;→ line8s reduces Schedule 1 Part I aggregate (line 8, 9, 10) → line 8 → line 9' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#d1e7dd;strokeColor=#0f5132;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+      <mxGeometry x='260' y='1735' width='580' height='100' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ EDGES ══ -->
+    <mxCell id='e01' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n01' target='n02' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e02' value='YES' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n02' target='n02x' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e03' value='NO' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n02' target='n03' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e04' value='NO' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n03' target='n03x' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e05' value='YES' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n03' target='n04' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e06' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n04' target='n05' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e07' value='YES' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n05' target='n05x' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e08' value='NO' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n05' target='n06' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e09' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n06' target='n07' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e10' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n07' target='n08' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e11' value='YES' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n08' target='n09' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e12' value='NO' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n08' target='n10' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e13' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n09' target='n10' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e14' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n10' target='n11' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e15' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n11' target='n12' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e16' value='YES' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n12' target='n12x' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e17' value='NO' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n12' target='n13' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e18' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n13' target='n14' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e19' value='YES' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n14' target='n15' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e20' value='NO — line8s = null' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n14' target='n16' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e21' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n15' target='n16' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e22' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n16' target='n17' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e23' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n17' target='n18' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+
+  </root>
+</mxGraphModel>

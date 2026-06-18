@@ -1,0 +1,197 @@
+# Form 8801 - Credit for Prior Year Minimum Tax - taxpayer.
+# One Form 8801 per return. The taxpayer intake owns the return-level screening and nearly all
+# prior-year data. The spouse form only contributes MFJ supplemental prior-year Form 2555 data.
+# Section order: screening -> priorYearCore -> specialRatePartIII -> importedCurrentYearFields -> computedOutputs
+name: prior-min-tax-credit-taxpayer
+title: Form 8801 - Prior min tax credit (taxpayer)
+multiplicity: single
+formName: 8801
+category: deductions
+instructions:
+  - Use this form to enter the prior-year AMT and carryforward data needed for Form 8801.
+  - Form 8801 is generally one form per return, not one per spouse.
+  - On MFJ returns, the spouse form only adds spouse-specific prior-year Form 2555 worksheet data when applicable.
+  - Current-year line 22 and line 23 inputs are imported by the backend from the return computation when available.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: claimsPriorMinTaxCredit
+        type: boolean
+        required: true
+        label: Do you need to compute a prior year minimum tax credit for 2025?
+        help: >
+          Select Yes if you had prior-year AMT from deferral items, a 2024 Form 8801
+          carryforward, or another Form 8801 line 21 trigger that could produce a 2025 credit.
+      - name: confirmPriorYearReturnsAvailable
+        type: boolean
+        required: false
+        label: Do you have your 2024 Form 6251, Form 8801, and any required worksheets available?
+        help: >
+          Form 8801 depends on prior-year AMT and carryforward amounts. Have the 2024 return,
+          Form 6251, Form 8801, and any capital-gain or foreign-earned-income worksheets ready.
+
+  - name: priorYearCore
+    title: Prior-year AMT and carryforward inputs
+    multiplicity: single
+    showIf: claimsPriorMinTaxCredit == true
+    instructions:
+      - Enter 2024 prior-year values from Form 6251, Form 8801, and any MTFTCE workpapers.
+      - These inputs drive Form 8801 Parts I and II.
+    fields:
+      - name: priorYearFilingStatus
+        type: select
+        required: true
+        label: 2024 filing status used for the prior-year AMT return
+        options:
+          - Single
+          - Married filing jointly
+          - Married filing separately
+          - Head of household
+          - Qualifying surviving spouse
+        help: >
+          The 2024 filing status controls the exemption, phaseout threshold, and special-rate
+          thresholds used in Part I and Part III.
+      - name: priorYearForm6251Line1Plus2e
+        type: amount
+        required: false
+        label: 2024 Form 6251 line 1 plus line 2e combined
+        placeholder: 0.00
+        help: >
+          This is Form 8801 line 1. If you prefer, you can track line 1 and line 2e separately
+          outside the app and enter only the combined amount here.
+      - name: priorYearExclusionItemAdjustments
+        type: amount
+        required: false
+        label: Form 8801 line 2 exclusion-item adjustments and preferences
+        placeholder: 0.00
+      - name: priorYearMtcnold
+        type: amount
+        required: false
+        label: Form 8801 line 3 minimum tax credit NOL deduction (enter signed amount)
+        placeholder: 0.00
+      - name: priorYearMtftceOnExclusionItems
+        type: amount
+        required: false
+        label: Form 8801 line 12 MTFTCE on exclusion items
+        placeholder: 0.00
+        help: >
+          Enter the result from your separate MTFTCE workpapers if applicable. The detailed
+          Forms 1116 workpaper computation is not attached and is currently tracked manually.
+      - name: priorYearForm6251Line10
+        type: amount
+        required: false
+        label: 2024 Form 6251 line 10
+        placeholder: 0.00
+      - name: priorYearForm6251Line11
+        type: amount
+        required: false
+        label: 2024 Form 6251 line 11
+        placeholder: 0.00
+      - name: priorYearForm8801Line26Carryforward
+        type: amount
+        required: false
+        label: 2024 Form 8801 line 26 carryforward
+        placeholder: 0.00
+      - name: priorYearUnallowedQualifiedElectricVehicleCredit
+        type: amount
+        required: false
+        label: Form 8801 line 20 unallowed legacy qualified electric vehicle credit
+        placeholder: 0.00
+
+  - name: specialRatePartIII
+    title: Special-rate and Form 2555 worksheet inputs
+    multiplicity: single
+    showIf: claimsPriorMinTaxCredit == true
+    instructions:
+      - Complete this section only if 2024 line 11 requires Part III or the prior-year Form 2555 worksheet path.
+      - If you did not use qualified-dividend/capital-gain rates or the Form 2555 worksheet in 2024, leave these fields blank.
+    fields:
+      - name: priorYearFiledForm2555
+        type: boolean
+        required: false
+        label: Did the 2024 return use Form 2555 / the Foreign Earned Income Tax Worksheet for Form 8801 line 11?
+      - name: priorYearUsesPartIII
+        type: boolean
+        required: false
+        label: Did the 2024 return require Form 8801 Part III because of qualified dividends or capital gains?
+      - name: priorYearFeitwLine3Taxpayer
+        type: amount
+        required: false
+        label: Prior-year Foreign Earned Income Tax Worksheet line 3 amount attributable to the taxpayer
+        placeholder: 0.00
+      - name: partIIILine28Amount
+        type: amount
+        required: false
+        label: Form 8801 Part III line 28 prior-year worksheet amount
+        placeholder: 0.00
+      - name: partIIILine29Amount
+        type: amount
+        required: false
+        label: Form 8801 Part III line 29 unrecaptured Section 1250 / Schedule D amount
+        placeholder: 0.00
+      - name: partIIILine30CapAmount
+        type: amount
+        required: false
+        label: Form 8801 Part III line 30 worksheet cap amount
+        placeholder: 0.00
+      - name: partIIILine35Amount
+        type: amount
+        required: false
+        label: Form 8801 Part III line 35 worksheet amount
+        placeholder: 0.00
+      - name: partIIILine42Amount
+        type: amount
+        required: false
+        label: Form 8801 Part III line 42 worksheet amount
+        placeholder: 0.00
+
+  - name: importedCurrentYearFields
+    title: Imported current-year fields (backend only - not rendered)
+    multiplicity: single
+    showIf: claimsPriorMinTaxCredit == true
+    fields:
+      - name: currentYearForm1040Line16
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported current-year Form 1040 line 16
+      - name: currentYearSchedule2Line1z
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported current-year Schedule 2 line 1z
+      - name: currentYearForm1040Line19
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported current-year Form 1040 line 19
+      - name: currentYearSchedule3CreditsExcluding8801And8912
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported current-year Schedule 3 lines 1 through 6z excluding line 6b and line 6k
+      - name: currentYearForm6251Line9
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported current-year Form 6251 line 9
+
+  - name: computedOutputs
+    title: Computed outputs (backend only - not rendered)
+    multiplicity: single
+    showIf: claimsPriorMinTaxCredit == true
+    fields:
+      - name: form8801Line25
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed - Form 8801 line 25 prior year minimum tax credit
+      - name: form8801Line26
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed - Form 8801 line 26 carryforward to 2026

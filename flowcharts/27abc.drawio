@@ -1,0 +1,90 @@
+<mxGraphModel><root><mxCell id="0"/><mxCell id="1" parent="0"/>
+
+<!-- Title -->
+<mxCell id="2" value="Form 1040 Lines 27a / 27b / 27c — Earned Income Credit (2025)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="50" y="10" width="950" height="40" as="geometry"/></mxCell>
+
+<!-- LEGEND -->
+<mxCell id="leg1" value="LEGEND" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="50" y="58" width="80" height="20" as="geometry"/></mxCell>
+<mxCell id="leg2" value="Input (personal form)" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="78" width="120" height="22" as="geometry"/></mxCell>
+<mxCell id="leg3" value="Computation" style="rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;" vertex="1" parent="1"><mxGeometry x="180" y="78" width="110" height="22" as="geometry"/></mxCell>
+<mxCell id="leg4" value="Output / consumer" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;" vertex="1" parent="1"><mxGeometry x="300" y="78" width="120" height="22" as="geometry"/></mxCell>
+<mxCell id="leg5" value="Gap (fixed)" style="rounded=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=9;" vertex="1" parent="1"><mxGeometry x="430" y="78" width="80" height="22" as="geometry"/></mxCell>
+<mxCell id="leg6" value="Deferred / OOS" style="rounded=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=9;" vertex="1" parent="1"><mxGeometry x="520" y="78" width="100" height="22" as="geometry"/></mxCell>
+
+<!-- ===== INPUTS — LEFT COLUMN ===== -->
+
+<!-- Screening gate -->
+<mxCell id="gate" value="Screening gate&#xa;earned-income-credit-taxpayer&#xa;claimsEIC = true (required)" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="130" width="180" height="50" as="geometry"/></mxCell>
+
+<!-- Hard disqualifiers -->
+<mxCell id="disq" value="Hard disqualifiers&#xa;hasForm2555 = true → null&#xa;isNonresidentAlien = true → null&#xa;eicPreviouslyDenied → Form 8862 gate&#xa;MFS filing status:&#xa;  qualifiesForMfsSeparatedSpouseEicException&#xa;  = false → null&#xa;  = true → use Single thresholds [G8]" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="195" width="180" height="100" as="geometry"/></mxCell>
+
+<!-- Earned income inputs -->
+<mxCell id="earnedIn" value="Earned income inputs&#xa;W-2 wagesTipsOtherCompAmount (box 1)&#xa;  [filtered by taxpayer SSN; null=MFJ]&#xa;otherEarnedIncome (personal form)&#xa;combatPay (W-2 box 12Q, if elected)&#xa;[MFJ: + spouse earned income / combat]" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="310" width="180" height="90" as="geometry"/></mxCell>
+
+<!-- Investment income gate -->
+<mxCell id="investGate" value="Investment income ceiling&#xa;taxExemptInterest (2a)&#xa;+ taxableInterest (2b)&#xa;+ ordinaryDividends (3b)&#xa;+ max(0, capitalGainLoss 7a)&#xa;If total &gt; $11,950 → null" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="415" width="180" height="90" as="geometry"/></mxCell>
+
+<!-- Qualifying children -->
+<mxCell id="qChildren" value="Qualifying children [G2, G3, G7 fixed]&#xa;eicQualifyingChildren array — child counts if:&#xa;  (a) childSSN present&#xa;  (b) relationship in EIC_QUALIFYING_RELATIONSHIPS [G3]&#xa;  (c) childFiledJointReturn ≠ true [G2]&#xa;  (d) monthsLivedWithTaxpayer &gt; 6&#xa;  (e) isPermanentlyDisabled = true&#xa;      OR ageAtYearEnd &lt; 19&#xa;      OR (age 19-23 AND isFullTimeStudent) [G7]" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="520" width="180" height="120" as="geometry"/></mxCell>
+
+<!-- Childless age test -->
+<mxCell id="ageTest" value="Childless age test&#xa;(only if numChildren == 0&#xa; and NOT MFS exception)&#xa;you.dateOfBirth → age at year-end&#xa;age &lt; 25 OR age &gt; 64 → null" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="655" width="180" height="70" as="geometry"/></mxCell>
+
+<!-- Spouse form -->
+<mxCell id="spouseForm" value="MFJ supplemental&#xa;earned-income-credit-spouse&#xa;spouseOtherEarnedIncome&#xa;spouseElectNontaxableCombatPay" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="740" width="180" height="65" as="geometry"/></mxCell>
+
+<!-- AGI -->
+<mxCell id="agi" value="AGI from line 11b&#xa;form1040.adjustments&#xa;  .line11bAmountFromLine11a..." style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="820" width="180" height="50" as="geometry"/></mxCell>
+
+<!-- ===== COMPUTATION ===== -->
+
+<mxCell id="calc27a" value="computeLine27aEIC()&#xa;TaxReturnComputeService.java&#xa;&#xa;1. Screening gate check (claimsEIC)&#xa;2. Hard disqualifier gates&#xa;   hasForm2555 / isNonresidentAlien / Form8862&#xa;3. MFS check [G8 fixed]:&#xa;   exception=false → null&#xa;   exception=true → filingStatusStr=&quot;Single&quot;&#xa;4. Earned income aggregation&#xa;5. Investment income gate (&gt;$11,950 → null)&#xa;6. Count qualifying children [G2,G3,G7]:&#xa;   SSN + relationship + !jointReturn&#xa;   + months&gt;6 + (age&lt;19 OR student19-23 OR disabled)&#xa;   MFS exception + 0 children → null&#xa;7. Childless age test (25–64)&#xa;8. Dual EIC table lookup&#xa;   creditFromEarned = eicTableLookup(earned, status, n)&#xa;   creditFromAGI = eicTableLookup(agi, status, n)&#xa;   credit = min(creditFromEarned, creditFromAGI)&#xa;9. FLOOR rounding; null if ≤ 0" style="rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;" vertex="1" parent="1"><mxGeometry x="285" y="310" width="240" height="280" as="geometry"/></mxCell>
+
+<!-- eicTableLookup computation box -->
+<mxCell id="eicTable" value="eicTableLookup()&#xa;&#xa;if income ≤ phaseInEnd:&#xa;  credit = income × phaseInRate&#xa;elif income ≤ phaseoutStart:&#xa;  credit = maxCredit&#xa;elif income &lt; phaseoutEnd:&#xa;  credit = maxCredit − (income−phaseoutStart)×rate&#xa;else: credit = 0&#xa;return FLOOR(max(0, credit))&#xa;&#xa;MFS exception filers use Single thresholds [G8]" style="rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;" vertex="1" parent="1"><mxGeometry x="285" y="630" width="240" height="155" as="geometry"/></mxCell>
+
+<!-- Edges: inputs → computation -->
+<mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="gate" target="calc27a" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="disq" target="calc27a" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="earnedIn" target="calc27a" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="investGate" target="calc27a" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="qChildren" target="calc27a" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="ageTest" target="calc27a" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="spouseForm" target="calc27a" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e8" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="agi" target="calc27a" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e9" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="calc27a" target="eicTable" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- ===== OUTPUT ===== -->
+
+<mxCell id="out27a" value="Line 27a — EIC&#xa;Payments.earnedIncomeCredit&#xa;null when disqualified or gate=false" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="585" y="380" width="200" height="55" as="geometry"/></mxCell>
+
+<mxCell id="out27bc" value="Lines 27b / 27c (checkboxes)&#xa;27b: always false (SE out of scope)&#xa;27c: true when EIC = null" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;" vertex="1" parent="1"><mxGeometry x="585" y="460" width="200" height="50" as="geometry"/></mxCell>
+
+<mxCell id="e10" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="eicTable" target="out27a" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e11" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="calc27a" target="out27bc" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- ===== DOWNSTREAM ===== -->
+
+<mxCell id="line32" value="Line 32 — Total other payments&#xa;line32 = line27a + line28 + line29 + line31&#xa;Payments.totalOtherPaymentsAndRefundableCredits" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;" vertex="1" parent="1"><mxGeometry x="585" y="540" width="220" height="55" as="geometry"/></mxCell>
+
+<mxCell id="line33" value="Line 33 — Total Payments&#xa;line33 = line25d + line26 + line32&#xa;Payments.totalPayments" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;" vertex="1" parent="1"><mxGeometry x="585" y="620" width="220" height="50" as="geometry"/></mxCell>
+
+<mxCell id="e12" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="out27a" target="line32" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e13" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="line32" target="line33" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- Form 8862 gate -->
+<mxCell id="form8862gate" value="Form 8862 gate&#xa;eicPreviouslyDenied = true?&#xa;→ require Form 8862 Part II&#xa;   (eicEligible = true) to proceed&#xa;→ else emit FORM_8862_EIC_REQUIRED flag" style="rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;" vertex="1" parent="1"><mxGeometry x="285" y="130" width="240" height="80" as="geometry"/></mxCell>
+
+<mxCell id="e14" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="disq" target="form8862gate" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e15" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="form8862gate" target="calc27a" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- ===== GAPS FIXED ===== -->
+
+<mxCell id="fixed" value="Fixed 2026-04-19:&#xa;G2: childFiledJointReturn — countEicQualifyingChildren() skips child when true (IRC §32(c)(3)(D))&#xa;G3: EIC_QUALIFYING_RELATIONSHIPS set — invalid/blank relationship → child not counted&#xa;G4: Unit test — combat pay election (W-2 box 12Q + 1099-INT to set AGI)&#xa;G5: E2E test — MFJ + qualifying child EIC&#xa;G6: E2E test — combat pay election (with 1099-INT to push AGI into plateau)&#xa;G7: Full-time student path — age 19-23 + isFullTimeStudent=true now counts as qualifying child&#xa;G8: MFS separated-spouse exception — qualifiesForMfsSeparatedSpouseEicException=true uses Single thresholds (IRC §32(d)(2))" style="text;html=1;strokeColor=#b85450;fillColor=#f8cecc;align=left;fontSize=9;whiteSpace=wrap;" vertex="1" parent="1"><mxGeometry x="50" y="910" width="740" height="100" as="geometry"/></mxCell>
+
+<!-- ===== DEFERRED / OOS ===== -->
+
+<mxCell id="deferred" value="Deferred / OOS:&#xa;G1 (LOW): computeInvestmentIncomeForEic() — Schedule E net passive/rental excluded from ceiling test (Schedule E OOS)&#xa;G9 (OOS): Line 27b clergy checkbox — always false until Schedule SE is implemented&#xa;G10 (OOS): Schedule EIC PDF attachment — qualifying child count drives credit; no printable Schedule EIC generated&#xa;G11 (OOS): Schedule C/SE net earnings — excluded from EIC earned income base until SE scope added" style="text;html=1;strokeColor=#9673a6;fillColor=#e1d5e7;align=left;fontSize=9;whiteSpace=wrap;" vertex="1" parent="1"><mxGeometry x="50" y="1025" width="740" height="75" as="geometry"/></mxCell>
+
+</root></mxGraphModel>

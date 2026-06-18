@@ -1,0 +1,354 @@
+# Form 8962 taxpayer/family-head intake.
+# Form 8962 is filed once per return. This taxpayer form owns all return-level
+# gating, FPL settings, MAGI add-backs, shared policy allocations (Part IV),
+# and the year-of-marriage election (Part V).
+# 1095-A statements supply the monthly premium/SLCSP/APTC data for Part II.
+# NOTE: Backend-only sections are not rendered in the UI intake component.
+name: premium-tax-credit-taxpayer
+title: Form 8962 - Premium tax credit (taxpayer/family head)
+multiplicity: single
+formName: 8962
+category: deductions
+instructions:
+  - Form 8962 is filed once per return, not once per spouse.
+  - This taxpayer form owns the return-level questions. The spouse form captures only spouse-specific MAGI add-backs.
+  - Upload all Form 1095-A statements before completing this form. The monthly premium, SLCSP, and APTC columns from 1095-A feed Part II automatically.
+  - If a Marketplace policy covered people outside your tax family (e.g., a child claimed by the other parent), complete the Shared Policy Allocation section (Part IV).
+  - If you married during 2025 and APTC was paid, you may use the Alternative Calculation for Year of Marriage (Part V).
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: claimsOrReceivedPtc
+        type: boolean
+        required: true
+        label: Did anyone in your tax family purchase Marketplace coverage in 2025, or was advance PTC paid on your behalf?
+        help: Select Yes if you or a family member enrolled in a Marketplace (Exchange) health plan in 2025, OR if advance payments of the premium tax credit (APTC) were paid to an insurer for your coverage.
+
+  - name: statementUploadCheck
+    title: Form 1095-A upload confirmation
+    multiplicity: single
+    showIf: claimsOrReceivedPtc == true
+    instructions:
+      - You should receive Form 1095-A from the Marketplace for each policy covering your tax family.
+      - If you received a corrected Form 1095-A, upload only the corrected version. Discard the original.
+    fields:
+      - name: receivedAny1095A
+        type: boolean
+        required: false
+        label: Did you receive any Form 1095-A for 2025?
+        help: Select Yes if the Marketplace sent you at least one Form 1095-A.
+      - name: uploadedAll1095AStatements
+        type: boolean
+        required: false
+        label: Did you upload all applicable Form 1095-A statements?
+        help: Select Yes only after all received 1095-A forms have been uploaded via the Statements section.
+      - name: confirmAllHealthCoverageDocumentationUploaded
+        type: boolean
+        required: true
+        label: I confirm all received Form 1095-A statements have been uploaded
+        help: You must confirm this before the backend can import your coverage data for Part II.
+
+  - name: eligibilityAndFamilySize
+    title: Tax family and FPL settings
+    multiplicity: single
+    showIf: claimsOrReceivedPtc == true
+    instructions:
+      - The tax family includes yourself, your spouse (if MFJ), and all dependents claimed on this return.
+      - The federal poverty line (FPL) is determined by your family size and the state you lived in on December 31, 2025.
+    fields:
+      - name: taxFamilySize
+        type: number
+        required: true
+        placeholder: 1
+        label: Tax family size (Form 8962, line 1)
+        help: Enter the total count of individuals in your tax family — yourself, spouse (if MFJ), and all dependents claimed on this return.
+      - name: fplRegion
+        type: select
+        required: true
+        placeholder: Select region
+        label: State for federal poverty line table
+        help: Select the FPL table that matches your state of residence on December 31, 2025. If you or your spouse lived in Alaska or Hawaii at any point during 2025, select that state. MFJ filers who lived in different states use the higher table.
+        options:
+          - value: continental
+            label: 48 states + D.C. (standard table)
+          - value: alaska
+            label: Alaska
+          - value: hawaii
+            label: Hawaii
+      - name: noncitizenMarketplaceCoverage
+        type: boolean
+        required: false
+        label: Is any member of your tax family a noncitizen obtaining Marketplace coverage?
+        help: Select Yes if a noncitizen enrolled in Marketplace coverage who is not eligible for Medicaid because of immigration status.
+      - name: mfsException
+        type: boolean
+        required: false
+        label: Are you filing MFS but qualify for the MFS exception (e.g., domestic abuse or abandoned spouse)?
+        help: Select Yes only if you are filing married filing separately and meet a qualifying exception allowing you to claim the PTC.
+
+  - name: magiAddbacks
+    title: Modified AGI adjustments (Worksheet 1-1)
+    multiplicity: single
+    showIf: claimsOrReceivedPtc == true
+    instructions:
+      - Modified AGI for Form 8962 = AGI + tax-exempt interest + nontaxable Social Security + Form 2555 exclusions.
+      - The backend pulls AGI and tax-exempt interest from the computed return. Enter only the add-back items below that apply to you.
+    fields:
+      - name: magiAddbackForm2555FeiTaxpayer
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Form 2555 foreign earned income exclusion (taxpayer)
+        help: Enter the amount from Form 2555, line 45 or line 50 (foreign earned income exclusion) for the taxpayer.
+      - name: magiAddbackForm2555HousingTaxpayer
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Form 2555 foreign housing exclusion (taxpayer)
+        help: Enter the amount from Form 2555, line 47 (foreign housing exclusion) for the taxpayer, if any.
+      - name: magiAddbackForm2555FeiSpouse
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Form 2555 foreign earned income exclusion (spouse)
+        help: Enter the amount from Form 2555, line 45 or line 50 for the spouse, if applicable.
+      - name: magiAddbackForm2555HousingSpouse
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Form 2555 foreign housing exclusion (spouse)
+        help: Enter the amount from Form 2555, line 47 for the spouse, if applicable.
+
+  - name: dependentMagiEntries
+    title: Dependent modified AGI (Worksheet 1-2)
+    multiplicity: multiple
+    showIf: claimsOrReceivedPtc == true
+    instructions:
+      - Include the modified AGI of each dependent who is required to file a return because of actual tax liability — not merely to recover withheld taxes.
+      - Add one row per qualifying dependent. Leave this section empty if no dependent is required to file.
+    fields:
+      - name: dependentName
+        type: text
+        required: true
+        placeholder: Dependent name
+        label: Dependent name
+        help: Enter the name of the dependent whose modified AGI must be included in the household income calculation.
+      - name: dependentModifiedAgi
+        type: amount
+        required: true
+        placeholder: 0.00
+        label: Dependent modified AGI (Worksheet 1-2 result)
+        help: Enter the dependent's modified AGI as computed on Worksheet 1-2. This includes their AGI, tax-exempt interest, and any applicable exclusion add-backs.
+
+  - name: unemploymentCompensation
+    title: Unemployment compensation (Part II, line 9)
+    multiplicity: single
+    showIf: claimsOrReceivedPtc == true
+    fields:
+      - name: receivedUnemploymentCompensation
+        type: boolean
+        required: false
+        label: Did you or your spouse receive unemployment compensation for any week beginning in 2025? (line 9)
+        help: Select Yes if you or your spouse received unemployment compensation. This may affect the applicable figure used in Part II, treating household income as not exceeding 133% of FPL for those weeks.
+
+  - name: employerCoverageAffordability
+    title: Employer coverage affordability (Part II, line 10)
+    multiplicity: single
+    showIf: claimsOrReceivedPtc == true
+    fields:
+      - name: employerCoverageNotAffordable
+        type: boolean
+        required: false
+        label: Did you or your spouse have an offer of employer-sponsored coverage that was NOT considered affordable? (line 10)
+        help: Select Yes if you or a family member was offered employer-sponsored minimum essential coverage that did not meet affordability or minimum value standards, making you potentially eligible for PTC.
+
+  - name: sharedPolicyAllocation
+    title: Shared policy allocation (Part IV, lines 30–33)
+    multiplicity: multiple
+    showIf: claimsOrReceivedPtc == true
+    instructions:
+      - Complete this section if a Marketplace policy covered at least one individual who is NOT in your tax family (e.g., a child enrolled on your policy but claimed by your ex-spouse on their return, or vice versa).
+      - Add one row per shared policy (up to 4). Enter the allocation percentages agreed upon with the other tax family or as computed per IRS allocation rules.
+    fields:
+      - name: sharedPolicyNumber
+        type: text
+        required: true
+        placeholder: Policy number
+        label: Marketplace policy number (col. a)
+        help: Enter the policy number from Form 1095-A, line 2.
+      - name: sharedOtherTaxpayerSsn
+        type: text
+        required: false
+        placeholder: ###-##-####
+        label: Other taxpayer SSN (col. b)
+        help: Enter the SSN of the other taxpayer who shares this policy. Leave blank if unknown.
+      - name: sharedPremiumAllocationPct
+        type: amount
+        required: true
+        placeholder: 0.00
+        label: Premium allocation percentage — col. c (decimal, e.g. 0.50 for 50%)
+        help: Enter the allocation percentage for column A (enrollment premiums) as a decimal (e.g., 0.5000 for 50%). The sum across both tax families must equal 1.00.
+      - name: sharedSlcspAllocationPct
+        type: amount
+        required: true
+        placeholder: 0.00
+        label: SLCSP allocation percentage — col. d (decimal)
+        help: Enter the allocation percentage for column B (SLCSP premium) as a decimal.
+      - name: sharedAptcAllocationPct
+        type: amount
+        required: true
+        placeholder: 0.00
+        label: APTC allocation percentage — col. e (decimal)
+        help: Enter the allocation percentage for column C (advance credit payments) as a decimal.
+      - name: sharedAllocationStartMonth
+        type: number
+        required: false
+        placeholder: 1
+        label: Allocation start month (col. f, 1–12)
+        help: Enter the first month the allocation applies (1 = January, 12 = December). Leave blank if allocation applies all year.
+      - name: sharedAllocationStopMonth
+        type: number
+        required: false
+        placeholder: 12
+        label: Allocation stop month (col. g, 1–12)
+        help: Enter the last month the allocation applies. Leave blank if allocation applies all year.
+
+  - name: yearOfMarriageElection
+    title: Alternative calculation for year of marriage (Part V)
+    multiplicity: single
+    showIf: claimsOrReceivedPtc == true
+    instructions:
+      - You may elect the alternative calculation if you married during 2025 and APTC was paid for you or your spouse before the marriage.
+      - If you elect this method, complete lines 35a–35h below for each spouse.
+    fields:
+      - name: useAlternativeCalculationForYearOfMarriage
+        type: boolean
+        required: false
+        label: Do you elect to use the alternative calculation for year of marriage? (line 34)
+        help: Select Yes only if you married during 2025 and choose the alternative calculation. This overrides the standard Part I computation for months before your marriage.
+      - name: altCalcMonthsTaxpayer
+        type: number
+        required: false
+        placeholder: 0
+        label: Taxpayer — number of months using alternative calculation (line 35a)
+        help: Enter the number of months (before marriage) for which the taxpayer uses the alternative monthly contribution amount.
+      - name: altCalcCoverageMonthsTaxpayer
+        type: number
+        required: false
+        placeholder: 0
+        label: Taxpayer — months in coverage under alternative calculation (line 35b)
+        help: Enter the number of months in which the taxpayer was enrolled in Marketplace coverage during the pre-marriage period.
+      - name: altCalcMonthsSpouse
+        type: number
+        required: false
+        placeholder: 0
+        label: Spouse — number of months using alternative calculation (line 35c)
+        help: Enter the number of months (before marriage) for which the spouse uses the alternative monthly contribution amount.
+      - name: altCalcCoverageMonthsSpouse
+        type: number
+        required: false
+        placeholder: 0
+        label: Spouse — months in coverage under alternative calculation (line 35d)
+        help: Enter the number of months in which the spouse was enrolled in Marketplace coverage during the pre-marriage period.
+      - name: altCalcMonthlyContributionTaxpayer
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Taxpayer — alternative monthly contribution amount (line 35e)
+        help: Enter the taxpayer's alternative monthly contribution amount for the pre-marriage period, per the IRS instructions for Part V.
+      - name: altCalcMonthlySlcspTaxpayer
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Taxpayer — applicable SLCSP premium for alternative calculation (line 35f)
+        help: Enter the applicable SLCSP monthly premium for the taxpayer during the alternative calculation period.
+      - name: altCalcMonthlyContributionSpouse
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Spouse — alternative monthly contribution amount (line 35g)
+        help: Enter the spouse's alternative monthly contribution amount for the pre-marriage period.
+      - name: altCalcMonthlySlcspSpouse
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Spouse — applicable SLCSP premium for alternative calculation (line 35h)
+        help: Enter the applicable SLCSP monthly premium for the spouse during the alternative calculation period.
+
+  # Backend-only section: fields populated from 1095-A statements. Not rendered in the UI.
+  - name: importedStatementFields
+    title: Imported 1095-A statement data (backend only)
+    multiplicity: single
+    showIf: claimsOrReceivedPtc == true
+    fields:
+      - name: imported1095ACount
+        type: number
+        required: false
+        readOnly: true
+        label: Count of uploaded Form 1095-A statements
+      - name: importedAnnualEnrollmentPremiums
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported annual enrollment premiums total (col. A, line 33A)
+      - name: importedAnnualSlcspPremium
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported annual SLCSP premium total (col. B, line 33B)
+      - name: importedAnnualAptcPaid
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported annual advance credit payments total (col. C, line 33C)
+
+  # Backend-only section: computed Form 8962 results. Not rendered in the UI.
+  - name: computedOutputs
+    title: Computed Form 8962 outputs (backend only)
+    multiplicity: single
+    showIf: claimsOrReceivedPtc == true
+    fields:
+      - name: computedForm8962Required
+        type: boolean
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Form 8962 required flag
+      - name: computedLine3HouseholdIncome
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed household income (line 3)
+      - name: computedLine5FplPct
+        type: number
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed household income as percentage of FPL (line 5)
+      - name: computedLine24TotalPtc
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed total premium tax credit (line 24)
+      - name: computedLine25TotalAptc
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed total advance credit payments (line 25)
+      - name: computedLine26NetPtc
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed net premium tax credit (line 26) → Schedule 3 line 9
+      - name: computedLine29RepaymentAmount
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed repayment amount (line 29) → Schedule 2 line 1a

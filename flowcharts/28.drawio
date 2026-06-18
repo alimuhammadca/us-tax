@@ -1,0 +1,114 @@
+<mxGraphModel><root><mxCell id="0"/><mxCell id="1" parent="0"/>
+
+<!-- Title -->
+<mxCell id="2" value="Form 1040 Line 28 — ACTC / Schedule 8812 (2025)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1" vertex="1" parent="1"><mxGeometry x="200" y="20" width="600" height="40" as="geometry"/></mxCell>
+
+<!-- INPUTS box -->
+<mxCell id="10" value="INPUTS&#xa;AGI (line 11b)&#xa;Filing status&#xa;Dependents (CTC / ODC)&#xa;Form 2555 exclusions&#xa;W-2 box 4 (SS withheld)&#xa;Schedule 2 lines 5/6/13&#xa;Total tax before credits (line 18)&#xa;Schedule 3 prior credits&#xa;EIC pre-set (line 27a)&#xa;AOTC pre-set (line 29)&#xa;ctcScreening / form8862&#xa;ctcScreening.isBonafidePuertoRicoResident" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=left;spacingLeft=8;" vertex="1" parent="1"><mxGeometry x="20" y="80" width="240" height="220" as="geometry"/></mxCell>
+
+<!-- Form 8862 gate -->
+<mxCell id="20" value="Form 8862 gate&#xa;ctcPreviouslyDenied?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1"><mxGeometry x="330" y="90" width="200" height="80" as="geometry"/></mxCell>
+<mxCell id="21" value="Yes" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="20" target="25" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="22" value="No" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="20" target="30" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="430" y="210"/></Array></mxGeometry></mxCell>
+<!-- Connect INPUTS to Form 8862 gate -->
+<mxCell id="23" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="10" target="20" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- Form 8862 required result -->
+<mxCell id="25" value="Emit FORM_8862_CTC_REQUIRED&#xa;line14=0, line27=0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1"><mxGeometry x="590" y="90" width="200" height="60" as="geometry"/></mxCell>
+
+<!-- Step 1: MAGI -->
+<mxCell id="30" value="MAGI = AGI + Form2555 exclusions&#xa;(taxpayer + spouse)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1"><mxGeometry x="280" y="200" width="300" height="50" as="geometry"/></mxCell>
+
+<!-- Step 2: Count dependents + tentative credit -->
+<mxCell id="40" value="Count numCtcChildren (qualifiesForCTC)&#xa;Count numOdcDependents (qualifiesForODC)&#xa;line5 = $2,000 × numCTC  ✓ (IRS 2025)&#xa;line7 = $500 × numODC&#xa;line8 = line5 + line7" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;spacingLeft=8;" vertex="1" parent="1"><mxGeometry x="250" y="270" width="360" height="80" as="geometry"/></mxCell>
+<mxCell id="41" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="30" target="40" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- Phase-out -->
+<mxCell id="50" value="Phase-out&#xa;threshold = $400k MFJ | $200k others&#xa;→ stores line9ThresholdAmount (PDF f1_9[0])&#xa;line10 = max(0, MAGI − threshold)  [raw]&#xa;line11 = $50 × ceil(excess/$1,000)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;spacingLeft=8;" vertex="1" parent="1"><mxGeometry x="235" y="370" width="390" height="80" as="geometry"/></mxCell>
+<mxCell id="51" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="40" target="50" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- Phase-out gate -->
+<mxCell id="60" value="line8 ≤ line11?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1"><mxGeometry x="330" y="470" width="200" height="70" as="geometry"/></mxCell>
+<mxCell id="61" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="50" target="60" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="62" value="Yes (fully phased out)" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="60" target="65" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="590" y="505"/></Array></mxGeometry></mxCell>
+<mxCell id="65" value="line14=0, line27=0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1"><mxGeometry x="590" y="475" width="200" height="40" as="geometry"/></mxCell>
+<mxCell id="63" value="No" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="60" target="70" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="430" y="570"/></Array></mxGeometry></mxCell>
+
+<!-- line12 -->
+<mxCell id="70" value="line12 = line8 − line11 (credit after phase-out)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1"><mxGeometry x="255" y="560" width="350" height="40" as="geometry"/></mxCell>
+
+<!-- CLW-A -->
+<mxCell id="80" value="Credit Limit Worksheet A (G6 fixed ✓)&#xa;wA1 = totalTaxBeforeCredits (line 18)&#xa;wA3 = Sched3: line1 + line2 + line3 + line4&#xa;     + line5b + line6d + line6f + line6m&#xa;worksheetA = max(0, wA1 − wA3)&#xa;line14 = min(line12, worksheetA) → Form1040 line 19" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;spacingLeft=8;" vertex="1" parent="1"><mxGeometry x="215" y="620" width="430" height="100" as="geometry"/></mxCell>
+<mxCell id="81" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="70" target="80" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- electsNoActc gate -->
+<mxCell id="90" value="electsNoActc = true?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1"><mxGeometry x="330" y="740" width="200" height="70" as="geometry"/></mxCell>
+<mxCell id="91" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="80" target="90" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="92" value="Yes" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="90" target="93" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="590" y="775"/></Array></mxGeometry></mxCell>
+<mxCell id="93" value="line27=0 (opt-out)&#xa;UI shows amber banner" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1"><mxGeometry x="590" y="750" width="200" height="45" as="geometry"/></mxCell>
+<mxCell id="94" value="No" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="90" target="100" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="430" y="840"/></Array></mxGeometry></mxCell>
+
+<!-- Form2555 / no CTC children gate -->
+<mxCell id="100" value="Form2555 filed OR numCtcChildren=0?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1"><mxGeometry x="290" y="830" width="280" height="70" as="geometry"/></mxCell>
+<mxCell id="101" value="Yes" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="100" target="102" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="590" y="865"/></Array></mxGeometry></mxCell>
+<mxCell id="102" value="line27=0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1"><mxGeometry x="590" y="845" width="200" height="40" as="geometry"/></mxCell>
+<mxCell id="103" value="No" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="100" target="110" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="430" y="930"/></Array></mxGeometry></mxCell>
+
+<!-- ITIN gate (G9 fixed) -->
+<mxCell id="110" value="ITIN check (G9 fixed ✓)&#xa;MFJ: BOTH spouses have ITINs?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1"><mxGeometry x="290" y="920" width="280" height="80" as="geometry"/></mxCell>
+<mxCell id="111" value="Yes (both ITINs)" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="110" target="112" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="590" y="960"/></Array></mxGeometry></mxCell>
+<mxCell id="112" value="line27=0 + SCHEDULE_8812_ITIN_ACTC_BLOCKED flag" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1"><mxGeometry x="590" y="940" width="200" height="45" as="geometry"/></mxCell>
+<mxCell id="113" value="No (at least one valid SSN)" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="110" target="120" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="430" y="1030"/></Array></mxGeometry></mxCell>
+
+<!-- line16a gate -->
+<mxCell id="120" value="line16a = max(0, line12 − line14)&#xa;line16a = 0?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1"><mxGeometry x="300" y="1020" width="260" height="80" as="geometry"/></mxCell>
+<mxCell id="121" value="Yes" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="120" target="122" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="590" y="1060"/></Array></mxGeometry></mxCell>
+<mxCell id="122" value="line27=0 (CTC used all tax)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1"><mxGeometry x="590" y="1040" width="200" height="40" as="geometry"/></mxCell>
+<mxCell id="123" value="No" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="120" target="130" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="430" y="1130"/></Array></mxGeometry></mxCell>
+
+<!-- Part II-A computation -->
+<mxCell id="130" value="Part II-A: Earned Income Method&#xa;line16b = $1,700 × numCtcChildren  (ACTC ceiling)&#xa;line17 = min(line16a, line16b)  (potential ACTC)&#xa;line18a = totalWages + combatPayElection&#xa;line19 = max(0, line18a − $2,500)&#xa;line20 = 15% × line19" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;spacingLeft=8;" vertex="1" parent="1"><mxGeometry x="215" y="1120" width="430" height="100" as="geometry"/></mxCell>
+
+<!-- Puerto Rico resident gate -->
+<mxCell id="135" value="Puerto Rico bona fide resident?&#xa;(G11 fixed ✓ — bypasses 3-child gate)" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1"><mxGeometry x="295" y="1240" width="270" height="80" as="geometry"/></mxCell>
+<mxCell id="136" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="130" target="135" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="137" value="Yes (always Part II-B)" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="135" target="170" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="430" y="1490"/></Array></mxGeometry></mxCell>
+
+<!-- Part II-B routing (3 children check) -->
+<mxCell id="140" value="line16b &lt; $5,100?&#xa;(fewer than 3 CTC children)" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1"><mxGeometry x="300" y="1350" width="260" height="80" as="geometry"/></mxCell>
+<mxCell id="141" value="No" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="135" target="140" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="430" y="1350"/></Array></mxGeometry></mxCell>
+
+<!-- Part II-A only path -->
+<mxCell id="150" value="Part II-A only&#xa;line27 = min(line17, line20)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1"><mxGeometry x="610" y="1360" width="200" height="60" as="geometry"/></mxCell>
+<mxCell id="151" value="Yes (1-2 children)" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="140" target="150" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="610" y="1390"/></Array></mxGeometry></mxCell>
+
+<!-- line20 >= line17 gate -->
+<mxCell id="160" value="line20 ≥ line17?&#xa;(earned income covers potential)" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1"><mxGeometry x="300" y="1460" width="260" height="80" as="geometry"/></mxCell>
+<mxCell id="161" value="No (3+ children)" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="140" target="160" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="430" y="1460"/></Array></mxGeometry></mxCell>
+
+<!-- earned income covers ceiling -->
+<mxCell id="162" value="line27 = line17" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1"><mxGeometry x="20" y="1475" width="180" height="50" as="geometry"/></mxCell>
+<mxCell id="163" value="Yes" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="160" target="162" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="300" y="1500"/><mxPoint x="110" y="1500"/></Array></mxGeometry></mxCell>
+
+<!-- Part II-B -->
+<mxCell id="170" value="Part II-B: Payroll Tax Method&#xa;line21 = sum(W-2 box 4 SS withheld)&#xa;line22 = Sched2(lines 5+6+13) [SE out of scope → 0]&#xa;line23 = line21 + line22&#xa;line24 = EIC + refundable AOTC&#xa;line25 = line23 + line24&#xa;line26 = max(line20, line25)&#xa;line27 = min(line17, line26)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;spacingLeft=8;" vertex="1" parent="1"><mxGeometry x="215" y="1570" width="430" height="130" as="geometry"/></mxCell>
+<mxCell id="171" value="No (Part II-B may improve)" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="160" target="170" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="430" y="1580"/></Array></mxGeometry></mxCell>
+
+<!-- Final output -->
+<mxCell id="180" value="line27 = ACTC&#xa;→ Payments.additionalChildTaxCredit&#xa;→ Form1040.line28" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="265" y="1730" width="330" height="60" as="geometry"/></mxCell>
+<mxCell id="181" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="170" target="180" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="182" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="150" target="180" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="710" y="1740"/></Array></mxGeometry></mxCell>
+<mxCell id="183" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="162" target="180" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="110" y="1750"/></Array></mxGeometry></mxCell>
+
+<!-- Downstream -->
+<mxCell id="190" value="→ line32 (other refundable credits subtotal)&#xa;→ line33 (total payments)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="265" y="1820" width="330" height="50" as="geometry"/></mxCell>
+<mxCell id="191" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="180" target="190" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- Legend -->
+<mxCell id="200" value="Legend" style="text;html=1;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="820" y="400" width="80" height="20" as="geometry"/></mxCell>
+<mxCell id="201" value="Computation step" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1"><mxGeometry x="820" y="430" width="160" height="30" as="geometry"/></mxCell>
+<mxCell id="202" value="Decision / gate" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1"><mxGeometry x="820" y="475" width="160" height="50" as="geometry"/></mxCell>
+<mxCell id="203" value="Zero result (return)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1"><mxGeometry x="820" y="540" width="160" height="30" as="geometry"/></mxCell>
+<mxCell id="204" value="All gaps fixed as of 2026-04-20&#xa;(G3 SE tax deferred — out of scope)" style="text;html=1;" vertex="1" parent="1"><mxGeometry x="820" y="585" width="200" height="30" as="geometry"/></mxCell>
+
+</root></mxGraphModel>

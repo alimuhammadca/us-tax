@@ -1,0 +1,70 @@
+<mxGraphModel><root><mxCell id="0"/><mxCell id="1" parent="0"/>
+
+<!-- Title -->
+<mxCell id="2" value="Form 1040 Line 24 — Total Tax (2025)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="50" y="10" width="820" height="40" as="geometry"/></mxCell>
+
+<!-- LEGEND -->
+<mxCell id="leg1" value="LEGEND" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="50" y="58" width="80" height="20" as="geometry"/></mxCell>
+<mxCell id="leg2" value="Input (upstream)" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="78" width="110" height="22" as="geometry"/></mxCell>
+<mxCell id="leg3" value="Computation" style="rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;" vertex="1" parent="1"><mxGeometry x="170" y="78" width="110" height="22" as="geometry"/></mxCell>
+<mxCell id="leg4" value="Output / consumer" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;" vertex="1" parent="1"><mxGeometry x="290" y="78" width="120" height="22" as="geometry"/></mxCell>
+<mxCell id="leg5" value="Gap" style="rounded=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=9;" vertex="1" parent="1"><mxGeometry x="420" y="78" width="80" height="22" as="geometry"/></mxCell>
+
+<!-- ===== UPSTREAM INPUTS ===== -->
+
+<!-- Line 18 (totalTaxBeforeCredits) -->
+<mxCell id="line18" value="Form 1040 Line 18&#xa;= totalTaxBeforeCredits&#xa;= line16 + line17&#xa;Java: TaxAndCredits.totalTaxBeforeCredits" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="130" width="200" height="70" as="geometry"/></mxCell>
+
+<!-- Line 21 (totalCredits) -->
+<mxCell id="line21" value="Form 1040 Line 21&#xa;= totalCredits&#xa;= line19 (CTC/ODC) + line20 (Sched 3 line 8)&#xa;Java: TaxAndCredits.totalCredits" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="220" width="200" height="70" as="geometry"/></mxCell>
+
+<!-- Line 23 (otherTaxes) -->
+<mxCell id="line23" value="Form 1040 Line 23&#xa;= Schedule 2 line 21 = otherTaxes&#xa;= finalizeSchedule2OtherTaxes() sum&#xa;Java: TaxAndCredits.otherTaxes&#xa;(Finalized at main flow line 1065)" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="310" width="200" height="80" as="geometry"/></mxCell>
+
+<!-- ===== LINE 22 COMPUTATION ===== -->
+<mxCell id="line22calc" value="Line 22 computation&#xa;line22 = max(0, line18 − line21)&#xa;= roundMoney(line18.subtract(line21)&#xa;               .max(BigDecimal.ZERO))&#xa;tac.setTaxAfterCredits(line22)" style="rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;" vertex="1" parent="1"><mxGeometry x="310" y="160" width="220" height="90" as="geometry"/></mxCell>
+
+<!-- Line 22 output -->
+<mxCell id="line22" value="Form 1040 Line 22&#xa;= taxAfterCredits&#xa;= max(0, line18 − line21)&#xa;Java: TaxAndCredits.taxAfterCredits&#xa;Stored: 0 (floored); can be null? No." style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="310" y="290" width="220" height="90" as="geometry"/></mxCell>
+
+<!-- ===== LINE 24 COMPUTATION ===== -->
+<mxCell id="line24calc" value="Line 24 computation&#xa;line24 = roundMoney(line22.add(line23))&#xa;tac.setTotalTax(line24 &gt; 0 ? line24 : ZERO)&#xa;&#xa;TaxReturnComputeService.java:15087&#xa;Method: computeLine20ThroughLine24()&#xa;Call site: prepare() line 1067" style="rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;" vertex="1" parent="1"><mxGeometry x="580" y="250" width="240" height="110" as="geometry"/></mxCell>
+
+<!-- Line 24 output -->
+<mxCell id="line24" value="Form 1040 Line 24 — Total Tax&#xa;= line22 + nz(line23)&#xa;Java field: TaxAndCredits.totalTax&#xa;Getter: getTotalTax()&#xa;PDF key: line24_total_tax&#xa;AcroForm: f2_16[0]&#xa;Page 2, rect (504, 528.001, 576, 540)&#xa;Always stored as BigDecimal (never null)&#xa;Set to ZERO when both inputs = 0" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="580" y="420" width="260" height="150" as="geometry"/></mxCell>
+
+<!-- ===== DOWNSTREAM CONSUMERS ===== -->
+
+<!-- Consumer: computeLine31ThroughLine38 -->
+<mxCell id="c1" value="computeLine31ThroughLine38()&#xa;Reads: tac.getTotalTax()&#xa;Use: compare vs. line33 (total payments)&#xa;→ if line33 &gt; totalTax: refund&#xa;→ if totalTax &gt; line33: amount owed" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;" vertex="1" parent="1"><mxGeometry x="580" y="620" width="260" height="90" as="geometry"/></mxCell>
+
+<!-- Consumer: computeForm2210 (gap) -->
+<mxCell id="c2" value="computeForm2210()&#xa;Part I Line 1: reads totalTaxBeforeCredits (line 18)&#xa;Part I Line 2: reads otherTaxes (line 23)&#xa;⚠ G1 GAP: should read taxAfterCredits (line 22)&#xa;for Line 1, not totalTaxBeforeCredits (line 18)" style="rounded=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=9;" vertex="1" parent="1"><mxGeometry x="580" y="730" width="260" height="90" as="geometry"/></mxCell>
+
+<!-- Consumer: Frontend -->
+<mxCell id="c3" value="Frontend form-tax-return-1040.component.ts&#xa;Line 329: values['line24_total_tax'] =&#xa;  this.formatAmount(form.taxAndCredits?.totalTax)&#xa;Shell: const taxTotal = tax?.['totalTax']&#xa;Schedule 2 Part I: line 3 total tax" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;" vertex="1" parent="1"><mxGeometry x="310" y="620" width="240" height="90" as="geometry"/></mxCell>
+
+<!-- ===== GAPS BOX ===== -->
+<mxCell id="gaps" value="Open Gaps:&#xa;G1 (MEDIUM) — computeForm2210() Part I Line 1 reads totalTaxBeforeCredits (line 18) instead of taxAfterCredits (line 22).&#xa;  IRS Form 2210 Part I Line 1 = Form 1040 line 22. Overstates underpayment penalty base by line 21 (credits).&#xa;  Fix: change getTotalTaxBeforeCredits() → getTaxAfterCredits() at TaxReturnComputeService.java:15409.&#xa;G2 (LOW) — No dedicated line24-total-tax.spec.ts. Edge case line22=0/line23&gt;0 (credits absorb regular tax; other taxes remain) not E2E-tested." style="rounded=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="700" width="800" height="100" as="geometry"/></mxCell>
+
+<!-- ===== EDGES ===== -->
+<!-- line18 → line22 calc -->
+<mxCell id="e1" value="line18" style="edgeStyle=orthogonalEdgeStyle;fontSize=9;" edge="1" source="line18" target="line22calc" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<!-- line21 → line22 calc -->
+<mxCell id="e2" value="line21" style="edgeStyle=orthogonalEdgeStyle;fontSize=9;" edge="1" source="line21" target="line22calc" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<!-- line22calc → line22 -->
+<mxCell id="e3" value="" style="edgeStyle=orthogonalEdgeStyle;fontSize=9;" edge="1" source="line22calc" target="line22" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<!-- line22 → line24calc -->
+<mxCell id="e4" value="taxAfterCredits" style="edgeStyle=orthogonalEdgeStyle;fontSize=9;" edge="1" source="line22" target="line24calc" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<!-- line23 → line24calc -->
+<mxCell id="e5" value="otherTaxes" style="edgeStyle=orthogonalEdgeStyle;fontSize=9;" edge="1" source="line23" target="line24calc" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<!-- line24calc → line24 -->
+<mxCell id="e6" value="" style="edgeStyle=orthogonalEdgeStyle;fontSize=9;" edge="1" source="line24calc" target="line24" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<!-- line24 → c1 (refund/owed) -->
+<mxCell id="e7" value="totalTax" style="edgeStyle=orthogonalEdgeStyle;fontSize=9;" edge="1" source="line24" target="c1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<!-- line24 → c2 (Form 2210) — dashed because it doesn't actually read totalTax directly -->
+<mxCell id="e8" value="(indirect)" style="edgeStyle=orthogonalEdgeStyle;fontSize=9;dashed=1;" edge="1" source="line24" target="c2" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<!-- line24 → c3 (frontend) -->
+<mxCell id="e9" value="totalTax" style="edgeStyle=orthogonalEdgeStyle;fontSize=9;" edge="1" source="line24" target="c3" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+</root></mxGraphModel>

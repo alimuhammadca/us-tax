@@ -1,0 +1,19 @@
+<mxfile host='app.diagrams.net' modified='2026-03-07T10:32:00.0000000Z' agent='Codex' version='20.8.16' type='device'>
+  <diagram id='5c-flow-pension-exception-checkboxes' name='Line 5c - Pension exception checkboxes and write-in'>
+    <mxGraphModel dx='1400' dy='900' grid='1' gridSize='10' guides='1' tooltips='1' connect='1' arrows='1' fold='1' page='1' pageScale='1' pageWidth='1200' pageHeight='900' math='0' shadow='0'>
+      <root>
+        <mxCell id='0'/>
+        <mxCell id='1' parent='0'/>
+        <mxCell id='2' value='Inputs (User)&#xa;Return-level gating owned by taxpayer pension form (conflict prevention)&#xa;hadPensionRollover&#xa;isEligibleRetiredPublicSafetyOfficer + electsPsoPremiumExclusion&#xa;hasOtherLine5cWriteInCode + line5cOtherWriteInText&#xa;Spouse form contributes spouse exception signals and amounts' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='20' y='20' width='390' height='270' as='geometry'/></mxCell>
+        <mxCell id='3' value='Inputs (Derived from Compute)&#xa;per-owner exception booleans from pension computation&#xa;hasRollover, hasPsoElection, hasOtherWriteIn&#xa;normalized write-in text tokens&#xa;cross-owner OR aggregation to return level' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='20' y='310' width='390' height='180' as='geometry'/></mxCell>
+        <mxCell id='4' value='Reference/Derived Inputs&#xa;5abc.md IRS 2025 line 5c rules:&#xa;box1 = rollover&#xa;box2 = PSO premium exclusion election&#xa;box3 = other write-in code/word required by instructions&#xa;check each box that applies' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='20' y='510' width='390' height='220' as='geometry'/></mxCell>
+        <mxCell id='5' value='Computation&#xa;line5c.box1 = OR(taxpayer.hasRollover, spouse.hasRollover)&#xa;line5c.box2 = OR(taxpayer.hasPsoElection, spouse.hasPsoElection)&#xa;line5c.box3 = OR(taxpayer.hasOtherWriteIn, spouse.hasOtherWriteIn)&#xa;line5c.box3Text = joined normalized write-in text&#xa;when box3 is false, text is null' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='440' y='220' width='400' height='320' as='geometry'/></mxCell>
+        <mxCell id='6' value='Outputs&#xa;Form 1040 line 5c fields&#xa;box1 rollover, box2 PSO, box3 other, box3 text&#xa;Persisted with Form 1040 income lines and shown in return preview' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='870' y='250' width='320' height='250' as='geometry'/></mxCell>
+        <mxCell id='7' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='2' target='5'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='8' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='3' target='5'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='9' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='4' target='5'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='10' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='5' target='6'><mxGeometry relative='1' as='geometry'/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

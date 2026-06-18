@@ -1,0 +1,15 @@
+<mxfile host='app.diagrams.net' modified='2026-03-07T17:18:00.0000000Z' agent='Codex' version='20.8.16' type='device'>
+  <diagram id='6d-flow-mfs-apart-checkbox' name='Line 6d - MFS lived apart checkbox'>
+    <mxGraphModel dx='1400' dy='900' grid='1' gridSize='10' guides='1' tooltips='1' connect='1' arrows='1' fold='1' page='1' pageScale='1' pageWidth='1200' pageHeight='900' math='0' shadow='0'>
+      <root>
+        <mxCell id='0'/>
+        <mxCell id='1' parent='0'/>
+        <mxCell id='2' value='Inputs&#xa;filing-status form: filingStatus&#xa;social-security-benefits-taxpayer:&#xa;livedWithSpouseAnyTimeDuringTaxYear&#xa;livedApartFromSpouseEntireTaxYear' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='20' y='110' width='360' height='220' as='geometry'/></mxCell>
+        <mxCell id='3' value='Computation&#xa;isMfs = filingStatus == &quot;Married filing separately&quot;&#xa;line6d = isMfs AND livedApartFromSpouseEntireTaxYear&#xa;For worksheet branch: mfsLivedWithSpouseAnyTime = isMfs AND livedWithSpouseAnyTimeDuringTaxYear' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='420' y='120' width='420' height='220' as='geometry'/></mxCell>
+        <mxCell id='4' value='Output&#xa;Form 1040 line 6d checkbox&#xa;Persisted as income.line6dMfsLivedApartAllYear&#xa;Displayed in 1040 preview row 6d' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='870' y='160' width='300' height='170' as='geometry'/></mxCell>
+        <mxCell id='5' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='2' target='3'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='6' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='3' target='4'><mxGeometry relative='1' as='geometry'/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

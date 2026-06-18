@@ -1,0 +1,159 @@
+﻿# Form 1040 line 3a/3b spouse workflow.
+# Approach: keep spouse-specific user questions + imported statement fields + computed outputs in one YAML.
+# NOTE: Sections marked as backend-only are NOT supposed to be rendered in the actual form component.
+# NOTE: Return-level statement upload gating is intentionally kept on dividend-income-taxpayer to avoid spouse conflict.
+name: dividend-income-spouse
+title: Form 1040 - Dividend income (spouse, lines 3a and 3b)
+multiplicity: single
+formName: 1040
+category: income
+instructions:
+  - Use this only for spouse-specific amounts for Form 1040 lines 3a and 3b.
+  - Return-level 1099-DIV upload checks stay on dividend-income-taxpayer.
+  - Qualified dividends must always be less than or equal to ordinary dividends.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: hadDividendIncome
+        type: boolean
+        required: true
+        label: Did your spouse have any dividend income during the tax year?
+        help: If No, stop here and do not continue this spouse interview.
+
+  - name: supplementalDividendAmounts
+    title: Supplemental dividend amounts
+    multiplicity: single
+    showIf: hadDividendIncome == true
+    fields:
+      - name: manualOrdinaryDividendsNotOnStatements
+        type: amount
+        required: false
+        label: Ordinary dividends not reported on statements (line 3b)
+        placeholder: 0.00
+        help: Enter spouse ordinary dividends not shown on uploaded 1099-DIV statements.
+      - name: manualQualifiedDividendsNotOnStatements
+        type: amount
+        required: false
+        label: Qualified dividends not reported on statements (line 3a)
+        placeholder: 0.00
+        help: Enter spouse qualified dividends not shown on uploaded 1099-DIV statements.
+
+  - name: nomineeDividends
+    title: Nominee dividends
+    multiplicity: single
+    showIf: hadDividendIncome == true
+    instructions:
+      - Enter nominee amounts your spouse received in spouse name but that belong to someone else.
+      - Nominee amounts reduce what is reported on Form 1040 lines 3a and 3b.
+    fields:
+      - name: hasNomineeDividends
+        type: boolean
+        required: false
+        label: Did your spouse receive dividends as a nominee for someone else?
+        help: Select Yes if any spouse-reported dividends belong to another owner.
+      - name: nomineeOrdinaryDividends
+        type: amount
+        required: false
+        label: Spouse nominee ordinary dividends to subtract from line 3b
+        placeholder: 0.00
+        help: Enter spouse ordinary dividends received as nominee that do not belong to spouse.
+      - name: nomineeQualifiedDividends
+        type: amount
+        required: false
+        label: Spouse nominee qualified dividends to subtract from line 3a
+        placeholder: 0.00
+        help: Enter spouse qualified dividends received as nominee that do not belong to spouse.
+
+  - name: qualifiedDividendDisallowedCategories
+    title: Qualified dividend disallowed categories
+    multiplicity: single
+    showIf: hadDividendIncome == true
+    instructions:
+      - Enter only spouse amounts that must be excluded from qualified dividends under IRS rules.
+      - These amounts reduce line 3a but do not reduce line 3b unless separately entered as nominee ordinary dividends.
+    fields:
+      - name: nonQualifiedFromHoldingPeriodCommon61of121
+        type: amount
+        required: false
+        label: Spouse nonqualified dividends from failed common-stock 61-of-121 holding period test
+        placeholder: 0.00
+        help: Enter spouse dividends that fail the 61-day holding period rule for common stock or most mutual funds.
+      - name: nonQualifiedFromHoldingPeriodPreferred91of181
+        type: amount
+        required: false
+        label: Spouse nonqualified dividends from failed preferred-stock 91-of-181 holding period test
+        placeholder: 0.00
+        help: Enter spouse dividends that fail the 91-day holding period rule for certain preferred stock.
+      - name: nonQualifiedFromRelatedPaymentObligationShortSale
+        type: amount
+        required: false
+        label: Spouse nonqualified dividends due to related-payment obligation or short sale
+        placeholder: 0.00
+        help: Enter spouse dividends disallowed because spouse was obligated to make related payments.
+      - name: nonQualifiedPaymentsInLieu
+        type: amount
+        required: false
+        label: Spouse nonqualified payments in lieu of dividends
+        placeholder: 0.00
+        help: Enter spouse payments in lieu known not to be qualified dividends.
+      - name: nonQualifiedSurrogateForeignCorporationDividends
+        type: amount
+        required: false
+        label: Spouse nonqualified dividends from disallowed surrogate foreign corporations
+        placeholder: 0.00
+        help: Enter spouse dividends excluded under the surrogate foreign corporation rule.
+      - name: nonQualifiedNonTreatyForeignCorporationDividends
+        type: amount
+        required: false
+        label: Spouse nonqualified dividends from non-treaty foreign corporations
+        placeholder: 0.00
+        help: "Most filers leave this blank. Per IRS Publication 550 and Internal Revenue Code §1(h)(11)(C), a dividend from a foreign corporation is qualified only when the corporation (a) is incorporated in a U.S. possession, OR (b) is eligible for benefits of a U.S. tax treaty with an exchange-of-information program identified by the Treasury Secretary, OR (c) its stock is readily tradable on an established U.S. securities market. Enter spouse's dividends in box 1b that fail ALL THREE tests. Distinct from the surrogate foreign-corporation field above, which covers only Internal Revenue Code §7874 corporate inversions."
+
+  # Backend-only statement imports. Not rendered in form component.
+  - name: importedStatementFields
+    title: Imported statement fields (backend only)
+    multiplicity: single
+    showIf: hadDividendIncome == true
+    fields:
+      - name: imported1099DivBox1aOrdinaryDividends
+        type: amount
+        required: false
+        readOnly: true
+        label: 1099-DIV box 1a total (imported)
+      - name: imported1099DivBox1bQualifiedDividends
+        type: amount
+        required: false
+        readOnly: true
+        label: 1099-DIV box 1b total (imported)
+      - name: imported1099DivPayerCount
+        type: integer
+        required: false
+        readOnly: true
+        label: Number of imported 1099-DIV payers
+
+  # Backend-only computed values. Not rendered in form component.
+  - name: computedOutputs
+    title: Computed outputs (backend only)
+    multiplicity: single
+    showIf: hadDividendIncome == true
+    fields:
+      - name: computedLine3bOrdinaryDividendsContribution
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed spouse contribution to Form 1040 line 3b
+      - name: computedLine3aQualifiedDividendsContribution
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed spouse contribution to Form 1040 line 3a
+      - name: computedQualifiedDividendDisallowedTotalContribution
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed spouse disallowed qualified dividends total

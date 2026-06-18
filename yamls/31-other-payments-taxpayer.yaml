@@ -1,0 +1,142 @@
+name: 31-other-payments
+title: Other payments and refundable credits
+multiplicity: single
+formName: schedule3
+category: applications
+version: 2
+instructions:
+  - Use this form for a fuel tax credit (Form 4136), Section 1341 repayment credit,
+    Section 965(i) deferred tax, or any other refundable credit not captured elsewhere on Schedule 3.
+  - Do not enter the Premium Tax Credit (Form 8962), extension payment (Form 4868),
+    excess Social Security tax, or Form 2439 tax credit here — those are computed
+    automatically from your statements and other forms.
+  - Line 13c (Form 3800 net elective payment) is not yet computed. If you have a Form 3800
+    Part III line 6(j) amount, enter it under line 13z with the description "Form 3800 line 6(j)".
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: hasFuelTaxCredit
+        type: boolean
+        required: true
+        label: Do you have a credit for federal tax on fuels?
+        helpText: >
+          Answer Yes if you used fuel for non-highway purposes — such as farming, fishing,
+          or off-road business use — and paid federal excise tax on it. You compute this
+          credit on a separate form and attach it to your return.
+      - name: hasSection1341Credit
+        type: boolean
+        required: true
+        label: Did you repay more than $3,000 of income that was reported in a prior year
+               under a claim of right (IRC §1341)?
+        helpText: >
+          A claim-of-right repayment occurs when you reported income in a prior year, paid
+          tax on it, and then repaid that amount because you did not have an unrestricted
+          right to keep it — for example, repaying a bonus, commission, or insurance
+          proceeds. The repayment must exceed $3,000; smaller amounts are deducted on
+          Schedule A only.
+      - name: hasOtherRefundableCredits
+        type: boolean
+        required: true
+        label: Do you have any other refundable credits not listed elsewhere on Schedule 3?
+        helpText: >
+          Answer Yes if you have Schedule 3 line 13z write-in credits. Known 2025 sources include
+          Form 8689 (U.S. Virgin Islands income allocation) and Form 3800 Part III line 6(j) net
+          elective payment amounts. Do not include credits already captured elsewhere in this app.
+      - name: hasDeferred965Tax
+        type: boolean
+        required: true
+        label: Do you have a triggered Section 965(i) deferred net tax liability for 2025?
+        helpText: >
+          This applies only to S-corporation shareholders who previously deferred a net
+          Section 965 tax liability and had a triggering event in 2025 — such as selling
+          the stock, terminating the S-election, liquidating, or death of the shareholder.
+          Most filers answer No.
+
+  - name: fuelTaxCredit
+    title: Credit for federal tax on fuels
+    multiplicity: single
+    showIf: hasFuelTaxCredit == true
+    instructions:
+      - Enter the amount from Form 4136, line 14. Attach Form 4136 to your return.
+        This credit applies to excise taxes paid on fuel used for non-highway or
+        certain off-highway business purposes.
+    fields:
+      - name: creditForFederalTaxOnFuels
+        type: amount
+        required: true
+        label: Credit for federal tax on fuels
+        helpText: >
+          Enter the amount from the total line of the fuel-tax credit form. Attach the
+          completed form to your return.
+
+  - name: section1341
+    title: Section 1341 repayment credit
+    multiplicity: single
+    showIf: hasSection1341Credit == true
+    instructions:
+      - Compute the §1341 credit yourself by comparing Option A (deduct on Schedule A at
+        current rates) vs Option B (hypothetical tax reduction at prior-year rates).
+        Enter the larger result below.
+      - The repayment must exceed $3,000. Amounts of $3,000 or less may only be deducted
+        on Schedule A.
+    fields:
+      - name: section1341RepaymentAmount
+        type: amount
+        required: false
+        label: Amount repaid in 2025
+        helpText: >
+          Enter the total dollar amount you repaid in 2025. This confirms the repayment
+          exceeded $3,000 and supports your credit calculation records.
+      - name: section1341Credit
+        type: amount
+        required: true
+        label: Section 1341 credit (the larger of Option A or Option B)
+        helpText: >
+          Compare two options and enter the larger amount. Option A — the additional tax
+          you would owe this year if the repaid amount were added back to income (the
+          deduction benefit). Option B — the reduction in tax that would have applied in
+          the prior year if the income had been excluded. Enter whichever amount is greater.
+
+  - name: otherRefundableCredits
+    title: Other refundable credits
+    multiplicity: multiple
+    showIf: hasOtherRefundableCredits == true
+    instructions:
+      - Enter each credit separately with a description and dollar amount.
+      - Known 2025 line 13z sources include Form 8689 (U.S. Virgin Islands income allocation)
+        and Form 3800 Part III line 6(j) net elective payment amounts.
+    fields:
+      - name: description
+        type: text
+        required: true
+        label: Description
+        helpText: >
+          Enter a brief label for the credit source, for example "Form 8689 — USVI allocation"
+          or "Form 3800 line 6(j)". This description appears on the Schedule 3 write-in line.
+      - name: amount
+        type: amount
+        required: true
+        label: Amount
+        helpText: >
+          Enter the dollar amount of this credit exactly as computed on the supporting form.
+
+  - name: deferred965Tax
+    title: Deferred Section 965(i) net tax liability
+    multiplicity: single
+    showIf: hasDeferred965Tax == true
+    instructions:
+      - Enter the deferred net Section 965(i) tax liability triggered in 2025.
+        This applies to S-corporation shareholders when a triggering event (such as
+        disposition of stock, S-election termination, or death) causes previously deferred
+        net 965 tax to become payable. See Schedule 3 instructions for line 13d.
+    fields:
+      - name: deferredNet965TaxLiability
+        type: amount
+        required: true
+        label: Deferred net Section 965(i) tax liability
+        helpText: >
+          Enter the net amount of previously deferred Section 965 tax that became payable
+          in 2025 due to a triggering event. See the Schedule 3 instructions for guidance
+          on computing this amount.

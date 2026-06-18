@@ -1,0 +1,19 @@
+<mxfile host='app.diagrams.net' modified='2026-03-03T03:07:00.0000000Z' agent='Codex' version='20.8.16' type='device'>
+  <diagram id='3baf6h9d4f2b5e44' name='Line 3b - Ordinary dividends'>
+    <mxGraphModel dx='1400' dy='900' grid='1' gridSize='10' guides='1' tooltips='1' connect='1' arrows='1' fold='1' page='1' pageScale='1' pageWidth='1200' pageHeight='900' math='0' shadow='0'>
+      <root>
+        <mxCell id='0'/>
+        <mxCell id='1' parent='0'/>
+        <mxCell id='2' value='Inputs (User)&#xa;dividend-income-taxpayer / dividend-income-spouse:&#xa;hadDividendIncome&#xa;manualOrdinaryDividendsNotOnStatements&#xa;hasNomineeDividends&#xa;nomineeOrdinaryDividends&#xa;(Taxpayer form owns return-level 1099-DIV upload gating)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='20' y='20' width='370' height='240' as='geometry'/></mxCell>
+        <mxCell id='3' value='Inputs (Statements/Imports)&#xa;1099-DIV box1a ordinary dividends&#xa;Statement ownership matched by recipientTIN/SSN&#xa;Legacy fallback mode: if dividend forms absent, use statement-only 3b totals' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='20' y='280' width='370' height='200' as='geometry'/></mxCell>
+        <mxCell id='4' value='Reference/Derived Inputs&#xa;IRS rule from 3ab.md:&#xa;Schedule B required when ordinary dividends &gt; 1500 OR nominee dividends exist&#xa;Rounding: roundMoney()&#xa;Non-negative guards: subtractNonNegative()' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='20' y='500' width='370' height='200' as='geometry'/></mxCell>
+        <mxCell id='5' value='Computation&#xa;Per person ordinaryCandidate = sum(1099-DIV box1a) + manualOrdinaryDividendsNotOnStatements&#xa;Per person line3bContribution = ordinaryCandidate - nomineeOrdinaryDividends (floor 0)&#xa;Aggregate taxpayer + spouse => Form 1040 line 3b&#xa;scheduleBRequiredFromDividends = (line3b &gt; 1500) OR (any nominee dividends present)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='430' y='220' width='390' height='300' as='geometry'/></mxCell>
+        <mxCell id='6' value='Outputs&#xa;Form 1040 line 3b (ordinary dividends)&#xa;Schedule B generated when required&#xa;Schedule B line 6 = ordinary dividends total&#xa;Combined with line 2b triggers for final Schedule B visibility in Tax Return sidebar' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='850' y='240' width='350' height='260' as='geometry'/></mxCell>
+        <mxCell id='7' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='2' target='5'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='8' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='3' target='5'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='9' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='4' target='5'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='10' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='5' target='6'><mxGeometry relative='1' as='geometry'/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

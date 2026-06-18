@@ -1,0 +1,56 @@
+# Form 8962 spouse supplemental intake.
+# Form 8962 is one consolidated return-level form. This spouse form captures
+# only the spouse-specific MAGI add-backs for Worksheet 1-1.
+# The taxpayer form owns all return-level gating, FPL settings, shared policy
+# allocation (Part IV), and the year-of-marriage election (Part V).
+# NOTE: Backend-only sections are not rendered in the UI intake component.
+name: premium-tax-credit-spouse
+title: Form 8962 - Premium tax credit (spouse supplemental)
+multiplicity: single
+formName: 8962
+category: deductions
+instructions:
+  - Use this form to enter spouse-specific MAGI add-backs only. All other Form 8962 questions are on the taxpayer Form 8962 tab.
+  - The spouse's AGI is automatically combined with the taxpayer's AGI by the backend when computing household income (line 3).
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: spouseHasAdditionalPtcInputs
+        type: boolean
+        required: true
+        label: Does the spouse have any Form 2555 foreign income exclusions that must be added back for Form 8962 MAGI?
+        help: Select Yes if the spouse has a Form 2555 foreign earned income or housing exclusion that must be added back to compute household income for Form 8962.
+
+  - name: spouseModifiedAgiAddbacks
+    title: Spouse modified AGI add-backs (Worksheet 1-1)
+    multiplicity: single
+    showIf: spouseHasAdditionalPtcInputs == true
+    instructions:
+      - The backend already includes the spouse AGI in the household income calculation. Enter only additional add-backs below that are specific to the spouse.
+    fields:
+      - name: spouseMagiAddbackForm2555Fei
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Spouse Form 2555 foreign earned income exclusion
+        help: Enter the amount from the spouse's Form 2555, line 45 or line 50 (foreign earned income exclusion), if not already entered on the taxpayer Form 8962 tab.
+      - name: spouseMagiAddbackForm2555Housing
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Spouse Form 2555 foreign housing exclusion
+        help: Enter the amount from the spouse's Form 2555, line 47 (foreign housing exclusion), if applicable and not already entered on the taxpayer tab.
+
+  # Backend-only computed values. Not rendered in the UI.
+  - name: computedOutputs
+    title: Computed outputs (backend only)
+    multiplicity: single
+    fields:
+      - name: computedSpouseModifiedAgi
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed spouse modified AGI (AGI + add-backs)

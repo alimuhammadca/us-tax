@@ -1,0 +1,184 @@
+# Form 2555 — Foreign Earned Income intake for taxpayer/family head.
+# If both spouses have foreign earned income and both wish to claim exclusions,
+# each must complete a separate Form 2555 (see 2555.md in lines folder).
+# Self-employment foreign income is out of scope; wages/salary only.
+name: foreign-earned-income-taxpayer
+title: Form 2555 - Foreign Earned Income (taxpayer)
+multiplicity: single
+formName: 2555
+category: income
+instructions:
+  - Complete this form if you earned wages or salary from work performed in a foreign country in 2025.
+  - You may qualify to exclude foreign earned income, a foreign housing amount, or both from US taxation.
+  - If your spouse also has foreign earned income and wishes to claim exclusions, they must complete a separate Form 2555 under their own tab.
+  - Self-employment foreign income is not supported; only wages and salary income can be entered here.
+
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: hadForeignEarnedIncome
+        type: boolean
+        required: true
+        label: Did you have foreign earned income in 2025?
+        help: Select Yes if you earned wages or salary from work performed outside the United States during 2025.
+
+  - name: generalInformation
+    title: General information
+    multiplicity: single
+    showIf: hadForeignEarnedIncome == true
+    instructions:
+      - Enter information about where you lived and worked outside the United States.
+      - Your tax home is generally the location of your principal place of business or employment.
+    fields:
+      - name: taxHomeCountry
+        type: text
+        required: true
+        placeholder: e.g. United Kingdom
+        label: Country where your tax home was located
+        help: Enter the foreign country where you were regularly stationed or conducted business in 2025.
+      - name: bfResidenceOrPresenceCountry
+        type: text
+        required: false
+        placeholder: e.g. France
+        label: Country of qualifying residence or physical presence
+        help: Enter the foreign country where you established bona fide residence or were physically present for the qualifying period.
+      - name: citizenOrResidentOf
+        type: text
+        required: false
+        placeholder: e.g. United States
+        label: Country of citizenship
+        help: Enter the country of which you are a citizen or national. Most US filers will enter United States.
+
+  - name: qualifyingTest
+    title: Qualifying test
+    multiplicity: single
+    showIf: hadForeignEarnedIncome == true
+    instructions:
+      - You must meet either the bona fide residence test or the physical presence test to exclude foreign earned income.
+      - Bona fide residence test — you were a bona fide resident of a foreign country for an uninterrupted period that includes all of 2025.
+      - Physical presence test — you were physically present in a foreign country for at least 330 full days during any 12-month period starting or ending in 2025.
+    fields:
+      - name: qualifyingTest
+        type: select
+        required: true
+        placeholder: Select qualifying test
+        label: How did you qualify for the exclusion?
+        help: Select the situation that describes how you qualify. Bona fide residence — you were a resident of a foreign country for all of 2025. Physical presence — you were in a foreign country for at least 330 full days during a 12-month period.
+        options:
+          - value: bona_fide_residence
+            label: I lived as a bona fide resident of a foreign country for an uninterrupted period that includes all of 2025
+          - value: physical_presence
+            label: I was physically present in a foreign country or countries for at least 330 full days during a 12-month period
+      - name: bfResidenceStartDate
+        type: date
+        required: false
+        placeholder: YYYY-MM-DD
+        label: Date bona fide residence began
+        help: Enter the date you first established bona fide residence in the foreign country. Complete only if you selected the bona fide residence test.
+      - name: bfResidenceEndDate
+        type: date
+        required: false
+        placeholder: YYYY-MM-DD
+        label: Date bona fide residence ended (leave blank if still a resident at year-end)
+        help: Enter the date your bona fide residence ended, or leave blank if you were still a bona fide resident at year-end 2025.
+      - name: physPresence12MonthStartDate
+        type: date
+        required: false
+        placeholder: YYYY-MM-DD
+        label: Start of 12-month qualifying period
+        help: Enter the first day of the 12-month period during which you were present in a foreign country for at least 330 full days. Complete only if you selected the physical presence test.
+      - name: physPresence12MonthEndDate
+        type: date
+        required: false
+        placeholder: YYYY-MM-DD
+        label: End of 12-month qualifying period
+        help: Enter the last day of the 12-month qualifying period.
+
+  - name: employerAndIncome
+    title: Employer and foreign earned income
+    multiplicity: single
+    showIf: hadForeignEarnedIncome == true
+    instructions:
+      - Enter details about your employer and the income you earned in the foreign country.
+      - Report income in US dollars using the IRS yearly average exchange rate unless you use the actual exchange rate method.
+      - Self-employment income from foreign sources is not supported; contact a tax professional if this applies to you.
+    fields:
+      - name: foreignEarnedIncomeType
+        type: select
+        required: true
+        placeholder: Select income type
+        label: Type of foreign earned income
+        help: Select the type of foreign income you received. Only wages and salary are supported in this application.
+        options:
+          - value: wages
+            label: Wages and salary (W-2 or foreign employer equivalent)
+          - value: self_employed
+            label: Self-employment income (not supported — contact a tax professional)
+      - name: employerName
+        type: text
+        required: false
+        placeholder: e.g. Acme Corp Ltd
+        label: Employer name
+        help: Enter the full legal name of your foreign employer.
+      - name: employerAddressForeign
+        type: text
+        required: false
+        placeholder: e.g. 100 High Street, London, UK
+        label: Employer address in foreign country
+        help: Enter your employer's business address in the foreign country.
+      - name: foreignWagesAmount
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Total foreign wages and salary in USD
+        help: Enter the total wages and salary you earned from work performed in a foreign country, converted to US dollars.
+
+  - name: housingExclusion
+    title: Foreign housing exclusion (optional)
+    multiplicity: single
+    showIf: hadForeignEarnedIncome == true
+    instructions:
+      - Complete this section only if your employer paid or reimbursed your foreign housing costs and you want to exclude those amounts.
+      - The housing deduction (for self-employment income) is not supported here.
+      - Qualified housing expenses include rent, utilities, insurance, occupancy taxes, and non-deductible leasehold improvements. Do not include deductible mortgage interest or taxes.
+    fields:
+      - name: claimsHousingExclusion
+        type: boolean
+        required: false
+        label: Do you want to claim the foreign housing exclusion?
+        help: Select Yes if your employer-provided housing amounts or reimbursements qualify for the housing exclusion.
+      - name: housingExpensesTotal
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Total qualified foreign housing expenses in USD
+        help: Enter the total qualified housing expenses for the year. This amount is limited to your employer-paid housing; the deductible base amount is subtracted during computation.
+      - name: housingLocationCountry
+        type: text
+        required: false
+        placeholder: e.g. Germany
+        label: Country where your housing was located
+        help: Enter the country where your foreign housing was located. The IRS publishes per-country housing cost ceilings that limit the exclusion.
+
+  # Backend-only computed values. NOT rendered in the UI form component.
+  - name: computedOutputs
+    title: Computed outputs (backend only)
+    multiplicity: single
+    showIf: hadForeignEarnedIncome == true
+    fields:
+      - name: computedForeignEarnedIncomeExclusion
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed foreign earned income exclusion (Form 2555 line 45) — pending line 16 implementation
+        help: This value will be computed when line 16 (Tax) is implemented. See outstanding.md.
+      - name: computedHousingExclusionAmount
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed foreign housing exclusion amount (Form 2555 line 50) — pending line 16 implementation
+        help: This value will be computed when line 16 (Tax) is implemented. See outstanding.md.

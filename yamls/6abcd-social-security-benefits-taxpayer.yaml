@@ -1,0 +1,333 @@
+﻿# Form 1040 lines 6a/6b/6c/6d (taxpayer/family head) workflow.
+# Approach: keep user questions + imported statement fields + computed outputs in one YAML.
+# NOTE: Sections marked as backend-only are NOT supposed to be rendered in the actual form component.
+name: social-security-benefits-taxpayer
+title: Form 1040 - Social Security benefits (taxpayer, lines 6a, 6b, 6c, and 6d)
+multiplicity: single
+formName: 1040
+category: income
+instructions:
+  - Start here only if the taxpayer had Social Security or Railroad Retirement benefits for Form 1040 lines 6a/6b/6c/6d.
+  - Upload validation is mandatory before entering supplemental details.
+  - At least one SSA-1099 or RRB-1099 statement must be uploaded before continue.
+  - This taxpayer form owns return-level line 6c election and line 6d facts to avoid spouse conflicts.
+  - Supplemental Security Income (SSI) is excluded and must not be included in taxable-benefit calculations.
+  - Self-employment income is out of scope and excluded.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: hadSocialSecurityBenefits
+        type: boolean
+        required: true
+        label: Did you receive Social Security or Railroad Retirement benefits during the tax year?
+        help: If No, stop here and do not continue this interview.
+
+  - name: statementUploadCheck
+    title: Statement upload check
+    multiplicity: single
+    showIf: hadSocialSecurityBenefits == true
+    instructions:
+      - At least one SSA-1099 or RRB-1099 statement must be uploaded to continue.
+      - Component must block continue when required uploads are missing.
+    fields:
+      - name: hasUploadedAtLeastOneSsaOrRrbStatement
+        type: boolean
+        required: true
+        label: Have you uploaded at least one SSA-1099 or RRB-1099 statement?
+        help: Select Yes only after at least one applicable statement is uploaded.
+      - name: receivedSsa1099
+        type: boolean
+        required: false
+        label: Did you receive Form SSA-1099?
+        help: Select Yes if the Social Security Administration issued you Form SSA-1099.
+      - name: uploadedSsa1099
+        type: boolean
+        required: false
+        label: If you received SSA-1099, did you upload it?
+        help: Select Yes only if all received SSA-1099 statements were uploaded.
+      - name: receivedRrb1099
+        type: boolean
+        required: false
+        label: Did you receive Form RRB-1099?
+        help: Select Yes if the Railroad Retirement Board issued you Form RRB-1099.
+      - name: uploadedRrb1099
+        type: boolean
+        required: false
+        label: If you received RRB-1099, did you upload it?
+        help: Select Yes only if all received RRB-1099 statements were uploaded.
+      - name: confirmAllReceivedSsaRrbStatementsUploaded
+        type: boolean
+        required: true
+        label: I confirm all received SSA-1099 and RRB-1099 statements are uploaded
+        help: You must confirm this before saving the Social Security benefits form.
+
+  - name: exclusionsAndFacts
+    title: Exclusions and facts
+    multiplicity: single
+    showIf: hadSocialSecurityBenefits == true
+    fields:
+      - name: hasSupplementalSecurityIncome
+        type: boolean
+        required: false
+        label: Did you receive Supplemental Security Income (SSI)?
+        help: SSI is not taxable and must be excluded from Form 1040 lines 6a/6b.
+      - name: supplementalSecurityIncomeAmount
+        type: amount
+        required: false
+        label: SSI amount received (excluded)
+        placeholder: 0.00
+        help: Enter SSI amount only for exclusion documentation; do not include it in taxable-benefit calculations.
+      - name: confirmSsiExcludedFromTaxableBenefits
+        type: boolean
+        required: false
+        label: I confirm SSI is excluded from taxable Social Security benefit calculations
+        help: Confirm SSI exclusion before continuing.
+
+  - name: line6dMfsApartFacts
+    title: Line 6d facts (return-level)
+    multiplicity: single
+    showIf: hadSocialSecurityBenefits == true
+    instructions:
+      - These facts are return-level and intentionally kept only on taxpayer form to avoid spouse conflicts.
+    fields:
+      - name: isMarriedFilingSeparately
+        type: boolean
+        required: false
+        label: Is the return filing status Married Filing Separately (MFS)?
+        help: Select Yes only when filing status is MFS.
+      - name: livedWithSpouseAnyTimeDuringTaxYear
+        type: boolean
+        required: false
+        label: Did you live with your spouse at any time during the tax year?
+        help: Select Yes for any cohabitation during the tax year. This affects worksheet branching.
+      - name: livedApartFromSpouseEntireTaxYear
+        type: boolean
+        required: false
+        label: Did you live apart from your spouse for the entire tax year?
+        help: If MFS and lived apart all year, line 6d should be checked.
+
+  - name: lumpSumElectionScreening
+    title: Lump-sum election screening (return-level)
+    multiplicity: single
+    showIf: hadSocialSecurityBenefits == true
+    instructions:
+      - These questions are return-level and intentionally kept only on taxpayer form to avoid spouse conflicts.
+    fields:
+      - name: hasLumpSumBackPaymentForPriorYears
+        type: boolean
+        required: false
+        label: Did the return include any Social Security/RRB lump-sum back payment for prior years?
+        help: Select Yes if any amount in current-year statements relates to earlier tax years.
+      - name: electsLumpSumElectionMethod
+        type: boolean
+        required: false
+        label: Are you electing the lump-sum election method for line 6c?
+        help: Select Yes to apply Pub. 915 lump-sum election when it reduces taxable benefits.
+      - name: hasLumpSumAllocationByYear
+        type: boolean
+        required: false
+        label: Do you have allocation by prior year for each lump-sum amount?
+        help: Select Yes only if prior-year allocation detail is available from notices or records.
+      - name: requiresPub915ExceptionComputation
+        type: boolean
+        required: false
+        label: Does this return require Pub. 915 exception computation?
+        help: Select Yes when worksheet exception handling is needed instead of normal worksheet-only flow.
+
+  - name: worksheetSupportInputs
+    title: Worksheet support inputs
+    multiplicity: single
+    showIf: hadSocialSecurityBenefits == true
+    instructions:
+      - Use these only when line 7a or line 8 worksheet inputs are not otherwise available from return computation.
+    fields:
+      - name: manualCapitalGainLossLine7a
+        type: amount
+        required: false
+        label: Manual capital gain or loss (line 7a) for worksheet support
+        placeholder: 0.00
+        help: Optional override used in worksheet line 3 input when needed.
+      - name: manualOtherIncomeLine8
+        type: amount
+        required: false
+        label: Manual other income (line 8) for worksheet support
+        placeholder: 0.00
+        help: Optional override used in worksheet line 3 input when needed.
+
+  - name: lumpSumDetails
+    title: Lump-sum details by prior year
+    multiplicity: multiple
+    showIf: hasLumpSumBackPaymentForPriorYears == true
+    instructions:
+      - Add one row per owner and prior year included in the current-year lump-sum payment.
+    fields:
+      - name: owner
+        type: select
+        required: true
+        options:
+          - taxpayer
+          - spouse
+        label: Benefit owner
+        help: Select the person whose prior-year benefit amount is being entered.
+      - name: priorTaxYear
+        type: integer
+        required: true
+        label: Prior tax year for this lump-sum allocation
+        help: Enter the tax year to which this back-payment portion relates.
+      - name: lumpSumAllocatedToPriorYear
+        type: amount
+        required: true
+        label: Lump-sum amount allocable to this prior year
+        placeholder: 0.00
+        help: Enter amount from SSA/RRB notice allocable to the selected prior year.
+      - name: priorYearOtherIncomeForRecompute
+        type: amount
+        required: false
+        label: Prior-year other income used for recomputation
+        placeholder: 0.00
+        help: Enter prior-year income inputs needed to recompute taxable benefits under election method.
+      - name: priorYearTaxExemptInterestForRecompute
+        type: amount
+        required: false
+        label: Prior-year tax-exempt interest for recomputation
+        placeholder: 0.00
+        help: Enter prior-year tax-exempt interest used in recomputation.
+      - name: priorYearAdjustmentsForRecompute
+        type: amount
+        required: false
+        label: Prior-year adjustments for recomputation
+        placeholder: 0.00
+        help: Enter prior-year adjustment total used by lump-sum recomputation.
+      - name: priorYearBenefitsPreviouslyReported
+        type: amount
+        required: false
+        label: Prior-year benefits previously reported
+        placeholder: 0.00
+        help: Enter prior-year benefits amount previously reported for that year.
+      - name: priorYearTaxableBenefitsPreviouslyReported
+        type: amount
+        required: false
+        label: Prior-year taxable benefits previously reported
+        placeholder: 0.00
+        help: Enter taxable Social Security benefits previously reported for that prior year.
+
+  # Backend-only statement imports. Not rendered in form component.
+  - name: importedStatementFields
+    title: Imported statement fields (backend only)
+    multiplicity: single
+    showIf: hadSocialSecurityBenefits == true
+    fields:
+      - name: importedSsa1099RecordCount
+        type: integer
+        required: false
+        readOnly: true
+        label: Number of SSA-1099 statements (imported)
+      - name: importedSsa1099Box5Total
+        type: amount
+        required: false
+        readOnly: true
+        label: SSA-1099 box 5 total (imported)
+      - name: importedSsa1099Box6FederalWithholdingTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: SSA-1099 box 6 total federal withholding (imported)
+      - name: importedRrb1099RecordCount
+        type: integer
+        required: false
+        readOnly: true
+        label: Number of RRB-1099 statements (imported)
+      - name: importedRrb1099Box5SsebTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: RRB-1099 box 5 SSEB total (imported)
+      - name: importedRrb1099Box10FederalWithholdingTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: RRB-1099 box 10 federal withholding total (imported)
+      - name: importedReturnWorksheetLine3IncomeTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Worksheet line 3 income total (imported)
+      - name: importedReturnWorksheetLine4TaxExemptInterest
+        type: amount
+        required: false
+        readOnly: true
+        label: Worksheet line 4 tax-exempt interest (imported)
+      - name: importedReturnWorksheetLine6AdjustmentsTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Worksheet line 6 adjustments total (imported)
+
+  # Backend-only computed values. Not rendered in form component.
+  - name: computedOutputs
+    title: Computed outputs (backend only)
+    multiplicity: single
+    showIf: hadSocialSecurityBenefits == true
+    fields:
+      - name: computedLine6aGrossBenefitsContributionTaxpayer
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed taxpayer contribution to Form 1040 line 6a
+      - name: computedLine6bTaxableBenefitsContributionTaxpayer
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed taxpayer contribution to Form 1040 line 6b
+      - name: computedTaxpayerLumpSumElectionContribution
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed taxpayer lump-sum election contribution
+      - name: computedReturnLine6aGrossBenefits
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Form 1040 line 6a
+      - name: computedReturnLine6bTaxableBenefits
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Form 1040 line 6b
+      - name: computedReturnLine6cChecked
+        type: boolean
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Form 1040 line 6c checkbox
+      - name: computedReturnLine6dChecked
+        type: boolean
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Form 1040 line 6d checkbox
+      - name: computedReturnTaxableBenefitsNormalMethod
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed taxable benefits under normal worksheet method
+      - name: computedReturnTaxableBenefitsLumpSumMethod
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed taxable benefits under lump-sum election method
+      - name: computedReturnUsesPub915Exception
+        type: boolean
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Pub. 915 exception method flag

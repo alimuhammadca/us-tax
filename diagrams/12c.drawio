@@ -1,0 +1,25 @@
+<mxfile host='app.diagrams.net' modified='2026-03-11T00:00:00.0000000Z' agent='Codex' version='20.8.16' type='device'>
+  <diagram id='12c-flow' name='Line 12c - Dual-status alien'>
+    <mxGraphModel dx='1200' dy='800' grid='1' gridSize='10' guides='1' tooltips='1' connect='1' arrows='1' fold='1' page='1' pageScale='1' pageWidth='1100' pageHeight='850' math='0' shadow='0'>
+      <root>
+        <mxCell id='0'/>
+        <mxCell id='1' parent='0'/>
+        <mxCell id='2' value='Input&#xa;youWereDualStatusAlien' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='60' y='200' width='220' height='90' as='geometry'/>
+        </mxCell>
+        <mxCell id='3' value='Decision&#xa;If true, check line 12c&#xa;and force standard deduction = 0' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='390' y='185' width='280' height='120' as='geometry'/>
+        </mxCell>
+        <mxCell id='4' value='Outputs&#xa;Form1040.deductions.line12cChecked&#xa;Standard deduction hard-zero branch' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='760' y='185' width='260' height='120' as='geometry'/>
+        </mxCell>
+        <mxCell id='5' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='2' target='3'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='6' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='3' target='4'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

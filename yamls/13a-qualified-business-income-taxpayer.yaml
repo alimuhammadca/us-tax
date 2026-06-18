@@ -1,0 +1,124 @@
+# Form 1040 line 13a taxpayer/family head workflow.
+# Approach: keep source statements authoritative and use this form only for supplemental non-statement facts.
+# NOTE: Raw K-1 and 1099-DIV box 5 data belong in statement workflows, not here.
+name: qualified-business-income-taxpayer
+title: Form 1040 - Qualified business income deduction (taxpayer/family head, line 13a)
+multiplicity: single
+formName: 1040
+category: deductions
+instructions:
+  - Use this form only if you have non-self-employment inputs relevant to Form 1040 line 13a.
+  - The source inputs for line 13a come from uploaded statements such as Schedule K-1 section 199A statements and Form 1099-DIV box 5.
+  - Use this form for prior-year QBI loss carryforward, statement-upload confirmation, and supplemental facts not captured directly from statements.
+  - Self-employment QBI from Schedule C or Schedule F is out of scope for this product and must be blocked.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: hadQualifiedBusinessIncomeInputs
+        type: boolean
+        required: true
+        label: Did you have any qualified business income deduction inputs for line 13a?
+        help: Select Yes if you have relevant section 199A inputs from statements or prior-year carryforward support.
+
+  - name: outOfScopeScreening
+    title: Things we can't help with yet
+    multiplicity: single
+    showIf: hadQualifiedBusinessIncomeInputs == true
+    instructions:
+      - Two paths are currently out of scope. Selecting Yes for either will result in a blocking flag after compute.
+    fields:
+      - name: hasScheduleCOrScheduleFQbiSources
+        type: boolean
+        required: false
+        label: Did any of your line 13a inputs come from Schedule C or Schedule F self-employment activity?
+        help: Select Yes if any section 199A input came from sole proprietorship or farm self-employment activity; this is currently out of scope.
+      - name: isCooperativePatronOfAgriculturalHorticulturalCooperative
+        type: boolean
+        required: false
+        label: Are you a patron of a specified agricultural or horticultural cooperative?
+        help: Select Yes if you received a domestic production activities deduction from a specified cooperative (Form 8995-A Schedule D). This path is currently out of scope.
+
+  - name: statementUploadCheck
+    title: Your uploaded statements
+    multiplicity: single
+    showIf: hadQualifiedBusinessIncomeInputs == true
+    instructions:
+      - The deduction is calculated from amounts in your uploaded statements. Confirm all applicable statements are in your library.
+      - Relevant statements: K-1 (Form 1065) with section 199A, K-1 (Form 1120-S) with section 199A, K-1 (Form 1041) with section 199A, Form 1099-DIV box 5.
+    fields:
+      - name: confirmAllReceivedQbiStatementsUploaded
+        type: boolean
+        required: true
+        label: I confirm all received statements for my line 13a deduction are uploaded
+        help: You must confirm this before saving.
+
+  - name: priorYearCarryforward
+    title: Prior-year loss carryforwards
+    multiplicity: single
+    showIf: hadQualifiedBusinessIncomeInputs == true
+    instructions:
+      - If your prior-year QBI worksheet shows a net loss that was not fully absorbed, it carries forward to reduce this year's deduction.
+      - The same applies to a net REIT/PTP loss from prior years.
+    fields:
+      - name: hasPriorYearQbiLossCarryforward
+        type: boolean
+        required: false
+        label: Do you have a prior-year QBI loss carryforward?
+        help: Select Yes if your prior return or QBI worksheet shows a carryforward that reduces the current-year line 13a deduction.
+      - name: priorYearQbiLossCarryforwardAmount
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Prior-year QBI loss carryforward amount
+        help: Enter the carryforward amount from your prior-year QBI support. Shown only when hasPriorYearQbiLossCarryforward is true.
+      - name: priorYearQbiCarryforwardNotes
+        type: text
+        required: false
+        placeholder: Prior-year return or worksheet reference
+        label: Prior-year QBI carryforward notes
+        help: Note where this carryforward came from. Shown only when hasPriorYearQbiLossCarryforward is true.
+      - name: hasPriorYearReitPtpLossCarryforward
+        type: boolean
+        required: false
+        label: Do you have a prior-year REIT/PTP net loss carryforward?
+        help: Select Yes if your prior-year qualified REIT dividends and PTP income netted to a loss that carries forward to offset current-year REIT/PTP income.
+      - name: priorYearReitPtpLossCarryforwardAmount
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Prior-year REIT/PTP net loss carryforward amount
+        help: Enter the carryforward amount. Reduces current-year qualified REIT/PTP income before the 20% component is computed. Shown only when hasPriorYearReitPtpLossCarryforward is true.
+
+  - name: supplementalAdjustments
+    title: Supplemental line 13a adjustments
+    multiplicity: single
+    showIf: hadQualifiedBusinessIncomeInputs == true
+    instructions:
+      - Enter only supplemental non-statement amounts or corrections needed for line 13a that are not already in uploaded statements.
+    fields:
+      - name: manualQualifiedBusinessIncomeAdjustment
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Manual qualified business income adjustment
+        help: Enter any non-self-employment QBI adjustment not already captured from statements.
+      - name: manualQualifiedReitDividendAdjustment
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Manual qualified REIT dividend adjustment
+        help: Enter any adjustment to qualified REIT dividends not already captured from statements.
+      - name: manualQualifiedPtpIncomeOrLossAdjustment
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Manual qualified PTP income or loss adjustment
+        help: Enter any qualified publicly traded partnership adjustment not already captured from statements.
+      - name: qbiSupplementalAdjustmentNotes
+        type: text
+        required: false
+        placeholder: Explain the adjustment
+        label: Supplemental adjustment notes
+        help: Briefly explain any manual line 13a adjustment entered above.

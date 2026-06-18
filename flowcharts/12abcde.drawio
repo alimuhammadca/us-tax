@@ -1,0 +1,179 @@
+<mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+
+    <!-- Title -->
+    <mxCell id="title" value="Form 1040 Lines 12a–12e — Standard / Itemized Deductions (2025) — Updated 2026-04-17" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=15;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="200" y="20" width="1100" height="30" as="geometry" />
+    </mxCell>
+
+    <!-- START -->
+    <mxCell id="start" value="START: computeLine12()" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+      <mxGeometry x="580" y="65" width="180" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- Determine checkboxes -->
+    <mxCell id="checkboxes" value="Determine line 12 checkboxes:&#xa;12a = someoneCanClaimYou OR (MFJ AND someoneCanClaimSpouse)&#xa;12b = spouseItemizesSeparateReturn&#xa;12c = youWereDualStatusAlien&#xa;12d count = sum of 0–4 age/blindness boxes&#xa;  (HOH: spouse boxes excluded by UI — no spouse tab)&#xa;  (QSS: capped at 2 boxes — spouse boxes not counted)&#xa;  (MFS: spouse boxes require spouseMeetsAgeBlindnessMfsRequirements)" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+      <mxGeometry x="460" y="140" width="420" height="80" as="geometry" />
+    </mxCell>
+    <mxCell id="e_start_check" edge="1" source="start" target="checkboxes" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- Gate: 12b or 12c? -->
+    <mxCell id="gate_12bc" value="line12b OR line12c?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="560" y="255" width="220" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="e_check_gate" edge="1" source="checkboxes" target="gate_12bc" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- Hard zero -->
+    <mxCell id="hardZero" value="standardDeduction = $0&#xa;(MFS spouse itemizes OR dual-status alien)" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+      <mxGeometry x="820" y="258" width="220" height="64" as="geometry" />
+    </mxCell>
+    <mxCell id="e_bc_yes" edge="1" source="gate_12bc" target="hardZero" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+      <mxCell value="Yes" as="label" />
+    </mxCell>
+
+    <!-- Gate: 12a? -->
+    <mxCell id="gate_12a" value="line12a?&#xa;(someone can claim taxpayer&#xa;or spouse as dependent)" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="560" y="360" width="220" height="80" as="geometry" />
+    </mxCell>
+    <mxCell id="e_bc_no" edge="1" source="gate_12bc" target="gate_12a" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+      <mxCell value="No" as="label" />
+    </mxCell>
+
+    <!-- Dependent worksheet -->
+    <mxCell id="depWorksheet" value="Dependent Standard Deduction Worksheet:&#xa;earnedIncome = dependentStandardDeductionEarnedIncome&#xa;if earnedIncome &gt; $900:&#xa;  line2 = earnedIncome + $450&#xa;else:&#xa;  line2 = $1,350 (minimum)&#xa;limitedBase = min(line2, base_sd_for_status)&#xa;addon = line12dCount × per_box_addon&#xa;standardDeduction = limitedBase + addon" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+      <mxGeometry x="190" y="360" width="340" height="140" as="geometry" />
+    </mxCell>
+    <mxCell id="e_12a_yes" edge="1" source="gate_12a" target="depWorksheet" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+      <mxCell value="Yes" as="label" />
+    </mxCell>
+
+    <!-- Gate: 12d boxes? -->
+    <mxCell id="gate_12d" value="line12dCount &gt; 0?&#xa;(age / blindness boxes)" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="580" y="480" width="180" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="e_12a_no" edge="1" source="gate_12a" target="gate_12d" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+      <mxCell value="No" as="label" />
+    </mxCell>
+
+    <!-- Age/blindness chart -->
+    <mxCell id="ageBlindChart" value="Age/Blindness Chart:&#xa;standardDeduction = base_sd + (per_box_addon × count)&#xa;Single/HOH: +$2,000/box (max 2 boxes for HOH)&#xa;MFJ/MFS: +$1,600/box (MFJ max 4, MFS max 4)&#xa;QSS: +$1,600/box, capped at 2 boxes" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+      <mxGeometry x="820" y="373" width="320" height="100" as="geometry" />
+    </mxCell>
+    <mxCell id="e_12d_yes" edge="1" source="gate_12d" target="ageBlindChart" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+      <mxCell value="Yes" as="label" />
+    </mxCell>
+
+    <!-- Base standard deduction -->
+    <mxCell id="baseSd" value="Base Standard Deduction:&#xa;Single/MFS: $15,750  MFJ/QSS: $31,500  HOH: $23,625" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+      <mxGeometry x="500" y="590" width="340" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="e_12d_no" edge="1" source="gate_12d" target="baseSd" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+      <mxCell value="No" as="label" />
+    </mxCell>
+
+    <!-- Converge standard deduction -->
+    <mxCell id="sdResult" value="standardDeductionBase determined" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+      <mxGeometry x="530" y="680" width="280" height="40" as="geometry" />
+    </mxCell>
+    <mxCell id="e_dep_conv" edge="1" source="depWorksheet" target="sdResult" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="e_age_conv" edge="1" source="ageBlindChart" target="sdResult" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="e_base_conv" edge="1" source="baseSd" target="sdResult" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="e_hard_conv" edge="1" source="hardZero" target="sdResult" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- Build Schedule A -->
+    <mxCell id="buildSchedA" value="buildScheduleA():&#xa;Medical: max(0, medicalPaid − 7.5% × AGI)&#xa;SALT: min(incomeOrSalesTax + realEstate + personalProp, $40,000/$20,000 MFS)&#xa;  [MAGI phasedown above $500k/$250k MFS not yet implemented]&#xa;Foreign taxes: foreignTaxesPaid (line 6; deduction alt to Form 1116)&#xa;Interest: mortgage + points + min(investInt, netInvIncome)&#xa;Charity: cash + non-cash&#xa;Casualty &amp; theft: personalCasualtyAndTheftLoss (line 15)&#xa;Disaster: netQualifiedDisasterLoss (line 16)&#xa;Other: otherAllowedItemizedDeductions (line 16)&#xa;→ totalItemizedDeductions" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+      <mxGeometry x="460" y="760" width="420" height="130" as="geometry" />
+    </mxCell>
+    <mxCell id="e_sd_scheda" edge="1" source="sdResult" target="buildSchedA" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- Disaster gate -->
+    <mxCell id="gate_disaster" value="electDisasterLoss&#xa;StandardDeductionIncrease?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="565" y="930" width="210" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="e_scheda_disaster" edge="1" source="buildSchedA" target="gate_disaster" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- Apply disaster increase -->
+    <mxCell id="disasterIncrease" value="standardDeduction += netQualifiedDisasterLoss&#xa;(Schedule A line 16 combined amount path)" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+      <mxGeometry x="820" y="933" width="260" height="64" as="geometry" />
+    </mxCell>
+    <mxCell id="e_disaster_yes" edge="1" source="gate_disaster" target="disasterIncrease" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+      <mxCell value="Yes" as="label" />
+    </mxCell>
+
+    <!-- chooseLine12e -->
+    <mxCell id="chooseLine12e" value="chooseLine12e(deductionElection):&#xa;'STANDARD' → standardDeduction&#xa;'ITEMIZED' → itemized (Schedule A line 17)&#xa;'AUTO'     → max(standard, itemized)" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+      <mxGeometry x="490" y="1050" width="360" height="80" as="geometry" />
+    </mxCell>
+    <mxCell id="e_disaster_no" edge="1" source="gate_disaster" target="chooseLine12e" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+      <mxCell value="No" as="label" />
+    </mxCell>
+    <mxCell id="e_disaster_merge" edge="1" source="disasterIncrease" target="chooseLine12e" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- Line 12e -->
+    <mxCell id="line12e" value="line12e = chosen deduction amount&#xa;deductionType = 'Standard' or 'Itemized'" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+      <mxGeometry x="530" y="1165" width="280" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="e_choose_12e" edge="1" source="chooseLine12e" target="line12e" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- QBI / line 13a -->
+    <mxCell id="line13a" value="computeLine13a(line12e, status, AGI)&#xa;→ Form 8995 or Form 8995-A&#xa;→ line 13a = QBI deduction" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+      <mxGeometry x="530" y="1250" width="280" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="e_12e_13a" edge="1" source="line12e" target="line13a" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- Line 14 -->
+    <mxCell id="line14" value="line14 = line12e + line13a&#xa;(line13b added later by Schedule 1-A)" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+      <mxGeometry x="530" y="1340" width="280" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="e_13a_14" edge="1" source="line13a" target="line14" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- Line 15 -->
+    <mxCell id="line15" value="line15 = max(0, AGI − line14)&#xa;Updated later: max(0, AGI − line12e − line13a − line13b)" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+      <mxGeometry x="530" y="1420" width="280" height="55" as="geometry" />
+    </mxCell>
+    <mxCell id="e_14_15" edge="1" source="line14" target="line15" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- Form 4684 required attachment -->
+    <mxCell id="form4684" value="Form 4684 required attachment&#xa;when netQualifiedDisasterLoss &gt; 0&#xa;AND (itemized OR disaster increase)" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+      <mxGeometry x="870" y="1165" width="220" height="65" as="geometry" />
+    </mxCell>
+    <mxCell id="e_12e_4684" edge="1" source="line12e" target="form4684" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- END -->
+    <mxCell id="end" value="END → Line12Computation:&#xa;Deductions, ScheduleA, Form4684, Form8995, Form8995A&#xa;consumed by: line16, AMT, QBI, EIC" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+      <mxGeometry x="510" y="1510" width="320" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="e_15_end" edge="1" source="line15" target="end" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- Legend -->
+    <mxCell id="leg1" value="Green = compute step" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="50" y="140" width="150" height="30" as="geometry" />
+    </mxCell>
+    <mxCell id="leg2" value="Yellow = decision gate" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="50" y="185" width="150" height="40" as="geometry" />
+    </mxCell>
+    <mxCell id="leg3" value="Red = flag / error / hard-zero" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="50" y="240" width="150" height="30" as="geometry" />
+    </mxCell>
+    <mxCell id="leg4" value="Purple = aggregate / final amount" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="50" y="285" width="150" height="30" as="geometry" />
+    </mxCell>
+    <mxCell id="leg5" value="Orange = compute with known gap" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="50" y="330" width="150" height="30" as="geometry" />
+    </mxCell>
+    <mxCell id="leg6" value="SALT $40k/$20k MFS implemented 2026-04-17.&#xa;MAGI phasedown still deferred." style="text;html=1;strokeColor=none;fillColor=none;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="50" y="375" width="200" height="35" as="geometry" />
+    </mxCell>
+
+  </root>
+</mxGraphModel>

@@ -1,0 +1,49 @@
+formId: third-party-designee-taxpayer
+title: Third Party Designee
+description: >
+  Authorize another person to discuss this return with the IRS. This does not
+  give the designee power to represent you — only to answer questions about
+  your return during processing.
+
+sections:
+  - id: designee
+    title: Third party designee
+    instructions:
+      - >
+        If you want to allow a friend, family member, or any other person you
+        choose to discuss this tax return with the IRS, check Yes and fill in
+        the information below. This authorization expires on April 15, 2027.
+    fields:
+      - id: allowDesignee
+        label: Do you want to allow another person to discuss this return with the IRS?
+        type: boolean
+        helpText: >
+          By checking Yes, you authorize the IRS to call the designee to answer
+          questions that arise during the processing of your return. On a joint
+          return, both you and your spouse authorize the designee. This does not
+          authorize the designee to receive your refund, bind you to anything,
+          or represent you before the IRS.
+
+      - id: designeeName
+        label: Designee's name
+        type: string
+        showIf: allowDesignee == true
+        helpText: >
+          Enter the full name of the person you are authorizing. This can be
+          your tax preparer, a family member, or any other trusted person.
+
+      - id: designeePhone
+        label: Phone number
+        type: string
+        showIf: allowDesignee == true
+        helpText: >
+          Enter the designee's phone number where the IRS can reach them.
+
+      - id: designeePin
+        label: Personal identification number (PIN)
+        type: string
+        showIf: allowDesignee == true
+        helpText: >
+          Enter any five digits the designee chooses as their personal
+          identification number. The IRS uses this to verify the designee's
+          identity when they call. Cannot be 00000.

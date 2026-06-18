@@ -1,0 +1,133 @@
+# ------------------------------------------------------------------------------
+# Medicaid Waiver Payments — Spouse
+# Purpose:
+#   Capture spouse inputs needed to compute:
+#     - Form 1040, Line 1d (spouse's share of Medicaid waiver payments not in W-2 box 1)
+#     - Schedule 1, Line 8s (spouse's negative back-out when earned-income election is active)
+#   Only read on MFJ returns; election is made independently for each spouse.
+# ------------------------------------------------------------------------------
+name: medicaid-waiver-payments-spouse
+title: Medicaid waiver payments (spouse)
+multiplicity: single
+formName: medicaidWaiverPayments
+category: medicaidWaiverPaymentsIncome
+instructions:
+  - Use this form for your spouse's payments under a state Medicaid Home and Community-Based Services (HCBS) waiver program.
+  - The earned-income election (line 8s) is made independently for each spouse; your own election is on the taxpayer version of this form.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: receivedMedicaidWaiverPayments
+        type: boolean
+        required: true
+        label: Did your spouse receive Medicaid waiver payments during the tax year?
+        help: Select Yes if your spouse received payments from a Medicaid waiver program (sometimes shown on W-2 box 12 code II, on a 1099, or only on a state/agency statement).
+
+  - name: electionsAndStatus
+    title: Elections and status
+    multiplicity: single
+    instructions:
+      - These answers determine where the spouse's amounts flow (1040 line 1d vs Schedule C) and whether the excluded amounts may be counted in earned income for credits.
+    fields:
+      - name: includeQualifiedPaymentsInEarnedIncomeForEIC_ACTC
+        type: boolean
+        required: false
+        label: Do you want your spouse's qualified Medicaid waiver payments to count toward the Earned Income Credit or Child Tax Credit?
+        help: IRS allows each spouse to independently choose to include ALL (but not part) of their qualified payments in earned income for EIC/ACTC purposes.
+      - name: hasTradeOrBusinessProvidingHomeCare
+        type: boolean
+        required: false
+        label: Does your spouse run a home-care business (sole proprietor) that receives these payments?
+        help: If Yes and the payments were reported on a 1099, the IRS instructs reporting on Schedule C with an offsetting "Notice 2014-7" expense rather than line 1d.
+
+  - name: qualificationFacts
+    title: Qualification facts (for Notice 2014-7)
+    multiplicity: single
+    showIf: receivedMedicaidWaiverPayments == true
+    instructions:
+      - These fields help support the classification of amounts as qualified excludable Medicaid waiver payments.
+    fields:
+      - name: programName
+        type: text
+        required: false
+        label: Medicaid waiver program name (if known)
+        placeholder: e.g., State HCBS waiver program
+        help: Enter the name of the Medicaid waiver program under which your spouse received payments, if known.
+      - name: careRecipientRelationship
+        type: select
+        required: false
+        options:
+          - CHILD
+          - PARENT
+          - SPOUSE
+          - OTHER_RELATIVE
+          - NON_RELATIVE
+        label: Relationship of the care recipient to your spouse (if applicable)
+        help: Select the relationship of the person your spouse provided care for under the Medicaid waiver program.
+      - name: livesWithCareRecipient
+        type: boolean
+        required: false
+        label: Did your spouse live with the care recipient for whom they provided care?
+        help: This can be relevant for determining whether payments qualify as excludable difficulty-of-care payments.
+
+  - name: medicaidWaiverPayments
+    title: Medicaid waiver payments
+    multiplicity: multiple
+    instructions:
+      - Add one row per payer/source statement (W-2, 1099, or year-end summary) that includes your spouse's Medicaid waiver payments.
+      - Enter only the portion that is Medicaid waiver payments (not other taxable items like vacation pay).
+    fields:
+      - name: payerName
+        type: text
+        required: true
+        placeholder: Payer / agency name
+        label: Payer name
+        help: Enter the payer or agency that issued the statement or paid your spouse.
+      - name: payerTIN
+        type: text
+        required: false
+        placeholder: EIN if known
+        label: Payer EIN (if known)
+        help: Optional but helpful for matching to statements.
+      - name: sourceType
+        type: select
+        options:
+          - W-2
+          - 1099-MISC
+          - 1099-NEC
+          - Other
+        required: true
+        placeholder: W2 | 1099-MISC | 1099-NEC | Other
+        label: Source type
+        help: Identify whether this came from a W-2, 1099-MISC, 1099-NEC, or other statement.
+      - name: qualifiedNotice2014_7Amount
+        type: amount
+        required: true
+        placeholder: Qualified Medicaid waiver payments
+        label: Qualified Medicaid waiver payments (Notice 2014-7 amount)
+        help: Enter the amount that qualifies as excludable difficulty-of-care payments under Notice 2014-7.
+      - name: w2Box12CodeIIAmount
+        type: amount
+        required: false
+        placeholder: Amount from W-2 box 12 code II (if any)
+        label: W-2 box 12 code II (if applicable)
+        help: If this source is a W-2 and box 12 has code II, enter that amount (prefer auto-filled from the W-2).
+      - name: qualifiedAmountIncludedInW2Box1
+        type: amount
+        required: false
+        placeholder: Qualified amount included in W-2 box 1 (if any)
+        label: Qualified amount included in W-2 box 1 (if applicable)
+        help: Usually 0. Use only if qualified Medicaid waiver payments were included in W-2 box 1 wages.
+      - name: taxablePaymentsNotInW2Box1
+        type: amount
+        required: false
+        placeholder: Taxable Medicaid waiver-related payments not in W-2 box 1
+        label: Taxable Medicaid waiver-related payments not included in W-2 box 1
+        help: If the payer statement includes taxable payments related to the program and these amounts are NOT in W-2 box 1, enter them here.
+      - name: notes
+        type: text
+        required: false
+        label: Notes (optional)
+        placeholder: Any details helpful for classification or reconciliation

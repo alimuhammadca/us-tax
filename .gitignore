@@ -1,0 +1,49 @@
+# Sub-repos — already on GitHub under separate origins.
+us-tax-be/
+us-tax-ui/
+
+# Personal / business folders.
+Maaz/
+Business Plans/
+
+# Working scratch + backups.
+codex-temp/
+backups/
+shell-backups/
+statement-component-backups/
+
+# Large asset bins not needed for the spec/docs repo.
+screenshots/
+images/
+figma/
+yaml/
+
+# Working scratch directories not listed in the include set.
+mappings/
+plans/
+statements/
+
+# Loose binaries / Office temp / log noise.
+*.png
+*.jpeg
+*.jpg
+*.docx
+~$*
+log.txt
+notes.txt
+statements.txt
+statements2.txt
+test_cases.txt
+
+# Standalone helper scripts that depend on us-tax-be / us-tax-ui paths.
+compute-coords.js
+extract-models.ps1
+generate-k1-overlay.js
+inject-k1-overlay.js
+load-context.cmd
+
+# IDE / OS clutter.
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

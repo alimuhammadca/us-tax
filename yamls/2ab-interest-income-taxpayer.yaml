@@ -1,0 +1,409 @@
+# Form 1040 line 2a/2b (taxpayer/family head) workflow.
+# Approach: keep user questions + imported statement fields + computed outputs in one YAML.
+# NOTE: Sections marked as backend-only are NOT supposed to be rendered in the actual form component.
+name: interest-income-taxpayer
+title: Form 1040 - Interest income (taxpayer, lines 2a and 2b)
+multiplicity: single
+formName: 1040
+category: income
+instructions:
+  - Start here only if the taxpayer had interest income for Form 1040 lines 2a and/or 2b.
+  - Upload validation is mandatory before entering supplemental details.
+  - At least one of 1099-INT, 1099-DIV, or 1099-OID must be uploaded before continue.
+  - This taxpayer form owns return-level Schedule B gating questions to avoid spouse conflicts.
+  - Self-employment income is out of scope and excluded.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: hasBusinessRelatedInterest
+        type: boolean
+        required: false
+        label: Is any of your interest income connected to a business or self-employment activity?
+        help: Business-related interest income is reported on Schedule C and is not handled here. Do not include it in this form.
+      - name: hadInterestIncome
+        type: boolean
+        required: true
+        label: Did you have any interest income during the tax year?
+        help: If No, stop here and do not continue this interview.
+
+  - name: statementUploadCheck
+    title: Statement upload check
+    multiplicity: single
+    showIf: hadInterestIncome == true
+    instructions:
+      - At least one of 1099-INT, 1099-DIV, or 1099-OID must be uploaded to continue.
+      - The application auto-detects uploaded statements; this field is kept for cases where no statements exist yet.
+    fields:
+      - name: confirmAllReceivedInterestStatementsUploaded
+        type: boolean
+        required: true
+        label: Have you uploaded all the interest statements you received (1099-INT, 1099-DIV, 1099-OID)?
+        help: "Please upload all Forms 1099-INT, 1099-DIV, and 1099-OID you received before saving. The application reads box amounts directly from your uploaded statements."
+
+  - name: supplementalInterestAmounts
+    title: Supplemental interest amounts
+    multiplicity: single
+    showIf: hadInterestIncome == true
+    fields:
+      - name: manualTaxableInterestNotOnStatements
+        type: amount
+        required: false
+        label: Taxable interest not reported on statements
+        placeholder: 0.00
+        help: "Enter taxable interest not shown on uploaded statements, such as small amounts without a 1099. This flows to Form 1040 line 2b."
+      - name: manualTaxExemptInterestNotOnStatements
+        type: amount
+        required: false
+        label: Tax-exempt interest not reported on statements
+        placeholder: 0.00
+        help: "Enter tax-exempt interest not shown on uploaded statements (e.g., direct holdings of municipal bonds). This flows to Form 1040 line 2a. Do NOT include market discount on a tax-exempt bond — that is taxable interest (line 2b), not tax-exempt interest."
+      - name: taxExemptStatedInterestFrom1099OidBox2
+        type: amount
+        required: false
+        label: Portion of 1099-OID box 2 that is tax-exempt stated interest
+        placeholder: 0.00
+        help: "Enter only the tax-exempt portion of 1099-OID box 2 for tax-exempt OID bonds. This flows to Form 1040 line 2a."
+      - name: taxablePortionFrom1099OidBox2Override
+        type: amount
+        required: false
+        label: Taxable portion of 1099-OID box 2 to include (override)
+        placeholder: 0.00
+        help: "Use only when you need to override the taxable portion derived from 1099-OID box 2. This flows to Form 1040 line 2b."
+
+  - name: interestAdjustments
+    title: Interest adjustments
+    multiplicity: single
+    showIf: hadInterestIncome == true
+    instructions:
+      - Enter adjustments only when not already netted by payer statements.
+    fields:
+      - name: hasInterestAdjustments
+        type: boolean
+        required: false
+        label: Do any of these less common interest adjustments apply to you?
+        help: "Check this if you paid accrued interest to a seller when you bought a bond, you are a nominee recipient of interest belonging to someone else, or you are reducing interest or OID below the 1099-reported amount due to bond premium or acquisition premium not already reflected on your statements."
+      - name: accruedInterestPaidAdjustment
+        type: amount
+        required: false
+        label: Interest you paid to a bond seller when you bought the bond mid-period
+        placeholder: 0.00
+        help: "When you buy a bond between interest payment dates, you pay the seller for the interest that accrued since the last payment. You can subtract this amount because you did not actually earn that portion of the interest — you prepaid it."
+        showIf: hasInterestAdjustments == true
+      - name: nomineeInterestAdjustment
+        type: amount
+        required: false
+        label: Interest reported under your name that actually belongs to someone else
+        placeholder: 0.00
+        help: "If a 1099-INT was issued in your name but the interest belongs to another person (such as a joint account co-owner), enter the amount that belongs to them here. You are a 'nominee' for their share."
+        showIf: hasInterestAdjustments == true
+      - name: taxableBondPremiumAdjustmentNotInStatements
+        type: amount
+        required: false
+        label: Taxable bond premium adjustment not reflected on statements
+        placeholder: 0.00
+        help: Enter taxable bond premium amortization only when payer statements did not already net it.
+        showIf: hasInterestAdjustments == true
+      - name: treasuryBondPremiumAdjustmentNotInStatements
+        type: amount
+        required: false
+        label: Treasury bond premium adjustment not reflected on statements
+        placeholder: 0.00
+        help: Enter Treasury bond premium amortization only when not already reflected on payer statements.
+        showIf: hasInterestAdjustments == true
+      - name: taxExemptBondPremiumAdjustmentNotInStatements
+        type: amount
+        required: false
+        label: Tax-exempt bond premium adjustment not reflected on statements
+        placeholder: 0.00
+        help: Enter tax-exempt bond premium amortization only when not already reflected on payer statements.
+        showIf: hasInterestAdjustments == true
+      - name: oidAcquisitionPremiumAdjustmentNotInStatements
+        type: amount
+        required: false
+        label: OID acquisition premium adjustment not reflected on statements
+        placeholder: 0.00
+        help: Enter acquisition premium amortization only when OID reported by payer was not already net.
+        showIf: hasInterestAdjustments == true
+      - name: priorYearReportedSavingsBondAdjustment
+        type: amount
+        required: false
+        label: U.S. savings bond interest you already reported in a prior year
+        placeholder: 0.00
+        help: "If you elected to report Series EE or I savings bond interest each year as it accrued (instead of at redemption), your 1099-INT box 3 at redemption will include amounts you already reported in prior tax years. Enter the prior-year-reported portion here — it reduces Form 1040 line 2b and is listed as a negative item on Schedule B. Triggers Schedule B regardless of the $1,500 threshold (IRS Publication 17 chapter 6 condition #4)."
+        showIf: hasInterestAdjustments == true
+      - name: frozenDepositInterestAdjustment
+        type: amount
+        required: false
+        label: Interest from a frozen deposit you cannot withdraw
+        placeholder: 0.00
+        help: "A 1099-INT box 1 may include interest on a deposit you cannot access — for example, when a court order, regulator, or bankruptcy has frozen the account. The inaccessible portion is non-taxable until you can withdraw it. Enter the frozen portion here — it reduces Form 1040 line 2b and is listed as a negative item on Schedule B. Triggers Schedule B regardless of the $1,500 threshold (IRS Publication 17 chapter 6 condition #6)."
+        showIf: hasInterestAdjustments == true
+      - name: marketDiscountSection1278bElection
+        type: boolean
+        required: false
+        label: Have you made the Internal Revenue Code §1278(b) election to include market discount as interest each year?
+        help: "Most filers leave this NO. By default, market discount (1099-OID box 5) accrued during your ownership of a bond is taxed only when you sell or redeem the bond — at that point it becomes ordinary income on Schedule D. The §1278(b) election lets you instead include accrued market discount as interest income each year. The election is IRREVOCABLE and applies to ALL market discount bonds you acquire after the election year. Only choose Yes if you have filed (or are filing with this return) the written §1278(b) election statement required by IRS Publication 550."
+        showIf: hasInterestAdjustments == true
+      - name: payerAlreadyReportedNetInterestOrOid
+        type: boolean
+        required: false
+        label: Did your broker or bank already reduce the reported interest or OID on your statement to account for the premium?
+        help: Select Yes if payer already netted bond premium or acquisition premium into reported amounts.
+        showIf: hasInterestAdjustments == true
+      - name: reducingInterestBelow1099ByBondPremium
+        type: boolean
+        required: false
+        label: Did you pay more than face value for a bond and are reducing reported interest using bond premium amortization?
+        help: Select Yes when you are reducing reported interest using amortizable bond premium rules.
+        showIf: hasInterestAdjustments == true
+      - name: reducingOidBelow1099ByAcquisitionPremium
+        type: boolean
+        required: false
+        label: Did you pay more than face value for an OID bond and are reducing reported OID using acquisition premium amortization?
+        help: Select Yes when you are reducing reported OID using acquisition premium rules.
+        showIf: hasInterestAdjustments == true
+
+  - name: scheduleBConditions
+    title: Savings bond exclusion
+    multiplicity: single
+    showIf: hadInterestIncome == true
+    instructions:
+      - Return-level gating questions belong only on taxpayer/family-head form to avoid conflicts.
+    fields:
+      - name: claimsSavingsBondExclusionForm8815
+        type: boolean
+        required: false
+        label: Are you claiming Series EE/I savings bond interest exclusion?
+        help: "Select Yes if you are claiming the exclusion for eligible Series EE or I bond interest redeemed for qualified education expenses (Form 8815). Enter only the final exclusion amount below — Form 8815 is not computed here."
+      - name: savingsBondExclusionAmount
+        type: amount
+        required: false
+        label: Excludable savings bond interest amount (override)
+        placeholder: 0.00
+        help: "Enter the excludable savings bond interest amount you computed externally using the IRS Publication 550 / Form 8815 worksheet. This is a power-user override — provide it OR fill in the line-by-line fields below."
+        showIf: claimsSavingsBondExclusionForm8815 == true
+      # Form 8815 line-by-line intake (Phase 3 — 2026-06-02). Grouped accordion
+      # within the Series EE/I savings bond exclusion section. Three nested
+      # sub-sections: line 1 enrolled-person × institution table (9 fields),
+      # lines 2/3/5/6 expense+proceeds (4 fields), and the line-9 MAGI override
+      # + special-circumstance suppression flag (2 fields). Authority:
+      # IRC §135 + IRS 2025 Form 8815 + Pub. 970 chapter 10.
+      - name: form8815Row1PersonEnrolled
+        type: text
+        required: false
+        label: Form 8815 Line 1 Row 1 — Name of person enrolled
+        showIf: claimsSavingsBondExclusionForm8815 == true
+      - name: form8815Row1InstitutionName
+        type: text
+        required: false
+        label: Form 8815 Line 1 Row 1 — Institution name
+        showIf: claimsSavingsBondExclusionForm8815 == true
+      - name: form8815Row1InstitutionAddress
+        type: text
+        required: false
+        label: Form 8815 Line 1 Row 1 — Institution address
+        showIf: claimsSavingsBondExclusionForm8815 == true
+      - name: form8815Row2PersonEnrolled
+        type: text
+        required: false
+        label: Form 8815 Line 1 Row 2 — Name of person enrolled
+        showIf: claimsSavingsBondExclusionForm8815 == true
+      - name: form8815Row2InstitutionName
+        type: text
+        required: false
+        label: Form 8815 Line 1 Row 2 — Institution name
+        showIf: claimsSavingsBondExclusionForm8815 == true
+      - name: form8815Row2InstitutionAddress
+        type: text
+        required: false
+        label: Form 8815 Line 1 Row 2 — Institution address
+        showIf: claimsSavingsBondExclusionForm8815 == true
+      - name: form8815Row3PersonEnrolled
+        type: text
+        required: false
+        label: Form 8815 Line 1 Row 3 — Name of person enrolled
+        showIf: claimsSavingsBondExclusionForm8815 == true
+      - name: form8815Row3InstitutionName
+        type: text
+        required: false
+        label: Form 8815 Line 1 Row 3 — Institution name
+        showIf: claimsSavingsBondExclusionForm8815 == true
+      - name: form8815Row3InstitutionAddress
+        type: text
+        required: false
+        label: Form 8815 Line 1 Row 3 — Institution address
+        showIf: claimsSavingsBondExclusionForm8815 == true
+      - name: form8815QualifiedHigherEducationExpenses
+        type: amount
+        required: false
+        label: Form 8815 Line 2 — Total qualified higher education expenses
+        placeholder: 0.00
+        showIf: claimsSavingsBondExclusionForm8815 == true
+      - name: form8815NontaxableEducationalBenefits
+        type: amount
+        required: false
+        label: Form 8815 Line 3 — Nontaxable educational benefits
+        placeholder: 0.00
+        showIf: claimsSavingsBondExclusionForm8815 == true
+      - name: form8815TotalSeriesEEIBondProceedsCashed
+        type: amount
+        required: false
+        label: Form 8815 Line 5 — Total Series EE/I bond proceeds cashed in 2025
+        placeholder: 0.00
+        showIf: claimsSavingsBondExclusionForm8815 == true
+      - name: form8815InterestPortionFromBondProceeds
+        type: amount
+        required: false
+        label: Form 8815 Line 6 — Interest portion included on Line 5 (override)
+        placeholder: 0.00
+        help: "Auto-derived from 1099-INT box 3 unless overridden here. Use the override when bonds require the Line 6 Worksheet (Phase 5)."
+        showIf: claimsSavingsBondExclusionForm8815 == true
+      - name: form8815ManualMagiOverride
+        type: amount
+        required: false
+        label: Form 8815 Line 9 — Modified AGI (override)
+        placeholder: 0.00
+        help: "Default: computed from Form 1040 line 11b + Form 2555 add-backs + adoption assistance + Puerto Rico exclusion. Override only if you computed MAGI externally per IRS Pub 970 chapter 10."
+        showIf: claimsSavingsBondExclusionForm8815 == true
+      - name: form8815IsBlockedSpecificCircumstance
+        type: boolean
+        required: false
+        label: I have a special circumstance that disqualifies me (bonds in child's name; bondholder under 24 at issuance)
+        showIf: claimsSavingsBondExclusionForm8815 == true
+
+  - name: scheduleBForeignConditions
+    title: Foreign account disclosure
+    multiplicity: single
+    showIf: hadInterestIncome == true
+    instructions:
+      - Return-level foreign account gating questions belong only on taxpayer/family-head form to avoid conflicts.
+    fields:
+      - name: hasForeignFinancialSituation
+        type: boolean
+        required: false
+        label: Do any of these less common foreign account situations apply?
+        help: "Check this if you had a foreign financial account, had signature authority over a foreign account, or received a distribution from or transferred assets to a foreign trust."
+      - name: hasForeignAccountForScheduleBPartIII
+        type: boolean
+        required: false
+        label: Did you have a financial account at a foreign bank, brokerage, or investment institution at any time during 2025, or did you have signature authority over such an account?
+        help: "This includes checking, savings, securities, or other financial accounts at a bank or institution located outside the United States. Answer Yes even if you did not own the account — signature authority counts."
+        showIf: hasForeignFinancialSituation == true
+      - name: hasFbarRequirement
+        type: boolean
+        required: false
+        label: Did the aggregate value of all your foreign financial accounts exceed $10,000 at any point during 2025?
+        help: If yes, you may need to file FinCEN Form 114 (FBAR) separately with the Financial Crimes Enforcement Network. This does not affect your federal tax return filing.
+        showIf: hasForeignAccountForScheduleBPartIII == true
+      - name: hasForeignTrustDistributionOrTransfer
+        type: boolean
+        required: false
+        label: Did you receive money or property from a foreign trust, or did you transfer money or property to a foreign trust?
+        help: "A foreign trust is a trust that is not under the primary supervision of a U.S. court or not controlled by U.S. persons. Include distributions you received as a beneficiary."
+        showIf: hasForeignFinancialSituation == true
+
+  # Backend-only statement imports. Not rendered in form component.
+  - name: importedStatementFields
+    title: Imported statement fields (backend only)
+    multiplicity: single
+    showIf: hadInterestIncome == true
+    fields:
+      - name: imported1099IntBox1TaxableInterest
+        type: amount
+        required: false
+        readOnly: true
+        label: 1099-INT box 1 total (imported)
+      - name: imported1099IntBox3TreasuryInterest
+        type: amount
+        required: false
+        readOnly: true
+        label: 1099-INT box 3 total (imported)
+      - name: imported1099IntBox8TaxExemptInterest
+        type: amount
+        required: false
+        readOnly: true
+        label: 1099-INT box 8 total (imported)
+      - name: imported1099IntBox9PrivateActivityBondInterest
+        type: amount
+        required: false
+        readOnly: true
+        label: 1099-INT box 9 total (imported)
+      - name: imported1099IntBox11BondPremium
+        type: amount
+        required: false
+        readOnly: true
+        label: 1099-INT box 11 total (imported)
+      - name: imported1099IntBox12TreasuryBondPremium
+        type: amount
+        required: false
+        readOnly: true
+        label: 1099-INT box 12 total (imported)
+      - name: imported1099IntBox13TaxExemptBondPremium
+        type: amount
+        required: false
+        readOnly: true
+        label: 1099-INT box 13 total (imported)
+      - name: imported1099DivBox12ExemptInterestDividends
+        type: amount
+        required: false
+        readOnly: true
+        label: 1099-DIV box 12 total (imported)
+      - name: imported1099OidBox1Oid
+        type: amount
+        required: false
+        readOnly: true
+        label: 1099-OID box 1 total (imported)
+      - name: imported1099OidBox2OtherPeriodicInterest
+        type: amount
+        required: false
+        readOnly: true
+        label: 1099-OID box 2 total (imported)
+      - name: imported1099OidBox6AcquisitionPremium
+        type: amount
+        required: false
+        readOnly: true
+        label: 1099-OID box 6 total (imported)
+      - name: imported1099OidBox11TaxExemptOid
+        type: amount
+        required: false
+        readOnly: true
+        label: 1099-OID box 11 total (imported)
+
+  # Backend-only computed values. Not rendered in form component.
+  - name: computedOutputs
+    title: Computed outputs (backend only)
+    multiplicity: single
+    showIf: hadInterestIncome == true
+    fields:
+      - name: computedLine2aTaxExemptInterest
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Form 1040 line 2a
+      - name: computedLine2bTaxableInterest
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Form 1040 line 2b
+      - name: computedScheduleBRequired
+        type: boolean
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Schedule B required flag
+      - name: computedScheduleBPartITotalInterest
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Schedule B Part I total interest
+      - name: computedForm6251Line2g
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Form 6251 line 2g

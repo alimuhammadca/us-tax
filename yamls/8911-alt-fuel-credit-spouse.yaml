@@ -1,0 +1,122 @@
+# Form 8911 - Alternative Fuel Vehicle Refueling Property Credit - spouse.
+# The spouse form is supplemental only on MFJ returns. The output remains one
+# consolidated Form 8911 per return plus one Schedule A attachment per property.
+name: alt-fuel-credit-spouse
+title: Form 8911 - Alt fuel credit (spouse)
+multiplicity: single
+formName: 8911
+category: deductions
+instructions:
+  - Use this form only for spouse-owned refueling properties or spouse-side pass-through credit amounts on a joint return.
+  - The current app scope still produces one joint Form 8911 for the return.
+sections:
+  - name: screening
+    title: Spouse supplemental input
+    multiplicity: single
+    fields:
+      - name: spouseHasAltFuelCreditInputs
+        type: boolean
+        required: true
+        label: Does your spouse have additional refueling property credit information to add?
+
+  - name: spousePassThroughCredit
+    title: Spouse pass-through credit support
+    multiplicity: single
+    showIf: spouseHasAltFuelCreditInputs == true
+    fields:
+      - name: spousePassthroughRefuelingPropertyCreditContribution
+        type: amount
+        required: false
+        label: Spouse pass-through alternative fuel vehicle refueling property credit contribution
+        placeholder: 0.00
+
+  - name: spouseProperties
+    title: Spouse-owned qualifying properties
+    multiplicity: multiple
+    showIf: spouseHasAltFuelCreditInputs == true
+    instructions:
+      - Add one entry for each spouse-owned refueling property that may require its own Schedule A (Form 8911) attachment.
+    fields:
+      - name: propertyNickname
+        type: text
+        required: false
+        label: Property nickname
+      - name: registrationNumber
+        type: text
+        required: false
+        label: Registration number
+      - name: propertyDescription
+        type: text
+        required: false
+        label: Property description
+      - name: ownerNameTinIfDifferent
+        type: text
+        required: false
+        label: Owner name and TIN if different
+      - name: propertyLocation
+        type: text
+        required: false
+        label: Property location
+      - name: constructionBeganDate
+        type: date
+        required: false
+        label: Construction began date
+      - name: placedInServiceDate
+        type: date
+        required: false
+        label: Placed in service date
+      - name: eligibleCensusTract
+        type: boolean
+        required: false
+        label: Was the property placed in service in an eligible census tract?
+      - name: eligibleCensusTractGeoid
+        type: text
+        required: false
+        label: Eligible census tract GEOID
+      - name: certificationPermitNumber
+        type: text
+        required: false
+        label: Certification or permit number
+      - name: propertyCost
+        type: amount
+        required: false
+        label: Total property cost
+        placeholder: 0.00
+      - name: businessInvestmentUsePercentage
+        type: amount
+        required: false
+        label: Business or investment-use percentage
+        placeholder: 0.00
+      - name: section179Deduction
+        type: amount
+        required: false
+        label: Section 179 deduction claimed for the property
+        placeholder: 0.00
+      - name: pwaRequirementsMet
+        type: boolean
+        required: false
+        label: Were prevailing wage and apprenticeship requirements met?
+      - name: installedAtMainHome
+        type: boolean
+        required: false
+        label: Was the property installed at your main home?
+      - name: originalUseBeginsWithTaxpayer
+        type: boolean
+        required: false
+        label: Did the original use of the property begin with you?
+      - name: usedPredominantlyOutsideUs
+        type: boolean
+        required: false
+        label: Was the property used predominantly outside the United States?
+
+  - name: computedOutputs
+    title: Computed outputs (backend only - not rendered)
+    multiplicity: single
+    showIf: spouseHasAltFuelCreditInputs == true
+    fields:
+      - name: spouseGeneratedScheduleAAttachmentCount
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed - spouse-side Schedule A attachment count

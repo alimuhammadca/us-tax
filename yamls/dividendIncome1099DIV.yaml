@@ -1,0 +1,355 @@
+name: dividendIncome1099Div
+title: Dividend info from your 1099-DIV
+collection: FIXME
+multiplicity: multiple
+formName: dividendInfo
+category: income
+instructions:
+  - Refer to your 1099-DIV to complete the following form.
+  - Create a new form for each 1099-DIV you received.
+sections:
+  - name: payerInformation
+    title: Payer's information
+    multiplicity: single
+    fields:
+      - name: receivedFrom
+        type: text
+        required: true
+        placeholder: Enter the name of the financial institution or payer
+        label: Dividend received from
+        help: This is the name that appears in the "Payer's name" box on your 1099-DIV.
+  - name: dividendsAndGains
+    title: Dividends and gains
+    multiplicity: single
+    fields:
+      - name: totalOrdinaryDividendsBox1a
+        type: amount
+        required: false
+        placeholder: Enter the amount from Box 1a
+        label: Box 1a - Total ordinary dividends
+        help: This is the total of your ordinary dividends as reported in box 1a of your 1099-DIV.
+      - name: QualifiedDividendsBox1b
+        type: amount
+        required: false
+        placeholder: Enter the amount from Box 1b
+        label: Box 1b - Qualified dividends 
+        help: This is the portion of your ordinary dividends that are qualified dividends as reported in box 1b of your 1099-DIV.
+      - name: totalCapitalGainDistributionsBox2a
+        type: amount
+        required: false
+        placeholder: Enter the amount from Box 2a
+        label: Box 2a - Total capital gain distributions 
+        help: This is the total of your capital gain distributions as reported in box 2a of your 1099-DIV.
+  - name: lessCommonItems
+    title: Less common items
+    multiplicity: single
+    fields:
+      - name: unrecapturedSection1250GainBox2b
+        type: amount
+        required: false
+        placeholder: Enter the amount from Box 2b
+        label: Box 2b - Unrec. Sec. 1250 gain
+        help: This is the unrecaptured Section 1250 gain as reported in box 2b of your 1099-DIV.
+      - name: section1202GainBox2c
+        type: amount
+        required: false
+        placeholder: Enter the amount from Box 2c (if any).
+        label: Box 2c - Section 1202 gain 
+        help: This is the Section 1202 gain as reported in box 2c of your 1099-DIV.
+      - name: collectibles28GainBox2d
+        type: amount
+        required: false
+        placeholder: Enter the amount from Box 2d
+        label: Box 2d - Collectibles (28%) gain
+        help: This is the collectibles (28%) gain as reported in box 2d of your 1099-DIV.
+      - name: nonDividendDistributionsBox3
+        type: amount
+        required: false
+        placeholder: Enter the amount from Box 3
+        label: Box 3 - Nondividend distributions
+        help: These are non-dividend distributions as reported in box 3 of your 1099-DIV.
+      - name: federalIncomeTaxWithheldBox4
+        type: amount
+        required: false
+        placeholder: Enter the amount from Box 4
+        label: Box 4 - Federal income tax withheld
+        help: This is the federal income tax withheld as reported in box 4 of your 1099-DIV.
+      - name: section199ADividendsBox5
+        type: amount
+        required: false
+        placeholder: Enter the amount from Box 5
+        label: Box 5 - Section 199A dividends
+        help: These are Section 199A dividends as reported in box 5 of your 1099-DIV.
+      - name: investmentExpensesBox6
+        type: amount
+        required: false
+        placeholder: Enter the amount from Box 6
+        label: Box 6 - Investment expenses
+        help: These are investment expenses as reported in box 6 of your 1099-DIV.
+      - name: foreignTaxPaidBox7
+        type: amount
+        required: false
+        placeholder: Enter the amount from Box 7
+        label: Box 7 - Foreign tax paid
+        help: This is foreign tax paid as reported in box 7 of your 1099-DIV.
+      - name: cashLiquidationDistributionsBox9
+        type: amount
+        required: false
+        placeholder: Enter the amount from Box 9
+        label: Box 9 - Cash liquidation distributions
+        help: These are cash liquidation distributions as reported in box 9 of your 1099-DIV.
+      - name: noncashLiquidationDistributionsBox10
+        type: amount
+        required: false
+        placeholder: Enter the amount from Box 10
+        label: Box 10 - Noncash liquidation distributions
+        help: These are noncash liquidation distributions as reported in box 10 of your 1099-DIV.
+      - name: exemptInterestDividendsBox12
+        type: amount
+        required: false
+        placeholder: Enter the amount from Box 12
+        label: Box 12 - Exempt-interest dividends
+        help: These are exempt-interest dividends as reported in box 12 of your 1099-DIV.
+      - name: specifiedPrivateActivityBondInterestDividendsBox13
+        type: amount
+        required: false
+        placeholder: Enter the amount from Box 13
+        label: Box 13 - Specified private activity bond interest dividends
+        help: These are specified private activity bond interest dividends as reported in box 13 of your 1099-DIV.
+  - name: stateTaxes
+    title: State taxes
+    multiplicity: single
+    instructions:
+      - Feel free to add another section if you had tax withheld in another state.
+    fields:
+      - name: box14State
+        type: state
+        required: false
+        placeholder: Select a state
+        label: Box 14 - State
+        help: Select the state from Box 14 of your 1099-DIV.
+      - name: box15StateIdNumber
+        type: text
+        required: false
+        placeholder: Enter the state ID number from Box 15
+        label: Box 15 - State ID no
+        help: This is the payer's state identification number as reported in box 15 of your 1099-DIV.
+      - name: box16StateTaxWithheld
+        type: amount
+        required: false
+        placeholder: Enter the state tax withheld from Box 16
+        label: Box 16 - State tax withheld
+        help: This is the amount of state income tax withheld as reported in box 16 of your 1099-DIV.
+  # - name: stateTaxes2
+  #   title: State taxes (Second State)
+  #   type: single
+  #   fields:
+  #     - name: box14State2
+  #       type: list
+  #       required: false
+  #       placeholder: Select a state
+  #       label: Box 14 - State
+  #       help: Choose the state abbreviation for the second state (if any) as reported in box 2d of your 1099-DIV.
+  #       options: FIXME
+  #     - name: box15StateIdNumber2
+  #       type: text
+  #       required: false
+  #       placeholder: Enter the state ID number for the second state (if any).
+  #       label: Box 15 - State ID no.
+  #       help: This is the payer's state identification number for the second state as reported in box 2d of your 1099-DIV.
+  #     - name: box16StateTaxWithheld2
+  #       type: amount
+  #       required: false
+  #       placeholder: Enter the state tax withheld for the second state (if any).
+  #       label: Box 16 - State tax withheld
+  #       help: This is the amount of state income tax withheld for the second state as reported in box 2d of your 1099-DIV.
+  - name: fatcaFilingRequirement
+    title: FATCA filing requirement
+    type: single
+    fields:
+      - name: box11FatcaChecked
+        type: boolean
+        required: false
+        placeholder: Check this box if this applies to you
+        label: "Box 11 - FATCA filing requirement box is checked."
+        help: Check this box if the FATCA filing requirement box is checked on your form as reported in box 2d of your 1099-DIV.    
+  - name: uncommonSituations
+    title: Uncommon Situations
+    type: single
+    fields:
+      - name: usGovernmentInterest
+        type: boolean
+        required: false
+        label: Is a portion of these dividends U.S. government interest?
+        help: Select "Yes" some of your dividends are from U.S. government interest.
+      - name: adjustDividendsOrEsop
+        type: list
+        options:
+         - I need to adjust these dividends. 
+         - This is an ESOP distribution.
+        required: false
+        placeholder: Select an option
+        label: Please select the situation that applies to you
+        help: Select if you need to adjust the reported dividends or if they are from an ESOP.
+      - name: qualifiedDividendsSecuritiesHoldingPeriod
+        type: boolean
+        required: false
+        label: Are some qualified dividends or section 199A dividends from securities that didn't meet the required holding period? 
+        help: Select "Yes" if some qualified or 199A dividends are from securities held for less than the required time.
+      - name: gotSection1202Statement
+        type: boolean
+        required: false
+        label: Did you get a statement with Section 1202 info?
+        help: Select "Yes" you received a statement with Section 1202 information.
+      # - name: noneOfTheAboveApply
+      #   type: boolean
+      #   required: false 
+      #   placeholder: Check this box if this applies to you
+      #   label: None of these apply
+      #   help: Select this if none of the above situations apply to your dividends as reported in box 2d of your 1099-DIV.
+  - name: usGovernmentInterestAmount
+    title: U.S. Government Interest
+    type: single
+    fields:
+      - name: usGovernmentInterest
+        type: amount
+        required: true
+        placeholder: Enter the amount of U.S. government interest
+        label: U.S. government interest
+        help: Enter the portion of your dividends that is U.S. Government interest.
+  - name: dividendAdjustment
+    title: Dividend adjustment
+    type: single
+    fields:
+      - name: adjustmentAmount
+        type: amount
+        required: true
+        placeholder: Enter the adjustment amount
+        label: Adjustment amount 
+        help: Enter the amount to adjust your reported dividends.
+      - name: typeOfAdjustment
+        type: list
+        options:
+         - I received all or part of these dividends for someone else (I am a nominee)
+         - Other adjustment, including restricted stock dividends reported on Form W-2
+        required: true
+        label: Type of adjustment
+        help: Select the reason for your dividend adjustment.
+  - name: holdingPeriodDividends
+    title: Holding period dividends
+    type: single
+    fields:
+      - name: totalQualifiedDividendsBox1b
+        type: amount
+        required: true
+        placeholder: Enter the total qualified dividends from Box 1b
+        label: Box 1b - Total qualified dividends
+        help: This is the total amount of qualified dividends reported as reported in box 1b of your 1099-DIV.
+      - name: dividendsMeet60DayHoldingPeriod
+        type: amount
+        required: false
+        placeholder: Enter the amount that meets the 60/90 day holding period
+        label: Dividends that meet the 60/90 day holding period
+        help: Enter the portion of dividends that meet the longer holding period.
+      - name: totalSection199ADividendsBox5
+        type: amount
+        required: true
+        placeholder: Enter the total Section 199A dividends from Box 5
+        label: Box 5 - Total Section 199A dividends
+        help: This is the total amount of Section 199A dividends as reported in box 5 of your 1099-DIV.
+      - name: dividendsMeet45DayHoldingPeriod
+        type: amount
+        required: true
+        placeholder: Enter the amount that meets the 45 day holding period
+        label: Dividends that meet the 45 day holding period
+        help: Enter the portion of dividends that meet the standard holding period for qualified dividends.
+  - name: exclusionPercentages
+    title: Exclusion percentages
+    multiplicity: single
+    fields:
+      - name: gainAmount50Percent
+        type: amount
+        required: false
+        placeholder: Enter 50% amount
+        label: Enter 50% of the amount in box 2c
+        help: Enter the gain amount associated with the 50% exclusion as reported in box 2c of your 1099-DIV.
+      - name: gainAmoun60Percent
+        type: amount
+        required: false
+        placeholder: Enter 60% amount
+        label: Enter 60% of the amount in box 2c
+        help: Enter the gain amount associated with the 60% exclusion as reported in box 2c of your 1099-DIV.
+      - name: gainAmount75Percent
+        type: amount
+        required: false
+        placeholder: Enter 75% amount.
+        label: Enter 75% of the amount in box 2c
+        help: Enter the gain amount associated with the 75% exclusion as reported in box 2c of your 1099-DIV.
+      - name: gainAmount100Percent
+        type: amount
+        required: false
+        placeholder: Enter 100% amount.
+        label: Enter 100% of the amount in box 2c
+        help: Enter the gain amount associated with the 100% exclusion as reported in box 2c of your 1099-DIV.
+  - name: foreignTaxAdjustment
+    title: Foreign tax adjustment
+    type: single
+    fields:
+      - name: yourPortionForeignTaxBox7
+        type: amount
+        required: false
+        placeholder: Enter your portion
+        label: Box 7 - your portion of foreign tax paid
+        help: Enter the amount of foreign tax paid that is attributable to your share of the dividend income. Enter a zero if you didn't pay a portion or all of the foreign taxes on this 1099-DIV.      
+  - name: foreignDividendsInfo
+    title: Foreign dividends
+    multiplicity: single
+    fields:
+      - name: foreignDividendsReceived
+        type: amount
+        required: false
+        placeholder: Enter foreign dividends
+        label: Foreign dividends received 
+        help: Enter the total amount of dividends and distributions you received from foreign sources.
+      - name: sourceOfForeignDividends
+        type: list
+        options:
+         - Mutual Fund/Regulated Investment Company (RIC)
+         - Other source
+        required: false
+        placeholder: Select source
+        label: Source of foreign dividends
+        help: Indicate the source of your foreign dividends.
+      - name: foreignCountryOrPossession
+        type: country
+        required: false
+        placeholder: Select a country
+        label: Box 8 - Foreign country or U.S. possession 
+        help: Select the foreign country or U.S. possession from which the dividends originated as reported in box 8 of your 1099-DIV.
+  - name: exemptInterestStates
+    title: Exempt-interest dividends 
+    type: multiple
+    fields:
+      - name: taxExemptState
+        type: state
+        required: false
+        placeholder: Select a state
+        label: State
+        help: Choose the state where your exempt-interest dividends were earned as reported in box  of your 1099-DIV.
+        options: FIXME
+  - name: taxExemptStates
+    title: Tax exempt dividends earned
+    multiplicity: multiple
+    fields:
+      - name: state
+        type: list
+        required: false
+        placeholder: Select a state
+        label: State
+        help: Choose the state where you earned exempt-interest dividend income.
+      - name: exemptAmount
+        type: amount
+        required: false
+        placeholder: Enter amount
+        label: Tax exempt dividend amount
+        help: Enter the specific amount of tax exempt dividends earned in the selected state.

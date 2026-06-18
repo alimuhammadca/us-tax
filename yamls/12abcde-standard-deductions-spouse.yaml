@@ -1,0 +1,36 @@
+# Form 1040 line 12a-12e spouse workflow.
+# Approach: keep spouse-only dependency, separate-return itemization, and age/blindness indicators on the spouse form.
+# NOTE: This file is the shared yamls-folder copy of the active line 12 spouse interview.
+name: standard-deductions-spouse
+title: Form 1040 - Standard deductions (spouse, lines 12a through 12e)
+multiplicity: single
+formName: 1040
+category: deductions
+instructions:
+  - Use this spouse form only for spouse-specific line 12 indicators.
+  - Return-level deduction election and Schedule A inputs stay on the taxpayer/family head line 12 form.
+sections:
+  - name: spouseIndicators
+    title: Spouse line 12 indicators
+    multiplicity: single
+    fields:
+      - name: someoneCanClaimSpouse
+        type: boolean
+        required: false
+        label: Someone can claim your spouse as a dependent
+      - name: spouseItemizesSeparateReturn
+        type: boolean
+        required: false
+        label: Your spouse itemizes on a separate return
+      - name: spouseBornBeforeThreshold
+        type: boolean
+        required: false
+        label: Your spouse was born before the threshold date for the tax year
+      - name: spouseIsBlind
+        type: boolean
+        required: false
+        label: Your spouse is blind
+      - name: spouseMeetsAgeBlindnessMfsRequirements
+        type: boolean
+        required: false
+        label: "MFS only: your spouse had no gross income, is not filing a return, and cannot be claimed as a dependent by another taxpayer"

@@ -1,0 +1,192 @@
+# ------------------------------------------------------------------------------
+# Medicaid Waiver Payments (One form per spouse)
+# Purpose:
+#   Capture inputs needed to compute:
+#     - Form 1040, Line 1d (Medicaid waiver payments not reported on W-2)
+#     - Schedule 1, Line 8s (negative adjustment for nontaxable payments included as earned income)
+#   Support both pathways:
+#     - Non-business reporting on 1040 Line 1d (+ Schedule 1 back-out if elected)
+#     - Trade/business reporting via Schedule C with a "Notice 2014-7" offset (if applicable)
+# ------------------------------------------------------------------------------
+name: medicaid-waiver-payments-taxpayer
+title: Medicaid waiver payments (you)
+multiplicity: single
+formName: medicaidWaiverPayments
+category: medicaidWaiverPaymentsIncome
+instructions:
+  - Use this form for your own payments under a state Medicaid Home and Community-Based Services (HCBS) waiver program that may be excludable from income under IRS Notice 2014-7 (difficulty-of-care payments).
+  - If married filing jointly, your spouse completes the separate spouse version; the earned-income election is made independently by each spouse.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+        # Purpose:
+        #   Primary gate to enable progressive disclosure and prevent collecting irrelevant data.
+        #   If false, downstream sections should remain hidden and downstream computations should treat as zero.
+      - name: receivedMedicaidWaiverPayments
+        type: boolean
+        required: true
+        label: Did you receive Medicaid waiver payments during the tax year?
+        help: Select Yes if you received payments from a Medicaid waiver program (sometimes shown on W-2 box 12 code II, on a 1099, or only on a state/agency statement).
+
+  - name: electionsAndStatus
+    title: Elections and status
+    multiplicity: single
+    instructions:
+      - These answers determine where the amounts flow (1040 line 1d vs Schedule C) and whether the excluded amounts may be counted in earned income for credits.
+    fields:
+        # Purpose:
+        #   Earned-income election switch.
+        #   Drives whether nontaxable/qualified payments are:
+        #     - included in wages (1a/1d) to increase earned income for EIC/ACTC, AND
+        #     - backed out on Schedule 1 line 8s (negative) to keep them nontaxable.
+        #   If false, nontaxable qualified payments may be omitted from return wages entirely.
+      - name: includeQualifiedPaymentsInEarnedIncomeForEIC_ACTC
+        type: boolean
+        required: false
+        label: Do you want to include qualified Medicaid waiver payments in earned income for EIC/ACTC?
+        help: IRS allows you to choose to include ALL (but not part) of qualified payments in earned income for EIC/ACTC, if the payments are otherwise earned income (wages or self-employment).
+        # Purpose:
+        #   Classification switch for reporting pathway.
+        #   If true, and payments are part of a trade/business, software may:
+        #     - report gross receipts on Schedule C, and
+        #     - subtract the excludable portion as a Schedule C expense/adjustment (labeled "Notice 2014-7"),
+        #     rather than placing amounts on 1040 line 1d.
+        #   Also informs self-employment tax handling decisions.
+      - name: hasTradeOrBusinessProvidingHomeCare
+        type: boolean
+        required: false
+        label: Do you have a trade or business of providing home care services (sole proprietor)?
+        help: If Yes and the payments were reported on a 1099, the IRS instructs reporting on Schedule C with an offsetting "Notice 2014-7" expense.
+
+  - name: qualificationFacts
+    title: Qualification facts (for Notice 2014-7)
+    multiplicity: single
+    showIf: receivedMedicaidWaiverPayments == true
+    instructions:
+      - These fields help support the classification of amounts entered as qualified excludable Medicaid waiver payments.
+      - Keep this minimal; do not block filing solely based on these answers—use them for warnings/consistency checks.
+    fields:
+        # Purpose:
+        #   Audit/supporting detail. Helps identify the program/payer context.
+        #   Useful for reconciliation and for explaining why payments are treated as Medicaid waiver payments.
+      - name: programName
+        type: text
+        required: false
+        label: Medicaid waiver program name (if known)
+        placeholder: e.g., State HCBS waiver program
+        help: Enter the name of the Medicaid waiver program under which you received payments, if known.
+        # Purpose:
+        #   Fact capture to support qualification analysis and to power warning logic.
+        #   Some implementations use relationship + living arrangement as indicators for excludability.
+      - name: careRecipientRelationship
+        type: select
+        required: false
+        options:
+          - CHILD
+          - PARENT
+          - SPOUSE
+          - OTHER_RELATIVE
+          - NON_RELATIVE
+        label: Relationship of the care recipient to you (if applicable)
+        help: Select the relationship of the person you provided care for under the Medicaid waiver program.
+        # Purpose:
+        #   Key qualification fact used in many Notice 2014-7 determinations.
+        #   Also supports consistent “qualified amount” entry guidance and audit trail.
+      - name: livesWithCareRecipient
+        type: boolean
+        required: false
+        label: Did you live with the care recipient for whom you provided care?
+        help: This can be relevant for determining whether payments qualify as excludable difficulty-of-care payments.
+
+  - name: medicaidWaiverPayments
+    title: Medicaid waiver payments
+    multiplicity: multiple
+    instructions:
+      - Add one row per payer/source statement (W-2, 1099, or year-end summary) that includes Medicaid waiver payments.
+      - Enter only the portion that is Medicaid waiver payments (not other taxable items like vacation pay).
+    fields:
+        # Purpose:
+        #   Identifies the payer/agency for reconciliation and support.
+        #   Helps users match entries to documents (W-2/1099/stubs).
+      - name: payerName
+        type: text
+        required: true
+        placeholder: Payer / agency name
+        label: Payer name
+        help: Enter the payer or agency that issued the statement or paid you.
+        # Purpose:
+        #   Optional identifier for matching payer across imported forms (W-2/1099).
+        #   Helps deduplicate multiple documents from the same payer.
+      - name: payerTIN
+        type: text
+        required: false
+        placeholder: EIN if known
+        label: Payer EIN (if known)
+        help: Optional but helpful for matching to statements.
+        # Purpose:
+        #   Establishes the document/reporting context.
+        #   Used to drive downstream routing (W-2 import vs 1099 workflows) and validation (e.g., Code II applies to W-2).
+      - name: sourceType
+        type: select
+        options:
+          - W-2
+          - 1099-MISC
+          - 1099-NEC
+          - Other
+        required: true
+        placeholder: W2 | 1099-MISC | 1099-NEC | Other
+        label: Source type
+        help: Identify whether this came from a W-2, 1099-MISC, 1099-NEC, or other statement.
+        # Purpose:
+        #   Captures the nontaxable (excludable) portion under Notice 2014-7.
+        #   If earned-income election is true, this amount may be included on 1040 line 1d (or 1a if already in box 1)
+        #   and then backed out on Schedule 1 line 8s (negative) to preserve non-taxability.
+      - name: qualifiedNotice2014_7Amount
+        type: amount
+        required: true
+        placeholder: Qualified Medicaid waiver payments
+        label: Qualified Medicaid waiver payments (Notice 2014-7 amount)
+        help: Enter the amount that qualifies as excludable difficulty-of-care payments under Notice 2014-7 (exclude non-qualifying items like vacation pay).
+        # Purpose:
+        #   Captures the informational Code II amount (often the nontaxable waiver payments).
+        #   Used for reconciliation: in many cases Code II aligns with the qualified/excludable amount.
+        #   Helps confirm the “nontaxable waiver payments exist” even if W-2 box 1 is zero.
+      - name: w2Box12CodeIIAmount
+        type: amount
+        required: false
+        placeholder: Amount from W-2 box 12 code II (if any)
+        label: W-2 box 12 code II (if applicable)
+        help: If this source is a W-2 and box 12 has code II, enter that amount (prefer auto-filled from the W-2).
+        # Purpose:
+        #   Prevents double counting between 1040 line 1a (W-2 box 1 wages) and line 1d.
+        #   If qualified amounts are already in box 1, they will be reflected in line 1a and should NOT be re-added to 1d.
+        #   If election is made, the back-out on Schedule 1 line 8s should include qualified amounts included in 1a and/or 1d.
+      - name: qualifiedAmountIncludedInW2Box1
+        type: amount
+        required: false
+        placeholder: Qualified amount included in W-2 box 1 (if any)
+        label: Qualified amount included in W-2 box 1 (if applicable)
+        help: Usually 0. Use only if qualified Medicaid waiver payments were included in W-2 box 1 wages.
+        # Purpose:
+        #   Captures the taxable (non-Notice-2014-7) portion that still belongs on 1040 line 1d
+        #   when it is NOT already included in W-2 box 1.
+        #   This is required to handle mixed statements where some items are excludable and others are taxable.
+      - name: taxablePaymentsNotInW2Box1
+        type: amount
+        required: false
+        placeholder: Taxable Medicaid waiver-related payments not in W-2 box 1 
+        label: Taxable Medicaid waiver-related payments not included in W-2 box 1
+        help: If the payer statement includes taxable payments related to the program (training pay, admin pay, etc.) and these amounts are NOT in W-2 box 1, enter them here so they can flow to 1040 line 1d.
+        # Purpose:
+        #   Freeform explanation for edge cases:
+        #     - partial qualification
+        #     - multiple care recipients
+        #     - payer issued no tax form
+        #   Helps support troubleshooting and audit trail without expanding schema complexity.
+      - name: notes
+        type: text
+        required: false
+        label: Notes (optional)
+        placeholder: Any details helpful for classification or reconciliation

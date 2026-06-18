@@ -1,0 +1,124 @@
+# Form 8880 — Credit for Qualified Retirement Savings Contributions (Saver's Credit) — spouse.
+# This form is additive — provides column (b) spouse data for a joint Form 8880.
+# Only applicable on MFJ returns. Taxpayer form owns the screening question and statement imports.
+# Section order: spouseDisqualifiers → spouseContributions → importedStatementFields
+name: savings-credit-spouse
+title: Form 8880 — Savings credit (spouse)
+multiplicity: single
+formName: 8880
+category: deductions
+instructions:
+  - This form applies only on married filing jointly (MFJ) returns.
+  - Enter your spouse's 2025 retirement contributions and disqualifier information.
+  - Taxpayer (column a) contributions and screening are on the taxpayer Savings credit form.
+  - One Form 8880 is filed per return; this data populates column (b) of that form.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: spouseHasSavingsCredit
+        type: boolean
+        required: false
+        label: Does your spouse have retirement savings contributions to enter?
+        helpText: >
+          Answer Yes if your spouse contributed to an IRA, ABLE account, 401(k), 403(b),
+          457(b), SEP, SIMPLE, or other qualified employer retirement plan in 2025.
+          This form applies only on jointly-filed returns.
+
+  - name: spouseDisqualifiers
+    title: Spouse eligibility check
+    multiplicity: single
+    showIf: spouseHasSavingsCredit == true
+    instructions:
+      - Answer each question for your spouse. A disqualified spouse cannot contribute to column (b).
+    fields:
+      - name: spouseBornAfter2007
+        type: boolean
+        required: false
+        label: Was your spouse born after January 1, 2008? (i.e., age 17 or younger as of Jan 1, 2026)
+        help: >
+          The credit requires the spouse to be age 18 or older as of January 1, 2026.
+          If born after January 1, 2008, the spouse is disqualified from column (b).
+      - name: spouseIsFullTimeStudent
+        type: boolean
+        required: false
+        label: >
+          Was your spouse a full-time student during any part of 5 or more calendar months of 2025?
+        help: >
+          Full-time student means enrolled full-time at a school (including technical,
+          trade, or mechanical schools). Does not include on-the-job training, correspondence
+          schools, or internet-only courses.
+      - name: spouseIsClaimedAsDependent
+        type: boolean
+        required: false
+        label: Can your spouse be claimed as a dependent on someone else's 2025 tax return?
+        help: >
+          If another taxpayer is eligible to claim the spouse as a dependent on their 2025 return,
+          the spouse is disqualified from column (b) even if that taxpayer does not claim them.
+
+  - name: spouseContributions
+    title: Spouse contributions and distributions (column b)
+    multiplicity: single
+    showIf: spouseHasSavingsCredit == true
+    instructions:
+      - Enter your spouse's 2025 IRA, ABLE, and employer plan contributions.
+      - Do not include rollovers, conversions, or returned contributions.
+      - For distributions, note that the IRS cross-column rule is handled on the taxpayer form —
+        enter only the spouse's own distributions here as a reference; the backend combines them.
+    fields:
+      - name: spouseIraContributions
+        type: amount
+        required: false
+        label: Spouse traditional and Roth IRA contributions (exclude rollovers)
+        placeholder: 0.00
+        help: >
+          Enter spouse's 2025 traditional IRA and Roth IRA contributions. Exclude rollovers,
+          direct transfers, and contributions returned before the tax deadline.
+      - name: spouseAbleContributions
+        type: amount
+        required: false
+        label: Spouse ABLE account contributions made by spouse as designated beneficiary
+        placeholder: 0.00
+        help: >
+          Enter 2025 contributions the spouse made to their own ABLE account as the
+          designated beneficiary. Do not include contributions made by others.
+      - name: spouseEmployerPlanDeferrals
+        type: amount
+        required: false
+        label: >
+          Spouse additional employer plan deferrals not already captured from spouse's W-2
+          (SEP, SIMPLE, and other plans)
+        placeholder: 0.00
+        help: >
+          Enter spouse's elective deferrals not captured by spouse W-2 box 12 auto-import.
+          Includes SEP-IRA, SIMPLE, 501(c)(18)(D), and voluntary after-tax contributions.
+          Do not enter amounts already in spouse W-2 box 12 codes D, E, F, G, H, or S.
+      - name: spouseDistributions2023to2025
+        type: amount
+        required: false
+        label: >
+          Spouse distributions received after 12/31/2022 and before the 2025 return due date —
+          from any IRA, ABLE, or employer retirement plan
+        placeholder: 0.00
+        help: >
+          Enter spouse's distributions in this window from qualified plans. The backend
+          applies the MFJ cross-column rule (both spouses' distributions go into both columns)
+          using the amounts entered on both the taxpayer and spouse forms.
+          Do not include rollovers, direct transfers, or non-taxable rollover distributions.
+
+  # Backend-only imported statement fields. Not rendered in the UI form component.
+  - name: importedStatementFields
+    title: Imported statement fields (backend only — not rendered)
+    multiplicity: single
+    fields:
+      - name: spouseW2ElectiveDeferrals
+        type: amount
+        required: false
+        readOnly: true
+        label: Auto-imported spouse W-2 box 12 elective deferrals (codes D, E, F, G, H, S)
+      - name: spouseDistributions1099R
+        type: amount
+        required: false
+        readOnly: true
+        label: Auto-imported spouse 1099-R gross distributions (excluding rollover codes G, H)

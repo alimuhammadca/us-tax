@@ -1,0 +1,473 @@
+# Form 1040 line 7a/7b spouse workflow.
+# Revisions (Phases 1-4): reframed labels, help text added, uncommon-situations gate,
+# Form 8949 box redesign (basisReportedToIrs replaces form8949Box).
+# Return-level statement upload gating, line 7b checkboxes, and Form 8814 linkage stay on
+# capital-gain-loss-taxpayer to avoid spouse conflict.
+name: capital-gain-loss-spouse
+title: Form 1040 - Capital gain or loss (spouse, lines 7a and 7b)
+multiplicity: single
+formName: 1040
+category: income
+instructions:
+  - Use this only for spouse-specific capital gain or loss inputs that contribute to Form 1040 line 7a.
+  - Return-level upload checks, Exception 1 determination, and line 7b checkbox decisions stay on capital-gain-loss-taxpayer.
+  - Upload spouse statements first — the application auto-detects most details from them.
+  - Use the direct-entry and supplemental sections only for spouse items not already captured by uploaded statements.
+  - Self-employment income is out of scope and excluded.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: hadCapitalGainOrLoss
+        type: boolean
+        required: true
+        label: Did your spouse have any capital gain or capital loss activity during the tax year?
+        help: Answer Yes if your spouse sold stocks, bonds, mutual funds, crypto, real estate, or any other capital asset — or received capital gain distributions from a fund. Answer No to skip this section.
+
+  - name: spouseScheduleDTriggerContributions
+    title: Spouse Schedule D contributions
+    multiplicity: single
+    showIf: hadCapitalGainOrLoss == true
+    instructions:
+      - These spouse-specific answers contribute to Schedule D and Form 8949 requirement logic.
+      - Indicate whether your spouse had any of these situations in addition to any automatically detected from uploaded statements.
+    fields:
+      - name: hadCapitalAssetSalesOrExchanges
+        type: boolean
+        required: false
+        label: Did your spouse sell or exchange any stocks, bonds, crypto, or other capital assets this year?
+        help: Select Yes if your spouse had sales or exchanges of capital assets. This may be auto-detected from uploaded 1099-B or 1099-DA statements.
+      - name: hasCapitalLossesForTaxYear
+        type: boolean
+        required: false
+        label: Did any of your spouse's transactions result in a capital loss this year?
+        help: Select Yes if any of your spouse's sales resulted in a loss (sold for less than what was paid). This is needed to complete Schedule D line 21.
+      - name: hasCapitalLossCarryoverFromPriorYear
+        type: boolean
+        required: false
+        label: Does your spouse have a capital loss carryover from a prior year?
+        help: Select Yes if your spouse's prior-year Schedule D showed a carryover loss (line 26 short-term, line 27 long-term). Enter the amounts in the carryover section below.
+      - name: hasForm2439UndistributedCapitalGains
+        type: boolean
+        required: false
+        label: Did your spouse receive a notice of mutual fund capital gains that were automatically reinvested on their behalf?
+        help: Select Yes if your spouse's mutual fund company sent a Form 2439 showing undistributed capital gains — gains that were reinvested without a cash distribution.
+      - name: hasOtherScheduleDSourceForms
+        type: boolean
+        required: false
+        label: Does your spouse have capital gains or losses from installment sales, selling business property, a casualty or theft, a like-kind exchange, or a straddle or Section 1256 contract?
+        help: Select Yes if your spouse has capital items from any of these less common transaction types. Enter the net amounts in the supplemental section below.
+      - name: hasAny1099DivBoxes2b2c2dAmounts
+        type: boolean
+        required: false
+        label: Did any of your spouse's mutual fund or ETF dividends include gains from collectibles, excluded small-business-stock gains, or real-estate depreciation recapture?
+        help: Select Yes if any of your spouse's 1099-DIV forms have a nonzero amount in boxes 2b, 2c, or 2d. This may require Schedule D and the less common situations section.
+      - name: verifiedCapitalStatementTotals
+        type: boolean
+        required: false
+        showIf: hadCapitalGainOrLoss == true
+        label: The imported statement amounts shown above look correct
+        help: If the amounts do not look correct, go to the Statements section in the sidebar and correct the statement entry there. The amounts will update automatically the next time you run the computation.
+
+  - name: spouseDirectEntryAndAdjustments
+    title: Spouse direct-entry capital adjustments
+    multiplicity: single
+    showIf: hadCapitalGainOrLoss == true
+    instructions:
+      - Use these fields only for spouse capital gain amounts not already reflected in uploaded statements.
+      - Do not re-enter amounts already captured from spouse 1099-DIV, 1099-B, 1099-DA, or Form 2439 uploads.
+    fields:
+      - name: manualCapitalGainDistributionsNotOnStatements
+        type: amount
+        required: false
+        label: Spouse capital gain distributions not reflected in uploaded statements
+        placeholder: "0.00"
+        help: Enter spouse capital gain distributions not captured in uploaded 1099-DIV statements. Do not include amounts already imported automatically.
+      - name: manualOtherCapitalGainAdjustments
+        type: amount
+        required: false
+        label: Spouse other capital gain adjustments not captured by uploaded statements
+        placeholder: "0.00"
+        help: Enter any additional spouse gain adjustment not included in imported statement totals.
+      - name: manualOtherCapitalLossAdjustments
+        type: amount
+        required: false
+        label: Spouse other capital loss adjustments not captured by uploaded statements
+        placeholder: "0.00"
+        help: Enter any additional spouse loss adjustment not included in imported statement totals. Enter a positive number; it will be applied as a loss.
+
+  - name: spouseManualScheduleDDirectAggregation
+    title: Spouse broker-reported direct aggregation (basis reported to IRS)
+    multiplicity: single
+    showIf: hadCapitalGainOrLoss == true
+    instructions:
+      - Use these fields only for spouse short-term or long-term sales where the broker confirmed basis to the IRS, and the 1099-B or 1099-DA has not yet been uploaded.
+      - Do not enter amounts already captured from uploaded statements.
+    fields:
+      - name: manualShortTermDirectAggregationProceedsLine1a
+        type: amount
+        required: false
+        label: Spouse short-term sale proceeds — broker reported basis to IRS (not already uploaded)
+        placeholder: "0.00"
+        help: Total proceeds from spouse short-term sales where the 1099-B shows basis was reported to the IRS (Box 12 checked), and that 1099-B has not been uploaded.
+      - name: manualShortTermDirectAggregationBasisLine1a
+        type: amount
+        required: false
+        label: Spouse short-term cost basis — broker reported to IRS (not already uploaded)
+        placeholder: "0.00"
+        help: Total cost basis for the above spouse short-term sales. This is column (e) on the 1099-B, representing what was originally paid for the asset.
+      - name: manualShortTermDirectAggregationAdjustmentsLine1a
+        type: amount
+        required: false
+        label: Spouse short-term adjustment amount (for the above transactions)
+        placeholder: "0.00"
+        help: Net adjustment to the above spouse short-term proceeds or basis. Enter a negative number to reduce gain; positive to increase gain.
+      - name: manualLongTermDirectAggregationProceedsLine8a
+        type: amount
+        required: false
+        label: Spouse long-term sale proceeds — broker reported basis to IRS (not already uploaded)
+        placeholder: "0.00"
+        help: Total proceeds from spouse long-term sales where the 1099-B shows basis was reported to the IRS, and that 1099-B has not been uploaded.
+      - name: manualLongTermDirectAggregationBasisLine8a
+        type: amount
+        required: false
+        label: Spouse long-term cost basis — broker reported to IRS (not already uploaded)
+        placeholder: "0.00"
+        help: Total cost basis for the above spouse long-term sales — what was originally paid for the asset.
+      - name: manualLongTermDirectAggregationAdjustmentsLine8a
+        type: amount
+        required: false
+        label: Spouse long-term adjustment amount (for the above transactions)
+        placeholder: "0.00"
+        help: Net adjustment to the above spouse long-term proceeds or basis. Enter a negative number to reduce gain; positive to increase gain.
+
+  - name: spouseManualScheduleDSupplementalLines
+    title: Spouse supplemental gains and losses from other sources
+    multiplicity: single
+    showIf: hadCapitalGainOrLoss == true
+    instructions:
+      - Use these fields for spouse capital gains or losses from sources not automatically derived from uploaded statements.
+      - Enter the net gain as a positive number and the net loss as a negative number.
+    fields:
+      - name: shortTermOtherFormsGainLossLine4
+        type: amount
+        required: false
+        label: Spouse short-term gains or losses from installment sales, casualty or theft, like-kind exchanges, or straddles (other than K-1 sources)
+        placeholder: "0.00"
+        help: Net short-term amount from spouse installment sales, casualty or theft elections, like-kind exchanges, or straddle and Section 1256 contracts. Use a negative number for a net loss.
+      - name: shortTermScheduleK1GainLossLine5
+        type: amount
+        required: false
+        label: Spouse short-term gains or losses passed through from a partnership, S-corp, or trust (K-1)
+        placeholder: "0.00"
+        help: Net short-term capital gain or loss from spouse Schedule K-1 forms. Use a negative number for a net loss. Sum all spouse K-1s with short-term capital items.
+      - name: longTermOtherFormsGainLossLine11
+        type: amount
+        required: false
+        label: Spouse long-term gains or losses from installment sales, business property sales, casualty or theft, like-kind exchanges, straddles, or mutual fund undistributed gains
+        placeholder: "0.00"
+        help: Net long-term amount from spouse installment sales, business property sales, casualty elections, like-kind exchanges, straddle contracts, or undistributed capital gains. Use a negative number for a net loss.
+      - name: longTermScheduleK1GainLossLine12
+        type: amount
+        required: false
+        label: Spouse long-term gains or losses passed through from a partnership, S-corp, or trust (K-1)
+        placeholder: "0.00"
+        help: Net long-term capital gain or loss from spouse Schedule K-1 forms. Use a negative number for a net loss. Sum all spouse K-1s with long-term capital items.
+
+  - name: spouseUncommonSituationsScreening
+    title: Spouse less common situations
+    multiplicity: single
+    showIf: hadCapitalGainOrLoss == true
+    instructions:
+      - Most filers can skip this section. Check any situation that applies to your spouse this year.
+    fields:
+      - name: hasNomineeCapitalGainDistributions
+        type: boolean
+        required: false
+        label: My spouse received capital gain distributions that actually belong to someone else (nominee)
+        help: Select Yes if distributions were paid to your spouse but legally belong to another person. Your spouse must issue Form 1099-DIV to the actual owner and subtract those distributions from spouse totals.
+      - name: hasQofDeferralOrTermination
+        type: boolean
+        required: false
+        label: My spouse is deferring a capital gain in a Qualified Opportunity Fund (QOF), or a prior QOF investment period is ending this year
+        help: Select Yes if your spouse invested eligible gain proceeds into a QOF to defer tax, or if a prior QOF deferral period has now ended and the gain is being recognized. Form 8997 must be attached to the return.
+      - name: hasCollectiblesOrSection1202Gain
+        type: boolean
+        required: false
+        label: My spouse has gains from selling collectibles (art, coins, stamps, antiques) or from qualifying small-business stock (Section 1202)
+        help: Select Yes if any of your spouse's capital gains come from collectibles or from stock in a qualified small business. These gains are taxed at up to 28%.
+      - name: hasRealEstateDepreciationRecapture
+        type: boolean
+        required: false
+        label: My spouse sold rental or business real estate on which depreciation deductions were previously claimed
+        help: Select Yes if your spouse sold real property for which depreciation deductions were taken in prior years. A portion of the gain may be taxed as unrecaptured Section 1250 gain.
+      - name: hasNonbusinessBadDebt
+        type: boolean
+        required: false
+        label: A personal loan my spouse made to someone became completely worthless this year (nonbusiness bad debt)
+        help: Select Yes if your spouse loaned money to someone outside the ordinary course of business, and it can no longer be collected. Treated as a short-term capital loss under Section 166.
+
+  - name: spouseUncommonSituationsDetail
+    title: Spouse less common situation details
+    multiplicity: single
+    showIf: hadCapitalGainOrLoss == true
+    instructions:
+      - Complete only the fields that correspond to situations checked above. Leave the rest blank.
+    fields:
+      - name: nomineeCapitalGainDistributionsToSubtract
+        type: amount
+        required: false
+        showIf: hasNomineeCapitalGainDistributions == true
+        label: Spouse nominee capital gain distributions to subtract
+        placeholder: "0.00"
+        help: Enter the total distributions paid to your spouse that belong to another person. Your spouse must issue Form 1099-DIV to the actual owner.
+      - name: confirmNomineeStatementWillBeProvided
+        type: boolean
+        required: false
+        showIf: hasNomineeCapitalGainDistributions == true
+        label: I confirm spouse nominee statement details will be provided to the actual owner as required
+        help: Your spouse must furnish a 1099-DIV to the actual owner by January 31 and file Copy A with the IRS by the applicable deadline.
+      - name: twentyEightPercentRateGainWorksheetAmountLine18
+        type: amount
+        required: false
+        showIf: hasCollectiblesOrSection1202Gain == true
+        label: Net gain from spouse collectibles or qualifying small-business stock taxed at the 28% rate
+        placeholder: "0.00"
+        help: Enter your spouse's net gain from collectibles or the included portion of Section 1202 excluded gain. Compute this using the 28% Rate Gain Worksheet in the Schedule D instructions.
+      - name: unrecapturedSection1250GainWorksheetAmountLine19
+        type: amount
+        required: false
+        showIf: hasRealEstateDepreciationRecapture == true
+        label: Gain from real estate depreciation taxed at up to 25% (spouse unrecaptured depreciation)
+        placeholder: "0.00"
+        help: Enter the portion of your spouse's real-estate gain attributable to prior depreciation deductions. Compute this using the Unrecaptured Section 1250 Gain Worksheet in the Schedule D instructions.
+      - name: nonbusinessBadDebtFaceAmount
+        type: amount
+        required: false
+        showIf: hasNonbusinessBadDebt == true
+        label: Original face amount of the spouse loan that became completely worthless
+        placeholder: "0.00"
+        help: Enter the amount your spouse originally lent. The proceeds are $0 by definition — the entire face amount is your spouse's short-term capital loss, reported on Form 8949 Box C.
+      - name: nonbusinessBadDebtDescription
+        type: text
+        required: false
+        showIf: hasNonbusinessBadDebt == true
+        placeholder: "Loan to Jane Doe, loaned 2020-06-01, became worthless 2025-09-15"
+        label: Description of the spouse bad debt (who they lent to and when it became worthless)
+        help: Describe the loan, the borrower, and the date it became completely worthless. This description will appear on Form 8949.
+
+  - name: spouseManualForm8949Transactions
+    title: Spouse manual Form 8949 transactions
+    multiplicity: multiple
+    showIf: hadCapitalGainOrLoss == true
+    instructions:
+      - Add one entry for each spouse transaction that must appear on Form 8949 and is not already captured by uploaded statement data.
+      - Use these for transactions not on a 1099-B or 1099-DA, or for corrections and adjustments to reported spouse transactions.
+    fields:
+      - name: transactionDescription
+        type: text
+        required: true
+        placeholder: "100 sh. XYZ Corp."
+        label: Description of property sold
+        help: Describe what was sold — for example, "100 shares XYZ Corp." or "0.5 Bitcoin." Use the same description as on the 1099-B if applicable.
+      - name: transactionTerm
+        type: select
+        required: true
+        label: Holding period
+        help: Short-term means your spouse held the asset one year or less. Long-term means more than one year.
+        options:
+          - value: short
+            label: Short-term (held 1 year or less)
+          - value: long
+            label: Long-term (held more than 1 year)
+      - name: basisReportedToIrs
+        type: select
+        required: true
+        label: Did the broker report the cost basis for this transaction to the IRS?
+        help: Check the spouse's 1099-B — if Box 12 is checked, basis was reported. If there is no 1099-B for this transaction, choose the third option. The application uses this to assign the correct Form 8949 reporting box.
+        options:
+          - value: reported
+            label: "Yes — broker reported cost basis to the IRS (covered security)"
+          - value: not_reported
+            label: "No — broker did not report cost basis to the IRS (noncovered security)"
+          - value: no_1099b
+            label: "No 1099-B received for this transaction"
+      - name: dateAcquired
+        type: text
+        required: false
+        placeholder: "YYYY-MM-DD"
+        label: Date acquired
+        help: Enter the date your spouse bought or otherwise acquired the asset (YYYY-MM-DD). Enter "Various" if shares were acquired on multiple dates.
+      - name: dateSoldOrDisposed
+        type: text
+        required: false
+        placeholder: "YYYY-MM-DD"
+        label: Date sold or disposed of
+        help: Enter the date the sale or disposition was completed (YYYY-MM-DD).
+      - name: proceeds
+        type: amount
+        required: true
+        placeholder: "0.00"
+        label: Proceeds (sale price)
+        help: Enter the gross proceeds from the sale as shown on the 1099-B or settlement statement.
+      - name: costOrOtherBasis
+        type: amount
+        required: true
+        placeholder: "0.00"
+        label: Cost or other basis
+        help: Enter what your spouse paid for the asset, including commissions and fees at purchase. For inherited assets, use the fair market value at the date of the decedent's death.
+      - name: adjustmentCode
+        type: text
+        required: false
+        placeholder: "W"
+        label: Adjustment code (if any)
+        help: Enter the IRS adjustment code from Form 8949 column (f) if applicable — for example, W for a wash sale.
+      - name: adjustmentAmount
+        type: amount
+        required: false
+        placeholder: "0.00"
+        label: Adjustment amount
+        help: Enter the net adjustment in column (g). Positive increases gain; negative reduces gain.
+      - name: transactionNotes
+        type: text
+        required: false
+        placeholder: "Manual correction or review note"
+        label: Notes (for your records only)
+        help: Optional internal notes — not reported on the tax return.
+
+  - name: spouseCapitalLossCarryoverSupport
+    title: Spouse prior-year capital loss carryover
+    multiplicity: single
+    showIf: hasCapitalLossCarryoverFromPriorYear == true
+    instructions:
+      - Enter spouse carryover amounts from last year's Schedule D. Short-term carryovers are on line 26, long-term on line 27.
+      - The allowable loss is the amount actually deducted last year — capped at $3,000 ($1,500 if Married Filing Separately).
+    fields:
+      - name: priorYearCapitalLossCarryoverShortTerm
+        type: amount
+        required: false
+        label: Spouse prior-year short-term capital loss carryover
+        placeholder: "0.00"
+        help: Enter the short-term capital loss your spouse carried over from the prior year. Found on line 26 of last year's Schedule D.
+      - name: priorYearCapitalLossCarryoverLongTerm
+        type: amount
+        required: false
+        label: Spouse prior-year long-term capital loss carryover
+        placeholder: "0.00"
+        help: Enter the long-term capital loss your spouse carried over from the prior year. Found on line 27 of last year's Schedule D.
+      - name: priorYearScheduleDLine21AllowableLoss
+        type: amount
+        required: false
+        label: Spouse allowable capital loss deducted on last year's return (capped at $3,000 or $1,500 MFS)
+        placeholder: "0.00"
+        help: Enter the amount from line 21 of your spouse's prior-year Schedule D — the actual loss deducted, limited to $3,000 or $1,500 for Married Filing Separately.
+
+  # Backend-only statement imports. Not rendered in form component.
+  - name: importedStatementFields
+    title: Imported statement fields (backend only)
+    multiplicity: single
+    showIf: hadCapitalGainOrLoss == true
+    fields:
+      - name: imported1099DivBox2aCapitalGainDistributionsTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Spouse 1099-DIV box 2a total (imported)
+      - name: imported1099DivBox2bUnrecaptured1250Total
+        type: amount
+        required: false
+        readOnly: true
+        label: Spouse 1099-DIV box 2b total (imported)
+      - name: imported1099DivBox2cSection1202Total
+        type: amount
+        required: false
+        readOnly: true
+        label: Spouse 1099-DIV box 2c total (imported)
+      - name: imported1099DivBox2dCollectiblesGainTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Spouse 1099-DIV box 2d total (imported)
+      - name: imported1099BRecordCount
+        type: integer
+        required: false
+        readOnly: true
+        label: Number of imported spouse 1099-B statements
+      - name: imported1099DaRecordCount
+        type: integer
+        required: false
+        readOnly: true
+        label: Number of imported spouse 1099-DA statements
+      - name: imported1099B1099DaNetGainOrLossTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported spouse 1099-B/1099-DA net gain or loss total
+      - name: importedForm2439Line1aUndistributedLongTermGainTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported spouse Form 2439 line 1a total
+      - name: importedForm2439Line1bUnrecaptured1250Total
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported spouse Form 2439 line 1b total
+      - name: importedForm2439Line1cSection1202Total
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported spouse Form 2439 line 1c total
+      - name: importedForm2439Line1dCollectiblesGainTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported spouse Form 2439 line 1d total
+      - name: importedOtherScheduleDSourceNetTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported spouse other Schedule D source net total
+      - name: importedPriorYearCapitalLossCarryoverTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported spouse prior-year capital loss carryover total
+
+  # Backend-only computed values. Not rendered in form component.
+  - name: computedOutputs
+    title: Computed outputs (backend only)
+    multiplicity: single
+    showIf: hadCapitalGainOrLoss == true
+    fields:
+      - name: computedLine7aCapitalGainOrLossContributionSpouse
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed spouse contribution to Form 1040 line 7a
+      - name: computedScheduleDRequiredContributionFromSpouseInputs
+        type: boolean
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Schedule D required contribution from spouse inputs
+      - name: computedForm8949RequiredContributionFromSpouseInputs
+        type: boolean
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Form 8949 required contribution from spouse inputs
+      - name: computedScheduleDLine16ContributionSpouse
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed spouse contribution to Schedule D line 16
+      - name: computedScheduleDLine21AllowedLossContributionSpouse
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed spouse contribution to Schedule D line 21 allowable loss

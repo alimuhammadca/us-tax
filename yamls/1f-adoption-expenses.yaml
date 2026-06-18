@@ -1,0 +1,291 @@
+# Form 8839 - Qualified Adoption Expenses (supports 1040 line 1f via Part III line 31)
+# Scope: EMPLOYEE-ONLY (no self-employment support). Any self-employment income should block app eligibility.
+#
+# UI flow:
+# 1) Screening gate: claimsAdoptionExpensesOrBenefits — exit early if No.
+# 2) Import W-2 Box 12 Code T total adoption benefits; user verifies the amount.
+# 3) Collect child rows (Part I) for up to 6 children.
+#    Each child has a claimsAdoptionCredit gate before revealing Part II inputs.
+# 4) If total adoption benefits > 0, show Part III inputs for per-child allocation + prior-year benefits.
+# 5) Compute Part III line 31 and map it to Form 1040 line 1f (may be negative).
+#
+# Editable rule:
+# - User inputs + imported fields: editable (imported may be readOnly if you prefer).
+# - Computed/derived fields: remove or readOnly.
+
+adoptionBenefits8839:
+  version: 4
+  scope:
+    supportsSelfEmployment: false
+
+  sections:
+    - name: screening
+      title: Adoption activity
+      multiplicity: single
+      fields:
+        - name: claimsAdoptionExpensesOrBenefits
+          type: boolean
+          required: false
+          label: Did you adopt a child, receive employer adoption assistance, or pay qualified adoption expenses in 2025?
+          help: Answer Yes if you received any employer adoption benefits (W-2 box 12 code T), paid qualified adoption expenses, or are carrying forward adoption credit from a prior year.
+          exitIfNo: true
+          exitMessage: No adoption entries needed.
+
+    - name: imports
+      title: Employer adoption benefits from W-2
+      multiplicity: single
+      fields:
+        # Imported from W-2 module: Sum of all Box 12 amounts where code == "T".
+        # Flow: This drives whether Part III is needed and sets the total that must be allocated across children.
+        - name: w2Box12CodeTTotal
+          type: amount
+          required: true
+          computed: true
+          readOnly: true
+          label: Total W-2 box 12 code T employer adoption benefits
+          help: Imported. Sum of W-2 box 12 amounts with code T for the return.
+
+        # V6: Verification step for the imported total.
+        - name: doesW2CodeTAmountLookCorrect
+          type: boolean
+          required: false
+          label: Does this total look correct?
+          help: If the total employer adoption benefits shown does not match your W-2 box 12 code T, check that your W-2 has been uploaded correctly in the Statements section, then return here and re-save.
+          showIf:
+            field: importedStatementFields.w2Box12CodeTTotal
+            greaterThan: 0
+
+    - name: children
+      title: Child information (Part I — up to 6 children)
+      multiplicity: multiple
+      maxItems: 6
+      fields:
+        # Child first name (Part I line 1(a)).
+        - name: childFirstName
+          type: text
+          required: true
+          label: Child first name
+          help: Enter the child's first name as it appears on legal adoption documents.
+
+        # Child last name (Part I line 1(a)).
+        - name: childLastName
+          type: text
+          required: true
+          label: Child last name
+          help: Enter the child's last name as it appears on legal adoption documents.
+
+        # Child year of birth (Part I line 1(b)).
+        - name: childYearOfBirth
+          type: integer
+          required: false
+          label: Child year of birth
+          help: Enter the child's 4-digit birth year (e.g., 2018).
+
+        # Part I line 1(c) checkbox — born before 2008 and disabled (age ≥18 in 2025).
+        - name: bornBefore2008AndDisabled
+          type: boolean
+          required: false
+          label: Born before 2008 and disabled?
+          help: Select Yes if the child was born before January 1, 2008, AND is disabled (physically or mentally incapable of self-care). If Yes, the child qualifies as an eligible child regardless of age.
+
+        # Part I line 1(d) checkbox.
+        - name: hasSpecialNeeds
+          type: boolean
+          required: false
+          label: Child with special needs?
+          help: A child with special needs is a U.S. citizen or resident that a state has determined requires adoption assistance due to age, physical or mental condition, ethnicity, or membership in a sibling group. When Yes and the adoption is final, the full exclusion limit applies even if actual employer benefits are less.
+
+        # Part I line 1(e) checkbox.
+        - name: isForeignChild
+          type: boolean
+          required: false
+          label: Foreign child?
+          help: Select Yes if the child was not a U.S. citizen or resident when the adoption effort began. Foreign adoptions may only exclude employer benefits in the year the adoption becomes final.
+
+        # Part I line 1(f): SSN/ATIN/ITIN.
+        - name: identifyingNumber
+          type: text
+          required: false
+          label: Identifying number (SSN / ATIN / ITIN)
+          help: Enter the child's Social Security Number, Adoption Taxpayer Identification Number (ATIN), or ITIN. Required to claim the adoption credit. Leave blank if the child does not yet have an identifying number.
+
+        # Part I line 1(g) checkbox.
+        - name: adoptionFinal2025OrEarlier
+          type: boolean
+          required: false
+          label: Was the adoption legally finalized in 2025 or earlier?
+          help: Select Yes if the adoption was legally finalized in 2025 or any prior year. Required for the special-needs full-exclusion rule and to determine when foreign-child employer benefits become excludable.
+
+        # V3: Gate before Part II inputs.
+        - name: claimsAdoptionCredit
+          type: boolean
+          required: false
+          label: Are you claiming the adoption credit for this child?
+          help: Answer Yes if you paid qualified adoption expenses for this child (attorney fees, court costs, agency fees, and necessary travel not reimbursed by your employer) and want to claim the adoption credit on Form 1040 line 30.
+
+        # V4: moreThanThreeChildren shown only when > 3 children are present (UI-level showIf based on count).
+        - name: moreThanThreeChildren
+          type: boolean
+          required: false
+          label: More than six eligible children?
+          help: Select Yes if you have more than six eligible children. You must attach a separate Form 8839 for each additional child beyond the six entered here.
+          showIf:
+            childCount: greaterThan3
+
+    - name: adoptionCreditPartII
+      title: Adoption credit (Part II)
+      multiplicity: single
+      fields:
+        - name: priorYearAdoptionCreditByChild
+          type: group
+          required: false
+          fields:
+            - name: child1PriorYearCredit
+              type: amount
+              required: false
+              label: Child 1 prior-year adoption credit
+              help: Enter the credit claimed for this child on a prior-year Form 8839. Reduces the maximum credit available for 2025.
+            - name: child2PriorYearCredit
+              type: amount
+              required: false
+              label: Child 2 prior-year adoption credit
+              help: Enter the credit claimed for this child on a prior-year Form 8839.
+            - name: child3PriorYearCredit
+              type: amount
+              required: false
+              label: Child 3 prior-year adoption credit
+              help: Enter the credit claimed for this child on a prior-year Form 8839.
+            - name: child4PriorYearCredit
+              type: amount
+              required: false
+              label: Child 4 prior-year adoption credit
+              help: Enter the credit claimed for this child on a prior-year Form 8839.
+            - name: child5PriorYearCredit
+              type: amount
+              required: false
+              label: Child 5 prior-year adoption credit
+              help: Enter the credit claimed for this child on a prior-year Form 8839.
+            - name: child6PriorYearCredit
+              type: amount
+              required: false
+              label: Child 6 prior-year adoption credit
+              help: Enter the credit claimed for this child on a prior-year Form 8839.
+
+        - name: qualifiedAdoptionExpensesByChild
+          type: group
+          required: false
+          fields:
+            - name: child1QualifiedExpenses
+              type: amount
+              required: false
+              label: Child 1 qualified adoption expenses
+              help: Enter qualified adoption expenses paid in 2025 or prior years for this child that were not reimbursed by your employer. Includes adoption fees, attorney fees, court costs, and related travel.
+            - name: child2QualifiedExpenses
+              type: amount
+              required: false
+              label: Child 2 qualified adoption expenses
+              help: Enter qualified adoption expenses paid in 2025 or prior years for this child that were not reimbursed by your employer.
+            - name: child3QualifiedExpenses
+              type: amount
+              required: false
+              label: Child 3 qualified adoption expenses
+              help: Enter qualified adoption expenses paid in 2025 or prior years for this child that were not reimbursed by your employer.
+            - name: child4QualifiedExpenses
+              type: amount
+              required: false
+              label: Child 4 qualified adoption expenses
+              help: Enter qualified adoption expenses paid in 2025 or prior years for this child that were not reimbursed by your employer.
+            - name: child5QualifiedExpenses
+              type: amount
+              required: false
+              label: Child 5 qualified adoption expenses
+              help: Enter qualified adoption expenses paid in 2025 or prior years for this child that were not reimbursed by your employer.
+            - name: child6QualifiedExpenses
+              type: amount
+              required: false
+              label: Child 6 qualified adoption expenses
+              help: Enter qualified adoption expenses paid in 2025 or prior years for this child that were not reimbursed by your employer.
+
+        - name: line15CreditCarryforward
+          type: amount
+          required: false
+          label: Credit carried forward from prior years
+          help: Enter the unused adoption credit carried forward from a prior-year Form 8839, if any. Unused credit may be carried forward for up to five years.
+
+    - name: employerBenefitsPartIII
+      title: Employer-provided adoption benefits (Part III — computes Form 1040 line 1f)
+      multiplicity: single
+      visibleWhen:
+        all:
+          - field: importedStatementFields.w2Box12CodeTTotal
+            greaterThan: 0
+      fields:
+        - name: priorYearEmployerBenefitsByChild
+          type: group
+          required: true
+          fields:
+            - name: child1PriorYearBenefits
+              type: amount
+              required: false
+              label: Child 1 prior-year employer adoption benefits
+              help: Enter employer-provided adoption benefits received in years before 2025 for this child (from a prior-year W-2 box 12 code T). These reduce the per-child exclusion available in 2025.
+            - name: child2PriorYearBenefits
+              type: amount
+              required: false
+              label: Child 2 prior-year employer adoption benefits
+              help: Enter employer-provided adoption benefits received in years before 2025 for this child.
+            - name: child3PriorYearBenefits
+              type: amount
+              required: false
+              label: Child 3 prior-year employer adoption benefits
+              help: Enter employer-provided adoption benefits received in years before 2025 for this child.
+            - name: child4PriorYearBenefits
+              type: amount
+              required: false
+              label: Child 4 prior-year employer adoption benefits
+              help: Enter employer-provided adoption benefits received in years before 2025 for this child.
+            - name: child5PriorYearBenefits
+              type: amount
+              required: false
+              label: Child 5 prior-year employer adoption benefits
+              help: Enter employer-provided adoption benefits received in years before 2025 for this child.
+            - name: child6PriorYearBenefits
+              type: amount
+              required: false
+              label: Child 6 prior-year employer adoption benefits
+              help: Enter employer-provided adoption benefits received in years before 2025 for this child.
+
+        - name: currentYearBenefitsAllocation
+          type: group
+          required: true
+          fields:
+            - name: child1Benefits2025
+              type: amount
+              required: false
+              label: Child 1 employer benefits allocated for 2025
+              help: Enter the portion of your W-2 box 12 code T total allocated to this child for 2025. The amounts across all children must add up to the total shown above.
+            - name: child2Benefits2025
+              type: amount
+              required: false
+              label: Child 2 employer benefits allocated for 2025
+              help: Enter the portion of your W-2 box 12 code T total allocated to this child for 2025. All children's amounts must sum to the W-2 box 12 code T total.
+            - name: child3Benefits2025
+              type: amount
+              required: false
+              label: Child 3 employer benefits allocated for 2025
+              help: Enter the portion of your W-2 box 12 code T total allocated to this child for 2025. All children's amounts must sum to the W-2 box 12 code T total.
+            - name: child4Benefits2025
+              type: amount
+              required: false
+              label: Child 4 employer benefits allocated for 2025
+              help: Enter the portion of your W-2 box 12 code T total allocated to this child for 2025. All children's amounts must sum to the W-2 box 12 code T total.
+            - name: child5Benefits2025
+              type: amount
+              required: false
+              label: Child 5 employer benefits allocated for 2025
+              help: Enter the portion of your W-2 box 12 code T total allocated to this child for 2025. All children's amounts must sum to the W-2 box 12 code T total.
+            - name: child6Benefits2025
+              type: amount
+              required: false
+              label: Child 6 employer benefits allocated for 2025
+              help: Enter the portion of your W-2 box 12 code T total allocated to this child for 2025. All children's amounts must sum to the W-2 box 12 code T total.

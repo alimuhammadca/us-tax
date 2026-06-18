@@ -1,0 +1,434 @@
+# Form 1040 line 5a/5b/5c (taxpayer/family head) workflow.
+# Approach: keep user questions + imported statement fields + computed outputs in one YAML.
+# NOTE: Sections marked as backend-only are NOT supposed to be rendered in the actual form component.
+name: pension-annuity-income-taxpayer
+title: Form 1040 - Pensions and annuities (taxpayer, lines 5a, 5b, and 5c)
+multiplicity: single
+formName: 1040
+category: income
+instructions:
+  - Start here only if the taxpayer had pension or annuity distributions for Form 1040 lines 5a/5b/5c.
+  - Upload validation is mandatory before entering supplemental details.
+  - At least one non-IRA Form 1099-R or Form RRB-1099-R must be uploaded before continue.
+  - This taxpayer form owns return-level line 5c and Form 4972/Form 5329 gating to avoid spouse conflicts.
+  - Self-employment income is out of scope and excluded.
+  - UI renders as a sub-interview wizard; section order below matches wizard screen flow:
+    screening → statementUploadCheck → classificationAndRouting → pensionDetails →
+    exceptionAmounts → uncommonGate → psoInputs → taxableComputationInputsSimplifiedMethod →
+    taxableComputationInputsGeneralRule → earlyDistributionPenalty → summary (save screen).
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: hadPensionOrAnnuityIncome
+        type: boolean
+        required: true
+        label: Did you have any pension or annuity distributions during the tax year?
+        help: If No, stop here and do not continue this interview.
+
+  - name: statementUploadCheck
+    title: Statement upload check
+    multiplicity: single
+    showIf: hadPensionOrAnnuityIncome == true
+    instructions:
+      - At least one non-IRA 1099-R or RRB-1099-R must be uploaded to continue.
+      - Component must block continue when required uploads are missing.
+    fields:
+      - name: hasUploadedAtLeastOnePensionStatement
+        type: boolean
+        required: false
+        label: At least one pension statement uploaded
+        help: Auto-derived from statement store — true when pension1099RCount + rrb1099RCount > 0. Not shown as a user question; set programmatically by the component.
+      - name: received1099RNonIra
+        type: boolean
+        required: false
+        label: Did you receive a non-IRA Form 1099-R?
+        help: Auto-derived true when pension1099RCount > 0. Shown as editable radio only when count is 0 (user may have received but not yet uploaded).
+      - name: uploaded1099RNonIra
+        type: boolean
+        required: false
+        label: Non-IRA 1099-R uploaded
+        help: Auto-derived from statement count. Not shown as a user question.
+      - name: receivedRrb1099R
+        type: boolean
+        required: false
+        label: Did you receive a Form RRB-1099-R (Railroad Retirement)?
+        help: Auto-derived true when rrb1099RCount > 0. Shown as editable radio only when count is 0.
+      - name: uploadedRrb1099R
+        type: boolean
+        required: false
+        label: RRB-1099-R uploaded
+        help: Auto-derived from statement count. Not shown as a user question.
+      - name: confirmAllReceivedPensionStatementsUploaded
+        type: boolean
+        required: false
+        label: All received statements uploaded
+        help: Auto-derived when all declared-received statement types have corresponding uploads. Not shown as a user question.
+
+  - name: classificationAndRouting
+    title: Classification and routing
+    multiplicity: single
+    showIf: hadPensionOrAnnuityIncome == true
+    fields:
+      - name: hasDisabilityPensionBeforeMinimumRetirementAge
+        type: boolean
+        required: false
+        label: Did any disability pension apply before minimum retirement age?
+        help: Select Yes if any disability pension must be routed to line 1h instead of lines 5a/5b.
+      - name: disabilityPensionLine1hRoutingConfirmed
+        type: boolean
+        required: false
+        label: I confirm disability pension amounts before minimum retirement age are routed to line 1h
+        help: Confirm this routing when applicable.
+
+  - name: pensionDetails
+    title: Pension details
+    multiplicity: single
+    showIf: hadPensionOrAnnuityIncome == true
+    fields:
+      - name: hadPensionRollover
+        type: boolean
+        required: false
+        label: Did you roll any pension or annuity distribution into another retirement account or IRA?
+        help: A direct rollover (code G on 1099-R) or a 60-day rollover reduces your taxable pension amount.
+      - name: hasAnyTaxableAmountNotDeterminedPension1099R
+        type: boolean
+        required: false
+        label: Did any of your 1099-R forms leave the taxable amount blank and check box 2b?
+        help: '"Taxable amount not determined" means the payer could not calculate your taxable amount. Use the cost basis method (Simplified Method) to compute it.'
+
+  - name: exceptionAmounts
+    title: Exception amounts
+    multiplicity: single
+    showIf: hadPensionOrAnnuityIncome == true
+    instructions:
+      - Enter amounts that affect how much of your pension is taxable.
+      - Return-level line 5c annotation fields are kept on taxpayer/family-head form only.
+      - Wizard screen: exception-amounts (Step 5 of 11).
+    fields:
+      - name: totalPensionRolloverAmount
+        type: amount
+        required: false
+        showIf: hadPensionRollover == true
+        label: Total amount rolled over
+        placeholder: 0.00
+        help: Enter the total amount rolled over from all qualified plans and annuities.
+      - name: taxableEmployeeContributionsAlreadyTaxedBox5Total
+        type: amount
+        required: false
+        showIf: hadPensionRollover == true
+        label: Employee contributions already taxed — box 5 total from all 1099-R forms
+        placeholder: 0.00
+        help: Enter the total from box 5 of all your 1099-R forms. Reduces the rollover base.
+      - name: hasOtherLine5cWriteInCode
+        type: boolean
+        required: false
+        label: Does your situation require a special IRS annotation next to line 5b on your return?
+        help: IRS instructions occasionally require a word or code written next to line 5b. Most taxpayers answer No.
+      - name: line5cOtherWriteInText
+        type: text
+        required: false
+        showIf: hasOtherLine5cWriteInCode == true
+        label: Annotation text
+        placeholder: Enter annotation code or text
+        help: Enter the exact word or code the IRS requires to be written next to line 5b.
+      - name: line5cOtherWriteInAmount
+        type: amount
+        required: false
+        showIf: hasOtherLine5cWriteInCode == true
+        label: Amount associated with this annotation
+        placeholder: 0.00
+        help: Enter the dollar amount associated with the annotation, if applicable.
+
+  - name: uncommonGate
+    title: Less common situations
+    multiplicity: single
+    showIf: hadPensionOrAnnuityIncome == true
+    instructions:
+      - >
+        Three booleans set by the UI "Less common situations" checklist.
+        Not shown as standalone questions. Setting each reveals the corresponding wizard screen.
+        Wizard screen: uncommon-gate (Step 6 of 11).
+    fields:
+      - name: isEligibleRetiredPublicSafetyOfficer
+        type: boolean
+        required: false
+        label: PSO premium exclusion
+        help: >
+          Set to true via the "Less common situations" checklist when the taxpayer is an eligible
+          retired public safety officer. Reveals the PSO premium exclusion wizard screen.
+      - name: needsSimplifiedMethodComputation
+        type: boolean
+        required: false
+        label: Cost basis calculation needed (Simplified Method)
+        help: >
+          Set to true via the "Less common situations" checklist when the taxpayer's 1099-R left
+          box 2a blank (box 2b checked) and they have after-tax contributions. Reveals Simplified
+          Method wizard screen.
+      - name: needsGeneralRuleComputation
+        type: boolean
+        required: false
+        label: Exclusion ratio calculation (General Rule)
+        help: >
+          Set to true via the "Less common situations" checklist when the pension uses an IRS
+          Publication 939 exclusion ratio. Reveals General Rule wizard screen.
+
+  - name: psoInputs
+    title: PSO premium exclusion
+    multiplicity: single
+    showIf: isEligibleRetiredPublicSafetyOfficer == true
+    instructions:
+      - Wizard screen: pso (Step 7 of 11, conditional on uncommonGate.isEligibleRetiredPublicSafetyOfficer).
+    fields:
+      - name: electsPsoPremiumExclusion
+        type: boolean
+        required: false
+        label: Are you electing to exclude qualifying insurance premiums from your pension income?
+        help: The PSO exclusion lets eligible retired public safety officers exclude up to $3,000 per year in qualifying premiums paid from their pension.
+      - name: totalQualifyingPsoPremiumsPaid
+        type: amount
+        required: false
+        showIf: electsPsoPremiumExclusion == true
+        label: Total qualifying insurance premiums paid from your pension
+        placeholder: 0.00
+        help: >
+          Enter the total premiums for accident, health, or long-term care insurance paid directly
+          from the plan to the insurer or by you from plan proceeds. Capped at $3,000.
+
+  - name: taxableComputationInputsSimplifiedMethod
+    title: Simplified Method inputs
+    multiplicity: single
+    showIf: needsSimplifiedMethodComputation == true
+    fields:
+      - name: annuityStartingDate
+        type: date
+        required: false
+        label: Annuity starting date
+        help: Enter annuity start date used for Simplified Method factor determination.
+      - name: annuitantAgeAtStartingDate
+        type: integer
+        required: false
+        label: Annuitant age at annuity starting date
+        help: Enter age at annuity start date for Simplified Method.
+      - name: jointAnnuitantAgeAtStartingDate
+        type: integer
+        required: false
+        label: Joint annuitant age at annuity starting date (if applicable)
+        help: Enter spouse/co-annuitant age when joint-survivor annuity rules apply.
+      - name: investmentInContractCostSimplifiedMethod
+        type: amount
+        required: false
+        label: Investment in contract / after-tax contributions (Simplified Method)
+        placeholder: 0.00
+        help: Enter cost basis used by Simplified Method.
+      - name: numberOfAnnuityPaymentsReceivedInTaxYear
+        type: integer
+        required: false
+        label: Number of annuity payments received during the tax year
+        help: Enter payment count for annual nontaxable portion computation.
+      - name: priorYearTaxFreeRecoveryAmount
+        type: amount
+        required: false
+        label: Prior-year tax-free recovery amount
+        placeholder: 0.00
+        help: Enter cumulative prior-year tax-free recovery used to cap remaining basis.
+
+  - name: taxableComputationInputsGeneralRule
+    title: General Rule inputs
+    multiplicity: single
+    showIf: needsGeneralRuleComputation == true
+    fields:
+      - name: investmentInContractCostGeneralRule
+        type: amount
+        required: false
+        label: Investment in contract / cost basis (General Rule)
+        placeholder: 0.00
+        help: Enter cost basis used for General Rule exclusion ratio.
+      - name: expectedReturnGeneralRule
+        type: amount
+        required: false
+        label: Expected return (General Rule)
+        placeholder: 0.00
+        help: Enter expected return used to compute exclusion ratio.
+      - name: paymentsReceivedInTaxYearGeneralRule
+        type: amount
+        required: false
+        label: Payments received in tax year (General Rule)
+        placeholder: 0.00
+        help: Enter current-year pension/annuity payments for General Rule computation.
+      - name: exclusionRatioOverrideGeneralRule
+        type: decimal
+        required: false
+        label: Exclusion ratio override (General Rule)
+        placeholder: 0.000000
+        help: Enter override ratio only when required by reviewed computation support.
+
+  - name: earlyDistributionPenalty
+    title: Early distribution penalty
+    multiplicity: single
+    showIf: hadPensionOrAnnuityIncome == true
+    instructions:
+      - Applies when pension or annuity money was received before age 59½ without a qualifying exception.
+      - >
+        NOTE: electsForm4972SpecialTaxTreatment and form4972LumpSumDistributionAmount have been removed.
+        Form 4972 is managed via the lump-sum-distribution-taxpayer personal form.
+    fields:
+      - name: hasEarlyDistributionAdditionalTaxForForm5329
+        type: boolean
+        required: false
+        label: Did you receive pension or annuity distributions before age 59½ and lack a qualifying exception to the 10% penalty?
+        help: Distribution code "1" on your 1099-R means no known exception applies. Exceptions include disability, SEPP, and separation from service after age 55.
+      - name: form5329ExceptionCodeOrReason
+        type: text
+        required: false
+        showIf: hasEarlyDistributionAdditionalTaxForForm5329 == true
+        label: Reason your penalty is reduced or waived (if applicable)
+        placeholder: Enter exception code or explanation
+        help: If a partial or full exception applies, enter the IRS exception code or a brief explanation. Leave blank if the full 10% penalty applies and you have explicitly confirmed below that no exception applies.
+      - name: noEarlyDistributionExceptionApplies
+        type: boolean
+        required: false
+        showIf: hasEarlyDistributionAdditionalTaxForForm5329 == true
+        label: I confirm no IRC §72(t)(2) exception applies — I am paying the full additional tax.
+        help: Check this box to explicitly affirm that no exception (disability, age-55-separation-from-service, SEPP, qualified higher-education expenses, first-time home purchase, etc.) applies to your early distribution. Required when the exception reason above is left blank so the application can confirm you intentionally elected to pay the full 10% (or 25% for SIMPLE-IRA first-2-years) additional tax.
+
+  # Backend-only statement imports. Not rendered in form component.
+  - name: importedStatementFields
+    title: Imported statement fields (backend only)
+    multiplicity: single
+    showIf: hadPensionOrAnnuityIncome == true
+    fields:
+      - name: imported1099RNonIraRecordCount
+        type: integer
+        required: false
+        readOnly: true
+        label: Number of non-IRA 1099-R statements (imported)
+      - name: imported1099RNonIraBox1GrossTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Non-IRA 1099-R box 1 total (imported)
+      - name: imported1099RNonIraBox2aTaxableTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Non-IRA 1099-R box 2a total (imported)
+      - name: imported1099RNonIraTaxableAmountNotDeterminedCount
+        type: integer
+        required: false
+        readOnly: true
+        label: Non-IRA 1099-R box 2b taxable not determined count (imported)
+      - name: imported1099RNonIraBox4FederalWithholdingTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Non-IRA 1099-R box 4 total (imported)
+      - name: imported1099RNonIraBox5EmployeeContributionTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Non-IRA 1099-R box 5 total (imported)
+      - name: imported1099RNonIraCodeGCount
+        type: integer
+        required: false
+        readOnly: true
+        label: Non-IRA 1099-R code G count (imported)
+      - name: imported1099RNonIraCode3Count
+        type: integer
+        required: false
+        readOnly: true
+        label: Non-IRA 1099-R code 3 count (imported)
+      - name: importedRrb1099RRecordCount
+        type: integer
+        required: false
+        readOnly: true
+        label: Number of RRB-1099-R statements (imported)
+      - name: importedRrb1099RBox7TotalGrossPaid
+        type: amount
+        required: false
+        readOnly: true
+        label: RRB-1099-R box 7 total gross paid (imported)
+      - name: importedRrb1099RBox3EmployeeContributionCost
+        type: amount
+        required: false
+        readOnly: true
+        label: RRB-1099-R box 3 total employee contribution/cost (imported)
+      - name: importedRrb1099RBox9FederalWithholding
+        type: amount
+        required: false
+        readOnly: true
+        label: RRB-1099-R box 9 total federal withholding (imported)
+
+  # Backend-only computed values. Not rendered in form component.
+  - name: computedOutputs
+    title: Computed outputs (backend only)
+    multiplicity: single
+    showIf: hadPensionOrAnnuityIncome == true
+    fields:
+      - name: computedLine5aGrossPensionContributionTaxpayer
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed taxpayer contribution to Form 1040 line 5a
+      - name: computedLine5bTaxablePensionContributionTaxpayer
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed taxpayer contribution to Form 1040 line 5b
+      - name: computedLine5cTaxpayerExceptionFlagRollover
+        type: boolean
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed taxpayer rollover exception flag (line 5c box 1)
+      - name: computedLine5cTaxpayerExceptionFlagPso
+        type: boolean
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed taxpayer PSO exception flag (line 5c box 2)
+      - name: computedLine5cTaxpayerExceptionFlagOther
+        type: boolean
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed taxpayer other write-in flag (line 5c box 3)
+      - name: computedLine5cTaxpayerOtherWriteInText
+        type: text
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed taxpayer line 5c box 3 text
+      - name: computedPsoExclusionAppliedAmountTaxpayer
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed taxpayer PSO exclusion amount applied
+      - name: computedRolloverExclusionAppliedAmountTaxpayer
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed taxpayer rollover exclusion amount applied
+      - name: computedLine1hDisabilityReclassificationAmountTaxpayer
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed taxpayer disability pension amount routed to line 1h
+      - name: computedForm4972Required
+        type: boolean
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Form 4972 required flag
+      - name: computedForm5329Required
+        type: boolean
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Form 5329 required flag

@@ -1,0 +1,309 @@
+<mxfile host='app.diagrams.net' modified='2026-04-15T00:00:00.000Z' agent='Claude' version='20.8.16' type='device'>
+  <diagram id='line6abcd-computation' name='Lines 6a/6b/6c/6d Social Security Benefits Flowchart'>
+    <mxGraphModel dx='1400' dy='900' grid='1' gridSize='10' guides='1' tooltips='1' connect='1' arrows='1' fold='1' page='1' pageScale='1' pageWidth='1700' pageHeight='3200' math='0' shadow='0'>
+      <root>
+        <mxCell id='0'/>
+        <mxCell id='1' parent='0'/>
+
+        <!-- LEGEND -->
+        <mxCell id='leg1' value='Start / End' style='ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1330' y='80' width='120' height='40' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg2' value='Process / Action' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1330' y='130' width='120' height='40' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg3' value='Decision' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1330' y='180' width='120' height='50' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg4' value='Output / Result' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1330' y='240' width='120' height='40' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg5' value='Blocking Flag' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8d7da;strokeColor=#842029;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1330' y='290' width='120' height='40' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg6' value='Input Data' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1330' y='340' width='120' height='40' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg7' value='Gap / Deferred' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1330' y='390' width='120' height='40' as='geometry'/>
+        </mxCell>
+
+        <!-- ABBREVIATIONS -->
+        <mxCell id='abbr' value='Abbreviations&#xa;&#xa;SSA  = Social Security Administration&#xa;RRB  = Railroad Retirement Board&#xa;MFJ  = Married Filing Jointly&#xa;MFS  = Married Filing Separately&#xa;SSI  = Supplemental Security Income&#xa;TIN  = Taxpayer Identification Number&#xa;SSEB = Social Security Equivalent Benefit' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f0f4ff;strokeColor=#3b5bdb;fontSize=11;align=left;spacingLeft=8;' vertex='1' parent='1'>
+          <mxGeometry x='1320' y='450' width='290' height='180' as='geometry'/>
+        </mxCell>
+
+        <!-- 2025 CONSTANTS -->
+        <mxCell id='const' value='2025 IRS Constants (Verified)&#xa;&#xa;MFJ base amount: $32,000&#xa;MFJ second-tier: $44,000&#xa;All-other base amount: $25,000&#xa;All-other second-tier: $34,000&#xa;Maximum taxable fraction: 85%&#xa;&#xa;MFS + lived with spouse:&#xa;  No base amount; use 85% path&#xa;&#xa;Sources: IRS i1040gi_2025,&#xa;Pub. 915 (2025)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#388e3c;fontSize=11;align=left;spacingLeft=8;' vertex='1' parent='1'>
+          <mxGeometry x='1320' y='650' width='290' height='210' as='geometry'/>
+        </mxCell>
+
+        <!-- KNOWN GAPS -->
+        <mxCell id='gaps' value='Implementation Status (2026-04-16)&#xa;&#xa;✓ Gap 1 resolved: Worksheet line 5 wired for&#xa;  Form 2555 exclusions (taxpayer + spouse).&#xa;  Deferred: Form 8839 adoption (§137),&#xa;  Form 8815, Samoa/PR exclusions.&#xa;&#xa;✓ Gap 2 resolved: Lump-sum uses full&#xa;  Pub. 915 Worksheet 3 per-year recompute.&#xa;&#xa;✓ Gap 3 resolved: Worksheet line 6 auto-pulled&#xa;  from Schedule 1 Part II adjustments&#xa;  (incomeAdjustments.line10FromSchedule1Line26).&#xa;&#xa;✓ Gap 4 resolved: Line 6c &amp; 6d checkboxes&#xa;  mapped in f1040_field_mapping_semantic.csv.&#xa;&#xa;✓ Gap 5 resolved: Negative net benefits emits&#xa;  SOCIAL_SECURITY_NEGATIVE_NET_BENEFITS_MANUAL_REVIEW&#xa;  (non-blocking); SS lines omitted from output.&#xa;  IRA coordination emits advisory flag;&#xa;  iterative Pub. 590-A solve still deferred.' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;align=left;spacingLeft=8;' vertex='1' parent='1'>
+          <mxGeometry x='1320' y='880' width='290' height='280' as='geometry'/>
+        </mxCell>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- MAIN FLOW — column x≈330 -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+
+        <!-- START -->
+        <mxCell id='n01' value='START&#xa;computeSocialSecurityBenefits()&#xa;&#xa;Inputs: social-security-benefits-taxpayer,&#xa;social-security-benefits-spouse,&#xa;ssa-1099 entries, rrb-1099 entries,&#xa;you, spouse, filing-status, flags' style='ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;' vertex='1' parent='1'>
+          <mxGeometry x='260' y='40' width='360' height='80' as='geometry'/>
+        </mxCell>
+
+        <!-- STEP 1: Gate hadSocialSecurityBenefits -->
+        <mxCell id='n02' value='taxpayerHadBenefits == true&#xa;OR spouseHadBenefits == true?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='270' y='175' width='340' height='70' as='geometry'/>
+        </mxCell>
+        <mxCell id='e01' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n01' target='n02' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- No benefits path -->
+        <mxCell id='n03' value='Return null&#xa;(no Social Security computation)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='760' y='187' width='220' height='46' as='geometry'/>
+        </mxCell>
+        <mxCell id='e02' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n02' target='n03' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+          <Array as='points'>
+            <mxPoint x='610' y='210'/>
+            <mxPoint x='870' y='210'/>
+          </Array>
+        </mxCell>
+        <mxCell id='lbl02' value='No' style='edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;' vertex='1' connectable='0' parent='e02'>
+          <mxGeometry x='-0.1' relative='1' as='geometry'>
+            <mxPoint as='offset'/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- STEP 2: Statement gating validation -->
+        <mxCell id='n04' value='validateSocialSecurityStatementGating()&#xa;&#xa;Check: uploadedAtLeastOne, confirmedAll,&#xa;receivedSsa1099/uploadedSsa1099,&#xa;receivedRrb1099/uploadedRrb1099,&#xa;ssaEntries not empty, rrbEntries not empty' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='255' y='300' width='370' height='90' as='geometry'/>
+        </mxCell>
+        <mxCell id='e03' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n02' target='n04' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='lbl03' value='Yes' style='edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;' vertex='1' connectable='0' parent='e03'>
+          <mxGeometry x='-0.1' relative='1' as='geometry'>
+            <mxPoint as='offset'/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Blocking flags -->
+        <mxCell id='n05' value='Emit blocking flags:&#xa;SOCIAL_SECURITY_STATEMENT_UPLOAD_REQUIRED&#xa;MISSING_UPLOADED_SSA_1099 (if needed)&#xa;MISSING_UPLOADED_RRB_1099 (if needed)&#xa;(computation continues; caller checks flags)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8d7da;strokeColor=#842029;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='760' y='315' width='290' height='75' as='geometry'/>
+        </mxCell>
+        <mxCell id='e04' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n04' target='n05' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+          <Array as='points'>
+            <mxPoint x='625' y='345'/>
+            <mxPoint x='905' y='345'/>
+          </Array>
+        </mxCell>
+        <mxCell id='lbl04' value='Gating fails' style='edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;' vertex='1' connectable='0' parent='e04'>
+          <mxGeometry x='-0.1' relative='1' as='geometry'>
+            <mxPoint as='offset'/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- STEP 3: Compute gross benefits per person -->
+        <mxCell id='n06' value='computeSocialSecurityForPerson() × 2&#xa;&#xa;For each SSA-1099 entry:&#xa;  TIN match via beneficiarySSN → grossBenefits += netBenefitsAmount&#xa;For each RRB-1099 entry:&#xa;  TIN match via recipientIdNumber → grossBenefits += netSSEBAmount&#xa;&#xa;If hasSupplementalSecurityIncome:&#xa;  grossBenefits -= supplementalSecurityIncomeAmount  (SSI excluded)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='235' y='450' width='410' height='120' as='geometry'/>
+        </mxCell>
+        <mxCell id='e05' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n04' target='n06' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- STEP 4: line6a -->
+        <mxCell id='n07' value='line6a = taxpayer.grossBenefits + spouse.grossBenefits' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='270' y='630' width='340' height='46' as='geometry'/>
+        </mxCell>
+        <mxCell id='e06' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n06' target='n07' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- STEP 5: Line 6d determination -->
+        <mxCell id='n08' value='isMfs = filingStatus == MFS?&#xa;livedApartAllYear?&#xa;&#xa;line6d = isMfs &amp;&amp; livedApartAllYear' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='270' y='730' width='340' height='70' as='geometry'/>
+        </mxCell>
+        <mxCell id='e07' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n07' target='n08' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- STEP 6: Build worksheet inputs -->
+        <mxCell id='n09' value='Build Worksheet Inputs:&#xa;&#xa;w1 = line6a&#xa;worksheetLine3 = line1z+2b+3b+4b+5b+7a+8 (or manual override)&#xa;worksheetLine4 = line2a tax-exempt interest (or override)&#xa;worksheetLine5 = Form2555 taxpayer lines 45+50&#xa;              + Form2555 spouse lines 45+50&#xa;              (⚠ Form 8839/8815/Samoa/PR deferred)&#xa;worksheetLine6 = incomeAdjustments.line10FromSchedule1Line26()' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='215' y='860' width='450' height='130' as='geometry'/>
+        </mxCell>
+        <mxCell id='e08' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n08' target='n09' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- STEP 7: MFS branch decision -->
+        <mxCell id='n10' value='MFS + livedWithSpouseAnyTime == true?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='280' y='1050' width='320' height='70' as='geometry'/>
+        </mxCell>
+        <mxCell id='e09' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n09' target='n10' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- MFS restrictive branch -->
+        <mxCell id='n11' value='MFS + Lived-With-Spouse Branch:&#xa;&#xa;w2 = 0.50 × w1&#xa;w5 = w2 + worksheetLine3 + worksheetLine4&#xa;w7 = max(0, w5 - worksheetLine6)&#xa;&#xa;taxableNormal = min(0.85 × w1, 0.85 × w7)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='760' y='1040' width='290' height='110' as='geometry'/>
+        </mxCell>
+        <mxCell id='e10' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n10' target='n11' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+          <Array as='points'>
+            <mxPoint x='600' y='1085'/>
+            <mxPoint x='905' y='1085'/>
+          </Array>
+        </mxCell>
+        <mxCell id='lbl10' value='Yes' style='edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;' vertex='1' connectable='0' parent='e10'>
+          <mxGeometry x='-0.1' relative='1' as='geometry'>
+            <mxPoint as='offset'/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Normal branch: threshold calculation -->
+        <mxCell id='n12' value='Normal / MFJ / MFS-apart Branch:&#xa;&#xa;w2 = 0.50 × w1&#xa;w5 = w2 + worksheetLine3 + worksheetLine4&#xa;w7 = max(0, w5 - worksheetLine6)&#xa;&#xa;if w7 ≤ 0: taxableNormal = 0&#xa;&#xa;baseAmount = $32,000 (MFJ) | $25,000 (other)&#xa;secondBase = $44,000 (MFJ) | $34,000 (other)&#xa;overBase = max(0, w7 - baseAmount)&#xa;if overBase ≤ 0: taxableNormal = 0&#xa;&#xa;taxableUpTo50 = min(0.5×w1, 0.5×overBase)&#xa;overSecond = max(0, w7 - secondBase)&#xa;if overSecond &gt; 0:&#xa;  plateau = min(0.5×(secondBase-baseAmount), 0.5×w1)&#xa;  taxable = plateau + 0.85×overSecond&#xa;else:&#xa;  taxable = taxableUpTo50&#xa;&#xa;taxableNormal = min(0.85×w1, taxable)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='195' y='1180' width='490' height='290' as='geometry'/>
+        </mxCell>
+        <mxCell id='e11' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n10' target='n12' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='lbl11' value='No' style='edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;' vertex='1' connectable='0' parent='e11'>
+          <mxGeometry x='-0.1' relative='1' as='geometry'>
+            <mxPoint as='offset'/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Merge normal branches -->
+        <mxCell id='n13' value='taxableNormal determined' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='300' y='1535' width='280' height='40' as='geometry'/>
+        </mxCell>
+        <mxCell id='e12' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n12' target='n13' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='e13' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n11' target='n13' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+          <Array as='points'>
+            <mxPoint x='905' y='1570'/>
+            <mxPoint x='440' y='1570'/>
+          </Array>
+        </mxCell>
+
+        <!-- STEP 8: Lump-sum check -->
+        <mxCell id='n14' value='hasLumpSumBackPaymentForPriorYears == true?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='285' y='1630' width='310' height='70' as='geometry'/>
+        </mxCell>
+        <mxCell id='e14' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n13' target='n14' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Lump-sum computation (simplified) -->
+        <mxCell id='n15' value='computeTaxableSocialSecurityLumpSum() — Pub. 915 Worksheet 3:&#xa;&#xa;lumpSumTotal = sum of lumpSumDetails[].lumpSumAllocatedToPriorYear&#xa;currentYearBase = line6a − lumpSumTotal&#xa;&#xa;// Current-year recompute on reduced base&#xa;currentYearTaxable = computeTaxableSocialSecurityNormal(&#xa;  currentYearBase, worksheetLine3, worksheetLine4,&#xa;  worksheetLine5, worksheetLine6, filingStatus)&#xa;&#xa;// Per-year additional taxable&#xa;for each row in lumpSumDetails:&#xa;  priorSS = row.lumpSumAllocatedToPriorYear&#xa;  priorOther = row.priorYearOtherIncomeForRecompute&#xa;  priorExempt = row.priorYearTaxExemptInterestForRecompute&#xa;  priorAdj = row.priorYearAdjustmentsForRecompute&#xa;  priorPrevTaxable = row.priorYearTaxableBenefitsPreviouslyReported&#xa;  withLump = computeTaxableSocialSecurityNormal(&#xa;    priorSS+priorBenefitsPreviouslyReported, priorOther,&#xa;    priorExempt, 0, priorAdj, filingStatus)&#xa;  withoutLump = priorPrevTaxable (previously reported)&#xa;  additionalTaxable += max(0, withLump − withoutLump)&#xa;&#xa;taxableLumpSum = currentYearTaxable + additionalTaxable&#xa;&#xa;If lumpSumDetails empty → emit non-blocking flag&#xa;SOCIAL_SECURITY_LUMP_SUM_ALLOCATION_REQUIRED' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='760' y='1620' width='310' height='185' as='geometry'/>
+        </mxCell>
+        <mxCell id='e15' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n14' target='n15' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+          <Array as='points'>
+            <mxPoint x='595' y='1665'/>
+            <mxPoint x='915' y='1665'/>
+          </Array>
+        </mxCell>
+        <mxCell id='lbl15' value='Yes' style='edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;' vertex='1' connectable='0' parent='e15'>
+          <mxGeometry x='-0.1' relative='1' as='geometry'>
+            <mxPoint as='offset'/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- STEP 9: Line 6b and 6c selection -->
+        <mxCell id='n16' value='electsLumpSumElection == true&#xa;AND taxableLumpSum &lt; taxableNormal?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='280' y='1870' width='320' height='70' as='geometry'/>
+        </mxCell>
+        <mxCell id='e16' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n14' target='n16' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='lbl16' value='No' style='edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;' vertex='1' connectable='0' parent='e16'>
+          <mxGeometry x='-0.1' relative='1' as='geometry'>
+            <mxPoint as='offset'/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id='e16b' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n15' target='n16' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+          <Array as='points'>
+            <mxPoint x='915' y='1905'/>
+            <mxPoint x='440' y='1905'/>
+          </Array>
+        </mxCell>
+
+        <!-- Lump-sum elected path -->
+        <mxCell id='n17' value='line6b = taxableLumpSum&#xa;line6c = true (checkbox checked)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='760' y='1860' width='270' height='55' as='geometry'/>
+        </mxCell>
+        <mxCell id='e17' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n16' target='n17' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+          <Array as='points'>
+            <mxPoint x='600' y='1905'/>
+            <mxPoint x='895' y='1905'/>
+          </Array>
+        </mxCell>
+        <mxCell id='lbl17' value='Yes' style='edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;' vertex='1' connectable='0' parent='e17'>
+          <mxGeometry x='-0.1' relative='1' as='geometry'>
+            <mxPoint as='offset'/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Normal path -->
+        <mxCell id='n18' value='line6b = taxableNormal&#xa;line6c = false' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='300' y='2010' width='280' height='50' as='geometry'/>
+        </mxCell>
+        <mxCell id='e18' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n16' target='n18' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='lbl18' value='No' style='edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;' vertex='1' connectable='0' parent='e18'>
+          <mxGeometry x='-0.1' relative='1' as='geometry'>
+            <mxPoint as='offset'/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Merge line 6b paths -->
+        <mxCell id='n19' value='Apply 85% cap:&#xa;if line6a null and line6b null → line6b = 0&#xa;line6b = min(0.85 × line6a, max(0, line6b))' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='270' y='2120' width='340' height='70' as='geometry'/>
+        </mxCell>
+        <mxCell id='e19' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n18' target='n19' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='e19b' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n17' target='n19' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+          <Array as='points'>
+            <mxPoint x='895' y='2155'/>
+            <mxPoint x='440' y='2155'/>
+          </Array>
+        </mxCell>
+
+        <!-- OUTPUT -->
+        <mxCell id='n20' value='OUTPUT: SocialSecurityComputation&#xa;&#xa;line6a = socialSecurityBenefits&#xa;line6b = taxableSocialSecurityBenefits&#xa;line6c = line6cLumpSumElection (checkbox)&#xa;line6d = line6dMfsLivedApartAllYear (checkbox)&#xa;taxableNormal (internal)&#xa;taxableLumpSum (internal)&#xa;&#xa;→ Income.java fields set&#xa;→ line6b flows to line 9 totalIncome&#xa;→ line6a NOT added to line 9' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='245' y='2250' width='390' height='165' as='geometry'/>
+        </mxCell>
+        <mxCell id='e20' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n19' target='n20' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- END -->
+        <mxCell id='n21' value='END' style='ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;' vertex='1' parent='1'>
+          <mxGeometry x='370' y='2475' width='140' height='50' as='geometry'/>
+        </mxCell>
+        <mxCell id='e21' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n20' target='n21' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- PDF EXPORT NOTE -->
+        <mxCell id='n22' value='PDF Export Note:&#xa;line6a → f1_68[0] ✅ mapped&#xa;line6b → f1_69[0] ✅ mapped&#xa;line6c → ⚠ set but CSV has no row (c1_41 unmapped)&#xa;line6d → ⚠ set but CSV has no row (c1_42 unmapped)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;align=left;spacingLeft=8;' vertex='1' parent='1'>
+          <mxGeometry x='760' y='2250' width='310' height='100' as='geometry'/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

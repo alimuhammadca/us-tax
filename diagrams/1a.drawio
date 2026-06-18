@@ -1,0 +1,119 @@
+<mxfile host='app.diagrams.net' modified='2026-04-09T22:45:00.0000000Z' agent='Codex' version='20.8.16' type='device'>
+  <diagram id='1a-flow-w2-box1-wages' name='Line 1a - W-2 box 1 wages'>
+    <mxGraphModel dx='1600' dy='1100' grid='1' gridSize='10' guides='1' tooltips='1' connect='1' arrows='1' fold='1' page='1' pageScale='1' pageWidth='1800' pageHeight='1200' math='0' shadow='0'>
+      <root>
+        <mxCell id='0'/>
+        <mxCell id='1' parent='0'/>
+
+        <!-- ── Inputs column ── -->
+
+        <mxCell id='2' value='Employment gating inputs&#xa;employment-income-taxpayer&#xa;employment-income-spouse&#xa;&#xa;Fields read:&#xa;hasEmploymentIncome&#xa;householdWork' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='20' y='40' width='320' height='150' as='geometry'/>
+        </mxCell>
+
+        <mxCell id='3' value='W-2 statement inputs&#xa;listEntriesWithData(uid, &quot;w-2&quot;)&#xa;&#xa;Fields read per entry:&#xa;wagesTipsOtherCompAmount   (Box 1 — wages, tips, other comp)&#xa;nonqualifiedPlansAmount    (Box 11 — Nonqualified Deferred Compensation / Non-governmental Section 457)&#xa;statutoryEmployee          (Box 13 checkbox — statutory employee flag)&#xa;hasUncommonW2Situations    (interview gate)&#xa;includesInmateWages        (interview question)&#xa;inmateWagesAmount          (interview amount)&#xa;employeeSSN                (Social Security Number — validation only)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='20' y='220' width='380' height='290' as='geometry'/>
+        </mxCell>
+
+        <mxCell id='4' value='Other incomes personal forms&#xa;(non-W-2 sources only)&#xa;other-incomes-taxpayer&#xa;other-incomes-spouse&#xa;&#xa;Fields aggregated in computeOtherIncomes():&#xa;otherIncomeNonqualifiedDeferredComp8t&#xa;  (Nonqualified Deferred Comp / Sec 457 — Schedule 1 line 8t)&#xa;otherIncomeWagesWhileIncarcerated8u&#xa;  (Inmate wages — Schedule 1 line 8u)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='20' y='550' width='380' height='210' as='geometry'/>
+        </mxCell>
+
+        <mxCell id='100' value='Form 4852 — Substitute W-2&#xa;(when employer fails to issue a W-2)&#xa;form4852-taxpayer / form4852-spouse&#xa;&#xa;Status: IMPLEMENTED (2026-04-09)&#xa;extractForm4852Line1aWages() reads&#xa;line7aWagesTipsOtherCompensation when:&#xa;  needsForm4852 == true&#xa;  substituteFormType == &quot;w2&quot; (not 1099-R)&#xa;MFS guard: spouse Form 4852 excluded on MFS.&#xa;MISSING_W2 flag suppressed when present.' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#d1e7dd;strokeColor=#0f5132;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='20' y='800' width='380' height='190' as='geometry'/>
+        </mxCell>
+
+        <!-- ── Validation gate ── -->
+
+        <mxCell id='5' value='Validation gate&#xa;validateEmploymentIncomeW2Requirement()&#xa;&#xa;Per person:&#xa;  if hasEmploymentIncome == true&#xa;  and householdWork == false&#xa;  and hasW2ForSsn(w2Entries, personSsn) == false&#xa;  and extractForm4852Line1aWages(form4852Data) == null&#xa;  =&gt; blocking flag&#xa;  MISSING_W2_EMPLOYMENT_INCOME_TAXPAYER or SPOUSE&#xa;&#xa;Form 4852 W-2 substitute suppresses the flag.&#xa;Compute still proceeds with flags attached.' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8d7da;strokeColor=#842029;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='460' y='40' width='400' height='290' as='geometry'/>
+        </mxCell>
+
+        <!-- ── computeLine1aWages() ── -->
+
+        <mxCell id='6' value='computeLine1aWages(w2Entries, flags, uid)&#xa;&#xa;Per W-2 entry:&#xa;  if statutoryEmployee == true:&#xa;    emit STATUTORY_EMPLOYEE_W2_OUT_OF_SCOPE (blocking)&#xa;    skip entry (line 1a gets $0 from this W-2)&#xa;  else:&#xa;    eligible = box 1 (wages, tips, other comp)&#xa;    eligible -= nonqualifiedPlansAmount (box 11)  [floor 0]&#xa;          [Nonqualified Deferred Comp / Sec 457 → Schedule 1 line 8t]&#xa;    eligible -= inmateWagesAmount                  [floor 0]&#xa;          [Inmate wages → Schedule 1 line 8u]&#xa;    total += eligible&#xa;&#xa;+ extractForm4852Line1aWages() for each person&#xa;  (adds substitute W-2 wages when Form 4852 present)&#xa;&#xa;line1a = roundMoney(total)&#xa;&#xa;NOTE: sumW2Wages() (unadjusted box 1 total) still used by&#xa;  computeSocialSecurity() and computeForm2441().' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#d1e7dd;strokeColor=#0f5132;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='460' y='390' width='460' height='380' as='geometry'/>
+        </mxCell>
+
+        <!-- ── computeOtherIncomes() aggregation ── -->
+
+        <mxCell id='7' value='computeOtherIncomes() — Schedule 1 aggregation&#xa;&#xa;Schedule 1 line 8t (Nonqualified Deferred Comp / Non-governmental Section 457):&#xa;  = Σ w2.nonqualifiedPlansAmount (non-statutory W-2s)&#xa;  + otherIncomesTaxpayer.otherIncomeNonqualifiedDeferredComp8t&#xa;  + otherIncomesSpouse.otherIncomeNonqualifiedDeferredComp8t&#xa;&#xa;Schedule 1 line 8u (Inmate wages while incarcerated):&#xa;  = Σ w2.inmateWagesAmount&#xa;  + otherIncomesTaxpayer.otherIncomeWagesWhileIncarcerated8u&#xa;  + otherIncomesSpouse.otherIncomeWagesWhileIncarcerated8u&#xa;&#xa;These are stored on Schedule1AdditionalIncome.&#xa;No double-counting: amounts removed from line 1a&#xa;appear exactly once in 8t or 8u.' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#d1e7dd;strokeColor=#0f5132;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='460' y='830' width='460' height='310' as='geometry'/>
+        </mxCell>
+
+        <!-- ── Flags output ── -->
+
+        <mxCell id='8' value='Outputs (blocking flags)&#xa;&#xa;MISSING_W2_EMPLOYMENT_INCOME_TAXPAYER&#xa;MISSING_W2_EMPLOYMENT_INCOME_SPOUSE&#xa;  (from validation gate — suppressed if Form 4852&#xa;   W-2 substitute is present for that person)&#xa;&#xa;STATUTORY_EMPLOYEE_W2_OUT_OF_SCOPE&#xa;  (from computeLine1aWages — one per statutory W-2)&#xa;  Schedule C is out of scope; user must resolve.' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8d7da;strokeColor=#842029;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='1000' y='40' width='420' height='290' as='geometry'/>
+        </mxCell>
+
+        <!-- ── Return fields output ── -->
+
+        <mxCell id='9' value='Outputs (Form 1040 return fields)&#xa;&#xa;Form1040.income.wages        = line 1a&#xa;PDF semantic field: line1a_wages_w2_box1&#xa;&#xa;Line 1z (total wages) includes line 1a&#xa;Line 9 (total income) includes line 1z&#xa;&#xa;Schedule1AdditionalIncome:&#xa;  otherIncomeNonqualifiedDeferredComp  (line 8t)&#xa;    [Nonqualified Deferred Comp / Sec 457]&#xa;  otherIncomeWagesWhileIncarcerated    (line 8u)&#xa;    [Inmate wages while incarcerated]&#xa;&#xa;No double-counting:&#xa;  wages + 8t + 8u = original W-2 box 1 total' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#cfe2ff;strokeColor=#084298;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='1000' y='390' width='420' height='370' as='geometry'/>
+        </mxCell>
+
+        <!-- ── Edges ── -->
+        <mxCell id='20' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='2' target='5'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='21' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='3' target='5'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='22' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='5' target='8'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='23' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='5' target='6'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='24' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='3' target='6'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='25' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='2' target='6'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='26' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='6' target='8'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='27' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='6' target='9'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='28' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='3' target='7'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='29' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='4' target='7'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='30' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='7' target='9'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='31' style='endArrow=block;html=1;strokeColor=#0f5132;strokeWidth=2;' edge='1' parent='1' source='100' target='6'>
+          <mxGeometry relative='1' as='geometry'>
+            <Array as='points'>
+              <mxPoint x='440' y='895'/>
+              <mxPoint x='440' y='580'/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id='32' value='IMPLEMENTED&#xa;extractForm4852Line1aWages()' style='edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontColor=#0f5132;fontStyle=1;' vertex='1' connectable='0' parent='31'>
+          <mxGeometry x='-0.1' relative='1' as='geometry'>
+            <mxPoint as='offset'/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id='33' style='endArrow=block;html=1;strokeColor=#0f5132;' edge='1' parent='1' source='100' target='5'>
+          <mxGeometry relative='1' as='geometry'>
+            <Array as='points'>
+              <mxPoint x='200' y='790'/>
+              <mxPoint x='200' y='185'/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id='34' value='suppresses&#xa;MISSING_W2 flag' style='edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontColor=#0f5132;' vertex='1' connectable='0' parent='33'>
+          <mxGeometry x='-0.1' relative='1' as='geometry'>
+            <mxPoint as='offset'/>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

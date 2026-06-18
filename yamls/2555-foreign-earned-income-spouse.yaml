@@ -1,0 +1,185 @@
+# Form 2555 — Foreign Earned Income intake for spouse.
+# Spouse-specific form: captures spouse's independent qualifying test, employer,
+# income, and housing facts. Qualification answers may legitimately differ
+# from the taxpayer form (see 2555.md in lines folder).
+# Return-level gating is on the taxpayer form only.
+# Self-employment foreign income is out of scope; wages/salary only.
+name: foreign-earned-income-spouse
+title: Form 2555 - Foreign Earned Income (spouse)
+multiplicity: single
+formName: 2555
+category: income
+instructions:
+  - Complete this form if your spouse earned wages or salary from work performed in a foreign country in 2025.
+  - The spouse must complete their own Form 2555 independently — qualification answers may differ from the taxpayer form.
+  - Shared household facts (same foreign household) must be consistent with the taxpayer form; expenses cannot be duplicated.
+  - Self-employment foreign income is not supported; only wages and salary income can be entered here.
+
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: spouseHadForeignEarnedIncome
+        type: boolean
+        required: true
+        label: Did your spouse have foreign earned income in 2025?
+        help: Select Yes if your spouse earned wages or salary from work performed outside the United States during 2025.
+
+  - name: generalInformation
+    title: General information (spouse)
+    multiplicity: single
+    showIf: spouseHadForeignEarnedIncome == true
+    instructions:
+      - Enter information about where your spouse lived and worked outside the United States.
+      - The spouse's tax home and qualifying country may differ from the taxpayer's.
+    fields:
+      - name: spouseTaxHomeCountry
+        type: text
+        required: true
+        placeholder: e.g. Japan
+        label: Country where your spouse's tax home was located
+        help: Enter the foreign country where your spouse was regularly stationed or conducted business in 2025.
+      - name: spouseBfResidenceOrPresenceCountry
+        type: text
+        required: false
+        placeholder: e.g. Japan
+        label: Country of spouse's qualifying residence or physical presence
+        help: Enter the foreign country where your spouse established bona fide residence or was physically present for the qualifying period.
+      - name: spouseCitizenOrResidentOf
+        type: text
+        required: false
+        placeholder: e.g. United States
+        label: Spouse's country of citizenship
+        help: Enter the country of which your spouse is a citizen or national.
+
+  - name: qualifyingTest
+    title: Qualifying test (spouse)
+    multiplicity: single
+    showIf: spouseHadForeignEarnedIncome == true
+    instructions:
+      - Your spouse must independently meet either the bona fide residence test or the physical presence test.
+      - The spouse's qualifying test and dates may differ from the taxpayer's — this is normal and expected.
+    fields:
+      - name: spouseQualifyingTest
+        type: select
+        required: true
+        placeholder: Select qualifying test
+        label: How did your spouse qualify for the exclusion?
+        help: Select the situation that describes how your spouse qualifies. Bona fide residence — they were a resident of a foreign country for all of 2025. Physical presence — they were in a foreign country for at least 330 full days during a 12-month period.
+        options:
+          - value: bona_fide_residence
+            label: Spouse lived as a bona fide resident of a foreign country for an uninterrupted period that includes all of 2025
+          - value: physical_presence
+            label: Spouse was physically present in a foreign country or countries for at least 330 full days during a 12-month period
+      - name: spouseBfResidenceStartDate
+        type: date
+        required: false
+        placeholder: YYYY-MM-DD
+        label: Date spouse's bona fide residence began
+        help: Enter the date your spouse first established bona fide residence in the foreign country.
+      - name: spouseBfResidenceEndDate
+        type: date
+        required: false
+        placeholder: YYYY-MM-DD
+        label: Date spouse's bona fide residence ended (leave blank if still a resident at year-end)
+        help: Enter the date your spouse's bona fide residence ended, or leave blank if still resident at year-end 2025.
+      - name: spousePhysPresence12MonthStartDate
+        type: date
+        required: false
+        placeholder: YYYY-MM-DD
+        label: Start of spouse's 12-month qualifying period
+        help: Enter the first day of your spouse's 12-month period with at least 330 full days in a foreign country.
+      - name: spousePhysPresence12MonthEndDate
+        type: date
+        required: false
+        placeholder: YYYY-MM-DD
+        label: End of spouse's 12-month qualifying period
+        help: Enter the last day of your spouse's 12-month qualifying period.
+
+  - name: employerAndIncome
+    title: Employer and foreign earned income (spouse)
+    multiplicity: single
+    showIf: spouseHadForeignEarnedIncome == true
+    instructions:
+      - Enter details about your spouse's employer and the income they earned in the foreign country.
+      - Report income in US dollars using the IRS yearly average exchange rate.
+      - Self-employment income from foreign sources is not supported.
+    fields:
+      - name: spouseForeignEarnedIncomeType
+        type: select
+        required: true
+        placeholder: Select income type
+        label: Type of spouse's foreign earned income
+        help: Select the type of foreign income your spouse received.
+        options:
+          - value: wages
+            label: Wages and salary (W-2 or foreign employer equivalent)
+          - value: self_employed
+            label: Self-employment income (not supported — contact a tax professional)
+      - name: spouseEmployerName
+        type: text
+        required: false
+        placeholder: e.g. Global Corp Ltd
+        label: Spouse's employer name
+        help: Enter the full legal name of your spouse's foreign employer.
+      - name: spouseEmployerAddressForeign
+        type: text
+        required: false
+        placeholder: e.g. 2-1 Marunouchi, Tokyo, Japan
+        label: Spouse's employer address in foreign country
+        help: Enter your spouse's employer's business address in the foreign country.
+      - name: spouseForeignWagesAmount
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Spouse's total foreign wages and salary in USD
+        help: Enter the total wages and salary your spouse earned from work performed in a foreign country, converted to US dollars.
+
+  - name: housingExclusion
+    title: Spouse's foreign housing exclusion (optional)
+    multiplicity: single
+    showIf: spouseHadForeignEarnedIncome == true
+    instructions:
+      - Complete this section only if your spouse wants to claim the foreign housing exclusion.
+      - If both spouses shared the same foreign household, housing expenses cannot be duplicated between the two forms.
+      - If housing amounts are computed jointly, only one spouse may claim the exclusion — enter it on the taxpayer form and leave this section blank.
+    fields:
+      - name: spouseClaimsHousingExclusion
+        type: boolean
+        required: false
+        label: Does your spouse want to claim the foreign housing exclusion separately?
+        help: Select Yes only if your spouse is computing housing amounts separately and independently. If housing is computed jointly, use the taxpayer form only.
+      - name: spouseHousingExpensesTotal
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Spouse's total qualified foreign housing expenses in USD
+        help: Enter the spouse's separately computed qualified housing expenses. Ensure there is no duplication with amounts entered on the taxpayer form.
+      - name: spouseHousingLocationCountry
+        type: text
+        required: false
+        placeholder: e.g. Japan
+        label: Country where spouse's housing was located
+        help: Enter the country where your spouse's foreign housing was located.
+
+  # Backend-only computed values. NOT rendered in the UI form component.
+  - name: computedOutputs
+    title: Computed outputs (backend only)
+    multiplicity: single
+    showIf: spouseHadForeignEarnedIncome == true
+    fields:
+      - name: computedSpouseForeignEarnedIncomeExclusion
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed spouse foreign earned income exclusion (Form 2555 line 45) — pending line 16 implementation
+        help: This value will be computed when line 16 (Tax) is implemented. See outstanding.md.
+      - name: computedSpouseHousingExclusionAmount
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed spouse foreign housing exclusion amount (Form 2555 line 50) — pending line 16 implementation
+        help: This value will be computed when line 16 (Tax) is implemented. See outstanding.md.

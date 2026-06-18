@@ -1,0 +1,153 @@
+# Form 1040 line 13b (Schedule 1-A) workflow for spouse.
+# Approach: spouse-specific tip, overtime, and senior amounts only.
+# Return-level questions (MAGI exclusions, car loan interest, filing-status gates) are on the taxpayer form.
+# NOTE: Sections marked as backend-only are NOT supposed to be rendered in the actual form component.
+name: additional-deductions-spouse
+title: Form 1040 - Additional deductions (spouse, line 13b via Schedule 1-A)
+multiplicity: single
+formName: 1040
+category: deductions
+instructions:
+  - Use this form only for the spouse's qualified tips, qualified overtime, and enhanced senior deduction inputs.
+  - Return-level questions (MAGI exclusions, car loan interest, Schedule 1-A gating) are captured in the taxpayer form.
+  - If married, you must file jointly (MFJ) to claim any Schedule 1-A deduction.
+  - The spouse must have a valid SSN to be included in the deduction.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: spouseHasAdditionalDeductionInputs
+        type: boolean
+        required: true
+        label: Does the spouse have qualified tips, qualified overtime, or senior deduction inputs for Schedule 1-A?
+        help: Select Yes if the spouse received qualified tips, qualified overtime compensation, or is age 65+ and eligible for the enhanced senior deduction.
+
+  - name: spouseQualifiedTipsDeduction
+    title: Tips deduction (spouse)
+    multiplicity: single
+    showIf: spouseHasAdditionalDeductionInputs == true
+    instructions:
+      - Complete this section only if the spouse received qualified tips in an occupation listed at IRS.gov/TippedOccupations.
+      - The spouse must have a valid SSN and the return must be MFJ.
+      - Tip amounts are read from the spouse's uploaded W-2 box 7 and Form 4137.
+    fields:
+      - name: spouseReceivedQualifiedTips
+        type: boolean
+        required: false
+        label: Did the spouse receive qualified tips from a tipped occupation?
+        help: Select Yes only for tips in occupations listed at IRS.gov/TippedOccupations.
+      - name: spouseTippedOccupationConfirmed
+        type: boolean
+        required: false
+        label: I confirm the spouse's occupation is on the IRS tipped-occupations list
+        help: The deduction applies only to tips in qualifying occupations. Shown only when spouseReceivedQualifiedTips is true.
+      - name: spouseHasMultipleTipEmployers
+        type: boolean
+        required: false
+        label: Did the spouse receive tips from more than one employer?
+        help: Select Yes if the spouse worked for multiple employers and received tips from more than one. Shown only when spouseReceivedQualifiedTips is true.
+      - name: spouseManualTipsFromNonStatementSources
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Spouse tips from 1099-NEC, 1099-MISC, or 1099-K not already in uploaded statements
+        help: Enter any tip amounts for the spouse from non-W-2/non-4137 sources not already reflected in uploaded statements. Shown only when spouseReceivedQualifiedTips is true.
+
+  - name: spouseQualifiedOvertimeDeduction
+    title: Overtime deduction (spouse)
+    multiplicity: single
+    showIf: spouseHasAdditionalDeductionInputs == true
+    instructions:
+      - Complete this section only if the spouse received qualified overtime compensation.
+      - The spouse must have a valid SSN and the return must be MFJ.
+      - W-2 box 1 does not separately identify overtime; the spouse must enter the overtime portion manually.
+    fields:
+      - name: spouseReceivedQualifiedOvertime
+        type: boolean
+        required: false
+        label: Did the spouse receive qualified overtime compensation?
+        help: Select Yes if the spouse received overtime pay that qualifies as qualified overtime compensation.
+      - name: spouseOvertimeFromW2Box1Amount
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Overtime portion of the spouse's W-2 wages
+        help: Enter only the qualified overtime portion of the spouse's W-2 box 1 wages. Use pay stubs — W-2 does not show this separately. Shown only when spouseReceivedQualifiedOvertime is true.
+      - name: spouseOvertimeFromNonW2SourcesAmount
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Spouse overtime from non-W-2 sources not in uploaded statements
+        help: Enter spouse qualified overtime from 1099-NEC, 1099-MISC box 3, or similar sources not already in uploaded statements. Shown only when spouseReceivedQualifiedOvertime is true.
+
+  - name: spouseEnhancedSeniorDeduction
+    title: Senior deduction (spouse)
+    multiplicity: single
+    showIf: spouseHasAdditionalDeductionInputs == true
+    instructions:
+      - Complete this section only if the spouse was born before January 2, 1961 (age 65 or older in 2025).
+      - The return must be MFJ and the spouse must have a valid SSN.
+    fields:
+      - name: spouseBornBeforeJan2_1961
+        type: boolean
+        required: false
+        label: Was the spouse born before January 2, 1961?
+        help: Select Yes if the spouse's date of birth is on or before January 1, 1961 (age 65+ in 2025). Pre-populated from spouse's date of birth if available.
+
+  # Backend-only statement imports. Not rendered in form component.
+  - name: importedStatementFields
+    title: Imported statement fields (backend only)
+    multiplicity: single
+    showIf: spouseHasAdditionalDeductionInputs == true
+    fields:
+      - name: importedW2Box7TipsSpouse
+        type: amount
+        required: false
+        readOnly: true
+        label: Spouse W-2 box 7 tips total (imported)
+      - name: importedForm4137UnreportedTipsSpouse
+        type: amount
+        required: false
+        readOnly: true
+        label: Spouse Form 4137 unreported tips total (imported)
+      - name: imported1099NecBox1TipsOvertimeSpouse
+        type: amount
+        required: false
+        readOnly: true
+        label: Spouse 1099-NEC box 1 tips/overtime total (imported)
+      - name: imported1099MiscBox3TipsOvertimeSpouse
+        type: amount
+        required: false
+        readOnly: true
+        label: Spouse 1099-MISC box 3 tips/overtime total (imported)
+      - name: imported1099KBox1aTipsSpouse
+        type: amount
+        required: false
+        readOnly: true
+        label: Spouse 1099-K box 1a tips total (imported)
+
+  # Backend-only computed values. Not rendered in form component.
+  - name: computedOutputs
+    title: Computed outputs (backend only)
+    multiplicity: single
+    showIf: spouseHasAdditionalDeductionInputs == true
+    fields:
+      - name: computedSpouseSchedule1ALine13TipsContribution
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed spouse contribution to Schedule 1-A line 13 tips deduction
+      - name: computedSpouseSchedule1ALine21OvertimeContribution
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed spouse contribution to Schedule 1-A line 21 overtime deduction
+      - name: computedSpouseSchedule1ALine37SeniorContribution
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed spouse contribution to Schedule 1-A line 37 enhanced senior deduction

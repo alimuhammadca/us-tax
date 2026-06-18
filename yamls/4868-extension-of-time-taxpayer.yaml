@@ -1,0 +1,216 @@
+# Form 4868 - Application for Automatic Extension of Time To File U.S. Individual
+# Income Tax Return - taxpayer (return-level owner).
+#
+# The taxpayer form owns the full return-level extension-of-time workflow:
+# screening, filing method, Part I identity, Part II estimate lines, and payment details.
+# On MFJ the spouse form can contribute spouse-side payment details, but the output
+# remains one joint Form 4868 per return.
+#
+# Line 7 (extension payment) maps to Schedule 3 line 10 on the eventual return.
+# The extension extends the time to FILE only - tax owed is still due April 15.
+name: extension-of-time-taxpayer
+title: Form 4868 - Extension of time (taxpayer)
+multiplicity: single
+formName: 4868
+category: applications
+instructions:
+  - Use this form when you need more time to file the federal return for 2025.
+  - Filing Form 4868 extends the filing deadline from April 15 to October 15, 2026.
+  - The extension does NOT extend the time to pay. Tax owed is still due by April 15, 2026.
+  - One Form 4868 per return. On MFJ, use the spouse form only for spouse-side payment details.
+  - The extension payment (line 7) will appear on Schedule 3 line 10 of the actual return.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: needsExtensionOfTime
+        type: boolean
+        required: true
+        label: Do you want to request an extension of time to file for 2025?
+        helpText: >
+          An automatic 6-month extension moves your filing deadline from April 15 to October 15, 2026.
+          The extension only extends time to file — any tax owed is still due April 15, 2026.
+
+  - name: filing
+    title: Filing method
+    multiplicity: single
+    showIf: needsExtensionOfTime == true
+    instructions:
+      - Select the method used to file or obtain the extension.
+      - If you pay electronically and designate the payment as an extension payment you do
+        not need to also file Form 4868 - the payment itself satisfies the extension request.
+    fields:
+      - name: extensionFilingMethod
+        type: select
+        required: true
+        label: Extension filing method
+        helpText: >
+          You can e-file Form 4868, mail a paper copy, or simply make an electronic payment and
+          designate it as an extension payment — the payment itself satisfies the extension request.
+        options:
+          - label: E-file Form 4868
+            value: e-file
+          - label: Mail paper Form 4868
+            value: mail
+          - label: Electronic payment (substitutes for Form 4868)
+            value: electronic-payment-substitute
+      - name: fiscalYearBegin
+        type: date
+        required: false
+        label: Fiscal year begin date (leave blank for calendar year)
+        helpText: >
+          Enter the first day of your fiscal tax year in MM/DD/YYYY format. Leave blank if you
+          use the standard calendar year (January 1 – December 31).
+      - name: fiscalYearEnd
+        type: date
+        required: false
+        label: Fiscal year end date (leave blank for calendar year)
+        helpText: >
+          Enter the last day of your fiscal tax year in MM/DD/YYYY format. Leave blank if you
+          use the standard calendar year.
+
+  - name: taxEstimate
+    title: Part II — Tax estimate (Form 4868 lines 4–7)
+    multiplicity: single
+    showIf: needsExtensionOfTime == true
+    instructions:
+      - Line 4 is the estimated total 2025 tax liability (Form 1040 line 24 estimate).
+      - Line 5 is estimated total payments already made. Do NOT include the extension
+        payment itself on line 5. Include withholding and Form 1040-ES payments only.
+      - Line 7 is the amount paid with this extension request. This maps to Schedule 3
+        line 10 on the actual return. You can pay less than the line 6 balance due and
+        still get the extension.
+    fields:
+      - name: estimatedTotalTaxLiability2025
+        type: amount
+        required: false
+        label: Estimated total 2025 tax liability
+        placeholder: 0.00
+        helpText: >
+          Enter your best estimate of the total tax you will owe for 2025 (roughly Form 1040 line 24).
+          This is used only for the extension request and does not affect the actual tax computed later.
+      - name: estimatedTotalPaymentsExcludingExtensionPayment
+        type: amount
+        required: false
+        label: Total payments already made (excluding this extension payment)
+        placeholder: 0.00
+        helpText: >
+          Enter the total of withholding from your W-2 and 1099 forms, plus any estimated tax
+          payments made during 2025. Do not include the payment you are making with this extension.
+      - name: taxpayerExtensionPaymentAmount
+        type: amount
+        required: false
+        label: Amount you are paying with this extension request
+        placeholder: 0.00
+        helpText: >
+          Enter the amount you are paying now. This will be credited on Schedule 3 line 10 of your
+          actual return. You can pay less than the balance due and still receive the extension.
+      - name: paymentMethod
+        type: select
+        required: false
+        label: Payment method
+        helpText: >
+          Select how you are making your extension payment. IRS Direct Pay and EFTPS are free
+          electronic options.
+        options:
+          - label: IRS Direct Pay
+            value: Direct Pay
+          - label: EFTPS
+            value: EFTPS
+          - label: Credit card
+            value: Credit card
+          - label: Debit card
+            value: Debit card
+          - label: Check or money order
+            value: Check
+          - label: No payment made
+            value: None
+      - name: paymentDate
+        type: date
+        required: false
+        label: Payment date
+        helpText: >
+          Enter the date you made or will make the extension payment, in MM/DD/YYYY format.
+      - name: confirmationNumber
+        type: text
+        required: false
+        label: Payment confirmation number or check number
+        helpText: >
+          Enter the confirmation number you received when making your electronic extension payment,
+          or the check number if paying by check, for your records.
+
+  - name: specialStatus
+    title: Special status (Form 4868 lines 8–9)
+    multiplicity: single
+    showIf: needsExtensionOfTime == true
+    fields:
+      - name: outOfCountryFlag
+        type: boolean
+        required: false
+        label: Were you outside the United States on April 15, 2026?
+        helpText: >
+          U.S. citizens and resident aliens living and working outside the U.S. and Puerto Rico
+          automatically get a 2-month extension to June 15, 2026 — no Form 4868 needed for that
+          initial extension. Check Yes if you qualify for this automatic 2-month extension.
+      - name: form1040nrSpecialFlag
+        type: boolean
+        required: false
+        label: Are you a nonresident alien without wages subject to U.S. income tax withholding?
+        helpText: >
+          Nonresident aliens without U.S. wage withholding have a filing deadline of June 15, 2026.
+          Form 4868 extends this to October 15. Note: Form 1040-NR is not supported in this application.
+
+  - name: importedSupport
+    title: Imported support values
+    multiplicity: single
+    showIf: needsExtensionOfTime == true
+    instructions:
+      - These fields are populated automatically by the backend from previously saved forms.
+      - They are not rendered in the UI.
+    fields:
+      - name: importedFilingStatus
+        type: text
+        required: false
+        readOnly: true
+        label: Imported filing status
+      - name: importedTaxpayerName
+        type: text
+        required: false
+        readOnly: true
+        label: Imported taxpayer name
+      - name: importedTaxpayerSsn
+        type: text
+        required: false
+        readOnly: true
+        label: Imported taxpayer SSN
+      - name: importedSpouseName
+        type: text
+        required: false
+        readOnly: true
+        label: Imported spouse name (MFJ)
+      - name: importedSpouseSsn
+        type: text
+        required: false
+        readOnly: true
+        label: Imported spouse SSN (MFJ)
+
+  - name: computedOutputs
+    title: Computed outputs
+    multiplicity: single
+    showIf: needsExtensionOfTime == true
+    instructions:
+      - Backend-only computed fields. Not rendered in the UI.
+    fields:
+      - name: form4868Line6
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed — Form 4868 line 6 estimated balance due (line4 minus line5)
+      - name: schedule3Line10AmountPaidWithExtension
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed — Schedule 3 line 10 amount paid with extension (line 7)

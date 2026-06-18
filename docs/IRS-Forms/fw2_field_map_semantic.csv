@@ -1,0 +1,273 @@
+old_name,new_name,tooltip,field_type,page_index,rect_llx,rect_lly,rect_urx,rect_ury
+c1_1[0],copy_a_void,Copy A - Void,/Btn,1,132.481,739.999,142.481,749.999
+f1_01[0],copy_a_employee_ssn,Copy A - Employee’s social security number (Box a),/Tx,1,153.2,732.002,278.8,744.001
+f1_02[0],copy_a_employer_ein,Copy A - Employer identification number (EIN) (Box b),/Tx,1,38.0,708.001,330.2,720.0
+f1_03[0],copy_a_employer_name_address_zip,"Copy A - Employer’s name, address, and ZIP code (Box c)",/Tx,1,38.0,635.998,330.2,695.999
+f1_04[0],copy_a_control_number,Copy A - Control number (Box d),/Tx,1,38.0,612.0,330.2,623.999
+f1_05[0],copy_a_employee_first_name_initial,Copy A - Employee’s first name and initial (Box e),/Tx,1,38.0,588.002,171.8,600.001
+f1_06[0],copy_a_employee_last_name,Copy A - Employee’s last name (Box e),/Tx,1,173.8,588.002,308.6,600.001
+f1_07[0],copy_a_employee_name_suffix,Copy A - Employee name suffix (Box e),/Tx,1,310.6,588.002,330.2,600.001
+f1_08[0],copy_a_employee_address_zip,Copy A - Employee’s address and ZIP code (Box f),/Tx,1,38.0,515.999,330.2,585.999
+f1_09[0],copy_a_box1_wages_tips_other_comp,Copy A - Box 1: Wages Tips Other Comp,/Tx,1,333.2,708.001,451.6,720.0
+f1_10[0],copy_a_box2_federal_income_tax_withheld,Copy A - Box 2: Federal Income Tax Withheld,/Tx,1,455.6,708.001,574.0,720.0
+f1_11[0],copy_a_box3_social_security_wages,Copy A - Box 3: Social Security Wages,/Tx,1,332.2,684.0,452.6,695.999
+f1_12[0],copy_a_box4_social_security_tax_withheld,Copy A - Box 4: Social Security Tax Withheld,/Tx,1,454.6,684.0,574.0,695.999
+f1_13[0],copy_a_box5_medicare_wages_tips,Copy A - Box 5: Medicare Wages Tips,/Tx,1,332.2,660.002,452.6,672.001
+f1_14[0],copy_a_box6_medicare_tax_withheld,Copy A - Box 6: Medicare Tax Withheld,/Tx,1,454.6,660.002,574.0,672.001
+f1_15[0],copy_a_box7_social_security_tips,Copy A - Box 7: Social Security Tips,/Tx,1,332.2,636.001,452.6,648.0
+f1_16[0],copy_a_box8_allocated_tips,Copy A - Box 8: Allocated Tips,/Tx,1,454.6,636.001,574.0,648.0
+f1_17[0],copy_a_box9,Copy A - Box 9,/Tx,1,332.2,612.0,452.6,623.999
+f1_18[0],copy_a_box10_dependent_care_benefits,Copy A - Box 10: Dependent Care Benefits,/Tx,1,454.6,612.0,574.0,623.999
+f1_19[0],copy_a_box11_nonqualified_plans,Copy A - Box 11: Nonqualified Plans,/Tx,1,332.2,588.002,452.6,600.001
+f1_20[0],copy_a_box12a_code,Copy A - Box 12a: Code,/Tx,1,462.8,588.002,488.6,600.001
+f1_21[0],copy_a_box12a_amount,Copy A - Box 12a: Amount,/Tx,1,490.6,588.002,574.0,600.001
+f1_22[0],copy_a_box12b_code,Copy A - Box 12b: Code,/Tx,1,462.8,564.001,488.6,576.0
+f1_23[0],copy_a_box12b_amount,Copy A - Box 12b: Amount,/Tx,1,490.6,564.001,574.0,576.0
+f1_24[0],copy_a_box12c_code,Copy A - Box 12c: Code,/Tx,1,462.8,540.0,488.6,551.999
+f1_25[0],copy_a_box12c_amount,Copy A - Box 12c: Amount,/Tx,1,490.6,540.0,574.0,551.999
+f1_26[0],copy_a_box12d_code,Copy A - Box 12d: Code,/Tx,1,462.8,516.002,488.6,528.001
+f1_27[0],copy_a_box12d_amount,Copy A - Box 12d: Amount,/Tx,1,490.6,516.002,574.0,528.001
+c1_2[0],copy_a_box13_statutory_employee,Copy A - Box 13: Statutory employee,/Btn,1,348.6,565.699,358.6,575.699
+c1_3[0],copy_a_box13_retirement_plan,Copy A - Box 13: Retirement plan,/Btn,1,384.6,565.699,394.6,575.699
+c1_4[0],copy_a_box13_third_party_sick_pay,Copy A - Box 13: Third-party sick pay,/Btn,1,420.6,565.699,430.6,575.699
+f1_28[0],copy_a_box14_other,Copy A - Box 14: Other,/Tx,1,332.2,504.0,452.6,551.999
+f1_29[0],copy_a_box15_state_1,Copy A - Box 15 (1): State,/Tx,1,38.0,480.002,63.8,492.001
+f1_30[0],copy_a_box15_employer_state_id_1,Copy A - Box 15 (1): Employer’s state ID number,/Tx,1,65.8,480.002,193.4,492.001
+f1_31[0],copy_a_box15_state_2,Copy A - Box 15 (2): State,/Tx,1,38.0,455.998,63.8,467.999
+f1_32[0],copy_a_box15_employer_state_id_2,Copy A - Box 15 (2): Employer’s state ID number,/Tx,1,65.8,456.001,193.4,468.0
+f1_33[0],copy_a_box16_state_wages_1,"Copy A - Box 16 (1): State wages, tips, etc.",/Tx,1,195.4,480.002,279.8,492.001
+f1_34[0],copy_a_box16_state_wages_2,"Copy A - Box 16 (2): State wages, tips, etc.",/Tx,1,195.4,455.998,279.8,467.999
+f1_35[0],copy_a_box17_state_income_tax_1,Copy A - Box 17 (1): State income tax,/Tx,1,281.8,480.002,359.0,492.001
+f1_36[0],copy_a_box17_state_income_tax_2,Copy A - Box 17 (2): State income tax,/Tx,1,281.8,455.998,359.0,467.999
+f1_37[0],copy_a_box18_local_wages_1,"Copy A - Box 18 (1): Local wages, tips, etc.",/Tx,1,361.0,480.002,445.4,492.001
+f1_38[0],copy_a_box18_local_wages_2,"Copy A - Box 18 (2): Local wages, tips, etc.",/Tx,1,361.0,455.998,445.4,467.999
+f1_39[0],copy_a_box19_local_income_tax_1,Copy A - Box 19 (1): Local income tax,/Tx,1,447.4,480.002,524.6,492.001
+f1_40[0],copy_a_box19_local_income_tax_2,Copy A - Box 19 (2): Local income tax,/Tx,1,447.4,455.998,524.6,467.999
+f1_41[0],copy_a_box20_locality_name_1,Copy A - Box 20 (1): Locality name,/Tx,1,526.6,480.002,574.0,492.001
+f1_42[0],copy_a_box20_locality_name_2,Copy A - Box 20 (2): Locality name,/Tx,1,526.6,455.998,574.0,467.999
+f2_01[0],employee_ssn,Employee’s social security number (Box a),/Tx,2,153.2,732.002,278.8,744.001
+f2_01[0],employee_ssn,Employee’s social security number (Box a),/Tx,3,153.2,732.002,278.8,744.001
+f2_01[0],employee_ssn,Employee’s social security number (Box a),/Tx,5,153.2,732.002,278.8,744.001
+f2_01[0],employee_ssn,Employee’s social security number (Box a),/Tx,7,153.2,732.002,278.8,744.001
+f2_01[0],employee_ssn,Employee’s social security number (Box a),/Tx,9,153.2,732.002,278.8,744.001
+f2_02[0],employer_ein,Employer identification number (EIN) (Box b),/Tx,2,38.0,708.001,330.2,720.0
+f2_02[0],employer_ein,Employer identification number (EIN) (Box b),/Tx,3,38.0,708.001,330.2,720.0
+f2_02[0],employer_ein,Employer identification number (EIN) (Box b),/Tx,5,38.0,708.001,330.2,720.0
+f2_02[0],employer_ein,Employer identification number (EIN) (Box b),/Tx,7,38.0,708.001,330.2,720.0
+f2_02[0],employer_ein,Employer identification number (EIN) (Box b),/Tx,9,38.0,708.001,330.2,720.0
+f2_03[0],employer_name_address_zip,"Employer’s name, address, and ZIP code (Box c)",/Tx,2,38.0,635.998,330.2,695.999
+f2_03[0],employer_name_address_zip,"Employer’s name, address, and ZIP code (Box c)",/Tx,3,38.0,635.998,330.2,695.999
+f2_03[0],employer_name_address_zip,"Employer’s name, address, and ZIP code (Box c)",/Tx,5,38.0,635.998,330.2,695.999
+f2_03[0],employer_name_address_zip,"Employer’s name, address, and ZIP code (Box c)",/Tx,7,38.0,635.998,330.2,695.999
+f2_03[0],employer_name_address_zip,"Employer’s name, address, and ZIP code (Box c)",/Tx,9,38.0,635.998,330.2,695.999
+f2_04[0],control_number,Control number (Box d),/Tx,2,38.0,612.0,330.2,623.999
+f2_04[0],control_number,Control number (Box d),/Tx,3,38.0,612.0,330.2,623.999
+f2_04[0],control_number,Control number (Box d),/Tx,5,38.0,612.0,330.2,623.999
+f2_04[0],control_number,Control number (Box d),/Tx,7,38.0,612.0,330.2,623.999
+f2_04[0],control_number,Control number (Box d),/Tx,9,38.0,612.0,330.2,623.999
+f2_05[0],employee_first_name_initial,Employee’s first name and initial (Box e),/Tx,2,38.0,588.002,171.8,600.001
+f2_05[0],employee_first_name_initial,Employee’s first name and initial (Box e),/Tx,3,38.0,588.002,171.8,600.001
+f2_05[0],employee_first_name_initial,Employee’s first name and initial (Box e),/Tx,5,38.0,588.002,171.8,600.001
+f2_05[0],employee_first_name_initial,Employee’s first name and initial (Box e),/Tx,7,38.0,588.002,171.8,600.001
+f2_05[0],employee_first_name_initial,Employee’s first name and initial (Box e),/Tx,9,38.0,588.002,171.8,600.001
+f2_06[0],employee_last_name,Employee’s last name (Box e),/Tx,2,173.8,588.002,308.6,600.001
+f2_06[0],employee_last_name,Employee’s last name (Box e),/Tx,3,173.8,588.002,308.6,600.001
+f2_06[0],employee_last_name,Employee’s last name (Box e),/Tx,5,173.8,588.002,308.6,600.001
+f2_06[0],employee_last_name,Employee’s last name (Box e),/Tx,7,173.8,588.002,308.6,600.001
+f2_06[0],employee_last_name,Employee’s last name (Box e),/Tx,9,173.8,588.002,308.6,600.001
+f2_07[0],employee_name_suffix,Employee name suffix (Box e),/Tx,2,310.6,588.002,330.2,600.001
+f2_07[0],employee_name_suffix,Employee name suffix (Box e),/Tx,3,310.6,588.002,330.2,600.001
+f2_07[0],employee_name_suffix,Employee name suffix (Box e),/Tx,5,310.6,588.002,330.2,600.001
+f2_07[0],employee_name_suffix,Employee name suffix (Box e),/Tx,7,310.6,588.002,330.2,600.001
+f2_07[0],employee_name_suffix,Employee name suffix (Box e),/Tx,9,310.6,588.002,330.2,600.001
+f2_08[0],employee_address_zip,Employee’s address and ZIP code (Box f),/Tx,2,38.0,515.999,330.2,585.999
+f2_08[0],employee_address_zip,Employee’s address and ZIP code (Box f),/Tx,3,38.0,515.999,330.2,585.999
+f2_08[0],employee_address_zip,Employee’s address and ZIP code (Box f),/Tx,5,38.0,515.999,330.2,585.999
+f2_08[0],employee_address_zip,Employee’s address and ZIP code (Box f),/Tx,7,38.0,515.999,330.2,585.999
+f2_08[0],employee_address_zip,Employee’s address and ZIP code (Box f),/Tx,9,38.0,515.999,330.2,585.999
+f2_09[0],box1_wages_tips_other_comp,Box 1: Wages Tips Other Comp,/Tx,2,333.2,708.001,451.6,720.0
+f2_09[0],box1_wages_tips_other_comp,Box 1: Wages Tips Other Comp,/Tx,3,333.2,708.001,451.6,720.0
+f2_09[0],box1_wages_tips_other_comp,Box 1: Wages Tips Other Comp,/Tx,5,333.2,708.001,451.6,720.0
+f2_09[0],box1_wages_tips_other_comp,Box 1: Wages Tips Other Comp,/Tx,7,333.2,708.001,451.6,720.0
+f2_09[0],box1_wages_tips_other_comp,Box 1: Wages Tips Other Comp,/Tx,9,333.2,708.001,451.6,720.0
+f2_10[0],box2_federal_income_tax_withheld,Box 2: Federal Income Tax Withheld,/Tx,2,455.6,708.001,574.0,720.0
+f2_10[0],box2_federal_income_tax_withheld,Box 2: Federal Income Tax Withheld,/Tx,3,455.6,708.001,574.0,720.0
+f2_10[0],box2_federal_income_tax_withheld,Box 2: Federal Income Tax Withheld,/Tx,5,455.6,708.001,574.0,720.0
+f2_10[0],box2_federal_income_tax_withheld,Box 2: Federal Income Tax Withheld,/Tx,7,455.6,708.001,574.0,720.0
+f2_10[0],box2_federal_income_tax_withheld,Box 2: Federal Income Tax Withheld,/Tx,9,455.6,708.001,574.0,720.0
+f2_11[0],box3_social_security_wages,Box 3: Social Security Wages,/Tx,2,332.2,684.0,452.6,695.999
+f2_11[0],box3_social_security_wages,Box 3: Social Security Wages,/Tx,3,332.2,684.0,452.6,695.999
+f2_11[0],box3_social_security_wages,Box 3: Social Security Wages,/Tx,5,332.2,684.0,452.6,695.999
+f2_11[0],box3_social_security_wages,Box 3: Social Security Wages,/Tx,7,332.2,684.0,452.6,695.999
+f2_11[0],box3_social_security_wages,Box 3: Social Security Wages,/Tx,9,332.2,684.0,452.6,695.999
+f2_12[0],box4_social_security_tax_withheld,Box 4: Social Security Tax Withheld,/Tx,2,454.6,684.0,574.0,695.999
+f2_12[0],box4_social_security_tax_withheld,Box 4: Social Security Tax Withheld,/Tx,3,454.6,684.0,574.0,695.999
+f2_12[0],box4_social_security_tax_withheld,Box 4: Social Security Tax Withheld,/Tx,5,454.6,684.0,574.0,695.999
+f2_12[0],box4_social_security_tax_withheld,Box 4: Social Security Tax Withheld,/Tx,7,454.6,684.0,574.0,695.999
+f2_12[0],box4_social_security_tax_withheld,Box 4: Social Security Tax Withheld,/Tx,9,454.6,684.0,574.0,695.999
+f2_13[0],box5_medicare_wages_tips,Box 5: Medicare Wages Tips,/Tx,2,332.2,660.002,452.6,672.001
+f2_13[0],box5_medicare_wages_tips,Box 5: Medicare Wages Tips,/Tx,3,332.2,660.002,452.6,672.001
+f2_13[0],box5_medicare_wages_tips,Box 5: Medicare Wages Tips,/Tx,5,332.2,660.002,452.6,672.001
+f2_13[0],box5_medicare_wages_tips,Box 5: Medicare Wages Tips,/Tx,7,332.2,660.002,452.6,672.001
+f2_13[0],box5_medicare_wages_tips,Box 5: Medicare Wages Tips,/Tx,9,332.2,660.002,452.6,672.001
+f2_14[0],box6_medicare_tax_withheld,Box 6: Medicare Tax Withheld,/Tx,2,454.6,660.002,574.0,672.001
+f2_14[0],box6_medicare_tax_withheld,Box 6: Medicare Tax Withheld,/Tx,3,454.6,660.002,574.0,672.001
+f2_14[0],box6_medicare_tax_withheld,Box 6: Medicare Tax Withheld,/Tx,5,454.6,660.002,574.0,672.001
+f2_14[0],box6_medicare_tax_withheld,Box 6: Medicare Tax Withheld,/Tx,7,454.6,660.002,574.0,672.001
+f2_14[0],box6_medicare_tax_withheld,Box 6: Medicare Tax Withheld,/Tx,9,454.6,660.002,574.0,672.001
+f2_15[0],box7_social_security_tips,Box 7: Social Security Tips,/Tx,2,332.2,636.001,452.6,648.0
+f2_15[0],box7_social_security_tips,Box 7: Social Security Tips,/Tx,3,332.2,636.001,452.6,648.0
+f2_15[0],box7_social_security_tips,Box 7: Social Security Tips,/Tx,5,332.2,636.001,452.6,648.0
+f2_15[0],box7_social_security_tips,Box 7: Social Security Tips,/Tx,7,332.2,636.001,452.6,648.0
+f2_15[0],box7_social_security_tips,Box 7: Social Security Tips,/Tx,9,332.2,636.001,452.6,648.0
+f2_16[0],box8_allocated_tips,Box 8: Allocated Tips,/Tx,2,454.6,636.001,574.0,648.0
+f2_16[0],box8_allocated_tips,Box 8: Allocated Tips,/Tx,3,454.6,636.001,574.0,648.0
+f2_16[0],box8_allocated_tips,Box 8: Allocated Tips,/Tx,5,454.6,636.001,574.0,648.0
+f2_16[0],box8_allocated_tips,Box 8: Allocated Tips,/Tx,7,454.6,636.001,574.0,648.0
+f2_16[0],box8_allocated_tips,Box 8: Allocated Tips,/Tx,9,454.6,636.001,574.0,648.0
+f2_17[0],box9,Box 9,/Tx,2,332.2,612.0,452.6,623.999
+f2_17[0],box9,Box 9,/Tx,3,332.2,612.0,452.6,623.999
+f2_17[0],box9,Box 9,/Tx,5,332.2,612.0,452.6,623.999
+f2_17[0],box9,Box 9,/Tx,7,332.2,612.0,452.6,623.999
+f2_17[0],box9,Box 9,/Tx,9,332.2,612.0,452.6,623.999
+f2_18[0],box10_dependent_care_benefits,Box 10: Dependent Care Benefits,/Tx,2,454.6,612.0,574.0,623.999
+f2_18[0],box10_dependent_care_benefits,Box 10: Dependent Care Benefits,/Tx,3,454.6,612.0,574.0,623.999
+f2_18[0],box10_dependent_care_benefits,Box 10: Dependent Care Benefits,/Tx,5,454.6,612.0,574.0,623.999
+f2_18[0],box10_dependent_care_benefits,Box 10: Dependent Care Benefits,/Tx,7,454.6,612.0,574.0,623.999
+f2_18[0],box10_dependent_care_benefits,Box 10: Dependent Care Benefits,/Tx,9,454.6,612.0,574.0,623.999
+f2_19[0],box11_nonqualified_plans,Box 11: Nonqualified Plans,/Tx,2,332.2,588.002,452.6,600.001
+f2_19[0],box11_nonqualified_plans,Box 11: Nonqualified Plans,/Tx,3,332.2,588.002,452.6,600.001
+f2_19[0],box11_nonqualified_plans,Box 11: Nonqualified Plans,/Tx,5,332.2,588.002,452.6,600.001
+f2_19[0],box11_nonqualified_plans,Box 11: Nonqualified Plans,/Tx,7,332.2,588.002,452.6,600.001
+f2_19[0],box11_nonqualified_plans,Box 11: Nonqualified Plans,/Tx,9,332.2,588.002,452.6,600.001
+f2_20[0],box12a_code,Box 12a: Code,/Tx,2,462.8,588.002,488.6,600.001
+f2_20[0],box12a_code,Box 12a: Code,/Tx,3,462.8,588.002,488.6,600.001
+f2_20[0],box12a_code,Box 12a: Code,/Tx,5,462.8,588.002,488.6,600.001
+f2_20[0],box12a_code,Box 12a: Code,/Tx,7,462.8,588.002,488.6,600.001
+f2_20[0],box12a_code,Box 12a: Code,/Tx,9,462.8,588.002,488.6,600.001
+f2_21[0],box12a_amount,Box 12a: Amount,/Tx,2,490.6,588.002,574.0,600.001
+f2_21[0],box12a_amount,Box 12a: Amount,/Tx,3,490.6,588.002,574.0,600.001
+f2_21[0],box12a_amount,Box 12a: Amount,/Tx,5,490.6,588.002,574.0,600.001
+f2_21[0],box12a_amount,Box 12a: Amount,/Tx,7,490.6,588.002,574.0,600.001
+f2_21[0],box12a_amount,Box 12a: Amount,/Tx,9,490.6,588.002,574.0,600.001
+f2_22[0],box12b_code,Box 12b: Code,/Tx,2,462.8,564.001,488.6,576.0
+f2_22[0],box12b_code,Box 12b: Code,/Tx,3,462.8,564.001,488.6,576.0
+f2_22[0],box12b_code,Box 12b: Code,/Tx,5,462.8,564.001,488.6,576.0
+f2_22[0],box12b_code,Box 12b: Code,/Tx,7,462.8,564.001,488.6,576.0
+f2_22[0],box12b_code,Box 12b: Code,/Tx,9,462.8,564.001,488.6,576.0
+f2_23[0],box12b_amount,Box 12b: Amount,/Tx,2,490.6,564.001,574.0,576.0
+f2_23[0],box12b_amount,Box 12b: Amount,/Tx,3,490.6,564.001,574.0,576.0
+f2_23[0],box12b_amount,Box 12b: Amount,/Tx,5,490.6,564.001,574.0,576.0
+f2_23[0],box12b_amount,Box 12b: Amount,/Tx,7,490.6,564.001,574.0,576.0
+f2_23[0],box12b_amount,Box 12b: Amount,/Tx,9,490.6,564.001,574.0,576.0
+f2_24[0],box12c_code,Box 12c: Code,/Tx,2,462.8,540.0,488.6,551.999
+f2_24[0],box12c_code,Box 12c: Code,/Tx,3,462.8,540.0,488.6,551.999
+f2_24[0],box12c_code,Box 12c: Code,/Tx,5,462.8,540.0,488.6,551.999
+f2_24[0],box12c_code,Box 12c: Code,/Tx,7,462.8,540.0,488.6,551.999
+f2_24[0],box12c_code,Box 12c: Code,/Tx,9,462.8,540.0,488.6,551.999
+f2_25[0],box12c_amount,Box 12c: Amount,/Tx,2,490.6,540.0,574.0,551.999
+f2_25[0],box12c_amount,Box 12c: Amount,/Tx,3,490.6,540.0,574.0,551.999
+f2_25[0],box12c_amount,Box 12c: Amount,/Tx,5,490.6,540.0,574.0,551.999
+f2_25[0],box12c_amount,Box 12c: Amount,/Tx,7,490.6,540.0,574.0,551.999
+f2_25[0],box12c_amount,Box 12c: Amount,/Tx,9,490.6,540.0,574.0,551.999
+f2_26[0],box12d_code,Box 12d: Code,/Tx,2,462.8,516.002,488.6,528.001
+f2_26[0],box12d_code,Box 12d: Code,/Tx,3,462.8,516.002,488.6,528.001
+f2_26[0],box12d_code,Box 12d: Code,/Tx,5,462.8,516.002,488.6,528.001
+f2_26[0],box12d_code,Box 12d: Code,/Tx,7,462.8,516.002,488.6,528.001
+f2_26[0],box12d_code,Box 12d: Code,/Tx,9,462.8,516.002,488.6,528.001
+f2_27[0],box12d_amount,Box 12d: Amount,/Tx,2,490.6,516.002,574.0,528.001
+f2_27[0],box12d_amount,Box 12d: Amount,/Tx,3,490.6,516.002,574.0,528.001
+f2_27[0],box12d_amount,Box 12d: Amount,/Tx,5,490.6,516.002,574.0,528.001
+f2_27[0],box12d_amount,Box 12d: Amount,/Tx,7,490.6,516.002,574.0,528.001
+f2_27[0],box12d_amount,Box 12d: Amount,/Tx,9,490.6,516.002,574.0,528.001
+c2_2[0],box13_statutory_employee,Box 13: Statutory employee,/Btn,2,348.6,565.699,358.6,575.699
+c2_2[0],box13_statutory_employee,Box 13: Statutory employee,/Btn,3,348.6,565.699,358.6,575.699
+c2_2[0],box13_statutory_employee,Box 13: Statutory employee,/Btn,5,348.6,565.699,358.6,575.699
+c2_2[0],box13_statutory_employee,Box 13: Statutory employee,/Btn,7,348.6,565.699,358.6,575.699
+c2_2[0],box13_statutory_employee,Box 13: Statutory employee,/Btn,9,348.6,565.699,358.6,575.699
+c2_3[0],box13_retirement_plan,Box 13: Retirement plan,/Btn,2,384.6,565.699,394.6,575.699
+c2_3[0],box13_retirement_plan,Box 13: Retirement plan,/Btn,3,384.6,565.699,394.6,575.699
+c2_3[0],box13_retirement_plan,Box 13: Retirement plan,/Btn,5,384.6,565.699,394.6,575.699
+c2_3[0],box13_retirement_plan,Box 13: Retirement plan,/Btn,7,384.6,565.699,394.6,575.699
+c2_3[0],box13_retirement_plan,Box 13: Retirement plan,/Btn,9,384.6,565.699,394.6,575.699
+c2_4[0],box13_third_party_sick_pay,Box 13: Third-party sick pay,/Btn,2,420.6,565.699,430.6,575.699
+c2_4[0],box13_third_party_sick_pay,Box 13: Third-party sick pay,/Btn,3,420.6,565.699,430.6,575.699
+c2_4[0],box13_third_party_sick_pay,Box 13: Third-party sick pay,/Btn,5,420.6,565.699,430.6,575.699
+c2_4[0],box13_third_party_sick_pay,Box 13: Third-party sick pay,/Btn,7,420.6,565.699,430.6,575.699
+c2_4[0],box13_third_party_sick_pay,Box 13: Third-party sick pay,/Btn,9,420.6,565.699,430.6,575.699
+f2_28[0],box14_other,Box 14: Other,/Tx,2,332.2,504.0,452.6,551.999
+f2_28[0],box14_other,Box 14: Other,/Tx,3,332.2,504.0,452.6,551.999
+f2_28[0],box14_other,Box 14: Other,/Tx,5,332.2,504.0,452.6,551.999
+f2_28[0],box14_other,Box 14: Other,/Tx,7,332.2,504.0,452.6,551.999
+f2_28[0],box14_other,Box 14: Other,/Tx,9,332.2,504.0,452.6,551.999
+f2_29[0],box15_state_1,Box 15 (1): State,/Tx,2,38.0,480.002,63.8,492.001
+f2_29[0],box15_state_1,Box 15 (1): State,/Tx,3,38.0,480.002,63.8,492.001
+f2_29[0],box15_state_1,Box 15 (1): State,/Tx,5,38.0,480.002,63.8,492.001
+f2_29[0],box15_state_1,Box 15 (1): State,/Tx,7,38.0,480.002,63.8,492.001
+f2_29[0],box15_state_1,Box 15 (1): State,/Tx,9,38.0,480.002,63.8,492.001
+f2_30[0],box15_employer_state_id_1,Box 15 (1): Employer’s state ID number,/Tx,2,65.8,480.002,193.4,492.001
+f2_30[0],box15_employer_state_id_1,Box 15 (1): Employer’s state ID number,/Tx,3,65.8,480.002,193.4,492.001
+f2_30[0],box15_employer_state_id_1,Box 15 (1): Employer’s state ID number,/Tx,5,65.8,480.002,193.4,492.001
+f2_30[0],box15_employer_state_id_1,Box 15 (1): Employer’s state ID number,/Tx,7,65.8,480.002,193.4,492.001
+f2_30[0],box15_employer_state_id_1,Box 15 (1): Employer’s state ID number,/Tx,9,65.8,480.002,193.4,492.001
+f2_31[0],box15_state_2,Box 15 (2): State,/Tx,2,38.0,455.998,63.8,467.999
+f2_31[0],box15_state_2,Box 15 (2): State,/Tx,3,38.0,455.998,63.8,467.999
+f2_31[0],box15_state_2,Box 15 (2): State,/Tx,5,38.0,455.998,63.8,467.999
+f2_31[0],box15_state_2,Box 15 (2): State,/Tx,7,38.0,455.998,63.8,467.999
+f2_31[0],box15_state_2,Box 15 (2): State,/Tx,9,38.0,455.998,63.8,467.999
+f2_32[0],box15_employer_state_id_2,Box 15 (2): Employer’s state ID number,/Tx,2,65.8,456.001,193.4,468.0
+f2_32[0],box15_employer_state_id_2,Box 15 (2): Employer’s state ID number,/Tx,3,65.8,456.001,193.4,468.0
+f2_32[0],box15_employer_state_id_2,Box 15 (2): Employer’s state ID number,/Tx,5,65.8,456.001,193.4,468.0
+f2_32[0],box15_employer_state_id_2,Box 15 (2): Employer’s state ID number,/Tx,7,65.8,456.001,193.4,468.0
+f2_32[0],box15_employer_state_id_2,Box 15 (2): Employer’s state ID number,/Tx,9,65.8,456.001,193.4,468.0
+f2_33[0],box16_state_wages_1,"Box 16 (1): State wages, tips, etc.",/Tx,2,195.4,480.002,279.8,492.001
+f2_33[0],box16_state_wages_1,"Box 16 (1): State wages, tips, etc.",/Tx,3,195.4,480.002,279.8,492.001
+f2_33[0],box16_state_wages_1,"Box 16 (1): State wages, tips, etc.",/Tx,5,195.4,480.002,279.8,492.001
+f2_33[0],box16_state_wages_1,"Box 16 (1): State wages, tips, etc.",/Tx,7,195.4,480.002,279.8,492.001
+f2_33[0],box16_state_wages_1,"Box 16 (1): State wages, tips, etc.",/Tx,9,195.4,480.002,279.8,492.001
+f2_34[0],box16_state_wages_2,"Box 16 (2): State wages, tips, etc.",/Tx,2,195.4,455.998,279.8,467.999
+f2_34[0],box16_state_wages_2,"Box 16 (2): State wages, tips, etc.",/Tx,3,195.4,455.998,279.8,467.999
+f2_34[0],box16_state_wages_2,"Box 16 (2): State wages, tips, etc.",/Tx,5,195.4,455.998,279.8,467.999
+f2_34[0],box16_state_wages_2,"Box 16 (2): State wages, tips, etc.",/Tx,7,195.4,455.998,279.8,467.999
+f2_34[0],box16_state_wages_2,"Box 16 (2): State wages, tips, etc.",/Tx,9,195.4,455.998,279.8,467.999
+f2_35[0],box17_state_income_tax_1,Box 17 (1): State income tax,/Tx,2,281.8,480.002,359.0,492.001
+f2_35[0],box17_state_income_tax_1,Box 17 (1): State income tax,/Tx,3,281.8,480.002,359.0,492.001
+f2_35[0],box17_state_income_tax_1,Box 17 (1): State income tax,/Tx,5,281.8,480.002,359.0,492.001
+f2_35[0],box17_state_income_tax_1,Box 17 (1): State income tax,/Tx,7,281.8,480.002,359.0,492.001
+f2_35[0],box17_state_income_tax_1,Box 17 (1): State income tax,/Tx,9,281.8,480.002,359.0,492.001
+f2_36[0],box17_state_income_tax_2,Box 17 (2): State income tax,/Tx,2,281.8,455.998,359.0,467.999
+f2_36[0],box17_state_income_tax_2,Box 17 (2): State income tax,/Tx,3,281.8,455.998,359.0,467.999
+f2_36[0],box17_state_income_tax_2,Box 17 (2): State income tax,/Tx,5,281.8,455.998,359.0,467.999
+f2_36[0],box17_state_income_tax_2,Box 17 (2): State income tax,/Tx,7,281.8,455.998,359.0,467.999
+f2_36[0],box17_state_income_tax_2,Box 17 (2): State income tax,/Tx,9,281.8,455.998,359.0,467.999
+f2_37[0],box18_local_wages_1,"Box 18 (1): Local wages, tips, etc.",/Tx,2,361.0,480.002,445.4,492.001
+f2_37[0],box18_local_wages_1,"Box 18 (1): Local wages, tips, etc.",/Tx,3,361.0,480.002,445.4,492.001
+f2_37[0],box18_local_wages_1,"Box 18 (1): Local wages, tips, etc.",/Tx,5,361.0,480.002,445.4,492.001
+f2_37[0],box18_local_wages_1,"Box 18 (1): Local wages, tips, etc.",/Tx,7,361.0,480.002,445.4,492.001
+f2_37[0],box18_local_wages_1,"Box 18 (1): Local wages, tips, etc.",/Tx,9,361.0,480.002,445.4,492.001
+f2_38[0],box18_local_wages_2,"Box 18 (2): Local wages, tips, etc.",/Tx,2,361.0,455.998,445.4,467.999
+f2_38[0],box18_local_wages_2,"Box 18 (2): Local wages, tips, etc.",/Tx,3,361.0,455.998,445.4,467.999
+f2_38[0],box18_local_wages_2,"Box 18 (2): Local wages, tips, etc.",/Tx,5,361.0,455.998,445.4,467.999
+f2_38[0],box18_local_wages_2,"Box 18 (2): Local wages, tips, etc.",/Tx,7,361.0,455.998,445.4,467.999
+f2_38[0],box18_local_wages_2,"Box 18 (2): Local wages, tips, etc.",/Tx,9,361.0,455.998,445.4,467.999
+f2_39[0],box19_local_income_tax_1,Box 19 (1): Local income tax,/Tx,2,447.4,480.002,524.6,492.001
+f2_39[0],box19_local_income_tax_1,Box 19 (1): Local income tax,/Tx,3,447.4,480.002,524.6,492.001
+f2_39[0],box19_local_income_tax_1,Box 19 (1): Local income tax,/Tx,5,447.4,480.002,524.6,492.001
+f2_39[0],box19_local_income_tax_1,Box 19 (1): Local income tax,/Tx,7,447.4,480.002,524.6,492.001
+f2_39[0],box19_local_income_tax_1,Box 19 (1): Local income tax,/Tx,9,447.4,480.002,524.6,492.001
+f2_40[0],box19_local_income_tax_2,Box 19 (2): Local income tax,/Tx,2,447.4,455.998,524.6,467.999
+f2_40[0],box19_local_income_tax_2,Box 19 (2): Local income tax,/Tx,3,447.4,455.998,524.6,467.999
+f2_40[0],box19_local_income_tax_2,Box 19 (2): Local income tax,/Tx,5,447.4,455.998,524.6,467.999
+f2_40[0],box19_local_income_tax_2,Box 19 (2): Local income tax,/Tx,7,447.4,455.998,524.6,467.999
+f2_40[0],box19_local_income_tax_2,Box 19 (2): Local income tax,/Tx,9,447.4,455.998,524.6,467.999
+f2_41[0],box20_locality_name_1,Box 20 (1): Locality name,/Tx,2,526.6,480.002,574.0,492.001
+f2_41[0],box20_locality_name_1,Box 20 (1): Locality name,/Tx,3,526.6,480.002,574.0,492.001
+f2_41[0],box20_locality_name_1,Box 20 (1): Locality name,/Tx,5,526.6,480.002,574.0,492.001
+f2_41[0],box20_locality_name_1,Box 20 (1): Locality name,/Tx,7,526.6,480.002,575.0,492.001
+f2_41[0],box20_locality_name_1,Box 20 (1): Locality name,/Tx,9,526.6,480.002,574.0,492.001
+f2_42[0],box20_locality_name_2,Box 20 (2): Locality name,/Tx,2,526.6,455.998,574.0,467.999
+f2_42[0],box20_locality_name_2,Box 20 (2): Locality name,/Tx,3,526.6,455.998,574.0,467.999
+f2_42[0],box20_locality_name_2,Box 20 (2): Locality name,/Tx,5,526.6,455.998,574.0,467.999
+f2_42[0],box20_locality_name_2,Box 20 (2): Locality name,/Tx,7,526.6,455.998,575.0,467.999
+f2_42[0],box20_locality_name_2,Box 20 (2): Locality name,/Tx,9,526.6,455.998,574.0,467.999
+c2_1[0],void,Void,/Btn,9,132.481,739.999,142.481,749.999

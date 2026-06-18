@@ -1,0 +1,19 @@
+﻿<mxfile host='app.diagrams.net' modified='2026-03-04T10:15:00.0000000Z' agent='Codex' version='20.8.16' type='device'>
+  <diagram id='4a-flow-ira-gross' name='Line 4a - IRA distributions (gross)'>
+    <mxGraphModel dx='1400' dy='900' grid='1' gridSize='10' guides='1' tooltips='1' connect='1' arrows='1' fold='1' page='1' pageScale='1' pageWidth='1200' pageHeight='900' math='0' shadow='0'>
+      <root>
+        <mxCell id='0'/>
+        <mxCell id='1' parent='0'/>
+        <mxCell id='2' value='Inputs (User)&#xa;ira-income-taxpayer / ira-income-spouse&#xa;hadIraDistributions&#xa;rollover, QCD, HFD, conversion and basis indicators&#xa;question ownership: return-level conflict-prone gating stays on taxpayer form' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='20' y='20' width='360' height='220' as='geometry'/></mxCell>
+        <mxCell id='3' value='Inputs (Statements/Imports)&#xa;1099-R entries where IRA/SEP/SIMPLE is checked&#xa;owner split by recipientTIN/SSN: TP vs SP&#xa;gross IRA source = box1 sum by owner&#xa;form selection gate requires at least one uploaded IRA-related 1099-R' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='20' y='260' width='360' height='240' as='geometry'/></mxCell>
+        <mxCell id='4' value='Reference/Derived Inputs&#xa;4abc.md IRS rule: fully taxable overall => 4b only and 4a blank&#xa;If any exception applies (rollover/QCD/HFD/8606 path), 4a must show total gross&#xa;multi-distribution rule: aggregate all IRA gross distributions' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='20' y='520' width='360' height='210' as='geometry'/></mxCell>
+        <mxCell id='5' value='Computation&#xa;Per owner grossIRA = sum(1099-R box1 where is_ira=true)&#xa;Aggregate grossIRA = grossIRA_TP + grossIRA_SP&#xa;fullyTaxableOverall = no exceptions across both spouses and taxable equals gross&#xa;line4a = null when fullyTaxableOverall&#xa;line4a = roundMoney(grossIRA) when any exception path applies' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='420' y='230' width='390' height='300' as='geometry'/></mxCell>
+        <mxCell id='6' value='Outputs&#xa;Form 1040 line 4a (IRA distributions, gross)&#xa;Value emitted only when exception-driven reporting is required&#xa;Stored in tax-return computation payload and shown in Form 1040 preview' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='840' y='250' width='350' height='260' as='geometry'/></mxCell>
+        <mxCell id='7' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='2' target='5'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='8' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='3' target='5'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='9' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='4' target='5'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='10' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='5' target='6'><mxGeometry relative='1' as='geometry'/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

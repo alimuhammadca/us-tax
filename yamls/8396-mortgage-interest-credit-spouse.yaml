@@ -1,0 +1,41 @@
+# Form 8396 - Mortgage Interest Credit - spouse.
+# This spouse form is additive only. The output remains one consolidated Form 8396 per return.
+name: mortgage-interest-credit-spouse
+title: Form 8396 - Mortgage interest credit (spouse)
+multiplicity: single
+formName: 8396
+category: deductions
+instructions:
+  - Use this spouse form only on married filing jointly returns when the spouse paid eligible mortgage interest that should be added to the joint Form 8396.
+  - Do not use this form if the taxpayer-side mortgage-interest amount already includes the spouse-paid amount.
+sections:
+  - name: spouseScreening
+    title: Spouse supplemental screening
+    multiplicity: single
+    fields:
+      - name: spouseHasMortgageInterestCreditInputs
+        type: boolean
+        required: true
+        label: Does your spouse have supplemental mortgage-interest credit input to add?
+
+  - name: spouseContribution
+    title: Spouse mortgage-interest contribution
+    multiplicity: single
+    showIf: spouseHasMortgageInterestCreditInputs == true
+    fields:
+      - name: spouseMortgageInterestPaidContribution
+        type: amount
+        required: false
+        label: Spouse-paid eligible mortgage interest to add to the joint Form 8396 line 1 calculation
+        placeholder: 0.00
+
+  - name: importedSupport
+    title: Imported support values (backend only - not rendered)
+    multiplicity: single
+    showIf: spouseHasMortgageInterestCreditInputs == true
+    fields:
+      - name: jointForm8396Ownership
+        type: text
+        required: false
+        readOnly: true
+        label: Backend note - spouse data rolls into the joint Form 8396

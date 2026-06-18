@@ -1,0 +1,57 @@
+formId: 35-direct-deposit
+label: Direct deposit (refund)
+
+sections:
+  - id: directDeposit
+    label: Direct deposit — where to send your refund
+    fields:
+      - id: wantsDirectDeposit
+        label: Do you want your refund deposited directly to a bank account?
+        type: boolean
+        required: true
+        helpText: >
+          Direct deposit is the fastest way to receive your refund — typically within
+          21 days of e-filing. If you select No, the IRS will mail a paper check to
+          your address on file, which can take 6–8 weeks. You cannot use this option
+          if you are splitting your refund across multiple accounts using the Allocation
+          of Refund form.
+
+      - id: routingNumber
+        label: Routing number
+        type: string
+        required: false
+        showIf: "wantsDirectDeposit == true"
+        helpText: >
+          Your bank's 9-digit ABA routing number identifies the financial institution
+          receiving your deposit. Find it on the bottom-left of a printed check or in
+          your online banking settings under "Account details." The IRS validates routing
+          numbers using the ABA checksum — an invalid number will delay your refund.
+        validation:
+          pattern: "^\\d{9}$"
+          message: Routing number must be exactly 9 digits
+
+      - id: accountType
+        label: Account type
+        type: enum
+        required: false
+        showIf: "wantsDirectDeposit == true"
+        helpText: >
+          Select Checking if your refund should go to a checking account, or Savings if
+          it should go to a savings account. If you are unsure which type you have,
+          check your bank statement or online banking profile.
+        options:
+          - value: checking
+            label: Checking
+          - value: savings
+            label: Savings
+
+      - id: accountNumber
+        label: Account number
+        type: string
+        required: false
+        showIf: "wantsDirectDeposit == true"
+        helpText: >
+          Your account number uniquely identifies your specific account at the bank. Find
+          it on the bottom of a check — it follows the 9-digit routing number — or in
+          your online banking settings. Enter up to 17 characters; hyphens are allowed.
+        hint: Up to 17 characters

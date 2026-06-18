@@ -1,0 +1,114 @@
+# Schedule R (Form 1040) - taxpayer intake.
+# One Schedule R per return. The taxpayer intake owns the return-level screening,
+# MFS lived-apart gating, taxpayer disability facts, and taxpayer nontaxable pension inputs.
+name: elderly-disabled-credit-taxpayer
+title: Schedule R - Elderly/Disabled credit (taxpayer)
+multiplicity: single
+formName: 1040SR
+category: deductions
+instructions:
+  - Use this form to determine whether the return may claim Schedule R, Credit for the Elderly or the Disabled.
+  - Schedule R is one form per return, not one per spouse.
+  - Filing status, date of birth, Social Security, and current-year tax limitation inputs are imported from other saved forms and the computed return when available.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: claimsElderlyDisabledCredit
+        type: boolean
+        required: true
+        label: Do you want to evaluate the 2025 elderly or disabled credit for this return?
+        help: >
+          Select Yes if the taxpayer may qualify by being age 65 or older at the end of 2025,
+          or by retiring on permanent and total disability.
+      - name: confirmQualificationSupportReady
+        type: boolean
+        required: false
+        label: Do you have the pension, physician-statement, and disability support needed for Schedule R?
+        help: >
+          Have the 2025 pension/disability records and any physician or VA certification details
+          available before saving.
+      - name: mfsLivedApartAllYear
+        type: boolean
+        required: false
+        label: If filing MFS, did you live apart from your spouse for all of 2025?
+        help: >
+          Married filing separately taxpayers who lived with a spouse at any time in 2025 cannot claim Schedule R.
+
+  - name: taxpayerDisabilityFacts
+    title: Taxpayer disability-track inputs
+    multiplicity: single
+    showIf: claimsElderlyDisabledCredit == true
+    instructions:
+      - Answer these questions even if you may qualify by age; the backend combines them with the imported DOB and filing status.
+      - If the taxpayer qualifies by age only, answer No to the disability-retirement question and continue.
+    fields:
+      - name: taxpayerRetiredOnPermanentTotalDisability
+        type: boolean
+        required: false
+        label: Did the taxpayer retire on permanent and total disability?
+      - name: taxpayerReceivedTaxableDisabilityIncome
+        type: boolean
+        required: false
+        label: Did the taxpayer receive taxable disability income in 2025?
+      - name: taxpayerTaxableDisabilityIncomeAmount
+        type: amount
+        required: false
+        label: Taxpayer taxable disability income included in wages
+        placeholder: 0.00
+      - name: taxpayerUnderMandatoryRetirementAgeOnJan1
+        type: boolean
+        required: false
+        label: Was the taxpayer under mandatory retirement age on January 1, 2025?
+      - name: taxpayerExistingPhysicianStatement
+        type: boolean
+        required: false
+        label: Does the taxpayer already have a valid physician or VA statement on file?
+        help: >
+          This covers the recurring-statement path described in the Schedule R instructions.
+
+  - name: taxpayerReductions
+    title: Taxpayer line 13b reductions
+    multiplicity: single
+    showIf: claimsElderlyDisabledCredit == true
+    instructions:
+      - Enter only the taxpayer share of nontaxable pensions, annuities, or disability income excluded under federal law.
+      - Nontaxable Social Security is imported from Form 1040 lines 6a and 6b when the return is computed.
+    fields:
+      - name: taxpayerNontaxablePensionBenefits
+        type: amount
+        required: false
+        label: Taxpayer nontaxable pensions, annuities, or disability income for Schedule R line 13b
+        placeholder: 0.00
+
+  - name: importedReturnData
+    title: Imported return fields (backend only - not rendered)
+    multiplicity: single
+    showIf: claimsElderlyDisabledCredit == true
+    fields:
+      - name: importedFilingStatus
+        type: text
+        required: false
+        readOnly: true
+        label: Imported filing status
+      - name: importedTaxpayerDateOfBirth
+        type: text
+        required: false
+        readOnly: true
+        label: Imported taxpayer date of birth
+      - name: importedForm1040Line11a
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported Form 1040 line 11a
+      - name: importedForm1040Line18
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported Form 1040 line 18
+      - name: importedSchedule3LimitInputs
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported Schedule 3 limitation inputs

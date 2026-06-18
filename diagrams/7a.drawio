@@ -1,0 +1,24 @@
+﻿<mxfile host='app.diagrams.net' modified='2026-03-08T04:35:00.0000000Z' agent='Codex' version='20.8.16' type='device'>
+  <diagram id='7a-flow-capital-gain-loss' name='Line 7a - Capital gain or (loss)'>
+    <mxGraphModel dx='1400' dy='900' grid='1' gridSize='10' guides='1' tooltips='1' connect='1' arrows='1' fold='1' page='1' pageScale='1' pageWidth='1300' pageHeight='900' math='0' shadow='0'>
+      <root>
+        <mxCell id='0'/>
+        <mxCell id='1' parent='0'/>
+        <mxCell id='2' value='Inputs (Statements)&#xa;1099-B and 1099-DA transaction detail&#xa;1099-DIV boxes 2a / 2b / 2c / 2d&#xa;Form 2439 and other capital-source statements&#xa;(6252, 4797, 4684, 6781, 8824, K-1 capital items)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='20' y='40' width='380' height='220' as='geometry'/></mxCell>
+        <mxCell id='3' value='Inputs (Capital forms)&#xa;capital-gain-loss-taxpayer&#xa;capital-gain-loss-spouse&#xa;Direct Schedule D aggregation rows&#xa;Carryovers, nominee subtraction, QOF flag&#xa;Manual Form 8949 transactions&#xa;Child amount from computed Form 8814 list' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='20' y='290' width='380' height='220' as='geometry'/></mxCell>
+        <mxCell id='4' value='Decision: Exception 1 direct line 7a path?&#xa;No sales/exchanges&#xa;No QOF deferral or manual adjustments&#xa;No losses/carryovers/other sources&#xa;No 1099-DIV box 2b/2c/2d amounts&#xa;Only capital gain distributions / direct gains' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff3cd;strokeColor=#b8860b;fontSize=12;' vertex='1' parent='1'><mxGeometry x='460' y='180' width='260' height='200' as='geometry'/></mxCell>
+        <mxCell id='5' value='Direct 1040 path&#xa;line7aBase = capital gain distributions&#xa;+ direct gains - nominee subtraction&#xa;No Schedule D or Form 8949 output' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#d1e7dd;strokeColor=#0f5132;fontSize=12;' vertex='1' parent='1'><mxGeometry x='780' y='80' width='300' height='170' as='geometry'/></mxCell>
+        <mxCell id='6' value='Normalized capital output path&#xa;Build direct Schedule D rows 1a / 8a&#xa;Build Form 8949 pages for boxes and adjustments&#xa;Roll totals into Schedule D lines 1b-10, 13-21&#xa;Apply line 21 capital-loss limit when needed' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8d7da;strokeColor=#842029;fontSize=12;' vertex='1' parent='1'><mxGeometry x='780' y='300' width='300' height='190' as='geometry'/></mxCell>
+        <mxCell id='7' value='Finalize line 7a and return outputs&#xa;line7a = roundMoney(line7aBase + childAmountFromForm8814)&#xa;Populate Form 1040 line 7a / 7b flags&#xa;Emit 2025 Schedule D and Form 8949 when required' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#cfe2ff;strokeColor=#084298;fontSize=12;' vertex='1' parent='1'><mxGeometry x='1120' y='180' width='300' height='190' as='geometry'/></mxCell>
+        <mxCell id='8' value='YES' style='edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;' vertex='1' connectable='0' parent='9'><mxGeometry x='0.2' y='-2' relative='1' as='geometry'><mxPoint x='-4' y='-4' as='offset'/></mxGeometry></mxCell>
+        <mxCell id='9' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='4' target='5'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='10' value='NO' style='edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;' vertex='1' connectable='0' parent='11'><mxGeometry x='0.2' y='-2' relative='1' as='geometry'><mxPoint x='-4' y='-4' as='offset'/></mxGeometry></mxCell>
+        <mxCell id='11' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='4' target='6'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='12' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='2' target='4'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='13' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='3' target='4'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='14' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='5' target='7'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='15' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='6' target='7'><mxGeometry relative='1' as='geometry'/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

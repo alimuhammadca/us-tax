@@ -1,0 +1,29 @@
+<mxfile host='app.diagrams.net' modified='2026-03-10T00:00:00.0000000Z' agent='Codex' version='20.8.16' type='device'>
+  <diagram id='11b-flow-agi-copy' name='Line 11b - Amount from line 11a'>
+    <mxGraphModel dx='1200' dy='800' grid='1' gridSize='10' guides='1' tooltips='1' connect='1' arrows='1' fold='1' page='1' pageScale='1' pageWidth='1100' pageHeight='850' math='0' shadow='0'>
+      <root>
+        <mxCell id='0'/>
+        <mxCell id='1' parent='0'/>
+
+        <mxCell id='2' value='Input&#xa;Form 1040 line 11a&#xa;Adjusted gross income' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='80' y='190' width='250' height='120' as='geometry'/>
+        </mxCell>
+
+        <mxCell id='3' value='Copy mapping&#xa;line 11b = line 11a&#xa;No additional transformation' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='420' y='190' width='250' height='120' as='geometry'/>
+        </mxCell>
+
+        <mxCell id='4' value='Outputs&#xa;Form1040.adjustments.line11bAmountFromLine11aAdjustedGrossIncome&#xa;Referenced by later IRS worksheets/phaseouts' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='760' y='170' width='270' height='160' as='geometry'/>
+        </mxCell>
+
+        <mxCell id='5' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='2' target='3'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='6' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='3' target='4'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

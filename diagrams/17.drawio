@@ -1,0 +1,100 @@
+<mxfile host="app.diagrams.net" modified="2026-03-21T19:00:00.000Z" agent="Claude Code" version="21.0.0">
+  <diagram name="Form 1040 Line 17 — AMT / Form 6251" id="line17-amt-dataflow">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- ─── Input: Statement Data ─── -->
+        <mxCell id="s1" value="1099-INT&#xa;specifiedPrivateActivityBondInterestAmount&#xa;→ line 2g PAB interest" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="20" y="60" width="280" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- ─── Input: Computed Forms ─── -->
+        <mxCell id="cf1" value="Form1040.Deductions&#xa;.totalDeductions (line14)&#xa;.deductionType (Itemized?)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="20" y="150" width="280" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="cf2" value="Form1040.Adjustments&#xa;.adjustedGrossIncome (line11b)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="20" y="230" width="280" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="cf3" value="TaxAndCredits.tax (line16)&#xa;TaxAndCredits.box2Form4972Tax" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="20" y="300" width="280" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="cf4" value="Form8962&#xa;.line29RepaymentAmount (PTC repayment)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="20" y="370" width="280" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="cf5" value="ScheduleA&#xa;.deductibleTaxes (SALT, line 5e)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="20" y="440" width="280" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="cf6" value="Schedule1.AdditionalIncome&#xa;.taxableRefundsStateLocal (line 1)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="20" y="510" width="280" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="cf7" value="Schedule1A&#xa;.line37EnhancedSeniorDeduction (add-back)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="20" y="580" width="280" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="cf8" value="ScheduleD&#xa;line15, line16, line18, line19&#xa;(capital gains worksheet trigger)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="20" y="650" width="280" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="cf9" value="Form2555Taxpayer / Form2555Spouse&#xa;(FEITW path trigger)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="20" y="730" width="280" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- ─── Central Compute: computeLine17() ─── -->
+        <mxCell id="comp" value="computeLine17()&#xa;&#xa;Part I — AMTI:&#xa;line1a = line14 − senior add-back&#xa;line1b = AGI − line1a&#xa;line2a = SALT (if itemizing)&#xa;line2b = −stateLocalRefund&#xa;line2g = PAB interest&#xa;line4 = line1b+2a+2b+2g&#xa;line5 = exemption (phaseout applied)&#xa;line6 = max(0, line4 − line5)&#xa;&#xa;Part II — Tentative min tax:&#xa;Decision: FEITW | AMT_PART_III | DIRECT_RATE&#xa;line7 = tentative min tax&#xa;line9 = line7 − line8 (FTC = 0)&#xa;line10 = line16 + ptcRepay − form4972Tax&#xa;line11 = max(0, line9 − line10)&#xa;&#xa;IRS rule: generate Form 6251 when PAB > 0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="380" y="150" width="320" height="380" as="geometry" />
+        </mxCell>
+
+        <!-- ─── Worksheets (internal) ─── -->
+        <mxCell id="ws1" value="computeAmtDirectRate()&#xa;26% up to $239,100 / 28% above&#xa;(MFS split at $119,550)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="790" y="150" width="280" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ws2" value="computeAmtPartIII()&#xa;AMT QDCG capital-gains worksheet&#xa;lines 12–40 (0%/15%/20%/25%/28% tiers)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="790" y="230" width="280" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="ws3" value="computeAmtForeignEarnedIncomeTaxWorksheet()&#xa;AMT FEITW (bracket on AMTI base&#xa;excluding exclusion amounts)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="790" y="320" width="280" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="ws4" value="AMT Exemption Phaseout Worksheet&#xa;(internal, not persisted)&#xa;phaseout = max(0, AMTI−threshold) × 0.25&#xa;exemption = max(0, base − phaseout)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="790" y="410" width="280" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- ─── Output: Form 6251 ─── -->
+        <mxCell id="out1" value="Form6251&#xa;&#xa;Part I: line1a, line1b, line2a, line2b, line2g&#xa;          line4 (AMTI), line5 (exemption), line6&#xa;Part II: line7 (TMT), line7ComputationPath&#xa;          line8 (FTC=0), line9, line10, line11 (AMT)&#xa;Part III: lines 12–40 (when QDCG path used)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="380" y="600" width="320" height="150" as="geometry" />
+        </mxCell>
+
+        <!-- ─── Output: wireLine17ToOutputs() ─── -->
+        <mxCell id="out2" value="TaxAndCredits&#xa;.alternativeMinimumTax (line 17)&#xa;  = Form 6251 line 11 (when &gt; 0)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="790" y="600" width="280" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="out3" value="Schedule2&#xa;.line3AlternativeMinimumTax&#xa;  = Form 6251 line 11&#xa;.line1aExcessAdvancePtcRepayment&#xa;  = form8962.line29RepaymentAmount" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="790" y="690" width="280" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- ─── Edges: statements → compute ─── -->
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="s1" target="comp" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="cf1" target="comp" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="cf2" target="comp" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="cf3" target="comp" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="cf4" target="comp" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="cf5" target="comp" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="cf6" target="comp" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e8" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="cf7" target="comp" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e9" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="cf8" target="comp" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e10" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="cf9" target="comp" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- ─── Edges: compute → worksheets ─── -->
+        <mxCell id="e11" style="edgeStyle=orthogonalEdgeStyle;dashed=1;" edge="1" source="comp" target="ws1" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e12" style="edgeStyle=orthogonalEdgeStyle;dashed=1;" edge="1" source="comp" target="ws2" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e13" style="edgeStyle=orthogonalEdgeStyle;dashed=1;" edge="1" source="comp" target="ws3" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e14" style="edgeStyle=orthogonalEdgeStyle;dashed=1;" edge="1" source="comp" target="ws4" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- ─── Edges: compute → outputs ─── -->
+        <mxCell id="e15" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="comp" target="out1" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e16" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="out1" target="out2" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e17" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="out1" target="out3" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

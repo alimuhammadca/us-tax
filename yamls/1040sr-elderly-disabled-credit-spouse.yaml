@@ -1,0 +1,77 @@
+# Schedule R (Form 1040) - spouse intake.
+# Schedule R is still one form per return. This spouse form only contributes spouse-specific
+# disability facts and line 13b reduction amounts for MFJ returns.
+name: elderly-disabled-credit-spouse
+title: Schedule R - Elderly/Disabled credit (spouse)
+multiplicity: single
+formName: 1040SR
+category: deductions
+instructions:
+  - This spouse form is additive only. The tax return still produces one consolidated Schedule R.
+  - Use it when the spouse contributes disability-track facts or spouse nontaxable pension reductions to the joint return.
+sections:
+  - name: spouseScreening
+    title: Spouse supplemental screening
+    multiplicity: single
+    fields:
+      - name: spouseHasElderlyDisabledCreditInputs
+        type: boolean
+        required: true
+        label: Does the spouse have Schedule R information to add to the return?
+        help: >
+          Select Yes if the spouse may qualify by age or disability, or if the spouse has
+          nontaxable pension amounts that belong on Schedule R line 13b.
+
+  - name: spouseDisabilityFacts
+    title: Spouse disability-track inputs
+    multiplicity: single
+    showIf: spouseHasElderlyDisabledCreditInputs == true
+    fields:
+      - name: spouseRetiredOnPermanentTotalDisability
+        type: boolean
+        required: false
+        label: Did the spouse retire on permanent and total disability?
+      - name: spouseReceivedTaxableDisabilityIncome
+        type: boolean
+        required: false
+        label: Did the spouse receive taxable disability income in 2025?
+      - name: spouseTaxableDisabilityIncomeAmount
+        type: amount
+        required: false
+        label: Spouse taxable disability income included in wages
+        placeholder: 0.00
+      - name: spouseUnderMandatoryRetirementAgeOnJan1
+        type: boolean
+        required: false
+        label: Was the spouse under mandatory retirement age on January 1, 2025?
+      - name: spouseExistingPhysicianStatement
+        type: boolean
+        required: false
+        label: Does the spouse already have a valid physician or VA statement on file?
+
+  - name: spouseReductions
+    title: Spouse line 13b reductions
+    multiplicity: single
+    showIf: spouseHasElderlyDisabledCreditInputs == true
+    fields:
+      - name: spouseNontaxablePensionBenefits
+        type: amount
+        required: false
+        label: Spouse nontaxable pensions, annuities, or disability income for Schedule R line 13b
+        placeholder: 0.00
+
+  - name: importedReturnData
+    title: Imported return fields (backend only - not rendered)
+    multiplicity: single
+    showIf: spouseHasElderlyDisabledCreditInputs == true
+    fields:
+      - name: importedSpouseDateOfBirth
+        type: text
+        required: false
+        readOnly: true
+        label: Imported spouse date of birth
+      - name: importedScheduleROwnership
+        type: text
+        required: false
+        readOnly: true
+        label: Backend note - spouse inputs roll into one joint Schedule R

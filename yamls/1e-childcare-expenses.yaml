@@ -1,0 +1,438 @@
+# Child & Dependent Care (Form 2441) — Employee-only scope (NO self-employment support)
+#
+# This YAML is intentionally "parse-clean" (valid YAML) and keeps computed fields,
+# but marks them as computed/readOnly so they are not user-editable.
+#
+# Top-level shape:
+#   childcareExpenses:
+#     sections: [ ... ]
+#
+# Notes:
+# - Comments immediately above each field explain purpose + flow.
+# - "computed: true" means backend-derived.
+# - "readOnly: true" means UI should not allow editing (may display as summary).
+# - Where your app has its own enums, adjust `type` strings accordingly.
+
+childcareExpenses:
+  version: 1
+  scope:
+    supportsSelfEmployment: false
+
+  sections:
+    - name: generalQuestions
+      title: General questions (Boxes A/B + gating)
+      multiplicity: single
+      fields:
+        # Box A (MFS exception). Only relevant if filing status is Married Filing Separately.
+        # Flow: If MFS and exception NOT met, user cannot claim credit/exclusion.
+        - name: marriedFilingSeparatelyException
+          type: boolean
+          required: false
+          label: If MFS, do you meet the special requirements to claim this credit/exclusion?
+          help: Applicable only if filing status is Married Filing Separately.
+
+        # Box B: Student/disabled deemed income. If true, months are required to compute deemed earned income.
+        - name: studentOrDisabledDeemedIncome
+          type: boolean
+          required: false
+          label: Were you a student or disabled and using deemed income?
+          help: If yes, we will compute deemed earned income per Form 2441 instructions.
+
+        # Months for deemed income (taxpayer). Used only when studentOrDisabledDeemedIncome is true.
+        - name: studentOrDisabledMonths
+          type: integer
+          required: false
+          min: 0
+          max: 12
+          label: Months you were a student or disabled (0–12)
+          help: Used only if deemed income applies.
+
+        # Spouse deemed income toggle (MFJ only). Used to compute spouse earned income limitation in Parts II/III.
+        - name: studentOrDisabledDeemedIncomeSpouse
+          type: boolean
+          required: false
+          label: Was your spouse a student or disabled and using deemed income? (MFJ only)
+          help: Used only for Married Filing Jointly returns.
+
+        # Months for deemed income (spouse). Used only when studentOrDisabledDeemedIncomeSpouse is true.
+        - name: studentOrDisabledMonthsSpouse
+          type: integer
+          required: false
+          min: 0
+          max: 12
+          label: Months spouse was a student or disabled (0–12)
+          help: Used only if spouse deemed income applies.
+
+        # Part III gate: dependent care benefits. Employee-only scope means this is driven by W-2 Box 10.
+        # Flow: If false, Part III is skipped and 1040 line 1e must be 0.
+        - name: didReceiveDependentCareBenefits
+          type: boolean
+          required: true
+          label: Did you receive dependent care benefits (for example, W-2 box 10)?
+          help: If yes, we compute taxable benefits (Form 2441 line 26 → Form 1040 line 1e).
+
+    - name: careProviders
+      title: Part I — Care providers (Form 2441 Part I)
+      multiplicity: multiple
+      maxItems: 3
+      instructions:
+        - Add one row for each person or organization who provided care.
+        - The paper form has space for up to 3 providers. If you have more, check the flag and attach a statement.
+      fields:
+        # Overflow flag: user indicates >3 providers; app should collect extra providers via attachment UI.
+        - name: moreThanThreeCareProviders
+          type: boolean
+          required: false
+          label: I have more than three care providers (attachment needed)
+          help: If checked, we will collect additional providers on an attachment/statement.
+
+        # Provider name: required for IRS matching and audit.
+        - name: providerName
+          type: text
+          required: true
+          label: Care provider's name
+          help: Person or organization providing care.
+
+        # Provider address: required for IRS matching and audit.
+        - name: providerAddress
+          type: text
+          required: true
+          label: Care provider's address
+          help: Street, city, state, ZIP.
+
+        # Provider identifying number: SSN or EIN; required in most cases.
+        - name: providerIdentifyingNumber
+          type: text
+          required: true
+          label: Care provider's identifying number (SSN or EIN)
+          help: Enter SSN or EIN (see IRS instructions for limited exceptions).
+
+        # Household employee indicator: affects household employment considerations; does not change core credit math.
+        - name: providerHouseholdEmployee
+          type: boolean
+          required: false
+          label: Care provider is your household employee
+          help: Check if this provider is your household employee (e.g., nanny).
+
+        # Amount paid: supports audit trail and expense reconciliation.
+        - name: amountPaidToProvider
+          type: amount
+          required: true
+          label: Amount paid to provider
+          help: Total paid to this provider during the tax year.
+
+    - name: qualifyingPersons
+      title: Part II — Qualifying persons and expenses (Form 2441 Part II)
+      multiplicity: multiple
+      maxItems: 3
+      instructions:
+        - Add one row for each qualifying person.
+        - The paper form has space for up to 3 qualifying persons. If you have more, check the flag and attach a statement.
+      fields:
+        # Overflow flag: user indicates >3 qualifying persons; app should collect extra persons via attachment UI.
+        - name: moreThanThreeQualifyingPersons
+          type: boolean
+          required: false
+          label: I have more than three qualifying persons (attachment needed)
+          help: If checked, we will collect additional qualifying persons on an attachment/statement.
+
+        # Qualifying person first name.
+        - name: qualifyingFirstName
+          type: text
+          required: true
+          label: Qualifying person's first name
+
+        # Qualifying person last name.
+        - name: qualifyingLastName
+          type: text
+          required: true
+          label: Qualifying person's last name
+
+        # Qualifying person SSN.
+        - name: qualifyingSSN
+          type: text
+          required: true
+          label: Qualifying person's SSN
+
+        # Disabled over age 12 indicator: eligibility/validation.
+        - name: qualifyingOver12AndDisabled
+          type: boolean
+          required: false
+          label: Qualifying person was over age 12 and disabled
+
+        # Qualified expenses paid for this person (Part II col (d)).
+        - name: qualifiedExpensesForPerson
+          type: amount
+          required: true
+          label: Qualified expenses paid for this person
+          help: Enter qualified care expenses paid in the year for this person.
+
+    - name: creditComputation
+      title: Part II — Credit computation (Form 2441 Lines 3–11)
+      multiplicity: single
+      instructions:
+        - These are computed lines for the Child and Dependent Care Credit.
+        - Backend computes them; UI may display read-only summaries.
+      fields:
+        # Line 3: total qualified expenses, capped ($3,000 or $6,000). If Part III applies, line 31 feeds line 3.
+        - name: line3TotalQualifiedExpensesLimited
+          type: amount
+          computed: true
+          readOnly: true
+          label: Line 3 — Total qualified expenses (limited)
+
+        # Line 4: taxpayer earned income (computed from wages module; deemed-income rules may override).
+        - name: line4EarnedIncomeTaxpayer
+          type: amount
+          computed: true
+          readOnly: true
+          label: Line 4 — Your earned income
+
+        # Line 5: spouse earned income (MFJ) or line 4 for others.
+        - name: line5EarnedIncomeSpouseOrLine4
+          type: amount
+          computed: true
+          readOnly: true
+          label: Line 5 — Spouse earned income (MFJ) or line 4
+
+        # Line 6: smallest of lines 3, 4, 5.
+        - name: line6SmallestOf3_4_5
+          type: amount
+          computed: true
+          readOnly: true
+          label: Line 6 — Smallest of lines 3, 4, or 5
+
+        # Line 7: AGI (Form 1040 line 11).
+        - name: line7AGI
+          type: amount
+          computed: true
+          readOnly: true
+          label: Line 7 — Adjusted gross income (AGI)
+
+        # Line 8: applicable percentage (derived from AGI table).
+        - name: line8ApplicablePercentage
+          type: decimal
+          computed: true
+          readOnly: true
+          label: Line 8 — Applicable percentage (decimal)
+
+        # Line 9a: line 6 × line 8.
+        - name: line9aCreditBase
+          type: amount
+          computed: true
+          readOnly: true
+          label: Line 9a — Line 6 × line 8
+
+        # Optional Worksheet A input: prior-year expenses paid this year.
+        - name: priorYearQualifiedExpensesPaidThisYear
+          type: amount
+          required: false
+          label: Worksheet A — Prior-year expenses paid this year
+          help: Enter if you paid last-year care expenses during this year.
+
+        # Line 9b: computed from Worksheet A; otherwise 0.
+        - name: line9bPriorYearExpensesPaidThisYear
+          type: amount
+          computed: true
+          readOnly: true
+          label: Line 9b — Prior-year expenses paid this year
+
+        # Line 9c: line 9a + line 9b.
+        - name: line9cTotal
+          type: amount
+          computed: true
+          readOnly: true
+          label: Line 9c — Total (9a + 9b)
+
+        # Line 10: tax liability limit (from worksheet).
+        - name: line10TaxLiabilityLimit
+          type: amount
+          computed: true
+          readOnly: true
+          label: Line 10 — Tax liability limit
+
+        # Line 11: credit = smaller of line 9c or line 10. Flows to Schedule 3 line 2.
+        - name: line11Credit
+          type: amount
+          computed: true
+          readOnly: true
+          label: Line 11 — Child and dependent care credit
+
+    - name: dependentCareBenefits
+      title: Part III — Dependent care benefits (Form 2441 Lines 12–31)
+      multiplicity: single
+      visibleWhen:
+        all:
+          - field: generalQuestions.didReceiveDependentCareBenefits
+            equals: true
+      instructions:
+        - Complete ONLY if you received dependent care benefits (e.g., W-2 box 10).
+        - Computes excluded vs taxable benefits; line 26 flows to Form 1040 line 1e.
+      fields:
+        # Box 1 exclusion: amounts already included in W-2 box 1 (already taxed; excluded from line 12).
+        - name: alreadyIncludedInBox1Amount
+          type: amount
+          required: false
+          label: Amount already included in W-2 box 1 (already taxed)
+
+        # Line 12: total dependent care benefits received minus any already-taxed amount in box 1.
+        - name: line12TotalBenefits
+          type: amount
+          computed: true
+          readOnly: true
+          label: Line 12 — Total dependent care benefits received
+
+        # Line 13: prior-year unused benefits consumed during the current-year grace period (user input).
+        # Note: dependent care FSAs allow only a 2½-month grace period, not a true fund carryover.
+        - name: line13GracePeriodBenefitsUsed
+          type: amount
+          required: false
+          label: Line 13 — Prior-year unused benefits used during current-year grace period
+
+        # Line 14: forfeited or carried forward; store as positive and subtract in line 15 computation.
+        - name: line14ForfeitedOrCarriedForward
+          type: amount
+          required: false
+          label: Line 14 — Benefits forfeited or carried to next year
+
+        # Line 15: line 12 + line 13 − line 14.
+        - name: line15CombinedBenefits
+          type: amount
+          computed: true
+          readOnly: true
+          label: Line 15 — Combined benefits
+
+        # Line 16: qualified expenses incurred in the year (Part III-specific input).
+        - name: line16QualifiedExpensesForBenefits
+          type: amount
+          required: false
+          label: Line 16 — Qualified expenses incurred in the year
+
+        # Additional earned income not captured by W-2 (e.g., disability wages qualifying under IRC §21).
+        - name: additionalEarnedIncomeTaxpayer
+          type: amount
+          required: false
+          label: Additional earned income (taxpayer, non-W-2)
+
+        # Spouse additional earned income not captured by W-2 (MFJ only; ignored for other statuses).
+        - name: additionalEarnedIncomeSpouse
+          type: amount
+          required: false
+          label: Additional earned income (spouse, non-W-2, MFJ only)
+
+        # Plan maximum excludable: employer plan document may cap the exclusion below the $5,000 statutory limit.
+        - name: planMaxExcludable
+          type: amount
+          required: false
+          label: Employer plan maximum excludable amount (if less than statutory cap)
+
+        # IRC §129(d) nondiscrimination: if employer plan failed the test, benefits are fully taxable.
+        - name: employerPlanFailed129dTest
+          type: boolean
+          required: false
+          label: Employer plan failed IRC §129(d) nondiscrimination test
+
+        # Line 17: min(line 15, line 16).
+        - name: line17SmallerOf15_16
+          type: amount
+          computed: true
+          readOnly: true
+          label: Line 17 — Smaller of lines 15 or 16
+
+        # Line 18: taxpayer earned income (computed; deemed-income rules may apply).
+        - name: line18EarnedIncomeTaxpayer
+          type: amount
+          computed: true
+          readOnly: true
+          label: Line 18 — Your earned income
+
+        # Line 19: spouse earned income (MFJ) or equals line 18 for others (computed).
+        - name: line19EarnedIncomeSpouseOrPerStatus
+          type: amount
+          computed: true
+          readOnly: true
+          label: Line 19 — Spouse earned income (MFJ) or per status
+
+        # Line 20: min(line 17, line 18, line 19).
+        - name: line20SmallestOf17_18_19
+          type: amount
+          computed: true
+          readOnly: true
+          label: Line 20 — Smallest of lines 17, 18, or 19
+
+        # Line 21: min(statutory cap, planMaxExcludable) — $5,000 or $2,500 if MFS (unless separation exception).
+        - name: line21PlanLimit
+          type: amount
+          computed: true
+          readOnly: true
+          label: Line 21 — Maximum excludable benefits
+
+        # Line 22: self-employment/partnership benefits not supported; computed as 0.
+        - name: line22BenefitsFromSelfEmploymentOrPartnership
+          type: amount
+          computed: true
+          readOnly: true
+          label: Line 22 — Benefits from sole proprietorship or partnership (not supported)
+
+        # Line 23: line 15 − line 22 (employee-only usually equals line 15).
+        - name: line23Line15Minus22
+          type: amount
+          computed: true
+          readOnly: true
+          label: Line 23 — Line 15 minus line 22
+
+        # Line 24: deductible benefits applies only when line 22 > 0; employee-only = 0.
+        - name: line24DeductibleBenefits
+          type: amount
+          computed: true
+          readOnly: true
+          label: Line 24 — Deductible benefits (employee-only = 0)
+
+        # Line 25: excluded benefits (employee-only = min(line 20, line 21)).
+        - name: line25ExcludedBenefits
+          type: amount
+          computed: true
+          readOnly: true
+          label: Line 25 — Excluded benefits
+
+        # Line 26: taxable benefits = max(0, line 23 − line 25). Maps to Form 1040 line 1e.
+        - name: line26TaxableBenefits
+          type: amount
+          computed: true
+          readOnly: true
+          label: Line 26 — Taxable benefits (Form 1040 line 1e)
+
+        # Line 27: expense cap ($3,000/$6,000) based on number of qualifying persons.
+        - name: line27StatutoryExpenseLimit
+          type: amount
+          computed: true
+          readOnly: true
+          label: Line 27 — $3,000/$6,000 limit
+
+        # Line 28: line 24 + line 25.
+        - name: line28AddLines24And25
+          type: amount
+          computed: true
+          readOnly: true
+          label: Line 28 — Add lines 24 and 25
+
+        # Line 29: max(0, line 27 − line 28).
+        - name: line29Line27Minus28
+          type: amount
+          computed: true
+          readOnly: true
+          label: Line 29 — Line 27 minus line 28
+
+        # Line 30: qualified expenses eligible for credit after benefits reconciliation (backend-defined).
+        - name: line30RecomputedQualifiedExpenses
+          type: amount
+          computed: true
+          readOnly: true
+          label: Line 30 — Qualified expenses excluding benefits
+
+        # Line 31: min(line 29, line 30). Feeds Part II line 3 when Part III applies.
+        - name: line31SmallerOf29Or30
+          type: amount
+          computed: true
+          readOnly: true
+          label: Line 31 — Smaller of line 29 or 30

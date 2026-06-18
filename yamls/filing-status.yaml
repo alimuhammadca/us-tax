@@ -1,0 +1,80 @@
+# Form 1040 header - return filing status workflow.
+# Approach: this shared form owns the return-level filing status decision.
+name: filing-status
+title: Form 1040 - Filing status
+multiplicity: single
+formName: 1040
+category: personal
+instructions:
+  - Choose the filing status that applied to you on December 31, 2025.
+  - If your spouse died in 2025 or 2024 and you have a qualifying child, you may be eligible for Qualifying Surviving Spouse status.
+  - If you are Married Filing Separately, you must enter your spouse's name and SSN below.
+
+sections:
+  - name: filingStatus
+    title: Filing status
+    multiplicity: single
+    fields:
+      - name: filingStatus
+        type: select
+        required: true
+        label: Filing status
+        options:
+          - Single
+          - Married filing jointly
+          - Married filing separately
+          - Head of household
+          - Qualifying surviving spouse
+          - Nonresident / dual-status alien spouse as a U.S. resident
+        help: >
+          Your filing status determines your standard deduction, tax bracket, and
+          eligibility for credits. It is determined as of December 31, 2025.
+
+      - name: mfsSpouseName
+        type: text
+        required: false
+        label: Spouse's full name (Married filing separately only)
+        placeholder: e.g. Jane A. Smith
+        showIf: "filingStatus === 'Married filing separately'"
+        help: If you are Married Filing Separately, enter your spouse's full name here.
+
+      - name: mfsSpouseSSN
+        type: text
+        required: false
+        label: Spouse's SSN or ITIN (Married filing separately only)
+        placeholder: "###-##-####"
+        showIf: "filingStatus === 'Married filing separately'"
+        help: >
+          If you are Married Filing Separately, enter your spouse's SSN or ITIN.
+          This is required even if you and your spouse have separate returns.
+
+      - name: mfsOrHohLivedApartOrLegallySeparated
+        type: boolean
+        required: true
+        label: Select yes if your filing status is MFS or HOH and you lived apart from your spouse for the last 6 months of the tax year, or you are legally separated according to your state law under a written separation agreement or a decree of separate maintenance and you did not live in the same household as your spouse at the end of 2025.
+        showIf: "filingStatus === 'Married filing separately' Or filingStatus === 'Head of household'"
+        help: >
+          Select yes if you meet the MFS or HOH lived-apart or legally
+          separated condition shown on Form 1040.
+
+      - name: hohQualifyingPersonName
+        type: text
+        required: false
+        label: Name of qualifying person (Head of household only)
+        placeholder: e.g. Emma Smith
+        showIf: "filingStatus === 'Head of household' Or filingStatus === 'Qualifying surviving spouse'"
+        help: >
+          Enter the name of the qualifying person who makes you eligible for Head of
+          Household status. This is usually your dependent child.
+
+      - name: alienPersonName
+        type: text
+        required: false
+        label: Name of spouse (Alien / dual-status spouse as a U.S. resident only)
+        placeholder: e.g. Emma Smith
+        showIf: "filingStatus === 'Nonresident / dual-status alien spouse as a U.S. resident'"
+        help: >
+          Enter the name of the nonresident / dual-status 
+          spouse who you treating as a U.S. resident
+
+          

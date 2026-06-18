@@ -1,0 +1,137 @@
+<mxfile host="app.diagrams.net" modified="2026-03-15T00:00:00.000Z" agent="Claude" version="21.0.0" type="device">
+  <diagram id="line14-dataflow" name="Form 1040 Line 14 — Taxable Income Dataflow">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Title -->
+        <mxCell id="title" value="Form 1040 Line 14 — Taxable Income (2025)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="200" y="20" width="760" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- ── Income sources (left column) ── -->
+        <mxCell id="w2" value="Form W-2&#xa;(wages, tips)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="20" y="80" width="140" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="int-div" value="Interest / Dividends&#xa;(Schedule B)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="20" y="150" width="140" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ira-pension" value="IRA / Pension / SS&#xa;(lines 4–6)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="20" y="220" width="140" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="cap-gains" value="Capital Gains/Losses&#xa;(Schedule D)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="20" y="290" width="140" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="other-income" value="Other Income&#xa;(Schedule 1 Part I)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="20" y="360" width="140" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- ── Line 9: Total Income ── -->
+        <mxCell id="line9" value="Line 9&#xa;Total Income" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="230" y="220" width="140" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- ── Schedule 1 Part II (adjustments) ── -->
+        <mxCell id="sched1adj" value="Schedule 1 Part II&#xa;Income Adjustments" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="20" y="450" width="140" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- ── Line 11b: AGI ── -->
+        <mxCell id="line11b" value="Line 11b&#xa;Adjusted Gross Income (AGI)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="230" y="390" width="140" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- ── Deduction sources (middle-right column) ── -->
+        <mxCell id="schedA" value="Schedule A&#xa;(if itemizing)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="440" y="80" width="140" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="stdded" value="Standard Deduction&#xa;(filing status + adjustments)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="440" y="150" width="140" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- ── Line 12e: Chosen Deduction ── -->
+        <mxCell id="line12e" value="Line 12e&#xa;Standard or Itemized Deduction" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="650" y="110" width="160" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- ── Form 8995 / 8995-A ── -->
+        <mxCell id="f8995" value="Form 8995 or 8995-A&#xa;(QBI sources: K-1, REIT divs)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="440" y="250" width="140" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- ── Line 13a: QBI Deduction ── -->
+        <mxCell id="line13a" value="Line 13a&#xa;QBI Deduction" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="650" y="250" width="160" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- ── Schedule 1-A ── -->
+        <mxCell id="sched1a" value="Schedule 1-A&#xa;(tips / overtime / car loan / senior)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="440" y="390" width="140" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- ── Line 13b: Additional Deductions ── -->
+        <mxCell id="line13b" value="Line 13b&#xa;Additional Deductions&#xa;(Schedule 1-A line 38)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="650" y="390" width="160" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- ── Line 14: Taxable Income (output) ── -->
+        <mxCell id="line14" value="LINE 14&#xa;Taxable Income&#xa;= max(0, 11b − 12e − 13a − 13b)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="870" y="270" width="200" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- ── Floor note ── -->
+        <mxCell id="floor-note" value="Floor rule:&#xa;If result &lt; 0 → enter -0-&#xa;(taxable income is never negative)" style="text;html=1;strokeColor=#b85450;fillColor=#f8cecc;align=left;verticalAlign=middle;spacingLeft=4;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="870" y="360" width="200" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- ── Downstream consumers ── -->
+        <mxCell id="tax-table" value="Line 16&#xa;Tax (tax tables / rate schedules)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="1110" y="200" width="160" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="f8995-limit" value="Form 8995/8995-A&#xa;Overall 20%-of-taxable-income limit" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="1110" y="270" width="160" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="f6251" value="Form 6251&#xa;Alternative Minimum Tax" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="1110" y="340" width="160" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- ── Edges: income → line 9 ── -->
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="w2" target="line9" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="int-div" target="line9" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="ira-pension" target="line9" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="cap-gains" target="line9" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="other-income" target="line9" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- line 9 → line 11b -->
+        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="line9" target="line11b" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <!-- adjustments → line 11b -->
+        <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="sched1adj" target="line11b" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- deduction sources → line 12e -->
+        <mxCell id="e8" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="schedA" target="line12e" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e9" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="stdded" target="line12e" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Form 8995 → line 13a -->
+        <mxCell id="e10" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="f8995" target="line13a" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Schedule 1-A → line 13b -->
+        <mxCell id="e11" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="sched1a" target="line13b" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- line 11b feeds Schedule 1-A (MAGI base) -->
+        <mxCell id="e12" style="edgeStyle=orthogonalEdgeStyle;dashed=1;" edge="1" source="line11b" target="sched1a" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- lines 12e, 13a, 13b → line 14 -->
+        <mxCell id="e13" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;" edge="1" source="line11b" target="line14" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e14" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;" edge="1" source="line12e" target="line14" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e15" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;" edge="1" source="line13a" target="line14" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e16" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;" edge="1" source="line13b" target="line14" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- line 14 → downstream -->
+        <mxCell id="e17" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="line14" target="tax-table" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e18" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="line14" target="f8995-limit" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e19" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="line14" target="f6251" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

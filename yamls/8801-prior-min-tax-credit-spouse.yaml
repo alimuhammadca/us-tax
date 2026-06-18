@@ -1,0 +1,49 @@
+# Form 8801 - Credit for Prior Year Minimum Tax - spouse.
+# This form is additive only. Form 8801 is still one form per return.
+# Use it only to capture spouse-specific prior-year Form 2555 worksheet input for MFJ returns.
+name: prior-min-tax-credit-spouse
+title: Form 8801 - Prior min tax credit (spouse)
+multiplicity: single
+formName: 8801
+category: deductions
+instructions:
+  - This spouse form only applies on married filing jointly returns.
+  - Use it when the prior-year joint return used Form 2555 and you need the spouse share of the prior-year worksheet amount.
+  - The taxpayer form owns the return-level Form 8801 screening and all other prior-year inputs.
+sections:
+  - name: spouseScreening
+    title: Spouse supplemental screening
+    multiplicity: single
+    fields:
+      - name: spouseHasPriorMinTaxCreditInputs
+        type: boolean
+        required: true
+        label: Does your spouse have supplemental prior-year Form 8801 / Form 2555 worksheet data to add?
+        help: >
+          Select Yes only if the joint return needs spouse-specific prior-year Form 2555 worksheet input
+          for the single Form 8801 filed with the return.
+
+  - name: spouseForm2555Supplement
+    title: Spouse prior-year Form 2555 worksheet input
+    multiplicity: single
+    showIf: spouseHasPriorMinTaxCreditInputs == true
+    instructions:
+      - Enter the spouse amount only when the prior-year joint return used the Foreign Earned Income Tax Worksheet path.
+      - The backend combines this spouse amount with the taxpayer amount into one Form 8801 Part III line 27.
+    fields:
+      - name: priorYearFeitwLine3Spouse
+        type: amount
+        required: false
+        label: Prior-year Foreign Earned Income Tax Worksheet line 3 amount attributable to the spouse
+        placeholder: 0.00
+
+  - name: importedCurrentYearFields
+    title: Imported current-year fields (backend only - not rendered)
+    multiplicity: single
+    showIf: spouseHasPriorMinTaxCreditInputs == true
+    fields:
+      - name: currentYearForm8801Ownership
+        type: text
+        required: false
+        readOnly: true
+        label: Backend note - spouse data rolls into the joint Form 8801

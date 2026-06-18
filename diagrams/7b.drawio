@@ -1,0 +1,17 @@
+﻿<mxfile host='app.diagrams.net' modified='2026-03-08T04:36:00.0000000Z' agent='Codex' version='20.8.16' type='device'>
+  <diagram id='7b-flow-capital-checkboxes' name='Line 7b - Schedule D and child gain checkboxes'>
+    <mxGraphModel dx='1400' dy='900' grid='1' gridSize='10' guides='1' tooltips='1' connect='1' arrows='1' fold='1' page='1' pageScale='1' pageWidth='1200' pageHeight='900' math='0' shadow='0'>
+      <root>
+        <mxCell id='0'/>
+        <mxCell id='1' parent='0'/>
+        <mxCell id='2' value='Inputs&#xa;Exception 1 / Schedule D result&#xa;Computed dependent Form 8814 line 10 total&#xa;Normalized capital-source requirement flags&#xa;Schedule D / Form 8949 output decisions' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='30' y='120' width='390' height='220' as='geometry'/></mxCell>
+        <mxCell id='3' value='Child capital gate&#xa;Parent capital forms do not re-enter child gain/loss&#xa;If Form 8814 line 10 total exists, use it directly&#xa;Else child amount stays null / zero' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3cd;strokeColor=#b8860b;fontSize=12;' vertex='1' parent='1'><mxGeometry x='470' y='150' width='300' height='170' as='geometry'/></mxCell>
+        <mxCell id='4' value='Compute line 7b fields&#xa;line7bScheduleDNotRequired = exception1&#xa;line7bIncludesChildCapitalGainLoss = child amount present&#xa;line7bChildAmountFromForm8814Line10 = roundMoney(childAmount)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#d1e7dd;strokeColor=#0f5132;fontSize=12;' vertex='1' parent='1'><mxGeometry x='820' y='140' width='330' height='190' as='geometry'/></mxCell>
+        <mxCell id='5' value='Outputs&#xa;Form 1040 line 7b checkbox: Schedule D not required&#xa;Form 1040 line 7b checkbox: Includes child capital gain/loss&#xa;Line 7b entry: computed Form 8814 line 10 amount&#xa;Tax Return sidebar shows Schedule D / Form 8949 when capital logic requires them' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#cfe2ff;strokeColor=#084298;fontSize=12;' vertex='1' parent='1'><mxGeometry x='1200' y='140' width='360' height='190' as='geometry'/></mxCell>
+        <mxCell id='6' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='2' target='3'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='7' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='3' target='4'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='8' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='4' target='5'><mxGeometry relative='1' as='geometry'/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

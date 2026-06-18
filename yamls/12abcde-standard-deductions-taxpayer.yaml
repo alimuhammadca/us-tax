@@ -1,0 +1,150 @@
+# Form 1040 line 12a-12e taxpayer/family head workflow.
+# Approach: keep return-level deduction election, Schedule A inputs, and taxpayer indicators on the taxpayer form.
+# NOTE: This file is the shared yamls-folder copy of the active line 12 taxpayer interview.
+name: standard-deductions-taxpayer
+title: Form 1040 - Standard deductions (taxpayer/family head, lines 12a through 12e)
+multiplicity: single
+formName: 1040
+category: deductions
+instructions:
+  - Use this taxpayer/family head form for the return-level line 12 deduction choice, taxpayer indicators, and Schedule A inputs.
+  - Form 1040 line 12e is selected here and may use the standard deduction, itemized deductions, or the larger amount when auto-select is chosen.
+  - Spouse-only line 12 indicators are captured in the spouse form.
+sections:
+  - name: deductionElection
+    title: Line 12e selection
+    multiplicity: single
+    fields:
+      - name: deductionElection
+        type: select
+        required: false
+        label: How should line 12e be selected?
+        options:
+          - Auto choose the larger deduction
+          - Take the standard deduction
+          - Itemize deductions
+
+  - name: taxpayerIndicators
+    title: Taxpayer line 12 indicators
+    multiplicity: single
+    fields:
+      - name: someoneCanClaimYou
+        type: boolean
+        required: false
+        label: Someone can claim you as a dependent
+      - name: youWereDualStatusAlien
+        type: boolean
+        required: false
+        label: You were a dual-status alien
+      - name: youBornBeforeThreshold
+        type: boolean
+        required: false
+        label: You were born before the threshold date for the tax year
+      - name: youAreBlind
+        type: boolean
+        required: false
+        label: You are blind
+      - name: dependentStandardDeductionEarnedIncome
+        type: number
+        required: false
+        label: Dependent standard deduction earned income
+
+  - name: scheduleAInputs
+    title: Schedule A inputs
+    multiplicity: single
+    fields:
+      - name: medicalDentalExpensesPaid
+        type: number
+        required: false
+        label: Medical and dental expenses paid
+      - name: stateLocalTaxChoice
+        type: select
+        required: false
+        label: State and local tax choice
+        options:
+          - Income
+          - Sales
+      - name: stateLocalIncomeTaxesPaid
+        type: number
+        required: false
+        label: State and local income taxes paid
+      - name: stateLocalSalesTaxesPaid
+        type: number
+        required: false
+        label: State and local sales taxes paid
+      - name: realEstateTaxesPaid
+        type: number
+        required: false
+        label: Real estate taxes paid
+      - name: personalPropertyTaxesPaid
+        type: number
+        required: false
+        label: Personal property taxes paid
+      - name: homeMortgageInterestPaid
+        type: number
+        required: false
+        label: Qualified home mortgage interest paid
+      - name: homeMortgagePointsPaid
+        type: number
+        required: false
+        label: Qualified home mortgage points paid
+      - name: investmentInterestPaid
+        type: number
+        required: false
+        label: Investment interest paid
+      - name: netInvestmentIncome
+        type: number
+        required: false
+        label: Net investment income for the investment-interest limit
+      - name: priorYearInvestmentInterestCarryover
+        type: number
+        required: false
+        label: Prior-year disallowed investment interest carryover (Form 4952 line 7)
+      - name: electInvestmentIncomeIncludesQualifiedDividendsAndCapitalGain
+        type: boolean
+        required: false
+        label: Elect to include qualified dividends or net long-term capital gain in investment income (Form 4952 line 4g)
+      - name: electedQualifiedDividendsAndCapitalGainAmount
+        type: number
+        required: false
+        label: Amount of qualified dividends or net long-term capital gain elected (Form 4952 line 4g amount)
+      - name: charitableCashContributions
+        type: number
+        required: false
+        label: Charitable cash contributions
+      - name: charitableNonCashContributions
+        type: number
+        required: false
+        label: Charitable non-cash contributions
+      - name: priorYearCharitableContributionCarryover
+        type: number
+        required: false
+        label: Prior-year charitable contribution carryover (Schedule A line 13)
+      - name: personalCasualtyAndTheftLoss
+        type: number
+        required: false
+        label: Personal casualty and theft losses from a federally declared disaster (separate from the net qualified disaster loss standard-deduction increase)
+      - name: foreignTaxesPaid
+        type: number
+        required: false
+        label: Foreign taxes paid (not subject to the SALT cap; use only when not claiming the foreign tax credit)
+      - name: otherAllowedItemizedDeductions
+        type: number
+        required: false
+        label: Other allowed itemized deductions (such as attorney fees from unlawful discrimination claims or impairment-related work expenses)
+      - name: netQualifiedDisasterLoss
+        type: number
+        required: false
+        label: Net qualified disaster loss from a federally declared disaster
+      - name: electDisasterLossStandardDeductionIncrease
+        type: boolean
+        required: false
+        label: Elect to increase the standard deduction using the net qualified disaster loss
+      - name: hasSection962Election
+        type: boolean
+        required: false
+        label: You made a section 962 election (taxed as a domestic corporation on section 951A inclusions)
+      - name: section250DeductionAmount
+        type: number
+        required: false
+        label: Section 250 deduction amount (DO NOT report on line 12e; routes to line 16 with an explanatory statement)

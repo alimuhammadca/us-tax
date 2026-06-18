@@ -1,0 +1,147 @@
+formId: refund-allocation-taxpayer
+title: Allocation of Refund (Form 8888)
+person: taxpayer
+
+sections:
+  - id: screening
+    title: Refund Allocation
+    description: >
+      Use this form only if you want the IRS to split your refund among two or three
+      direct-deposit accounts. If you want only one account or a paper check,
+      do not use this form — use the direct deposit fields on Form 1040 instead.
+      The last account listed acts as the fallback if any deposit fails; the IRS may
+      deposit your entire refund into that account if routing to other accounts fails.
+    fields:
+      - id: wantsRefundAllocation
+        label: Would you like to split your refund among 2 or 3 separate bank accounts?
+        type: boolean
+        required: true
+        helpText: >
+          Select Yes if you want the IRS to divide your refund and deposit it into
+          two or three different bank accounts. Select No if you want the full refund
+          sent to one account (use the Direct Deposit form instead) or if you prefer
+          a paper check.
+
+  - id: account1
+    title: Account 1
+    showIf: wantsRefundAllocation == true
+    fields:
+      - id: account1Amount
+        label: Amount to deposit into account 1 (whole dollars)
+        type: number
+        required: true
+        helpText: >
+          Enter the whole-dollar amount you want deposited into this account. The
+          minimum is $1. All account amounts combined must equal your exact refund
+          amount — the system will warn you if they do not match.
+
+      - id: account1Routing
+        label: Routing number for account 1 (9 digits)
+        type: string
+        required: true
+        helpText: >
+          Your bank's 9-digit ABA routing number identifies the financial institution
+          receiving this deposit. Find it on the bottom-left of a printed check or in
+          your online banking settings. The first two digits must be 01–12 or 21–32.
+        hint: First two digits must be 01–12 or 21–32.
+
+      - id: account1Type
+        label: Account type for account 1
+        type: select
+        options: [checking, savings]
+        required: true
+        helpText: >
+          Select Checking or Savings depending on which type of account this is. If
+          you are unsure, check your bank statement or online banking profile.
+
+      - id: account1Number
+        label: Account number for account 1 (up to 17 characters; hyphens allowed)
+        type: string
+        required: true
+        helpText: >
+          Your account number uniquely identifies your specific account at the bank.
+          Find it on the bottom of a check — it follows the 9-digit routing number —
+          or in your online banking settings.
+
+  - id: account2
+    title: Account 2
+    showIf: wantsRefundAllocation == true
+    fields:
+      - id: account2Amount
+        label: Amount to deposit into account 2 (whole dollars)
+        type: number
+        required: true
+        helpText: >
+          Enter the whole-dollar amount you want deposited into this second account.
+          The minimum is $1.
+
+      - id: account2Routing
+        label: Routing number for account 2 (9 digits)
+        type: string
+        required: true
+        helpText: >
+          The 9-digit ABA routing number for the second account's bank. Must be
+          different from account 1's routing number only if it is a different bank;
+          two accounts at the same bank may share a routing number.
+
+      - id: account2Type
+        label: Account type for account 2
+        type: select
+        options: [checking, savings]
+        required: true
+        helpText: >
+          Select Checking or Savings for this account.
+
+      - id: account2Number
+        label: Account number for account 2 (up to 17 characters; hyphens allowed)
+        type: string
+        required: true
+        helpText: >
+          The account number for this second deposit account.
+
+  - id: account3
+    title: Account 3 (optional)
+    showIf: wantsRefundAllocation == true
+    fields:
+      - id: account3Amount
+        label: Amount to deposit into account 3 (whole dollars)
+        type: number
+        required: false
+        helpText: >
+          Optional third account. If provided, this account also receives the IRS fallback
+          deposit — if any earlier account deposit fails, the IRS may route the entire
+          refund here. Make sure this is an account you would accept for the full refund.
+
+      - id: account3Routing
+        label: Routing number for account 3 (9 digits)
+        type: string
+        required: false
+        helpText: >
+          The 9-digit ABA routing number for the third account's bank.
+
+      - id: account3Type
+        label: Account type for account 3
+        type: select
+        options: [checking, savings]
+        required: false
+        helpText: >
+          Select Checking or Savings for this optional third account.
+
+      - id: account3Number
+        label: Account number for account 3 (up to 17 characters; hyphens allowed)
+        type: string
+        required: false
+        helpText: >
+          The account number for this optional third deposit account.
+
+  - id: computedOutputs
+    readOnly: true
+    computed: true
+    fields:
+      - id: totalAllocated
+        label: Total allocated
+        type: number
+
+      - id: refundFromReturn
+        label: Refund from return
+        type: number

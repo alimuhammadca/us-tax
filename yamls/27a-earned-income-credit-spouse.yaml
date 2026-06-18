@@ -1,0 +1,44 @@
+formId: earned-income-credit-spouse
+title: Earned Income Credit — Spouse Supplemental (MFJ only)
+description: >
+  MFJ supplemental form for Line 27a. Only the spouse's own elections and
+  other earned income are entered here. Qualifying children are entered on
+  the taxpayer form (either spouse's qualifying child counts for the joint return).
+
+sections:
+
+  - id: screening
+    title: Screening
+    fields:
+      - id: spouseHasEicElections
+        label: Does your spouse have combat zone pay or other earned income to add for the Earned Income Credit?
+        type: boolean
+        helpText: >
+          Answer Yes if your spouse served in a combat zone in 2025 (nontaxable combat pay
+          election) or has earned income not reported on a W-2 such as jury duty pay or
+          union strike benefits. Answer No if neither applies — no other inputs are needed
+          on the spouse EIC form.
+
+  - id: spouseElections
+    title: Spouse EIC Elections
+    showIf: "spouseHasEicElections === true"
+    instructions:
+      - Enter the spouse's EIC-related elections if they differ from the taxpayer's.
+      - If the spouse had no combat zone pay and no other earned income, leave both blank.
+    fields:
+      - id: spouseElectNontaxableCombatPay
+        label: Does your spouse want to include nontaxable combat zone pay in earned income for EIC purposes?
+        type: boolean
+        helpText: >
+          If your spouse served in a combat zone in 2025 and received nontaxable combat pay
+          (W-2 box 12 code Q), they may elect to count it as earned income for this credit.
+          Each spouse independently decides whether to include their own combat pay.
+
+      - id: spouseOtherEarnedIncome
+        label: Spouse's other earned income not reported on a W-2 (jury duty pay, union strike benefits, etc.)
+        type: decimal
+        placeholder: "0.00"
+        helpText: >
+          Include the spouse's jury duty pay, union strike benefits, or long-term disability
+          payments received before reaching the normal retirement age set by their employer's
+          pension plan, if any. Do not include pensions, Social Security, or investment income.

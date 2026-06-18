@@ -1,0 +1,181 @@
+# Form 8911 - Alternative Fuel Vehicle Refueling Property Credit - taxpayer.
+# Current app scope supports one consolidated Form 8911 per return and one
+# Schedule A (Form 8911) attachment per qualifying property. The taxpayer form
+# owns the return-level workflow plus taxpayer-owned property entries.
+name: alt-fuel-credit-taxpayer
+title: Form 8911 - Alt fuel credit (taxpayer)
+multiplicity: single
+formName: 8911
+category: deductions
+instructions:
+  - Use this form for the return-level Form 8911 workflow and taxpayer-owned refueling property entries.
+  - In the current app scope, the return produces one consolidated Form 8911 and one Schedule A attachment per qualifying property.
+  - Business and investment-use credit is shown on Form 8911 line 3 for form-completion purposes, but the downstream Form 3800 path remains deferred.
+  - Current-year tax-limit fields are imported from the computed return when available so you do not re-enter them.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: claimsAltFuelCreditOnReturn
+        type: boolean
+        required: true
+        label: Do you need to compute an alternative fuel vehicle refueling property credit for 2025?
+      - name: confirmEligibleCensusTractSupportReady
+        type: boolean
+        required: false
+        label: Do you have support showing the property was installed in an eligible census tract?
+
+  - name: passthroughCredit
+    title: Pass-through business credit support
+    multiplicity: single
+    showIf: claimsAltFuelCreditOnReturn == true
+    instructions:
+      - Enter any released or pass-through refueling property credit amount that feeds Form 8911 line 2.
+      - If only a pass-through credit exists and there are no qualifying properties, the downstream Form 3800 path remains deferred in the current app scope.
+    fields:
+      - name: passthroughRefuelingPropertyCredit
+        type: amount
+        required: false
+        label: Pass-through alternative fuel vehicle refueling property credit amount
+        placeholder: 0.00
+
+  - name: taxpayerProperties
+    title: Taxpayer-owned qualifying properties
+    multiplicity: multiple
+    showIf: claimsAltFuelCreditOnReturn == true
+    instructions:
+      - Add one entry for each refueling property that could require its own Schedule A (Form 8911) attachment.
+      - For personal-use credit, the property must be installed at your main home and located in an eligible census tract.
+    fields:
+      - name: propertyNickname
+        type: text
+        required: false
+        label: Property nickname
+      - name: registrationNumber
+        type: text
+        required: false
+        label: Registration number
+      - name: propertyDescription
+        type: text
+        required: false
+        label: Property description
+      - name: ownerNameTinIfDifferent
+        type: text
+        required: false
+        label: Owner name and TIN if different
+      - name: propertyLocation
+        type: text
+        required: false
+        label: Property location
+      - name: constructionBeganDate
+        type: date
+        required: false
+        label: Construction began date
+      - name: placedInServiceDate
+        type: date
+        required: false
+        label: Placed in service date
+      - name: eligibleCensusTract
+        type: boolean
+        required: false
+        label: Was the property placed in service in an eligible census tract?
+      - name: eligibleCensusTractGeoid
+        type: text
+        required: false
+        label: Eligible census tract GEOID
+      - name: certificationPermitNumber
+        type: text
+        required: false
+        label: Certification or permit number
+      - name: propertyCost
+        type: amount
+        required: false
+        label: Total property cost
+        placeholder: 0.00
+      - name: businessInvestmentUsePercentage
+        type: amount
+        required: false
+        label: Business or investment-use percentage
+        placeholder: 0.00
+      - name: section179Deduction
+        type: amount
+        required: false
+        label: Section 179 deduction claimed for the property
+        placeholder: 0.00
+      - name: pwaRequirementsMet
+        type: boolean
+        required: false
+        label: Were prevailing wage and apprenticeship requirements met?
+      - name: installedAtMainHome
+        type: boolean
+        required: false
+        label: Was the property installed at your main home?
+      - name: originalUseBeginsWithTaxpayer
+        type: boolean
+        required: false
+        label: Did the original use of the property begin with you?
+      - name: usedPredominantlyOutsideUs
+        type: boolean
+        required: false
+        label: Was the property used predominantly outside the United States?
+
+  - name: importedSupport
+    title: Imported current-year support (backend only - not rendered)
+    multiplicity: single
+    showIf: claimsAltFuelCreditOnReturn == true
+    fields:
+      - name: importedFilingStatus
+        type: text
+        required: false
+        readOnly: true
+        label: Imported filing status
+      - name: importedForm1040Line16
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported Form 1040 line 16 regular tax
+      - name: importedSchedule2Line1z
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported Schedule 2 line 1z total tax
+      - name: importedSchedule3ForeignTaxCredit
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported Schedule 3 foreign tax credit
+      - name: importedSchedule3PriorCreditsSubtotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported Form 8911 line 6b prior credits subtotal
+      - name: importedForm6251Line9
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported Form 6251 line 9 tentative minimum tax
+
+  - name: computedOutputs
+    title: Computed outputs (backend only - not rendered)
+    multiplicity: single
+    showIf: claimsAltFuelCreditOnReturn == true
+    fields:
+      - name: form8911Line3
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed - Form 8911 line 3 total business and investment-use credit
+      - name: form8911Line10
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed - Form 8911 line 10 alternative fuel vehicle refueling property credit
+      - name: generatedScheduleAAttachmentCount
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed - number of Schedule A (Form 8911) attachments

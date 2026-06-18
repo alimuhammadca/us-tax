@@ -1,0 +1,41 @@
+old_leaf_name,new_name,tooltip,field_type,page_index,rect_llx,rect_lly,rect_urx,rect_ury
+f1_1[0],taxpayer_name,Name of person who must file this form,/Tx,0,36.000,684.000,438.450,698.001
+f1_2[0],taxpayer_ssn,Social security number,/Tx,0,439.200,684.000,576.000,698.001
+f1_3[0],firm_1_name,Name of firm (col a),/Tx,0,57.600,383.998,244.050,407.999
+f1_4[0],firm_1_federal_id_number,Firm's federal identification number (col b),/Tx,0,244.800,383.998,324.000,395.999
+f1_5[0],firm_1_reason_code,Reason code (col c),/Tx,0,324.000,383.998,374.400,395.999
+f1_6[0],firm_1_irs_determination_date,Date of IRS determination/correspondence (col d),/Tx,0,374.400,383.998,453.600,395.999
+c1_1[0],firm_1_received_1099_checkbox,Form 1099-MISC/1099-NEC received (col e),/Btn,0,473.800,386.999,483.800,396.999
+f1_7[0],firm_1_wages_no_fica_not_w2,Total wages with no SS/Medicare withholding and not reported on W-2 (col f),/Tx,0,504.000,383.998,576.000,395.999
+f1_8[0],firm_2_name,Name of firm (col a),/Tx,0,57.600,359.997,244.050,383.998
+f1_9[0],firm_2_federal_id_number,Firm's federal identification number (col b),/Tx,0,244.800,359.997,324.000,371.998
+f1_10[0],firm_2_reason_code,Reason code (col c),/Tx,0,324.000,359.997,374.400,371.998
+f1_11[0],firm_2_irs_determination_date,Date of IRS determination/correspondence (col d),/Tx,0,374.400,359.997,453.600,371.998
+c1_2[0],firm_2_received_1099_checkbox,Form 1099-MISC/1099-NEC received (col e),/Btn,0,473.800,362.998,483.800,372.998
+f1_12[0],firm_2_wages_no_fica_not_w2,Total wages with no SS/Medicare withholding and not reported on W-2 (col f),/Tx,0,504.000,359.997,576.000,371.998
+f1_13[0],firm_3_name,Name of firm (col a),/Tx,0,57.600,335.996,244.050,359.997
+f1_14[0],firm_3_federal_id_number,Firm's federal identification number (col b),/Tx,0,244.800,335.996,324.000,347.997
+f1_15[0],firm_3_reason_code,Reason code (col c),/Tx,0,324.000,335.996,374.400,347.997
+f1_16[0],firm_3_irs_determination_date,Date of IRS determination/correspondence (col d),/Tx,0,374.400,335.996,453.600,347.997
+c1_3[0],firm_3_received_1099_checkbox,Form 1099-MISC/1099-NEC received (col e),/Btn,0,473.800,338.997,483.800,348.997
+f1_17[0],firm_3_wages_no_fica_not_w2,Total wages with no SS/Medicare withholding and not reported on W-2 (col f),/Tx,0,504.000,335.996,576.000,347.997
+f1_18[0],firm_4_name,Name of firm (col a),/Tx,0,57.600,311.995,244.050,335.996
+f1_19[0],firm_4_federal_id_number,Firm's federal identification number (col b),/Tx,0,244.800,311.995,324.000,323.996
+f1_20[0],firm_4_reason_code,Reason code (col c),/Tx,0,324.000,311.995,374.400,323.996
+f1_21[0],firm_4_irs_determination_date,Date of IRS determination/correspondence (col d),/Tx,0,374.400,311.995,453.600,323.996
+c1_4[0],firm_4_received_1099_checkbox,Form 1099-MISC/1099-NEC received (col e),/Btn,0,473.800,314.996,483.800,324.996
+f1_22[0],firm_4_wages_no_fica_not_w2,Total wages with no SS/Medicare withholding and not reported on W-2 (col f),/Tx,0,504.000,311.995,576.000,323.996
+f1_23[0],firm_5_name,Name of firm (col a),/Tx,0,57.600,287.994,244.050,311.995
+f1_24[0],firm_5_federal_id_number,Firm's federal identification number (col b),/Tx,0,244.800,287.994,324.000,299.995
+f1_25[0],firm_5_reason_code,Reason code (col c),/Tx,0,324.000,287.994,374.400,299.995
+f1_26[0],firm_5_irs_determination_date,Date of IRS determination/correspondence (col d),/Tx,0,374.400,287.994,453.600,299.995
+c1_5[0],firm_5_received_1099_checkbox,Form 1099-MISC/1099-NEC received (col e),/Btn,0,473.800,290.995,483.800,300.995
+f1_27[0],firm_5_wages_no_fica_not_w2,Total wages with no SS/Medicare withholding and not reported on W-2 (col f),/Tx,0,504.000,287.994,576.000,299.995
+f1_28[0],line6_total_wages,Line 6: Total wages (sum of column f lines 1–5 across all Forms 8919),/Tx,0,504.000,264.002,576.000,276.001
+f1_29[0],line7_max_wages_subject_to_ss_tax,Line 7: Maximum amount of wages subject to social security tax (annual limit),/Tx,0,481.400,252.000,482.400,263.999
+f1_30[0],line8_total_ss_wages_tips_rrta_unreported_tips,"Line 8: Total social security wages/tips (W-2 boxes 3 & 7), RRTA compensation, and unreported tips (Form 4137 line 10)",/Tx,0,410.400,204.001,481.650,216.000
+f1_31[0],line9_line7_minus_line8,"Line 9: Line 7 minus line 8 (if negative, enter 0)",/Tx,0,504.000,192.002,576.000,204.001
+f1_32[0],line10_wages_subject_to_ss_tax,Line 10: Wages subject to social security tax (smaller of line 6 or line 9),/Tx,0,504.000,180.000,576.000,191.999
+f1_33[0],line11_social_security_tax,Line 11: Social security tax (line 10 × 0.062),/Tx,0,504.000,168.001,576.000,180.000
+f1_34[0],line12_medicare_tax,Line 12: Medicare tax (line 6 × 0.0145),/Tx,0,504.000,156.002,576.000,168.001
+f1_35[0],line13_total_uncollected_ss_medicare_tax,Line 13: Total uncollected SS and Medicare tax (line 11 + line 12),/Tx,0,504.000,132.001,576.000,144.000

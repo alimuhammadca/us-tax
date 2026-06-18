@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+
+    <!-- Title -->
+    <mxCell id="100" value="Form 1040 Line 32 — Total Other Payments and Refundable Credits (2025)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="300" y="30" width="900" height="40" as="geometry" />
+    </mxCell>
+
+    <!-- INPUTS column header -->
+    <mxCell id="200" value="INPUTS (computed upstream)" style="text;html=1;strokeColor=none;fillColor=#dae8fc;align=center;verticalAlign=middle;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+      <mxGeometry x="80" y="100" width="300" height="40" as="geometry" />
+    </mxCell>
+
+    <!-- LINE 27a box -->
+    <mxCell id="201" value="Line 27a: Earned Income Credit (EIC)&#xa;computeLine27aEIC()&#xa;Payments.earnedIncomeCredit&#xa;2025 max: $649–$8,046" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="80" y="160" width="300" height="70" as="geometry" />
+    </mxCell>
+
+    <!-- LINE 28 box -->
+    <mxCell id="202" value="Line 28: Additional Child Tax Credit (ACTC)&#xa;computeSchedule8812() Part II-A&#xa;Payments.additionalChildTaxCredit&#xa;2025 cap: $1,700/child; floor 15%×(EI−$2,500)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="80" y="250" width="300" height="70" as="geometry" />
+    </mxCell>
+
+    <!-- LINE 29 box -->
+    <mxCell id="203" value="Line 29: Refundable AOTC&#xa;computeForm8863() line 8&#xa;Payments.americanOpportunityCredit&#xa;Max $1,000/student (40% of $2,500)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="80" y="340" width="300" height="70" as="geometry" />
+    </mxCell>
+
+    <!-- LINE 30 box -->
+    <mxCell id="204" value="Line 30: Refundable Adoption Credit&#xa;computeAdoptionBenefits() Form 8839 Part II line 13&#xa;Payments.refundableAdoptionCredit&#xa;$5,000 cap/child; phaseout $259k–$299k MAGI" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="80" y="430" width="300" height="70" as="geometry" />
+    </mxCell>
+
+    <!-- LINE 31 box -->
+    <mxCell id="205" value="Line 31: Amount from Schedule 3, Line 15&#xa;finalizeSchedule3Totals()&#xa;Payments.otherPaymentsSchedule3&#xa;Sched 3 Part II: lines 9+10+11+12+14" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="80" y="520" width="300" height="70" as="geometry" />
+    </mxCell>
+
+    <!-- SUMMATION BOX -->
+    <mxCell id="300" value="LINE 32: Total Other Payments &amp; Refundable Credits&#xa;&#xa;line32 = line27a + line28 + line29 + line30 + line31&#xa;&#xa;safeAmount(earnedIncomeCredit)&#xa;+ safeAmount(additionalChildTaxCredit)&#xa;+ safeAmount(americanOpportunityCredit)&#xa;+ safeAmount(refundableAdoptionCredit)&#xa;+ safeAmount(otherPaymentsSchedule3)&#xa;&#xa;Payments.totalOtherPaymentsAndRefundableCredits&#xa;null if sum = 0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="500" y="290" width="340" height="230" as="geometry" />
+    </mxCell>
+
+    <!-- Arrows from inputs to summation -->
+    <mxCell id="401" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="201" target="300" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="402" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="202" target="300" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="403" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="203" target="300" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="404" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="204" target="300" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="405" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="205" target="300" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- NULL GUARD diamond -->
+    <mxCell id="310" value="line32 &gt; 0?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" vertex="1" parent="1">
+      <mxGeometry x="560" y="550" width="200" height="80" as="geometry" />
+    </mxCell>
+    <mxCell id="406" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="300" target="310" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- Store non-null -->
+    <mxCell id="311" value="Store line32 value" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="480" y="660" width="160" height="50" as="geometry" />
+    </mxCell>
+    <!-- Store null -->
+    <mxCell id="312" value="Store null&#xa;(no credits/payments)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="680" y="660" width="160" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="407" value="Yes" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="310" target="311" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="408" value="No" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="310" target="312" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- LINE 33 section header -->
+    <mxCell id="500" value="LINE 33: Total Payments&#xa;&#xa;line33 = line25d + line26 + line32&#xa;(safeAmount treats null line32 as $0)&#xa;&#xa;Payments.totalPayments" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="900" y="340" width="300" height="150" as="geometry" />
+    </mxCell>
+
+    <!-- Line 25d and 26 feeding line 33 -->
+    <mxCell id="601" value="Line 25d: Total Withholding&#xa;(25a + 25b + 25c)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="900" y="200" width="300" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="602" value="Line 26: Estimated Tax Payments&#xa;computeLine26EstimatedTax()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="900" y="275" width="300" height="50" as="geometry" />
+    </mxCell>
+
+    <mxCell id="501" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="601" target="500" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="502" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="602" target="500" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="503" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="300" target="500" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- DOWNSTREAM -->
+    <mxCell id="700" value="Line 34: Overpaid (line33 − line24)&#xa;Line 37: Amount Owed (line24 − line33)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="900" y="520" width="300" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="504" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="500" target="700" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- AUDIT NOTE -->
+    <mxCell id="800" value="✅ All gaps resolved (2026-04-21)&#xa;G1: f2_26[0] renamed → line30_refundable_adoption_credit; frontend mapping added&#xa;G2: Unit tests line32_actcContributesToLine32 + line32_threeSourcesSumCorrectly added&#xa;G3: Unit test line32_refundableAdoptionCreditContributesToLine32 added&#xa;G4: E2E test line32: EIC + adoption credit both contribute added&#xa;6 unit tests + 5 E2E tests passing.&#xa;Open: G5 — no E2E with all 5 sources simultaneously (EIC+ACTC+AOTC+adoption+Sched3)" style="text;html=1;strokeColor=#82b366;fillColor=#d5e8d4;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="80" y="660" width="440" height="100" as="geometry" />
+    </mxCell>
+
+  </root>
+</mxGraphModel>

@@ -1,0 +1,63 @@
+<mxGraphModel><root><mxCell id="0"/><mxCell id="1" parent="0"/>
+
+<!-- Title -->
+<mxCell id="2" value="Form 1040 Line 26 — Estimated Tax Payments (2025)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="50" y="10" width="900" height="40" as="geometry"/></mxCell>
+
+<!-- LEGEND -->
+<mxCell id="leg1" value="LEGEND" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="50" y="58" width="80" height="20" as="geometry"/></mxCell>
+<mxCell id="leg2" value="Input (personal form)" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="78" width="120" height="22" as="geometry"/></mxCell>
+<mxCell id="leg3" value="Computation" style="rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;" vertex="1" parent="1"><mxGeometry x="180" y="78" width="110" height="22" as="geometry"/></mxCell>
+<mxCell id="leg4" value="Output / consumer" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;" vertex="1" parent="1"><mxGeometry x="300" y="78" width="120" height="22" as="geometry"/></mxCell>
+<mxCell id="leg5" value="Gap" style="rounded=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=9;" vertex="1" parent="1"><mxGeometry x="430" y="78" width="80" height="22" as="geometry"/></mxCell>
+<mxCell id="leg6" value="Deferred / OOS" style="rounded=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=9;" vertex="1" parent="1"><mxGeometry x="520" y="78" width="100" height="22" as="geometry"/></mxCell>
+
+<!-- ===== INPUTS — LEFT COLUMN ===== -->
+
+<!-- Screening gate -->
+<mxCell id="gate" value="Screening gate&#xa;madeEstimatedTaxPayments&#xa;= true (required)&#xa;estimated-tax-payments-taxpayer" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="130" width="180" height="60" as="geometry"/></mxCell>
+
+<!-- Q1-Q4 installments -->
+<mxCell id="q1234" value="Q1–Q4 installments&#xa;installment1Amount (Apr 15)&#xa;installment2Amount (Jun 16)&#xa;installment3Amount (Sep 15)&#xa;installment4Amount (Jan 15, 2026)&#xa;estimated-tax-payments-taxpayer" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="205" width="180" height="85" as="geometry"/></mxCell>
+
+<!-- Prior-year credits -->
+<mxCell id="prioryear" value="Prior-year credits&#xa;priorYearOverpaymentCredited&#xa;(2024 original return line 36)&#xa;amendedReturnOverpaymentCredited&#xa;(2024 Form 1040-X)&#xa;estimated-tax-payments-taxpayer" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="305" width="180" height="85" as="geometry"/></mxCell>
+
+<!-- Annotation field (not summed) -->
+<mxCell id="formerssn" value="divorceFormerSpouseSSN&#xa;(annotation only — not summed&#xa;into line 26; written on dotted&#xa;line of Form 1040 line 26)" style="rounded=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="405" width="180" height="65" as="geometry"/></mxCell>
+
+<!-- G1: Spouse form — FIXED -->
+<mxCell id="gapSpouse" value="G1 — FIXED 2026-04-19&#xa;estimated-tax-payments-spouse&#xa;NOW read for MFJ returns.&#xa;taxpayerForm=null also handled&#xa;(G4 fix — spouse-only payments&#xa;no longer lost)." style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="485" width="180" height="80" as="geometry"/></mxCell>
+
+<!-- ===== COMPUTATION ===== -->
+
+<mxCell id="calc26" value="Line 26 computation&#xa;computeLine26EstimatedTax()&#xa;TaxReturnComputeService.java&#xa;lines 15346–15374&#xa;&#xa;1. Gate check (madeEstimated=true)&#xa;2. Sum 6 positive-only fields&#xa;3. roundMoney(); null if zero" style="rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;" vertex="1" parent="1"><mxGeometry x="280" y="220" width="220" height="120" as="geometry"/></mxCell>
+
+<mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="gate" target="calc26" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="q1234" target="calc26" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="prioryear" target="calc26" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;dashed=1;strokeColor=#b85450;" edge="1" source="gapSpouse" target="calc26" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- ===== OUTPUT ===== -->
+
+<mxCell id="out26" value="Line 26&#xa;Payments.estimatedTaxPayments&#xa;null when zero or gate=false" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="550" y="250" width="180" height="55" as="geometry"/></mxCell>
+
+<mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="calc26" target="out26" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- ===== DOWNSTREAM ===== -->
+
+<mxCell id="line33" value="Line 33 — Total Payments&#xa;line33 = line25d + line26 + line32&#xa;computeLine31ThroughLine38() ~line 15257" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;" vertex="1" parent="1"><mxGeometry x="550" y="340" width="220" height="55" as="geometry"/></mxCell>
+
+<mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="out26" target="line33" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<mxCell id="form2210" value="Form 2210 — Underpayment Penalty&#xa;Uses totalPayments (incl. line 26)&#xa;to compute required annual payment.&#xa;computeForm2210() ~line 15392" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;" vertex="1" parent="1"><mxGeometry x="550" y="420" width="220" height="60" as="geometry"/></mxCell>
+
+<mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="out26" target="form2210" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- ===== DEFERRED ===== -->
+
+<mxCell id="deferred" value="Deferred / OOS:&#xa;Payment dates (Form 2210 Schedule AI)&#xa;Prior-year auto-import from 2024 return&#xa;Form 1040-ES PDF voucher export&#xa;Farmers/fishermen (2210-F) — OOS&#xa;Community property MFS split — OOS&#xa;More than 4 installments — design limit" style="rounded=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="590" width="220" height="95" as="geometry"/></mxCell>
+
+<!-- ===== GAPS BOX ===== -->
+<mxCell id="gapsBox" value="All gaps fixed 2026-04-19&#xa;&#xa;G1 FIXED — computeLine26EstimatedTax() now reads both taxpayer and spouse forms for MFJ.&#xa;G2 FIXED — 4 new unit tests: MFJ both forms, MFJ spouse-only, MFJ null taxpayer form, MFS isolation.&#xa;G3 FIXED — 4 new E2E tests: MFJ combined, MFJ spouse-only, MFS isolation, divorceFormerSpouseSSN.&#xa;G4 FIXED — taxpayerForm==null no longer causes early return; MFJ spouse-only payments preserved.&#xa;G5 FIXED — divorceFormerSpouseSSN E2E round-trip test added (annotation-only field verified)." style="text;html=1;strokeColor=#82b366;fillColor=#d5e8d4;align=left;fontSize=9;whiteSpace=wrap;" vertex="1" parent="1"><mxGeometry x="280" y="560" width="500" height="125" as="geometry"/></mxCell>
+
+</root></mxGraphModel>

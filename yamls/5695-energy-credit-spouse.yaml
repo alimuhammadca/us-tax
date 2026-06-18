@@ -1,0 +1,392 @@
+# Form 5695 spouse workflow.
+# Form 5695 is still one return-level credit form in most cases. This spouse
+# form exists so MFJ returns can capture spouse-owned costs and the separate-main-
+# home exception path for Part II without duplicating taxpayer questions.
+# NOTE: Backend-only sections are not rendered in the UI component.
+name: energy-credit-spouse
+title: Form 5695 - Energy credit (spouse)
+multiplicity: single
+formName: 5695
+category: deductions
+instructions:
+  - Use the spouse form only for spouse-owned or spouse-home energy credit inputs that should be merged into the same return-level Form 5695 workflow.
+  - The spouse form is especially important when spouses filing jointly maintained separate main homes for Part II.
+  - Return-level support confirmation belongs on the taxpayer form.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: spouseHasEnergyCreditInputs
+        type: boolean
+        required: true
+        label: Does the spouse tab need to add Form 5695 energy credit inputs?
+      - name: spouseSeparateMainHomeForPartII
+        type: boolean
+        required: false
+        label: Did the spouse have a separate main home for Part II that may require an additional Form 5695 attachment?
+
+  - name: spouseResidentialCleanEnergyCredit
+    title: Part I - Additional spouse-owned clean energy inputs
+    multiplicity: single
+    showIf: spouseHasEnergyCreditInputs == true
+    fields:
+      - name: spouseLine1SolarElectricCosts
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Spouse solar electric property costs
+      - name: spouseLine2SolarWaterHeatingCosts
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Spouse solar water heating property costs
+      - name: spouseLine3SmallWindEnergyCosts
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Spouse small wind energy property costs
+      - name: spouseLine4GeothermalHeatPumpCosts
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Spouse geothermal heat pump costs
+      - name: spouseLine5BatteryCapacityAtLeast3kwh
+        type: boolean
+        required: false
+        label: Does the spouse battery storage technology meet the 3 kWh minimum?
+      - name: spouseLine5BatteryStorageCosts
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Spouse battery storage technology costs
+      - name: spouseLine7aFuelCellInstalledOnMainHomeInUs
+        type: boolean
+        required: false
+        label: Was spouse fuel cell property installed on or in connection with the spouse main home in the United States?
+      - name: spouseLine7bFuelCellMainHomeAddress
+        type: text
+        required: false
+        placeholder: Spouse fuel cell main home address
+        label: Spouse fuel cell main home address
+      - name: spouseLine7cFuelCellJointOccupants
+        type: boolean
+        required: false
+        label: Are spouse fuel cell costs being allocated among joint occupants?
+      - name: spouseLine8FuelCellPropertyCosts
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Spouse fuel cell property costs
+      - name: spouseLine10FuelCellCapacityKw
+        type: amount
+        required: false
+        placeholder: 0.0
+        label: Spouse fuel cell kilowatt capacity
+
+  - name: spousePartIiEligibility
+    title: Part II - Additional spouse-home eligibility and allocation inputs
+    multiplicity: single
+    showIf: spouseHasEnergyCreditInputs == true
+    fields:
+      - name: spousePartIIInstalledOnMainHomeInUs
+        type: boolean
+        required: false
+        label: Were spouse improvements installed in or on the spouse main home in the United States?
+      - name: spousePartIIOriginalUser
+        type: boolean
+        required: false
+        label: Is the spouse the original user of the improvements?
+      - name: spousePartIIFiveYearUse
+        type: boolean
+        required: false
+        label: Are spouse improvements reasonably expected to remain in use for at least 5 years?
+      - name: spouseMainHomeAddress
+        type: text
+        required: false
+        placeholder: Spouse main home address
+        label: Spouse main home address
+      - name: spousePartIIRelatedToConstruction
+        type: boolean
+        required: false
+        label: Were spouse improvements related to construction of the home?
+      - name: spouseInstalledQualifiedEnergyProperty
+        type: boolean
+        required: false
+        label: Did the spouse install qualified energy property in a U.S. residence?
+      - name: spouseQualifiedEnergyPropertyOriginalUser
+        type: boolean
+        required: false
+        label: Is the spouse the original user of the qualified energy property?
+      - name: spouseQualifiedEnergyPropertyResidenceAddressesText
+        type: text
+        required: false
+        placeholder: Spouse qualified energy property residence addresses, one per line
+        label: Spouse qualified energy property residence addresses
+      - name: spouseEnablingPropertyInstalledSameYear
+        type: boolean
+        required: false
+        label: Was spouse enabling property installed in the same year as the enabled property?
+      - name: spouseEnabledPropertyCode
+        type: text
+        required: false
+        placeholder: IRS-enabled property code
+        label: Spouse enabled property code
+      - name: spouseQualifiedAudit
+        type: boolean
+        required: false
+        label: Did the spouse pay for a qualified home energy audit?
+      - name: spouseJointOccupants
+        type: boolean
+        required: false
+        label: Are spouse Part II costs being allocated among joint occupants?
+      - name: spouseCondominiumOrCooperative
+        type: boolean
+        required: false
+        label: Is the spouse claiming a condo or cooperative fractional share?
+
+  - name: spousePartIiCosts
+    title: Part II - Additional spouse-owned direct costs
+    multiplicity: single
+    showIf: spouseHasEnergyCreditInputs == true
+    fields:
+      - name: spouseInsulationAirSealingCosts
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Spouse insulation and air sealing material costs
+      - name: spouseOtherDoorCosts
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Spouse other qualifying exterior door costs
+      - name: spouseOtherWindowCosts
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Spouse other qualifying window or skylight costs
+      - name: spouseCentralAirOtherCosts
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Spouse other qualifying central air conditioner costs
+      - name: spouseWaterHeaterOtherCosts
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Spouse other qualifying water heater costs
+      - name: spouseFurnaceBoilerOtherCosts
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Spouse other qualifying furnace or boiler costs
+      - name: spouseEnablingPropertyCosts
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Spouse enabling property costs
+      - name: spouseEnablingPropertyQmidsText
+        type: text
+        required: false
+        placeholder: One QMID per line or comma-separated
+        label: Spouse enabling property QMIDs
+      - name: spouseHomeEnergyAuditCosts
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Spouse home energy audit costs
+      - name: spouseOtherHeatPumpCosts
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Spouse other qualifying heat pump costs
+      - name: spouseOtherHeatPumpWaterHeaterCosts
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Spouse other qualifying heat pump water heater costs
+      - name: spouseOtherBiomassCosts
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Spouse other qualifying biomass stove or boiler costs
+
+  - name: spouseDoorItems
+    title: Part II - Spouse exterior door items
+    multiplicity: multiple
+    showIf: spouseHasEnergyCreditInputs == true
+    fields:
+      - name: description
+        type: text
+        required: true
+        placeholder: Exterior door description
+        label: Door description
+      - name: qmid
+        type: text
+        required: false
+        placeholder: QMID
+        label: Door QMID
+      - name: cost
+        type: amount
+        required: true
+        placeholder: 0.00
+        label: Door cost
+
+  - name: spouseWindowItems
+    title: Part II - Spouse window and skylight items
+    multiplicity: multiple
+    showIf: spouseHasEnergyCreditInputs == true
+    fields:
+      - name: description
+        type: text
+        required: true
+        placeholder: Window or skylight description
+        label: Window or skylight description
+      - name: qmid
+        type: text
+        required: false
+        placeholder: QMID
+        label: Window or skylight QMID
+      - name: cost
+        type: amount
+        required: true
+        placeholder: 0.00
+        label: Window or skylight cost
+
+  - name: spouseCentralAirItems
+    title: Part II - Spouse central air conditioner items
+    multiplicity: multiple
+    showIf: spouseHasEnergyCreditInputs == true
+    fields:
+      - name: description
+        type: text
+        required: true
+        placeholder: Central air conditioner description
+        label: Central air conditioner description
+      - name: qmid
+        type: text
+        required: false
+        placeholder: QMID
+        label: Central air conditioner QMID
+      - name: cost
+        type: amount
+        required: true
+        placeholder: 0.00
+        label: Central air conditioner cost
+
+  - name: spouseWaterHeaterItems
+    title: Part II - Spouse water heater items
+    multiplicity: multiple
+    showIf: spouseHasEnergyCreditInputs == true
+    fields:
+      - name: description
+        type: text
+        required: true
+        placeholder: Water heater description
+        label: Water heater description
+      - name: qmid
+        type: text
+        required: false
+        placeholder: QMID
+        label: Water heater QMID
+      - name: cost
+        type: amount
+        required: true
+        placeholder: 0.00
+        label: Water heater cost
+
+  - name: spouseFurnaceBoilerItems
+    title: Part II - Spouse furnace or boiler items
+    multiplicity: multiple
+    showIf: spouseHasEnergyCreditInputs == true
+    fields:
+      - name: description
+        type: text
+        required: true
+        placeholder: Furnace or boiler description
+        label: Furnace or boiler description
+      - name: qmid
+        type: text
+        required: false
+        placeholder: QMID
+        label: Furnace or boiler QMID
+      - name: cost
+        type: amount
+        required: true
+        placeholder: 0.00
+        label: Furnace or boiler cost
+
+  - name: spouseHeatPumpItems
+    title: Part II - Spouse heat pump items
+    multiplicity: multiple
+    showIf: spouseHasEnergyCreditInputs == true
+    fields:
+      - name: description
+        type: text
+        required: true
+        placeholder: Heat pump description
+        label: Heat pump description
+      - name: qmid
+        type: text
+        required: false
+        placeholder: QMID
+        label: Heat pump QMID
+      - name: cost
+        type: amount
+        required: true
+        placeholder: 0.00
+        label: Heat pump cost
+
+  - name: spouseHeatPumpWaterHeaterItems
+    title: Part II - Spouse heat pump water heater items
+    multiplicity: multiple
+    showIf: spouseHasEnergyCreditInputs == true
+    fields:
+      - name: description
+        type: text
+        required: true
+        placeholder: Heat pump water heater description
+        label: Heat pump water heater description
+      - name: qmid
+        type: text
+        required: false
+        placeholder: QMID
+        label: Heat pump water heater QMID
+      - name: cost
+        type: amount
+        required: true
+        placeholder: 0.00
+        label: Heat pump water heater cost
+
+  - name: spouseBiomassItems
+    title: Part II - Spouse biomass stove or boiler items
+    multiplicity: multiple
+    showIf: spouseHasEnergyCreditInputs == true
+    fields:
+      - name: description
+        type: text
+        required: true
+        placeholder: Biomass stove or boiler description
+        label: Biomass stove or boiler description
+      - name: qmid
+        type: text
+        required: false
+        placeholder: QMID
+        label: Biomass stove or boiler QMID
+      - name: cost
+        type: amount
+        required: true
+        placeholder: 0.00
+        label: Biomass stove or boiler cost
+
+  - name: computedOutputs
+    title: Computed outputs (backend only)
+    multiplicity: single
+    showIf: spouseHasEnergyCreditInputs == true
+    fields:
+      - name: computedSpouseMergedIntoForm5695
+        type: boolean
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed spouse energy-credit data merged into Form 5695

@@ -1,0 +1,119 @@
+<mxGraphModel dx='1400' dy='900' grid='1' gridSize='10' guides='1' tooltips='1' connect='1' arrows='1' fold='1' page='1' pageScale='1' pageWidth='1654' pageHeight='1169' math='0' shadow='0'>
+  <root>
+    <mxCell id='0'/>
+    <mxCell id='1' parent='0'/>
+
+    <!-- ══ TITLE ══ -->
+    <mxCell id='title' value='Form 1040 Line 1g — Wages from Form 8919&#xa;Method: computeUncollectedSSTax()  →  computeForm8919ForPerson() × 2  in TaxReturnComputeService' style='text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1' vertex='1' parent='1'>
+      <mxGeometry x='150' y='20' width='980' height='50' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ UPSTREAM DEPENDENCY NOTE ══ -->
+    <mxCell id='dep' value='Upstream dependency: computeTips() must run FIRST to produce Form 4137 → line 10 used in Form 8919 line 8' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;fontStyle=2' vertex='1' parent='1'>
+      <mxGeometry x='250' y='85' width='760' height='30' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ START ══ -->
+    <mxCell id='n01' value='START: computeUncollectedSSTax(taxpayerData, spouseData, you, spouse, w2Entries, tips, flags)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='310' y='132' width='640' height='45' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ GATE 1: taxpayer data null ══ -->
+    <mxCell id='n02' value='taxpayerData == null&#xa;OR firms list empty?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='470' y='198' width='320' height='72' as='geometry'/>
+    </mxCell>
+    <mxCell id='n02x' value='taxpayer Form 8919 = null&#xa;[no uncollected SS data]' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8d7da;strokeColor=#842029;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='840' y='213' width='225' height='45' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ TAXPAYER FORM 8919 HEADER ══ -->
+    <mxCell id='tph' value='computeForm8919ForPerson(taxpayerData, w2Entries, form4137Taxpayer, taxpayerSsn, flags, "taxpayer")' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;fontStyle=1' vertex='1' parent='1'>
+      <mxGeometry x='290' y='302' width='680' height='30' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ REASON CODE VALIDATION ══ -->
+    <mxCell id='n03' value='For each firm row:&#xa;  Validate reasonCode ∈ {A, C, G, H}&#xa;    → FORM8919_REASON_CODE_INVALID_TAXPAYER [blocking] if invalid&#xa;  If code A or C:&#xa;    Validate irsDeterminationDate present&#xa;    → FORM8919_IRS_DATE_REQUIRED_TAXPAYER [blocking] if absent&#xa;  If code G:&#xa;    → FORM8919_SS8_REQUIRED_TAXPAYER [non-blocking / informational]&#xa;  If code H AND received1099MiscOrNec == false:&#xa;    → FORM8919_CODE_H_1099_TAXPAYER [non-blocking / soft warning]' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+      <mxGeometry x='270' y='345' width='720' height='160' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ LINE 6 ══ -->
+    <mxCell id='n04' value='line6 = Σ wagesNoFicaNotW2 across all firm rows   [sum column (f)]&#xa;        → Form 1040 line 1g (aggregated later with spouse)&#xa;        → Form 8959 line 3 (if AMT required)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+      <mxGeometry x='280' y='520' width='700' height='60' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ LINE 7 ══ -->
+    <mxCell id='n05' value='line7 = ReferenceData.SOCIAL_SECURITY_WAGE_BASE = 176,100   [2025 constant; printed on form]' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+      <mxGeometry x='280' y='595' width='700' height='40' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ LINE 8 ══ -->
+    <mxCell id='n06' value='★ line8 = Σ W-2.box3 (SS wages, SSN-filtered to taxpayer)&#xa;         + Σ W-2.box7 (SS tips, SSN-filtered to taxpayer)&#xa;         + Σ RRTA tier-1 compensation (W-2 box 14 RRTA, SSN-filtered)&#xa;         + form4137Taxpayer.line10   (unreported tips subject to SS — cross-form import)&#xa;         [If none present: line8 = 0]' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+      <mxGeometry x='270' y='648' width='720' height='95' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ LINES 9–13 ══ -->
+    <mxCell id='n07' value='line9  = max(0, line7 − line8)   [remaining SS wage base; = 0 if line8 ≥ line7]&#xa;line10 = min(line6, line9)          [wages subject to SS tax]&#xa;line11 = line10 × 0.062             [uncollected SS tax; = 0 if line9 = 0]&#xa;line12 = line6 × 0.0145             [uncollected Medicare tax; NO wage base cap]&#xa;line13 = line11 + line12            [total uncollected SS+Medicare → Schedule 2 line 6]' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+      <mxGeometry x='270' y='758' width='720' height='105' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ TAXPAYER OUTPUT ══ -->
+    <mxCell id='n08' value='Return: Form8919{firms, line6..line13}   [taxpayer Form 8919 object]' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='310' y='878' width='640' height='40' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ SPOUSE HEADER ══ -->
+    <mxCell id='sph' value='computeForm8919ForPerson(spouseData, w2Entries, form4137Spouse, spouseSsn, flags, "spouse")  [identical logic; spouse SSN filter]' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;fontStyle=1' vertex='1' parent='1'>
+      <mxGeometry x='270' y='940' width='720' height='30' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ SPOUSE SAME LOGIC ══ -->
+    <mxCell id='n09' value='Same computation as taxpayer above, using spouseData and spouseSsn.&#xa;Flags use _SPOUSE suffix. Form 4137 spouse object used for line 8 if present.&#xa;Returns Form8919{...} for spouse, or null if spouseData == null / firms empty.' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+      <mxGeometry x='270' y='982' width='720' height='65' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ AGGREGATION HEADER ══ -->
+    <mxCell id='aghdr' value='AGGREGATION — Return-Level Totals' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;fontStyle=1' vertex='1' parent='1'>
+      <mxGeometry x='350' y='1070' width='560' height='28' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ AGGREGATION ══ -->
+    <mxCell id='n10' value='line1g = addNonNull(taxpayer.line6, spouse.line6)&#xa;         → form1040.income.uncollectedSocialSecurityMedicareWages  [Form 1040 line 1g]&#xa;&#xa;line6Tax = addNonNull(taxpayer.line13, spouse.line13)&#xa;           → schedule2.otherTaxes.uncollectedSocialSecurityMedicareTaxOnWages  [Schedule 2 line 6]' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+      <mxGeometry x='260' y='1110' width='740' height='100' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ FORM 8959 GATE ══ -->
+    <mxCell id='n11' value='Form 8959 required?&#xa;[Medicare wages &gt; threshold]' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='460' y='1230' width='340' height='65' as='geometry'/>
+    </mxCell>
+    <mxCell id='n11y' value='form8959.line3UncollectedWages&#xa;  += taxpayer.line6 + spouse.line6&#xa;→ Form 8959 Part I (0.9% AMT base)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='850' y='1238' width='280' height='52' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ OUTPUT / DOWNSTREAM ══ -->
+    <mxCell id='n12' value='Output stored on TaxReturnComputation:&#xa;  form8919Taxpayer   — Form8919 (null if taxpayer has no qualifying data)&#xa;  form8919Spouse     — Form8919 (null if spouse has no qualifying data)&#xa;&#xa;Downstream wiring:&#xa;→ form1040.income.uncollectedSocialSecurityMedicareWages (line 1g) → line 1z → line 9 (total income)&#xa;→ schedule2.otherTaxes.uncollectedSocialSecurityMedicareTaxOnWages (Schedule 2 line 6)&#xa;→ form8959.line3UncollectedWages (Form 8959 Part I — Additional Medicare Tax base) [conditional]&#xa;→ Shell sidebar: "Form 8919 (You)" / "Form 8919 (Spouse)" rendered conditionally when non-null&#xa;→ PDF export: buildMultiPagePdf() — firms in groups of 5; lines 6–13 on first page only' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#d1e7dd;strokeColor=#0f5132;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+      <mxGeometry x='230' y='1320' width='800' height='175' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ EDGES ══ -->
+    <mxCell id='e01' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n01' target='n02' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e02' value='YES' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n02' target='n02x' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e03' value='NO' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n02' target='tph' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e04' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='tph' target='n03' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e05' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n03' target='n04' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e06' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n04' target='n05' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e07' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n05' target='n06' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e08' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n06' target='n07' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e09' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n07' target='n08' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e10' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n08' target='sph' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <!-- null path also merges at aggregation -->
+    <mxCell id='e10b' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n02x' target='aghdr' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e11' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='sph' target='n09' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e12' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n09' target='aghdr' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e13' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='aghdr' target='n10' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e14' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n10' target='n11' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e15' value='YES' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n11' target='n11y' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e16' value='NO' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n11' target='n12' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e17' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n11y' target='n12' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+
+  </root>
+</mxGraphModel>

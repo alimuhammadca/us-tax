@@ -1,0 +1,200 @@
+# Form 4852 - spouse substitute W-2 / 1099-R attachment.
+#
+# Use this per-person application form when the spouse did not receive a correct
+# Form W-2 or Form 1099-R in time to file and needs a separate Form 4852 attachment.
+name: form4852-spouse
+title: Form 4852 - Substitute W-2 / 1099-R (spouse)
+multiplicity: single
+formName: 4852
+category: applications
+instructions:
+  - Complete this form when your spouse needs a separate Form 4852 attachment.
+  - Line 1, line 2, line 3, and the tax year are imported from the saved return information.
+  - Use the W-2 section for substitute wage and withholding amounts. Use the 1099-R section only when replacing a missing or incorrect Form 1099-R.
+  - Explain both how the spouse determined the amounts and what efforts were made to obtain the missing or corrected form.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: needsForm4852
+        type: boolean
+        required: true
+        label: Does your spouse need a separate Form 4852 attachment?
+
+  - name: substituteForm
+    title: Substitute form type
+    multiplicity: single
+    showIf: needsForm4852 == true
+    fields:
+      - name: substituteFormType
+        type: select
+        required: true
+        label: Which missing or incorrect form is the spouse replacing?
+        options:
+          - label: Form W-2
+            value: w2
+          - label: Form 1099-R
+            value: 1099-r
+
+  - name: importedSupport
+    title: Imported support values
+    multiplicity: single
+    showIf: needsForm4852 == true
+    fields:
+      - name: importedNameShownOnReturn
+        type: text
+        required: false
+        readOnly: true
+        label: Imported name(s) shown on return
+      - name: importedSsn
+        type: text
+        required: false
+        readOnly: true
+        label: Imported spouse SSN
+      - name: importedAddress
+        type: text
+        required: false
+        readOnly: true
+        label: Imported address
+      - name: importedTaxYear
+        type: text
+        required: false
+        readOnly: true
+        label: Imported tax year
+
+  - name: employerOrPayer
+    title: Employer or payer
+    multiplicity: single
+    showIf: needsForm4852 == true
+    fields:
+      - name: employerOrPayerNameAddressZip
+        type: text
+        required: true
+        label: Line 5 - Employer's or payer's name, address, and ZIP code
+      - name: employerOrPayerTin
+        type: text
+        required: false
+        label: Line 6 - Employer's or payer's TIN
+
+  - name: substituteW2
+    title: Form W-2 line 7 amounts
+    multiplicity: single
+    showIf: needsForm4852 == true && substituteFormType == 'w2'
+    fields:
+      - name: line7aWagesTipsOtherCompensation
+        type: amount
+        required: false
+        label: Line 7a - Wages, tips, and other compensation
+      - name: line7bSocialSecurityWages
+        type: amount
+        required: false
+        label: Line 7b - Social security wages
+      - name: line7cMedicareWagesAndTips
+        type: amount
+        required: false
+        label: Line 7c - Medicare wages and tips
+      - name: line7dSocialSecurityTips
+        type: amount
+        required: false
+        label: Line 7d - Social security tips
+      - name: line7eFederalIncomeTaxWithheld
+        type: amount
+        required: false
+        label: Line 7e - Federal income tax withheld
+      - name: line7fStateIncomeTaxWithheld
+        type: amount
+        required: false
+        label: Line 7f - State income tax withheld
+      - name: line7fStateName
+        type: text
+        required: false
+        label: Line 7f - State name
+      - name: line7gLocalIncomeTaxWithheld
+        type: amount
+        required: false
+        label: Line 7g - Local income tax withheld
+      - name: line7gLocalityName
+        type: text
+        required: false
+        label: Line 7g - Locality name
+      - name: line7hSocialSecurityTaxWithheld
+        type: amount
+        required: false
+        label: Line 7h - Social security tax withheld
+      - name: line7iMedicareTaxWithheld
+        type: amount
+        required: false
+        label: Line 7i - Medicare tax withheld
+
+  - name: substitute1099r
+    title: Form 1099-R line 8 amounts
+    multiplicity: single
+    showIf: needsForm4852 == true && substituteFormType == '1099-r'
+    fields:
+      - name: line8aGrossDistribution
+        type: amount
+        required: false
+        label: Line 8a - Gross distribution
+      - name: line8bTaxableAmount
+        type: amount
+        required: false
+        label: Line 8b - Taxable amount
+      - name: line8cTaxableAmountNotDetermined
+        type: boolean
+        required: false
+        label: Line 8c - Taxable amount not determined
+      - name: line8dTotalDistribution
+        type: boolean
+        required: false
+        label: Line 8d - Total distribution
+      - name: line8eCapitalGain
+        type: amount
+        required: false
+        label: Line 8e - Capital gain
+      - name: line8fFederalIncomeTaxWithheld
+        type: amount
+        required: false
+        label: Line 8f - Federal income tax withheld
+      - name: line8gStateIncomeTaxWithheld
+        type: amount
+        required: false
+        label: Line 8g - State income tax withheld
+      - name: line8gStateName
+        type: text
+        required: false
+        label: Line 8g - State name
+      - name: line8hLocalIncomeTaxWithheld
+        type: amount
+        required: false
+        label: Line 8h - Local income tax withheld
+      - name: line8hLocalityName
+        type: text
+        required: false
+        label: Line 8h - Locality name
+      - name: line8iEmployeeContributions
+        type: amount
+        required: false
+        label: Line 8i - Employee contributions
+      - name: line8jDistributionCodes
+        type: text
+        required: false
+        label: Line 8j - Distribution codes
+      - name: line8jIraSepSimple
+        type: boolean
+        required: false
+        label: Line 8j - IRA / SEP / SIMPLE
+
+  - name: explanations
+    title: Explanation
+    multiplicity: single
+    showIf: needsForm4852 == true
+    fields:
+      - name: line9HowAmountsWereDetermined
+        type: text
+        required: true
+        label: Line 9 - How did the spouse determine the amounts?
+      - name: line10EffortsToObtainMissingOrCorrectedForm
+        type: text
+        required: true
+        label: Line 10 - Explain the efforts made to obtain the missing or corrected form

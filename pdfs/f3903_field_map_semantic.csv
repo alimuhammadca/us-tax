@@ -1,0 +1,11 @@
+old_field_name,old_full_name,semantic_field_name,field_type,pages_0_indexed,rect_first_occurrence
+c1_1[0],topmostSubform[0].Page1[0].c1_1[0],page1_0_c1_1_0,checkbox,0,"[564.902, 651.000, 572.902, 659.000]"
+c1_2[0],topmostSubform[0].Page1[0].c1_2[0],page1_0_c1_2_0,checkbox,0,"[72.000, 470.000, 80.000, 478.000]"
+c1_2[1],topmostSubform[0].Page1[0].c1_2[1],page1_0_c1_2_1,checkbox,0,"[72.000, 434.000, 80.000, 442.000]"
+f1_1[0],topmostSubform[0].Page1[0].f1_1[0],page1_0_f1_1_0,text,0,"[36.000, 684.000, 467.250, 698.001]"
+f1_2[0],topmostSubform[0].Page1[0].f1_2[0],page1_0_f1_2_0,text,0,"[468.000, 684.000, 576.000, 698.001]"
+f1_3[0],topmostSubform[0].Page1[0].f1_3[0],page1_0_f1_3_0,text,0,"[504.000, 624.002, 576.000, 636.001]"
+f1_4[0],topmostSubform[0].Page1[0].f1_4[0],page1_0_f1_4_0,text,0,"[504.000, 588.002, 576.000, 600.001]"
+f1_5[0],topmostSubform[0].Page1[0].f1_5[0],page1_0_f1_5_0,text,0,"[504.000, 564.001, 576.000, 576.000]"
+f1_6[0],topmostSubform[0].Page1[0].f1_6[0],page1_0_f1_6_0,text,0,"[504.000, 516.002, 576.000, 528.001]"
+f1_7[0],topmostSubform[0].Page1[0].f1_7[0],page1_0_f1_7_0,text,0,"[504.000, 420.001, 576.000, 432.000]"

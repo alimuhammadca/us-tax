@@ -1,0 +1,17 @@
+<mxfile host='app.diagrams.net' modified='2026-03-07T17:16:00.0000000Z' agent='Codex' version='20.8.16' type='device'>
+  <diagram id='6b-flow-social-security-taxable' name='Line 6b - Taxable Social Security benefits'>
+    <mxGraphModel dx='1400' dy='900' grid='1' gridSize='10' guides='1' tooltips='1' connect='1' arrows='1' fold='1' page='1' pageScale='1' pageWidth='1200' pageHeight='900' math='0' shadow='0'>
+      <root>
+        <mxCell id='0'/>
+        <mxCell id='1' parent='0'/>
+        <mxCell id='2' value='Worksheet Inputs&#xa;line6a gross benefits&#xa;line1z, line2b, line3b, line4b, line5b&#xa;manualCapitalGainLossLine7a, manualOtherIncomeLine8&#xa;line2a tax-exempt interest&#xa;Schedule 1 adjustments total (worksheet line 6)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='20' y='60' width='380' height='250' as='geometry'/></mxCell>
+        <mxCell id='3' value='Filing Status Branch&#xa;MFS + livedWithSpouseAnyTime => 85% branch&#xa;MFJ => base 32,000 / second base 44,000&#xa;Single/HOH/QSS/MFS-apart => base 25,000 / second base 34,000' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='20' y='340' width='380' height='190' as='geometry'/></mxCell>
+        <mxCell id='4' value='Computation&#xa;taxableNormal = Social Security worksheet result&#xa;line6b defaults to taxableNormal&#xa;if line6a exists and taxable is null => line6b = 0&#xa;Clamp: 0 <= line6b <= 85% of line6a' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='440' y='180' width='390' height='220' as='geometry'/></mxCell>
+        <mxCell id='5' value='Output&#xa;Form 1040 line 6b (taxable amount)&#xa;Persisted as income.taxableSocialSecurityBenefits&#xa;Included in line 9 total income' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='860' y='210' width='320' height='170' as='geometry'/></mxCell>
+        <mxCell id='6' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='2' target='4'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='7' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='3' target='4'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='8' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='4' target='5'><mxGeometry relative='1' as='geometry'/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,41 @@
+# Form 8834 - Qualified Electric Vehicle Credit - spouse.
+# This spouse form is additive only. The output remains one consolidated Form 8834 per return.
+name: electric-vehicle-credit-spouse
+title: Form 8834 - Electric Vehicle credit (spouse)
+multiplicity: single
+formName: 8834
+category: deductions
+instructions:
+  - Use this spouse form only on married filing jointly returns when the spouse has an additional released qualified electric vehicle passive activity credit to add to the joint Form 8834.
+  - Do not use this form if the taxpayer-side released credit already includes the spouse amount.
+sections:
+  - name: spouseScreening
+    title: Spouse supplemental screening
+    multiplicity: single
+    fields:
+      - name: spouseHasElectricVehicleCreditInputs
+        type: boolean
+        required: true
+        label: Does your spouse have an additional released qualified electric vehicle passive activity credit amount to add?
+
+  - name: spouseContribution
+    title: Spouse released credit contribution
+    multiplicity: single
+    showIf: spouseHasElectricVehicleCreditInputs == true
+    fields:
+      - name: spouseReleasedQevPassiveActivityCreditContribution
+        type: amount
+        required: false
+        label: Spouse released qualified electric vehicle passive activity credit contribution
+        placeholder: 0.00
+
+  - name: importedSupport
+    title: Imported support values (backend only - not rendered)
+    multiplicity: single
+    showIf: spouseHasElectricVehicleCreditInputs == true
+    fields:
+      - name: jointForm8834Ownership
+        type: text
+        required: false
+        readOnly: true
+        label: Backend note - spouse data rolls into the joint Form 8834

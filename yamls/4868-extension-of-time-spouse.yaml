@@ -1,0 +1,58 @@
+# Form 4868 - spouse supplemental form.
+#
+# Use this only for spouse-side additions on an MFJ return. The output remains
+# one joint Form 4868 per return. The taxpayer form owns the return-level workflow,
+# the filing method, and the primary extension payment. This spouse form allows the
+# spouse to contribute a separate extension payment (e.g. from a different bank account)
+# and a spouse-side confirmation reference, which the backend aggregates into line 7.
+name: extension-of-time-spouse
+title: Form 4868 - Extension of time (spouse)
+multiplicity: single
+formName: 4868
+category: applications
+instructions:
+  - Use this form only when filing jointly (MFJ) and the spouse has supplemental
+    extension payment details to add.
+  - The output remains one joint Form 4868 per return.
+  - The spouse payment contribution is added to the taxpayer payment to produce
+    Form 4868 line 7 (which maps to Schedule 3 line 10 on the actual return).
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: spouseHasExtensionOfTimeInputs
+        type: boolean
+        required: true
+        label: Does your spouse have additional extension payment details to add?
+        helpText: >
+          On a joint return, both spouses share one Form 4868. Use this tab only if your spouse
+          made a separate extension payment. In most cases this tab can be left as No.
+
+  - name: spouseContribution
+    title: Spouse supplemental extension details
+    multiplicity: single
+    showIf: spouseHasExtensionOfTimeInputs == true
+    fields:
+      - name: spouseIncludedOnJointExtension
+        type: boolean
+        required: false
+        label: Is the spouse included on the joint extension request?
+        helpText: >
+          Answer Yes if the spouse is included on the same Form 4868 as the taxpayer.
+          This is standard for a joint return.
+      - name: spouseExtensionPaymentContribution
+        type: amount
+        required: false
+        label: Spouse extension payment contribution (added to taxpayer line 7)
+        placeholder: 0.00
+        helpText: >
+          Enter the amount the spouse is contributing to the extension payment. This will be
+          added to the taxpayer's amount to produce the total on Schedule 3 line 10.
+      - name: spousePaymentReference
+        type: text
+        required: false
+        label: Spouse payment reference or confirmation number
+        helpText: >
+          Enter the confirmation number or check number for the spouse's extension payment,
+          for your records.

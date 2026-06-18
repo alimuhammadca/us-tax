@@ -1,0 +1,365 @@
+# Form 8863 taxpayer/family-head workflow.
+# Form 8863 is one consolidated return-level form, so this taxpayer form owns
+# return-level gating, upload confirmation, MAGI add-backs, and may also hold
+# claimed students. If the spouse tab is used, enter each student on exactly one
+# of the two forms so the future consolidated Form 8863 can merge them cleanly.
+# NOTE: Backend-only sections are not rendered in the UI intake component.
+name: education-credits-taxpayer
+title: Form 8863 - Education credits (taxpayer/family head)
+multiplicity: single
+formName: 8863
+category: deductions
+instructions:
+  - Form 8863 is filed once per return, not once per spouse or once per student.
+  - Use this taxpayer form for return-level Form 8863 questions and for any claimed students you want to enter from the taxpayer tab.
+  - If the spouse tab is also used, enter each student on exactly one tab so the later tax-return Form 8863 can merge both student lists without duplication.
+  - You may claim both the American Opportunity Credit and the Lifetime Learning Credit on the same return, but not for the same student.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: claimsEducationCreditsOnReturn
+        type: boolean
+        required: true
+        label: Will this return claim the American Opportunity Credit or Lifetime Learning Credit for any student?
+        help: Select Yes if this return will claim an American Opportunity Credit or Lifetime Learning Credit for at least one student.
+      - name: claimedAsDependentOnAnotherReturn
+        type: boolean
+        required: false
+        label: Are you (the taxpayer) claimed as a dependent on another person's return for 2025?
+        help: Select Yes if you can be claimed as a dependent on someone else's 2025 return. Under Internal Revenue Code section 25A(g)(3), a taxpayer who can be claimed as a dependent cannot claim any education credit; selecting Yes blocks the credit.
+      - name: taxpayerOrSpouseDisqualifiedAsNonresidentAlien
+        type: boolean
+        required: false
+        label: Is the taxpayer or spouse a non-resident alien for 2025 without a resident-treatment election in effect?
+        help: Select Yes if either spouse was a non-resident alien for any part of 2025 and the resident-treatment election under Internal Revenue Code section 6013(g) or 6013(h) is NOT in effect. Selecting Yes blocks the education credit under Internal Revenue Code section 25A(g)(7).
+      - name: taxpayerTinIssuedByDueDate
+        type: boolean
+        required: false
+        label: Was your (the taxpayer's) Social Security Number or Individual Taxpayer Identification Number issued by the due date of the 2025 return, including extensions?
+        help: Select No if your taxpayer identification number was first issued after the due date of the 2025 return (including extensions). Under Internal Revenue Code section 25A(g)(1)(A), an education credit cannot be claimed when the taxpayer identification number was issued after the due date. Leave blank if your taxpayer identification number was already in hand on time.
+
+  - name: statementUploadCheck
+    title: Education support upload check
+    multiplicity: single
+    showIf: claimsEducationCreditsOnReturn == true
+    instructions:
+      - Form 1098-T is commonly required support for Form 8863.
+      - Keep statement uploads authoritative and use this form for supplemental education-credit facts not fully captured by statement entry screens.
+    fields:
+      - name: receivedAny1098TForClaimedStudents
+        type: boolean
+        required: false
+        label: Did any of your claimed students receive a 1098-T from their school?
+        help: Select Yes if at least one student claimed for Form 8863 received a 2025 Form 1098-T.
+      - name: uploadedAll1098TStatementsForClaimedStudents
+        type: boolean
+        required: false
+        label: If so, did you upload all the 1098-T statements you received?
+        help: Select Yes only if all received 1098-T statements for claimed students were uploaded.
+      - name: usingAlternativeEnrollmentDocumentationForAnyStudent
+        type: boolean
+        required: false
+        label: Are you relying on non-1098-T documentation for any claimed student?
+        help: Select Yes if any claimed student did not receive a 1098-T and you are instead relying on other enrollment or payment support.
+      - name: confirmAllEducationSupportUploaded
+        type: boolean
+        required: true
+        label: I confirm all received education-credit support has been uploaded
+        help: You must confirm this before saving the education credits form.
+
+  - name: returnLevelEligibility
+    title: Return-level education credit inputs
+    multiplicity: single
+    showIf: claimsEducationCreditsOnReturn == true
+    instructions:
+      - These questions affect the single consolidated Form 8863 for the return.
+      - MAGI add-backs below support the phaseout tests in Part I and Part II.
+    fields:
+      - name: aotcPreviouslyDenied
+        type: boolean
+        required: false
+        label: Was the American Opportunity Credit previously denied or reduced due to a non-clerical error?
+        help: Select Yes if AOTC was previously denied or reduced for reasons other than a math or clerical error. When Yes, Form 8862 Part IV must be completed to reclaim the credit.
+      - name: hasMagiAddBacks
+        type: boolean
+        required: false
+        label: Do you have income add-backs that increase your adjusted gross income for the education credit phaseout test?
+        help: Select Yes if you have Puerto Rico excluded income, Form 2555 foreign earned income, Form 2555 housing exclusion, or Form 4563 excluded income to add back for the Form 8863 MAGI computation. Select No if your AGI equals your Form 8863 MAGI.
+      - name: magiAddBackPuertoRicoExcludedIncome
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Puerto Rico excluded income add-back for education credit phaseout
+        help: Enter excluded Puerto Rico income if it must be added back when determining Form 8863 MAGI.
+      - name: magiAddBackForm2555ExcludedIncome
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Foreign earned income exclusion add-back for education credit phaseout
+        help: Enter the Form 2555 foreign earned income exclusion amount that must be added back for Form 8863 MAGI, if applicable.
+      - name: magiAddBackForm2555HousingExclusion
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Foreign housing exclusion add-back for education credit phaseout
+        help: Enter the Form 2555 housing exclusion amount that must be added back for Form 8863 MAGI, if applicable.
+      - name: magiAddBackForm4563ExcludedIncome
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: U.S. possession excluded income add-back for education credit phaseout
+        help: Enter the Form 4563 excluded income amount that must be added back for Form 8863 MAGI, if applicable.
+      - name: refundableAotcRestrictionApplies
+        type: boolean
+        required: false
+        label: Does the under-24 refundable AOTC restriction apply to this return? (Manual override)
+        help: >
+          Manual override of the IRS Form 8863 line 7 box compound test. Leave blank to let the
+          application compute the answer from the five sub-questions below. Select Yes to force
+          the refundable AOTC (Form 1040 line 29) to zero regardless of those sub-answers. Select
+          No to force the 40% refundable share even if the sub-questions would otherwise restrict it.
+          Most filers should leave this field blank and answer the sub-questions instead.
+      - name: under24WasUnder18AtYearEnd
+        type: boolean
+        required: false
+        label: Were you under age 18 at the end of 2025?
+        help: Select Yes if the taxpayer was under 18 on December 31, 2025. This is the first of the three age legs of the IRS Form 8863 line 7 compound test (Internal Revenue Code section 25A(i)(1)(A)(ii)).
+      - name: under24WasAge18AndEarnedIncomeLtHalfSupport
+        type: boolean
+        required: false
+        label: Were you exactly age 18 at the end of 2025 AND was your earned income less than half of your support?
+        help: Select Yes only if BOTH conditions held at year end. This is the second of the three age legs of the IRS Form 8863 line 7 compound test.
+      - name: under24WasAge19To23FullTimeStudentEarnedIncomeLtHalfSupport
+        type: boolean
+        required: false
+        label: Were you age 19 through 23 at the end of 2025 AND a full-time student AND your earned income was less than half of your support?
+        help: Select Yes only if ALL THREE conditions held at year end. This is the third of the three age legs of the IRS Form 8863 line 7 compound test.
+      - name: under24AtLeastOneParentAlive
+        type: boolean
+        required: false
+        label: Was at least one of your parents alive at the end of 2025?
+        help: Select Yes if at least one biological, adoptive, or step parent was alive on December 31, 2025. The under-24 refundable restriction does NOT apply if both parents were deceased.
+      - name: educationCreditsReturnNotes
+        type: text
+        required: false
+        placeholder: Special return-level Form 8863 notes
+        label: Return-level education credit notes
+        help: Capture any return-level note that should carry forward to the consolidated Form 8863 workflow, such as unusual documentation or review notes.
+
+  - name: taxpayerEducationCreditStudents
+    title: Claimed students entered from the taxpayer tab (Part III)
+    multiplicity: multiple
+    showIf: claimsEducationCreditsOnReturn == true
+    instructions:
+      - Add one row per student claimed for Form 8863 from the taxpayer tab.
+      - Enter the student only once across the taxpayer and spouse education-credit forms.
+      - Use the student-level fields below to support Part III line 20 through line 31 for each student.
+    fields:
+      - name: studentFirstNameLine20
+        type: text
+        required: true
+        placeholder: First name
+        label: Student's first name
+        help: Enter the student's first name exactly as it should appear on Form 8863.
+      - name: studentLastNameLine20
+        type: text
+        required: true
+        placeholder: Last name
+        label: Student's last name
+        help: Enter the student's last name exactly as it should appear on Form 8863.
+      - name: studentTinLine21
+        type: text
+        required: true
+        placeholder: ###-##-####
+        label: Student's Social Security Number or TIN
+        help: Enter the student's SSN or other TIN used for the education credit claim.
+      - name: studentTinIssuedByDueDate
+        type: boolean
+        required: false
+        label: Was the student's taxpayer identification number issued by the due date of the 2025 return, including extensions?
+        help: Select No only if the student's Social Security Number, Individual Taxpayer Identification Number, or Adoption Taxpayer Identification Number was first issued after the due date of the 2025 return (including extensions). Under Internal Revenue Code section 25A(g)(1)(B), the American Opportunity Credit cannot be claimed for a student whose taxpayer identification number was issued after the due date. The Lifetime Learning Credit does not have this restriction.
+      - name: studentRelationshipToTaxReturn
+        type: select
+        required: true
+        placeholder: Select relationship
+        label: Relationship of the student to this return
+        help: Identify whether this student is the taxpayer, spouse, dependent, or another eligible student claimed on the return.
+        options:
+          - value: taxpayer
+            label: Taxpayer
+          - value: spouse
+            label: Spouse
+          - value: dependent
+            label: Dependent
+          - value: other_eligible_student
+            label: Other eligible student
+      - name: creditTypeRequested
+        type: select
+        required: true
+        placeholder: Select credit
+        label: Credit claimed for this student
+        help: Select the credit claimed for this student. Do not claim both credits for the same student.
+        options:
+          - value: aotc
+            label: American Opportunity Credit
+          - value: llc
+            label: Lifetime Learning Credit
+      - name: adjustedQualifiedEducationExpenses
+        type: amount
+        required: true
+        placeholder: 0.00
+        label: Adjusted qualified education expenses for this student
+        help: Enter the student's qualified expenses after reducing for tax-free educational assistance.
+      - name: taxFreeEducationAssistanceReductionAmount
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Tax-free educational assistance that reduced the claimed expenses
+        help: Enter the total scholarship, grant, employer assistance, veterans benefit, or other tax-free educational assistance amount applied against the student's expenses.
+      - name: educationSupportNotes
+        type: text
+        required: false
+        placeholder: Notes about qualified expenses or support
+        label: Student education-support notes
+        help: Briefly explain unusual documentation, adjustments, or expense-support facts for this student.
+      - name: institution1NameLine22
+        type: text
+        required: true
+        placeholder: School name
+        label: Name of primary school or institution
+        help: Enter the first educational institution for this student.
+      - name: institution1AddressLine22
+        type: text
+        required: true
+        placeholder: School address
+        label: Address of primary school or institution
+        help: Enter the mailing address for the first institution.
+      - name: institution1EinLine22
+        type: text
+        required: false
+        placeholder: ##-#######
+        label: Primary institution's EIN
+        help: Enter the institution EIN when required, especially for AOTC or when a Form 1098-T was issued.
+      - name: institution1Received1098T
+        type: boolean
+        required: true
+        label: Did the primary school issue a 1098-T for this student in 2025?
+        help: Select Yes if the first institution issued a 2025 Form 1098-T for this student.
+      - name: institution1PriorYear1098TBox7Checked
+        type: boolean
+        required: false
+        label: Did the primary school's 2024 1098-T indicate prior-year billing?
+        help: Select Yes if the prior-year 1098-T for the first institution had box 7 checked.
+      - name: studentHasSecondInstitutionLine22
+        type: boolean
+        required: false
+        label: Did this student attend a second school or institution in 2025?
+        help: Select Yes only if you need to list a second institution for this student.
+      - name: institution2NameLine22
+        type: text
+        required: false
+        placeholder: Second school name
+        label: Name of second school or institution
+        help: Enter the second institution only when needed for this student.
+      - name: institution2AddressLine22
+        type: text
+        required: false
+        placeholder: Second school address
+        label: Address of second school or institution
+        help: Enter the mailing address for the second institution.
+      - name: institution2EinLine22
+        type: text
+        required: false
+        placeholder: ##-#######
+        label: Second institution's EIN
+        help: Enter the second institution EIN when required.
+      - name: institution2Received1098T
+        type: boolean
+        required: false
+        label: Did the second school issue a 1098-T for this student in 2025?
+        help: Select Yes if the second institution issued a 2025 Form 1098-T for this student.
+      - name: institution2PriorYear1098TBox7Checked
+        type: boolean
+        required: false
+        label: Did the second school's 2024 1098-T indicate prior-year billing?
+        help: Select Yes if the prior-year 1098-T for the second institution had box 7 checked.
+      - name: aotcClaimedFourPriorYearsLine23
+        type: boolean
+        required: false
+        label: Has the American Opportunity Credit been claimed for this student in four or more prior tax years?
+        help: Select Yes if the student has already used the AOTC in four earlier tax years.
+      - name: studentWasAtLeastHalfTimeLine24
+        type: boolean
+        required: false
+        label: Was the student enrolled at least half-time in a degree or certificate program?
+        help: Select Yes only if the student met the half-time requirement for the AOTC.
+      - name: studentCompletedFirstFourYearsBefore2025Line25
+        type: boolean
+        required: false
+        label: Had the student completed the first four years of postsecondary education before 2025?
+        help: Select Yes if the student had already completed the first four years before the beginning of 2025.
+      - name: studentHadFelonyDrugConvictionLine26
+        type: boolean
+        required: false
+        label: Did the student have a felony drug conviction before the end of 2025?
+        help: Select Yes if the student had a felony drug conviction that disqualifies AOTC treatment.
+
+  # Backend-only statement imports. Not rendered in the form component.
+  - name: importedStatementFields
+    title: Imported statement fields (backend only)
+    multiplicity: single
+    showIf: claimsEducationCreditsOnReturn == true
+    fields:
+      - name: imported1098TStudentCount
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported count of uploaded 1098-T student records
+      - name: imported1098TBox1PaymentsTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported aggregate 1098-T box 1 payments total
+      - name: imported1098TBox5ScholarshipsTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported aggregate 1098-T box 5 scholarships total
+      - name: imported1098TStudentsMatchedToEducationCredits
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported count of claimed students matched to uploaded 1098-T records
+
+  # Backend-only computed values. Not rendered in the form component.
+  - name: computedOutputs
+    title: Computed outputs (backend only)
+    multiplicity: single
+    showIf: claimsEducationCreditsOnReturn == true
+    fields:
+      - name: computedForm8863Required
+        type: boolean
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Form 8863 required flag
+      - name: computedMergedPartIIICount
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed total Part III student count after taxpayer/spouse merge
+      - name: computedForm8863Line8RefundableAotc
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Form 8863 line 8 refundable American Opportunity Credit
+      - name: computedForm8863Line19NonrefundableEducationCredits
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Form 8863 line 19 nonrefundable education credits

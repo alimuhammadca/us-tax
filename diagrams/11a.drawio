@@ -1,0 +1,29 @@
+<mxfile host='app.diagrams.net' modified='2026-03-10T00:00:00.0000000Z' agent='Codex' version='20.8.16' type='device'>
+  <diagram id='11a-flow-agi' name='Line 11a - Adjusted gross income'>
+    <mxGraphModel dx='1200' dy='800' grid='1' gridSize='10' guides='1' tooltips='1' connect='1' arrows='1' fold='1' page='1' pageScale='1' pageWidth='1100' pageHeight='850' math='0' shadow='0'>
+      <root>
+        <mxCell id='0'/>
+        <mxCell id='1' parent='0'/>
+
+        <mxCell id='2' value='Inputs&#xa;Form 1040 line 9&#xa;Total income&#xa;&#xa;Form 1040 line 10&#xa;Adjustments to income from Schedule 1 line 26' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='40' y='160' width='280' height='170' as='geometry'/>
+        </mxCell>
+
+        <mxCell id='3' value='Compute AGI&#xa;line 11a = line 9 - line 10&#xa;Preserve negative result if line 10 exceeds line 9&#xa;No zero-flooring on this line' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='390' y='170' width='300' height='150' as='geometry'/>
+        </mxCell>
+
+        <mxCell id='4' value='Outputs&#xa;Form1040.adjustments.line11aAdjustedGrossIncome&#xa;Form1040.adjustments.adjustedGrossIncome (compatibility field)&#xa;Used by preview and downstream deduction/tax logic' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='760' y='150' width='300' height='190' as='geometry'/>
+        </mxCell>
+
+        <mxCell id='5' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='2' target='3'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='6' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='3' target='4'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

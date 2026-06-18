@@ -1,0 +1,452 @@
+# Form 5695 taxpayer workflow.
+# One Form 5695 is usually filed per return. This taxpayer form owns the
+# return-level screening, upload confirmation, pooled Part I inputs, shared
+# Part II gating, prior-year carryforward, and special-case flags.
+# NOTE: Backend-only sections are not rendered in the UI component.
+name: energy-credit-taxpayer
+title: Form 5695 - Energy credit (taxpayer/family head)
+multiplicity: single
+formName: 5695
+category: deductions
+instructions:
+  - Form 5695 is usually one form per return even on a joint return.
+  - Use this taxpayer form for the return-level screening plus the primary Part I and Part II inputs.
+  - If the spouse tab is also used, enter spouse-owned or spouse-home amounts there so the tax-return Form 5695 can merge both forms correctly.
+  - Keep invoices, QMIDs, manufacturer certifications, and home-energy-audit support in your records even though they are not attached to the return.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: claimsEnergyCreditOnReturn
+        type: boolean
+        required: true
+        label: Will this return claim Form 5695 residential energy credits?
+        help: Select Yes if this return will claim the Residential Clean Energy Credit, the Energy Efficient Home Improvement Credit, or both.
+      - name: confirmAllEnergySupportUploaded
+        type: boolean
+        required: false
+        label: I confirm all received Form 5695 support has been uploaded
+        help: Confirm only after invoices, audit reports, and other available support have been uploaded.
+      - name: claimsResidentialCleanEnergyCredit
+        type: boolean
+        required: false
+        label: Does this return claim the Residential Clean Energy Credit? (Part I)
+      - name: claimsEnergyEfficientHomeImprovementCredit
+        type: boolean
+        required: false
+        label: Does this return claim the Energy Efficient Home Improvement Credit? (Part II)
+
+  - name: residentialCleanEnergyCredit
+    title: Part I - Residential Clean Energy Credit
+    multiplicity: single
+    showIf: claimsEnergyCreditOnReturn == true && claimsResidentialCleanEnergyCredit == true
+    instructions:
+      - Part I generally uses one pooled set of costs for the return.
+      - Fuel cell property is stricter and must be tied to the taxpayer's main home in the United States.
+      - Part I can carry forward; line 12 stores the prior-year carryforward from 2024.
+    fields:
+      - name: line1SolarElectricCosts
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Solar electric property costs (line 1)
+      - name: line2SolarWaterHeatingCosts
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Solar water heating property costs (line 2)
+      - name: line3SmallWindEnergyCosts
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Small wind energy property costs (line 3)
+      - name: line4GeothermalHeatPumpCosts
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Geothermal heat pump costs (line 4)
+      - name: line5BatteryCapacityAtLeast3kwh
+        type: boolean
+        required: false
+        label: Does the battery storage technology meet the 3 kWh minimum? (line 5a)
+      - name: line5BatteryStorageCosts
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Battery storage technology costs (line 5b)
+      - name: line7aFuelCellInstalledOnMainHomeInUs
+        type: boolean
+        required: false
+        label: Was fuel cell property installed on or in connection with your main home in the United States? (line 7a)
+      - name: line7bFuelCellMainHomeAddress
+        type: text
+        required: false
+        placeholder: Main home address for fuel cell property
+        label: Fuel cell main home address (line 7b)
+      - name: line7cFuelCellJointOccupants
+        type: boolean
+        required: false
+        label: Are fuel cell costs being allocated among joint occupants? (line 7c)
+      - name: line8FuelCellPropertyCosts
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Fuel cell property costs (line 8)
+      - name: line10FuelCellCapacityKw
+        type: amount
+        required: false
+        placeholder: 0.0
+        label: Fuel cell kilowatt capacity (line 10)
+      - name: line12PriorYearCarryforward
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: 2024 carryforward into line 12
+      - name: additionalResidenceAddressesText
+        type: text
+        required: false
+        placeholder: Additional residence addresses for Part I, one per line
+        label: Additional Part I residence addresses
+        help: Use this if more than one residence was used for Part I property during the year.
+
+  - name: partIiEligibility
+    title: Part II - Eligibility and home-level facts
+    multiplicity: single
+    showIf: claimsEnergyCreditOnReturn == true && claimsEnergyEfficientHomeImprovementCredit == true
+    instructions:
+      - Part II generally applies to improvements to your main home in the United States.
+      - Enter the shared gating facts first, then the specific cost items below.
+    fields:
+      - name: partIIInstalledOnMainHomeInUs
+        type: boolean
+        required: false
+        label: Were the improvements installed in or on your main home in the United States? (line 17a)
+      - name: partIIOriginalUser
+        type: boolean
+        required: false
+        label: Are you the original user of the improvements? (line 17b)
+      - name: partIIFiveYearUse
+        type: boolean
+        required: false
+        label: Is each improvement reasonably expected to remain in use for at least 5 years? (line 17c)
+      - name: mainHomeAddress
+        type: text
+        required: false
+        placeholder: Main home address
+        label: Main home address for Part II (line 17d)
+      - name: partIIRelatedToConstruction
+        type: boolean
+        required: false
+        label: Were any of the claimed improvements related to construction of the home? (line 17e)
+      - name: installedQualifiedEnergyProperty
+        type: boolean
+        required: false
+        label: Did you install qualified energy property in a U.S. residence? (line 21a)
+      - name: qualifiedEnergyPropertyOriginalUser
+        type: boolean
+        required: false
+        label: Are you the original user of the qualified energy property? (line 21b)
+      - name: qualifiedEnergyPropertyResidenceAddressesText
+        type: text
+        required: false
+        placeholder: Residence addresses for qualified energy property, one per line
+        label: Qualified energy property residence addresses (line 21c)
+      - name: enablingPropertyInstalledSameYear
+        type: boolean
+        required: false
+        label: Was the enabling property installed in the same year as the enabled qualifying property? (line 25a)
+      - name: enabledPropertyCode
+        type: text
+        required: false
+        placeholder: IRS-enabled property code
+        label: Enabled property code (line 25b)
+      - name: qualifiedAudit
+        type: boolean
+        required: false
+        label: Did you pay for a qualified home energy audit for your main home? (line 26a)
+      - name: jointOccupants
+        type: boolean
+        required: false
+        label: Are Part II costs being allocated among joint occupants? (line 32a)
+      - name: condominiumOrCooperative
+        type: boolean
+        required: false
+        label: Are you claiming a condo or cooperative fractional share? (line 32b)
+
+  - name: partIiCosts
+    title: Part II - Direct costs and grouped items
+    multiplicity: single
+    showIf: claimsEnergyCreditOnReturn == true && claimsEnergyEfficientHomeImprovementCredit == true
+    instructions:
+      - Use the grouped item tables for property that needs individual QMIDs or multiple high-cost entries.
+      - Use the "other" cost fields for the remaining qualified costs in the same category.
+    fields:
+      - name: insulationAirSealingCosts
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Insulation and air sealing material costs (line 18a)
+      - name: otherDoorCosts
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Other qualifying exterior door costs (line 19e)
+      - name: otherWindowCosts
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Other qualifying window or skylight costs (line 20b)
+      - name: centralAirOtherCosts
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Other qualifying central air conditioner costs (line 22b)
+      - name: waterHeaterOtherCosts
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Other qualifying water heater costs (line 23b)
+      - name: furnaceBoilerOtherCosts
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Other qualifying furnace or boiler costs (line 24b)
+      - name: enablingPropertyCosts
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Enabling property costs (line 25c)
+      - name: enablingPropertyQmidsText
+        type: text
+        required: false
+        placeholder: One QMID per line or comma-separated
+        label: Enabling property QMIDs (line 25d)
+      - name: homeEnergyAuditCosts
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Home energy audit costs (line 26b)
+      - name: otherHeatPumpCosts
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Other qualifying heat pump costs
+      - name: otherHeatPumpWaterHeaterCosts
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Other qualifying heat pump water heater costs
+      - name: otherBiomassCosts
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Other qualifying biomass stove or boiler costs
+
+  - name: doorItems
+    title: Part II - Exterior door items
+    multiplicity: multiple
+    showIf: claimsEnergyCreditOnReturn == true && claimsEnergyEfficientHomeImprovementCredit == true
+    fields:
+      - name: description
+        type: text
+        required: true
+        placeholder: Exterior door description
+        label: Door description
+      - name: qmid
+        type: text
+        required: false
+        placeholder: QMID
+        label: Door QMID
+      - name: cost
+        type: amount
+        required: true
+        placeholder: 0.00
+        label: Door cost
+
+  - name: windowItems
+    title: Part II - Window and skylight items
+    multiplicity: multiple
+    showIf: claimsEnergyCreditOnReturn == true && claimsEnergyEfficientHomeImprovementCredit == true
+    fields:
+      - name: description
+        type: text
+        required: true
+        placeholder: Window or skylight description
+        label: Window or skylight description
+      - name: qmid
+        type: text
+        required: false
+        placeholder: QMID
+        label: Window or skylight QMID
+      - name: cost
+        type: amount
+        required: true
+        placeholder: 0.00
+        label: Window or skylight cost
+
+  - name: centralAirItems
+    title: Part II - Central air conditioner items
+    multiplicity: multiple
+    showIf: claimsEnergyCreditOnReturn == true && claimsEnergyEfficientHomeImprovementCredit == true
+    fields:
+      - name: description
+        type: text
+        required: true
+        placeholder: Central air conditioner description
+        label: Central air conditioner description
+      - name: qmid
+        type: text
+        required: false
+        placeholder: QMID
+        label: Central air conditioner QMID
+      - name: cost
+        type: amount
+        required: true
+        placeholder: 0.00
+        label: Central air conditioner cost
+
+  - name: waterHeaterItems
+    title: Part II - Water heater items
+    multiplicity: multiple
+    showIf: claimsEnergyCreditOnReturn == true && claimsEnergyEfficientHomeImprovementCredit == true
+    fields:
+      - name: description
+        type: text
+        required: true
+        placeholder: Water heater description
+        label: Water heater description
+      - name: qmid
+        type: text
+        required: false
+        placeholder: QMID
+        label: Water heater QMID
+      - name: cost
+        type: amount
+        required: true
+        placeholder: 0.00
+        label: Water heater cost
+
+  - name: furnaceBoilerItems
+    title: Part II - Furnace or boiler items
+    multiplicity: multiple
+    showIf: claimsEnergyCreditOnReturn == true && claimsEnergyEfficientHomeImprovementCredit == true
+    fields:
+      - name: description
+        type: text
+        required: true
+        placeholder: Furnace or boiler description
+        label: Furnace or boiler description
+      - name: qmid
+        type: text
+        required: false
+        placeholder: QMID
+        label: Furnace or boiler QMID
+      - name: cost
+        type: amount
+        required: true
+        placeholder: 0.00
+        label: Furnace or boiler cost
+
+  - name: heatPumpItems
+    title: Part II - Heat pump items
+    multiplicity: multiple
+    showIf: claimsEnergyCreditOnReturn == true && claimsEnergyEfficientHomeImprovementCredit == true
+    fields:
+      - name: description
+        type: text
+        required: true
+        placeholder: Heat pump description
+        label: Heat pump description
+      - name: qmid
+        type: text
+        required: false
+        placeholder: QMID
+        label: Heat pump QMID
+      - name: cost
+        type: amount
+        required: true
+        placeholder: 0.00
+        label: Heat pump cost
+
+  - name: heatPumpWaterHeaterItems
+    title: Part II - Heat pump water heater items
+    multiplicity: multiple
+    showIf: claimsEnergyCreditOnReturn == true && claimsEnergyEfficientHomeImprovementCredit == true
+    fields:
+      - name: description
+        type: text
+        required: true
+        placeholder: Heat pump water heater description
+        label: Heat pump water heater description
+      - name: qmid
+        type: text
+        required: false
+        placeholder: QMID
+        label: Heat pump water heater QMID
+      - name: cost
+        type: amount
+        required: true
+        placeholder: 0.00
+        label: Heat pump water heater cost
+
+  - name: biomassItems
+    title: Part II - Biomass stove or boiler items
+    multiplicity: multiple
+    showIf: claimsEnergyCreditOnReturn == true && claimsEnergyEfficientHomeImprovementCredit == true
+    fields:
+      - name: description
+        type: text
+        required: true
+        placeholder: Biomass stove or boiler description
+        label: Biomass stove or boiler description
+      - name: qmid
+        type: text
+        required: false
+        placeholder: QMID
+        label: Biomass stove or boiler QMID
+      - name: cost
+        type: amount
+        required: true
+        placeholder: 0.00
+        label: Biomass stove or boiler cost
+
+  - name: importedFields
+    title: Imported fields (backend only)
+    multiplicity: single
+    showIf: claimsEnergyCreditOnReturn == true
+    fields:
+      - name: importedForm1040Line18
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported Form 1040 line 18 tax
+      - name: importedSchedule3OtherCreditTotalBefore5695
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported Schedule 3 nonrefundable credits before Form 5695
+
+  - name: computedOutputs
+    title: Computed outputs (backend only)
+    multiplicity: single
+    showIf: claimsEnergyCreditOnReturn == true
+    fields:
+      - name: computedForm5695Count
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed number of Form 5695 artifacts
+      - name: computedLine15Schedule3Line5a
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Form 5695 line 15 to Schedule 3 line 5a
+      - name: computedLine32Schedule3Line5b
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Form 5695 line 32 to Schedule 3 line 5b

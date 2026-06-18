@@ -1,0 +1,12 @@
+old_field_name,old_full_name,semantic_field_name,field_type,pages_0_indexed,rect_first_occurrence
+Form 1099-SSA line 1,Form 1099-SSA line 1,form_1099_ssa_line_1,text,0,"[102.837, 674.716, 254.987, 693.813]"
+Form 1099-SSA line 2,Form 1099-SSA line 2,form_1099_ssa_line_2,text,0,"[256.162, 673.468, 447.912, 686.669]"
+Form 1099-SSA line 3,Form 1099-SSA line 3,form_1099_ssa_line_3,text,0,"[61.419, 649.930, 157.986, 663.004]"
+Form 1099-SSA line 3 description,Form 1099-SSA line 3 description,form_1099_ssa_line_3_description,text,0,"[60.551, 407.309, 249.772, 636.439]"
+Form 1099-SSA line 4,Form 1099-SSA line 4,form_1099_ssa_line_4,text,0,"[160.042, 649.627, 286.376, 662.700]"
+Form 1099-SSA line 4 description,Form 1099-SSA line 4 description,form_1099_ssa_line_4_description,text,0,"[256.170, 555.926, 447.862, 635.241]"
+Form 1099-SSA line 5,Form 1099-SSA line 5,form_1099_ssa_line_5,text,0,"[291.083, 650.922, 446.010, 664.123]"
+Form 1099-SSA line 6,Form 1099-SSA line 6,form_1099_ssa_line_6,text,0,"[256.587, 521.701, 447.615, 542.733]"
+Form 1099-SSA line 7,Form 1099-SSA line 7,form_1099_ssa_line_7,text,0,"[255.745, 424.863, 447.726, 506.712]"
+Form 1099-SSA line 8,Form 1099-SSA line 8,form_1099_ssa_line_8,text,0,"[297.967, 394.676, 448.875, 414.418]"
+Form 1099-SSA text,Form 1099-SSA text,form_1099_ssa_text,text,0,"[61.955, 390.139, 281.800, 413.534]"

@@ -1,0 +1,47 @@
+<mxfile host='app.diagrams.net' modified='2026-03-10T00:00:00.0000000Z' agent='Codex' version='20.8.16' type='device'>
+  <diagram id='10-flow-income-adjustments' name='Line 10 - Adjustments to income (Schedule 1 line 26)'>
+    <mxGraphModel dx='1400' dy='900' grid='1' gridSize='10' guides='1' tooltips='1' connect='1' arrows='1' fold='1' page='1' pageScale='1' pageWidth='1200' pageHeight='900' math='0' shadow='0'>
+      <root>
+        <mxCell id='0'/>
+        <mxCell id='1' parent='0'/>
+
+        <mxCell id='2' value='Inputs (User forms)&#xa;income-adjustments-taxpayer&#xa;income-adjustments-spouse&#xa;Schedule 1 Part II lines 11-23&#xa;Schedule 1 line 24a-24k&#xa;Schedule 1 line 24z items list&#xa;Out-of-scope flags (lines 15-17)&#xa;Return-level statement confirmations (taxpayer)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='20' y='60' width='360' height='270' as='geometry'/>
+        </mxCell>
+
+        <mxCell id='3' value='Inputs (Statements)&#xa;1098-E (stored as statement id 1099-e)&#xa;1099-INT box 2 early withdrawal penalty&#xa;1099-OID box 5 early withdrawal penalty&#xa;Schedule K-1 (Form 1041) section 67(e) excess deductions&#xa;Used for statement gating and optional imported totals' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='20' y='350' width='360' height='210' as='geometry'/>
+        </mxCell>
+
+        <mxCell id='4' value='Compute Schedule 1 Adjustments&#xa;line25 = sum(line24a..line24z)&#xa;line26 = sum(line11..line23) + line25&#xa;If any SE-only adjustment (15-17) => blocking flag&#xa;If required statement gating fails => blocking flag(s)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='420' y='130' width='390' height='250' as='geometry'/>
+        </mxCell>
+
+        <mxCell id='5' value='Derive Form 1040 Lines&#xa;1040 line 10 = Schedule 1 line 26&#xa;1040 line 11 (AGI) = line 9 - line 10&#xa;(If no line 10 amount, AGI follows line 9)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='840' y='130' width='340' height='170' as='geometry'/>
+        </mxCell>
+
+        <mxCell id='6' value='Output Forms / Attachments&#xa;Schedule 1 (adjustments section)&#xa;Form 1040 (adjustments section)&#xa;Required attachments when applicable:&#xa;- Form 2106 (line 12)&#xa;- Form 3903 (line 14)&#xa;- Form 8889 (line 13)&#xa;- Form 8853 (line 23)&#xa;- Form 2555 (line 24j)&#xa;Merged with existing Schedule 1 attachments from other lines' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='840' y='330' width='340' height='270' as='geometry'/>
+        </mxCell>
+
+        <mxCell id='7' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='2' target='4'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='8' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='3' target='4'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='9' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='4' target='5'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='10' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='4' target='6'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='11' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='5' target='6'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
+

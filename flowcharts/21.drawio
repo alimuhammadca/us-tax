@@ -1,0 +1,51 @@
+<mxGraphModel><root><mxCell id="0"/><mxCell id="1" parent="0"/>
+
+<!-- Title -->
+<mxCell id="2" value="Form 1040 Line 21 — Total Nonrefundable Credits (2025)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="50" y="10" width="760" height="40" as="geometry"/></mxCell>
+
+<!-- LINE 19 INPUT BOX -->
+<mxCell id="3" value="Form 1040 Line 19&#xa;= Schedule 8812 line 14&#xa;Child Tax Credit / ODC&#xa;Java field: TaxAndCredits.childTaxCredit&#xa;Set by: computeSchedule8812()" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1"><mxGeometry x="50" y="80" width="290" height="90" as="geometry"/></mxCell>
+
+<!-- Schedule 8812 source -->
+<mxCell id="4" value="Schedule 8812 Part I&#xa;line14 = CTC ($2,200/child) + ODC ($500/non-child)&#xa;limited by Credit Limit Worksheet A&#xa;Java: Schedule8812.java&#xa;Method: computeSchedule8812()" style="rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" vertex="1" parent="1"><mxGeometry x="50" y="200" width="290" height="80" as="geometry"/></mxCell>
+
+<!-- LINE 20 INPUT BOX -->
+<mxCell id="5" value="Form 1040 Line 20&#xa;= Schedule 3 line 8&#xa;Other nonrefundable credits (Part I total)&#xa;Java field: TaxAndCredits.otherCreditsSchedule3&#xa;Set by: computeLine20ThroughLine24()" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1"><mxGeometry x="420" y="80" width="300" height="90" as="geometry"/></mxCell>
+
+<!-- Schedule 3 source -->
+<mxCell id="6" value="Schedule 3 Part I (lines 1–8)&#xa;1=Form1116 · 2=Form2441 · 3=Form8863&#xa;4=Form8880 · 5a/5b=Form5695&#xa;6a–6z=other credits · 7=sum(6a..6z)&#xa;line8 = 1+2+3+4+5a+5b+7&#xa;Java: finalizeSchedule3Totals()" style="rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" vertex="1" parent="1"><mxGeometry x="420" y="200" width="300" height="100" as="geometry"/></mxCell>
+
+<!-- LINE 21 COMPUTE BOX -->
+<mxCell id="7" value="Form 1040 Line 21&#xa;= line19 + line20&#xa;= nz(childTaxCredit) + nz(otherCreditsSchedule3)&#xa;Java field: TaxAndCredits.totalCredits&#xa;PDF key: line21_total_credits_add_lines19_20&#xa;PDF field: f2_13[0]&#xa;Stored as null when zero" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="175" y="340" width="320" height="110" as="geometry"/></mxCell>
+
+<!-- LINE 22 OUTPUT BOX -->
+<mxCell id="8" value="Form 1040 Line 22&#xa;= max(0, line18 − line21)&#xa;Java field: TaxAndCredits.taxAfterCredits&#xa;PDF key: line22_tax_less_credits&#xa;PDF field: f2_14[0]" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1"><mxGeometry x="175" y="510" width="320" height="80" as="geometry"/></mxCell>
+
+<!-- LINE 18 INPUT (for line 22) -->
+<mxCell id="9" value="Form 1040 Line 18&#xa;= line16 + line17&#xa;Java field: TaxAndCredits.totalTaxBeforeCredits&#xa;(tax + AMT before any credits)" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1"><mxGeometry x="550" y="510" width="230" height="80" as="geometry"/></mxCell>
+
+<!-- LINE 24 OUTPUT BOX -->
+<mxCell id="10" value="Form 1040 Line 24 (total tax)&#xa;= line22 + line23 (other taxes)&#xa;Java field: TaxAndCredits.totalTax&#xa;Feeds lines 25–38 payment calculations" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1"><mxGeometry x="175" y="650" width="320" height="70" as="geometry"/></mxCell>
+
+<!-- METHOD BOX -->
+<mxCell id="11" value="METHOD: computeLine20ThroughLine24()&#xa;File: TaxReturnComputeService.java ~line 15023&#xa;&#xa;Compute order:&#xa;1. All applyXxxToSchedule3() calls&#xa;2. computeSchedule8812()&#xa;3. finalizeSchedule3Totals()&#xa;4. computeLine20ThroughLine24()  ← HERE&#xa;5. computeLine31ThroughLine38()" style="rounded=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="480" width="110" height="150" as="geometry"/></mxCell>
+
+<!-- Edges: sources → line 19 -->
+<mxCell id="e1" value="" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="4" target="3" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<!-- sources → line 20 -->
+<mxCell id="e2" value="" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="6" target="5" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<!-- line 19 → line 21 -->
+<mxCell id="e3" value="line19" style="edgeStyle=orthogonalEdgeStyle;fontSize=9;" edge="1" source="3" target="7" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<!-- line 20 → line 21 -->
+<mxCell id="e4" value="line20" style="edgeStyle=orthogonalEdgeStyle;fontSize=9;" edge="1" source="5" target="7" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<!-- line 21 → line 22 -->
+<mxCell id="e5" value="line21" style="edgeStyle=orthogonalEdgeStyle;fontSize=9;" edge="1" source="7" target="8" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<!-- line 18 → line 22 -->
+<mxCell id="e6" value="line18" style="edgeStyle=orthogonalEdgeStyle;fontSize=9;" edge="1" source="9" target="8" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<!-- line 22 → line 24 -->
+<mxCell id="e7" value="" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="8" target="10" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- GAPS BOX -->
+<mxCell id="12" value="Identified gaps:&#xa;G1 (LOW) — No Java unit test asserts getTotalCredits() directly.&#xa;G2 (LOW) — line21-total-credits.spec.ts missing retries: 1 directive." style="rounded=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=9;" vertex="1" parent="1"><mxGeometry x="420" y="650" width="360" height="70" as="geometry"/></mxCell>
+
+</root></mxGraphModel>

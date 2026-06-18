@@ -1,0 +1,111 @@
+# Form 8912 - Credit to Holders of Tax Credit Bonds - spouse supplemental form.
+# Use this only for spouse-side additions on an MFJ return. The output remains one joint Form 8912.
+name: bond-credit-spouse
+title: Form 8912 - Bond credit (spouse)
+multiplicity: single
+formName: 8912
+category: deductions
+instructions:
+  - Use this form only when filing jointly and the spouse has additional bond-credit entries or carryforward contribution to add.
+  - The output remains one joint Form 8912 per return.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: spouseHasBondCreditInputs
+        type: boolean
+        required: true
+        label: Does your spouse have additional bond credit information to add?
+
+  - name: carryforward
+    title: Spouse carryforward contribution
+    multiplicity: single
+    showIf: spouseHasBondCreditInputs == true
+    fields:
+      - name: spousePriorYearCarryforwardContribution
+        type: amount
+        required: false
+        label: Spouse prior-year Form 8912 carryforward contribution
+        placeholder: 0.00
+
+  - name: spouse1097BtcEntries
+    title: Spouse Form 1097-BTC entries
+    multiplicity: multiple
+    showIf: spouseHasBondCreditInputs == true
+    fields:
+      - name: issuerName
+        type: text
+        required: false
+        label: Issuer name
+      - name: issuerEin
+        type: text
+        required: false
+        label: Issuer EIN
+      - name: uniqueIdentifier
+        type: text
+        required: false
+        label: Unique identifier
+      - name: creditAmount
+        type: amount
+        required: false
+        label: Credit amount from Form 1097-BTC
+        placeholder: 0.00
+
+  - name: spouseDirectBondEntries
+    title: Spouse directly held bond entries
+    multiplicity: multiple
+    showIf: spouseHasBondCreditInputs == true
+    fields:
+      - name: bondType
+        type: text
+        required: false
+        label: Bond type
+      - name: issuerName
+        type: text
+        required: false
+        label: Bond issuer name
+      - name: issuerCityState
+        type: text
+        required: false
+        label: Bond issuer city and state
+      - name: issuerEin
+        type: text
+        required: false
+        label: Bond issuer EIN
+      - name: issueDate
+        type: date
+        required: false
+        label: Bond issue date
+      - name: maturityDate
+        type: date
+        required: false
+        label: Bond maturity date
+      - name: disposalDate
+        type: date
+        required: false
+        label: Bond disposal date
+      - name: cusipOrPaymentDates
+        type: text
+        required: false
+        label: CUSIP number or payment dates
+      - name: basisAmount
+        type: amount
+        required: false
+        label: Outstanding principal or interest payable
+        placeholder: 0.00
+      - name: creditRatePercent
+        type: amount
+        required: false
+        label: Treasury credit rate percent
+        placeholder: 0.00
+      - name: allocationPercentage
+        type: amount
+        required: false
+        label: Allocation percentage held
+        placeholder: 0.00
+      - name: line19BaseCreditAmount
+        type: amount
+        required: false
+        label: Form 8912 Part IV line 19 base credit amount
+        placeholder: 0.00

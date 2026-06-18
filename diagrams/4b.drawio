@@ -1,0 +1,19 @@
+﻿<mxfile host='app.diagrams.net' modified='2026-03-04T10:16:00.0000000Z' agent='Codex' version='20.8.16' type='device'>
+  <diagram id='4b-flow-ira-taxable' name='Line 4b - IRA distributions (taxable amount)'>
+    <mxGraphModel dx='1400' dy='900' grid='1' gridSize='10' guides='1' tooltips='1' connect='1' arrows='1' fold='1' page='1' pageScale='1' pageWidth='1200' pageHeight='900' math='0' shadow='0'>
+      <root>
+        <mxCell id='0'/>
+        <mxCell id='1' parent='0'/>
+        <mxCell id='2' value='Inputs (User)&#xa;ira-income-taxpayer / ira-income-spouse&#xa;Form 8606 Part I/II/III inputs (basis, distributions, conversions, Roth basis)&#xa;exception amounts: rollover, QCD, HFD&#xa;taxable amount not determined override inputs when needed' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='20' y='20' width='370' height='250' as='geometry'/></mxCell>
+        <mxCell id='3' value='Inputs (Statements/Imports)&#xa;1099-R box2a taxable amounts&#xa;1099-R box2b taxable amount not determined flag&#xa;IRA classification from checkbox + box7 distribution codes&#xa;per-owner statement partition by recipientTIN/SSN' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='20' y='290' width='370' height='220' as='geometry'/></mxCell>
+        <mxCell id='4' value='Reference/Derived Inputs&#xa;4abc.md rules:&#xa;fully taxable path uses 4b only&#xa;Exception 2 requires Form 8606&#xa;MFJ: compute per person then aggregate&#xa;Rounding: roundMoney(); non-negative guards' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='20' y='530' width='370' height='200' as='geometry'/></mxCell>
+        <mxCell id='5' value='Computation&#xa;Per owner taxable_simple from fully-taxable IRA records (typically box2a path)&#xa;When Form 8606 triggers:&#xa;taxable_trad_with_basis = Part I line 15c&#xa;taxable_conv_to_roth = Part II line 18&#xa;taxable_roth = Part III taxable result&#xa;ownerTaxable = taxable_simple + 8606 components&#xa;line4b = roundMoney(ownerTaxable_TP + ownerTaxable_SP)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='430' y='220' width='390' height='320' as='geometry'/></mxCell>
+        <mxCell id='6' value='Outputs&#xa;Form 1040 line 4b (taxable IRA amount)&#xa;Form 8606 outputs generated conditionally:&#xa;tax-return-8606-taxpayer / tax-return-8606-spouse&#xa;Data persisted in tax return payload for preview and PDF generation' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='850' y='240' width='350' height='280' as='geometry'/></mxCell>
+        <mxCell id='7' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='2' target='5'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='8' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='3' target='5'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='9' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='4' target='5'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='10' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='5' target='6'><mxGeometry relative='1' as='geometry'/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

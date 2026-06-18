@@ -1,0 +1,20 @@
+<mxfile host='app.diagrams.net' modified='2026-03-08T11:05:00.0000000Z' agent='Codex' version='20.8.16' type='device'>
+  <diagram id='8-flow-other-incomes' name='Line 8 - Other incomes'>
+    <mxGraphModel dx='1400' dy='900' grid='1' gridSize='10' guides='1' tooltips='1' connect='1' arrows='1' fold='1' page='1' pageScale='1' pageWidth='1300' pageHeight='900' math='0' shadow='0'>
+      <root>
+        <mxCell id='0'/>
+        <mxCell id='1' parent='0'/>
+        <mxCell id='2' value='Inputs (User forms)&#xa;other-incomes-taxpayer&#xa;other-incomes-spouse&#xa;Schedule 1 lines 1-7 fields&#xa;Schedule 1 line 8a-8v and 8z rows&#xa;Out-of-scope flags: Schedule C/F' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='20' y='50' width='360' height='220' as='geometry'/></mxCell>
+        <mxCell id='3' value='Inputs (Statements)&#xa;1099-G, 1099-C, Form 2555, 8853, 8889&#xa;Used for upload-gating validation&#xa;and imported-field support' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='20' y='300' width='360' height='160' as='geometry'/></mxCell>
+        <mxCell id='4' value='Validation gate&#xa;- confirm statements uploaded&#xa;- received vs uploaded consistency&#xa;- block Schedule C / Schedule F (out-of-scope)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8d7da;strokeColor=#842029;fontSize=12;' vertex='1' parent='1'><mxGeometry x='440' y='170' width='300' height='170' as='geometry'/></mxCell>
+        <mxCell id='5' value='Compute Schedule 1 Part I&#xa;line1..line7 aggregated TP+SP&#xa;line8a/8d sign normalization&#xa;line8z sum from repeat rows&#xa;line9 = sum(8a..8z)&#xa;line10 = sum(1..7) + line9' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#d1e7dd;strokeColor=#0f5132;fontSize=12;' vertex='1' parent='1'><mxGeometry x='800' y='150' width='320' height='210' as='geometry'/></mxCell>
+        <mxCell id='6' value='Emit outputs&#xa;Schedule1.additionalIncome&#xa;Schedule1.otherIncomeItems&#xa;Form1040.line8 = Schedule1.line10&#xa;Return forms sidebar includes Schedule 1' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#cfe2ff;strokeColor=#084298;fontSize=12;' vertex='1' parent='1'><mxGeometry x='1160' y='170' width='300' height='170' as='geometry'/></mxCell>
+        <mxCell id='7' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='2' target='4'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='8' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='3' target='4'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='9' value='pass' style='edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;' vertex='1' connectable='0' parent='10'><mxGeometry x='0.15' y='-2' relative='1' as='geometry'><mxPoint x='-4' y='-4' as='offset'/></mxGeometry></mxCell>
+        <mxCell id='10' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='4' target='5'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='11' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='5' target='6'><mxGeometry relative='1' as='geometry'/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

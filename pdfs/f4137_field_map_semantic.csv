@@ -1,0 +1,35 @@
+old_name,new_name,tooltip,page_index,rect_llx,rect_lly,rect_urx,rect_ury
+f1_1[0],taxpayer_name,Name of person who received tips,0,36.000,677.999,467.250,692.000
+f1_2[0],taxpayer_ssn,Social security number,0,468.000,677.999,576.000,692.000
+f1_3[0],employer_a_name,Line 1 A: employer name,0,65.550,611.997,301.650,635.998
+f1_4[0],employer_a_ein,Line 1 A: employer EIN,0,302.400,611.997,388.800,623.998
+f1_5[0],employer_a_total_cash_charge_tips,Line 1 A col (c): total cash and charge tips received,0,388.800,611.997,481.650,623.998
+f1_6[0],employer_a_reported_cash_charge_tips,Line 1 A col (d): cash and charge tips reported to employer,0,482.400,611.997,576.000,623.998
+f1_7[0],employer_b_name,Line 1 B: employer name,0,65.550,587.996,301.650,611.997
+f1_8[0],employer_b_ein,Line 1 B: employer EIN,0,302.400,587.996,388.800,599.997
+f1_9[0],employer_b_total_cash_charge_tips,Line 1 B col (c): total cash and charge tips received,0,388.800,587.996,481.650,599.997
+f1_10[0],employer_b_reported_cash_charge_tips,Line 1 B col (d): cash and charge tips reported to employer,0,482.400,587.996,576.000,599.997
+f1_11[0],employer_c_name,Line 1 C: employer name,0,65.550,563.995,301.650,587.996
+f1_12[0],employer_c_ein,Line 1 C: employer EIN,0,302.400,563.995,388.800,575.996
+f1_13[0],employer_c_total_cash_charge_tips,Line 1 C col (c): total cash and charge tips received,0,388.800,563.995,481.650,575.996
+f1_14[0],employer_c_reported_cash_charge_tips,Line 1 C col (d): cash and charge tips reported to employer,0,482.400,563.995,576.000,575.996
+f1_15[0],employer_d_name,Line 1 D: employer name,0,65.550,539.994,301.650,563.995
+f1_16[0],employer_d_ein,Line 1 D: employer EIN,0,302.400,539.994,388.800,551.995
+f1_17[0],employer_d_total_cash_charge_tips,Line 1 D col (c): total cash and charge tips received,0,388.800,539.994,481.650,551.995
+f1_18[0],employer_d_reported_cash_charge_tips,Line 1 D col (d): cash and charge tips reported to employer,0,482.400,539.994,576.000,551.995
+f1_19[0],employer_e_name,Line 1 E: employer name,0,65.550,515.993,301.650,539.994
+f1_20[0],employer_e_ein,Line 1 E: employer EIN,0,302.400,515.993,388.800,527.994
+f1_21[0],employer_e_total_cash_charge_tips,Line 1 E col (c): total cash and charge tips received,0,388.800,515.993,481.650,527.994
+f1_22[0],employer_e_reported_cash_charge_tips,Line 1 E col (d): cash and charge tips reported to employer,0,482.400,515.993,576.000,527.994
+f1_23[0],line2_amount,Form 4137 line 2 amount,0,410.400,492.001,481.650,504.000
+f1_24[0],line3_amount,Form 4137 line 3 amount,0,504.000,468.000,576.000,479.999
+f1_25[0],line4_amount,Form 4137 line 4 amount,0,504.000,444.002,576.000,456.001
+f1_26[0],line5_amount,Form 4137 line 5 amount,0,504.000,420.001,576.000,432.000
+f1_27[0],line6_amount,Form 4137 line 6 amount,0,504.000,408.002,576.000,420.001
+f1_28[0],line7_amount,Form 4137 line 7 amount,0,481.400,396.000,482.400,407.999
+f1_29[0],line8_amount,Form 4137 line 8 amount,0,410.400,360.000,481.650,371.999
+f1_30[0],line9_amount,Form 4137 line 9 amount,0,504.000,348.001,576.000,360.000
+f1_31[0],line10_amount,Form 4137 line 10 amount,0,504.000,324.000,576.000,335.999
+f1_32[0],line11_amount,Form 4137 line 11 amount,0,504.000,312.001,576.000,324.000
+f1_33[0],line12_amount,Form 4137 line 12 amount,0,504.000,300.002,576.000,312.001
+f1_34[0],line13_amount,Form 4137 line 13 amount — carry to Schedule 2 line 5,0,504.000,276.001,576.000,288.000

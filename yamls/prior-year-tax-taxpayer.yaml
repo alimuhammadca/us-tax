@@ -1,0 +1,137 @@
+formId: prior-year-tax-taxpayer
+title: Prior Year Tax & Estimated Payments
+person: taxpayer
+
+sections:
+  - id: screening
+    title: Prior Year Tax Information
+    description: >
+      Enter your 2024 AGI and total tax so the system can compute the prior-year safe harbor.
+      If your total 2025 withholding and estimated payments fall below the required annual
+      payment, an underpayment penalty may apply. All fields are optional — leave blank if
+      you do not have your 2024 return available.
+    fields:
+      - id: priorYearAgi
+        label: Your 2024 Adjusted Gross Income
+        type: number
+        required: false
+        helpText: >
+          Enter the AGI from your 2024 tax return. If your 2024 AGI was more than $150,000
+          ($75,000 if you filed as Married Filing Separately), the safe-harbor threshold
+          increases from 100% to 110% of your 2024 tax — meaning you need to have paid
+          more to avoid a penalty. Leave blank if you do not know this amount.
+        hint: >
+          If it was over $150,000 ($75,000 MFS), the safe-harbor threshold is 110% of
+          your 2024 tax instead of 100%.
+
+      - id: priorYearTaxLiability
+        label: Your 2024 Total Tax Liability
+        type: number
+        required: false
+        helpText: >
+          Enter the total tax from your 2024 return. The required annual payment is the
+          smaller of 90% of your 2025 tax or 100% (or 110% if your 2024 AGI exceeded
+          $150,000) of this amount. Leave blank if unavailable — the system will use
+          only the 90% current-year threshold.
+        hint: >
+          Leave blank if unknown — the system will use only the 90% current-year threshold.
+
+      - id: waiveFullPenalty
+        label: Do you want to request a full waiver of the underpayment penalty?
+        type: boolean
+        required: false
+        helpText: >
+          You may request a full penalty waiver if you had unusual circumstances that
+          prevented you from making timely estimated payments — for example, a casualty,
+          disaster, or other extraordinary situation. The IRS reviews all waiver requests
+          and may require documentation. Most filers do not need this waiver.
+
+      - id: waivePartialPenalty
+        label: Do you want to request a partial waiver of the underpayment penalty?
+        type: boolean
+        required: false
+        helpText: >
+          A partial waiver may be available if you meet the requirements under the
+          annualized income installment method or had special circumstances for part of
+          the year. Select Yes only if your tax advisor has recommended it. This causes
+          the IRS to review whether a reduced penalty is appropriate.
+
+      - id: jointSeparateMismatch
+        label: Did your filing status change between 2024 and 2025?
+        type: boolean
+        required: false
+        helpText: >
+          Answer Yes if you filed a joint return in 2024 but are filing separately in
+          2025, or vice versa. This affects how the prior-year safe harbor is calculated
+          because the 2024 total tax was computed under a different filing status than
+          your 2025 return.
+
+  - id: estimatedPayments
+    title: 2025 Estimated Tax Payments
+    multiplicity: single
+    description: >
+      Screening gate + individual payment amounts. Do not include withholding from W-2s
+      or 1099s — those are captured automatically.
+    fields:
+      - id: madeEstimatedPayments
+        label: Did you make any 2025 estimated tax payments directly to the IRS?
+        type: boolean
+        required: false
+        helpText: >
+          Estimated tax payments are voluntary quarterly payments sent directly to the IRS
+          to cover income not subject to withholding — such as investment income, rental
+          income, or large capital gains. If all of your income is from W-2 wages with
+          sufficient withholding, you likely did not make estimated payments. Do not
+          include extension payments made via Form 4868 — those are tracked separately.
+
+      - id: payment1Amount
+        showIf: madeEstimatedPayments == true
+        label: Period 1 payment (due April 15, 2025)
+        type: number
+        required: false
+        helpText: >
+          Enter the estimated tax payment you made for the January–March 2025 period.
+          This payment was due April 15, 2025. Leave blank if you made no payment for
+          this period.
+
+      - id: payment2Amount
+        showIf: madeEstimatedPayments == true
+        label: Period 2 payment (due June 16, 2025)
+        type: number
+        required: false
+        helpText: >
+          Enter the estimated tax payment you made for the April–May 2025 period.
+          This payment was due June 16, 2025 (June 15 fell on a Sunday). Leave blank
+          if you made no payment for this period.
+
+      - id: payment3Amount
+        showIf: madeEstimatedPayments == true
+        label: Period 3 payment (due September 15, 2025)
+        type: number
+        required: false
+        helpText: >
+          Enter the estimated tax payment you made for the June–August 2025 period.
+          This payment was due September 15, 2025. Leave blank if you made no payment
+          for this period.
+
+      - id: payment4Amount
+        showIf: madeEstimatedPayments == true
+        label: Period 4 payment (due January 15, 2026)
+        type: number
+        required: false
+        helpText: >
+          Enter the estimated tax payment you made for the September–December 2025 period.
+          This payment was due January 15, 2026. You are not required to make this payment
+          if you file and pay your full balance by February 2, 2026.
+
+  - id: computedOutputs
+    readOnly: true
+    computed: true
+    fields:
+      - id: requiredAnnualPayment
+        label: Required Annual Payment
+        type: number
+
+      - id: totalPenalty
+        label: Estimated Tax Penalty
+        type: number

@@ -1,0 +1,239 @@
+<mxGraphModel dx='1400' dy='900' grid='1' gridSize='10' guides='1' tooltips='1' connect='1' arrows='1' fold='1' page='1' pageScale='1' pageWidth='1654' pageHeight='1169' math='0' shadow='0'>
+  <root>
+    <mxCell id='0'/>
+    <mxCell id='1' parent='0'/>
+
+    <!-- ══ TITLE ══ -->
+    <mxCell id='title' value='Form 1040 Line 1e — Taxable Dependent Care Benefits (Form 2441)&#xa;Two-pass: computeDependentCareBenefits() [Phase 1]  +  finalizeForm2441PartII() [Phase 2]' style='text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1' vertex='1' parent='1'>
+      <mxGeometry x='150' y='20' width='960' height='50' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ PHASE 1 HEADER ══ -->
+    <mxCell id='ph1hdr' value='PHASE 1 — computeDependentCareBenefits()  ·  called at prepare() before AGI is available' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;fontStyle=1' vertex='1' parent='1'>
+      <mxGeometry x='270' y='85' width='700' height='30' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ START ══ -->
+    <mxCell id='n01' value='START: computeDependentCareBenefits(data, w2Entries, ssn, flags)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='330' y='130' width='500' height='45' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ GATE 1: data null ══ -->
+    <mxCell id='n02' value='data == null?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='475' y='196' width='210' height='65' as='geometry'/>
+    </mxCell>
+    <mxCell id='n02x' value='return null&#xa;[no childcare-expenses personal form saved]' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8d7da;strokeColor=#842029;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='745' y='204' width='260' height='50' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ READ GENERAL QUESTIONS ══ -->
+    <mxCell id='n03' value='Read generalQuestions section:&#xa;  hasDependentCareProviders, filingStatus (isMfj, isMfs)&#xa;  marriedFilingSeparatelyException' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+      <mxGeometry x='330' y='286' width='500' height='60' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ PART II SETUP HEADER ══ -->
+    <mxCell id='ph2setup' value='PART II SETUP — Qualifying Persons and Care Expenses (lines 3–6, 9b)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;fontStyle=1' vertex='1' parent='1'>
+      <mxGeometry x='310' y='372' width='540' height='28' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ PART II COMPUTE ══ -->
+    <mxCell id='n04' value='Read careProviders[] and qualifyingPersons[]:&#xa;  person1 qualified expenses (cap $3,000); person2 qualified expenses (cap $3,000)&#xa;  deemedIncomeTaxpayer / deemedIncomeSpouse (student or disabled — provided by user)&#xa;  line9b = priorYearExpensesPaidThisYear&#xa;&#xa;line3 = min(person1Expenses, $3,000)&#xa;line4 = min(person2Expenses, $3,000)&#xa;line5 = line3 + line4  (cap $6,000)&#xa;line6 = min(line3, line4, line5)   [smallest of lines 3 / 4 / 5]' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+      <mxGeometry x='290' y='415' width='580' height='150' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ GATE 2: didReceiveDependentCareBenefits ══ -->
+    <mxCell id='n05' value='didReceiveDependentCare&#xa;Benefits == true?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='470' y='587' width='220' height='70' as='geometry'/>
+    </mxCell>
+    <mxCell id='n05x' value='No employer benefits:&#xa;  line1e = null  (Part III lines 12–31 = null)&#xa;  Part II credit still computed in Phase 2' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='745' y='595' width='255' height='55' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ PART III HEADER ══ -->
+    <mxCell id='ph3hdr' value='PART III — Employer-Provided Dependent Care Benefits Exclusion (lines 12–31)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;fontStyle=1' vertex='1' parent='1'>
+      <mxGeometry x='290' y='685' width='580' height='28' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ W-2 BOX 10 + LINE 12 (Item 1: box-1 deduction) ══ -->
+    <mxCell id='n06' value='Aggregate W-2 box 10 across all W-2 entries:&#xa;  totalBenefits = Σ dependentCareBenefitsAmount (over all W-2 entries)&#xa;  [Blocking flag: DEPENDENT_CARE_BENEFITS_FORM_REQUIRED if totalBenefits &gt; 0 and form absent]&#xa;&#xa;Read: alreadyIncludedInBox1Amount  (optional — amounts already taxed in W-2 box 1)&#xa;&#xa;★ line12 = max(0, totalBenefits − alreadyIncludedInBox1Amount)&#xa;   [Box-1 deduction prevents double-taxation of amounts already in W-2 box 1]' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+      <mxGeometry x='270' y='728' width='620' height='130' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ LINES 13–15 ══ -->
+    <mxCell id='n07' value='Read: line13 = priorYearUnusedBenefits  (user — benefits carried from prior year)&#xa;Read: line14 = amountForfeitedOrCarriedForward  (user — forfeited or carried to next plan year)&#xa;line15 = max(0, line12 + line13 − line14)   [net benefits available for exclusion]' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+      <mxGeometry x='270' y='878' width='620' height='65' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ LINES 16–17 ══ -->
+    <mxCell id='n08' value='line16 = line16QualifiedExpensesForBenefits  (user override)&#xa;         ?? sumQualifiedExpenses(qualifyingPersons)   [falls back to Part II persons sum]&#xa;line17 = min(line15, line16)   [benefits limited to actual qualified expenses incurred]' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+      <mxGeometry x='270' y='963' width='620' height='65' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ LINES 18–19: EARNED INCOME (Item 3: additional earned income) ══ -->
+    <mxCell id='n09' value='★ Lines 18 / 19 — Earned income (additional non-W-2 income included):&#xa;&#xa;  line18 = sumW2WagesBySsn(taxpayerSsn, w2Entries)&#xa;           + additionalEarnedIncomeTaxpayer   [non-W-2 earned income for taxpayer]&#xa;           → max(line18, deemedIncomeTaxpayer)   [if taxpayer is full-time student or disabled]&#xa;&#xa;  if MFJ:&#xa;    line19 = sumW2WagesBySsn(spouseSsn, w2Entries)&#xa;             + additionalEarnedIncomeSpouse   [non-W-2 earned income for spouse]&#xa;             → max(line19, deemedIncomeSpouse)   [if spouse is student or disabled]&#xa;  else (single / HOH / MFS):&#xa;    line19 = line18   [use taxpayer earned income for both lines]' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+      <mxGeometry x='250' y='1048' width='660' height='185' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ LINE 20 ══ -->
+    <mxCell id='n10' value='line20 = min(line17, line18, line19)   [limited to smallest of expense cap, taxpayer earned, spouse earned]' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='270' y='1253' width='620' height='40' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ GATE 3: planMaxExcludable (Item 2: plan max cap) ══ -->
+    <mxCell id='n11' value='planMaxExcludable&#xa;!= null?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='470' y='1313' width='220' height='65' as='geometry'/>
+    </mxCell>
+    <mxCell id='n11y' value='★ line21 = min(statutoryCap, planMaxExcludable)&#xa;  [employer plan caps exclusion below statutory limit]' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='745' y='1320' width='295' height='52' as='geometry'/>
+    </mxCell>
+    <mxCell id='n11n' value='line21 = statutoryCap&#xa;  where: MFS (no exception) → $2,500;  all other filing statuses → $5,000' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='270' y='1400' width='620' height='45' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ GATE 4: §129(d) nondiscrimination test (Item 5) ══ -->
+    <mxCell id='n12' value='employerPlanFailed&#xa;129dTest == true?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='470' y='1467' width='220' height='68' as='geometry'/>
+    </mxCell>
+    <mxCell id='n12y' value='★ §129(d) nondiscrimination test failure:&#xa;  line25 = 0   [no exclusion allowed]&#xa;  line26 = line15   [full benefit amount is taxable → line 1e]' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+      <mxGeometry x='745' y='1470' width='300' height='65' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ NORMAL PATH LINES 22–26 ══ -->
+    <mxCell id='n13' value='Normal path:&#xa;  line22 = line12  (employer contributions this year per W-2 box 10)&#xa;  line23 = line22  (total employer contributions)&#xa;  line24 = min(line23, line21)&#xa;  line25 = min(line20, line21)   [excludable amount: limited by earned income and plan cap]&#xa;  line26 = max(0, line15 − line25)   [taxable benefits → Form 1040 line 1e]' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+      <mxGeometry x='250' y='1557' width='660' height='115' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ LINES 27–31 (adjusted expenses for Part II credit) ══ -->
+    <mxCell id='n14' value='Adjusted Part II expenses for credit (lines 27–31):&#xa;  line27 = person1 qualified expenses (from qualifying persons)&#xa;  line28 = person2 qualified expenses&#xa;  line29 = line27 + line28&#xa;  line30 = max(0, line29 − line26)   [reduce by amount already excluded as Part III benefit]&#xa;  line31 = min(line30, line6)   [capped to Part II smallest-of-3/4/5; fed back into Part II credit computation]' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+      <mxGeometry x='250' y='1693' width='660' height='115' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ PHASE 1 OUTPUT ══ -->
+    <mxCell id='n15' value='Phase 1 output:&#xa;  form1040.income.dependentCareBenefits = roundMoney(line26)   [line 1e]&#xa;  form2441 Part III lines 12–31 set; Part II line 6 set&#xa;  Part II lines 7 / 8 / 9a / 9c / 10 / 11 = null   (Phase 2 will populate after AGI is computed)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+      <mxGeometry x='250' y='1828' width='660' height='70' as='geometry'/>
+    </mxCell>
+
+    <!-- ══════════════════════════════════════════════════════════════ -->
+    <!-- ══ PHASE 2 ══ -->
+    <!-- ══════════════════════════════════════════════════════════════ -->
+
+    <!-- ══ PHASE 2 HEADER ══ -->
+    <mxCell id='ph2hdr' value='PHASE 2 — finalizeForm2441PartII()  ·  called AFTER applyForeignTaxCreditToSchedule3(),  BEFORE applyChildDependentCareCredit() and applyForm8880ToSchedule3()' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;fontStyle=1' vertex='1' parent='1'>
+      <mxGeometry x='160' y='1930' width='840' height='30' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ START PHASE 2 ══ -->
+    <mxCell id='n16' value='START: finalizeForm2441PartII(dependentCare, form1040, schedule3)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='310' y='1976' width='540' height='45' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ GATE 5: form2441 null ══ -->
+    <mxCell id='n17' value='form2441 == null?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='475' y='2042' width='210' height='65' as='geometry'/>
+    </mxCell>
+    <mxCell id='n17x' value='return (no-op)&#xa;[no form 2441 data from Phase 1]' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8d7da;strokeColor=#842029;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='745' y='2050' width='245' height='50' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ GATE 6: AGI null ══ -->
+    <mxCell id='n18' value='AGI (line 11b) == null?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='455' y='2128' width='250' height='65' as='geometry'/>
+    </mxCell>
+    <mxCell id='n18x' value='return (no-op)&#xa;[AGI not yet computed — should not occur in normal pipeline]' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8d7da;strokeColor=#842029;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='745' y='2136' width='295' height='50' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ READ PHASE 2 INPUTS ══ -->
+    <mxCell id='n19' value='Read:&#xa;  agi = form1040.adjustments.line11bAmountFromLine11aAdjustedGrossIncome&#xa;  line6 = form2441.line6SmallestOf3_4_5   (set in Phase 1)&#xa;  line9b = form2441.line9bPriorYearExpensesPaidThisYear   (set in Phase 1)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+      <mxGeometry x='290' y='2218' width='580' height='75' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ APPLICABLE PERCENTAGE TABLE ══ -->
+    <mxCell id='n20' value='dependentCareApplicablePercentage(agi) — 2025 table:&#xa;  AGI ≤ $15,000                  → 35%&#xa;  AGI $15,001–$17,000            → 34%&#xa;  $17,001–$19,000                → 33%   …  −1% per $2,000 bracket&#xa;  AGI $43,001–$45,000            → 21%&#xa;  AGI &gt; $45,000                  → 20%   [floor; does not reduce further]&#xa;  line8 = applicable percentage (e.g. 0.35)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+      <mxGeometry x='270' y='2313' width='620' height='125' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ LINES 9A, 9C ══ -->
+    <mxCell id='n21' value='line9a = multiply(line6, line8)   [credit base = adjusted expenses × applicable percentage]&#xa;line9c = addNonNull(line9a, line9b)   [add prior-year expenses if any]' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+      <mxGeometry x='290' y='2458' width='580' height='55' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ CREDIT LIMIT WORKSHEET (CLW) ══ -->
+    <mxCell id='n22' value='Credit Limit Worksheet (CLW) — line 10:&#xa;  totalTaxBeforeCredits = form1040.taxAndCredits.totalTaxBeforeCredits   (line 18)&#xa;&#xa;  priorCredits = sumSchedule3NonrefundableCreditsExcluding5695(schedule3)&#xa;    → INCLUDES: foreignTaxCredit (Schedule 3 line 1 — already applied at this point)&#xa;    → EXCLUDES: childDependentCareCredit (not yet applied — set by applyChildDependentCareCredit)&#xa;    → EXCLUDES: Form 5695 residential energy credit&#xa;&#xa;  line10 = roundMoney(max(0, totalTaxBeforeCredits − priorCredits))' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+      <mxGeometry x='250' y='2533' width='660' height='145' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ LINE 11 + SET FIELDS ══ -->
+    <mxCell id='n23' value='line11 = roundMoney(min(line9c, line10))   [credit limited to remaining tax liability]&#xa;&#xa;Set on form2441 object (in-place mutation):&#xa;  line7Agi                    = roundMoney(agi)&#xa;  line8ApplicablePercentage   = line8&#xa;  line9aLine6TimesPercentage  = roundMoney(line9a)&#xa;  line9cTotalCreditBeforeLimit = roundMoney(line9c)&#xa;  line10TaxLiabilityLimit     = line10&#xa;  line11ChildDependentCareCredit = roundMoney(line11)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+      <mxGeometry x='270' y='2698' width='620' height='140' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ WIRE-UP HEADER ══ -->
+    <mxCell id='phwirehdr' value='WIRE-UP — applyChildDependentCareCredit()  ·  called immediately after finalizeForm2441PartII()' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;fontStyle=1' vertex='1' parent='1'>
+      <mxGeometry x='270' y='2865' width='620' height='28' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ APPLY CREDIT TO SCHEDULE 3 ══ -->
+    <mxCell id='n24' value='schedule3.nonrefundableCredits.childDependentCareCredit = form2441.line11&#xa;→ Schedule 3 line 2   (feeds Form 1040 line 20 via finalizeSchedule3Totals)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+      <mxGeometry x='270' y='2908' width='620' height='52' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ DOWNSTREAM WIRING ══ -->
+    <mxCell id='n25' value='Downstream wiring:&#xa;→ form1040.income.dependentCareBenefits                          (Form 1040 line 1e — taxable benefits)&#xa;→ form2441  (full model: Part II lines 3–11; Part III lines 12–31; care providers; qualifying persons)&#xa;→ schedule3.nonrefundableCredits.childDependentCareCredit        (Schedule 3 line 2)&#xa;→ line 1e contributes to line 1z  →  line 9 (total income)&#xa;→ Schedule 3 line 2  →  Form 1040 line 20 (total nonrefundable credits) via finalizeSchedule3Totals&#xa;→ applyForm8880ToSchedule3 CLW reads childDependentCareCredit AFTER it is set here (correct ordering)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#d1e7dd;strokeColor=#0f5132;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+      <mxGeometry x='240' y='2978' width='680' height='120' as='geometry'/>
+    </mxCell>
+
+    <!-- ══════════════════════════════════════ -->
+    <!-- ══ EDGES — Phase 1 ══ -->
+    <!-- ══════════════════════════════════════ -->
+    <mxCell id='e01' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n01' target='n02' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e02' value='YES' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n02' target='n02x' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e03' value='NO' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n02' target='n03' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e04' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n03' target='ph2setup' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e05' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='ph2setup' target='n04' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e06' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n04' target='n05' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e07' value='NO' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n05' target='n05x' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e08' value='YES' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n05' target='ph3hdr' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e09' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='ph3hdr' target='n06' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e10' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n06' target='n07' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e11' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n07' target='n08' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e12' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n08' target='n09' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e13' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n09' target='n10' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e14' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n10' target='n11' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e15' value='YES' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n11' target='n11y' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e16' value='NO' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n11' target='n11n' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <!-- Both planMax paths converge at §129(d) gate -->
+    <mxCell id='e17' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n11y' target='n12' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e18' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n11n' target='n12' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <!-- §129(d) paths: YES → bypass, NO → normal -->
+    <mxCell id='e19' value='YES' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n12' target='n12y' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e20' value='NO' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n12' target='n13' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <!-- Both §129(d) paths merge at lines 27-31 -->
+    <mxCell id='e21' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n12y' target='n14' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e22' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n13' target='n14' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <!-- Lines 27-31 → Phase 1 output -->
+    <mxCell id='e23' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n14' target='n15' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <!-- No-benefits path also merges at Phase 1 output -->
+    <mxCell id='e23b' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n05x' target='n15' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <!-- Phase 1 output → Phase 2 header -->
+    <mxCell id='e24' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n15' target='ph2hdr' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+
+    <!-- ══════════════════════════════════════ -->
+    <!-- ══ EDGES — Phase 2 ══ -->
+    <!-- ══════════════════════════════════════ -->
+    <mxCell id='e25' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='ph2hdr' target='n16' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e26' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n16' target='n17' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e27' value='YES' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n17' target='n17x' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e28' value='NO' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n17' target='n18' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e29' value='YES' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n18' target='n18x' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e30' value='NO' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n18' target='n19' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e31' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n19' target='n20' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e32' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n20' target='n21' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e33' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n21' target='n22' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e34' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n22' target='n23' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e35' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n23' target='phwirehdr' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e36' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='phwirehdr' target='n24' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e37' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n24' target='n25' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+
+  </root>
+</mxGraphModel>

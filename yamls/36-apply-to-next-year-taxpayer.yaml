@@ -1,0 +1,31 @@
+formId: 36-apply-to-next-year
+label: Apply overpayment to next year
+
+sections:
+  - id: applyToNextYear
+    label: Apply overpayment to 2026 estimated tax
+    fields:
+      - id: electsApplyToNextYear
+        label: Do you want to apply part or all of your overpayment to your 2026 estimated tax?
+        type: boolean
+        required: true
+        helpText: >
+          If you paid more tax than you owed in 2025, you can apply some or all of the
+          overpayment to your 2026 estimated taxes instead of receiving it as a refund
+          check. This is an irrevocable election — once the IRS credits the amount to
+          2026, you cannot change your mind and request it back as a refund. Most filers
+          choose to receive the full refund and make separate estimated payments.
+
+      - id: amountToApply
+        label: Amount to apply to your 2026 estimated tax
+        type: currency
+        required: false
+        showIf: "electsApplyToNextYear == true"
+        helpText: >
+          Enter the dollar amount you want the IRS to credit toward your first 2026
+          estimated tax installment (due April 15, 2026). This cannot exceed your total
+          overpayment. If you want to direct it to a later 2026 quarter, attach a
+          statement to your return specifying the quarter.
+        hint: >
+          Cannot exceed your total overpayment amount. The backend enforces this ceiling
+          automatically when you compute your return.

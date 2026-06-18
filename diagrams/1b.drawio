@@ -1,0 +1,79 @@
+<mxfile host='app.diagrams.net' modified='2026-04-09T00:00:00.000Z' agent='Claude' version='20.8.16' type='device'>
+  <diagram id='86b66387b1dd40e1' name='Line 1b - Household employee wages (not on W-2)'>
+    <mxGraphModel dx='1500' dy='1000' grid='1' gridSize='10' guides='1' tooltips='1' connect='1' arrows='1' fold='1' page='1' pageScale='1' pageWidth='1400' pageHeight='1200' math='0' shadow='0'>
+      <root>
+        <mxCell id='0'/>
+        <mxCell id='1' parent='0'/>
+
+        <!-- START -->
+        <mxCell id='start' value='START&#xa;employment-income-{taxpayer|spouse}' style='ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c84b8;fontSize=12;fontStyle=1;' vertex='1' parent='1'><mxGeometry x='500' y='20' width='280' height='60' as='geometry'/></mxCell>
+
+        <!-- Gate 1: hasEmploymentIncome -->
+        <mxCell id='g1' value='hasEmploymentIncome = true?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;' vertex='1' parent='1'><mxGeometry x='510' y='120' width='260' height='80' as='geometry'/></mxCell>
+        <mxCell id='e_start_g1' style='endArrow=block;html=1;' edge='1' source='start' target='g1' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+
+        <!-- Gate 1 → No: null -->
+        <mxCell id='null1' value='line 1b = null&#xa;(no employment income)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;' vertex='1' parent='1'><mxGeometry x='840' y='130' width='200' height='60' as='geometry'/></mxCell>
+        <mxCell id='e_g1_no' value='No' style='endArrow=block;html=1;exitX=1;exitY=0.5;' edge='1' source='g1' target='null1' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+
+        <!-- Gate 2: householdWork -->
+        <mxCell id='g2' value='householdWork = true?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;' vertex='1' parent='1'><mxGeometry x='510' y='240' width='260' height='80' as='geometry'/></mxCell>
+        <mxCell id='e_g1_yes' value='Yes' style='endArrow=block;html=1;' edge='1' source='g1' target='g2' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+
+        <!-- Gate 2 → No: null -->
+        <mxCell id='null2' value='line 1b = null&#xa;(no household work)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;' vertex='1' parent='1'><mxGeometry x='840' y='250' width='200' height='60' as='geometry'/></mxCell>
+        <mxCell id='e_g2_no' value='No' style='endArrow=block;html=1;exitX=1;exitY=0.5;' edge='1' source='g2' target='null2' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+
+        <!-- Gate 3: control test -->
+        <mxCell id='g3' value='householdEmployeeUnderControlTest = true?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;' vertex='1' parent='1'><mxGeometry x='510' y='360' width='260' height='80' as='geometry'/></mxCell>
+        <mxCell id='e_g2_yes' value='Yes' style='endArrow=block;html=1;' edge='1' source='g2' target='g3' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+
+        <!-- Gate 3 → No: blocking flag + Schedule C note -->
+        <mxCell id='flag_se' value='Blocking flag:&#xa;HOUSEHOLD_WORK_SELF_EMPLOYMENT_{TAXPAYER|SPOUSE}&#xa;&#xa;Worker appears self-employed.&#xa;→ Route to Schedule C (out of scope)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;' vertex='1' parent='1'><mxGeometry x='840' y='350' width='280' height='100' as='geometry'/></mxCell>
+        <mxCell id='e_g3_no' value='No' style='endArrow=block;html=1;exitX=1;exitY=0.5;' edge='1' source='g3' target='flag_se' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+
+        <!-- Gate 4: receivedW2 -->
+        <mxCell id='g4' value='householdReceivedW2 = false?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;' vertex='1' parent='1'><mxGeometry x='510' y='480' width='260' height='80' as='geometry'/></mxCell>
+        <mxCell id='e_g3_yes' value='Yes' style='endArrow=block;html=1;' edge='1' source='g3' target='g4' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+
+        <!-- Gate 4 → No (W-2 received): → line 1a -->
+        <mxCell id='line1a' value='Wages belong on line 1a (W-2 box 1)&#xa;line 1b = null for this person' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;' vertex='1' parent='1'><mxGeometry x='840' y='490' width='240' height='60' as='geometry'/></mxCell>
+        <mxCell id='e_g4_no' value='No&#xa;(W-2 received)' style='endArrow=block;html=1;exitX=1;exitY=0.5;' edge='1' source='g4' target='line1a' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+
+        <!-- Gate 5: MFS -->
+        <mxCell id='g5' value='Filing status = MFS?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;' vertex='1' parent='1'><mxGeometry x='510' y='600' width='260' height='80' as='geometry'/></mxCell>
+        <mxCell id='e_g4_yes' value='Yes&#xa;(no W-2)' style='endArrow=block;html=1;' edge='1' source='g4' target='g5' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+
+        <!-- Gate 5 → Yes: skip spouse -->
+        <mxCell id='mfs_note' value='Aggregate taxpayer employers only.&#xa;Spouse employers skipped — MFS filers&#xa;each file their own return.' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;' vertex='1' parent='1'><mxGeometry x='840' y='610' width='260' height='70' as='geometry'/></mxCell>
+        <mxCell id='e_g5_yes' value='Yes' style='endArrow=block;html=1;exitX=1;exitY=0.5;' edge='1' source='g5' target='mfs_note' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+
+        <!-- Per-employer loop -->
+        <mxCell id='loop' value='For each employer in householdEmployers[]' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;' vertex='1' parent='1'><mxGeometry x='510' y='720' width='260' height='60' as='geometry'/></mxCell>
+        <mxCell id='e_g5_no' value='No (MFJ/Single/HOH)' style='endArrow=block;html=1;' edge='1' source='g5' target='loop' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e_mfs_loop' style='endArrow=block;html=1;exitX=0.5;exitY=1;entryX=1;entryY=0.5;' edge='1' source='mfs_note' target='loop' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+
+        <!-- Gate 6: reportedOnForm8919 collision guard -->
+        <mxCell id='g6' value='employer.reportedOnForm8919 = true?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;' vertex='1' parent='1'><mxGeometry x='510' y='820' width='260' height='80' as='geometry'/></mxCell>
+        <mxCell id='e_loop_g6' style='endArrow=block;html=1;' edge='1' source='loop' target='g6' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+
+        <!-- Gate 6 → Yes: skip employer (collision guard) -->
+        <mxCell id='collision' value='SKIP this employer.&#xa;Collision guard: wages already reported&#xa;on Form 8919 line 1g. Including here&#xa;would double-count in line 1z.' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;' vertex='1' parent='1'><mxGeometry x='840' y='820' width='260' height='90' as='geometry'/></mxCell>
+        <mxCell id='e_g6_yes' value='Yes&#xa;(on Form 8919)' style='endArrow=block;html=1;exitX=1;exitY=0.5;' edge='1' source='g6' target='collision' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+
+        <!-- Accumulate wages -->
+        <mxCell id='accum' value='total += employer.wages' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;' vertex='1' parent='1'><mxGeometry x='510' y='940' width='260' height='60' as='geometry'/></mxCell>
+        <mxCell id='e_g6_no' value='No&#xa;(include)' style='endArrow=block;html=1;' edge='1' source='g6' target='accum' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+
+        <!-- Output -->
+        <mxCell id='out' value='line 1b = roundHalfUp(total)&#xa;→ Form 1040 line 1b&#xa;→ Form 1040 line 1z (total wages)&#xa;→ Form 1040 line 9 (total income)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c84b8;fontSize=12;fontStyle=1;' vertex='1' parent='1'><mxGeometry x='490' y='1040' width='300' height='90' as='geometry'/></mxCell>
+        <mxCell id='e_accum_out' style='endArrow=block;html=1;' edge='1' source='accum' target='out' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+
+        <!-- Reference data box -->
+        <mxCell id='ref' value='Reference Data&#xa;W-2 threshold (2025): $2,800&#xa;(employer obligation; NOT eligibility gate)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=11;fontStyle=2;' vertex='1' parent='1'><mxGeometry x='100' y='480' width='280' height='80' as='geometry'/></mxCell>
+        <mxCell id='e_ref' style='endArrow=open;dashed=1;html=1;' edge='1' source='ref' target='g4' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

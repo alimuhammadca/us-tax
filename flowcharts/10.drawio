@@ -1,0 +1,160 @@
+<mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+
+    <!-- Title -->
+    <mxCell id="title" value="Form 1040 Line 10 — Schedule 1 Part II Adjustments to Income (2025) — Updated 2026-04-17" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="200" y="20" width="1000" height="30" as="geometry" />
+    </mxCell>
+
+    <!-- START -->
+    <mxCell id="start" value="START: computeIncomeAdjustments()" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+      <mxGeometry x="560" y="70" width="180" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- Gate: hadAnyAdjustments? -->
+    <mxCell id="gate1" value="hadIncomeAdjustments&#xa;ForSchedule1?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="560" y="150" width="180" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="e1" edge="1" source="start" target="gate1" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- out-of-scope checks -->
+    <mxCell id="oos" value="Check out-of-scope flags:&#xa;line15 SE tax → LINE15_OUT_OF_SCOPE&#xa;line16 SE retirement → LINE16_OUT_OF_SCOPE&#xa;line17 SE health ins → LINE17_OUT_OF_SCOPE" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+      <mxGeometry x="450" y="260" width="400" height="70" as="geometry" />
+    </mxCell>
+
+    <!-- gate1 Yes → oos (statement gating removed 2026-04-17) -->
+    <mxCell id="e2" edge="1" source="gate1" target="oos" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+      <mxCell style="edgeStyle=none;" value="Yes" as="label" />
+    </mxCell>
+
+    <!-- gate1 No → oos -->
+    <mxCell id="e3a" edge="1" source="gate1" target="oos" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+      <mxCell style="edgeStyle=none;" value="No" as="label" />
+    </mxCell>
+
+    <!-- Compute lines 11-14 -->
+    <mxCell id="lines11to14" value="Lines 11–14 (direct sums)&#xa;11: educatorExpenses — taxpayer + spouse, cap $300/person §62(a)(2)(D)&#xa;12: reservistExpenses (Form 2106)&#xa;13: hsaDeduction (Form 8889)&#xa;14: movingExpenses (Form 3903)" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+      <mxGeometry x="450" y="370" width="400" height="90" as="geometry" />
+    </mxCell>
+    <mxCell id="e4" edge="1" source="oos" target="lines11to14" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- Lines 15-17 out of scope -->
+    <mxCell id="lines15to17" value="Lines 15/16/17 = null&#xa;(out of scope — SE paths)" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+      <mxGeometry x="900" y="370" width="200" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- Compute line 18 -->
+    <mxCell id="line18" value="Line 18: Early Withdrawal Penalty&#xa;= manualEntry + sum(1099-INT entries.earlyWithdrawalPenaltyAmount)&#xa;  + sum(1099-OID entries.earlyWithdrawalPenaltyAmount)" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+      <mxGeometry x="450" y="490" width="400" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="e5" edge="1" source="lines11to14" target="line18" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- Compute lines 19a/19b/19c with post-2018 guard -->
+    <mxCell id="line19" value="Lines 19a/19b/19c: Alimony&#xa;19a = alimonyPaid (taxpayer + spouse)&#xa;  Guard: if agreementDate ≥ 2019-01-01 → 19a=0&#xa;  + flag ALIMONY_POST_2018_NOT_DEDUCTIBLE (TCJA §11051)&#xa;19b = alimonyRecipientSsn&#xa;19c = alimonyAgreementDate" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+      <mxGeometry x="450" y="590" width="400" height="90" as="geometry" />
+    </mxCell>
+    <mxCell id="e6" edge="1" source="line18" target="line19" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- Compute line 20 — IRA phaseout implemented -->
+    <mxCell id="line20" value="Line 20: IRA Deduction&#xa;= iraDeductionLine20 (taxpayer + spouse)&#xa;§219(g) MAGI phaseout applied per person&#xa;isCoveredByWorkplaceRetirementPlan used for threshold&#xa;Outputs: iraDeductionTaxpayer, iraDeductionSpouse" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+      <mxGeometry x="450" y="710" width="400" height="80" as="geometry" />
+    </mxCell>
+    <mxCell id="e7" edge="1" source="line19" target="line20" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- Compute line 21 — $2,500 cap implemented -->
+    <mxCell id="line21" value="Line 21: Student Loan Interest&#xa;= manualEntry + sum(1098-E entries.studentLoanInterestReceivedAmount)&#xa;  cap $2,500 (§221(b)(1)); MFS filers → $0&#xa;⚠ MAGI phaseout (§221(b)(2)) not implemented" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+      <mxGeometry x="450" y="820" width="400" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="e8" edge="1" source="line20" target="line21" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- Lines 22 and 23 -->
+    <mxCell id="lines22to23" value="Line 22 = null (reserved)&#xa;Line 23 = archerMsaDeduction (Form 8853)" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+      <mxGeometry x="450" y="920" width="400" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="e9" edge="1" source="line21" target="lines22to23" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- Lines 24a-24k -->
+    <mxCell id="lines24a_k" value="Lines 24a–24k (write-in adjustments)&#xa;24a: juryDutyPay  24b: rentalPropertyExpenses&#xa;24c: firstNonNull(userEntry, olympicLine8m)  24d: reforestation&#xa;24e: tradeActRepayment  24f: section501c18d&#xa;24g: chaplains403b  24h: unlawfulDiscrimAttorneyFees&#xa;24i: whistleblowerAttorneyFees  24j: Form2555Housing&#xa;24k: section67eK1 + sum(K-1(1041) entries.excessDeductionsSection67eAmount)" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+      <mxGeometry x="450" y="1000" width="400" height="120" as="geometry" />
+    </mxCell>
+    <mxCell id="e10" edge="1" source="lines22to23" target="lines24a_k" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- Line 24z -->
+    <mxCell id="line24z" value="Line 24z: buildSchedule1OtherAdjustmentItems()&#xa;= sum of user-specified write-in items&#xa;Only when IRS instruction directs entry here" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+      <mxGeometry x="450" y="1150" width="400" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="e11" edge="1" source="lines24a_k" target="line24z" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- line25 computation -->
+    <mxCell id="line25" value="line25 = sumAmounts(24a…24z)" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+      <mxGeometry x="450" y="1240" width="400" height="40" as="geometry" />
+    </mxCell>
+    <mxCell id="e12" edge="1" source="line24z" target="line25" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- line26 computation -->
+    <mxCell id="line26" value="line26 = sumAmounts(11,12,13,14,15,16,17,18,19a,20,21,22,23) + line25" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+      <mxGeometry x="450" y="1310" width="400" height="40" as="geometry" />
+    </mxCell>
+    <mxCell id="e13" edge="1" source="line25" target="line26" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- hasAnySchedule1Input gate -->
+    <mxCell id="hasInput" value="hasAnySchedule1Input?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="560" y="1380" width="180" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="e14" edge="1" source="line26" target="hasInput" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- return null -->
+    <mxCell id="returnNull" value="return null&#xa;(no Schedule 1 attached)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+      <mxGeometry x="800" y="1385" width="160" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="e15" edge="1" source="hasInput" target="returnNull" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+      <mxCell value="No" as="label" />
+    </mxCell>
+
+    <!-- populate output -->
+    <mxCell id="output" value="Return IncomeAdjustmentsComputation:&#xa;  .adjustments() — Schedule1Adjustments (lines 11–26)&#xa;  .otherAdjustmentItems() — line 24z write-in list&#xa;  .line10FromSchedule1Line26() — BigDecimal (Form 1040 line 10)&#xa;  .iraDeductionTaxpayer() — post-phaseout, per-person&#xa;  .iraDeductionSpouse() — post-phaseout, per-person&#xa;  .isCoveredByWorkplaceRetirementPlanTaxpayer() — Boolean&#xa;  .isCoveredByWorkplaceRetirementPlanSpouse() — Boolean" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+      <mxGeometry x="420" y="1470" width="460" height="120" as="geometry" />
+    </mxCell>
+    <mxCell id="e16" edge="1" source="hasInput" target="output" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+      <mxCell value="Yes" as="label" />
+    </mxCell>
+
+    <!-- END -->
+    <mxCell id="end" value="END → line10FromSchedule1Line26()&#xa;consumed by buildAdjustments() → line11a AGI&#xa;and computeSocialSecurityBenefits() → SS worksheet line 6" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+      <mxGeometry x="500" y="1620" width="300" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="e17" edge="1" source="output" target="end" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- Statement inputs sidebar note -->
+    <mxCell id="stmtNote" value="Statement entry sources (direct parse):&#xa;1099-INT / 1099-OID → line 18&#xa;1098-E → line 21 (cap $2,500)&#xa;K-1 (Form 1041) → line 24k" style="text;html=1;strokeColor=#666666;fillColor=#f5f5f5;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontColor=#333333;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="900" y="490" width="220" height="70" as="geometry" />
+    </mxCell>
+
+    <!-- Legend -->
+    <mxCell id="leg1" value="Green = compute step" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="50" y="150" width="150" height="30" as="geometry" />
+    </mxCell>
+    <mxCell id="leg2" value="Yellow = decision gate" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="50" y="195" width="150" height="40" as="geometry" />
+    </mxCell>
+    <mxCell id="leg3" value="Red = flag / error path" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="50" y="250" width="150" height="30" as="geometry" />
+    </mxCell>
+    <mxCell id="leg4" value="Purple = aggregate total" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="50" y="295" width="150" height="30" as="geometry" />
+    </mxCell>
+    <mxCell id="leg5" value="Orange = out of scope" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="50" y="340" width="150" height="30" as="geometry" />
+    </mxCell>
+    <mxCell id="leg6" value="⚠ = remaining gap (MAGI phaseout §221(b)(2) for line 21)" style="text;html=1;strokeColor=none;fillColor=none;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="50" y="380" width="200" height="35" as="geometry" />
+    </mxCell>
+
+  </root>
+</mxGraphModel>

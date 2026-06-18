@@ -1,0 +1,333 @@
+# Form 4952 is one return-level attachment, not a separate per-spouse form on MFJ.
+# Approach: keep user questions + imported statement fields + computed outputs in one YAML.
+# NOTE: Sections marked as backend-only are NOT supposed to be rendered in the actual form component.
+name: investment-interest-expense-deduction
+title: Form 4952 - Investment interest expense deduction
+multiplicity: single
+formName: 4952
+category: deductions
+instructions:
+  - Use this form only if Form 4952 is required to compute the current-year deductible investment interest expense and any carryforward.
+  - On a Married Filing Jointly return, complete one joint Form 4952 for the return; do not create a separate per-spouse Form 4952.
+  - You generally do not file Form 4952 if investment income from interest and ordinary dividends minus qualified dividends exceeds investment interest expense, you have no other deductible investment expenses, and you have no 2024 disallowed carryforward.
+  - Investment interest attributable to royalties, nonpassive business activity, or an at-risk activity may need separate routing to Schedule E, a business schedule, or Form 6198.
+  - If Form 6251 line 2c requires an AMT recomputation, the return may also need an AMT-side Form 4952 computation artifact.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: needsForm4952
+        type: boolean
+        required: true
+        label: Do you need to file Form 4952 for this return?
+        help: Select Yes only if you must attach Form 4952 to claim an investment interest deduction for 2025.
+
+  - name: statementUploadCheck
+    title: Statement upload check
+    multiplicity: single
+    showIf: needsForm4952 == true
+    instructions:
+      - Confirm that all received statements relevant to Form 4952 have been uploaded before continuing.
+      - Relevant sources may include Forms 1099-INT, 1099-OID, 1099-DIV, capital-gain statements, Schedule K-1 statements, and Form 8814 amounts that flow into investment income.
+    fields:
+      - name: receivedInterestDividendStatementsForInvestmentIncome
+        type: boolean
+        required: false
+        label: Did you receive interest or dividend statements relevant to investment income?
+        help: Select Yes if Forms 1099-INT, 1099-OID, or 1099-DIV support the investment-income amounts used on Form 4952.
+      - name: uploadedInterestDividendStatementsForInvestmentIncome
+        type: boolean
+        required: false
+        label: If you received those interest or dividend statements, did you upload them?
+        help: Select Yes only if all applicable interest and dividend statements were uploaded.
+      - name: receivedCapitalGainStatementsForInvestmentIncome
+        type: boolean
+        required: false
+        label: Did you receive capital-gain statements relevant to investment income?
+        help: Select Yes if line 4d or line 4e is supported by capital-gain distributions, brokerage statements, or Schedule D source statements.
+      - name: uploadedCapitalGainStatementsForInvestmentIncome
+        type: boolean
+        required: false
+        label: If you received those capital-gain statements, did you upload them?
+        help: Select Yes only if all applicable capital-gain statements were uploaded.
+      - name: receivedScheduleK1WithInvestmentInterestOrIncome
+        type: boolean
+        required: false
+        label: Did you receive any Schedule K-1 with investment interest expense or investment income?
+        help: Select Yes if a partnership, S corporation, estate, or trust K-1 contributes to Form 4952.
+      - name: uploadedScheduleK1WithInvestmentInterestOrIncome
+        type: boolean
+        required: false
+        label: If you received those K-1 statements, did you upload them?
+        help: Select Yes only if all applicable Schedule K-1 statements were uploaded.
+      - name: confirmAllReceivedInvestmentSupportUploaded
+        type: boolean
+        required: true
+        label: I confirm all received statements relevant to Form 4952 have been uploaded
+        help: You must confirm this before saving the Form 4952 input form.
+
+  - name: partIInvestmentInterestExpense
+    title: Part I - Total investment interest expense
+    multiplicity: single
+    showIf: needsForm4952 == true
+    instructions:
+      - Enter the amounts needed for Form 4952 lines 1 and 2.
+      - Include investment interest expense reported on Schedule K-1 if it is deductible on this return.
+    fields:
+      - name: investmentInterestExpensePaidOrAccruedLine1
+        type: amount
+        required: true
+        label: Line 1 - Investment interest expense paid or accrued in 2025
+        placeholder: 0.00
+        help: Enter the investment interest expense paid or accrued during 2025 that is allocable to property held for investment.
+      - name: disallowedInvestmentInterestExpenseFrom2024Line2
+        type: amount
+        required: false
+        label: Line 2 - Disallowed investment interest expense from 2024
+        placeholder: 0.00
+        help: Enter the carryforward from 2024 Form 4952 line 7, if any.
+
+  - name: partIINetInvestmentIncome
+    title: Part II - Net investment income
+    multiplicity: single
+    showIf: needsForm4952 == true
+    instructions:
+      - Enter the investment-income amounts needed for Form 4952 lines 4a through 5.
+      - Do not include net gain from the disposition of property held for investment on line 4a; enter it on line 4d instead.
+    fields:
+      - name: grossIncomeFromPropertyHeldForInvestmentLine4a
+        type: amount
+        required: true
+        label: Line 4a - Gross income from property held for investment
+        placeholder: 0.00
+        help: Enter interest, ordinary dividends, annuities, royalties, net investment income from estates or trusts, and similar investment income, excluding net gain from dispositions.
+      - name: qualifiedDividendsIncludedInLine4aLine4b
+        type: amount
+        required: false
+        label: Line 4b - Qualified dividends included on line 4a
+        placeholder: 0.00
+        help: Enter the portion of line 4a that consists of qualified dividends.
+      - name: netGainFromDispositionOfInvestmentPropertyLine4d
+        type: amount
+        required: false
+        label: Line 4d - Net gain from the disposition of property held for investment
+        placeholder: 0.00
+        help: Enter total gains minus total losses from the disposition of property held for investment, including capital gain distributions and capital loss carryovers when applicable.
+      - name: netCapitalGainFromDispositionOfInvestmentPropertyLimit
+        type: amount
+        required: false
+        label: Net capital gain from the disposition of property held for investment
+        placeholder: 0.00
+        help: Enter the net capital gain amount used to cap Form 4952 line 4e before the smaller-of test.
+      - name: investmentExpensesLine5
+        type: amount
+        required: false
+        label: Line 5 - Investment expenses
+        placeholder: 0.00
+        help: Enter deductible investment expenses other than interest expense that are directly connected with producing investment income.
+
+  - name: line4gElection
+    title: Line 4g election
+    multiplicity: single
+    showIf: needsForm4952 == true
+    instructions:
+      - Qualified dividends and net capital gain are generally excluded from investment income unless you elect to include part or all of them on line 4g.
+      - Amounts elected into line 4g are not eligible for qualified-dividend or capital-gain tax rates.
+    fields:
+      - name: electToIncludeQualifiedDividendsOrCapitalGainInInvestmentIncome
+        type: boolean
+        required: false
+        label: Do you elect to include qualified dividends or net capital gain in investment income?
+        help: Select Yes only if you are making the Form 4952 line 4g election.
+      - name: electedInvestmentIncomeAmountLine4g
+        type: amount
+        required: false
+        label: Line 4g - Amount elected to include in investment income
+        placeholder: 0.00
+        help: Enter the amount from lines 4b and 4e that you elect to include in investment income.
+      - name: electedLine4eAmountAttributedToLine4g
+        type: amount
+        required: false
+        label: Optional elected line 4e amount attributed to line 4g
+        placeholder: 0.00
+        help: If you are using the special line 4e attribution election, enter the portion of line 4e treated as attributable to line 4g.
+      - name: line4gElectionNotes
+        type: text
+        required: false
+        label: Line 4g election notes
+        placeholder: Election statement or tax-effect notes
+        help: Briefly explain any line 4g election or attribution choice that should appear in the supporting statement.
+
+  - name: specialRoutingAndAllocation
+    title: Special routing and allocation
+    multiplicity: single
+    showIf: needsForm4952 == true
+    instructions:
+      - Use this section for amounts that may need to be routed somewhere other than Schedule A line 9 or that require special support.
+      - If spouses file separately and paid investment-related amounts from a joint or community-property account, allocation support should be documented here.
+    fields:
+      - name: hasRoyaltiesInvestmentInterestPortion
+        type: boolean
+        required: false
+        label: Is any deductible investment interest attributable to royalties?
+        help: Select Yes if any portion of line 8 should be routed to Schedule E because it relates to royalties.
+      - name: royaltiesInvestmentInterestPortionAmount
+        type: amount
+        required: false
+        label: Portion attributable to royalties
+        placeholder: 0.00
+        help: Enter the amount of deductible investment interest attributable to royalties.
+      - name: hasNonPassiveBusinessInvestmentInterestPortion
+        type: boolean
+        required: false
+        label: Is any deductible investment interest attributable to a nonpassive trade or business?
+        help: Select Yes if any portion of the allowable deduction belongs on a trade-or-business schedule instead of Schedule A.
+      - name: nonPassiveBusinessInvestmentInterestPortionAmount
+        type: amount
+        required: false
+        label: Portion attributable to a nonpassive trade or business
+        placeholder: 0.00
+        help: Enter the amount of deductible investment interest attributable to a nonpassive trade or business.
+      - name: hasAtRiskActivityInvestmentInterestPortion
+        type: boolean
+        required: false
+        label: Is any deductible investment interest attributable to an at-risk activity?
+        help: Select Yes if any portion of the deduction must also be considered on Form 6198.
+      - name: atRiskActivityInvestmentInterestPortionAmount
+        type: amount
+        required: false
+        label: Portion attributable to an at-risk activity
+        placeholder: 0.00
+        help: Enter the amount of deductible investment interest attributable to an at-risk activity.
+      - name: hasJointOrCommunityAccountAllocationIssue
+        type: boolean
+        required: false
+        label: Do separate-return allocation rules apply to a joint or community-property account?
+        help: Select Yes if filing separately and any investment-related amount must be split between spouses under joint-account or community-property allocation rules.
+      - name: jointOrCommunityAccountAllocationNotes
+        type: text
+        required: false
+        label: Allocation notes for separate-return support
+        placeholder: Explain the allocation method
+        help: Describe how joint-account or community-property amounts were allocated between spouses.
+      - name: requiresAmtInvestmentInterestRecompute
+        type: boolean
+        required: false
+        label: Does Form 6251 line 2c require an AMT-side Form 4952 recomputation?
+        help: Select Yes if alternative minimum tax rules require a second Form 4952 computation artifact.
+
+  # Backend-only imported statement totals. Not rendered in form component.
+  - name: importedStatementFields
+    title: Imported statement fields (backend only)
+    multiplicity: single
+    showIf: needsForm4952 == true
+    fields:
+      - name: importedInvestmentInterestExpenseFromScheduleK1
+        type: amount
+        required: false
+        readOnly: true
+        label: Schedule K-1 investment interest expense total (imported)
+      - name: importedInvestmentIncomeFromScheduleK1
+        type: amount
+        required: false
+        readOnly: true
+        label: Schedule K-1 investment income total (imported)
+      - name: importedTaxableInterestIncomeTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported taxable interest total
+      - name: importedOrdinaryDividendsTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported ordinary dividends total
+      - name: importedQualifiedDividendsTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported qualified dividends total
+      - name: importedNetCapitalGainFromInvestmentProperty
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported net capital gain from investment property
+      - name: importedForm8814InvestmentIncomeTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported Form 8814 investment income total
+
+  # Backend-only computed values. Not rendered in form component.
+  - name: computedOutputs
+    title: Computed outputs (backend only)
+    multiplicity: single
+    showIf: needsForm4952 == true
+    fields:
+      - name: computedForm4952Required
+        type: boolean
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Form 4952 required flag
+      - name: computedTotalInvestmentInterestExpenseLine3
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed line 3 total investment interest expense
+      - name: computedLine4cInvestmentIncomeExcludingQualifiedDividends
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed line 4c
+      - name: computedLine4eNetCapitalGainUsed
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed line 4e
+      - name: computedLine4fGainExcludingNetCapitalGain
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed line 4f
+      - name: computedInvestmentIncomeLine4h
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed line 4h investment income
+      - name: computedNetInvestmentIncomeLine6
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed line 6 net investment income
+      - name: computedDisallowedInvestmentInterestCarryforwardLine7
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed line 7 carryforward to next year
+      - name: computedInvestmentInterestExpenseDeductionLine8
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed line 8 investment interest expense deduction
+      - name: computedScheduleALine9Amount
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Schedule A line 9 amount from Form 4952
+      - name: computedAmtForm4952ArtifactRequired
+        type: boolean
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed AMT-side Form 4952 artifact required flag

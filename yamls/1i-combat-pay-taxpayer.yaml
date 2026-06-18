@@ -1,0 +1,25 @@
+name: combat-pay-taxpayer
+title: Military Service - Nontaxable combat pay election (Taxpayer, Form 1040 line 1i)
+multiplicity: single
+formName: 1040
+category: credits.earnedIncome
+instructions:
+  - Use this form to elect whether to include the taxpayer's nontaxable combat pay as earned income for EITC and ACTC only.
+  - This election does not make the income taxable and affects credits only.
+
+sections:
+  - name: taxpayerCombatPay
+    title: Taxpayer - Nontaxable combat pay election
+    multiplicity: single
+    fields:
+      # Imported: total combat pay from W-2 Box 12 Code Q (read-only)
+      - name: combatPayTotal
+        type: amount
+        readOnly: true
+        label: Taxpayer nontaxable combat pay (W-2 Box 12 Code Q)
+
+      # User input: election flag
+      - name: electCombatPay
+        type: boolean
+        required: false
+        label: Include combat pay as earned income for EITC

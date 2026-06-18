@@ -1,0 +1,144 @@
+# Form 8615 (Kiddie income) workflow; attached only to the child’s return.
+name: kiddie-income-taxpayer
+title: Form 8615 - Kiddie income (taxpayer return)
+multiplicity: single
+formName: 8615
+category: income
+instructions:
+  - Form 8615 applies when a child has > $2,700 of unearned income, is required to file,
+    meets the age/support tests, and did not file a joint return. Attach Form 8615 only to
+    the child’s own Form 1040 or 1040-NR; each affected child gets their own form.
+  - Use this workflow to capture the child’s part I/II/III inputs so we can later compute
+    the kiddie-tax tentatively at the parent’s rate. Outstanding computations remain deferred.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: hasKiddieTaxUnearnedIncome
+        type: boolean
+        required: true
+        label: Does the child have more than $2,700 of unearned income and meet the kiddie-tax criteria?
+        help: Form 8615 is required only when all of the age/support/unearned-income/joint-return tests apply.
+      - name: childFilingStatus
+        type: list
+        required: true
+        label: Child’s filing status
+        help: Use the filing status the child selects on their Form 1040/1040-NR.
+        options:
+          - label: Single
+            value: single
+          - label: Married filing jointly
+            value: married-filing-jointly
+          - label: Married filing separately
+            value: married-filing-separately
+          - label: Head of household
+            value: head-of-household
+          - label: Qualifying widow(er)
+            value: qualifying-widow
+
+  - name: child-unearned-income
+    title: Part I – Child’s net unearned income
+    multiplicity: single
+    showIf: hasKiddieTaxUnearnedIncome == true
+    instructions:
+      - Record Form 8615 lines 1 through 5.
+    fields:
+      - name: childUnearnedIncomeLine1
+        type: amount
+        required: true
+        label: Line 1 – Child’s unearned income (interest, dividends, capital gains, etc.)
+        placeholder: 0.00
+        help: Enter the total from Form 8615 line 1.
+      - name: childItemizedDeductionLine2
+        type: amount
+        required: false
+        label: Line 2 – Deductions connected with the unearned income
+        placeholder: 0.00
+        help: Use the larger of $2,700 or $1,350 plus the Schedule A line 17 expenses tied to the unearned income.
+      - name: childTaxableIncomeLine4
+        type: amount
+        required: true
+        label: Line 4 – Child’s taxable income (Form 1040/1040-NR line 15)
+        placeholder: 0.00
+      - name: childNetUnearnedIncomeLine5
+        type: amount
+        required: true
+        label: Line 5 – Net unearned income (smaller of line 3 or line 4)
+        placeholder: 0.00
+        help: Copy the smaller of line 3 (line1 minus line2) or line 4.
+
+  - name: parent-info
+    title: Part II – Parent’s return information
+    multiplicity: single
+    showIf: hasKiddieTaxUnearnedIncome == true
+    instructions:
+      - Identify the parent return used to figure the tentative parent-rate tax.
+    fields:
+      - name: parentFirstName
+        type: text
+        required: true
+        label: Parent’s first name
+        placeholder: Parent first name
+      - name: parentLastName
+        type: text
+        required: true
+        label: Parent’s last name
+        placeholder: Parent last name
+      - name: parentSsn
+        type: text
+        required: true
+        label: Parent’s SSN or ITIN
+        placeholder: ###-##-####
+      - name: parentFilingStatus
+        type: list
+        required: true
+        label: Parent’s filing status
+        help: Choose the filing status used on the parent return that determines the kiddie-tax rate.
+        options:
+          - label: Single
+            value: single
+          - label: Married filing jointly
+            value: married-joint
+          - label: Married filing separately
+            value: married-separate
+          - label: Head of household
+            value: head-of-household
+          - label: Qualifying widow(er)
+            value: qualifying-widow
+      - name: parentTaxableIncomeLine6
+        type: amount
+        required: true
+        label: Line 6 – Parent’s taxable income
+        placeholder: 0.00
+        help: Copy the parent’s Form 1040/1040-NR line 15.
+      - name: otherChildrenNetUnearnedLine7
+        type: amount
+        required: false
+        label: Line 7 – Total line 5 amounts from the other children
+        placeholder: 0.00
+        help: Line 7 is the sum of all other children’s Form 8615 line 5 values that share the same parent return.
+
+  - name: child-tax-details
+    title: Part III — Child’s tax
+    multiplicity: single
+    showIf: hasKiddieTaxUnearnedIncome == true
+    instructions:
+      - Capture the child’s taxable portion not subject to kiddie tax and the final tax figure.
+    fields:
+      - name: childTaxableIncomeNotSubjectToKiddieTaxLine14
+        type: amount
+        required: false
+        label: Line 14 – Amount of taxable income not subject to the parent-rate tax
+        placeholder: 0.00
+      - name: childTentativeTaxShareLine13
+        type: amount
+        required: false
+        label: Line 13 – Child’s share of the tentative parent-rate tax
+        placeholder: 0.00
+      - name: childFinalTaxLine18
+        type: amount
+        required: false
+        label: Line 18 – Child’s final tax (larger of line 16 or line 17)
+        placeholder: 0.00
+        help: This amount will eventually flow to line 16 on the child’s Form 1040/1040-NR.

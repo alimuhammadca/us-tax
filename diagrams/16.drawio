@@ -1,0 +1,90 @@
+<mxfile host="app.diagrams.net" modified="2026-03-20T00:00:00.000Z" agent="Claude Code" version="21.0.0">
+  <diagram name="Form 1040 Line 16 — Tax" id="line16-tax-dataflow">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- ─── Input: Personal Forms ─── -->
+        <mxCell id="pf1" value="foreign-earned-income-taxpayer&#xa;(hadForeignEarnedIncome, foreignWagesAmount,&#xa;qualifyingTest, dates, housingExpenses)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="20" y="60" width="280" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="pf2" value="foreign-earned-income-spouse&#xa;(same structure, spouse-prefixed keys)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="20" y="150" width="280" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="pf3" value="kiddie-income-taxpayer&#xa;(hasKiddieTaxUnearnedIncome,&#xa;childFinalTaxLine18)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="20" y="230" width="280" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="pf4" value="16-tax-taxpayer&#xa;(hasEcrRecapture, ecrAmount)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="20" y="310" width="280" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="pf5" value="lump-sum-distribution-taxpayer/spouse&#xa;→ Form4972 (line30Total)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="20" y="380" width="280" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- ─── Input: Computed Forms ─── -->
+        <mxCell id="cf1" value="Form8814 (list)&#xa;line15ExtraTax per child" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="20" y="450" width="280" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="cf2" value="ScheduleD&#xa;line15, line16, line18, line19" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="20" y="520" width="280" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="cf3" value="Form1040.Income&#xa;qualifiedDividends (line3a)&#xa;capitalGainLoss (line7a)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="20" y="590" width="280" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="cf4" value="Form1040.Deductions.line15TaxableIncome" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="20" y="670" width="280" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- ─── Central Compute: computeLine16() ─── -->
+        <mxCell id="comp" value="computeLine16()&#xa;&#xa;Decision tree:&#xa;1. line15 ≤ 0 → ZERO&#xa;2. Form2555 → FEITW&#xa;3. Form8615 → FORM_8615&#xa;4. SchedD Tax Wksht → SCHEDULE_D_TAX_WORKSHEET&#xa;5. QDCG Wksht → QDCG&#xa;6. line15 &lt; 100k → TAX_TABLE&#xa;7. line15 ≥ 100k → TAX_COMPUTATION_WORKSHEET&#xa;&#xa;+ Box1 (Form8814 sum)&#xa;+ Box2 (Form4972 sum)&#xa;+ Box3 ECR" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="380" y="200" width="300" height="280" as="geometry" />
+        </mxCell>
+
+        <!-- ─── Worksheets (internal) ─── -->
+        <mxCell id="ws1" value="computeTaxBracket()&#xa;2025 Single/MFJ/MFS/HOH brackets" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="760" y="100" width="260" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ws2" value="computeQDCGWorksheet()&#xa;0%/15%/20% preferential rates" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="760" y="180" width="260" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ws3" value="computeScheduleDTaxWorksheet()&#xa;28% + §1250 + QDCG rates" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="760" y="260" width="260" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ws4" value="computeForeignEarnedIncomeTaxWorksheet()&#xa;lineD − lineE (bracket on C and B)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="760" y="340" width="260" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ws5" value="computeForm2555Exclusions()&#xa;line45 (earned income excl)&#xa;line50 (housing excl)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="760" y="420" width="260" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- ─── Output: TaxAndCredits ─── -->
+        <mxCell id="out" value="TaxAndCredits&#xa;&#xa;.tax (line 16 total)&#xa;.regularTax&#xa;.computationMethod&#xa;.box1Form8814Tax / box1Checked&#xa;.box2Form4972Tax / box2Checked&#xa;.ecrBox3Tax / box3Checked / box3Code" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="380" y="560" width="300" height="150" as="geometry" />
+        </mxCell>
+
+        <!-- ─── Edges: inputs → compute ─── -->
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="pf1" target="comp" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="pf2" target="comp" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="pf3" target="comp" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="pf4" target="comp" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="pf5" target="comp" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="cf1" target="comp" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="cf2" target="comp" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e8" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="cf3" target="comp" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e9" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="cf4" target="comp" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- ─── Edges: compute → worksheets ─── -->
+        <mxCell id="e10" style="edgeStyle=orthogonalEdgeStyle;dashed=1;" edge="1" source="comp" target="ws1" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e11" style="edgeStyle=orthogonalEdgeStyle;dashed=1;" edge="1" source="comp" target="ws2" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e12" style="edgeStyle=orthogonalEdgeStyle;dashed=1;" edge="1" source="comp" target="ws3" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e13" style="edgeStyle=orthogonalEdgeStyle;dashed=1;" edge="1" source="comp" target="ws4" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e14" style="edgeStyle=orthogonalEdgeStyle;dashed=1;" edge="1" source="pf1" target="ws5" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- ─── Edge: compute → output ─── -->
+        <mxCell id="e15" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="comp" target="out" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

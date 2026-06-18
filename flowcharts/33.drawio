@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxGraphModel dx="1654" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+
+    <!-- Title -->
+    <mxCell id="100" value="Form 1040 Line 33 — Total Payments and Lines 34–38 (Refund / Amount Owed) (2025)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="200" y="20" width="1200" height="40" as="geometry" />
+    </mxCell>
+
+    <!-- ── COLUMN HEADERS ── -->
+    <mxCell id="h1" value="LINE 25d INPUTS" style="text;html=1;strokeColor=none;fillColor=#dae8fc;align=center;verticalAlign=middle;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="30" y="80" width="200" height="30" as="geometry" />
+    </mxCell>
+    <mxCell id="h2" value="LINE 26 INPUTS" style="text;html=1;strokeColor=none;fillColor=#d5e8d4;align=center;verticalAlign=middle;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="250" y="80" width="200" height="30" as="geometry" />
+    </mxCell>
+    <mxCell id="h3" value="LINE 32 INPUT" style="text;html=1;strokeColor=none;fillColor=#ffe6cc;align=center;verticalAlign=middle;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="470" y="80" width="200" height="30" as="geometry" />
+    </mxCell>
+    <mxCell id="h4" value="LINE 33 TOTAL PAYMENTS" style="text;html=1;strokeColor=none;fillColor=#fff2cc;align=center;verticalAlign=middle;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="720" y="80" width="220" height="30" as="geometry" />
+    </mxCell>
+    <mxCell id="h5" value="DOWNSTREAM LINES 34–38" style="text;html=1;strokeColor=none;fillColor=#f8cecc;align=center;verticalAlign=middle;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="1000" y="80" width="280" height="30" as="geometry" />
+    </mxCell>
+
+    <!-- ── LINE 25d INPUTS ── -->
+    <mxCell id="201" value="Line 25a: W-2 Box 2 Withholding&#xa;sumFederalWithholdingFromEntries(w2Entries)&#xa;→ Payments.withholdingW2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="30" y="130" width="200" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="202" value="Line 25b: 1099 / SSA-1099 / RRB-1099&#xa;sumFederalWithholdingFromMultipleLists()&#xa;+ sumSsa1099Withholding()&#xa;→ Payments.withholding1099" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="30" y="210" width="200" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="203" value="Line 25c: W-2G Box 4 + Form 8959 Line 24&#xa;sumFederalWithholdingFromEntries(w2gEntries)&#xa;+ form8959.line24TotalAmtWithheld&#xa;→ Payments.withholdingOther" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="30" y="300" width="200" height="70" as="geometry" />
+    </mxCell>
+
+    <!-- 25d summation box -->
+    <mxCell id="204" value="Line 25d = 25a + 25b + 25c&#xa;Payments.totalWithholding&#xa;null if zero" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="30" y="400" width="200" height="55" as="geometry" />
+    </mxCell>
+    <mxCell id="e201" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="201" target="204" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="e202" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="202" target="204" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="e203" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="203" target="204" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+    <!-- ── LINE 26 INPUTS ── -->
+    <mxCell id="211" value="Q1–Q4 Installments&#xa;installment1–4Amount&#xa;(forms: estimated-tax-payments-taxpayer/spouse)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="250" y="130" width="200" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="212" value="Prior-Year Overpayment Applied&#xa;priorYearOverpaymentCredited&#xa;amendedReturnOverpaymentCredited" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="250" y="210" width="200" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="213" value="MFJ: both spouse forms combined&#xa;MFS: only taxpayer form used" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="250" y="290" width="200" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- 26 summation box -->
+    <mxCell id="214" value="Line 26 = computeLine26EstimatedTax()&#xa;Payments.estimatedTaxPayments&#xa;null if gate=false or sum=0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="250" y="400" width="200" height="55" as="geometry" />
+    </mxCell>
+    <mxCell id="e211" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="211" target="214" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="e212" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="212" target="214" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="e213" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="213" target="214" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+    <!-- ── LINE 32 INPUT ── -->
+    <mxCell id="221" value="Line 32: totalOtherPaymentsAndRefundableCredits&#xa;= line27a(EIC) + line28(ACTC)&#xa;+ line29(AOTC refundable)&#xa;+ line30(adoption refundable)&#xa;+ line31(Schedule 3 line15)&#xa;See flowchart 32.drawio" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="470" y="200" width="200" height="110" as="geometry" />
+    </mxCell>
+
+    <!-- ── LINE 33 COMPUTATION ── -->
+    <mxCell id="300" value="LINE 33: Total Payments&#xa;&#xa;line33 = line25d + line26 + line32&#xa;&#xa;safeAmount(totalWithholding)&#xa;+ safeAmount(estimatedTaxPayments)&#xa;+ safeAmount(totalOtherPaymentsAndRefundableCredits)&#xa;&#xa;→ Payments.totalPayments&#xa;(null if sum = 0)&#xa;&#xa;Frontend: line33TotalPayments()&#xa;prefers stored value; falls back&#xa;to client-side recompute" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="720" y="160" width="220" height="230" as="geometry" />
+    </mxCell>
+
+    <!-- Arrows into line33 -->
+    <mxCell id="e301" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="204" target="300" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="e302" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="214" target="300" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="e303" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="221" target="300" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+    <!-- ── COMPARISON DIAMOND ── -->
+    <mxCell id="400" value="line33 vs line24&#xa;(total tax)" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="745" y="440" width="170" height="100" as="geometry" />
+    </mxCell>
+    <mxCell id="e400" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="300" target="400" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+    <!-- ── OVERPAYMENT PATH (right) ── -->
+    <mxCell id="501" value="Line 34: Overpaid&#xa;= line33 − line24&#xa;Refund.overpaid" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="1000" y="130" width="200" height="55" as="geometry" />
+    </mxCell>
+    <mxCell id="e501" value="line33 &gt; line24" style="edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" source="400" target="501" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+    <mxCell id="502" value="Line 35a: Refund Amount&#xa;= line34 − line36&#xa;Refund.refundAmount" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="1000" y="210" width="200" height="55" as="geometry" />
+    </mxCell>
+    <mxCell id="e502" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="501" target="502" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+    <mxCell id="503" value="Lines 35b/c/d: Direct Deposit&#xa;routingNumber (9-digit ABA)&#xa;accountType (checking/savings)&#xa;accountNumber (≤17 chars)&#xa;form: 35-direct-deposit&#xa;or suppressed if Form 8888 used" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="1000" y="290" width="200" height="90" as="geometry" />
+    </mxCell>
+    <mxCell id="e503" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="502" target="503" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+    <mxCell id="504" value="Line 36: Apply to 2026 Est. Tax&#xa;amountToApply ≤ line34 (irrevocable)&#xa;Refund.amountAppliedToNextYear&#xa;form: 36-apply-to-next-year" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="1000" y="405" width="200" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="e504" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="501" target="504" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+    <!-- Form 8888 -->
+    <mxCell id="505" value="Form 8888 (optional)&#xa;Split refund up to 3 accounts&#xa;line5 must = line35a&#xa;FORM_8888_TOTAL_MISMATCH flag&#xa;if mismatch (non-blocking)&#xa;form: refund-allocation-taxpayer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="1230" y="210" width="190" height="100" as="geometry" />
+    </mxCell>
+    <mxCell id="e505" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="502" target="505" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+    <!-- ── AMOUNT OWED PATH (bottom) ── -->
+    <mxCell id="511" value="Line 37: Amount Owed&#xa;= line24 − line33&#xa;AmountOwed.amountOwed" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="1000" y="570" width="200" height="55" as="geometry" />
+    </mxCell>
+    <mxCell id="e511" value="line24 &gt; line33" style="edgeStyle=orthogonalEdgeStyle;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" source="400" target="511" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+    <mxCell id="512" value="Line 38: Est. Tax Penalty&#xa;Form 2210 totalPenalty&#xa;AmountOwed.estimatedTaxPenalty&#xa;Added to line 37 amount&#xa;&#xa;form: prior-year-tax-taxpayer&#xa;(priorYearAgi, priorYearTaxLiability,&#xa;waiveFullPenalty...)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="1000" y="655" width="200" height="110" as="geometry" />
+    </mxCell>
+    <mxCell id="e512" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="511" target="512" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+    <!-- Form 2210 detail box -->
+    <mxCell id="513" value="Form 2210 Logic&#xa;Line 1 = taxAfterCredits (line 22)&#xa;Line 5 = max(0, combinedTax − refundableCredits)&#xa;Line 6 = line5 × 90%&#xa;Line 7 = safe harbor (100%/110% prior-year tax)&#xa;Line 8 = min(line6, line7)&#xa;Penalty if payments &lt; line 8 AND owed ≥ $1,000&#xa;&#xa;Methods: NO_PENALTY / WAIVED / REGULAR_METHOD&#xa;OOS: Schedule AI, Box D, Form 2210-F" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="1230" y="620" width="200" height="155" as="geometry" />
+    </mxCell>
+    <mxCell id="e513" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="512" target="513" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+    <!-- ── BALANCED path (no refund, no owed) ── -->
+    <mxCell id="520" value="Balanced return&#xa;No refund, no amount owed&#xa;(line33 = line24)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="745" y="580" width="170" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="e520" value="line33 = line24" style="edgeStyle=orthogonalEdgeStyle;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" source="400" target="520" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+    <!-- ── GAP NOTES ── -->
+    <mxCell id="800" value="GAP STATUS (2026-04-21 — fourth pass complete)&#xa;&#xa;✅ RESOLVED (18 of 19 gaps closed):&#xa;G1  E2E: line36 apply-to-next-year&#xa;G2  E2E: direct deposit (lines 35b/c/d)&#xa;G4  Unit: line36 cap enforcement&#xa;G5  E2E: line36 cap when amount exceeds overpaid&#xa;G6  E2E: DD suppressed when Form 8888 elected&#xa;G7  Unit: Form 2210 boxB (partial waiver)&#xa;G8  Unit: Form 2210 boxE (joint-separate mismatch)&#xa;G9  E2E: Form 2210 boxB&#xa;G10 E2E: Form 2210 boxE&#xa;G11 E2E: Form 2210 110% safe harbor&#xa;G12 E2E: Form 8888 3-account split&#xa;G13 E2E: Form 8888 suppresses DD&#xa;G14 Unit: line33 = line24 (neither refund nor owed)&#xa;G15 Unit: line36 not applied when false&#xa;G16 Unit: DD not populated when false&#xa;G17 Unit: penalty additive to amountOwed&#xa;G18 E2E: line33 = line24&#xa;UI  prior-year-tax estimated-payments screening gate (madeEstimatedPayments)&#xa;&#xa;⚠️ OPEN:&#xa;G3  (LOW): $1 minimum refund rule not enforced — very rare edge case&#xa;&#xa;DEFERRED / OOS:&#xa;G4 Form 8888 PDF fill/export not implemented&#xa;G5 Form 8888 / Form 8379 cross-check (Form 8379 not yet implemented)&#xa;G6 Form 8888 IRA/HSA account types not in dropdown&#xa;G7 Form 2210 Schedule AI (Box C) — OOS&#xa;G8 Form 2210 Box D (actual withholding dates) — OOS&#xa;G9 Form 2210-F (farmers/fishermen) — OOS" style="text;html=1;strokeColor=#82b366;fillColor=#d5e8d4;fontSize=10;align=left;verticalAlign=top;" vertex="1" parent="1">
+      <mxGeometry x="30" y="530" width="460" height="350" as="geometry" />
+    </mxCell>
+
+    <!-- ── PDF MAP NOTE ── -->
+    <mxCell id="900" value="PDF Fields (form-tax-return-1040.component.ts)&#xa;line33: f2_29[0] → line33_total_payments ✅&#xa;line34: line34_overpaid ✅&#xa;line35a: line35a_refund_amount ✅&#xa;line35b/c/d: direct_deposit_routing/account/type ✅&#xa;line36: line36_applied_to_2025_estimated_tax ✅&#xa;line37: line37_amount_you_owe ✅&#xa;line38: line38_estimated_tax_penalty ✅" style="text;html=1;strokeColor=#6c8ebf;fillColor=#dae8fc;fontSize=10;align=left;verticalAlign=top;" vertex="1" parent="1">
+      <mxGeometry x="30" y="700" width="420" height="130" as="geometry" />
+    </mxCell>
+
+  </root>
+</mxGraphModel>

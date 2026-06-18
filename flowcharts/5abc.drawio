@@ -1,0 +1,404 @@
+<mxfile host='app.diagrams.net' modified='2026-04-15T00:00:00.000Z' agent='Claude' version='20.8.16' type='device'>
+  <diagram id='line5abc-computation' name='Lines 5a/5b/5c Pension and Annuity Flowchart'>
+    <mxGraphModel dx='1400' dy='900' grid='1' gridSize='10' guides='1' tooltips='1' connect='1' arrows='1' fold='1' page='1' pageScale='1' pageWidth='1700' pageHeight='3800' math='0' shadow='0'>
+      <root>
+        <mxCell id='0'/>
+        <mxCell id='1' parent='0'/>
+
+        <!-- LEGEND -->
+        <mxCell id='leg1' value='Start / End' style='ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1320' y='80' width='120' height='40' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg2' value='Process / Action' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1320' y='130' width='120' height='40' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg3' value='Decision' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1320' y='180' width='120' height='50' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg4' value='Output / Result' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1320' y='240' width='120' height='40' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg5' value='Blocking Flag' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8d7da;strokeColor=#842029;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1320' y='290' width='120' height='40' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg6' value='Input Data' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1320' y='340' width='120' height='40' as='geometry'/>
+        </mxCell>
+
+        <!-- ABBREVIATIONS -->
+        <mxCell id='abbr' value='Abbreviations&#xa;&#xa;PSO  = Retired Public Safety Officer&#xa;RRB  = Railroad Retirement Board&#xa;MFJ  = Married Filing Jointly&#xa;IRA  = Individual Retirement Account&#xa;SSN  = Social Security Number&#xa;TIN  = Taxpayer Identification Number' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f0f4ff;strokeColor=#3b5bdb;fontSize=11;align=left;spacingLeft=8;' vertex='1' parent='1'>
+          <mxGeometry x='1310' y='410' width='290' height='160' as='geometry'/>
+        </mxCell>
+
+        <!-- 2025 CONSTANTS -->
+        <mxCell id='const' value='2025 IRS Constants (Verified)&#xa;&#xa;PSO premium exclusion cap: $3,000&#xa;Early distribution penalty rate: 10%&#xa;&#xa;Simplified Method factors:&#xa;Age ≤55 (combined ≤110): 360&#xa;Age 56–60 (combined 111–120): 310&#xa;Age 61–65 (combined 121–130): 260&#xa;Age 66–70 (combined 131–140): 210&#xa;Age 71+ (combined 141+): 160&#xa;&#xa;Sources: IRS Pub. 575 (2025),&#xa;Pub. 939 (12/2025), i1040gi_2025' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#388e3c;fontSize=11;align=left;spacingLeft=8;' vertex='1' parent='1'>
+          <mxGeometry x='1310' y='590' width='290' height='210' as='geometry'/>
+        </mxCell>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- MAIN FLOW — column x≈330 -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+
+        <!-- START -->
+        <mxCell id='n01' value='START&#xa;computePensionAnnuities()&#xa;&#xa;Inputs: pension-annuity-income-taxpayer,&#xa;pension-annuity-income-spouse,&#xa;1099-R entries, rrb-1099-r entries,&#xa;you, spouse, flags' style='ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;' vertex='1' parent='1'>
+          <mxGeometry x='260' y='40' width='360' height='75' as='geometry'/>
+        </mxCell>
+
+        <!-- STEP 1: Gate hadPensionOrAnnuityIncome -->
+        <mxCell id='n02' value='hadPensionOrAnnuityIncome&#xa;== true (taxpayer OR spouse)?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='270' y='160' width='340' height='70' as='geometry'/>
+        </mxCell>
+        <mxCell id='e01' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n01' target='n02' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- No path — return null/zero -->
+        <mxCell id='n03' value='Return: lines 5a/5b = null&#xa;No pension computation' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='760' y='172' width='220' height='46' as='geometry'/>
+        </mxCell>
+        <mxCell id='e02' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n02' target='n03' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+          <Array as='points'>
+            <mxPoint x='780' y='195'/>
+          </Array>
+        </mxCell>
+        <mxCell id='elab02' value='No' style='edgeLabel;fontSize=11;fontStyle=1;' vertex='1' connectable='0' parent='e02'>
+          <mxGeometry relative='0.2' as='geometry'/>
+        </mxCell>
+
+        <!-- STEP 2: Statement gating -->
+        <mxCell id='n04' value='validatePensionStatementGating()&#xa;&#xa;Check: upload confirmed, 1099-R received/uploaded,&#xa;RRB-1099-R received/uploaded' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='270' y='280' width='340' height='70' as='geometry'/>
+        </mxCell>
+        <mxCell id='e03' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n02' target='n04' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='elab03' value='Yes' style='edgeLabel;fontSize=11;fontStyle=1;' vertex='1' connectable='0' parent='e03'>
+          <mxGeometry relative='0.5' as='geometry'/>
+        </mxCell>
+
+        <!-- Blocking flag -->
+        <mxCell id='n05' value='PENSION_STATEMENT_UPLOAD_REQUIRED&#xa;MISSING_UPLOADED_NON_IRA_1099_R&#xa;MISSING_UPLOADED_RRB_1099_R&#xa;(blocking — returns early)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8d7da;strokeColor=#842029;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='760' y='292' width='280' height='56' as='geometry'/>
+        </mxCell>
+        <mxCell id='e04' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n04' target='n05' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+          <Array as='points'>
+            <mxPoint x='780' y='315'/>
+          </Array>
+        </mxCell>
+        <mxCell id='elab04' value='Missing' style='edgeLabel;fontSize=11;fontStyle=1;' vertex='1' connectable='0' parent='e04'>
+          <mxGeometry relative='0.2' as='geometry'/>
+        </mxCell>
+
+        <!-- STEP 3: Per-person computation (taxpayer) -->
+        <mxCell id='n06' value='computePensionForPerson("taxpayer")&#xa;&#xa;Loop 1099-R: skip iraSepSimple=true,&#xa;match recipientTIN to taxpayer SSN,&#xa;accumulate gross / taxable / box5 / early-dist codes' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='270' y='400' width='340' height='80' as='geometry'/>
+        </mxCell>
+        <mxCell id='e05' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n04' target='n06' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='elab05' value='OK' style='edgeLabel;fontSize=11;fontStyle=1;' vertex='1' connectable='0' parent='e05'>
+          <mxGeometry relative='0.5' as='geometry'/>
+        </mxCell>
+
+        <!-- STEP 4: RRB-1099-R accumulation -->
+        <mxCell id='n07' value='Loop RRB-1099-R: match TIN&#xa;box3=employee cost, box4=NSSEB, box5=VDB, box6=SA&#xa;grossRrb += box7 (or box4+5+6)&#xa;taxableRrb: VDB+SA always taxable; box4 taxable only when cost=0&#xa;(when cost&gt;0, box4 basis recovered via Simplified/General Rule)&#xa;Fallback: taxableRrb = grossRrb when detail fields absent' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='270' y='530' width='340' height='60' as='geometry'/>
+        </mxCell>
+        <mxCell id='e06' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n06' target='n07' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- STEP 5: taxableBase initialization -->
+        <mxCell id='n08' value='taxableBase = (box2a ?? grossDistribution) + grossRrb&#xa;grossTotal = gross1099R + grossRrb' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='270' y='640' width='340' height='50' as='geometry'/>
+        </mxCell>
+        <mxCell id='e07' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n07' target='n08' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- STEP 6: Simplified Method? -->
+        <mxCell id='n09' value='needsSimplifiedMethodComputation&#xa;== true?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='280' y='740' width='320' height='65' as='geometry'/>
+        </mxCell>
+        <mxCell id='e08' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n08' target='n09' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Simplified Method compute -->
+        <mxCell id='n10' value='computePensionTaxableViaSimplifiedMethod()&#xa;&#xa;factor = table(annuitantAge, jointAge)&#xa;remainingBasis = max(0, cost - priorYearRecovery)&#xa;monthlyExclusion = remainingBasis ÷ factor&#xa;annualExclusion = monthlyExclusion × payments&#xa;taxableBase = grossTotal - annualExclusion&#xa;(if remainingBasis=0 → fully taxable)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='760' y='740' width='320' height='80' as='geometry'/>
+        </mxCell>
+        <mxCell id='e09' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n09' target='n10' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+          <Array as='points'>
+            <mxPoint x='760' y='772'/>
+          </Array>
+        </mxCell>
+        <mxCell id='elab09' value='Yes' style='edgeLabel;fontSize=11;fontStyle=1;' vertex='1' connectable='0' parent='e09'>
+          <mxGeometry relative='0.2' as='geometry'/>
+        </mxCell>
+
+        <!-- STEP 7: General Rule? -->
+        <mxCell id='n11' value='needsGeneralRuleComputation&#xa;== true?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='280' y='860' width='320' height='65' as='geometry'/>
+        </mxCell>
+        <mxCell id='e10' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n09' target='n11' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='elab10' value='No' style='edgeLabel;fontSize=11;fontStyle=1;' vertex='1' connectable='0' parent='e10'>
+          <mxGeometry relative='0.5' as='geometry'/>
+        </mxCell>
+        <mxCell id='e10b' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n10' target='n11' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+          <Array as='points'>
+            <mxPoint x='920' y='870'/>
+            <mxPoint x='600' y='870'/>
+          </Array>
+        </mxCell>
+
+        <!-- General Rule compute -->
+        <mxCell id='n12' value='computePensionTaxableViaGeneralRule()&#xa;&#xa;ratio = cost ÷ expectedReturn&#xa;taxFree = ratio × paymentsReceived&#xa;taxableBase = paymentsReceived - taxFree' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='760' y='855' width='320' height='75' as='geometry'/>
+        </mxCell>
+        <mxCell id='e11' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n11' target='n12' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+          <Array as='points'>
+            <mxPoint x='760' y='892'/>
+          </Array>
+        </mxCell>
+        <mxCell id='elab11' value='Yes' style='edgeLabel;fontSize=11;fontStyle=1;' vertex='1' connectable='0' parent='e11'>
+          <mxGeometry relative='0.2' as='geometry'/>
+        </mxCell>
+
+        <!-- STEP 8: Rollover? -->
+        <mxCell id='n13' value='hadPensionRollover == true&#xa;OR totalPensionRolloverAmount &gt; 0?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='280' y='980' width='320' height='70' as='geometry'/>
+        </mxCell>
+        <mxCell id='e12' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n11' target='n13' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='elab12' value='No' style='edgeLabel;fontSize=11;fontStyle=1;' vertex='1' connectable='0' parent='e12'>
+          <mxGeometry relative='0.5' as='geometry'/>
+        </mxCell>
+        <mxCell id='e12b' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n12' target='n13' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+          <Array as='points'>
+            <mxPoint x='920' y='1000'/>
+            <mxPoint x='600' y='1000'/>
+          </Array>
+        </mxCell>
+
+        <!-- Apply rollover reduction -->
+        <mxCell id='n14' value='line5cBox1 = true&#xa;box5Offset = user-entered ?? statement box5&#xa;reducedBase = max(0, gross1099R - rollover - box5Offset)&#xa;taxable = reducedBase + taxableRrb&#xa;(starts from box 1 gross per IRS Pub.575;&#xa;RRB not eligible for rollover reduction)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='760' y='982' width='320' height='60' as='geometry'/>
+        </mxCell>
+        <mxCell id='e13' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n13' target='n14' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+          <Array as='points'>
+            <mxPoint x='760' y='1015'/>
+          </Array>
+        </mxCell>
+        <mxCell id='elab13' value='Yes' style='edgeLabel;fontSize=11;fontStyle=1;' vertex='1' connectable='0' parent='e13'>
+          <mxGeometry relative='0.2' as='geometry'/>
+        </mxCell>
+
+        <!-- STEP 9: PSO? -->
+        <mxCell id='n15' value='isEligiblePso AND electsPsoPremiumExclusion?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='280' y='1100' width='320' height='65' as='geometry'/>
+        </mxCell>
+        <mxCell id='e14' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n13' target='n15' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='elab14' value='No' style='edgeLabel;fontSize=11;fontStyle=1;' vertex='1' connectable='0' parent='e14'>
+          <mxGeometry relative='0.5' as='geometry'/>
+        </mxCell>
+        <mxCell id='e14b' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n14' target='n15' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+          <Array as='points'>
+            <mxPoint x='920' y='1120'/>
+            <mxPoint x='600' y='1120'/>
+          </Array>
+        </mxCell>
+
+        <!-- Apply PSO exclusion -->
+        <mxCell id='n16' value='line5cBox2 = true&#xa;psoExclusion = min(psoPremiums, 3000)&#xa;taxableBase = max(0, taxableBase - psoExclusion)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='760' y='1100' width='320' height='56' as='geometry'/>
+        </mxCell>
+        <mxCell id='e15' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n15' target='n16' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+          <Array as='points'>
+            <mxPoint x='760' y='1132'/>
+          </Array>
+        </mxCell>
+        <mxCell id='elab15' value='Yes' style='edgeLabel;fontSize=11;fontStyle=1;' vertex='1' connectable='0' parent='e15'>
+          <mxGeometry relative='0.2' as='geometry'/>
+        </mxCell>
+
+        <!-- STEP 10: Early distribution? -->
+        <mxCell id='n17' value='earlyDistributionBase &gt; 0&#xa;(distribution codes "1" or "S")?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='280' y='1220' width='320' height='65' as='geometry'/>
+        </mxCell>
+        <mxCell id='e16' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n15' target='n17' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='elab16' value='No' style='edgeLabel;fontSize=11;fontStyle=1;' vertex='1' connectable='0' parent='e16'>
+          <mxGeometry relative='0.5' as='geometry'/>
+        </mxCell>
+        <mxCell id='e16b' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n16' target='n17' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+          <Array as='points'>
+            <mxPoint x='920' y='1240'/>
+            <mxPoint x='600' y='1240'/>
+          </Array>
+        </mxCell>
+
+        <!-- Compute early distribution tax -->
+        <mxCell id='n18' value='earlyDistTax = earlyDistributionBase × 0.10&#xa;(flows to Form 5329 — NOT part of line 5b)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='760' y='1222' width='320' height='56' as='geometry'/>
+        </mxCell>
+        <mxCell id='e17' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n17' target='n18' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+          <Array as='points'>
+            <mxPoint x='760' y='1252'/>
+          </Array>
+        </mxCell>
+        <mxCell id='elab17' value='Yes' style='edgeLabel;fontSize=11;fontStyle=1;' vertex='1' connectable='0' parent='e17'>
+          <mxGeometry relative='0.2' as='geometry'/>
+        </mxCell>
+
+        <!-- STEP 11: return PensionPersonComputation for taxpayer -->
+        <mxCell id='n19' value='Return PensionPersonComputation(taxpayer)&#xa;gross, taxable, hasRollover, hasPso,&#xa;hasAnyException, line5cBox3Text, earlyDistTax' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='270' y='1345' width='340' height='60' as='geometry'/>
+        </mxCell>
+        <mxCell id='e18' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n17' target='n19' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='elab18' value='No' style='edgeLabel;fontSize=11;fontStyle=1;' vertex='1' connectable='0' parent='e18'>
+          <mxGeometry relative='0.5' as='geometry'/>
+        </mxCell>
+        <mxCell id='e18b' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n18' target='n19' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+          <Array as='points'>
+            <mxPoint x='920' y='1365'/>
+            <mxPoint x='610' y='1365'/>
+          </Array>
+        </mxCell>
+
+        <!-- STEP 12: Repeat for spouse (if MFJ) -->
+        <mxCell id='n20' value='Repeat computePensionForPerson("spouse")&#xa;if spouse hadPensionOrAnnuityIncome' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='270' y='1460' width='340' height='60' as='geometry'/>
+        </mxCell>
+        <mxCell id='e19' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n19' target='n20' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- STEP 13: Aggregate return-level -->
+        <mxCell id='n21' value='Aggregate return-level&#xa;grossPensions = taxpayer.gross + spouse.gross&#xa;taxablePensions = taxpayer.taxable + spouse.taxable&#xa;line5cBox1 = taxpayer.hasRollover || spouse.hasRollover&#xa;line5cBox2 = taxpayer.hasPso || spouse.hasPso&#xa;line5cBox3 = any box3 text set' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='250' y='1580' width='380' height='90' as='geometry'/>
+        </mxCell>
+        <mxCell id='e20' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n20' target='n21' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- STEP 14: Fully taxable overall? -->
+        <mxCell id='n22' value='All amounts fully taxable?&#xa;(grossPensions == taxablePensions AND&#xa;no exceptions from any person)' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='270' y='1730' width='340' height='75' as='geometry'/>
+        </mxCell>
+        <mxCell id='e21' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n21' target='n22' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Fully taxable path -->
+        <mxCell id='n23' value='line5a = null&#xa;line5b = taxablePensions' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='760' y='1747' width='220' height='46' as='geometry'/>
+        </mxCell>
+        <mxCell id='e22' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n22' target='n23' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+          <Array as='points'>
+            <mxPoint x='760' y='1767'/>
+          </Array>
+        </mxCell>
+        <mxCell id='elab22' value='Yes' style='edgeLabel;fontSize=11;fontStyle=1;' vertex='1' connectable='0' parent='e22'>
+          <mxGeometry relative='0.2' as='geometry'/>
+        </mxCell>
+
+        <!-- Partially taxable path -->
+        <mxCell id='n24' value='line5a = grossPensions&#xa;line5b = taxablePensions' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='270' y='1870' width='340' height='46' as='geometry'/>
+        </mxCell>
+        <mxCell id='e23' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n22' target='n24' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='elab23' value='No' style='edgeLabel;fontSize=11;fontStyle=1;' vertex='1' connectable='0' parent='e23'>
+          <mxGeometry relative='0.5' as='geometry'/>
+        </mxCell>
+
+        <!-- Join paths -->
+        <mxCell id='n25' value='Finalize line 5c&#xa;Set box1, box2, box3, box3Text' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='270' y='1980' width='340' height='56' as='geometry'/>
+        </mxCell>
+        <mxCell id='e24' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n24' target='n25' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='e24b' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n23' target='n25' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+          <Array as='points'>
+            <mxPoint x='870' y='1960'/>
+            <mxPoint x='440' y='1960'/>
+          </Array>
+        </mxCell>
+
+        <!-- STEP 15: Form 5329 -->
+        <mxCell id='n26' value='hasEarlyDistributionAdditionalTaxForForm5329&#xa;== true?&#xa;(user opt-in — not auto-detected from codes)' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='280' y='2100' width='320' height='65' as='geometry'/>
+        </mxCell>
+        <mxCell id='e25' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n25' target='n26' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Build Form 5329 -->
+        <mxCell id='n27' value='Build Form5329&#xa;additionalTaxOnEarlyDistributions = earlyDistTax&#xa;exceptionCodeOrReason = form field value' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='760' y='2100' width='300' height='60' as='geometry'/>
+        </mxCell>
+        <mxCell id='e26' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n26' target='n27' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+          <Array as='points'>
+            <mxPoint x='760' y='2132'/>
+          </Array>
+        </mxCell>
+        <mxCell id='elab26' value='Yes' style='edgeLabel;fontSize=11;fontStyle=1;' vertex='1' connectable='0' parent='e26'>
+          <mxGeometry relative='0.2' as='geometry'/>
+        </mxCell>
+
+        <!-- STEP 16: Form 4972 adjustment (post-compute) -->
+        <mxCell id='n28' value='adjustPensionLinesForForm4972()&#xa;&#xa;If Form4972 Part III: subtract gross+taxable from 5a/5b&#xa;If Form4972 Part II only: subtract box3 (capital gain) only&#xa;Clear 5a if 5a==5b or 5a==0 after adjustment' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='250' y='2250' width='380' height='80' as='geometry'/>
+        </mxCell>
+        <mxCell id='e27' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n26' target='n28' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='elab27' value='No' style='edgeLabel;fontSize=11;fontStyle=1;' vertex='1' connectable='0' parent='e27'>
+          <mxGeometry relative='0.5' as='geometry'/>
+        </mxCell>
+        <mxCell id='e27b' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n27' target='n28' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+          <Array as='points'>
+            <mxPoint x='910' y='2280'/>
+            <mxPoint x='630' y='2280'/>
+          </Array>
+        </mxCell>
+
+        <!-- END -->
+        <mxCell id='n29' value='END&#xa;Output: Income.pensionsAnnuities (5a),&#xa;Income.taxablePensionsAnnuities (5b),&#xa;Income.line5cBox1/2/3/Text,&#xa;Form5329 (if applicable)&#xa;Form4972 adjustment applied' style='ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;' vertex='1' parent='1'>
+          <mxGeometry x='260' y='2400' width='360' height='90' as='geometry'/>
+        </mxCell>
+        <mxCell id='e28' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n28' target='n29' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

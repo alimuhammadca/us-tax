@@ -1,0 +1,96 @@
+# Form 8859 - Carryforward Homebuyer Credit - taxpayer.
+# Current app scope supports one consolidated Form 8859 per return.
+# The taxpayer form owns the return-level carryforward screening and line 2 worksheet inputs.
+name: carryforward-homebuyer-credit-taxpayer
+title: Form 8859 - Carryforward homebuyer credit (taxpayer)
+multiplicity: single
+formName: 8859
+category: deductions
+instructions:
+  - Use this form when you have a carryforward District of Columbia first-time homebuyer credit from a prior-year Form 8859.
+  - The app currently computes one consolidated Form 8859 per return.
+  - Current-year Form 1040 and Schedule 3 values used in line 2 are imported when available so you do not have to re-enter them.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: claimsCarryforwardHomebuyerCredit
+        type: boolean
+        required: true
+        label: Do you need to compute a carryforward homebuyer credit for 2025?
+      - name: confirmPriorYearForm8859Available
+        type: boolean
+        required: false
+        label: Do you have the prior-year Form 8859 carryforward amount available?
+
+  - name: carryforward
+    title: Prior-year carryforward
+    multiplicity: single
+    showIf: claimsCarryforwardHomebuyerCredit == true
+    instructions:
+      - Enter the carryforward from the prior-year Form 8859 line 4.
+      - If filing jointly, enter only the taxpayer-side carryforward here. Use the spouse form only for an additional spouse contribution.
+    fields:
+      - name: priorYearForm8859Line4Carryforward
+        type: amount
+        required: false
+        label: Prior-year Form 8859 line 4 carryforward
+        placeholder: 0.00
+
+  - name: limitation
+    title: Schedule 8812 worksheet B override
+    multiplicity: single
+    showIf: claimsCarryforwardHomebuyerCredit == true
+    instructions:
+      - Leave this off unless the Form 8859 line 2 instructions require using Schedule 8812 Credit Limit Worksheet B line 14 instead of Form 1040 line 19.
+    fields:
+      - name: useSchedule8812CreditLimitWorksheetBOverride
+        type: boolean
+        required: false
+        label: Do you need to override line 19 with Schedule 8812 Credit Limit Worksheet B line 14?
+      - name: schedule8812CreditLimitWorksheetBLine14Override
+        type: amount
+        required: false
+        label: Schedule 8812 Credit Limit Worksheet B line 14 override amount
+        placeholder: 0.00
+        showIf: useSchedule8812CreditLimitWorksheetBOverride == true
+
+  - name: importedSupport
+    title: Imported support values (backend only - not rendered)
+    multiplicity: single
+    showIf: claimsCarryforwardHomebuyerCredit == true
+    fields:
+      - name: importedForm1040Line18
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported Form 1040 line 18 total tax before credits
+      - name: importedAdjustedLine19
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported adjusted line 19 amount used in Form 8859 line 2
+      - name: importedOtherCreditsTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported Schedule 3 and related credits total used in Form 8859 line 2
+
+  - name: computedOutputs
+    title: Computed outputs (backend only - not rendered)
+    multiplicity: single
+    showIf: claimsCarryforwardHomebuyerCredit == true
+    fields:
+      - name: form8859Line3
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed - Form 8859 line 3 current-year credit
+      - name: form8859Line4
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed - Form 8859 line 4 carryforward to next year

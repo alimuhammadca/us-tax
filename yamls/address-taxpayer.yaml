@@ -1,0 +1,163 @@
+# Form 1040 header - taxpayer/family head mailing address workflow.
+# Approach: this form owns only the taxpayer/return mailing address.
+name: address-taxpayer
+title: Form 1040 - Address (taxpayer / family head)
+multiplicity: single
+formName: 1040
+category: personal
+instructions:
+  - Enter the mailing address where the IRS can contact you about the return.
+  - First answer the address-location questions, then complete either the domestic or foreign address block.
+
+sections:
+  - name: address
+    title: Home address
+    multiplicity: single
+    fields:
+      - name: isForeignAddress
+        type: boolean
+        required: true
+        label: Is this a foreign address?
+        help: Select yes if the mailing address is outside the United States.
+
+      - name: isMainHomeInUSA
+        type: boolean
+        required: true
+        label: Did you live in the United States more than half of the tax year?
+        help: Select yes if you lived in the United States more than half of the tax year.
+
+      - name: streetAddress
+        type: text
+        required: true
+        label: Street address or P.O. box
+        placeholder: e.g. 123 Main St
+        help: Enter your home address where the IRS can contact you. If you have a P.O. box, enter it here.
+
+      - name: apartmentNumber
+        type: text
+        required: false
+        label: Apartment number
+        placeholder: e.g. 4B
+        help: Enter your apartment number if applicable.
+
+      - name: city
+        type: text
+        required: true
+        label: City
+        placeholder: e.g. Springfield
+        help: Enter the city of your home address.
+
+      - name: state
+        type: select
+        required: false
+        label: State
+        showIf: "isForeignAddress === false"
+        options:
+          - AL
+          - AK
+          - AZ
+          - AR
+          - CA
+          - CO
+          - CT
+          - DE
+          - FL
+          - GA
+          - HI
+          - ID
+          - IL
+          - IN
+          - IA
+          - KS
+          - KY
+          - LA
+          - ME
+          - MD
+          - MA
+          - MI
+          - MN
+          - MS
+          - MO
+          - MT
+          - NE
+          - NV
+          - NH
+          - NJ
+          - NM
+          - NY
+          - NC
+          - ND
+          - OH
+          - OK
+          - OR
+          - PA
+          - RI
+          - SC
+          - SD
+          - TN
+          - TX
+          - UT
+          - VT
+          - VA
+          - WA
+          - WV
+          - WI
+          - WY
+          - DC
+          - PR
+          - GU
+          - VI
+          - AS
+          - MP
+        help: Select the state or territory of your home address.
+
+      - name: zipCode
+        type: text
+        required: false
+        label: ZIP code
+        placeholder: "e.g. 62701 or 62701-1234"
+        showIf: "isForeignAddress === false"
+        help: Enter your 5-digit ZIP code or ZIP+4 code.
+
+      - name: foreignCountry
+        type: text
+        required: false
+        label: Foreign country name
+        placeholder: e.g. Canada
+        showIf: "isForeignAddress === true"
+        help: Enter the name of the foreign country. Do not abbreviate.
+
+      - name: foreignProvinceStateCounty
+        type: text
+        required: false
+        label: Foreign province, state, or county
+        placeholder: e.g. Ontario
+        showIf: "isForeignAddress === true"
+        help: Enter the province, state, or county of your foreign address.
+
+      - name: foreignPostalCode
+        type: text
+        required: false
+        label: Foreign postal code
+        placeholder: e.g. M5V 2T6
+        showIf: "isForeignAddress === true"
+        help: Enter the postal code of your foreign address.
+
+      - name: emailAddress
+        type: text
+        required: false
+        label: Email address
+        placeholder: e.g. username@domain.com
+        help: Enter your email address.
+
+      - name: phoneNumber
+        type: text
+        required: false
+        label: Phone number
+        placeholder: e.g. (555) 555-5555
+        help: Enter your phone number.
+
+
+
+
+

@@ -1,0 +1,41 @@
+# Form 8859 - Carryforward Homebuyer Credit - spouse.
+# This spouse form is additive only. The output remains one consolidated Form 8859 per return.
+name: carryforward-homebuyer-credit-spouse
+title: Form 8859 - Carryforward homebuyer credit (spouse)
+multiplicity: single
+formName: 8859
+category: deductions
+instructions:
+  - Use this spouse form only on married filing jointly returns when the spouse has an additional prior-year carryforward to add to the joint Form 8859.
+  - Do not use this form if the taxpayer-side carryforward already includes the spouse amount.
+sections:
+  - name: spouseScreening
+    title: Spouse supplemental screening
+    multiplicity: single
+    fields:
+      - name: spouseHasCarryforwardHomebuyerCreditInputs
+        type: boolean
+        required: true
+        label: Does your spouse have an additional carryforward homebuyer credit amount to add?
+
+  - name: spouseContribution
+    title: Spouse carryforward contribution
+    multiplicity: single
+    showIf: spouseHasCarryforwardHomebuyerCreditInputs == true
+    fields:
+      - name: spousePriorYearCarryforwardContribution
+        type: amount
+        required: false
+        label: Spouse prior-year Form 8859 line 4 carryforward contribution
+        placeholder: 0.00
+
+  - name: importedSupport
+    title: Imported support values (backend only - not rendered)
+    multiplicity: single
+    showIf: spouseHasCarryforwardHomebuyerCreditInputs == true
+    fields:
+      - name: jointForm8859Ownership
+        type: text
+        required: false
+        readOnly: true
+        label: Backend note - spouse data rolls into the joint Form 8859

@@ -1,0 +1,328 @@
+name: other-earned-income
+title: Form 1040 - Other earned income (line 1h)
+multiplicity: single
+formName: 1040
+category: wageAdjustments
+instructions:
+  - Use this form to report other earned income that belongs on Form 1040 line 1h.
+  - Line 1h is the sum of disability pension wages, excess elective deferrals, current-year corrective distributions, and strike/lockout benefits.
+sections:
+  - name: imports
+    title: Imported data (read-only)
+    multiplicity: single
+    instructions:
+      - These values are populated automatically from W-2 and 1099-R statements and tax-year reference data.
+    fields:
+      - name: taxYear
+        type: integer
+        required: false
+        readOnly: true
+        label: Return tax year (imported)
+      - name: taxpayerAgeAtYearEnd
+        type: integer
+        required: false
+        readOnly: true
+        label: Taxpayer age at year end (imported)
+      - name: spouseAgeAtYearEnd
+        type: integer
+        required: false
+        readOnly: true
+        label: Spouse age at year end (imported)
+      - name: w2Total402gDeferralsTaxpayer
+        type: amount
+        required: false
+        readOnly: true
+        label: Total 402(g) deferrals (taxpayer)
+      - name: w2Total402gDeferralsSpouse
+        type: amount
+        required: false
+        readOnly: true
+        label: Total 402(g) deferrals (spouse)
+      - name: w2TotalSimpleDeferralsTaxpayer
+        type: amount
+        required: false
+        readOnly: true
+        label: Total SIMPLE deferrals (taxpayer)
+      - name: w2TotalSimpleDeferralsSpouse
+        type: amount
+        required: false
+        readOnly: true
+        label: Total SIMPLE deferrals (spouse)
+      - name: w2Total457bDeferralsTaxpayer
+        type: amount
+        required: false
+        readOnly: true
+        label: Total 457(b) deferrals (taxpayer)
+      - name: w2Total457bDeferralsSpouse
+        type: amount
+        required: false
+        readOnly: true
+        label: Total 457(b) deferrals (spouse)
+
+  - name: strikeBenefits
+    title: Step 1 - Strike or lockout benefits
+    multiplicity: single
+    fields:
+      - name: manualStrikeBenefitsAmount
+        type: amount
+        required: false
+        label: Strike or lockout benefits not reported on statements
+        help: Enter taxable strike/lockout benefits you received that were not captured from statements.
+      - name: importedStrikeBenefitsAmount
+        type: amount
+        required: false
+        readOnly: true
+        label: Strike or lockout benefits from statements (imported)
+      - name: strikeBenefitsTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Strike/lockout benefits total (computed)
+
+  - name: excessElectiveDeferrals
+    title: Step 2 - Excess elective deferrals
+    multiplicity: single
+    fields:
+      - name: excessElectiveDeferralsTaxpayer
+        type: amount
+        required: false
+        readOnly: true
+        label: Excess elective deferrals (taxpayer, computed)
+      - name: excessElectiveDeferralsSpouse
+        type: amount
+        required: false
+        readOnly: true
+        label: Excess elective deferrals (spouse, computed)
+      - name: excessElectiveDeferralsTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Excess elective deferrals total (computed)
+
+  - name: disabilityPensions
+    title: Step 3 - Disability pensions treated as wages
+    multiplicity: multiple
+    instructions:
+      - These entries are populated from 1099-R statements with distribution code 3.
+      - If the recipient SSN does not match the taxpayer or spouse, select who this 1099-R belongs to.
+    fields:
+      - name: source1099RId
+        type: text
+        required: false
+        readOnly: true
+        label: Source 1099-R entry id (imported)
+      - name: payerName
+        type: text
+        required: false
+        readOnly: true
+        label: Payer/plan name (imported)
+      - name: recipientTIN
+        type: text
+        required: false
+        readOnly: true
+        label: Recipient SSN/ITIN (imported)
+      - name: owner
+        type: select
+        required: false
+        options: ["taxpayer", "spouse"]
+        label: Taxpayer or spouse
+      - name: box1GrossDistribution
+        type: amount
+        required: false
+        readOnly: true
+        label: 1099-R box 1 gross distribution (imported)
+      - name: box2aTaxableAmount
+        type: amount
+        required: false
+        readOnly: true
+        label: 1099-R box 2a taxable amount (imported)
+      - name: box7DistributionCode
+        type: text
+        required: false
+        readOnly: true
+        label: 1099-R box 7 code(s) (imported)
+      - name: isBelowPlanMinimumRetirementAge
+        type: boolean
+        required: true
+        label: Below plan minimum retirement age?
+      - name: disabilityPensionWageAmount
+        type: amount
+        required: false
+        readOnly: true
+        label: Disability pension wages included (computed)
+
+  - name: electiveDeferralsTaxpayer
+    title: Step 2a - SIMPLE plan elevated limit (taxpayer, §117)
+    multiplicity: single
+    showIf: taxpayerHasSimpleDeferral
+    instructions:
+      - SECURE 2.0 Act §117 lets certain SIMPLE plans (employers with ≤25 employees, or certain larger ones that elect higher matching) use an elevated $17,600 contribution cap for 2025 instead of the standard $16,500. The worker must self-declare because the W-2 carries no §117 indicator.
+    fields:
+      - name: usesSimple117ElevatedLimits
+        type: boolean
+        required: false
+        label: Did the SIMPLE plan that paid you use the elevated $17,600 cap?
+
+  - name: electiveDeferralsSpouse
+    title: Step 2b - SIMPLE plan elevated limit (spouse, §117)
+    multiplicity: single
+    showIf: spouseHasSimpleDeferral
+    instructions:
+      - Same as the taxpayer section above, but for the spouse on a Married Filing Jointly return.
+    fields:
+      - name: usesSimple117ElevatedLimits
+        type: boolean
+        required: false
+        label: Did the SIMPLE plan that paid your spouse use the elevated $17,600 cap?
+
+  - name: special457bTaxpayer
+    title: Step 2c - 457(b) 3-year special pre-retirement catch-up (taxpayer)
+    multiplicity: single
+    showIf: taxpayerHas457bDeferral
+    instructions:
+      - IRC §457(b)(3) lets a worker in any of the 3 years before their 457(b) plan's normal retirement age defer up to $47,000 for 2025 (double the regular $23,500 limit). This REPLACES the age-50 or 60-63 catch-up for the 457(b) plan only.
+    fields:
+      - name: uses457b3YearSpecialCatchup
+        type: boolean
+        required: false
+        label: Are you electing the 3-year special catch-up for your 457(b) plan?
+
+  - name: special457bSpouse
+    title: Step 2d - 457(b) 3-year special pre-retirement catch-up (spouse)
+    multiplicity: single
+    showIf: spouseHas457bDeferral
+    instructions:
+      - Same as the taxpayer section above, but for the spouse on a Married Filing Jointly return.
+    fields:
+      - name: uses457b3YearSpecialCatchup
+        type: boolean
+        required: false
+        label: Is your spouse electing the 3-year special catch-up for their 457(b) plan?
+
+  - name: rule15year403bTaxpayer
+    title: Step 2e - 403(b) 15-year rule (taxpayer)
+    multiplicity: single
+    showIf: taxpayerHas402gDeferral
+    instructions:
+      - IRC §402(g)(7) lets a 403(b) participant with 15+ years of service at a qualified eligible employer (school, hospital, church) defer an extra $3,000 per year on top of the standard limit. Subject to a $15,000 lifetime cap; you are responsible for tracking. STACKS with the age-50 catch-up.
+    fields:
+      - name: uses403b15YearRule
+        type: boolean
+        required: false
+        label: Are you electing the 15-year rule for your 403(b) plan?
+
+  - name: rule15year403bSpouse
+    title: Step 2f - 403(b) 15-year rule (spouse)
+    multiplicity: single
+    showIf: spouseHas402gDeferral
+    instructions:
+      - Same as the taxpayer section above, but for the spouse on a Married Filing Jointly return.
+    fields:
+      - name: uses403b15YearRule
+        type: boolean
+        required: false
+        label: Is your spouse electing the 15-year rule for their 403(b) plan?
+
+  - name: psoExclusionTaxpayer
+    title: Step 3a - Public Safety Officer premium exclusion (taxpayer)
+    multiplicity: single
+    showIf: anyDisabilityEntryOwnedByTaxpayer
+    instructions:
+      - Eligible retired police, firefighters, EMTs, and similar may exclude up to $3,000 per year of qualifying accident, health, or long-term-care insurance premiums paid from the disability pension.
+      - Double-gate. The exclusion only applies when the person is eligible AND elects it.
+      - The exclusion is capped at $3,000 per person per year (IRC §402(l)). Statutory; not annually-indexed.
+    fields:
+      - name: isEligibleRetiredPublicSafetyOfficer
+        type: boolean
+        required: false
+        label: Are you an eligible retired public safety officer?
+      - name: electsPsoPremiumExclusion
+        type: boolean
+        required: false
+        showIf: isEligibleRetiredPublicSafetyOfficer
+        label: Do you want to claim the premium exclusion?
+      - name: totalQualifyingPsoPremiumsPaid
+        type: amount
+        required: false
+        showIf: electsPsoPremiumExclusion
+        label: Total qualifying premiums paid from the pension this year
+
+  - name: psoExclusionSpouse
+    title: Step 3b - Public Safety Officer premium exclusion (spouse)
+    multiplicity: single
+    showIf: anyDisabilityEntryOwnedBySpouse
+    instructions:
+      - Same as the taxpayer section above, but for the spouse on a Married Filing Jointly return.
+    fields:
+      - name: isEligibleRetiredPublicSafetyOfficer
+        type: boolean
+        required: false
+        label: Is your spouse an eligible retired public safety officer?
+      - name: electsPsoPremiumExclusion
+        type: boolean
+        required: false
+        showIf: isEligibleRetiredPublicSafetyOfficer
+        label: Do they want to claim the premium exclusion?
+      - name: totalQualifyingPsoPremiumsPaid
+        type: amount
+        required: false
+        showIf: electsPsoPremiumExclusion
+        label: Total qualifying premiums paid from the pension this year
+
+  - name: correctiveDistributions
+    title: Step 4 - Corrective distributions (non-IRA)
+    multiplicity: multiple
+    instructions:
+      - Populated from 1099-R statements with code 8 (current year) or code P (prior year).
+      - Only current-year taxable corrective distributions are included in line 1h.
+    fields:
+      - name: source1099RId
+        type: text
+        required: false
+        readOnly: true
+        label: Source 1099-R entry id (imported)
+      - name: payerName
+        type: text
+        required: false
+        readOnly: true
+        label: Payer/plan name (imported)
+      - name: recipientTIN
+        type: text
+        required: false
+        readOnly: true
+        label: Recipient SSN/ITIN (imported)
+      - name: owner
+        type: select
+        required: false
+        options: ["taxpayer", "spouse"]
+        label: Taxpayer or spouse
+      - name: box2aTaxableAmount
+        type: amount
+        required: false
+        readOnly: true
+        label: 1099-R box 2a taxable amount (imported)
+      - name: box7DistributionCode
+        type: text
+        required: false
+        readOnly: true
+        label: 1099-R box 7 code(s) (imported)
+      - name: correctiveDistributionIncludedAmount
+        type: amount
+        required: false
+        readOnly: true
+        label: Corrective distribution included in line 1h (computed)
+
+  - name: line1hSummary
+    title: Step 5 - Line 1h summary
+    multiplicity: single
+    fields:
+      - name: line1hComputedTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Computed line 1h total
+      - name: line1hStatementDescriptions
+        type: text
+        required: false
+        readOnly: true
+        label: Line 1h statement descriptions

@@ -1,0 +1,229 @@
+# Form 1040 line 2a/2b spouse workflow.
+# Approach: keep spouse-specific user questions + imported statement fields + computed outputs in one YAML.
+# NOTE: Sections marked as backend-only are NOT supposed to be rendered in the actual form component.
+# NOTE: Return-level upload/schedule-B gating questions are intentionally omitted to avoid spouse conflict.
+name: interest-income-spouse
+title: Form 1040 - Interest income (spouse, lines 2a and 2b)
+multiplicity: single
+formName: 1040
+category: income
+instructions:
+  - Use this only for spouse-specific amounts for Form 1040 lines 2a and 2b.
+  - Return-level upload checks and Schedule B gating stay on interest-income-taxpayer.
+  - Self-employment income is out of scope and excluded.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      # Intentional: spouse interest income is not auto-derived from statement store in the current
+      # implementation because the taxpayer form owns return-level statement gating. The spouse form
+      # is a thin supplement; the user confirms the spouse had interest income before entering
+      # spouse-specific supplemental amounts and adjustments.
+      - name: hasBusinessRelatedInterest
+        type: boolean
+        required: false
+        label: Is any of your spouse's interest income connected to a business or self-employment activity?
+        help: Business-related interest income is reported on Schedule C and is not handled here. Do not include it in this form.
+      - name: hadInterestIncome
+        type: boolean
+        required: true
+        label: Did your spouse have any interest income during the tax year?
+        help: If No, stop here and do not continue this spouse interview.
+
+  - name: supplementalInterestAmounts
+    title: Supplemental interest amounts
+    multiplicity: single
+    showIf: hadInterestIncome == true
+    fields:
+      - name: manualTaxableInterestNotOnStatements
+        type: amount
+        required: false
+        label: Taxable interest not reported on statements
+        placeholder: 0.00
+        help: "Enter spouse taxable interest not shown on uploaded statements. This flows to Form 1040 line 2b."
+      - name: manualTaxExemptInterestNotOnStatements
+        type: amount
+        required: false
+        label: Tax-exempt interest not reported on statements
+        placeholder: 0.00
+        help: "Enter spouse tax-exempt interest not shown on uploaded statements (e.g., direct holdings of municipal bonds). This flows to Form 1040 line 2a. Do NOT include market discount on a tax-exempt bond — that is taxable interest (line 2b), not tax-exempt interest."
+      - name: taxExemptStatedInterestFrom1099OidBox2
+        type: amount
+        required: false
+        label: Portion of 1099-OID box 2 that is tax-exempt stated interest
+        placeholder: 0.00
+        help: "Enter only the spouse tax-exempt portion of 1099-OID box 2 for tax-exempt OID bonds. This flows to Form 1040 line 2a."
+      - name: taxablePortionFrom1099OidBox2Override
+        type: amount
+        required: false
+        label: Taxable portion of 1099-OID box 2 to include (override)
+        placeholder: 0.00
+        help: "Use only when spouse taxable 1099-OID box 2 needs an override. This flows to Form 1040 line 2b."
+
+  - name: interestAdjustments
+    title: Interest adjustments
+    multiplicity: single
+    showIf: hadInterestIncome == true
+    instructions:
+      - Enter only spouse-specific adjustments not already netted on payer statements.
+    fields:
+      - name: hasInterestAdjustments
+        type: boolean
+        required: false
+        label: Do any of these less common interest adjustments apply to your spouse?
+        help: "Check this if the spouse paid accrued interest to a seller when buying a bond, is a nominee recipient of interest belonging to someone else, or is reducing interest or OID below the 1099-reported amount due to bond premium or acquisition premium not already reflected on their statements."
+      - name: accruedInterestPaidAdjustment
+        type: amount
+        required: false
+        label: Interest your spouse paid to a bond seller when buying the bond mid-period
+        placeholder: 0.00
+        help: "When you buy a bond between interest payment dates, you pay the seller for the interest that accrued since the last payment. You can subtract this amount because you did not actually earn that portion of the interest — you prepaid it."
+        showIf: hasInterestAdjustments == true
+      - name: nomineeInterestAdjustment
+        type: amount
+        required: false
+        label: Interest reported under your spouse's name that actually belongs to someone else
+        placeholder: 0.00
+        help: "If a 1099-INT was issued in the spouse's name but the interest belongs to another person (such as a joint account co-owner), enter the amount that belongs to them here. The spouse is a 'nominee' for their share."
+        showIf: hasInterestAdjustments == true
+      - name: taxableBondPremiumAdjustmentNotInStatements
+        type: amount
+        required: false
+        label: Taxable bond premium adjustment not reflected on statements
+        placeholder: 0.00
+        help: Enter spouse taxable bond premium amortization only when payer statements did not already net it.
+        showIf: hasInterestAdjustments == true
+      - name: treasuryBondPremiumAdjustmentNotInStatements
+        type: amount
+        required: false
+        label: Treasury bond premium adjustment not reflected on statements
+        placeholder: 0.00
+        help: Enter spouse Treasury bond premium amortization only when not already reflected on payer statements.
+        showIf: hasInterestAdjustments == true
+      - name: taxExemptBondPremiumAdjustmentNotInStatements
+        type: amount
+        required: false
+        label: Tax-exempt bond premium adjustment not reflected on statements
+        placeholder: 0.00
+        help: Enter spouse tax-exempt bond premium amortization only when not already reflected on payer statements.
+        showIf: hasInterestAdjustments == true
+      - name: oidAcquisitionPremiumAdjustmentNotInStatements
+        type: amount
+        required: false
+        label: OID acquisition premium adjustment not reflected on statements
+        placeholder: 0.00
+        help: Enter spouse acquisition premium amortization only when OID reported by payer was not already net.
+        showIf: hasInterestAdjustments == true
+      - name: priorYearReportedSavingsBondAdjustment
+        type: amount
+        required: false
+        label: U.S. savings bond interest your spouse already reported in a prior year
+        placeholder: 0.00
+        help: "If your spouse elected to report Series EE or I savings bond interest each year as it accrued (instead of at redemption), the 1099-INT box 3 at redemption will include amounts already reported in prior tax years. Enter the prior-year-reported portion here — it reduces Form 1040 line 2b and is listed as a negative item on Schedule B. Triggers Schedule B regardless of the $1,500 threshold (IRS Publication 17 chapter 6 condition #4)."
+        showIf: hasInterestAdjustments == true
+      - name: frozenDepositInterestAdjustment
+        type: amount
+        required: false
+        label: Spouse interest from a frozen deposit you cannot withdraw
+        placeholder: 0.00
+        help: "A 1099-INT box 1 may include interest on a deposit your spouse cannot access — for example, when a court order, regulator, or bankruptcy has frozen the account. The inaccessible portion is non-taxable until your spouse can withdraw it. Enter the frozen portion here — it reduces Form 1040 line 2b and is listed as a negative item on Schedule B. Triggers Schedule B regardless of the $1,500 threshold (IRS Publication 17 chapter 6 condition #6)."
+        showIf: hasInterestAdjustments == true
+      - name: marketDiscountSection1278bElection
+        type: boolean
+        required: false
+        label: Has your spouse made the Internal Revenue Code §1278(b) election to include market discount as interest each year?
+        help: "Most filers leave this NO. By default, market discount (1099-OID box 5) accrued during your spouse's ownership of a bond is taxed only when the bond is sold or redeemed — at that point it becomes ordinary income on Schedule D. The §1278(b) election lets your spouse instead include accrued market discount as interest income each year. The election is IRREVOCABLE and applies to ALL market discount bonds your spouse acquires after the election year. Only choose Yes if a written §1278(b) election statement has been filed per IRS Publication 550."
+        showIf: hasInterestAdjustments == true
+
+  # Backend-only statement imports. Not rendered in form component.
+  - name: importedStatementFields
+    title: Imported statement fields (backend only)
+    multiplicity: single
+    showIf: hadInterestIncome == true
+    fields:
+      - name: imported1099IntBox1TaxableInterest
+        type: amount
+        required: false
+        readOnly: true
+        label: 1099-INT box 1 total (imported)
+      - name: imported1099IntBox3TreasuryInterest
+        type: amount
+        required: false
+        readOnly: true
+        label: 1099-INT box 3 total (imported)
+      - name: imported1099IntBox8TaxExemptInterest
+        type: amount
+        required: false
+        readOnly: true
+        label: 1099-INT box 8 total (imported)
+      - name: imported1099IntBox9PrivateActivityBondInterest
+        type: amount
+        required: false
+        readOnly: true
+        label: 1099-INT box 9 total (imported)
+      - name: imported1099IntBox11BondPremium
+        type: amount
+        required: false
+        readOnly: true
+        label: 1099-INT box 11 total (imported)
+      - name: imported1099IntBox12TreasuryBondPremium
+        type: amount
+        required: false
+        readOnly: true
+        label: 1099-INT box 12 total (imported)
+      - name: imported1099IntBox13TaxExemptBondPremium
+        type: amount
+        required: false
+        readOnly: true
+        label: 1099-INT box 13 total (imported)
+      - name: imported1099DivBox12ExemptInterestDividends
+        type: amount
+        required: false
+        readOnly: true
+        label: 1099-DIV box 12 total (imported)
+      - name: imported1099OidBox1Oid
+        type: amount
+        required: false
+        readOnly: true
+        label: 1099-OID box 1 total (imported)
+      - name: imported1099OidBox2OtherPeriodicInterest
+        type: amount
+        required: false
+        readOnly: true
+        label: 1099-OID box 2 total (imported)
+      - name: imported1099OidBox6AcquisitionPremium
+        type: amount
+        required: false
+        readOnly: true
+        label: 1099-OID box 6 total (imported)
+      - name: imported1099OidBox11TaxExemptOid
+        type: amount
+        required: false
+        readOnly: true
+        label: 1099-OID box 11 total (imported)
+
+  # Backend-only computed values. Not rendered in form component.
+  - name: computedOutputs
+    title: Computed outputs (backend only)
+    multiplicity: single
+    showIf: hadInterestIncome == true
+    fields:
+      - name: computedLine2aTaxExemptInterest
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed spouse contribution to Form 1040 line 2a
+      - name: computedLine2bTaxableInterest
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed spouse contribution to Form 1040 line 2b
+      - name: computedForm6251Line2gContribution
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed spouse contribution to Form 6251 line 2g

@@ -1,0 +1,155 @@
+<mxGraphModel dx='1500' dy='900' grid='1' gridSize='10' guides='1' tooltips='1' connect='1' arrows='1' fold='1' page='1' pageScale='1' pageWidth='1654' pageHeight='2400' math='0' shadow='0'>
+  <root>
+    <mxCell id='0'/>
+    <mxCell id='1' parent='0'/>
+
+    <!-- ══ TITLE ══ -->
+    <mxCell id='title' value='Form 1040 Line 1z — Total Wages&#xa;Computed inline in buildIncome()  in  TaxReturnComputeService.java&#xa;Formula: line1z = addNonNull(1a, 1b, 1c, 1d, 1e, 1f, 1g, 1h)  [line 1i EXCLUDED]' style='text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1' vertex='1' parent='1'>
+      <mxGeometry x='100' y='15' width='1450' height='60' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ SOURCE FORMS / STATEMENTS (top row) ══ -->
+    <mxCell id='src_w2' value='W-2 Statement&#xa;box 1: wagesTipsOtherCompAmount&#xa;box 12 code T (adoption)&#xa;employeeSSN (attribution)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='60' y='100' width='280' height='70' as='geometry'/>
+    </mxCell>
+
+    <mxCell id='src_4137' value='Form 4137&#xa;(tip income computation)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='360' y='110' width='220' height='50' as='geometry'/>
+    </mxCell>
+
+    <mxCell id='src_2441' value='Form 2441&#xa;line 26: taxable dependent&#xa;care benefits' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='600' y='100' width='220' height='70' as='geometry'/>
+    </mxCell>
+
+    <mxCell id='src_8839' value='Form 8839&#xa;line 31: adoption benefits&#xa;(may be negative)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='840' y='100' width='220' height='70' as='geometry'/>
+    </mxCell>
+
+    <mxCell id='src_8919' value='Form 8919&#xa;line 6: uncollected&#xa;SS/Medicare wages' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='1080' y='100' width='220' height='70' as='geometry'/>
+    </mxCell>
+
+    <mxCell id='src_manual' value='Manual Entry&#xa;household wages (1b)&#xa;other earned income (1h)&#xa;Medicaid waiver (1d)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='1320' y='100' width='220' height='70' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ SUB-LINE COMPUTATION BOXES ══ -->
+    <mxCell id='line1a' value='line 1a&#xa;Wages, salaries, tips&#xa;W-2 box 1 (SSN-filtered)&#xa;+ Form 4852 substitute&#xa;&#xa;income.wages' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='60' y='220' width='200' height='85' as='geometry'/>
+    </mxCell>
+
+    <mxCell id='line1b' value='line 1b&#xa;Household employee wages&#xa;not reported on W-2&#xa;&#xa;income.householdEmployeeWages' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='275' y='220' width='200' height='85' as='geometry'/>
+    </mxCell>
+
+    <mxCell id='line1c' value='line 1c&#xa;Tip income not on line 1a&#xa;Form 4137 (unreported tips)&#xa;&#xa;income.tipIncome' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='490' y='220' width='200' height='85' as='geometry'/>
+    </mxCell>
+
+    <mxCell id='line1d' value='line 1d&#xa;Medicaid waiver payments&#xa;not in W-2 box 1&#xa;&#xa;income.medicaidWaiverPayments' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='705' y='220' width='200' height='85' as='geometry'/>
+    </mxCell>
+
+    <mxCell id='line1e' value='line 1e&#xa;Taxable dependent care&#xa;benefits (Form 2441 line 26)&#xa;&#xa;income.dependentCareBenefits' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='920' y='220' width='200' height='85' as='geometry'/>
+    </mxCell>
+
+    <mxCell id='line1f' value='line 1f&#xa;Employer adoption benefits&#xa;Form 8839 line 31&#xa;(may be negative)&#xa;income.adoptionBenefits' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='1135' y='220' width='200' height='85' as='geometry'/>
+    </mxCell>
+
+    <mxCell id='line1g' value='line 1g&#xa;Wages from Form 8919&#xa;line 6&#xa;&#xa;income.uncollectedSocialSecurity&#xa;MedicareWages' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='1350' y='220' width='200' height='95' as='geometry'/>
+    </mxCell>
+
+    <mxCell id='line1h' value='line 1h&#xa;Other earned income&#xa;(strike pay, jury duty, etc.)&#xa;&#xa;income.otherEarnedIncome' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='490' y='370' width='200' height='85' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ LINE 1i EXCLUDED BOX ══ -->
+    <mxCell id='line1i_excluded' value='line 1i (NOT included in 1z)&#xa;Nontaxable combat pay election&#xa;W-2 box 12 code Q&#xa;&#xa;income.nontaxableCombatPayElection&#xa;&#xa;Used only for EIC + ACTC' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;dashed=1;' vertex='1' parent='1'>
+      <mxGeometry x='705' y='370' width='220' height='100' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ SUMMATION NODE ══ -->
+    <mxCell id='sum_node' value='line1z = roundMoney(&#xa;  addNonNull(&#xa;    addNonNull(addNonNull(addNonNull(addNonNull(&#xa;      addNonNull(addNonNull(1a, 1b), 1c),&#xa;      1d), 1e), 1f), 1g), 1h)&#xa;)&#xa;&#xa;addNonNull: null treated as 0 only when other operand non-null;&#xa;both null → null result' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1' vertex='1' parent='1'>
+      <mxGeometry x='450' y='520' width='750' height='90' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ NULL GUARD ══ -->
+    <mxCell id='null_check' value='line1z != null?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='580' y='650' width='240' height='70' as='geometry'/>
+    </mxCell>
+
+    <mxCell id='null_yes' value='income.setTotalWages(line1z)&#xa;→ form1040.income.totalWages' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='490' y='760' width='300' height='55' as='geometry'/>
+    </mxCell>
+
+    <mxCell id='null_no' value='totalWages not set&#xa;(remains absent from JSON)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='830' y='760' width='260' height='55' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ OUTPUT STORE ══ -->
+    <mxCell id='output_store' value='Output: form1040.income.totalWages (BigDecimal)&#xa;PDF field: line1z_total_wages&#xa;Frontend: form.income?.totalWages ?? form.income?.wages' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='440' y='855' width='680' height='60' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ DOWNSTREAM CONSUMERS ══ -->
+    <mxCell id='hdr_down' value='DOWNSTREAM CONSUMERS' style='text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1' vertex='1' parent='1'>
+      <mxGeometry x='100' y='955' width='1450' height='30' as='geometry'/>
+    </mxCell>
+
+    <mxCell id='d_line9' value='Line 9 — Total Income&#xa;&#xa;line9 = line1z + line2b + line3b + line4b&#xa;         + line5b + line6b + line7a + line8' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=left;spacingLeft=8' vertex='1' parent='1'>
+      <mxGeometry x='130' y='1000' width='420' height='75' as='geometry'/>
+    </mxCell>
+
+    <mxCell id='d_8812' value='Schedule 8812 — CTC / ACTC&#xa;&#xa;line18a = totalWages + nontaxableCombatPayElection&#xa;ACTCFloor = max(0, line18a − 2,500)&#xa;ACTCFromEarnedIncome = ACTCFloor × 15%' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=left;spacingLeft=8' vertex='1' parent='1'>
+      <mxGeometry x='600' y='1000' width='460' height='75' as='geometry'/>
+    </mxCell>
+
+    <mxCell id='d_agi' value='AGI (line 11b) — Indirect&#xa;&#xa;line11b = line9 − line10 (adjustments)&#xa;→ feeds standard deduction, QBI, taxable income' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=11;align=left;spacingLeft=8' vertex='1' parent='1'>
+      <mxGeometry x='1110' y='1000' width='400' height='75' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ INVARIANTS ══ -->
+    <mxCell id='invariants' value='Invariants:&#xa;• line1z = sum(1a through 1h only); line1i is NEVER included&#xa;• Negative sub-lines (e.g. 1f special-needs adoption) are preserved algebraically&#xa;• If all 1a-1h are null → line1z is null (not zero)&#xa;• line1z rounded to 2 decimal places via roundMoney()' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=11;align=left;spacingLeft=8' vertex='1' parent='1'>
+      <mxGeometry x='360' y='1120' width='930' height='75' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ EDGES — sources to sub-lines ══ -->
+    <mxCell id='e_w2_1a' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='src_w2' target='line1a' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e_w2_1b' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='src_manual' target='line1b' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e_4137_1c' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='src_4137' target='line1c' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e_manual_1d' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='src_manual' target='line1d' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e_2441_1e' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='src_2441' target='line1e' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e_8839_1f' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='src_8839' target='line1f' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e_8919_1g' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='src_8919' target='line1g' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e_manual_1h' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='src_manual' target='line1h' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e_w2_1f' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='src_w2' target='line1f' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+
+    <!-- ══ EDGES — sub-lines to sum ══ -->
+    <mxCell id='e_1a_sum' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='line1a' target='sum_node' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e_1b_sum' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='line1b' target='sum_node' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e_1c_sum' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='line1c' target='sum_node' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e_1d_sum' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='line1d' target='sum_node' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e_1e_sum' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='line1e' target='sum_node' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e_1f_sum' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='line1f' target='sum_node' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e_1g_sum' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='line1g' target='sum_node' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e_1h_sum' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='line1h' target='sum_node' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+
+    <!-- ══ EDGE — 1i excluded (dashed) ══ -->
+    <mxCell id='e_1i_excluded' value='EXCLUDED' style='edgeStyle=orthogonalEdgeStyle;dashed=1;strokeColor=#b85450;fontColor=#b85450;fontStyle=2' edge='1' source='line1i_excluded' target='sum_node' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+
+    <!-- ══ EDGES — sum → null check → output ══ -->
+    <mxCell id='e_sum_null' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='sum_node' target='null_check' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e_null_yes' value='non-null' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='null_check' target='null_yes' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e_null_no' value='null' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='null_check' target='null_no' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e_yes_out' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='null_yes' target='output_store' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+
+    <!-- ══ EDGES — output → downstream ══ -->
+    <mxCell id='e_out_line9' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='output_store' target='d_line9' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e_out_8812' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='output_store' target='d_8812' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e_out_agi' style='edgeStyle=orthogonalEdgeStyle;dashed=1;' edge='1' source='d_line9' target='d_agi' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+
+  </root>
+</mxGraphModel>

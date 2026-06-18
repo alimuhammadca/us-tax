@@ -1,0 +1,201 @@
+# Form 8863 spouse workflow.
+# Form 8863 is still one consolidated return-level form. This spouse form is
+# only for additional student Part III entries that should be merged into the
+# same return-level Form 8863 later. Return-level gating, upload confirmation,
+# MAGI add-backs, and Form 8862 questions stay on the taxpayer form.
+# NOTE: Backend-only sections are not rendered in the UI intake component.
+name: education-credits-spouse
+title: Form 8863 - Education credits (spouse)
+multiplicity: single
+formName: 8863
+category: deductions
+instructions:
+  - Use this spouse form only for additional students that should be merged into the same consolidated Form 8863 for the return.
+  - Do not duplicate a student already entered on the taxpayer education-credits form.
+  - Return-level upload confirmations, MAGI adjustments, and other shared Form 8863 questions belong on the taxpayer form only.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: spouseHasAdditionalEducationCreditStudents
+        type: boolean
+        required: true
+        label: Does the spouse tab need to add any students to Form 8863?
+        help: Select Yes only if you need to add one or more additional students from the spouse tab for the consolidated Form 8863.
+
+  - name: spouseEducationCreditStudents
+    title: Additional students entered from the spouse tab (Part III)
+    multiplicity: multiple
+    showIf: spouseHasAdditionalEducationCreditStudents == true
+    instructions:
+      - Add one row per additional student entered from the spouse tab.
+      - Enter each student only once across the taxpayer and spouse education-credit forms.
+    fields:
+      - name: studentFirstNameLine20
+        type: text
+        required: true
+        placeholder: First name
+        label: Student's first name
+        help: Enter the student's first name exactly as it should appear on Form 8863.
+      - name: studentLastNameLine20
+        type: text
+        required: true
+        placeholder: Last name
+        label: Student's last name
+        help: Enter the student's last name exactly as it should appear on Form 8863.
+      - name: studentTinLine21
+        type: text
+        required: true
+        placeholder: ###-##-####
+        label: Student's Social Security Number or TIN
+        help: Enter the student's SSN or other TIN used for the education credit claim.
+      - name: studentTinIssuedByDueDate
+        type: boolean
+        required: false
+        label: Was the student's taxpayer identification number issued by the due date of the 2025 return, including extensions?
+        help: Select No only if the student's Social Security Number, Individual Taxpayer Identification Number, or Adoption Taxpayer Identification Number was first issued after the due date of the 2025 return (including extensions). Under Internal Revenue Code section 25A(g)(1)(B), the American Opportunity Credit cannot be claimed for a student whose taxpayer identification number was issued after the due date. The Lifetime Learning Credit does not have this restriction.
+      - name: studentRelationshipToTaxReturn
+        type: select
+        required: true
+        placeholder: Select relationship
+        label: Relationship of the student to this return
+        help: Identify whether this student is the taxpayer, spouse, dependent, or another eligible student claimed on the return.
+        options:
+          - value: taxpayer
+            label: Taxpayer
+          - value: spouse
+            label: Spouse
+          - value: dependent
+            label: Dependent
+          - value: other_eligible_student
+            label: Other eligible student
+      - name: creditTypeRequested
+        type: select
+        required: true
+        placeholder: Select credit
+        label: Credit claimed for this student
+        help: Select the credit claimed for this student. Do not claim both credits for the same student.
+        options:
+          - value: aotc
+            label: American Opportunity Credit
+          - value: llc
+            label: Lifetime Learning Credit
+      - name: adjustedQualifiedEducationExpenses
+        type: amount
+        required: true
+        placeholder: 0.00
+        label: Adjusted qualified education expenses for this student
+        help: Enter the student's qualified expenses after reducing for tax-free educational assistance.
+      - name: taxFreeEducationAssistanceReductionAmount
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Tax-free educational assistance that reduced the claimed expenses
+        help: Enter the total scholarship, grant, employer assistance, veterans benefit, or other tax-free educational assistance amount applied against the student's expenses.
+      - name: educationSupportNotes
+        type: text
+        required: false
+        placeholder: Notes about qualified expenses or support
+        label: Student education-support notes
+        help: Briefly explain unusual documentation, adjustments, or expense-support facts for this student.
+      - name: institution1NameLine22
+        type: text
+        required: true
+        placeholder: School name
+        label: Name of primary school or institution
+        help: Enter the first educational institution for this student.
+      - name: institution1AddressLine22
+        type: text
+        required: true
+        placeholder: School address
+        label: Address of primary school or institution
+        help: Enter the mailing address for the first institution.
+      - name: institution1EinLine22
+        type: text
+        required: false
+        placeholder: ##-#######
+        label: Primary institution's EIN
+        help: Enter the institution EIN when required, especially for AOTC or when a Form 1098-T was issued.
+      - name: institution1Received1098T
+        type: boolean
+        required: true
+        label: Did the primary school issue a 1098-T for this student in 2025?
+        help: Select Yes if the first institution issued a 2025 Form 1098-T for this student.
+      - name: institution1PriorYear1098TBox7Checked
+        type: boolean
+        required: false
+        label: Did the primary school's 2024 1098-T indicate prior-year billing?
+        help: Select Yes if the prior-year 1098-T for the first institution had box 7 checked.
+      - name: studentHasSecondInstitutionLine22
+        type: boolean
+        required: false
+        label: Did this student attend a second school or institution in 2025?
+        help: Select Yes only if you need to list a second institution for this student.
+      - name: institution2NameLine22
+        type: text
+        required: false
+        placeholder: Second school name
+        label: Name of second school or institution
+        help: Enter the second institution only when needed for this student.
+      - name: institution2AddressLine22
+        type: text
+        required: false
+        placeholder: Second school address
+        label: Address of second school or institution
+        help: Enter the mailing address for the second institution.
+      - name: institution2EinLine22
+        type: text
+        required: false
+        placeholder: ##-#######
+        label: Second institution's EIN
+        help: Enter the second institution EIN when required.
+      - name: institution2Received1098T
+        type: boolean
+        required: false
+        label: Did the second school issue a 1098-T for this student in 2025?
+        help: Select Yes if the second institution issued a 2025 Form 1098-T for this student.
+      - name: institution2PriorYear1098TBox7Checked
+        type: boolean
+        required: false
+        label: Did the second school's 2024 1098-T indicate prior-year billing?
+        help: Select Yes if the prior-year 1098-T for the second institution had box 7 checked.
+      - name: aotcClaimedFourPriorYearsLine23
+        type: boolean
+        required: false
+        label: Has the American Opportunity Credit been claimed for this student in four or more prior tax years?
+        help: Select Yes if the student has already used the AOTC in four earlier tax years.
+      - name: studentWasAtLeastHalfTimeLine24
+        type: boolean
+        required: false
+        label: Was the student enrolled at least half-time in a degree or certificate program?
+        help: Select Yes only if the student met the half-time requirement for the AOTC.
+      - name: studentCompletedFirstFourYearsBefore2025Line25
+        type: boolean
+        required: false
+        label: Had the student completed the first four years of postsecondary education before 2025?
+        help: Select Yes if the student had already completed the first four years before the beginning of 2025.
+      - name: studentHadFelonyDrugConvictionLine26
+        type: boolean
+        required: false
+        label: Did the student have a felony drug conviction before the end of 2025?
+        help: Select Yes if the student had a felony drug conviction that disqualifies AOTC treatment.
+
+  # Backend-only computed values. Not rendered in the form component.
+  - name: computedOutputs
+    title: Computed outputs (backend only)
+    multiplicity: single
+    showIf: spouseHasAdditionalEducationCreditStudents == true
+    fields:
+      - name: computedSpouseEducationCreditStudentCount
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed number of spouse-tab student entries
+      - name: computedMergedPartIIICount
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed total Part III student count after taxpayer/spouse merge

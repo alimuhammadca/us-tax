@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxGraphModel dx="1654" dy="1100" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+
+    <!-- Title -->
+    <mxCell id="100" value="Unified Refund and Amount Owed Form — UI Audit (2025)&#xa;Form ID: refund-and-amount-owed-taxpayer&#xa;Consolidates: 35-direct-deposit, refund-allocation-taxpayer, 36-apply-to-next-year, prior-year-tax-taxpayer" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="150" y="20" width="1300" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- ── COLUMN HEADERS ── -->
+    <mxCell id="h1" value="COMPUTED OUTPUT&#xa;(read-only banners)" style="text;html=1;strokeColor=none;fillColor=#dae8fc;align=center;verticalAlign=middle;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="30" y="90" width="200" height="35" as="geometry" />
+    </mxCell>
+    <mxCell id="h2" value="REFUND PATH&#xa;(overpaid != null)" style="text;html=1;strokeColor=none;fillColor=#d5e8d4;align=center;verticalAlign=middle;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="260" y="90" width="460" height="35" as="geometry" />
+    </mxCell>
+    <mxCell id="h3" value="AMOUNT OWED PATH&#xa;(amountOwed != null)" style="text;html=1;strokeColor=none;fillColor=#f8cecc;align=center;verticalAlign=middle;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="750" y="90" width="460" height="35" as="geometry" />
+    </mxCell>
+
+    <!-- ── COMPUTED OUTPUT BANNERS ── -->
+    <mxCell id="201" value="Refund Summary Banner&#xa;• Overpaid amount&#xa;• Amount to be refunded&#xa;*ngIf=&quot;overpaid != null&quot;&#xa;&#xa;UI fix: stripped &quot;(line 34)&quot;, &quot;(line 35a)&quot;&#xa;from result-label text" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="30" y="150" width="200" height="110" as="geometry" />
+    </mxCell>
+    <mxCell id="202" value="Amount Owed Banner&#xa;• Amount you owe&#xa;• Underpayment penalty&#xa;*ngIf=&quot;amountOwed != null&quot;&#xa;&#xa;UI fix: stripped &quot;(line 37)&quot;, &quot;(line 38)&quot;&#xa;from result-label text" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="30" y="290" width="200" height="110" as="geometry" />
+    </mxCell>
+
+    <!-- ── REFUND PATH: DIRECT DEPOSIT ── -->
+    <mxCell id="301" value="Section: Direct Deposit&#xa;*ngIf=&quot;overpaid != null &amp;&amp;&#xa;  wantsRefundAllocation !== true&quot;&#xa;&#xa;UI fixes applied:&#xa;• R34: title stripped &quot;(lines 35b–35d)&quot;&#xa;• R22: section preamble added&#xa;• R33: 3 field labels cleaned&#xa;• R8: (no currency fields here)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="260" y="150" width="210" height="140" as="geometry" />
+    </mxCell>
+
+    <!-- Gate -->
+    <mxCell id="302" value="wantsDirectDeposit&#xa;= true?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="290" y="310" width="150" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="e301" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="301" target="302" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+    <mxCell id="303" value="Routing number&#xa;Account type (p-select)&#xa;Account number&#xa;&#xa;R33: stripped &quot;(line 35b/c/d)&quot;&#xa;from all 3 labels" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="290" y="410" width="150" height="100" as="geometry" />
+    </mxCell>
+    <mxCell id="e302" value="Yes" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="302" target="303" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+    <!-- ── REFUND PATH: SPLIT REFUND (Form 8888) ── -->
+    <mxCell id="311" value="Section: Split Refund&#xa;*ngIf=&quot;overpaid != null &amp;&amp;&#xa;  wantsDirectDeposit !== true&quot;&#xa;&#xa;UI fixes applied:&#xa;• R34: title stripped &quot;— Form 8888&quot;&#xa;• R22: section preamble added&#xa;• R10+R6: 12 help icons added&#xa;• R8: 3 amount fields → mode=&quot;currency&quot;&#xa;• R43: [min]=0 on 3 amount fields&#xa;• R18: 9 parenthetical notes stripped" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="500" y="150" width="210" height="170" as="geometry" />
+    </mxCell>
+
+    <mxCell id="312" value="wantsRefundAllocation&#xa;= true?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="530" y="340" width="150" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="e311" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="311" target="312" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+    <mxCell id="313" value="Account 1 (required): 4 fields&#xa;Account 2 (required): 4 fields&#xa;Account 3 (optional): 4 fields&#xa;Total: 12 sub-fields&#xa;&#xa;Each field now has:&#xa;• label-row + help icon&#xa;• helpMap entry&#xa;• YAML helpText" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="510" y="440" width="190" height="130" as="geometry" />
+    </mxCell>
+    <mxCell id="e312" value="Yes" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="312" target="313" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+    <!-- ── REFUND PATH: APPLY TO NEXT YEAR ── -->
+    <mxCell id="321" value="Section: Apply to 2026 Est. Tax&#xa;*ngIf=&quot;overpaid != null&quot;&#xa;&#xa;UI fixes:&#xa;• R34: title stripped &quot;(line 36)&quot;&#xa;• R8: amountToApply → mode=&quot;currency&quot;&#xa;• R43: [min]=0 added" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="260" y="540" width="210" height="110" as="geometry" />
+    </mxCell>
+
+    <!-- ── AMOUNT OWED PATH: PRIOR YEAR INFO ── -->
+    <mxCell id="401" value="Section: Prior Year Information&#xa;*ngIf=&quot;amountOwed != null&quot;&#xa;Title: &quot;Prior year information (underpayment penalty)&quot;&#xa;(no line ref — OK)&#xa;&#xa;Has section preamble ✓&#xa;Has instructions array ✓" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="750" y="150" width="220" height="110" as="geometry" />
+    </mxCell>
+
+    <mxCell id="402" value="Prior-year AGI + Tax fields&#xa;&#xa;UI fixes:&#xa;• R8: 2 fields → mode=&quot;currency&quot;&#xa;• R43: [min]=0 on both&#xa;• R2: helpText: &quot;$75k MFS&quot; →&#xa;  &quot;threshold depends on filing status&quot;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="750" y="280" width="220" height="110" as="geometry" />
+    </mxCell>
+    <mxCell id="e401" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="401" target="402" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+    <!-- Penalty waiver subsection -->
+    <mxCell id="403" value="Subsection: Penalty Waiver (optional)&#xa;• waiveFullPenalty — radio ✓&#xa;• waivePartialPenalty — radio ✓&#xa;  TurboTax: label rewritten to plain English&#xa;• jointSeparateMismatch — radio ✓&#xa;&#xa;Has preamble: &quot;Leave all three as No...&quot; ✓" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="750" y="410" width="220" height="110" as="geometry" />
+    </mxCell>
+    <mxCell id="e402" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="402" target="403" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+    <!-- Estimated payments subsection -->
+    <mxCell id="404" value="Subsection: 2025 Estimated Payments&#xa;madeEstimatedPayments gate (radio)&#xa;&#xa;*ngIf=&quot;madeEstimatedPayments === true&quot;:&#xa;• payment1–4Amount (4 fields)&#xa;&#xa;UI fixes:&#xa;• R8: 4 fields → mode=&quot;currency&quot;&#xa;• R43: [min]=0 on all 4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="750" y="540" width="220" height="130" as="geometry" />
+    </mxCell>
+    <mxCell id="e403" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="403" target="404" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+    <!-- ── VIOLATION SUMMARY ── -->
+    <mxCell id="800" value="UI AUDIT SUMMARY (2026-04-22)&#xa;&#xa;22 violations across 10 rule categories — ALL FIXED&#xa;&#xa;HIGH (6):&#xa;• R34 ×3: IRS refs in section titles (template)&#xa;• R33 ×3: IRS refs in field labels (template)&#xa;&#xa;MEDIUM (35 instances across 5 rules):&#xa;• R8  ×10: mode=&quot;decimal&quot; → mode=&quot;currency&quot;&#xa;• R10+R6 ×12: Form 8888 help icons + helpText&#xa;• R22 ×2: Missing section preambles&#xa;• R43 ×10: [min]=0 on currency inputs&#xa;• R38 ×1: OnPush → DEFERRED (project-wide)&#xa;&#xa;LOW (9 instances):&#xa;• R18 ×9: Parenthetical format notes in labels&#xa;• R2  ×1: Filing-status text in helpText&#xa;• R12 ×1: Section title starts with &quot;Your&quot;&#xa;• TurboTax ×1: Jargon in waiver label&#xa;&#xa;E2E TESTS: 4 new UI verification tests added&#xa;(refund-and-amount-owed-ui.spec.ts)" style="text;html=1;strokeColor=#82b366;fillColor=#d5e8d4;fontSize=10;align=left;verticalAlign=top;" vertex="1" parent="1">
+      <mxGeometry x="1030" y="150" width="340" height="370" as="geometry" />
+    </mxCell>
+
+    <!-- ── FORM CONSOLIDATION NOTE ── -->
+    <mxCell id="900" value="FORM CONSOLIDATION&#xa;&#xa;Unified form: refund-and-amount-owed-taxpayer&#xa;Replaces 4 legacy forms:&#xa;• 35-direct-deposit (lines 35b/c/d)&#xa;• refund-allocation-taxpayer (Form 8888)&#xa;• 36-apply-to-next-year (line 36)&#xa;• prior-year-tax-taxpayer (Form 2210 inputs)&#xa;&#xa;Backend: merge-with-fallback at TaxReturnComputeService&#xa;line ~193–199 reads unified first, falls back to legacy.&#xa;All field names identical across old and new forms.&#xa;&#xa;Files modified:&#xa;• YAML: refund-and-amount-owed-taxpayer.yaml&#xa;• Component: form-refund-and-amount-owed.component.ts&#xa;• E2E: refund-and-amount-owed-ui.spec.ts (new)" style="text;html=1;strokeColor=#6c8ebf;fillColor=#dae8fc;fontSize=10;align=left;verticalAlign=top;" vertex="1" parent="1">
+      <mxGeometry x="1030" y="550" width="340" height="260" as="geometry" />
+    </mxCell>
+
+  </root>
+</mxGraphModel>

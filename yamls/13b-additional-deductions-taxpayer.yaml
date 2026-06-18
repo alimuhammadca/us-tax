@@ -1,0 +1,271 @@
+# Form 1040 line 13b (Schedule 1-A line 38) workflow for taxpayer/family head.
+# Approach: keep user questions + imported statement fields + computed outputs in one YAML.
+# NOTE: Sections marked as backend-only are NOT supposed to be rendered in the actual form component.
+name: additional-deductions-taxpayer
+title: Form 1040 - Additional deductions (taxpayer/family head, line 13b via Schedule 1-A)
+multiplicity: single
+formName: 1040
+category: deductions
+instructions:
+  - Use this form only if you have inputs for one or more Schedule 1-A deductions that feed Form 1040 line 13b.
+  - Schedule 1-A line 38 (sum of lines 13, 21, 30, and 37) flows directly to Form 1040 line 13b.
+  - This taxpayer/family-head form owns all return-level questions (MAGI exclusions, car loan interest, filing-status gates).
+  - Spouse-specific tip, overtime, and senior amounts are captured in the spouse form.
+  - If married, you must file jointly (MFJ) to claim the tips, overtime, and enhanced senior deductions (Parts II, III, V).
+  - Self-employment income is out of scope; do not enter Schedule C or Schedule F amounts here.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: hadAdditionalDeductions
+        type: boolean
+        required: true
+        label: Do you have any additional deductions for Form 1040 line 13b (Schedule 1-A)?
+        help: Select Yes if you received qualified tips, qualified overtime, paid car loan interest on a new passenger vehicle, or qualify for the enhanced senior deduction.
+
+  - name: statementUploadCheck
+    title: Your uploaded statements
+    multiplicity: single
+    showIf: hadAdditionalDeductions == true
+    instructions:
+      - Tip amounts are read from your uploaded statements — W-2 box 7, Form 4137, 1099-NEC, 1099-MISC box 3, and 1099-K box 1a.
+      - Make sure all relevant statements are in your library, then confirm below.
+    fields:
+      - name: confirmAllRelevantStatementsUploaded
+        type: boolean
+        required: true
+        label: I confirm all received statements relevant to Schedule 1-A have been uploaded
+        help: You must confirm this before saving the additional deductions form.
+
+  - name: magiExclusions
+    title: Income exclusions affecting your phaseout
+    multiplicity: single
+    showIf: hadAdditionalDeductions == true
+    instructions:
+      - Most domestic filers can leave this section as No.
+      - If you have foreign earned income, a housing exclusion, or income excluded as a Puerto Rico or American Samoa resident, those amounts adjust the Schedule 1-A phaseout base.
+    fields:
+      - name: hasMagiExclusions
+        type: boolean
+        required: false
+        label: Do you have income excluded under Form 2555, Form 4563, or bona fide Puerto Rico residency?
+        help: Select Yes only if applicable. The 4 amount fields below are shown only when this is true.
+      - name: puertoRicoExcludedIncome
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Puerto Rico excluded income
+        help: Enter bona fide residents of Puerto Rico excluded income, if applicable. Shown only when hasMagiExclusions is true.
+      - name: form2555Line45ExcludedIncome
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Foreign earned income exclusion
+        help: Enter the Form 2555 line 45 amount for the foreign earned income exclusion. Shown only when hasMagiExclusions is true.
+      - name: form2555Line50HousingExclusion
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Foreign housing exclusion
+        help: Enter the Form 2555 line 50 amount for the foreign housing exclusion. Shown only when hasMagiExclusions is true.
+      - name: form4563Line15ExcludedIncome
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: American Samoa excluded income
+        help: Enter the Form 4563 line 15 amount for bona fide residents of American Samoa. Shown only when hasMagiExclusions is true.
+
+  - name: qualifiedTipsDeduction
+    title: Tips deduction (taxpayer)
+    multiplicity: single
+    showIf: hadAdditionalDeductions == true
+    instructions:
+      - New for 2025. Deduct qualified tips from tipped occupations listed at IRS.gov/TippedOccupations.
+      - Cap $25,000 per return; phaseout above $150,000 MAGI ($300,000 if MFJ) at $100 per $1,000.
+      - Return must be MFJ if married; taxpayer must have a valid SSN.
+    fields:
+      - name: taxpayerReceivedQualifiedTips
+        type: boolean
+        required: false
+        label: Did you receive qualified tips from a tipped occupation?
+        help: Select Yes only for tips in occupations listed at IRS.gov/TippedOccupations.
+      - name: taxpayerTippedOccupationConfirmed
+        type: boolean
+        required: false
+        label: I confirm my occupation is on the IRS tipped-occupations list
+        help: The deduction applies only to tips in qualifying occupations. Shown only when taxpayerReceivedQualifiedTips is true.
+      - name: taxpayerHasMultipleTipEmployers
+        type: boolean
+        required: false
+        label: Did you receive tips from more than one employer?
+        help: Select Yes if you worked for multiple employers and received tips from more than one. Shown only when taxpayerReceivedQualifiedTips is true.
+      - name: taxpayerManualTipsFromNonStatementSources
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Tips from 1099-NEC, 1099-MISC, or 1099-K not already in uploaded statements
+        help: Enter tip amounts from non-W-2/non-4137 sources not already reflected in uploaded statements. Shown only when taxpayerReceivedQualifiedTips is true.
+
+  - name: qualifiedOvertimeDeduction
+    title: Overtime deduction (taxpayer)
+    multiplicity: single
+    showIf: hadAdditionalDeductions == true
+    instructions:
+      - New for 2025. Deduct qualified overtime compensation.
+      - Cap $12,500 single / $25,000 MFJ; phaseout above $150,000 MAGI ($300,000 if MFJ).
+      - W-2 box 1 does not separately identify overtime; you must enter the overtime portion manually from pay records.
+    fields:
+      - name: taxpayerReceivedQualifiedOvertime
+        type: boolean
+        required: false
+        label: Did you receive qualified overtime compensation?
+        help: Select Yes if you received overtime pay that qualifies as qualified overtime compensation.
+      - name: taxpayerOvertimeFromW2Box1Amount
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Overtime portion of your W-2 wages
+        help: Enter only the qualified overtime portion of your W-2 box 1 wages. Use your pay stubs — W-2 does not show this separately. Shown only when taxpayerReceivedQualifiedOvertime is true.
+      - name: taxpayerOvertimeFromNonW2SourcesAmount
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Overtime from non-W-2 sources not in uploaded statements
+        help: Enter qualified overtime from 1099-NEC, 1099-MISC box 3, or other non-W-2 sources not already in uploaded statements. Shown only when taxpayerReceivedQualifiedOvertime is true.
+
+  - name: carLoanInterestDeduction
+    title: Car loan interest deduction
+    multiplicity: single
+    showIf: hadAdditionalDeductions == true
+    instructions:
+      - New for 2025. Deduct interest paid on a new passenger vehicle loan originated in 2025.
+      - Cap $10,000 per return; phaseout above $100,000 MAGI ($200,000 if MFJ).
+      - Interest already deducted on your rental return (Schedule E) must be excluded.
+    fields:
+      - name: paidCarLoanInterestOnNewVehicle
+        type: boolean
+        required: false
+        label: Did you pay interest on a qualified new passenger vehicle loan in 2025?
+        help: Select Yes only for interest on a new passenger vehicle loan originated in 2025 for a new car.
+
+  - name: carLoanVehicles
+    title: Vehicle loan entries
+    multiplicity: multiple
+    showIf: paidCarLoanInterestOnNewVehicle == true
+    instructions:
+      - Add one row for each qualifying new passenger vehicle loan.
+    fields:
+      - name: vehicleVin
+        type: text
+        required: false
+        placeholder: Vehicle VIN (17 characters)
+        label: Vehicle Identification Number (VIN)
+        help: Enter the 17-character VIN exactly as it appears on the vehicle title or registration.
+      - name: vehicleLoanInterestPaidAmount
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Total interest paid on this vehicle loan
+        help: Enter the total interest paid or accrued during 2025 for this vehicle loan.
+      - name: interestAlreadyDeductedOnScheduleEAmount
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Amount already deducted on your rental return (enter 0 if none)
+        help: Enter any portion of this interest that was already deducted on Schedule E (rental or royalty activity). Enter 0 if none.
+
+  - name: enhancedSeniorDeduction
+    title: Senior deduction (taxpayer)
+    multiplicity: single
+    showIf: hadAdditionalDeductions == true
+    instructions:
+      - New for 2025. Taxpayers born before January 2, 1961 (age 65 or older in 2025) may claim an additional $6,000 deduction.
+      - Phaseout at 6% of MAGI above $75,000 ($150,000 if MFJ). Return must be MFJ if married.
+    fields:
+      - name: taxpayerBornBeforeJan2_1961
+        type: boolean
+        required: false
+        label: Were you born before January 2, 1961?
+        help: Select Yes if your date of birth is on or before January 1, 1961 (age 65+ in 2025). Pre-populated from your date of birth if available.
+
+  # Backend-only statement imports. Not rendered in form component.
+  - name: importedStatementFields
+    title: Imported statement fields (backend only)
+    multiplicity: single
+    showIf: hadAdditionalDeductions == true
+    fields:
+      - name: importedW2Box7TipsTaxpayer
+        type: amount
+        required: false
+        readOnly: true
+        label: Taxpayer W-2 box 7 tips total (imported)
+      - name: importedForm4137UnreportedTipsTaxpayer
+        type: amount
+        required: false
+        readOnly: true
+        label: Taxpayer Form 4137 unreported tips total (imported)
+      - name: imported1099NecBox1TipsOvertimeTaxpayer
+        type: amount
+        required: false
+        readOnly: true
+        label: Taxpayer 1099-NEC box 1 tips/overtime total (imported)
+      - name: imported1099MiscBox3TipsOvertimeTaxpayer
+        type: amount
+        required: false
+        readOnly: true
+        label: Taxpayer 1099-MISC box 3 tips/overtime total (imported)
+      - name: imported1099KBox1aTipsTaxpayer
+        type: amount
+        required: false
+        readOnly: true
+        label: Taxpayer 1099-K box 1a tips total (imported)
+
+  # Backend-only computed values. Not rendered in form component.
+  - name: computedOutputs
+    title: Computed outputs (backend only)
+    multiplicity: single
+    showIf: hadAdditionalDeductions == true
+    fields:
+      - name: computedSchedule1AMagi
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Schedule 1-A MAGI (line 3)
+      - name: computedSchedule1ALine13TipsDeduction
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Schedule 1-A line 13 tips deduction
+      - name: computedSchedule1ALine21OvertimeDeduction
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Schedule 1-A line 21 overtime deduction
+      - name: computedSchedule1ALine30CarLoanDeduction
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Schedule 1-A line 30 car loan interest deduction
+      - name: computedSchedule1ALine37SeniorDeduction
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Schedule 1-A line 37 enhanced senior deduction
+      - name: computedSchedule1ALine38Total
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Schedule 1-A line 38 total (= Form 1040 line 13b)
+      - name: computedSchedule1ARequired
+        type: boolean
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Schedule 1-A required flag

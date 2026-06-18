@@ -1,0 +1,61 @@
+<mxGraphModel><root><mxCell id="0"/><mxCell id="1" parent="0"/>
+
+<!-- Title -->
+<mxCell id="2" value="Form 1040 Line 30 — Refundable Adoption Credit / Form 8839 (2025)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1" vertex="1" parent="1"><mxGeometry x="150" y="20" width="700" height="40" as="geometry"/></mxCell>
+
+<!-- INPUTS box -->
+<mxCell id="10" value="INPUTS&#xa;adoption-expenses personal form:&#xa;  · magiForAdoptionBenefitsExclusion (manual, G1)&#xa;  · children[].childFirstName/childLastName&#xa;  · children[].hasSpecialNeeds&#xa;  · children[].isForeignChild&#xa;  · children[].adoptionFinal2025OrEarlier&#xa;  · adoptionCreditPartII.qualifiedAdoptionExpensesByChild.child{n}QualifiedExpenses&#xa;  · adoptionCreditPartII.priorYearAdoptionCreditByChild.child{n}PriorYearCredit&#xa;  · adoptionCreditPartII.line15CreditCarryforward&#xa;  · employerBenefitsPartIII.currentYearBenefitsAllocation.child{n}Benefits2025&#xa;W-2 box 12 code T entries (Part III)&#xa;Filing status&#xa;Schedule 3 prior nonref credits (CLW-B)&#xa;totalTaxBeforeCredits (Form 1040 line 18)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=left;spacingLeft=8;" vertex="1" parent="1"><mxGeometry x="20" y="80" width="280" height="300" as="geometry"/></mxCell>
+
+<!-- Entry gate -->
+<mxCell id="20" value="adoptionData non-null&#xa;AND (children &gt; 0 OR W-2 code T)?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1"><mxGeometry x="340" y="90" width="220" height="80" as="geometry"/></mxCell>
+<mxCell id="21" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="10" target="20" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="22" value="No" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="20" target="23" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="630" y="130"/></Array></mxGeometry></mxCell>
+<mxCell id="23" value="return null&#xa;(no adoption computation)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1"><mxGeometry x="640" y="105" width="170" height="50" as="geometry"/></mxCell>
+<mxCell id="24" value="Yes" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="20" target="30" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="450" y="210"/></Array></mxGeometry></mxCell>
+
+<!-- MFS gate -->
+<mxCell id="30" value="Filing status = MFS?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1"><mxGeometry x="340" y="200" width="220" height="70" as="geometry"/></mxCell>
+<mxCell id="31" value="Yes" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="30" target="32" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="630" y="235"/></Array></mxGeometry></mxCell>
+<mxCell id="32" value="Part II refundable credit = 0&#xa;No blocking flag (G4 gap)&#xa;Part III still computed" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1"><mxGeometry x="640" y="215" width="190" height="55" as="geometry"/></mxCell>
+<mxCell id="33" value="No" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="30" target="40" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="450" y="300"/></Array></mxGeometry></mxCell>
+
+<!-- MAGI availability check -->
+<mxCell id="40" value="magiForAdoptionBenefitsExclusion&#xa;present in personal form?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1"><mxGeometry x="320" y="290" width="260" height="80" as="geometry"/></mxCell>
+<mxCell id="41" value="No (G1 gap)" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="40" target="42" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="640" y="330"/></Array></mxGeometry></mxCell>
+<mxCell id="42" value="phaseoutFraction = 0&#xa;(full credit, no phaseout)&#xa;Auto-MAGI deferred (G1)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1"><mxGeometry x="645" y="310" width="180" height="55" as="geometry"/></mxCell>
+<mxCell id="43" value="Yes" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="40" target="50" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="450" y="400"/></Array></mxGeometry></mxCell>
+
+<!-- Phaseout computation -->
+<mxCell id="50" value="Part II Lines 7–9: MAGI phaseout&#xa;line7 = magiForAdoptionBenefitsExclusion&#xa;line8 = max(0, line7 − $259,190)&#xa;line9 = min(1.0000, line8 / $40,000)  [HALF_UP 4dp]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;spacingLeft=8;" vertex="1" parent="1"><mxGeometry x="280" y="390" width="340" height="70" as="geometry"/></mxCell>
+
+<!-- Per-child loop header -->
+<mxCell id="60" value="FOR EACH CHILD (up to 6):&#xa;Per-child Part II lines 2–11b" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1"><mxGeometry x="310" y="480" width="280" height="50" as="geometry"/></mxCell>
+<mxCell id="61" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="50" target="60" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- Per-child computation box -->
+<mxCell id="70" value="Per-child computation:&#xa;line2 = $17,280 (max credit)&#xa;line3 = priorYearAdoptionCredit&#xa;line4 = line2 − line3&#xa;line5 = qualified expenses (special-needs: $17,280−prior, G5)&#xa;line6 = min(line4, line5)&#xa;line10 = line6 × phaseoutFraction (line9)&#xa;line11a = max(0, line6 − line10)&#xa;line11b = min(line11a, $5,000)  ← refundable cap" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;spacingLeft=8;" vertex="1" parent="1"><mxGeometry x="250" y="550" width="400" height="140" as="geometry"/></mxCell>
+<mxCell id="71" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="60" target="70" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- Aggregation lines 11c-13 -->
+<mxCell id="80" value="Part II Return-Level Aggregation:&#xa;line11c = Σ per-child line11b  → refundable base&#xa;line12  = Σ per-child line11a  → total after phaseout&#xa;line13  = line11c              → Form 1040 line 30" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;spacingLeft=8;" vertex="1" parent="1"><mxGeometry x="260" y="710" width="380" height="80" as="geometry"/></mxCell>
+<mxCell id="81" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="70" target="80" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- CLW-B computation -->
+<mxCell id="90" value="applyAdoptionCredit() — Credit Limit Worksheet B:&#xa;line14 = max(0, line12 − line13)&#xa;line15 = creditCarryforward (personal form)&#xa;line16 = line14 + line15&#xa;CLW-B line2 = totalTaxBeforeCredits (line 18)&#xa;priorCredits = Sched3 lines 1,2,3,4,5a,5b,6a,6b&#xa;  [G2: missing Form 1040 line 19 CTC/ODC]&#xa;  [G3: missing Sched3 lines 6d,6f,6g,6l,6m]&#xa;CLW-B line4 = max(0, CLW-B line2 − priorCredits)&#xa;line17 = max(0, CLW-B line4)&#xa;line18 = min(line16, line17) → Sched 3 line 6c" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;spacingLeft=8;" vertex="1" parent="1"><mxGeometry x="230" y="810" width="440" height="160" as="geometry"/></mxCell>
+<mxCell id="91" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="80" target="90" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- Part III employer benefits -->
+<mxCell id="100" value="Part III — Employer Benefits (W-2 code T):&#xa;line23 = total W-2 box 12 code T benefits&#xa;Per-child exclusion:&#xa;  special-needs + final: line24 = $17,280&#xa;  otherwise: line24 = min(allocated benefits, $17,280)&#xa;line30 = Σ per-child line24 (total excluded)&#xa;line31 = line23 − line30 → Form 1040 line 1f" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;spacingLeft=8;" vertex="1" parent="1"><mxGeometry x="250" y="990" width="400" height="130" as="geometry"/></mxCell>
+<mxCell id="101" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="90" target="100" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- OUTPUTS box -->
+<mxCell id="110" value="OUTPUTS&#xa;Form 1040 line 30 = Form8839.line13  (refundable adoption credit)&#xa;  → via Payments.refundableAdoptionCredit&#xa;  → included in line 32 → line 33&#xa;Schedule 3 line 6c = Form8839.line18  (nonrefundable)&#xa;  → via Schedule3NonrefundableCredits.adoptionCredit&#xa;  → included in Schedule 3 line 8 → Form 1040 line 20&#xa;Form 1040 line 1f = Form8839.line31   (taxable employer benefits)&#xa;  → via Income.adoptionBenefits&#xa;Form8839 model: header, children[], part2Lines, part3Lines" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=left;spacingLeft=8;" vertex="1" parent="1"><mxGeometry x="220" y="1140" width="460" height="150" as="geometry"/></mxCell>
+<mxCell id="111" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="100" target="110" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- Legend -->
+<mxCell id="200" value="GAPS (audit 2026-04-20)&#xa;G1 MEDIUM: MAGI not auto-derived from AGI + add-backs; manual entry only&#xa;G2 MEDIUM: CLW-B prior-credits sum missing Form 1040 line 19 (CTC/ODC)&#xa;G3 LOW: CLW-B prior-credits sum missing Sched3 lines 6d,6f,6g,6l,6m&#xa;G4 LOW: No ADOPTION_CREDIT_MFS_INELIGIBLE flag for MFS filers&#xa;G5 LOW: Special-needs Part II line 5 ($17,280 cap) has no unit test&#xa;G6 LOW: No E2E test for nonrefundable path (line 18 → Sched3 6c → line 20)&#xa;G7 LOW: Schedule 8812 CLW-B substitute (line 14 of CLW-B replaces line 19) not implemented&#xa;G8 LOW: f8839 semantic PDF assets exist but CSV field names need 2025 review" style="text;html=1;strokeColor=#666666;fillColor=#f5f5f5;fontColor=#333333;align=left;verticalAlign=top;spacingLeft=8;rounded=1;" vertex="1" parent="1"><mxGeometry x="20" y="900" width="200" height="240" as="geometry"/></mxCell>
+
+<!-- Compute Order note -->
+<mxCell id="210" value="COMPUTE ORDER&#xa;computeAdoptionBenefits()  [early — manual MAGI]&#xa;  ↓ (produces refundableCredit + line1f + form8839)&#xa;computeLine16/17/18()&#xa;  ↓ (totalTaxBeforeCredits needed for CLW-B)&#xa;applyForeignTaxCredit…() → applyForm8801…()&#xa;  ↓ (Sched3 lines 1–6b needed for CLW-B)&#xa;applyAdoptionCredit()&#xa;  ↓ (sets line17, line18, wires Sched3 6c)&#xa;computeLine31ThroughLine38()&#xa;  ↓ (sets Payments.refundableAdoptionCredit)" style="text;html=1;strokeColor=#666666;fillColor=#f5f5f5;fontColor=#333333;align=left;verticalAlign=top;spacingLeft=8;rounded=1;" vertex="1" parent="1"><mxGeometry x="20" y="500" width="210" height="200" as="geometry"/></mxCell>
+
+</root></mxGraphModel>

@@ -1,0 +1,526 @@
+# Form 1040 line 7a/7b (taxpayer/family head) workflow.
+# Revisions (Phases 1-4): reframed labels, help text added, uncommon-situations gate,
+# statement auto-derivation, Form 8949 box redesign (basisReportedToIrs replaces form8949Box).
+name: capital-gain-loss-taxpayer
+title: Form 1040 - Capital gain or loss (taxpayer, lines 7a and 7b)
+multiplicity: single
+formName: 1040
+category: income
+instructions:
+  - Start here only if the taxpayer had capital gain or loss items for Form 1040 lines 7a and 7b.
+  - Upload your capital statements first — the application auto-detects most details from them.
+  - Use the direct-entry and supplemental sections only for items not already captured by uploaded statements.
+  - This taxpayer form owns return-level statement checks and line 7b checkboxes.
+  - Self-employment income is out of scope and excluded.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: hadCapitalGainOrLoss
+        type: boolean
+        required: true
+        label: Did you have any capital gain or capital loss activity during the tax year?
+        help: Answer Yes if you sold stocks, bonds, mutual funds, crypto, real estate, or any other capital asset — or received capital gain distributions from a fund. Answer No to skip this entire section.
+
+  - name: statementUploadCheck
+    title: Statement upload check
+    multiplicity: single
+    showIf: hadCapitalGainOrLoss == true
+    instructions:
+      - The application automatically detects 1099-B, 1099-DA, 1099-DIV, and Form 2439 uploads. Statement counts are shown above the form in the application.
+      - If you have partnership, S-corp, or trust K-1 forms with capital items, indicate that below — those are entered manually in the supplemental section.
+    fields:
+      - name: receivedOtherScheduleDSourceStatements
+        type: boolean
+        required: false
+        label: Do you have capital gains or losses from a partnership, S-corp, trust, or other source not already captured by uploaded 1099-B, 1099-DA, 1099-DIV, or Form 2439 statements?
+        help: Select Yes if you have a Schedule K-1 or similar source with capital items. You will enter the net amounts manually in the supplemental section below.
+      - name: confirmAllReceivedCapitalStatementsUploaded
+        type: boolean
+        required: true
+        label: I confirm all capital-gain/loss statements I received are now uploaded or manually entered
+        help: The application uses only uploaded statement data for automatic calculations. Confirm before proceeding.
+      - name: verifiedCapitalStatementTotals
+        type: boolean
+        required: false
+        showIf: hadCapitalGainOrLoss == true
+        label: The imported statement amounts shown above look correct
+        help: If the amounts do not look correct, go to the Statements section in the sidebar and correct the statement entry there. The amounts will update automatically the next time you run the computation.
+
+  - name: scheduleDAndExceptionScreening
+    title: Schedule D and exception screening
+    multiplicity: single
+    showIf: hadCapitalGainOrLoss == true
+    instructions:
+      - These questions help determine whether you need Schedule D or can use the simplified direct-entry exception.
+      - The application automatically detects 1099-B/1099-DA sales and Form 2439 from your uploaded statements — those are pre-answered below.
+    fields:
+      - name: hasCapitalLossesForTaxYear
+        type: boolean
+        required: false
+        label: Did any of your sales or transactions result in a capital loss this year?
+        help: Select Yes if any transaction resulted in selling for less than what you paid. Schedule D requires this information to compute the allowable loss deduction.
+      - name: hasCapitalLossCarryoverFromPriorYear
+        type: boolean
+        required: false
+        label: Do you have a capital loss carryover from a prior year that you could not fully deduct?
+        help: Select Yes if last year's Schedule D showed a carryover loss (line 26 for short-term, line 27 for long-term). Enter the amounts in the carryover section that will appear below.
+      - name: hasOtherScheduleDSourceForms
+        type: boolean
+        required: false
+        label: Do you have capital gains or losses from installment sales, selling business property, a casualty or theft loss, a like-kind exchange, or a straddle or Section 1256 contract?
+        help: Select Yes if any of these less common transaction types contributed to your capital gain or loss this year. Enter the net amounts in the supplemental section below.
+
+  - name: directEntryAndAdjustments
+    title: Direct-entry capital adjustments
+    multiplicity: single
+    showIf: hadCapitalGainOrLoss == true
+    instructions:
+      - Use these fields only for capital gain amounts not already reflected in your uploaded statements.
+      - Do not re-enter amounts already captured from 1099-DIV, 1099-B, 1099-DA, or Form 2439 uploads.
+    fields:
+      - name: manualCapitalGainDistributionsNotOnStatements
+        type: amount
+        required: false
+        label: Capital gain distributions not reflected in uploaded statements
+        placeholder: "0.00"
+        help: Enter capital gain distributions from a fund that were not captured in your 1099-DIV uploads. Do not include amounts already imported automatically.
+      - name: manualOtherCapitalGainAdjustments
+        type: amount
+        required: false
+        label: Other capital gain adjustments not captured by uploaded statements
+        placeholder: "0.00"
+        help: Enter any additional gain adjustment not included in imported statement totals — for example, a gain from a corrected 1099-B that has not been re-uploaded yet.
+      - name: manualOtherCapitalLossAdjustments
+        type: amount
+        required: false
+        label: Other capital loss adjustments not captured by uploaded statements
+        placeholder: "0.00"
+        help: Enter any additional loss adjustment not included in imported statement totals. Enter a positive number; it will be applied as a loss.
+
+  - name: manualScheduleDDirectAggregation
+    title: Broker-reported direct aggregation (basis reported to IRS)
+    multiplicity: single
+    showIf: hadCapitalGainOrLoss == true
+    instructions:
+      - Use these fields only for short-term or long-term sales where your broker confirmed basis to the IRS, and you have not yet uploaded the 1099-B or 1099-DA covering these transactions.
+      - Do not enter amounts already captured from uploaded statements. If already uploaded, the amounts are auto-imported.
+    fields:
+      - name: manualShortTermDirectAggregationProceedsLine1a
+        type: amount
+        required: false
+        label: Short-term sale proceeds — broker reported basis to IRS (not already uploaded)
+        placeholder: "0.00"
+        help: Total proceeds from short-term sales where your 1099-B shows basis was reported to the IRS (Box 12 checked), and that 1099-B has not been uploaded. Short-term means you held the asset one year or less.
+      - name: manualShortTermDirectAggregationBasisLine1a
+        type: amount
+        required: false
+        label: Short-term cost basis — broker reported to IRS (not already uploaded)
+        placeholder: "0.00"
+        help: Total cost basis for the above short-term sales. This is column (e) on your 1099-B, representing what you originally paid for the asset.
+      - name: manualShortTermDirectAggregationAdjustmentsLine1a
+        type: amount
+        required: false
+        label: Short-term adjustment amount (for the above transactions)
+        placeholder: "0.00"
+        help: Net adjustment to the above short-term proceeds or basis. Enter a negative number to reduce gain (e.g., wash-sale disallowance reduces the deductible loss — enter as negative). Enter a positive number to increase gain.
+      - name: manualLongTermDirectAggregationProceedsLine8a
+        type: amount
+        required: false
+        label: Long-term sale proceeds — broker reported basis to IRS (not already uploaded)
+        placeholder: "0.00"
+        help: Total proceeds from long-term sales where your 1099-B shows basis was reported to the IRS, and that 1099-B has not been uploaded. Long-term means you held the asset more than one year.
+      - name: manualLongTermDirectAggregationBasisLine8a
+        type: amount
+        required: false
+        label: Long-term cost basis — broker reported to IRS (not already uploaded)
+        placeholder: "0.00"
+        help: Total cost basis for the above long-term sales — what you originally paid for the asset.
+      - name: manualLongTermDirectAggregationAdjustmentsLine8a
+        type: amount
+        required: false
+        label: Long-term adjustment amount (for the above transactions)
+        placeholder: "0.00"
+        help: Net adjustment to the above long-term proceeds or basis. Enter a negative number to reduce gain, positive to increase gain.
+
+  - name: manualScheduleDSupplementalLines
+    title: Supplemental gains and losses from other sources
+    multiplicity: single
+    showIf: hadCapitalGainOrLoss == true
+    instructions:
+      - Use these fields for capital gains or losses from sources not automatically derived from uploaded statements.
+      - Enter the net gain as a positive number and the net loss as a negative number for each category.
+    fields:
+      - name: shortTermOtherFormsGainLossLine4
+        type: amount
+        required: false
+        label: Short-term gains or losses from installment sales, casualty or theft, like-kind exchanges, or straddles (other than K-1 sources)
+        placeholder: "0.00"
+        help: Net short-term amount from installment sales, casualty or theft elections, like-kind exchanges, or straddle and Section 1256 contracts. Use a negative number for a net loss. Add up amounts from all applicable sources.
+      - name: shortTermScheduleK1GainLossLine5
+        type: amount
+        required: false
+        label: Short-term gains or losses passed through from a partnership, S-corp, or trust (K-1)
+        placeholder: "0.00"
+        help: Net short-term capital gain or loss shown on Schedule K-1 forms you received. Use a negative number for a net loss. Sum all K-1s that include short-term capital items.
+      - name: longTermOtherFormsGainLossLine11
+        type: amount
+        required: false
+        label: Long-term gains or losses from installment sales, business property sales, casualty or theft, like-kind exchanges, straddles, or mutual fund undistributed gains
+        placeholder: "0.00"
+        help: Net long-term amount from installment sales, selling business property, casualty elections, like-kind exchanges, straddle contracts, or mutual fund undistributed capital gains. Use a negative number for a net loss.
+      - name: longTermScheduleK1GainLossLine12
+        type: amount
+        required: false
+        label: Long-term gains or losses passed through from a partnership, S-corp, or trust (K-1)
+        placeholder: "0.00"
+        help: Net long-term capital gain or loss shown on Schedule K-1 forms you received. Use a negative number for a net loss. Sum all K-1s that include long-term capital items.
+
+  - name: uncommonSituationsScreening
+    title: Less common situations
+    multiplicity: single
+    showIf: hadCapitalGainOrLoss == true
+    instructions:
+      - Most filers can skip this section. Check any situation that applies to you this year.
+    fields:
+      - name: hasNomineeCapitalGainDistributions
+        type: boolean
+        required: false
+        label: I received capital gain distributions that actually belong to someone else (nominee)
+        help: Select Yes if capital gain distributions were paid to you but legally belong to another person — you must issue Form 1099-DIV to the actual owner and subtract those distributions from your totals.
+      - name: hasQofDeferralOrTermination
+        type: boolean
+        required: false
+        label: I am deferring a capital gain in a Qualified Opportunity Fund (QOF), or a prior QOF investment period is ending this year
+        help: Select Yes if you invested eligible gain proceeds into a QOF to defer tax, or if a prior QOF deferral period has now ended and the gain is being recognized. This disqualifies the simplified Exception 1 direct-entry path.
+      - name: hasCollectiblesOrSection1202Gain
+        type: boolean
+        required: false
+        label: I have gains from selling collectibles (art, coins, stamps, antiques) or from qualifying small-business stock (Section 1202)
+        help: Select Yes if any capital gains this year come from selling collectibles or from stock in a qualified small business under Section 1202. These gains are taxed at up to 28%, not the standard 15% or 20% rate.
+      - name: hasRealEstateDepreciationRecapture
+        type: boolean
+        required: false
+        label: I sold rental or business real estate on which I previously claimed depreciation deductions
+        help: Select Yes if you sold real property — such as a rental building or commercial property — for which you took depreciation deductions in prior years. A portion of the gain may be taxed as unrecaptured Section 1250 gain at a higher rate.
+      - name: hasNonbusinessBadDebt
+        type: boolean
+        required: false
+        label: A personal loan I made to someone became completely worthless this year (nonbusiness bad debt)
+        help: Select Yes if you loaned money to someone outside the ordinary course of a business, and you can no longer collect it. The IRS treats this as a short-term capital loss under Section 166.
+
+  - name: uncommonSituationsDetail
+    title: Less common situation details
+    multiplicity: single
+    showIf: hadCapitalGainOrLoss == true
+    instructions:
+      - Complete only the fields that correspond to situations you checked above. Leave the rest blank.
+    fields:
+      - name: nomineeCapitalGainDistributionsToSubtract
+        type: amount
+        required: false
+        showIf: hasNomineeCapitalGainDistributions == true
+        label: Amount of capital gain distributions to subtract (nominee amount)
+        placeholder: "0.00"
+        help: Enter the total distributions paid to you that belong to another person. You are responsible for issuing Form 1099-DIV to the actual owner and filing Copy A with the IRS by the deadline.
+      - name: confirmNomineeStatementWillBeProvided
+        type: boolean
+        required: false
+        showIf: hasNomineeCapitalGainDistributions == true
+        label: I will issue a Form 1099-DIV to the actual owner of these distributions as required
+        help: You must furnish a 1099-DIV to the actual owner by January 31 and file Copy A with the IRS by the applicable deadline. Confirm this obligation before saving.
+      - name: twentyEightPercentRateGainWorksheetAmountLine18
+        type: amount
+        required: false
+        showIf: hasCollectiblesOrSection1202Gain == true
+        label: Net gain from collectibles or qualifying small-business stock taxed at the 28% rate
+        placeholder: "0.00"
+        help: Enter the net gain from collectibles or the included portion of Section 1202 excluded small-business-stock gain. Compute this figure using the 28% Rate Gain Worksheet in the Schedule D instructions.
+      - name: unrecapturedSection1250GainWorksheetAmountLine19
+        type: amount
+        required: false
+        showIf: hasRealEstateDepreciationRecapture == true
+        label: Gain from real estate depreciation taxed at up to 25% (unrecaptured depreciation)
+        placeholder: "0.00"
+        help: Enter the portion of your real-estate gain attributable to prior depreciation deductions, limited to your actual gain. Compute this using the Unrecaptured Section 1250 Gain Worksheet in the Schedule D instructions.
+      - name: nonbusinessBadDebtFaceAmount
+        type: amount
+        required: false
+        showIf: hasNonbusinessBadDebt == true
+        label: Original face amount of the loan that became completely worthless
+        placeholder: "0.00"
+        help: Enter the amount you originally lent. The proceeds are $0 by definition — the entire face amount is your short-term capital loss, reported on Form 8949 Box C.
+      - name: nonbusinessBadDebtDescription
+        type: text
+        required: false
+        showIf: hasNonbusinessBadDebt == true
+        placeholder: "Loan to Jane Doe, loaned 2020-06-01, became worthless 2025-09-15"
+        label: Description of the bad debt (who you lent to and when it became worthless)
+        help: Describe the loan, the borrower, and the date it became completely worthless. This description will appear on Form 8949 and should be specific enough to identify the debt.
+
+  - name: manualForm8949Transactions
+    title: Manual Form 8949 transactions
+    multiplicity: multiple
+    showIf: hadCapitalGainOrLoss == true
+    instructions:
+      - Add one entry for each transaction that must appear on Form 8949 and is not already fully captured by uploaded statement data.
+      - Use these for transactions not on a 1099-B or 1099-DA, or for corrections and adjustments to reported transactions.
+    fields:
+      - name: transactionDescription
+        type: text
+        required: true
+        placeholder: "100 sh. XYZ Corp."
+        label: Description of property sold
+        help: Describe what was sold — for example, "100 shares XYZ Corp." or "0.5 Bitcoin." Use the same description as on your 1099-B if applicable.
+      - name: transactionTerm
+        type: select
+        required: true
+        label: Holding period
+        help: Short-term means you held the asset for one year or less before selling. Long-term means you held it for more than one year.
+        options:
+          - value: short
+            label: Short-term (held 1 year or less)
+          - value: long
+            label: Long-term (held more than 1 year)
+      - name: basisReportedToIrs
+        type: select
+        required: true
+        label: Did your broker report the cost basis for this transaction to the IRS?
+        help: Check your 1099-B — if Box 12 is checked, basis was reported to the IRS. If you have no 1099-B for this transaction, choose the third option. The application uses this to assign the correct Form 8949 reporting box.
+        options:
+          - value: reported
+            label: "Yes — broker reported cost basis to the IRS (covered security)"
+          - value: not_reported
+            label: "No — broker did not report cost basis to the IRS (noncovered security)"
+          - value: no_1099b
+            label: "No 1099-B received for this transaction"
+      - name: dateAcquired
+        type: text
+        required: false
+        placeholder: "YYYY-MM-DD"
+        label: Date acquired
+        help: Enter the date you bought or otherwise acquired the asset (YYYY-MM-DD format). Enter "Various" if shares were acquired on multiple dates.
+      - name: dateSoldOrDisposed
+        type: text
+        required: false
+        placeholder: "YYYY-MM-DD"
+        label: Date sold or disposed of
+        help: Enter the date the sale or disposition was completed (YYYY-MM-DD format).
+      - name: proceeds
+        type: amount
+        required: true
+        placeholder: "0.00"
+        label: Proceeds (sale price)
+        help: Enter the gross proceeds from the sale as shown on your 1099-B or settlement statement. Do not subtract commissions here — use the adjustment amount field below if needed.
+      - name: costOrOtherBasis
+        type: amount
+        required: true
+        placeholder: "0.00"
+        label: Cost or other basis
+        help: Enter what you paid for the asset, including commissions and fees paid at purchase. For inherited assets, use the fair market value at the date of the decedent's death.
+      - name: adjustmentCode
+        type: text
+        required: false
+        placeholder: "W"
+        label: Adjustment code (if any)
+        help: Enter the IRS adjustment code from Form 8949 column (f) if an adjustment applies — for example, W for a wash sale, B for basis reported incorrectly by your broker.
+      - name: adjustmentAmount
+        type: amount
+        required: false
+        placeholder: "0.00"
+        label: Adjustment amount
+        help: Enter the net adjustment in column (g). A wash-sale disallowance increases the amount you report — enter it as a positive number. A basis correction that reduces the reported gain — enter as a negative number.
+      - name: transactionNotes
+        type: text
+        required: false
+        placeholder: "Manual correction or review note"
+        label: Notes (for your records only)
+        help: Optional internal notes — not reported on the tax return. Use this to explain why this transaction was entered manually.
+
+  - name: capitalLossCarryoverSupport
+    title: Prior-year capital loss carryover
+    multiplicity: single
+    showIf: hasCapitalLossCarryoverFromPriorYear == true
+    instructions:
+      - Enter carryover amounts from last year's Schedule D. Short-term carryovers come from line 26, long-term from line 27.
+      - The allowable loss is the amount you actually deducted last year — capped at $3,000 ($1,500 if Married Filing Separately).
+    fields:
+      - name: priorYearCapitalLossCarryoverShortTerm
+        type: amount
+        required: false
+        label: Prior-year short-term capital loss carryover
+        placeholder: "0.00"
+        help: Enter the short-term capital loss you carried over from the prior year. This amount is on line 26 of last year's Schedule D.
+      - name: priorYearCapitalLossCarryoverLongTerm
+        type: amount
+        required: false
+        label: Prior-year long-term capital loss carryover
+        placeholder: "0.00"
+        help: Enter the long-term capital loss you carried over from the prior year. This amount is on line 27 of last year's Schedule D.
+      - name: priorYearScheduleDLine21AllowableLoss
+        type: amount
+        required: false
+        label: Allowable capital loss deducted on last year's return (capped at $3,000 or $1,500 MFS)
+        placeholder: "0.00"
+        help: Enter the amount from line 21 of last year's Schedule D — the actual loss amount deducted on that return, limited to $3,000 (or $1,500 for Married Filing Separately). This is used to compute this year's carryover split.
+
+  # Backend-only statement imports. Not rendered in form component.
+  - name: importedStatementFields
+    title: Imported statement fields (backend only)
+    multiplicity: single
+    showIf: hadCapitalGainOrLoss == true
+    fields:
+      - name: imported1099DivBox2aCapitalGainDistributionsTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: 1099-DIV box 2a total (imported)
+      - name: imported1099DivBox2bUnrecaptured1250Total
+        type: amount
+        required: false
+        readOnly: true
+        label: 1099-DIV box 2b total (imported)
+      - name: imported1099DivBox2cSection1202Total
+        type: amount
+        required: false
+        readOnly: true
+        label: 1099-DIV box 2c total (imported)
+      - name: imported1099DivBox2dCollectiblesGainTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: 1099-DIV box 2d total (imported)
+      - name: imported1099BRecordCount
+        type: integer
+        required: false
+        readOnly: true
+        label: Number of imported 1099-B statements
+      - name: imported1099DaRecordCount
+        type: integer
+        required: false
+        readOnly: true
+        label: Number of imported 1099-DA statements
+      - name: imported1099B1099DaNetGainOrLossTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported 1099-B/1099-DA net gain or loss total
+      - name: imported1099B1099DaHasQofFlag
+        type: boolean
+        required: false
+        readOnly: true
+        label: Imported QOF flag from 1099-B/1099-DA
+      - name: importedForm2439Line1aUndistributedLongTermGainTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported Form 2439 line 1a total
+      - name: importedForm2439Line1bUnrecaptured1250Total
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported Form 2439 line 1b total
+      - name: importedForm2439Line1cSection1202Total
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported Form 2439 line 1c total
+      - name: importedForm2439Line1dCollectiblesGainTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported Form 2439 line 1d total
+      - name: importedOtherScheduleDSourceNetTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported other Schedule D source net total
+      - name: importedPriorYearCapitalLossCarryoverTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported prior-year capital loss carryover total
+      # Auto-derived from statement store (Phase 3 — backend injects these; never ask user)
+      - name: derivedHadCapitalAssetSalesOrExchanges
+        type: boolean
+        required: false
+        readOnly: true
+        label: Auto-derived — 1099-B or 1099-DA statements present (capital sales or exchanges detected)
+      - name: derivedHasForm2439UndistributedCapitalGains
+        type: boolean
+        required: false
+        readOnly: true
+        label: Auto-derived — Form 2439 statements present (undistributed capital gains detected)
+      - name: derivedHasAny1099DivBoxes2b2c2dAmounts
+        type: boolean
+        required: false
+        readOnly: true
+        label: Auto-derived — 1099-DIV boxes 2b, 2c, or 2d contain nonzero amounts
+
+  # Backend-only computed values. Not rendered in form component.
+  - name: computedOutputs
+    title: Computed outputs (backend only)
+    multiplicity: single
+    showIf: hadCapitalGainOrLoss == true
+    fields:
+      - name: computedLine7aCapitalGainOrLossContributionTaxpayer
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed taxpayer contribution to Form 1040 line 7a
+      - name: computedException1DirectEntryEligible
+        type: boolean
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Exception 1 direct-entry eligible flag
+      - name: computedScheduleDRequiredFromTaxpayerInputs
+        type: boolean
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Schedule D required flag from taxpayer inputs
+      - name: computedForm8949RequiredFromTaxpayerInputs
+        type: boolean
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Form 8949 required flag from taxpayer inputs
+      - name: computedScheduleDLine16NetCapitalGainLoss
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Schedule D line 16 net capital gain or loss
+      - name: computedScheduleDLine21AllowedCapitalLoss
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Schedule D line 21 allowable capital loss
+      - name: computedReturnLine7aCapitalGainOrLoss
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Form 1040 line 7a
+      - name: computedReturnLine7bScheduleDNotRequiredChecked
+        type: boolean
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Form 1040 line 7b schedule D not required checkbox
+      - name: computedReturnLine7bIncludesChildCapitalGainLossChecked
+        type: boolean
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Form 1040 line 7b includes child capital gain or loss checkbox
+      - name: computedReturnLine7bChildAmountFromForm8814Line10
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Form 1040 line 7b child amount from Form 8814 line 10

@@ -1,0 +1,23 @@
+# Form 1040 header - taxpayer Presidential Election Campaign Fund question.
+# Approach: this taxpayer form owns only the taxpayer campaign-fund election.
+name: presidential-election-campaign-taxpayer
+title: Form 1040 - Presidential Election Campaign (taxpayer / family head)
+multiplicity: single
+formName: 1040
+category: personal
+instructions:
+  - Answer this question only if you want $3 of your taxes directed to the Presidential Election Campaign Fund.
+  - This choice does not increase your tax or reduce your refund.
+
+sections:
+  - name: presidentialElectionCampaign
+    title: Presidential Election Campaign Fund
+    multiplicity: single
+    fields:
+      - name: presidentialElectionFundTaxpayer
+        type: boolean
+        required: true
+        label: Do you want $3 to go to the Presidential Election Campaign Fund?
+        help: >
+          Checking Yes directs $3 of your taxes to the Presidential Election Campaign
+          Fund. It does not increase your tax or reduce your refund.

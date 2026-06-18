@@ -1,0 +1,19 @@
+﻿<mxfile host='app.diagrams.net' modified='2026-03-04T10:17:00.0000000Z' agent='Codex' version='20.8.16' type='device'>
+  <diagram id='4c-flow-ira-exceptions' name='Line 4c - IRA exception checkboxes and statements'>
+    <mxGraphModel dx='1400' dy='900' grid='1' gridSize='10' guides='1' tooltips='1' connect='1' arrows='1' fold='1' page='1' pageScale='1' pageWidth='1200' pageHeight='900' math='0' shadow='0'>
+      <root>
+        <mxCell id='0'/>
+        <mxCell id='1' parent='0'/>
+        <mxCell id='2' value='Inputs (User)&#xa;Taxpayer + spouse IRA forms:&#xa;hadIraRollover, hadQcd, hadHfd, hasOtherLine4cWriteInCode, line4cOtherWriteInText&#xa;Taxpayer-only return-level gating:&#xa;moreThanOneLine4ExceptionAppliesOnReturn&#xa;onlyException2AndOneOtherAppliesOnReturn&#xa;exceptionBreakoutStatementPrepared' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='20' y='20' width='380' height='270' as='geometry'/></mxCell>
+        <mxCell id='3' value='Inputs (Derived from Compute)&#xa;Per-owner exception booleans from IRA computation path&#xa;Form 8606 trigger (Exception 2) per owner&#xa;per-owner write-in text normalized and joined for return output' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='20' y='310' width='380' height='180' as='geometry'/></mxCell>
+        <mxCell id='4' value='Reference/Derived Inputs&#xa;4abc.md IRS 2025 rules:&#xa;box1 = rollover, box2 = QCD, box3 = HFD/other write-in&#xa;if more than one exception applies, breakout statement may be required&#xa;waiver case: only Exception 2 plus one other exception' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='20' y='510' width='380' height='220' as='geometry'/></mxCell>
+        <mxCell id='5' value='Computation&#xa;line4c.box1 = OR(taxpayer.rollover, spouse.rollover)&#xa;line4c.box2 = OR(taxpayer.qcd, spouse.qcd)&#xa;line4c.box3 = OR(taxpayer.hfd/other, spouse.hfd/other)&#xa;line4c.box3Text = join(owner box3 text; include HFD label when applicable)&#xa;statementRequired = multi-exception rule with waiver handling&#xa;when required and not prepared, emit validation/blocking flag' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='430' y='220' width='400' height='320' as='geometry'/></mxCell>
+        <mxCell id='6' value='Outputs&#xa;Form 1040 line 4c fields:&#xa;box1 rollover, box2 QCD, box3 other, box3 text&#xa;line4cExceptionBreakoutStatementRequired flag&#xa;compute flags list for missing required exception breakout statement' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='860' y='250' width='330' height='260' as='geometry'/></mxCell>
+        <mxCell id='7' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='2' target='5'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='8' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='3' target='5'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='9' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='4' target='5'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='10' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='5' target='6'><mxGeometry relative='1' as='geometry'/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

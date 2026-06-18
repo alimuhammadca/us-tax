@@ -1,0 +1,17 @@
+<mxfile host='app.diagrams.net' modified='2026-03-08T12:05:00.0000000Z' agent='Codex' version='20.8.16' type='device'>
+  <diagram id='9-flow-total-income' name='Line 9 - Total income'>
+    <mxGraphModel dx='1400' dy='900' grid='1' gridSize='10' guides='1' tooltips='1' connect='1' arrows='1' fold='1' page='1' pageScale='1' pageWidth='1300' pageHeight='900' math='0' shadow='0'>
+      <root>
+        <mxCell id='0'/>
+        <mxCell id='1' parent='0'/>
+        <mxCell id='2' value='Computed feeder lines&#xa;line1z total wages&#xa;line2b taxable interest&#xa;line3b ordinary dividends&#xa;line4b taxable IRA dist.&#xa;line5b taxable pensions&#xa;line6b taxable SS benefits&#xa;line7a capital gain/(loss)&#xa;line8 Schedule 1 line 10' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='30' y='140' width='370' height='290' as='geometry'/></mxCell>
+        <mxCell id='3' value='Form 1040 line 9 computation&#xa;line9 = line1z + line2b + line3b + line4b + line5b + line6b + line7a + line8&#xa;(missing feeder values treated as 0 in aggregation)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#d1e7dd;strokeColor=#0f5132;fontSize=12;' vertex='1' parent='1'><mxGeometry x='460' y='190' width='430' height='190' as='geometry'/></mxCell>
+        <mxCell id='4' value='Emit to return&#xa;Form1040.income.totalIncome = line9&#xa;Used by 1040 preview/save PDF mapping' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#cfe2ff;strokeColor=#084298;fontSize=12;' vertex='1' parent='1'><mxGeometry x='950' y='210' width='300' height='150' as='geometry'/></mxCell>
+        <mxCell id='5' value='Validation&#xa;Check arithmetic integrity&#xa;Do not include 2a/3a/4a/5a/6a/1i in line 9' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3cd;strokeColor=#b8860b;fontSize=12;' vertex='1' parent='1'><mxGeometry x='460' y='420' width='430' height='120' as='geometry'/></mxCell>
+        <mxCell id='6' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='2' target='3'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='7' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='3' target='4'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='8' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='3' target='5'><mxGeometry relative='1' as='geometry'/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

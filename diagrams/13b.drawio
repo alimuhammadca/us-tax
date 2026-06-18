@@ -1,0 +1,106 @@
+<mxfile host="app.diagrams.net" modified="2026-03-15T00:00:00.000Z" agent="Claude" version="21.0.0" type="device">
+  <diagram id="schedule1A-dataflow" name="Form 1040 Line 13b — Schedule 1-A Dataflow">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Title -->
+        <mxCell id="title" value="Form 1040 Line 13b — Schedule 1-A Additional Deductions (2025)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="200" y="20" width="760" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- INPUT SOURCES -->
+        <mxCell id="w2" value="W-2 (box 7)&#xa;Social Security Tips" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="20" y="100" width="140" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="form4137" value="Form 4137&#xa;Unreported Tips" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="20" y="170" width="140" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="manual-tips" value="Manual Tips Entry&#xa;(1099-NEC/MISC/K)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="20" y="240" width="140" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="manual-overtime" value="Manual Overtime&#xa;(W-2 box 1 portion)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="20" y="310" width="140" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="car-loan" value="Car Loan Interest&#xa;(new 2025 vehicle)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="20" y="380" width="140" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="dob" value="Date of Birth&#xa;(age 65+ check)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="20" y="450" width="140" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="magi-exclusions" value="MAGI Exclusions&#xa;(Puerto Rico, 2555, 4563)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="20" y="520" width="140" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- MAGI Computation -->
+        <mxCell id="magi-box" value="Part I: MAGI&#xa;= AGI (line 11b) + exclusions" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="230" y="440" width="180" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="agi-src" value="AGI (Form 1040 line 11b)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="230" y="540" width="180" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Part II Tips -->
+        <mxCell id="part2" value="Part II: No Tax on Tips&#xa;Cap $25k&#xa;Phaseout $100/k above $150k/$300k MFJ" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="480" y="80" width="200" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Part III Overtime -->
+        <mxCell id="part3" value="Part III: No Tax on Overtime&#xa;Cap $12.5k / $25k MFJ&#xa;Same phaseout as tips" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="480" y="180" width="200" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Part IV Car Loan -->
+        <mxCell id="part4" value="Part IV: No Tax on Car Loan Interest&#xa;Cap $10k&#xa;Phaseout $200/k above $100k/$200k MFJ" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="480" y="280" width="200" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Part V Senior -->
+        <mxCell id="part5" value="Part V: Enhanced Senior Deduction&#xa;$6k/person (age 65+)&#xa;Phaseout 6% above $75k/$150k MFJ" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="480" y="380" width="200" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Schedule 1-A line 38 -->
+        <mxCell id="line38" value="Schedule 1-A Line 38&#xa;= Lines 13+21+30+37" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="760" y="270" width="160" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Form 1040 line 13b -->
+        <mxCell id="line13b" value="Form 1040 Line 13b&#xa;Additional deductions" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="980" y="270" width="160" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- MFJ gate note -->
+        <mxCell id="mfj-gate" value="MFJ Gate:&#xa;Parts II, III, V require MFJ&#xa;when married (MFS = $0)" style="text;html=1;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;spacingLeft=4;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="480" y="480" width="200" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Edges: Inputs → Parts -->
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="w2" target="part2" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="form4137" target="part2" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="manual-tips" target="part2" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="manual-overtime" target="part3" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="car-loan" target="part4" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="dob" target="part5" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="magi-exclusions" target="magi-box" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e8" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="agi-src" target="magi-box" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- MAGI → Parts -->
+        <mxCell id="e9" style="edgeStyle=orthogonalEdgeStyle;dashed=1;" edge="1" source="magi-box" target="part2" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e10" style="edgeStyle=orthogonalEdgeStyle;dashed=1;" edge="1" source="magi-box" target="part3" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e11" style="edgeStyle=orthogonalEdgeStyle;dashed=1;" edge="1" source="magi-box" target="part4" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e12" style="edgeStyle=orthogonalEdgeStyle;dashed=1;" edge="1" source="magi-box" target="part5" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Parts → Line 38 -->
+        <mxCell id="e13" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="part2" target="line38" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e14" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="part3" target="line38" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e15" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="part4" target="line38" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e16" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="part5" target="line38" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Line 38 → Line 13b -->
+        <mxCell id="e17" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;" edge="1" source="line38" target="line13b" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

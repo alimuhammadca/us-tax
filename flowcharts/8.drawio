@@ -1,0 +1,292 @@
+<mxfile host='app.diagrams.net' modified='2026-04-16T00:00:00.000Z' agent='Claude' version='20.8.16' type='device'>
+  <diagram id='line8-computation' name='Line 8 Other Income (Schedule 1 Part I) Flowchart'>
+    <mxGraphModel dx='1400' dy='900' grid='1' gridSize='10' guides='1' tooltips='1' connect='1' arrows='1' fold='1' page='1' pageScale='1' pageWidth='1900' pageHeight='4400' math='0' shadow='0'>
+      <root>
+        <mxCell id='0'/>
+        <mxCell id='1' parent='0'/>
+
+        <!-- LEGEND -->
+        <mxCell id='leg1' value='Start / End' style='ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1530' y='80' width='130' height='40' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg2' value='Process / Action' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1530' y='130' width='130' height='40' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg3' value='Decision' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1530' y='180' width='130' height='50' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg4' value='Output / Result' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1530' y='240' width='130' height='40' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg5' value='Blocking Flag' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8d7da;strokeColor=#842029;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1530' y='290' width='130' height='40' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg6' value='Gap / Deferred' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1530' y='340' width='130' height='40' as='geometry'/>
+        </mxCell>
+
+        <!-- ABBREVIATIONS -->
+        <mxCell id='abbr' value='Abbreviations&#xa;&#xa;S1     = Schedule 1 (Form 1040)&#xa;NOL    = Net Operating Loss&#xa;NQDC   = Nonqualified Deferred Compensation&#xa;FEIE   = Foreign Earned Income Exclusion&#xa;MSA    = Medical Savings Account&#xa;HSA    = Health Savings Account&#xa;ABLE   = Achieving a Better Life Experience&#xa;MFS    = Married Filing Separately&#xa;QI     = Qualified Income&#xa;USOC   = US Olympic Committee&#xa;GITD   = Gross Income To Date' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f0f4ff;strokeColor=#3b5bdb;fontSize=11;align=left;spacingLeft=8;' vertex='1' parent='1'>
+          <mxGeometry x='1520' y='410' width='300' height='200' as='geometry'/>
+        </mxCell>
+
+        <!-- 2025 CONSTANTS -->
+        <mxCell id='const' value='2025 IRS Constants (Verified)&#xa;&#xa;Olympic / Paralympic medal exclusion AGI limit:&#xa;  All filers: $1,000,000&#xa;  MFS: $500,000&#xa;  (Exclusion taken on Schedule 1 line 24c, not 8m)&#xa;&#xa;Gambling losses: deductible on Schedule A only,&#xa;  up to gambling winnings on line 8b.&#xa;&#xa;Alimony taxable: pre-2019 agreements only.&#xa;&#xa;1099-K top entry space: separate disclosure field,&#xa;  does NOT affect lines 9 or 10.&#xa;&#xa;Form 8814 line 12 flows to Schedule 1 line 8&#xa;  (added post-computeOtherIncomes).&#xa;&#xa;W-2 box 11 (NQDC) auto-merges into line 8t.&#xa;Employment form inmate wages auto-merges into 8u.&#xa;&#xa;Sources: 2025 IRS Form 1040 Instructions,&#xa;2025 Schedule 1 Instructions, IRC §74(d), §951, §951A' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#388e3c;fontSize=11;align=left;spacingLeft=8;' vertex='1' parent='1'>
+          <mxGeometry x='1520' y='630' width='300' height='310' as='geometry'/>
+        </mxCell>
+
+        <!-- KNOWN GAPS / IMPLEMENTATION STATUS -->
+        <mxCell id='gaps' value='Implementation Status / Gaps (2026-04-16)&#xa;&#xa;IMPLEMENTED:&#xa;&#x2713; Lines 1, 2a/2b, 4, 5, 7 (user entry + imports)&#xa;&#x2713; Lines 8a through 8v and 8z (all sub-lines)&#xa;&#x2713; Lines 3 / 6 out-of-scope blocking flags&#xa;&#x2713; Statement gating (1099-G, 1099-C)&#xa;&#x2713; 1099-K top entry space (disclosure field, no income effect)&#xa;&#x2713; 1099-G unemploymentCompensationAmount auto-parsed → line 7&#xa;&#x2713; 1099-C amountOfDebtDischargedAmount auto-parsed → line 8c&#xa;&#x2713; Form 2555 exclusion inline auto-compute → line 8d&#xa;&#x2713; Import: Form 8853 write-back → line 8e&#xa;&#x2713; Import: Form 8889 write-back → line 8f&#xa;&#x2713; W-2 box 11 NQDC auto-merge → line 8t&#xa;&#x2713; Employment form inmate wages → line 8u&#xa;&#x2713; Medicaid waiver offset → line 8s&#xa;&#x2713; Form 8814 line 12 → Schedule 1 line 8&#xa;&#x2713; Line 8z repeatable items list&#xa;&#x2713; Required-attachment stubs: 2555/8853/8889/4797/4684/ScheduleE&#xa;&#x2713; Line 9 total and line 10 = Form 1040 line 8&#xa;&#x2713; Section 962 election → blocking out-of-scope flag&#xa;&#x2713; Alimony line 2a without date → advisory flag&#xa;&#x2713; Line 8m Olympic gross → line 24c auto-compute (in adjustments)&#xa;&#xa;DEFERRED:&#xa;&#x26A0; Line 1 tax-benefit-rule worksheet — requires prior-year data&#xa;&#x26A0; Unemployment repayment &gt;$3k Pub.525 — requires prior-year rates&#xa;&#x26A0; Form 8853 full compute output — required-attachment only&#xa;&#x26A0; Form 8889 full compute output — required-attachment only&#xa;&#x26A0; Form 4797 full output — required-attachment only&#xa;&#x26A0; Schedule C / Schedule F — blocked, no compute' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;align=left;spacingLeft=8;' vertex='1' parent='1'>
+          <mxGeometry x='1520' y='960' width='300' height='490' as='geometry'/>
+        </mxCell>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- MAIN FLOW -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+
+        <!-- START -->
+        <mxCell id='n01' value='START — computeOtherIncomes()&#xa;&#xa;Inputs: other-incomes-taxpayer, other-incomes-spouse,&#xa;MedicaidComputation, form1099GEntries, form1099CEntries,&#xa;w2Entries, inmateWages taxpayer/spouse,&#xa;foreignEarnedIncomeTaxpayer, foreignEarnedIncomeSpouse,&#xa;flags, uid' style='ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;' vertex='1' parent='1'>
+          <mxGeometry x='280' y='40' width='460' height='100' as='geometry'/>
+        </mxCell>
+
+        <!-- Gate: hadAdditionalIncomeForSchedule1 -->
+        <mxCell id='n02' value='taxpayerHasAdditionalIncome == true&#xa;OR spouseHasAdditionalIncome == true?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='290' y='185' width='440' height='70' as='geometry'/>
+        </mxCell>
+        <mxCell id='e01' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n01' target='n02' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- No → out-of-scope screening still runs, but lines 1-7 and 8a-8z use 0 -->
+        <!-- Actually check if hasAnySchedule1Input at the end -->
+
+        <!-- Statement gating (when hadAny == true) -->
+        <mxCell id='n03' value='validateOtherIncomeStatementGating()&#xa;&#xa;Check: confirmAllReceivedOtherIncomeStatementsUploaded&#xa;Check: received1099G vs uploaded1099G vs entries1099G&#xa;Check: received1099C vs uploaded1099C vs entries1099C' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='290' y='320' width='440' height='80' as='geometry'/>
+        </mxCell>
+        <mxCell id='e02' value='Yes' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n02' target='n03' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Blocking flags from gating -->
+        <mxCell id='n03b' value='Emit blocking flags:&#xa;OTHER_INCOME_STATEMENT_CONFIRMATION_REQUIRED&#xa;OTHER_INCOME_MISSING_UPLOADED_1099_G&#xa;OTHER_INCOME_MISSING_UPLOADED_1099_C' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8d7da;strokeColor=#842029;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='760' y='330' width='260' height='70' as='geometry'/>
+        </mxCell>
+        <mxCell id='e02b' value='missing' style='edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5;exitDx=0;exitDy=0;' edge='1' source='n03' target='n03b' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Out-of-scope check: Schedule C / F -->
+        <mxCell id='n04' value='Check out-of-scope blockers&#xa;&#xa;hasScheduleCBusinessIncomeOutOfScope?&#xa;hasScheduleFFarmIncomeOutOfScope?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='310' y='460' width='400' height='80' as='geometry'/>
+        </mxCell>
+        <mxCell id='e03' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n03' target='n04' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='e03b' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n02' target='n04' parent='1'>
+          <mxGeometry relative='1' as='geometry'>
+            <Array as='points'>
+              <mxPoint x='760' y='220'/>
+              <mxPoint x='760' y='500'/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Out-of-scope flags: Schedule C / F -->
+        <mxCell id='n04b' value='Emit blocking flags:&#xa;OTHER_INCOME_SCHEDULE_C_OUT_OF_SCOPE&#xa;OTHER_INCOME_SCHEDULE_F_OUT_OF_SCOPE&#xa;(continue computing other lines)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8d7da;strokeColor=#842029;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='760' y='460' width='260' height='70' as='geometry'/>
+        </mxCell>
+        <mxCell id='e04b' value='Yes' style='edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5;exitDx=0;exitDy=0;' edge='1' source='n04' target='n04b' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Section 962 election check -->
+        <mxCell id='n04c' value='hasSection962CfcElection?&#xa;(taxpayer OR spouse)' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='310' y='555' width='400' height='60' as='geometry'/>
+        </mxCell>
+        <mxCell id='e04c' value='No' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n04' target='n04c' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Section 962 blocking flag -->
+        <mxCell id='n04d' value='Emit blocking flag:&#xa;OTHER_INCOME_SECTION_962_ELECTION_OUT_OF_SCOPE&#xa;(continue computing other lines)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8d7da;strokeColor=#842029;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='760' y='555' width='260' height='60' as='geometry'/>
+        </mxCell>
+        <mxCell id='e04d' value='Yes' style='edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5;exitDx=0;exitDy=0;' edge='1' source='n04c' target='n04d' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Compute lines 1 through 7 -->
+        <mxCell id='n05' value='Compute Schedule 1 lines 1 through 7&#xa;&#xa;line1  = taxableStateLocalRefundsLine1 (taxpayer+spouse) + imported1099GLine1TaxableRefunds&#xa;line2a = alimonyReceivedLine2a (taxpayer+spouse)&#xa;line2b = alimonyAgreementDateLine2b (string date)&#xa;line3  = businessIncomeLossLine3OutOfScope (out-of-scope placeholder)&#xa;line4  = otherGainsLossesLine4 (taxpayer+spouse)&#xa;line5  = rentalRealEstateRoyaltiesLine5 (taxpayer+spouse)&#xa;line6  = farmIncomeLossLine6OutOfScope (out-of-scope placeholder)&#xa;line7  = unemploymentCompensationLine7 (user) + auto-parse from 1099-G entries&#xa;         (entries1099G.stream() maps unemploymentCompensationAmount → sum)&#xa;         + firstNonNullAmount(statementTotal, imported1099GLine7) − repaymentAdjustment&#xa;&#xa;Also: form1099KPersonalItemsDisclosureAmount stored (disclosure only, no income effect)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='280' y='645' width='460' height='165' as='geometry'/>
+        </mxCell>
+        <mxCell id='e05' value='No' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n04c' target='n05' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Alimony advisory flag -->
+        <mxCell id='n05b' value='line2a &gt; 0 AND alimonyAgreementDateLine2b absent?&#xa;→ Emit NON-BLOCKING flag:&#xa;OTHER_INCOME_ALIMONY_DATE_REQUIRED' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3cd;strokeColor=#856404;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='760' y='670' width='270' height='65' as='geometry'/>
+        </mxCell>
+        <mxCell id='e05b' style='edgeStyle=orthogonalEdgeStyle;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;' edge='1' source='n05' target='n05b' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Compute line 8 sublines (negative) -->
+        <mxCell id='n06' value='Compute negative-entry lines 8a, 8d, 8s&#xa;&#xa;line8a = −|otherIncomeNetOperatingLoss8a| (negated by engine)&#xa;&#xa;line8d = inline auto-compute:&#xa;  autoLine8d = computeForm2555ExclusionForSsWorksheet(&#xa;                 foreignEarnedIncomeTaxpayer, foreignEarnedIncomeSpouse)&#xa;  manualLine8d = otherIncomeForeignEarnedIncomeExclusion8d (user override)&#xa;  line8d = −|firstNonNullAmount(manualLine8d, autoLine8d)|&#xa;  (user-entered value takes precedence; auto-compute is fallback)&#xa;&#xa;line8s = medicaid.schedule1Line8s() (already negative from Medicaid computation)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='280' y='875' width='460' height='140' as='geometry'/>
+        </mxCell>
+        <mxCell id='e06' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n05' target='n06' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Compute positive line 8 sublines -->
+        <mxCell id='n07' value='Compute positive-entry lines 8b, 8c, 8e–8r, 8t–8v&#xa;&#xa;line8b  = otherIncomeGambling8b&#xa;line8c  = otherIncomeCancellationOfDebt8c + auto-parse from 1099-C entries&#xa;         (entries1099C.stream() maps amountOfDebtDischargedAmount → sum)&#xa;         + firstNonNullAmount(statementTotal, imported1099CLine8cCancellationOfDebt)&#xa;line8e  = otherIncomeForm88538e + importedForm8853Line8e&#xa;line8f  = otherIncomeForm88898f + importedForm8889Line8f&#xa;line8g  = otherIncomeAlaskaPermanentFundDividends8g&#xa;line8h  = otherIncomeJuryDutyPay8h&#xa;line8i  = otherIncomePrizesAwards8i&#xa;line8j  = otherIncomeHobbyIncome8j&#xa;line8k  = otherIncomeStockOptions8k&#xa;line8l  = otherIncomeRentalPersonalProperty8l&#xa;line8m  = otherIncomeOlympicParalympic8m (gross; exclusion deferred to line 24c)&#xa;line8n  = otherIncomeSection951a8n&#xa;line8o  = otherIncomeSection951A8o&#xa;line8p  = otherIncomeSection461l8p&#xa;line8q  = otherIncomeAbleDistributions8q&#xa;line8r  = otherIncomeScholarships8r&#xa;line8t  = otherIncomeNonqualifiedDeferredComp8t + sumW2Box11Nqdc(w2Entries)&#xa;line8u  = otherIncomeWagesWhileIncarcerated8u + inmateWages taxpayer+spouse&#xa;line8v  = otherIncomeDigitalAssets8v' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='280' y='970' width='460' height='270' as='geometry'/>
+        </mxCell>
+        <mxCell id='e07' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n06' target='n07' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Line 8z -->
+        <mxCell id='n08' value='Compute line 8z (catch-all list)&#xa;&#xa;buildSchedule1OtherIncomeItems(taxpayerForm, spouseForm)&#xa;&#xa;Read otherIncomeItems8z[] from each form.&#xa;Filter: skip items with blank description or zero amount.&#xa;Prefix with "Taxpayer:" or "Spouse:" label.&#xa;&#xa;line8z = sum of all valid item amounts' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='280' y='1310' width='460' height='130' as='geometry'/>
+        </mxCell>
+        <mxCell id='e08' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n07' target='n08' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Compute line 9 -->
+        <mxCell id='n09' value='Compute Schedule 1 line 9&#xa;&#xa;line9 = sumAmounts(line8a, line8b, line8c, line8d, line8e, line8f,&#xa;                   line8g, line8h, line8i, line8j, line8k, line8l,&#xa;                   line8m, line8n, line8o, line8p, line8q, line8r,&#xa;                   line8s, line8t, line8u, line8v, line8z)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='280' y='1510' width='460' height='90' as='geometry'/>
+        </mxCell>
+        <mxCell id='e09' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n08' target='n09' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Compute line 10 -->
+        <mxCell id='n10' value='Compute Schedule 1 line 10&#xa;&#xa;line10 = line1 + line2a + line3 + line4 + line5 + line6 + line7 + line9&#xa;&#xa;This becomes Form 1040 line 8.' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='280' y='1670' width='460' height='80' as='geometry'/>
+        </mxCell>
+        <mxCell id='e10' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n09' target='n10' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- hasAnySchedule1Input check -->
+        <mxCell id='n11' value='hasAnySchedule1Input?&#xa;&#xa;= any non-zero of lines 1–7/9 OR non-empty 8z items OR&#xa;  non-zero w2Box11NqdcTotal OR non-zero inmateWages taxpayer/spouse?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='300' y='1820' width='420' height='80' as='geometry'/>
+        </mxCell>
+        <mxCell id='e11' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n10' target='n11' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- No → return null -->
+        <mxCell id='n12' value='return null&#xa;(no Schedule 1 Part I activity)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='760' y='1835' width='200' height='50' as='geometry'/>
+        </mxCell>
+        <mxCell id='e12' value='No' style='edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5;exitDx=0;exitDy=0;' edge='1' source='n11' target='n12' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Build Schedule1AdditionalIncome -->
+        <mxCell id='n13' value='Build Schedule1AdditionalIncome object&#xa;&#xa;Set all line fields from computed values above.&#xa;Set totalOtherIncome = line9.&#xa;Set totalAdditionalIncome = line10.&#xa;&#xa;Build otherIncomeItems list (for line 8z detail).&#xa;&#xa;Return OtherIncomeComputation(additionalIncome, otherIncomeItems,&#xa;                               line10, line8t, line8u)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='280' y='1975' width='460' height='120' as='geometry'/>
+        </mxCell>
+        <mxCell id='e13' value='Yes' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n11' target='n13' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- applySchedule1AdditionalIncome (called separately in prepare()) -->
+        <mxCell id='n14' value='applySchedule1AdditionalIncome()&#xa;&#xa;Copy additionalIncome into Schedule1.additionalIncome.&#xa;Copy otherIncomeItems into Schedule1.otherIncomeItems.' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='280' y='2165' width='460' height='80' as='geometry'/>
+        </mxCell>
+        <mxCell id='e14' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n13' target='n14' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- applyForm8814Line12ToSchedule1 (called after applySchedule1AdditionalIncome in prepare()) -->
+        <mxCell id='n15' value='applyForm8814Line12ToSchedule1()&#xa;&#xa;Sum Form8814.line12OtherIncomeToSchedule1 across all Form 8814 children.&#xa;If total nonzero:&#xa;  additionalIncome.otherIncomeForm8814 += totalLine12&#xa;  additionalIncome.totalOtherIncome += totalLine12&#xa;  additionalIncome.totalAdditionalIncome += totalLine12&#xa;&#xa;(Runs after computeOtherIncomes; Form 8814 computed before line 8 in prepare())' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='280' y='2315' width='460' height='120' as='geometry'/>
+        </mxCell>
+        <mxCell id='e15' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n14' target='n15' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- buildLine8AttachmentForms -->
+        <mxCell id='n16' value='buildLine8AttachmentForms()&#xa;&#xa;From additionalIncome amounts:&#xa;line4 nonzero → Required-attachment: Form 4797&#xa;line4 nonzero → Required-attachment: Form 4684&#xa;line5 nonzero → Required-attachment: Schedule E&#xa;line8d nonzero → Required-attachment: Form 2555&#xa;line8e nonzero → Required-attachment: Form 8853&#xa;line8f nonzero → Required-attachment: Form 8889' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='280' y='2505' width='460' height='120' as='geometry'/>
+        </mxCell>
+        <mxCell id='e16' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n15' target='n16' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- buildIncome wire-up -->
+        <mxCell id='n17' value='buildIncome() wires Form 1040 line 8&#xa;&#xa;Income.setOtherIncomeSchedule1(&#xa;    roundMoney(otherIncome.line8FromSchedule1()))&#xa;&#xa;→ JSON: form1040.income.otherIncomeSchedule1' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='280' y='2695' width='460' height='90' as='geometry'/>
+        </mxCell>
+        <mxCell id='e17' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n16' target='n17' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- OUTPUT -->
+        <mxCell id='n18' value='OUTPUTS&#xa;&#xa;form1040.income.otherIncomeSchedule1         (Form 1040 line 8)&#xa;schedule1.additionalIncome.*                 (all line fields)&#xa;schedule1.otherIncomeItems[]                 (line 8z detail)&#xa;form4797 required-attachment (when line 4 nonzero)&#xa;form4684 required-attachment (when line 4 nonzero)&#xa;scheduleE required-attachment (when line 5 nonzero)&#xa;form2555 required-attachment (when line 8d nonzero)&#xa;form8853 required-attachment (when line 8e nonzero)&#xa;form8889 required-attachment (when line 8f nonzero)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;fontStyle=1;' vertex='1' parent='1'>
+          <mxGeometry x='260' y='2865' width='500' height='140' as='geometry'/>
+        </mxCell>
+        <mxCell id='e18' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n17' target='n18' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- END -->
+        <mxCell id='n19' value='END&#xa;&#xa;line 8 (otherIncomeSchedule1) feeds:&#xa;&#x2022; line 9 total income (computeTotalIncome)&#xa;&#x2022; AGI (lines 11a / 11b)&#xa;&#x2022; AMT (Form 6251 line 2b: negative of taxable state/local refund)&#xa;&#x2022; PDF export — Schedule 1 Part I fields' style='ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;' vertex='1' parent='1'>
+          <mxGeometry x='290' y='3075' width='440' height='100' as='geometry'/>
+        </mxCell>
+        <mxCell id='e19' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n18' target='n19' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- IMPLEMENTED NODES (formerly gap nodes) -->
+
+        <!-- Implemented: 1099-K top entry space -->
+        <mxCell id='gap1' value='&#x2713; IMPLEMENTED: 1099-K top entry space&#xa;form1099KPersonalItemsDisclosureAmount field&#xa;in both personal forms + output model.&#xa;Disclosure only — no effect on line 9 or 10.' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='760' y='760' width='250' height='75' as='geometry'/>
+        </mxCell>
+        <mxCell id='egap1' style='edgeStyle=orthogonalEdgeStyle;dashed=1;' edge='1' source='n05' target='gap1' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Implemented: 1099-G auto-parse -->
+        <mxCell id='gap2' value='&#x2713; IMPLEMENTED: 1099-G auto-parse&#xa;entries1099G.stream() reads unemploymentCompensationAmount&#xa;(box 1) → feeds line 7 auto-total.&#xa;Statement parse takes precedence over imported field.' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='760' y='850' width='250' height='80' as='geometry'/>
+        </mxCell>
+        <mxCell id='egap2' style='edgeStyle=orthogonalEdgeStyle;dashed=1;' edge='1' source='n05' target='gap2' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Implemented: Olympic exclusion line 24c -->
+        <mxCell id='gap3' value='&#x2713; IMPLEMENTED: Line 8m Olympic exclusion&#xa;Gross income on line 8m.&#xa;computeIncomeAdjustments() receives olympicLine8m,&#xa;auto-populates line 24c (user override allowed).' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='760' y='1090' width='250' height='80' as='geometry'/>
+        </mxCell>
+        <mxCell id='egap3' style='edgeStyle=orthogonalEdgeStyle;dashed=1;' edge='1' source='n07' target='gap3' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Implemented: Section 962 election -->
+        <mxCell id='gap4' value='&#x2713; IMPLEMENTED: Section 962 election&#xa;hasSection962CfcElection in both YAMLs&#xa;and both Angular components.&#xa;Backend emits OTHER_INCOME_SECTION_962_ELECTION_OUT_OF_SCOPE&#xa;blocking flag (see n04d decision node).' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='760' y='1190' width='250' height='90' as='geometry'/>
+        </mxCell>
+        <mxCell id='egap4' style='edgeStyle=orthogonalEdgeStyle;dashed=1;' edge='1' source='n07' target='gap4' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Gap: Form 8853/8889 full output -->
+        <mxCell id='gap5' value='&#x26A0; GAP: Form 8853 and Form 8889&#xa;full compute output not produced.&#xa;Only required-attachment stubs emitted.' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='760' y='2520' width='240' height='70' as='geometry'/>
+        </mxCell>
+        <mxCell id='egap5' style='edgeStyle=orthogonalEdgeStyle;dashed=1;' edge='1' source='n16' target='gap5' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

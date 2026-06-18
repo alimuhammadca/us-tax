@@ -1,0 +1,245 @@
+<mxfile host='app.diagrams.net' modified='2026-04-13T00:00:00.000Z' agent='Claude' version='20.8.16' type='device'>
+  <diagram id='line2ab-computation' name='Lines 2a/2b Computation Flowchart'>
+    <mxGraphModel dx='1400' dy='900' grid='1' gridSize='10' guides='1' tooltips='1' connect='1' arrows='1' fold='1' page='1' pageScale='1' pageWidth='1600' pageHeight='3200' math='0' shadow='0'>
+      <root>
+        <mxCell id='0'/>
+        <mxCell id='1' parent='0'/>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- LEGEND -->
+        <!-- ═══════════════════════════════════════════════════ -->
+        <mxCell id='leg0' value='Legend' style='text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;fontStyle=1;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='1220' y='40' width='100' height='30' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg1' value='Start / End' style='ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1220' y='80' width='120' height='40' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg2' value='Process / Action' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1220' y='130' width='120' height='40' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg3' value='Decision' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1220' y='180' width='120' height='50' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg4' value='Output / Result' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1220' y='240' width='120' height='40' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg5' value='Blocking Flag' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8d7da;strokeColor=#842029;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1220' y='290' width='120' height='40' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg6' value='Input Data' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1220' y='340' width='120' height='40' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg7' value='Known Bug' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1220' y='390' width='120' height='40' as='geometry'/>
+        </mxCell>
+
+        <!-- ABBREVIATION KEY -->
+        <mxCell id='abbr' value='Abbreviations&#xa;&#xa;PAB  = Private Activity Bond&#xa;OID  = Original Issue Discount&#xa;MFJ  = Married Filing Jointly&#xa;AGI  = Adjusted Gross Income&#xa;AMT  = Alternative Minimum Tax&#xa;FBAR = Foreign Bank Account Report&#xa;SSN  = Social Security Number&#xa;TIN  = Taxpayer Identification Number' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f0f4ff;strokeColor=#3b5bdb;fontSize=11;align=left;spacingLeft=8;' vertex='1' parent='1'>
+          <mxGeometry x='1220' y='450' width='280' height='170' as='geometry'/>
+        </mxCell>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- MAIN FLOW — centre column x≈350 -->
+        <!-- ═══════════════════════════════════════════════════ -->
+
+        <!-- START -->
+        <mxCell id='n01' value='START&#xa;computeInterestIncome()' style='ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;' vertex='1' parent='1'>
+          <mxGeometry x='300' y='40' width='240' height='55' as='geometry'/>
+        </mxCell>
+
+        <!-- INIT ACCUMULATORS -->
+        <mxCell id='n02' value='Initialise accumulators&#xa;taxableInterest = 0&#xa;taxExemptInterest = 0&#xa;form6251Line2g = 0&#xa;scheduleBInterestItems = []&#xa;oidBox2Total = 0' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='290' y='120' width='260' height='100' as='geometry'/>
+        </mxCell>
+
+        <!-- CHECK INTEREST SCREENING -->
+        <mxCell id='n03' value='hadInterestIncome == true&#xa;(taxpayer or spouse)?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='295' y='250' width='250' height='70' as='geometry'/>
+        </mxCell>
+
+        <!-- VALIDATE STATEMENT GATING -->
+        <mxCell id='n04' value='Validate statement upload gating&#xa;validateInterestStatementGating()&#xa;&#xa;Expects at least one of:&#xa;1099-INT, 1099-DIV, 1099-OID entries&#xa;with meaningful saved data' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='290' y='355' width='260' height='100' as='geometry'/>
+        </mxCell>
+
+        <!-- BLOCKING FLAG: MISSING STATEMENTS -->
+        <mxCell id='n05' value='Emit flag&#xa;MISSING_INTEREST_STATEMENTS_TAXPAYER&#xa;&#xa;Compute proceeds for other lines&#xa;but return cannot be filed.' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8d7da;strokeColor=#842029;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='620' y='355' width='280' height='80' as='geometry'/>
+        </mxCell>
+
+        <!-- SKIP TO OUTPUT WHEN NO INTEREST -->
+        <mxCell id='n06' value='Return null&#xa;(no interest income on return)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='620' y='255' width='220' height='55' as='geometry'/>
+        </mxCell>
+
+        <!-- LOOP: PER-PERSON PASS -->
+        <mxCell id='n07' value='For each person&#xa;(taxpayer, then spouse):&#xa;computeInterestForPerson()' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;fontStyle=1;' vertex='1' parent='1'>
+          <mxGeometry x='295' y='490' width='260' height='65' as='geometry'/>
+        </mxCell>
+
+        <!-- ── PER-PERSON LOOP ── -->
+
+        <!-- LOAD 1099-INT ENTRIES -->
+        <mxCell id='n08' value='Load 1099-INT entries for person&#xa;(filter by recipientTIN == personSSN)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='295' y='590' width='260' height='55' as='geometry'/>
+        </mxCell>
+
+        <!-- LOOP: MORE 1099-INT? -->
+        <mxCell id='n09' value='More 1099-INT&#xa;entries?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='315' y='675' width='220' height='60' as='geometry'/>
+        </mxCell>
+
+        <!-- PROCESS 1099-INT ENTRY -->
+        <mxCell id='n10' value='Per 1099-INT entry:&#xa;box1 = interestIncomeAmount&#xa;box3 = usSavingsBondsTreasuryInterestAmount&#xa;box8 = taxExemptInterestAmount&#xa;box9 = specifiedPrivateActivityBondInterestAmount&#xa;box11 = bondPremiumAmount&#xa;box12 = bondPremiumTreasuryAmount&#xa;box13 = bondPremiumTaxExemptAmount&#xa;&#xa;taxable += (box1 + box3) - (box11 + box12)&#xa;taxExempt += box8 - box13&#xa;form6251Line2g += box9&#xa;Add payer name + taxable amount to scheduleBItems' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+          <mxGeometry x='610' y='650' width='340' height='190' as='geometry'/>
+        </mxCell>
+
+        <!-- NOTE: box9 is a subset of box8 (PAB interest is already included in total tax-exempt).
+             taxExempt += box8 (only) — box9 must NOT be added again.
+             box9 flows separately to form6251Line2g only. Fixed 2026-04-13. -->
+
+        <!-- LOAD 1099-OID ENTRIES -->
+        <mxCell id='n11' value='Load 1099-OID entries for person&#xa;(filter by recipientTIN == personSSN)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='295' y='890' width='260' height='55' as='geometry'/>
+        </mxCell>
+
+        <!-- LOOP: MORE 1099-OID? -->
+        <mxCell id='n12' value='More 1099-OID&#xa;entries?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='315' y='975' width='220' height='60' as='geometry'/>
+        </mxCell>
+
+        <!-- PROCESS 1099-OID ENTRY -->
+        <mxCell id='n13' value='Per 1099-OID entry:&#xa;box1 = originalIssueDiscountAmount&#xa;box2 = otherPeriodicInterestAmount&#xa;box6 = acquisitionPremiumAmount&#xa;box11 = taxExemptOidAmount&#xa;&#xa;taxable += box1 - box6&#xa;taxExempt += box11&#xa;oidBox2Total += box2&#xa;Add payer name + taxable to scheduleBItems' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+          <mxGeometry x='610' y='955' width='310' height='160' as='geometry'/>
+        </mxCell>
+
+        <!-- LOAD 1099-DIV ENTRIES -->
+        <mxCell id='n14' value='Load 1099-DIV entries for person&#xa;(filter by recipientTIN == personSSN)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='295' y='1170' width='260' height='55' as='geometry'/>
+        </mxCell>
+
+        <!-- LOOP: MORE 1099-DIV? -->
+        <mxCell id='n15' value='More 1099-DIV&#xa;entries?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='315' y='1255' width='220' height='60' as='geometry'/>
+        </mxCell>
+
+        <!-- PROCESS 1099-DIV ENTRY -->
+        <mxCell id='n16' value='Per 1099-DIV entry:&#xa;box12 = exemptInterestDividendsAmount&#xa;box13 = specifiedPrivateActivityBondDividendsAmount&#xa;&#xa;taxExempt += box12&#xa;form6251Line2g += box13&#xa;Add payer name + dividend amount to scheduleBDividendItems' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+          <mxGeometry x='610' y='1235' width='310' height='120' as='geometry'/>
+        </mxCell>
+
+        <!-- CLASSIFY OID BOX2 -->
+        <mxCell id='n17' value='Classify 1099-OID box 2&#xa;(from personal form):&#xa;taxExemptStatedInterestFrom1099OidBox2&#xa;  → subtract from taxable, add to taxExempt&#xa;taxablePortionFrom1099OidBox2Override&#xa;  → use as override if present&#xa;otherwise: taxableBox2 = oidBox2Total&#xa;                       - taxExemptPortion' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+          <mxGeometry x='290' y='1390' width='280' height='150' as='geometry'/>
+        </mxCell>
+
+        <!-- ADD MANUAL AMOUNTS -->
+        <mxCell id='n18' value='Add manual interest (personal form):&#xa;taxable += manualTaxableInterestNotOnStatements&#xa;taxExempt += manualTaxExemptInterestNotOnStatements&#xa;Add manual taxable to scheduleBItems' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+          <mxGeometry x='290' y='1575' width='280' height='80' as='geometry'/>
+        </mxCell>
+
+        <!-- APPLY ADJUSTMENTS -->
+        <mxCell id='n19' value='Apply personal form adjustments:&#xa;taxable -= accruedInterestPaidAdjustment&#xa;taxable -= nomineeInterestAdjustment&#xa;taxable -= taxableBondPremiumAdjustment&#xa;taxable -= treasuryBondPremiumAdjustment&#xa;taxable -= oidAcquisitionPremiumAdjustment&#xa;taxExempt -= taxExemptBondPremiumAdjustment&#xa;(floor each at zero)&#xa;Add each negative to scheduleBItems' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+          <mxGeometry x='290' y='1685' width='280' height='160' as='geometry'/>
+        </mxCell>
+
+        <!-- RETURN PERSON TOTALS -->
+        <mxCell id='n20' value='Return InterestPersonTotals&#xa;(taxableBeforeExclusion,&#xa; taxExempt,&#xa; form6251Line2g,&#xa; hasNomineeInterest,&#xa; scheduleBInterestItems)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='290' y='1880' width='280' height='80' as='geometry'/>
+        </mxCell>
+
+        <!-- BOTH PERSONS DONE? -->
+        <mxCell id='n21' value='Both persons&#xa;processed?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='315' y='1995' width='220' height='60' as='geometry'/>
+        </mxCell>
+
+        <!-- AGGREGATE PERSON TOTALS -->
+        <mxCell id='n22' value='Aggregate taxpayer + spouse:&#xa;taxableBeforeExclusion = taxpayer.taxable + spouse.taxable&#xa;taxExemptInterest = taxpayer.taxExempt + spouse.taxExempt&#xa;form6251Line2g = taxpayer.pab + spouse.pab&#xa;scheduleBItems = taxpayer.items + spouse.items' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+          <mxGeometry x='270' y='2090' width='310' height='110' as='geometry'/>
+        </mxCell>
+
+        <!-- APPLY SAVINGS BOND EXCLUSION -->
+        <mxCell id='n23' value='Apply Form 8815 exclusion (taxpayer form):&#xa;savingsBondExclusionAmount&#xa;&#xa;line2bTaxableInterest =&#xa;  max(0, taxableBeforeExclusion - exclusion)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+          <mxGeometry x='270' y='2235' width='310' height='100' as='geometry'/>
+        </mxCell>
+
+        <!-- EVALUATE SCHEDULE B TRIGGERS -->
+        <mxCell id='n24' value='Evaluate Schedule B triggers:&#xa;• line2bTaxableInterest &gt; $1,500?&#xa;• ordinary dividends &gt; $1,500?&#xa;• nominee interest adjustment present?&#xa;• accrued interest adjustment?&#xa;• OID reported below 1099 amount?&#xa;• bond premium reduces below 1099?&#xa;• savings bond exclusion claimed?&#xa;• foreign account / signature authority?&#xa;• foreign trust distribution / transfer?' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+          <mxGeometry x='270' y='2365' width='310' height='190' as='geometry'/>
+        </mxCell>
+
+        <!-- SCHEDULE B REQUIRED? -->
+        <mxCell id='n25' value='scheduleBRequired?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='315' y='2585' width='220' height='60' as='geometry'/>
+        </mxCell>
+
+        <!-- BUILD SCHEDULE B -->
+        <mxCell id='n26' value='buildScheduleB()&#xa;line2 = taxableBeforeExclusion&#xa;line3 = savingsBondExclusionAmount&#xa;line4 = line2bTaxableInterest&#xa;line5 = dividendItems (per-payer rows)&#xa;line6 = ordinaryDividends&#xa;line7a = hasForeignAccountForScheduleBPartIII&#xa;line7aFbar = hasFbarRequirement (separate field)&#xa;line8 = hasForeignTrustDistributionOrTransfer' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+          <mxGeometry x='610' y='2560' width='330' height='130' as='geometry'/>
+        </mxCell>
+
+        <!-- FORM 6251 CHECK -->
+        <mxCell id='n27' value='form6251Line2g &gt; 0?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='315' y='2685' width='220' height='60' as='geometry'/>
+        </mxCell>
+
+        <!-- FORM 6251 OUTPUT -->
+        <mxCell id='n28' value='Pass pabInterest to computeLine17()&#xa;→ Form6251.line2gPrivateActivityBondInterest&#xa;&#xa;Form 6251 generated even when AMT = 0&#xa;if line 2g &gt; 0 (per IRS filing rules)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+          <mxGeometry x='610' y='2670' width='320' height='100' as='geometry'/>
+        </mxCell>
+
+        <!-- FINAL OUTPUTS -->
+        <mxCell id='n29' value='Return InterestComputation:&#xa;• line2aTaxExemptInterest → form1040.income.taxExemptInterest&#xa;• line2bTaxableInterest → form1040.income.taxableInterest → line9&#xa;• scheduleB (or null)&#xa;• form6251 line2g (passed to computeLine17)&#xa;• scheduleBInterestItems (per-payer detail)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+          <mxGeometry x='270' y='2820' width='380' height='120' as='geometry'/>
+        </mxCell>
+
+        <!-- END -->
+        <mxCell id='n30' value='END' style='ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;' vertex='1' parent='1'>
+          <mxGeometry x='355' y='2975' width='140' height='50' as='geometry'/>
+        </mxCell>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- EDGES -->
+        <!-- ═══════════════════════════════════════════════════ -->
+
+        <mxCell id='e01' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n01' target='n02' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e02' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n02' target='n03' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e03' value='No' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n03' target='n06' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e04' value='Yes' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n03' target='n04' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e05' value='Missing statements' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n04' target='n05' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e06' value='Statements present' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n04' target='n07' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e07' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n07' target='n08' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e08' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n08' target='n09' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e09' value='Yes' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n09' target='n10' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e10' value='No' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n09' target='n11' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e10b' style='edgeStyle=orthogonalEdgeStyle;dashed=1;' edge='1' source='n10' target='n10b' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e11' style='edgeStyle=orthogonalEdgeStyle;entryX=0.5;entryY=0;' edge='1' source='n10' target='n09' parent='1'><mxGeometry relative='1' as='geometry'><Array as='points'><mxPoint x='780' y='620'/><mxPoint x='425' y='620'/></Array></mxGeometry></mxCell>
+        <mxCell id='e12' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n11' target='n12' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e13' value='Yes' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n12' target='n13' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e14' value='No' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n12' target='n14' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e15' style='edgeStyle=orthogonalEdgeStyle;entryX=0.5;entryY=0;' edge='1' source='n13' target='n12' parent='1'><mxGeometry relative='1' as='geometry'><Array as='points'><mxPoint x='765' y='930'/><mxPoint x='425' y='930'/></Array></mxGeometry></mxCell>
+        <mxCell id='e16' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n14' target='n15' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e17' value='Yes' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n15' target='n16' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e18' value='No' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n15' target='n17' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e19' style='edgeStyle=orthogonalEdgeStyle;entryX=0.5;entryY=0;' edge='1' source='n16' target='n15' parent='1'><mxGeometry relative='1' as='geometry'><Array as='points'><mxPoint x='765' y='1210'/><mxPoint x='425' y='1210'/></Array></mxGeometry></mxCell>
+        <mxCell id='e20' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n17' target='n18' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e21' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n18' target='n19' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e22' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n19' target='n20' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e23' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n20' target='n21' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e24' value='No — process next person' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n21' target='n08' parent='1'><mxGeometry relative='1' as='geometry'><Array as='points'><mxPoint x='200' y='2025'/><mxPoint x='200' y='590'/><mxPoint x='295' y='590'/></Array></mxGeometry></mxCell>
+        <mxCell id='e25' value='Yes' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n21' target='n22' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e26' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n22' target='n23' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e27' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n23' target='n24' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e28' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n24' target='n25' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e29' value='Yes' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n25' target='n26' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e30' value='No' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n25' target='n27' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e31' style='edgeStyle=orthogonalEdgeStyle;entryX=0.5;entryY=0;' edge='1' source='n26' target='n27' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e32' value='Yes' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n27' target='n28' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e33' value='No' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n27' target='n29' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e34' style='edgeStyle=orthogonalEdgeStyle;entryX=0.5;entryY=0;' edge='1' source='n28' target='n29' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e35' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n29' target='n30' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

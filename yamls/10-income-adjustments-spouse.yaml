@@ -1,0 +1,273 @@
+﻿# Form 1040 line 10 (Schedule 1 line 26) workflow for spouse.
+# Approach: keep spouse-specific user questions + imported fields + computed outputs in one YAML.
+# NOTE: Sections marked as backend-only are NOT supposed to be rendered in the actual form component.
+# NOTE: Return-level statement upload confirmations are intentionally kept on taxpayer form to avoid conflicts.
+name: income-adjustments-spouse
+title: Form 1040 - Income adjustments (spouse, line 10 via Schedule 1 line 26)
+multiplicity: single
+formName: 1040
+category: income
+instructions:
+  - Use this form for spouse-specific adjustments to income that contribute to Schedule 1 line 26 and Form 1040 line 10.
+  - Return-level statement upload confirmations remain on the taxpayer Income adjustments form.
+  - Self-employment adjustments (lines 15 to 17) are out of scope and must be blocked.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: hadIncomeAdjustmentsForSchedule1
+        type: boolean
+        required: true
+        label: Did your spouse have income adjustments that belong on Schedule 1 and Form 1040 line 10?
+        help: If No, stop here and do not continue this workflow.
+
+  - name: outOfScopeScreening
+    title: Out-of-scope screening
+    multiplicity: single
+    showIf: hadIncomeAdjustmentsForSchedule1 == true
+    instructions:
+      - Schedule 1 lines 15 through 17 are self-employment-only and out of scope for this product.
+    fields:
+      - name: hasDeductibleSelfEmploymentTaxLine15OutOfScope
+        type: boolean
+        required: false
+        label: Does your spouse have a deductible self-employment tax adjustment?
+        help: Select Yes if Schedule SE is required. This return will be blocked in this product.
+      - name: hasSelfEmployedRetirementPlanAdjustmentLine16OutOfScope
+        type: boolean
+        required: false
+        label: Does your spouse have a self-employed retirement plan adjustment?
+        help: Select Yes if this self-employment adjustment is required. This return will be blocked.
+      - name: hasSelfEmployedHealthInsuranceAdjustmentLine17OutOfScope
+        type: boolean
+        required: false
+        label: Does your spouse have a self-employed health insurance adjustment?
+        help: Select Yes if this self-employment adjustment is required. This return will be blocked.
+
+  - name: schedule1Lines11to23
+    title: Deductions and adjustments
+    multiplicity: single
+    showIf: hadIncomeAdjustmentsForSchedule1 == true
+    fields:
+      - name: educatorExpensesLine11
+        type: amount
+        required: false
+        label: Spouse educator expenses
+        placeholder: 0.00
+        help: K-12 teachers and other eligible educators may deduct up to $300 for unreimbursed classroom expenses.
+      - name: reservistPerformingArtistFeeBasisExpensesLine12
+        type: amount
+        required: false
+        label: Certain business expenses of spouse (reservists, performing artists, fee-basis officials)
+        placeholder: 0.00
+        help: Covers unreimbursed business expenses for Armed Forces reservists, qualified performing artists, and fee-basis government officials.
+      - name: hsaDeductionLine13
+        type: amount
+        required: false
+        label: Spouse health savings account (HSA) deduction
+        placeholder: 0.00
+        help: Enter spouse HSA contributions made outside of payroll deductions. Payroll HSA contributions (Box 12 Code W) are already excluded from wages.
+      - name: movingExpensesArmedForcesLine14
+        type: amount
+        required: false
+        label: Spouse moving expenses (Armed Forces only)
+        placeholder: 0.00
+        help: Only active-duty Armed Forces members who move due to a military order may deduct moving expenses.
+      - name: movingExpensesStorageFeesOnlyLine14
+        type: boolean
+        required: false
+        label: Are spouse's moving expenses for storage fees only?
+        help: Select Yes if the moving expense amount consists entirely of storage fees.
+      - name: penaltyOnEarlyWithdrawalOfSavingsLine18
+        type: amount
+        required: false
+        label: Spouse penalty on early withdrawal of savings
+        placeholder: 0.00
+        help: Enter the penalty spouse paid for early withdrawal from a savings account or CD, as shown on a 1099-INT or 1099-OID.
+      - name: alimonyPaidLine19a
+        type: amount
+        required: false
+        label: Spouse alimony paid (pre-2019 agreements only)
+        placeholder: 0.00
+        help: Only alimony under a divorce or separation agreement executed before 2019 is deductible.
+      - name: alimonyRecipientSsnLine19b
+        type: text
+        required: false
+        label: Alimony recipient's Social Security number
+        placeholder: ###-##-####
+        help: Enter the recipient's SSN. Required when claiming an alimony deduction.
+      - name: alimonyAgreementDateLine19c
+        type: date
+        required: false
+        label: Date of divorce or separation agreement
+        help: Enter the date of the original agreement. Only pre-2019 agreements qualify for deductibility.
+      - name: iraDeductionLine20
+        type: amount
+        required: false
+        label: Spouse IRA deduction
+        placeholder: 0.00
+        help: Enter spouse contributions to a traditional IRA that qualify as deductible based on income and retirement plan coverage.
+      - name: isCoveredByWorkplaceRetirementPlanSpouse
+        type: boolean
+        required: false
+        label: Is your spouse covered by a retirement plan at work?
+        help: Includes 401(k), 403(b), pension, SEP, SIMPLE, and other qualified plans. Affects whether the spouse's IRA contribution is fully deductible. If uncertain, check Box 13 (Retirement plan) on spouse's W-2.
+      - name: iraDeductionMfsLivedApartLine20
+        type: boolean
+        required: false
+        label: Is spouse filing separately and did they live apart from you all year?
+        help: Affects IRA deduction phase-out rules. Select Yes only if filing married separately and the spouses lived apart the entire year.
+      - name: studentLoanInterestDeductionLine21
+        type: amount
+        required: false
+        label: Spouse student loan interest deduction
+        placeholder: 0.00
+        help: Enter interest spouse paid on qualified student loans. Maximum deduction is $2,500 and phases out at higher income.
+      - name: archerMsaDeductionLine23
+        type: amount
+        required: false
+        label: Spouse Archer MSA deduction
+        placeholder: 0.00
+        help: Enter spouse deductible Archer MSA amount for line 23.
+
+  - name: schedule1OtherAdjustments24aTo24k
+    title: Less common adjustments
+    multiplicity: single
+    showIf: hadIncomeAdjustmentsForSchedule1 == true
+    fields:
+      - name: otherAdjustmentJuryDutyPayLine24a
+        type: amount
+        required: false
+        label: Spouse jury duty pay given to employer
+        placeholder: 0.00
+        help: Enter jury duty pay that spouse turned over to their employer as required.
+      - name: otherAdjustmentDeductibleExpensesRelatedTo8lLine24b
+        type: amount
+        required: false
+        label: Spouse deductible expenses related to income reported on Schedule 1
+        placeholder: 0.00
+        help: Enter deductible expenses tied to spouse's personal-property rental income reported on Schedule 1.
+      - name: otherAdjustmentNontaxableOlympicParalympicLine24c
+        type: amount
+        required: false
+        label: Spouse nontaxable Olympic and Paralympic prize amounts
+        placeholder: 0.00
+        help: Enter nontaxable prize amounts spouse received for Olympic or Paralympic competition.
+      - name: otherAdjustmentReforestationAmortizationLine24d
+        type: amount
+        required: false
+        label: Spouse reforestation amortization and expenses
+        placeholder: 0.00
+        help: Enter spouse deductible reforestation amortization and qualifying expenses.
+      - name: otherAdjustmentTradeActRepaymentLine24e
+        type: amount
+        required: false
+        label: Spouse repayment of supplemental unemployment benefits under the Trade Act
+        placeholder: 0.00
+        help: Enter spouse's repayment of supplemental unemployment benefits received under the Trade Act.
+      - name: otherAdjustmentContributions501c18dLine24f
+        type: amount
+        required: false
+        label: Spouse contributions to section 501(c)(18)(D) pension plans
+        placeholder: 0.00
+        help: Enter spouse deductible contributions to a section 501(c)(18)(D) pension plan.
+      - name: otherAdjustmentChaplain403bContributionsLine24g
+        type: amount
+        required: false
+        label: Spouse contributions by certain chaplains to section 403(b) plans
+        placeholder: 0.00
+        help: Enter spouse deductible chaplain contributions to section 403(b) plans that were not excludable from income.
+      - name: otherAdjustmentAttorneyFeesUnlawfulDiscriminationLine24h
+        type: amount
+        required: false
+        label: Spouse attorney fees and court costs for unlawful discrimination claims
+        placeholder: 0.00
+        help: Enter spouse deductible attorney fees and court costs for an unlawful discrimination claim.
+      - name: otherAdjustmentAttorneyFeesIrsAwardLine24i
+        type: amount
+        required: false
+        label: Spouse attorney fees and court costs for IRS whistleblower award claims
+        placeholder: 0.00
+        help: Enter spouse deductible attorney fees and court costs for an IRS whistleblower award.
+      - name: otherAdjustmentHousingDeductionForm2555Line24j
+        type: amount
+        required: false
+        label: Spouse foreign housing deduction
+        placeholder: 0.00
+        help: Enter spouse's foreign housing deduction computed on Form 2555 for amounts that exceed the base housing exclusion. Distinct from the foreign earned income exclusion on Schedule 1 line 8d.
+      - name: otherAdjustmentExcessDeductionsSection67eLine24k
+        type: amount
+        required: false
+        label: Spouse excess deductions of an estate (Section 67(e) expenses from Schedule K-1)
+        placeholder: 0.00
+        help: Enter the amount of section 67(e) excess deductions shown on Schedule K-1 (Form 1041) for the spouse.
+
+  - name: otherAdjustmentsItems24z
+    title: Spouse other adjustments items (line 24z)
+    multiplicity: multiple
+    showIf: hadIncomeAdjustmentsForSchedule1 == true
+    instructions:
+      - Add one row for each spouse line 24z adjustment item.
+    fields:
+      - name: description
+        type: text
+        required: true
+        label: Description
+        placeholder: Enter line 24z description
+        help: Enter a short description for this spouse other adjustment item.
+      - name: amount
+        type: amount
+        required: true
+        label: Amount
+        placeholder: 0.00
+        help: Enter amount for this spouse line 24z item.
+
+  # Backend-only imported fields. Not rendered in the actual form component.
+  - name: importedStatementFields
+    title: Imported statement fields (backend only)
+    multiplicity: single
+    showIf: hadIncomeAdjustmentsForSchedule1 == true
+    fields:
+      - name: imported1098EBox1StudentLoanInterestTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported spouse Form 1098-E box 1 student loan interest total
+      - name: imported1099IntEarlyWithdrawalPenaltyTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported spouse Form 1099-INT early withdrawal penalty total
+      - name: imported1099OidEarlyWithdrawalPenaltyTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported spouse Form 1099-OID early withdrawal penalty total
+      - name: importedK1Section67eExcessDeductionsTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported spouse Schedule K-1 section 67(e) excess deductions total
+
+  # Backend-only computed outputs. Not rendered in the actual form component.
+  - name: computedOutputs
+    title: Computed outputs (backend only)
+    multiplicity: single
+    showIf: hadIncomeAdjustmentsForSchedule1 == true
+    fields:
+      - name: computedSchedule1Line25TotalOtherAdjustmentsContribution
+        type: amount
+        required: false
+        readOnly: true
+        label: Computed spouse contribution to Schedule 1 line 25 total other adjustments
+      - name: computedSchedule1Line26TotalAdjustmentsContribution
+        type: amount
+        required: false
+        readOnly: true
+        label: Computed spouse contribution to Schedule 1 line 26 total adjustments to income
+      - name: computedForm1040Line10AdjustmentsToIncomeContribution
+        type: amount
+        required: false
+        readOnly: true
+        label: Computed spouse contribution to Form 1040 line 10 adjustments to income

@@ -1,0 +1,104 @@
+<mxGraphModel><root><mxCell id="0"/><mxCell id="1" parent="0"/>
+
+<!-- Title -->
+<mxCell id="2" value="Form 1040 Line 29 — Refundable AOTC / Form 8863 (2025)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1" vertex="1" parent="1"><mxGeometry x="150" y="20" width="700" height="40" as="geometry"/></mxCell>
+
+<!-- INPUTS box -->
+<mxCell id="10" value="INPUTS&#xa;AGI (line 11b)&#xa;Filing status&#xa;Form 8862 output&#xa;education-credits-taxpayer form&#xa;  · claimsEducationCreditsOnReturn&#xa;  · aotcPreviouslyDenied (renamed G17)&#xa;  · refundableAotcRestrictionApplies&#xa;  · hasMagiAddBacks (UI gate, G18)&#xa;  · magiAddBack* (4 fields, conditional)&#xa;  · taxpayerEducationCreditStudents[]&#xa;      studentTinLine21 (G19)&#xa;      institution1NameLine22 (G19)&#xa;      institution1AddressLine22 (G19)&#xa;education-credits-spouse form&#xa;  · spouseEducationCreditStudents[]&#xa;Schedule 3 prior nonref credits (CLW)&#xa;totalTaxBeforeCredits (line 18)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=left;spacingLeft=8;" vertex="1" parent="1"><mxGeometry x="20" y="80" width="260" height="300" as="geometry"/></mxCell>
+
+<!-- Entry gate -->
+<mxCell id="20" value="claimsEducationCreditsOnReturn&#xa;= true?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1"><mxGeometry x="320" y="90" width="220" height="80" as="geometry"/></mxCell>
+<mxCell id="21" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="10" target="20" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="22" value="No" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="20" target="23" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="600" y="130"/></Array></mxGeometry></mxCell>
+<mxCell id="23" value="return null&#xa;(no form8863)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1"><mxGeometry x="610" y="100" width="150" height="45" as="geometry"/></mxCell>
+<mxCell id="24" value="Yes" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="20" target="30" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="430" y="210"/></Array></mxGeometry></mxCell>
+
+<!-- Form 8862 gate -->
+<mxCell id="30" value="aotcPreviouslyDenied = true?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1"><mxGeometry x="320" y="200" width="220" height="70" as="geometry"/></mxCell>
+<mxCell id="31" value="Yes + no Form8862" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="30" target="32" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="600" y="235"/></Array></mxGeometry></mxCell>
+<mxCell id="32" value="Emit FORM_8862_AOTC_REQUIRED&#xa;AOTC blocked, LLC continues" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1"><mxGeometry x="610" y="210" width="200" height="50" as="geometry"/></mxCell>
+<mxCell id="33" value="No / Form 8862 OK" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="30" target="40" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="430" y="300"/></Array></mxGeometry></mxCell>
+
+<!-- MFS gate -->
+<mxCell id="40" value="Filing status = MFS?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1"><mxGeometry x="320" y="290" width="220" height="70" as="geometry"/></mxCell>
+<mxCell id="41" value="Yes" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="40" target="42" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="600" y="325"/></Array></mxGeometry></mxCell>
+<mxCell id="42" value="Emit EDUCATION_CREDITS_MFS_INELIGIBLE&#xa;return null" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1"><mxGeometry x="610" y="305" width="200" height="45" as="geometry"/></mxCell>
+<mxCell id="43" value="No" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="40" target="50" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="430" y="390"/></Array></mxGeometry></mxCell>
+
+<!-- MAGI computation -->
+<mxCell id="50" value="MAGI = AGI (line11b)&#xa;+ magiAddBackPuertoRicoExcludedIncome&#xa;+ magiAddBackForm2555ExcludedIncome&#xa;+ magiAddBackForm2555HousingExclusion&#xa;+ magiAddBackForm4563ExcludedIncome" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;spacingLeft=8;" vertex="1" parent="1"><mxGeometry x="280" y="380" width="300" height="80" as="geometry"/></mxCell>
+
+<!-- Phaseout threshold -->
+<mxCell id="60" value="Set phaseout thresholds&#xa;MFJ: upper=$180k / range=$20k&#xa;QSS/Single/HOH/MFS: upper=$90k / range=$10k&#xa;(QSS correctly uses $90k thresholds — G1 fixed)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;spacingLeft=8;" vertex="1" parent="1"><mxGeometry x="280" y="480" width="300" height="80" as="geometry"/></mxCell>
+<mxCell id="61" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="50" target="60" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- Phaseout gate -->
+<mxCell id="70" value="MAGI >= upper?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1"><mxGeometry x="330" y="580" width="200" height="70" as="geometry"/></mxCell>
+<mxCell id="71" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="60" target="70" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="72" value="Yes (fully phased out)" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="70" target="73" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="600" y="615"/></Array></mxGeometry></mxCell>
+<mxCell id="73" value="magiExceedsPhaseoutCeiling=true&#xa;return (no credits)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1"><mxGeometry x="610" y="600" width="180" height="45" as="geometry"/></mxCell>
+<mxCell id="74" value="No" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="70" target="80" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="430" y="680"/></Array></mxGeometry></mxCell>
+
+<!-- Phaseout fraction -->
+<mxCell id="80" value="phaseoutFraction = (upper - MAGI) / range&#xa;→ 3 decimal places, RoundingMode.DOWN&#xa;→ capped at [0.000, 1.000]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1"><mxGeometry x="270" y="670" width="320" height="60" as="geometry"/></mxCell>
+
+<!-- Collect students -->
+<mxCell id="90" value="Collect allStudents[]&#xa;= taxpayerStudents + spouseStudents (MFJ)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1"><mxGeometry x="280" y="750" width="300" height="50" as="geometry"/></mxCell>
+<mxCell id="91" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="80" target="90" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- Per-student loop: AOTC -->
+<mxCell id="100" value="FOR EACH STUDENT:&#xa;creditTypeRequested = 'aotc'?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1"><mxGeometry x="310" y="820" width="240" height="80" as="geometry"/></mxCell>
+<mxCell id="101" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="90" target="100" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- AOTC disqualifiers -->
+<mxCell id="110" value="AOTC disqualifiers? (any)&#xa;· 4 prior years claimed&#xa;· not half-time&#xa;· completed 4 years before 2025&#xa;· felony drug conviction&#xa;· Form 8862 index block" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1"><mxGeometry x="140" y="920" width="240" height="100" as="geometry"/></mxCell>
+<mxCell id="111" value="AOTC" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="100" target="110" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="310" y="900"/><mxPoint x="260" y="900"/></Array></mxGeometry></mxCell>
+<mxCell id="112" value="Yes (skip)" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="110" target="113" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="100" y="970"/></Array></mxGeometry></mxCell>
+<mxCell id="113" value="skip student" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1"><mxGeometry x="20" y="950" width="100" height="40" as="geometry"/></mxCell>
+<mxCell id="114" value="No" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="110" target="120" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="260" y="1040"/></Array></mxGeometry></mxCell>
+
+<!-- AOTC per-student calculation -->
+<mxCell id="120" value="AOTC Part III:&#xa;line27 = min(expenses, $4,000)&#xa;line28 = max(0, line27 - $2,000)&#xa;line29 = line28 × 25%&#xa;line30 = line29 + $2,000 (min $2,000; max $2,500)&#xa;sv.perStudentLine30 = line30  [G19 new]&#xa;totalAotcBeforePhaseout += line30" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;spacingLeft=8;" vertex="1" parent="1"><mxGeometry x="140" y="1030" width="280" height="110" as="geometry"/></mxCell>
+
+<!-- LLC calculation -->
+<mxCell id="130" value="LLC Part III:&#xa;sv.perStudentLlcExpenses = expenses  [G19 new]&#xa;totalLlcExpenses += expenses&#xa;(no per-student cap)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;spacingLeft=8;" vertex="1" parent="1"><mxGeometry x="460" y="920" width="240" height="80" as="geometry"/></mxCell>
+<mxCell id="131" value="LLC" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="100" target="130" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="550" y="900"/></Array></mxGeometry></mxCell>
+
+<!-- Part I: apply phaseout to AOTC -->
+<mxCell id="140" value="Part I — Phased AOTC&#xa;line1 = totalAotcBeforePhaseout&#xa;line7 = round(line1 × phaseoutFraction)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1"><mxGeometry x="270" y="1150" width="320" height="70" as="geometry"/></mxCell>
+<mxCell id="141" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="120" target="140" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="270" y="1140"/></Array></mxGeometry></mxCell>
+<mxCell id="142" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="130" target="140" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="570" y="1140"/><mxPoint x="430" y="1140"/></Array></mxGeometry></mxCell>
+
+<!-- Under-24 restriction gate -->
+<mxCell id="150" value="refundableAotcRestrictionApplies&#xa;= true?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1"><mxGeometry x="320" y="1240" width="220" height="80" as="geometry"/></mxCell>
+<mxCell id="151" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="140" target="150" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- Under-24 branch: line8=0 -->
+<mxCell id="152" value="Yes (under-24)" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="150" target="153" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="600" y="1280"/></Array></mxGeometry></mxCell>
+<mxCell id="153" value="line8 = 0&#xa;line9 = line7 (full AOTC nonrefundable)&#xa;Form1040.line29 = 0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1"><mxGeometry x="610" y="1260" width="200" height="55" as="geometry"/></mxCell>
+
+<!-- Normal 40/60 split -->
+<mxCell id="154" value="No (normal)" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="150" target="155" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="430" y="1350"/></Array></mxGeometry></mxCell>
+<mxCell id="155" value="line8 = round(line7 × 40%)  → refundable&#xa;line9 = line7 − line8           → nonrefundable" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1"><mxGeometry x="270" y="1340" width="320" height="55" as="geometry"/></mxCell>
+
+<!-- Part II: LLC phaseout + nonref total -->
+<mxCell id="160" value="Part II — Nonrefundable Education Credits&#xa;line10 = totalLlcExpenses&#xa;line11 = min(line10, $10,000)  [return cap]&#xa;line12 = round(line11 × 20%)&#xa;llcPhased = round(line12 × phaseoutFraction)&#xa;line18 = round(line9 + llcPhased)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;spacingLeft=8;" vertex="1" parent="1"><mxGeometry x="250" y="1420" width="360" height="100" as="geometry"/></mxCell>
+<mxCell id="161" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="155" target="160" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="162" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="153" target="160" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="710" y="1410"/><mxPoint x="550" y="1410"/></Array></mxGeometry></mxCell>
+
+<!-- CLW -->
+<mxCell id="170" value="Credit Limit Worksheet&#xa;priorCredits = Sched3: line1 + line2 + line6d + line6l&#xa;creditLimit = max(0, totalTaxBeforeCredits − priorCredits)&#xa;line19 = min(line18, creditLimit)&#xa;→ Schedule 3 line 3 → Form 1040 line 20" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;spacingLeft=8;" vertex="1" parent="1"><mxGeometry x="240" y="1540" width="380" height="90" as="geometry"/></mxCell>
+<mxCell id="171" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="160" target="170" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- Outputs -->
+<mxCell id="180" value="OUTPUTS&#xa;line8RefundableAotc → Form1040.line29&#xa;line19NonrefundableEducationCredits → Sched3.line3&#xa;line1TotalAotcBeforePhaseout (display) [G19 new]&#xa;line7AllowableAotc (display) [G19 new]&#xa;magiForPhaseout (display)&#xa;studentCount (display)&#xa;magiExceedsPhaseoutCeiling (gate flag)&#xa;header { name, ssn }  [G19 new]&#xa;students[] {&#xa;  studentName, studentSsn, creditType,&#xa;  institution1Name, institution1Address,&#xa;  perStudentLine30, perStudentLlcExpenses&#xa;}" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;spacingLeft=8;" vertex="1" parent="1"><mxGeometry x="240" y="1650" width="380" height="150" as="geometry"/></mxCell>
+<mxCell id="181" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="170" target="180" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- Downstream -->
+<mxCell id="190" value="Form 1040 line 29 downstream&#xa;line32 = line27a + line28 + line29 + line30 + line31&#xa;line33 = line25d + line26 + line32&#xa;&#xa;Schedule 8812 Part II-B line 24&#xa;reads AOTC pre-set before computeSchedule8812()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=left;spacingLeft=8;" vertex="1" parent="1"><mxGeometry x="240" y="1760" width="380" height="90" as="geometry"/></mxCell>
+<mxCell id="191" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="180" target="190" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- Legend -->
+<mxCell id="200" value="LEGEND&#xa;Blue = inputs/downstream&#xa;Green = computation steps&#xa;Yellow = decision/gates&#xa;Red = terminal error / zero path&#xa;Orange = warning / partial path&#xa;&#xa;All gaps G1–G24 resolved (2026-04-20)&#xa;G1  QSS threshold — fixed&#xa;G2  Sparse model — fixed (G19)&#xa;G3  PDF fills — fixed (G20)&#xa;G4  Under-24 self-report — deferred&#xa;G5  MFJ spouse-student E2E — fixed&#xa;G6  Form 8862 AOTC E2E — fixed&#xa;G17 YAML field rename — fixed&#xa;G18 hasMagiAddBacks gate — fixed&#xa;G19 student fields + merged loop — fixed&#xa;G20 PDF buildFieldValues — fixed&#xa;G21 unit test boundaries — fixed&#xa;G22/G23/G24 E2E tests — fixed" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;align=left;spacingLeft=8;" vertex="1" parent="1"><mxGeometry x="700" y="700" width="240" height="320" as="geometry"/></mxCell>
+
+</root></mxGraphModel>

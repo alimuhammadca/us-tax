@@ -1,0 +1,229 @@
+# Form 4972 — Tax on Lump-Sum Distributions intake for taxpayer.
+# Elected separately from the pension-annuity-income form.
+# Self-elected per-person; use the spouse YAML for the spouse variant.
+name: lump-sum-distribution-taxpayer
+title: "Form 4972 — Tax on Lump-Sum Distributions (Taxpayer)"
+multiplicity: single
+formName: 4972
+category: income
+instructions:
+  - Complete this form if you received a lump-sum distribution from a qualified retirement plan in 2025 and elect special tax treatment.
+  - You must meet the Part I eligibility requirements (born before January 2, 1936, or a beneficiary of someone born before that date, with at least 5 years of plan participation).
+  - You may elect Part II (20% capital gain treatment on the box 3 amount), Part III (10-year tax option), or both.
+  - Import your 1099-R entry to pre-fill source amounts, or enter them manually below.
+
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: electsForm4972
+        type: boolean
+        required: true
+        label: Do you elect Form 4972 special tax treatment for a lump-sum distribution?
+        help: Select Yes if you received a qualifying lump-sum distribution from a qualified retirement plan and wish to use the special tax treatment under Form 4972.
+
+  - name: statementSource
+    title: Source 1099-R data
+    multiplicity: single
+    showIf: electsForm4972 == true
+    instructions:
+      - Select the 1099-R entry that contains the lump-sum distribution to import box amounts automatically.
+      - If no matching statement is available, enter the amounts manually below.
+    fields:
+      - name: selectedStatementId
+        type: text
+        required: false
+        label: Selected 1099-R entry ID
+        help: Enter the ID of the 1099-R statement entry for this lump-sum distribution. Selecting it will auto-fill the source amounts below.
+      - name: sourcePayerName
+        type: text
+        required: false
+        readOnly: true
+        label: Payer name (from selected 1099-R)
+        help: Auto-filled from the selected 1099-R entry.
+      - name: sourceTaxableAmount
+        type: amount
+        required: false
+        readOnly: true
+        label: Box 2a — Taxable amount (from selected 1099-R)
+        help: Auto-filled from box 2a of the selected 1099-R entry.
+      - name: sourceCapitalGainAmount
+        type: amount
+        required: false
+        readOnly: true
+        label: Box 3 — Capital gain included in box 2a (from selected 1099-R)
+        help: Auto-filled from box 3 of the selected 1099-R entry.
+      - name: sourceNuaAmount
+        type: amount
+        required: false
+        readOnly: true
+        label: Box 6 — Net unrealized appreciation (from selected 1099-R)
+        help: Auto-filled from box 6 of the selected 1099-R entry.
+      - name: currentActuarialValue
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Box 8 — Current actuarial value of annuity (if any)
+        help: Enter the current actuarial value of the annuity portion of the distribution, if applicable. This corresponds to box 8 of Form 4972.
+      - name: multipleRecipientPct
+        type: amount
+        required: false
+        placeholder: e.g. 75
+        label: Box 9a — Your percentage of total distribution (if less than 100%)
+        help: If the distribution was divided among multiple recipients, enter your percentage here (e.g., 75 for 75%). Leave blank if you received 100%.
+
+  - name: partI
+    title: Part I — Eligibility
+    multiplicity: single
+    showIf: electsForm4972 == true
+    instructions:
+      - Answer all five questions. If any answer disqualifies the distribution, Form 4972 cannot be used.
+      - Question 2 — answering Yes (you did roll over) disqualifies the distribution.
+      - Question 5 — answering Yes (prior election made) disqualifies the distribution.
+    fields:
+      - name: partI_q1_entireBalance
+        type: boolean
+        required: true
+        label: Was this the participant's entire balance from all qualified plans of one kind?
+        help: Answer Yes if the distribution represents the entire balance from all plans of one kind (e.g., all profit-sharing plans) from this employer.
+      - name: partI_q2_noRollover
+        type: boolean
+        required: true
+        label: Did you roll over any part of this distribution?
+        help: Answer Yes if you rolled over any portion of this distribution to an IRA or other qualified plan. A Yes answer disqualifies the distribution from Form 4972 treatment.
+      - name: partI_q3_bornBefore1936OrBeneficiary
+        type: boolean
+        required: true
+        label: Were you born before January 2, 1936, or are you a beneficiary of someone born before January 2, 1936?
+        help: Answer Yes if you (the plan participant) were born before January 2, 1936, or if you are receiving this distribution as a beneficiary of someone born before that date.
+      - name: partI_q4_fiveYearsParticipation
+        type: boolean
+        required: true
+        label: Did the participant have at least 5 years of plan participation before the year of distribution?
+        help: Answer Yes if the plan participant was a plan participant for at least 5 years before the year the lump-sum distribution was received.
+      - name: partI_q5_noPriorElection
+        type: boolean
+        required: true
+        label: Have you previously used Form 4972 after 1986 for a distribution from this same participant?
+        help: Answer Yes if you have previously elected special tax treatment under Form 4972 after 1986 for a distribution from this same participant. A Yes answer disqualifies the distribution.
+
+  - name: partElections
+    title: Part elections
+    multiplicity: single
+    showIf: electsForm4972 == true
+    instructions:
+      - Select which parts of Form 4972 you wish to use.
+      - Part II applies 20% capital gain treatment to the box 3 amount.
+      - Part III applies the 10-year tax option to the ordinary income portion.
+    fields:
+      - name: usePartII
+        type: boolean
+        required: false
+        label: Elect Part II — 20% capital gain election
+        help: Check to apply 20% capital gain treatment to the portion shown in box 3 of the 1099-R (capital gain included in box 2a).
+      - name: usePartIII
+        type: boolean
+        required: false
+        label: Elect Part III — 10-year tax option
+        help: Check to apply the 10-year tax option using 1986 single-filer rates to the ordinary income portion of the lump-sum distribution.
+
+  - name: partIIIAdjustments
+    title: Part III adjustments
+    multiplicity: single
+    showIf: electsForm4972 == true
+    fields:
+      - name: deathBenefitExclusion
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Line 9 — Death benefit exclusion (if applicable)
+        help: Enter the death benefit exclusion amount, if any. This applies only if the participant died and the distribution includes an excludable death benefit.
+
+  # Backend-only computed values. NOT rendered in the UI form component.
+  - name: computedOutputs
+    title: Computed outputs (backend only)
+    multiplicity: single
+    readOnly: true
+    showIf: electsForm4972 == true
+    fields:
+      - name: eligible
+        type: boolean
+        required: false
+        readOnly: true
+        label: Part I eligibility result
+      - name: partII_line6CapitalGain
+        type: amount
+        required: false
+        readOnly: true
+        label: Part II Line 6 — Capital gain amount
+      - name: partII_line7CapitalGainTax
+        type: amount
+        required: false
+        readOnly: true
+        label: Part II Line 7 — 20% capital gain tax
+      - name: partIII_line8OrdinaryIncome
+        type: amount
+        required: false
+        readOnly: true
+        label: Part III Line 8 — Ordinary income
+      - name: partIII_line9DeathBenefit
+        type: amount
+        required: false
+        readOnly: true
+        label: Part III Line 9 — Death benefit exclusion
+      - name: partIII_line10Taxable
+        type: amount
+        required: false
+        readOnly: true
+        label: Part III Line 10 — Taxable amount after death benefit
+      - name: partIII_line11AnnuityValue
+        type: amount
+        required: false
+        readOnly: true
+        label: Part III Line 11 — Current actuarial value of annuity
+      - name: partIII_line12Net
+        type: amount
+        required: false
+        readOnly: true
+        label: Part III Line 12 — Net amount
+      - name: partIII_line13OneTenth
+        type: amount
+        required: false
+        readOnly: true
+        label: Part III Line 13 — One-tenth of line 12
+      - name: partIII_line14Mda
+        type: amount
+        required: false
+        readOnly: true
+        label: Part III Line 14 — Minimum distribution allowance
+      - name: partIII_line15Reduced
+        type: amount
+        required: false
+        readOnly: true
+        label: Part III Line 15 — Line 12 minus line 14
+      - name: partIII_line16OneTenth
+        type: amount
+        required: false
+        readOnly: true
+        label: Part III Line 16 — One-tenth of line 15
+      - name: partIII_line25TaxOnLine13
+        type: amount
+        required: false
+        readOnly: true
+        label: Part III Line 25 — Tax on line 13 (1986 rates)
+      - name: partIII_line28TaxOnLine16
+        type: amount
+        required: false
+        readOnly: true
+        label: Part III Line 28 — Tax on line 16 (1986 rates)
+      - name: partIII_line29TenYearTax
+        type: amount
+        required: false
+        readOnly: true
+        label: Part III Line 29 — 10-year tax
+      - name: line30Total
+        type: amount
+        required: false
+        readOnly: true
+        label: Line 30 — Total Form 4972 tax (line 7 + line 29) — pending Form 1040 line 16

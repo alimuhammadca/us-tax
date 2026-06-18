@@ -1,0 +1,25 @@
+<mxfile host='app.diagrams.net' modified='2026-03-11T00:00:00.0000000Z' agent='Codex' version='20.8.16' type='device'>
+  <diagram id='12d-flow' name='Line 12d - Age and blindness boxes'>
+    <mxGraphModel dx='1200' dy='800' grid='1' gridSize='10' guides='1' tooltips='1' connect='1' arrows='1' fold='1' page='1' pageScale='1' pageWidth='1100' pageHeight='850' math='0' shadow='0'>
+      <root>
+        <mxCell id='0'/>
+        <mxCell id='1' parent='0'/>
+        <mxCell id='2' value='Inputs&#xa;youBornBeforeThreshold&#xa;youAreBlind&#xa;spouseBornBeforeThreshold&#xa;spouseIsBlind' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='40' y='160' width='260' height='170' as='geometry'/>
+        </mxCell>
+        <mxCell id='3' value='Compute box count&#xa;Add 1 for each checked age/blindness box&#xa;Range: 0 to 4 depending on filing status' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='390' y='175' width='300' height='140' as='geometry'/>
+        </mxCell>
+        <mxCell id='4' value='Outputs&#xa;Form1040.deductions.line12dBoxesCheckedCount&#xa;Feeds chart / add-on standard deduction logic' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='780' y='170' width='260' height='150' as='geometry'/>
+        </mxCell>
+        <mxCell id='5' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='2' target='3'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='6' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='3' target='4'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

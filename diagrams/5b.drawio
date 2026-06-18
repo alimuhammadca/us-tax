@@ -1,0 +1,19 @@
+<mxfile host='app.diagrams.net' modified='2026-03-07T10:31:00.0000000Z' agent='Codex' version='20.8.16' type='device'>
+  <diagram id='5b-flow-pension-taxable' name='Line 5b - Pensions and annuities (taxable amount)'>
+    <mxGraphModel dx='1400' dy='900' grid='1' gridSize='10' guides='1' tooltips='1' connect='1' arrows='1' fold='1' page='1' pageScale='1' pageWidth='1200' pageHeight='900' math='0' shadow='0'>
+      <root>
+        <mxCell id='0'/>
+        <mxCell id='1' parent='0'/>
+        <mxCell id='2' value='Inputs (User)&#xa;pension-annuity-income-taxpayer / pension-annuity-income-spouse&#xa;rollover amount and box5 taxable-contribution offset&#xa;PSO eligibility/election and direct premium amount&#xa;Simplified Method / General Rule parameters when 1099-R taxable amount is not reliable' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='20' y='20' width='380' height='260' as='geometry'/></mxCell>
+        <mxCell id='3' value='Inputs (Statements/Imports)&#xa;Non-IRA 1099-R box2a taxable amounts&#xa;1099-R box2b taxable amount not determined&#xa;1099-R box5 employee contribution basis&#xa;distribution codes for early distribution signals&#xa;RRB-1099-R gross amounts when applicable' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='20' y='300' width='380' height='220' as='geometry'/></mxCell>
+        <mxCell id='4' value='Reference/Derived Inputs&#xa;5abc.md IRS rules:&#xa;rollover taxable = (gross - taxable-contribution offset - rollover amount), floor at zero&#xa;PSO exclusion = min(premiums paid directly, 3000)&#xa;if box2a is missing/not determined, use Simplified Method or General Rule&#xa;MFJ: compute per person then aggregate' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='20' y='540' width='380' height='210' as='geometry'/></mxCell>
+        <mxCell id='5' value='Computation&#xa;per-owner taxableBase = box2a-derived or method-computed amount&#xa;taxableAfterRollover = max(0, taxableBase - rollover - box5Offset) when rollover applies&#xa;taxableAfterPso = max(0, taxableAfterRollover - min(psoPremiums, 3000)) when PSO elected&#xa;line5b = roundMoney(taxableAfterPso_TP + taxableAfterPso_SP)&#xa;additional derived outputs: Form 5329 additional tax base (when selected)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='430' y='230' width='400' height='320' as='geometry'/></mxCell>
+        <mxCell id='6' value='Outputs&#xa;Form 1040 line 5b (taxable pensions and annuities)&#xa;Supports 5b-only fully-taxable path and partial-taxability path&#xa;Feeds tax-return payload and downstream return generation' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='860' y='250' width='330' height='260' as='geometry'/></mxCell>
+        <mxCell id='7' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='2' target='5'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='8' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='3' target='5'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='9' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='4' target='5'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='10' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='5' target='6'><mxGeometry relative='1' as='geometry'/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

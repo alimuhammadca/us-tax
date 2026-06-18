@@ -1,0 +1,222 @@
+# Form 1116 — Foreign Tax Credit (taxpayer / family head) intake YAML.
+# Approach: taxpayer form owns statement imports and simplified exception gate.
+# Spouse form is additive — handles supplemental spouse-specific foreign income only.
+# Section order: screening → statementUploadCheck → simplifiedExceptionGate →
+#   simplifiedExceptionEntry → foreignIncomeSources → importedStatementFields → computedOutputs
+name: foreign-tax-credit-taxpayer
+title: Form 1116 — Foreign Tax Credit (taxpayer)
+multiplicity: single
+formName: 1116
+category: deductions
+instructions:
+  - Complete this form if you paid foreign income taxes or had foreign-source income.
+  - Simplified exception applies when all foreign income is passive dividends/interest
+    from 1099-DIV/INT, total taxes ≤ $300 ($600 MFJ), and no Puerto Rico income excluded.
+  - For amounts above the threshold use the full Form 1116 section with income categories.
+  - Taxpayer form owns statement imports; spouse supplemental data lives in the spouse form.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: hasForeignTaxCredit
+        type: boolean
+        required: true
+        label: Did you pay foreign income taxes or have foreign source income?
+        help: >
+          Select Yes if any 1099-DIV (box 7) or 1099-INT (box 6) shows foreign taxes paid,
+          or if you had wages, business income, or other income from a foreign country.
+
+  - name: statementUploadCheck
+    title: Statement upload check
+    multiplicity: single
+    showIf: hasForeignTaxCredit == true
+    instructions:
+      - Confirm whether you uploaded 1099-DIV and/or 1099-INT statements that show foreign taxes.
+    fields:
+      - name: confirms1099DivUploaded
+        type: boolean
+        required: false
+        label: Did you receive a 1099-DIV with foreign tax paid (box 7)? If so, is it uploaded?
+        help: Select Yes if you have at least one 1099-DIV with a box 7 foreign tax amount uploaded.
+      - name: confirms1099IntUploaded
+        type: boolean
+        required: false
+        label: Did you receive a 1099-INT with foreign tax withheld (box 6)? If so, is it uploaded?
+        help: Select Yes if you have at least one 1099-INT with a box 6 foreign tax amount uploaded.
+
+  - name: simplifiedExceptionGate
+    title: Simplified exception
+    multiplicity: single
+    showIf: hasForeignTaxCredit == true
+    instructions:
+      - The simplified exception lets you skip Form 1116 when all three conditions are met.
+      - "(1) All foreign income is passive dividends or interest from 1099-DIV/INT only."
+      - "(2) Total foreign taxes paid or accrued ≤ $300 (single) or $600 (MFJ)."
+      - "(3) You are not excluding income from Puerto Rico."
+    fields:
+      - name: claimsSimplifiedException
+        type: boolean
+        required: false
+        label: >
+          Do all simplified exception conditions apply? (All passive 1099 income,
+          total taxes ≤ $300/$600 MFJ, no Puerto Rico exclusion)
+        help: >
+          If Yes, the backend will apply the lesser of total foreign taxes or the
+          US tax limitation automatically — no full Form 1116 needed.
+
+  - name: simplifiedExceptionEntry
+    title: Simplified exception — override entry
+    multiplicity: single
+    showIf: claimsSimplifiedException == true
+    fields:
+      - name: simplifiedForeignTaxesOverride
+        type: amount
+        required: false
+        label: Total foreign taxes paid (leave blank to use imported amount from statements)
+        placeholder: 0.00
+        help: >
+          Leave blank to let the backend sum foreign taxes from uploaded 1099-DIV (box 7)
+          and 1099-INT (box 6) statements. Enter a value here only to override that sum.
+
+  - name: foreignIncomeSources
+    title: Foreign income sources (full Form 1116)
+    multiplicity: multiple
+    showIf: claimsSimplifiedException == false AND hasForeignTaxCredit == true
+    instructions:
+      - One entry per income category (passive, general, section 951A, etc.).
+      - Each category entry may have up to three country sub-entries (IRS columns A/B/C).
+      - MFJ returns combine both spouses on the same category form; use spouse form for
+        supplemental spouse-specific income.
+    fields:
+      - name: incomeCategory
+        type: dropdown
+        required: true
+        label: Income category
+        options:
+          - passive
+          - general
+          - section951a
+          - foreignBranch
+          - treatyResourced
+          - lumpSum
+          - section901j
+        help: >
+          Select the income category as defined on Form 1116.
+          Passive = most investment income; general = wages, salaries; section951A = GILTI.
+      - name: creditBasis
+        type: dropdown
+        required: true
+        label: Credit basis
+        options:
+          - paid
+          - accrued
+        help: >
+          "Paid" means you actually paid the tax during 2025.
+          "Accrued" means the tax was owed and accrued in 2025 even if not yet remitted.
+      - name: skipPartI
+        type: boolean
+        required: false
+        label: Skip Part I (lump-sum distribution category only)
+        help: >
+          Check this only for the lump-sum distribution category where
+          Part I gross income allocation is not required.
+      - name: countryEntries
+        type: nested
+        multiplicity: multiple
+        label: Countries (up to 3 — Form 1116 columns A, B, C)
+        fields:
+          - name: countryOrTerritory
+            type: text
+            required: true
+            label: Country or U.S. possession
+            help: Enter the country name or U.S. possession (e.g., Canada, Germany, France).
+          - name: grossForeignIncome
+            type: amount
+            required: false
+            label: Gross income from this country in this category
+            placeholder: 0.00
+            help: Enter total gross income from this country in this category.
+          - name: definitivelyRelatedDeds
+            type: amount
+            required: false
+            label: Deductions directly related to this country's foreign income (optional)
+            placeholder: 0.00
+            help: Enter deductions directly related to the foreign income from this country.
+          - name: otherInterestExpense
+            type: amount
+            required: false
+            label: Deductible interest expense allocated to this country (optional)
+            placeholder: 0.00
+            help: Enter deductible interest expense allocated to this country's income.
+          - name: foreignSourceLosses
+            type: amount
+            required: false
+            label: Capital losses or other losses from foreign sources in this country (optional)
+            placeholder: 0.00
+            help: Enter any capital losses or other losses from foreign sources in this country.
+          - name: foreignTaxesPaidUsd
+            type: amount
+            required: false
+            label: Foreign taxes paid or accrued (in U.S. dollars)
+            placeholder: 0.00
+            help: Enter the US dollar equivalent of foreign taxes paid or accrued to this country.
+          - name: datePaidOrAccrued
+            type: text
+            required: false
+            label: Date the foreign taxes were paid or accrued (YYYY-MM-DD)
+            help: Enter the date the foreign taxes were paid or accrued, in YYYY-MM-DD format.
+      - name: priorYearCarryover
+        type: amount
+        required: false
+        label: Unused foreign tax credit carried forward from prior years (optional)
+        placeholder: 0.00
+        help: >
+          Enter unused foreign tax credit from prior years that is eligible to be carried
+          forward to 2025.
+
+  # Backend-only imported statement fields. Not rendered in the UI form component.
+  - name: importedStatementFields
+    title: Imported statement fields (backend only — not rendered)
+    multiplicity: single
+    showIf: hasForeignTaxCredit == true
+    fields:
+      - name: importedPassiveDividendForeignTax
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported total from 1099-DIV box 7 (foreign tax paid)
+      - name: importedPassiveInterestForeignTax
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported total from 1099-INT box 6 (foreign tax withheld)
+      - name: importedPassiveForeignDividends
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported total 1099-DIV foreign dividends received
+      - name: importedPassiveCountries
+        type: text
+        required: false
+        readOnly: true
+        label: Comma-separated list of foreign countries from 1099-DIV statements
+
+  # Backend-only computed outputs. Not rendered in the UI form component.
+  - name: computedOutputs
+    title: Computed outputs (backend only — not rendered)
+    multiplicity: single
+    showIf: hasForeignTaxCredit == true
+    fields:
+      - name: simplifiedExceptionApplies
+        type: boolean
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed — simplified exception applies flag
+      - name: totalPassiveForeignTaxesImported
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed — total passive foreign taxes imported from 1099-DIV/INT

@@ -1,0 +1,286 @@
+# Project Form Map
+
+**Frontend Form Components (Input + Statements)**
+- `C:\us-tax\us-tax-ui\src\app\forms\form-1095-a.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-1095-b.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-1095-c.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-1098-t.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-1099-a.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-1099-b.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-1099-c.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-1099-cap.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-1099-div.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-1099-e.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-1099-g.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-1099-int.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-1099-k.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-1099-ltc.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-1099-misc.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-1099-oid.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-1099-ptr.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-1099-q.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-1099-qa.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-1099-r.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-1099-s.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-1099-sa.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-3921.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-5498.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-adoption-expenses.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-age-blindness.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-childcare-expenses.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-capital-gain-loss-spouse.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-capital-gain-loss-taxpayer.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-combat-pay-spouse.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-combat-pay-taxpayer.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-dependent.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-dependents.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-digital-assets.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-employment.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-employment-spouse.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-employment-taxpayer.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-filing-status.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-investments.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-medicaid-waiver-spouse.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-medicaid-waiver-taxpayer.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-other-earned-income.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-presidential-election-campaign.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-rrb-1099.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-rrb-1099-r.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-spouse.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-ssa-1099.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-standard-deduction.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-statements-select.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-tip-income-spouse.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-tip-income-taxpayer.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-uncollected-ss-medicare-spouse.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-uncollected-ss-medicare-taxpayer.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-w2.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-w-2.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-w-2g.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-you.component.ts`
+
+**Frontend Form Components (Tax Return Output)**
+- `C:\us-tax\us-tax-ui\src\app\forms\form-tax-return-1040.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-tax-return-2441.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-tax-return-4137-spouse.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-tax-return-4137-taxpayer.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-tax-return-8839.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-tax-return-8949.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-tax-return-8919-spouse.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-tax-return-8919-taxpayer.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-tax-return-scheduled.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-tax-return-schedule1.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-tax-return-schedule2.component.ts`
+- `C:\us-tax\us-tax-ui\src\app\forms\form-tax-return-schedule3.component.ts`
+
+**Backend YAML Form Definitions**
+- `C:\us-tax\us-tax-be\yaml\1040.yaml`
+- `C:\us-tax\us-tax-be\yaml\age_blindness.yaml`
+- `C:\us-tax\us-tax-be\yaml\dependents.yaml`
+- `C:\us-tax\us-tax-be\yaml\digital_assets.yaml`
+- `C:\us-tax\us-tax-be\yaml\election.yaml`
+- `C:\us-tax\us-tax-be\yaml\employment_income.yaml`
+- `C:\us-tax\us-tax-be\yaml\employment_income_spouse.yaml`
+- `C:\us-tax\us-tax-be\yaml\employment_income_taxpayer.yaml`
+- `C:\us-tax\us-tax-be\yaml\filing_status.yaml`
+- `C:\us-tax\us-tax-be\yaml\schedule-1.yaml`
+- `C:\us-tax\us-tax-be\yaml\schedule-2.yaml`
+- `C:\us-tax\us-tax-be\yaml\schedule-3.yaml`
+- `C:\us-tax\us-tax-be\yaml\spouse.yaml`
+- `C:\us-tax\us-tax-be\yaml\standard_deduction.yaml`
+- `C:\us-tax\us-tax-be\yaml\tip_income_spouse.yaml`
+- `C:\us-tax\us-tax-be\yaml\tip_income_taxpayer.yaml`
+- `C:\us-tax\us-tax-be\yaml\you.yaml`
+
+**UI Statement YAML Definitions**
+- `C:\us-tax\us-tax-ui\YAML\1095-A.yaml`
+- `C:\us-tax\us-tax-ui\YAML\1095-B.yaml`
+- `C:\us-tax\us-tax-ui\YAML\1095-C.yaml`
+- `C:\us-tax\us-tax-ui\YAML\1098-E.yaml`
+- `C:\us-tax\us-tax-ui\YAML\1098-T.yaml`
+- `C:\us-tax\us-tax-ui\YAML\1099-A.yaml`
+- `C:\us-tax\us-tax-ui\YAML\1099-B.yaml`
+- `C:\us-tax\us-tax-ui\YAML\1099-C.yaml`
+- `C:\us-tax\us-tax-ui\YAML\1099-CAP.yaml`
+- `C:\us-tax\us-tax-ui\YAML\1099-DIV.yaml`
+- `C:\us-tax\us-tax-ui\YAML\1099-G.yaml`
+- `C:\us-tax\us-tax-ui\YAML\1099-INT.yaml`
+- `C:\us-tax\us-tax-ui\YAML\1099-K.yaml`
+- `C:\us-tax\us-tax-ui\YAML\1099-LTC.yaml`
+- `C:\us-tax\us-tax-ui\YAML\1099-MISC.yaml`
+- `C:\us-tax\us-tax-ui\YAML\1099-OID.yaml`
+- `C:\us-tax\us-tax-ui\YAML\1099-PTR.yaml`
+- `C:\us-tax\us-tax-ui\YAML\1099-Q.yaml`
+- `C:\us-tax\us-tax-ui\YAML\1099-QA.yaml`
+- `C:\us-tax\us-tax-ui\YAML\1099-R.yaml`
+- `C:\us-tax\us-tax-ui\YAML\1099-S.yaml`
+- `C:\us-tax\us-tax-ui\YAML\1099-SA.yaml`
+- `C:\us-tax\us-tax-ui\YAML\3921.yaml`
+- `C:\us-tax\us-tax-ui\YAML\5498.yaml`
+- `C:\us-tax\us-tax-ui\YAML\RRB-1099.yaml`
+- `C:\us-tax\us-tax-ui\YAML\RRB-1099-R.yaml`
+- `C:\us-tax\us-tax-ui\YAML\SSA-1099.yaml`
+- `C:\us-tax\us-tax-ui\YAML\w-2.yaml`
+- `C:\us-tax\us-tax-ui\YAML\w-2g.yaml`
+
+**Semantic PDF Assets (UI Public)**
+- `C:\us-tax\us-tax-ui\public\irs\context.md`
+- `C:\us-tax\us-tax-ui\public\irs\f1040.pdf`
+- `C:\us-tax\us-tax-ui\public\irs\f1040_field_mapping_semantic.csv`
+- `C:\us-tax\us-tax-ui\public\irs\f1040_semantic_labels.pdf`
+- `C:\us-tax\us-tax-ui\public\irs\f2441_field_map_semantic.csv`
+- `C:\us-tax\us-tax-ui\public\irs\f2441_semantic_labels.pdf`
+- `C:\us-tax\us-tax-ui\public\irs\f4137_field_map_semantic.csv`
+- `C:\us-tax\us-tax-ui\public\irs\f4137_semantic_labels.pdf`
+- `C:\us-tax\us-tax-ui\public\irs\f8839_field_map_semantic.csv`
+- `C:\us-tax\us-tax-ui\public\irs\f8839_semantic_labels.pdf`
+- `C:\us-tax\us-tax-ui\public\irs\f8919_field_map_semantic.csv`
+- `C:\us-tax\us-tax-ui\public\irs\f8919_semantic_labels.pdf`
+- `C:\us-tax\us-tax-ui\public\irs\f8949_field_map_semantic.csv`
+- `C:\us-tax\us-tax-ui\public\irs\f8949_semantic_labels.pdf`
+- `C:\us-tax\us-tax-ui\public\irs\f1040s1_field_map_semantic.csv`
+- `C:\us-tax\us-tax-ui\public\irs\f1040s1_semantic_labels.pdf`
+- `C:\us-tax\us-tax-ui\public\irs\f1040s2_field_map_semantic.csv`
+- `C:\us-tax\us-tax-ui\public\irs\f1040s2_semantic_labels.pdf`
+- `C:\us-tax\us-tax-ui\public\irs\f1040s3_field_map_semantic.csv`
+- `C:\us-tax\us-tax-ui\public\irs\f1040s3_semantic_labels.pdf`
+- `C:\us-tax\us-tax-ui\public\irs\f1040sd_field_map_semantic.csv`
+- `C:\us-tax\us-tax-ui\public\irs\f1040sd_semantic_labels.pdf`
+
+**IRS Forms Assets (Source Docs)**
+- `C:\us-tax\docs\IRS-Forms\1099ssa.pdf`
+- `C:\us-tax\docs\IRS-Forms\f1040.pdf`
+- `C:\us-tax\docs\IRS-Forms\f1040_field_mapping_semantic.csv`
+- `C:\us-tax\docs\IRS-Forms\f1040_semantic_labels.pdf`
+- `C:\us-tax\docs\IRS-Forms\f1040-1.jpg`
+- `C:\us-tax\docs\IRS-Forms\f1040-2.jpg`
+- `C:\us-tax\docs\IRS-Forms\f1040sr.pdf`
+- `C:\us-tax\docs\IRS-Forms\f1040sd.pdf`
+- `C:\us-tax\docs\IRS-Forms\f1042s.pdf`
+- `C:\us-tax\docs\IRS-Forms\f1095a.pdf`
+- `C:\us-tax\docs\IRS-Forms\f1095b.pdf`
+- `C:\us-tax\docs\IRS-Forms\f1095c.pdf`
+- `C:\us-tax\docs\IRS-Forms\f1098e.pdf`
+- `C:\us-tax\docs\IRS-Forms\f1098t.pdf`
+- `C:\us-tax\docs\IRS-Forms\f1099a.pdf`
+- `C:\us-tax\docs\IRS-Forms\f1099b.pdf`
+- `C:\us-tax\docs\IRS-Forms\f1099c.pdf`
+- `C:\us-tax\docs\IRS-Forms\f1099cap.pdf`
+- `C:\us-tax\docs\IRS-Forms\f1099div.pdf`
+- `C:\us-tax\docs\IRS-Forms\f1099g.pdf`
+- `C:\us-tax\docs\IRS-Forms\f1099int.pdf`
+- `C:\us-tax\docs\IRS-Forms\f1099k.pdf`
+- `C:\us-tax\docs\IRS-Forms\f1099ltc.pdf`
+- `C:\us-tax\docs\IRS-Forms\f1099msc.pdf`
+- `C:\us-tax\docs\IRS-Forms\f1099nec.pdf`
+- `C:\us-tax\docs\IRS-Forms\f1099oid.pdf`
+- `C:\us-tax\docs\IRS-Forms\f1099ptr.pdf`
+- `C:\us-tax\docs\IRS-Forms\f1099q.pdf`
+- `C:\us-tax\docs\IRS-Forms\f1099qa.pdf`
+- `C:\us-tax\docs\IRS-Forms\f1099r.pdf`
+- `C:\us-tax\docs\IRS-Forms\f1099r_field_map_semantic.csv`
+- `C:\us-tax\docs\IRS-Forms\f1099r_semantic_labels.pdf`
+- `C:\us-tax\docs\IRS-Forms\f1099sa.pdf`
+- `C:\us-tax\docs\IRS-Forms\f1116.pdf`
+- `C:\us-tax\docs\IRS-Forms\f172.pdf`
+- `C:\us-tax\docs\IRS-Forms\f2106.pdf`
+- `C:\us-tax\docs\IRS-Forms\f2210.pdf`
+- `C:\us-tax\docs\IRS-Forms\f2350.pdf`
+- `C:\us-tax\docs\IRS-Forms\f2439.pdf`
+- `C:\us-tax\docs\IRS-Forms\f2441.pdf`
+- `C:\us-tax\docs\IRS-Forms\f2441_field_map_semantic.csv`
+- `C:\us-tax\docs\IRS-Forms\f2441_semantic_labels.pdf`
+- `C:\us-tax\docs\IRS-Forms\f2555.pdf`
+- `C:\us-tax\docs\IRS-Forms\f3800.pdf`
+- `C:\us-tax\docs\IRS-Forms\f3903.pdf`
+- `C:\us-tax\docs\IRS-Forms\f3921.pdf`
+- `C:\us-tax\docs\IRS-Forms\f4136.pdf`
+- `C:\us-tax\docs\IRS-Forms\f4137.pdf`
+- `C:\us-tax\docs\IRS-Forms\f4137_field_map_semantic.csv`
+- `C:\us-tax\docs\IRS-Forms\f4137_semantic_labels.pdf`
+- `C:\us-tax\docs\IRS-Forms\f4684.pdf`
+- `C:\us-tax\docs\IRS-Forms\f4797.pdf`
+- `C:\us-tax\docs\IRS-Forms\f4852.pdf`
+- `C:\us-tax\docs\IRS-Forms\f4868.pdf`
+- `C:\us-tax\docs\IRS-Forms\f5329.pdf`
+- `C:\us-tax\docs\IRS-Forms\f5405.pdf`
+- `C:\us-tax\docs\IRS-Forms\f5471.pdf`
+- `C:\us-tax\docs\IRS-Forms\f5498.pdf`
+- `C:\us-tax\docs\IRS-Forms\f5695.pdf`
+- `C:\us-tax\docs\IRS-Forms\f6251.pdf`
+- `C:\us-tax\docs\IRS-Forms\f6478.pdf`
+- `C:\us-tax\docs\IRS-Forms\f7206.pdf`
+- `C:\us-tax\docs\IRS-Forms\f8288a.pdf`
+- `C:\us-tax\docs\IRS-Forms\f8396.pdf`
+- `C:\us-tax\docs\IRS-Forms\f8606.pdf`
+- `C:\us-tax\docs\IRS-Forms\f8615.pdf`
+- `C:\us-tax\docs\IRS-Forms\f8801.pdf`
+- `C:\us-tax\docs\IRS-Forms\f8805.pdf`
+- `C:\us-tax\docs\IRS-Forms\f8834.pdf`
+- `C:\us-tax\docs\IRS-Forms\f8839.pdf`
+- `C:\us-tax\docs\IRS-Forms\f8839_field_map_semantic.csv`
+- `C:\us-tax\docs\IRS-Forms\f8839_semantic_labels.pdf`
+- `C:\us-tax\docs\IRS-Forms\f8853.pdf`
+- `C:\us-tax\docs\IRS-Forms\f8859.pdf`
+- `C:\us-tax\docs\IRS-Forms\f8863.pdf`
+- `C:\us-tax\docs\IRS-Forms\f8867.pdf`
+- `C:\us-tax\docs\IRS-Forms\f8880.pdf`
+- `C:\us-tax\docs\IRS-Forms\f8881.pdf`
+- `C:\us-tax\docs\IRS-Forms\f8882.pdf`
+- `C:\us-tax\docs\IRS-Forms\f8885.pdf`
+- `C:\us-tax\docs\IRS-Forms\f8888.pdf`
+- `C:\us-tax\docs\IRS-Forms\f8889.pdf`
+- `C:\us-tax\docs\IRS-Forms\f8910.pdf`
+- `C:\us-tax\docs\IRS-Forms\f8911.pdf`
+- `C:\us-tax\docs\IRS-Forms\f8912.pdf`
+- `C:\us-tax\docs\IRS-Forms\f8919.pdf`
+- `C:\us-tax\docs\IRS-Forms\f8919_field_map_semantic.csv`
+- `C:\us-tax\docs\IRS-Forms\f8919_semantic_labels.pdf`
+- `C:\us-tax\docs\IRS-Forms\f8919--dft.pdf`
+- `C:\us-tax\docs\IRS-Forms\f8932.pdf`
+- `C:\us-tax\docs\IRS-Forms\f8936.pdf`
+- `C:\us-tax\docs\IRS-Forms\f8941.pdf`
+- `C:\us-tax\docs\IRS-Forms\f8949.pdf`
+- `C:\us-tax\docs\IRS-Forms\f8959.pdf`
+- `C:\us-tax\docs\IRS-Forms\f8960.pdf`
+- `C:\us-tax\docs\IRS-Forms\f8962.pdf`
+- `C:\us-tax\docs\IRS-Forms\f8978.pdf`
+- `C:\us-tax\docs\IRS-Forms\f8994.pdf`
+- `C:\us-tax\docs\IRS-Forms\f8995.pdf`
+- `C:\us-tax\docs\IRS-Forms\f8995-A.pdf`
+- `C:\us-tax\docs\IRS-Forms\f965a.pdf`
+- `C:\us-tax\docs\IRS-Forms\fss8.pdf`
+- `C:\us-tax\docs\IRS-Forms\fw2.pdf`
+- `C:\us-tax\docs\IRS-Forms\fw2_field_map_semantic.csv`
+- `C:\us-tax\docs\IRS-Forms\fw2_semantic_labels.pdf`
+- `C:\us-tax\docs\IRS-Forms\fw2g.pdf`
+- `C:\us-tax\docs\IRS-Forms\i2441.pdf`
+- `C:\us-tax\docs\IRS-Forms\i8839.pdf`
+- `C:\us-tax\docs\IRS-Forms\iw2g.pdf`
+- `C:\us-tax\docs\IRS-Forms\p560.pdf`
+- `C:\us-tax\docs\IRS-Forms\Schedule 1.pdf`
+- `C:\us-tax\docs\IRS-Forms\Schedule 2.pdf`
+- `C:\us-tax\docs\IRS-Forms\Schedule 3.pdf`
+- `C:\us-tax\docs\IRS-Forms\Schedule 8812.pdf`
+- `C:\us-tax\docs\IRS-Forms\Schedule A.pdf`
+- `C:\us-tax\docs\IRS-Forms\Schedule B.pdf`
+- `C:\us-tax\docs\IRS-Forms\Schedule C.pdf`
+- `C:\us-tax\docs\IRS-Forms\Schedule D.pdf`
+- `C:\us-tax\docs\IRS-Forms\Schedule E.pdf`
+- `C:\us-tax\docs\IRS-Forms\Schedule EIC.pdf`
+- `C:\us-tax\docs\IRS-Forms\Schedule F.pdf`
+- `C:\us-tax\docs\IRS-Forms\Schedule H.pdf`
+- `C:\us-tax\docs\IRS-Forms\Schedule J.pdf`
+- `C:\us-tax\docs\IRS-Forms\Schedule k-1 Form 1041.pdf`
+- `C:\us-tax\docs\IRS-Forms\Schedule k-1 Form 1065.pdf`
+- `C:\us-tax\docs\IRS-Forms\Schedule k-1 Form 1120-S.pdf`
+- `C:\us-tax\docs\IRS-Forms\Schedule R.pdf`
+- `C:\us-tax\docs\IRS-Forms\Schedule SE.pdf`
+- `C:\us-tax\docs\IRS-Forms\f1040s1.pdf`
+- `C:\us-tax\docs\IRS-Forms\f1040s2.pdf`
+- `C:\us-tax\docs\IRS-Forms\f1040s3.pdf`
+- `C:\us-tax\docs\IRS-Forms\W2_Ali_Muhammad_realistic.pdf`
+- `C:\us-tax\docs\IRS-Forms\W2_Samira_Muhammad_realistic.pdf`
+
+**Reviewed Spec (Line 1c Tip Income)**
+- `C:\us-tax\yaml\reviewed\Personal\incomes\1c-tip-income-taxpayer.yaml`

@@ -1,0 +1,19 @@
+<mxfile host='app.diagrams.net' modified='2026-03-03T03:06:00.0000000Z' agent='Codex' version='20.8.16' type='device'>
+  <diagram id='3a9e5g8c3e1a4d33' name='Line 3a - Qualified dividends'>
+    <mxGraphModel dx='1400' dy='900' grid='1' gridSize='10' guides='1' tooltips='1' connect='1' arrows='1' fold='1' page='1' pageScale='1' pageWidth='1200' pageHeight='900' math='0' shadow='0'>
+      <root>
+        <mxCell id='0'/>
+        <mxCell id='1' parent='0'/>
+        <mxCell id='2' value='Inputs (User)&#xa;dividend-income-taxpayer / dividend-income-spouse:&#xa;hadDividendIncome&#xa;manualQualifiedDividendsNotOnStatements&#xa;hasNomineeDividends&#xa;nomineeQualifiedDividends&#xa;nonQualifiedFromHoldingPeriodCommon61of121&#xa;nonQualifiedFromHoldingPeriodPreferred91of181&#xa;nonQualifiedFromRelatedPaymentObligationShortSale&#xa;nonQualifiedPaymentsInLieu&#xa;nonQualifiedSurrogateForeignCorporationDividends' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='20' y='20' width='370' height='280' as='geometry'/></mxCell>
+        <mxCell id='3' value='Inputs (Statements/Imports)&#xa;1099-DIV box1b qualified dividends&#xa;Statement ownership matched by recipientTIN/SSN&#xa;Legacy fallback mode: if dividend forms absent, use statement-only 3a totals' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='20' y='320' width='370' height='200' as='geometry'/></mxCell>
+        <mxCell id='4' value='Reference/Derived Inputs&#xa;IRS rule from 3ab.md: 3a is subset of 3b&#xa;Invariant: 0 &lt;= line3a &lt;= line3b&#xa;Rounding: roundMoney()&#xa;Non-negative guards: subtractNonNegative()&#xa;Emit non-blocking flag when 3a is capped to 3b' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='20' y='540' width='370' height='200' as='geometry'/></mxCell>
+        <mxCell id='5' value='Computation&#xa;Per person candidateQualified = sum(1099-DIV box1b) + manualQualifiedDividendsNotOnStatements&#xa;Per person disallowed = nomineeQualified + all disallowed categories&#xa;Per person line3aContribution = candidateQualified - disallowed (floor 0)&#xa;Aggregate taxpayer + spouse&#xa;Final guardrail: if line3a &gt; line3b then set line3a = line3b and add QUALIFIED_DIVIDENDS_LIMITED_TO_ORDINARY_DIVIDENDS flag' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='430' y='220' width='390' height='320' as='geometry'/></mxCell>
+        <mxCell id='6' value='Outputs&#xa;Form 1040 line 3a (qualified dividends)&#xa;Used by tax-rate worksheet downstream&#xa;Contributes to debug logs for derived interest/dividend lines&#xa;May emit non-blocking cap flag if 3a exceeded 3b before guardrail' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='850' y='240' width='350' height='260' as='geometry'/></mxCell>
+        <mxCell id='7' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='2' target='5'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='8' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='3' target='5'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='9' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='4' target='5'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='10' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='5' target='6'><mxGeometry relative='1' as='geometry'/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

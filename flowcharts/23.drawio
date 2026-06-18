@@ -1,0 +1,111 @@
+<mxGraphModel><root><mxCell id="0"/><mxCell id="1" parent="0"/>
+
+<!-- Title -->
+<mxCell id="2" value="Form 1040 Line 23 — Other Taxes / Schedule 2 Part II (2025)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="50" y="10" width="820" height="40" as="geometry"/></mxCell>
+
+<!-- LEGEND -->
+<mxCell id="leg1" value="LEGEND" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="50" y="58" width="80" height="20" as="geometry"/></mxCell>
+<mxCell id="leg2" value="Implemented" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="78" width="100" height="22" as="geometry"/></mxCell>
+<mxCell id="leg3" value="Deferred / Stub null" style="rounded=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=9;" vertex="1" parent="1"><mxGeometry x="160" y="78" width="120" height="22" as="geometry"/></mxCell>
+<mxCell id="leg4" value="Out of scope" style="rounded=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=9;" vertex="1" parent="1"><mxGeometry x="290" y="78" width="100" height="22" as="geometry"/></mxCell>
+
+<!-- ===== SCHEDULE 2 PART II INPUT COLUMN ===== -->
+
+<!-- Line 4: SE tax — OUT OF SCOPE -->
+<mxCell id="s4" value="Schedule 2 line 4&#xa;Self-employment tax&#xa;(Schedule SE)&#xa;Java: selfEmploymentTax&#xa;OUT OF SCOPE — always null" style="rounded=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="120" width="180" height="70" as="geometry"/></mxCell>
+
+<!-- Line 5: Unreported tip income tax — IMPLEMENTED -->
+<mxCell id="s5" value="Schedule 2 line 5&#xa;Unreported tip income tax&#xa;(Form 4137 line 13)&#xa;Java: unreportedTipIncomeTax&#xa;IMPLEMENTED" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="200" width="180" height="70" as="geometry"/></mxCell>
+
+<!-- Line 6: Uncollected SS/Medicare on wages — IMPLEMENTED -->
+<mxCell id="s6" value="Schedule 2 line 6&#xa;Uncollected SS/Medicare on wages&#xa;(Form 8919 line 13)&#xa;Java: uncollectedSocialSecurityMedicareTaxOnWages&#xa;IMPLEMENTED" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="280" width="180" height="70" as="geometry"/></mxCell>
+
+<!-- Line 7 subtotal -->
+<mxCell id="s7" value="Schedule 2 line 7&#xa;= line5 + line6&#xa;Java: totalAdditionalSocialSecurityMedicareTax&#xa;IMPLEMENTED" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;" vertex="1" parent="1"><mxGeometry x="260" y="240" width="180" height="60" as="geometry"/></mxCell>
+
+<!-- Line 8: Form 5329 IRA tax — IMPLEMENTED -->
+<mxCell id="s8" value="Schedule 2 line 8&#xa;Additional tax on IRAs&#xa;(Form 5329)&#xa;Java: additionalTaxOnIras&#xa;IMPLEMENTED" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="370" width="180" height="70" as="geometry"/></mxCell>
+
+<!-- Line 9: Household employment — DEFERRED -->
+<mxCell id="s9" value="Schedule 2 line 9&#xa;Household employment taxes&#xa;(Schedule H)&#xa;Java: householdEmploymentTaxes&#xa;DEFERRED — stub null" style="rounded=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="450" width="180" height="70" as="geometry"/></mxCell>
+
+<!-- Line 11: Additional Medicare Tax — IMPLEMENTED (FULL, Fixed G3 2026-04-19) -->
+<mxCell id="s11" value="Schedule 2 line 11&#xa;Additional Medicare Tax&#xa;(Form 8959 line 18: Part I + Part III RRTA)&#xa;Java: additionalMedicareTax&#xa;IMPLEMENTED (G3 Fixed 2026-04-19)" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="530" width="180" height="80" as="geometry"/></mxCell>
+
+<!-- Line 12: Net investment income — DEFERRED -->
+<mxCell id="s12" value="Schedule 2 line 12&#xa;Net investment income tax&#xa;(Form 8960)&#xa;Java: netInvestmentIncomeTax&#xa;DEFERRED — stub null" style="rounded=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="620" width="180" height="70" as="geometry"/></mxCell>
+
+<!-- Lines 13-16: Various — DEFERRED -->
+<mxCell id="s13" value="Schedule 2 lines 13–16&#xa;Uncollected SS/RRTA tips/GTL;&#xa;Installment interest (14,15);&#xa;Low-income housing recapture (16)&#xa;DEFERRED — stub null" style="rounded=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="700" width="180" height="80" as="geometry"/></mxCell>
+
+<!-- Lines 17a-z / 18: Other — DEFERRED -->
+<mxCell id="s18" value="Schedule 2 lines 17a–17z / 18&#xa;Other additional taxes detail lines&#xa;Java: recaptureOtherCredits, additionalTaxOnHsa*, etc.&#xa;totalAdditionalTaxes&#xa;DEFERRED — stub null" style="rounded=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="790" width="180" height="80" as="geometry"/></mxCell>
+
+<!-- Line 19: Form 4255 recapture — DEFERRED -->
+<mxCell id="s19" value="Schedule 2 line 19&#xa;Recapture EPE (Form 4255 line 1d col l)&#xa;Java: recaptureNetEpeForm4255Line1dColL&#xa;DEFERRED — stub null" style="rounded=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="880" width="180" height="70" as="geometry"/></mxCell>
+
+<!-- Line 20: Section 965 — OUT OF SCOPE (excluded from line 21) -->
+<mxCell id="s20" value="Schedule 2 line 20&#xa;Section 965 installment (Form 965-A)&#xa;Java: section965NetTaxLiabilityInstallment&#xa;EXCLUDED from line 21 (2025 IRS form)&#xa;OUT OF SCOPE" style="rounded=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="960" width="180" height="80" as="geometry"/></mxCell>
+
+<!-- ===== ACCUMULATION METHODS ===== -->
+
+<!-- Method: applyAdditionalSocialSecurityMedicareTaxes -->
+<mxCell id="m1" value="applyAdditionalSocialSecurityMedicareTaxes()&#xa;TaxReturnComputeService.java:11099&#xa;Called at main flow line 589&#xa;Sets sub-item fields only: lines 5, 6, 7&#xa;(does NOT set totalOtherTaxes or otherTaxes)" style="rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;" vertex="1" parent="1"><mxGeometry x="260" y="370" width="220" height="90" as="geometry"/></mxCell>
+
+<!-- Method: applyForm5329TaxToSchedule2 -->
+<mxCell id="m2" value="applyForm5329TaxToSchedule2()&#xa;TaxReturnComputeService.java:11154&#xa;Called at main flow line 623&#xa;Sets sub-item field only: line 8&#xa;(does NOT set totalOtherTaxes or otherTaxes)" style="rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;" vertex="1" parent="1"><mxGeometry x="260" y="480" width="220" height="80" as="geometry"/></mxCell>
+
+<!-- Method: finalizeSchedule2OtherTaxes (NEW — Fixed G5 2026-04-19) -->
+<mxCell id="m3" value="finalizeSchedule2OtherTaxes()&#xa;TaxReturnComputeService.java:11197&#xa;Called at main flow line 1065&#xa;Sums all sub-items: lines 5+6+8+11&#xa;Sets totalOtherTaxes = finalized sum&#xa;Sets TaxAndCredits.otherTaxes = finalized sum&#xa;(G5 Fixed 2026-04-19)" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;" vertex="1" parent="1"><mxGeometry x="260" y="580" width="220" height="100" as="geometry"/></mxCell>
+
+<!-- ===== SCHEDULE 2 LINE 21 TOTAL ===== -->
+<mxCell id="total" value="Schedule 2 line 21 — Total Other Taxes&#xa;Java: Schedule2OtherTaxes.totalOtherTaxes&#xa;= finalizeSchedule2OtherTaxes() sum&#xa;(G5 Fixed 2026-04-19)" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="520" y="400" width="240" height="80" as="geometry"/></mxCell>
+
+<!-- Line 23 OUTPUT -->
+<mxCell id="line23" value="Form 1040 Line 23 — Other Taxes&#xa;= Schedule2.line21 = TaxAndCredits.otherTaxes&#xa;Java field: TaxAndCredits.otherTaxes&#xa;Getter: getOtherTaxes()&#xa;PDF key: line23_other_taxes_schedule2_line21&#xa;AcroForm: f2_15[0]&#xa;Page 2, rect (504, 540, 576, 551.999)&#xa;Read in: computeLine20ThroughLine24() line 15050" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="520" y="540" width="250" height="130" as="geometry"/></mxCell>
+
+<!-- Line 22 INPUT -->
+<mxCell id="line22" value="Form 1040 Line 22&#xa;= max(0, line18 − line21)&#xa;Java: TaxAndCredits.taxAfterCredits&#xa;Set by: computeLine20ThroughLine24()" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1"><mxGeometry x="520" y="700" width="220" height="80" as="geometry"/></mxCell>
+
+<!-- ADD node -->
+<mxCell id="add" value="line22 + nz(line23)" style="rhombus;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="555" y="820" width="160" height="60" as="geometry"/></mxCell>
+
+<!-- Line 24 OUTPUT -->
+<mxCell id="line24" value="Form 1040 Line 24 — Total Tax&#xa;= line22 + nz(line23)&#xa;Java: TaxAndCredits.totalTax&#xa;Stored as 0 (not null) when zero" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="520" y="920" width="250" height="80" as="geometry"/></mxCell>
+
+<!-- GAPS BOX -->
+<mxCell id="gaps" value="Open Gaps:&#xa;G1 (HIGH) — SE tax (line 4) out of scope; line 23 = 0 for SE filers.&#xa;G2 (HIGH) — Schedule H household employment (line 9) not implemented.&#xa;G4 (MED) — Form 8960 Net Investment Income (line 12) not implemented.&#xa;G8 (LOW) — W-2 box 12 codes A/B → Schedule 2 line 13 not implemented.&#xa;&#xa;Fixed 2026-04-19:&#xa;G3 — Form 8959 Part III RRTA now included in Schedule2OtherTaxes.additionalMedicareTax (Form 8959 line 18 full total).&#xa;G5 — finalizeSchedule2OtherTaxes() added; totalOtherTaxes and TaxAndCredits.otherTaxes are finalized in one pass.&#xa;G6 — Dedicated E2E spec line23-other-taxes.spec.ts created (3 scenarios).&#xa;G7 — computeForm2210() now reads safeAmount(tac.getOtherTaxes()) for Form 2210 Part I line 2." style="rounded=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="1100" width="720" height="120" as="geometry"/></mxCell>
+
+<!-- ===== EDGES ===== -->
+<!-- lines 5,6 → line 7 -->
+<mxCell id="e1" value="line5" style="edgeStyle=orthogonalEdgeStyle;fontSize=9;" edge="1" source="s5" target="s7" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e2" value="line6" style="edgeStyle=orthogonalEdgeStyle;fontSize=9;" edge="1" source="s6" target="s7" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- lines 5,6,7,11 → applyAdditional method -->
+<mxCell id="e3" value="" style="edgeStyle=orthogonalEdgeStyle;fontSize=9;" edge="1" source="s7" target="m1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e3b" value="line11" style="edgeStyle=orthogonalEdgeStyle;fontSize=9;" edge="1" source="s11" target="m1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- line 8 → applyForm5329 method -->
+<mxCell id="e4" value="line8" style="edgeStyle=orthogonalEdgeStyle;fontSize=9;" edge="1" source="s8" target="m2" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- methods → finalize method (sub-item fields feed finalization) -->
+<mxCell id="e5" value="sub-item fields" style="edgeStyle=orthogonalEdgeStyle;fontSize=9;" edge="1" source="m1" target="m3" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e6" value="sub-item field" style="edgeStyle=orthogonalEdgeStyle;fontSize=9;" edge="1" source="m2" target="m3" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<!-- finalize → Schedule 2 line 21 total -->
+<mxCell id="e6b" value="totalOtherTaxes=" style="edgeStyle=orthogonalEdgeStyle;fontSize=9;" edge="1" source="m3" target="total" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- Schedule 2 line 21 → line 23 -->
+<mxCell id="e7" value="TaxAndCredits.otherTaxes" style="edgeStyle=orthogonalEdgeStyle;fontSize=9;" edge="1" source="total" target="line23" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- line 22 + line 23 → add node -->
+<mxCell id="e8" value="line22" style="edgeStyle=orthogonalEdgeStyle;fontSize=9;" edge="1" source="line22" target="add" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e9" value="line23" style="edgeStyle=orthogonalEdgeStyle;fontSize=9;" edge="1" source="line23" target="add" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- add → line 24 -->
+<mxCell id="e10" value="line24" style="edgeStyle=orthogonalEdgeStyle;fontSize=9;" edge="1" source="add" target="line24" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- METHOD box -->
+<mxCell id="mbox" value="computeLine20ThroughLine24()&#xa;TaxReturnComputeService.java:15023&#xa;Called at line 1052&#xa;Reads tac.getOtherTaxes() as line23&#xa;Computes line24 = line22 + line23" style="rounded=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=9;" vertex="1" parent="1"><mxGeometry x="780" y="650" width="200" height="90" as="geometry"/></mxCell>
+<mxCell id="e11" value="" style="edgeStyle=orthogonalEdgeStyle;fontSize=9;dashed=1;" edge="1" source="mbox" target="line23" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+</root></mxGraphModel>

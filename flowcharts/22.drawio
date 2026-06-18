@@ -1,0 +1,47 @@
+<mxGraphModel><root><mxCell id="0"/><mxCell id="1" parent="0"/>
+
+<!-- Title -->
+<mxCell id="2" value="Form 1040 Line 22 — Tax After Credits (2025)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="50" y="10" width="720" height="40" as="geometry"/></mxCell>
+
+<!-- LINE 18 INPUT BOX -->
+<mxCell id="3" value="Form 1040 Line 18&#xa;= line16 + line17&#xa;= tax + AMT&#xa;Java field: TaxAndCredits.totalTaxBeforeCredits&#xa;Set by: computeLine16() + computeLine17()" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1"><mxGeometry x="50" y="80" width="290" height="90" as="geometry"/></mxCell>
+
+<!-- LINE 21 INPUT BOX -->
+<mxCell id="4" value="Form 1040 Line 21&#xa;= line19 + line20&#xa;= CTC/ODC + Schedule 3 line 8&#xa;Java field: TaxAndCredits.totalCredits&#xa;Set by: computeLine20ThroughLine24() (lines 20–21 segment)&#xa;Stored as null when zero" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1"><mxGeometry x="420" y="80" width="300" height="110" as="geometry"/></mxCell>
+
+<!-- SUBTRACTION NODE -->
+<mxCell id="5" value="line18 − line21&#xa;= safeAmount(line18).subtract(safeAmount(line21))" style="rhombus;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="200" y="240" width="220" height="80" as="geometry"/></mxCell>
+
+<!-- FLOOR NODE -->
+<mxCell id="6" value="max(0, result)&#xa;.max(BigDecimal.ZERO)&#xa;IRS: 'If zero or less, enter -0-'" style="rhombus;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="200" y="380" width="220" height="80" as="geometry"/></mxCell>
+
+<!-- LINE 22 OUTPUT BOX -->
+<mxCell id="7" value="Form 1040 Line 22 — Tax After Credits&#xa;= max(0, nz(line18) − nz(line21))&#xa;Java field: TaxAndCredits.taxAfterCredits&#xa;Getter: getTaxAfterCredits()&#xa;PDF key: line22_tax_less_credits&#xa;AcroForm: f2_14[0]&#xa;Page 2, rect (504, 552.002, 576, 564.001)&#xa;Always stored (never null, even when 0)" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="160" y="520" width="310" height="130" as="geometry"/></mxCell>
+
+<!-- LINE 23 DOWNSTREAM -->
+<mxCell id="8" value="Form 1040 Line 23&#xa;= Schedule 2 line 21 (other taxes)&#xa;Java field: TaxAndCredits.otherTaxes&#xa;Added AFTER line 22" style="rounded=1;fillColor=#f0f0f0;strokeColor=#999999;fontSize=10;" vertex="1" parent="1"><mxGeometry x="530" y="580" width="210" height="80" as="geometry"/></mxCell>
+
+<!-- LINE 24 DOWNSTREAM -->
+<mxCell id="9" value="Form 1040 Line 24 — Total Tax&#xa;= line22 + line23&#xa;Java field: TaxAndCredits.totalTax&#xa;Stored as 0 (not null) when zero&#xa;Feeds lines 25–38 (payments, refund, owed)" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1"><mxGeometry x="160" y="720" width="310" height="90" as="geometry"/></mxCell>
+
+<!-- METHOD BOX -->
+<mxCell id="10" value="METHOD: computeLine20ThroughLine24()&#xa;File: TaxReturnComputeService.java ~line 15023&#xa;Call site: line 1052&#xa;&#xa;Compute order:&#xa;1. computeSchedule8812()  → line 19&#xa;2. applyXxxToSchedule3() calls&#xa;3. finalizeSchedule3Totals() → line 8&#xa;4. computeLine20ThroughLine24() ← HERE&#xa;   (lines 20 → 21 → 22 → 24)&#xa;5. computeLine31ThroughLine38()&#xa;6. computeForm2210()" style="rounded=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=9;" vertex="1" parent="1"><mxGeometry x="50" y="380" width="130" height="230" as="geometry"/></mxCell>
+
+<!-- Edges -->
+<!-- line 18 → subtraction -->
+<mxCell id="e1" value="line18" style="edgeStyle=orthogonalEdgeStyle;fontSize=9;" edge="1" source="3" target="5" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<!-- line 21 → subtraction -->
+<mxCell id="e2" value="line21" style="edgeStyle=orthogonalEdgeStyle;fontSize=9;" edge="1" source="4" target="5" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<!-- subtraction → floor -->
+<mxCell id="e3" value="result" style="edgeStyle=orthogonalEdgeStyle;fontSize=9;" edge="1" source="5" target="6" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<!-- floor → line 22 -->
+<mxCell id="e4" value="line22" style="edgeStyle=orthogonalEdgeStyle;fontSize=9;" edge="1" source="6" target="7" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<!-- line 22 → line 24 -->
+<mxCell id="e5" value="line22" style="edgeStyle=orthogonalEdgeStyle;fontSize=9;" edge="1" source="7" target="9" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<!-- line 23 → line 24 -->
+<mxCell id="e6" value="line23" style="edgeStyle=orthogonalEdgeStyle;fontSize=9;" edge="1" source="8" target="9" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- GAPS BOX -->
+<mxCell id="11" value="Identified gaps:&#xa;G1 (LOW) — line22-tax-after-credits.spec.ts missing retries: 1 directive.&#xa;G2 (INFO) — No Java unit test named specifically for line 22 (coverage adequate via line21 suite)." style="rounded=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=9;" vertex="1" parent="1"><mxGeometry x="420" y="720" width="320" height="70" as="geometry"/></mxCell>
+
+</root></mxGraphModel>

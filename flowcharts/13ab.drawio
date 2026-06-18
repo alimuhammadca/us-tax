@@ -1,0 +1,257 @@
+<mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1854" pageHeight="1600" math="0" shadow="0">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+
+    <!-- Title -->
+    <mxCell id="title" value="Form 1040 Lines 13a &amp; 13b — QBI Deduction &amp; Schedule 1-A Additional Deductions (2025) — Created 2026-04-17" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="100" y="20" width="1600" height="30" as="geometry" />
+    </mxCell>
+
+    <!-- ORDER NOTE -->
+    <mxCell id="orderNote" value="CRITICAL COMPUTE ORDER: Line 13b (Schedule 1-A) MUST be computed before Line 13a (QBI)&#xa;because taxable_income_before_qbi = AGI − line12e − line13b" style="text;html=1;strokeColor=#b85450;fillColor=#f8cecc;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="400" y="58" width="1000" height="40" as="geometry" />
+    </mxCell>
+
+    <!-- START -->
+    <mxCell id="start" value="START: compute()&#xa;(line 12e is already final)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+      <mxGeometry x="760" y="118" width="280" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- ========== PHASE 1: LINE 13b ========== -->
+
+    <mxCell id="ph1label" value="PHASE 1 — Line 13b (Schedule 1-A)" style="text;html=1;strokeColor=none;fillColor=#d5e8d4;align=left;verticalAlign=middle;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+      <mxGeometry x="100" y="185" width="340" height="30" as="geometry" />
+    </mxCell>
+
+    <mxCell id="step13b" value="computeSchedule1A()" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="800" y="190" width="200" height="45" as="geometry" />
+    </mxCell>
+    <mxCell id="e_start_13b" edge="1" source="start" target="step13b" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- MAGI -->
+    <mxCell id="magi" value="Part I — MAGI (line 3):&#xa;MAGI = AGI(line11b) + Puerto Rico exclusion&#xa;       + Form2555.line45 + Form2555.line50 + Form4563.line15&#xa;(drives phaseouts for Parts II–V)" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+      <mxGeometry x="650" y="258" width="500" height="72" as="geometry" />
+    </mxCell>
+    <mxCell id="e_13b_magi" edge="1" source="step13b" target="magi" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- PART II TIPS -->
+    <mxCell id="gate_tips" value="Part II — Tips eligible?&#xa;taxpayerReceivedQualifiedTips AND validSSN&#xa;AND (!married OR isMFJ)" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="60" y="370" width="260" height="80" as="geometry" />
+    </mxCell>
+    <mxCell id="e_magi_tips" edge="1" source="magi" target="gate_tips" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <mxCell id="tips_zero" value="line13 = $0" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+      <mxGeometry x="20" y="485" width="130" height="40" as="geometry" />
+    </mxCell>
+    <mxCell id="e_tips_no" edge="1" source="gate_tips" target="tips_zero" parent="1">
+      <mxGeometry relative="1" as="geometry" /><mxCell value="No" as="label" />
+    </mxCell>
+
+    <mxCell id="tips_calc" value="Tips (line 13):&#xa;raw = W-2 box7 + Form4137.line4&#xa;    + 1099-NEC(isTipIncome, SSN-matched) [capped by netIncomeCap]&#xa;    + manual&#xa;capped = min(raw, $25,000)&#xa;excess = max(0, MAGI − $150k/$300k MFJ)&#xa;phaseout = floor(excess/1000) × $100&#xa;line13 = max(0, capped − phaseout)" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+      <mxGeometry x="165" y="470" width="270" height="100" as="geometry" />
+    </mxCell>
+    <mxCell id="e_tips_yes" edge="1" source="gate_tips" target="tips_calc" parent="1">
+      <mxGeometry relative="1" as="geometry" /><mxCell value="Yes" as="label" />
+    </mxCell>
+
+    <!-- PART III OVERTIME -->
+    <mxCell id="gate_ot" value="Part III — Overtime eligible?&#xa;overtimeReceived AND validSSN&#xa;AND (!married OR isMFJ)" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="490" y="370" width="260" height="80" as="geometry" />
+    </mxCell>
+    <mxCell id="e_magi_ot" edge="1" source="magi" target="gate_ot" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <mxCell id="ot_zero" value="line21 = $0" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+      <mxGeometry x="455" y="485" width="130" height="40" as="geometry" />
+    </mxCell>
+    <mxCell id="e_ot_no" edge="1" source="gate_ot" target="ot_zero" parent="1">
+      <mxGeometry relative="1" as="geometry" /><mxCell value="No" as="label" />
+    </mxCell>
+
+    <mxCell id="ot_calc" value="Overtime (line 21):&#xa;raw = W-2 OT + manual (no auto-import)&#xa;cap = $12,500 / $25,000 MFJ&#xa;capped = min(raw, cap)&#xa;excess = max(0, MAGI − $150k/$300k MFJ)&#xa;phaseout = floor(excess/1000) × $100&#xa;line21 = max(0, capped − phaseout)" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+      <mxGeometry x="598" y="465" width="270" height="110" as="geometry" />
+    </mxCell>
+    <mxCell id="e_ot_yes" edge="1" source="gate_ot" target="ot_calc" parent="1">
+      <mxGeometry relative="1" as="geometry" /><mxCell value="Yes" as="label" />
+    </mxCell>
+
+    <!-- PART IV CAR LOAN -->
+    <mxCell id="gate_car" value="Part IV — Car loan eligible?&#xa;paidCarLoanInterest = true&#xa;AND vehicle entries exist&#xa;(all filing statuses)" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="940" y="370" width="260" height="90" as="geometry" />
+    </mxCell>
+    <mxCell id="e_magi_car" edge="1" source="magi" target="gate_car" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <mxCell id="car_zero" value="line30 = $0" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+      <mxGeometry x="900" y="495" width="130" height="40" as="geometry" />
+    </mxCell>
+    <mxCell id="e_car_no" edge="1" source="gate_car" target="car_zero" parent="1">
+      <mxGeometry relative="1" as="geometry" /><mxCell value="No" as="label" />
+    </mxCell>
+
+    <mxCell id="car_calc" value="Car loan interest (line 30):&#xa;if refinanced: paid × (origPrincipal / refiBalance)&#xa;net/vehicle = paid − schedE − schedC − schedF&#xa;totalNet = sum of per-vehicle net&#xa;capped = min(totalNet, $10,000)&#xa;excess = max(0, MAGI − $100k/$200k MFJ)&#xa;phaseout = ceil(excess/1000) × $200  ← CEILING&#xa;line30 = max(0, capped − phaseout)" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+      <mxGeometry x="1050" y="460" width="290" height="110" as="geometry" />
+    </mxCell>
+    <mxCell id="e_car_yes" edge="1" source="gate_car" target="car_calc" parent="1">
+      <mxGeometry relative="1" as="geometry" /><mxCell value="Yes" as="label" />
+    </mxCell>
+
+    <!-- PART V SENIOR -->
+    <mxCell id="gate_senior" value="Part V — Senior eligible?&#xa;born before Jan 2, 1961&#xa;AND validSSN&#xa;AND (!married OR isMFJ)" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="1410" y="370" width="260" height="90" as="geometry" />
+    </mxCell>
+    <mxCell id="e_magi_senior" edge="1" source="magi" target="gate_senior" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <mxCell id="senior_zero" value="line37 = $0" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+      <mxGeometry x="1380" y="495" width="130" height="40" as="geometry" />
+    </mxCell>
+    <mxCell id="e_senior_no" edge="1" source="gate_senior" target="senior_zero" parent="1">
+      <mxGeometry relative="1" as="geometry" /><mxCell value="No" as="label" />
+    </mxCell>
+
+    <mxCell id="senior_calc" value="Senior deduction (line 37):&#xa;count = taxpayerEligible + spouseEligible&#xa;base = count × $6,000&#xa;excess = max(0, MAGI − $75k/$150k MFJ)&#xa;phaseout = 6% × excess (continuous)&#xa;line37 = max(0, base − phaseout)&#xa;[line37 also added back as AMT adjustment]" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+      <mxGeometry x="1530" y="460" width="280" height="110" as="geometry" />
+    </mxCell>
+    <mxCell id="e_senior_yes" edge="1" source="gate_senior" target="senior_calc" parent="1">
+      <mxGeometry relative="1" as="geometry" /><mxCell value="Yes" as="label" />
+    </mxCell>
+
+    <!-- line38 total -->
+    <mxCell id="line38" value="Schedule 1-A line 38 (total):&#xa;line38 = line13 + line21 + line30 + line37&#xa;→ Form1040.line13b = line38" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="680" y="610" width="440" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="e_tc_38" edge="1" source="tips_calc" target="line38" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="e_tz_38" edge="1" source="tips_zero" target="line38" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="e_oc_38" edge="1" source="ot_calc" target="line38" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="e_oz_38" edge="1" source="ot_zero" target="line38" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="e_cc_38" edge="1" source="car_calc" target="line38" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="e_cz_38" edge="1" source="car_zero" target="line38" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="e_sc_38" edge="1" source="senior_calc" target="line38" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="e_sz_38" edge="1" source="senior_zero" target="line38" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- ========== PHASE 2: LINE 13a ========== -->
+
+    <mxCell id="ph2label" value="PHASE 2 — Line 13a (QBI Deduction)" style="text;html=1;strokeColor=none;fillColor=#dae8fc;align=left;verticalAlign=middle;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+      <mxGeometry x="100" y="688" width="340" height="30" as="geometry" />
+    </mxCell>
+
+    <mxCell id="step13a" value="computeLine13a()&#xa;(only after line 13b is final)" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="790" y="698" width="220" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="e_38_13a" edge="1" source="line38" target="step13a" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- taxableIncomeBeforeQbi -->
+    <mxCell id="taxBeforeQbi" value="taxableIncomeBeforeQbi =&#xa;max(0, AGI(line11b) − line12e − line13b)&#xa;(second-pass after line13b is final)" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+      <mxGeometry x="640" y="775" width="520" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="e_13a_tib" edge="1" source="step13a" target="taxBeforeQbi" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- Gate: any QBI sources? -->
+    <mxCell id="gate_qbi" value="Any QBI sources?&#xa;(1099-DIV box 5, K-1 199A,&#xa;manual, prior carryforward)" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="720" y="878" width="360" height="75" as="geometry" />
+    </mxCell>
+    <mxCell id="e_tib_qbi" edge="1" source="taxBeforeQbi" target="gate_qbi" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <mxCell id="qbi_zero" value="line13a = $0&#xa;(no QBI sources)" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+      <mxGeometry x="540" y="895" width="150" height="45" as="geometry" />
+    </mxCell>
+    <mxCell id="e_qbi_no" edge="1" source="gate_qbi" target="qbi_zero" parent="1">
+      <mxGeometry relative="1" as="geometry" /><mxCell value="No" as="label" />
+    </mxCell>
+
+    <!-- Gate: SE out of scope? -->
+    <mxCell id="gate_se" value="Sched C/F QBI&#xa;(self-employment)?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="720" y="985" width="360" height="65" as="geometry" />
+    </mxCell>
+    <mxCell id="e_qbi_yes" edge="1" source="gate_qbi" target="gate_se" parent="1">
+      <mxGeometry relative="1" as="geometry" /><mxCell value="Yes" as="label" />
+    </mxCell>
+
+    <mxCell id="se_block" value="Blocking flag:&#xa;LINE13A_SELF_EMPLOYMENT_OUT_OF_SCOPE&#xa;line13a = null (not computed)" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+      <mxGeometry x="540" y="992" width="160" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="e_se_yes" edge="1" source="gate_se" target="se_block" parent="1">
+      <mxGeometry relative="1" as="geometry" /><mxCell value="Yes" as="label" />
+    </mxCell>
+
+    <!-- Gate: threshold -->
+    <mxCell id="gate_thresh" value="taxableIncomeBeforeQbi&#xa;&gt; threshold?&#xa;($197,300 / $394,600 MFJ)" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="720" y="1082" width="360" height="75" as="geometry" />
+    </mxCell>
+    <mxCell id="e_se_no" edge="1" source="gate_se" target="gate_thresh" parent="1">
+      <mxGeometry relative="1" as="geometry" /><mxCell value="No" as="label" />
+    </mxCell>
+
+    <!-- Below threshold: Form 8995 -->
+    <mxCell id="form8995" value="Form 8995 (below threshold):&#xa;qbiNet = max(0, QBI − priorYearCarryforward)&#xa;qbiComp = 20% × qbiNet&#xa;reitPtpComp = 20% × qualifiedREIT_PTP&#xa;tentative = qbiComp + reitPtpComp&#xa;tiLimit = 20% × max(0, taxIncBeforeQBI − capGain/qualDiv)&#xa;line13a = min(tentative, tiLimit)&#xa;→ Form8995.line15" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+      <mxGeometry x="360" y="1090" width="330" height="130" as="geometry" />
+    </mxCell>
+    <mxCell id="e_thresh_no" edge="1" source="gate_thresh" target="form8995" parent="1">
+      <mxGeometry relative="1" as="geometry" /><mxCell value="No (below)" as="label" />
+    </mxCell>
+
+    <!-- Above threshold: Form 8995-A -->
+    <mxCell id="gate_8995a_path" value="Above threshold — valid K-1&#xa;activity details available?&#xa;(blocks: manual, neg K-1, cooperative patron)" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="1070" y="1082" width="300" height="75" as="geometry" />
+    </mxCell>
+    <mxCell id="e_thresh_yes" edge="1" source="gate_thresh" target="gate_8995a_path" parent="1">
+      <mxGeometry relative="1" as="geometry" /><mxCell value="Yes (above)" as="label" />
+    </mxCell>
+
+    <mxCell id="block_complex" value="Blocking flag (one of):&#xa;LINE13A_MANUAL_QBI_THRESHOLD_UNSUPPORTED&#xa;LINE13A_NEGATIVE_K1_QBI_THRESHOLD_UNSUPPORTED&#xa;LINE13A_COMPLEX_QBI_THRESHOLD_UNSUPPORTED&#xa;LINE13A_COOPERATIVE_PATRON_UNSUPPORTED&#xa;line13a = null" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+      <mxGeometry x="1420" y="1090" width="290" height="90" as="geometry" />
+    </mxCell>
+    <mxCell id="e_8995a_no" edge="1" source="gate_8995a_path" target="block_complex" parent="1">
+      <mxGeometry relative="1" as="geometry" /><mxCell value="No (blocked)" as="label" />
+    </mxCell>
+
+    <mxCell id="form8995a" value="Form 8995-A (above threshold, per activity):&#xa;For each K-1 activity:&#xa;  phaseInPct = (taxInc − threshold) / phaseInRange&#xa;  if SSTB AND above upperThreshold: limited = $0&#xa;  if SSTB AND in phase-in band:&#xa;    applicablePct = 1 − phaseInPct&#xa;    adjQBI = QBI × applicablePct; adjW2/UBIA scaled similarly&#xa;    limited = min(20%×adjQBI, wageUbiaLimit(adjW2, adjUBIA))&#xa;  if non-SSTB AND above upperThreshold:&#xa;    limited = min(tentative, wageUbiaLimit)&#xa;  if non-SSTB AND in phase-in band:&#xa;    reduction = max(0, tentative − wageUbiaLimit) × phaseInPct&#xa;    limited = tentative − reduction&#xa;Sum all activities + REIT/PTP − priorReitPtpCarryforward; apply tiLimit&#xa;→ Form8995A.line39" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+      <mxGeometry x="1060" y="1192" width="380" height="160" as="geometry" />
+    </mxCell>
+    <mxCell id="e_8995a_yes" edge="1" source="gate_8995a_path" target="form8995a" parent="1">
+      <mxGeometry relative="1" as="geometry" /><mxCell value="Yes (K-1 details)" as="label" />
+    </mxCell>
+
+    <!-- Merge: line13a result -->
+    <mxCell id="line13a_result" value="Form1040.line13a&#xa;(= Form8995.line15 OR Form8995A.line39)&#xa;line13a &gt;= 0 always" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="640" y="1380" width="520" height="55" as="geometry" />
+    </mxCell>
+    <mxCell id="e_8995_res" edge="1" source="form8995" target="line13a_result" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="e_8995a_res" edge="1" source="form8995a" target="line13a_result" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="e_qbiz_res" edge="1" source="qbi_zero" target="line13a_result" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- ========== FINAL: Lines 14 and 15 ========== -->
+
+    <mxCell id="lines14_15" value="line14 = line12e + line13a + line13b&#xa;line15 = max(0, AGI(line11b) − line14)  ← taxable income" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="640" y="1462" width="520" height="55" as="geometry" />
+    </mxCell>
+    <mxCell id="e_13a_14" edge="1" source="line13a_result" target="lines14_15" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <mxCell id="endNode" value="END" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+      <mxGeometry x="830" y="1540" width="140" height="40" as="geometry" />
+    </mxCell>
+    <mxCell id="e_end" edge="1" source="lines14_15" target="endNode" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- ========== LEGEND ========== -->
+
+    <mxCell id="legend_title" value="Legend" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="100" y="1380" width="80" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="leg1" value="Implemented" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+      <mxGeometry x="100" y="1410" width="130" height="30" as="geometry" />
+    </mxCell>
+    <mxCell id="leg2" value="Decision gate" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="250" y="1405" width="130" height="40" as="geometry" />
+    </mxCell>
+    <mxCell id="leg3" value="Blocked / zero path" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+      <mxGeometry x="400" y="1410" width="130" height="30" as="geometry" />
+    </mxCell>
+    <mxCell id="leg4" value="All gaps resolved 2026-04-17" style="rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+      <mxGeometry x="550" y="1410" width="160" height="30" as="geometry" />
+    </mxCell>
+
+    <mxCell id="gap_note" value="All lines 13a/13b implementation gaps resolved as of 2026-04-17.&#xa;computeLine13a() is now invoked second-pass after computeSchedule1A() in prepare(); SSTB computed with applicable percentage; REIT/PTP carryforward; 1099-NEC tips; Schedule C/F car-loan exclusion; refinancing proportionalization." style="text;html=1;strokeColor=#82b366;fillColor=#d5e8d4;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="100" y="1455" width="500" height="55" as="geometry" />
+    </mxCell>
+
+  </root>
+</mxGraphModel>

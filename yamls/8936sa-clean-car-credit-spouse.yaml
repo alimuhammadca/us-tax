@@ -1,0 +1,128 @@
+# Schedule A (Form 8936) spouse workflow.
+# This spouse form is additive only. The return still produces one combined
+# Schedule 3 result, but each spouse-owned vehicle becomes its own Schedule A
+# attachment when the return is computed.
+name: clean-car-credit-spouse
+title: Schedule A (Form 8936) - Clean car credit (spouse)
+multiplicity: single
+formName: 8936sa
+category: deductions
+instructions:
+  - Use this spouse form only for spouse-owned vehicles on a joint return.
+  - The return still uses one joint MAGI test, but each spouse vehicle gets its own Schedule A attachment.
+  - Business and commercial vehicle paths are deferred in this phase.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: spouseHasCleanCarCreditInputs
+        type: boolean
+        required: true
+        label: Does the spouse have clean car credit vehicle inputs?
+
+  - name: spouseVehicles
+    title: Spouse clean vehicles
+    multiplicity: multiple
+    showIf: spouseHasCleanCarCreditInputs == true
+    fields:
+      - name: vehicleNickname
+        type: text
+        required: false
+        placeholder: Optional label used only in the UI
+        label: Vehicle nickname
+      - name: creditPath
+        type: select
+        required: true
+        label: Credit path
+        options:
+          - New clean vehicle
+          - Previously owned clean vehicle
+      - name: vehicleYear
+        type: number
+        required: true
+        label: Vehicle year
+      - name: vehicleMake
+        type: text
+        required: true
+        label: Vehicle make
+      - name: vehicleModel
+        type: text
+        required: true
+        label: Vehicle model
+      - name: vehicleVin
+        type: text
+        required: true
+        label: VIN
+      - name: vehiclePlacedInServiceDate
+        type: date
+        required: true
+        label: Placed-in-service date
+      - name: vehicleAcquiredDate
+        type: date
+        required: false
+        label: Acquisition date
+      - name: sellerReportReceived
+        type: boolean
+        required: false
+        label: Seller or dealer report received
+      - name: creditTransferredToDealer
+        type: boolean
+        required: false
+        label: Was the credit transferred to the dealer at the time of sale?
+      - name: transferredCreditAmount
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Transferred credit amount
+      - name: resoldWithin30Days
+        type: boolean
+        required: false
+        label: Was the vehicle resold within 30 days?
+      - name: newVehicleAcquiredForUseOrLeaseNotResale
+        type: boolean
+        required: false
+        label: New vehicle acquired for use or lease, not resale
+      - name: newVehicleTentativeCreditAmount
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: New clean vehicle tentative credit amount
+      - name: businessUsePercentage
+        type: amount
+        required: false
+        placeholder: 0
+        label: Business or investment use percentage
+      - name: previouslyOwnedAcquiredForUseNotResale
+        type: boolean
+        required: false
+        label: Previously owned vehicle acquired for use, not resale
+      - name: previouslyOwnedSalesPrice
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Previously owned vehicle sales price
+      - name: previouslyOwnedClaimedInPrior3Years
+        type: boolean
+        required: false
+        label: Previously owned clean vehicle credit claimed in the prior 3 years
+      - name: previouslyOwnedCanBeClaimedAsDependent
+        type: boolean
+        required: false
+        label: Can the purchaser be claimed as a dependent on another return?
+
+  - name: importedFields
+    title: Imported fields (backend only)
+    multiplicity: single
+    showIf: spouseHasCleanCarCreditInputs == true
+    fields:
+      - name: importedJointFilingStatus
+        type: text
+        required: false
+        readOnly: true
+        label: Imported joint filing status
+      - name: importedJointCurrentYearAgi
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported joint current-year AGI

@@ -1,0 +1,77 @@
+# Form 1040 header - spouse identification workflow.
+# Approach: this form now owns only spouse identity fields.
+# Return-level fields (filing status, address, digital assets, Presidential
+# Election Fund) are split into dedicated YAML files.
+name: identification-spouse
+title: Form 1040 - Identification (spouse)
+multiplicity: single
+formName: 1040
+category: personal
+instructions:
+  - Enter legal spouse name exactly as it appears on your Social Security card.
+  - Spouse SSN or ITIN must be on the return before the due date to claim any tax benefit.
+
+sections:
+  - name: spouseIdentity
+    title: Spouse identity
+    multiplicity: single
+    fields:
+      - name: spouseFirstNamefirstName
+        type: text
+        required: true
+        label: Spouse's first name
+        placeholder: e.g. John
+        help: Enter the spouse's first name. Leave blank if not filing jointly.
+
+      - name: spouseMiddleInitial
+        type: text
+        required: false
+        label: Spouse middle initial
+        placeholder: e.g. A
+        help: Enter spouse's middle initial if applicable.
+
+      - name: spouseLastName
+        type: text
+        required: true
+        label: Spouse's last name
+        placeholder: e.g. Smith
+        help: Enter spouse's legal last name as it appears on their Social Security card.
+
+      - name: spouseSsn
+        type: text
+        required: true
+        label: Spouse's Social Security Number (SSN) or ITIN
+        placeholder: "###-##-####"
+        help: >
+          You must enter spouse's SSN (or ITIN if they are not eligible for an SSN) in the
+          spaces provided. A $50 penalty applies for each missing SSN. Enter dashes as
+          shown (e.g. 123-45-6789).
+
+      - name: spouseDateOfBirth
+        type: date
+        required: true
+        label: Spouse's date of birth
+        placeholder: "YYYY-MM-DD"
+        help: >
+          Required for e-file signature authentication and to determine age-related
+          credits and deductions (e.g. additional standard deduction for age >= 65,
+          kiddie tax rules, EIC age gates).
+
+      - name: spouseOccupation
+        type: text
+        required: true
+        label: Spouse's Occupation
+        placeholder: e.g. Software Engineer
+        help: >
+          Every filer must enter their occupation. This appears in the signature area
+          of Form 1040 and is used by the IRS for statistical purposes.
+
+      - name: spouseIdentityProtectionPin
+        type: text
+        required: false
+        label: Spouse's Identity Protection PIN (IP PIN)
+        placeholder: "######"
+        help: >
+          If the IRS has issued your spouse a six-digit IP PIN, enter it here. The IP PIN must
+          appear on the return (paper and e-file) or the return will be rejected.
+          All taxpayers are now eligible to apply for an IP PIN at IRS.gov/IPPIN.

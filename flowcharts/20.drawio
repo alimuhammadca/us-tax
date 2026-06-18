@@ -1,0 +1,79 @@
+<mxGraphModel><root><mxCell id="0"/><mxCell id="1" parent="0"/>
+
+<!-- Title -->
+<mxCell id="2" value="Form 1040 Line 20 / Line 31 — Schedule 3: Nonrefundable Credits &amp; Other Payments (2025)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="50" y="10" width="1050" height="40" as="geometry"/></mxCell>
+
+<!-- PART I label -->
+<mxCell id="3" value="SCHEDULE 3 PART I — Nonrefundable Credits (lines 1–8 → Form 1040 line 20)" style="text;html=1;strokeColor=none;fillColor=#dae8fc;align=left;verticalAlign=middle;fontStyle=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="50" y="60" width="680" height="30" as="geometry"/></mxCell>
+
+<!-- Credits 1-4 box -->
+<mxCell id="4" value="Lines 1–4: Main nonrefundable credits&#xa;1 = foreignTaxCredit (Form 1116)&#xa;2 = childDependentCareCredit (Form 2441)&#xa;3 = educationCredits (Form 8863 line 19)&#xa;4 = retirementSavingsContributionsCredit (Form 8880)" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1"><mxGeometry x="50" y="100" width="310" height="90" as="geometry"/></mxCell>
+
+<!-- Credits 5a-5b box -->
+<mxCell id="5" value="Lines 5a–5b: Energy credits&#xa;5a = residentialCleanEnergyCredit (Form 5695 line 15)&#xa;5b = energyEfficientHomeImprovementCredit (Form 5695 line 32)" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1"><mxGeometry x="50" y="210" width="310" height="70" as="geometry"/></mxCell>
+
+<!-- Credits 6a-6m box -->
+<mxCell id="6" value="Lines 6a–6m: Other nonrefundable credits&#xa;6a = generalBusinessCredit (Form 3800 — out of scope)&#xa;6b = priorYearMinimumTaxCredit (Form 8801)&#xa;6c = adoptionCredit (Form 8839 — DEFERRED, stub)&#xa;6d = elderlyDisabledCredit (Schedule R)&#xa;6e = [reserved — always blank]&#xa;6f = cleanVehicleCredit (Form 8936 Schedule A)&#xa;6g = mortgageInterestCredit (Form 8396)&#xa;6h = dcFirstTimeHomebuyerCredit (Form 8859)&#xa;6i = qualifiedElectricVehicleCredit (Form 8834)&#xa;6j = alternativeFuelRefuelingCredit (Form 8911)&#xa;6k = creditToHoldersOfTaxCreditBonds (Form 8912)&#xa;6l = amountFromForm8978Line14 (⚠ NEVER SET — G2)&#xa;6m = creditPreviouslyOwnedCleanVehicles (Form 8936 Sched A)&#xa;6z = otherNonrefundableCredits (write-in)" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1"><mxGeometry x="50" y="300" width="360" height="230" as="geometry"/></mxCell>
+
+<!-- Line 7 box (bug) -->
+<mxCell id="7" value="Line 7: totalOtherNonrefundableCredits&#xa;⚠ G6 BUG: currently = line 6z only&#xa;IRS requires: sum(6a..6z)&#xa;PDF field f1_24[0] shows wrong value&#xa;Fix: sum all 6a–6z fields" style="rounded=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" vertex="1" parent="1"><mxGeometry x="50" y="550" width="310" height="80" as="geometry"/></mxCell>
+
+<!-- Line 8 box -->
+<mxCell id="8" value="Line 8 = 1 + 2 + 3 + 4 + 5a + 5b + 7&#xa;(implementation: sums all credits individually → correct)&#xa;totalNonrefundableCredits&#xa;PDF field f1_08[0]" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1"><mxGeometry x="50" y="650" width="360" height="70" as="geometry"/></mxCell>
+
+<!-- Line 20 box -->
+<mxCell id="9" value="Form 1040 Line 20&#xa;= Schedule 3 line 8&#xa;TaxAndCredits.otherCreditsSchedule3&#xa;PDF: line20_amount_from_schedule3_line8" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="50" y="740" width="360" height="70" as="geometry"/></mxCell>
+
+<!-- Lines 21-24 chain -->
+<mxCell id="10" value="Lines 21–24 (credit chain)&#xa;line21 = line19 (CTC) + line20&#xa;line22 = max(0, line18 − line21)&#xa;line24 = line22 + line23 (other taxes)" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1"><mxGeometry x="50" y="830" width="310" height="80" as="geometry"/></mxCell>
+
+<!-- Edges Part I -->
+<mxCell id="e1" value="" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="4" target="5" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e2" value="" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="5" target="6" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e3" value="" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="6" target="7" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e4" value="" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="7" target="8" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e5" value="" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="8" target="9" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e6" value="" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="9" target="10" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- PART II label -->
+<mxCell id="11" value="SCHEDULE 3 PART II — Other Payments and Refundable Credits (lines 9–15 → Form 1040 line 31)" style="text;html=1;strokeColor=none;fillColor=#d5e8d4;align=left;verticalAlign=middle;fontStyle=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="500" y="60" width="640" height="30" as="geometry"/></mxCell>
+
+<!-- Lines 9-12 -->
+<mxCell id="12" value="Lines 9–12: Direct payment lines&#xa;9  = netPremiumTaxCredit (Form 8962)&#xa;10 = amountPaidWithExtension (Form 4868)&#xa;11 = excessSocialSecurityRrtaTaxWithheld (W-2 box 4, 2+ employers)&#xa;12 = creditForFederalTaxOnFuels (Form 4136) — ⚠ NEVER SET (G3)" style="rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" vertex="1" parent="1"><mxGeometry x="500" y="100" width="400" height="100" as="geometry"/></mxCell>
+
+<!-- Lines 13a-13z -->
+<mxCell id="13" value="Lines 13a–13z: Other payments (sub-group)&#xa;13a = form2439 (Form 2439 statement box 2)&#xa;13b = section1341Credit (other-payments personal form)&#xa;13c = netElectivePaymentElectionAmount (Form 3800 — out of scope; no PDF field)&#xa;13d = deferredNet965TaxLiability (§965(i)) — ⚠ NEVER SET (G5)&#xa;13z = otherRefundableCredits (write-in)" style="rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" vertex="1" parent="1"><mxGeometry x="500" y="220" width="440" height="110" as="geometry"/></mxCell>
+
+<!-- Line 14 -->
+<mxCell id="14" value="Line 14 = sum(13a + 13b + 13c + 13d + 13z)&#xa;totalOtherPaymentsRefundableCredits&#xa;PDF field f1_36[0]" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1"><mxGeometry x="500" y="350" width="360" height="60" as="geometry"/></mxCell>
+
+<!-- Line 15 -->
+<mxCell id="15" value="Line 15 = 9 + 10 + 11 + 12 + 14&#xa;totalOtherPaymentsAndRefundableCredits&#xa;PDF field f1_37[0]" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1"><mxGeometry x="500" y="430" width="360" height="60" as="geometry"/></mxCell>
+
+<!-- Line 31 -->
+<mxCell id="16" value="Form 1040 Line 31&#xa;= Schedule 3 line 15&#xa;Payments.otherPaymentsSchedule3&#xa;PDF: line31_amount_from_schedule3_line15" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="500" y="510" width="360" height="70" as="geometry"/></mxCell>
+
+<!-- Edges Part II -->
+<mxCell id="e7" value="" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="12" target="13" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e8" value="" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="13" target="14" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e9" value="" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="14" target="15" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e10" value="" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="15" target="16" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+<!-- Compute order label -->
+<mxCell id="17" value="COMPUTE ORDER" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontStyle=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="980" y="60" width="220" height="30" as="geometry"/></mxCell>
+
+<!-- Compute order box -->
+<mxCell id="18" value="1. All applyXxxToSchedule3() methods&#xa;   (sets individual credit fields)&#xa;2. computeSchedule8812()&#xa;   (reads schedule3 for CLW-A)&#xa;3. finalizeSchedule3Totals()&#xa;   (computes line 7, 8, 14, 15)&#xa;4. computeLine20ThroughLine24()&#xa;   (sets Form1040.line20, 21, 22, 24)&#xa;5. computeLine31ThroughLine38()&#xa;   (sets Form1040.line31 from line15)" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1"><mxGeometry x="980" y="100" width="260" height="200" as="geometry"/></mxCell>
+
+<!-- Gaps summary -->
+<mxCell id="20" value="⚠ G2 — Form 8978 negative line 14 not wired&#xa;Schedule 3 line 6l (amountFromForm8978Line14)&#xa;setAmountFromForm8978Line14() never called.&#xa;Field always null in CLW-A and PDF.&#xa;LOW severity." style="rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;" vertex="1" parent="1"><mxGeometry x="500" y="620" width="280" height="80" as="geometry"/></mxCell>
+
+<mxCell id="21" value="⚠ G3 — Form 4136 fuel credit not wired&#xa;creditForFederalTaxOnFuels always null.&#xa;Form 4136 not implemented.&#xa;LOW severity." style="rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;" vertex="1" parent="1"><mxGeometry x="800" y="620" width="240" height="80" as="geometry"/></mxCell>
+
+<mxCell id="22" value="⚠ G5 — §965(i) deferred tax not wired&#xa;deferredNet965TaxLiability always null.&#xa;Section 965 deferred to future.&#xa;LOW severity." style="rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;" vertex="1" parent="1"><mxGeometry x="500" y="720" width="280" height="80" as="geometry"/></mxCell>
+
+<mxCell id="23" value="⚠ G6 — Line 7 PDF display bug&#xa;totalOtherNonrefundableCredits = 6z only.&#xa;IRS: must = sum(6a..6z).&#xa;Line 8 / line 20 are correct.&#xa;PDF f1_24 shows wrong total.&#xa;MEDIUM severity." style="rounded=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=9;" vertex="1" parent="1"><mxGeometry x="800" y="720" width="260" height="90" as="geometry"/></mxCell>
+
+<mxCell id="24" value="ℹ G1 — Adoption credit (6c) deferred&#xa;applyAdoptionCredit() is stub.&#xa;CLW-B not yet implemented.&#xa;Documented as Priority 3 in outstanding.md." style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;" vertex="1" parent="1"><mxGeometry x="980" y="330" width="260" height="80" as="geometry"/></mxCell>
+
+</root></mxGraphModel>

@@ -1,0 +1,77 @@
+# Form 1040 header - taxpayer/family head identification workflow.
+# Approach: this form now owns only taxpayer identity fields.
+# Return-level fields (filing status, address, digital assets, Presidential
+# Election Fund) are split into dedicated YAML files.
+name: identification-taxpayer
+title: Form 1040 - Identification (taxpayer / family head)
+multiplicity: single
+formName: 1040
+category: personal
+instructions:
+  - Enter your legal name exactly as it appears on your Social Security card.
+  - Your SSN or ITIN must be on the return before the due date to claim any tax benefit.
+
+sections:
+  - name: taxpayerIdentity
+    title: Taxpayer identity
+    multiplicity: single
+    fields:
+      - name: firstName
+        type: text
+        required: true
+        label: First name
+        placeholder: e.g. John
+        help: Enter your legal first name as it appears on your Social Security card.
+
+      - name: middleInitial
+        type: text
+        required: false
+        label: Middle initial
+        placeholder: e.g. A
+        help: Enter your middle initial if applicable.
+
+      - name: lastName
+        type: text
+        required: true
+        label: Last name
+        placeholder: e.g. Smith
+        help: Enter your legal last name as it appears on your Social Security card.
+
+      - name: ssn
+        type: text
+        required: true
+        label: Social Security Number (SSN) or ITIN
+        placeholder: "###-##-####"
+        help: >
+          You must enter your SSN (or ITIN if you are not eligible for an SSN) in the
+          spaces provided. A $50 penalty applies for each missing SSN. Enter dashes as
+          shown (e.g. 123-45-6789).
+
+      - name: dateOfBirth
+        type: date
+        required: true
+        label: Date of birth
+        placeholder: "YYYY-MM-DD"
+        help: >
+          Required for e-file signature authentication and to determine age-related
+          credits and deductions (e.g. additional standard deduction for age >= 65,
+          kiddie tax rules, EIC age gates).
+
+      - name: occupation
+        type: text
+        required: true
+        label: Occupation
+        placeholder: e.g. Software Engineer
+        help: >
+          Every filer must enter their occupation. This appears in the signature area
+          of Form 1040 and is used by the IRS for statistical purposes.
+
+      - name: identityProtectionPin
+        type: text
+        required: false
+        label: Identity Protection PIN (IP PIN)
+        placeholder: "######"
+        help: >
+          If the IRS has issued you a six-digit IP PIN, enter it here. The IP PIN must
+          appear on the return (paper and e-file) or the return will be rejected.
+          All taxpayers are now eligible to apply for an IP PIN at IRS.gov/IPPIN.

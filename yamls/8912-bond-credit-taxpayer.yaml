@@ -1,0 +1,176 @@
+# Form 8912 - Credit to Holders of Tax Credit Bonds - taxpayer.
+# Current app scope supports one consolidated Form 8912 per return.
+# The taxpayer form owns the return-level workflow, prior-year carryforward,
+# Form 1097-BTC rows, and direct bond rows.
+name: bond-credit-taxpayer
+title: Form 8912 - Bond credit (taxpayer)
+multiplicity: single
+formName: 8912
+category: deductions
+instructions:
+  - Use this form when you have a 2025 credit to holders of tax credit bonds from Form 1097-BTC, directly held qualifying bonds, or prior-year carryforward.
+  - In the current app scope, the return produces one consolidated Form 8912 per return, not one per spouse and not one per bond.
+  - Current-year limitation inputs are imported from the computed return when available so you do not re-enter them.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: claimsBondCredit
+        type: boolean
+        required: true
+        label: Do you need to compute a credit to holders of tax credit bonds for 2025?
+
+  - name: carryforward
+    title: Prior-year carryforward
+    multiplicity: single
+    showIf: claimsBondCredit == true
+    instructions:
+      - Enter only the taxpayer-side prior-year carryforward here.
+      - On a joint return, use the spouse form only for an additional spouse contribution.
+    fields:
+      - name: priorYearCarryforwardCredit
+        type: amount
+        required: false
+        label: Prior-year Form 8912 carryforward credit
+        placeholder: 0.00
+
+  - name: taxpayer1097BtcEntries
+    title: Form 1097-BTC entries
+    multiplicity: multiple
+    showIf: claimsBondCredit == true
+    instructions:
+      - Add one row for each Form 1097-BTC received for 2025.
+      - Do not duplicate the same bond again in the direct-bond section.
+    fields:
+      - name: issuerName
+        type: text
+        required: false
+        label: Issuer name
+      - name: issuerEin
+        type: text
+        required: false
+        label: Issuer EIN
+      - name: uniqueIdentifier
+        type: text
+        required: false
+        label: Unique identifier
+      - name: creditAmount
+        type: amount
+        required: false
+        label: Credit amount from Form 1097-BTC
+        placeholder: 0.00
+
+  - name: taxpayerDirectBondEntries
+    title: Directly held bond entries
+    multiplicity: multiple
+    showIf: claimsBondCredit == true
+    instructions:
+      - Add one row for each qualifying bond held directly without Form 1097-BTC support.
+      - The bond must have been issued on or before December 31, 2017.
+    fields:
+      - name: bondType
+        type: text
+        required: false
+        label: Bond type
+      - name: issuerName
+        type: text
+        required: false
+        label: Bond issuer name
+      - name: issuerCityState
+        type: text
+        required: false
+        label: Bond issuer city and state
+      - name: issuerEin
+        type: text
+        required: false
+        label: Bond issuer EIN
+      - name: issueDate
+        type: date
+        required: false
+        label: Bond issue date
+      - name: maturityDate
+        type: date
+        required: false
+        label: Bond maturity date
+      - name: disposalDate
+        type: date
+        required: false
+        label: Bond disposal date
+      - name: cusipOrPaymentDates
+        type: text
+        required: false
+        label: CUSIP number or payment dates
+      - name: basisAmount
+        type: amount
+        required: false
+        label: Outstanding principal or interest payable
+        placeholder: 0.00
+      - name: creditRatePercent
+        type: amount
+        required: false
+        label: Treasury credit rate percent
+        placeholder: 0.00
+      - name: allocationPercentage
+        type: amount
+        required: false
+        label: Allocation percentage held
+        placeholder: 0.00
+      - name: line19BaseCreditAmount
+        type: amount
+        required: false
+        label: Form 8912 Part IV line 19 base credit amount
+        placeholder: 0.00
+
+  - name: importedSupport
+    title: Imported support values (backend only - not rendered)
+    multiplicity: single
+    showIf: claimsBondCredit == true
+    fields:
+      - name: importedForm1040Line16
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported Form 1040 line 16 tax
+      - name: importedSchedule2Line1z
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported Schedule 2 line 1z total tax
+      - name: importedForm6251Line11
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported Form 6251 line 11 alternative minimum tax
+      - name: importedSchedule3ForeignTaxCredit
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported Schedule 3 line 1 foreign tax credit
+      - name: importedSchedule3Line10bSubtotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported Form 8912 line 10b subtotal
+      - name: importedSchedule3GeneralBusinessCredit
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported Schedule 3 general business credit
+      - name: importedSchedule3PriorYearMinimumTaxCredit
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported Schedule 3 prior year minimum tax credit
+
+  - name: computedOutputs
+    title: Computed outputs (backend only - not rendered)
+    multiplicity: single
+    showIf: claimsBondCredit == true
+    fields:
+      - name: form8912Line12
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed - Form 8912 line 12 bond credit

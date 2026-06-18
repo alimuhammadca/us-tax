@@ -1,0 +1,77 @@
+# Form 8834 - Qualified Electric Vehicle Credit - taxpayer.
+# One consolidated Form 8834 per return. The taxpayer form owns the return-level workflow
+# and the released passive activity credit amount from Form 8582-CR support.
+name: electric-vehicle-credit-taxpayer
+title: Form 8834 - Electric Vehicle credit (taxpayer)
+multiplicity: single
+formName: 8834
+category: deductions
+instructions:
+  - Use this form only when you have a released qualified electric vehicle passive activity credit for 2025.
+  - Form 8834 is generally one form per return, not one per spouse and not one per vehicle.
+  - Current-year limitation inputs are imported from the computed return when available so you do not re-enter them.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: claimsElectricVehicleCredit
+        type: boolean
+        required: true
+        label: Do you need to compute a qualified electric vehicle credit for 2025?
+      - name: confirmReleasedQevCreditAvailable
+        type: boolean
+        required: false
+        label: Do you have the released Form 8582-CR qualified electric vehicle credit amount available?
+
+  - name: releasedCredit
+    title: Released passive activity credit
+    multiplicity: single
+    showIf: claimsElectricVehicleCredit == true
+    instructions:
+      - Enter the released qualified electric vehicle passive activity credit allowed for 2025 from Form 8582-CR or equivalent support.
+      - This is Form 8834 line 1 in the current app scope.
+    fields:
+      - name: releasedQevPassiveActivityCredit
+        type: amount
+        required: false
+        label: Released qualified electric vehicle passive activity credit
+        placeholder: 0.00
+
+  - name: importedCurrentYearFields
+    title: Imported current-year fields (backend only - not rendered)
+    multiplicity: single
+    showIf: claimsElectricVehicleCredit == true
+    fields:
+      - name: importedForm1040Line18
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported Form 1040 line 18 total tax before credits
+      - name: importedSchedule3ForeignTaxCredit
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported Schedule 3 line 1 foreign tax credit
+      - name: importedSchedule3Line3bPriorCreditsTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported Form 8834 line 3b prior credits subtotal
+      - name: importedForm6251Line9
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported Form 6251 line 9 tentative minimum tax
+
+  - name: computedOutputs
+    title: Computed outputs (backend only - not rendered)
+    multiplicity: single
+    showIf: claimsElectricVehicleCredit == true
+    fields:
+      - name: form8834Line7
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed - Form 8834 line 7 qualified electric vehicle credit

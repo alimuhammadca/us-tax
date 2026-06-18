@@ -1,0 +1,182 @@
+# Schedule A (Form 8936) taxpayer workflow.
+# One Schedule A attachment is required for each eligible clean vehicle placed
+# in service during the tax year. This taxpayer form owns the return-level
+# screening plus the taxpayer vehicle list used to build the per-vehicle
+# Schedule A attachments.
+name: clean-car-credit-taxpayer
+title: Schedule A (Form 8936) - Clean car credit (taxpayer/family head)
+multiplicity: single
+formName: 8936sa
+category: deductions
+instructions:
+  - One Schedule A (Form 8936) attachment is prepared for each vehicle placed in service during the year.
+  - Use this taxpayer form for the return-level clean vehicle screening, MAGI support, and taxpayer-owned vehicles.
+  - Use the spouse form only for spouse-owned vehicles on a joint return.
+  - Business and commercial vehicle paths are deferred; this phase focuses on personal return credits.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: claimsCleanCarCreditOnReturn
+        type: boolean
+        required: true
+        label: Will this return claim a clean car credit?
+      - name: confirmSellerReportsAndSupportReady
+        type: boolean
+        required: false
+        label: I confirm seller reports and support are available
+        help: Confirm only after dealer or seller reports, VINs, purchase dates, and supporting documents are available.
+
+  - name: magiInputs
+    title: Return-level MAGI support
+    multiplicity: single
+    showIf: claimsCleanCarCreditOnReturn == true
+    instructions:
+      - Form 8936 uses current-year MAGI and prior-year MAGI to test eligibility.
+      - Current-year AGI can be imported from the computed return; enter only the additional addbacks needed for Form 8936 MAGI if they apply.
+    fields:
+      - name: currentYearAdditionalMagiAddbacks
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Current-year MAGI addbacks not already included in AGI
+      - name: priorYearMagi
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Prior-year MAGI for the Form 8936 lookback rule
+
+  - name: taxpayerVehicles
+    title: Taxpayer clean vehicles
+    multiplicity: multiple
+    showIf: claimsCleanCarCreditOnReturn == true
+    instructions:
+      - Add one row for each taxpayer-owned clean vehicle placed in service during the year.
+      - Choose New clean vehicle or Previously owned clean vehicle for this phase.
+    fields:
+      - name: vehicleNickname
+        type: text
+        required: false
+        placeholder: Optional label used only in the UI
+        label: Vehicle nickname
+      - name: creditPath
+        type: select
+        required: true
+        label: Credit path
+        options:
+          - New clean vehicle
+          - Previously owned clean vehicle
+      - name: vehicleYear
+        type: number
+        required: true
+        label: Vehicle year
+      - name: vehicleMake
+        type: text
+        required: true
+        label: Vehicle make
+      - name: vehicleModel
+        type: text
+        required: true
+        label: Vehicle model
+      - name: vehicleVin
+        type: text
+        required: true
+        label: VIN
+      - name: vehiclePlacedInServiceDate
+        type: date
+        required: true
+        label: Placed-in-service date
+      - name: vehicleAcquiredDate
+        type: date
+        required: false
+        label: Acquisition date
+      - name: sellerReportReceived
+        type: boolean
+        required: false
+        label: Seller or dealer report received
+      - name: creditTransferredToDealer
+        type: boolean
+        required: false
+        label: Was the credit transferred to the dealer at the time of sale?
+      - name: transferredCreditAmount
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Transferred credit amount
+      - name: resoldWithin30Days
+        type: boolean
+        required: false
+        label: Was the vehicle resold within 30 days?
+      - name: newVehicleAcquiredForUseOrLeaseNotResale
+        type: boolean
+        required: false
+        label: New vehicle acquired for use or lease, not resale
+      - name: newVehicleTentativeCreditAmount
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: New clean vehicle tentative credit amount
+      - name: businessUsePercentage
+        type: amount
+        required: false
+        placeholder: 0
+        label: Business or investment use percentage
+        help: Mixed-use vehicles can still expose the personal-use portion on Schedule 3, but the business-credit path remains deferred.
+      - name: previouslyOwnedAcquiredForUseNotResale
+        type: boolean
+        required: false
+        label: Previously owned vehicle acquired for use, not resale
+      - name: previouslyOwnedSalesPrice
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Previously owned vehicle sales price
+      - name: previouslyOwnedClaimedInPrior3Years
+        type: boolean
+        required: false
+        label: Previously owned clean vehicle credit claimed in the prior 3 years
+      - name: previouslyOwnedCanBeClaimedAsDependent
+        type: boolean
+        required: false
+        label: Can the purchaser be claimed as a dependent on another return?
+
+  - name: importedFields
+    title: Imported fields (backend only)
+    multiplicity: single
+    showIf: claimsCleanCarCreditOnReturn == true
+    fields:
+      - name: importedFilingStatus
+        type: text
+        required: false
+        readOnly: true
+        label: Imported filing status
+      - name: importedCurrentYearAgi
+        type: amount
+        required: false
+        readOnly: true
+        label: Imported current-year AGI
+
+  - name: computedOutputs
+    title: Computed outputs (backend only)
+    multiplicity: single
+    showIf: claimsCleanCarCreditOnReturn == true
+    fields:
+      - name: computedScheduleAAttachmentCount
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Schedule A attachment count
+      - name: computedSchedule3Line6f
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Schedule 3 line 6f clean vehicle credit
+      - name: computedSchedule3Line6m
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed Schedule 3 line 6m previously owned clean vehicle credit

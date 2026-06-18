@@ -1,0 +1,99 @@
+# Form 1040 Line 16 — Tax intake (taxpayer return level).
+# Collects only the information not already captured by source forms.
+# In-scope source forms: Form 8814 (child-interest-dividends), Form 4972 (lump-sum-distribution),
+# Form 2555 (foreign-earned-income), Form 8615 (kiddie-income). Schedule D is generated from
+# capital-gain-loss statements and is not an intake form.
+#
+# The only user-input item is the ECR (education credit recapture) box-3 write-in. The
+# advanced/uncommon write-ins (962, 1291TAX, Form 8978, 965INC) are displayed in the UI as
+# information only (no data captured) — the user is told to add them manually after export.
+name: 16-tax-taxpayer
+title: "Other tax items"
+multiplicity: single
+formName: 1040
+category: income
+instructions:
+  - This page covers two rare situations. Most people do not need to enter anything here —
+    your tax is computed automatically from the income, deduction, and credit forms you have
+    already completed.
+  - If you claimed a college tax credit (American Opportunity or Lifetime Learning) in an
+    earlier year and later received a refund or tax-free scholarship for the same expenses,
+    you may need to pay part of that credit back. Answer the question below.
+  - A small number of uncommon taxes (related to foreign corporations, foreign investment
+    funds, partnership adjustments, and deferred foreign-earnings tax) are not computed by
+    this application. If any apply to your return you will need to add them manually to
+    Form 1040 line 16 after exporting.
+
+sections:
+  - name: screening
+    title: Paying back a college tax credit
+    multiplicity: single
+    fields:
+      - name: hasEcrRecapture
+        type: boolean
+        required: true
+        label: Did you get a refund or tax-free scholarship for college expenses you already claimed a tax credit for in an earlier year?
+        help: >
+          Answer Yes if, in a previous tax year, you claimed the American Opportunity Credit
+          or the Lifetime Learning Credit (both reported on IRS Form 8863) for a student, and
+          then later received tax-free scholarship money or a refund of those college expenses.
+          The IRS may require you to pay part of that credit back this year.
+
+  - name: ecrAmount
+    title: Amount to pay back
+    multiplicity: single
+    showIf: hasEcrRecapture == true
+    instructions:
+      - Enter the dollar amount you need to pay back. This figure comes from the Education
+        Credit Recapture worksheet in the IRS Form 8863 instructions; your prior-year tax
+        software or preparer can usually provide it.
+    fields:
+      - name: ecrAmount
+        type: amount
+        required: true
+        placeholder: 0.00
+        label: Amount to add to this year's tax
+        help: This amount will be added directly to the tax on this year's Form 1040 line 16.
+
+  # Backend-only computed values. NOT rendered in the UI form component.
+  - name: computedOutputs
+    title: Computed line 16 outputs (backend only)
+    multiplicity: single
+    readOnly: true
+    fields:
+      - name: line16Tax
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Form 1040 line 16 — Total tax
+      - name: regularTax
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Regular tax on taxable income
+      - name: computationMethod
+        type: text
+        required: false
+        readOnly: true
+        computed: true
+        label: Tax computation method used (TAX_TABLE, TAX_COMPUTATION_WORKSHEET, QDCG, SCHEDULE_D_TAX_WORKSHEET, FOREIGN_EARNED_INCOME, FORM_8615, ZERO)
+      - name: form8814AddonTax
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Box 1 — Form 8814 child interest/dividend tax
+      - name: form4972AddonTax
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Box 2 — Form 4972 lump-sum distribution tax
+      - name: ecrAddonTax
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Box 3 — ECR education credit recapture tax

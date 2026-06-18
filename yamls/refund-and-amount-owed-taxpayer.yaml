@@ -1,0 +1,276 @@
+formId: refund-and-amount-owed-taxpayer
+title: Refund and Amount Owed
+description: >
+  Review your refund or balance due and configure how to receive any overpayment —
+  direct deposit, split refund, or credit to next year's estimated tax. If you have
+  a balance due, enter prior-year information so we can determine whether an
+  underpayment penalty applies.
+
+sections:
+
+  # ── Refund summary (computed, read-only) ────────────────────────────────────
+  - id: refundSummary
+    title: Refund summary
+    readOnly: true
+    fields:
+      - id: overpaid
+        label: Amount overpaid
+        type: currency
+        computed: true
+        helpText: >
+          Line 34 — the total you paid in 2025 through withholding, estimated payments,
+          and refundable credits, minus your total tax liability (line 24). This is your
+          starting overpayment before any amount applied to next year.
+      - id: refundAmount
+        label: Amount to be refunded
+        type: currency
+        computed: true
+        helpText: >
+          Line 35a — your overpayment minus any amount elected to apply to your 2026
+          estimated tax (line 36). This is what you receive as a check or direct deposit,
+          or split via Form 8888.
+
+  # ── Direct deposit — lines 35b/35c/35d ─────────────────────────────────────
+  # Shown when overpaid; hidden when split-refund (Form 8888) is elected.
+  - id: directDeposit
+    title: Direct deposit
+    instructions:
+      - >
+        Direct deposit is the fastest way to receive your refund. Your bank's 9-digit
+        routing number and account number are on the bottom of a check or in your online
+        banking settings.
+    fields:
+      - id: wantsDirectDeposit
+        label: Would you like your refund deposited directly into a bank account?
+        type: boolean
+        helpText: >
+          Direct deposit is faster and safer than a paper check. The IRS typically
+          deposits e-filed refunds within 8–21 days. You need your bank's 9-digit
+          routing number and your account number. Not available when using split-refund
+          (Form 8888).
+      - id: routingNumber
+        label: Routing number
+        type: string
+        showIf: wantsDirectDeposit == true
+        helpText: >
+          Your bank's 9-digit ABA routing number appears at the bottom-left of a
+          printed check. The IRS validates routing numbers using the ABA checksum —
+          an incorrect number will redirect your refund to a paper check.
+      - id: accountType
+        label: Account type
+        type: enum
+        options: [checking, savings]
+        showIf: wantsDirectDeposit == true
+        helpText: >
+          Select Checking or Savings. For money-market accounts that accept direct
+          deposits, select Savings.
+      - id: accountNumber
+        label: Account number
+        type: string
+        showIf: wantsDirectDeposit == true
+        helpText: >
+          Your account number appears at the bottom of a check, after the 9-digit
+          routing number. Enter up to 17 characters; hyphens are allowed.
+
+  # ── Split refund — Form 8888 ────────────────────────────────────────────────
+  # Shown when overpaid; hidden when single direct deposit is elected.
+  - id: splitRefund
+    title: Split refund
+    instructions:
+      - >
+        Split your refund among two or three bank accounts. Account totals must equal
+        your exact refund amount. Account 3 is optional and also serves as the IRS
+        fallback if earlier deposits fail.
+    fields:
+      - id: wantsRefundAllocation
+        label: Would you like to split your refund among two or three accounts?
+        type: boolean
+        helpText: >
+          Form 8888 lets you allocate your refund across up to three direct-deposit
+          accounts. A common use is directing part to savings and the remainder to
+          checking. The last account listed is the IRS fallback if earlier deposits fail.
+          Not available when single direct-deposit is also elected.
+      - id: account1Amount
+        label: Account 1 — deposit amount
+        type: currency
+        showIf: wantsRefundAllocation == true
+        helpText: Whole dollar amount to deposit into account 1. All account totals must equal your exact refund amount.
+      - id: account1Routing
+        label: Account 1 — routing number
+        type: string
+        showIf: wantsRefundAllocation == true
+        helpText: Your bank's 9-digit ABA routing number. First two digits must be 01–12 or 21–32.
+      - id: account1Type
+        label: Account 1 — account type
+        type: enum
+        options: [checking, savings]
+        showIf: wantsRefundAllocation == true
+        helpText: Select Checking or Savings. For money-market accounts, select Savings.
+      - id: account1Number
+        label: Account 1 — account number
+        type: string
+        showIf: wantsRefundAllocation == true
+        helpText: Enter up to 17 characters. Hyphens allowed; no spaces.
+      - id: account2Amount
+        label: Account 2 — deposit amount
+        type: currency
+        showIf: wantsRefundAllocation == true
+        helpText: Whole dollar amount to deposit into account 2.
+      - id: account2Routing
+        label: Account 2 — routing number
+        type: string
+        showIf: wantsRefundAllocation == true
+        helpText: Your bank's 9-digit ABA routing number. First two digits must be 01–12 or 21–32.
+      - id: account2Type
+        label: Account 2 — account type
+        type: enum
+        options: [checking, savings]
+        showIf: wantsRefundAllocation == true
+        helpText: Select Checking or Savings. For money-market accounts, select Savings.
+      - id: account2Number
+        label: Account 2 — account number
+        type: string
+        showIf: wantsRefundAllocation == true
+        helpText: Enter up to 17 characters. Hyphens allowed; no spaces.
+      - id: account3Amount
+        label: Account 3 — deposit amount (optional)
+        type: currency
+        showIf: wantsRefundAllocation == true
+        helpText: >
+          Optional third account. Also acts as the IRS fallback destination when earlier
+          deposits cannot be processed. Omit if two accounts suffice.
+      - id: account3Routing
+        label: Account 3 — routing number (optional)
+        type: string
+        showIf: wantsRefundAllocation == true
+        helpText: 9-digit ABA routing number for the optional third account.
+      - id: account3Type
+        label: Account 3 — account type (optional)
+        type: enum
+        options: [checking, savings]
+        showIf: wantsRefundAllocation == true
+        helpText: Select Checking or Savings for the optional third account.
+      - id: account3Number
+        label: Account 3 — account number (optional)
+        type: string
+        showIf: wantsRefundAllocation == true
+        helpText: Enter up to 17 characters for the optional third account.
+
+  # ── Apply to 2026 estimated tax — line 36 ───────────────────────────────────
+  - id: applyToNextYear
+    title: Apply to 2026 estimated tax
+    fields:
+      - id: electsApplyToNextYear
+        label: Do you want to apply part or all of your overpayment to your 2026 estimated tax?
+        type: boolean
+        helpText: >
+          Instead of receiving your full refund now, you can credit up to the entire
+          overpayment toward your first 2026 quarterly estimated tax installment (due
+          April 15, 2026). This election is irrevocable after filing. Most filers prefer
+          to receive the full refund and make separate 2026 estimated payments if needed.
+      - id: amountToApply
+        label: Amount to apply to 2026 estimated taxes
+        type: currency
+        showIf: electsApplyToNextYear == true
+        helpText: >
+          Cannot exceed your total overpayment. The remainder becomes your refund amount.
+
+  # ── Balance due (computed, read-only) ────────────────────────────────────────
+  - id: balanceDue
+    title: Balance due
+    readOnly: true
+    fields:
+      - id: amountOwed
+        label: Amount you owe
+        type: currency
+        computed: true
+        helpText: >
+          Line 37 — the difference between your total tax (line 24) and total payments
+          (line 33). Payment is due by April 15, 2026. Options include IRS Direct Pay
+          (directpay.irs.gov), EFTPS, credit/debit card, or check payable to
+          "United States Treasury."
+      - id: estimatedTaxPenalty
+        label: Estimated tax penalty
+        type: currency
+        computed: true
+        helpText: >
+          An underpayment penalty applies when your 2025 payments were less than both
+          (a) 90% of this year's tax and (b) 100%/110% of last year's tax. Computed by
+          Form 2210. See the Form 2210 entry in the sidebar for the detailed calculation.
+
+  # ── Prior year information — Form 2210 inputs ────────────────────────────────
+  - id: priorYearInfo
+    title: Prior year information (underpayment penalty)
+    instructions:
+      - Enter your 2024 figures so we can compute the correct underpayment penalty.
+      - Leave blank if you do not have your 2024 return available — the penalty will be
+        estimated using the 90% current-year threshold only.
+    fields:
+      - id: priorYearAgi
+        label: Your 2024 adjusted gross income
+        type: currency
+        helpText: >
+          Required to determine whether the 100% or 110% prior-year safe harbor applies.
+          If your 2024 AGI exceeded $150,000 (the threshold depends on your filing status),
+          you must have paid at least 110% of your 2024 tax to avoid the penalty.
+      - id: priorYearTaxLiability
+        label: Your 2024 total tax
+        type: currency
+        helpText: >
+          Used to compute the prior-year safe-harbor threshold. Leave blank if unknown —
+          the system uses only the 90% current-year threshold in that case.
+      - id: madeEstimatedPayments
+        label: Did you make any 2025 estimated tax payments directly to the IRS?
+        type: boolean
+        helpText: >
+          Answer Yes if you mailed or submitted payments using Form 1040-ES vouchers or
+          IRS Direct Pay in 2025. Separate from payroll withholding. Do not include
+          extension payments made via Form 4868.
+      - id: payment1Amount
+        label: Period 1 payment (due April 15, 2025)
+        type: currency
+        showIf: madeEstimatedPayments == true
+        helpText: >
+          Covers income earned January 1 – March 31, 2025. Leave blank if no payment
+          was made for this period.
+      - id: payment2Amount
+        label: Period 2 payment (due June 16, 2025)
+        type: currency
+        showIf: madeEstimatedPayments == true
+        helpText: Covers income earned April 1 – May 31, 2025.
+      - id: payment3Amount
+        label: Period 3 payment (due September 15, 2025)
+        type: currency
+        showIf: madeEstimatedPayments == true
+        helpText: Covers income earned June 1 – August 31, 2025.
+      - id: payment4Amount
+        label: Period 4 payment (due January 15, 2026)
+        type: currency
+        showIf: madeEstimatedPayments == true
+        helpText: >
+          Covers income earned September 1 – December 31, 2025. Not required if you
+          file and pay in full by February 2, 2026.
+      - id: waiveFullPenalty
+        label: Do you want to request a full waiver of the underpayment penalty?
+        type: boolean
+        helpText: >
+          The IRS may waive the full penalty in unusual circumstances (casualty, disaster,
+          extraordinary event). Most filers do not qualify. Checking Yes checks Form 2210 box A.
+      - id: waivePartialPenalty
+        label: Did your income arrive unevenly during the year? (You can request a reduced penalty.)
+        type: boolean
+        helpText: >
+          If income was unevenly distributed across the year, the annualized income
+          installment method may reduce your penalty. Checking Yes checks Form 2210 box B.
+      - id: jointSeparateMismatch
+        label: Did your filing status change between 2024 and 2025?
+        type: boolean
+        helpText: >
+          Answer Yes only if you filed jointly in 2024 but separately in 2025 (or vice
+          versa). Affects the prior-year safe-harbor calculation. Checks Form 2210 box E.
+
+  # ── Backend-only computed outputs (not rendered in UI) ───────────────────────
+  - id: computedOutputs
+    readOnly: true
+    computed: true
+    fields: []

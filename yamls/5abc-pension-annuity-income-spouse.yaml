@@ -1,0 +1,329 @@
+# Form 1040 line 5a/5b/5c spouse workflow.
+# Approach: keep spouse-specific user questions + imported statement fields + computed outputs in one YAML.
+# NOTE: Sections marked as backend-only are NOT supposed to be rendered in the actual form component.
+# NOTE: Return-level upload/line 5c/Form 4972/Form 5329 gating is intentionally kept on pension-annuity-income-taxpayer to avoid spouse conflict.
+name: pension-annuity-income-spouse
+title: Form 1040 - Pensions and annuities (spouse, lines 5a, 5b, and 5c)
+multiplicity: single
+formName: 1040
+category: income
+instructions:
+  - Use this only for spouse-specific pension/annuity inputs for Form 1040 lines 5a/5b/5c.
+  - Return-level upload checks and line 5c/Form 4972/Form 5329 gating stay on pension-annuity-income-taxpayer.
+  - Self-employment income is out of scope and excluded.
+  - UI renders as a sub-interview wizard; section order below matches wizard screen flow:
+    screening → classificationAndRouting → pensionDetails → exceptionAmounts (conditional) →
+    uncommonGate → psoInputs → taxableComputationInputsSimplifiedMethod →
+    taxableComputationInputsGeneralRule → summary (save screen).
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: hadPensionOrAnnuityIncome
+        type: boolean
+        required: true
+        label: Did your spouse have any pension or annuity distributions during the tax year?
+        help: If No, stop here and do not continue this spouse interview.
+
+  - name: classificationAndRouting
+    title: Classification and routing
+    multiplicity: single
+    showIf: hadPensionOrAnnuityIncome == true
+    instructions:
+      - Wizard screen: classification (Step 2 of 9).
+    fields:
+      - name: hasDisabilityPensionBeforeMinimumRetirementAge
+        type: boolean
+        required: false
+        label: Did any of your spouse's pension payments come from a disability pension before reaching the employer's minimum retirement age?
+        help: If yes, those amounts route to line 1h (wages) rather than line 5b (pensions).
+      - name: disabilityPensionLine1hRoutingConfirmed
+        type: boolean
+        required: false
+        showIf: hasDisabilityPensionBeforeMinimumRetirementAge == true
+        label: I confirm the spouse disability pension amounts before minimum retirement age have been entered under line 1h
+        help: Confirm this once the disability pension amount is included on the W-2 or other source feeding line 1h.
+
+  - name: pensionDetails
+    title: Pension details
+    multiplicity: single
+    showIf: hadPensionOrAnnuityIncome == true
+    instructions:
+      - Wizard screen: pension-details (Step 3 of 9).
+    fields:
+      - name: hadPensionRollover
+        type: boolean
+        required: false
+        label: Did your spouse roll any pension or annuity distribution into another retirement account or IRA?
+        help: A direct rollover (code G on 1099-R) or a 60-day rollover reduces the taxable pension amount.
+      - name: hasAnyTaxableAmountNotDeterminedPension1099R
+        type: boolean
+        required: false
+        label: Did any of your spouse's 1099-R forms leave the taxable amount blank and check box 2b?
+        help: '"Taxable amount not determined" means the payer could not calculate the taxable amount. The cost basis method (Simplified Method) may be needed.'
+
+  - name: exceptionAmounts
+    title: Rollover amounts
+    multiplicity: single
+    showIf: hadPensionRollover == true
+    instructions:
+      - Wizard screen: exception-amounts (Step 4 of 9, conditional on hadPensionRollover == true).
+      - Return-level line 5c write-in text is kept on taxpayer form to avoid conflicts.
+    fields:
+      - name: totalPensionRolloverAmount
+        type: amount
+        required: false
+        label: Total amount your spouse rolled over
+        placeholder: 0.00
+        help: Enter the total amount rolled over from all qualified plans and annuities.
+      - name: taxableEmployeeContributionsAlreadyTaxedBox5Total
+        type: amount
+        required: false
+        label: Spouse employee contributions already taxed — box 5 total from all 1099-R forms
+        placeholder: 0.00
+        help: Enter the total from box 5 of all spouse's 1099-R forms. Reduces the rollover base.
+
+  - name: uncommonGate
+    title: Less common situations
+    multiplicity: single
+    showIf: hadPensionOrAnnuityIncome == true
+    instructions:
+      - >
+        Three booleans set by the UI "Less common situations" checklist.
+        Not shown as standalone questions. Setting each reveals the corresponding wizard screen.
+        Wizard screen: uncommon-gate (Step 5 of 9).
+    fields:
+      - name: isEligibleRetiredPublicSafetyOfficer
+        type: boolean
+        required: false
+        label: PSO premium exclusion
+        help: >
+          Set to true via the "Less common situations" checklist when the spouse is an eligible
+          retired public safety officer. Reveals the PSO premium exclusion wizard screen.
+      - name: needsSimplifiedMethodComputation
+        type: boolean
+        required: false
+        label: Cost basis calculation needed (Simplified Method)
+        help: >
+          Set to true via the "Less common situations" checklist when the spouse's 1099-R left
+          box 2a blank (box 2b checked) and they have after-tax contributions. Reveals Simplified
+          Method wizard screen.
+      - name: needsGeneralRuleComputation
+        type: boolean
+        required: false
+        label: Exclusion ratio calculation (General Rule)
+        help: >
+          Set to true via the "Less common situations" checklist when the spouse's pension uses an
+          IRS Publication 939 exclusion ratio. Reveals General Rule wizard screen.
+
+  - name: psoInputs
+    title: PSO premium exclusion
+    multiplicity: single
+    showIf: isEligibleRetiredPublicSafetyOfficer == true
+    instructions:
+      - Wizard screen: pso (Step 6 of 9, conditional on uncommonGate.isEligibleRetiredPublicSafetyOfficer).
+    fields:
+      - name: electsPsoPremiumExclusion
+        type: boolean
+        required: false
+        label: Is your spouse electing to exclude qualifying insurance premiums from pension income?
+        help: The PSO exclusion lets eligible retired public safety officers exclude up to $3,000 per year in qualifying premiums paid from their pension.
+      - name: totalQualifyingPsoPremiumsPaid
+        type: amount
+        required: false
+        showIf: electsPsoPremiumExclusion == true
+        label: Total qualifying insurance premiums paid from your spouse's pension
+        placeholder: 0.00
+        help: >
+          Enter the total accident, health, or long-term care insurance premiums paid
+          for your spouse — either paid directly from the plan to the insurer, or paid
+          by your spouse from amounts received from the plan. Limited to $3,000.
+
+  - name: taxableComputationInputsSimplifiedMethod
+    title: Simplified Method inputs
+    multiplicity: single
+    showIf: needsSimplifiedMethodComputation == true
+    instructions:
+      - Wizard screen: simplified-method (Step 7 of 9, conditional on uncommonGate.needsSimplifiedMethodComputation).
+    fields:
+      - name: annuityStartingDate
+        type: date
+        required: false
+        label: Spouse annuity starting date
+        help: Enter spouse annuity start date used for Simplified Method factor determination.
+      - name: annuitantAgeAtStartingDate
+        type: integer
+        required: false
+        label: Spouse annuitant age at annuity starting date
+        help: Enter spouse age at annuity start date for Simplified Method.
+      - name: jointAnnuitantAgeAtStartingDate
+        type: integer
+        required: false
+        label: Joint annuitant age at annuity starting date (if applicable)
+        help: Enter co-annuitant age when joint-survivor annuity rules apply.
+      - name: investmentInContractCostSimplifiedMethod
+        type: amount
+        required: false
+        label: Spouse investment in contract / after-tax contributions (Simplified Method)
+        placeholder: 0.00
+        help: Enter spouse cost basis used by Simplified Method.
+      - name: numberOfAnnuityPaymentsReceivedInTaxYear
+        type: integer
+        required: false
+        label: Number of spouse annuity payments received during the tax year
+        help: Enter spouse payment count for annual nontaxable portion computation.
+      - name: priorYearTaxFreeRecoveryAmount
+        type: amount
+        required: false
+        label: Spouse prior-year tax-free recovery amount
+        placeholder: 0.00
+        help: Enter spouse cumulative prior-year tax-free recovery used to cap remaining basis.
+
+  - name: taxableComputationInputsGeneralRule
+    title: General Rule inputs
+    multiplicity: single
+    showIf: needsGeneralRuleComputation == true
+    instructions:
+      - Wizard screen: general-rule (Step 8 of 9, conditional on uncommonGate.needsGeneralRuleComputation).
+    fields:
+      - name: investmentInContractCostGeneralRule
+        type: amount
+        required: false
+        label: Spouse investment in contract / cost basis (General Rule)
+        placeholder: 0.00
+        help: Enter spouse cost basis used for General Rule exclusion ratio.
+      - name: expectedReturnGeneralRule
+        type: amount
+        required: false
+        label: Spouse expected return (General Rule)
+        placeholder: 0.00
+        help: Enter spouse expected return used to compute exclusion ratio.
+      - name: paymentsReceivedInTaxYearGeneralRule
+        type: amount
+        required: false
+        label: Spouse payments received in tax year (General Rule)
+        placeholder: 0.00
+        help: Enter spouse current-year pension/annuity payments for General Rule computation.
+      - name: exclusionRatioOverrideGeneralRule
+        type: decimal
+        required: false
+        label: Spouse exclusion ratio override (General Rule)
+        placeholder: 0.000000
+        help: Enter spouse override ratio only when required by reviewed computation support.
+
+  # Backend-only statement imports. Not rendered in form component.
+  - name: importedStatementFields
+    title: Imported statement fields (backend only)
+    multiplicity: single
+    showIf: hadPensionOrAnnuityIncome == true
+    fields:
+      - name: imported1099RNonIraRecordCount
+        type: integer
+        required: false
+        readOnly: true
+        label: Number of spouse non-IRA 1099-R statements (imported)
+      - name: imported1099RNonIraBox1GrossTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Spouse non-IRA 1099-R box 1 total (imported)
+      - name: imported1099RNonIraBox2aTaxableTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Spouse non-IRA 1099-R box 2a total (imported)
+      - name: imported1099RNonIraTaxableAmountNotDeterminedCount
+        type: integer
+        required: false
+        readOnly: true
+        label: Spouse non-IRA 1099-R box 2b taxable not determined count (imported)
+      - name: imported1099RNonIraBox4FederalWithholdingTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Spouse non-IRA 1099-R box 4 total (imported)
+      - name: imported1099RNonIraBox5EmployeeContributionTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Spouse non-IRA 1099-R box 5 total (imported)
+      - name: imported1099RNonIraCodeGCount
+        type: integer
+        required: false
+        readOnly: true
+        label: Spouse non-IRA 1099-R code G count (imported)
+      - name: imported1099RNonIraCode3Count
+        type: integer
+        required: false
+        readOnly: true
+        label: Spouse non-IRA 1099-R code 3 count (imported)
+      - name: importedRrb1099RRecordCount
+        type: integer
+        required: false
+        readOnly: true
+        label: Number of spouse RRB-1099-R statements (imported)
+      - name: importedRrb1099RBox7TotalGrossPaid
+        type: amount
+        required: false
+        readOnly: true
+        label: Spouse RRB-1099-R box 7 total gross paid (imported)
+      - name: importedRrb1099RBox3EmployeeContributionCost
+        type: amount
+        required: false
+        readOnly: true
+        label: Spouse RRB-1099-R box 3 total employee contribution/cost (imported)
+      - name: importedRrb1099RBox9FederalWithholding
+        type: amount
+        required: false
+        readOnly: true
+        label: Spouse RRB-1099-R box 9 total federal withholding (imported)
+
+  # Backend-only computed values. Not rendered in form component.
+  - name: computedOutputs
+    title: Computed outputs (backend only)
+    multiplicity: single
+    showIf: hadPensionOrAnnuityIncome == true
+    fields:
+      - name: computedLine5aGrossPensionContributionSpouse
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed spouse contribution to Form 1040 line 5a
+      - name: computedLine5bTaxablePensionContributionSpouse
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed spouse contribution to Form 1040 line 5b
+      - name: computedLine5cSpouseExceptionFlagRollover
+        type: boolean
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed spouse rollover exception flag contribution (line 5c box 1)
+      - name: computedLine5cSpouseExceptionFlagPso
+        type: boolean
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed spouse PSO exception flag contribution (line 5c box 2)
+      - name: computedPsoExclusionAppliedAmountSpouse
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed spouse PSO exclusion amount applied
+      - name: computedRolloverExclusionAppliedAmountSpouse
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed spouse rollover exclusion amount applied
+      - name: computedLine1hDisabilityReclassificationAmountSpouse
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed spouse disability pension amount routed to line 1h

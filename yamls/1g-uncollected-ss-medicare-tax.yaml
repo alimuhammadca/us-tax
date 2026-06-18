@@ -1,0 +1,128 @@
+# Form 8919 - Uncollected Social Security and Medicare Tax on Wages
+# Scope: employee-only app (no self-employment support).
+#
+# Editable rule:
+# - user input fields are editable
+# - imported fields are readOnly
+# - computed fields are readOnly
+#
+# Filing status note:
+# - If MFJ, IRS requires a separate Form 8919 for each spouse who must file it.
+
+uncollectedSSMedicareWages8919:
+  version: 2
+  formName: 8919
+  category: employmentTax
+  multiplicity: perSpouse
+
+  sections:
+    - name: identity
+      title: Taxpayer identity (imported)
+      multiplicity: single
+      fields:
+        - name: taxpayerName
+          type: text
+          computed: true
+          readOnly: true
+          label: Taxpayer name (imported)
+
+        - name: taxpayerSSN
+          type: text
+          computed: true
+          readOnly: true
+          label: Taxpayer SSN (imported)
+
+    - name: firms
+      title: Firms and wages without FICA withholding (Form 8919 lines 1-5)
+      multiplicity: multiple
+      maxItems: 999
+      instructions:
+        - Add one row per firm that paid you wages with no SS/Medicare withholding and not reported on Form W-2.
+        - If more than 5 firms, additional Form 8919 pages will be generated automatically.
+      fields:
+        - name: firmName
+          type: text
+          required: true
+          label: Firm name (col a)
+
+        - name: firmFederalIdNumber
+          type: text
+          required: false
+          label: Firm federal identification number (col b)
+
+        - name: reasonCode
+          type: select
+          required: true
+          options: ["A", "C", "G", "H"]
+          label: Reason code (col c)
+
+        - name: irsDeterminationDate
+          type: date
+          required: false
+          label: IRS determination/correspondence date (A or C only)
+
+        - name: received1099MiscOrNec
+          type: boolean
+          required: false
+          label: Received Form 1099-MISC and/or 1099-NEC (col e)
+
+        - name: wagesNoFicaNotW2
+          type: amount
+          required: true
+          label: Wages with no SS/Medicare withholding and not on Form W-2 (col f)
+
+    - name: imports
+      title: Imported totals needed for lines 7-13
+      multiplicity: single
+      fields:
+        - name: ssWageBaseMax
+          type: amount
+          computed: true
+          readOnly: true
+          label: Line 7 Social Security wage base maximum (tax-year constant)
+
+        - name: totalSSWagesTipsRRTAAnd4137
+          type: amount
+          computed: true
+          readOnly: true
+          label: Line 8 total SS wages/tips + RRTA + Form 4137 SS tips
+
+    - name: computed
+      title: Computed lines (read-only)
+      multiplicity: single
+      fields:
+        - name: line6TotalWages
+          type: amount
+          computed: true
+          readOnly: true
+          label: Line 6 total wages (to Form 1040 line 1g)
+
+        - name: line9RemainingSSWageBase
+          type: amount
+          computed: true
+          readOnly: true
+          label: Line 9 remaining SS wage base
+
+        - name: line10WagesSubjectToSSTax
+          type: amount
+          computed: true
+          readOnly: true
+          label: Line 10 wages subject to SS tax
+
+        - name: line11SocialSecurityTax
+          type: amount
+          computed: true
+          readOnly: true
+          label: Line 11 Social Security tax (6.2%)
+
+        - name: line12MedicareTax
+          type: amount
+          computed: true
+          readOnly: true
+          label: Line 12 Medicare tax (1.45%)
+
+        - name: line13TotalUncollectedTax
+          type: amount
+          computed: true
+          readOnly: true
+          label: Line 13 total uncollected SS/Medicare tax (to Schedule 2 line 6)

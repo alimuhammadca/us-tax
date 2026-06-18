@@ -1,0 +1,147 @@
+<mxGraphModel dx='1500' dy='900' grid='1' gridSize='10' guides='1' tooltips='1' connect='1' arrows='1' fold='1' page='1' pageScale='1' pageWidth='1654' pageHeight='2400' math='0' shadow='0'>
+  <root>
+    <mxCell id='0'/>
+    <mxCell id='1' parent='0'/>
+
+    <!-- ══ TITLE ══ -->
+    <mxCell id='title' value='Form 1040 Line 1i — Nontaxable Combat Pay Election&#xa;Method: computeCombatPay()  in  TaxReturnComputeService.java' style='text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1' vertex='1' parent='1'>
+      <mxGeometry x='150' y='15' width='1300' height='45' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ START ══ -->
+    <mxCell id='n_start' value='START: computeCombatPay(&#xa;  taxpayerData, spouseData, you, spouse, w2Entries, uid)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='427' y='75' width='800' height='50' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ COLUMN HEADERS ══ -->
+    <mxCell id='col_taxpayer' value='TAXPAYER PATH' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#647687;strokeColor=#314354;fontColor=#ffffff;fontSize=12;fontStyle=1' vertex='1' parent='1'>
+      <mxGeometry x='130' y='160' width='500' height='40' as='geometry'/>
+    </mxCell>
+    <mxCell id='col_spouse' value='SPOUSE PATH' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#647687;strokeColor=#314354;fontColor=#ffffff;fontSize=12;fontStyle=1' vertex='1' parent='1'>
+      <mxGeometry x='1030' y='160' width='500' height='40' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ SSN EXTRACTION ══ -->
+    <mxCell id='t_ssn' value='taxpayerSsn = normalize(you.ssn)&#xa;(digits-only; null if absent)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='155' y='230' width='450' height='50' as='geometry'/>
+    </mxCell>
+    <mxCell id='s_ssn' value='spouseSsn = normalize(spouse.ssn&#xa;  OR identification-spouse.spouseSsn)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='1055' y='230' width='450' height='50' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ W-2 SCAN TAXPAYER ══ -->
+    <mxCell id='t_scan' value='Scan all w2Entries:&#xa;filter where employeeSSN matches taxpayerSsn&#xa;(digits-only SSN comparison)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='155' y='310' width='450' height='60' as='geometry'/>
+    </mxCell>
+    <mxCell id='s_scan' value='Scan all w2Entries:&#xa;filter where employeeSSN matches spouseSsn&#xa;(digits-only SSN comparison)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='1055' y='310' width='450' height='60' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ CODE Q SUM TAXPAYER ══ -->
+    <mxCell id='t_codeq' value='For each matched W-2:&#xa;iterate box12Entries[]&#xa;where code == "Q" (case-insensitive)&#xa;sum box12Amount → taxpayerTotal' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='155' y='400' width='450' height='70' as='geometry'/>
+    </mxCell>
+    <mxCell id='s_codeq' value='For each matched W-2:&#xa;iterate box12Entries[]&#xa;where code == "Q" (case-insensitive)&#xa;sum box12Amount → spouseTotal' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='1055' y='400' width='450' height='70' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ READ ELECTION FLAGS ══ -->
+    <mxCell id='t_flag' value='Read electCombatPay&#xa;from combat-pay-taxpayer form' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='155' y='500' width='450' height='50' as='geometry'/>
+    </mxCell>
+    <mxCell id='s_flag' value='Read electCombatPay&#xa;from combat-pay-spouse form' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='1055' y='500' width='450' height='50' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ DECISION: TAXPAYER ELECTS? ══ -->
+    <mxCell id='t_dec' value='electCombatPay == true?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='230' y='580' width='300' height='70' as='geometry'/>
+    </mxCell>
+    <mxCell id='s_dec' value='electCombatPay == true?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='1130' y='580' width='300' height='70' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ TAXPAYER YES/NO BRANCHES ══ -->
+    <mxCell id='t_yes' value='taxpayerTotal != null?&#xa;→ taxpayerElected = taxpayerTotal&#xa;→ else taxpayerElected = 0&#xa;(elected but no code Q found)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='90' y='690' width='340' height='65' as='geometry'/>
+    </mxCell>
+    <mxCell id='t_no' value='taxpayerElected = null&#xa;(not elected)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='470' y='690' width='220' height='50' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ SPOUSE YES/NO BRANCHES ══ -->
+    <mxCell id='s_yes' value='spouseTotal != null?&#xa;→ spouseElected = spouseTotal&#xa;→ else spouseElected = 0&#xa;(elected but no code Q found)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='990' y='690' width='340' height='65' as='geometry'/>
+    </mxCell>
+    <mxCell id='s_no' value='spouseElected = null&#xa;(not elected)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='1370' y='690' width='220' height='50' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ MERGE / LINE 1i CALC ══ -->
+    <mxCell id='n_line1i' value='line1i = roundMoney( addNonNull(taxpayerElected, spouseElected) )&#xa;&#xa;addNonNull: treats null as 0 only when other is non-null; both null → null' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1' vertex='1' parent='1'>
+      <mxGeometry x='380' y='810' width='900' height='65' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ OUTPUT STORAGE ══ -->
+    <mxCell id='n_store' value='Income.setNontaxableCombatPayElection(line1i)&#xa;→ form1040.income.nontaxableCombatPayElection&#xa;&#xa;line1z = addNonNull(1a,1b,1c,1d,1e,1f,1g,1h)  [line1i EXCLUDED by design]' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='330' y='915' width='1000' height='65' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ DOWNSTREAM CONSUMERS ══ -->
+    <mxCell id='hdr_down' value='DOWNSTREAM CONSUMERS' style='text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1' vertex='1' parent='1'>
+      <mxGeometry x='150' y='1020' width='1360' height='30' as='geometry'/>
+    </mxCell>
+
+    <mxCell id='d_eic' value='EIC — computeLine27aEIC()&#xa;&#xa;earnedIncomeForEic = normalEarnedIncome + nontaxableCombatPayElection&#xa;&#xa;⚠ election may DECREASE EIC if filer is in phaseout range&#xa;(higher earnedIncome → lower EIC table lookup)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=left;spacingLeft=8' vertex='1' parent='1'>
+      <mxGeometry x='130' y='1070' width='600' height='90' as='geometry'/>
+    </mxCell>
+
+    <mxCell id='d_actc' value='ACTC — computeSchedule8812() Part II-A&#xa;&#xa;ACTCBase = taxableEarnedIncome + nontaxableCombatPayElection&#xa;ACTCFloor = max(0, ACTCBase − 2,500)&#xa;ACTCFromEarnedIncome = ACTCFloor × 15%&#xa;cap per qualifying child = $1,700 (2025)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=left;spacingLeft=8' vertex='1' parent='1'>
+      <mxGeometry x='930' y='1070' width='600' height='90' as='geometry'/>
+    </mxCell>
+
+    <mxCell id='d_ira' value='IRA contributions (out of scope for line 1i)&#xa;&#xa;Nontaxable combat pay counts as compensation for&#xa;IRA contribution limits — handled in IRA forms, not here.' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=11;align=left;spacingLeft=8' vertex='1' parent='1'>
+      <mxGeometry x='530' y='1070' width='400' height='90' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ INVARIANTS ══ -->
+    <mxCell id='n_inv' value='Invariants:&#xa;• line1i ≥ 0&#xa;• per-person elected = 0 or full code Q total (no partial amounts)&#xa;• line1i ≤ sum(all W-2 code Q on return)&#xa;• line1i NOT in line1z, NOT in AGI, NOT in taxable income' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=11;align=left;spacingLeft=8' vertex='1' parent='1'>
+      <mxGeometry x='380' y='1200' width='900' height='80' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ EDGES ══ -->
+    <!-- start → SSN -->
+    <mxCell id='e1' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n_start' target='t_ssn' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e2' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n_start' target='s_ssn' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <!-- SSN → scan -->
+    <mxCell id='e3' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='t_ssn' target='t_scan' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e4' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='s_ssn' target='s_scan' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <!-- scan → code Q sum -->
+    <mxCell id='e5' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='t_scan' target='t_codeq' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e6' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='s_scan' target='s_codeq' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <!-- code Q → read flag -->
+    <mxCell id='e7' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='t_codeq' target='t_flag' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e8' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='s_codeq' target='s_flag' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <!-- flag → decision -->
+    <mxCell id='e9' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='t_flag' target='t_dec' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e10' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='s_flag' target='s_dec' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <!-- taxpayer decision → yes/no -->
+    <mxCell id='e11' value='Yes' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='t_dec' target='t_yes' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e12' value='No / null' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='t_dec' target='t_no' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <!-- spouse decision → yes/no -->
+    <mxCell id='e13' value='Yes' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='s_dec' target='s_yes' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e14' value='No / null' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='s_dec' target='s_no' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <!-- yes/no → line1i -->
+    <mxCell id='e15' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='t_yes' target='n_line1i' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e16' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='t_no' target='n_line1i' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e17' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='s_yes' target='n_line1i' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e18' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='s_no' target='n_line1i' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <!-- line1i → store -->
+    <mxCell id='e19' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n_line1i' target='n_store' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <!-- store → downstream -->
+    <mxCell id='e20' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n_store' target='d_eic' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e21' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n_store' target='d_actc' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e22' style='edgeStyle=orthogonalEdgeStyle;dashed=1;' edge='1' source='n_store' target='d_ira' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+
+  </root>
+</mxGraphModel>

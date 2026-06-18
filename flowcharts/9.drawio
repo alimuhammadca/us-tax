@@ -1,0 +1,153 @@
+<mxfile host='app.diagrams.net' modified='2026-04-16T00:00:00.000Z' agent='Claude' version='20.8.16' type='device'>
+  <diagram id='line9-computation' name='Line 9 Total Income Flowchart'>
+    <mxGraphModel dx='1400' dy='900' grid='1' gridSize='10' guides='1' tooltips='1' connect='1' arrows='1' fold='1' page='1' pageScale='1' pageWidth='1500' pageHeight='2200' math='0' shadow='0'>
+      <root>
+        <mxCell id='0'/>
+        <mxCell id='1' parent='0'/>
+
+        <!-- LEGEND -->
+        <mxCell id='leg1' value='Start / End' style='ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1140' y='80' width='130' height='40' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg2' value='Process / Action' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1140' y='130' width='130' height='40' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg3' value='Decision' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1140' y='180' width='130' height='50' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg4' value='Output / Result' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1140' y='240' width='130' height='40' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg5' value='Gap / Deferred' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1140' y='290' width='130' height='40' as='geometry'/>
+        </mxCell>
+
+        <!-- CONSTANTS / NOTES -->
+        <mxCell id='notes' value='2025 Notes&#xa;&#xa;Line 9 formula (IRS printed instruction):&#xa;"Add lines 1z, 2b, 3b, 4b, 5b, 6b, 7a, and 8.&#xa; This is your total income."&#xa;&#xa;FEEDER LINES — TAXABLE ONLY:&#xa;1z  Total wages (sum of lines 1a–1h)&#xa;2b  Taxable interest (NOT tax-exempt 2a)&#xa;3b  Ordinary dividends (NOT qualified 3a)&#xa;4b  Taxable IRA distributions (NOT gross 4a)&#xa;5b  Taxable pensions/annuities (NOT gross 5a)&#xa;6b  Taxable Social Security (NOT gross 6a)&#xa;7a  Capital gain or (loss) — can be negative&#xa;8   Other income from Schedule 1 — can be negative&#xa;&#xa;COMPANION LINES EXCLUDED:&#xa;2a, 3a, 4a, 5a, 6a, 1i — must NOT enter line 9&#xa;&#xa;SIGNED BEHAVIOR:&#xa;Line 7a and line 8 may be negative.&#xa;Line 9 result is NOT floored to zero.&#xa;&#xa;NULL HANDLING:&#xa;addNonNull(null, x) = x&#xa;All null feeders → 0 contribution.&#xa;If ALL feeders null → line9 = null (not set).&#xa;&#xa;Sources: 2025 Form 1040, 2025 Form 1040 Instructions,&#xa;i1040gi_2025.txt, J.K. Lasser's Income Tax 2025' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#388e3c;fontSize=11;align=left;spacingLeft=8;' vertex='1' parent='1'>
+          <mxGeometry x='1130' y='360' width='310' height='440' as='geometry'/>
+        </mxCell>
+
+        <!-- IMPLEMENTATION STATUS -->
+        <mxCell id='status' value='Implementation Status (2026-04-16)&#xa;&#xa;IMPLEMENTED:&#xa;&#x2713; Formula: line9 = 1z+2b+3b+4b+5b+6b+7a+8&#xa;&#x2713; addNonNull chain (null feeders → 0)&#xa;&#x2713; roundMoney (2 decimal places)&#xa;&#x2713; No zero-floor (negative line 9 preserved)&#xa;&#x2713; income.setTotalIncome(line9) output&#xa;&#x2713; PDF export: f1040 line9_total_income (f1_73[0])&#xa;&#x2713; Frontend display: form-tax-return-1040&#xa;&#x2713; Unit test: wages+line8 → 1150&#xa;&#x2713; E2E test: line9-total-income.spec.ts (1 scenario)&#xa;&#xa;GAPS (test coverage only):&#xa;&#x26A0; No unit test for negative line 9&#xa;   (e.g. large capital loss + NOL on line 8)&#xa;&#x26A0; No unit test exercising all 8 feeders together&#xa;&#x26A0; No unit test for companion-line exclusion guardrail&#xa;   (2a, 3a, 4a, 5a, 6a must NOT be included)&#xa;&#x26A0; No E2E test for negative line 9 scenario&#xa;&#x26A0; E2E spec only exercises 2 of 8 feeders&#xa;&#xa;NOTE: No computation gaps — implementation complete.&#xa;Gaps are in test-coverage breadth only.' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;align=left;spacingLeft=8;' vertex='1' parent='1'>
+          <mxGeometry x='1130' y='820' width='310' height='370' as='geometry'/>
+        </mxCell>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- MAIN FLOW -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+
+        <!-- START -->
+        <mxCell id='n01' value='START — buildIncome()&#xa;&#xa;Called from prepare() after all 8 feeder lines computed.&#xa;&#xa;Parameters received:&#xa;  interest (→ line2b)&#xa;  dividends (→ line3b)&#xa;  ira (→ line4b)&#xa;  pension (→ line5b)&#xa;  socialSecurity (→ line6b)&#xa;  capitalGainLoss (→ line7a)&#xa;  otherIncome (→ line8)&#xa;  w2Entries + employment forms (→ line1z)' style='ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;' vertex='1' parent='1'>
+          <mxGeometry x='240' y='40' width='500' height='120' as='geometry'/>
+        </mxCell>
+
+        <!-- Extract feeder lines from upstream computations -->
+        <mxCell id='n02' value='Extract 8 feeder lines from upstream computation results&#xa;&#xa;line1z = roundMoney(totalWagesRaw)   — sum of lines 1a–1h (computed above)&#xa;line2b = roundMoney(interest.taxableInterestIncome())&#xa;line3b = roundMoney(dividends.ordinaryDividendsTotal())&#xa;line4b = roundMoney(ira.taxableIraDistributions())&#xa;line5b = roundMoney(pension.taxablePensionsAnnuities())&#xa;line6b = roundMoney(socialSecurity.taxableSocialSecurityBenefits())&#xa;line7a = roundMoney(capitalGainLoss.line7aCapitalGainOrLoss())&#xa;line8  = roundMoney(otherIncome.line8FromSchedule1())&#xa;&#xa;Any of these may be null if upstream computation returned null.' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='240' y='220' width='500' height='150' as='geometry'/>
+        </mxCell>
+        <mxCell id='e01' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n01' target='n02' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Companion-line guardrail note -->
+        <mxCell id='n02b' value='Companion lines NOT extracted for line 9:&#xa;2a (tax-exempt interest)&#xa;3a (qualified dividends)&#xa;4a (gross IRA distributions)&#xa;5a (gross pension/annuity)&#xa;6a (total SS benefits)&#xa;1i (combat pay election)&#xa;&#xa;These are set on Income object&#xa;for informational display only.' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#388e3c;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='780' y='240' width='220' height='135' as='geometry'/>
+        </mxCell>
+        <mxCell id='e01b' style='edgeStyle=orthogonalEdgeStyle;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;' edge='1' source='n02' target='n02b' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Compute line 9 -->
+        <mxCell id='n03' value='Compute Form 1040 line 9 — Total Income&#xa;&#xa;line9 = roundMoney(&#xa;    addNonNull(&#xa;        addNonNull(addNonNull(addNonNull(addNonNull(addNonNull(addNonNull(&#xa;            line1z, line2b), line3b), line4b), line5b), line6b), line7a),&#xa;        line8&#xa;    )&#xa;)&#xa;&#xa;addNonNull semantics: treats null as 0 (missing feeders = 0)&#xa;roundMoney: 2 decimal places, HALF_UP&#xa;Result NOT floored to zero — may be negative if 7a or 8 is negative' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='240' y='440' width='500' height='150' as='geometry'/>
+        </mxCell>
+        <mxCell id='e02' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n02' target='n03' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Signed-result check -->
+        <mxCell id='n03b' value='Can line 9 be negative?&#xa;&#xa;YES if:&#xa;• line7a is a capital loss (large loss)&#xa;• line8 has large NOL or Form 2555 exclusion&#xa;&#xa;Result is preserved as-is.&#xa;No zero floor applied.' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='780' y='460' width='220' height='115' as='geometry'/>
+        </mxCell>
+        <mxCell id='e02b' style='edgeStyle=orthogonalEdgeStyle;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;' edge='1' source='n03' target='n03b' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Null check before setting -->
+        <mxCell id='n04' value='line9 != null?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='330' y='660' width='320' height='60' as='geometry'/>
+        </mxCell>
+        <mxCell id='e03' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n03' target='n04' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- null result -->
+        <mxCell id='n04b' value='income.totalIncome not set&#xa;(all feeders were null)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='700' y='668' width='200' height='45' as='geometry'/>
+        </mxCell>
+        <mxCell id='e03b' value='No' style='edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5;exitDx=0;exitDy=0;' edge='1' source='n04' target='n04b' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Set output -->
+        <mxCell id='n05' value='Store result on Income object&#xa;&#xa;income.setTotalIncome(line9)&#xa;&#xa;→ JSON output: form1040.income.totalIncome&#xa;→ PDF export: f1040 field line9_total_income&#xa;   (CSV row: f1_73[0], page 1, rect (504, 54, 576, 65.999))' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='240' y='790' width='500' height='100' as='geometry'/>
+        </mxCell>
+        <mxCell id='e04' value='Yes' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n04' target='n05' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Return Income object -->
+        <mxCell id='n06' value='buildIncome() returns Income object&#xa;(contains line9 = income.totalIncome plus all feeder lines)&#xa;&#xa;prepare() stores this on TaxReturnComputation.form1040()' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='240' y='960' width='500' height='80' as='geometry'/>
+        </mxCell>
+        <mxCell id='e05' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n05' target='n06' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- buildAdjustments downstream -->
+        <mxCell id='n07' value='buildAdjustments() — uses line 9 for AGI&#xa;&#xa;line9  = income.getTotalIncome()&#xa;line10 = incomeAdjustments.line10FromSchedule1Line26()&#xa;line11a = subtractNonNegativeAllowNegative(line9, line10)&#xa;  (negative AGI preserved — no floor)&#xa;line11b = line11a (IRS copy line)&#xa;&#xa;→ adjustments.adjustedGrossIncome = line11a' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='240' y='1110' width='500' height='120' as='geometry'/>
+        </mxCell>
+        <mxCell id='e06' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n06' target='n07' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- OUTPUT -->
+        <mxCell id='n08' value='OUTPUTS FROM LINE 9&#xa;&#xa;form1040.income.totalIncome               (Form 1040 line 9)&#xa;  └─ feeds: form1040.adjustments.adjustedGrossIncome  (line 11a)&#xa;  └─ feeds: form1040.adjustments.line11bAmountFromLine11a (line 11b)&#xa;  └─ feeds: AMT (Form 6251) — indirectly via AGI&#xa;  └─ feeds: QBI deduction (line 13a) — MAGI-based thresholds&#xa;  └─ feeds: SS worksheet — NOT line 9 directly (different base)&#xa;  └─ feeds: Schedule 8812 CTC/ACTC phaseout — via AGI&#xa;  └─ feeds: Form 8863 AOTC/LLC phaseout — via MAGI from AGI&#xa;&#xa;PDF: line9_total_income in f1040_field_map_semantic.csv' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;fontStyle=1;' vertex='1' parent='1'>
+          <mxGeometry x='215' y='1300' width='550' height='150' as='geometry'/>
+        </mxCell>
+        <mxCell id='e07' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n07' target='n08' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- END -->
+        <mxCell id='n09' value='END&#xa;&#xa;Line 9 is a pure sum of 8 taxable feeder lines.&#xa;No schedule, no worksheet, no alternate path.&#xa;Computation is complete and correct for 2025.' style='ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;' vertex='1' parent='1'>
+          <mxGeometry x='290' y='1520' width='400' height='90' as='geometry'/>
+        </mxCell>
+        <mxCell id='e08' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n08' target='n09' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- GAP NODES -->
+
+        <!-- Gap: negative line 9 test -->
+        <mxCell id='gap1' value='&#x26A0; GAP: No unit test for negative line 9&#xa;Should test: large capital loss (line7a negative) +&#xa;NOL on line 8 → totalIncome negative → preserved' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='780' y='600' width='260' height='65' as='geometry'/>
+        </mxCell>
+        <mxCell id='egap1' style='edgeStyle=orthogonalEdgeStyle;dashed=1;' edge='1' source='n03b' target='gap1' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Gap: all 8 feeders test -->
+        <mxCell id='gap2' value='&#x26A0; GAP: No unit test with all 8 feeders&#xa;Only wages + line8 are exercised together.&#xa;Test with 2b, 3b, 4b, 5b, 6b all nonzero needed.' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='780' y='810' width='260' height='65' as='geometry'/>
+        </mxCell>
+        <mxCell id='egap2' style='edgeStyle=orthogonalEdgeStyle;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;' edge='1' source='n05' target='gap2' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

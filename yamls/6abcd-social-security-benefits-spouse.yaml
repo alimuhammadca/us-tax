@@ -1,0 +1,169 @@
+﻿# Form 1040 lines 6a/6b/6c/6d spouse workflow.
+# Approach: keep spouse-specific user questions + imported statement fields + computed outputs in one YAML.
+# NOTE: Sections marked as backend-only are NOT supposed to be rendered in the actual form component.
+# NOTE: Return-level upload/line 6c election/line 6d facts stay on social-security-benefits-taxpayer to avoid spouse conflict.
+name: social-security-benefits-spouse
+title: Form 1040 - Social Security benefits (spouse, lines 6a, 6b, 6c, and 6d)
+multiplicity: single
+formName: 1040
+category: income
+instructions:
+  - Use this only for spouse-specific Social Security and Railroad Retirement inputs for Form 1040 lines 6a/6b/6c/6d.
+  - Return-level upload checks, line 6c election, and line 6d MFS-apart facts stay on social-security-benefits-taxpayer.
+  - Supplemental Security Income (SSI) is excluded and must not be included in taxable-benefit calculations.
+  - Self-employment income is out of scope and excluded.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: hadSocialSecurityBenefits
+        type: boolean
+        required: true
+        label: Did your spouse receive Social Security or Railroad Retirement benefits during the tax year?
+        help: If No, stop here and do not continue this spouse interview.
+
+  - name: exclusionsAndFacts
+    title: Exclusions and facts
+    multiplicity: single
+    showIf: hadSocialSecurityBenefits == true
+    fields:
+      - name: hasSupplementalSecurityIncome
+        type: boolean
+        required: false
+        label: Did your spouse receive Supplemental Security Income (SSI)?
+        help: SSI is not taxable and must be excluded from Form 1040 lines 6a/6b.
+      - name: supplementalSecurityIncomeAmount
+        type: amount
+        required: false
+        label: Spouse SSI amount received (excluded)
+        placeholder: 0.00
+        help: Enter spouse SSI amount only for exclusion documentation; do not include it in taxable-benefit calculations.
+      - name: confirmSsiExcludedFromTaxableBenefits
+        type: boolean
+        required: false
+        label: I confirm spouse SSI is excluded from taxable Social Security benefit calculations
+        help: Confirm spouse SSI exclusion before continuing.
+
+  - name: lumpSumGate
+    title: Lump-sum back payment
+    multiplicity: single
+    showIf: hadSocialSecurityBenefits == true
+    fields:
+      - name: hasLumpSumBackPaymentForPriorYears
+        type: boolean
+        required: false
+        label: Did your spouse receive a Social Security or Railroad Retirement lump-sum back payment for prior years?
+        help: Select Yes only if the SSA/RRB notice shows a back payment allocated across multiple prior years. Standard benefit payments do not qualify.
+
+  - name: lumpSumDetails
+    title: Spouse lump-sum details by prior year
+    multiplicity: multiple
+    showIf: hadSocialSecurityBenefits == true
+    instructions:
+      - Add one row per prior year only when spouse had a Social Security/RRB lump-sum back payment.
+      - Line 6c election decision remains on taxpayer return-level form.
+    fields:
+      - name: priorTaxYear
+        type: integer
+        required: false
+        label: Prior tax year for this spouse lump-sum allocation
+        help: Enter the tax year to which this spouse back-payment portion relates.
+      - name: lumpSumAllocatedToPriorYear
+        type: amount
+        required: false
+        label: Spouse lump-sum amount allocable to this prior year
+        placeholder: 0.00
+        help: Enter spouse amount from SSA/RRB notice allocable to the selected prior year.
+      - name: priorYearOtherIncomeForRecompute
+        type: amount
+        required: false
+        label: Spouse prior-year other income for recomputation
+        placeholder: 0.00
+        help: Enter spouse prior-year income inputs needed for election recomputation.
+      - name: priorYearTaxExemptInterestForRecompute
+        type: amount
+        required: false
+        label: Spouse prior-year tax-exempt interest for recomputation
+        placeholder: 0.00
+        help: Enter spouse prior-year tax-exempt interest used in recomputation.
+      - name: priorYearAdjustmentsForRecompute
+        type: amount
+        required: false
+        label: Spouse prior-year adjustments for recomputation
+        placeholder: 0.00
+        help: Enter spouse prior-year adjustment total used by lump-sum recomputation.
+      - name: priorYearBenefitsPreviouslyReported
+        type: amount
+        required: false
+        label: Spouse prior-year benefits previously reported
+        placeholder: 0.00
+        help: Enter spouse prior-year benefits amount previously reported for that year.
+      - name: priorYearTaxableBenefitsPreviouslyReported
+        type: amount
+        required: false
+        label: Spouse prior-year taxable benefits previously reported
+        placeholder: 0.00
+        help: Enter spouse prior-year taxable Social Security benefits previously reported for that year.
+
+  # Backend-only statement imports. Not rendered in form component.
+  - name: importedStatementFields
+    title: Imported statement fields (backend only)
+    multiplicity: single
+    showIf: hadSocialSecurityBenefits == true
+    fields:
+      - name: importedSsa1099RecordCount
+        type: integer
+        required: false
+        readOnly: true
+        label: Number of spouse SSA-1099 statements (imported)
+      - name: importedSsa1099Box5Total
+        type: amount
+        required: false
+        readOnly: true
+        label: Spouse SSA-1099 box 5 total (imported)
+      - name: importedSsa1099Box6FederalWithholdingTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Spouse SSA-1099 box 6 total federal withholding (imported)
+      - name: importedRrb1099RecordCount
+        type: integer
+        required: false
+        readOnly: true
+        label: Number of spouse RRB-1099 statements (imported)
+      - name: importedRrb1099Box5SsebTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Spouse RRB-1099 box 5 SSEB total (imported)
+      - name: importedRrb1099Box10FederalWithholdingTotal
+        type: amount
+        required: false
+        readOnly: true
+        label: Spouse RRB-1099 box 10 federal withholding total (imported)
+
+  # Backend-only computed values. Not rendered in form component.
+  - name: computedOutputs
+    title: Computed outputs (backend only)
+    multiplicity: single
+    showIf: hadSocialSecurityBenefits == true
+    fields:
+      - name: computedLine6aGrossBenefitsContributionSpouse
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed spouse contribution to Form 1040 line 6a
+      - name: computedLine6bTaxableBenefitsContributionSpouse
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed spouse contribution to Form 1040 line 6b
+      - name: computedSpouseLumpSumElectionContribution
+        type: amount
+        required: false
+        readOnly: true
+        computed: true
+        label: Computed spouse lump-sum election contribution

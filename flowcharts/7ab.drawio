@@ -1,0 +1,285 @@
+<mxfile host='app.diagrams.net' modified='2026-04-16T00:00:00.000Z' agent='Claude' version='20.8.16' type='device'>
+  <diagram id='line7ab-computation' name='Lines 7a/7b Capital Gain or (Loss) Flowchart'>
+    <mxGraphModel dx='1400' dy='900' grid='1' gridSize='10' guides='1' tooltips='1' connect='1' arrows='1' fold='1' page='1' pageScale='1' pageWidth='1900' pageHeight='4000' math='0' shadow='0'>
+      <root>
+        <mxCell id='0'/>
+        <mxCell id='1' parent='0'/>
+
+        <!-- LEGEND -->
+        <mxCell id='leg1' value='Start / End' style='ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1530' y='80' width='130' height='40' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg2' value='Process / Action' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1530' y='130' width='130' height='40' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg3' value='Decision' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1530' y='180' width='130' height='50' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg4' value='Output / Result' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1530' y='240' width='130' height='40' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg5' value='Blocking Flag' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8d7da;strokeColor=#842029;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1530' y='290' width='130' height='40' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg6' value='Gap / Deferred' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1530' y='340' width='130' height='40' as='geometry'/>
+        </mxCell>
+
+        <!-- ABBREVIATIONS -->
+        <mxCell id='abbr' value='Abbreviations&#xa;&#xa;CGD  = Capital Gain Distribution (1099-DIV box 2a)&#xa;MFS  = Married Filing Separately&#xa;QOF  = Qualified Opportunity Fund&#xa;TIN  = Taxpayer Identification Number&#xa;ST   = Short-Term&#xa;LT   = Long-Term&#xa;QDCG = Qualified Dividends &amp; Capital Gain Worksheet&#xa;SDTW = Schedule D Tax Worksheet' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f0f4ff;strokeColor=#3b5bdb;fontSize=11;align=left;spacingLeft=8;' vertex='1' parent='1'>
+          <mxGeometry x='1520' y='410' width='300' height='180' as='geometry'/>
+        </mxCell>
+
+        <!-- 2025 CONSTANTS -->
+        <mxCell id='const' value='2025 IRS Constants (Verified)&#xa;&#xa;Capital loss deduction limit:&#xa;  All filers: $3,000&#xa;  MFS: $1,500&#xa;&#xa;Form 8814 child gross income limit: $13,500&#xa;Form 8814 line 4 threshold: $2,700&#xa;&#xa;Form 8949 rows per page: 11&#xa;&#xa;Direct Schedule D boxes (no Form 8949):&#xa;  Box A = ST, basis reported to IRS (1099-B)&#xa;  Box D = LT, basis reported to IRS (1099-B)&#xa;  Box G = ST, basis reported to IRS (1099-DA)&#xa;  Box J = LT, basis reported to IRS (1099-DA)&#xa;&#xa;Sources: IRS 2025 Form 1040 Instructions,&#xa;2025 Schedule D Instructions, 2025 Form 8949&#xa;Instructions, 2025 Form 8814 Instructions' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#388e3c;fontSize=11;align=left;spacingLeft=8;' vertex='1' parent='1'>
+          <mxGeometry x='1520' y='610' width='300' height='290' as='geometry'/>
+        </mxCell>
+
+        <!-- KNOWN GAPS -->
+        <mxCell id='gaps' value='Implementation Status / Gaps (2026-04-16)&#xa;&#xa;✓ Exception 1 (no-Schedule-D) path implemented&#xa;✓ Schedule D lines 1a–22 computed&#xa;✓ Form 8949 pages (A–L boxes) computed&#xa;✓ Loss limit $3,000/$1,500 MFS applied&#xa;✓ Form 8814 line 10 → line 7b child checkbox&#xa;✓ QOF detection blocks Exception 1 (taxpayer AND spouse)&#xa;✓ 1099-B and 1099-DA box derivation&#xa;✓ Direct Schedule D aggregation (boxes A/D/G/J)&#xa;✓ Prior-year carryover (lines 6 and 14)&#xa;✓ 1099-DIV boxes 2b/2c/2d → Schedule D lines 18/19&#xa;✓ Form 8997 — produced as required-attachment when QOF deferral&#xa;  detected on taxpayer OR spouse form&#xa;&#xa;⚠ GAPS:&#xa;⚠ Form 2439 output artifact — not produced&#xa;⚠ Form 6252 output artifact — not produced&#xa;⚠ Form 6781 output artifact — not produced&#xa;⚠ Form 8824 output artifact — not produced&#xa;⚠ Schedule K-1 capital attachment — not produced&#xa;⚠ Capital loss carryover worksheet — simplified fallback&#xa;⚠ Form 8814 child amt via Schedule D line 13 when&#xa;  Schedule D required — added directly to line 7a&#xa;⚠ E2E coverage for 1099-DA, 4684, 4797 etc. — removed&#xa;⚠ Nonbusiness bad debt path — not modeled&#xa;⚠ 1099-S personal-use loss reporting — not modeled' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;align=left;spacingLeft=8;' vertex='1' parent='1'>
+          <mxGeometry x='1520' y='920' width='300' height='380' as='geometry'/>
+        </mxCell>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- MAIN FLOW -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+
+        <!-- START -->
+        <mxCell id='n01' value='START — computeCapitalGainLoss()&#xa;&#xa;Inputs: capital-gain-loss-taxpayer/spouse,&#xa;1099-DIV/B/DA/2439/6252/4797/4684/6781/8824&#xa;K-1 entries, you/spouse (SSNs),&#xa;includesChildCapitalGainLoss, form8814Line10Total,&#xa;filingStatus, flags' style='ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;' vertex='1' parent='1'>
+          <mxGeometry x='300' y='40' width='440' height='90' as='geometry'/>
+        </mxCell>
+
+        <!-- STEP: Gate — hadCapitalGainOrLoss -->
+        <mxCell id='n02' value='taxpayerHadCapital == true&#xa;OR spouseHadCapital == true?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='310' y='185' width='420' height='70' as='geometry'/>
+        </mxCell>
+        <mxCell id='e01' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n01' target='n02' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- No → return null -->
+        <mxCell id='n03' value='return null&#xa;(no capital activity)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='760' y='195' width='180' height='50' as='geometry'/>
+        </mxCell>
+        <mxCell id='e02' value='No' style='edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5;exitDx=0;exitDy=0;' edge='1' source='n02' target='n03' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- STEP: Statement gating -->
+        <mxCell id='n04' value='validateCapitalStatementGating()&#xa;&#xa;Check upload confirmation fields vs. statement counts' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='310' y='310' width='420' height='60' as='geometry'/>
+        </mxCell>
+        <mxCell id='e03' value='Yes' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n02' target='n04' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Blocking flags from gating -->
+        <mxCell id='n04b' value='Emit blocking flags:&#xa;CAPITAL_STATEMENT_UPLOAD_REQUIRED&#xa;MISSING_UPLOADED_1099_DIV_CAPITAL' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8d7da;strokeColor=#842029;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='760' y='318' width='230' height='60' as='geometry'/>
+        </mxCell>
+        <mxCell id='e03b' value='missing' style='edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5;exitDx=0;exitDy=0;' edge='1' source='n04' target='n04b' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- STEP: TIN matching + person totals -->
+        <mxCell id='n05' value='computeCapitalForPerson() × 2&#xa;&#xa;Read 1099-DIV entries (boxes 2a/2b/2c/2d) per person via TIN matching.&#xa;Aggregate manual amounts, carryovers, situation flags.&#xa;&#xa;Note: hasForm2439UndistributedCapitalGains and&#xa;hasAny1099DivBoxes2b2c2dAmounts are only on the SPOUSE&#xa;personal form; taxpayer version auto-detects from statements.' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='310' y='430' width='420' height='70' as='geometry'/>
+        </mxCell>
+        <mxCell id='e04' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n04' target='n05' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- STEP: Build transaction list -->
+        <mxCell id='n06' value='Build transaction list&#xa;&#xa;buildCapitalTransactionsFrom1099B() — derive box A/B/C/D/E/F per entry&#xa;buildCapitalTransactionsFrom1099Da() — derive box G/H/I/J/K/L per entry&#xa;buildManualTransactions() — user-entered Form 8949 transactions&#xa;&#xa;For each transaction: isDirectScheduleDBox? → route to line 1a / 8a&#xa;Wash-sale adjustment → code "W", forces Form 8949&#xa;QOF flag → forces Form 8949' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='310' y='555' width='420' height='100' as='geometry'/>
+        </mxCell>
+        <mxCell id='e05' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n05' target='n06' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- STEP: Build Schedule D rows -->
+        <mxCell id='n07' value='Build Schedule D aggregate rows&#xa;&#xa;line1a = box A/G direct (basis reported, no wash, no QOF)&#xa;line1b/2/3 = box A/G, B/H, C/I via Form 8949 aggregates&#xa;line8a = box D/J direct&#xa;line8b/9/10 = box D/J, E/K, F/L via Form 8949 aggregates&#xa;buildForm8949Pages() — 11 transactions/page per box' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='310' y='710' width='420' height='90' as='geometry'/>
+        </mxCell>
+        <mxCell id='e06' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n06' target='n07' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- STEP: Detect Exception 1 conditions -->
+        <mxCell id='n08' value='Detect Exception 1 conditions&#xa;&#xa;hasQofDeferral — from TAXPAYER or SPOUSE form flag OR transaction QOF flags&#xa;hasSalesOrExchanges — from taxpayer/spouse form flag OR transactions OR line1a/8a rows&#xa;hasCapitalLosses — from taxpayer/spouse form flag OR negative Schedule D rows&#xa;hasCarryover — from taxpayer/spouse form flag OR carryover amounts&#xa;hasForm2439 — from taxpayer/spouse form flag OR 2439 entries&#xa;hasOtherSources — from taxpayer/spouse form flag OR feeder form entries OR line4/5/11/12&#xa;hasSpecial1099DivBoxes — from taxpayer/spouse form flag OR box2b/c/d amounts' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='310' y='855' width='420' height='110' as='geometry'/>
+        </mxCell>
+        <mxCell id='e07' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n07' target='n08' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Decision: Exception 1? -->
+        <mxCell id='n09' value='exception1 =&#xa;!QOF &amp;&amp; !sales &amp;&amp; !losses&#xa;&amp;&amp; !carryover &amp;&amp; !2439&#xa;&amp;&amp; !otherSources &amp;&amp; !box2b/c/d?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='330' y='1025' width='380' height='80' as='geometry'/>
+        </mxCell>
+        <mxCell id='e08' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n08' target='n09' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- ─── EXCEPTION 1 PATH ─── -->
+        <mxCell id='n10' value='EXCEPTION 1 — Direct entry path&#xa;&#xa;line7aBase = capitalGainDistributions − nomineeAdjustments&#xa;(= 1099-DIV box2a total + manual distributions − nominee)&#xa;&#xa;scheduleDNotRequired = true&#xa;No Schedule D produced&#xa;No Form 8949 produced' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='760' y='1005' width='340' height='110' as='geometry'/>
+        </mxCell>
+        <mxCell id='e09' value='Yes' style='edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5;exitDx=0;exitDy=0;' edge='1' source='n09' target='n10' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- ─── SCHEDULE D PATH ─── -->
+        <mxCell id='n11' value='SCHEDULE D PATH&#xa;&#xa;line7  = line1a+1b+2+3+4+5 − line6_carryover&#xa;line15 = line8a+8b+9+10+11+12+13 − line14_carryover&#xa;line16 = line7 + line15&#xa;line18 = box2c+box2d+worksheetAmt18&#xa;line19 = box2b+worksheetAmt19&#xa;line20 = (line18=0 AND line19=0) → QDCG Worksheet&#xa;line22 = qualifiedDividends &gt; 0' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='310' y='1175' width='420' height='120' as='geometry'/>
+        </mxCell>
+        <mxCell id='e10' value='No' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n09' target='n11' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Decision: line16 sign -->
+        <mxCell id='n12' value='line16 &gt; 0?&#xa;= 0?&#xa;&lt; 0 (loss)?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='360' y='1355' width='320' height='80' as='geometry'/>
+        </mxCell>
+        <mxCell id='e11' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n11' target='n12' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Gain path -->
+        <mxCell id='n13' value='line7aBase = line16&#xa;(gain flows through)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='760' y='1330' width='220' height='50' as='geometry'/>
+        </mxCell>
+        <mxCell id='e12' value='gain' style='edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.3;exitDx=0;exitDy=0;' edge='1' source='n12' target='n13' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Zero path -->
+        <mxCell id='n13b' value='line7aBase = 0' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='760' y='1395' width='220' height='40' as='geometry'/>
+        </mxCell>
+        <mxCell id='e12b' value='zero' style='edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5;exitDx=0;exitDy=0;' edge='1' source='n12' target='n13b' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Loss path -->
+        <mxCell id='n14' value='Apply loss limit&#xa;&#xa;lossLimit = $3,000 (all) | $1,500 (MFS)&#xa;line21 = min(|line16|, lossLimit)&#xa;line7aBase = −line21' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='760' y='1450' width='260' height='80' as='geometry'/>
+        </mxCell>
+        <mxCell id='e13' value='loss' style='edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.7;exitDx=0;exitDy=0;' edge='1' source='n12' target='n14' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Decision: Form 8949 required? -->
+        <mxCell id='n15' value='form8949Required =&#xa;scheduleDRequired AND&#xa;(!form8949Pages.isEmpty() OR hasQOF)?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='340' y='1570' width='380' height='80' as='geometry'/>
+        </mxCell>
+        <mxCell id='e14' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n12' target='n15' parent='1'>
+          <mxGeometry relative='1' as='geometry'>
+            <Array as='points'>
+              <mxPoint x='520' y='1560'/>
+              <mxPoint x='520' y='1570'/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Form 8949 yes -->
+        <mxCell id='n16' value='Build Form8949&#xa;pages grouped by box&#xa;11 transactions/page' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='760' y='1570' width='220' height='60' as='geometry'/>
+        </mxCell>
+        <mxCell id='e15' value='Yes' style='edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5;exitDx=0;exitDy=0;' edge='1' source='n15' target='n16' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Merge line 7a -->
+        <mxCell id='n17' value='Compute line7a&#xa;&#xa;line7a = line7aBase + (childAmount if includesChildCapitalGainLoss)&#xa;&#xa;includesChildCapitalGainLoss from Form 8814 line 10&#xa;(pre-computed before this function is called)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='310' y='1720' width='420' height='80' as='geometry'/>
+        </mxCell>
+        <mxCell id='e16' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n15' target='n17' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='e17' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n10' target='n17' parent='1'>
+          <mxGeometry relative='1' as='geometry'>
+            <Array as='points'>
+              <mxPoint x='930' y='1115'/>
+              <mxPoint x='930' y='1760'/>
+              <mxPoint x='730' y='1760'/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Finalize line 7b -->
+        <mxCell id='n18' value='Finalize line 7b checkboxes&#xa;&#xa;line7bScheduleDNotRequired = exception1&#xa;line7bIncludesChildCapitalGainLoss = includesChildCapitalGainLoss&#xa;line7bChildAmountFromForm8814Line10 = childAmount' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='310' y='1865' width='420' height='80' as='geometry'/>
+        </mxCell>
+        <mxCell id='e18' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n17' target='n18' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Check: hasOutput? -->
+        <mxCell id='n19' value='hasOutput? (any non-null/non-zero field)' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='360' y='2010' width='320' height='60' as='geometry'/>
+        </mxCell>
+        <mxCell id='e19' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n18' target='n19' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- No output → null -->
+        <mxCell id='n20' value='return null' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='760' y='2020' width='140' height='40' as='geometry'/>
+        </mxCell>
+        <mxCell id='e20' value='No' style='edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5;exitDx=0;exitDy=0;' edge='1' source='n19' target='n20' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- OUTPUT -->
+        <mxCell id='n21' value='Return CapitalGainLossComputation&#xa;&#xa;→ form1040.income.capitalGainLoss = line7a&#xa;→ form1040.income.line7bScheduleDNotRequired&#xa;→ form1040.income.line7bIncludesChildCapitalGainLoss&#xa;→ form1040.income.line7bChildAmountFromForm8814Line10&#xa;→ TaxReturnComputation.scheduleD (if required)&#xa;→ TaxReturnComputation.form8949 (if required)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;fontStyle=1;' vertex='1' parent='1'>
+          <mxGeometry x='290' y='2145' width='460' height='110' as='geometry'/>
+        </mxCell>
+        <mxCell id='e21' value='Yes' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n19' target='n21' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- END -->
+        <mxCell id='n22' value='END&#xa;&#xa;line7a feeds:&#xa;• line 9 total income&#xa;• SS benefits worksheet line 3&#xa;• line 16 tax decision (Schedule D routing)&#xa;• Form 6251 AMT (lines 18/19)' style='ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;' vertex='1' parent='1'>
+          <mxGeometry x='320' y='2325' width='400' height='90' as='geometry'/>
+        </mxCell>
+        <mxCell id='e22' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n21' target='n22' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- GAP: Form 2439 / 6252 / 6781 / 8824 output not produced -->
+        <mxCell id='gap1' value='⚠ GAP: Form 2439, 6252, 6781, 8824&#xa;output artifacts not produced.&#xa;Entries read for gating only.' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='760' y='720' width='250' height='70' as='geometry'/>
+        </mxCell>
+        <mxCell id='egap1' style='edgeStyle=orthogonalEdgeStyle;dashed=1;' edge='1' source='n07' target='gap1' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Form 8997 — now produced as required attachment -->
+        <mxCell id='gap2' value='✓ Form 8997 (QOF Annual Report)&#xa;produced as required-attachment flag&#xa;when taxpayer OR spouse QOF deferral&#xa;detected. Full computation deferred.' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='760' y='1045' width='260' height='70' as='geometry'/>
+        </mxCell>
+        <mxCell id='egap2' style='edgeStyle=orthogonalEdgeStyle;dashed=1;' edge='1' source='n09' target='gap2' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- GAP: carryover worksheet -->
+        <mxCell id='gap3' value='⚠ GAP: Capital loss carryover&#xa;worksheet not produced.&#xa;Fallback: uses line 21 as short-term&#xa;when per-term amounts absent.' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='760' y='1175' width='240' height='70' as='geometry'/>
+        </mxCell>
+        <mxCell id='egap3' style='edgeStyle=orthogonalEdgeStyle;dashed=1;' edge='1' source='n11' target='gap3' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- GAP: Form 8814 child amount via line 13 -->
+        <mxCell id='gap4' value='⚠ GAP: When Schedule D required,&#xa;Form 8814 child amount should appear&#xa;on Schedule D line 13, not just added&#xa;directly to line 7a.' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='760' y='1720' width='260' height='70' as='geometry'/>
+        </mxCell>
+        <mxCell id='egap4' style='edgeStyle=orthogonalEdgeStyle;dashed=1;' edge='1' source='n17' target='gap4' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

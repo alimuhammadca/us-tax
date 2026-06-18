@@ -1,0 +1,174 @@
+<mxGraphModel dx='1400' dy='900' grid='1' gridSize='10' guides='1' tooltips='1' connect='1' arrows='1' fold='1' page='1' pageScale='1' pageWidth='1654' pageHeight='1169' math='0' shadow='0'>
+  <root>
+    <mxCell id='0'/>
+    <mxCell id='1' parent='0'/>
+
+    <!-- ══ TITLE ══ -->
+    <mxCell id='title' value='Form 1040 Line 1c — Tip Income Not Reported on Line 1a&#xa;computeTipsForPerson() — per taxpayer / per spouse' style='text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1' vertex='1' parent='1'>
+      <mxGeometry x='250' y='20' width='780' height='50' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ START ══ -->
+    <mxCell id='n01' value='START: computeTipsForPerson(tipsData, w2Entries, flags, label, ssn)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='350' y='90' width='380' height='45' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ LOAD EMPLOYER ENTRIES ══ -->
+    <mxCell id='n02' value='Load tipsByEmployer list from tipsData' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='350' y='160' width='380' height='40' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ ENTRIES EMPTY? ══ -->
+    <mxCell id='n03' value='tipsByEmployer&#xa;list empty?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='410' y='220' width='200' height='70' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ AUTO-FILL FROM W-2 ══ -->
+    <mxCell id='n04' value='buildTipEntriesFromW2()&#xa;— filter W-2 by SSN&#xa;— create entry for each W-2 with allocatedTipsW2Box8 &gt; 0' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+      <mxGeometry x='660' y='220' width='280' height='70' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ STILL EMPTY? ══ -->
+    <mxCell id='n05' value='entries still&#xa;empty?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='410' y='320' width='200' height='65' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ RETURN NULL ══ -->
+    <mxCell id='n06' value='return TipResult(null, null, null)&#xa;[no tip income, no Form 4137]' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8d7da;strokeColor=#842029;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='660' y='325' width='260' height='55' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ PER-EMPLOYER LOOP ══ -->
+    <mxCell id='n07' value='FOR EACH employer entry:' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;fontStyle=1' vertex='1' parent='1'>
+      <mxGeometry x='350' y='420' width='380' height='35' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ COMPUTE UNREPORTED ══ -->
+    <mxCell id='n08' value='unreported = max(0, received − reported)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='350' y='475' width='380' height='35' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ ALLOCATED TIPS > 0? ══ -->
+    <mxCell id='n09' value='allocatedTipsW2Box8&#xa;&gt; 0?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='410' y='530' width='200' height='65' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ ADEQUATE RECORDS? ══ -->
+    <mxCell id='n10' value='hasAdequateRecords == true&#xa;AND substantiated &lt; allocated?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='160' y='625' width='220' height='70' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ USE SUBSTANTIATED ══ -->
+    <mxCell id='n11' value='unreportedForIncome = substantiated&#xa;[adequate records override]' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='60' y='725' width='240' height='45' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ USE MAX(unreported, allocated) ══ -->
+    <mxCell id='n12' value='unreportedForIncome = max(unreported, allocated)&#xa;[allocated wins when higher]' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='330' y='725' width='270' height='45' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ NO ALLOCATED ══ -->
+    <mxCell id='n13' value='unreportedForIncome = unreported' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='650' y='630' width='230' height='40' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ ACCUMULATE TOTALS ══ -->
+    <mxCell id='n14' value='Accumulate totals:&#xa;totalCashChargeTips += received&#xa;totalReportedTips += reported&#xa;totalUnreportedTipsForIncome += unreportedForIncome&#xa;totalUnderTwentyTips += line5Under20PerMonthTips&#xa;totalNonCashTips += nonCashTipsFmv&#xa;totalMedicareOnlyTips += medicareOnlyGovernmentTips&#xa;totalAllocatedTips += allocatedTipsW2Box8&#xa;totalRrtaComp += rRTACompensationW2Box14&#xa;employers.add(employer)   [no cap — all employers retained]' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+      <mxGeometry x='310' y='800' width='380' height='145' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ END LOOP ══ -->
+    <mxCell id='n15' value='END LOOP' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;fontStyle=1' vertex='1' parent='1'>
+      <mxGeometry x='410' y='970' width='200' height='35' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ COMPUTE LINE 1C INCOME ══ -->
+    <mxCell id='n16' value='line1cIncome = totalUnreportedTipsForIncome + totalNonCashTips&#xa;&#xa;line4 = totalUnreportedTipsForIncome&#xa;line5 = totalUnderTwentyTips&#xa;line6 = max(0, line4 − line5)   [subject to Medicare]' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+      <mxGeometry x='310' y='1030' width='400' height='80' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ FORM 4137 GATE ══ -->
+    <mxCell id='n17' value='line4 &gt; 0&#xa;AND (line6 &gt; 0 OR allocatedTips &gt; 0)?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='390' y='1140' width='250' height='70' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ NO FORM 4137 ══ -->
+    <mxCell id='n18' value='form4137 = null&#xa;[all noncash or all under-$20]' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8d7da;strokeColor=#842029;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='690' y='1148' width='220' height='55' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ SS WAGES FROM W-2 ══ -->
+    <mxCell id='n19' value='ssWagesTips = sumW2SocialSecurityWagesAndTipsForSsn(w2Entries, ssn)&#xa;  [W-2 box 3 + box 7, filtered by SSN]&#xa;if null: fallback to form input fields (socialSecurityWagesW2Box3 + socialSecurityTipsW2Box7)&#xa;&#xa;line8 = ssWagesTips + totalRrtaComp&#xa;line9 = max(0, $176,100 − line8)   [remaining SS wage base]' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+      <mxGeometry x='270' y='1240' width='500' height='95' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ MISSING SS DATA? ══ -->
+    <mxCell id='n20' value='line6 &gt; 0 AND&#xa;ssWagesTips == null?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='390' y='1365' width='250' height='70' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ EMIT FLAG ══ -->
+    <mxCell id='n21' value='Emit MISSING_SS_W2_DATA_{label}&#xa;(blocking flag)&#xa;line10 = null, line11 = null&#xa;[Medicare-only fallback]' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8d7da;strokeColor=#842029;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='690' y='1373' width='230' height='70' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ COMPUTE SS TAX ══ -->
+    <mxCell id='n22' value='ssEligibleTips = line6 − medicareOnlyGovernmentTips&#xa;line10 = min(ssEligibleTips, line9)&#xa;line11 = line10 × 6.2%   [SS tax]' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+      <mxGeometry x='270' y='1365' width='360' height='70' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ MEDICARE TAX ══ -->
+    <mxCell id='n23' value='line12 = line6 × 1.45%   [Medicare tax]&#xa;line13 = line11 + line12   [total tax → Schedule 2 line 5]' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+      <mxGeometry x='270' y='1465' width='440' height='55' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ BUILD FORM 4137 ══ -->
+    <mxCell id='n24' value='Build Form4137 object with lines 2–13&#xa;and per-employer detail (all employers — no cap)&#xa;PDF export applies multi-copy pattern when employers &gt; 5&#xa;(ui.md rule 43: ⌈N/5⌉ copies, last copy carries calculation lines)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#d1e7dd;strokeColor=#0f5132;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='310' y='1550' width='400' height='80' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ RETURN ══ -->
+    <mxCell id='n25' value='return TipResult(line1cIncome, line13TotalTax, form4137)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;' vertex='1' parent='1'>
+      <mxGeometry x='330' y='1660' width='400' height='40' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ AGGREGATION ══ -->
+    <mxCell id='n26' value='computeTips() aggregates both spouses:&#xa;line1c = taxpayer.line1c + spouse.line1c&#xa;totalTipTax = taxpayer.tipTax + spouse.tipTax&#xa;→ Form1040.income.tipIncome (line 1c)&#xa;→ Schedule2.otherTaxes.unreportedTipIncomeTax (line 5)&#xa;→ Form4137Taxpayer / Form4137Spouse (output models)&#xa;→ Form8959 Part I: line6 contributes to Additional Medicare Tax base' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#d1e7dd;strokeColor=#0f5132;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+      <mxGeometry x='270' y='1730' width='500' height='120' as='geometry'/>
+    </mxCell>
+
+    <!-- ══ EDGES ══ -->
+    <mxCell id='e01' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n01' target='n02' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e02' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n02' target='n03' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e03' value='YES' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n03' target='n04' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e04' value='NO' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n03' target='n05' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e05' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n04' target='n05' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e06' value='YES' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n05' target='n06' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e07' value='NO' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n05' target='n07' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e08' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n07' target='n08' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e09' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n08' target='n09' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e10' value='YES' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n09' target='n10' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e11' value='YES' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n10' target='n11' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e12' value='NO' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n10' target='n12' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e13' value='NO' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n09' target='n13' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e14' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n11' target='n14' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e15' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n12' target='n14' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e16' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n13' target='n14' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e17' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n14' target='n15' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e18' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n15' target='n16' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e19' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n16' target='n17' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e20' value='NO' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n17' target='n18' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e21' value='YES' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n17' target='n19' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e22' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n18' target='n25' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e23' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n19' target='n20' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e24' value='YES' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n20' target='n21' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e25' value='NO' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n20' target='n22' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e26' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n21' target='n23' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e27' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n22' target='n23' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e28' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n23' target='n24' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e29' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n24' target='n25' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+    <mxCell id='e30' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n25' target='n26' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+
+  </root>
+</mxGraphModel>

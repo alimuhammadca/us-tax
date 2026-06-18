@@ -1,0 +1,40 @@
+formId: ctc-actc-screening-taxpayer
+title: Child Tax Credit — Settings
+description: >
+  Configure Child Tax Credit settings for this return.
+  Most families only need to answer the first question.
+
+sections:
+  - id: settings
+    title: Child Tax Credit settings
+    instructions:
+      - Answer the questions below to configure how the Child Tax Credit is handled on your return.
+      - Most families only need to answer the first question.
+    fields:
+      - id: ctcPreviouslyDenied
+        label: Did the IRS previously deny or reduce your Child Tax Credit or Other Dependent Credit?
+        type: boolean
+        helpText: >
+          Answer Yes if the IRS sent you a notice in a prior year reducing or disallowing your
+          Child Tax Credit, Additional Child Tax Credit, or Other Dependent Credit. When you
+          answer Yes, complete the Credits After Disallowance section in the sidebar.
+
+      - id: electsNoActc
+        label: Would you like to skip the Additional Child Tax Credit this year?
+        type: boolean
+        helpText: >
+          The Additional Child Tax Credit is refundable and worth up to $1,700 per qualifying
+          child in 2025. It is computed automatically when you qualify. Skipping it is unusual —
+          select Yes only if your tax professional has specifically advised you to do so.
+
+  - id: rareSettings
+    title: Less common situations
+    instructions:
+      - These situations apply to very few filers. Leave blank if neither applies.
+    fields:
+      - id: isBonafidePuertoRicoResident
+        label: Were you a full-year resident of Puerto Rico during 2025?
+        type: boolean
+        helpText: >
+          Full-year residents of Puerto Rico who have at least one qualifying child may claim
+          the Additional Child Tax Credit with fewer than three children. Most filers answer No.

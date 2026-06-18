@@ -1,0 +1,73 @@
+old_leaf_name,new_name,tooltip,field_type,page_index,rect_llx,rect_lly,rect_urx,rect_ury
+f1_1[0],taxpayer_name,Name(s) shown on return,/Tx,0,36.000,684.000,452.850,698.001
+f1_2[0],taxpayer_ssn,Your social security number,/Tx,0,453.600,684.000,576.000,698.001
+c1_1[0],mfs_exception_checkbox,Box A: MFS exception met (see instructions),/Btn,0,564.000,663.000,573.000,672.000
+c1_2[0],student_or_disabled_deemed_income_checkbox,Box B: Student/disabled deemed income used,/Btn,0,564.000,638.999,573.000,647.999
+c1_3[0],more_than_3_care_providers_checkbox,More than three care providers (see instructions),/Btn,0,564.000,615.001,573.000,624.001
+f1_3[0],care_provider_1_name,Care provider 1 name,/Tx,0,36.000,540.000,136.050,564.001
+f1_4[0],care_provider_1_address_line1,Care provider 1 address line 1,/Tx,0,137.800,540.000,316.050,564.001
+f1_5[0],care_provider_1_id_number,Care provider 1 identifying number (SSN or EIN),/Tx,0,316.800,540.000,388.800,552.001
+c1_4[0],care_provider_1_household_employee_yes,Care provider 1 was household employee - Yes,/Btn,0,404.300,547.501,413.300,556.501
+c1_4[1],care_provider_1_household_employee_no,Care provider 1 was household employee - No,/Btn,0,461.900,547.501,470.900,556.501
+f1_6[0],care_provider_1_amount_paid,Care provider 1 amount paid,/Tx,0,504.000,540.000,576.000,552.001
+f1_7[0],care_provider_2_name,Care provider 2 name,/Tx,0,36.000,515.999,136.050,540.000
+f1_8[0],care_provider_2_address_line1,Care provider 2 address line 1,/Tx,0,137.800,515.999,316.050,540.000
+f1_9[0],care_provider_2_id_number,Care provider 2 identifying number (SSN or EIN),/Tx,0,316.800,515.999,388.800,528.000
+c1_5[0],care_provider_2_household_employee_yes,Care provider 2 was household employee - Yes,/Btn,0,404.300,523.500,413.300,532.500
+c1_5[1],care_provider_2_household_employee_no,Care provider 2 was household employee - No,/Btn,0,461.900,523.500,470.900,532.500
+f1_10[0],care_provider_2_amount_paid,Care provider 2 amount paid,/Tx,0,504.000,515.999,576.000,528.000
+f1_11[0],care_provider_3_name,Care provider 3 name,/Tx,0,36.000,491.998,136.050,515.999
+f1_12[0],care_provider_3_address_line1,Care provider 3 address line 1,/Tx,0,137.800,491.998,316.050,515.999
+f1_13[0],care_provider_3_id_number,Care provider 3 identifying number (SSN or EIN),/Tx,0,316.800,491.998,388.800,503.999
+c1_6[0],care_provider_3_household_employee_yes,Care provider 3 was household employee - Yes,/Btn,0,404.300,499.499,413.300,508.499
+c1_6[1],care_provider_3_household_employee_no,Care provider 3 was household employee - No,/Btn,0,461.900,499.499,470.900,508.499
+f1_14[0],care_provider_3_amount_paid,Care provider 3 amount paid,/Tx,0,504.000,491.998,576.000,503.999
+c1_7[0],more_than_3_qualifying_persons_checkbox,More than three qualifying persons (see instructions),/Btn,0,564.000,391.502,573.000,400.502
+f1_15[0],qualifying_person_1_first_name,Qualifying person 1 first name,/Tx,0,36.000,342.000,172.050,353.999
+f1_16[0],qualifying_person_1_last_name,Qualifying person 1 last name,/Tx,0,173.800,342.000,308.850,353.999
+f1_17[0],qualifying_person_1_ssn,Qualifying person 1 SSN,/Tx,0,309.600,342.000,396.000,353.999
+c1_8[0],qualifying_person_1_disabled_over12_checkbox,Qualifying person 1 disabled and over age 12,/Btn,0,434.700,343.500,443.700,352.500
+f1_18[0],qualifying_person_1_qualified_expenses_paid_2024,Qualified expenses paid in 2024 for qualifying person 1,/Tx,0,482.400,342.000,576.000,353.999
+f1_19[0],qualifying_person_2_first_name,Qualifying person 2 first name,/Tx,0,36.000,330.001,172.050,342.000
+f1_20[0],qualifying_person_2_last_name,Qualifying person 2 last name,/Tx,0,173.800,330.001,308.850,342.000
+f1_21[0],qualifying_person_2_ssn,Qualifying person 2 SSN,/Tx,0,309.600,330.001,396.000,342.000
+c1_9[0],qualifying_person_2_disabled_over12_checkbox,Qualifying person 2 disabled and over age 12,/Btn,0,434.700,331.501,443.700,340.501
+f1_22[0],qualifying_person_2_qualified_expenses_paid_2024,Qualified expenses paid in 2024 for qualifying person 2,/Tx,0,482.400,330.001,576.000,342.000
+f1_23[0],qualifying_person_3_first_name,Qualifying person 3 first name,/Tx,0,36.000,318.002,172.050,330.001
+f1_24[0],qualifying_person_3_last_name,Qualifying person 3 last name,/Tx,0,173.800,318.002,308.850,330.001
+f1_25[0],qualifying_person_3_ssn,Qualifying person 3 SSN,/Tx,0,309.600,318.002,396.000,330.001
+c1_10[0],qualifying_person_3_disabled_over12_checkbox,Qualifying person 3 disabled and over age 12,/Btn,0,434.700,319.502,443.700,328.502
+f1_26[0],qualifying_person_3_qualified_expenses_paid_2024,Qualified expenses paid in 2024 for qualifying person 3,/Tx,0,482.400,318.002,576.000,330.001
+f1_27[0],line3_total_qualified_expenses_limited,Line 3: Total qualified expenses (limited),/Tx,0,482.400,294.001,576.000,306.000
+f1_28[0],line4_earned_income,Line 4: Earned income,/Tx,0,482.400,282.002,576.000,294.001
+f1_29[0],line5_spouse_earned_income_or_line4,Line 5: Spouse earned income (MFJ) or line 4,/Tx,0,482.400,258.001,576.000,270.000
+f1_30[0],line6_smallest_of_3_4_5,"Line 6: Smallest of lines 3, 4, or 5",/Tx,0,482.400,246.002,576.000,258.001
+f1_31[0],line7_agi,Line 7: AGI (Form 1040 line 11),/Tx,0,396.000,234.000,460.050,245.999
+f1_32[0],line8_applicable_percentage,Line 8: Applicable percentage (decimal),/Tx,0,554.400,162.000,576.000,173.999
+f1_33[0],line9a_line6_times_percentage,Line 9a: Line 6 × line 8,/Tx,0,482.400,108.000,576.000,119.999
+f1_34[0],line9b_prior_year_expenses_paid_2024,Line 9b: 2023 expenses paid in 2024 (Worksheet A),/Tx,0,482.400,84.002,576.000,96.001
+f1_35[0],line9c_total_credit_before_limit,Line 9c: Total (9a + 9b),/Tx,0,482.400,72.000,576.000,83.999
+f1_36[0],line10_tax_liability_limit,Line 10: Tax liability limit (Credit Limit Worksheet),/Tx,0,396.000,60.001,460.050,72.000
+f1_37[0],line11_child_dependent_care_credit,Line 11: Child and dependent care credit,/Tx,0,482.400,36.000,576.000,47.999
+f2_1[0],line12_total_dependent_care_benefits,Line 12: Total dependent care benefits received,/Tx,1,482.400,672.001,576.000,684.000
+f2_2[0],line13_grace_period_benefits_used,Line 13: Prior-year unused benefits used during current-year grace period,/Tx,1,482.400,648.000,576.000,659.999
+f2_3[0],line14_forfeited_or_carried_to_2025,Line 14: Forfeited or carried over to 2025,/Tx,1,485.400,636.001,573.000,648.000
+f2_4[0],line15_total_benefits_available,Line 15: Total (12 through 14),/Tx,1,482.400,624.002,576.000,636.001
+f2_5[0],line16_total_qualified_expenses_incurred_2024,Line 16: Total qualified expenses incurred in 2024,/Tx,1,367.200,600.001,460.050,612.000
+f2_6[0],line17_smaller_of_15_or_16,Line 17: Smaller of line 15 or 16,/Tx,1,367.200,588.002,460.050,600.001
+f2_7[0],line18_earned_income,Line 18: Earned income,/Tx,1,367.200,576.000,460.050,587.999
+f2_8[0],line19_spouse_earned_income_or_line18,Line 19: Spouse earned income (MFJ) or line 18,/Tx,1,367.200,522.000,460.050,533.999
+f2_9[0],line20_smallest_of_17_18_19,"Line 20: Smallest of lines 17, 18, or 19",/Tx,1,367.200,480.002,460.050,492.001
+f2_10[0],line21_plan_limit,Line 21: Dependent care plan limit,/Tx,1,367.200,432.000,460.050,443.999
+c2_1[0],line22_no_sole_prop_or_partnership_benefits_checkbox,Line 22: No amount from sole proprietorship/partnership,/Btn,1,65.800,410.002,73.800,418.002
+c2_1[1],line22_yes_sole_prop_or_partnership_benefits_checkbox,"Line 22: Yes, amount from sole proprietorship/partnership",/Btn,1,65.800,397.999,73.800,405.999
+f2_11[0],line22_amount_from_sole_prop_or_partnership,Line 22: Amount from sole proprietorship/partnership,/Tx,1,482.400,396.000,576.000,407.999
+f2_12[0],line23_line15_minus_line22,Line 23: Line 15 − line 22,/Tx,1,367.200,384.001,460.050,396.000
+f2_13[0],line24_deductible_benefits,Line 24: Deductible benefits,/Tx,1,482.400,360.000,576.000,371.999
+f2_14[0],line25_excluded_benefits,Line 25: Excluded benefits,/Tx,1,482.400,336.002,576.000,348.001
+f2_15[0],line26_taxable_benefits,Line 26: Taxable benefits (to Form 1040 line 1e),/Tx,1,482.400,312.001,576.000,324.000
+f2_16[0],line27_statutory_limit,"Line 27: $3,000/$6,000 limit",/Tx,1,482.400,264.002,576.000,276.001
+f2_17[0],line28_add_lines_24_25,Line 28: Add lines 24 and 25,/Tx,1,482.400,252.000,576.000,263.999
+f2_18[0],line29_line27_minus_line28,Line 29: Line 27 − line 28,/Tx,1,482.400,228.002,576.000,240.001
+f2_19[0],line30_total_qualified_expenses_excluding_benefits,Line 30: Total qualified expenses excluding benefits,/Tx,1,482.400,204.001,576.000,216.000
+f2_20[0],line31_smaller_of_29_or_30,Line 31: Smaller of line 29 or 30,/Tx,1,482.400,180.000,576.000,191.999

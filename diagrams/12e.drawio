@@ -1,0 +1,40 @@
+<mxfile host='app.diagrams.net' modified='2026-03-11T00:00:00.0000000Z' agent='Codex' version='20.8.16' type='device'>
+  <diagram id='12e-flow' name='Line 12e - Deduction amount'>
+    <mxGraphModel dx='1400' dy='900' grid='1' gridSize='10' guides='1' tooltips='1' connect='1' arrows='1' fold='1' page='1' pageScale='1' pageWidth='1300' pageHeight='900' math='0' shadow='0'>
+      <root>
+        <mxCell id='0'/>
+        <mxCell id='1' parent='0'/>
+        <mxCell id='2' value='Inputs&#xa;Line 12a/12b/12c/12d results&#xa;deductionElection&#xa;dependent worksheet earned income&#xa;Schedule A itemized inputs&#xa;Form 1040 line 11 AGI' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='30' y='150' width='280' height='190' as='geometry'/>
+        </mxCell>
+        <mxCell id='3' value='Compute standard deduction&#xa;12b or 12c => 0&#xa;12a => dependent worksheet&#xa;12d => chart / add-on path&#xa;Optional disaster-loss standard-deduction increase' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='380' y='100' width='300' height='170' as='geometry'/>
+        </mxCell>
+        <mxCell id='4' value='Compute Schedule A&#xa;medical floor&#xa;SALT cap&#xa;interest limits&#xa;charity totals&#xa;net qualified disaster loss&#xa;total itemized deductions' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='380' y='300' width='300' height='170' as='geometry'/>
+        </mxCell>
+        <mxCell id='5' value='Select line 12e&#xa;ITEMIZED => Schedule A total&#xa;STANDARD => standard deduction&#xa;AUTO => larger of the two' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='760' y='190' width='280' height='150' as='geometry'/>
+        </mxCell>
+        <mxCell id='6' value='Outputs&#xa;Form1040.deductions.standardDeductionComputed&#xa;Form1040.deductions.itemizedDeductionsFromScheduleA&#xa;Form1040.deductions.deductionAmount (line 12e)&#xa;Schedule A output when used&#xa;Form 4684 attachment when disaster loss is used' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='1110' y='150' width='320' height='230' as='geometry'/>
+        </mxCell>
+        <mxCell id='7' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='2' target='3'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='8' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='2' target='4'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='9' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='3' target='5'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='10' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='4' target='5'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='11' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='5' target='6'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

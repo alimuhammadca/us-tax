@@ -1,0 +1,202 @@
+<mxfile host='app.diagrams.net' modified='2026-04-14T00:00:00.000Z' agent='Claude' version='20.8.16' type='device'>
+  <diagram id='line4abc-computation' name='Lines 4a/4b/4c IRA Distributions Flowchart'>
+    <mxGraphModel dx='1400' dy='900' grid='1' gridSize='10' guides='1' tooltips='1' connect='1' arrows='1' fold='1' page='1' pageScale='1' pageWidth='1700' pageHeight='3400' math='0' shadow='0'>
+      <root>
+        <mxCell id='0'/>
+        <mxCell id='1' parent='0'/>
+
+        <!-- LEGEND -->
+        <mxCell id='leg1' value='Start / End' style='ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1320' y='80' width='120' height='40' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg2' value='Process / Action' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1320' y='130' width='120' height='40' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg3' value='Decision' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1320' y='180' width='120' height='50' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg4' value='Output / Result' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1320' y='240' width='120' height='40' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg5' value='Blocking Flag' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8d7da;strokeColor=#842029;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1320' y='290' width='120' height='40' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg6' value='Input Data' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1320' y='340' width='120' height='40' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg7' value='Non-blocking Flag' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1320' y='390' width='120' height='40' as='geometry'/>
+        </mxCell>
+
+        <!-- ABBREVIATIONS -->
+        <mxCell id='abbr' value='Abbreviations&#xa;&#xa;IRA  = Individual Retirement Account&#xa;SEP  = Simplified Employee Pension IRA&#xa;SIMPLE = Savings Incentive Match Plan&#xa;QCD  = Qualified Charitable Distribution&#xa;HFD  = HSA Funding Distribution&#xa;SIE  = Split-Interest Entity&#xa;MFJ  = Married Filing Jointly&#xa;TIN  = Taxpayer Identification Number&#xa;RMD  = Required Minimum Distribution&#xa;SECURE = Setting Every Community Up for&#xa;         Retirement Enhancement Act' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f0f4ff;strokeColor=#3b5bdb;fontSize=11;align=left;spacingLeft=8;' vertex='1' parent='1'>
+          <mxGeometry x='1310' y='450' width='290' height='230' as='geometry'/>
+        </mxCell>
+
+        <!-- 2025 CONSTANTS NOTE -->
+        <mxCell id='const' value='2025 IRS Constants (Verified)&#xa;&#xa;QCD annual cap per person: $108,000&#xa;QCD one-time SIE sub-cap: $54,000&#xa;QCD minimum age: 70½&#xa;&#xa;Source: IRS Pub. 526 (2025 edition)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#388e3c;fontSize=11;align=left;spacingLeft=8;' vertex='1' parent='1'>
+          <mxGeometry x='1310' y='700' width='290' height='120' as='geometry'/>
+        </mxCell>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- MAIN FLOW — centre column x≈330 -->
+        <!-- ═══════════════════════════════════════════════════ -->
+
+        <!-- START -->
+        <mxCell id='n01' value='START&#xa;computeIraDistributions()&#xa;&#xa;Inputs: iraIncomeTaxpayer, iraIncomeSpouse,&#xa;form1099REntries, you, spouse, flags' style='ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;' vertex='1' parent='1'>
+          <mxGeometry x='280' y='40' width='320' height='75' as='geometry'/>
+        </mxCell>
+
+        <!-- STATEMENT GATING -->
+        <mxCell id='n02' value='Validate IRA statement upload gating&#xa;validateIraStatementGating()&#xa;&#xa;Checks on ira-income-taxpayer form:&#xa;• hasUploadedAtLeastOneIra1099RStatement&#xa;• confirmAllReceived1099RUploaded&#xa;• received1099R / uploaded1099R' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='280' y='155' width='320' height='110' as='geometry'/>
+        </mxCell>
+
+        <!-- GATING FLAGS -->
+        <mxCell id='n02b' value='Emit blocking flags if gating fails:&#xa;• IRA_STATEMENT_UPLOAD_REQUIRED&#xa;• MISSING_UPLOADED_1099_R&#xa;&#xa;Compute proceeds but return cannot be filed.' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8d7da;strokeColor=#842029;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='680' y='155' width='290' height='110' as='geometry'/>
+        </mxCell>
+
+        <!-- PER-PERSON LOOP HEADER -->
+        <mxCell id='n03' value='For each person (taxpayer, then spouse):&#xa;computeIraForPerson()' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;fontStyle=1;' vertex='1' parent='1'>
+          <mxGeometry x='295' y='305' width='290' height='55' as='geometry'/>
+        </mxCell>
+
+        <!-- HAD IRA CHECK -->
+        <mxCell id='n04' value='hadIraDistributions == true?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='310' y='395' width='260' height='60' as='geometry'/>
+        </mxCell>
+
+        <!-- SKIP PERSON -->
+        <mxCell id='n04b' value='Return empty IraPersonComputation&#xa;(null gross, null taxable, no flags)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='660' y='398' width='270' height='54' as='geometry'/>
+        </mxCell>
+
+        <!-- FILTER 1099-R -->
+        <mxCell id='n05' value='Filter 1099-R entries for this person:&#xa;• iraSepSimple == true&#xa;• belongsToPersonIra() — SSN TIN match&#xa;  (fallback: spouseHadIra &amp;&amp; !taxpayerHadIra&#xa;   assigns untagged entry to spouse)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+          <mxGeometry x='290' y='500' width='300' height='100' as='geometry'/>
+        </mxCell>
+
+        <!-- ACCUMULATE LOOP -->
+        <mxCell id='n06' value='For each IRA 1099-R entry:&#xa;grossIra += box1 (grossDistributionAmount)&#xa;taxableBox2a += box2a (taxableAmountAmount)&#xa;taxableNotDetermined += box2b count&#xa;rothCodeCount += (code J or Q or T)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+          <mxGeometry x='290' y='640' width='300' height='105' as='geometry'/>
+        </mxCell>
+
+        <!-- READ EXCEPTION FLAGS -->
+        <mxCell id='n07' value='Read exception flags from personal form:&#xa;hasRollover ← hadIraRollover&#xa;hasQcd ← hadQcd&#xa;hasHfd ← hadHfd&#xa;hasOtherWriteIn ← hasOtherLine4cWriteInCode&#xa;&#xa;hasException2 = hasNondeductibleTraditionalBasis&#xa;  OR hasTraditionalToRothConversion&#xa;  OR hasRothIraDistributions&#xa;  OR hadReturnOfContributionOrRecharacterization&#xa;  OR rothCodeCount &gt; 0' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+          <mxGeometry x='290' y='785' width='300' height='170' as='geometry'/>
+        </mxCell>
+
+        <!-- EXCEPTION 2? -->
+        <mxCell id='n08' value='hasException2?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='315' y='995' width='250' height='60' as='geometry'/>
+        </mxCell>
+
+        <!-- FORM 8606 PATH -->
+        <mxCell id='n09' value='buildForm8606()&#xa;&#xa;Part I (lines 1–15c): Traditional IRA basis&#xa;  line10 = line5 ÷ (line9 + yearEndValue)  [ratio]&#xa;  line12 = line7 × line10  [taxable trad]&#xa;  line13 = min(line11, conversion)&#xa;  line14 = line5 − line12 − line13  [carry-fwd basis]&#xa;  line15c = line15a − line15b  [taxable trad dist]&#xa;&#xa;Part II (lines 16–18): Roth conversion taxability&#xa;  line18 = line16 − line17&#xa;&#xa;Part III (lines 19–25c): Roth distributions&#xa;  line25c = line25a − line25b&#xa;&#xa;Taxable from Form 8606:&#xa;  part1Line15c + part2Line18 + part3Line25c' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+          <mxGeometry x='650' y='960' width='320' height='275' as='geometry'/>
+        </mxCell>
+
+        <!-- COMPUTE TAXABLE -->
+        <mxCell id='n10' value='Compute taxableAfterExceptions:&#xa;  base = taxableBox2a&#xa;  base -= rolloverAmount  (if hasRollover)&#xa;  base -= qcdAmount       (if hasQcd)&#xa;  base -= hfdAmount       (if hasHfd)&#xa;  base = max(0, base)&#xa;&#xa;If hasException2:&#xa;  taxable = Form 8606 result&#xa;    (part1Line15c + part2Line18 + part3Line25c)&#xa;Else:&#xa;  taxable = base' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+          <mxGeometry x='290' y='1105' width='300' height='185' as='geometry'/>
+        </mxCell>
+
+        <!-- BUILD BOX3 TEXT -->
+        <mxCell id='n11' value='Build line4cBox3Text (if hasHfd or hasOtherWriteIn):&#xa;text = "HFD" (if hasHfd)&#xa;Append line4cOtherWriteInText via&#xa;joinLine4cOtherText()&#xa;(semicolon-separated, LinkedHashSet dedup)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+          <mxGeometry x='290' y='1330' width='300' height='100' as='geometry'/>
+        </mxCell>
+
+        <!-- PERSON RESULT -->
+        <mxCell id='n12' value='Return IraPersonComputation:&#xa;• grossIraDistributions&#xa;• taxableIraDistributions&#xa;• hasRollover, hasQcd, hasBox3Other&#xa;• hasException2, hasAnyException&#xa;• line4cBox3Text&#xa;• form8606 (null if no Exception 2)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='290' y='1470' width='300' height='120' as='geometry'/>
+        </mxCell>
+
+        <!-- BOTH PERSONS DONE? -->
+        <mxCell id='n13' value='Both persons&#xa;processed?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='320' y='1625' width='220' height='60' as='geometry'/>
+        </mxCell>
+
+        <!-- AGGREGATE -->
+        <mxCell id='n14' value='Aggregate taxpayer + spouse:&#xa;grossIra = taxpayer.gross + spouse.gross&#xa;taxableIra = taxpayer.taxable + spouse.taxable&#xa;line4cBox1 = taxpayer.hasRollover || spouse.hasRollover&#xa;line4cBox2 = taxpayer.hasQcd || spouse.hasQcd&#xa;line4cBox3 = taxpayer.hasBox3Other || spouse.hasBox3Other&#xa;box3Text = concat taxpayer + spouse texts&#xa;&#xa;Determine line4a:&#xa;  fullyTaxable = !anyException &amp;&amp; gross==taxable&#xa;  line4a = fullyTaxable ? null : gross&#xa;line4b = taxableIra' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+          <mxGeometry x='270' y='1725' width='340' height='190' as='geometry'/>
+        </mxCell>
+
+        <!-- MULTI-EXCEPTION CHECK -->
+        <mxCell id='n15' value='Count exception categories:&#xa;(box1, box2, box3, exception2 each = 1)&#xa;&#xa;exceptionCount &gt; 1?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='310' y='1955' width='260' height='80' as='geometry'/>
+        </mxCell>
+
+        <!-- WAIVER CHECK -->
+        <mxCell id='n16' value='Waiver applies?&#xa;(count == 2 AND one is Exception2&#xa; AND other is exactly one of box1/2/3)' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='660' y='1958' width='280' height='74' as='geometry'/>
+        </mxCell>
+
+        <!-- STATEMENT REQUIRED CHECK -->
+        <mxCell id='n17' value='exceptionBreakoutStatementPrepared == true?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='310' y='2080' width='260' height='64' as='geometry'/>
+        </mxCell>
+
+        <!-- BLOCKING FLAG -->
+        <mxCell id='n17b' value='Emit blocking flag:&#xa;LINE4_EXCEPTION_BREAKOUT_STATEMENT_REQUIRED&#xa;(compute proceeds; return cannot be filed)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8d7da;strokeColor=#842029;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='660' y='2083' width='290' height='58' as='geometry'/>
+        </mxCell>
+
+        <!-- NON-BLOCKING FLAGS -->
+        <mxCell id='n18' value='Emit non-blocking review flags if applicable:&#xa;&#xa;IRA_ROLLOVER_ATTACHMENT_REVIEW&#xa;  ← rolloverIntoQualifiedPlanOrCompletedInFollowingYear&#xa;&#xa;IRA_QCD_SIE_ATTACHMENT_REVIEW&#xa;  ← hasOneTimeQcdToSplitInterestEntity' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+          <mxGeometry x='270' y='2190' width='350' height='110' as='geometry'/>
+        </mxCell>
+
+        <!-- WIRE OUTPUTS -->
+        <mxCell id='n19' value='Wire to output model:&#xa;income.iraDistributions = line4a&#xa;income.taxableIraDistributions = line4b&#xa;income.line4cBox1Rollover = box1&#xa;income.line4cBox2Qcd = box2&#xa;income.line4cBox3Other = box3&#xa;income.line4cBox3Text = box3Text&#xa;income.line4cExceptionBreakoutStatementRequired&#xa;&#xa;computation.form8606Taxpayer = taxpayer.form8606&#xa;computation.form8606Spouse = spouse.form8606&#xa;(null when Exception 2 does not apply)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+          <mxGeometry x='270' y='2345' width='350' height='190' as='geometry'/>
+        </mxCell>
+
+        <!-- DOWNSTREAM CONSUMERS NOTE -->
+        <mxCell id='nDS' value='Downstream consumers:&#xa;&#xa;• line4b (taxableIraDistributions) → line9 totalIncome&#xa;• box4 withholding → line25b (via computeWithholding)&#xa;• line4a/4b → Form 1040 PDF fields&#xa;• form8606 → Tax Return UI sidebar (conditional)&#xa;• form8606 → Form 8606 PDF export&#xa;• line4c checkboxes → Form 1040 PDF checkboxes' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=11;align=left;spacingLeft=6;' vertex='1' parent='1'>
+          <mxGeometry x='700' y='2345' width='310' height='180' as='geometry'/>
+        </mxCell>
+
+        <!-- END -->
+        <mxCell id='n20' value='END' style='ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;' vertex='1' parent='1'>
+          <mxGeometry x='370' y='2575' width='140' height='50' as='geometry'/>
+        </mxCell>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- EDGES -->
+        <!-- ═══════════════════════════════════════════════════ -->
+
+        <mxCell id='e01' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n01' target='n02' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e02' value='Gating fails' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n02' target='n02b' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e02b' value='Gating passes' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n02' target='n03' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e02c' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n02b' target='n03' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e03' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n03' target='n04' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e04' value='No' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n04' target='n04b' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e04b' value='Yes' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n04' target='n05' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e04c' style='edgeStyle=orthogonalEdgeStyle;entryX=0.5;entryY=0;' edge='1' source='n04b' target='n12' parent='1'><mxGeometry relative='1' as='geometry'><Array as='points'><mxPoint x='795' y='1520'/><mxPoint x='440' y='1520'/></Array></mxGeometry></mxCell>
+        <mxCell id='e05' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n05' target='n06' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e06' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n06' target='n07' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e07' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n07' target='n08' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e08' value='Yes' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n08' target='n09' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e08b' value='No' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n08' target='n10' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e09' style='edgeStyle=orthogonalEdgeStyle;entryX=0.5;entryY=0;' edge='1' source='n09' target='n10' parent='1'><mxGeometry relative='1' as='geometry'><Array as='points'><mxPoint x='810' y='1250'/><mxPoint x='440' y='1250'/></Array></mxGeometry></mxCell>
+        <mxCell id='e10' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n10' target='n11' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e11' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n11' target='n12' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e12' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n12' target='n13' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e13' value='No — process next person' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n13' target='n05' parent='1'><mxGeometry relative='1' as='geometry'><Array as='points'><mxPoint x='180' y='1655'/><mxPoint x='180' y='500'/><mxPoint x='290' y='500'/></Array></mxGeometry></mxCell>
+        <mxCell id='e14' value='Yes' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n13' target='n14' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e15' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n14' target='n15' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e16' value='Yes' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n15' target='n16' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e16b' value='No (single exception)' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n15' target='n18' parent='1'><mxGeometry relative='1' as='geometry'><Array as='points'><mxPoint x='200' y='1995'/><mxPoint x='200' y='2245'/></Array></mxGeometry></mxCell>
+        <mxCell id='e17' value='Yes — waiver' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n16' target='n18' parent='1'><mxGeometry relative='1' as='geometry'><Array as='points'><mxPoint x='800' y='2245'/><mxPoint x='620' y='2245'/></Array></mxGeometry></mxCell>
+        <mxCell id='e17b' value='No — statement required' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n16' target='n17' parent='1'><mxGeometry relative='1' as='geometry'><Array as='points'><mxPoint x='800' y='2032'/><mxPoint x='570' y='2032'/></Array></mxGeometry></mxCell>
+        <mxCell id='e18' value='Yes' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n17' target='n18' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e18b' value='No' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n17' target='n17b' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e18c' style='edgeStyle=orthogonalEdgeStyle;entryX=0.5;entryY=0;' edge='1' source='n17b' target='n18' parent='1'><mxGeometry relative='1' as='geometry'><Array as='points'><mxPoint x='805' y='2190'/><mxPoint x='445' y='2190'/></Array></mxGeometry></mxCell>
+        <mxCell id='e19' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n18' target='n19' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='e20' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n19' target='n20' parent='1'><mxGeometry relative='1' as='geometry'/></mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

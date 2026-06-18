@@ -1,0 +1,140 @@
+<mxfile host='app.diagrams.net' modified='2026-04-17T00:00:00.000Z' agent='Claude' version='20.8.16' type='device'>
+  <diagram id='line15-computation' name='Line 15 Taxable Income Flowchart'>
+    <mxGraphModel dx='1400' dy='900' grid='1' gridSize='10' guides='1' tooltips='1' connect='1' arrows='1' fold='1' page='1' pageScale='1' pageWidth='1500' pageHeight='2200' math='0' shadow='0'>
+      <root>
+        <mxCell id='0'/>
+        <mxCell id='1' parent='0'/>
+
+        <!-- LEGEND -->
+        <mxCell id='leg1' value='Start / End' style='ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1130' y='80' width='130' height='40' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg2' value='Process / Action' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1130' y='130' width='130' height='40' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg3' value='Decision' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1130' y='180' width='130' height='50' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg4' value='Output / Result' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1130' y='240' width='130' height='40' as='geometry'/>
+        </mxCell>
+        <mxCell id='leg5' value='Gap / Tech Debt' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='1130' y='290' width='130' height='40' as='geometry'/>
+        </mxCell>
+
+        <!-- NOTES -->
+        <mxCell id='notes' value='2025 Notes&#xa;&#xa;IRS printed instruction:&#xa;"Subtract line 14 from line 11b.&#xa; If zero or less, enter -0-.&#xa; This is your taxable income."&#xa;&#xa;KEY RULES:&#xa;• line15 = max(0, line11b − line14)&#xa;• line14 = line12e + line13a + line13b&#xa;• line15 is FLOORED AT ZERO&#xa;  (unlike lines 11a/11b which allow negatives)&#xa;• null AGI → null line15 (not zero)&#xa;• line15 = 0 → no tax due on line 16&#xa;• line15 is set at THREE points in prepare()&#xa;&#xa;HELPER METHOD:&#xa;subtractNonNegative(left, right):&#xa;  if left==null: return null&#xa;  result = left − (right ?? 0)&#xa;  return max(0, result)&#xa;&#xa;Sources: 2025 Form 1040, 2025 Form 1040 Instructions,&#xa;i1040gi_2025.txt' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#388e3c;fontSize=11;align=left;spacingLeft=8;' vertex='1' parent='1'>
+          <mxGeometry x='1120' y='360' width='310' height='340' as='geometry'/>
+        </mxCell>
+
+        <!-- IMPLEMENTATION STATUS -->
+        <mxCell id='status' value='Implementation Status (2026-04-17)&#xa;&#xa;IMPLEMENTED:&#xa;&#x2713; formula: max(0, line11b − line14)&#xa;&#x2713; subtractNonNegative helper (floor + null guard)&#xa;&#x2713; Deductions.line15TaxableIncome (explicit field)&#xa;&#x2713; Deductions.taxableIncome (legacy alias = same)&#xa;&#x2713; Three computation points in prepare()&#xa;&#x2713; Line 16 gate: line15==null → skip; line15≤0 → no tax&#xa;&#x2713; PDF: line15_taxable_income → f2_06[0] page 2&#xa;&#x2713; 7 unit tests in TaxLine15TaxableIncomeTest.java&#xa;&#x2713; 5 E2E scenarios in line15-taxable-income.spec.ts&#xa;&#xa;GAPS (all low severity):&#xa;&#x26A0; G1: Frontend reads legacy taxableIncome field&#xa;   form-tax-return-1040.component.ts line 304:&#xa;   values[&apos;line15_taxable_income&apos;] = form.deductions?.taxableIncome&#xa;   Should use line15TaxableIncome ?? taxableIncome&#xa;&#x26A0; G2: No E2E scenario for QBI second-pass path&#xa;   (line 13a reducing line 15 via K-1 or SE QBI)&#xa;&#x26A0; G3: Local saveAdditionalDeductionsTaxpayerApi&#xa;   helper in E2E spec duplicates savePersonalFormApi' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;align=left;spacingLeft=8;' vertex='1' parent='1'>
+          <mxGeometry x='1120' y='720' width='310' height='360' as='geometry'/>
+        </mxCell>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- MAIN FLOW -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+
+        <!-- START -->
+        <mxCell id='n01' value='START — Line 15 computation (inside prepare())&#xa;&#xa;Prerequisites already computed upstream:&#xa;  line11b = AGI carryforward (may be negative or null)&#xa;  line12e = standard or itemized deduction&#xa;  line13b = Schedule 1-A additional deductions (first pass done)&#xa;  line13a = QBI deduction (first pass done with line13b=null)&#xa;  line14 = line12e + line13a_first + line13b' style='ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;' vertex='1' parent='1'>
+          <mxGeometry x='220' y='40' width='530' height='110' as='geometry'/>
+        </mxCell>
+
+        <!-- First pass -->
+        <mxCell id='n02' value='FIRST PASS — Interim line 15&#xa;&#xa;agiFinal = form1040.getAdjustments().getLine11bAmountFromLine11aAdjustedGrossIncome()&#xa;line14interim = form1040.getDeductions().getTotalDeductions()&#xa;&#xa;l15 = roundMoney(subtractNonNegative(agiFinal, line14interim))&#xa;&#xa;form1040.getDeductions().setTaxableIncome(l15)        ← legacy&#xa;form1040.getDeductions().setLine15TaxableIncome(l15)  ← canonical&#xa;&#xa;// Comment in code: "interim — will be overridden below if QBI second-pass runs"' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='220' y='220' width='530' height='140' as='geometry'/>
+        </mxCell>
+        <mxCell id='e01' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n01' target='n02' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- QBI second pass? -->
+        <mxCell id='n03' value='QBI sources present?&#xa;(K-1, REIT/PTP, Schedule C/F, 1099-DIV box 5)&#xa;&#xa;AND not blocked by SE flag or cooperative patron flag?' style='rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='300' y='430' width='370' height='80' as='geometry'/>
+        </mxCell>
+        <mxCell id='e02' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n02' target='n03' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- QBI second pass YES -->
+        <mxCell id='n04' value='QBI SECOND PASS&#xa;&#xa;computeLine13a() called again with final line13b value.&#xa;taxableIncomeBeforeQbi = AGI − line12e − line13b  ← corrected&#xa;&#xa;newLine13a = QBI deduction (corrected with proper base)&#xa;newLine14 = line12e + newLine13a + line13b&#xa;&#xa;// Override line 14 on the Deductions object:&#xa;form1040.getDeductions().setTotalDeductions(newLine14)&#xa;&#xa;l15 = roundMoney(subtractNonNegative(agiFinal, newLine14))&#xa;form1040.getDeductions().setTaxableIncome(l15)&#xa;form1040.getDeductions().setLine15TaxableIncome(l15)  ← FINAL' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='60' y='590' width='530' height='180' as='geometry'/>
+        </mxCell>
+        <mxCell id='e03' value='Yes' style='edgeStyle=orthogonalEdgeStyle;exitX=0;exitY=0.5;exitDx=0;exitDy=0;' edge='1' source='n03' target='n04' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- QBI second pass NO -->
+        <mxCell id='n04b' value='FALLBACK (no QBI)&#xa;&#xa;line13b already in line14.&#xa;l15 = subtractNonNegative(agiFinal, line14)&#xa;&#xa;setTaxableIncome(l15)&#xa;setLine15TaxableIncome(l15)  ← FINAL&#xa;&#xa;(First-pass value is already correct in this path)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='640' y='590' width='330' height='150' as='geometry'/>
+        </mxCell>
+        <mxCell id='e03b' value='No' style='edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5;exitDx=0;exitDy=0;' edge='1' source='n03' target='n04b' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- subtractNonNegative detail -->
+        <mxCell id='n05' value='subtractNonNegative(agi, line14) detail:&#xa;&#xa;1. if agi == null: return null        (incomplete return)&#xa;2. diff = agi − (line14 ?? 0)&#xa;3. if diff &lt; 0: return 0              (zero-floor rule)&#xa;4. else: return roundMoney(diff)&#xa;&#xa;Example: AGI=$10k, line14=$15k → 10k−15k=−5k → return 0&#xa;Example: AGI=$50k, line14=$15k → 50k−15k=35k → return $35,000&#xa;Example: AGI=null, line14=$15k → return null' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#388e3c;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='60' y='840' width='420' height='140' as='geometry'/>
+        </mxCell>
+        <mxCell id='e04' style='edgeStyle=orthogonalEdgeStyle;exitX=0.5;exitY=1;exitDx=0;exitDy=0;' edge='1' source='n04' target='n05' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='e04b' style='edgeStyle=orthogonalEdgeStyle;dashed=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;' edge='1' source='n04b' target='n05' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- Final log -->
+        <mxCell id='n06' value='LOG.infof("Form 1040 line15 computed...")&#xa;Logs: agi, line14TotalDeductions, line15TaxableIncome' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='220' y='1060' width='530' height='60' as='geometry'/>
+        </mxCell>
+        <mxCell id='e05' style='edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;' edge='1' source='n05' target='n06' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+        <mxCell id='e05b' style='edgeStyle=orthogonalEdgeStyle;exitX=0.5;exitY=1;exitDx=0;exitDy=0;' edge='1' source='n04b' target='n06' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- OUTPUT -->
+        <mxCell id='n07' value='OUTPUTS (JSON: form1040.deductions)&#xa;&#xa;line15TaxableIncome  → canonical field; E2E tests assert this&#xa;taxableIncome        → legacy alias; always equals line15TaxableIncome&#xa;&#xa;PDF: line15_taxable_income → f2_06[0] (page 2, y=636)&#xa;     filled from form.deductions.taxableIncome [legacy — G1 gap]' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;fontStyle=1;' vertex='1' parent='1'>
+          <mxGeometry x='200' y='1200' width='570' height='110' as='geometry'/>
+        </mxCell>
+        <mxCell id='e06' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n06' target='n07' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- LINE 16 GATE -->
+        <mxCell id='n08' value='LINE 16 GATE — computeLine16() reads line15TaxableIncome&#xa;&#xa;line15 == null → line16 skipped entirely (return early)&#xa;line15 == 0    → regularTax = 0 (no worksheet needed)&#xa;line15 &gt; 0    → branch into tax computation:&#xa;  Form 2555 filer?    → Foreign Earned Income Tax Worksheet&#xa;  Form 8615 applies?  → Form 8615 (kiddie tax)&#xa;  Schedule D QDCG?    → Schedule D Tax Worksheet or QDCG Wksht&#xa;  line15 &lt; $100,000?  → Tax Table&#xa;  line15 ≥ $100,000?  → Tax Computation Worksheet&#xa;  Schedule J          → Out of scope (farmers/fishermen)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;' vertex='1' parent='1'>
+          <mxGeometry x='200' y='1390' width='570' height='160' as='geometry'/>
+        </mxCell>
+        <mxCell id='e07' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n07' target='n08' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- END -->
+        <mxCell id='n09' value='END&#xa;&#xa;Line 15 is max(0, line11b − line14). Zero-floor enforced.&#xa;Null AGI → null line15. Zero line15 → zero tax.' style='ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;' vertex='1' parent='1'>
+          <mxGeometry x='300' y='1630' width='370' height='70' as='geometry'/>
+        </mxCell>
+        <mxCell id='e08' style='edgeStyle=orthogonalEdgeStyle;' edge='1' source='n08' target='n09' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <!-- GAP NODES -->
+        <mxCell id='gap1' value='&#x26A0; G1: Frontend reads legacy taxableIncome field&#xa;form-tax-return-1040.component.ts:304&#xa;values[&apos;line15_taxable_income&apos;] = form.deductions?.taxableIncome&#xa;Should prefer line15TaxableIncome ?? taxableIncome&#xa;Interface also missing line15TaxableIncome declaration.' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='820' y='1205' width='290' height='90' as='geometry'/>
+        </mxCell>
+        <mxCell id='egap1' style='edgeStyle=orthogonalEdgeStyle;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;' edge='1' source='n07' target='gap1' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+        <mxCell id='gap2' value='&#x26A0; G2: No E2E test for QBI second-pass path&#xa;line15-taxable-income.spec.ts has 5 scenarios:&#xa;all cover line 12e or 13b reduction of line15.&#xa;None seed K-1 QBI → confirm 13a reduces line15&#xa;via the corrected second-pass computation.' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;' vertex='1' parent='1'>
+          <mxGeometry x='640' y='640' width='280' height='90' as='geometry'/>
+        </mxCell>
+        <mxCell id='egap2' style='edgeStyle=orthogonalEdgeStyle;dashed=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;' edge='1' source='gap2' target='n04' parent='1'>
+          <mxGeometry relative='1' as='geometry'/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

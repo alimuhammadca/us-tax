@@ -1,0 +1,17 @@
+<mxfile host='app.diagrams.net' modified='2026-03-07T17:15:00.0000000Z' agent='Codex' version='20.8.16' type='device'>
+  <diagram id='6a-flow-social-security-gross' name='Line 6a - Social Security benefits (gross)'>
+    <mxGraphModel dx='1400' dy='900' grid='1' gridSize='10' guides='1' tooltips='1' connect='1' arrows='1' fold='1' page='1' pageScale='1' pageWidth='1200' pageHeight='900' math='0' shadow='0'>
+      <root>
+        <mxCell id='0'/>
+        <mxCell id='1' parent='0'/>
+        <mxCell id='2' value='Inputs (Statements)&#xa;SSA-1099 entries: Box 5 netBenefitsAmount&#xa;RRB-1099 entries: Box 5 netSSEBAmount&#xa;Owner assignment by SSN/TIN match (taxpayer/spouse)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='20' y='40' width='360' height='200' as='geometry'/></mxCell>
+        <mxCell id='3' value='Inputs (User forms)&#xa;social-security-benefits-taxpayer&#xa;social-security-benefits-spouse&#xa;hadSocialSecurityBenefits&#xa;hasSupplementalSecurityIncome + supplementalSecurityIncomeAmount' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='20' y='270' width='360' height='210' as='geometry'/></mxCell>
+        <mxCell id='4' value='Computation&#xa;grossTP = sum(SSA/RRB box 5 for taxpayer owner)&#xa;grossSP = sum(SSA/RRB box 5 for spouse owner)&#xa;Exclude SSI per person: gross = max(0, gross - SSI)&#xa;line6a = roundMoney(grossTP + grossSP)' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='420' y='180' width='400' height='220' as='geometry'/></mxCell>
+        <mxCell id='5' value='Output&#xa;Form 1040 line 6a (Social security benefits)&#xa;Persisted as income.socialSecurityBenefits&#xa;Feeds line 6b worksheet and line 9 total income path' style='rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#6c757d;fontSize=12;' vertex='1' parent='1'><mxGeometry x='860' y='210' width='320' height='170' as='geometry'/></mxCell>
+        <mxCell id='6' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='2' target='4'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='7' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='3' target='4'><mxGeometry relative='1' as='geometry'/></mxCell>
+        <mxCell id='8' style='endArrow=block;html=1;strokeColor=#6c757d;' edge='1' parent='1' source='4' target='5'><mxGeometry relative='1' as='geometry'/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

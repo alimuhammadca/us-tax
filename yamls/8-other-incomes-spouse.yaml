@@ -1,0 +1,268 @@
+# Form 1040 line 8 (Schedule 1 line 10) workflow for spouse.
+# Approach: keep spouse-specific user questions + imported fields + computed outputs in one YAML.
+# NOTE: Sections marked as backend-only are NOT supposed to be rendered in the actual form component.
+# NOTE: Return-level upload confirmation and statement gating are intentionally kept on taxpayer form to avoid conflicts.
+name: other-incomes-spouse
+title: Form 1040 - Other incomes (spouse, line 8 via Schedule 1)
+multiplicity: single
+formName: 1040
+category: income
+instructions:
+  - Use this form for spouse-specific Schedule 1 Part I amounts that contribute to Form 1040 line 8.
+  - Return-level statement upload confirmations remain on the taxpayer Other incomes form.
+  - Self-employment/business and farm income are out of scope and must be blocked.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: hadAdditionalIncomeForSchedule1
+        type: boolean
+        required: true
+        label: Did your spouse have additional income that belongs on Schedule 1 and Form 1040 line 8?
+        help: If No, stop here and do not continue this workflow.
+
+  - name: outOfScopeScreening
+    title: Out-of-scope screening
+    multiplicity: single
+    showIf: hadAdditionalIncomeForSchedule1 == true
+    instructions:
+      - Schedule C and Schedule F paths are out of scope for this product.
+    fields:
+      - name: hasScheduleCBusinessIncomeOutOfScope
+        type: boolean
+        required: false
+        label: Does spouse have Schedule C business income or loss for Schedule 1 line 3?
+        help: Select Yes if Schedule C is required. This return will be blocked in this product.
+      - name: hasScheduleFFarmIncomeOutOfScope
+        type: boolean
+        required: false
+        label: Does spouse have Schedule F farm income or loss for Schedule 1 line 6?
+        help: Select Yes if Schedule F is required. This return will be blocked in this product.
+      - name: hasSection962CfcElection
+        type: boolean
+        required: false
+        label: Has your spouse made a Section 962 election to be taxed at corporate rates on CFC income (Section 951 / 951A inclusions)?
+        help: Select Yes if your spouse made a Section 962 election for controlled foreign corporation income. This product does not support Section 962 elections; please consult a tax professional.
+
+  - name: schedule1Lines1to7
+    title: Spouse Schedule 1 lines 1 through 7
+    multiplicity: single
+    showIf: hadAdditionalIncomeForSchedule1 == true
+    fields:
+      - name: form1099KPersonalItemsDisclosureAmount
+        type: amount
+        required: false
+        label: Spouse Form 1099-K amount reported for personal items sold at a loss or reported in error (disclosure only — does not affect income)
+        placeholder: 0.00
+        help: Enter the amount from Form 1099-K if it represents spouse personal items sold at a loss or amounts reported in error. Disclosure only — does not add to taxable income.
+      - name: taxableStateLocalRefundsLine1
+        type: amount
+        required: false
+        label: Spouse taxable state and local refunds (line 1)
+        placeholder: 0.00
+        help: Enter spouse amount for Schedule 1 line 1.
+      - name: alimonyReceivedLine2a
+        type: amount
+        required: false
+        label: Spouse alimony received (line 2a)
+        placeholder: 0.00
+        help: Enter spouse taxable alimony received when applicable.
+      - name: otherGainsLossesLine4
+        type: amount
+        required: false
+        label: Spouse other gains or losses (line 4)
+        placeholder: 0.00
+        help: Enter spouse gains or losses that map to Schedule 1 line 4.
+      - name: rentalRealEstateRoyaltiesLine5
+        type: amount
+        required: false
+        label: Spouse rental real estate, royalties, partnerships, S corps, trusts (line 5)
+        placeholder: 0.00
+        help: Enter spouse Schedule E amounts flowing to Schedule 1 line 5.
+      - name: unemploymentCompensationLine7
+        type: amount
+        required: false
+        label: Spouse unemployment compensation (line 7)
+        placeholder: 0.00
+        help: Enter spouse gross unemployment compensation before repayment adjustment.
+      - name: repaidUnemploymentOverpaymentIn2025
+        type: boolean
+        required: false
+        label: Did spouse repay unemployment compensation in 2025?
+        help: Select Yes if spouse repaid a 2025 unemployment overpayment.
+      - name: unemploymentRepaymentAdjustment
+        type: amount
+        required: false
+        label: Spouse unemployment repayment adjustment amount
+        placeholder: 0.00
+        help: Enter spouse repayment amount used to reduce Schedule 1 line 7.
+
+  - name: schedule1OtherIncome8
+    title: Spouse Schedule 1 other income (line 8a through line 8v)
+    multiplicity: single
+    showIf: hadAdditionalIncomeForSchedule1 == true
+    fields:
+      - name: otherIncomeNetOperatingLoss8a
+        type: amount
+        required: false
+        label: Spouse net operating loss (line 8a)
+        placeholder: 0.00
+        help: Enter as positive input; engine applies required negative sign.
+      - name: otherIncomeGambling8b
+        type: amount
+        required: false
+        label: Spouse gambling income (line 8b)
+        placeholder: 0.00
+        help: Enter spouse gambling income included on line 8b.
+      - name: otherIncomeCancellationOfDebt8c
+        type: amount
+        required: false
+        label: Spouse cancellation of debt (line 8c)
+        placeholder: 0.00
+        help: Enter spouse cancellation-of-debt income included on line 8c.
+      - name: otherIncomeForeignEarnedIncomeExclusion8d
+        type: amount
+        required: false
+        label: Spouse foreign earned income exclusion from Form 2555 (line 8d)
+        placeholder: 0.00
+        help: Enter as positive input; engine applies required negative sign.
+      - name: otherIncomeForm88538e
+        type: amount
+        required: false
+        label: Spouse income from Form 8853 (line 8e)
+        placeholder: 0.00
+        help: Enter spouse Form 8853 income flowing to line 8e.
+      - name: otherIncomeForm88898f
+        type: amount
+        required: false
+        label: Spouse income from Form 8889 (line 8f)
+        placeholder: 0.00
+        help: Enter spouse Form 8889 income flowing to line 8f.
+      - name: otherIncomeAlaskaPermanentFundDividends8g
+        type: amount
+        required: false
+        label: Spouse Alaska Permanent Fund dividends (line 8g)
+        placeholder: 0.00
+        help: Enter spouse taxable Alaska Permanent Fund dividends.
+      - name: otherIncomeJuryDutyPay8h
+        type: amount
+        required: false
+        label: Spouse jury duty pay (line 8h)
+        placeholder: 0.00
+        help: Enter spouse jury duty pay included on line 8h.
+      - name: otherIncomePrizesAwards8i
+        type: amount
+        required: false
+        label: Spouse prizes and awards (line 8i)
+        placeholder: 0.00
+        help: Enter spouse taxable prizes and awards.
+      - name: otherIncomeHobbyIncome8j
+        type: amount
+        required: false
+        label: Spouse activity not engaged in for profit income (line 8j)
+        placeholder: 0.00
+        help: Enter spouse hobby income reported on line 8j.
+      - name: otherIncomeStockOptions8k
+        type: amount
+        required: false
+        label: Spouse stock options (line 8k)
+        placeholder: 0.00
+        help: Enter spouse stock-option income not reported elsewhere.
+      - name: otherIncomeRentalPersonalProperty8l
+        type: amount
+        required: false
+        label: Spouse rental of personal property income (line 8l)
+        placeholder: 0.00
+        help: Enter spouse income from rental of personal property not reported on Schedule C/E.
+      - name: otherIncomeOlympicParalympic8m
+        type: amount
+        required: false
+        label: Spouse Olympic or Paralympic medals and prize money (line 8m)
+        placeholder: 0.00
+        help: Enter spouse taxable amount for line 8m.
+      - name: otherIncomeSection951a8n
+        type: amount
+        required: false
+        label: Spouse section 951(a) inclusion (line 8n)
+        placeholder: 0.00
+        help: Enter spouse section 951(a) inclusion amount.
+      - name: otherIncomeSection951A8o
+        type: amount
+        required: false
+        label: Spouse section 951A(a) inclusion (line 8o)
+        placeholder: 0.00
+        help: Enter spouse section 951A(a) inclusion amount.
+      - name: otherIncomeSection461l8p
+        type: amount
+        required: false
+        label: Spouse section 461(l) excess business loss adjustment (line 8p)
+        placeholder: 0.00
+        help: Enter spouse section 461(l) adjustment only when applicable.
+      - name: otherIncomeAbleDistributions8q
+        type: amount
+        required: false
+        label: Spouse taxable ABLE account distributions (line 8q)
+        placeholder: 0.00
+        help: Enter spouse taxable ABLE account distributions.
+      - name: otherIncomeScholarships8r
+        type: amount
+        required: false
+        label: Spouse scholarships and fellowship grants not on Form W-2 (line 8r)
+        placeholder: 0.00
+        help: Enter spouse taxable scholarship and fellowship grant amounts.
+      - name: otherIncomeNonqualifiedDeferredComp8t
+        type: amount
+        required: false
+        label: Spouse pension or annuity from nonqualified deferred comp or nongovernmental 457 plan (line 8t)
+        placeholder: 0.00
+        help: Enter spouse line 8t income amount.
+      - name: otherIncomeWagesWhileIncarcerated8u
+        type: amount
+        required: false
+        label: Spouse wages earned while incarcerated (line 8u)
+        placeholder: 0.00
+        help: Enter spouse wages earned while incarcerated.
+      - name: otherIncomeDigitalAssets8v
+        type: amount
+        required: false
+        label: Spouse digital assets received as ordinary income not reported elsewhere (line 8v)
+        placeholder: 0.00
+        help: Enter spouse taxable ordinary digital-asset income not already reported.
+
+  - name: otherIncomeItems8z
+    title: Spouse other income items (line 8z)
+    multiplicity: multiple
+    showIf: hadAdditionalIncomeForSchedule1 == true
+    instructions:
+      - Add one row for each spouse line 8z item.
+    fields:
+      - name: description
+        type: text
+        required: true
+        label: Description
+        placeholder: Enter line 8z description
+        help: Enter a short description for this spouse other income item.
+      - name: amount
+        type: amount
+        required: true
+        label: Amount
+        placeholder: 0.00
+        help: Enter amount for this spouse line 8z item.
+
+  # Backend-only computed outputs. Not rendered in the actual form component.
+  - name: computedOutputs
+    title: Computed outputs (backend only)
+    multiplicity: single
+    showIf: hadAdditionalIncomeForSchedule1 == true
+    fields:
+      - name: computedSchedule1Line9TotalOtherIncomeContribution
+        type: amount
+        required: false
+        readOnly: true
+        label: Computed spouse contribution to Schedule 1 line 9 total other income
+      - name: computedSchedule1Line10TotalAdditionalIncomeContribution
+        type: amount
+        required: false
+        readOnly: true
+        label: Computed spouse contribution to Schedule 1 line 10 total additional income

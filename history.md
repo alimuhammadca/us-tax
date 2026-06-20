@@ -1,6 +1,36 @@
 ﻿# History
 
 
+## 2026-06-20 — MFS migration #5 (Presidential Election Campaign): per-leg $3 leak — FOUND & FIXED
+
+The Form 1040 Presidential Election Campaign $3 box is per-person (separate
+You/Spouse boxes; checking it never changes tax or refund — i1040gi). The
+inventory looked "already MFS-ready," but an **IRS-correct e2e caught a real
+per-leg bug**: the spouse's separate MFS return showed the "You" box per the
+**head's** designation, not the spouse's.
+
+**Root cause:** `pf_presidential_election` is ONE row holding both
+`you_fund_election` (head) and `spouse_fund_election` (spouse).
+`load('…-spouse')` returns BOTH keys, so the scoper's generic
+`-spouse`→`-taxpayer` rename carried the head's `youFundElection`, and
+`buildPresidentialElection` reads `youFundElection` as the filer's "you" → the
+head's choice leaked onto the spouse's 1040.
+
+**Fix:** `MfsFormScoper` special-cases `presidential-election-campaign-spouse`
+(like `identification-spouse`) — `normalizePresidentialSpouse` maps the spouse's
+`spouseFundElection` onto the filer keys (`presidentialElectionFundTaxpayer` /
+`youFundElection`) and drops the head's value. `mfs_head` unaffected; MFJ
+unaffected (both boxes still independent).
+
+**Verified:** 2 new `Phase7bComputeScopingTest` cases (31 green) + e2e
+`mfs-spouse-presidential-election.spec.ts` (head Yes / spouse No → `mfs_head`
+you=true, `mfs_spouse` you=false) — green.
+
+★ **Lesson:** an inventory's "already MFS-ready" is a hypothesis — the e2e is the
+verdict. Verification caught a bug the read-through (and the inventory agent's
+conclusion) missed. Contrast Form #4, which was genuinely already done.
+
+
 ## 2026-06-20 — MFS migration #4 (Digital assets): already MFS-ready — verified, no code change
 
 Inventory (per `[[feedback_inspect_before_decompose]]`) found Form #4 already in

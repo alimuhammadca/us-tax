@@ -1,6 +1,435 @@
 ﻿# History
 
 
+## 2026-06-20 — HOH-split Phase F: e2e specs (IRS-pinned) — authored + parse-verified
+
+`e2e/tests/hoh-split-filing.spec.ts` — 5 specs exercising the whole feature end
+to end. **Assertions are pinned to HAND-COMPUTED 2025 IRS values** (Rev. Proc.
+2024-40 rate schedules + 2025 standard deductions), NOT to the app's output, so
+a red pin surfaces a real bug (or a reference-math error) rather than rubber-
+stamping the implementation:
+- **HoH + HoH** — each $130k filer → status "Head of household", std $23,625,
+  taxable $106,375, line-16 tax **$16,638**; eligible election does not block.
+- **MFS + MFS** — std $15,750, taxable $114,250, tax **$20,267**; spouse-name
+  flip asserted (mfs_head names the spouse, mfs_spouse names the head).
+- **HoH + MFS** mix — head HoH leg + spouse MFS leg, per-leg values.
+- **MFJ** — combined $260k → one return, std $31,500, taxable $228,500, tax
+  **$40,534**.
+- **Ineligible HoH** (kept-up-home = false) → primary compute **409** with
+  `HOH_HEAD_NOT_CONSIDERED_UNMARRIED`; `overrideFlags=true` → 200 (overrideable).
+- IRS-rule outcome the specs demonstrate: HoH+HoH 2·16,638 = **33,276** <
+  MFS+MFS 2·20,267 = **40,534** (= MFJ).
+
+Helper: extended `seedDependentApi` to pass `claimedByMfs` +
+`monthsLivedWithTaxpayer` (needed for the considered-unmarried qualifying-child
+residency + per-side attribution).
+
+**RUN GREEN (2026-06-20):** all **5/5 specs pass** against a freshly-booted
+backend (clean Dev Services Postgres → V79+V80 applied; Quarkus healthy = clean
+Liquibase apply + Hibernate schema-validation) + the Angular dev server. Every
+IRS-hand-computed pin held — HoH $23,625/$106,375/$16,638, MFS
+$15,750/$114,250/$20,267, MFJ $31,500/$228,500/$40,534, the spouse-name flip,
+and the ineligible-HoH 409 → overrideable 200. Because the pins were derived
+independently from the IRS rate schedules, the app matching them validates the
+implementation as IRS-correct end to end.
+
+**Full verification (in-session):** backend + frontend compile/build green; 47
+multireturn + 869 TaxReturnComputeService unit tests green; V79+V80 clean
+Liquibase apply (backend boot); 5/5 IRS-pinned e2e green. HOH-split Phases A–F
+COMPLETE.
+
+
+## 2026-06-20 — HOH-split Phase E: Tier-2 blocking HoH-eligibility validation at compute
+
+The "considered unmarried" tests now block (overrideably) at Tax Return
+generation when an HoH election is invalid. 47 multireturn + 869 compute tests
+green; no regression.
+
+**Validation (`TaxReturnComputeService.validateConsideredUnmarriedForHoh`):**
+runs in `prepare(String)` after the existing household validations, **guarded to
+the unscoped/primary compute** (`SCOPED_FORMS_OVERRIDE.get() == null`) so it sees
+the full household (both filing-status forms + every dependent) and fires once,
+not per scoped leg. Reads the head election (`filing-status`, with
+`headHohMarriedLivedApart`) and the spouse election (`filing-status-spouse.
+spouseFilingStatus`); builds `HouseholdFacts` from the kept-up-home flags,
+lived-apart flag, and the dependents (`claimedByMfs`, `relationship`,
+`monthsLivedWithTaxpayer`, `isQualifyingChildOfAnotherTaxpayer` → claimable);
+emits **blocking but OVERRIDEABLE** flags (not in `NonOverrideableFlags.CODES`):
+- `HOH_HEAD_NOT_CONSIDERED_UNMARRIED`
+- `HOH_SPOUSE_NOT_CONSIDERED_UNMARRIED`
+- `HOH_DUPLICATE_QUALIFYING_PERSON` (both HoH legs share a qualifying person)
+
+**Testable core:** the decision logic lives in the pure
+`ConsideredUnmarriedEligibilityService.hohElectionProblems(facts, headElectedHoh,
+spouseElectedHoh)` returning `List<HohFlag>`; the compute method is a thin
+code→message→TaxReturnFlag mapper. 6 new POJO unit cases (no/both-eligible →
+none; per-side ineligible → that flag; duplicate person → duplicate flag;
+only-elected-sides-flagged).
+
+**No regression by construction:** for any non-married-HoH compute both election
+booleans are false → early return before building facts. Confirmed: 869
+TaxReturnComputeServiceTest cases unchanged.
+
+**Verification boundary:** the 409/override round-trip + per-leg HoH compute
+output confirm on the next e2e (Playwright EPERM in-sandbox). Phase F (e2e +
+final docs) remains.
+
+
+## 2026-06-20 — HOH-split Phase D: dependent attribution under HoH + credit re-enablement verified
+
+**D1 (dependent attribution UI):** `form-dependent`'s `claimedByMfs` selector
+("Which spouse claims this dependent?") was MFS-only and labeled "(MFS)". Now it
+shows whenever the household files **separate returns** (MFS, or HoH while
+married — reads both `filing-status` and `filing-status-spouse`), the "(MFS)"
+label is dropped, and a choice is **required when either side files HoH** (each
+HoH return must claim its own distinct qualifying child; `isValid()` enforces).
+Optional for MFS+MFS (defaults to head per §152(c)(4)). Frontend build green.
+
+**D2 (credit re-enablement — VERIFIED, no change):** confirmed the MFS
+disallowances for the three computed credits all key specifically on
+`"Married filing separately"`, so a HoH leg (scoped `filingStatus = "Head of
+household"`) correctly re-enables them — there is **no combined MFS-or-HoH
+predicate** that would wrongly block HoH:
+- EIC `computeLine27aEIC` — gate at line ~28150 (`isMfs`), with the §32(d)(2)
+  separated-spouse exception.
+- Education `computeForm8863` — gate at line ~26633 (`isMfs` → return null,
+  EDUCATION_CREDITS_MFS_INELIGIBLE flag); HoH gets the Single/HoH MAGI ceiling.
+- Dependent care `computeDependentCareBenefits` — `creditDisallowed = (isMfs &&
+  !mfsException) || noCareExpenses` (line ~18704).
+
+Income isolation for a HoH leg comes from the scoper's existing SSN-scoping +
+spouse-form dropping (same mechanism MFS legs use), not from an `isMfsReturn`
+flag — so the HoH leg sees only the filer's income. Exact per-credit behavior
+under HoH should still be pinned by e2e (can't run in-sandbox).
+
+
+## 2026-06-20 — HOH-split Phase C: scoper generalization + separate-return generation for HoH
+
+Makes the Phase-B elections actually produce HoH/MFS returns. The scoper no
+longer hard-codes MFS — it sets each leg's status from the per-tab election.
+Build-verified (41 Java unit tests + frontend build green); end-to-end compute
+confirms on the next e2e (can't run in-sandbox).
+
+**Scoper (`MfsFormScoper`):**
+- `overrideFilingStatusToMfs` → **`overrideFilingStatusToSeparate(side,
+  electedStatus, …)`**. The mfs_head leg takes the Family Head election
+  (`filing-status.filingStatus`); the mfs_spouse leg takes the spouse election
+  (`filing-status-spouse.spouseFilingStatus`) — each independently MFS or HoH.
+  `filing-status-spouse` is skipped in the -spouse rename loop (it would
+  otherwise mis-map to a nonexistent `filing-status-taxpayer`) and applied to
+  the kept return-level filing-status form after the loop.
+- **HoH leg:** names no spouse, carries `hohQualifyingPersonName` (the side's
+  attributed dependents already scope in via `scopedDependentSide`).
+- **MFS leg:** folds in the original **Form #3 spouse-name flip** — mfs_head
+  names the actual spouse, mfs_spouse names the Family Head (previously only the
+  SSN survived under a key the output builder didn't read, so the spouse's MFS
+  1040 named the wrong person). Name derived from the identification forms.
+- `getPersonalForms` already loads `filing-status-spouse` (it iterates every
+  mapper's `formIds()`), so the scoper sees the spouse election; empty-skipped
+  when absent → safe MFS default (legacy behavior preserved).
+
+**Frontend trigger:** Family Head form broadens the lifecycle trigger from
+`isMfs` to **`householdFilesSeparately` = isMfs OR (isHoh AND
+headHohMarriedLivedApart)** — so electing married-HoH materializes the two
+return rows (the backend row-creator is status-agnostic; the scoper sets each
+leg's real status).
+
+**Tests:** 7 new `Phase7bComputeScopingTest` cases (HoH+HoH, MFS+HoH mix, spouse
+election default, spouse-name flip both directions, HoH-leg-names-no-spouse,
+filing-status-spouse non-leak) → **41 green** total. MFJ primary + existing MFS
+paths unchanged.
+
+**Deferred to later phases:** Tier-2 blocking HoH-eligibility validation at
+compute (Phase E, using `ConsideredUnmarriedEligibilityService`); EIC/education/
+dependent-care credit re-enablement verification under HoH (Phase D); the
+`tax_return_v2.filingStatus` row label still reads MFS for an HoH leg (display-
+only; compute uses the scoped status — follow-up).
+
+
+## 2026-06-20 — HOH-split Phase B: paired Filing Status form + per-tab MFS/HoH election (frontend + persistence)
+
+Implements the user-declared model (design doc §0): **Filing Status is now a
+paired per-person form.** Family Head MFJ → one joint return, spouse status
+locked; Family Head MFS/HoH → spouse tab elects **{MFS, HoH}** independently
+(both legs may be HoH). Build-verified (frontend `npm run build` + backend
+compile + 34 unit tests green); actual persistence/generation confirmed on the
+next e2e (can't run in-sandbox).
+
+**Persistence (single-row model, consistent with Phase A's head/spouse columns):**
+- **V80** adds `spouse_filing_status`, `spouse_qualifying_person_name`,
+  `head_hoh_married_lived_apart` to `pf_filing_status`; registered in
+  `db.changelog-master.xml`. Entity columns added.
+- `FilingStatusMapper` now handles **two form ids** against the one uid row with
+  **disjoint** column writes: `filing-status` (head/household columns) and
+  `filing-status-spouse` (spouse_* columns only) — neither clobbers the other.
+- `filing-status-spouse` added to `PERSONAL_FORMS` allow-list (register-in-N
+  hazard).
+
+**Frontend:**
+- New `form-filing-status-spouse.component.ts` — options {MFS, HoH} only;
+  disabled/mirrors "MFJ" when the Family Head files jointly (reads the head's
+  election); reveals considered-unmarried inputs (kept-up-own-home + qualifying
+  person) when spouse = HoH; Tier-1 inline advisory.
+- Family Head `form-filing-status-taxpayer.component.ts` — when head = HoH, adds
+  the **married-HoH question** ("Are you married but lived apart from your
+  spouse?", drives the spouse return) + head kept-up-own-home + Tier-1 advisory.
+- `form-utils`: `isMarriedFilingJointlyStatus` / `isHeadOfHouseholdStatus`.
+- Shell: registered the spouse component, sidebar item (Personal → Filing status
+  on the Spouse tab), and nav order.
+
+**Not yet wired (Phase C):** actual generation of the elected separate returns —
+`enableMfs → enableSeparateFiling` (per-leg elected status) and
+`overrideFilingStatusToMfs → overrideFilingStatusToSeparate` in `MfsFormScoper`.
+Phase B saves the elections; Phase C makes them produce HoH/MFS returns.
+
+
+## 2026-06-20 — HOH-split optimizer Phase A: considered-unmarried inputs + eligibility service
+
+Paused the MFS spouse-forms migration at Form #3 (Filing status) to design and
+begin a larger feature surfaced by that form: a married couple **living apart**
+where **each** spouse is independently "considered unmarried" (§7703(b)) can file
+**Head of Household** with a *different* qualifying child — an outcome that beats
+MFS but which the multi-return optimizer cannot represent today (it forces
+MFS+MFS on both split legs and compares only MFJ vs MFS-split).
+
+**Design doc:** `C:\us-tax\docs\separate-filing-hoh-split-design.md` (scenario
+enumeration MFJ / MFS+MFS / HOH+HOH / HOH+MFS / MFS+HOH; eligibility service;
+status-aware scoper; optimizer generalization; phases A–E). Tracking entry in
+`outstanding.md`; memory `project_hoh_split_optimizer`.
+
+**Resolved up front — §63(c)(6)(A) itemize-coupling:** an HOH leg is *never*
+zeroed (the IRS standard-deduction-zero rule keys on the filer's own status
+being *married filing separately* — i1040gi "Persons not eligible for the
+standard deduction" + 2024 Std Deduction Table CAUTION + MFS special-rule #11).
+The MFS leg stays coupled to the other leg's itemize choice.
+
+**Phase A (this change) — backend only, all behind the existing
+`multi_return.feature.*` gating; MFJ + existing MFS untouched:**
+- **V79** migration adds `head_kept_up_own_home` + `spouse_kept_up_own_home`
+  BOOLEAN to `pf_filing_status` (Pub 17 Worksheet 2-1 kept-up-home test, per
+  side) — the only genuinely new input; registered in `db.changelog-master.xml`.
+- `PfFilingStatus` entity + `FilingStatusMapper` save/load the two attestations
+  (`headKeptUpOwnHome` / `spouseKeptUpOwnHome`).
+- New `ConsideredUnmarriedEligibilityService` — pure POJO (no `@QuarkusTest`)
+  encoding the four-part considered-unmarried test per side + the distinct-
+  qualifying-person guard for the HOH+HOH scenario. Qualifying person is
+  **derived** from the existing `dependent.claimedByMfs` + `monthsLivedWith
+  Taxpayer` + `relationship` (no new per-spouse field); free-text
+  `hohQualifyingPersonName` is the fallback for a non-dependent qualifying
+  person. Clarified `Dependent.monthsLivedWithTaxpayer` Javadoc — "with the
+  *claiming* parent."
+- Tests: `ConsideredUnmarriedEligibilityServiceTest` (12 cases, truth table) +
+  `Phase7bComputeScopingTest` (22, unchanged) — **34 green**.
+
+**Verification boundary:** the V79 apply + Hibernate schema-validation are
+confirmed by structure/compile here; the actual Liquibase run surfaces only on
+the next dev-mode boot / e2e (cannot run in-sandbox — Playwright EPERM). Phases
+B–E (scoper, optimizer, frontend, e2e) pending.
+
+
+## 2026-06-20 — MFS migration #2 (Address): spouse Address form + per-spouse address scoping
+
+Second form of the MFS spouse-forms migration (plan/queue in
+`C:\us-tax\mfs-spouse-migration.md`). Problem: there was no spouse Address form,
+and `MfsFormScoper.scopeForMfsSpouse` dropped `address-taxpayer` (it ends in
+`-taxpayer`), so the `mfs_spouse` Form 1040 had a **blank address**.
+
+**Frontend:** new `form-address-spouse.component.ts` — mirrors the taxpayer
+Address fields but leads with a **"Same as Family Head's address"** checkbox
+(default ON; shows the head's address read-only as a preview; clears the fields
+when re-checked → MFJ users type nothing, no double entry). Email/Phone moved to
+the end of both Address forms (taxpayer + spouse) per request. Shell wiring:
+import + render line + `personalSpouseItems` (Address after Identification) +
+spouse nav order.
+
+**Backend:**
+- Migration **V78** — `pf_address` gains `owner_role` (backfilled to `taxpayer`)
+  + `same_as_taxpayer_address`; `UNIQUE(uid)` → `UNIQUE(uid, owner_role)`.
+  Registered in the master changelog. (Note: Quarkus dev-mode does NOT re-run a
+  newly-added Liquibase changeset on hot-reload — it needs a full backend
+  restart; validated the SQL against the live dev DB in a rolled-back txn first.)
+- `PfAddress` entity gains `ownerRole` + `sameAsTaxpayerAddress`.
+- `AddressMapper` now handles `address-spouse`, keyed by `uid + owner_role`
+  (mirrors `IdentificationMapper`), persisting the flag on the spouse row.
+- `PersonalResource.PERSONAL_FORMS` += `address-spouse`.
+- `MfsFormScoper.scopeForMfsSpouse` resolves the spouse address into
+  `address-taxpayer` instead of dropping it: own address when the flag is off +
+  data is present, else the household address. `mfs_head` + MFJ unchanged.
+
+**Tests:** `Phase7bComputeScopingTest` +4 cases (own-address, same-flag
+fallback, empty fallback, mfs_head keeps household) — 22/22. New e2e
+`mfs-spouse-address.spec.ts` (own-address → mfs_spouse shows spouse's address;
+same-flag → household) — green. Regression: `mfs-basic-flow`,
+`mfs-spouse-identity`, `person-tabs-labels` all green; UI build clean.
+
+
+## 2026-06-19 — MFS migration #1 (Identification): scope spouse identity to the mfs_spouse filer header
+
+First form of the MFS spouse-forms migration (plan + queue in
+`C:\us-tax\mfs-spouse-migration.md`). Goal: let the Spouse tab produce a correct
+standalone MFS return without breaking MFJ.
+
+**Frontend:** none. `form-identification-spouse` is already at field parity with
+the taxpayer form (firstName/middleInitial/lastName/ssn/dateOfBirth/occupation/
+identityProtectionPin), is **not** `isJointReturn`-gated, and is editable under
+MFS. Identification is genuinely per-person, so no "same as Family Head" reuse.
+
+**Backend (the actual bug):** `MfsFormScoper.scopeForMfsSpouse` renamed the form
+key `identification-spouse → identification-taxpayer` but left the inner field
+names **spouse-prefixed** (`spouseSsn`, `spouseDateOfBirth`, `spouseOccupation`,
+…). The filer-header resolver `resolveTaxpayerHeader` reads **canonical**
+un-prefixed keys, so the mfs_spouse Form 1040 filer name + signature occupation +
+IP PIN came out blank (only SSN survived, via `readSsn`'s `spouseSsn` fallback).
+Fix: added `normalizeSpouseIdentity(...)` and call it when renaming
+identification-spouse, mapping the 7 spouse-prefixed identity fields to their
+canonical keys (won't overwrite an existing non-blank canonical value; input not
+mutated). Also reordered the branch so `identification-spouse` is matched
+**before** the generic `-spouse` suffix branch (it also ends in `-spouse`, which
+was silently swallowing it un-normalized). mfs_head + MFJ primary untouched. No
+migration, no new form/table.
+
+**Unit tests:** extended `Phase7bComputeScopingTest` (pure static, no
+`@QuarkusTest`) — `mfsSpouseNormalizesSpousePrefixedIdentityToCanonicalFilerKeys`
+(asserts all 7 fields normalize + input not mutated) and
+`...DoesNotOverwriteExistingCanonicalValue`. 19/19 green.
+
+**e2e:** new `mfs-spouse-identity.spec.ts` — seed taxpayer + spouse
+(spouse-prefixed identity via `seedSpouseApi`), enable MFS, compute the
+`mfs_spouse` return, assert `form1040.filer.firstName/lastName` and
+`form1040.signature.taxpayerOccupation` are the **spouse's** values, and the
+mfs_head return remains the taxpayer's (no swap). Green.
+
+
+## 2026-06-19 — Forms 8911 & 8912 migrated to the pure-HTML render (1040 manner)
+
+Replaced the embedded `app-pdf-readonly-preview` overlay implementations of the
+Form 8911 (Alternative Fuel Vehicle Refueling Property Credit) and Form 8912
+(Credit to Holders of Tax Credit Bonds) tax-return views with the pure-HTML/CSS
+renderer used by Form 1040 / Schedule 1 and the other v2 forms (same approach as
+the 8834/8396 and 8834-era migrations). Source layouts come from
+`C:\Users\alimu\Downloads\f8911` and `…\f8912` (`pdf_elements_v2.json` +
+`form.js`).
+
+**Frontend (`us-tax-ui`):**
+- New assets copied to `public/irs/f8911_elements.json` and
+  `public/irs/f8912_elements.json`.
+- Rewrote `form-tax-return-8911.component.ts` and
+  `form-tax-return-8912.component.ts` (+ new `.html` / `.scss` per component)
+  modeled on the v2 pattern: loads the elements JSON, ports the standalone
+  `form.js` renderer to Angular/TS (rects, lines, labels, read-only
+  inputs/checkboxes positioned from PDF coords × 1.5), and maps the computed
+  return (`form8911` / `form8912`) onto the semantic field names.
+- Both views expose **"Save as PDF"** (fills the semantic-labels PDF AcroForm by
+  semantic name — the f8911/f8912 `_semantic_labels.pdf` fields are already
+  renamed to semantic names, so no reverse CSV map is needed — then flattens and
+  downloads `Form-8911-2025.pdf` / `Form-8912-2025.pdf`) and **"Show all
+  fields"** (debug toggle printing each field's semantic name).
+- Selectors/class names unchanged (`FormTaxReturn8911Component`,
+  `FormTaxReturn8912Component`), so `shell.component.ts` wiring is untouched.
+  `npm run build` passes (pre-existing warnings only).
+
+**Field-name verification** (against `C:\us-tax\pdfs`): every field name in the
+deployed `f*_elements.json` matches its `f*_field_map_semantic.csv` semantic
+column and the field names inside `f*_semantic_labels.pdf`; all component value-
+map keys are valid CSV field names — zero mismatches.
+- f8911: 15 json = 15 csv = 15 pdf, 15/15 component keys mapped.
+- f8912: 218 json = 218 csv = 218 pdf. Pages 1–2 map fully (lines 1–14, incl.
+  the 20-row Part III line-13 table). Page-3 Part IV is mapped for the
+  single-bond identification (line 15–16) + the Part IV total (line 20 → form
+  line 2) from the first `partIVEntries` entry; the per-payment-date worksheet
+  (line 18 rows / line 19) is not in the computation model and renders blank
+  (visible under "Show all fields"), same as the 4972/8396 intermediate-
+  worksheet fields.
+
+No backend or compute changes.
+
+
+## 2026-06-19 — Semantic PDF assets for Form 5329 & Schedule A (Form 8936) (1040-manner)
+
+Generated curated semantic PDF + field-map CSV pairs for two more IRS forms, in
+the same manner as Form 1040 / Schedule 1 (hand-curated semantic leaf names from
+an exact map keyed by full field name; PDF AcroForm partial names renamed to the
+semantic names; CSV columns
+`page,old_full_name,new_full_name,new_leaf_name,tooltip_label,type,rect`).
+
+**Outputs (in `C:\us-tax\pdfs`):**
+- `f5329_semantic_labels.pdf` + `f5329_field_mapping_semantic.csv` — Form 5329
+  (Additional Taxes on Qualified Plans). **75 fields, 0 unmapped fallbacks.**
+- `f8936sa_semantic_labels.pdf` + `f8936sa_field_mapping_semantic.csv` —
+  Schedule A (Form 8936), Clean Vehicle Credit Amount. **65 fields, 0 unmapped
+  fallbacks.** (User asked for Schedule A; the base `f8936.pdf` is not present in
+  `docs\IRS-Forms` — only `f8936sa.pdf`.)
+
+**Generators (new):** `scripts\generate-semantic-f5329-2025.js` and
+`scripts\generate-semantic-f8936sa-2025.js`. Each was built by inspecting the
+PDF's AcroForm fields and reading the source PDF page-by-page to match every
+field to its printed line:
+- f5329 — header + Parts I–IX (early-distribution tax incl. the line-2
+  exception-number box; education/ABLE; excess-contribution taxes for
+  traditional/Roth IRA, Coverdell, Archer MSA, HSA, ABLE; excess-accumulation
+  lines 52a–55; Paid Preparer block — taxpayer/preparer signature lines are
+  non-fillable).
+- f8936sa — header + Part I vehicle details (incl. the VIN comb field), Part II
+  business/investment use (8a–11), Part III personal use (12), Part IV
+  previously-owned (13a–17), Part V qualified-commercial (18a–26). The PDF's
+  checkbox numbering skips `c2_2`, accounted for so the 7 Part-IV Yes/No pairs
+  map to lines 13a–13g.
+
+All semantic leaf names are unique; PDF rename verified by reloading each saved
+PDF. No backend or compute changes.
+
+**Naming note:** these use the 1040-manner `*_field_mapping_semantic.csv`
+filename (with `_mapping_`). `publish-form8936sa-assets.js` was rewired to this
+new naming: it now publishes `f8936sa_semantic_labels.pdf` +
+`f8936sa_field_mapping_semantic.csv` from the canonical `C:\us-tax\pdfs` into
+`us-tax-ui\public\irs`, and removes the superseded legacy
+`f8936sa_field_map_semantic.csv` (old generic format) from both locations. Ran
+it — UI `public/irs` now carries only the 1040-manner pair. The obsolete generic
+`generate-semantic-f8936sa.js` generator was deleted (superseded by
+`generate-semantic-f8936sa-2025.js`).
+
+
+## 2026-06-19 — Forms 8834 & 8396 migrated to the pure-HTML render (1040 manner)
+
+Replaced the embedded `app-pdf-readonly-preview` overlay implementations of
+the Form 8834 (Qualified Electric Vehicle Credit) and Form 8396 (Mortgage
+Interest Credit) tax-return views with the pure-HTML/CSS renderer used by Form
+1040 / Schedule 1 and the other v2 forms (4972, 8863, etc.). Source layouts
+come from `C:\Users\alimu\Downloads\f8834` and `…\f8396`
+(`pdf_elements_v2.json` + `form.js`).
+
+**Frontend (`us-tax-ui`):**
+- New assets copied to `public/irs/f8834_elements.json` and
+  `public/irs/f8396_elements.json` (the `pdf_elements_v2.json` exports).
+- Rewrote `form-tax-return-8834.component.ts` and
+  `form-tax-return-8396.component.ts` (+ new `.html` / `.scss` per component)
+  modeled on `form-tax-return-4972`: loads the elements JSON, ports the
+  standalone `form.js` renderer to Angular/TS (rects, lines, labels, read-only
+  inputs/checkboxes positioned from PDF coords × 1.5), and maps the computed
+  return (`form8834` / `form8396`) onto the semantic field names.
+- Both views expose **"Save as PDF"** (fills the semantic-labels PDF AcroForm
+  by semantic name — the f8834/f8396 `_semantic_labels.pdf` fields are already
+  renamed to semantic names, so no reverse CSV map is needed — then flattens
+  and downloads `Form-8834-2025.pdf` / `Form-8396-2025.pdf`) and
+  **"Show all fields"** (debug toggle that prints each field's semantic name).
+- Selectors/class names unchanged (`FormTaxReturn8834Component`,
+  `FormTaxReturn8396Component`), so `shell.component.ts` wiring is untouched.
+  `npm run build` passes (pre-existing warnings only).
+
+**Field-name verification** (against `C:\us-tax\pdfs`): every field name in the
+deployed `f*_elements.json` matches its `f*_field_map_semantic.csv` semantic
+column and the field names inside `f*_semantic_labels.pdf`, and every key the
+component maps is a valid CSV field name — zero mismatches.
+- f8834: 11 json = 11 csv = 11 pdf, 11/11 component keys mapped.
+- f8396: 26 json = 26 csv = 26 pdf, 21/26 component keys mapped (the 5 omitted
+  — `mcc_issuer_name`, `mcc_issue_date`, and three `worksheet_line*` fields —
+  are not in the computation model and render blank, as with the 4972 view's
+  intermediate-worksheet fields).
+
+No backend or compute changes. Semantic PDF assets in `C:\us-tax\pdfs`
+(`f8834_*`, `f8396_*`) were already present (1040-manner 7-column CSVs).
+
+
 ## 2026-06-17 — Azure SQL Server → Postgres migration complete (Phases 1-7)
 
 Migrated the backend datastore from Azure SQL Server (`sql-ustax-9u14g`,

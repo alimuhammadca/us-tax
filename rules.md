@@ -1256,6 +1256,35 @@ Rationale: a non-blocking advisory leaves the decision to the user, and users ro
 - `FORM_8606_LINE4_EXCEEDS_LINE1_TAXPAYER` / `..._SPOUSE` — Form 8606 line 4 (post-year-end contributions for the tax year) exceeds line 1 (current-year nondeductible contributions). Detectable via Form 5498 cross-match → CP2000 risk.
 
 
+## Separate-filing splits (HOH-split feature) — 2026-06-20
+
+Filing status is a **user-declared per-tab election**, not optimizer-derived. The
+Family Head form holds the household election; `filing-status-spouse` holds the
+spouse's own election. When the household does not file jointly, each spouse is
+**MFS or HoH** (never MFJ/Single/QSS) and the app generates two separate returns.
+Guardrails:
+
+- **Per-leg status from the election, never hard-coded.** `MfsFormScoper.
+  overrideFilingStatusToSeparate` sets each scoped leg's `filingStatus` from the
+  Family Head election (mfs_head) / `spouseFilingStatus` (mfs_spouse). Absent a
+  spouse election it defaults to MFS (legacy behavior). Do NOT reintroduce a
+  forced-MFS override.
+- **HoH legs name no spouse**; MFS legs name the OTHER spouse (mfs_head → the
+  spouse, mfs_spouse → the Family Head — the spouse-name flip).
+- **Considered-unmarried (§7703(b)) is REQUIRED for a married HoH election** and
+  is validated Tier-2: `validateConsideredUnmarriedForHoh` runs ONLY on the
+  unscoped/primary compute (`SCOPED_FORMS_OVERRIDE == null`) — never per scoped
+  leg — and emits blocking-but-overrideable flags
+  (`HOH_HEAD_NOT_CONSIDERED_UNMARRIED`, `HOH_SPOUSE_NOT_CONSIDERED_UNMARRIED`,
+  `HOH_DUPLICATE_QUALIFYING_PERSON`). Decision logic is the pure
+  `ConsideredUnmarriedEligibilityService.hohElectionProblems(...)`.
+- **MFS credit disallowances must key on `"Married filing separately"` only** —
+  never a combined MFS-or-HoH predicate — so an HoH leg correctly re-enables EIC
+  / education credits / dependent-care.
+- Each HoH return needs its own **distinct** qualifying child; per-dependent
+  attribution is `dependent.claimedByMfs` (required under HoH).
+
+
 
 
 

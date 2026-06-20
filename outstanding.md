@@ -3174,3 +3174,23 @@ Added: 2026-06-14 (per `XLS/Computations/38.md` Gap H closure).
   **Why this is the ONLY F2210 reference-data refresh needed:** the six other F2210 constants (`F2210_NO_PENALTY_BALANCE_THRESHOLD = $1,000`, `F2210_SAFE_HARBOR_HIGH_AGI_THRESHOLD_OTHERS = $150,000`, `F2210_SAFE_HARBOR_HIGH_AGI_THRESHOLD_MFS = $75,000`, `F2210_SAFE_HARBOR_HIGH_RATE = 1.10`, the implicit 90% / 100% safe-harbor multipliers, the four-quarter default days `{365, 303, 212, 90}`) are statutory and stable year to year. The interest-rate refresh is the entire surface area of the yearly reference-data update for Form 2210.
 
   **Failure mode if the refresh is missed:** the Form 1040 line 38 penalty will be off by the rate ratio. For a $1,000 underpayment from Q1 (365 days) under a hypothetical 8% rate in 2026, the correct penalty is $80 but the codebase would still compute $70 (using the 2025 7% rate). The error compounds proportionally for larger underpayments and longer-duration periods. The IRS would charge the correct penalty post-filing per Internal Revenue Code §6601, so the taxpayer's filed return would understate the penalty by ~12.5% of the line-38 value when the rate moves from 7% to 8%.
+
+---
+
+## Separate-Filing Optimizer — HOH/HOH and HOH/MFS splits (LARGE feature; multi-phase; in progress)
+
+Added: 2026-06-20 (during MFS-spouse migration Form #3 = Filing status).
+
+### Gap HOH-Split — optimizer only models the separate alternative as MFS + MFS
+
+- **[Multi-return / OptimizerService + MfsFormScoper / LARGE / IN PROGRESS]** A married couple living apart where **each** spouse is independently "considered unmarried" (§7703(b)) can file **Head of Household** with a *different* qualifying child — a legal outcome that beats MFS (HOH rates, $23,625 × 2 deductions, EIC/education/dependent-care credits restored). The current multi-return architecture has **no HOH-aware split**: `return_kind ∈ {primary, mfs_head, mfs_spouse, dependent_own}`, `MfsFormScoper.overrideFilingStatusToMfs` unconditionally forces "Married filing separately" on both split legs, and `OptimizerService` compares only **MFJ vs MFS-split**. For the living-apart-with-children cohort the optimizer therefore recommends a strictly-worse status or under-states achievable savings.
+
+  **Full design:** `C:\us-tax\docs\separate-filing-hoh-split-design.md` — scenario enumeration (MFJ / MFS+MFS / HOH+HOH / HOH+MFS / MFS+HOH), the `ConsideredUnmarriedEligibilityService`, the status-aware `overrideFilingStatusToSeparate` scoper generalization (Option A: reuse `mfs_head`/`mfs_spouse` rows as which-side markers), the optimizer generalization, and 5 phases A–E (each shippable behind `multi_return.feature.*`).
+
+  **Resolved decisions (in the design doc):**
+  - **Itemize-coupling (§63(c)(6)(A)):** HOH legs are *never* zeroed (rule keys on filer status = MFS); MFS legs stay coupled to the other leg's itemize choice. (i1040gi "Persons not eligible for the standard deduction" + 2024 Std Deduction Table CAUTION + MFS special-rule #11.)
+  - **Qualifying person is derivable** from existing `dependent.claimedByMfs` + `monthsLivedWithTaxpayer` + `relationship` — no new per-spouse qualifying-person field. The only genuinely new input is the Pub 17 Worksheet 2-1 "paid > half the cost of keeping up the [separate] home" test (two per-side booleans).
+
+  **Status:** Phase A in progress (kept-up-home inputs + eligibility service). Phases B–E pending. S0 (MFJ) and S1 (MFS+MFS) paths stay byte-for-byte identical — all new behavior is additive and flag-gated.
+
+  **Open verification items (design §8):** §7703(b) reference-chain nuance for the MFS-leg-coupled-to-HOH-leg case (implemented conservatively); residency semantics ("with claiming parent"); §152(e) release representability; community-property states (out of scope, flagged); feature-flag sub-flag for staged HOH rollout.

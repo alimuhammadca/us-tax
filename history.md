@@ -1,6 +1,28 @@
 ﻿# History
 
 
+## 2026-06-20 — MFS migration #4 (Digital assets): already MFS-ready — verified, no code change
+
+Inventory (per `[[feedback_inspect_before_decompose]]`) found Form #4 already in
+target state — nothing to build:
+- **Frontend:** the spouse component (`form-digital-assets person="spouse"`,
+  formId `digital-assets-spouse`) has NO filing-status gating; it renders +
+  accepts input under MFS already.
+- **Backend:** `DigitalAssetsMapper.formIds()` handles `digital-assets-spouse`
+  (owner_role='spouse'); entity has owner_role; allow-list has all three ids.
+- **Scoper:** `digital-assets-spouse` routes to the `mfs_spouse` leg via the
+  generic `-spouse`→`-taxpayer` rename (not in any skip-list).
+- **Compute:** `buildDigitalAssets` reads per-leg (head→mfs_head, spouse→
+  mfs_spouse) and OR-combines ONLY for MFJ — matching the IRS per-return rule
+  (each MFS spouse answers the digital-asset question for themselves; MFJ is one
+  answer, Yes if either spouse transacted).
+
+**Verified, not assumed:** new `e2e/tests/mfs-spouse-digital-assets.spec.ts` —
+head "Yes" + spouse "No" under MFS → `mfs_head` 1040 shows **Yes**, `mfs_spouse`
+1040 shows **No** (per-leg isolation, not OR-combined). **1/1 green** against the
+running stack. No production code changed; the only new artifact is the spec.
+
+
 ## 2026-06-20 — HOH-split Phase F: e2e specs (IRS-pinned) — authored + parse-verified
 
 `e2e/tests/hoh-split-filing.spec.ts` — 5 specs exercising the whole feature end

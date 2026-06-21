@@ -6,6 +6,46 @@ Updated: 2026-05-18T23:00:00-04:00
 
 ---
 
+## ~~MFS: Return-Level Childcare/Form-2441 Qualifying-Person Scoping Blocks the Non-Claiming Spouse Leg — Deferred 2026-06-21~~ **RESOLVED 2026-06-21 (Option B)**
+
+**Resolved same day** by MFS migration Form #12 Option B: the spouse now has its
+own `childcare-expenses-spouse` form (owner_role spouse; V82), so childcare is
+per leg. The MFS spouse leg reads its own Form 2441 (its own qualifying children)
+and no longer sees the head's return-level childcare form — the §17
+qualifying-person-not-in-family block is gone (the spouse leg computes 200). See
+history.md 2026-06-21 Option B entry. Original deferred analysis below.
+
+
+
+Found during MFS-spouse migration Form #12 (child & dependent care). The
+`childcare-expenses` form is return-level (no -taxpayer/-spouse suffix) and
+lists qualifying children for the whole household. On an MFS return, dependents
+are claimed per leg via `claimedByMfs` (`loadScopedDependents` filters by
+`scopedDependentSide`), so a qualifying child belongs to exactly one leg's
+family. When that child is listed on the shared childcare form, the leg that
+does NOT claim the child hits the §17 non-overrideable
+`DEPENDENT_CARE_QUALIFYING_PERSON_NOT_IN_FAMILY` flag, which 409s that leg's
+ENTIRE compute — not just the dependent-care credit.
+
+Impact: an MFS spouse leg cannot produce ANY computed return while the
+household childcare form lists a child claimed by the other spouse, even though
+the spouse may have unrelated return content to file.
+
+Correct fix (deferred — tied to the broader dependents work): scope the
+qualifying-person list per leg so each leg's Form 2441 sees only the children it
+claims (and only that leg's share of expenses). This also generalizes the
+double-claim protection from "child claimed by one side" to "expenses split per
+side." Note the realistic considered-unmarried care-provider elects Head of
+household (HoH-split), where the leg's status is "Head of household"
+(isMfs=false) and the credit computes per leg normally. The §21(e)(2) credit
+disallowance itself is correctly implemented and needs no change. Current
+behavior is locked in by `e2e/tests/mfs-spouse-childcare-credit.spec.ts` Test 3.
+
+Likely recurs on Form #13 (adoption-expenses / Form 8839), which also references
+children on a return-level form.
+
+---
+
 ## ~~Line 4abc: QCD $108,000 Annual Cap + SIE $54,000 Cap Enforcement — Deferred 2026-05-11~~ **Completed 2026-06-03**
 
 **Resolved 2026-06-03** as Gaps 1 and 2 of `XLS/Computations/4a.md` §3.2. Constants added: `ReferenceData.QCD_ANNUAL_CAP_PER_PERSON_2025 = $108,000` (line 258) and `ReferenceData.QCD_SIE_LIFETIME_CAP_PER_PERSON_2025 = $54,000` (line 267). Advisory flags wired: `QCD_EXCEEDS_ANNUAL_CAP_TAXPAYER`/`_SPOUSE` (non-blocking, silent-cap design — `effectiveQcdAmount = min(totalQcdAmount, $108,000)` with the over-cap portion absorbed into Line 4b) and `QCD_SIE_EXCEEDS_LIFETIME_CAP_TAXPAYER`/`_SPOUSE` (promoted to **blocking** 2026-06-04 per `rules.md §18`). Backend lock-in tests: `qcdAnnualCapSilentlyAppliedAndFlagFires`, `splitInterestEntityQcdExceedingLifetimeCapEmitsFlag`. Spec coverage: `XLS/Computations/4a.md` §3.5 confirms "clean — both cap-validation gaps closed 2026-06-03"; `XLS/Computations/4b.md` Gaps 6/7 closed in parallel.

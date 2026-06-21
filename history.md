@@ -1,6 +1,117 @@
 ﻿# History
 
 
+## 2026-06-21 — MFS migration #12 (Child & dependent care — Form 2441): Option B — spouse gets its own Form 2441
+
+**User chose Option B: a mirrored spouse childcare form.** Builds on the
+verify-only finding below — the spouse tab now has its own Form 2441 so the MFS
+spouse leg computes its own child & dependent care credit, and the return-level
+409 gap (documented earlier same day) is **RESOLVED**.
+
+Design choices (minimal blast radius):
+- **Kept the `childcare-expenses` formId** (taxpayer copy) and added a new
+  `childcare-expenses-spouse`. No rename → existing `line1e` taxpayer e2e and UI
+  untouched.
+- **MFJ MERGES both forms into the one combined Form 2441** (per user feedback —
+  an initial "hide the spouse copy on MFJ" approach was wrong because Form 2441
+  Part III dependent-care benefits are per-spouse: a spouse with their own W-2
+  box 10 benefits / qualified expenses must be captured). The spouse form is
+  shown on the spouse tab on MFJ too. On MFS each leg computes its own 2441.
+
+Backend:
+- **V82** — `owner_role` on `pf_childcare_expenses` (+ surrogate `id` PK and
+  UNIQUE(uid, owner_role), the V81 third-party-designee shape) and
+  `parent_owner_role` on both child tables (`pf_childcare_care_provider`,
+  `pf_childcare_qualifying_person`) with composite FKs. Existing rows backfill
+  to `owner_role='taxpayer'`.
+- Entities: `PfChildcareExpenses` (surrogate id + ownerRole),
+  `PfChildcareCareProvider` / `PfChildcareQualifyingPerson` (parentOwnerRole).
+- `ChildcareExpensesMapper`: `formIds += childcare-expenses-spouse`; all
+  reads/writes/deletes keyed by `(uid, owner_role)` / `(parent_uid,
+  parent_owner_role)`; role derived from formId.
+- `PersonalResource.PERSONAL_FORMS += childcare-expenses-spouse`.
+- `MfsFormScoper`: childcare special-case — on the spouse leg
+  `childcare-expenses-spouse` becomes the `childcare-expenses` compute reads, and
+  the head's copy is dropped (mirrors the address resolution). Head leg unchanged
+  (already keeps `childcare-expenses`, skips `-spouse`).
+- `TaxReturnComputeService.mergeChildcareForms(tp, sp)` at the read site: on the
+  MFJ primary return BOTH form keys are present and merge into one Form 2441
+  (providers + qualifying persons concatenated, persons de-duped by SSN; Part III
+  benefit amounts + line 16 + plan max SUMMED; activation/§129(d) booleans OR-ed;
+  per-spouse earned-income/deemed fields taken from the taxpayer form to avoid
+  double-count). On the MFS legs the scoper has collapsed to one form, so the
+  spouse arg is null and the merge returns the taxpayer form unchanged (line1e
+  MFJ tests, taxpayer form only, are unaffected).
+
+Frontend:
+- `form-childcare-expenses.component.ts` parameterized with `@Input formId`
+  (default `childcare-expenses`) + `person`.
+- `shell.component.ts`: spouse sidebar item + template render
+  (`formId="childcare-expenses-spouse" person="spouse"`), shown on the spouse tab
+  like other spouse income forms (including MFJ — its data merges).
+
+Verification (all green):
+- Backend compile EXIT=0; V82 applied (Liquibase boot OK); frontend `tsc
+  --noEmit` EXIT=0.
+- `e2e/tests/mfs-spouse-childcare-credit.spec.ts` rewritten, **4/4**:
+  1. MFS head, no exception → head credit null (§21(e)(2)); **spouse leg now
+     computes cleanly (200, no §17 409)** — the return-level gap is resolved.
+  2. MFS head, exception → head credit **$660** (3,000 × 22%).
+  3. **MFJ merges the spouse form**: head box-10 $3,000 + spouse box-10 $2,000,
+     head line-16 $3,000 + spouse line-16 $2,000 → merged line 16 = $5,000, all
+     excluded → line 1e = **$0** (without the merge the spouse's $2,000 drops and
+     $2,000 is taxable). Proves the spouse's own benefits are captured on MFJ.
+  4. MFS spouse, own `childcare-expenses-spouse` + spouse-claimed child +
+     exception → spouse leg credit **$810** (3,000 × 27%). Proves the spouse tab
+     produces its own MFS Form 2441.
+- Taxpayer regression `line1e-dependent-care.spec.ts` **20/20** green
+  (unchanged formId → unaffected).
+
+outstanding.md gap (return-level childcare blocks spouse leg) marked RESOLVED.
+
+
+## 2026-06-21 — MFS migration #12 (Child & dependent care — Form 2441): verify + 1 deferred gap
+
+**Verdict: §21(e)(2) credit gate already correct — no code change; one deferred
+gap documented.** Form #12. The child & dependent care credit (Form 2441 Part
+II → Schedule 3) plus the §129 box-10 exclusion (line 1e) are driven by the
+RETURN-LEVEL `childcare-expenses` form (no -taxpayer/-spouse suffix). The
+MfsFormScoper keeps suffix-less keys on BOTH legs unchanged.
+
+- **IRC §21(e)(2) already implemented**: in `computeDependentCareBenefits`,
+  `creditDisallowed = (isMfs && !marriedFilingSeparatelyException) ||
+  noCareExpenses`; `finalizeForm2441PartII` returns early when disallowed,
+  leaving `schedule3.nonrefundableCredits.childDependentCareCredit` null. `isMfs`
+  comes from the scoper-forced MFS status on each leg; `mfsException` is the
+  considered-unmarried flag (lived apart last 6 months / legally separated). The
+  §129 exclusion (line 1e) is separate and already SSN-filtered per leg.
+- **Per-leg dependent claiming closes the double-claim**: `loadScopedDependents`
+  filters household dependents by the leg's `scopedDependentSide` (head sees
+  `claimedByMfs != "spouse"`; spouse sees only `"spouse"`). A qualifying child
+  therefore belongs to exactly ONE leg's family — it cannot be a qualifying
+  person on both legs, so the same expenses can't be claimed twice.
+- **Deferred GAP (locked in by e2e Test 3)**: `childcare-expenses` is
+  return-level and lists qualifying children for the whole household. On an MFS
+  leg that does NOT claim a listed child, the §17 non-overrideable
+  `DEPENDENT_CARE_QUALIFYING_PERSON_NOT_IN_FAMILY` flag fires and 409s that
+  leg's ENTIRE compute (not just the credit). The fix — per-leg
+  qualifying-person scoping (only the children the leg claims) — is tied to the
+  deferred dependents work and is tracked in outstanding.md. The realistic
+  considered-unmarried care-provider elects Head of household (HoH-split),
+  where the leg's status is "Head of household" (isMfs=false) and the credit
+  computes per leg normally — not MFS.
+- **E2E** (`e2e/tests/mfs-spouse-childcare-credit.spec.ts`, 3 tests, all green):
+  1. MFS, child claimed by head, NO exception → head-leg credit null (§21(e)(2)
+     disallowance).
+  2. MFS, exception=true → head-leg credit = **$660** (qualified expenses
+     $3,000 ×1 person limit; AGI $40,000 → 35% − ceil((40000−15000)/2000)% =
+     22%; tax limit non-binding).
+  3. Spouse leg → 409 `DEPENDENT_CARE_QUALIFYING_PERSON_NOT_IN_FAMILY` (the
+     deferred gap).
+
+Queue advanced to #13 (Adoption expenses — Form 8839).
+
+
 ## 2026-06-21 — MFS migration #11 (Combat pay — line 1i): verify-only
 
 **Verdict: already MFS-ready — no code change.** Form #11 in the spouse-forms

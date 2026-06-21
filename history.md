@@ -1,6 +1,40 @@
 ﻿# History
 
 
+## 2026-06-21 — MFS migration #10 (Uncollected SS/Medicare — Form 8919): verify-only
+
+**Verdict: already MFS-ready — no code change.** Form #10 in the spouse-forms
+migration queue. Line 1g = Form 8919 line 6 (wages on which SS/Medicare tax was
+not withheld and not reported on a W-2).
+
+- **Frontend**: `form-uncollected-ss-medicare-spouse.component.ts` carries no
+  `isJointReturn` gate — the spouse form is already editable under MFS. Nothing
+  to remove (contrast #7/#8/#9 which needed gate-removal).
+- **Backend, per-leg safe by construction**:
+  - `pf_uncollected_ss_medicare` uses the **two-row owner_role model** (one row
+    per filer), NOT the shared-row dual-column shape that leaked in Presidential
+    (#5). No head→spouse leak possible.
+  - `MfsFormScoper` generic `-spouse`→`-taxpayer` rename applies cleanly (same
+    field names both legs).
+  - `computeForm8919ForPerson` is **MFS-guarded** at
+    `TaxReturnComputeService.java:19801-19803`: on any MFS leg `spouseData` is
+    passed as null, so `spouseResult.line6TotalWages()` is null and
+    `line1g = addNonNull(taxpayer.line6TotalWages(), null)` = the filer's own
+    wages only. Schedule 2 line 6 (uncollected tax) follows the same guard.
+  - Output: `line1g` → `income.setUncollectedSocialSecurityMedicareWages`
+    (`TaxReturnComputeService.java:7826-7827` → `form1040.income`).
+  - Both `uncollected-ss-medicare-taxpayer` / `-spouse` already in
+    `PERSONAL_FORMS`.
+- **Per the rule (the e2e is the verdict, not the inventory's word)**: added
+  `e2e/tests/mfs-spouse-uncollected-ss-medicare.spec.ts` — head $5,000 + spouse
+  $3,000 of Form 8919 wages under MFS → `mfs_head`
+  `form1040.income.uncollectedSocialSecurityMedicareWages` = $5,000,
+  `mfs_spouse` = $3,000. **Green** (16.4 s). Proves per-leg isolation with no
+  head→spouse leak.
+
+Queue advanced to #11 (Combat pay).
+
+
 ## 2026-06-21 — MFS migration #9 (Medicaid waiver): remove the spouse-form MFS gate
 
 Line 1d Medicaid waiver payments (Notice 2014-7 difficulty-of-care, IRC §131) are

@@ -1,6 +1,26 @@
 ﻿# History
 
 
+## 2026-06-21 — Verify Family-Head/Spouse form data isolation + fix inmate-wages W-2 picker
+
+User reported seeing the same data in the Family Head and Spouse instances of the
+Employment and Tips forms. **Verified they are DISTINCT objects:** distinct form
+ids (`employment-income-`/`tip-income-` `-taxpayer` vs `-spouse`), distinct
+`owner_role` rows, no `getForm` caching. Proven empirically by
+`mfs-spouse-form-isolation.spec.ts` (save distinct data under each id, load back
+→ distinct, for both Employment and Tips). The "same data" was the **shared
+household W-2 statement surface** (the "W-2 statements: N" count badge + the W-2
+picker), which is household-shared by design (W-2s uploaded once, attributed by
+SSN).
+
+**One real leak found + fixed:** the Employment inmate-wages W-2 picker
+(`loadW2EntryDetails`) listed ALL household W-2s, unfiltered by person — a filer
+could attach the other spouse's W-2 as their own inmate wages. Now filters by the
+person's `employeeSSN` (taxpayer `getForm('you').ssn` / spouse
+`getForm('spouse').ssn`), mirroring the Tips form's existing SSN filter. `npm run
+build` green.
+
+
 ## 2026-06-20 — MFS migration #8 (Tips): remove the spouse-form MFS gate (same pattern as #7)
 
 Line 1c tip income is per-person (i1040gi / lines/1c.md; line 1c = unreported

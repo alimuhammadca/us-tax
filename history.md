@@ -1,6 +1,39 @@
 ﻿# History
 
 
+## 2026-06-21 — MFS migration #11 (Combat pay — line 1i): verify-only
+
+**Verdict: already MFS-ready — no code change.** Form #11 in the spouse-forms
+migration queue. Line 1i = nontaxable combat pay election (W-2 box 12 code Q
+included in earned income for EIC/ACTC only; not taxable, not in 1z/9/AGI).
+
+- **Frontend**: `form-combat-pay-spouse.component.ts` carries no `isJointReturn`
+  gate — the only `[disabled]` is on the Save button. Already editable under
+  MFS; nothing to remove.
+- **Backend, per-leg safe by construction**:
+  - `pf_combat_pay` stores **one row per (uid, owner_role)** (CombatPayMapper —
+    two-row model), NOT the shared-row dual-column shape that leaked in
+    Presidential (#5). No head→spouse leak possible.
+  - `MfsFormScoper` generic `-spouse`→`-taxpayer` rename routes both the
+    `electCombatPay` flag and the resolved filer SSN per leg.
+  - `computeCombatPay` has a **THREE-POINT MFS guard** (`spouseSsn`,
+    `electSpouse`, `spouseTotal` each nulled on MFS — lines/1i.md §4). The
+    three-point form is required because `sumW2Box12ByCodes(_, _, null)` would
+    sum ALL code-Q entries; gating spouseSsn alone wouldn't stop the leak. Each
+    leg sums code Q only for its own resolved-filer SSN.
+  - Output: `line1i` → `income.setNontaxableCombatPayElection` →
+    `form1040.income.nontaxableCombatPayElection`.
+  - Both `combat-pay-taxpayer` / `-spouse` already in `PERSONAL_FORMS`.
+- **Per the rule (the e2e is the verdict, not the inventory's word)**: added
+  `e2e/tests/mfs-spouse-combat-pay.spec.ts` — head W-2 code Q $2,500 + spouse
+  W-2 code Q $1,200 (distinct employeeSSN), both electing, under MFS →
+  `mfs_head` `form1040.income.nontaxableCombatPayElection` = $2,500,
+  `mfs_spouse` = $1,200. **Green** (11.4 s). Proves per-leg election routing,
+  per-SSN code-Q attribution, and no head→spouse leak.
+
+Queue advanced to #12 (Child & dependent care — Form 2441).
+
+
 ## 2026-06-21 — MFS migration #10 (Uncollected SS/Medicare — Form 8919): verify-only
 
 **Verdict: already MFS-ready — no code change.** Form #10 in the spouse-forms

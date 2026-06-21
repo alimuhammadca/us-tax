@@ -1,6 +1,54 @@
 ﻿# History
 
 
+## 2026-06-21 — MFS migration #13 (Adoption expenses — Form 8839): Option B — spouse gets its own Form 8839
+
+User chose Option B (mirror), consistent with #12. The spouse tab gets its own
+adoption form so the MFS spouse leg computes its own Form 8839 benefits
+exclusion (line 1f), and on MFJ both forms merge into one combined Form 8839.
+
+Adoption differs from childcare: the **credit (Part II §23) is out of scope**
+(only the §137 benefits exclusion / line 1f computes); there is **no §17
+family-membership validation** (so no 409 gap); and the §137(f) MFS exclusion
+gate already existed and is correct (`mfsExclusionDisallowed = isMfs &&
+!mfsLivedApartOrLegallySeparated`, read from the filing-status form). box-12-T is
+already SSN-filtered per leg.
+
+Backend:
+- **V83** — owner_role on `pf_adoption_expenses` (surrogate id PK +
+  UNIQUE(uid, owner_role), the V82 shape) + parent_owner_role on `pf_adoption_child`
+  with composite FK; existing rows backfill to 'taxpayer'.
+- `PfAdoptionExpenses` (surrogate id + ownerRole), `PfAdoptionChild`
+  (parentOwnerRole). `AdoptionExpensesMapper`: formId += adoption-expenses-spouse,
+  keyed by (uid, owner_role) / (parent_uid, parent_owner_role).
+- `PERSONAL_FORMS += adoption-expenses-spouse`. `MfsFormScoper` adoption
+  special-case (spouse leg's -spouse copy -> the adoption-expenses read key; head
+  copy dropped) — mirrors childcare.
+- `TaxReturnComputeService.mergeAdoptionForms(tp, sp)` at the read site. Form 8839
+  stores per-child amounts in parallel `child1..6` maps aligned to
+  `children.entries`, so the merge concatenates entries and **re-indexes** the
+  spouse's `child{N}` amount keys to `child{N+offset}` (helper `mergeChildMap`
+  via regex). Activation/§1372 booleans OR-ed; imports + (out-of-scope) credit
+  carryforward from the taxpayer form. On MFS legs the scoper collapses to one
+  form, so the spouse arg is null and the merge passes the taxpayer form through.
+
+Frontend: `form-adoption-expenses.component.ts` parameterized with `@Input formId`;
+`shell.component.ts` spouse sidebar item + template render, shown on the spouse
+tab (merges on MFJ).
+
+Verified (all green): backend compile EXIT=0; V83 boot OK; frontend `tsc` EXIT=0;
+`e2e/tests/mfs-spouse-adoption-benefits.spec.ts` **3/3**:
+  1. MFS no exception -> each leg its own box-12-T taxable (head $8,000, spouse
+     $5,000) — per-leg routing.
+  2. MFJ merge -> head child $5,000 + spouse child $5,000 ($10,000 box-12-T), two
+     children each < $17,280 cap -> fully excluded -> line 1f = **$0**.
+  3. MFS spouse leg + lived-apart exception -> excludes its own $5,000 via
+     adoption-expenses-spouse -> line 1f = **$0**.
+Plus `line1f-adoption-benefits` regression + Phase3/Phase4 unit tests.
+
+Queue advanced to #14 (Other earned income).
+
+
 ## 2026-06-21 — MFS migration #12 (Child & dependent care — Form 2441): Option B — spouse gets its own Form 2441
 
 **User chose Option B: a mirrored spouse childcare form.** Builds on the

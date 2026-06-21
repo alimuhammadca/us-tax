@@ -1,6 +1,36 @@
 ﻿# History
 
 
+## 2026-06-20 — MFS migration #7 (Employment): remove the spouse-form MFS gate (first gated form)
+
+Employment income is per-person (line 1a = each filer's W-2 wages; line 1b =
+household-employee wages with no W-2 — i1040gi / lines/1b.md); MFS has no special
+disallowance. The backend was **already MFS-ready** (owner_role rows on
+`pf_employment_income`, scoper `-spouse` rename, and an isMfs-gated
+`sumHouseholdEmployeeWages` that correctly aggregates the renamed spouse data per
+leg — verified at TaxReturnComputeService:21452). The ONLY blocker was the
+frontend: `form-employment-spouse` self-disabled on `isJointReturn` (info banner +
+every input disabled + Save disabled + `isValid()` returns false), so a spouse
+couldn't enter their employment income for a separate return.
+
+**Bucket A — frontend gate-inversion only. Option #1 (chosen):** remove the
+internal filing-status gate and trust the shell (the spouse Employment form only
+appears on the Spouse tab = a married household: MFJ, MFS, or HoH-split). Renamed
+the always-true editability flag `isJointReturn` → `canEdit` (= true); removed the
+dead filing-status read, the `isJointStatus` helper, the `FilingStatusSnapshot`
+type, and the "joint returns only" banner. Taxpayer form untouched; MFJ behavior
+preserved.
+
+★ **Establishes the pattern for the remaining ~13 gated spouse forms (#8–#23):**
+remove the `isJointReturn` self-gate and trust the shell's per-tab visibility —
+preferred over `|| isMfs` because it also covers the HoH-split spouse without
+enumerating filing statuses.
+
+Verified: `npm run build` green + e2e `mfs-spouse-employment.spec.ts` (head
+$2,000 + spouse $1,500 household-employee wages under MFS → `mfs_head` line 1b =
+$2,000, `mfs_spouse` line 1b = $1,500) green. No backend change.
+
+
 ## 2026-06-20 — MFS migration #6 (Third party designee): new spouse designee form
 
 The Form 1040 Third Party Designee is per-return (i1040gi: "you, and your spouse

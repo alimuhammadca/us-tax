@@ -130,8 +130,8 @@ Cover each, then act (pausing only on a real design fork):
 ### Statements  (shared, recipient-TIN attributed — handle via attribution, not pairing; revisit as a group)
 
 ### Incomes
-7. ☐ **Employment** — `employment-taxpayer` ↔ `employment-spouse` (gated). Bucket A. **← CURRENT**
-8. ☐ **Tips** — `tips-taxpayer` ↔ `tips-spouse` (gated). Bucket A.
+7. ☑ **Employment** — `employment-taxpayer` ↔ `employment-spouse`. **DONE 2026-06-20 — first gated form; removed the MFS gate (option #1).** Backend already MFS-ready (owner_role rows, scoper rename, isMfs-gated compute); the spouse form just self-disabled on `isJointReturn`. Fix: removed the gate + dead derivation/banner, renamed flag → `canEdit`=true (trust the shell). ★ **PATTERN for the remaining gated forms #8–#23:** remove the `isJointReturn` self-gate, trust the shell's per-tab visibility (covers MFJ/MFS/HoH-split). Verified: npm build + `e2e/tests/mfs-spouse-employment.spec.ts` (head $2,000 / spouse $1,500 line-1b → per-leg) green. See history.md.
+8. ☐ **Tips** — `tips-taxpayer` ↔ `tips-spouse` (gated). Bucket A. **← CURRENT**
 9. ☐ **Medicaid waiver** — `medicaid-waiver-taxpayer` ↔ `medicaid-waiver-spouse` (gated). Bucket A/B.
 10. ☐ **Uncollected SS/Medicare** — `uncollected-ss-medicare-taxpayer` ↔ `-spouse` (NOT gated). Bucket A.
 11. ☐ **Combat pay** — `combat-pay-taxpayer` ↔ `-spouse` (NOT gated). Bucket A.

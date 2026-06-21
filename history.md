@@ -1,6 +1,27 @@
 ﻿# History
 
 
+## 2026-06-20 — MFS migration #8 (Tips): remove the spouse-form MFS gate (same pattern as #7)
+
+Line 1c tip income is per-person (i1040gi / lines/1c.md; line 1c = unreported
+tips + non-cash tips). Backend already MFS-ready (`tip-income-*` owner_role rows,
+scoper `-spouse` rename, isMfs-gated `computeTips` — verified at
+TaxReturnComputeService:21655). The spouse form self-gated on `isJointReturn`
+(banner + 7 disable bindings + `isValid()` early-return + an ngOnInit
+auto-populate guard).
+
+Applied the **option-#1 pattern** (per Form #7): removed the gate, renamed the
+editability flag to `canEdit`=true (trust the shell), dropped the dead
+filing-status read, `isJointStatus`, `FilingStatusSnapshot`, and the "joint only"
+banner. The ngOnInit W-2 auto-populate now runs under MFS too — the spouse's own
+W-2 box 7/8 tips should pre-fill their separate-return tip form (correct).
+
+Verified: `npm run build` green + e2e `mfs-spouse-tips.spec.ts` (head $1,200 +
+spouse $800 unreported tips under MFS → `mfs_head` line 1c = $1,200, `mfs_spouse`
+= $800; line 1c = received − reported per `computeTipsForPerson`) green. No
+backend change.
+
+
 ## 2026-06-20 — MFS migration #7 (Employment): remove the spouse-form MFS gate (first gated form)
 
 Employment income is per-person (line 1a = each filer's W-2 wages; line 1b =

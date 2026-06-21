@@ -131,8 +131,8 @@ Cover each, then act (pausing only on a real design fork):
 
 ### Incomes
 7. ☑ **Employment** — `employment-taxpayer` ↔ `employment-spouse`. **DONE 2026-06-20 — first gated form; removed the MFS gate (option #1).** Backend already MFS-ready (owner_role rows, scoper rename, isMfs-gated compute); the spouse form just self-disabled on `isJointReturn`. Fix: removed the gate + dead derivation/banner, renamed flag → `canEdit`=true (trust the shell). ★ **PATTERN for the remaining gated forms #8–#23:** remove the `isJointReturn` self-gate, trust the shell's per-tab visibility (covers MFJ/MFS/HoH-split). Verified: npm build + `e2e/tests/mfs-spouse-employment.spec.ts` (head $2,000 / spouse $1,500 line-1b → per-leg) green. See history.md.
-8. ☐ **Tips** — `tips-taxpayer` ↔ `tips-spouse` (gated). Bucket A. **← CURRENT**
-9. ☐ **Medicaid waiver** — `medicaid-waiver-taxpayer` ↔ `medicaid-waiver-spouse` (gated). Bucket A/B.
+8. ☑ **Tips** — `tips-taxpayer` ↔ `tips-spouse`. **DONE 2026-06-20 — removed MFS gate (option #1, same as #7).** Backend already MFS-ready (tip-income-* owner_role rows, scoper rename, isMfs-gated computeTips); removed the spouse form's isJointReturn gate → `canEdit`=true. Verified: npm build + `e2e/tests/mfs-spouse-tips.spec.ts` (head $1,200 / spouse $800 line-1c → per-leg) green. See history.md.
+9. ☐ **Medicaid waiver** — `medicaid-waiver-taxpayer` ↔ `medicaid-waiver-spouse` (gated). Bucket A/B. **← CURRENT**
 10. ☐ **Uncollected SS/Medicare** — `uncollected-ss-medicare-taxpayer` ↔ `-spouse` (NOT gated). Bucket A.
 11. ☐ **Combat pay** — `combat-pay-taxpayer` ↔ `-spouse` (NOT gated). Bucket A.
 12. ☐ **Child & dependent care** — `childcare-expenses` ↔ *(none)*. Bucket D — Form 2441; MFS usually disallowed (verify lived-apart).

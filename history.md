@@ -1,6 +1,27 @@
 ﻿# History
 
 
+## 2026-06-21 — MFS migration #9 (Medicaid waiver): remove the spouse-form MFS gate
+
+Line 1d Medicaid waiver payments (Notice 2014-7 difficulty-of-care, IRC §131) are
+per-person. Inventory confirmed **Bucket A, NOT B**: full field parity (9 fields +
+entries), backend already MFS-ready (`medicaid-waiver-payments-*` owner_role rows,
+scoper `-spouse` rename, isMfs-gated `computeMedicaidWaiverPayments`).
+
+Applied the **option-#1 pattern**: removed the spouse form's `isJointReturn` gate —
+banner, ~30 `[disabled]` bindings (now always-enabled via `canEdit`), the
+filing-status derivation, `isJointStatus`, `FilingStatusSnapshot`, and the 6 method
+guards (`addEntry`/`removeEntry`/`onSubmit`/`isValid`/`pickStatement`/
+`validationErrors`) — renamed the editability flag to `canEdit`=true (trust the
+shell). Note: `pickStatement` already had its own cross-SSN attribution guard, so
+no inmate-wages-style leak here.
+
+Verified: `npm run build` green + e2e `mfs-spouse-medicaid-waiver.spec.ts` (head
+$3,000 + spouse $2,000 taxable Medicaid waiver payments under MFS → `mfs_head`
+line 1d = $3,000, `mfs_spouse` = $2,000; line 1d = `taxablePaymentsNotInW2Box1`
+per `computeMedicaidForPerson`) green. No backend change.
+
+
 ## 2026-06-21 — Verify Family-Head/Spouse form data isolation + fix inmate-wages W-2 picker
 
 User reported seeing the same data in the Family Head and Spouse instances of the

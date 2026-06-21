@@ -1,6 +1,36 @@
 ﻿# History
 
 
+## 2026-06-20 — MFS migration #6 (Third party designee): new spouse designee form
+
+The Form 1040 Third Party Designee is per-return (i1040gi: "you, and your spouse
+if filing a joint return, are authorizing the IRS to call the designee"). There
+was no spouse form, and the scoper dropped `third-party-designee-taxpayer` for
+mfs_spouse, so the spouse's MFS return had a **blank** designee. Added a spouse
+designee (first genuine "add a spouse form" since the migration resumed).
+
+**Data model — owner_role two-row (mirrors pf_address), NOT dual-column.**
+Deliberately avoided the single-shared-row dual-column shape that caused the
+Form #5 leak: a distinct `owner_role='spouse'` row with the SAME field names as
+the taxpayer's means the scoper's generic `-spouse`→`-taxpayer` rename routes it
+with no normalization and no cross-spouse leak. V81 adds `owner_role` +
+surrogate `id` PK + `UNIQUE(uid, owner_role)`; legacy rows backfill to taxpayer.
+
+- **Backend:** `PfThirdPartyDesignee` (surrogate id + ownerRole);
+  `ThirdPartyDesigneeMapper` handles `-taxpayer` + `-spouse` keyed by
+  `(uid, owner_role)`; `third-party-designee-spouse` added to PERSONAL_FORMS.
+  **No scoper, compute, or output change.**
+- **Frontend:** parameterized `form-third-party-designee` (`@Input` formId +
+  person, spouse wording) + shell registration. **No reuse checkbox** — the
+  spouse designee form is MFS-only (a joint return's single designee is set on
+  the Family Head tab), so there's no MFJ double-entry to prevent.
+
+**Verified:** 33 `Phase7bComputeScopingTest` (incl. 2 designee cases) + e2e
+`mfs-spouse-third-party-designee.spec.ts` (head "Head CPA" / spouse "Spouse CPA"
+→ mfs_head names Head CPA, mfs_spouse names Spouse CPA) — green; V81 clean
+Liquibase apply confirmed (backend boots healthy on a fresh DB).
+
+
 ## 2026-06-20 — MFS migration #5 (Presidential Election Campaign): per-leg $3 leak — FOUND & FIXED
 
 The Form 1040 Presidential Election Campaign $3 box is per-person (separate

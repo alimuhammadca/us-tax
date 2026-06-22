@@ -1,6 +1,41 @@
 ﻿# History
 
 
+## 2026-06-22 — MFS migration #22 (Income adjustments — Schedule 1 Part II / line 10): VERIFY-ONLY (already MFS-ready)
+
+The queue guessed "Bucket A (gated)" but inspection showed the spouse form is NOT
+gated — it was already MFS-ready end to end, so the job was to pin the behavior, not
+manufacture changes (Step 2 "don't invent work"; same outcome as #10/#11). **No code
+change in any layer.**
+
+Inspected and confirmed already in place:
+- **Storage:** `pf_income_adjustments` keyed by `(uid, owner_role)`; one shared
+  `IncomeAdjustmentsMapper` for `income-adjustments-taxpayer` / `-spouse`; line-24z
+  write-in items carry `owner_role` too.
+- **Backend MFS-ready:** `computeIncomeAdjustments` nulls `incomeAdjustmentsSpouse`
+  on MFS (single-guard cascade) + the scoper's generic `-spouse → -taxpayer` rename
+  routes the spouse form onto the `mfs_spouse` leg.
+- **Spouse form not gated:** Save button ungated, no `!isJointReturn`. Its only
+  MFS-specific handling correctly hides the **student-loan-interest (line 21)** field
+  behind a "not available for MFS" notice (IRC §221(e)(2)).
+- **Model parity:** 30/30 fields — the only diff is the correctly per-person-named
+  `isCoveredByWorkplaceRetirementPlanTaxpayer` / `…Spouse`. (Unlike #21, no subset
+  gap: the IRA lived-apart fact `iraDeductionMfsLivedApartLine20` is on both forms.)
+- **Server-side §221(e)(2) enforcement:** the backend zeroes line 21 and emits
+  `SCHEDULE1_LINE21_STUDENT_LOAN_INTEREST_MFS_DISALLOWED` on any MFS return — and that
+  flag is **non-overrideable** (`NonOverrideableFlags`), so a spouse with stale SLID
+  data is hard-blocked (defense in depth beyond the UI hide).
+
+**Tests:** `e2e/tests/mfs-spouse-income-adjustments.spec.ts` (2 IRS-pinned, green):
+(1) MFS per-leg — head educator $250 / spouse educator $300 → head leg line 10 $250,
+spouse leg line 10 $300 (no leak; spouse's own renamed form flows); (2) MFS spouse
+leg with student loan interest $2,000 → 409
+`SCHEDULE1_LINE21_STUDENT_LOAN_INTEREST_MFS_DISALLOWED`, and **still 409 with
+overrideFlags** (proving the non-overrideable §17 block). MFJ-merge ($300+$300=$600)
+was already covered by `line10-income-adjustments.spec.ts`. Verified: #22 spec 2/2 +
+`line10-income-adjustments` 17 passed / 1 skipped.
+
+
 ## 2026-06-22 — MFS migration #21 (Other incomes — Schedule 1 Part I / line 8): gate removal + alimony line-2b parity (frontend only)
 
 Bucket B (paired but the spouse form was a subset). Storage already owner_role

@@ -1,6 +1,60 @@
 ﻿# History
 
 
+## 2026-06-21 — MFS migration #14 (Other earned income — line 1h): Option B — spouse gets its own form
+
+User chose the full mirror. The spouse tab gets its own line-1h form so the MFS
+spouse leg uses the SPOUSE's own elective-deferral flags (fixing a leak where the
+spouse leg read the head's flags), and on MFJ both forms merge into one.
+
+This form was the hardest mirror yet: line 1h income is statement-derived (W-2
+box-12 excess deferrals + 1099-R disability/corrective), attributed by SSN, and
+the per-person inputs were baked into wide `_taxpayer`/`_spouse` column PAIRS on
+one row plus `owner`-tagged child entries. Design (per the user's "each person
+their own UI + own row, merge on MFJ, separate on MFS"): each `owner_role` row
+holds one person's data in the "you"/taxpayer slot.
+
+Backend:
+- **V84** — owner_role on `pf_other_earned_income` (surrogate id PK +
+  UNIQUE(uid, owner_role)) + parent_owner_role on both child tables
+  (`pf_other_earned_disability_entry`, `pf_other_earned_corrective_entry`) with
+  composite FKs; existing rows backfill to 'taxpayer'. No data migration (legacy
+  MFJ spouse fields on the taxpayer row's spouse slot are still read via merge
+  fallback).
+- `PfOtherEarnedIncome` (surrogate id + ownerRole), both child entities
+  (parentOwnerRole). `OtherEarnedIncomeMapper`: formId += other-earned-income-spouse,
+  keyed by (uid, owner_role) / (parent_uid, parent_owner_role).
+- `PERSONAL_FORMS += other-earned-income-spouse`. `MfsFormScoper` special-case
+  (spouse leg's -spouse copy -> the read key; head copy dropped) — no slot remap
+  because each form stores its data in the "you"/taxpayer slot, so the compute
+  reads it directly on the spouse leg.
+- `TaxReturnComputeService.mergeOtherEarnedForms` — on the MFJ primary return
+  keeps the taxpayer form's taxpayer slot and maps the SPOUSE form's taxpayer
+  slot into the combined SPOUSE slot (electiveDeferrals.spouse, psoExclusionSpouse),
+  concatenating the disability/corrective entry lists (ownership re-derived by
+  SSN at compute). MFS legs pass the taxpayer form through (spouse arg null).
+
+Frontend: `form-other-earned-income.component.ts` parameterized with `@Input
+formId`/`person`; each form shows ONLY the active person's data — 1099-R records
+filtered to that person by recipient SSN (unresolved fall to the Family Head form
+so nothing is dropped/double-counted), elective-deferral/PSO blocks gated on the
+ACTIVE person's summary and bound to the "you"/taxpayer slot; the other person's
+blocks are hidden. `shell.component.ts` spouse sidebar item + render.
+
+Verified (all green): backend compile EXIT=0; V84 boot OK; frontend `tsc` EXIT=0;
+`e2e/tests/mfs-spouse-other-earned-income.spec.ts` **2/2** — both spouses defer
+$18,600 to a SIMPLE plan; head §117 flag false, spouse §117 flag true (entered on
+the spouse form):
+  1. MFS -> head leg excess **$2,100** (standard $16,500 limit), spouse leg excess
+     **$1,000** (spouse leg reads ITS OWN form's elevated $17,600 flag — the leak
+     fix; the old behavior applied the head's false flag -> $2,100).
+  2. MFJ merges the spouse's flag -> combined **$3,100** (= $2,100 + $1,000;
+     without the merge the spouse flag drops -> $4,200).
+Plus `line1h-other-earned-income` regression + Phase3/Phase4 unit tests.
+
+Queue advanced to #15 (Interest income).
+
+
 ## 2026-06-21 — MFS migration #13 (Adoption expenses — Form 8839): Option B — spouse gets its own Form 8839
 
 User chose Option B (mirror), consistent with #12. The spouse tab gets its own

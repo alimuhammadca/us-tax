@@ -1,6 +1,37 @@
 ﻿# History
 
 
+## 2026-06-22 — MFS migration #25 (Lump-sum distributions — Form 4972): scoper un-prefix (Variant A, like #23)
+
+Third form in the prefixed-storage cluster, and the cleanest: a Variant A gap (only
+the mfs_spouse leg breaks; MFJ already works).
+
+`LumpSumDistributionMapper` stores/loads the spouse copy under `spouse`-prefixed keys
+(`spouseElectsForm4972`, …), and compute has SEPARATE methods —
+`computeForm4972Spouse` reads the PREFIXED keys (so the MFJ spouse Form 4972 already
+works, covered by `line4972-lump-sum-distribution.spec`), while
+`computeForm4972Taxpayer` reads BARE keys. On the mfs_spouse leg the spouse is the
+filer, so her 4972 is read via the bare-key taxpayer method; the scoper's generic
+rename left the values prefixed → her Form 4972 vanished from her own return.
+
+**Fix:** `MfsFormScoper` special-cases `lump-sum-distribution-spouse` and un-prefixes
+the keys onto the bare `-taxpayer` key (`unPrefixSpouseKeys`, the helper generalized in
+#24). NO MFJ-spouse fix needed (unlike #24's Form 4563 — `computeForm4972Spouse`
+already reads prefixed). No migration, no UI change. (The separate pre-existing Form
+4972 Part II cap-gain / line 5b double-tax issue stays out of scope — tests use Part
+III.)
+
+**Tests:**
+- `e2e/tests/mfs-spouse-lump-sum-distribution.spec.ts` (2): MFS head taxable $6,000 /
+  spouse taxable $9,000 (Part III) → each leg's `form4972Taxpayer` line 8 ordinary
+  income carries that filer's amount, `form4972Spouse` null, no leak; spouse-only
+  election appears on her leg only.
+- `Phase7bComputeScopingTest.mfsSpouseUnPrefixesLumpSumDistributionOntoBareTaxpayerKeys`
+  (new) → 36/36.
+- Regression: `line4972-lump-sum-distribution` 6/6 (MFJ spouse variant + taxpayer
+  intact).
+
+
 ## 2026-06-22 — MFS migration #24 (US possession exclusion — Form 4563): scoper un-prefix + latent MFJ-spouse fix
 
 Same prefixed-storage shape as #23, but the per-leg work exposed that the spouse

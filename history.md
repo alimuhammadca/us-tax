@@ -1,6 +1,41 @@
 ﻿# History
 
 
+## 2026-06-22 — MFS migration #27 (Additional deductions — Schedule 1-A): Part IV (car loan) mirror to the spouse
+
+Two behaviors. **Parts II/III/V (tips/overtime/senior) are MFJ-only when married**
+(spec 13ab.md:223), so the spouse's MFS leg correctly excludes them — verify-only.
+**Part IV (car loan interest) has no MFJ restriction** (spec:343) — it applies on MFS,
+but the spouse form was a subset that never collected vehicles, so she could not claim
+her own car-loan interest on her separate return while the head could. User chose full
+consistency (mirror Part IV + merge on MFJ).
+
+**No migration:** `pf_additional_deductions` already has owner_role and the
+`pf_additional_deductions_vehicle` child links by `parentId` (the owner_role-specific
+row), so the spouse's vehicles attach to her own parent row.
+
+- **Mapper:** ungated Part IV (`paidCarLoanInterestOnNewVehicle` + the vehicle child
+  list) from the taxpayer-only blocks → both owner_role rows now persist it.
+- **Compute:** (1) the screening gate now accepts the renamed mfs_spouse leg
+  (`hadAdditionalDeductions || spouseHasAdditionalDeductionInputs`); (2) Part IV
+  combines BOTH spouses' vehicle lists under the single household $10k cap on MFJ, and
+  reads the leg's own form on MFS; (3) the §17 upload-confirmation blocker
+  (`SCHEDULE_1A_STATEMENTS_NOT_CONFIRMED_UPLOADED`) is skipped on MFS — it guards the
+  statement-backed tips/overtime parts, which are MFS-disallowed, so it falsely blocked
+  the spouse's (and head's) Part-IV-only MFS claim.
+- **Frontend:** `paidCarLoanInterestOnNewVehicle` added to the spouse model; a
+  person-agnostic `carLoanGate` accessor; vehicles load/save on both tabs; the Part IV
+  template section rendered for both persons (split out of the taxpayer-only block).
+
+**Tests:**
+- `e2e/tests/mfs-spouse-additional-deductions.spec.ts` (2): MFS head car loan $2,000 /
+  spouse car loan $3,000 → head leg line 30 $2,000, spouse leg line 30 $3,000 (her own
+  Part IV — the fix), spouse tips $5,000 → line 13 tips $0 (MFS-disallowed); MFJ → line
+  30 $5,000 (both vehicle lists combine under the cap).
+- Regression: `line13b-additional-deductions` 25/25 + `TaxReturnComputeServiceTest`
+  869/869 (Schedule 1-A car-loan unit tests intact). Frontend `npm run build` clean.
+
+
 ## 2026-06-22 — MFS migration #26 (Other tax items — line 16 box-3 + Schedule 2): full owner_role mirror
 
 The largest mirror so far. `16-tax-taxpayer` was a single per-uid form (no spouse

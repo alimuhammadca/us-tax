@@ -1,6 +1,31 @@
 ﻿# History
 
 
+## 2026-06-21 — MFS migration #17 (IRA income — line 4a/4b): spouse-form gate removal
+
+Same shape as #15/#16, frontend only. Storage already owner_role-based
+(`pf_ira_income` keyed by (uid, owner_role); both ira-income-taxpayer / -spouse
+forms already in the mapper + PERSONAL_FORMS); backend already MFS-ready
+(`iraIncomeSpouse = isMfsReturn ? null` guard + scoper rename). No migration, no
+backend change. No 8815-analog (IRA *income* = distributions, per-person /
+SSN-attributed; IRA *deduction* MFS rules live on the income-adjustments form).
+
+The only gap: the spouse form was UI-gated to MFJ — info-note, wrapper `.disabled`
+class, 43 `[disabled]` bindings, a running-totals projection `*ngIf="isJointReturn
+&& …"`, the isValid guard, and the Save button. Removed (option-#1). Note the
+extra spot vs #15/#16: the spouse Line 4a/4b projection panel was also gated on
+isJointReturn — now shows on MFS too.
+
+Frontend only: `form-ira-income-spouse.component.ts` gate removed.
+
+Verified (all green): frontend `tsc` EXIT=0;
+`e2e/tests/mfs-spouse-ira-income.spec.ts` **2/2** (MFS head line 4a $2,000 / 4b
+$1,500, spouse 4a $1,000 / 4b $800 from her own now-editable form; MFJ combined
+4a $3,000 / 4b $2,300) + line4abc-ira regression.
+
+Queue advanced to #18.
+
+
 ## 2026-06-21 — MFS migration #16 (Dividend income — line 3a/3b): spouse-form gate removal
 
 Twin of #15 (interest), frontend only. Storage was already owner_role-based

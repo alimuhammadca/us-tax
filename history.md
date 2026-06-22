@@ -1,6 +1,46 @@
 ﻿# History
 
 
+## 2026-06-21 — MFS migration #19 (Social Security benefits — line 6a/6b): gate removal + §86 lived-apart on the spouse form
+
+Bucket B — gate removal PLUS a real MFS wrinkle (the first non-Option-B form to
+need more than a gate flip). Frontend only.
+
+Storage already owner_role-based (`pf_social_security_benefits` keyed by
+(uid, owner_role); both forms in the mapper + PERSONAL_FORMS); the shared mapper
+already persists `livedWithSpouseAnyTimeDuringTaxYear` /
+`livedApartFromSpouseEntireTaxYear` for either form; backend already MFS-ready
+(scoper rename + `socialSecuritySpouse = isMfsReturn ? null` guard). No migration,
+no backend change.
+
+The wrinkle (§86): on MFS the SS-taxability base amount is **$0 if you lived with
+your spouse any time** during the year (most SS taxable) vs **$25,000 if you
+lived apart the entire year**. Those two fields existed only on the **taxpayer**
+SS form (an mfsOnly section). On the MFS spouse leg the scoper renames
+SS-spouse → SS-taxpayer, so the compute read the *spouse* form's (missing) fields
+→ defaulted to the generous $25k base even when the couple lived together →
+under-taxed the spouse's SS. Per user choice: **add the mfsOnly lived-apart
+section to the spouse form** (each MFS return carries its own answer, matching the
+IRS 1040 checkbox); the compute then reads it from the renamed spouse form.
+
+Frontend only (`form-social-security-benefits-spouse.component.ts`):
+- Removed the `!isJointReturn` gate (info-note, wrapper `.disabled` class, 20
+  `[disabled]` bindings, isValid guard, Save button).
+- Added `isMfs` (from the filing-status form) + the mfsOnly lived-apart section
+  (`livedWithSpouseAnyTimeDuringTaxYear`, `livedApartFromSpouseEntireTaxYear`)
+  rendered when MFS and the spouse had benefits, via the existing field-config
+  `*ngFor`; added the two fields to the help-lookup config.
+
+Verified (all green): frontend `tsc` EXIT=0;
+`e2e/tests/mfs-spouse-social-security.spec.ts` **2/2** — spouse leg SSA-1099
+$10,000 + $5,000 other income (provisional $10,000): lived apart -> $25k base ->
+taxable SS **$0**; lived with spouse -> $0 base (MFS 85% branch) -> taxable SS
+**$8,500**. Same income, only the lived-apart fact differs. Plus line6abcd
+regression.
+
+Queue advanced to #20.
+
+
 ## 2026-06-21 — MFS migration #18 (Pension/annuity income — line 5a/5b): spouse-form gate removal
 
 Same shape as #15/#16/#17, frontend only. Storage already owner_role-based

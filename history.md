@@ -1,6 +1,50 @@
 ﻿# History
 
 
+## 2026-06-22 — MFS migration #23 (Foreign income — Form 2555): scoper un-prefix fix (the per-leg e2e caught a real gap)
+
+Looked like a verify-only Bucket-A (single generic component, ungated, owner_role
+storage, pervasive compute MFS guards), but the per-leg e2e surfaced a real backend
+gap — the spouse's Form 2555 silently vanished from her own MFS return.
+
+**Root cause:** the generic `form-foreign-earned-income` component prefixes every API
+key with `spouse` for the spouse instance (`spouseTaxHomeCountry`, …); the shared
+`ForeignEarnedIncomeMapper` stores/loads the spouse copy under those prefixed names,
+and compute reads the spouse copy via `populateForm2555Spouse` (prefixed). But on the
+mfs_spouse leg the spouse is the FILER, so compute reads her form via
+`populateForm2555Taxpayer`, which reads BARE keys. `MfsFormScoper`'s generic
+`-spouse → -taxpayer` rename only swaps the form KEY, leaving the field names
+prefixed → `populateForm2555Taxpayer` found nothing → no Form 2555 on her leg.
+
+**Fix (`MfsFormScoper`):** a `foreign-earned-income-spouse` special-case +
+`normalizeForeignEarnedIncomeSpouse` that un-prefixes the `spouse<UpperCamel>` keys
+onto bare names (exactly reversing `ForeignEarnedIncomeMapper.k()`) before the generic
+rename — same shape as the existing identification / presidential normalize
+special-cases. The head leg already worked (it keeps the bare-key taxpayer form). No
+migration, no UI change.
+
+The known **pre-existing** cross-filing-status issue (the FEIE exclusion isn't netted
+out of Schedule 1 line 8d, so the FEITW stacks on a larger base — memory
+`project_form2555_doesnt_net_wages_from_agi`) is unrelated to MFS parity and stays
+out of scope; the tests pin the per-leg Form 2555 production, not the line-16 tax.
+
+**Tests:**
+- `e2e/tests/mfs-spouse-foreign-earned-income.spec.ts` (2, green): MFS head Japan
+  $95,000 / spouse France $80,000 → each leg's `form2555Taxpayer` carries that filer's
+  own country + exclusion, `form2555Spouse` null, no cross-leak; spouse-only foreign
+  income appears on her leg only (head leg has no 2555).
+- `Phase7bComputeScopingTest.mfsSpouseUnPrefixesForeignEarnedIncomeOntoBareTaxpayerKeys`
+  (new) → 34/34.
+- Regression: `form2555-foreign-earned-income` 7/7 (MFJ/single unaffected).
+
+**Lesson** (memory `feedback_mfs_spouse_prefixed_form_scoper_unprefix`): generic
+person-scoped forms that store spouse-PREFIXED keys need this un-prefix special-case;
+plain owner_role forms with identical field names (interest/dividend/IRA, #15-#18) do
+not. The e2e seed must also use the prefixed keys or the mapper stores nulls silently —
+my test first failed for THAT reason and masked the scoper gap until I read the mapper.
+Likely affects the remaining generic forms #24 (Form 4563) / #25 (Form 4972).
+
+
 ## 2026-06-22 — MFS migration #22 (Income adjustments — Schedule 1 Part II / line 10): VERIFY-ONLY (already MFS-ready)
 
 The queue guessed "Bucket A (gated)" but inspection showed the spouse form is NOT

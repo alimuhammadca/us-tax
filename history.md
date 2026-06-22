@@ -1,6 +1,48 @@
 ﻿# History
 
 
+## 2026-06-21 — MFS migration #15 (Interest income — line 2a/2b): spouse-form gate removal + Form 8815 MFS UX
+
+Bucket B (bring-to-parity), but lighter than expected. Storage was ALREADY
+owner_role-based (`pf_interest_income` keyed by (uid, owner_role); both
+interest-income-taxpayer / -spouse forms already in the mapper + PERSONAL_FORMS),
+and the backend was ALREADY MFS-ready (the scoper renames interest-income-spouse
+-> interest-income-taxpayer on the spouse leg; computeInterestIncome MFS-guards
+the spouse-side reads). No migration, no backend change.
+
+The only real gap: the **spouse form was UI-gated to MFJ** — 27
+`[disabled]="!isJointReturn"` bindings + a "joint return only" info-note + a
+save-guard + a disabled Save button — so the spouse could not enter interest
+income on MFS. Fix (option-#1, like #7/#8/#9): remove the gate so the form is
+editable whenever the spouse tab is shown.
+
+**Form 8815 clarification (user-raised):** Form 8815 (§135 Series EE/I savings-
+bond exclusion) is a single return-level/household input that lives on the Family
+Head form, not a per-spouse one — so the spouse form correctly omits it. It is
+disallowed on MFS (IRC §135(d)(2); computeForm8815 emits FORM_8815_MFS_BLOCKED +
+returns null, already covered by line2ab-form8815-fullflow). The head form
+previously showed the section unconditionally (inviting input the compute would
+then block). Per user feedback, the head form now **hides the "Savings bond
+exclusion" section on MFS** (`*ngIf="!isMfs"`, isMfs from the filing-status form);
+saved data persists and the section reappears if the household returns to a
+status that allows it; the section-completion counter treats it as N/A on MFS.
+
+Frontend only:
+- `form-interest-income-spouse.component.ts`: removed the `!isJointReturn`
+  editability gate (info-note, wrapper `.disabled` class, 27 `[disabled]`
+  bindings, the isValid guard, the Save-button gate).
+- `form-interest-income-taxpayer.component.ts`: added filing-status load + `isMfs`
+  + `isMfsStatus`; gated the 8815 section on `!isMfs`; made the completion counter
+  MFS-aware.
+
+Verified (all green): frontend `tsc` EXIT=0;
+`e2e/tests/mfs-spouse-interest-income.spec.ts` **2/2** (MFS head line 2b $500 /
+spouse $300 from her own now-editable form; MFJ combined $800) + line2ab
+regressions (interest-income + form8815-fullflow).
+
+Queue advanced to #16.
+
+
 ## 2026-06-21 — MFS migration #14 (Other earned income — line 1h): Option B — spouse gets its own form
 
 User chose the full mirror. The spouse tab gets its own line-1h form so the MFS

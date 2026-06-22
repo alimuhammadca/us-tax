@@ -1,6 +1,31 @@
 ﻿# History
 
 
+## 2026-06-21 — MFS migration #16 (Dividend income — line 3a/3b): spouse-form gate removal
+
+Twin of #15 (interest), frontend only. Storage was already owner_role-based
+(`pf_dividend_income` keyed by (uid, owner_role); both dividend-income-taxpayer /
+-spouse forms already in the mapper + PERSONAL_FORMS) and the backend already
+MFS-ready (`dividendIncomeSpouse = isMfsReturn ? null` guard + scoper rename on
+the spouse leg). No migration, no backend change. No 8815-analog (the only
+"disallowance" input is a normal per-person dividend field; NIIT/8960 is out of
+scope, help-text only).
+
+The only gap: the spouse form was UI-gated to MFJ — info-note, wrapper
+`.disabled` class, 11 `[disabled]` + 10 `[attr.disabled]` bindings, the isValid
+guard, and the Save button, all on `!isJointReturn`. Removed (option-#1, like
+#7/#8/#9/#15) so the spouse can enter dividends on MFS.
+
+Frontend only: `form-dividend-income-spouse.component.ts` gate removed.
+
+Verified (all green): frontend `tsc` EXIT=0;
+`e2e/tests/mfs-spouse-dividend-income.spec.ts` **2/2** (MFS head line 3b $500 /
+spouse $300 from her own now-editable form; MFJ combined $800) + line3ab-dividend
+regression.
+
+Queue advanced to #17.
+
+
 ## 2026-06-21 — MFS migration #15 (Interest income — line 2a/2b): spouse-form gate removal + Form 8815 MFS UX
 
 Bucket B (bring-to-parity), but lighter than expected. Storage was ALREADY

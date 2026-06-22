@@ -1,6 +1,50 @@
 ﻿# History
 
 
+## 2026-06-22 — MFS migration #26 (Other tax items — line 16 box-3 + Schedule 2): full owner_role mirror
+
+The largest mirror so far. `16-tax-taxpayer` was a single per-uid form (no spouse
+copy) driving line-16 box-3 write-ins (ECR / §962 / 8621 / 8978 / §965i) + Schedule 2
+additional taxes + Form 8960 NIIT overrides — ~42 mixed per-person + return-level
+fields. On the MFS spouse leg the whole form was dropped, so she could not report her
+own additional taxes. User chose the **full owner_role mirror** (Option B, like
+#12-#14).
+
+**Storage:** V85 splits `pf_line16_tax` by owner_role (surrogate id PK +
+unique(uid, owner_role), backfill taxpayer; flat — no child tables). Entity gains
+id + ownerRole; `Line16TaxMapper` keys by (uid, owner_role) and serves
+`16-tax-spouse` (UNPREFIXED field set — owner_role discriminates). `PERSONAL_FORMS +=
+16-tax-spouse`. The V67 tax_return_id trigger is unaffected (per-row by uid).
+
+**Scoper:** NONE needed — storage is unprefixed and compute reads the `-taxpayer`-
+suffixed key, so the generic `-spouse → -taxpayer` rename routes the spouse leg and
+drops the head copy automatically (unlike #23-#25's prefixed forms).
+
+**Compute merge** (the careful part): `mergeLine16TaxForms(tp, sp)` at the read site.
+On MFS legs `sp` is null → taxpayer passes through (existing MFJ tests unchanged). On
+the MFJ primary it combines: per-person additional-tax AMOUNTS are **SUMMED** (box-3
+ECR/962/8621/8978/965i + Schedule 2 recaptures/HSA/etc., including per-spouse Schedule
+H household employment tax); has* BOOLEANS are **OR-ed**; the return-level **Form 8960
+NIIT overrides + line-17a text are COALESCED head-first** so the single joint NIIT
+computation is not double-counted.
+
+**Frontend:** `form-line16-tax.component.ts` parameterized (`@Input formId`/`person`,
+person-aware heading); shell renders `16-tax-spouse` + sidebar item.
+
+**Tests:**
+- `e2e/tests/mfs-spouse-line16-tax.spec.ts` (2): MFS head ECR $500 / spouse ECR $800 →
+  each leg's `ecrBox3Tax` is that filer's amount, no leak; MFJ → `ecrBox3Tax` $1,300
+  (merge SUMS). (ECR is single-code — avoids the known multi-code box-3 500 issue.)
+- `Line16TaxMergeTest` (NEW, 8): SUM / OR / **COALESCE (no double-count)** / passthrough
+  — the pure merge method made package-private static so it unit-tests without
+  @QuarkusTest.
+- Regression: `line16-tax` 21 passed / 2 skipped (the 2 skips are the pre-existing
+  multi-code box-3 500 tests). Frontend `npm run build` clean.
+
+NOTE: the pre-existing multi-code box-3 500 issue
+([[project_line16_box3_three_codes_e2e_500]]) is unchanged and still out of scope.
+
+
 ## 2026-06-22 — MFS migration #25 (Lump-sum distributions — Form 4972): scoper un-prefix (Variant A, like #23)
 
 Third form in the prefixed-storage cluster, and the cleanest: a Variant A gap (only

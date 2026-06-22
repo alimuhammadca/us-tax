@@ -1,6 +1,41 @@
 ﻿# History
 
 
+## 2026-06-21 — MFS migration #20 (Capital gain/loss — line 7): gate removal + MFS 1099-B leak fix
+
+Started as a Bucket-A gate removal but the per-leg e2e surfaced a real backend
+MFS leak — fixed it.
+
+Storage already owner_role; backend already MFS-ready (scoper rename +
+`capitalSpouse = isMfsReturn ? null`); the IRC §1211(b) MFS $1,500 loss cap is
+already in compute (keyed on isMfsReturn). No migration.
+
+**Frontend (gate removal):** `form-capital-gain-loss-spouse.component.ts` —
+removed the `!isJointReturn` gate (info-note, `disabled-section` CSS class, the
+onSubmit save-guard, the Save button) so the spouse can enter capital data on MFS.
+
+**Backend (MFS 1099-B leak fix):** `belongsToEitherCapitalPersonByKey` has a
+catch-all `if (taxpayerHadCapital && !spouseHadCapital) return true`. On the MFS
+head leg the spouse form is nulled (`spouseHadCapital=false`) and `spouseSsn` is
+nulled, so the spouse's 1099-B (recipient TIN = the other spouse) doesn't match
+either SSN, hits the catch-all, and is attributed to the head → the spouse's
+capital gain LEAKED onto the head leg (e2e: $3,000 instead of $2,000). Single/MFJ
+unaffected (the leak needs both spouses' 1099-Bs on MFS). Fix: exclude
+1099-B/1099-DA entries whose recipient TIN is the other spouse's SSN, read from
+`filing-status.mfsOtherSpouseSsn` (the scoper-set key, same mechanism as the
+existing W-2 line-1a filter), before the catch-all. Threaded a new `excludeSsn`
+through `buildCapitalTransactionsFrom1099B` / `...1099Da` /
+`belongsToEitherCapitalPerson(ByKey)`; `excludeSsn` is null off-MFS so single/MFJ
+are unchanged.
+
+Verified (all green): backend compile EXIT=0 + restart; frontend `tsc` EXIT=0;
+`e2e/tests/mfs-spouse-capital-gain-loss.spec.ts` **2/2** (MFS head line 7 +$2,000
+/ spouse +$1,000 — no leak; MFS spouse leg $5,000 loss capped at -$1,500) +
+line7ab regression.
+
+Queue advanced to #21.
+
+
 ## 2026-06-21 — MFS migration #19 (Social Security benefits — line 6a/6b): gate removal + §86 lived-apart on the spouse form
 
 Bucket B — gate removal PLUS a real MFS wrinkle (the first non-Option-B form to

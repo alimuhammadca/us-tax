@@ -1,6 +1,46 @@
 ﻿# History
 
 
+## 2026-06-22 — MFS migration #24 (US possession exclusion — Form 4563): scoper un-prefix + latent MFJ-spouse fix
+
+Same prefixed-storage shape as #23, but the per-leg work exposed that the spouse
+Form 4563 was broken on **both MFJ and MFS** — fixed both (user's call).
+
+`PossessionResidenceExclusionMapper` stores/loads the spouse copy under
+`spouse`-prefixed keys (`spousePossession`, …). But BOTH compute consumers read BARE
+keys: `populateForm4563` (its `spousePerson` flag was DEAD — never used) and
+`computePossessionExclusionForSsWorksheet`. So the spouse's prefixed data was ignored
+everywhere — no spouse Form 4563 on a JOINT return, and none on her own MFS leg.
+(No test ever covered `form4563Spouse`, so it went unnoticed.)
+
+**Fixes:**
+1. **MFJ latent bug** — `TaxReturnComputeService` un-prefixes the spouse possession form
+   at the read site via `MfsFormScoper.unPrefixSpouseKeys(...)` (one line), so both
+   bare-key consumers see it. The spouse's Form 4563 now appears on the joint return.
+2. **MFS leg** — `MfsFormScoper` special-cases `possession-residence-exclusion-spouse`
+   and un-prefixes it onto the bare `-taxpayer` key (mirrors #23).
+3. Generalized #23's `normalizeForeignEarnedIncomeSpouse` into a public reusable
+   `unPrefixSpouseKeys` (both special-cases + the compute read site now call it).
+
+No migration, no UI change. (Form 4563 output is produced only for American Samoa.)
+
+**Tests:**
+- `e2e/tests/mfs-spouse-possession-residence-exclusion.spec.ts` (2): MFS head AS
+  $4,000 / spouse AS $5,000 → each leg's `form4563Taxpayer` line 15 carries that
+  filer's amount, `form4563Spouse` null, no leak; MFJ → `form4563Taxpayer` $4,000 AND
+  `form4563Spouse` $5,000 (the spouse copy now appears — the latent-bug fix).
+- `Phase7bComputeScopingTest.mfsSpouseUnPrefixesPossessionExclusionOntoBareTaxpayerKeys`
+  (new) → 35/35.
+- Regressions: `line6abcd` (taxpayer 4563 + SS worksheet), `form2555-foreign-earned-income`,
+  `mfs-spouse-foreign-earned-income` (#23 uses the renamed helper) → 34/34.
+
+**Lesson** (extends `feedback_mfs_spouse_prefixed_form_scoper_unprefix`): the prefixed-
+form gap has TWO variants — (a) a separate spouse populate method that reads prefixed
+(Form 2555) → only the mfs_spouse leg breaks; (b) ONE populate method with a dead
+spouse flag reading bare keys (Form 4563) → the spouse form is broken on MFJ too, so it
+needs the read-site un-prefix as well. Watch for both on #25 (Form 4972).
+
+
 ## 2026-06-22 — MFS migration #23 (Foreign income — Form 2555): scoper un-prefix fix (the per-leg e2e caught a real gap)
 
 Looked like a verify-only Bucket-A (single generic component, ungated, owner_role

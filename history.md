@@ -1,6 +1,64 @@
 ﻿# History
 
 
+## 2026-06-22 — MFS migration #21 (Other incomes — Schedule 1 Part I / line 8): gate removal + alimony line-2b parity (frontend only)
+
+Bucket B (paired but the spouse form was a subset). Storage already owner_role
+(`pf_other_incomes` keyed by `(uid, owner_role)`; one shared `OtherIncomesMapper`
+for `other-incomes-taxpayer` / `-spouse`); backend already MFS-ready —
+`computeOtherIncomes` nulls `otherIncomeSpouse` on MFS (the 13-orchestrator
+single-guard cascade) and the scoper's generic `-spouse → -taxpayer` rename routes
+the spouse form onto the `mfs_spouse` leg. **No migration / no backend change.**
+
+Two gaps closed on `form-other-incomes-spouse.component.ts`:
+
+**(1) Gate removal** (the #15–#20 pattern): removed the `!isJointReturn` editability
+gate — the MFJ-only info-note, the `<ng-container *ngIf="isJointReturn">` wrapper,
+the Save button's `!isJointReturn` disable, and the `isValid()` / `validationErrors()`
+joint-only short-circuits. The spouse can now enter her own other income on her MFS
+leg. (`isJointReturn` left set-but-unused — harmless, tsc-clean.)
+
+**(2) Alimony line-2b parity** (the actual "alimony-date gap"): the taxpayer form
+had the Schedule 1 **line 2b agreement-date** field; the spouse form had only the
+line 2a amount. The backend runs `validateAlimonyAgreementDate` per-side, so
+pre-change a spouse who received alimony on her renamed leg could NEVER supply the
+date and was stuck on the `OTHER_INCOME_ALIMONY_DATE_REQUIRED_TAXPAYER` advisory.
+Mirrored the `alimonyAgreementDateLine2b` field onto the spouse form — model field,
+default, `FieldType += 'date'`, `DatePickerModule` import, the `p-datepicker`
+renderer + the post-2018 **TCJA warning** callout, `gatedByNonZero` field config,
+help entry, the `isAlimonyAgreementPost2018()` method, a post-2018 validation error,
+and the normalize-for-save reset. Per IRC §71 (repealed by TCJA), alimony under a
+pre-2019 agreement is taxable (line 2a); a post-2018 agreement is not.
+
+**(3) Statement-upload-check parity** (follow-up, per user request): the original
+spouse model was missing 6 more fields beyond the alimony date — the whole
+`statementUploadCheck` section (`received1099G`/`uploaded1099G`,
+`received1099C`/`uploaded1099C`, `confirmAllReceivedOtherIncomeStatementsUploaded`,
+`hasUploadedAtLeastOneOtherIncomeStatement`). These drive
+`validateOtherIncomeStatementGating`, which reads ONLY the (renamed) taxpayer map —
+so on her MFS leg the spouse had no field to satisfy the confirmation gate and was
+stuck on the overrideable `OTHER_INCOME_STATEMENT_CONFIRMATION_REQUIRED` blocker.
+Mirrored the full section onto the spouse form: the 6 model fields + defaults, the
+1099-G/1099-C count pills + auto-answer notes + received/uploaded questions + the
+upload-CTA deep-link (`FormNavigationService`), the confirm-all radio (hidden via
+`isFullyAutoDetected()`), `refreshStatementCounts()` in ngOnInit, the `isValid()` /
+`validationErrors()` gates, the normalize-for-save resets, and help entries. The
+shared `OtherIncomesMapper` already persists all 6 fields per `owner_role`, so still
+NO backend change. (Statement counts are unfiltered by SSN — same convention as the
+taxpayer form; the backend attributes income by recipient TIN at compute.)
+
+**Tests:** `e2e/tests/mfs-spouse-other-incomes.spec.ts` (5 IRS-pinned, all green):
+(1) MFS per-leg — head pre-2019 alimony $4,000 / spouse pre-2019 alimony $6,000 →
+head leg line 8 $4,000, spouse leg line 8 $6,000 (no leak; the new spouse line-2b
+date flows on her renamed leg); (2) MFJ merge → combined line 8 $10,000; (3) MFS
+spouse leg with a **post-2018** date → non-overrideable §17 blocker
+`OTHER_INCOME_ALIMONY_POST2018_AGREEMENT_NOT_TAXABLE_TAXPAYER` (409); (4) MFS spouse
+leg — her OWN `confirmAllReceived` clears the statement gate (200, line 8 $4,000,
+no override); (5) without her confirmation the gate blocks (409,
+`OTHER_INCOME_STATEMENT_CONFIRMATION_REQUIRED`). Verified: `npm run build` clean +
+#21 spec 5/5 + `line8-other-incomes` 34/34.
+
+
 ## 2026-06-21 — MFS migration #20 (Capital gain/loss — line 7): gate removal + MFS 1099-B leak fix
 
 Started as a Bucket-A gate removal but the per-leg e2e surfaced a real backend

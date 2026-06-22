@@ -1,6 +1,32 @@
 ﻿# History
 
 
+## 2026-06-21 — MFS migration #18 (Pension/annuity income — line 5a/5b): spouse-form gate removal
+
+Same shape as #15/#16/#17, frontend only. Storage already owner_role-based
+(`pf_pension_annuity_income` keyed by (uid, owner_role); both forms already in the
+mapper + PERSONAL_FORMS); backend already MFS-ready (`pensionIncomeSpouse =
+isMfsReturn ? null` guard + scoper rename). No migration, no backend change. No
+8815-analog (PSO premium exclusion is per-person, owned by each form; lump-sum /
+Form 4972 lives on a separate form).
+
+The gate mechanism here was different — the spouse form is a multi-screen wizard,
+so its whole `form-view` + `wizard-nav` were `*ngIf="isJointReturn"`-hidden (no
+per-input `[disabled]` bindings). Removed the gate at 6 spots: the form-intro
+`*ngIf`, the info-note, the `form-view` `*ngIf`, the `wizard-nav` `*ngIf`, the
+`projectionVisible` getter (Line 5a/5b/5c projection now shows on MFS too), and
+the isValid guard.
+
+Frontend only: `form-pension-annuity-income-spouse.component.ts` gate removed.
+
+Verified (all green): frontend `tsc` EXIT=0;
+`e2e/tests/mfs-spouse-pension-income.spec.ts` **2/2** (MFS head line 5b $5,000 /
+spouse $3,000 from her own now-editable wizard; MFJ combined $8,000) + line5abc
+regression.
+
+Queue advanced to #19.
+
+
 ## 2026-06-21 — MFS migration #17 (IRA income — line 4a/4b): spouse-form gate removal
 
 Same shape as #15/#16, frontend only. Storage already owner_role-based

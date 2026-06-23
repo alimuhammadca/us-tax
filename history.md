@@ -1,6 +1,42 @@
 ﻿# History
 
 
+## 2026-06-23 — MFS migration #32 (Prior min tax credit — Form 8801): full per-person mirror, no migration
+
+Form 8801 (prior-year AMT credit, IRC §53) is computed (line 25 → Schedule 3 line 6b) but was
+**return-level**: the taxpayer form held all prior-year core inputs; the spouse form was a
+FEITW-only subset ("additive only — one form per return"). Per §53 each spouse files their
+**own** Form 8801 on MFS (the joint→MFS carryforward allocation is deferred per spec §10 — the
+user enters their own allocated figures). User chose the **full per-person mirror**.
+
+**No migration:** `pf_prior_min_tax_credit` already had owner_role two-row + all columns; the
+mapper just wasn't populating the core on the spouse row. Restructured the mapper so the
+prior-year core saves/loads for **both** rows; only the claim gate
+(`claimsPriorMinTaxCredit` / `spouseHasPriorMinTaxCreditInputs`) and the suffixed FEITW
+(`priorYearFeitwLine3Taxpayer` / `…Spouse`) stay role-specific.
+
+**Scoper (partial double-prefix):** only the FEITW is suffixed; the core figures are bare. So
+`MfsFormScoper.normalizePriorMinTaxCreditSpouse` passes the bare core through, swaps
+`priorYearFeitwLine3Spouse`→`…Taxpayer`, and maps the claim gate. The `-taxpayer` copy is
+dropped generically on `mfs_spouse`; `scopeForMfsHead` drops `-spouse` on the head leg.
+
+**No compute change:** `computeForm8801` reads the core + gate from the taxpayer slot and the
+FEITW from both. On MFS each leg builds its own Form 8801 (head: his slot, spouse null;
+spouse: her routed slot, spouse null). On MFJ unchanged (taxpayer core + summed FEITW; the
+spouse row's core is ignored).
+
+**Frontend:** shared `PriorMinTaxCreditCore` interface; the spouse model gains full parity; the
+spouse form shows its complete prior-year core **MFS-only** (`showSpouseCore`) and keeps the
+additive FEITW on MFJ (`!isMfs`). Validation extended for the MFS spouse core. Spouse YAML
+gains the MFS-only core section.
+
+**Verified:** `Phase7bComputeScopingTest` 40/40 (new partial-double-prefix case) +
+`TaxReturnComputeServiceTest` 869/869 + new `e2e/tests/mfs-spouse-prior-min-tax-credit.spec.ts`
+2/2 (MFS per-leg head 700+200→line25 900 / spouse 400+100→line25 500, no leak; MFJ joint uses
+taxpayer core → 900, spouse-row core ignored) + existing `line8801-prior-min-tax-credit` 2/2
+(single + MFJ Part-III FEITW) regression + npm recompile clean.
+
+
 ## 2026-06-23 — MFS migration #31 (Interest expense — Form 4952): full owner_role mirror
 
 Form 4952 (investment interest expense, IRC §163(d)) is **computed** (line 8 allowable

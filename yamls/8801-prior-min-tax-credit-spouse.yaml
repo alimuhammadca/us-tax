@@ -1,15 +1,18 @@
 # Form 8801 - Credit for Prior Year Minimum Tax - spouse.
-# This form is additive only. Form 8801 is still one form per return.
-# Use it only to capture spouse-specific prior-year Form 2555 worksheet input for MFJ returns.
+# MFS migration Form #32: dual purpose.
+#  - MFJ: additive only - just the spouse share of the prior-year Form 2555 worksheet,
+#    folded into the single joint Form 8801.
+#  - MFS: each spouse files their own Form 8801, so the spouse form ALSO collects her
+#    complete prior-year core (shown MFS-only via the showIf below).
 name: prior-min-tax-credit-spouse
 title: Form 8801 - Prior min tax credit (spouse)
 multiplicity: single
 formName: 8801
 category: deductions
 instructions:
-  - This spouse form only applies on married filing jointly returns.
-  - Use it when the prior-year joint return used Form 2555 and you need the spouse share of the prior-year worksheet amount.
-  - The taxpayer form owns the return-level Form 8801 screening and all other prior-year inputs.
+  - On a married filing jointly return this form is additive only (spouse Form 2555 worksheet share).
+  - On a married filing separately return the spouse files her own Form 8801 from her own prior-year core.
+  - The taxpayer form owns the return-level Form 8801 screening on a joint return.
 sections:
   - name: spouseScreening
     title: Spouse supplemental screening
@@ -36,6 +39,33 @@ sections:
         required: false
         label: Prior-year Foreign Earned Income Tax Worksheet line 3 amount attributable to the spouse
         placeholder: 0.00
+
+  # MFS migration Form #32: the spouse's own complete Form 8801 prior-year core, shown
+  # only on a married filing separately return (each spouse files their own Form 8801).
+  - name: spousePriorYearCore
+    title: Spouse prior-year AMT and carryforward inputs (MFS)
+    multiplicity: single
+    showIf: spouseHasPriorMinTaxCreditInputs == true && filingStatus == 'Married filing separately'
+    instructions:
+      - Enter the spouse's own 2024 AMT figures from her prior-year return; these drive her separate Form 8801.
+    fields:
+      - { name: confirmPriorYearReturnsAvailable, type: boolean, required: false, label: Spouse's 2024 AMT worksheets available? }
+      - { name: priorYearFilingStatus, type: select, required: true, label: Spouse's 2024 filing status }
+      - { name: priorYearForm6251Line1Plus2e, type: amount, required: false, label: Spouse's 2024 AMTI }
+      - { name: priorYearExclusionItemAdjustments, type: amount, required: false, label: Exclusion-item adjustments }
+      - { name: priorYearMtcnold, type: amount, required: false, label: Net adjusted minimum taxable income carryover }
+      - { name: priorYearMtftceOnExclusionItems, type: amount, required: false, label: Minimum tax foreign tax credit on exclusion items }
+      - { name: priorYearForm6251Line10, type: amount, required: true, label: Spouse's 2024 AMTI for exemption phase-out }
+      - { name: priorYearForm6251Line11, type: amount, required: true, label: Spouse's 2024 tentative minimum tax }
+      - { name: priorYearForm8801Line26Carryforward, type: amount, required: false, label: Unused minimum tax credit carried into 2025 }
+      - { name: priorYearUnallowedQualifiedElectricVehicleCredit, type: amount, required: false, label: Legacy qualified electric vehicle credit }
+      - { name: priorYearFiledForm2555, type: boolean, required: false, label: Spouse's 2024 return used the foreign earned income exclusion? }
+      - { name: priorYearUsesPartIII, type: boolean, required: false, label: Spouse's 2024 AMT used a special capital gain/qualified dividend calculation? }
+      - { name: partIIILine28Amount, type: amount, required: false, label: Net income from prior-year capital gain/loss calculation }
+      - { name: partIIILine29Amount, type: amount, required: false, label: Qualified dividends from prior year }
+      - { name: partIIILine30CapAmount, type: amount, required: false, label: Adjusted net capital gain cap }
+      - { name: partIIILine35Amount, type: amount, required: false, label: Special rate income amount }
+      - { name: partIIILine42Amount, type: amount, required: false, label: Tentative minimum tax from special-rate income }
 
   - name: importedCurrentYearFields
     title: Imported current-year fields (backend only - not rendered)

@@ -2279,6 +2279,7 @@ Knowledge: `C:\us-tax\knowledge\knowledge_line27abc.md` · Flowchart: `C:\us-tax
 - [Form 1116 / carryover Schedule B] Per-category carryover tracking uses user-entered `priorYearCarryover` values only; the automatic 1-year-back / 10-year-forward carryover ledger (Form 1116 Schedule B) is not built.
 - [Form 1116 / high-tax kickout] Passive income with an effective foreign tax rate above the highest US bracket should be reclassified to general category. Not implemented.
 - [Form 1116 / Part IV consolidation] When more than one Form 1116 exists, Part IV uses the category with the largest line 24. Only 4 categories are routed (indices 0–3); expand if needed.
+- [Form 1116 / MFS spouse simplified-exception path] **Added 2026-06-23 (MFS migration Form #42).** The MFS spouse's Form 1116 now computes correctly on her own leg (scoper un-prefix of `spouseHasForeignTaxCredit`/`spouseForeignIncomeSources` onto the bare keys). But the simplified-exception ($300 no-Form-1116 election) fields — `claimsSimplifiedException` and `simplifiedForeignTaxesOverride` — exist only on the taxpayer form, not the spouse form. So a spouse with a sub-$300 passive-only foreign tax on her separate return cannot elect to SKIP Form 1116; she gets the same credit via the full per-category Form 1116 path (the $300 de-minimis is correctly per-leg). Purely a filing-simplification gap, not a credit-value gap. Fix when polishing: add the two simplified-exception fields to the spouse component/model + map them in the scoper (they un-prefix cleanly).
 
 ---
 

@@ -1,6 +1,23 @@
 ﻿# History
 
 
+## 2026-06-23 — MFS migration #42 (Foreign tax credit — Form 1116): scoper-only un-prefix
+
+**Scope:** Make the Spouse tab's `foreign-tax-credit-spouse` form produce a correct standalone Form 1116 (foreign tax credit, Schedule 3 line 1) on the `mfs_spouse` leg, without breaking MFJ. Pure `MfsFormScoper` fix — no compute/mapper/frontend/migration change.
+
+**Merge shape:** `computeForm1116` pools both spouses' foreign income/tax entries per category (`byCategory`) and computes ONE §904 limitation per category against the combined taxable income — a limit-gated INPUT merge (the `feedback_mfj_merge_inputs_not_outputs_under_limit` family, like QBI #40 / Form 4952 #31). On a one-slot MFS leg it collapses to that filer's single-person computation against her own line 15 / US tax, and the de-minimis threshold is correctly $300 per MFS leg (`isMfj=false`).
+
+**Spouse form stands alone:** it collects the full per-category / per-country Form 1116 inputs (two-level child list `spouseForeignIncomeSources` → `countryEntries`). Only the top-level gate (`spouseHasForeignTaxCredit`) and the list key (`spouseForeignIncomeSources`) are spouse-prefixed; the nested country-entry field names are bare.
+
+**Gap:** the generic `-spouse → -taxpayer` rename kept the prefixed top-level names. `computeForm1116` gates on the bare `hasForeignTaxCredit` (taxpayer slot, early-return) and reads the list under `foreignIncomeSources` — neither present after the rename → her Form 1116 vanished (same shape as QBI #40 / Form 2555 #23).
+
+**Fix:** a `foreign-tax-credit-spouse → foreign-tax-credit-taxpayer` special-case applying `MfsFormScoper.unPrefixSpouseKeys(value)`. It is the EXACT inverse: `spouseHasForeignTaxCredit`→`hasForeignTaxCredit` and `spouseForeignIncomeSources`→`foreignIncomeSources`, and the nested `countryEntries` list (bare fields) passes through by value (`unPrefixSpouseKeys` only transforms top-level `spouse<UpperCamel>` keys). NO gate remap needed. Deferred minor: the simplified-exception (`claimsSimplifiedException` / `simplifiedForeignTaxesOverride`, the $300 no-Form-1116 path) is taxpayer-only, so a spouse with a sub-$300 passive return uses the full Form 1116 path — same credit, just not the filing simplification.
+
+**Files:** `MfsFormScoper.java` (+2 constants, +1 dispatch case reusing `unPrefixSpouseKeys`); `Phase7bComputeScopingTest.java` (+1 case). New `e2e/tests/mfs-spouse-foreign-tax-credit.spec.ts`.
+
+**Verification:** `Phase7bComputeScopingTest` **54/54** (was 53, +1 — un-prefix gate + nested list onto filer slot, head copy dropped). New e2e **2/2** — MFS per-leg head (Germany $20,000 / $2,000) $2,000 / spouse (France $15,000 / $1,500) $1,500, her own Form 1116 appears with no cross-leak; MFJ both passive entries pool → $3,500. `form1116-foreign-tax-credit` regression **3/3** (simplified exception, full passive, empty). No compute change → `TaxReturnComputeServiceTest` 871 unaffected. Pins held exactly (10% foreign rate ≪ the §904 limitation at the higher US effective rate → credit fully allowed = foreign taxes).
+
+
 ## 2026-06-23 — MFS migration #41 (Standard deductions — Form 1040 line 12): scoper normalize + §63(c)(6) household coordination
 
 **Scope:** Form 1040 line 12 (standard vs itemized). The Schedule A itemized dollar-split per leg was already done (Phase 9 `MfsScheduleAAllocator` + `*PaidBy` attestations); the MFS base ($15,750) and age/blind per-box ($1,600) amounts were already correct. User chose "Full §63(c)(6) coordination" over the bounded fix. Two gaps closed; no migration/mapper change.

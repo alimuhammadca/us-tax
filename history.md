@@ -1,6 +1,81 @@
 ﻿# History
 
 
+## 2026-06-22 — MFS migration #30 (Elderly/Disabled credit — Schedule R): double-prefix swap + per-person lived-apart
+
+Schedule R (§22) is **partly a blocker, partly parity** under MFS: a filer who lived
+**with** their spouse at any time is barred entirely (no lived-apart exception); one who
+lived **apart all year** claims via box 8 (65+) or box 9 (under-65 P&T disability) with a
+**$3,750 base** / $5,000 AGI ceiling. The compute already handled all of this **given the
+data** (`determineScheduleRBox` → 8/9, `scheduleRBaseAmount` → 3,750, and the
+lived-with-spouse early-return disallowance). The gaps were purely **data routing to the
+mfs_spouse leg** — two patterns combined:
+
+**Gap 1 — #29-style prefixed-form, but DOUBLE-prefixed.** The taxpayer form uses
+`taxpayer*` keys and the spouse form uses `spouse*` keys; `computeScheduleR` reads the
+filer slot via the **`taxpayer`** prefix. The generic `-spouse`→`-taxpayer` rename left
+`spouse*` keys in the taxpayer slot, so the claim gate (`spouseHasElderlyDisabledCredit-
+Inputs` ≠ `claimsElderlyDisabledCredit`) **early-exited and her whole Schedule R + all
+disability facts vanished**. Unlike Forms 2555/4563/4972/5695 (un-prefix `spouse*`→bare),
+this needs a `spouse*`→`taxpayer*` **SWAP**.
+
+**Gap 2 — #19-style lived-apart.** `mfsLivedApartAllYear` lived only on the taxpayer form,
+so the spouse leg defaulted false → the §22 lived-with-spouse block wrongly fired.
+
+**Fixes:**
+- **`MfsFormScoper.normalizeElderlyDisabledCreditSpouse`** (new special-case): swaps
+  `spouse*`→`taxpayer*` + maps `spouseHasElderlyDisabledCreditInputs`→`claimsElderlyDisabled-
+  Credit`; `mfsLivedApartAllYear` passes through bare.
+- **`ElderlyDisabledCreditMapper`**: store/load `mfsLivedApartAllYear` on **both** rows
+  (per-person under MFS, mirrors #19) — no migration (column already per-row).
+- **Frontend** (`form-elderly-disabled-credit` + spouse YAML): show the lived-apart
+  question on the **spouse** form (`showSpouseMfsLivedApartQuestion`), bind to the spouse
+  model, save-normalize + validate it — so the spouse-only-claims case works (the head's
+  answer doesn't exist there).
+
+**Verified:** `Phase7bComputeScopingTest` 38/38 (new swap + claim-gate + lived-apart-passthrough
+case) + `TaxReturnComputeServiceTest` 869/869 (compute unchanged) + new
+`e2e/tests/mfs-spouse-elderly-disabled-credit.spec.ts` 3/3 (MFS spouse 65+/lived-apart →
+box 8, base $3,750, qualified; MFS lived-**with** → disallowed; MFJ both 65+ → box 3, base
+$7,500) + npm recompile clean.
+
+
+## 2026-06-22 — MFS migration #29 (Energy credit — Form 5695): scoper un-prefix + claim-gate remap
+
+Energy credits (§25D Residential Clean Energy + §25C Energy Efficient Home
+Improvement) are **NOT disallowed for MFS** — each spouse files their own Form 5695
+for the costs they paid (spec 5695.md §10a), with no limit-halving. Looked like
+Bucket A (verify-only), but the per-leg e2e caught a real **prefixed-form scoper
+gap** — the same family as Forms 2555/4563/4972 (#23/#24/#25).
+
+**The gap:** the `energy-credit-spouse` form persists spouse-PREFIXED keys
+(`spouseLine1SolarElectricCosts`, `spouseHasEnergyCreditInputs`) — the mapper applies
+a "spouse" prefix per owner_role. `computeForm5695List` reads the filer via the
+**bare-key taxpayer slot** (and the spouse copy via prefixed keys, which is why MFJ
+already worked). On the `mfs_spouse` leg the scoper's generic `-spouse`→`-taxpayer`
+rename kept the prefixed names in the taxpayer slot, so the compute read bare keys,
+found nothing, and the spouse's **entire Form 5695 vanished** from her separate return.
+
+**New wrinkle vs #23/#24/#25:** un-prefixing alone wasn't enough. The spouse form's
+claim gate is `spouseHasEnergyCreditInputs`, but the taxpayer slot reads
+`claimsEnergyCreditOnReturn`; the mechanical un-prefix yields `hasEnergyCreditInputs`
+(which the compute ignores), so the whole form would still gate off. The fix maps the
+gate across explicitly.
+
+**Backend (`MfsFormScoper`):** added a special-case `energy-credit-spouse` →
+`normalizeEnergyCreditSpouse(value)` onto `energy-credit-taxpayer` (placed before the
+generic rename). `normalizeEnergyCreditSpouse` = `unPrefixSpouseKeys` + map
+`spouseHasEnergyCreditInputs` → `claimsEnergyCreditOnReturn`. No migration, no UI
+change (the component is ungated and energy credits are MFS-allowed). `computeForm4972Spouse`-
+style: MFJ untouched (it reads the prefixed spouse copy directly).
+
+**Verified:** `Phase7bComputeScopingTest` 37/37 (new energy-credit un-prefix + claim-gate
+case) + `TaxReturnComputeServiceTest` 869/869 (unchanged) + new
+`e2e/tests/mfs-spouse-energy-credit.spec.ts` 2/2 (MFS per-leg: head solar $10k →
+line 1 10,000 / line 6b 3,000; spouse solar $6k → line 1 6,000 / line 6b 1,800, no leak,
+her form NOT empty; MFJ merge → line 1 16,000 / line 6b 4,800).
+
+
 ## 2026-06-22 — MFS migration #28 (Education credits — Form 8863): MFS gate/blocker
 
 Education credits (American Opportunity Credit + Lifetime Learning Credit) are

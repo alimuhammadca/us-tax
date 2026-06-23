@@ -21,6 +21,18 @@ sections:
         help: >
           Select Yes if the spouse may qualify by age or disability, or if the spouse has
           nontaxable pension amounts that belong on Schedule R line 13b.
+      # MFS form #30: under Married Filing Separately each spouse files her own Schedule R
+      # and must certify she lived apart from her spouse all year (IRC §22 bars the credit
+      # for an MFS filer who lived with the spouse at any time). Shown only when MFS.
+      - name: mfsLivedApartAllYear
+        type: boolean
+        required: false
+        showIf: spouseHasElderlyDisabledCreditInputs == true && filingStatus == 'Married filing separately'
+        label: Did the spouse live apart from their spouse for all of 2025?
+        help: >
+          Married filing separately filers can claim Schedule R only if they lived apart
+          from their spouse for the entire year. Living together at any time in 2025 bars
+          the credit.
 
   - name: spouseDisabilityFacts
     title: Spouse disability-track inputs

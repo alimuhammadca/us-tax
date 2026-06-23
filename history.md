@@ -1,6 +1,21 @@
 ﻿# History
 
 
+## 2026-06-23 — MFS migration #36 (Electric Vehicle credit — Form 8834): scoper-only routing fix (prefixed-scalar variant)
+
+**Scope:** Make the Spouse tab's `electric-vehicle-credit-spouse` form produce a correct standalone Form 8834 (Qualified Electric Vehicle Credit) on the `mfs_spouse` leg, without breaking MFJ. Pure `MfsFormScoper` fix — no compute / mapper / frontend / entity / migration change.
+
+**Form 8834:** legacy passive-activity credit (line 1 = released QEV passive credit; line 7 = min(line 1, tax capacity after prior credits + TMT)) → Schedule 3 line 6i → Form 1040 line 20. `lines/8834.md` §4/§17: on MFS each spouse files their own Form 8834 for credits released on their own leg.
+
+**Gap:** storage is owner_role two-row, but the spouse form persists spouse-prefixed SCALAR keys (`spouseHasElectricVehicleCreditInputs`, `spouseReleasedQevPassiveActivityCreditContribution`). `computeForm8834` reads the filer via the BARE taxpayer slot (`claimsElectricVehicleCredit`, `releasedQevPassiveActivityCredit`) and its spouse additive path is MFJ-gated. So on the spouse's own (non-MFJ) leg the generic `-spouse → -taxpayer` rename left her data under the spouse-named keys → bare claim gate null → her Form 8834 early-returned (vanished).
+
+**Fix:** `MfsFormScoper.normalizeElectricVehicleCreditSpouse(form)` remaps the two spouse keys onto the bare taxpayer-slot keys the compute reads (claim gate + released amount), invoked from a new `ELECTRIC_VEHICLE_CREDIT_SPOUSE` special-case before the generic rename. Could NOT reuse `unPrefixSpouseKeys` (the energy-credit #29 helper): the spouse amount key drops a trailing "Contribution" stem and the gate stem differs, so both keys are mapped explicitly — same shape as `normalizeCleanCarCreditSpouse`, but with NO child list (unlike #33-#35). The `-taxpayer` copy is dropped generically on the spouse leg; `scopeForMfsHead` drops `-spouse` on the head leg. Deferred minor: `confirmReleasedQevCreditAvailable` has no spouse-form equivalent, so the spouse leg emits an advisory "not explicitly confirmed" note (cosmetic; credit value unaffected).
+
+**Files:** `MfsFormScoper.java` (+2 constants, +1 dispatch case, +1 normalize helper); `Phase7bComputeScopingTest.java` (+2 cases — spouse remap + head drop). New `e2e/tests/mfs-spouse-electric-vehicle-credit.spec.ts`.
+
+**Verification:** `Phase7bComputeScopingTest` 45/45 (was 43, +2). New e2e 2/2 — MFS per-leg head $4,000 / spouse $1,800 (her own Form 8834 appears, no cross-leak) + MFJ both combine to $5,800. `line8834-electric-vehicle-credit` regression 2/2 (single taxpayer + MFJ spouse supplemental). No compute change → `TaxReturnComputeServiceTest` 869 unaffected. Pins held exactly, confirming the credit is fully allowed (tax capacity > released amount) in each leg.
+
+
 ## 2026-06-23 — MFS migration #35 (Bond credit — Form 8912): scoper-only routing fix (same family)
 
 Form 8912 (Credit to Holders of Tax Credit Bonds) is computed (→ Schedule 3 line 6k),

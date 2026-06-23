@@ -1,6 +1,46 @@
 ﻿# History
 
 
+## 2026-06-23 — MFS migration #31 (Interest expense — Form 4952): full owner_role mirror
+
+Form 4952 (investment interest expense, IRC §163(d)) is **computed** (line 8 allowable
+deduction → Schedule A line 9), but was stored **single-per-uid** with no spouse form and a
+**bare form id** (`investment-interest-expense-deduction`, no `-taxpayer` suffix). So on the
+`mfs_spouse` leg the scoper's generic loop **kept** that single row → `computeForm4952` read
+the head's investment interest as the spouse's → it **leaked onto the spouse's Schedule A
+line 9** (and she couldn't claim her own). Per §163(d) each spouse files their own Form 4952
+on MFS; MFJ combines both into one. User chose the **full owner_role mirror** (like #12/#13/#26).
+
+**Storage (V86):** owner_role split on `pf_investment_interest_expense` — surrogate `id` PK +
+`owner_role` + UNIQUE(uid, owner_role), backfill 'taxpayer'. Flat V82/V85-style split (no child
+tables); the V65 `tax_return_id` column + V67 trigger are unaffected (per-row uid → same primary).
+Entity gains `id` + `ownerRole`. Bulk-delete catalog already covers the table (uid cascade).
+
+**Mapper:** keyed by (uid, owner_role); `roleFor(formId)` maps `-spouse`→spouse; UNPREFIXED
+(both copies use the same field names — the component is parameterized, not prefixed).
+`PERSONAL_FORMS += investment-interest-expense-deduction-spouse`.
+
+**Scoper:** bare-id routing (childcare/adoption style) — on `mfs_spouse`,
+`investment-interest-expense-deduction-spouse` → the bare filer key AND the head's bare copy is
+dropped, so the head's investment interest no longer leaks onto her return.
+
+**Compute (the §163(d) wrinkle):** the call site now reads both copies and, on **MFJ**, merges
+the **INPUTS** (`mergeForm4952Inputs` sums lines 1/2/4a/4b/4d/4e-cap/4g/5 + ORs the gates) and
+runs `computeForm4952` **once** on the combined — so the limit applies to COMBINED net
+investment income (not summed outputs). Off-MFJ the scoper already routed the filer's copy, so
+it passes through unchanged.
+
+**Frontend:** parameterized `form-interest-expense` (`@Input formId`/`person`); shell renders the
+`-spouse` instance + a spouse sidebar item (the existing `/-spouse$/` deduction filter routes it
+to the Spouse tab). No spouse YAML (exact-copy parameterized form, like childcare).
+
+**Verified:** `Phase7bComputeScopingTest` 39/39 (new bare-id routing case) + `TaxReturnComputeServiceTest`
+869/869 (single-return unchanged) + new `e2e/tests/mfs-spouse-investment-interest-expense.spec.ts`
+2/2 (MFS per-leg head line 8 = 5,000 / spouse line 8 = 3,000 no leak; MFJ merge line 3 = 8,000 /
+line 8 = 8,000) + regression `line4952-interest-expense` + `personal-form-mapper-roundtrip`
+(investment-interest-expense-deduction) green after a clean backend restart (V86 applied on boot).
+
+
 ## 2026-06-22 — MFS migration #30 (Elderly/Disabled credit — Schedule R): double-prefix swap + per-person lived-apart
 
 Schedule R (§22) is **partly a blocker, partly parity** under MFS: a filer who lived

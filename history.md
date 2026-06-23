@@ -1,6 +1,35 @@
 ﻿# History
 
 
+## 2026-06-23 — MFS #42 follow-up (Form 1116): spouse form made a FULL mirror of the taxpayer form
+
+User observed the head and spouse Form 1116 forms were not mirrors and asked why, then to fix it. The spouse form had been a thin MFJ "joint supplement" (gate + income-source list); the return-level controls — the simplified-exception ($300 no-Form-1116) election and the 1099-DIV/INT upload confirmations — lived only on the taxpayer form. The #42 scoper-only fix produced the correct credit on her MFS leg (the income-source list is the credit-determining input), but she could not elect the simplified exception on her own separate return.
+
+**Fix (full mirror — frontend + mapper only, NO migration / scoper / compute change):**
+- Frontend (`form-foreign-tax-credit-spouse.component.ts`): added the four fields — `spouseClaimsSimplifiedException`, `spouseSimplifiedForeignTaxesOverride`, `spouseConfirms1099DivUploaded`, `spouseConfirms1099IntUploaded` — to the model, a new "Statements & simplified exception" template section (income sources hidden when the simplified exception is elected, mirroring the taxpayer form), `normalizeForSave`/`normalizeOnLoad`, and help text. Reworded the now-misleading "(MFJ only)" screening label to be neutral (joint-combine vs MFS-own-return).
+- Mapper (`ForeignTaxCreditMapper.java`): the spouse `owner_role` branch now persists the four fields into the row's otherwise-unused BARE scalar columns (`claims_simplified_exception`, `simplified_foreign_taxes_override`, `confirms_1099_div_uploaded`, `confirms_1099_int_uploaded`) — the columns already exist on every row, so NO migration.
+- Scoper + compute UNCHANGED: the existing `unPrefixSpouseKeys` #42 case already maps `spouseClaimsSimplifiedException`→`claimsSimplifiedException` etc. (exact inversions), and `computeForm1116`'s simplified path reads them from the filer slot.
+
+**Verification:** UI build clean; new e2e in `mfs-spouse-foreign-tax-credit.spec.ts` (spouse elects simplified exception, $250 override → credit $250, `simplifiedExceptionUsed=true`, while the head uses the full path → $2,000); existing per-leg + MFJ tests still green; `form1116-foreign-tax-credit` 3/3 unchanged. No compute change → 871 compute unit tests unaffected.
+
+**Lesson:** when a spouse form is a thin "joint supplement," a full standalone-MFS mirror can often be added with NO migration by reusing the parent table's existing bare scalar columns on the spouse `owner_role` row (the columns exist on every row; the mapper's spouse branch just writes them under the spouse-prefixed payload keys), and the existing `unPrefixSpouseKeys` scoper case routes them for free.
+
+
+## 2026-06-23 — MFS migration #43 (Savings credit — Form 8880): scoper-only un-prefix
+
+**Scope:** Make the Spouse tab's `savings-credit-spouse` form produce a correct standalone Form 8880 (Retirement Savings Contributions Credit, Schedule 3 line 4) on the `mfs_spouse` leg, without breaking MFJ. Pure `MfsFormScoper` fix — no compute/mapper/frontend/migration change.
+
+**Merge shape:** Form 8880 is inherently per-column/per-person — `computeForm8880` reads column (a) from the taxpayer slot (bare keys: gate `hasSavingsCredit`, `iraContributions`, `ableContributions`, `employerPlanDeferrals`, `distributions2023to2025`, disqualifiers `bornAfter2007`/`isFullTimeStudent`/`isClaimedAsDependent`) and column (b) from the spouse slot only when `isMfj`. On MFS only column (a) applies. The credit-rate table (`saversCreditRate`) has MFJ/HOH branches and a Single/MFS fallthrough ($23,750 → 50%, $25,500 → 20%, $39,500 → 10%, else 0%) — MFS correctly uses the Single column, and filing status is read per-leg, so the scoper's MFS override drives the rate automatically. No rate work needed.
+
+**Spouse form stands alone** with clean `spouse<UpperCamel>` keys. **Gap:** the generic `-spouse → -taxpayer` rename kept the prefixed names; the bare gate `hasSavingsCredit` read null → her Form 8880 vanished (same shape as QBI #40 / Form 1116 #42 / Form 2555 #23).
+
+**Fix:** a `savings-credit-spouse → savings-credit-taxpayer` special-case applying `MfsFormScoper.unPrefixSpouseKeys(value)` — the EXACT inverse (`spouseHasSavingsCredit`→`hasSavingsCredit`, `spouseIraContributions`→`iraContributions`, etc.), NO gate remap. The W-2 box-12 elective-deferral and 1099-R distribution sums are SSN-attributed to the scoped filer (her SSN via the identity flip), so they attribute to her leg.
+
+**Files:** `MfsFormScoper.java` (+2 constants, +1 dispatch case reusing `unPrefixSpouseKeys`); `Phase7bComputeScopingTest.java` (+1 case). New `e2e/tests/mfs-spouse-savings-credit.spec.ts`.
+
+**Verification:** `Phase7bComputeScopingTest` **55/55** (was 54, +1). New e2e **2/2** — MFS per-leg head (AGI $35,000, IRA $2,000) $200 / spouse (AGI $30,000, IRA $1,500) $150, both at the 10% rate, no cross-leak; MFJ both columns (line7 $3,500, AGI $70,000 → 10%) → $350. `form8880-savings-credit` regression **3/3** (single 50%, MFJ both columns, AGI over ceiling). No compute change → `TaxReturnComputeServiceTest` 871 unaffected. Pins held exactly (AGI kept in the 10% band, tax liability well above the credit so not tax-limited).
+
+
 ## 2026-06-23 — MFS migration #42 (Foreign tax credit — Form 1116): scoper-only un-prefix
 
 **Scope:** Make the Spouse tab's `foreign-tax-credit-spouse` form produce a correct standalone Form 1116 (foreign tax credit, Schedule 3 line 1) on the `mfs_spouse` leg, without breaking MFJ. Pure `MfsFormScoper` fix — no compute/mapper/frontend/migration change.

@@ -1,6 +1,21 @@
 ﻿# History
 
 
+## 2026-06-23 — MFS migration #40 (Qualified business income — Form 8995/8995-A): scoper-only un-prefix
+
+**Scope:** Make the Spouse tab's `qbi-deduction-spouse` form produce a correct standalone QBI deduction (Form 1040 line 13a) on the `mfs_spouse` leg, without breaking MFJ. Pure `MfsFormScoper` fix — no compute/mapper/frontend/migration change. QBI here is REIT/PTP dividends + K-1 §199A pass-through only (self-employment Schedule C/F is out of scope, blocked by `LINE13A_SELF_EMPLOYMENT_OUT_OF_SCOPE`).
+
+**Merge shape (the key analysis):** `computeLine13a` is a limit-gated INPUT merge (taxpayer + spouse QBI/REIT/PTP amounts pooled FIRST, then ONE deduction computed against ONE combined-income §199A threshold — the `feedback_mfj_merge_inputs_not_outputs_under_limit` pattern, like #31 Form 4952). This works IN FAVOR of a simple scoper fix: on a one-slot MFS leg the merge collapses to a single-person computation against that leg's own threshold, which is **$197,300 for MFS** (the IRS "all other" bracket — NOT a half-of-MFJ value; confirmed in 13a.md §2.1). No MFJ-merge re-plumbing needed.
+
+**Gap:** the spouse form stores its 13 fields under `spouse<UpperCamel>` keys; `computeLine13a` reads the filer slot with bare keys via `qbiFormKey(false, …)`. The generic `-spouse → -taxpayer` rename kept the prefixed names, so her QBI deduction vanished on her leg (the same shape as Form 2555 #23 / 8834 #36 / 8859 #38).
+
+**Fix:** a `qbi-deduction-spouse → qbi-deduction-taxpayer` special-case applying `MfsFormScoper.unPrefixSpouseKeys(value)` before the generic rename. Because `unPrefixSpouseKeys` (strip `spouse`, lowercase the next char) is the EXACT inverse of `qbiFormKey`'s spouse transform (prepend `spouse`, capitalize the first char), every spouse key un-prefixes precisely to its bare key — so NO explicit gate remap is required (unlike Form 5695 #29 / 8834 #36, where the gate stem differed). The cleanest possible un-prefix case. The MFS guard at the call sites (`isMfsReturn ? null : qbiDeductionSpouse`) already null-shadows the now-empty spouse slot. Statement-sourced QBI (K-1/1099-DIV §199A) is attributed by `recipientTIN` via the identity flip, same as #15-#18.
+
+**Files:** `MfsFormScoper.java` (+2 constants, +1 dispatch case reusing `unPrefixSpouseKeys`); `Phase7bComputeScopingTest.java` (+1 case). New `e2e/tests/mfs-spouse-qbi-deduction.spec.ts`.
+
+**Verification:** `Phase7bComputeScopingTest` **52/52** (was 51, +1 — spouse QBI un-prefixes onto filer slot, head copy dropped). New e2e **2/2** — MFS per-leg head (REIT $10,000) $2,000 / spouse (REIT $6,000) $1,200, her own Form 8995 appears with no cross-leak; MFJ pooled $16,000 → $3,200. `line13a-qbi-deduction` regression **3/3** (+1 pre-existing skip). No compute change → `TaxReturnComputeServiceTest` 871 unaffected. Pins held exactly (below threshold → Form 8995, ample taxable-income headroom so line 13a = 20% × REIT). e2e seed gotcha: `confirmAllReceivedQbiStatementsUploaded` must be true or `validateQbiStatementGating` nulls the form inside compute (not just a REST 409 — overrideFlags can't bypass it).
+
+
 ## 2026-06-23 — MFS migration #39 (Premium tax credit — Form 8962): MFS compute correctness fix
 
 **Scope:** Form 8962 (PTC) had NO MFS handling — a latent correctness bug, not just a spouse-leg routing gap. User chose "Full correct handling." This is a COMPUTE fix affecting ALL MFS returns (primary single-return MFS + both multi-return legs), plus a flag, a frontend notice, and a scoper drop. No migration/mapper/entity change (all storage pre-existing).

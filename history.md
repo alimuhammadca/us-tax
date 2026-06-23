@@ -1,6 +1,38 @@
 ﻿# History
 
 
+## 2026-06-23 — MFS migration #33 (Clean car credit — Form 8936): scoper-only routing fix
+
+Form 8936 / Schedule A clean vehicle credit (§30D/§25E) is computed (→ Schedule 3 line 6f/6m)
+and per-vehicle/per-person: each vehicle is claimed by one spouse on their own return, and the
+MFS MAGI ceiling is taxpayer-only ($150k new / $75k previously owned — spec §3). Storage is a
+clean owner_role two-row (`pf_clean_car_credit` + `pf_clean_car_vehicle`, **bare** columns).
+
+**The gap:** the per-vehicle child ARRAY key is role-suffixed (`taxpayerVehicles` /
+`spouseVehicles`) and the claim gate differs (`claimsCleanCarCreditOnReturn` vs
+`spouseHasCleanCarCreditInputs`). `computeForm8936ScheduleAList` reads the filer slot via
+`taxpayerVehicles` + `claimsCleanCarCreditOnReturn`, so on the `mfs_spouse` leg the generic
+`-spouse`→`-taxpayer` rename leaves `spouseVehicles` + `spouseHasCleanCarCreditInputs` in the
+taxpayer slot → **her vehicles + claim vanish** from her own Schedule A list.
+
+**Fix (scoper only):** `MfsFormScoper.normalizeCleanCarCreditSpouse` renames the vehicle list
+`spouseVehicles`→`taxpayerVehicles` and maps the claim gate. The `-taxpayer` copy is dropped
+generically on `mfs_spouse`; `scopeForMfsHead` drops `-spouse` on the head leg (no leak there).
+**No compute, mapper, frontend, or migration change** — the per-leg AGI already gives the
+correct MFS taxpayer-only MAGI and the MFS MAGI ceiling is filing-status-aware.
+
+**Deferred (minor, noted):** the spouse form omits the MAGI add-back + prior-year-MAGI fields
+(joint-MAGI design), so on her MFS leg she can't enter foreign-income add-backs or use the
+prior-year MAGI election — edge cases; consistent with the spec's deferred prior-year
+automation. The common case (no foreign income, current MAGI under the ceiling) is correct.
+
+**Verified:** `Phase7bComputeScopingTest` 41/41 (new role-suffixed-child-array case) +
+`TaxReturnComputeServiceTest` 869/869 (compute unchanged) + new
+`e2e/tests/mfs-spouse-clean-car-credit.spec.ts` 2/2 (MFS per-leg head Tesla / spouse Rivian,
+each $7,500, no leak; MFJ both vehicles) + existing `line8936sa-clean-car-credit` 2/2
+(single + MFJ spouse) regression.
+
+
 ## 2026-06-23 — MFS migration #32 (Prior min tax credit — Form 8801): full per-person mirror, no migration
 
 Form 8801 (prior-year AMT credit, IRC §53) is computed (line 25 → Schedule 3 line 6b) but was

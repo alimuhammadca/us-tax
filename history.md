@@ -1,6 +1,34 @@
 ﻿# History
 
 
+## 2026-06-23 — MFS migration #34 (Alt fuel credit — Form 8911): scoper-only routing fix (twin of #33)
+
+Form 8911 / Schedule A alternative-fuel-vehicle-refueling-property credit (§30C) is computed
+(→ Schedule 3 line 6j), per-property/per-person: each spouse files their own Form 8911 for
+properties they own on MFS (spec §4); the Part II tax-liability limit uses each leg's own tax.
+Storage is owner_role two-row (`pf_alt_fuel_credit` + `pf_alt_fuel_property`, **bare** columns).
+
+**The gap (twin of #33, plus one):** the per-property child ARRAY key is role-suffixed
+(`taxpayerProperties` / `spouseProperties`), the claim gate differs
+(`claimsAltFuelCreditOnReturn` vs `spouseHasAltFuelCreditInputs`), **and** there's a
+spouse-specific pass-through (`spousePassthroughRefuelingPropertyCreditContribution`).
+`computeForm8911` reads the filer slot via `taxpayerProperties` / `claimsAltFuelCreditOnReturn`
+/ `passthroughRefuelingPropertyCredit` (the spouse property list + pass-through are otherwise
+MFJ-gated). So on the `mfs_spouse` leg the generic `-spouse`→`-taxpayer` rename left the
+spouse-named keys → `taxpayerClaims` false → **early-return, her Form 8911 vanishes**.
+
+**Fix (scoper only):** `MfsFormScoper.normalizeAltFuelCreditSpouse` renames the property list
+`spouseProperties`→`taxpayerProperties`, maps the claim gate, and maps the pass-through. The
+`-taxpayer` copy is dropped generically on `mfs_spouse`; `scopeForMfsHead` drops `-spouse` on
+the head leg. **No compute, mapper, frontend, or migration change** (per-leg tax already gives
+the correct MFS limitation).
+
+**Verified:** `Phase7bComputeScopingTest` 42/42 (new case) + `TaxReturnComputeServiceTest`
+869/869 (compute unchanged) + new `e2e/tests/mfs-spouse-alt-fuel-credit.spec.ts` 2/2 (MFS
+per-leg head $2,000→line10 $600 / spouse $3,000→line10 $900, no leak; MFJ both properties →
+line10 $1,500) + existing `line8911-alt-fuel-credit` 2/2 (single + MFJ spouse) regression.
+
+
 ## 2026-06-23 — MFS migration #33 (Clean car credit — Form 8936): scoper-only routing fix
 
 Form 8936 / Schedule A clean vehicle credit (§30D/§25E) is computed (→ Schedule 3 line 6f/6m)

@@ -2,6 +2,26 @@
 
 ---
 
+## MFS Spouse-Forms Migration — Canonical Rules — Established 2026-06-23 (queue #12–#44 COMPLETE)
+
+The Spouse tab produces a standalone Married-Filing-Separately return per leg. The household's personal-forms map is reshaped by `MfsFormScoper.scope(allForms, returnKind)` before `prepare(uid)`: `mfs_head` drops `-spouse` keys; `mfs_spouse` renames `-spouse → -taxpayer` (spouse = filer) and forces filing status to MFS. The full queue + per-form protocol live in `C:\us-tax\mfs-spouse-migration.md`. Rules for adding/maintaining any per-leg form:
+
+1. **Register in N places or it silently breaks.** A new `pf_X` / `se_X` parent table needs: the `V*.sql` `<include>` in `db.changelog-master.xml` (Liquibase does NOT auto-discover); both form IDs in `PersonalResource.PERSONAL_FORMS`; the table in `UserDataBulkDelete.PARENT_TABLES_UID_CASCADE`; and, if it gates a §17 blocker, the code in `NonOverrideableFlags.CODES`. Java unit tests bypass these — only e2e catches a forgotten registration.
+
+2. **Choose the scoper shape by reading the COMPUTE, never an inventory verdict.** Decisive questions: (a) does the spouse form store `spouse<UpperCamel>` keys that are the exact inverse of what the compute reads from the filer slot? → **scoper-only `unPrefixSpouseKeys`** (no gate remap; nested child lists pass through by value). (b) does only the GATE/amount stem differ? → **a `normalizeXSpouse` helper** mapping the gate + each renamed key. (c) is the spouse form a thin joint supplement that LACKS a credit-determining input the compute requires? → **full per-person mirror** (#37/#42-follow-up/#44) or **drop the supplement** (#39) if the credit is reported on the head leg. (d) does the MFJ combine under a statutory LIMIT (QBI §199A threshold, §163(d), §904)? → it is a limit-gated INPUT merge that collapses to a single-person computation on a one-slot leg — verify the per-leg threshold is the MFS value, then scoper-only suffices.
+
+3. **Full mirror needs NO migration when the columns already exist.** The `owner_role` two-row parent table carries the taxpayer's bare scalar columns on EVERY row; the spouse row leaves them null. To mirror: expand the mapper's spouse branch to write/load those bare columns under the spouse-prefixed payload keys, and (for child lists) parent the spouse's children by her own parent-row id. For a one-generic-component UI, add `private k(bareKey) { return person==='spouse' ? 'spouse'+Capitalize(bareKey) : bareKey }` (the exact inverse of `unPrefixSpouseKeys`) and route every key in `normalized()`/`loadModel()` through it; render the same template for both persons, keeping taxpayer-only UX (live estimates, import summaries) gated to `person==='taxpayer'`.
+
+4. **MFS-disallowed credits: hard block vs partial handling.** Flat statutory bar with no exception AND no other required output → promote the advisory flag to blocking + add to `NonOverrideableFlags.CODES` + UI `isMfs` notice + hide (education credits #28, SLID #22; optimizer-safe because it calls `prepare()` directly). A statutory EXCEPTION (PTC #39 abuse/abandonment; EIC #44 §32(d)(2) lived-apart) OR a still-required non-credit output (PTC's APTC repayment) → DO NOT hard-block: disallow only the credit, emit a NON-blocking advisory flag (suppressed when the exception is claimed), and keep the form visible.
+
+5. **Household-level rules need a cross-leg pass.** §63(c)(6)(A) (MFS spouses must use the same standard-vs-itemized method) can't be expressed per-leg under AUTO. Use a guarded recursive cross-leg compute (`TaxReturnComputeService.resolveSection63c6Election`, a `RESOLVING_*` ThreadLocal so inner leg computes use raw AUTO; the KiddieTaxParentReader pattern) that resolves the household-optimal method and stamps the same explicit election onto both legs. ★ Read the itemized total from `Deductions.getItemizedDeductionsFromScheduleA()` (always populated), NOT `TaxReturnComputation.scheduleA()` (null unless itemized is the chosen method).
+
+6. **MFS statement-attribution leaks.** Statement amounts (W-2, 1099-*, 1095-A) are attributed by SSN; on a scoped leg the filer SSN flips to the spouse's. The missing-TIN catch-all (`belongsToPerson`) can leak the OTHER spouse's untagged statement onto a leg — exclude by `filing-status.mfsOtherSpouseSsn` before the catch-all, and ALWAYS seed BOTH spouses' statements WITH TINs in per-leg e2e tests.
+
+7. **Every form ships with:** a `Phase7bComputeScopingTest` scoper case + a per-leg `mfs-spouse-*.spec.ts` e2e (MFS per-leg with exact IRS-pinned dollars + no cross-leak + an MFJ regression) + the existing line/form regression. Never assert `> 0`; pin hand-computed values.
+
+---
+
 ## SQL Migration Guardrails (Firestore→Azure SQL Cutover) — Established 2026-05-28
 
 Guardrails that emerged from triaging the e2e regressions after the Firestore→SQL cutover. Apply to all SQL-backed mappers, entities, and Liquibase changesets.

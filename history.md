@@ -1,6 +1,22 @@
 ﻿# History
 
 
+## 2026-06-23 — MFS migration #37 (Mortgage interest credit — Form 8396): FULL per-person mirror
+
+**Scope:** Make the Spouse tab's `mortgage-interest-credit-spouse` form produce a correct standalone Form 8396 (Mortgage Interest Credit) on the `mfs_spouse` leg, without breaking MFJ. User-elected the full per-person mirror (vs minimal-defer) — same choice as #32 Form 8801.
+
+**Why a mirror, not a scoper-only fix (unlike #33-#36):** Form 8396 turns mortgage interest into a credit via the MCC credit-rate % + eligibility flags, which live only on the taxpayer slot. The spouse form's MFJ shape is a 2-field supplemental (gate `spouseHasMortgageInterestCreditInputs` + `spouseMortgageInterestPaidContribution`) merged into the JOINT line 1. A pure 2-key remap would leave her MFS leg with no rate (`normalizeForm8396RatePercent(null)=null` → line 2/3 = 0) and `eligible=false` → a silent $0 credit. So the spouse form needs her OWN MCC core for a standalone separate return.
+
+**Fix (frontend + scoper only — no migration/mapper/compute change):**
+- Frontend (`form-mortgage-interest-credit.component.ts`): expanded the spouse model to also carry the full MCC core under the SAME bare keys the taxpayer form uses (rate, interest, qualified-MCC flags, indebtedness, owner share, 3 carryforwards). Added `filingStatus` load + `isMfs` + `showSpouseCore` getters; the spouse section reveals the core MFS-only (gated on `showSpouseCore`) and keeps the 2-field supplemental for MFJ (`!isMfs`). `isValid` requires the core (flags + rate + an interest figure) on MFS, the supplemental on MFJ. `normalizeSpouseForSave` keeps the core on MFS / only the supplemental on MFJ so the two modes never persist conflicting data. Mirrors the #32 Form 8801 MFS-only-core pattern.
+- Scoper (`MfsFormScoper.normalizeMortgageInterestCreditSpouse`): on her leg, maps the gate → master claim `claimsMortgageInterestCredit` (early-exit gate) and passes the bare MCC core through; drops the MFJ-only supplemental contribution. New `MORTGAGE_INTEREST_CREDIT_SPOUSE` special-case before the generic rename.
+- No migration/mapper/compute change: the mapper save/load is role-agnostic (reads/writes every payload key 1:1 to a column for whichever row), and every column already exists on both the taxpayer and spouse rows (V2). computeForm8396 already reads the bare core + master claim from the filer slot.
+
+**Files:** UI `form-mortgage-interest-credit.component.ts` (spouse model + template MFS core + isMfs/showSpouseCore + validation/save). BE `MfsFormScoper.java` (+2 constants, +1 dispatch case, +1 normalize helper); `Phase7bComputeScopingTest.java` (+2 cases). New `e2e/tests/mfs-spouse-mortgage-interest-credit.spec.ts`.
+
+**Verification:** `Phase7bComputeScopingTest` 47/47 (was 45, +2). New e2e 2/2 — MFS per-leg head (rate 20% × $6,000) $1,200 / spouse (rate 20% × $8,000) $1,600, her own Form 8396 appears with no cross-leak; MFJ supplemental still merges to $1,600. `line8396-mortgage-interest-credit` regression 2/2 (single taxpayer + MFJ supplemental via UI — confirms the new spouse-form `isMfs`/`showSpouseCore` logic didn't break the supplemental path). UI build clean. No compute change → `TaxReturnComputeServiceTest` 869 unaffected. Pins held exactly (credit fully allowed; rate ≤20% so no $2,000 cap).
+
+
 ## 2026-06-23 — MFS migration #36 (Electric Vehicle credit — Form 8834): scoper-only routing fix (prefixed-scalar variant)
 
 **Scope:** Make the Spouse tab's `electric-vehicle-credit-spouse` form produce a correct standalone Form 8834 (Qualified Electric Vehicle Credit) on the `mfs_spouse` leg, without breaking MFJ. Pure `MfsFormScoper` fix — no compute / mapper / frontend / entity / migration change.

@@ -2312,7 +2312,9 @@ Knowledge: `C:\us-tax\knowledge\knowledge_line27abc.md` · Flowchart: `C:\us-tax
 
 ## Form 8962 — Implemented (2026-03-21); Remaining Deferred Items
 
-No outstanding items beyond those captured in cross-cutting sections below.
+- [Form 8962 / MFS standalone spouse-leg repayment] **Added 2026-06-23 (MFS migration Form #39).** Form #39 fixed the MFS net-PTC disallowance + APTC repayment in `computeForm8962` (force line 24 = 0 when MFS without the abuse/abandonment exception; repayment still flows to Schedule 2). The household PTC + repayment are reported on the Family Head's leg; on the `mfs_spouse` leg `MfsFormScoper` DROPS the spouse PTC form because it is a thin, non-standalone supplement (only `spouseHasAdditionalPtcInputs` + two Form 2555 MAGI add-backs — no return-level PTC inputs). So a spouse who should report HER OWN allocated share of a shared-policy APTC for repayment on her separate return cannot yet do so (she has no 1095-A / Part IV shared-policy-allocation inputs on her form). Fix when needed: a full per-person mirror (like #37 Form 8396) — give the spouse form her own MCC-style PTC core (1095-A reference + shared-policy allocation) MFS-only + a scoper normalize routing it onto the filer slot. Common case (head holds/reports the policy, or 100%-to-head allocation) is correct today; the per-spouse APTC split on MFS is the gap.
+
+No further outstanding items beyond those captured in cross-cutting sections below.
 
 ---
 

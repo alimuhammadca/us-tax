@@ -1,6 +1,25 @@
 ﻿# History
 
 
+## 2026-06-23 — MFS migration #39 (Premium tax credit — Form 8962): MFS compute correctness fix
+
+**Scope:** Form 8962 (PTC) had NO MFS handling — a latent correctness bug, not just a spouse-leg routing gap. User chose "Full correct handling." This is a COMPUTE fix affecting ALL MFS returns (primary single-return MFS + both multi-return legs), plus a flag, a frontend notice, and a scoper drop. No migration/mapper/entity change (all storage pre-existing).
+
+**The bug:** `computeForm8962` set line 24 = total PTC and granted the net credit (line 26 → Schedule 3 line 9) whenever line 24 > line 25, with NO filing-status guard — so an MFS filer wrongly received the net PTC, which IRC §36B(c)(1)(C) disallows. The `mfsException` field (domestic-abuse / spousal-abandonment relief) was captured end-to-end in UI/mapper/entity but never read by compute (wired-but-dead).
+
+**Fix (option B "partial handling", per lines/8962.md "Special Coding Rules"):**
+- **Compute** (`computeForm8962`): read `filingStatus` + `mfsException` from the taxpayer slot; when MFS && !mfsException, force **line 24 = 0 before Part III**. This disallows the net credit (line 26 can't be positive) yet still runs reconciliation, so any excess APTC is repaid (line 27–29, with the separate-return cap already wired via `isSingleOrMfs`) → Schedule 2. When `mfsException == true`, compute normally (credit re-enabled for victims).
+- **Flag**: advisory (non-blocking) `PREMIUM_TAX_CREDIT_MFS_DISALLOWED` added at the call site when MFS && form8962 != null && !mfsException. NOT added to `NonOverrideableFlags.CODES` — it's informational, because the exception + the still-valid repayment make a hard block wrong (contrast the education-credits #28 hard block, which is correct only because that bar is flat with no exception).
+- **Frontend** (`form-premium-tax-credit.component.ts`): added a `filingStatus` field (set from the already-loaded `filing-status` form) + `isMfs` getter + an MFS informational notice. The form is NOT hidden (repayment inputs still needed); the existing `mfsException` question re-enables the credit. Also fixed a latent `.includes('MFJ')` check that never matched the display string.
+- **Scoper** (`MfsFormScoper`): the spouse form is a thin non-standalone supplement (only `spouseHasAdditionalPtcInputs` + two 2555 MAGI add-backs feeding joint MAGI; no return-level PTC inputs). On the mfs_spouse leg, DROP `premium-tax-credit-spouse` rather than letting the generic rename seed a half-populated taxpayer-slot form that would gate off anyway. The household PTC + its MFS repayment are reported on the head's leg.
+
+**Deferred:** a standalone spouse-leg PTC repayment (her own 1095-A / Part IV shared-policy allocation) would need a full mirror — documented in outstanding.md.
+
+**Files:** `TaxReturnComputeService.java` (line-24=0 MFS logic in computeForm8962 + advisory flag at call site); `MfsFormScoper.java` (+1 constant, +1 drop case); UI `form-premium-tax-credit.component.ts` (filingStatus + isMfs + notice). Tests: `TaxReturnComputeServiceTest.java` (+2 MFS cases), `Phase7bComputeScopingTest.java` (+2 cases), new `e2e/tests/mfs-premium-tax-credit.spec.ts`.
+
+**Verification:** `TaxReturnComputeServiceTest` **871/871** (was 869, +2 — MFS-no-exception disallows net + keeps $200 repayment + advisory flag; MFS-with-exception allows $300 net). `Phase7bComputeScopingTest` **51/51** (+2 — spouse supplement dropped on both legs). New e2e **3/3** — MFS disallowed+repaid+flag, MFS-exception re-enables $300, MFJ regression $300. `form8962-premium-tax-credit` 2/2 (UI persistence — confirms frontend changes safe). UI build clean. No existing test broke from the compute change (the line-24=0 path only fires for MFS).
+
+
 ## 2026-06-23 — MFS migration #38 (Carryforward homebuyer credit — Form 8859): scoper-only routing fix (#36 twin)
 
 **Scope:** Make the Spouse tab's `carryforward-homebuyer-credit-spouse` form produce a correct standalone Form 8859 (Carryforward of the DC First-Time Homebuyer Credit) on the `mfs_spouse` leg, without breaking MFJ. Pure `MfsFormScoper` fix — no frontend / migration / mapper / compute change.

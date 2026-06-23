@@ -1,6 +1,23 @@
 ﻿# History
 
 
+## 2026-06-23 — MFS migration #38 (Carryforward homebuyer credit — Form 8859): scoper-only routing fix (#36 twin)
+
+**Scope:** Make the Spouse tab's `carryforward-homebuyer-credit-spouse` form produce a correct standalone Form 8859 (Carryforward of the DC First-Time Homebuyer Credit) on the `mfs_spouse` leg, without breaking MFJ. Pure `MfsFormScoper` fix — no frontend / migration / mapper / compute change.
+
+**Form 8859:** line 1 = prior-year carryforward; line 2 = tax liability limit (auto-computed: tax-before-credits − CTC/ODC − other Schedule 3 credits); line 3 = min(line 1, line 2) → Schedule 3 line 6h → 1040 line 20; line 4 = carryforward to next year.
+
+**Verdict correction (the #37 lesson, applied correctly):** the inventory agent concluded "full mirror like #37," but reading `computeForm8859` directly disproved it. Unlike Form 8396 (#37 — which genuinely needed the MCC rate the spouse form never collected), Form 8859's ONLY user-driven credit input is the carryforward amount (line 1); line 2 is auto-computed from each leg's own return-level figures. The spouse form ALREADY carries her carryforward as `spousePriorYearCarryforwardContribution`. So this is a prefixed-scalar-renamed-stems remap (a #36 twin), NOT a mirror — the deciding factor is whether the spouse FORM collects the credit-determining input, not whether the canonical key/master gate happens to be taxpayer-slot-only (those are just key-name remaps).
+
+**Gap:** the master gate `claimsCarryforwardHomebuyerCredit` + the canonical line-1 key `priorYearForm8859Line4Carryforward` are read only from the taxpayer slot, and the compute early-returns unless the gate is true. On the spouse leg the generic `-spouse → -taxpayer` rename left her data under the spouse-prefixed keys → the bare gate read null → her Form 8859 gated off and vanished.
+
+**Fix:** `MfsFormScoper.normalizeCarryforwardHomebuyerCreditSpouse` maps her gate `spouseHasCarryforwardHomebuyerCreditInputs` → master claim `claimsCarryforwardHomebuyerCredit` and her contribution `spousePriorYearCarryforwardContribution` → the bare line-1 key `priorYearForm8859Line4Carryforward` (a 2-key remap, exactly the #36 shape). New `CARRYFORWARD_HOMEBUYER_CREDIT_SPOUSE` special-case before the generic rename. Deferred minor: the optional Schedule 8812 Credit Limit Worksheet B line-2 override is taxpayer-only (no spouse field) — a rare CTC edge case on her leg.
+
+**Files:** `MfsFormScoper.java` (+2 constants, +1 dispatch case, +1 normalize helper); `Phase7bComputeScopingTest.java` (+2 cases). New `e2e/tests/mfs-spouse-carryforward-homebuyer-credit.spec.ts`.
+
+**Verification:** `Phase7bComputeScopingTest` 49/49 (was 47, +2). New e2e 2/2 — MFS per-leg head $800 / spouse $1,200 (her own Form 8859 appears, no cross-leak) + MFJ both combine to $2,000. `line8859-carryforward-homebuyer-credit` regression 2/2 (single taxpayer + MFJ supplemental). No compute change → `TaxReturnComputeServiceTest` 869 unaffected. Pins held exactly (credit fully allowed — ample line-2 capacity, no dependents/other credits).
+
+
 ## 2026-06-23 — MFS migration #37 (Mortgage interest credit — Form 8396): FULL per-person mirror
 
 **Scope:** Make the Spouse tab's `mortgage-interest-credit-spouse` form produce a correct standalone Form 8396 (Mortgage Interest Credit) on the `mfs_spouse` leg, without breaking MFJ. User-elected the full per-person mirror (vs minimal-defer) — same choice as #32 Form 8801.

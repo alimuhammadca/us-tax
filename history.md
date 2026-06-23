@@ -1,6 +1,34 @@
 ﻿# History
 
 
+## 2026-06-23 — MFS migration #35 (Bond credit — Form 8912): scoper-only routing fix (same family)
+
+Form 8912 (Credit to Holders of Tax Credit Bonds) is computed (→ Schedule 3 line 6k),
+per-bond/per-person: each spouse files their own Form 8912 for bonds they hold on MFS
+(spec §4); the Part II tax-liability limit uses each leg's own tax. Storage is owner_role
+two-row (`pf_bond_credit` + `pf_bond_1097btc` + `pf_bond_direct`, **bare** columns).
+
+**The gap (same family as #33/#34, the largest yet):** **two** role-suffixed child arrays
+(`taxpayer1097BtcEntries`/`spouse1097BtcEntries`, `taxpayerDirectBondEntries`/
+`spouseDirectBondEntries`), a claim-gate mismatch (`claimsBondCredit` vs
+`spouseHasBondCreditInputs`), and a spouse-suffixed carryforward
+(`spousePriorYearCarryforwardContribution`). `computeForm8912` reads the filer slot for all
+of them (the spouse-named variants are otherwise MFJ-gated), so on the `mfs_spouse` leg the
+generic `-spouse`→`-taxpayer` rename left the spouse-named keys → `claimsBondCredit` null →
+**early-return, her Form 8912 vanished**.
+
+**Fix (scoper only):** `MfsFormScoper.normalizeBondCreditSpouse` routes the two bond lists,
+maps the claim gate, and maps the carryforward. The `-taxpayer` copy is dropped generically
+on `mfs_spouse`; `scopeForMfsHead` drops `-spouse` on the head leg. **No compute, mapper,
+frontend, or migration change.**
+
+**Verified:** `Phase7bComputeScopingTest` 43/43 (new case) + `TaxReturnComputeServiceTest`
+869/869 (compute unchanged) + new `e2e/tests/mfs-spouse-bond-credit.spec.ts` 2/2 (MFS per-leg
+head 1097-BTC $500 + carryforward $100 → line12 $600 / spouse $300 + $75 → line12 $375, no
+leak; MFJ combine → line12 $975) + existing `line8912-bond-credit` 2/2 (single + MFJ spouse)
+regression.
+
+
 ## 2026-06-23 — MFS migration #34 (Alt fuel credit — Form 8911): scoper-only routing fix (twin of #33)
 
 Form 8911 / Schedule A alternative-fuel-vehicle-refueling-property credit (§30C) is computed

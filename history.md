@@ -1,6 +1,51 @@
 ﻿# History
 
 
+## 2026-06-22 — MFS migration #28 (Education credits — Form 8863): MFS gate/blocker
+
+Education credits (American Opportunity Credit + Lifetime Learning Credit) are
+**flatly disallowed for Married Filing Separately filers under IRC §25A(g)(6)**
+("Denial of credit for married individuals filing separate returns") — a married
+taxpayer may claim the credit ONLY on a joint return, with **no lived-apart
+exception** (unlike the §21 childcare credit or the §86 SS base amount). Bucket =
+gate/blocker; mirrors the #22 §221(e)(2) student-loan-interest blocker.
+
+**Current state (inspected):** `computeForm8863` already returned `null` and emitted
+an `EDUCATION_CREDITS_MFS_INELIGIBLE` flag on MFS — but the flag was created with
+`blocking=false`, i.e. a **non-blocking advisory that silently dropped the credit**.
+Storage was already owner_role; the scoper's generic `-spouse`→`-taxpayer` rename
+routes the form per leg; the compute reads the **per-leg** filing status. The form is
+fully computed (not intake-only): refundable AOTC → Form 1040 line 29, nonrefundable →
+Schedule 3 line 3.
+
+**Backend (`TaxReturnComputeService:27088`):** promoted the flag from advisory to
+**blocking** and registered `EDUCATION_CREDITS_MFS_INELIGIBLE` in
+`NonOverrideableFlags.CODES` → a hard §17 blocker. `overrideFlags=true` can no longer
+push the disallowed credit through; the resolution is a filing-status change or
+dropping the claim. The MFS check sits after the early `claimsEducationCreditsOnReturn`
+guard, so it only fires when credits are actually claimed (no false-positive on every
+MFS return), and it uses the per-leg filing status, so an HoH considered-unmarried leg
+is **not** blocked and MFJ never reaches the branch (`isMfs=false`).
+
+**Optimizer-safe:** `OptimizerService` calls `computeService.prepare()` directly (the
+409 is enforced only at the REST layer, which the optimizer bypasses) and its arithmetic
+is null-safe against blocked compute results — so the joint-vs-separate comparison still
+computes the MFS scenario (no credit) for a household with education credits.
+
+**Frontend (`form-education-credits.component.ts/.html`):** reads the `filing-status`
+form in `ngOnInit`, adds an `isMfs` getter, shows a "can't be claimed on a Married
+Filing Separately return (IRC §25A(g)(6))" notice, and gates the entry form
+(`*ngIf="!loading && !isMfs"`) — the #22 UI pattern. No migration (storage already
+owner_role).
+
+**Verified:** `TaxReturnComputeServiceTest` 869/869 (the existing MFS test strengthened
+to assert `isBlocking()` + `NonOverrideableFlags.isNonOverrideable(...)`; the MFJ
+regression guard already present) + new `e2e/tests/mfs-spouse-education-credits.spec.ts`
+2/2 (MFS head leg → 409 with EDUCATION_CREDITS_MFS_INELIGIBLE even WITH overrideFlags;
+MFJ → Form 8863 present + $1,000 refundable AOTC on line 29 from 4,000 adjusted expenses)
++ npm recompile clean.
+
+
 ## 2026-06-22 — MFS migration #27 (Additional deductions — Schedule 1-A): Part IV (car loan) mirror to the spouse
 
 Two behaviors. **Parts II/III/V (tips/overtime/senior) are MFJ-only when married**

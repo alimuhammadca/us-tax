@@ -2,7 +2,7 @@
 
 ---
 
-## MFS Spouse-Forms Migration — Canonical Rules — Established 2026-06-23 (queue #12–#44 COMPLETE)
+## MFS Spouse-Forms Migration — Canonical Rules — Established 2026-06-23 (in progress; #12–#45 done, queue runs to #50)
 
 The Spouse tab produces a standalone Married-Filing-Separately return per leg. The household's personal-forms map is reshaped by `MfsFormScoper.scope(allForms, returnKind)` before `prepare(uid)`: `mfs_head` drops `-spouse` keys; `mfs_spouse` renames `-spouse → -taxpayer` (spouse = filer) and forces filing status to MFS. The full queue + per-form protocol live in `C:\us-tax\mfs-spouse-migration.md`. Rules for adding/maintaining any per-leg form:
 

@@ -8,9 +8,11 @@ Updated: 2026-07-01T00:00:00-04:00
 
 ---
 
-## Multi-Return: Three Pattern-C Mappers Missing `loadByTaxReturnId` Override (Phase3InfrastructureTest failing) — Documented 2026-07-01
+## ~~Multi-Return: Three Pattern-C Mappers Missing `loadByTaxReturnId` Override (Phase3InfrastructureTest failing) — Documented 2026-07-01~~ **RESOLVED 2026-07-01**
 
-**Status:** pre-existing failing test, unrelated to the 2026-06-30 compute-validation fixes (surfaced during that work's full `./mvnw test` run; confirmed it also fails on pristine `main` with the compute changes stashed).
+**Resolution (2026-07-01):** Root cause was a wrong-method override, not a missing one. The three mappers each overrode `loadByPersonId` (the Pattern A/B person-scoped method) with a pure delegation, when — as return-scoped Pattern C forms — they should override `loadByTaxReturnId` instead (the 11 correct Pattern C mappers, including the sibling owner_role-split `ChildcareExpensesMapper`/`AdoptionExpensesMapper`, all have `loadByPersonId=0, loadByTaxReturnId=1`; these three had the exact inverse). Fix: replaced each `loadByPersonId` override with a `loadByTaxReturnId` override (pure delegation to `reader.loadByTaxReturn`, mirroring the sibling mappers). Full backend suite now green (was 1321/1 → 1321/0). The classification was correct (they belong in `PATTERN_C_MAPPERS`); only the overridden method was wrong.
+
+**Status (original):** pre-existing failing test, unrelated to the 2026-06-30 compute-validation fixes (surfaced during that work's full `./mvnw test` run; confirmed it also fails on pristine `main` with the compute changes stashed).
 
 **Symptom:** `com.ustax.microservices.multireturn.Phase3InfrastructureTest.everyPatternCMapperOverridesLoadByTaxReturnId` fails:
 `All 14 Pattern C mappers must override loadByTaxReturnId ==> expected: <[]> but was: <[Form8862Mapper, OtherPayments31Mapper, CtcActcScreeningMapper]>`.

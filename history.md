@@ -1,6 +1,17 @@
 ﻿# History
 
 
+## 2026-07-06 — Full e2e regression clean after the Form 2555 / Form 2210 / Notice 2014-7 follow-ups (0 genuine failures)
+
+Ran the complete Playwright e2e regression (`--project=regression --workers=1`, ~2.0 h) against the three follow-up fixes (Form 2555 line-8d routing, Form 2210 net-PTC penalty base, Notice 2014-7 line 8s decoupling) plus the seven compute-validation-audit fixes already validated on 2026-07-06. Result: **1083 passed / 15 skipped / 1 flaky / 0 genuine failures.**
+
+Two specs went red during the run; both were confirmed **test-isolation artifacts of the shared Firebase account, not regressions**, and both sit outside every area changed this session:
+- `line1e-dependent-care.spec.ts:234` (MFJ spouse earned-income limit) — a `Child and dependent care` sidebar-link render timeout on the first attempt; **passed on the automatic retry** (counted flaky).
+- `personal-per-person-forms.spec.ts:148` (Standard deductions and election map per person) — `line12cChecked` came back false under cross-test data contamination; **re-run in isolation it passes cleanly (13.3 s)**. Same class as the documented `UserDataBulkDelete` stale-row / sidebar-render flakes.
+
+Every value-shifted area from this session's work is green end-to-end: Form 4972 averaging, Simplified Method Table 1/2 factors, SALT 30% phasedown, IRA-phaseout gate, Form 8880 saver's credit, Tax Table midpoint, Form 2555 line-8d exclusion routing, Form 2210 penalty base, and Notice 2014-7 line 8s. No code change resulted from this run — it is a validation checkpoint confirming the compute-validation audit and its follow-ups are clean across the full suite.
+
+
 ## 2026-07-06 — Notice 2014-7: Schedule 1 line 8s exclusion decoupled from the EIC/ACTC election
 
 Fixed the last flagged item from the 2026-06-30 compute-validation audit (us-tax-be `e2afc2a`). Under Notice 2014-7, excluding qualified Medicaid-waiver payments FROM GROSS INCOME and electing to INCLUDE them in earned income for the EIC/ACTC are **independent** concepts, but `computeMedicaidForPerson` produced the Schedule 1 line 8s exclusion offset **only when the earned-income election was on**. So a taxpayer with qualified payments in W-2 box 1 who did NOT make the election kept those excluded dollars taxed on line 1a.

@@ -2,6 +2,22 @@
 
 ---
 
+## Compute-Validation Guardrails (IRS 2025) — Established 2026-06-30
+
+An 8-agent audit of `TaxReturnComputeService` against the IRS 2025 forms/pubs fixed seven bugs (`b70b864`). Each invariant below has a Java unit pin AND an e2e pin; changing any shifts pinned dollar values — always re-pin to the IRS-correct value (verify against the form/pub), never match the test to old output.
+
+1. **Tax Table uses the $50-row midpoint below $100k.** `computeTaxBracket` applies the rate schedule to the row midpoint (`floor(ti/50)*50 + 25`, whole-dollar) for taxable income < $100,000, and the exact amount (Tax Computation Worksheet) at ≥ $100,000. The exact formula below $100k is WRONG (off by up to ~$12) — this matches `us-tax-sqa/_tools/tax2025.js` and the printed Tax Table. It flows into every sub-$100k line-16 tax, hence into QDCG/Schedule-D/FEITW ordinary components, Credit-Limit-Worksheet-A, and the CTC/ACTC split (nonrefundable +$3 ⇒ refundable −$3, CTC total fixed).
+2. **SALT phasedown = 30% of MAGI excess** (`ReferenceData.SCHEDULE_A_SALT_PHASEDOWN_RATE`), NOT $1-for-$1; floored at $10k/$5k, over $500k/$250k.
+3. **Simplified Method factor: Pub. 575 Table 1 (single, by age) vs Table 2 (joint, by combined age) — never conflate.** Single: ≤55→360, 56-60→310, 61-65→260, 66-70→210, 71+→160. Joint (combined): ≤110→410, ≤120→360, ≤130→310, ≤140→260, 141+→210. Missing annuitant age fires `PENSION_SIMPLIFIED_METHOD_INPUTS_MISSING`.
+4. **Form 4972 Part III follows the real form:** L12 = L10 + L11 (ADD the annuity value); MDA = L13 − L15; main 10-year tax = 10×tax(10%·L19); annuity offset via L20-28. The lump-sum taxable amount is removed from line 5b AND cascaded through line 9/AGI/line 15 (else it is taxed twice — regular base + Form 4972 add-on).
+5. **IRA-deduction MAGI phaseout must run even with no Social Security** (not only inside the SS↔IRA coordination block).
+6. **Form 8880: QSS is in the "Single/MFS/QSS" column** (NOT MFJ); the HOH AGI ceiling compares the normalized status string `"Head of household"` (NOT `"hoh"`).
+7. **Pattern-C (return-scoped) mappers override `loadByTaxReturnId`, NOT `loadByPersonId`.** Owner_role-split forms (childcare, adoption, Form 8862, 31-other-payments, ctc-actc-screening) are still Pattern C. Enforced by `Phase3InfrastructureTest`.
+
+Out of scope (documented, not fixed): Form 2555 exclusion → Schedule 1 line 8d routing; Form 2210 net-PTC omission from the penalty base. Detail: `history.md` 2026-06-30 / 07-06; memory `project_compute_validation_audit_2026q2`.
+
+---
+
 ## MFS Spouse-Forms Migration — Canonical Rules — Established 2026-06-23; ★ COMPLETE 2026-06-24 (#12–#50 all done)
 
 The Spouse tab produces a standalone Married-Filing-Separately return per leg. The household's personal-forms map is reshaped by `MfsFormScoper.scope(allForms, returnKind)` before `prepare(uid)`: `mfs_head` drops `-spouse` keys; `mfs_spouse` renames `-spouse → -taxpayer` (spouse = filer) and forces filing status to MFS. The full queue + per-form protocol live in `C:\us-tax\mfs-spouse-migration.md`. Rules for adding/maintaining any per-leg form:

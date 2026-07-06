@@ -1,6 +1,15 @@
 ﻿# History
 
 
+## 2026-07-06 — Form 2555 foreign earned income exclusion now routed to Schedule 1 line 8d (net out of AGI)
+
+Fixed the tracked Form 2555 gap (us-tax-be `1b82155`): the computed foreign earned income exclusion (Form 2555 line 45 + line 50) was consumed only by the Foreign Earned Income Tax Worksheet (FEITW) / AMT-FEITW / MAGI add-backs but was **never routed to Schedule 1 line 8d**, so it did not reduce AGI. Line 15 kept the full wages and the FEITW stacked on an overstated base — e.g. $100k W-2 + $80k exclusion gave line 16 **$19,753** instead of the IRS-canonical **$935** (line 15 $4,250; tax($84,250) − tax($80,000) = 13,455 − 12,520) — and the SS worksheet / Form 8863 MAGI add-backs double-counted the foreign income.
+
+**Fix:** `computeOtherIncomes` now sets **line 8d = −(computed Form 2555 exclusion)** at the source. It runs before the Social Security worksheet, the Pub. 590-A IRA-MAGI coordination, `buildForm1040`/AGI, and the FEITW consume Schedule 1 line 8, so the exclusion is netted through line 8 → line 9 → AGI → line 15 and every downstream worksheet sees the correct base. The computed exclusion is authoritative; the manual/imported line-8d intake fields remain a fallback only when no Form 2555 is computed. Also fixed the **Form 8863 MAGI add-back**: now that AGI is netted, the add-back restores exactly the computed exclusion (undoing the netting); the manual override is ignored when a Form 2555 is computed (it would otherwise understate MAGI) — removing a latent double-count.
+
+Assumes the foreign earned income is reported in wages (W-2 / line 1z) and the exclusion nets it out; a taxpayer who claims the exclusion without reporting the corresponding income now gets a correctly-lower AGI (previously the exclusion was silently ignored). Re-pinned 5 Java tests + 3 e2e tests to the IRS-correct netted values (two e2e setups had treated foreign wages as separate income the compute never included — relied on the old bug — so they were made realistic with the foreign wages part of the W-2). Full Java suite green (1321); Form-2555 e2e specs green (77/0). This was one of the two items left out of scope by the 2026-06-30 compute-validation audit; the other (Form 2210 net-PTC in the penalty base) remains open.
+
+
 ## 2026-07-06 — Full e2e regression validated against the compute-validation fixes (31 spec re-pins)
 
 Ran the complete Playwright e2e regression (155 specs, `--workers=1`) against the seven compute fixes below and re-pinned every value-shifted assertion to the IRS-correct result — the e2e analogue of the 11 Java unit-test re-pins. Backend served the changes via quarkus:dev live-reload; auth via the documented test phone/code; runs done with `dangerouslyDisableSandbox` (Playwright worker spawn EPERMs in the sandbox). Full run: **1075 passed / 15 skipped / 0 failed** after the re-pins.

@@ -13,8 +13,9 @@ An 8-agent audit of `TaxReturnComputeService` against the IRS 2025 forms/pubs fi
 5. **IRA-deduction MAGI phaseout must run even with no Social Security** (not only inside the SS↔IRA coordination block).
 6. **Form 8880: QSS is in the "Single/MFS/QSS" column** (NOT MFJ); the HOH AGI ceiling compares the normalized status string `"Head of household"` (NOT `"hoh"`).
 7. **Pattern-C (return-scoped) mappers override `loadByTaxReturnId`, NOT `loadByPersonId`.** Owner_role-split forms (childcare, adoption, Form 8862, 31-other-payments, ctc-actc-screening) are still Pattern C. Enforced by `Phase3InfrastructureTest`.
+8. **Form 2555 exclusion is routed to Schedule 1 line 8d as a NEGATIVE, netting it out of AGI** (added 2026-07-06, `1b82155`). `computeOtherIncomes` sets `line 8d = −(computed Form 2555 exclusion, line 45 + 50)` at the source — before the SS worksheet, IRA-MAGI, `buildForm1040`/AGI, and the FEITW consume line 8 — so the FEITW stacks on the netted base (`lineC = line15 + exclusion` recovers the full-income bracket) and MAGI add-backs (SS worksheet line 5, Form 8863) don't double-count. The computed exclusion is authoritative; manual/imported line-8d fields are a fallback only when no Form 2555 is computed. Form 8863's MAGI add-back must equal the computed exclusion (undoes the netting); its manual override is ignored when a Form 2555 is computed. Assumes the foreign income is reported in wages (line 1z) — the exclusion nets it out, it is NOT separately added to income.
 
-Out of scope (documented, not fixed): Form 2555 exclusion → Schedule 1 line 8d routing; Form 2210 net-PTC omission from the penalty base. Detail: `history.md` 2026-06-30 / 07-06; memory `project_compute_validation_audit_2026q2`.
+Out of scope (still open): Form 2210 net-PTC omission from the penalty base; Notice 2014-7 line 8s coupled to the EIC election. Detail: `history.md` 2026-06-30 / 07-06; memory `project_compute_validation_audit_2026q2`.
 
 ---
 

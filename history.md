@@ -1,6 +1,13 @@
 ﻿# History
 
 
+## 2026-07-06 — Notice 2014-7: Schedule 1 line 8s exclusion decoupled from the EIC/ACTC election
+
+Fixed the last flagged item from the 2026-06-30 compute-validation audit (us-tax-be `e2afc2a`). Under Notice 2014-7, excluding qualified Medicaid-waiver payments FROM GROSS INCOME and electing to INCLUDE them in earned income for the EIC/ACTC are **independent** concepts, but `computeMedicaidForPerson` produced the Schedule 1 line 8s exclusion offset **only when the earned-income election was on**. So a taxpayer with qualified payments in W-2 box 1 who did NOT make the election kept those excluded dollars taxed on line 1a.
+
+**Fix:** the qualified amount that appears in W-2 box 1 (`qualifiedAmountIncludedInW2Box1`) is now backed out via a line 8s negative **always**, regardless of the election. Only the not-in-W-2 qualified portion depends on the election (it is added to line 1d earned income, and offset in line 8s, only when elected). A zero/absent box-1 overlap yields no offset (null), unchanged. Added lock-in test `medicaidWaiverBox1QualifiedExcludedViaLine8sEvenWithoutEicElection` (box-1 $300 + election off → line 1d $200, line 8s −$300). Full Java suite green (1323). No e2e impact (the only spec with a positive box-1 amount asserts compute status — blocked vs unblocked — not the line 8s value; box-1 = 0 cases still produce null). **Both compute-validation-audit out-of-scope items and the seven confirmed bugs are now all resolved.**
+
+
 ## 2026-07-06 — Form 2210: Schedule 3 refundable credits (esp. net premium tax credit) now reduce the penalty base
 
 Fixed the last item left out of scope by the 2026-06-30 compute-validation audit (us-tax-be `81ddead`). Form 2210's refundable-credits subtraction — which reduces the current-year tax to the required-annual-payment / penalty base — included EIC + ACTC + refundable AOTC + adoption but **omitted the Schedule 3 Part II refundable credits, most notably the net premium tax credit (Schedule 3 line 9)**. Omitting them understated the refundable credits and overstated the penalty base for a taxpayer with a net PTC (the required annual payment = 90% of an inflated net tax, so the penalty could be too high).

@@ -1,13 +1,26 @@
 ﻿# History
 
 
+## 2026-07-06 — Investigated the two regression flakes: both are intermittent UI-timing races (corrects the earlier "contamination" label)
+
+Investigated the two reds from the full regression above. Neither is a compute bug or data contamination; both are **intermittent E2E UI-timing flakes**, and the two only *reported* differently because of a retry-config gap.
+
+**`personal-per-person-forms.spec.ts:148`** — `line12cChecked` derives **solely** from the taxpayer `standard-deductions-taxpayer` form's `youWereDualStatusAlien` field (`TaxReturnComputeService:6006` → `line12c = TRUE.equals(indicators.getYouWereDualStatusAlien())`, read at `:5634`); it has zero dependence on spouse data, filing status, or any other test — so cross-test contamination is ruled out (and `pf_standard_deductions` is in the `UserDataBulkDelete` clear-catalog). Evidence it is not a full async-GET model reset either: `someoneCanClaimYou` (set *before* the dual-status field) reached compute as `true` while only the later-set dual-status field was lost — a global reset would wipe both. `selectRadioOption` polls `isChecked()` and only returns once the radio is DOM-checked, so the radio *was* checked; the loss is an isolated Angular `ngModelChange` miss when the force-click lands during the collapsible `<details>` accordion's open animation. Controlled experiments: `:148` alone → pass; `:104`+`:148` → pass; full file (same predecessors) → intermittently fails ⇒ **probabilistic, not deterministic ordering**.
+
+**`line1e-dependent-care.spec.ts:234`** — the generic sidebar section-expand `*ngIf` render race under full-run load (`ui-flow.ts:90`); it self-recovered on retry. No change needed — that spec already carries the standard `retries: 1`.
+
+**Why one was "failed" and the other "flaky":** `personal-per-person-forms.spec.ts` was the **only** spec missing `test.describe.configure({ retries: 1 })` — the retry config e2e/CLAUDE.md mandates for every spec — so its flake surfaced as a hard failure instead of auto-recovering like line1e's.
+
+**Fixes (e2e/tests/personal-per-person-forms.spec.ts):** (1) added the standard `test.describe.configure({ retries: 1 })` (brings the file in line with the documented pattern; residual flake now auto-recovers); (2) added a `#youWereDualStatusAlien` visibility guard after the accordion expand, mirroring the existing `#someoneCanClaimYou` guard, to reduce the race's frequency. Verified: `:148` alone green, `:104`+`:148` green, full 7-test file green with `--retries=1`.
+
+
 ## 2026-07-06 — Full e2e regression clean after the Form 2555 / Form 2210 / Notice 2014-7 follow-ups (0 genuine failures)
 
 Ran the complete Playwright e2e regression (`--project=regression --workers=1`, ~2.0 h) against the three follow-up fixes (Form 2555 line-8d routing, Form 2210 net-PTC penalty base, Notice 2014-7 line 8s decoupling) plus the seven compute-validation-audit fixes already validated on 2026-07-06. Result: **1083 passed / 15 skipped / 1 flaky / 0 genuine failures.**
 
 Two specs went red during the run; both were confirmed **test-isolation artifacts of the shared Firebase account, not regressions**, and both sit outside every area changed this session:
 - `line1e-dependent-care.spec.ts:234` (MFJ spouse earned-income limit) — a `Child and dependent care` sidebar-link render timeout on the first attempt; **passed on the automatic retry** (counted flaky).
-- `personal-per-person-forms.spec.ts:148` (Standard deductions and election map per person) — `line12cChecked` came back false under cross-test data contamination; **re-run in isolation it passes cleanly (13.3 s)**. Same class as the documented `UserDataBulkDelete` stale-row / sidebar-render flakes.
+- `personal-per-person-forms.spec.ts:148` (Standard deductions and election map per person) — `line12cChecked` came back false. **Root-caused 2026-07-06 (see next entry): an intermittent UI-timing flake, NOT data contamination** — the earlier "contamination" reading here was wrong.
 
 Every value-shifted area from this session's work is green end-to-end: Form 4972 averaging, Simplified Method Table 1/2 factors, SALT 30% phasedown, IRA-phaseout gate, Form 8880 saver's credit, Tax Table midpoint, Form 2555 line-8d exclusion routing, Form 2210 penalty base, and Notice 2014-7 line 8s. No code change resulted from this run — it is a validation checkpoint confirming the compute-validation audit and its follow-ups are clean across the full suite.
 

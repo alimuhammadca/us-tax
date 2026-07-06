@@ -1,6 +1,13 @@
 ﻿# History
 
 
+## 2026-07-06 — Form 2210: Schedule 3 refundable credits (esp. net premium tax credit) now reduce the penalty base
+
+Fixed the last item left out of scope by the 2026-06-30 compute-validation audit (us-tax-be `81ddead`). Form 2210's refundable-credits subtraction — which reduces the current-year tax to the required-annual-payment / penalty base — included EIC + ACTC + refundable AOTC + adoption but **omitted the Schedule 3 Part II refundable credits, most notably the net premium tax credit (Schedule 3 line 9)**. Omitting them understated the refundable credits and overstated the penalty base for a taxpayer with a net PTC (the required annual payment = 90% of an inflated net tax, so the penalty could be too high).
+
+**Fix:** `computeForm2210` (now threaded with `schedule3`, which has net PTC applied + totals finalized before the call) also subtracts the Schedule 3 refundable **credits**: net PTC (line 9), Form 4136 fuel-tax (line 12), Form 2439 (13a), §1341 claim-of-right (13b), net elective payment (13c), and other refundable (13z). It deliberately **excludes** the Schedule 3 PAYMENT lines — amount paid with extension (line 10) and excess SS/RRTA (line 11) — and the deferred §965 tax liability (13d), which are not refundable credits. Added lock-in test `form2210RefundableCreditsIncludeNetPremiumTaxCredit` (Single, $57k wages, 12-month 1095-A → a positive net PTC smaller than the tax so Form 2210 fires; asserts `form2210.refundableCredits == form8962 line 26`). Full Java suite green (1321); no e2e impact (no spec combines a net PTC with a firing Form 2210). Both compute-validation-audit out-of-scope items are now resolved; only the narrow Notice 2014-7 line 8s / EIC-election coupling remains.
+
+
 ## 2026-07-06 — Form 2555 foreign earned income exclusion now routed to Schedule 1 line 8d (net out of AGI)
 
 Fixed the tracked Form 2555 gap (us-tax-be `1b82155`): the computed foreign earned income exclusion (Form 2555 line 45 + line 50) was consumed only by the Foreign Earned Income Tax Worksheet (FEITW) / AMT-FEITW / MAGI add-backs but was **never routed to Schedule 1 line 8d**, so it did not reduce AGI. Line 15 kept the full wages and the FEITW stacked on an overstated base — e.g. $100k W-2 + $80k exclusion gave line 16 **$19,753** instead of the IRS-canonical **$935** (line 15 $4,250; tax($84,250) − tax($80,000) = 13,455 − 12,520) — and the SS worksheet / Form 8863 MAGI add-backs double-counted the foreign income.

@@ -1330,6 +1330,35 @@ Guardrails:
   attribution is `dependent.claimedByMfs` (required under HoH).
 
 
+## Tax Return form previews — sandbox look-and-feel port — 2026-07-06
+
+`C:\us-tax-return-forms` is a **look-and-feel-only sandbox** (sample-filled copies of
+the `us-tax-ui` Tax Return `form-tax-return-*` previews). When incorporating fixes
+from it into `us-tax-ui`, port **per-change, never by copying files**. Guardrails:
+
+- **Real-data rendering is authoritative — never port the sandbox's sample-fill.**
+  The sandbox force-fills every field/checkbox for display (`cb.className =
+  'field-checkbox checked'`, `cb.checked = true`, `sampleValueFor(...)`,
+  `import ... from '../utils/sample-fill'`). `us-tax-ui` must keep its real-data
+  logic (`value === true ? ' checked' : ''`, blank when empty). After any port,
+  safety-scan: `git diff | grep '^\+.*(sampleValueFor|cb\.checked = true|field-checkbox checked)'`
+  MUST be empty.
+- **IRS fonts are self-hosted**, not CDN: the 6 `HelveticaNeueLTStd-*.otf` faces
+  live under `us-tax-ui/public/fonts/` (served at `/fonts/`) with `@font-face` in
+  `src/styles.scss`. Do NOT reintroduce the sandbox's jsdelivr CDN URLs.
+- **Shared font mapping** = `us-tax-ui/src/app/utils/form-font.utils.ts`
+  (`mapFont` with `outline` flag), imported by the inline-render forms. BUT the
+  shared `pure-pdf-preview.component.ts` keeps its OWN inline `mapFont` (a
+  different algorithm) — the two are not interchangeable; don't merge them.
+- **Two rendering paths exist**: forms using the shared `<pure-pdf-preview>` vs
+  forms with their own inline DOM renderer (2210, 8888, schedule1, 8936sa…). A
+  renderer feature may need porting to BOTH. Per-form containers differ
+  (`.tax-page`, `.f2210-doc`, per-form `.f<code>-pure-html-document`).
+- **Method**: measure per-file drift vs the sandbox baseline first (it is
+  typically ONLY the sample-fill lines), then `git apply --check` / `--reject`
+  and hand-apply rejected hunks — taking presentation only, keeping real-data.
+
+
 
 
 

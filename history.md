@@ -1,6 +1,13 @@
 ﻿# History
 
 
+## 2026-07-07 — Line 27a EIC: removed legacy `electNontaxableCombatPay` YAML fields (UI already clean)
+
+Next outstanding.md low-hanging item. The EIC combat-pay election is computed exclusively from the line-1i single source (`form1040.income.nontaxableCombatPayElection`), and a lock-in test (`line27aEicReadsCombatPayFromLine1iSource_notEicFormFlag` Part B) already proves the legacy EIC-form flag is dead. The unified `form-earned-income-credit.component.ts` had already dropped the field from its model/save/load. The only stale artifacts were the two reference YAMLs, which still defined the dead fields and asked the user a duplicate combat-pay question.
+
+Removed `electNontaxableCombatPay` (`27a-earned-income-credit-taxpayer.yaml`) and `spouseElectNontaxableCombatPay` (`27a-earned-income-credit-spouse.yaml`), plus their combat-pay instruction/help wording; re-worded the spouse screening question to match the shipped UI (combat pay is handled on the Combat Pay form). Kept `otherEarnedIncome`/`spouseOtherEarnedIncome`. No IRS constant/formula touched — the §32 election still flows through line 1i. Entity columns (`PfEarnedIncomeCredit`) left as inert dead storage (always null now; no pre-launch migration warranted). Updated the `computeLine27aEIC` breadcrumb comment; marked resolved in outstanding.md.
+
+
 ## 2026-07-07 — `buildTipEntriesFromW2` null-SSN fallthrough fixed (line 1c double-count on MFJ with no spouse SSN)
 
 Next outstanding.md low-hanging item, same no-guesswork / IRS-grounded directive. `TaxReturnComputeService.buildTipEntriesFromW2(w2Entries, ssn)` is called once per person (taxpayer + spouse) to auto-fill tip-income entries from W-2 box 8 (allocated tips). It used a `boolean hasSsn` flag and, when the SSN was null/empty, **disabled the SSN filter entirely** and included every W-2 — so on an MFJ return whose spouse has no SSN, the taxpayer's box-8 allocated tips auto-filled into BOTH the taxpayer and the (phantom) spouse tip computation, double-counting line 1c.

@@ -647,7 +647,9 @@ values["line27c_eic_opt_out_checkbox"] =
 
 ---
 
-## Line 27a EIC — Deprecate Legacy `electNontaxableCombatPay` YAML/UI Fields — Deferred 2026-05-10
+## ~~Line 27a EIC — Deprecate Legacy `electNontaxableCombatPay` YAML/UI Fields — Deferred 2026-05-10~~ **RESOLVED 2026-07-07**
+
+**RESOLVED 2026-07-07**: UI cleanup was already shipped earlier (the unified `form-earned-income-credit.component.ts` has no `electNontaxableCombatPay` in its model/save/load — see its "combat-pay legacy removed" comment — and routes combat pay to the Combat Pay form). Remaining work was the reference YAMLs: removed `electNontaxableCombatPay` (`27a-...-taxpayer.yaml`) and `spouseElectNontaxableCombatPay` (`27a-...-spouse.yaml`) plus their combat-pay instruction/help wording, and re-worded the spouse screening question to match the shipped UI ("other earned income"; combat pay handled on the Combat Pay form). Kept `otherEarnedIncome`/`spouseOtherEarnedIncome`. No IRS constant/formula changed — the §32 combat-pay election still flows through the single line-1i source (`nontaxableCombatPayElection`); lock-in test `line27aEicReadsCombatPayFromLine1iSource_notEicFormFlag` Part B unchanged. Entity columns left as inert dead storage (always null; no pre-launch migration). Backend comment at `computeLine27aEIC` updated.
 
 After 1i.xlsx Code Validation #2 closure, the backend `computeLine27aEIC` reads combat pay exclusively from `form1040.income.nontaxableCombatPayElection` (single source of truth, populated by `computeCombatPay` from the line-1i form `combat-pay-taxpayer.electCombatPay`). The legacy EIC personal-form fields are **no longer consumed** by the backend — but still defined in the YAML files and still rendered in the EIC UI form, asking the user a duplicate question that has no effect.
 

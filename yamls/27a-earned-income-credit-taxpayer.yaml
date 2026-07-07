@@ -76,19 +76,10 @@ sections:
     title: Earned Income Elections
     showIf: "claimsEIC === true"
     instructions:
-      - These optional elections affect the size of your EIC. Most filers can leave both blank.
-      - Combat zone pay — if you served in a combat zone in 2025, you may count nontaxable pay as earned income.
+      - This optional entry affects the size of your EIC. Most filers can leave it blank.
       - Other earned income — include jury duty pay, union strike benefits, or long-term disability pay not on a W-2.
+      - Combat zone pay is handled on the separate Combat Pay form and is not entered here.
     fields:
-      - id: electNontaxableCombatPay
-        label: Do you want to include nontaxable combat zone pay in your earned income for EIC purposes?
-        type: boolean
-        helpText: >
-          If you served in a combat zone in 2025 and received nontaxable combat pay (reported in
-          W-2 box 12 with code Q), you may elect to count it as earned income for this credit.
-          This may increase or decrease your EIC depending on where your income falls relative to
-          the phase-in and phaseout ranges. The system uses your W-2 box 12 code Q amounts automatically.
-
       - id: otherEarnedIncome
         label: Other earned income not reported on a W-2 (jury duty pay, union strike benefits, etc.)
         type: decimal

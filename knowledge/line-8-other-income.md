@@ -135,16 +135,18 @@ The 2025 Schedule 1 has a separate entry space above Part I for 1099-K amounts r
 
 ## 4. Backend architecture
 
+> *Convention (added 2026-07-07, knowledge-file line-number sweep):* code references use stable function/method names rather than source-code line numbers, which drift with refactors. IRS form/schedule line references (line 1c, Schedule 1 line 21, etc.) are stable and retained.
+
 ### 4.1 Compute entry point
 
-| Method | File | Approx. line |
-|---|---|---|
-| `computeOtherIncomes()` | `TaxReturnComputeService.java` | 6861 |
-| `validateOtherIncomeStatementGating()` | `TaxReturnComputeService.java` | 7351 |
-| `buildSchedule1OtherIncomeItems()` | `TaxReturnComputeService.java` | 7394 |
-| `applySchedule1AdditionalIncome()` | `TaxReturnComputeService.java` | 8661 |
-| `buildLine8AttachmentForms()` | `TaxReturnComputeService.java` | 8685 |
-| `applyForm8814Line12ToSchedule1()` | `TaxReturnComputeService.java` | 6080 |
+| Method | File |
+|---|---|
+| `computeOtherIncomes()` | `TaxReturnComputeService.java` |
+| `validateOtherIncomeStatementGating()` | `TaxReturnComputeService.java` |
+| `buildSchedule1OtherIncomeItems()` | `TaxReturnComputeService.java` |
+| `applySchedule1AdditionalIncome()` | `TaxReturnComputeService.java` |
+| `buildLine8AttachmentForms()` | `TaxReturnComputeService.java` |
+| `applyForm8814Line12ToSchedule1()` | `TaxReturnComputeService.java` |
 
 ### 4.2 `computeOtherIncomes()` signature
 
@@ -175,7 +177,7 @@ private record OtherIncomeComputation(
     BigDecimal line8uInmate)          // threaded to buildIncome for display
 ```
 
-Defined at `TaxReturnComputeService.java` line 17336.
+Defined in the `OtherIncomeComputation` record in `TaxReturnComputeService.java`.
 
 ### 4.4 Output model class
 
@@ -223,11 +225,11 @@ Key fields:
 ### 4.5 Wire-up in `prepare()`
 
 Order in `prepare()`:
-1. `computeOtherIncomes()` called at ~line 419 — produces `OtherIncomeComputation otherIncome`.
-2. `buildIncome()` at ~line 551 uses `otherIncome.line8FromSchedule1()` for Form 1040 line 8.
-3. `applySchedule1AdditionalIncome()` at ~line 582 copies the `additionalIncome` into `schedule1`.
-4. `applyForm8814Line12ToSchedule1()` at ~line 583 adds Form 8814 line 12 amounts to `schedule1`.
-5. `buildLine8AttachmentForms()` at ~line 644 produces required-attachment stubs.
+1. `computeOtherIncomes()` called — produces `OtherIncomeComputation otherIncome`.
+2. `buildIncome()` uses `otherIncome.line8FromSchedule1()` for Form 1040 line 8.
+3. `applySchedule1AdditionalIncome()` copies the `additionalIncome` into `schedule1`.
+4. `applyForm8814Line12ToSchedule1()` adds Form 8814 line 12 amounts to `schedule1`.
+5. `buildLine8AttachmentForms()` produces required-attachment stubs.
 
 ### 4.6 Statement gating flags
 

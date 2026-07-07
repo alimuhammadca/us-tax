@@ -1052,7 +1052,9 @@ The 2026-05-31 closure of Line 1e Gap 1 added the **outer-bound cap** to Form 24
 
 ---
 
-## Knowledge-File Source-Code Line-Number Sweep — Deferred 2026-05-06
+## ~~Knowledge-File Source-Code Line-Number Sweep — Deferred 2026-05-06~~ **RESOLVED 2026-07-07**
+
+**RESOLVED 2026-07-07**: swept all `knowledge/*.md`. 30 files updated: ~160+ drifting source-code line references removed (the stable function/method/record name was already adjacent in most cases, so only the volatile `(~line NNNN)` suffix was dropped; whole "source-line" table columns removed where present). Six bare line-number references with no adjacent symbol were resolved to their enclosing method via read-only `.java` lookup (`wireLine17ToOutputs`, `computeForm2210`, `computePensionAnnuities`, `computeLine31ThroughLine38`, `computeLine20ThroughLine24`, `buildIncome`, `computeSchedule8812` — all verified to exist). ~15 bare test-source line references with no symbol were stamped `(verified 2026-07-07)`. IRS form/schedule/worksheet line refs (line 1c, Schedule 1 line 21, Form 6251 line 11, Schedule D lines, etc.) were KEPT untouched; dated historical change-log entries (e.g. `:13799`, `line ~15409`) were left frozen as the record of where a past change was made; CSV field-map row refs left as-is. Each modified file received a dated convention note matching the `line-1c-tip-income.md` §4 pattern. No source/test/compute files touched — pure documentation hygiene.
 
 `1c.xlsx` Issue #9 verification (2026-05-06) confirmed that `knowledge/line-1c-tip-income.md` uses function-name references exclusively (no source-code line numbers). The convention is captured in `knowledge/line-1c-tip-income.md` §4 and the file's verification log.
 

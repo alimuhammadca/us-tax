@@ -71,15 +71,17 @@ Last updated: 2026-04-16
 
 ## 4. Core compute method locations
 
-| Method | File | Line (approx.) | Purpose |
-|---|---|---|---|
-| `computePensionAnnuities()` | `TaxReturnComputeService.java` | ~4970 | Return-level aggregation; calls per-person, assembles lines 5a/5b/5c, Form 5329 |
-| `computePensionForPerson()` | `TaxReturnComputeService.java` | ~5088 | Per-person computation: loops 1099-R + RRB, applies rollover/PSO/methods |
-| `computePensionTaxableViaSimplifiedMethod()` | `TaxReturnComputeService.java` | ~5198 | IRS Simplified Method exclusion: cost ÷ factor × payments |
-| `computePensionTaxableViaGeneralRule()` | `TaxReturnComputeService.java` | ~5213 | IRS General Rule: cost ÷ expected return × payments |
-| `determineSimplifiedMethodFactor()` | `TaxReturnComputeService.java` | ~5230 | Factor table lookup by annuitant age (single or combined joint) |
-| `validatePensionStatementGating()` | `TaxReturnComputeService.java` | ~5253 | Emits blocking flags for missing/incomplete pension upload confirmation |
-| `adjustPensionLinesForForm4972()` | `TaxReturnComputeService.java` | ~15087 | Post-compute: subtracts Form 4972 lump-sum amounts from lines 5a/5b |
+> *Convention (added 2026-07-07, knowledge-file line-number sweep):* code references use stable function/method names rather than source-code line numbers, which drift with refactors. IRS form/schedule line references (line 1c, Schedule 1 line 21, etc.) are stable and retained.
+
+| Method | File | Purpose |
+|---|---|---|
+| `computePensionAnnuities()` | `TaxReturnComputeService.java` | Return-level aggregation; calls per-person, assembles lines 5a/5b/5c, Form 5329 |
+| `computePensionForPerson()` | `TaxReturnComputeService.java` | Per-person computation: loops 1099-R + RRB, applies rollover/PSO/methods |
+| `computePensionTaxableViaSimplifiedMethod()` | `TaxReturnComputeService.java` | IRS Simplified Method exclusion: cost ÷ factor × payments |
+| `computePensionTaxableViaGeneralRule()` | `TaxReturnComputeService.java` | IRS General Rule: cost ÷ expected return × payments |
+| `determineSimplifiedMethodFactor()` | `TaxReturnComputeService.java` | Factor table lookup by annuitant age (single or combined joint) |
+| `validatePensionStatementGating()` | `TaxReturnComputeService.java` | Emits blocking flags for missing/incomplete pension upload confirmation |
+| `adjustPensionLinesForForm4972()` | `TaxReturnComputeService.java` | Post-compute: subtracts Form 4972 lump-sum amounts from lines 5a/5b |
 
 ---
 
@@ -235,7 +237,7 @@ After `computePensionAnnuities()` runs, `adjustPensionLinesForForm4972()` reduce
 
 ## 11. Form 5329 conditional generation
 
-**Primary gate:** `hasEarlyDistributionAdditionalTaxForForm5329 == true` in the `pension-annuity-income-taxpayer` personal form (`TaxReturnComputeService.java:5037`). Without this flag, Form 5329 is never generated regardless of distribution codes present.
+**Primary gate:** `hasEarlyDistributionAdditionalTaxForForm5329 == true` in the `pension-annuity-income-taxpayer` personal form (read in `computePensionAnnuities()`). Without this flag, Form 5329 is never generated regardless of distribution codes present.
 
 **When the gate is open:**
 - `additionalTaxOnEarlyDistributions` = sum of `earlyDistributionBase` from taxpayer + spouse 1099-R entries × 10%
@@ -249,7 +251,7 @@ Form5329.additionalTaxOnEarlyDistributions
   → Form1040.taxAndCredits.otherTaxes            (Form 1040 line 23)
 ```
 
-Implemented in `applyForm5329TaxToSchedule2()` (`TaxReturnComputeService.java:10365`). Does NOT affect line 5b — it flows through Schedule 2, not through the pension income computation.
+Implemented in `applyForm5329TaxToSchedule2()` (`TaxReturnComputeService.java`). Does NOT affect line 5b — it flows through Schedule 2, not through the pension income computation.
 
 **Output location:** `TaxReturnComputation.form5329` — null when the flag is absent or `additionalTaxOnEarlyDistributions` is zero.
 
@@ -320,27 +322,27 @@ Implemented in `applyForm5329TaxToSchedule2()` (`TaxReturnComputeService.java:10
 
 ### Unit tests (`TaxReturnComputeServiceTest.java`)
 
-| Test name | Line (approx.) | What it covers |
-|---|---|---|
-| `computesPensionDistributionsWithLine5cAndOutputForms` | ~1841 | 1099-R, rollover, PSO ($500→$3,000 cap), box 3 text, Form 5329 code 1 |
-| `computesFullyTaxablePensionWithLine5bOnly` | ~1901 | Fully taxable code-7; line 5a null, line 5b set, no Form 4972/5329 |
-| `flagsWhenPensionStatementUploadGatingFails` | ~1942 | Missing upload confirmation; two blocking flags emitted |
-| `computesPensionSimplifiedMethodBasic` | ~1979 | cost $18k, age 65 → factor 360, 12 payments → exclusion $600 → taxable $11,400 |
-| `computesPensionSimplifiedMethodWithPriorYearRecovery` | ~2020 | cost $7,200, prior recovery $5,400 → remaining basis $1,800 → exclusion $60 → taxable $11,940 |
-| `computesPensionSimplifiedMethodFullyRecoveredBasisIsFullyTaxable` | ~2063 | cost $6,000 fully recovered → remainingBasis=0 → fully taxable path |
-| `computesPensionGeneralRule` | ~2106 | exclusion ratio 5000/25000=0.20; tax-free=400; taxable=1600 |
-| `computesPensionRrb1099RNoCostFullyTaxable` | ~2146 | RRB box 4/5/6 totals; no employee cost → all fully taxable → line 5b=1700 |
-| `computesPensionMfjTwoPersonAggregation` | ~2181 | MFJ taxpayer $5k + spouse $3k → combined line 5b=8000; line 5a null |
-| `computesPensionPsoExclusionCappedAt3000` | ~2231 | Premiums $3,500 → capped at $3,000; taxable=7000; line5cBox2Pso=true |
-| `computesPensionEarlyDistributionCodeSTriggersForm5329` | ~2274 | Code "S" → earlyDistBase=4000 → penalty=400; exception code stored |
-| `form4972PartIIneligibleEmitsFlag` | ~8342 | All q1–q5 fails → null Form 4972 + FORM4972_TAXPAYER_INELIGIBLE flag |
-| `form4972PartIIOnlyComputesLine7` | ~8375 | Part II capital gain only → line7=200, line29=null, line30=200 |
-| `form4972PartIIIOnlyComputesLine29` | ~8402 | Part III 10-year option → line29 computed, line7=null |
-| `form4972BothPartsLine30IsLine7PlusLine29` | ~8431 | Both parts → line30=line7+line29 |
-| `form4972SpouseComputedSeparately` | ~8461 | Spouse election via `spouseElectsForm4972`; form4972Taxpayer=null |
-| `form4972PartIiiExcludesLumpSumFromLine5b` | ~8858 | Form 4972 Part III subtracts lump-sum from lines 5a/5b |
-| `form5329EarlyDistributionTaxWiresToSchedule2Line8AndLine23` | ~11707 | Code-1 $10k → penalty $1,000 → Sched2 line8 → Form1040 line23 |
-| `form5329AbsentWhenNoPensionEarlyDistribution` | ~11757 | No early distribution flag → form5329 null |
+| Test name | What it covers |
+|---|---|
+| `computesPensionDistributionsWithLine5cAndOutputForms` | 1099-R, rollover, PSO ($500→$3,000 cap), box 3 text, Form 5329 code 1 |
+| `computesFullyTaxablePensionWithLine5bOnly` | Fully taxable code-7; line 5a null, line 5b set, no Form 4972/5329 |
+| `flagsWhenPensionStatementUploadGatingFails` | Missing upload confirmation; two blocking flags emitted |
+| `computesPensionSimplifiedMethodBasic` | cost $18k, age 65 → factor 360, 12 payments → exclusion $600 → taxable $11,400 |
+| `computesPensionSimplifiedMethodWithPriorYearRecovery` | cost $7,200, prior recovery $5,400 → remaining basis $1,800 → exclusion $60 → taxable $11,940 |
+| `computesPensionSimplifiedMethodFullyRecoveredBasisIsFullyTaxable` | cost $6,000 fully recovered → remainingBasis=0 → fully taxable path |
+| `computesPensionGeneralRule` | exclusion ratio 5000/25000=0.20; tax-free=400; taxable=1600 |
+| `computesPensionRrb1099RNoCostFullyTaxable` | RRB box 4/5/6 totals; no employee cost → all fully taxable → line 5b=1700 |
+| `computesPensionMfjTwoPersonAggregation` | MFJ taxpayer $5k + spouse $3k → combined line 5b=8000; line 5a null |
+| `computesPensionPsoExclusionCappedAt3000` | Premiums $3,500 → capped at $3,000; taxable=7000; line5cBox2Pso=true |
+| `computesPensionEarlyDistributionCodeSTriggersForm5329` | Code "S" → earlyDistBase=4000 → penalty=400; exception code stored |
+| `form4972PartIIneligibleEmitsFlag` | All q1–q5 fails → null Form 4972 + FORM4972_TAXPAYER_INELIGIBLE flag |
+| `form4972PartIIOnlyComputesLine7` | Part II capital gain only → line7=200, line29=null, line30=200 |
+| `form4972PartIIIOnlyComputesLine29` | Part III 10-year option → line29 computed, line7=null |
+| `form4972BothPartsLine30IsLine7PlusLine29` | Both parts → line30=line7+line29 |
+| `form4972SpouseComputedSeparately` | Spouse election via `spouseElectsForm4972`; form4972Taxpayer=null |
+| `form4972PartIiiExcludesLumpSumFromLine5b` | Form 4972 Part III subtracts lump-sum from lines 5a/5b |
+| `form5329EarlyDistributionTaxWiresToSchedule2Line8AndLine23` | Code-1 $10k → penalty $1,000 → Sched2 line8 → Form1040 line23 |
+| `form5329AbsentWhenNoPensionEarlyDistribution` | No early distribution flag → form5329 null |
 
 ### E2E tests (`line5abc-pension-withdrawals.spec.ts`)
 

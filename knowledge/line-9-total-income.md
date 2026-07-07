@@ -89,9 +89,11 @@ Line 9 is **not guaranteed positive**:
 
 ## 7. Backend implementation
 
-**Method:** `buildIncome()` in `TaxReturnComputeService.java` (~line 3660)
+> *Convention (added 2026-07-07, knowledge-file line-number sweep):* code references use stable function/method names rather than source-code line numbers, which drift with refactors. IRS form/schedule line references (line 1c, Schedule 1 line 21, etc.) are stable and retained.
 
-**Line 9 specific code** (~line 3842):
+**Method:** `buildIncome()` in `TaxReturnComputeService.java`
+
+**Line 9 specific code:**
 ```java
 // Form 1040 line 9 = line 1z + 2b + 3b + 4b + 5b + 6b + 7a + 8.
 BigDecimal line9 = roundMoney(addNonNull(
@@ -100,7 +102,7 @@ BigDecimal line9 = roundMoney(addNonNull(
 ));
 ```
 
-Then at ~line 3960:
+Then (still in `buildIncome()`):
 ```java
 if (line9 != null) {
     income.setTotalIncome(line9);
@@ -108,9 +110,9 @@ if (line9 != null) {
 ```
 
 **`addNonNull` behavior**: treats null as 0 — each missing feeder contributes 0 to the sum.
-**`roundMoney` behavior**: rounds to 0 decimal places (whole-dollar, HALF_UP). `ROUNDING_MODE = ReturnRoundingMode.WHOLE_DOLLAR` is a static final constant at line 109. Result may be negative.
+**`roundMoney` behavior**: rounds to 0 decimal places (whole-dollar, HALF_UP). `ROUNDING_MODE = ReturnRoundingMode.WHOLE_DOLLAR` is a static final constant. Result may be negative.
 
-**Downstream** (`buildAdjustments()`, ~line 3966):
+**Downstream** (`buildAdjustments()`):
 ```java
 BigDecimal line9 = income == null ? null : roundMoney(income.getTotalIncome());
 BigDecimal line11a = line9 == null ? null : roundMoney(subtractNonNegativeAllowNegative(line9, line10));
@@ -124,7 +126,7 @@ BigDecimal line11a = line9 == null ? null : roundMoney(subtractNonNegativeAllowN
 
 ## 8. Frontend implementation
 
-**Tax return display:** `form-tax-return-1040.component.ts` (~line 290):
+**Tax return display:** `form-tax-return-1040.component.ts`:
 ```typescript
 values['line9_total_income'] = this.formatAmount(form.income?.totalIncome);
 ```
@@ -148,11 +150,11 @@ income?: {
 
 **File:** `TaxReturnComputeServiceTest.java`
 
-| Test | Location | Coverage |
-|---|---|---|
-| `computesForm1040Line9TotalIncomeFromTaxableFeederLines()` | ~line 6472 | Wages (line 1z = $1,000) + Schedule 1 other income (line 8 = $150) → line 9 = $1,150 |
-| Income adjustment test (implicit) | ~line 7001 | W-2 only → line 9 = $1,000 |
-| Another implicit assertion | ~line 7043 | Simple case → line 9 = $100 |
+| Test | Coverage |
+|---|---|
+| `computesForm1040Line9TotalIncomeFromTaxableFeederLines()` | Wages (line 1z = $1,000) + Schedule 1 other income (line 8 = $150) → line 9 = $1,150 |
+| Income adjustment test (implicit) | W-2 only → line 9 = $1,000 |
+| Another implicit assertion | Simple case → line 9 = $100 |
 
 **Test coverage gaps (see outstanding.md):**
 - No negative line 9 test (capital loss + NOL)

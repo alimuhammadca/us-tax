@@ -67,13 +67,13 @@ Guardrails:
 
 ## 3. Backend Implementation
 
+> *Convention (added 2026-07-07, knowledge-file line-number sweep):* code references use stable function/method names rather than source-code line numbers, which drift with refactors. IRS form/schedule line references (line 1c, Schedule 1 line 21, etc.) are stable and retained.
+
 **Method:** `computeLine20ThroughLine24(Form1040 form1040, Schedule3 schedule3)`
 
 **File:** `C:\us-tax\us-tax-be\src\main\java\com\ustax\microservices\TaxReturnComputeService.java`
 
-**Lines:** approximately 15023–15056
-
-**Call site:** line 1052 of `TaxReturnComputeService.java`
+**Call site:** the `computeLine20ThroughLine24()` call in `prepare()` (`TaxReturnComputeService.java`).
 
 ```java
 private void computeLine20ThroughLine24(Form1040 form1040, Schedule3 schedule3) {
@@ -144,7 +144,7 @@ interface TaxAndCreditsView {
 }
 ```
 
-**PDF fill mapping (line 326):**
+**PDF fill mapping:**
 ```typescript
 values['line21_total_credits_add_lines19_20'] = this.formatAmount(form.taxAndCredits?.totalCredits);
 ```
@@ -166,10 +166,10 @@ The Java test file is:
 
 | Test name / location | What it asserts |
 |---|---|
-| Line 12820 (inline, smoke-style test) | `getTaxAfterCredits() != null` — verifies line 22 is wired after lines 20–24; indirectly verifies line 21 runs |
-| Line 9083 (childTaxCredit present in CTC test) | `getChildTaxCredit()` is a positive value (line 19 = $2,200) |
-| Lines 14301/14349/14493 (CTC eligibility tests) | `getChildTaxCredit()` is null vs. non-null in various dependent configurations |
-| Line 9422 (CTC phaseout test) | `getChildTaxCredit()` has a specific reduced value |
+| Line 12820 (verified 2026-07-07) (inline, smoke-style test) | `getTaxAfterCredits() != null` — verifies line 22 is wired after lines 20–24; indirectly verifies line 21 runs |
+| Line 9083 (verified 2026-07-07) (childTaxCredit present in CTC test) | `getChildTaxCredit()` is a positive value (line 19 = $2,200) |
+| Lines 14301/14349/14493 (verified 2026-07-07) (CTC eligibility tests) | `getChildTaxCredit()` is null vs. non-null in various dependent configurations |
+| Line 9422 (verified 2026-07-07) (CTC phaseout test) | `getChildTaxCredit()` has a specific reduced value |
 
 **Added 2026-04-19 (G1 fix):**
 
@@ -216,7 +216,7 @@ The Java test file is:
 
 **Current state:** The Java test class has 315+ unit tests, but none assert on
 `getTotalCredits()` directly. The implicit coverage comes from line 22 being asserted
-(line 12821: `assertNotNull(getTaxAfterCredits())`), which is computable only if line 21
+(`assertNotNull(getTaxAfterCredits())`), which is computable only if line 21
 ran. The E2E layer has 3 focused tests. The gap is purely at the Java unit-test level.
 
 **When relevant:** Any refactor of `computeLine20ThroughLine24` could silently break

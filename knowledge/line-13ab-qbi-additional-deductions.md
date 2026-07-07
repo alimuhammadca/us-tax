@@ -229,7 +229,7 @@ phaseout = 6% × max(0, MAGI - threshold)
 line37SeniorDeduction = max(0, seniorBase - phaseout)
 ```
 
-**AMT treatment:** `line37` is added back to AMTI in Form 6251 (implemented at `computeLine17()` ~line 8093).
+**AMT treatment:** `line37` is added back to AMTI in Form 6251 (implemented at `computeLine17()`).
 
 ### 5.6 Line 38 total
 
@@ -242,22 +242,24 @@ line38 = line13TipsDeduction + line21OvertimeDeduction + line30CarLoanDeduction 
 
 ## 6. Backend implementation
 
+> *Convention (added 2026-07-07, knowledge-file line-number sweep):* code references use stable function/method names rather than source-code line numbers, which drift with refactors. IRS form/schedule line references (line 1c, Schedule 1 line 21, etc.) are stable and retained.
+
 ### 6.1 Core methods (`TaxReturnComputeService.java`)
 
-| Method | Approx line | Purpose |
-|---|---|---|
-| `computeLine13a()` | ~2949 | QBI deduction routing + Form 8995/8995-A computation |
-| `collectQbiInputsForPerson()` | ~3100 | Aggregates QBI inputs per person from statements + manual form |
-| `validateQbiStatementGating()` | ~3350 | Flags missing K-1 section 199A details; flags cooperative patron |
-| `validateQbiThresholdPath()` | ~3390 | Flags unsupported above-threshold paths (manual, negative K-1) |
-| `compute8995AQbiDeductionComponent()` | ~3448 | Above-threshold W-2/UBIA limitation with SSTB applicable-percentage and phase-in, per activity |
-| `computeQbiWageUbiaLimit()` | ~3508 | W-2/UBIA limit: max(50%×W2, 25%×W2 + 2.5%×UBIA) |
-| `shouldUseForm8995A()` | ~3569 | Threshold routing gate |
-| `sum1099NecTipsForSsn()` | ~16xxx | Scans 1099-NEC entries for `isTipIncome=true` with SSN match |
-| `computeSchedule1A()` | ~16773 | Full Schedule 1-A Parts I–V computation |
-| `computeTipsOvertimePhaseout()` | ~16xxx | Round-down phaseout helper (tips + overtime) |
-| `computeCarLoanPhaseout()` | ~16xxx | Round-up phaseout helper (car loan) |
-| `computeSeniorPhaseout()` | ~16xxx | Continuous 6% phaseout helper (senior) |
+| Method | Purpose |
+|---|---|
+| `computeLine13a()` | QBI deduction routing + Form 8995/8995-A computation |
+| `collectQbiInputsForPerson()` | Aggregates QBI inputs per person from statements + manual form |
+| `validateQbiStatementGating()` | Flags missing K-1 section 199A details; flags cooperative patron |
+| `validateQbiThresholdPath()` | Flags unsupported above-threshold paths (manual, negative K-1) |
+| `compute8995AQbiDeductionComponent()` | Above-threshold W-2/UBIA limitation with SSTB applicable-percentage and phase-in, per activity |
+| `computeQbiWageUbiaLimit()` | W-2/UBIA limit: max(50%×W2, 25%×W2 + 2.5%×UBIA) |
+| `shouldUseForm8995A()` | Threshold routing gate |
+| `sum1099NecTipsForSsn()` | Scans 1099-NEC entries for `isTipIncome=true` with SSN match |
+| `computeSchedule1A()` | Full Schedule 1-A Parts I–V computation |
+| `computeTipsOvertimePhaseout()` | Round-down phaseout helper (tips + overtime) |
+| `computeCarLoanPhaseout()` | Round-up phaseout helper (car loan) |
+| `computeSeniorPhaseout()` | Continuous 6% phaseout helper (senior) |
 
 ### 6.2 Flags emitted
 

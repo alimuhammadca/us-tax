@@ -1,6 +1,15 @@
 ﻿# History
 
 
+## 2026-07-07 — Knowledge-file source-code line-number sweep (30 files; drifting refs → stable symbol names)
+
+Cleared the outstanding.md "Knowledge-File Source-Code Line-Number Sweep" item. Knowledge files anchored code references to volatile `TaxReturnComputeService.java` line numbers (e.g. "`computeLine16()` (~line 1300)", "at line 2430") that drift with every refactor — the exact hazard hit twice earlier the same day. The `line-1c-tip-income.md` §4 convention (function-names-not-line-numbers) had never been applied to the other files.
+
+Swept all `knowledge/*.md` (delegated the mechanical pass to a subagent, then reviewed): **30 files** updated, ~160+ source-line references removed (function/method name kept as the stable anchor; volatile `(~line NNNN)` suffix dropped; a few whole "source-line" table columns removed). Six bare line-number refs with no adjacent symbol were resolved to their enclosing method via read-only `.java` lookup (all verified to exist: `wireLine17ToOutputs`, `computeForm2210`, `computePensionAnnuities`, `computeLine31ThroughLine38`, `computeLine20ThroughLine24`, `buildIncome`, `computeSchedule8812`); ~15 bare test-source lines were date-stamped. **Kept untouched**: IRS form/schedule/worksheet line refs (line 1c, Form 6251 line 11, Schedule D lines…), dated historical change-log entries (`:13799`, `line ~15409` — frozen as the record of where past changes landed), and CSV field-map row refs. Each modified file got a dated convention note.
+
+Reviewed for correctness before commit: confirmed no IRS-line refs were lost in the modified lines, resolved method names are real, and historical entries stayed frozen. No source/test/compute files touched — pure documentation hygiene, zero behavior change.
+
+
 ## 2026-07-07 — Line 6d MFS residence-flag mutual-exclusion: confirmed already enforced (doc sync, no code change)
 
 Next outstanding.md item — turned out to be already resolved and *over*-delivered. The item "Line 6d: `livedApartAllYear` vs `livedWithSpouseAnyTime` Mutual-Exclusion Enforcement (Deferred 2026-05-12)" planned only a soft advisory flag + a UI radio refactor. But the later **6d.md Gap 1 closure (2026-06-06)** already enforces the mutual exclusion as a §17 **non-overrideable blocker** — `validateLine6dMfsResidenceConsistency` emits `SOCIAL_SECURITY_LINE6D_MFS_RESIDENCE_INCONSISTENT` on both pathological states (both-TRUE and both-FALSE) on an MFS return with SS benefits, per IRC §86(c)(1)(C)/(D). Verified the full chain: flag registered in `NonOverrideableFlags.CODES`, four unit tests (`TaxReturnComputeServiceTest` ~6538–6663) covering both failure modes + coherent cases, and an e2e spec (`line6abcd-social-security-benefits.spec.ts`).

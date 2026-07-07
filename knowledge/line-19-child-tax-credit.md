@@ -40,8 +40,10 @@ Both come from a single `computeSchedule8812()` call. Line 19 is a nonrefundable
 
 ## 3. Backend Implementation
 
+> *Convention (added 2026-07-07, knowledge-file line-number sweep):* code references use stable function/method names rather than source-code line numbers, which drift with refactors. IRS form/schedule line references (line 1c, Schedule 1 line 21, etc.) are stable and retained.
+
 ### Method: `computeSchedule8812()`
-Location: `TaxReturnComputeService.java` ~line 17802
+Location: `TaxReturnComputeService.java`
 
 **Signature:**
 ```java
@@ -59,7 +61,7 @@ private Schedule8812 computeSchedule8812(
     List<TaxReturnFlag> flags)
 ```
 
-**Call site in `prepare()`** — ~line 853, after `computeForm8880()` and before `computeLine31ThroughLine38()`.
+**Call site in `prepare()`** — after `computeForm8880()` and before `computeLine31ThroughLine38()`.
 
 **Wire-up (in `prepare()`):**
 ```java

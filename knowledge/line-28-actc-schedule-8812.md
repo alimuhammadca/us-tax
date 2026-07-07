@@ -17,11 +17,13 @@ Line 28 is the **refundable** portion of the child-related credits. Line 19 is t
 
 ## 2. Backend Implementation
 
+> *Convention (added 2026-07-07, knowledge-file line-number sweep):* code references use stable function/method names rather than source-code line numbers, which drift with refactors. IRS form/schedule line references (line 1c, Schedule 1 line 21, etc.) are stable and retained.
+
 ### Entry point
 
 ```
 TaxReturnComputeService.java
-  computeSchedule8812()  lines 18024–18319
+  computeSchedule8812()
 ```
 
 **Signature:**
@@ -87,28 +89,28 @@ Key fields:
 
 ## 3. Compute Flow — Detailed
 
-### Step 1 — Form 8862 gate (lines 18037–18051)
+### Step 1 — Form 8862 gate (in `computeSchedule8812()`)
 
 If `ctcScreening.ctcPreviouslyDenied = true`:
 - If no `form8862` or `form8862.claimsCTC = false` → emit `FORM_8862_CTC_REQUIRED` flag, return zeroes
 - If `form8862.ctcEligible = false` → return zeroes (Part III gate failed)
 - Otherwise → continue
 
-### Step 2 — MAGI (lines 18055–18081)
+### Step 2 — MAGI (in `computeSchedule8812()`)
 
 ```
 MAGI = AGI + Form2555Taxpayer(foreignEarnedIncomeExclusion + housingExclusionAmount)
            + Form2555Spouse(foreignEarnedIncomeExclusion + housingExclusionAmount)
 ```
 
-### Step 3 — Count dependents (lines 18083–18096)
+### Step 3 — Count dependents (in `computeSchedule8812()`)
 
 ```
 numCtcChildren  = count of dependents where qualifiesForCTC() = true
 numOdcDependents = count where qualifiesForODC() = true (mutually exclusive)
 ```
 
-### Step 4 — Tentative credit (lines 18098–18104)
+### Step 4 — Tentative credit (in `computeSchedule8812()`)
 
 ```
 line5 = $2,000 × numCtcChildren   (IRS 2025; fixed 2026-04-20)
@@ -116,7 +118,7 @@ line7 = $500   × numOdcDependents
 line8 = line5 + line7
 ```
 
-### Step 5 — Phase-out (lines 18106–18127)
+### Step 5 — Phase-out (in `computeSchedule8812()`)
 
 ```
 threshold           = $400,000 (MFJ) | $200,000 (others)
@@ -132,7 +134,7 @@ If `line8 ≤ line11` → credit eliminated, return zeroes.
 line12 = line8 − line11
 ```
 
-### Step 6 — Credit Limit Worksheet A (lines 18141–18171) — G6 FIXED ✓
+### Step 6 — Credit Limit Worksheet A (in `computeSchedule8812()`) — G6 FIXED ✓
 
 ```
 wA1 = form1040.taxAndCredits.totalTaxBeforeCredits (line 18)
@@ -151,19 +153,19 @@ line13 = worksheetA
 
 All 8 CLW-A credits now correctly read. G6 fixed 2026-04-20.
 
-### Step 7 — Line 14: nonrefundable CTC+ODC (line 18167–18168)
+### Step 7 — Line 14: nonrefundable CTC+ODC (in `computeSchedule8812()`)
 
 ```
 line14 = min(line12, worksheetA)  →  Form1040.line19
 ```
 
-### Step 8 — `electsNoActc` opt-out (lines 18177–18188)
+### Step 8 — `electsNoActc` opt-out (in `computeSchedule8812()`)
 
 If `ctcScreening.electsNoActc = true` → set `electsNoActc=true`, `line27=0`, return.
 
 UI: `form-tax-return-schedule8812.component.ts` shows an amber opt-out banner when `electsNoActc === true` (added 2026-04-20).
 
-### Step 9 — ACTC eligibility gates (lines 18181–18218)
+### Step 9 — ACTC eligibility gates (in `computeSchedule8812()`)
 
 Gate 1: No Form 2555 or no CTC children:
 ```
@@ -186,7 +188,7 @@ line16a = max(0, line12 − line14)
 if line16a == 0 → line27 = 0, return
 ```
 
-### Step 10 — Part II-A: earned income method (lines 18220–18256)
+### Step 10 — Part II-A: earned income method (in `computeSchedule8812()`)
 
 ```
 line16b = $1,700 × numCtcChildren  (ACTC ceiling)
@@ -196,7 +198,7 @@ line19  = max(0, line18a − $2,500)
 line20  = 15% × line19
 ```
 
-### Step 11 — Routing: Part II-A or Part II-B (lines 18258–18330)
+### Step 11 — Routing: Part II-A or Part II-B (in `computeSchedule8812()`)
 
 ```
 // G11 FIXED (2026-04-20): Puerto Rico bona fide residents always use Part II-B,

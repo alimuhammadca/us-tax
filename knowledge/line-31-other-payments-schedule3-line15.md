@@ -67,27 +67,28 @@ Form1040.line33 = line25d + line26 + line32
 
 ## 4. Backend Implementation
 
+> *Convention (added 2026-07-07, knowledge-file line-number sweep):* code references use stable function/method names rather than source-code line numbers, which drift with refactors. IRS form/schedule line references (line 1c, Schedule 1 line 21, etc.) are stable and retained.
+
 ### 4.1 Model Classes
 
 | Class | File | Key Fields |
 |-------|------|------------|
-| `Schedule3OtherPaymentsCredits` | `src/main/java/com/ustax/model/output/Schedule3OtherPaymentsCredits.java` | All 11 fields with getters/setters (lines 1–109) |
-| `Schedule3` | `src/main/java/com/ustax/model/output/Schedule3.java` | `otherPaymentsCredits` field (lines 33–39) |
-| `Payments` | `src/main/java/com/ustax/model/output/Payments.java` | `otherPaymentsSchedule3` = line 31 (lines 95–101); `totalOtherPaymentsAndRefundableCredits` = line 32 (lines 103–109) |
+| `Schedule3OtherPaymentsCredits` | `src/main/java/com/ustax/model/output/Schedule3OtherPaymentsCredits.java` | All 11 fields with getters/setters |
+| `Schedule3` | `src/main/java/com/ustax/model/output/Schedule3.java` | `otherPaymentsCredits` field |
+| `Payments` | `src/main/java/com/ustax/model/output/Payments.java` | `otherPaymentsSchedule3` = line 31; `totalOtherPaymentsAndRefundableCredits` = line 32 |
 
 ### 4.2 Compute Methods (TaxReturnComputeService.java)
 
-| Method | Lines | Purpose |
-|--------|-------|---------|
-| `applyForm2439CreditToSchedule3()` | 14631–14650 | Aggregates Form 2439 box 2 from statement entries → line 13a |
-| `applyOtherPaymentsFormToSchedule3()` | 14657–14703 | Reads personal form → lines 12, 13b, 13d, 13z |
-| `finalizeSchedule3Totals()` | 14705–14760 | Computes line 14 (sum 13a–13z) and line 15 (sum 9–12+14) |
-| `computeLine31ThroughLine38()` | 15305–15442 | Wires line 15 → line 31; computes lines 32 and 33 |
+| Method | Purpose |
+|--------|---------|
+| `applyForm2439CreditToSchedule3()` | Aggregates Form 2439 box 2 from statement entries → line 13a |
+| `applyOtherPaymentsFormToSchedule3()` | Reads personal form → lines 12, 13b, 13d, 13z |
+| `finalizeSchedule3Totals()` | Computes line 14 (sum 13a–13z) and line 15 (sum 9–12+14) |
+| `computeLine31ThroughLine38()` | Wires line 15 → line 31; computes lines 32 and 33 |
 
 ### 4.3 Execution Order (in `prepare()`)
 
 ```
-Lines 1065–1079:
   computeExcessSocialSecurityTax()       → line 11
   applyForm4868ToSchedule3()             → line 10
   applyPremiumTaxCreditToSchedule3()     → line 9
@@ -139,8 +140,8 @@ if (line15 != null && line15.compareTo(BigDecimal.ZERO) > 0) {
 
 | Component | Location | Line 31 reference |
 |-----------|----------|-------------------|
-| Form 1040 tax return | `form-tax-return-1040.component.ts:340` | `line31_amount_from_schedule3_line15` = `payments.otherPaymentsSchedule3` |
-| Schedule 3 display | `form-tax-return-schedule3.component.ts:42–54` | All 11 `Schedule3OtherPaymentsCreditsView` fields mapped |
+| Form 1040 tax return | `form-tax-return-1040.component.ts` | `line31_amount_from_schedule3_line15` = `payments.otherPaymentsSchedule3` |
+| Schedule 3 display | `form-tax-return-schedule3.component.ts` | All 11 `Schedule3OtherPaymentsCreditsView` fields mapped |
 | PDF field map | `f1040_field_map_semantic.csv` | `line31_amount_from_schedule3_line15` |
 
 ---
@@ -148,16 +149,16 @@ if (line15 != null && line15.compareTo(BigDecimal.ZERO) > 0) {
 ## 7. Unit Tests
 
 **File:** `src/test/java/com/ustax/microservices/TaxReturnComputeServiceTest.java`  
-**Lines:** 15534–15707 (6 tests)
+**Tests:** 6
 
-| Test name | Lines | Scenario | Key assertion |
-|-----------|-------|----------|---------------|
-| `line31_line14AndLine15SplitCorrectly` | 15534–15561 | Extension $500 + §1341 $1,000 | `line14=1000`, `line15=1500`, `line31=1500` |
-| `line31_form2439CreditAggregatedFromStatements` | 15564–15582 | Two 2439 entries: $800+$400 | `form2439=1200`, `line31=1200` |
-| `line31_section1341CreditWiredToLine13b` | 15585–15604 | Personal form `section1341Credit=2500` | `section1341Credit=2500`, `line31=2500` |
-| `line31_otherRefundableCreditsSummedToLine13z` | 15607–15627 | Two items: [$400,$600] | `otherRefundableCredits=1000`, `line31=1000` |
-| `line31_nullWhenNoQualifyingInputs` | 15630–15647 | W-2 only, no Schedule 3 Part II | `otherPaymentsSchedule3 = null` |
-| `line31_allComponentsAggregateCorrectly` | 15650–15707 | Extension+excess SS+Form2439+§1341 | `line14=500`, `line15=1200`, `line31=1200` |
+| Test name | Scenario | Key assertion |
+|-----------|----------|---------------|
+| `line31_line14AndLine15SplitCorrectly` | Extension $500 + §1341 $1,000 | `line14=1000`, `line15=1500`, `line31=1500` |
+| `line31_form2439CreditAggregatedFromStatements` | Two 2439 entries: $800+$400 | `form2439=1200`, `line31=1200` |
+| `line31_section1341CreditWiredToLine13b` | Personal form `section1341Credit=2500` | `section1341Credit=2500`, `line31=2500` |
+| `line31_otherRefundableCreditsSummedToLine13z` | Two items: [$400,$600] | `otherRefundableCredits=1000`, `line31=1000` |
+| `line31_nullWhenNoQualifyingInputs` | W-2 only, no Schedule 3 Part II | `otherPaymentsSchedule3 = null` |
+| `line31_allComponentsAggregateCorrectly` | Extension+excess SS+Form2439+§1341 | `line14=500`, `line15=1200`, `line31=1200` |
 
 ---
 

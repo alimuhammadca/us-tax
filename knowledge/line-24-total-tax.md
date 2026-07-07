@@ -18,7 +18,7 @@ Add lines 22 and 23. This is your total tax.
 | Java model field | `TaxAndCredits.totalTax` |
 | Getter | `getTotalTax()` |
 | Setter | `setTotalTax(BigDecimal)` |
-| Java model class | `C:\us-tax\us-tax-be\src\main\java\com\ustax\model\output\TaxAndCredits.java` (line 27) |
+| Java model class | `C:\us-tax\us-tax-be\src\main\java\com\ustax\model\output\TaxAndCredits.java` |
 | Frontend TS field | `form.taxAndCredits?.totalTax` |
 | PDF semantic key | `line24_total_tax` |
 | PDF AcroForm field | `topmostSubform[0].Page2[0].f2_16[0]` |
@@ -56,7 +56,9 @@ Key guardrails per IRS:
 
 ## 3. Backend Implementation
 
-### Method: `computeLine20ThroughLine24()` — Lines 15087–15120
+> *Convention (added 2026-07-07, knowledge-file line-number sweep):* code references use stable function/method names rather than source-code line numbers, which drift with refactors. IRS form/schedule line references (line 1c, Schedule 1 line 21, etc.) are stable and retained.
+
+### Method: `computeLine20ThroughLine24()`
 
 **File:** `C:\us-tax\us-tax-be\src\main\java\com\ustax\microservices\TaxReturnComputeService.java`
 
@@ -91,7 +93,7 @@ private void computeLine20ThroughLine24(Form1040 form1040, Schedule3 schedule3) 
 
 **Storage rule:** `totalTax` is always stored as at least `BigDecimal.ZERO` — never null. This differs from `taxAfterCredits` (line 22) and `totalCredits` (line 21) which can be stored as null when zero. Rationale: line 24 is the total tax liability and is always shown on the form.
 
-**Call site:** `prepare()` line 1067, immediately after `finalizeSchedule2OtherTaxes()` (line 1065) and before `computeLine31ThroughLine38()` (line 1069).
+**Call site:** `prepare()`, immediately after `finalizeSchedule2OtherTaxes()` and before `computeLine31ThroughLine38()`.
 
 ### Helper utilities used
 
@@ -107,33 +109,32 @@ private void computeLine20ThroughLine24(Form1040 form1040, Schedule3 schedule3) 
 **File:** `C:\us-tax\us-tax-ui\src\app\forms\form-tax-return-1040.component.ts`
 
 ```typescript
-// Line 329
 values['line24_total_tax'] = this.formatAmount(form.taxAndCredits?.totalTax);
 ```
 
 ### Other frontend consumers of `totalTax`
 
-| File | Line | Usage |
-|---|---|---|
-| `form-tax-return-1040.component.ts` | 147 | TypeScript interface field: `totalTax?: number \| string \| null` |
-| `form-tax-return-1040.component.ts` | 329 | PDF fill: `line24_total_tax` |
-| `shell.component.ts` | 887 | Summary display: `const taxTotal = tax?.['totalTax']` |
-| `form-tax-return-schedule2.component.ts` | 22, 145 | Schedule 2 PDF fill for Part I line 3 total tax |
-| `form-alt-fuel-credit.component.ts` | 387 | Import from Schedule 2: `this.importedSchedule2 = this.num(schedule2?.tax?.totalTax)` |
-| `form-bond-credit.component.ts` | 292 | Import from Schedule 2: `this.importedSchedule2 = this.num(schedule2?.tax?.totalTax)` |
+| File | Usage |
+|---|---|
+| `form-tax-return-1040.component.ts` | TypeScript interface field: `totalTax?: number \| string \| null` |
+| `form-tax-return-1040.component.ts` | PDF fill: `line24_total_tax` |
+| `shell.component.ts` | Summary display: `const taxTotal = tax?.['totalTax']` |
+| `form-tax-return-schedule2.component.ts` | Schedule 2 PDF fill for Part I line 3 total tax |
+| `form-alt-fuel-credit.component.ts` | Import from Schedule 2: `this.importedSchedule2 = this.num(schedule2?.tax?.totalTax)` |
+| `form-bond-credit.component.ts` | Import from Schedule 2: `this.importedSchedule2 = this.num(schedule2?.tax?.totalTax)` |
 
 ---
 
 ## 5. Compute Order
 
 ```
-finalizeSchedule2OtherTaxes(schedule2, form1040)     ← line 1065 — populates tac.otherTaxes (line 23)
-computeLine20ThroughLine24(form1040, schedule3)       ← line 1067 — computes lines 20–24
+finalizeSchedule2OtherTaxes(schedule2, form1040)     — populates tac.otherTaxes (line 23)
+computeLine20ThroughLine24(form1040, schedule3)       — computes lines 20–24
   → reads tac.getTotalTaxBeforeCredits()  as line18
   → reads tac.getOtherTaxes()             as line23  (finalized by prior step)
   → sets  tac.taxAfterCredits             = line22
   → sets  tac.totalTax                    = line24
-computeLine31ThroughLine38(...)                       ← line 1069 — uses tac.getTotalTax() for refund/owed
+computeLine31ThroughLine38(...)                       — uses tac.getTotalTax() for refund/owed
 computeForm2210(form1040, priorYearData, ...)         ← later — uses tac for underpayment penalty
 ```
 
@@ -143,10 +144,10 @@ computeForm2210(form1040, priorYearData, ...)         ← later — uses tac for
 
 **File:** `C:\us-tax\us-tax-be\src\test\java\com\ustax\microservices\TaxReturnComputeServiceTest.java`
 
-| Test name | Line | What it asserts for line 24 |
-|---|---|---|
-| `line23_otherTaxes_equalsForm5329PenaltyAlone` | 16338 | `totalTax == taxAfterCredits + 1000` (Form 5329 penalty adds to line 24) |
-| `line23_otherTaxes_equalsCombinedForm5329AndAdditionalMedicareTax` | 16441 | `totalTax >= taxAfterCredits + 1450` (combined AMT + Form 5329 in line 24) |
+| Test name | What it asserts for line 24 |
+|---|---|
+| `line23_otherTaxes_equalsForm5329PenaltyAlone` | `totalTax == taxAfterCredits + 1000` (Form 5329 penalty adds to line 24) |
+| `line23_otherTaxes_equalsCombinedForm5329AndAdditionalMedicareTax` | `totalTax >= taxAfterCredits + 1450` (combined AMT + Form 5329 in line 24) |
 
 **Added 2026-04-19:** `form2210Line1UsesTaxAfterCreditsNotTotalTaxBeforeCredits` — $38k wages + Form 8880 savings credit ($200 at 10% rate). Asserts `taxAfterCredits < totalTaxBeforeCredits`, `f2210.currentYearTax == taxAfterCredits`, and `f2210.combinedTax == taxAfterCredits + otherTaxes`. Directly tests the G1 fix: verifies Form 2210 line 1 uses line 22, not line 18.
 

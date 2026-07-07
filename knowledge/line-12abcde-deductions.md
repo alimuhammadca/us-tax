@@ -178,8 +178,10 @@ Three election modes (stored in `deductionElection` personal form field):
 
 ## 8. Backend implementation details
 
+> *Convention (added 2026-07-07, knowledge-file line-number sweep):* code references use stable function/method names rather than source-code line numbers, which drift with refactors. IRS form/schedule line references (line 1c, Schedule 1 line 21, etc.) are stable and retained.
+
 ### Core method
-`computeLine12()` in `TaxReturnComputeService.java` (~line 2626)
+`computeLine12()` in `TaxReturnComputeService.java`
 
 **Returns:** `Line12Computation` record containing `Deductions`, `ScheduleA`, `RequiredAttachmentForm` (Form 4684), `Form8995`, `Form8995A`
 
@@ -202,18 +204,18 @@ Three election modes (stored in `deductionElection` personal form field):
 `line15 = max(0, AGI − line12e − line13a − line13b)`
 
 ### Helper methods
-- `computeStandardDeduction()` — line 2749: standard deduction routing
-- `buildScheduleA()` — line 2777: all Schedule A categories
-- `chooseLine12e()` — line 2850: selects final line 12e
-- `chooseDeductionType()` — line 2862: returns "Standard"/"Itemized" label
-- `buildLine12Form4684Attachment()` — line 2888: triggers Form 4684 requirement
-- `countAgeBlindnessBoxes()` — line 16721: counts 0–4 line 12d boxes
-- `baseStandardDeductionForStatus()` — line 16772: base amount by filing status
-- `additionalStandardDeductionForBoxes()` — line 16791: per-box addon
-- `lookupAgeBlindnessStandardDeduction()` — line 16801: chart lookup
-- `saltLimitForStatus()` — line 16824: SALT cap ($40,000/$20,000 MFS — updated 2026-04-17)
+- `computeStandardDeduction()` — standard deduction routing
+- `buildScheduleA()` — all Schedule A categories
+- `chooseLine12e()` — selects final line 12e
+- `chooseDeductionType()` — returns "Standard"/"Itemized" label
+- `buildLine12Form4684Attachment()` — triggers Form 4684 requirement
+- `countAgeBlindnessBoxes()` — counts 0–4 line 12d boxes
+- `baseStandardDeductionForStatus()` — base amount by filing status
+- `additionalStandardDeductionForBoxes()` — per-box addon
+- `lookupAgeBlindnessStandardDeduction()` — chart lookup
+- `saltLimitForStatus()` — SALT cap ($40,000/$20,000 MFS — updated 2026-04-17)
 
-### ReferenceData.java constants (lines 42–66)
+### ReferenceData.java constants
 - `STANDARD_DEDUCTION_BASE_SINGLE` = $15,750
 - `STANDARD_DEDUCTION_BASE_MFS` = $15,750
 - `STANDARD_DEDUCTION_BASE_MFJ` = $31,500

@@ -7,19 +7,21 @@ Last updated: **2026-04-16**
 
 ## 1. What is implemented
 
+> *Convention (added 2026-07-07, knowledge-file line-number sweep):* code references use stable function/method names rather than source-code line numbers, which drift with refactors. IRS form/schedule line references (line 1c, Schedule 1 line 21, etc.) are stable and retained.
+
 ### 1.1 Overall computation entry point
 
-| Location | Method | Backend file |
-|---|---|---|
-| `TaxReturnComputeService.java` | `computeCapitalGainLoss()` | ~line 5388 |
-| `TaxReturnComputeService.java` | `computeCapitalForPerson()` | ~line 5912 |
-| `TaxReturnComputeService.java` | `validateCapitalStatementGating()` | ~line 6401 |
-| `TaxReturnComputeService.java` | `buildCapitalTransactionsFrom1099B()` | ~line 6006 |
-| `TaxReturnComputeService.java` | `buildCapitalTransactionsFrom1099Da()` | ~line 6043 |
-| `TaxReturnComputeService.java` | `buildManualTransactions()` | ~line 6080 |
-| `TaxReturnComputeService.java` | `buildDirectAggregationRow()` | ~line 6109 |
-| `TaxReturnComputeService.java` | `buildForm8949AggregateRow()` | ~line ~6130 |
-| `TaxReturnComputeService.java` | `buildForm8949Pages()` | ~line 6155 |
+| Location | Method |
+|---|---|
+| `TaxReturnComputeService.java` | `computeCapitalGainLoss()` |
+| `TaxReturnComputeService.java` | `computeCapitalForPerson()` |
+| `TaxReturnComputeService.java` | `validateCapitalStatementGating()` |
+| `TaxReturnComputeService.java` | `buildCapitalTransactionsFrom1099B()` |
+| `TaxReturnComputeService.java` | `buildCapitalTransactionsFrom1099Da()` |
+| `TaxReturnComputeService.java` | `buildManualTransactions()` |
+| `TaxReturnComputeService.java` | `buildDirectAggregationRow()` |
+| `TaxReturnComputeService.java` | `buildForm8949AggregateRow()` |
+| `TaxReturnComputeService.java` | `buildForm8949Pages()` |
 
 ### 1.2 Internal records
 

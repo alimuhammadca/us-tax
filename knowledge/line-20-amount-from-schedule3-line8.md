@@ -86,7 +86,9 @@ Form1040.line31  = Schedule3.line15
 
 ## 4. Key Backend Methods
 
-### `finalizeSchedule3Totals()` (TaxReturnComputeService.java line 14445)
+> *Convention (added 2026-07-07, knowledge-file line-number sweep):* code references use stable function/method names rather than source-code line numbers, which drift with refactors. IRS form/schedule line references (line 1c, Schedule 1 line 21, etc.) are stable and retained.
+
+### `finalizeSchedule3Totals()` (TaxReturnComputeService.java)
 
 Computes the two Schedule 3 totals:
 
@@ -112,7 +114,7 @@ line15 = netPremiumTaxCredit + amountPaidWithExtension +
 
 **Must run after** all `applyXxxToSchedule3()` methods and before `computeLine20ThroughLine24()`.
 
-### `computeLine20ThroughLine24()` (line 14955)
+### `computeLine20ThroughLine24()`
 
 ```java
 line20 = schedule3.nonrefundableCredits.totalNonrefundableCredits  // null if ≤ 0
@@ -127,28 +129,28 @@ line24 = line22 + otherTaxes(line23)
 ### All `applyXxxToSchedule3()` methods — call order in `prepare()`
 
 ```
-applyForeignTaxCreditToSchedule3()         ~line  827
-finalizeForm2441PartII()                    ~line  838  (sets childDependentCareCredit)
-applyForm8880ToSchedule3()                 ~line  845
-applyPremiumTaxCreditToSchedule3()         ~line  847
-applyForm8863ToSchedule3()                 ~line  860
-applyForm5695ToSchedule3()                 ~line  914
-applyForm8801ToSchedule3()                 ~line  926
-applyAdoptionCredit(schedule3, adoption, form1040)  ~line  927  ← CLW-B; moved here 2026-04-18 (G1)
-applyScheduleRToSchedule3()                ~line  938
-applyForm8936ScheduleAToSchedule3()        ~line  951
-applyForm8396ToSchedule3()                 ~line  962
-applyForm8859ToSchedule3()                 ~line  973
-applyForm8834ToSchedule3()                 ~line  984
-applyForm8911ToSchedule3()                 ~line  999
-applyForm8912ToSchedule3()                 ~line 1011
-applyForm4868ToSchedule3()                 ~line 1021
-computeExcessSocialSecurityTax()           ~line 1044
-applyForm2439CreditToSchedule3()           ~line 1046
-applyOtherPaymentsFormToSchedule3()        ~line 1048
-finalizeSchedule3Totals()                  ~line 1049
-computeLine20ThroughLine24()               ~line 1051
-computeLine31ThroughLine38()               ~line 1053  (wires line15 → line31)
+applyForeignTaxCreditToSchedule3()
+finalizeForm2441PartII()                    (sets childDependentCareCredit)
+applyForm8880ToSchedule3()
+applyPremiumTaxCreditToSchedule3()
+applyForm8863ToSchedule3()
+applyForm5695ToSchedule3()
+applyForm8801ToSchedule3()
+applyAdoptionCredit(schedule3, adoption, form1040)  ← CLW-B; moved here 2026-04-18 (G1)
+applyScheduleRToSchedule3()
+applyForm8936ScheduleAToSchedule3()
+applyForm8396ToSchedule3()
+applyForm8859ToSchedule3()
+applyForm8834ToSchedule3()
+applyForm8911ToSchedule3()
+applyForm8912ToSchedule3()
+applyForm4868ToSchedule3()
+computeExcessSocialSecurityTax()
+applyForm2439CreditToSchedule3()
+applyOtherPaymentsFormToSchedule3()
+finalizeSchedule3Totals()
+computeLine20ThroughLine24()
+computeLine31ThroughLine38()               (wires line15 → line31)
 ```
 
 ---
@@ -207,7 +209,7 @@ values['line20_amount_from_schedule3_line8'] = formatAmount(form.taxAndCredits?.
 values['line31_amount_from_schedule3_line15'] = formatAmount(form.payments?.otherPaymentsSchedule3);
 ```
 
-### Shell sidebar — `shell.component.ts` line 906
+### Shell sidebar — `shell.component.ts`
 
 Schedule 3 sidebar entry is conditional:
 ```typescript

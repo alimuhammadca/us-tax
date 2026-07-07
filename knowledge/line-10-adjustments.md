@@ -77,7 +77,9 @@ Form1040.line10 = line26
 
 ## 3. Backend implementation
 
-**Method:** `computeIncomeAdjustments()` in `TaxReturnComputeService.java` (line ~7117)
+> *Convention (added 2026-07-07, knowledge-file line-number sweep):* code references use stable function/method names rather than source-code line numbers, which drift with refactors. IRS form/schedule line references (line 1c, Schedule 1 line 21, etc.) are stable and retained.
+
+**Method:** `computeIncomeAdjustments()` in `TaxReturnComputeService.java`
 
 **Signature:**
 ```java
@@ -97,21 +99,21 @@ private IncomeAdjustmentsComputation computeIncomeAdjustments(
 
 **Early return:** returns `null` when `!hasAnySchedule1Input` (no nonzero lines or adjustment items).
 
-**Call site:** `prepare()` at ~line 431; `olympicLine8m` is extracted from `otherIncome.additionalIncome().getOtherIncomeOlympicParalympicAwards()` before the call.
+**Call site:** `prepare()`; `olympicLine8m` is extracted from `otherIncome.additionalIncome().getOtherIncomeOlympicParalympicAwards()` before the call.
 
 ### Key code points
 
-| Code location (approx.) | What it does |
-|---|---|
-| ~7147–7177 | Out-of-scope gates for lines 15, 16, 17; emits blocking flags |
-| ~7179–7214 | Computes lines 11–23 and 24a–24k |
-| ~7218–7224 | Line 24c: `firstNonNullAmount(userLine24c, olympicLine8m)` — auto-fills from line 8m |
-| ~7232–7235 | Line 24k: manual field + `importedK1Section67eExcessDeductionsTotal` from personal form |
-| ~7237–7239 | Calls `buildSchedule1OtherAdjustmentItems()` for 24z list; sums to `line24z` |
-| ~7239–7240 | `line25 = sumAmounts(24a…24z)`; `line26 = sumAmounts(11…23) + line25` |
-| ~7242–7259 | `hasAnySchedule1Input` guard; returns null if no inputs |
-| ~7262–7290 | Populates `Schedule1Adjustments` output model |
-| ~7298–7302 | Returns `IncomeAdjustmentsComputation(adjustments, otherAdjustmentItems, roundMoney(line26))` |
+| What it does |
+|---|
+| Out-of-scope gates for lines 15, 16, 17; emits blocking flags |
+| Computes lines 11–23 and 24a–24k |
+| Line 24c: `firstNonNullAmount(userLine24c, olympicLine8m)` — auto-fills from line 8m |
+| Line 24k: manual field + `importedK1Section67eExcessDeductionsTotal` from personal form |
+| Calls `buildSchedule1OtherAdjustmentItems()` for 24z list; sums to `line24z` |
+| `line25 = sumAmounts(24a…24z)`; `line26 = sumAmounts(11…23) + line25` |
+| `hasAnySchedule1Input` guard; returns null if no inputs |
+| Populates `Schedule1Adjustments` output model |
+| Returns `IncomeAdjustmentsComputation(adjustments, otherAdjustmentItems, roundMoney(line26))` |
 
 ### Statement auto-import paths
 
@@ -185,7 +187,7 @@ Key fields:
 
 **Downstream read:**
 ```java
-// In buildAdjustments() ~line 3966
+// In buildAdjustments()
 BigDecimal line9 = income == null ? null : roundMoney(income.getTotalIncome());
 BigDecimal line10 = incomeAdjustments == null ? null : incomeAdjustments.line10FromSchedule1Line26();
 BigDecimal line11a = line9 == null ? null : roundMoney(subtractNonNegativeAllowNegative(line9, line10));
@@ -212,13 +214,13 @@ Gating field: `hadIncomeAdjustmentsForSchedule1` (boolean, taxpayer form only).
 
 **File:** `TaxReturnComputeServiceTest.java`
 
-| Test method (approx. line) | Coverage |
+| Test method | Coverage |
 |---|---|
-| `computesSchedule1PartIiAndForm1040Line10FromIncomeAdjustmentsForms()` (~6729) | Educator $1k + alimony $2k + IRA $3k + jury duty $100 → line26=$6,100; line10=$6,100 |
-| `flagsIncomeAdjustmentsStatementAndOutOfScopeGaps()` (~6803) | Statement gate missing → blocking flag; SE line 15 → blocking flag |
-| `olympicLine8mAutoFillsLine24c()` (~6889) | line 8m = $50k → line24c auto-populated $50k when no user entry |
-| `userEnteredLine24cOverridesOlympicAutoCompute()` (~6917) | line 8m = $50k + user 24c = $30k → line24c = $30k (user wins) |
-| `alimonyWithoutDateEmitsNonBlockingFlag()` (~7072) | Alimony entered without agreement date → non-blocking advisory flag |
+| `computesSchedule1PartIiAndForm1040Line10FromIncomeAdjustmentsForms()` | Educator $1k + alimony $2k + IRA $3k + jury duty $100 → line26=$6,100; line10=$6,100 |
+| `flagsIncomeAdjustmentsStatementAndOutOfScopeGaps()` | Statement gate missing → blocking flag; SE line 15 → blocking flag |
+| `olympicLine8mAutoFillsLine24c()` | line 8m = $50k → line24c auto-populated $50k when no user entry |
+| `userEnteredLine24cOverridesOlympicAutoCompute()` | line 8m = $50k + user 24c = $30k → line24c = $30k (user wins) |
+| `alimonyWithoutDateEmitsNonBlockingFlag()` | Alimony entered without agreement date → non-blocking advisory flag |
 
 **Unit test coverage gaps:**
 - No test for line 11 educator cap enforcement (no test that $400 entry is capped at $300)

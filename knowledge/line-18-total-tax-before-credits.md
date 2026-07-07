@@ -43,8 +43,10 @@ line24 = line22 + line23            (total tax)
 
 ## 3. Backend Implementation
 
+> *Convention (added 2026-07-07, knowledge-file line-number sweep):* code references use stable function/method names rather than source-code line numbers, which drift with refactors. IRS form/schedule line references (line 1c, Schedule 1 line 21, etc.) are stable and retained.
+
 ### Method: `computeLine18(Form1040, String uid)`
-Location: `TaxReturnComputeService.java` ~line 8566
+Location: `TaxReturnComputeService.java`
 
 ```java
 private void computeLine18(Form1040 form1040, String uid) {
@@ -71,12 +73,12 @@ private void computeLine18(Form1040 form1040, String uid) {
 
 | Order | Location | Reason |
 |---|---|---|
-| Primary | After `computeLine17()` (prepare ~line 825) | Normal computation pass |
-| Secondary | Inside `correctLine17ForFtc()` (~line 8547) | G-new-1 fix: refresh after FTC correction changes line 17 |
+| Primary | After `computeLine17()` (primary computation pass) | Normal computation pass |
+| Secondary | Inside `correctLine17ForFtc()` | G-new-1 fix: refresh after FTC correction changes line 17 |
 
 ### Related method: `wireLine17ToOutputs()`
 
-Sets both `taxAndCredits.alternativeMinimumTax` and `taxAndCredits.additionalTaxSchedule2` to Form 6251 line 11 (or null if zero). The comment at line 8486 explicitly notes: `"Wire Schedule 2 line 3 total (line1z + line2 = 0 + amt)"`.
+Sets both `taxAndCredits.alternativeMinimumTax` and `taxAndCredits.additionalTaxSchedule2` to Form 6251 line 11 (or null if zero). The comment in `wireLine17ToOutputs()` explicitly notes: `"Wire Schedule 2 line 3 total (line1z + line2 = 0 + amt)"`.
 
 ---
 

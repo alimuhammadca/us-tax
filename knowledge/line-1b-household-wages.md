@@ -14,6 +14,8 @@ reporting location, not a threshold gate. The $2,800 (2025) figure is the employ
 
 ## Three-gate formula (spec and code)
 
+> *Convention (added 2026-07-07, knowledge-file line-number sweep):* code references use stable function/method names rather than source-code line numbers, which drift with refactors. IRS form/schedule line references (line 1c, Schedule 1 line 21, etc.) are stable and retained.
+
 `1b = Σ householdEmployers[].wages` where **all three** gates pass:
 
 | Gate | YAML field | Backend check |
@@ -22,14 +24,14 @@ reporting location, not a threshold gate. The $2,800 (2025) figure is the employ
 | Passes control test (employee, not self-employed) | `householdEmployeeUnderControlTest == true` | `getBoolean(data, "householdEmployeeUnderControlTest")` |
 | No W-2 received | `householdReceivedW2 == false` | `getBoolean(data, "householdReceivedW2")` |
 
-Code: `TaxReturnComputeService.householdEmployeeAmount()` (around line 10978) called by
-`sumHouseholdEmployeeWages()` (around line 10966), which aggregates taxpayer + spouse
+Code: `TaxReturnComputeService.householdEmployeeAmount()` called by
+`sumHouseholdEmployeeWages()`, which aggregates taxpayer + spouse
 respecting the MFS guard.
 
 Outer gate: `hasEmploymentIncome == true` is enforced at TWO layers (since 2026-05-05):
 the UI's `normalizeForSave` clears `householdWork` to null when `hasEmploymentIncome != true`,
 AND `householdEmployeeAmount()` returns null at the top when `hasEmploymentIncome != true`
-(mirroring the `validateHouseholdEmployeeControlTest()` pattern at line 2680). Defense-in-depth
+(mirroring the `validateHouseholdEmployeeControlTest()` pattern). Defense-in-depth
 — see Issue 2 below for the full fix history.
 
 ---
@@ -51,7 +53,7 @@ AND `householdEmployeeAmount()` returns null at the top when `hasEmploymentIncom
 - `hasEmploymentIncome == true` AND `householdWork == true` AND
   `householdEmployeeUnderControlTest == false`
 
-Emitted by `validateHouseholdEmployeeControlTest()` at line 2430. Signals that the worker
+Emitted by `validateHouseholdEmployeeControlTest()`. Signals that the worker
 appears to be self-employed — Schedule C path, not Line 1b.
 
 ---

@@ -53,6 +53,8 @@ Line 1i (`income.nontaxableCombatPayElection`) is **explicitly excluded** from l
 
 ## Backend Implementation
 
+> *Convention (added 2026-07-07, knowledge-file line-number sweep):* code references use stable function/method names rather than source-code line numbers, which drift with refactors. IRS form/schedule line references (line 1c, Schedule 1 line 21, etc.) are stable and retained.
+
 **File:** `C:\us-tax\us-tax-be\src\main\java\com\ustax\microservices\TaxReturnComputeService.java`
 
 **Method containing line 1z computation:** `buildIncome()` (inline, not a separate named method)
@@ -107,7 +109,7 @@ The `Income` class also stores all sub-line values:
 
 If all sub-lines 1a through 1h are null, `addNonNull` propagates null and `line1z` remains null. The backend then does not call `income.setTotalWages()`, leaving the field absent from the JSON output.
 
-**Exception:** When a W-2 employment flag exists but `line1a` is null, `income.setWages(BigDecimal.ZERO)` is set explicitly (see `hasEmploymentFlag` check at line 3801).
+**Exception:** When a W-2 employment flag exists but `line1a` is null, `income.setWages(BigDecimal.ZERO)` is set explicitly (see `hasEmploymentFlag` check in `buildIncome()`).
 
 ---
 

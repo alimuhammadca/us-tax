@@ -45,7 +45,9 @@ Form1040.line33 = Form1040.line25d + Form1040.line26 + Form1040.line32
 
 ## 3. Backend Method
 
-**File:** `TaxReturnComputeService.java` lines 15347–15392 (post-fix)
+> *Convention (added 2026-07-07, knowledge-file line-number sweep):* code references use stable function/method names rather than source-code line numbers, which drift with refactors. IRS form/schedule line references (line 1c, Schedule 1 line 21, etc.) are stable and retained.
+
+**File:** `TaxReturnComputeService.java`
 
 ```java
 private BigDecimal computeLine26EstimatedTax(
@@ -127,18 +129,18 @@ prepare() {
   ...
 }
 
-computeLine31ThroughLine38() {                              // line 15133
-  String filingStatusStr = normalizeFilingStatus(...)       // line 15209
-  boolean isMfs = "Married filing separately".equals(...)  // line 15210
-  BigDecimal line26 = computeLine26EstimatedTax(            // line 15212
+computeLine31ThroughLine38() {
+  String filingStatusStr = normalizeFilingStatus(...)
+  boolean isMfs = "Married filing separately".equals(...)
+  BigDecimal line26 = computeLine26EstimatedTax(
       estimatedTaxPaymentsTaxpayer,
       estimatedTaxPaymentsSpouse,
       isMfs)
-  payments.setEstimatedTaxPayments(line26)                  // line 15213
+  payments.setEstimatedTaxPayments(line26)
   ...
   line33 = safeAmount(totalWithholding)
          + safeAmount(line26)
-         + safeAmount(line32)                               // line 15257
+         + safeAmount(line32)
 }
 ```
 

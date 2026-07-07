@@ -23,6 +23,8 @@ IRS printed instruction: *"Subtract line 14 from line 11b. If zero or less, ente
 
 ## 2. Backend implementation
 
+> *Convention (added 2026-07-07, knowledge-file line-number sweep):* code references use stable function/method names rather than source-code line numbers, which drift with refactors. IRS form/schedule line references (line 1c, Schedule 1 line 21, etc.) are stable and retained.
+
 ### Location
 
 `TaxReturnComputeService.java` — no single named method; computed at three points inside `prepare()`.
@@ -31,11 +33,11 @@ IRS printed instruction: *"Subtract line 14 from line 11b. If zero or less, ente
 
 Line 15 is set at three separate locations during `prepare()`, always using `subtractNonNegative(agi, line14)`:
 
-| Point | Approx line | Trigger | Notes |
-|---|---|---|---|
-| **First pass** | ~710 | After line 14 is assembled, before QBI second pass | Interim value; may be overridden |
-| **Second pass (QBI)** | ~761 | After `computeLine13a()` second pass with final line 13b | Correct final value when QBI applies |
-| **Fallback** | ~783 | When QBI second pass is skipped (no QBI sources) | Final value when no QBI |
+| Point | Trigger | Notes |
+|---|---|---|
+| **First pass** | After line 14 is assembled, before QBI second pass | Interim value; may be overridden |
+| **Second pass (QBI)** | After `computeLine13a()` second pass with final line 13b | Correct final value when QBI applies |
+| **Fallback** | When QBI second pass is skipped (no QBI sources) | Final value when no QBI |
 
 All three paths call:
 ```java
@@ -90,7 +92,7 @@ The Foreign Earned Income Tax Worksheet also gates on line 15 being > 0 before p
 ## 3. Frontend implementation
 
 - Component: `form-tax-return-1040.component.ts`
-- PDF mapping (line 304): `values['line15_taxable_income'] = this.formatAmount(form.deductions?.taxableIncome)`
+- PDF mapping: `values['line15_taxable_income'] = this.formatAmount(form.deductions?.taxableIncome)`
 - **Tech debt:** reads `taxableIncome` (legacy field); interface does not declare `line15TaxableIncome`
 - PDF CSV field: `line15_taxable_income` → `f2_06[0]` on page 2 (coordinates: 504, 636.001, 576, 648)
 

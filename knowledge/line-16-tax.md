@@ -36,11 +36,13 @@ The Tax Table and Tax Computation Worksheet use the same bracket formulas (`comp
 
 ## 3. Backend Implementation
 
+> *Convention (added 2026-07-07, knowledge-file line-number sweep):* code references use stable function/method names rather than source-code line numbers, which drift with refactors. IRS form/schedule line references (line 1c, Schedule 1 line 21, etc.) are stable and retained.
+
 ### Primary method
 
-`computeLine16()` in `TaxReturnComputeService.java` (~line 1300)
+`computeLine16()` in `TaxReturnComputeService.java`
 
-Called from `prepare()` at ~line 811:
+Called from `prepare()`:
 ```java
 computeLine16(form1040, filingStatus, scheduleD, form8814List, form4972Taxpayer, form4972Spouse,
     form2555Taxpayer, form2555Spouse, kiddieIncomeTaxpayer, line16TaxTaxpayer, uid);
@@ -93,18 +95,18 @@ Sets `box3Code = "ECR"`.
 - `box2Form4972Tax`, `box2Checked`
 - `ecrBox3Tax`, `box3Checked`, `box3Code`
 
-### isScheduleDTaxWorksheetRequired() (~line 1442)
+### isScheduleDTaxWorksheetRequired()
 Required when:
 - Schedule D line 18 (28% rate gain) > 0 OR line 19 (§1250 gain) > 0
 - AND Schedule D line 15 > 0 AND line 16 > 0
 
-### isQDCGWorksheetRequired() (~line 1467)
+### isQDCGWorksheetRequired()
 Required when (not using Schedule D worksheet) AND any of:
 - qualified dividends > 0
 - capital gain distributions on line 7a without Schedule D
 - Schedule D filed with both lines 15 and 16 positive
 
-### computeTaxBracket() (~line 1514)
+### computeTaxBracket()
 Full bracket table covering all ranges from $0 (supports both Tax Table and TCW paths).
 2025 bracket cutoffs:
 - Single: 10%@0–11925, 12%@11925–48475, 22%@48475–103350, 24%@103350–197300, 32%@197300–250525, 35%@250525–626350, 37%@626350+
@@ -112,7 +114,7 @@ Full bracket table covering all ranges from $0 (supports both Tax Table and TCW 
 - MFS: same as Single through 250525, then 35%@250525–375800, 37%@375800+
 - HOH: 10%@0–17000, 12%@17000–64850, 22%@64850–103350, 24%@103350–197300, 32%@197300–250500, 35%@250500–626350, 37%@626350+
 
-### computeQDCGWorksheet() (~line 1580)
+### computeQDCGWorksheet()
 2025 QDCG thresholds:
 - 0% ceiling: Single $48,350 / MFJ+QSS $96,700 / MFS $48,350 / HOH $64,750
 - 20% floor: Single $533,400 / MFJ+QSS $600,050 / MFS $300,025 / HOH $566,700
@@ -124,11 +126,11 @@ Algorithm:
 4. Calculate portion at 0%, 15%, 20% based on where income falls relative to thresholds
 5. `total = computeTaxBracket(ordinaryIncome) + 0.15×fifteenPortion + 0.20×twentyPortion`
 
-### computeScheduleDTaxWorksheet() (~line 1688)
+### computeScheduleDTaxWorksheet()
 Handles 28%-rate gains (collectibles, §1202) and unrecaptured §1250 gains (cap 25%).
 Simplified relative to IRS worksheet — treats special gains as subsets of netLtcg.
 
-### computeForeignEarnedIncomeTaxWorksheet() (~line 1780)
+### computeForeignEarnedIncomeTaxWorksheet()
 Lines A–F (using internal variable names C, D, E, F):
 ```
 lineC = line15 (taxable income) + totalExclusion (Form2555 lines 45+50 both taxpayer and spouse)

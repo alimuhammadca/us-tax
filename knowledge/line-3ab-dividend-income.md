@@ -168,9 +168,11 @@ Schedule B is a shared object between lines 2a/2b (Part I — interest) and line
 
 ## Backend implementation
 
-**Primary orchestration:** `computeInterestIncome()` in `TaxReturnComputeService.java` (~line 3922)  
-**Dividend pass:** `computeDividendIncome()` (~line 4282) — calls `computeDividendForPerson()` for taxpayer then spouse  
-**Per-person aggregation:** `computeDividendForPerson()` (~line 4345) — reads 1099-DIV entries, applies personal form adjustments  
+> *Convention (added 2026-07-07, knowledge-file line-number sweep):* code references use stable function/method names rather than source-code line numbers, which drift with refactors. IRS form/schedule line references (line 1c, Schedule 1 line 21, etc.) are stable and retained.
+
+**Primary orchestration:** `computeInterestIncome()` in `TaxReturnComputeService.java`  
+**Dividend pass:** `computeDividendIncome()` — calls `computeDividendForPerson()` for taxpayer then spouse  
+**Per-person aggregation:** `computeDividendForPerson()` — reads 1099-DIV entries, applies personal form adjustments  
 **Schedule B builder:** `buildScheduleB()` — populates `dividendItems` list and `line6TotalOrdinaryDividends`
 
 **Internal record types:**
@@ -220,7 +222,7 @@ File: `TaxReturnComputeServiceTest.java`
 |---|---|
 | `dividendBox13FlowsToForm6251Line2g` | 1099-DIV box 13 + 1099-INT box 9 both contribute to Form 6251 line 2g |
 | `scheduleBDividendItemsArePopulated` | Per-payer dividend rows in `scheduleB.dividendItems`; Schedule B generated when line 3b > $1,500 |
-| Full MFJ dividend test (~line 1595) | Taxpayer + spouse 1099-DIV attribution; manual amounts; nominee subtraction; disallowance categories; Schedule B line 6 |
+| Full MFJ dividend test (verified 2026-07-07) | Taxpayer + spouse 1099-DIV attribution; manual amounts; nominee subtraction; disallowance categories; Schedule B line 6 |
 | `flagsWhenDividendStatementsMissingForEnabledWorkflow` | Three blocking flags when upload gates not satisfied |
 | `computesDividendIncomeWithoutScheduleBWhenBelowThresholdAndNoNominee` | Low-dividend path; no Schedule B |
 

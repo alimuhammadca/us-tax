@@ -18,7 +18,7 @@ Other taxes, including self-employment tax, from Schedule 2, line 21
 | Java model field | `TaxAndCredits.otherTaxes` |
 | Getter | `getOtherTaxes()` |
 | Setter | `setOtherTaxes(BigDecimal)` |
-| Java model class | `C:\us-tax\us-tax-be\src\main\java\com\ustax\model\output\TaxAndCredits.java` (line 26) |
+| Java model class | `C:\us-tax\us-tax-be\src\main\java\com\ustax\model\output\TaxAndCredits.java` |
 | Frontend TS field | `form.taxAndCredits?.otherTaxes` |
 | PDF semantic key | `line23_other_taxes_schedule2_line21` |
 | PDF AcroForm field | `topmostSubform[0].Page2[0].f2_15[0]` |
@@ -91,13 +91,15 @@ Schedule2.line21 = line4 + line7 + line8 + line9 + line10 + line11 + line12
 
 ## 4. Backend Implementation
 
+> *Convention (added 2026-07-07, knowledge-file line-number sweep):* code references use stable function/method names rather than source-code line numbers, which drift with refactors. IRS form/schedule line references (line 1c, Schedule 1 line 21, etc.) are stable and retained.
+
 ### Methods that write `TaxAndCredits.otherTaxes` (line 23)
 
 **File:** `C:\us-tax\us-tax-be\src\main\java\com\ustax\microservices\TaxReturnComputeService.java`
 
-#### `applyAdditionalSocialSecurityMedicareTaxes()` — lines 11099–11144
+#### `applyAdditionalSocialSecurityMedicareTaxes()`
 
-Called from the main compute flow at line 589. Sets individual Schedule 2 Part II sub-item fields only — does **not** set `totalOtherTaxes` or `TaxAndCredits.otherTaxes` (those are handled by `finalizeSchedule2OtherTaxes()`):
+Called from the main compute flow (`prepare()`). Sets individual Schedule 2 Part II sub-item fields only — does **not** set `totalOtherTaxes` or `TaxAndCredits.otherTaxes` (those are handled by `finalizeSchedule2OtherTaxes()`):
 
 ```
 tipTax         = TipComputation.totalTipTax()          → Schedule2OtherTaxes.unreportedTipIncomeTax (line 5)
@@ -113,18 +115,18 @@ if form8959.line18TotalAdditionalMedicareTax != null:
     Schedule2OtherTaxes.additionalMedicareTax = form8959.line18TotalAdditionalMedicareTax  (line 11, corrected — G3 fix)
 ```
 
-#### `applyForm5329TaxToSchedule2()` — lines 11154–11178
+#### `applyForm5329TaxToSchedule2()`
 
-Called from main compute flow at line 623. Sets the Form 5329 sub-item field only:
+Called from main compute flow (`prepare()`). Sets the Form 5329 sub-item field only:
 
 ```
 iraTax = form5329.getAdditionalTaxOnEarlyDistributions()
 Schedule2OtherTaxes.additionalTaxOnIras = iraTax   (line 8 — sub-item only)
 ```
 
-#### `finalizeSchedule2OtherTaxes()` — line 11197 *(added 2026-04-19, G5 fix)*
+#### `finalizeSchedule2OtherTaxes()` *(added 2026-04-19, G5 fix)*
 
-Called just before `computeLine20ThroughLine24()` (~line 1065 of `prepare()`). Sums all sub-item fields into a single authoritative total:
+Called just before `computeLine20ThroughLine24()` (in `prepare()`). Sums all sub-item fields into a single authoritative total:
 
 ```
 line7  = totalAdditionalSocialSecurityMedicareTax (lines 5+6 subtotal)
@@ -137,7 +139,7 @@ Schedule2OtherTaxes.totalOtherTaxes = grandTotal
 TaxAndCredits.otherTaxes = grandTotal > 0 ? grandTotal : null
 ```
 
-#### `computeLine20ThroughLine24()` — lines 15023–15056
+#### `computeLine20ThroughLine24()`
 
 Reads `TaxAndCredits.otherTaxes` as finalized by `finalizeSchedule2OtherTaxes()`:
 
@@ -150,12 +152,12 @@ tac.setTotalTax(line24 > 0 ? line24 : BigDecimal.ZERO)
 **Compute order (call sites in main `prepare()`):**
 
 ```
-589   applyAdditionalSocialSecurityMedicareTaxes()  → writes Schedule2 sub-items: lines 5, 6, 7, 11 (Part I)
-      [buildForm8959() supersedes line 11 with Part I + III RRTA total — G3 fix]
-623   applyForm5329TaxToSchedule2()                 → writes Schedule2 sub-item: line 8
-...   [all other methods that do NOT touch otherTaxes]
-1065  finalizeSchedule2OtherTaxes()                 → sums all sub-items → totalOtherTaxes + TaxAndCredits.otherTaxes
-1052  computeLine20ThroughLine24()                  → reads tac.otherTaxes → line23; computes line24
+applyAdditionalSocialSecurityMedicareTaxes()  → writes Schedule2 sub-items: lines 5, 6, 7, 11 (Part I)
+    [buildForm8959() supersedes line 11 with Part I + III RRTA total — G3 fix]
+applyForm5329TaxToSchedule2()                 → writes Schedule2 sub-item: line 8
+    [all other methods that do NOT touch otherTaxes]
+finalizeSchedule2OtherTaxes()                 → sums all sub-items → totalOtherTaxes + TaxAndCredits.otherTaxes
+computeLine20ThroughLine24()                  → reads tac.otherTaxes → line23; computes line24
 ```
 
 ---
@@ -164,13 +166,13 @@ tac.setTotalTax(line24 > 0 ? line24 : BigDecimal.ZERO)
 
 ### PDF fill in Form 1040
 
-**File:** `C:\us-tax\us-tax-ui\src\app\forms\form-tax-return-1040.component.ts` (line 328)
+**File:** `C:\us-tax\us-tax-ui\src\app\forms\form-tax-return-1040.component.ts`
 
 ```typescript
 values['line23_other_taxes_schedule2_line21'] = this.formatAmount(form.taxAndCredits?.otherTaxes);
 ```
 
-TypeScript interface field: `TaxAndCreditsView.otherTaxes` (line 146 of the same file).
+TypeScript interface field: `TaxAndCreditsView.otherTaxes`.
 
 ### Schedule 2 display component
 
@@ -198,13 +200,13 @@ The component renders when `schedule2()` is non-null.
 
 | Test name | What it asserts about line 23 / otherTaxes |
 |---|---|
-| `form5329EarlyDistributionTaxWiresToSchedule2Line8AndLine23` (line 14051) | `schedule2.getOtherTaxes().getAdditionalTaxOnIras() == 1000`; `tac.getOtherTaxes() == 1000` |
-| `form5329AbsentWhenNoPensionEarlyDistribution` (line 14100) | `schedule2.getOtherTaxes().getAdditionalTaxOnIras() == null` — line 23 not set by Form 5329 |
-| Tip income test at ~line 99 | `schedule2.getOtherTaxes().getUnreportedTipIncomeTax() == 14` |
-| Tip+Medicare tax test at ~line 137 | `schedule2.getOtherTaxes().getAdditionalMedicareTax() == 90`; `getTotalOtherTaxes() == 855` |
-| Medicare-only tests at ~lines 5142, 6863 | `schedule2.getOtherTaxes().getAdditionalMedicareTax() == 90` |
-| Uncollected SS/Medicare at ~line 5111 | `schedule2.getOtherTaxes().getUncollectedSocialSecurityMedicareTaxOnWages() == 765` |
-| Line 14097 smoke assertion | `tac.getOtherTaxes() == 1000` when Form 5329 penalty present |
+| `form5329EarlyDistributionTaxWiresToSchedule2Line8AndLine23` | `schedule2.getOtherTaxes().getAdditionalTaxOnIras() == 1000`; `tac.getOtherTaxes() == 1000` |
+| `form5329AbsentWhenNoPensionEarlyDistribution` | `schedule2.getOtherTaxes().getAdditionalTaxOnIras() == null` — line 23 not set by Form 5329 |
+| Tip income test (verified 2026-07-07) | `schedule2.getOtherTaxes().getUnreportedTipIncomeTax() == 14` |
+| Tip+Medicare tax test (verified 2026-07-07) | `schedule2.getOtherTaxes().getAdditionalMedicareTax() == 90`; `getTotalOtherTaxes() == 855` |
+| Medicare-only tests (verified 2026-07-07) | `schedule2.getOtherTaxes().getAdditionalMedicareTax() == 90` |
+| Uncollected SS/Medicare (verified 2026-07-07) | `schedule2.getOtherTaxes().getUncollectedSocialSecurityMedicareTaxOnWages() == 765` |
+| Smoke assertion (verified 2026-07-07) | `tac.getOtherTaxes() == 1000` when Form 5329 penalty present |
 
 No unit test currently asserts that `line24 = line22 + line23` when `otherTaxes > 0` from tip tax (only the Form 5329 path verifies that chain end-to-end).
 
@@ -219,11 +221,11 @@ Dedicated spec created 2026-04-19: `line23-other-taxes.spec.ts`.
 | `line23-other-taxes.spec.ts` | "Line 23 — Form 5329 early withdrawal penalty alone flows to line 23" | Form 5329 1099-R penalty → `schedule2.otherTaxes.additionalTaxOnIras`; `taxAndCredits.otherTaxes` equals penalty |
 | `line23-other-taxes.spec.ts` | "Line 23 — Additional Medicare Tax alone flows to line 23" | $300k income → `schedule2.otherTaxes.additionalMedicareTax` > 0; `taxAndCredits.otherTaxes` equals AMT amount |
 | `line23-other-taxes.spec.ts` | "Line 23 — Form 5329 penalty and Additional Medicare Tax both flow to combined line 23" | Both present → `taxAndCredits.otherTaxes` = sum of IRA penalty + AMT |
-| `line5abc-pension-withdrawals.spec.ts` | "Form 5329 penalty wires through Schedule 2 line 8 to Form 1040 line 23" (line 313) | `schedule2.otherTaxes.additionalTaxOnIras == 500`; `form1040.taxAndCredits.otherTaxes == 500` |
-| `line5abc-pension-withdrawals.spec.ts` | "hasEarlyDistributionAdditionalTaxForForm5329 false suppresses Form 5329 and clears line 23" (line 354) | `schedule2.otherTaxes.additionalTaxOnIras` null; line 23 not populated |
-| `form8959-additional-medicare-tax.spec.ts` | Two scenarios (lines 91, 135) | `schedule2.otherTaxes.additionalMedicareTax == 180` (indirectly exercises line 23 accumulation) |
-| `line1c-tip-income.spec.ts` | Multiple scenarios (lines 91, 139, etc.) | `schedule2.otherTaxes.unreportedTipIncomeTax` (Form 4137 → Schedule 2 line 5) |
-| `line1g-uncollected-ss-medicare.spec.ts` | Line 100 | `schedule2.otherTaxes.uncollectedSocialSecurityMedicareTaxOnWages == 765` |
+| `line5abc-pension-withdrawals.spec.ts` | "Form 5329 penalty wires through Schedule 2 line 8 to Form 1040 line 23" | `schedule2.otherTaxes.additionalTaxOnIras == 500`; `form1040.taxAndCredits.otherTaxes == 500` |
+| `line5abc-pension-withdrawals.spec.ts` | "hasEarlyDistributionAdditionalTaxForForm5329 false suppresses Form 5329 and clears line 23" | `schedule2.otherTaxes.additionalTaxOnIras` null; line 23 not populated |
+| `form8959-additional-medicare-tax.spec.ts` | Two scenarios (verified 2026-07-07) | `schedule2.otherTaxes.additionalMedicareTax == 180` (indirectly exercises line 23 accumulation) |
+| `line1c-tip-income.spec.ts` | Multiple scenarios (verified 2026-07-07) | `schedule2.otherTaxes.unreportedTipIncomeTax` (Form 4137 → Schedule 2 line 5) |
+| `line1g-uncollected-ss-medicare.spec.ts` | (verified 2026-07-07) | `schedule2.otherTaxes.uncollectedSocialSecurityMedicareTaxOnWages == 765` |
 
 ---
 

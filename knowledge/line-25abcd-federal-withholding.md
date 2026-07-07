@@ -77,26 +77,28 @@ Implemented sources:
 
 ## 4. Backend Implementation
 
+> *Convention (added 2026-07-07, knowledge-file line-number sweep):* code references use stable function/method names rather than source-code line numbers, which drift with refactors. IRS form/schedule line references (line 1c, Schedule 1 line 21, etc.) are stable and retained.
+
 **File:** `TaxReturnComputeService.java`
-**Method:** `computeLine31ThroughLine38()` — lines 15133–15335
-**Sub-line block:** lines 15173–15205
+**Method:** `computeLine31ThroughLine38()`
+**Sub-line block:** in `computeLine31ThroughLine38()`
 
 ### Helper methods
 
-| Helper | Location | Purpose |
-|---|---|---|
-| `sumFederalWithholdingFromEntries(entries)` | line 15914 | Reads `federalIncomeTaxWithheldAmount` from each entry; skips null/zero |
-| `sumSsa1099Withholding(entries)` | line 15934 | Reads `voluntaryFederalIncomeTaxWithheldAmount` — SSA-1099 only |
-| `sumFederalWithholdingFromMultipleLists(lists...)` | line 15951 | Variadic wrapper — delegates to `sumFederalWithholdingFromEntries()` |
+| Helper | Purpose |
+|---|---|
+| `sumFederalWithholdingFromEntries(entries)` | Reads `federalIncomeTaxWithheldAmount` from each entry; skips null/zero |
+| `sumSsa1099Withholding(entries)` | Reads `voluntaryFederalIncomeTaxWithheldAmount` — SSA-1099 only |
+| `sumFederalWithholdingFromMultipleLists(lists...)` | Variadic wrapper — delegates to `sumFederalWithholdingFromEntries()` |
 
-### Line 25a (lines 15173–15174)
+### Line 25a
 
 ```java
 BigDecimal withholdingW2 = sumFederalWithholdingFromEntries(w2Entries);
 payments.setWithholdingW2(withholdingW2);
 ```
 
-### Line 25b (lines 15176–15187)
+### Line 25b
 
 ```java
 BigDecimal withholding1099 = sumFederalWithholdingFromMultipleLists(
@@ -109,7 +111,7 @@ withholding1099 = addNonNull(withholding1099, sumSsa1099Withholding(formSsa1099E
 payments.setWithholding1099(withholding1099);
 ```
 
-### Line 25c (lines 15189–15199)
+### Line 25c
 
 ```java
 BigDecimal withholdingOther = sumFederalWithholdingFromEntries(formW2gEntries);
@@ -120,7 +122,7 @@ if (form8959 != null && form8959.getLine24TotalAmtWithheld() != null) {
 payments.setWithholdingOther(withholdingOther);
 ```
 
-### Line 25d (lines 15201–15205)
+### Line 25d
 
 ```java
 BigDecimal totalWithholding = roundMoney(safeAmount(withholdingW2)
@@ -133,7 +135,7 @@ payments.setTotalWithholding(totalWithholding.compareTo(BigDecimal.ZERO) > 0 ? t
 
 ## 5. Form 8959 Part V → Line 25c Wiring
 
-`buildForm8959()` is called from `prepare()` at line 591. Part V (lines 22–24):
+`buildForm8959()` is called from `prepare()`. Part V (lines 22–24):
 
 ```java
 line19 = sumW2MedicareTaxWithheld(w2Entries)       // W-2 box 6 — total Medicare tax withheld
@@ -145,7 +147,7 @@ line24 = addNonNull(line22, line23)
 form.setLine24TotalAmtWithheld(line24)
 ```
 
-Then in `computeLine31ThroughLine38()` at line 15194–15197, `form8959.getLine24TotalAmtWithheld()` is added to `withholdingOther`.
+Then in `computeLine31ThroughLine38()`, `form8959.getLine24TotalAmtWithheld()` is added to `withholdingOther`.
 
 ---
 

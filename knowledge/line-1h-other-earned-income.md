@@ -130,7 +130,7 @@ The Form 1040 PDF has two fields for line 1h:
 3. If it fits: write the description directly into `line1h_statement_text`; no separate page appended.
 4. If it doesn't fit: write `"Refer to attached sheet"` into `line1h_statement_text` and append the separate statement page via `appendLine1hStatementPage()`.
 
-This follows **UI Rule 44** (write-in description field overflow). Fix in `form-tax-return-1040.component.ts` save flow (lines 452–463).
+This follows **UI Rule 44** (write-in description field overflow). Fix in `form-tax-return-1040.component.ts` save flow.
 
 ---
 
@@ -175,7 +175,10 @@ E2E test added: `Post-minimum-retirement-age disability: line 1h is null, pensio
 | `otherEarnedIncomeStatements` | `form1040.income.otherEarnedIncomeStatements` | List of description strings for the return display |
 
 ### Backend Record
-`OtherEarnedIncomeComputation` — private record in `TaxReturnComputeService.java` line 16478:
+
+> *Convention (added 2026-07-07, knowledge-file line-number sweep):* code references use stable function/method names rather than source-code line numbers, which drift with refactors. IRS form/schedule line references (line 1c, Schedule 1 line 21, etc.) are stable and retained.
+
+`OtherEarnedIncomeComputation` — private record in `TaxReturnComputeService.java`:
 ```
 record OtherEarnedIncomeComputation(BigDecimal line1h, List<String> statements)
 ```
@@ -184,9 +187,9 @@ record OtherEarnedIncomeComputation(BigDecimal line1h, List<String> statements)
 
 ## 5. Compute Method
 
-**Method:** `computeOtherEarnedIncome()` in `TaxReturnComputeService.java` (starting line 8569)
+**Method:** `computeOtherEarnedIncome()` in `TaxReturnComputeService.java`
 
-**Called from:** `prepare()` at line 343, result stored as `otherEarned`.
+**Called from:** `prepare()`, result stored as `otherEarned`.
 
 **Execution order:** Called after W-2 entries are loaded and after `you`/`spouse` identification forms are read. No upstream computation dependencies.
 
@@ -275,6 +278,6 @@ Follows **UI Rule 44**. Implemented in `form-tax-return-1040.component.ts` save 
 - IRC § 402(g)(1) — 2025 elective deferral limit $23,500
 - IRC § 408(p)(2)(E) — 2025 SIMPLE limit $16,500
 - IRS Rev. Proc. 2024-40 — 2025 retirement plan limit adjustments
-- Local backend: `C:\us-tax\us-tax-be\src\main\java\com\ustax\microservices\TaxReturnComputeService.java` (method `computeOtherEarnedIncome`, line 8569)
+- Local backend: `C:\us-tax\us-tax-be\src\main\java\com\ustax\microservices\TaxReturnComputeService.java` (method `computeOtherEarnedIncome`)
 - Local frontend: `C:\us-tax\us-tax-ui\src\app\forms\form-other-earned-income.component.ts`
 - Local YAML: `C:\us-tax\yamls\1h-other-earned-income.yaml`

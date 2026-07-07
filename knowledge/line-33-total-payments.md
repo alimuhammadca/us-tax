@@ -69,9 +69,11 @@ Lines 34 and 37 are mutually exclusive. Line 38 is added **after** line 37 is se
 
 ## 4. Backend Implementation
 
+> *Convention (added 2026-07-07, knowledge-file line-number sweep):* code references use stable function/method names rather than source-code line numbers, which drift with refactors. IRS form/schedule line references (line 1c, Schedule 1 line 21, etc.) are stable and retained.
+
 ### Core Method
 
-**File:** `TaxReturnComputeService.java` lines 19800–20015 (line 33 wiring at 19937-19940)
+**Method:** `computeLine31ThroughLine38()` in `TaxReturnComputeService.java` (line 33 wiring)
 
 ```java
 // Line 33: total payments
@@ -98,7 +100,7 @@ else if (totalTax.compareTo(line33) > 0) {
 
 ### Form 2210 (Line 38)
 
-**File:** `TaxReturnComputeService.java` line 20090+
+**Method:** `computeForm2210()` in `TaxReturnComputeService.java` (penalty wired into `AmountYouOwe` by `prepare()`).
 
 Called after `computeLine31ThroughLine38()`. When `totalPenalty > 0` and method != WAIVED:
 

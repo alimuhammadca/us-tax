@@ -22,17 +22,19 @@ Form1040.line33 = line25d + line26 + line32
 
 ## 2. Backend Implementation
 
+> *Convention (added 2026-07-07, knowledge-file line-number sweep):* code references use stable function/method names rather than source-code line numbers, which drift with refactors. IRS form/schedule line references (line 1c, Schedule 1 line 21, etc.) are stable and retained.
+
 **File:** `TaxReturnComputeService.java`
 
-| Method | Lines | Purpose |
-|---|---|---|
-| `computeLine27aEIC()` | 15702–15789 | Main EIC computation — all gates, lookup, result |
-| `eicTableLookup()` | 15795–15850 | Phase-in / plateau / phaseout formula; FLOOR rounding |
-| `computeInvestmentIncomeForEic()` | 15878–15890 | Investment income ceiling test (2a + 2b + 3b + 7a positive) |
-| `countEicQualifyingChildren()` | 15900–15930 | Count qualifying children from personal form array |
-| `sumW2WagesBySsn()` | 15856–15871 | W-2 box 1 wages, filtered by SSN or null (MFJ = all) |
+| Method | Purpose |
+|---|---|
+| `computeLine27aEIC()` | Main EIC computation — all gates, lookup, result |
+| `eicTableLookup()` | Phase-in / plateau / phaseout formula; FLOOR rounding |
+| `computeInvestmentIncomeForEic()` | Investment income ceiling test (2a + 2b + 3b + 7a positive) |
+| `countEicQualifyingChildren()` | Count qualifying children from personal form array |
+| `sumW2WagesBySsn()` | W-2 box 1 wages, filtered by SSN or null (MFJ = all) |
 
-**Constant:** `INVESTMENT_INCOME_CEILING_EIC_2025 = new BigDecimal("11950")` at line 122
+**Constant:** `INVESTMENT_INCOME_CEILING_EIC_2025 = new BigDecimal("11950")`
 
 **Output field:** `Payments.earnedIncomeCredit` (BigDecimal, null when EIC = 0 or disqualified)
 

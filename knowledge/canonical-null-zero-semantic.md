@@ -50,7 +50,7 @@ When writing a compute helper, ask: *"Would a user with no relevant inputs at al
 
 1. **Line 1z null propagation** depends on this rule. When all 8 sub-lines (1a–1h) return null on absent inputs, the addNonNull chain correctly produces `line1z = null`, and the Form 1040 line 1z cell renders blank for filers with no wage activity.
 
-2. **Downstream consumers branch on null**. Code like `if (income.getX() != null)` (Schedule 8812 line 19135, Schedule 3 credits, EIC worksheet, etc.) interprets null as "field absent" and ZERO as "field computed to zero". Mixing the two breaks the branching.
+2. **Downstream consumers branch on null**. Code like `if (income.getX() != null)` (`computeSchedule8812()`, Schedule 3 credits, EIC worksheet, etc.) interprets null as "field absent" and ZERO as "field computed to zero". Mixing the two breaks the branching.
 
 3. **PDF rendering** distinguishes blank from "0". The IRS form convention is: blank when the line doesn't apply, "0" when the line applies but the value is zero. The frontend's `formatAmount(null)` produces blank; `formatAmount(0)` produces "0".
 
@@ -126,3 +126,5 @@ Audit plan: **The 0-vs-null compliance check is now a standard step in every Cod
 - `outstanding.md` § Cross-line 0-vs-null compliance audit
 - `XLS/computations/1z.xlsx` Code Validation #1, #9 (origin investigations)
 - `XLS/computations/1h.xlsx` Code Validation #4(g) (early sighting)
+
+> *Convention (added 2026-07-07, knowledge-file line-number sweep):* code references use stable function/method names rather than source-code line numbers, which drift with refactors. IRS form/schedule line references (line 1c, Schedule 1 line 21, etc.) are stable and retained.

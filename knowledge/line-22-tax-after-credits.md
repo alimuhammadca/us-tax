@@ -18,7 +18,7 @@ Subtract line 21 from line 18. If zero or less, enter -0-
 | Java model field | `TaxAndCredits.taxAfterCredits` |
 | Getter | `getTaxAfterCredits()` |
 | Setter | `setTaxAfterCredits(BigDecimal)` |
-| Java model class | `C:\us-tax\us-tax-be\src\main\java\com\ustax\model\output\TaxAndCredits.java` (line 25) |
+| Java model class | `C:\us-tax\us-tax-be\src\main\java\com\ustax\model\output\TaxAndCredits.java` |
 | Frontend TS field | `form.taxAndCredits?.taxAfterCredits` |
 | PDF semantic key | `line22_tax_less_credits` |
 | PDF AcroForm field | `topmostSubform[0].Page2[0].f2_14[0]` |
@@ -53,13 +53,15 @@ line24 = line22 + line23                            (totalTax)
 
 ## 3. Backend Implementation
 
+> *Convention (added 2026-07-07, knowledge-file line-number sweep):* code references use stable function/method names rather than source-code line numbers, which drift with refactors. IRS form/schedule line references (line 1c, Schedule 1 line 21, etc.) are stable and retained.
+
 **Method:** `computeLine20ThroughLine24(Form1040 form1040, Schedule3 schedule3)`
 
 **File:** `C:\us-tax\us-tax-be\src\main\java\com\ustax\microservices\TaxReturnComputeService.java`
 
-**Lines:** 15023–15056 (line 22 specifically at lines 15044–15047)
+**Method:** `computeLine20ThroughLine24()` (line 22 segment)
 
-**Call site:** Line 1052 of `TaxReturnComputeService.java`
+**Call site:** `computeLine20ThroughLine24()` invoked from `prepare()` in `TaxReturnComputeService.java`
 
 **Java snippet (line 22 segment only):**
 
@@ -87,7 +89,7 @@ tac.setTotalCredits(line21.compareTo(BigDecimal.ZERO) > 0 ? line21 : null);
 - `totalCredits` (line 21) IS stored as null when zero; `taxAfterCredits` (line 22) is NOT.
 
 **Other references to `taxAfterCredits` in `TaxReturnComputeService.java`:**
-- Line 15047: `tac.setTaxAfterCredits(line22)` — the only write.
+- `tac.setTaxAfterCredits(line22)` — the only write.
 - No other method reads or writes `taxAfterCredits` directly; `totalTax` is read by downstream consumers instead.
 
 **Compute order dependencies:**
@@ -107,13 +109,13 @@ tac.setTotalCredits(line21.compareTo(BigDecimal.ZERO) > 0 ? line21 : null);
 
 **Component:** `C:\us-tax\us-tax-ui\src\app\forms\form-tax-return-1040.component.ts`
 
-**TypeScript interface field (line 145):**
+**TypeScript interface field:**
 
 ```typescript
 taxAfterCredits?: number | string | null;   // line 22
 ```
 
-**PDF fill (line 327):**
+**PDF fill:**
 
 ```typescript
 values['line22_tax_less_credits'] = this.formatAmount(form.taxAndCredits?.taxAfterCredits);
@@ -141,10 +143,10 @@ When `taxAfterCredits` is `0`, `formatAmount(0)` renders `"0"` in the PDF field 
 
 | Test name / location | What it asserts |
 |---|---|
-| Line 12820 (smoke-style integration test) | `assertNotNull(getTaxAfterCredits())` — line 22 is non-null after full compute with W-2 income |
-| `line21_equalsLine19PlusLine20_ctcAndAotc` (line ~16290) | `getTaxAfterCredits()` is non-null; CTC + AOTC produce `totalCredits`; arithmetic is correct |
-| `line21_isNullWhenNoCreditsPresent` (line ~16305) | Line 22 is computed (not null) when `totalCredits == null` (zero credits, so `line22 = line18`) |
-| `line21_line22FlooredAtZeroWhenCreditsAbsorbAllTax` (lines 16314–16331) | `getTaxAfterCredits() == 0` when CTC equals tax — floor explicitly asserted; also asserts `totalCredits == totalTaxBeforeCredits` |
+| Smoke-style integration test (verified 2026-07-07) | `assertNotNull(getTaxAfterCredits())` — line 22 is non-null after full compute with W-2 income |
+| `line21_equalsLine19PlusLine20_ctcAndAotc` | `getTaxAfterCredits()` is non-null; CTC + AOTC produce `totalCredits`; arithmetic is correct |
+| `line21_isNullWhenNoCreditsPresent` | Line 22 is computed (not null) when `totalCredits == null` (zero credits, so `line22 = line18`) |
+| `line21_line22FlooredAtZeroWhenCreditsAbsorbAllTax` | `getTaxAfterCredits() == 0` when CTC equals tax — floor explicitly asserted; also asserts `totalCredits == totalTaxBeforeCredits` |
 
 **Note:** No test is named specifically for line 22; the floor-at-zero test in the `line21_*` suite (added 2026-04-19 per G1 fix for line 21 audit) is the primary direct assertion on `taxAfterCredits == 0`.
 

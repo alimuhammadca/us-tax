@@ -73,7 +73,9 @@ Last updated: **2026-04-15**
 
 ## 4. Compute Flow: `computeSocialSecurityBenefits()`
 
-Location: `TaxReturnComputeService.java` ~line 7136
+> *Convention (added 2026-07-07, knowledge-file line-number sweep):* code references use stable function/method names rather than source-code line numbers, which drift with refactors. IRS form/schedule line references (line 1c, Schedule 1 line 21, etc.) are stable and retained.
+
+Location: `TaxReturnComputeService.java`
 
 ### Step 1 — Gating
 
@@ -83,7 +85,7 @@ if !taxpayerHadBenefits && !spouseHadBenefits:
 validateSocialSecurityStatementGating() → emit blocking flags if needed
 ```
 
-### Step 2 — Gross benefit per person (`computeSocialSecurityForPerson()` ~line 7319)
+### Step 2 — Gross benefit per person (`computeSocialSecurityForPerson()`)
 
 ```
 for each SSA-1099 entry:
@@ -126,7 +128,7 @@ Worksheet line 6 = first-non-null of:
 - `importedReturnWorksheetLine6AdjustmentsTotal` (manual override)
 - **0 (default)** — ⚠️ Schedule 1 adjustments are NOT auto-pulled from return computation
 
-### Step 6 — Normal taxable benefits (`computeTaxableSocialSecurityNormal()` ~line 7391)
+### Step 6 — Normal taxable benefits (`computeTaxableSocialSecurityNormal()`)
 
 ```
 w1 = line6a
@@ -151,7 +153,7 @@ else:
     taxableNormal = min(0.85 × w1, taxable)
 ```
 
-### Step 7 — Lump-sum election (`computeTaxableSocialSecurityLumpSum()` ~line 7437)
+### Step 7 — Lump-sum election (`computeTaxableSocialSecurityLumpSum()`)
 
 ⚠️ **Simplified approximation — not full Pub. 915 recomputation per prior year:**
 
@@ -186,7 +188,7 @@ line6b = min(0.85 × line6a, max(0, line6b))
 
 ## 5. TIN Matching / Attribution Logic
 
-### SSA-1099 (`belongsToPersonSsa1099()` ~line 7482)
+### SSA-1099 (`belongsToPersonSsa1099()`)
 
 | Condition | Assigned to |
 |---|---|
@@ -195,7 +197,7 @@ line6b = min(0.85 × line6a, max(0, line6b))
 | No TIN: taxpayer had benefits | Taxpayer |
 | No TIN: only spouse had benefits | Spouse |
 
-### RRB-1099 (`belongsToPersonRrb1099()` ~line 7501)
+### RRB-1099 (`belongsToPersonRrb1099()`)
 
 Same logic using `recipientIdNumber` field.
 
@@ -256,13 +258,13 @@ The frontend (`form-tax-return-1040.component.ts` lines 283–284) sets `line6c_
 
 ## 10. Unit Tests (5 tests)
 
-| Test | File | Line | What it covers |
-|---|---|---|---|
-| `computesSocialSecurityLinesWithLumpSumElectionAndLine6d` | `TaxReturnComputeServiceTest` | ~2316 | MFS+apart, lump-sum election reduces taxable ($30k → $10,850), line 6c=true, line 6d=true |
-| `flagsWhenSocialSecurityStatementsAreMissingForEnabledWorkflow` | `TaxReturnComputeServiceTest` | ~2369 | Missing statements → blocking flags |
-| `computesZeroTaxableSocialSecurityWhenBelowWorksheetThreshold` | `TaxReturnComputeServiceTest` | ~2400 | $12k benefits single → taxable=0, 6c=false, 6d=false |
-| `computesSocialSecurityAcrossSpousesAndExcludesSsi` | `TaxReturnComputeServiceTest` | ~2437 | MFJ, both spouses, SSI exclusions ($200 taxpayer + $500 spouse) → gross=17300, taxable=0 |
-| `computesMfsLivedWithSpouseSocialSecurityUsingWorksheetBranch` | `TaxReturnComputeServiceTest` | ~2488 | MFS lived-with-spouse restrictive branch → taxable = min(85%×line6a, 85%×w7) = 4250 |
+| Test | File | What it covers |
+|---|---|---|
+| `computesSocialSecurityLinesWithLumpSumElectionAndLine6d` | `TaxReturnComputeServiceTest` | MFS+apart, lump-sum election reduces taxable ($30k → $10,850), line 6c=true, line 6d=true |
+| `flagsWhenSocialSecurityStatementsAreMissingForEnabledWorkflow` | `TaxReturnComputeServiceTest` | Missing statements → blocking flags |
+| `computesZeroTaxableSocialSecurityWhenBelowWorksheetThreshold` | `TaxReturnComputeServiceTest` | $12k benefits single → taxable=0, 6c=false, 6d=false |
+| `computesSocialSecurityAcrossSpousesAndExcludesSsi` | `TaxReturnComputeServiceTest` | MFJ, both spouses, SSI exclusions ($200 taxpayer + $500 spouse) → gross=17300, taxable=0 |
+| `computesMfsLivedWithSpouseSocialSecurityUsingWorksheetBranch` | `TaxReturnComputeServiceTest` | MFS lived-with-spouse restrictive branch → taxable = min(85%×line6a, 85%×w7) = 4250 |
 
 ---
 
@@ -307,7 +309,7 @@ IRS worksheet line 5 covers (in order of build status):
 - US possession bona-fide-resident exclusions (American Samoa / Puerto Rico / Guam / USVI / CNMI per IRS Pub. 570) — **WIRED 2026-06-05** via the unified `possession-residence-exclusion-{taxpayer,spouse}` personal form (V47) → `computePossessionExclusionForSsWorksheet` helper → orchestrator's `worksheetLine5` aggregation.
 - Savings bond interest exclusion (Form 8815) — NOT a line-5 add-back; it is a worksheet-line-3 carveout (use Schedule B line 2 instead of Form 1040 line 2b). Tracked as separate Gap 6 in `XLS/Computations/6b.md`.
 
-**Backend**: `computeTaxableSocialSecurityNormal()` now computes `w5 = w2 + worksheetLine3 + worksheetLine4 + worksheetLine5`. The `worksheetLine5` aggregation site (`TaxReturnComputeService.computeSocialSecurityBenefits` ~line 12631) combines Form 2555 (both spouses) + adoption + possession exclusions (both spouses).
+**Backend**: `computeTaxableSocialSecurityNormal()` now computes `w5 = w2 + worksheetLine3 + worksheetLine4 + worksheetLine5`. The `worksheetLine5` aggregation site (`TaxReturnComputeService.computeSocialSecurityBenefits`) combines Form 2555 (both spouses) + adoption + possession exclusions (both spouses).
 
 **Verified by**: 3 Java unit tests (`possessionExclusionFromAmericanSamoaFlowsIntoSsWorksheetLine5`, `possessionExclusionUsesTotalOverrideWhenProvided`, `possessionExclusionSuppressedWhenScreeningFlagFalse`) + 2 e2e tests (American Samoa scenario, Puerto Rico scenario). See `XLS/Computations/6b.md` Gap 1 closure.
 
@@ -355,13 +357,13 @@ Tests 2 and 3 use `computeReturnViaUi` instead of `computeReturnApi`, making the
 
 | Item | Location |
 |---|---|
-| `computeSocialSecurityBenefits()` | `TaxReturnComputeService.java` ~line 7136 |
-| `computeSocialSecurityForPerson()` | `TaxReturnComputeService.java` ~line 7319 |
-| `validateSocialSecurityStatementGating()` | `TaxReturnComputeService.java` ~line 7348 |
-| `computeTaxableSocialSecurityNormal()` | `TaxReturnComputeService.java` ~line 7391 |
-| `computeTaxableSocialSecurityLumpSum()` | `TaxReturnComputeService.java` ~line 7437 |
-| `belongsToPersonSsa1099()` | `TaxReturnComputeService.java` ~line 7482 |
-| `belongsToPersonRrb1099()` | `TaxReturnComputeService.java` ~line 7501 |
+| `computeSocialSecurityBenefits()` | `TaxReturnComputeService.java` |
+| `computeSocialSecurityForPerson()` | `TaxReturnComputeService.java` |
+| `validateSocialSecurityStatementGating()` | `TaxReturnComputeService.java` |
+| `computeTaxableSocialSecurityNormal()` | `TaxReturnComputeService.java` |
+| `computeTaxableSocialSecurityLumpSum()` | `TaxReturnComputeService.java` |
+| `belongsToPersonSsa1099()` | `TaxReturnComputeService.java` |
+| `belongsToPersonRrb1099()` | `TaxReturnComputeService.java` |
 | `Income.java` | `src/main/java/com/ustax/model/output/Income.java` |
 
 ---

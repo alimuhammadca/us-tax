@@ -22,9 +22,11 @@
 
 ## 2. Backend implementation
 
+> *Convention (added 2026-07-07, knowledge-file line-number sweep):* code references use stable function/method names rather than source-code line numbers, which drift with refactors. IRS form/schedule line references (line 1c, Schedule 1 line 21, etc.) are stable and retained.
+
 ### Compute method
 
-Located in `TaxReturnComputeService.java` around line 4144:
+Located in `computeAdjustments()` in `TaxReturnComputeService.java`:
 
 ```java
 // computeAdjustments() — called from buildForm1040()
@@ -59,18 +61,18 @@ private BigDecimal line11bAmountFromLine11aAdjustedGrossIncome; // line 11b
 private BigDecimal adjustedGrossIncome;                        // LEGACY — equals line11a
 ```
 
-**Tech debt:** `adjustedGrossIncome` was kept for UI backward compatibility (comment at line 4157). It is always set to the same value as `line11a`. However, some downstream usages (notably `computeForm6251` AMT at line 8200) read `getAdjustedGrossIncome()` instead of `getLine11bAmountFromLine11aAdjustedGrossIncome()`. There is a helper `computeScheduleAgi()` at line 13593 that also prefers `line11a` over `line11b`. Since they are always identical this causes no functional error, but the legacy field should eventually be removed and callers updated to use the explicit 11a/11b accessors.
+**Tech debt:** `adjustedGrossIncome` was kept for UI backward compatibility (comment in `computeAdjustments()`). It is always set to the same value as `line11a`. However, some downstream usages (notably `computeForm6251` AMT) read `getAdjustedGrossIncome()` instead of `getLine11bAmountFromLine11aAdjustedGrossIncome()`. There is a helper `computeScheduleAgi()` that also prefers `line11a` over `line11b`. Since they are always identical this causes no functional error, but the legacy field should eventually be removed and callers updated to use the explicit 11a/11b accessors.
 
 ### How downstream code reads AGI
 
-| Caller | Field used | Line |
-|---|---|---|
-| Line 15 (taxable income) | `getLine11bAmountFromLine11aAdjustedGrossIncome()` | 708, 759, 781 |
-| QBI deduction (line 13a) | `getLine11bAmountFromLine11aAdjustedGrossIncome()` | 3104 |
-| Form 6251 AMT | `getAdjustedGrossIncome()` | 8200 |
-| Schedule A | `getAdjustedGrossIncome()` (via scheduleA.setAdjustedGrossIncome) | 2946 |
-| `computeScheduleAgi()` helper | `getLine11aAdjustedGrossIncome()` → fallback `getLine11b...` | 13596–13597 |
-| Form 8962 PTC | `getLine11aAdjustedGrossIncome()` via `computeScheduleAgi()` | 13596 |
+| Caller | Field used |
+|---|---|
+| Line 15 (taxable income) | `getLine11bAmountFromLine11aAdjustedGrossIncome()` |
+| QBI deduction (line 13a) | `getLine11bAmountFromLine11aAdjustedGrossIncome()` |
+| Form 6251 AMT | `getAdjustedGrossIncome()` |
+| Schedule A | `getAdjustedGrossIncome()` (via scheduleA.setAdjustedGrossIncome) |
+| `computeScheduleAgi()` helper | `getLine11aAdjustedGrossIncome()` → fallback `getLine11b...` |
+| Form 8962 PTC | `getLine11aAdjustedGrossIncome()` via `computeScheduleAgi()` |
 
 ---
 

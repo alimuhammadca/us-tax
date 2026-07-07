@@ -25,9 +25,11 @@ Lines 4a/4b/4c cover IRA distributions only (traditional, Roth, SEP, SIMPLE). No
 
 ## Computation Entry Point
 
-`TaxReturnComputeService.computeIraDistributions()` (~line 4477)
+> *Convention (added 2026-07-07, knowledge-file line-number sweep):* code references use stable function/method names rather than source-code line numbers, which drift with refactors. IRS form/schedule line references (line 1c, Schedule 1 line 21, etc.) are stable and retained.
 
-**Called from:** `prepare()` at ~line 350, after `computeChildInterestDividends()` and before `computeInterestIncome()`.
+`TaxReturnComputeService.computeIraDistributions()`
+
+**Called from:** `prepare()`, after `computeChildInterestDividends()` and before `computeInterestIncome()`.
 
 **Inputs:**
 - `iraIncomeTaxpayer` / `iraIncomeSpouse` — personal form data
@@ -37,7 +39,7 @@ Lines 4a/4b/4c cover IRA distributions only (traditional, Roth, SEP, SIMPLE). No
 
 ---
 
-## Per-Person Logic (`computeIraForPerson()` ~line 4727)
+## Per-Person Logic (`computeIraForPerson()`)
 
 ### Step 1 — Filter 1099-R entries for this person
 - Filter by `iraSepSimple == true` AND `belongsToPersonIra()` (SSN-based TIN matching)
@@ -110,7 +112,7 @@ Counts of exception categories present (each category = 1): box1, box2, box3, ex
 
 ---
 
-## Form 8606 (`buildForm8606(person, iraForm, grossTraditionalIra)` ~line 4842)
+## Form 8606 (`buildForm8606(person, iraForm, grossTraditionalIra)`)
 
 One per person, not joint. MFJ can have 0, 1, or 2.
 

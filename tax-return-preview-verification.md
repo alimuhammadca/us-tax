@@ -52,23 +52,34 @@ was empty on every file.
 | Form 8888 | **routing/account character-cells** | data-triggered (3-account refund split) |
 | Schedule 1-A | Parts II–VI, **VIN cell styling**, car-loan line 30 | data-triggered (car-loan interest); see VIN note below |
 | Schedule C | header, **EIN/business-code cell styling**, Part I/II grids | blank template only — see note below |
-| Schedule A | Medical / Taxes (SALT $40k cap) / Interest sections | data-triggered (itemized deductions) |
+| Schedule A | Medical/Taxes/Interest + **line values** (5a 8k, 5e 14.5k, 8a 10k) | data-triggered (itemized; `stateLocalTaxChoice:'Income'`) |
 
 **Total: 25 forms confirmed rendering correctly.**
 
-**Schedule A / Schedule D value rendering — companion-gate seeding (NOT a rendering gap):**
+**Schedule A / Schedule D value rendering — seeding bugs, NOT a rendering gap:**
 Both preview components fully map every computed line value from `comp.scheduleA` /
 `comp.scheduleD` (`buildSemanticValues()`), and always render the IRS template even when that
-object is null. During verification the first quick seeds produced **null** objects, so the
-forms rendered with empty value boxes. Root cause was an **incomplete seed**, not the
-renderer: statement data flows into compute only when its companion personal-form gate is
-set (the "three-part seed" pattern). Schedule D needs `capital-gain-loss-taxpayer`
-(`hadCapitalGainOrLoss` / `confirmAllReceivedCapitalStatementsUploaded` /
-`received1099BOr1099Da`); with the gate, `scheduleD` populates (`line7 = 25000`) and the
-values render (line 2: 30,000 / 5,000 / 25,000, QOF "No" checked). The backend emits both
-objects when properly gated (proven by `line13a-qbi` asserting `scheduleD.line7 === 25000`
-and `mfs-schedule-a-allocator` asserting `scheduleA` fields). The look-and-feel port is
-unaffected — it renders structure and values correctly.
+object is null. The first quick verification seeds produced **null** objects (→ empty value
+boxes) due to two distinct **seeding bugs in the test setup**, both now fixed and confirmed —
+the renderer and the port are unaffected:
+
+- **Schedule D — missing companion gate.** Statement data flows into compute only when its
+  companion personal-form gate is set (the "three-part seed" pattern). Schedule D needs
+  `capital-gain-loss-taxpayer` (`hadCapitalGainOrLoss` /
+  `confirmAllReceivedCapitalStatementsUploaded` / `received1099BOr1099Da`). With the gate,
+  `scheduleD` populates (`line7 = 25000`) and values render — **line 2: 30,000 / 5,000 /
+  25,000**, QOF "No" checked.
+- **Schedule A — invalid enum casing.** The seed used `stateLocalTaxChoice: 'income'`
+  (lowercase), which violates the DB check constraint `ck_pf_standard_deductions_slt_choice`
+  (requires **`'Income'`/`'Sales'`**, capitalized — `V2__personal_credits.sql:24`). That
+  threw an HTTP 500 that silently failed the *entire* `standard-deductions-taxpayer` save
+  (leaving `deductionElection` = "AUTO", itemized = null). With `stateLocalTaxChoice:
+  'Income'` (+ per-amount `...PaidBy: 'taxpayer'`), the save succeeds, `scheduleA` populates
+  (election ITEMIZED, itemized total $28,500), and every line renders — **5a 8,000 / 5b
+  6,000 / 5c 500 / 5d–5e 14,500 / 8a mortgage 10,000**.
+
+The backend emits both objects when properly seeded (proven by `line13a-qbi` asserting
+`scheduleD.line7 === 25000` and `mfs-schedule-a-allocator` asserting `scheduleA` fields).
 
 **Schedule C note (blank template only):** Schedule C business income is **out of scope**
 (self-employment; per CLAUDE.md). The backend never produces a `scheduleC` field, so no

@@ -75,3 +75,15 @@ sections:
           If the IRS has issued your spouse a six-digit IP PIN, enter it here. The IP PIN must
           appear on the return (paper and e-file) or the return will be rejected.
           All taxpayers are now eligible to apply for an IP PIN at IRS.gov/IPPIN.
+
+      - name: servedInCombatZone2025
+        type: boolean
+        required: false
+        label: Did your spouse serve in a combat zone during 2025?
+        help: >
+          Answer Yes only if your spouse served in a designated combat zone or a qualified
+          hazardous duty area during 2025. On a joint return, either spouse's service checks
+          the "combat zone" box at the top of Form 1040 (semantic field top_combat_zone), an
+          automatic filing-deadline-extension marker under IRS Publication 3, section 7. It does
+          not change tax, credits, AGI, or refund. Uses the same plain servedInCombatZone2025
+          key as the taxpayer form (no spouse prefix).

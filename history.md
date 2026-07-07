@@ -1,6 +1,16 @@
 ﻿# History
 
 
+## 2026-07-07 — FEATURE: Form 1040 top-of-form combat-zone checkbox (Pub. 3 §7 filing-deadline marker)
+
+Built the deferred `top_combat_zone` checkbox end-to-end (outstanding.md L479). It is an administrative filing-deadline-extension marker per IRS Pub. 3 §7 — it does NOT affect tax, credits, AGI, or refund. Deliberately sourced from a dedicated per-person question on the identification form (Personal section, always available) rather than derived from line-1i box-12 code-Q combat pay, because a filer can serve in a combat zone without earning code Q.
+
+- **Backend:** `Form1040.topCombatZone` (Boolean) set in `TaxReturnComputeService` immediately after `buildForm1040` — TRUE when the taxpayer OR (on a joint return) the spouse served in a combat zone, read via the plain `servedInCombatZone2025` key from both identification maps. On MFS the other spouse's identification is scoped out, so only the filing spouse's service checks the box. No compute-path/math change.
+- **Persistence:** `pf_identification.served_in_combat_zone_2025` (V90 migration + `db.changelog-master.xml` include), `PfIdentification` column, `IdentificationMapper` save/load using the plain key for both taxpayer and spouse (no spouse-prefix — new `coalesceBoolean` helper).
+- **Frontend:** Rule-7-compliant Yes/No radio group on both identification components (mirroring the address-form boolean pattern), typed `servedInCombatZone2025` on `TaxpayerIdentificationPayload`/`SpouseIdentificationPayload`, help-modal entries, and the 1040 view wires `values['top_combat_zone'] = form.topCombatZone === true` (the semantic field already exists in `f1040_fields.json`, so the checkbox renders in the HTML preview + Save-as-PDF). YAML intake specs added to both identification forms.
+- **Validation:** 4 backend unit tests (taxpayer-only, spouse-only MFJ, both, neither); full backend suite **1336/1336**; frontend AOT build green. Pending: the V90 migration needs a full backend dev-restart to apply, and the DB round-trip + PDF render should be confirmed via a dev-restart + e2e (unit tests use `TestPersonalDataService`, bypassing the mapper/DB).
+
+
 ## 2026-07-07 — Deleted the stale served f1040 field-map CSV (PDF-to-HTML migration cleanup)
 
 Cleared the outstanding.md "Form 1040 PDF-to-HTML migration — Deferred Cleanup" bullet. Deleted `us-tax-ui/public/irs/f1040_field_mapping_semantic.csv` — a stale served asset from before the 2026-05-18 Form 1040 pixel-perfect-HTML migration (its field names had drifted from canonical: `line11a_adjusted_gross_income` / `line14_add_lines12e_13a_and_13b` vs. `line11_...` / `line14_add_lines12_and_13`).

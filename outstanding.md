@@ -2881,7 +2881,9 @@ The `validateStatementsBelongToFamily` pass (`TaxReturnComputeService.java`, reg
 
 When the deferred items above land, update `STATEMENT_SSN_RULES` and remove the corresponding line from this section. The validator design is registry-driven so adding a new rule is one line.
 
-## Schedule 2 PDF preview — semantic field-position drift (2026-05-30)
+## ~~Schedule 2 PDF preview — semantic field-position drift (2026-05-30)~~ **RESOLVED — superseded by the pure-HTML preview migration (verified 2026-07-07)**
+
+**RESOLVED — moot.** This described a field-position bug in the OLD embedded-PDF preview (the curated `SCHEDULE2_MAPPING` in `publish-schedule-2025-assets.js` ordered fields by IRS field number, not visual order). Schedule 2 has since migrated to a **pure-HTML/CSS preview** (`form-tax-return-schedule2.component.ts` — an imperative HTML renderer, translation of `f1040s2_html/form.js`), which positions fields via its own HTML/CSS layout, NOT the curated mapping. Verified 2026-07-07: no live code uses `SCHEDULE2_MAPPING` or the f1040s2 field-map CSV for on-screen positioning (the CSV is a source-of-truth comment; the `_semantic_labels.pdf` fetch is only for Save-as-PDF AcroForm fill, which fills by field name). The Tax-Return-section HTML previews are checked/verified, so the on-screen drift no longer applies. No code change; doc-sync only.
 
 - **[Schedule 2 / PDF preview / MEDIUM / DEFERRED]** Running Test 1 of `line1c-tip-income.spec.ts` in the UI (unreported cash tips, Form 1040 line 1c = $300, Schedule 2 line 5 = $4) renders Schedule 2 with the $4 in the wrong cells: visual line 5 is empty, while visual lines 3, 6, and 21 each show $4. Form 4137 line 13 ($4) renders correctly. **The backend JSON is correct** — the e2e assertion `expect(computation?.schedule2?.otherTaxes?.unreportedTipIncomeTax).toBe(4)` passes; `tax.totalTax` and `uncollectedSocialSecurityMedicareTaxOnWages` are both null in the JSON; only `unreportedTipIncomeTax`, `totalAdditionalSocialSecurityMedicareTax` (line 7 subtotal), and `totalOtherTaxes` (line 21 grand total) are populated. The bug is purely in the PDF rendering layer.
 

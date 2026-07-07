@@ -1,6 +1,13 @@
 ﻿# History
 
 
+## 2026-07-07 — Schedule 2 line 13 (uncollected SS/Medicare tax, W-2 box 12 A/B/M/N): MFS fix + test coverage
+
+The outstanding.md "Schedule 2 Line 13 — Deferred 2026-05-09" item was stale: the compute path had since been implemented (`sumW2Box12CodesForScheduleLine13` sums W-2 box 12 codes A/B/M/N → `Schedule2OtherTaxes.uncollectedSocialSecurityMedicareRrtaTax` → line 18 → 21 → Form 1040 line 23). But it had **no tests** and a **MFS over-inclusion bug** — it summed every household W-2 with no SSN filter, so an MFS leg absorbed the *other* spouse's uncollected tax (line 13 is a per-return total, each spouse reports only their own).
+
+Fix (us-tax-be): gave the helper the same MFS/scoped-filer SSN filter line 1a uses — exclude the other spouse's W-2 via `filing-status.mfsOtherSpouseSsn`, keep only the filer's W-2 when `scopedFilerSsn` is set. Non-MFS/non-scoped returns are unchanged (both SSNs null → include all, correct for MFJ/Single). Verified against IRS 2025 Schedule 2 line 13 (book line 897): codes A/B/M/N are the complete set — there is no separate box-12 letter for RRTA (the same codes carry RRTA equivalents). Four unit tests added (code A, code M, all-four aggregation, MFS spouse-exclusion); `TaxReturnComputeServiceTest` 882/882. Marked resolved in outstanding.md.
+
+
 ## 2026-07-07 — Knowledge-file source-code line-number sweep (30 files; drifting refs → stable symbol names)
 
 Cleared the outstanding.md "Knowledge-File Source-Code Line-Number Sweep" item. Knowledge files anchored code references to volatile `TaxReturnComputeService.java` line numbers (e.g. "`computeLine16()` (~line 1300)", "at line 2430") that drift with every refactor — the exact hazard hit twice earlier the same day. The `line-1c-tip-income.md` §4 convention (function-names-not-line-numbers) had never been applied to the other files.

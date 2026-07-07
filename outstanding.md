@@ -764,7 +764,9 @@ A user with this scenario likely needs to amend their PRIOR-YEAR return — not 
 
 ---
 
-## Schedule 2 Line 13 — Uncollected SS/Medicare or RRTA Tax on Tips and Group-Term Life Insurance (W-2 Box 12 Codes A, B, M, N) — Deferred 2026-05-09
+## ~~Schedule 2 Line 13 — Uncollected SS/Medicare or RRTA Tax on Tips and Group-Term Life Insurance (W-2 Box 12 Codes A, B, M, N) — Deferred 2026-05-09~~ **RESOLVED 2026-07-07**
+
+**RESOLVED 2026-07-07.** The compute path was implemented at some point after the deferral (`sumW2Box12CodesForScheduleLine13` sums W-2 box 12 codes A/B/M/N → `Schedule2OtherTaxes.uncollectedSocialSecurityMedicareRrtaTax` → line 18 → line 21 → Form 1040 line 23), but had **no test coverage** and a **MFS over-inclusion bug**: it summed every household W-2 with no SSN filter, so an MFS leg absorbed the *other* spouse's uncollected tax (line 13 is per-return). Fixed 2026-07-07: added the same MFS/scoped-filer SSN filter line 1a uses (exclude `filing-status.mfsOtherSpouseSsn`; honor `scopedFilerSsn`) — non-MFS/non-scoped returns unchanged. Codes A/B/M/N are the complete set (verified against IRS 2025 Schedule 2 line 13 / i1040gi book — no separate box-12 letter for RRTA; the same codes carry RRTA equivalents). Four unit tests added (`schedule2Line13IncludesW2Box12CodeAUncollectedSsTaxOnTips`, `...CodeMUncollectedSsTaxOnGroupTermLife`, `schedule2Line13AggregatesAllFourCodesAcrossW2s`, `mfsExcludesSpouseFromSchedule2Line13`); suite 882/882 green.
 
 Per IRS 2025 Schedule 2 line 13 ("Uncollected social security and Medicare or RRTA tax on tips or group-term life insurance from Form W-2, box 12"), four W-2 box 12 codes flow here:
 

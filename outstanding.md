@@ -133,7 +133,9 @@ Per spec `lines/5abc.md` §3.2: "Compute the taxable amount **per distribution /
 
 ---
 
-## Line 6b: Lump-Sum Election Prior-Year Fidelity Gaps (Form 2555 + Filing-Status Changes) — Deferred 2026-05-12
+## ~~Line 6b: Lump-Sum Election Prior-Year Fidelity Gaps (Form 2555 + Filing-Status Changes) — Deferred 2026-05-12~~ **RESOLVED (6b.md Gap 3/Gap 4 closure 2026-06-05, V48; doc-synced 2026-07-07)**
+
+**RESOLVED — superseded.** Both prior-year fidelity gaps were closed via the V48 migration + the 6b.md Gap 3/Gap 4 closure (2026-06-05), after this deferral was written. `PfSocialSecurityLumpSumDetail` gained per-row prior-year override columns (`priorYearFilingStatus`, `priorYearMfsLivedWithSpouseAnyTime`, `priorYearWorksheetLine5ExclusionsForRecompute` — the last generalizing the deferral's proposed `priorYearForm2555ExclusionAmount` to cover Form 2555/8839/4563/PR exclusions); `SocialSecurityBenefitsMapper` saves/loads them; the recompute reads them per row (~line 16600/16606) and passes an `effectiveFilingStatus` + prior-year MFS-lived-with-spouse flag into `computeTaxableSocialSecurityNormal`. A §17 blocker (~line 16146) fires when a lump-sum row is missing the prior-year override columns. Tests: `computeLine6bForLumpSum`, `computeLine6bForLumpSumWithMfjCurrentYear`, plus scenarios seeding `priorYearFilingStatus` + `priorYearWorksheetLine5ExclusionsForRecompute`. No further action.
 
 Per IRC §86(e) + IRS Publication 915 Worksheet 3: when a taxpayer receives a retroactive Social Security back-payment covering one or more earlier years, they may elect to recompute the taxable portion using prior-year income context. The current implementation correctly handles the 4-step worksheet algorithm but has two fidelity gaps in the prior-year recomputation step.
 
@@ -1693,7 +1695,9 @@ All 4 enhancements implemented: dependent tab auto-includes 1099-INT/DIV; backen
 
 ---
 
-## Lines 2a/2b: Box 9 Double-Counted into Line 2a (Critical Bug)
+## ~~Lines 2a/2b: Box 9 Double-Counted into Line 2a (Critical Bug)~~ **RESOLVED (fixed 2026-04-13, re-verified 2026-05-11; doc-synced 2026-07-07)**
+
+**RESOLVED.** The double-count was fixed on 2026-04-13 (re-verified 2026-05-11, 2a.xlsx Code Validation #6) but this entry was never struck. `computeInterestForPerson` now reads `BigDecimal entryTaxExemptInterest = subtractNonNegative(box8, box13);` — box 9 (specified private-activity-bond interest, already a subset of box 8) is NO longer added on top for line 2a. Box 9 is captured separately for the AMT preference at `form6251Line2g = addNonNull(form6251Line2g, box9)`. An in-code comment documents the pre-2026-04-13 bug narrative and cites `lines/2ab.md` §7.1. (Note: this entry's "~line 4105" reference is stale — the code is now near line 8670.) No further action.
 
 **File:** `TaxReturnComputeService.java` — `computeInterestForPerson()` ~line 4105
 

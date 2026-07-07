@@ -1,6 +1,16 @@
 ﻿# History
 
 
+## 2026-07-07 — Stale-item sweep: 2 already-implemented "Deferred" entries doc-synced (incl. a "Critical Bug")
+
+Ran an evidence-based detection sweep (delegated to a subagent, then spot-checked) over the remaining open outstanding.md items to find any already implemented during the late-May/June audit closures but never marked resolved. Found and closed two; confirmed the other ~11 backend/compute items are genuinely open (and the feature/OCR/UI tracks unbuilt).
+
+1. **Lines 2a/2b — "Box 9 Double-Counted into Line 2a (Critical Bug)"** — was fixed 2026-04-13 (re-verified 2026-05-11, 2a.xlsx #6) but the entry still read as an open High-priority bug. Verified: `computeInterestForPerson` now uses `subtractNonNegative(box8, box13)` (box 9 no longer added on top of box 8 for line 2a; box 9 routed separately to Form 6251 line 2g for AMT). Marked RESOLVED.
+2. **Line 6b — Lump-Sum Election Prior-Year Fidelity Gaps** — closed via V48 + 6b.md Gap 3/Gap 4 (2026-06-05). Verified the prior-year override columns on `PfSocialSecurityLumpSumDetail` (`priorYearFilingStatus`, `priorYearMfsLivedWithSpouseAnyTime`, `priorYearWorksheetLine5ExclusionsForRecompute`), the mapper save/load, the per-row recompute (~line 16600), the §17 missing-column blocker (~line 16146), and the lump-sum tests. Marked RESOLVED.
+
+Doc-only; no code change. Items confirmed genuinely open (left as-is): Line 2b Form 8815 two-pass reduction, combat-zone checkbox, Line 1i IRA §219(f)(7) compensation, Notice 2014-7 blocking escalation, Pub 503 Worksheet A tighter cap, Form 8889/8853/4797 standalone compute, Form 8615 kiddie compute, Schedule 1 Part II post-AGI (24c enforcement is only a soft advisory today), `addNonNullVarargs` refactor, and the UI/OCR/payment feature tracks.
+
+
 ## 2026-07-07 — Line 5b per-annuity basis recovery: confirmed already implemented (doc-sync)
 
 outstanding.md still listed "Line 5b: Per-Annuity Basis Recovery (Deferred 2026-05-12)" as a 3–5 hour unstarted refactor, including the "related gap" that Simplified vs General Rule mutual exclusion wasn't enforced. Both were actually closed on 2026-06-04 (5b.md Gap 1 + Gap 2), after the deferral was written: `computePensionTaxableViaPerStream` iterates `annuityStreams[]` and sums per-stream taxable amounts (per-stream `basisRecoveryMethod`), and `emitAnnuityMethodMutualExclusionFlag` emits the blocking `PENSION_ANNUITY_METHOD_BOTH_SELECTED_*` flag per IRC §72(d). Verified both helpers, both flags, and the test set (`perAnnuityStreamBasisRecoverySumsStreamTaxableAmounts`, `flagsMultiAnnuityBasisRecoveryLimitationForTaxpayer`, `doesNotFlagMultiAnnuityWhenSingleEntryOrNoMethod`, plus the mutual-exclusion fire/no-fire pair). Marked resolved in outstanding.md; doc-only, no code change.

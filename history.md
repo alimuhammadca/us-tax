@@ -1,6 +1,13 @@
 ﻿# History
 
 
+## 2026-07-07 — Deleted the stale served f1040 field-map CSV (PDF-to-HTML migration cleanup)
+
+Cleared the outstanding.md "Form 1040 PDF-to-HTML migration — Deferred Cleanup" bullet. Deleted `us-tax-ui/public/irs/f1040_field_mapping_semantic.csv` — a stale served asset from before the 2026-05-18 Form 1040 pixel-perfect-HTML migration (its field names had drifted from canonical: `line11a_adjusted_gross_income` / `line14_add_lines12e_13a_and_13b` vs. `line11_...` / `line14_add_lines12_and_13`).
+
+The entry claimed "no code path reads this file," but verification found `pdf-readonly-preview.component.ts` `getCsvUrl()` still had an f1040 special-case pointing at it. Digging further, the whole `PdfReadonlyPreviewComponent` is now unmounted dead code — nothing imports or mounts it (only past-tense comments in migrated tax-return components reference it). So the CSV reference was dead; removed the dangling f1040 branch in `getCsvUrl()` alongside the delete. `tsc --noEmit` clean. Canonical `pdfs/` copy retained. Flagged two follow-ups (whole dead component removal; `f1040_semantic_labels.pdf`/PNG per-asset check) as still-open.
+
+
 ## 2026-07-07 — Stale-item sweep: 2 already-implemented "Deferred" entries doc-synced (incl. a "Critical Bug")
 
 Ran an evidence-based detection sweep (delegated to a subagent, then spot-checked) over the remaining open outstanding.md items to find any already implemented during the late-May/June audit closures but never marked resolved. Found and closed two; confirmed the other ~11 backend/compute items are genuinely open (and the feature/OCR/UI tracks unbuilt).

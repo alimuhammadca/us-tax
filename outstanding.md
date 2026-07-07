@@ -672,7 +672,9 @@ After 1i.xlsx Code Validation #2 closure, the backend `computeLine27aEIC` reads 
 
 ---
 
-## Line 1h — Corrective Distribution Box 2a Missing Advisory — Deferred 2026-05-10
+## ~~Line 1h — Corrective Distribution Box 2a Missing Advisory — Deferred 2026-05-10~~ **RESOLVED 2026-07-07**
+
+**Resolved 2026-07-07:** Implemented per the deferred scope. Inside the Cat 4 `hasCurrentCorrective` block in `computeOtherEarnedIncome`, when `taxableAmountAmount` is null but `grossDistributionAmount` is present, a non-blocking advisory flag `LINE1H_CORRECTIVE_BOX2A_MISSING` is emitted (naming the payer) and the amount is still NOT added to line 1h. Lock-in test `correctiveDistribution_box2aMissing_emitsAdvisoryFlag_lineRemainsNull` added (Java suite 875/875 green).
 
 Per IRS 2025 1099-R instructions, plan administrators issuing a code-8 corrective distribution MUST populate box 2a with the taxable amount. The amount must be split from any non-taxable basis the participant had in the plan, so the issuer (not the recipient) is the only party with the data needed to compute box 2a correctly.
 
@@ -710,7 +712,9 @@ When the issuer leaves box 2a blank on a code-8 1099-R (issuer error), Cat 4 sil
 
 ---
 
-## Line 1h — Code-P-Only 1099-R Advisory Flag — Deferred 2026-05-10
+## ~~Line 1h — Code-P-Only 1099-R Advisory Flag — Deferred 2026-05-10~~ **RESOLVED 2026-07-07**
+
+**Resolved 2026-07-07:** Implemented per the deferred scope. In the Cat 4 corrective block of `computeOtherEarnedIncome`, an `else if (hasPriorCorrective)` branch (code P without code 8, non-IRA, non-code-3) emits a non-blocking advisory flag `LINE1H_CODE_P_PRIOR_YEAR_INFO` (naming recipient + payer); the amount stays off line 1h. Lock-in test `line1hCodePOnly1099R_emitsPriorYearAdvisoryFlag_lineRemainsNull` added (Java suite 875/875 green).
 
 Per IRS 1099-R instructions, distribution code P represents "Excess contributions plus earnings/excess deferrals taxable in 2024" (the prior tax year). Such amounts belong on the prior-year return, NOT the current line 1h. The compute service correctly skips them.
 

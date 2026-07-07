@@ -1,6 +1,16 @@
 ﻿# History
 
 
+## 2026-07-07 — Line 1h: two non-blocking advisory flags for 1099-R corrective/code-P edge cases (outstanding.md)
+
+Cleared two deferred low-risk items from outstanding.md. Both are **advisory-only** (informational, non-blocking) — no tax math changes; the underlying "don't add to line 1h" behavior pre-existed and was already IRS-verified by lock-in tests. In the Cat 4 corrective block of `computeOtherEarnedIncome`:
+
+- **`LINE1H_CORRECTIVE_BOX2A_MISSING`** — a code-8 corrective 1099-R with box 2a (taxable amount) blank but box 1 (gross) present (an issuer error). The amount is still not added to line 1h (no gross fallback); the advisory names the payer and tells the user to obtain a corrected 1099-R.
+- **`LINE1H_CODE_P_PRIOR_YEAR_INFO`** — a code-P-only 1099-R (P without 8). Code P = excess deferrals taxable in the PRIOR year, so it stays off this year's line 1h; the advisory suggests the user may need to amend the prior-year return.
+
+IRS-grounded (per the user's no-guesswork directive): J.K. Lasser 2025 (`docs/books`, ~line 19537) states the issuer enters "Code 8 if the corrective distribution is taxable in [the current year], Code P if taxable in [the prior year]" — directly confirming both codes' treatment. Two lock-in tests added (`correctiveDistribution_box2aMissing_emitsAdvisoryFlag_lineRemainsNull`, `line1hCodePOnly1099R_emitsPriorYearAdvisoryFlag_lineRemainsNull`); `TaxReturnComputeServiceTest` 875/875 green; `line1h-other-earned-income` e2e green (its scenarios don't trigger the new flags — all code-8 have box 2a present, no code-P-only). outstanding.md items marked RESOLVED.
+
+
 ## 2026-07-07 — Form 8862: line 1 is the filing year (not the disallowance year) + preview values wired
 
 Fixed a data-correctness bug on Form 8862 found while wiring its preview. Line 1 asks for *"the tax year for which you are filing this form (for example, 2025)"* — the return's tax year — but the app mapped `taxYearOfDisallowance` (the past year the credit was **denied**, e.g. 2023) onto it, so line 1 would print the wrong year. (This corrects an earlier note that 8862's credit boxes were "rects, not fillable fields" — they are `/Btn` checkbox fields; the rects are separate decorative outlines.)

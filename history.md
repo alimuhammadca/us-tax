@@ -1,6 +1,13 @@
 ﻿# History
 
 
+## 2026-07-07 — Line 6d MFS residence-flag mutual-exclusion: confirmed already enforced (doc sync, no code change)
+
+Next outstanding.md item — turned out to be already resolved and *over*-delivered. The item "Line 6d: `livedApartAllYear` vs `livedWithSpouseAnyTime` Mutual-Exclusion Enforcement (Deferred 2026-05-12)" planned only a soft advisory flag + a UI radio refactor. But the later **6d.md Gap 1 closure (2026-06-06)** already enforces the mutual exclusion as a §17 **non-overrideable blocker** — `validateLine6dMfsResidenceConsistency` emits `SOCIAL_SECURITY_LINE6D_MFS_RESIDENCE_INCONSISTENT` on both pathological states (both-TRUE and both-FALSE) on an MFS return with SS benefits, per IRC §86(c)(1)(C)/(D). Verified the full chain: flag registered in `NonOverrideableFlags.CODES`, four unit tests (`TaxReturnComputeServiceTest` ~6538–6663) covering both failure modes + coherent cases, and an e2e spec (`line6abcd-social-security-benefits.spec.ts`).
+
+The only real defect was **stale documentation**: the compute read-site comment still described this as a "deferred soft validation gap… backend could emit advisory flag" — 24 lines above the blocker that actually enforces it. Corrected that comment to point at `validateLine6dMfsResidenceConsistency` and marked the outstanding.md item RESOLVED (superseded). No behavior change; the §17 blocker was already live. (The originally-suggested UI radio-group refactor remains optional prevent-at-entry UX polish, not a correctness gap.)
+
+
 ## 2026-07-07 — Line 27a EIC: removed legacy `electNontaxableCombatPay` YAML fields (UI already clean)
 
 Next outstanding.md low-hanging item. The EIC combat-pay election is computed exclusively from the line-1i single source (`form1040.income.nontaxableCombatPayElection`), and a lock-in test (`line27aEicReadsCombatPayFromLine1iSource_notEicFormFlag` Part B) already proves the legacy EIC-form flag is dead. The unified `form-earned-income-credit.component.ts` had already dropped the field from its model/save/load. The only stale artifacts were the two reference YAMLs, which still defined the dead fields and asked the user a duplicate combat-pay question.

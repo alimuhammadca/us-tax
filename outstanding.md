@@ -181,7 +181,9 @@ Per IRC §86(e) + IRS Publication 915 Worksheet 3: when a taxpayer receives a re
 
 ### Original deferred analysis (2026-05-12)
 
-## Line 6d: `livedApartAllYear` vs `livedWithSpouseAnyTime` Mutual-Exclusion Enforcement — Deferred 2026-05-12
+## ~~Line 6d: `livedApartAllYear` vs `livedWithSpouseAnyTime` Mutual-Exclusion Enforcement — Deferred 2026-05-12~~ **RESOLVED (superseded by 6d.md Gap 1 closure 2026-06-06; doc-synced 2026-07-07)**
+
+**RESOLVED — superseded.** This deferral (a *soft advisory* plan) was overtaken by the **6d.md Gap 1 closure on 2026-06-06**, which enforces the mutual exclusion *harder* than the deferred scope: `validateLine6dMfsResidenceConsistency` (`TaxReturnComputeService`) emits the **§17 non-overrideable blocker** `SOCIAL_SECURITY_LINE6D_MFS_RESIDENCE_INCONSISTENT` on both pathological cases (both-TRUE and both-FALSE) on an MFS return with SS benefits, per IRC §86(c)(1)(C)/(D). The flag is registered in `NonOverrideableFlags.CODES`; four unit tests (`TaxReturnComputeServiceTest` ~6538–6663) cover both failure modes + the coherent cases; an e2e spec (`line6abcd-social-security-benefits.spec.ts`) covers it end-to-end. So neither pathological case can reach a filed return — an inconsistent pair is a hard 409 block, not merely an advisory. The stale read-site comment that still described this as a "deferred soft validation gap" was corrected on 2026-07-07 to point at the enforcing blocker. The originally-suggested UI radio-group refactor remains an OPTIONAL UX polish (prevent-at-entry) but is no longer a correctness gap — the blocker is the safety net.
 
 Per IRC §86(c)(1)(C)/(D): on a Married-Filing-Separately return, the two residence-fact flags `livedApartFromSpouseEntireTaxYear` and `livedWithSpouseAnyTimeDuringTaxYear` describe mutually exclusive states — exactly ONE should be TRUE. The current backend reads both flags INDEPENDENTLY, allowing logically inconsistent return data.
 

@@ -1,6 +1,15 @@
 ﻿# History
 
 
+## 2026-07-07 — `buildTipEntriesFromW2` null-SSN fallthrough fixed (line 1c double-count on MFJ with no spouse SSN)
+
+Next outstanding.md low-hanging item, same no-guesswork / IRS-grounded directive. `TaxReturnComputeService.buildTipEntriesFromW2(w2Entries, ssn)` is called once per person (taxpayer + spouse) to auto-fill tip-income entries from W-2 box 8 (allocated tips). It used a `boolean hasSsn` flag and, when the SSN was null/empty, **disabled the SSN filter entirely** and included every W-2 — so on an MFJ return whose spouse has no SSN, the taxpayer's box-8 allocated tips auto-filled into BOTH the taxpayer and the (phantom) spouse tip computation, double-counting line 1c.
+
+**Fix** (us-tax-be): replaced the no-filter fallthrough with an early `return List.of()` when the normalized SSN is null/empty — a null SSN means "no person to attribute these W-2s to", which is an empty list, not an unfiltered one. Person-attribution only; no IRS constant/formula/threshold touched (line 1c aggregation unchanged for legitimate per-person SSNs). MFS returns were already protected by the spouse-skip guard; this closes the residual MFJ-null-SSN / direct-API path.
+
+**Lock-in**: new unit test `line1cAutoFill_nullSpouseSsn_doesNotDoubleCountTaxpayerW2Box8` (MFJ, taxpayer W-2 box 8 = $300, spouse form present but no SSN) asserts line 1c = $300. Verified genuine: reverting the fix makes it fail `expected 300 but was 600`; re-applying makes it green. `TaxReturnComputeServiceTest` 878/878. Marked resolved in outstanding.md.
+
+
 ## 2026-07-07 — Cleared three more outstanding.md low-risk items (tip UX, saver's-credit attribution, line 27c verify)
 
 Continued the outstanding.md sweep under the no-guesswork / IRS-grounded directive — verified each against `lines/*.md`, `docs/books`, and the real form field maps before changing anything.

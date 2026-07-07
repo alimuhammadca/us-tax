@@ -1131,7 +1131,9 @@ When fixing 1c.xlsx Code Validation #4 (silent fallthrough on adequate-records c
 
 ---
 
-## `buildTipEntriesFromW2` Null-SSN Fallthrough — Discovered 2026-05-06
+## `buildTipEntriesFromW2` Null-SSN Fallthrough — Discovered 2026-05-06 — RESOLVED 2026-07-07
+
+**RESOLVED 2026-07-07**: `buildTipEntriesFromW2` now returns `List.of()` when the normalized SSN is null/empty (early return, replacing the `boolean hasSsn` no-filter fallthrough). A null spouse SSN on an MFJ return no longer pulls the taxpayer's box-8 allocated tips into the spouse tip computation, so line 1c is no longer double-counted. Lock-in unit test `line1cAutoFill_nullSpouseSsn_doesNotDoubleCountTaxpayerW2Box8` (MFJ + spouse without SSN) asserts line 1c = $300, not $600 — verified to fail (`expected 300 but was 600`) against the pre-fix code and pass after. Suite 878/878 green. Person-attribution change only (no IRS constant/formula affected).
 
 `TaxReturnComputeService.buildTipEntriesFromW2(w2Entries, ssn)` (line ~16799) is called once per person (taxpayer + spouse) by `computeTipsForPerson` to auto-fill tip-income entries from W-2 box 8 (allocated tips) when no manual `tipsByEmployer[]` data exists.
 

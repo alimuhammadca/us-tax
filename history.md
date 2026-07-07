@@ -1,6 +1,15 @@
 ﻿# History
 
 
+## 2026-07-07 — Form 8862: line 1 is the filing year (not the disallowance year) + preview values wired
+
+Fixed a data-correctness bug on Form 8862 found while wiring its preview. Line 1 asks for *"the tax year for which you are filing this form (for example, 2025)"* — the return's tax year — but the app mapped `taxYearOfDisallowance` (the past year the credit was **denied**, e.g. 2023) onto it, so line 1 would print the wrong year. (This corrects an earlier note that 8862's credit boxes were "rects, not fillable fields" — they are `/Btn` checkbox fields; the rects are separate decorative outlines.)
+
+**Backend** (us-tax-be `6d7e42b`): added a distinct `Form8862.filingTaxYear` = `ReferenceData.TAX_YEAR`, set in `computeForm8862`. Also stamped it on the mapper read-back (`Form8862OutputMapper.load`) — `GET /api/tax-return` rebuilds `form8862` from the persisted `OutForm8862` entity, which dropped the fresh compute value on reload; since line 1 is a derived constant, it's stamped rather than persisted as a column (no migration). `taxYearOfDisallowance` stays as app-internal intake context (comment corrected). **Frontend** (us-tax-ui `0c331f4`): wired the 8862 preview `[values]` — line 1 = `filingTaxYear`, line-2 credit checkboxes = `claimsEIC/CTC/AOTC`.
+
+Verified with a seed using disallowance year 2023 + EIC/AOTC recertification: both `POST /compute` and `GET /api/tax-return` return `filingTaxYear: 2025`; the preview renders **line 1 = "2025"** (not 2023), EIC + AOTC checkboxes checked (blue), CTC empty — matching the data. Java tests green (965/965: 92 phase + 873 `TaxReturnComputeServiceTest`). This makes **5 of 13** `pure-pdf-preview` forms values-wired (2555/4563/8859/8880/8862).
+
+
 ## 2026-07-07 — Full e2e regression clean after the Tax Return preview work (0 genuine failures)
 
 Ran the complete Playwright e2e regression (`--project=regression --workers=1`, ~2.1 h) to validate the Tax Return form-preview port and its follow-up fixes (8862 checkbox-rect regression `cddf0d4`, Form 8880 values wiring `9ec8de3`). Result: **1082 passed / 15 skipped / 3 flaky / 0 genuine failures** (exit 0).

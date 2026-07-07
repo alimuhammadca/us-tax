@@ -41,7 +41,7 @@ was empty on every file.
 | Form 4868 | e-file logo + caution triangle | — |
 | Form 5329 | wordmark, amended checkbox | — |
 | Form 5695 | layout / character-cell fields | — |
-| Form 8862 | **(fixed)** Part I credit boxes | see regression below |
+| Form 8862 | **(fixed)** Part I boxes + **values** (line 1 = 2025, EIC/AOTC checked) | black-dot fix + values wiring below |
 | Form 8880 | (a)You/(b)Spouse columns | — |
 | Form 8959 | Parts I–V, gray carry-boxes | — |
 | Schedule R | **TIP circle icon**, filing-status boxes | circle intact after fix |
@@ -132,16 +132,27 @@ Assessing the 10 unwired forms:
   line 9 = 0.5, line 12 credit. (Line 9 renders only the fractional digit since the form
   pre-prints "X 0.".) The component comment had literally said *"blank until a backend f8880
   semantic mapping is wired."*
+- 🔴 **Form 8862 — substantive gap AND a data-correctness bug. FIXED** (us-tax-ui `0c331f4`
+  + us-tax-be `6d7e42b`). *(Corrects an earlier assessment here that called 8862's boxes
+  "rects, not fillable fields" — they are in fact `/Btn` checkbox fields; the rects are
+  separate decorative outlines.)* Two problems: (a) the Part I line-2 credit checkboxes
+  (`line2_checkbox_eic/ctc/aoc`) weren't wired; (b) **line 1** — *"the tax year for which you
+  are filing this form (2025)"* — was mapped to `taxYearOfDisallowance` (the past year the
+  credit was **denied**, e.g. 2023), so it would print the wrong year. Fix: added a distinct
+  `Form8862.filingTaxYear` = `ReferenceData.TAX_YEAR`, set in `computeForm8862` **and stamped
+  on the mapper read-back** (`GET /api/tax-return` rebuilds `form8862` from the persisted
+  `OutForm8862` entity, which dropped the fresh value — derived constant, no column needed);
+  wired the preview `[values]` (line 1 = `filingTaxYear`, checkboxes = `claimsEIC/CTC/AOTC`).
+  Verified with disallowance-year 2023 + EIC/AOTC: line 1 renders **2025** (not 2023), EIC +
+  AOTC checked, CTC empty. Java tests 965/965.
 - 🟢 **Correctly blank (no fix needed):**
   - **2106, 4684, 4797, 8853, 3903, schedule-e** — **no backend model class exists**; these
     forms aren't computed, so the blank template is correct (nothing to wire).
   - **8959** — Additional Medicare Tax is **out of scope** per CLAUDE.md → blank expected.
-  - **8862** — its computed `eic/ctc/aotcEligible` booleans map to the Part I credit boxes
-    which are **rects, not fillable fields** (the black-dot bug above), so `[values]` can't
-    render them; only the tax-year field is fillable → negligible. Left as-is.
 
-Net: 8880 was the sole substantive gap; now **4 of 13** `pure-pdf-preview` forms are wired
-(2555/4563/8859/8880). The remaining blanks are non-computed or out-of-scope, not defects.
+Net: 8880 and 8862 were the substantive gaps, both fixed; now **5 of 13** `pure-pdf-preview`
+forms are wired (2555/4563/8859/8880/8862). The remaining blanks are non-computed or
+out-of-scope, not defects.
 
 ## Not visually triggered (low risk)
 

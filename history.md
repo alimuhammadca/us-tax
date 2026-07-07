@@ -1,6 +1,18 @@
 ﻿# History
 
 
+## 2026-07-06 — Tax Return form previews: ported the sandbox look-and-feel fixes into us-tax-ui (fonts + renderer + 56 forms)
+
+Incorporated the colleague's (codegeek.dev) 23 visual-fidelity commits from the `C:\us-tax-return-forms` sandbox (`9c1df3a..HEAD`) into the real app `us-tax-ui`. The sandbox is a "sample-filled" look-and-feel copy of the Tax Return `form-tax-return-*` previews; the real app is real-data-driven — so this was a **per-change port, never a file copy** (the sandbox's sample-fill — force-checked checkboxes, `sampleValueFor()` placeholders — was deliberately excluded; `us-tax-ui`'s `value === true` / blank-when-empty rendering is preserved throughout).
+
+Landed as a 3-commit split on `us-tax-ui main` (`3216e6e` / `698e9da` / `d8831f4`, pushed `18d4523..d8831f4`):
+- **Foundation** (`3216e6e`) — self-hosted the 6 IRS "Helvetica Neue LT Std" `.otf` faces under `public/fonts/` (served at `/fonts/`) with `@font-face` in `styles.scss`; new shared `src/app/utils/form-font.utils.ts` (`mapFont` + outline flag); `pure-pdf-preview.component.ts` renderer upgrades (rule-lines above inputs via z-index, new `textOverrides`/`skipTexts`/`fieldOverrides` inputs threaded by `pageIndex`, radio-bullet circles + stroked rects, outline-font text-stroke, `}` brace reposition).
+- **SCSS** (`698e9da`) — 28 per-form `.scss` "checkbox dancing" fixes (remove redundant `position:relative`, z-index normalization) applied as one clean patch (baseline was byte-identical to the sandbox).
+- **Per-form** (`d8831f4`) — 28 per-form `.ts` + `f1040s3_elements.json`: word/letter-spacing for justified labels, `}`/`▲`/`!` glyph fixes, VIN/PIN/routing character cells, Form 2210 text-merging renderer, and schedule1's `mapFont`→shared-util refactor. 23 applied clean; 5 hand-ported where the colleague's patch collided with the real-data logic (schedule2/8919 kept their existing real-data checkbox — the sandbox's `cb.checked=true→semantic` change was already the real-app behavior; schedule1 import + 8936sa VIN block hand-added; 2210's +246 applied clean).
+
+**Method:** measured per-file drift (sandbox baseline vs us-tax-ui = uniformly just the sample-fill lines), then `git apply --check`/`--reject` + targeted Edits, with a safety scan (`git diff | grep '^\+.*(sampleValueFor|cb.checked = true|field-checkbox checked)'` = empty on every file). **Validated:** `tsc --noEmit` exit 0; `npm run build` exit 0 (6 pre-existing warnings, none from these files); fonts emitted to `dist/.../browser/fonts/`. **Browser-verified** via Playwright screenshots against the running dev servers — 1040 (outline wordmark + real data), Schedule 1 (mapFont refactor + outline), Schedule 2 (checkbox centering + stroked rects), 4972, 8919, 8936-A (17-cell VIN row), 2210 (flowchart text-merge) all render faithfully with real-data behavior and no sample-fill leak. Backend/`us-tax-be` unaffected (no changes; the throwaway screenshot spec was never committed).
+
+
 ## 2026-07-06 — Investigated the two regression flakes: both are intermittent UI-timing races (corrects the earlier "contamination" label)
 
 Investigated the two reds from the full regression above. Neither is a compute bug or data contamination; both are **intermittent E2E UI-timing flakes**, and the two only *reported* differently because of a retry-config gap.

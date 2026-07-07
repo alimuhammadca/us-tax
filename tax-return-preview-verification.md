@@ -51,8 +51,16 @@ was empty on every file.
 | Form 1116 | Foreign Tax Credit grid, "Germany" col | data-triggered (foreign tax) |
 | Form 8888 | **routing/account character-cells** | data-triggered (3-account refund split) |
 | Schedule 1-A | Parts II–VI, **VIN cell styling**, car-loan line 30 | data-triggered (car-loan interest); see VIN note below |
+| Schedule C | header, **EIN/business-code cell styling**, Part I/II grids | blank template only — see note below |
 
-**Total: 23 forms confirmed rendering correctly.**
+**Total: 24 forms confirmed rendering correctly.**
+
+**Schedule C note (blank template only):** Schedule C business income is **out of scope**
+(self-employment; per CLAUDE.md). The backend never produces a `scheduleC` field, so no
+business income/expenses can be populated — the component intentionally renders the blank
+IRS template (TEMP toggle, always-render). This verifies the look-and-feel port (labels,
+EIN/business-code character-cell styling, Part I/II grids, outline wordmark) but not any
+computed values, since none exist.
 
 **Schedule 1-A VIN note (not a port regression):** the ported VIN character-cell styling
 (`line22a_vehicle1_vin`, 18px letter-spacing + light-blue tint, component lines 407–410)

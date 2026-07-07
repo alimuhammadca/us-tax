@@ -1,6 +1,17 @@
 ﻿# History
 
 
+## 2026-07-07 — Full e2e regression: 1089 pass / 1 fail (self-inflicted, fixed) / 15 intentional skips
+
+Ran the full Playwright regression (`npm run test:regression -- --workers=1`) against the dev backend on V90+V91: **1105 tests, 1089 passed, 1 failed, 15 skipped (2.2h)**. The combat-zone feature specs (5) all passed in the full run, including the GET-reload lock-in and the UI-preview-render test.
+
+**The one failure was a regression I introduced earlier this session** — `line1f-adoption-benefits.spec.ts:783` ("Gap 6: manual MAGI differs from worksheet advisory fires") asserted on the flag code `ADOPTION_BENEFITS_MAGI_MANUAL_DIFFERS_FROM_WORKSHEET`, which is exactly the duplicate advisory I removed in the Form 8839 dedup fix (`6eff9bf`). When I removed it I grepped `us-tax-be/src` and `us-tax-ui/src` for consumers but **not the `e2e/` tests** — so I missed this one. The surviving helper-based flag `ADOPTION_MAGI_MANUAL_VS_AUTO_MISMATCH` fires on the identical condition, so the fix was to point the test at the surviving code (behavior unchanged — the advisory still fires when manual MAGI diverges >$100). Re-ran the single test → green. Net genuine result: **all tests pass**.
+
+The 15 skipped are intentional deferrals (e.g. the two `test.skip`-ped multi-code Box-3 line-16 e2e cases that 500 on the e2e path, the unregistered-phone auth negative case, etc.) — not errors.
+
+★ **Lesson (reinforces [[feedback_java_unit_passing_doesnt_mean_e2e_passing]]):** when removing a flag code or symbol, grep the `e2e/` tests too — not just `src/`. A symbol with zero `src/` consumers can still be asserted by an e2e spec, and only the full regression surfaces it.
+
+
 ## 2026-07-07 — FEATURE: Form 1040 top-of-form combat-zone checkbox (Pub. 3 §7 filing-deadline marker)
 
 Built the deferred `top_combat_zone` checkbox end-to-end (outstanding.md L479). It is an administrative filing-deadline-extension marker per IRS Pub. 3 §7 — it does NOT affect tax, credits, AGI, or refund. Deliberately sourced from a dedicated per-person question on the identification form (Personal section, always available) rather than derived from line-1i box-12 code-Q combat pay, because a filer can serve in a combat zone without earning code Q.

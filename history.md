@@ -7,7 +7,9 @@ Cleared the outstanding.md "Form 1040 PDF-to-HTML migration — Deferred Cleanup
 
 The entry claimed "no code path reads this file," but verification found `pdf-readonly-preview.component.ts` `getCsvUrl()` still had an f1040 special-case pointing at it. Digging further, the whole `PdfReadonlyPreviewComponent` is now unmounted dead code — nothing imports or mounts it (only past-tense comments in migrated tax-return components reference it). So the CSV reference was dead; removed the dangling f1040 branch in `getCsvUrl()` alongside the delete. `tsc --noEmit` clean. Canonical `pdfs/` copy retained.
 
-Follow-up (same day, at the user's request): **deleted `PdfReadonlyPreviewComponent` wholesale.** Re-verified it is fully dead — no template mounts its selector, nothing imports the class or its `ExtraTextOverlay` type, it is in no NgModule/standalone imports array — and `tsc --noEmit` stayed clean after removal. One follow-up still open: `f1040_semantic_labels.pdf` + its PNGs weren't deleted (other live components fetch their own `*_semantic_labels.pdf`, so those need a per-asset check first).
+Follow-up (same day, at the user's request): **deleted `PdfReadonlyPreviewComponent` wholesale.** Re-verified it is fully dead — no template mounts its selector, nothing imports the class or its `ExtraTextOverlay` type, it is in no NgModule/standalone imports array — and `tsc --noEmit` stayed clean after removal.
+
+Final follow-up: **deleted the orphaned f1040 semantic-label assets** — `public/irs/f1040_semantic_labels.pdf` + `public/irs-images/f1040_semantic_labels/` (two PNGs), ~1.3 MB. Confirmed orphaned: no `f1040_semantic_labels`/`irs-images` reference in `src/`; the only dynamic `*_semantic_labels.pdf` consumer was the deleted component; live tax-return components hardcode their own form's PDF (none f1040); the 1040 view renders from JSON vector assets (`f1040_vector_pages.json` + `f1040_fields.json`). The L2860 PDF-to-HTML cleanup item is now fully closed.
 
 
 ## 2026-07-07 — Stale-item sweep: 2 already-implemented "Deferred" entries doc-synced (incl. a "Critical Bug")

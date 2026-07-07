@@ -1,6 +1,13 @@
 ﻿# History
 
 
+## 2026-07-07 — Full e2e regression clean after the Tax Return preview work (0 genuine failures)
+
+Ran the complete Playwright e2e regression (`--project=regression --workers=1`, ~2.1 h) to validate the Tax Return form-preview port and its follow-up fixes (8862 checkbox-rect regression `cddf0d4`, Form 8880 values wiring `9ec8de3`). Result: **1082 passed / 15 skipped / 3 flaky / 0 genuine failures** (exit 0).
+
+All 3 reds were **shared-account UI-timing flakes that self-recovered on retry** (not regressions): `line1e-dependent-care:168` and `line1g-uncollected-ss-medicare:133` (sidebar-render races) and `personal-per-person-forms:157` (*"Standard deductions and election map per person"*). ★ The last one is the exact test whose flake was fixed earlier via `test.describe.configure({ retries: 1 })` + a `#youWereDualStatusAlien` visibility guard — it flaked again but **auto-recovered as flaky instead of hard-failing**, confirming that fix works as intended. The Tax Return preview changes are UI-only and left the compute suite fully green; no code change resulted from this run.
+
+
 ## 2026-07-06 — Tax Return previews: broad render verification found + fixed an 8862 checkbox regression
 
 Followed up the port (previous entry) with a broad Playwright screenshot sweep across ~40 Tax Return previews. 18 verified rendering correctly; ~20 show a clean empty-state placeholder without form-specific data (not crashes). The sweep caught **one real regression from the port** (us-tax-ui `cddf0d4`): the ported radio-bullet heuristic in `pure-pdf-preview.component.ts` (`r.fill === '#ffffff' && isSmall` → centered black dot) misfired on empty checkbox outlines that are white-filled **with** a black stroke — Form 8862 Part I's three credit boxes rendered as solid black dots instead of empty boxes. Fixed by guarding the heuristic with `&& !r.stroke` (a genuine bullet is a filled dot with no border; a bordered white box is a checkbox), so stroked white rects fall through to the bordered-box branch and render as proper empty checkboxes. Verified: 8862 Part I boxes now empty, Schedule R's (unstroked) TIP circle still renders. Being in the shared renderer, the fix benefits every pure-pdf-preview form.

@@ -1,6 +1,11 @@
 ﻿# History
 
 
+## 2026-07-07 — Line 5b per-annuity basis recovery: confirmed already implemented (doc-sync)
+
+outstanding.md still listed "Line 5b: Per-Annuity Basis Recovery (Deferred 2026-05-12)" as a 3–5 hour unstarted refactor, including the "related gap" that Simplified vs General Rule mutual exclusion wasn't enforced. Both were actually closed on 2026-06-04 (5b.md Gap 1 + Gap 2), after the deferral was written: `computePensionTaxableViaPerStream` iterates `annuityStreams[]` and sums per-stream taxable amounts (per-stream `basisRecoveryMethod`), and `emitAnnuityMethodMutualExclusionFlag` emits the blocking `PENSION_ANNUITY_METHOD_BOTH_SELECTED_*` flag per IRC §72(d). Verified both helpers, both flags, and the test set (`perAnnuityStreamBasisRecoverySumsStreamTaxableAmounts`, `flagsMultiAnnuityBasisRecoveryLimitationForTaxpayer`, `doesNotFlagMultiAnnuityWhenSingleEntryOrNoMethod`, plus the mutual-exclusion fire/no-fire pair). Marked resolved in outstanding.md; doc-only, no code change.
+
+
 ## 2026-07-07 — Form 8839 manual-MAGI cross-check: removed a duplicate advisory (item already implemented)
 
 The outstanding.md "Form 8839 manual MAGI cross-check vs autoMagi worksheet (Deferred 2026-05-24)" was already implemented exactly per its scope: `computeAdoptionAutoMagi(...)` extracted as a reusable helper, a non-blocking `ADOPTION_MAGI_MANUAL_VS_AUTO_MISMATCH` advisory firing when a manual MAGI diverges >$100 from the worksheet value, with its two unit tests already in place (fires on divergence; suppressed within tolerance).

@@ -81,7 +81,13 @@ children on a return-level form.
 
 ---
 
-## Line 5b: Per-Annuity Basis Recovery (Simplified Method / General Rule) — Deferred 2026-05-12
+## ~~Line 5b: Per-Annuity Basis Recovery (Simplified Method / General Rule) — Deferred 2026-05-12~~ **RESOLVED (superseded by 5b.md Gap 1 + Gap 2 closures 2026-06-04; doc-synced 2026-07-07)**
+
+**RESOLVED — superseded.** Both halves of this deferral were closed on 2026-06-04, after the deferral was written:
+- **Per-annuity-stream basis recovery (5b.md Gap 1):** when `pensionForm.annuityStreams[]` is non-empty, `computePensionTaxableViaPerStream` iterates the streams and sums per-stream taxable amounts (per-stream `basisRecoveryMethod` selector), replacing the per-person aggregate; any 1099-R/RRB gross not allocated to a stream is added as fully taxable so income isn't lost. Legacy per-person aggregate path still runs when `annuityStreams[]` is empty (backwards compatible), with a visibility flag `PENSION_BASIS_RECOVERY_PER_ANNUITY_LIMITATION_{TAXPAYER,SPOUSE}` nudging users with 2+ entries toward the per-stream path.
+- **Simplified vs General Rule mutual exclusion (the "related gap," IRC §72(d)):** `emitAnnuityMethodMutualExclusionFlag` emits the blocking (overrideable, rules.md §18) flag `PENSION_ANNUITY_METHOD_BOTH_SELECTED_{TAXPAYER,SPOUSE}` when both methods are elected, before the compute path runs.
+
+Verified 2026-07-07: both helpers exist; both flags emit; tests present — `flagsMultiAnnuityBasisRecoveryLimitationForTaxpayer`, `doesNotFlagMultiAnnuityWhenSingleEntryOrNoMethod`, `perAnnuityStreamBasisRecoverySumsStreamTaxableAmounts`, plus the `PENSION_ANNUITY_METHOD_BOTH_SELECTED_*` fire/no-fire pair (`doesNotFlagWhenOnlyOneAnnuityMethodSelected`). Suite green. Doc-only sync; no code change.
 
 Per spec `lines/5abc.md` §3.2: "Compute the taxable amount **per distribution / per annuity stream** and then sum the taxable pieces for line 5b. **Do not collapse multiple pensions into a single basis computation.**"
 

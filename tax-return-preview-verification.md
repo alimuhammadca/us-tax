@@ -53,8 +53,9 @@ was empty on every file.
 | Schedule 1-A | Parts II–VI, **VIN cell styling**, car-loan line 30 | data-triggered (car-loan interest); see VIN note below |
 | Schedule C | header, **EIN/business-code cell styling**, Part I/II grids | blank template only — see note below |
 | Schedule A | Medical/Taxes/Interest + **line values** (5a 8k, 5e 14.5k, 8a 10k) | data-triggered (itemized; `stateLocalTaxChoice:'Income'`) |
+| Form 8863 | Part I + **AOTC values** (l1 2,500 / l3 50k / l8 1,000), `}`-brace, SSN cells | data-triggered (AOTC student, $4k expenses) |
 
-**Total: 25 forms confirmed rendering correctly.**
+**Total: 26 forms confirmed rendering correctly.**
 
 **Schedule A / Schedule D value rendering — seeding bugs, NOT a rendering gap:**
 Both preview components fully map every computed line value from `comp.scheduleA` /

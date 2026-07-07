@@ -1,6 +1,11 @@
 ﻿# History
 
 
+## 2026-07-06 — Tax Return previews: broad render verification found + fixed an 8862 checkbox regression
+
+Followed up the port (previous entry) with a broad Playwright screenshot sweep across ~40 Tax Return previews. 18 verified rendering correctly; ~20 show a clean empty-state placeholder without form-specific data (not crashes). The sweep caught **one real regression from the port** (us-tax-ui `cddf0d4`): the ported radio-bullet heuristic in `pure-pdf-preview.component.ts` (`r.fill === '#ffffff' && isSmall` → centered black dot) misfired on empty checkbox outlines that are white-filled **with** a black stroke — Form 8862 Part I's three credit boxes rendered as solid black dots instead of empty boxes. Fixed by guarding the heuristic with `&& !r.stroke` (a genuine bullet is a filled dot with no border; a bordered white box is a checkbox), so stroked white rects fall through to the bordered-box branch and render as proper empty checkboxes. Verified: 8862 Part I boxes now empty, Schedule R's (unstroked) TIP circle still renders. Being in the shared renderer, the fix benefits every pure-pdf-preview form.
+
+
 ## 2026-07-06 — Tax Return form previews: ported the sandbox look-and-feel fixes into us-tax-ui (fonts + renderer + 56 forms)
 
 Incorporated the colleague's (codegeek.dev) 23 visual-fidelity commits from the `C:\us-tax-return-forms` sandbox (`9c1df3a..HEAD`) into the real app `us-tax-ui`. The sandbox is a "sample-filled" look-and-feel copy of the Tax Return `form-tax-return-*` previews; the real app is real-data-driven — so this was a **per-change port, never a file copy** (the sandbox's sample-fill — force-checked checkboxes, `sampleValueFor()` placeholders — was deliberately excluded; `us-tax-ui`'s `value === true` / blank-when-empty rendering is preserved throughout).

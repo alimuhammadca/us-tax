@@ -50,6 +50,17 @@ was empty on every file.
 | Form 2441 | provider table, `}`-brace decision box | data-triggered; real-data checkboxes blue-checked |
 | Form 1116 | Foreign Tax Credit grid, "Germany" col | data-triggered (foreign tax) |
 | Form 8888 | **routing/account character-cells** | data-triggered (3-account refund split) |
+| Schedule 1-A | Parts II–VI, **VIN cell styling**, car-loan line 30 | data-triggered (car-loan interest); see VIN note below |
+
+**Total: 23 forms confirmed rendering correctly.**
+
+**Schedule 1-A VIN note (not a port regression):** the ported VIN character-cell styling
+(`line22a_vehicle1_vin`, 18px letter-spacing + light-blue tint, component lines 407–410)
+renders as a tinted input box, but the VIN *digits* don't display — the backend doesn't
+expose the per-vehicle VIN to the preview layer (documented pre-existing gap, component
+line 189: *"values the backend doesn't expose individually (e.g., per-vehicle VIN/lender)"*).
+The identical character-cell technique renders real values correctly on Form 8888
+(routing/account) and Schedule A (Form 8936) VIN — already verified.
 
 Real-data checkbox behavior was confirmed repeatedly: Form 2441's "household employee? No"
 boxes, Form 8888's Checking/Savings per account, and Schedule D's QOF boxes all rendered

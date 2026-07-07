@@ -115,6 +115,34 @@ the bordered-box branch and render as proper empty checkboxes. Verified: 8862 Pa
 now empty, Schedule R's (unstroked) TIP circle still renders. Being in the shared renderer,
 the fix benefits every `pure-pdf-preview` form.
 
+## `pure-pdf-preview` `[values]` audit + Form 8880 fix (pre-existing, not the port)
+
+Auditing which `<pure-pdf-preview>` Tax Return forms bind `[values]` (render computed data)
+vs. only `elementsFile`/`textOverrides` (blank template). Of the **13** forms using the
+shared renderer, only **3 were wired** (2555, 4563, 8859); the other **10 render blank
+templates**. The look-and-feel port never touched `[values]` (grep across all port commits
+is empty) — the pattern is **100% pre-existing**. (Inline-render forms — 1040, schedule-1/2/
+3/d/a, 8863, 8888, 2441, 1116, 8936-A — build their own value maps and are unaffected.)
+
+Assessing the 10 unwired forms:
+- 🔴 **Substantive gap — computed values existed but weren't shown: Form 8880** (saver's
+  credit). **FIXED** (us-tax-ui `9ec8de3`): the component now maps `computation.form8880` →
+  the `f8880` semantic field names and binds `[values]`. Verified — with a $1,500 IRA
+  contribution (50% rate) the preview shows line 1/3/5/6/7 = 1,500, line 8 AGI = 22,000,
+  line 9 = 0.5, line 12 credit. (Line 9 renders only the fractional digit since the form
+  pre-prints "X 0.".) The component comment had literally said *"blank until a backend f8880
+  semantic mapping is wired."*
+- 🟢 **Correctly blank (no fix needed):**
+  - **2106, 4684, 4797, 8853, 3903, schedule-e** — **no backend model class exists**; these
+    forms aren't computed, so the blank template is correct (nothing to wire).
+  - **8959** — Additional Medicare Tax is **out of scope** per CLAUDE.md → blank expected.
+  - **8862** — its computed `eic/ctc/aotcEligible` booleans map to the Part I credit boxes
+    which are **rects, not fillable fields** (the black-dot bug above), so `[values]` can't
+    render them; only the tax-year field is fillable → negligible. Left as-is.
+
+Net: 8880 was the sole substantive gap; now **4 of 13** `pure-pdf-preview` forms are wired
+(2555/4563/8859/8880). The remaining blanks are non-computed or out-of-scope, not defects.
+
 ## Not visually triggered (low risk)
 
 ~18 forms show a clean empty-state placeholder without form-specific computed data

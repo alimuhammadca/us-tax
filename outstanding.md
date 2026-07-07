@@ -885,7 +885,9 @@ Both fields live under a new "Less common situations" toggle on the adoption-exp
 
 ---
 
-## Form 8839 manual MAGI cross-check vs autoMagi worksheet — Deferred 2026-05-24
+## ~~Form 8839 manual MAGI cross-check vs autoMagi worksheet — Deferred 2026-05-24~~ **RESOLVED 2026-07-07**
+
+**RESOLVED 2026-07-07.** The cross-check was already implemented per the deferred scope: `computeAdoptionAutoMagi(...)` was extracted as a reusable helper, and when a manual `magiForAdoptionBenefitsExclusion` diverges from the auto-derived worksheet value by more than $100 a non-blocking advisory `ADOPTION_MAGI_MANUAL_VS_AUTO_MISMATCH` fires (covering all six add-backs). Its two unit tests already exist (`...15376` fires on divergence; `...15433` suppressed within $100 tolerance). Cleanup on 2026-07-07: an OLDER duplicate inline implementation of the same cross-check (1f Gap #6, 2026-05-31, flag `ADOPTION_BENEFITS_MAGI_MANUAL_DIFFERS_FROM_WORKSHEET`) was still present and fired a **second** advisory for the identical condition — removed it (the helper-based version supersedes it; the inline flag had no test/UI consumer). Suite 882/882.
 
 When the user enters `magiForAdoptionBenefitsExclusion` manually on the adoption-expenses form, the G1 fallback does NOT fire and the user-entered value is used as-is. This matches the existing G1 architecture (manual entry wins) and assumes the user computed MAGI correctly per the 2025 Form 8839 worksheet — including all six add-backs now covered by autoMagi (Form 2555 lines 45/50, Puerto Rico, Form 4563 line 15, student-loan interest deduction, savings-bond interest exclusion, foreign-housing deduction).
 

@@ -1,6 +1,13 @@
 ﻿# History
 
 
+## 2026-07-07 — Form 8839 manual-MAGI cross-check: removed a duplicate advisory (item already implemented)
+
+The outstanding.md "Form 8839 manual MAGI cross-check vs autoMagi worksheet (Deferred 2026-05-24)" was already implemented exactly per its scope: `computeAdoptionAutoMagi(...)` extracted as a reusable helper, a non-blocking `ADOPTION_MAGI_MANUAL_VS_AUTO_MISMATCH` advisory firing when a manual MAGI diverges >$100 from the worksheet value, with its two unit tests already in place (fires on divergence; suppressed within tolerance).
+
+But an OLDER duplicate inline implementation of the same cross-check (1f Gap #6, 2026-05-31, flag `ADOPTION_BENEFITS_MAGI_MANUAL_DIFFERS_FROM_WORKSHEET`) was never removed when the helper-based version landed — so a divergent manual MAGI fired **two** advisories saying the same thing. Confirmed the helper computes identically to the inline block, and the inline flag had no test or UI consumer. Removed the redundant block (left a breadcrumb comment). `TaxReturnComputeServiceTest` 882/882 unchanged; the surviving cross-check tests still pass. Marked resolved in outstanding.md.
+
+
 ## 2026-07-07 — Schedule 2 line 13 (uncollected SS/Medicare tax, W-2 box 12 A/B/M/N): MFS fix + test coverage
 
 The outstanding.md "Schedule 2 Line 13 — Deferred 2026-05-09" item was stale: the compute path had since been implemented (`sumW2Box12CodesForScheduleLine13` sums W-2 box 12 codes A/B/M/N → `Schedule2OtherTaxes.uncollectedSocialSecurityMedicareRrtaTax` → line 18 → 21 → Form 1040 line 23). But it had **no tests** and a **MFS over-inclusion bug** — it summed every household W-2 with no SSN filter, so an MFS leg absorbed the *other* spouse's uncollected tax (line 13 is a per-return total, each spouse reports only their own).

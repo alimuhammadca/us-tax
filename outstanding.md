@@ -541,7 +541,9 @@ So the combat-pay-as-IRA-compensation rule is one of several IRC §219 compensat
 
 ---
 
-## Helper `sumW2Box12ByCodes` — Defensive Null-SSN Handling (Option C Broader Cleanup) — Deferred 2026-05-10
+## ~~Helper `sumW2Box12ByCodes` — Defensive Null-SSN Handling (Option C Broader Cleanup) — Deferred 2026-05-10~~ **RESOLVED 2026-07-07**
+
+**Resolved 2026-07-07:** `sumW2Box12ByCodes` now returns null when the SSN is null/empty (early-return guard replacing the skip-the-filter pattern), so it no longer sums EVERY W-2's box-12 amounts for an unattributable caller. The one unguarded call site — Form 8880 saver's-credit deferrals (`computeSaverCredit`, `taxpayerSsnW2`/`spouseSsnW2`) — is now protected: a missing taxpayer SSN yields line 2a = 0 instead of absorbing other people's deferrals. `countW2Box12ByCodes` left unchanged (its null-SSN = count-all is used for diagnostics). ★ Deviation from the deferred scope: the redundant `hasText` guards in `computeCombatPay` were KEPT (defense-in-depth; harmless, lower change surface) rather than removed. Two lock-in tests added — `saverCredit_w2DeferralUnderMismatchedSsn_notAbsorbedIntoLine2a` (own $800 counted, stranger's $5,000 excluded) and `saverCredit_nullTaxpayerSsn_doesNotAbsorbW2Deferrals` (null SSN → line 2a = 0). `TaxReturnComputeServiceTest` 877/877 green. IRS-neutral: Form 8880 line 2 already counts only box-12 codes D/E/F/G/H/S (elective deferrals); this only fixes person-attribution.
 
 After 1i.xlsx Code Validation #4 closure (Option A scope), the two combat-pay sum sites in `computeCombatPay` are protected by `hasText(ssn)` guards. But the underlying helper `sumW2Box12ByCodes` (`TaxReturnComputeService.java:10900`) still has the surprising semantic: when called with `ssn=null` or `ssn=""`, the helper SKIPS the SSN filter (line 10897 — `if (hasText(normalizedSsn))`) and sums ALL W-2 box 12 entries matching the requested code(s).
 
@@ -604,7 +606,9 @@ After 1i.xlsx Code Validation #4 closure (Option A scope), the two combat-pay su
 
 ---
 
-## Line 27c — G12 — EIC Opt-Out / Disqualified Checkbox Auto-Fill Missing — Deferred 2026-05-16
+## ~~Line 27c — G12 — EIC Opt-Out / Disqualified Checkbox Auto-Fill Missing — Deferred 2026-05-16~~ **ALREADY RESOLVED — verified 2026-07-07**
+
+**Verified already implemented 2026-07-07 (item was stale):** `form-tax-return-1040.component.ts` DOES wire line 27c — `values['line27c_no_schedule_eic_claim'] = form.payments?.earnedIncomeCredit == null;` (checked on every disqualifier path and voluntary opt-out, since all collapse to `earnedIncomeCredit == null`). The semantic field `line27c_no_schedule_eic_claim` (CheckBox `c2_13[0]`, Page 2) exists in `f1040_field_mapping_semantic.csv`, derived from the real 2025 IRS PDF — so line 27c does exist on the 2025 Form 1040. A dedicated test `form-tax-return-1040.line27c.spec.ts` already covers it (checked when EIC null/undefined, unchecked when positive). ★ NOTE: the recommended fix below used the field name `line27c_eic_opt_out_checkbox`, which does NOT exist — implementing it verbatim would have added dead code. No change needed; marking resolved.
 
 ★ **G12 NEW GAP surfaced at 27c #9 audit on 2026-05-16.** IRS 2025 Form 1040 line 27c is a checkbox that should be checked when (a) the taxpayer voluntarily opts out of EIC OR (b) the eligibility flow determines EIC cannot be claimed (Form 2555 filer, investment income > $11,950, invalid SSN, nonresident alien, MFS without §32(d)(2) exception, etc.). The 2025 instructions explicitly say "You can't take the credit. Check the box on line 27c." in disqualifying situations.
 
@@ -1083,7 +1087,9 @@ When a user claims `hasAdequateRecordsUnreportedLessThanAllocated=true` on the t
 
 ---
 
-## Hide SS Wage-Base Fallback Fields When Matching W-2 Exists — Deferred 2026-05-06
+## ~~Hide SS Wage-Base Fallback Fields When Matching W-2 Exists — Deferred 2026-05-06~~ **RESOLVED 2026-07-07**
+
+**Resolved 2026-07-07:** Both tip-income components (`form-tip-income-taxpayer` + `-spouse`) now expose `hasMatchingW2()` = `this.w2EntriesCache.length > 0` (the cache is already SSN-filtered to the person by `loadW2Entries`). The `#ssWageBaseFallback` template hides the two editable inputs (`socialSecurityWagesW2Box3` / `socialSecurityTipsW2Box7`) when `hasMatchingW2()` is true and shows a note instead: "✓ Social Security wages (box 3) and tips (box 7) will be read from the W-2 in Statements — no entry needed here." Matches the backend `firstNonNull(ssWagesTipsFromW2, ssWagesTipsFromInput)` semantics (lines/1c.md §7.5) — no compute change. tsc + ng build green; `line1c-tip-income` e2e 13/13.
 
 The tip-income form (taxpayer + spouse) has two per-employer "fallback only" fields:
 - `socialSecurityWagesW2Box3` (W-2 box 3)

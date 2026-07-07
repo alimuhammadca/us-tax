@@ -1,6 +1,17 @@
 ﻿# History
 
 
+## 2026-07-07 — Cleared three more outstanding.md low-risk items (tip UX, saver's-credit attribution, line 27c verify)
+
+Continued the outstanding.md sweep under the no-guesswork / IRS-grounded directive — verified each against `lines/*.md`, `docs/books`, and the real form field maps before changing anything.
+
+1. **Hide SS wage-base fallback fields when a matching W-2 exists** (UI-only, us-tax-ui `99ca672`). The per-employer `socialSecurityWagesW2Box3` / `socialSecurityTipsW2Box7` inputs on the tip-income form are fallback-only — the backend reads boxes 3+7 from the SSN-summed W-2 total and ignores them whenever any W-2 for the person's SSN is on file (`lines/1c.md` §7.5). Both tip components now expose `hasMatchingW2()` (their `w2EntriesCache` is SSN-filtered) and the `#ssWageBaseFallback` template shows a note instead of the inputs when a W-2 exists. No compute change; `ng build` green, tip e2e 13/13.
+
+2. **`sumW2Box12ByCodes` defensive null-SSN handling** (us-tax-be `7c4c8b8`). The helper skipped the SSN filter (summing EVERY W-2's box-12 amounts) when the SSN was null/empty; the one unguarded caller — Form 8880 saver's-credit deferrals — could then absorb other people's deferrals into line 2a for a taxpayer with a missing SSN. Added an early-return null guard. IRS-neutral (Form 8880 line 2 still counts only elective-deferral box-12 codes D/E/F/G/H/S; only person-attribution is fixed). Combat-pay/line-1h callers already guard null SSN. Two lock-in tests added; `TaxReturnComputeServiceTest` 877/877.
+
+3. **Line 27c EIC opt-out checkbox** — **verified already implemented** (item was stale). `form-tax-return-1040.component.ts` wires `line27c_no_schedule_eic_claim = earnedIncomeCredit == null`; the CheckBox field exists in `f1040_field_mapping_semantic.csv` (derived from the real 2025 IRS PDF — so line 27c does exist on the 2025 form) and a dedicated `form-tax-return-1040.line27c.spec.ts` covers it. ★ The outstanding.md recommendation used a non-existent field name (`line27c_eic_opt_out_checkbox`); implementing it verbatim would have added dead code — a concrete payoff of verifying before changing. Marked resolved, no code change.
+
+
 ## 2026-07-07 — Line 1h: two non-blocking advisory flags for 1099-R corrective/code-P edge cases (outstanding.md)
 
 Cleared two deferred low-risk items from outstanding.md. Both are **advisory-only** (informational, non-blocking) — no tax math changes; the underlying "don't add to line 1h" behavior pre-existed and was already IRS-verified by lock-in tests. In the Cat 4 corrective block of `computeOtherEarnedIncome`:

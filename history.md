@@ -1,6 +1,17 @@
 ﻿# History
 
 
+## 2026-07-07 — Schedule 1 Part II Post-AGI Refinement COMPLETE: line 24c Olympic ceiling (#2) + line 21 dependent rule verified (#5)
+
+Closed the last two sub-items of the "Schedule 1 Part II Post-AGI Refinement" item (10.md), which is now fully resolved (all five sub-items).
+
+**#2 — Line 24c Olympic/Paralympic exclusion AGI ceiling (IRC §74(d)(2)).** The exclusion is unavailable when AGI determined without it exceeds $1,000,000 ($500,000 MFS). Implemented via the post-AGI two-pass (reusing the line-21 infrastructure): after `buildForm1040`, pre-exclusion AGI = current AGI + line 24c; if it exceeds the ceiling, re-run `prepare()` once with `LINE24C_OLYMPIC_CEILING_DISALLOWED` set → `computeIncomeAdjustments` drops line 24c to 0 (the line 8m income stays taxable) and emits a non-blocking advisory. Evaluated BEFORE the line-21 phase-out so line 21's MAGI sees the corrected AGI; pre-exclusion AGI is income-based → deterministic single iteration. ★ Design: per J.K. Lasser 2025 (12.1/13.2) the return computes with the income taxable, so this is an **auto-disallow + non-blocking advisory**, NOT the originally-registered §17 blocker (a permanent 409 would be un-actionable — AGI > $1M is a fact). Removed the now-vestigial `SCHEDULE1_LINE24C_OLYMPIC_EXCLUSION_AGI_CEILING_EXCEEDED` from `NonOverrideableFlags.CODES`.
+
+**#5 — Line 21 dependent-disallow: verified NOT a defect.** The item claimed the current `someoneCanClaimYou OR someoneCanClaimSpouse` "over-blocks" and should require BOTH spouses claimable on MFJ. But Pub 970 / IRC §221(c) (J.K. Lasser 2025 §33.13): *"You, **or** your spouse if filing jointly, could be claimed as a dependent by another taxpayer"* — the **OR** is IRS-correct; the proposed change would *under*-block. No code change. ★ Verifying against the book prevented an IRS-incorrect "fix" — a concrete payoff of the no-guesswork directive.
+
+Tests: 2 unit (disallowed above ceiling / allowed below, with AGI-cascade + flag assertions) + 1 e2e (wages $1.1M + line 24c $50k → disallowed, AGI $1.1M, advisory). Full backend suite **1347/1347**; compute-only (no migration; line 24c uses the existing output field, no GET-reload gap).
+
+
 ## 2026-07-07 — Schedule 1 line 21 student-loan-interest MAGI phase-out (IRC §221(b)(2))
 
 Implemented the deferred §221 phase-out (10.md "Schedule 1 Part II Post-AGI Refinement" item #1). Previously line 21 applied only the $2,500 statutory cap — filers with MAGI in the phase-out band ($85k–$100k Single/HOH/QSS, $170k–$200k MFJ) over-deducted. The phase-out needs AGI, which isn't known when `computeIncomeAdjustments` runs, so I used the **same post-AGI two-pass** I built for Form 8815: after `buildForm1040`, compute §221(b)(2)(C) MAGI (AGI + the deduction added back + §911/§931/§933 foreign exclusions), apply `computeStudentLoanInterestPhaseout` (IRS worksheet: reduction = capped × round((MAGI−start)/range, 3dp)), and if it reduces the deduction, re-run `prepare()` once with the phased value in the `LINE21_STUDENT_LOAN_PHASEOUT_CAP` ThreadLocal so it cascades through AGI → line 15 → 16 → all credits. MAGI is pre-deduction (invariant across passes) → deterministic single iteration; the ThreadLocal guard prevents a third pass (and it composes safely with the 8815 two-pass — max 3 nested passes).

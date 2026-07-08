@@ -1,6 +1,17 @@
 ﻿# History
 
 
+## 2026-07-07 — Line 2b: Form 8815 line-by-line path now retroactively reduces Line 2b (Gap 3 — two-pass)
+
+Closed the deferred 2b.md Gap 3 / 8815.md Gap 7. Previously, filling the line-by-line Form 8815 intake WITHOUT the manual `savingsBondExclusionAmount` override computed the exclusion (line 14) but did NOT reduce Line 2b — because `computeInterestIncome` (Line 2b) runs before `computeForm8815`. The exclusion silently stayed in Line 2b → 9 → 11 → 15 → tax.
+
+Fixed via Option A (the recommended two-pass, IRS-grounded): when the line-by-line path yields line 14 > 0 and no manual override, `prepare()` re-runs ONCE with line 14 injected through a new `FORM8815_LINE_BY_LINE_EXCLUSION` ThreadLocal. The second pass applies the exclusion at `computeInterestIncome`, so Line 2b — and every downstream MAGI/AGI consumer (Schedule 3 credits, AMT, Schedule 8812, education/saver's credits, totals) — reflects it via the well-tested manual-override reduction path (Option B's per-consumer hand-patching + silent-failure risk avoided). Mirrors the multi-return scoping ThreadLocal and the QBI line-13a recompute two-pass.
+
+Correctness (IRC §135(c)(4)): the §135 MAGI is pre-exclusion. On the second pass Line 11b is already reduced, so `computeForm8815`'s line-11b MAGI default adds the exclusion back → line 14 is identical to pass 1 (deterministic single iteration; ThreadLocal `get()==null` guard prevents a third pass). The full line-by-line worksheet detail is preserved because the injection targets the interest-side reduction, not `computeForm8815`'s input (so pass 2 still runs the line-by-line path, not the override-line-14-only shape).
+
+Tests: `form8815LineByLineRetroactivelyReducesLine2bAndDownstream` (full exclusion → Line 2b 10000→7000, line 11b reflects it, worksheet detail preserved) and `form8815LineByLineSecondPassUsesPreExclusionMagi` (mid-phaseout; constant-free invariant `Line2b-reduction == displayed line 14` proves the pre-exclusion MAGI add-back). Full backend suite **1338/1338**. Javadoc + call-site breadcrumb updated; XLS/Computations 2b.md Gap 3 / 8815.md Gap 7 marked Closed.
+
+
 ## 2026-07-07 — Full e2e regression: 1089 pass / 1 fail (self-inflicted, fixed) / 15 intentional skips
 
 Ran the full Playwright regression (`npm run test:regression -- --workers=1`) against the dev backend on V90+V91: **1105 tests, 1089 passed, 1 failed, 15 skipped (2.2h)**. The combat-zone feature specs (5) all passed in the full run, including the GET-reload lock-in and the UI-preview-render test.

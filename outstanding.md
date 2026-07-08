@@ -278,7 +278,9 @@ Per IRS Schedule B (Form 1040) Part I instructions: when a taxpayer receives int
 
 ---
 
-## Line 2b: Form 8815 Line-by-Line Path Does Not Retroactively Reduce Line 2b (Gap 3 from 2b.md) — Deferred 2026-06-03
+## ~~Line 2b: Form 8815 Line-by-Line Path Does Not Retroactively Reduce Line 2b (Gap 3 from 2b.md) — Deferred 2026-06-03~~ **RESOLVED 2026-07-07 (Option A two-pass)**
+
+**RESOLVED 2026-07-07 — Option A (two-pass `prepare()`), as recommended.** When the line-by-line Form 8815 intake produces a non-zero line 14 but the user did NOT set the manual `savingsBondExclusionAmount` override, `prepare()` now re-runs ONCE with line 14 injected via the `FORM8815_LINE_BY_LINE_EXCLUSION` ThreadLocal (mirrors the multi-return scoping override + the QBI line-13a recompute pattern). The second pass applies the exclusion at `computeInterestIncome` (Line 2b) so it cascades through Line 9 → 11 → 15 → 16 → all Schedule 3 credits → AMT → totals via the well-tested override reduction path (no per-consumer hand-patching — Option B's silent-failure risk avoided). **Correctness:** per IRC §135(c)(4) the §135 MAGI is pre-exclusion; `computeForm8815`'s line-11b MAGI default adds the exclusion back on the second pass, so line 14 is identical to pass 1 (deterministic, single iteration; ThreadLocal `get()==null` guard prevents a third pass). **Full line-by-line worksheet detail is preserved** — the injection targets the interest-side reduction, not `computeForm8815`'s input, so pass 2 still runs the line-by-line path (not the override-line-14-only shape). Tests: `form8815LineByLineRetroactivelyReducesLine2bAndDownstream` (full exclusion → Line 2b + line 11b reduced) and `form8815LineByLineSecondPassUsesPreExclusionMagi` (mid-phaseout; constant-free invariant `Line2b reduction == displayed line 14` proves the pre-exclusion MAGI add-back). Full backend suite **1338/1338**. computeForm8815 Javadoc + call-site breadcrumb updated.
 
 **Tracked as Gap 3 in `XLS/Computations/2b.md` §3.2; also Gap 7 in `XLS/Computations/8815.md` §3.2.**
 

@@ -1,6 +1,13 @@
 ﻿# History
 
 
+## 2026-07-08 — Cross-line 0-vs-null audit: line 20 (amount from Schedule 3 line 8) audited + locked in
+
+Next line: **line 20 (amount from Schedule 3 line 8 — nonrefundable credits)**. Verified `computeLine20ThroughLine24` conforms — line 20 is **null-or-positive by design**: it starts null and is set only when Schedule 3 line 8 > 0, so an absent or $0 Schedule 3 nonrefundable-credit total coalesces to null (the IRS "leave line 20 blank if no credits" convention). **There is deliberately no ZERO branch** — the same shape as line 17. No compute change.
+
+Breadcrumb added at the line-20 wiring; lock-in `line20OtherCreditsNullWhenNoSchedule3Credits` ($40k ordinary-income return with no credits → line 20 null). Coverage table + outstanding.md updated. Remaining pending: lines 21–38.
+
+
 ## 2026-07-08 — Cross-line 0-vs-null audit: line 19 (CTC / ODC) audited + locked in
 
 Next line: **line 19 (child tax credit / credit for other dependents)**. Verified the Schedule 8812 wiring conforms — line 19 mirrors Schedule 8812 line 14. ★ Principled-diagnosis finding: a childless return gives line 19 = **0, not null**, because `computeSchedule8812` always returns a non-null object and its line 14 is a computed 0 for a childless filer. That is IRS-defensible (Schedule 8812 line 14 = 0), not a bug — so I locked in 0 rather than "fixing" it to null. Line 19 is **null only when there is no tax context** (TaxAndCredits null — no income — because the setter is guarded), and positive when the CTC/ODC is allowed. No compute change.

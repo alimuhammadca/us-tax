@@ -1,6 +1,19 @@
 ﻿# History
 
 
+## 2026-07-08 — Form 8978 negative line 14 auto-routes to Schedule 3 line 6l (Line 20 audit G2)
+
+Closed the Line 20 / Schedule 3 audit item **G2** (previously marked BLOCKED). A negative Form 8978 line 14 (net decrease in tax from a BBA partnership push-out adjustment) does not go on Form 1040 line 16; the IRS routes it to **Schedule 3 line 6l** as a positive (absolute) amount — a nonrefundable credit. Previously the negative case was detected in `computeLine16()` but only produced a non-blocking "claim it manually" advisory flag; `Schedule3NonrefundableCredits.amountFromForm8978Line14` stayed null and the PDF field filled blank.
+
+**Change.** New `applyForm8978NegativeToSchedule3(schedule3, line16TaxTaxpayer, uid)`, called immediately after `computeLine16()` (which has no `schedule3` handle) and before `finalizeSchedule3Totals()`. When `form8978Line14Amount < 0` it sets `amountFromForm8978Line14 = abs(line14)`. That field is already summed by `sumSchedule3NonrefundableCreditsExcluding5695` into the line 6z/7/8 subtotals → Form 1040 line 20, and is naturally floored by `line22 = max(0, line18 − line21)`. The positive path (line 16 box 3, code "Form 8978") is unchanged; the legacy manual-claim advisory was removed.
+
+**Verification.** `lines/8978.md` confirms negative line 14 → Schedule 3 line 6l (a **nonrefundable** credit — the earlier flag text incorrectly called it "refundable"; corrected). ★ The no-guesswork check caught the refundable/nonrefundable mislabel before wiring.
+
+**Scope / remaining.** The Form 8978 worksheet for a negative amount that *exceeds* available tax (carryforward of the unused decrease) remains deferred — noted in outstanding.md.
+
+Tests: updated unit (`line16Box3Form8978NegativeRoutesToSchedule3Line6l` — asserts line 6l = abs value + no legacy advisory) + updated e2e (`line16-tax.spec.ts` — negative −800 → `schedule3.nonrefundableCredits.amountFromForm8978Line14 = 800`, line 16 unchanged at 3875). Compute-only — no migration; the field was already serialized, so it round-trips on GET (e2e confirms). Full `TaxReturnComputeServiceTest` **899/899**.
+
+
 ## 2026-07-08 — Form 2441 earned income (lines 18/19) now includes computed tips (IRC §21(d)(1))
 
 Partially closed the "Form 2441 / earned-income inputs" cross-cutting item (outstanding.md). Form 2441 lines 18/19 (the earned-income limit on the dependent-care credit) previously counted only W-2 box-1 wages, the manual `additionalEarnedIncome*` field, and student/disabled deemed income — a tipped worker's line-1c tips were omitted, understating the earned-income limit.

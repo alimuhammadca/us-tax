@@ -1947,21 +1947,25 @@ carry `form4952`. No compute logic and no Tax Return UI component exist.
 The following gaps were identified during the Line 20 / Schedule 3 audit. G1 (adoption credit) is
 already documented as Priority 3 below. G4 (Form 3800 / line 13c) is out of scope by design.
 
-#### G2 — Form 8978 Negative Line 14 → Schedule 3 Line 6l (LOW) — **BLOCKED**
+#### ~~G2 — Form 8978 Negative Line 14 → Schedule 3 Line 6l (LOW)~~ **RESOLVED 2026-07-08**
 
 **Field:** `Schedule3NonrefundableCredits.amountFromForm8978Line14`
 
-**Current state:** `setAmountFromForm8978Line14()` is never called anywhere in
-`TaxReturnComputeService`. The CLW-A (Schedule 8812) reads `nc.amountFromForm8978Line14` (wA_7)
-but always receives null. PDF field `f1_20[0]` always fills as blank.
+**Was:** `setAmountFromForm8978Line14()` was never called. A negative Form 8978 line 14 was
+detected in `computeLine16()` but only produced a non-blocking "claim it manually" advisory flag
+(`LINE16_FORM_8978_NEGATIVE_ROUTES_TO_SCHEDULE3_LINE6L`); the Schedule 3 line 6l field stayed null.
 
-**When relevant:** A BBA partnership with a negative line 14 on Form 8978 reduces nonrefundable
-credits via Schedule 3 line 6l. Positive Form 8978 line 14 goes to Form 1040 line 16 box 3 (already
-wired). The negative path is the unimplemented half.
-
-**Fix needed:** After `applyForm8978ToSchedule3()` is wired (or as part of it), when Form 8978
-line 14 is negative, set `amountFromForm8978Line14` = abs(line14). Then include it in the CLW-A
-wA_7 sum and in the `totalOtherNonrefundableCredits` fix (see G6 below).
+**Fix (2026-07-08):** New `applyForm8978NegativeToSchedule3(schedule3, line16TaxTaxpayer, uid)`,
+called immediately after `computeLine16()` (before `finalizeSchedule3Totals()`), sets
+`amountFromForm8978Line14 = abs(negative line14)` on the Schedule 3 nonrefundable credits. It flows
+through the existing line 6z/7/8 subtotals (already summed at `sumSchedule3NonrefundableCreditsExcluding5695`)
+into Form 1040 line 20, naturally floored by `line22 = max(0, line18 − line21)`. The positive path
+(line 16 box 3) is unchanged; the legacy manual-claim advisory was removed. Verified against
+`lines/8978.md` (negative line 14 → Schedule 3 line 6l, a nonrefundable credit — earlier flag text
+incorrectly said "refundable"). 1 unit test (`line16Box3Form8978NegativeRoutesToSchedule3Line6l`)
++ 1 e2e (`line16-tax.spec.ts`). Compute-only — no migration; `amountFromForm8978Line14` already
+serialized (round-trips on GET). **Still deferred:** the Form 8978 worksheet for a negative amount
+that *exceeds* available tax (carryforward of the unused decrease).
 
 ---
 

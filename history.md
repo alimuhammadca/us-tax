@@ -1,6 +1,13 @@
 ﻿# History
 
 
+## 2026-07-08 — Cross-line 0-vs-null audit: lines 6a/6b (social security) audited + locked in
+
+Next line-pair: **lines 6a/6b (social security benefits)**. Verified `computeSocialSecurityBenefits` conforms — the whole `SocialSecurityComputation` record is null on the `!hasOutput` early-return, so line 6a (benefits) and line 6b (taxable) are **null when no SS benefits exist**. Here the canonical **ZERO branch is the natural, common case**: when benefits are present (line 6a ≠ null) but the §86 taxability worksheet makes none taxable (low other income), the "no-blank" rule (`line6a != null && line6b == null → line6b = 0`) forces line 6b = 0 (not null) — a retiree whose only income is Social Security. No compute change.
+
+Breadcrumb added at the `hasOutput` gate; lock-in: new `socialSecurityLine6aAnd6bNullWhenNoInput` (no input → both null) + the existing `computesZeroTaxableSocialSecurityWhenBelowWorksheetThreshold` ($12k benefits, low income → line 6a = 12000, line 6b = 0). Coverage table + outstanding.md updated. Remaining pending: 7a/7b, 8.
+
+
 ## 2026-07-08 — Cross-line 0-vs-null audit: lines 5a/5b (pension/annuity) audited + locked in
 
 Next line-pair: **lines 5a/5b (pension/annuity)**. Verified `computePensionIncome` conforms — it mirrors the IRA cluster: the whole `PensionComputation` record is null on the `!hasOutput` early-return, so line 5a (gross) and line 5b (taxable) are **null when there's no pension activity**, and an all-$0 pension 1099-R also yields null (`hasOutput` uses `hasNonZeroAmount` — a $0 distribution is blank per IRS). **ZERO on line 5b is reached only when genuine activity nets nontaxable** (full rollover, PSO exclusion, or Simplified/General Rule basis recovery, where a 5c box / Form 5329 keeps `hasOutput` true). No compute change.

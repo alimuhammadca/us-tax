@@ -1,6 +1,13 @@
 ﻿# History
 
 
+## 2026-07-08 — Cross-line 0-vs-null audit: lines 4a/4b/4c (IRA) audited + locked in
+
+Next line-pair: **lines 4a/4b/4c (IRA distributions)**. Verified `computeIraDistributions` conforms (with a documented nuance): the WHOLE `IraComputation` record is null on the `!hasOutput` early-return, so line 4a (gross) and line 4b (taxable) are **null when there's no IRA activity**. Because `hasOutput` uses `hasNonZeroAmount`, an all-$0 1099-R also yields null — a deliberate, spec-appropriate difference from lines 2b/3b (a $0 IRA distribution is "no distribution", which the IRS leaves blank). **ZERO on line 4b is reached only when genuine activity nets fully nontaxable** (e.g. a full QCD or Form 8606 basis, where the exception / 4c box keeps `hasOutput` true). No compute change.
+
+Breadcrumb added at the `hasOutput` gate; lock-in test pair `iraLine4aAnd4bNullWhenNoInput` (no input → both null) and `iraLine4bZeroWhenFullQcdOffsetsDistribution` (full QCD → line 4a = $5,000, line 4b = 0, 4c box 2 checked). Coverage table + outstanding.md updated. Remaining pending: 5a/5b, 6a/6b, 7a/7b, 8.
+
+
 ## 2026-07-08 — Cross-line 0-vs-null audit: lines 3a/3b (dividends) audited + locked in
 
 Next line-pair in the "Cross-Line 0-vs-null Compliance Audit": **lines 3a/3b (dividends)**. Verified `computeDividendIncome` conforms — line 3a (qualified) and line 3b (ordinary) are **null when no dividend input exists** (`line3a`/`line3b` are `addNonNull` aggregates; `computeDividendForPerson` returns all-null on the `!personHadDividend` early-return in modern mode and produces null when no 1099-DIV entries exist in legacy mode; `roundMoney(null)=null`), and the line-3a-≤-line-3b cap is `hasPositiveAmount`-guarded so it never manufactures a value. **ZERO only when the concept applies** with a provided value (explicit $0 1099-DIV box 1a → line 3b = 0). No compute change.

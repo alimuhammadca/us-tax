@@ -1,6 +1,11 @@
 ﻿# History
 
 
+## 2026-07-07 — Doc-sync: struck a stale duplicate in the output-form-wiring list (Line 8d Form 2555 auto-wire)
+
+Minor cleanup. The "Deferred Output-Form Wiring Gaps" list carried an unstruck "[Line 8 / Line 8d Form 2555 exclusion not auto-wired]" bullet whose proposed fix was already implemented and recorded (struck) three bullets below it ("[Line 8d / Form 2555 exclusion not auto-wired] Fixed 2026-04-16"). Verified in code: `computeOtherIncomes()` reads the manual `otherIncomeForeignEarnedIncomeExclusion8d` and calls `computeForm2555ExclusionForSsWorksheet(...)` as the auto-fallback (lines ~14333–14338). Struck the duplicate. Doc-only.
+
+
 ## 2026-07-07 — Line 1c e2e coverage: added the Schedule 2 line 13 (box-12 A/B) round-trip test; item resolved
 
 The outstanding.md "Line 1c E2E Test Coverage Gaps" item was mostly stale — `line1c-tip-income.spec.ts` already covered scenarios 1 (timely tips), 9 (MFJ two Form 4137, asserting `form4137Spouse`), and 12 (RRTA), and has `retries: 1`. The one genuine gap was scenario 11 — W-2 box 12 codes A/B → Schedule 2 line 13 — which is the box-12 A/B/M/N compute path I implemented earlier this session with unit tests only. Added an e2e: a W-2 with box 12 code A ($120) + code B ($30) → Schedule 2 line 13 = $150, and line 1c (`tipIncome`) stays null (codes A/B are uncollected tax, not tip income). Gives that feature its round-trip coverage. Marked the item RESOLVED. Test authoring only; no code change.

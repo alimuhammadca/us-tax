@@ -1,6 +1,13 @@
 ﻿# History
 
 
+## 2026-07-08 — Cross-line 0-vs-null audit: line 28 (additional child tax credit) audited + locked in
+
+Next line: **line 28 (additional child tax credit — the refundable counterpart to line 19)**. Verified the Schedule 8812 ACTC wiring conforms — line 28 is **null-or-positive**: it is set only when Schedule 8812 line 27 > 0, so a childless return (or one whose CTC is fully nonrefundable on line 19, or whose earned income is too low for the refundable portion) leaves it null. **No ZERO branch.** No compute change.
+
+Breadcrumb added at the wiring; lock-in `line28AdditionalChildTaxCreditNullWhenNone` ($40k childless return → line 28 null). Coverage table + outstanding.md updated. Remaining pending: lines 29–38.
+
+
 ## 2026-07-08 — Cross-line 0-vs-null audit: line 27a (Earned Income Credit) audited + locked in
 
 Next line: **line 27a (Earned Income Credit)**. Verified `computeLine27aEIC` conforms — line 27a is **null when the credit is not claimed or the filer is disqualified**: each eligibility failure is an early `return null` (no EIC form, `claimsEIC != true`, Form 2555 present, nonresident alien, ITIN filer, unresolved Form 8862 gate, etc.). When the credit is claimed and allowed it is positive; it can be **ZERO** when earned income/AGI is above the phase-out completion point (the EIC table returns 0). No compute change.

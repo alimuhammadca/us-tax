@@ -184,12 +184,30 @@ sections:
         label: Spouse attorney fees and court costs for unlawful discrimination claims
         placeholder: 0.00
         help: Enter spouse deductible attorney fees and court costs for an unlawful discrimination claim.
+      - name: line24hGrossIncomeFromDiscriminationAction
+        type: amount
+        required: false
+        label: Spouse income included from the discrimination judgment or settlement
+        placeholder: 0.00
+        help: >
+          Enter the amount of the spouse's judgment or settlement that was included in income. Per
+          IRC §62(a)(20) the line 24h deduction cannot exceed this amount; larger fees are reduced
+          to it automatically. Leave blank if not applicable.
       - name: otherAdjustmentAttorneyFeesIrsAwardLine24i
         type: amount
         required: false
         label: Spouse attorney fees and court costs for IRS whistleblower award claims
         placeholder: 0.00
         help: Enter spouse deductible attorney fees and court costs for an IRS whistleblower award.
+      - name: line24iWhistleblowerAwardIncludedInIncome
+        type: amount
+        required: false
+        label: Spouse whistleblower award reported as income
+        placeholder: 0.00
+        help: >
+          Enter the spouse's IRS whistleblower award amount reported as income. Per IRC §62(a)(21)
+          the line 24i deduction cannot exceed this amount; larger fees are reduced to it
+          automatically. Leave blank if not applicable.
       - name: otherAdjustmentHousingDeductionForm2555Line24j
         type: amount
         required: false

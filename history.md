@@ -1,6 +1,19 @@
 ﻿# History
 
 
+## 2026-07-07 — Schedule 1 lines 24h/24i attorney-fee income caps (IRC §62(a)(20)/(21)) + NIIT G4 doc-sync
+
+Two items. (1) **Doc-sync:** the "[Line 23 / G4] NIIT / Form 8960 not implemented" audit row was stale — verified `computeForm8960` + `applyForm8960ToSchedule2`, `Form8960` model, ~28 tests all exist. Struck it.
+
+(2) **Feature — lines 24h/24i attorney-fee income caps.** Previously the line 24h (unlawful-discrimination) and 24i (IRS-whistleblower) attorney-fee deductions passed the user-entered amount through uncapped. Per IRC §62(a)(20)/(21) (confirmed in J.K. Lasser 2025: "only to the extent of the amount included in income as a result of the judgment or settlement" / "up to the amount of the award reported as income"), each deduction is capped at the related income. Implemented full-stack:
+- **Compute:** when the user supplies the income basis and the entered fees exceed it, `line24h/24i = min(fees, basis)` and a non-blocking advisory fires (`SCHEDULE1_LINE24H_ATTORNEY_FEES_CAPPED_TO_INCOME` / `..._LINE24I_WHISTLEBLOWER_FEES_CAPPED_TO_AWARD`). Basis omitted → the entry is trusted (can't cap without the income figure).
+- **Persistence:** two optional cap-basis columns on `pf_income_adjustments` (`line24h_gross_income_from_discrimination_action`, `line24i_whistleblower_award_included_in_income`, **V92**) + `IncomeAdjustmentsMapper` save/load.
+- **Frontend:** the two inputs added to both income-adjustments components (data-driven: interface + model + field-config + helpMap + reset) and both YAML specs.
+- **Validation:** 3 unit tests (24h cap, 24i cap, no-cap-within-basis / no-basis) + 1 e2e round-trip (fees $30k/$15k → capped $20k/$10k, both advisories, through the V92-persisted path). Full backend suite **1341/1341**; frontend AOT green; backend boots clean on V90+V91+V92.
+
+This closes sub-items #3 and #4 of the outstanding.md "Schedule 1 Part II Post-AGI Refinement" item; #1 (line-21 MAGI phaseout), #2 (line-24c AGI ceiling), and #5 (line-21 dependent over-block) remain — they require the AGI post-pass.
+
+
 ## 2026-07-07 — Doc-sync: struck a stale duplicate in the output-form-wiring list (Line 8d Form 2555 auto-wire)
 
 Minor cleanup. The "Deferred Output-Form Wiring Gaps" list carried an unstruck "[Line 8 / Line 8d Form 2555 exclusion not auto-wired]" bullet whose proposed fix was already implemented and recorded (struck) three bullets below it ("[Line 8d / Form 2555 exclusion not auto-wired] Fixed 2026-04-16"). Verified in code: `computeOtherIncomes()` reads the manual `otherIncomeForeignEarnedIncomeExclusion8d` and calls `computeForm2555ExclusionForSsWorksheet(...)` as the auto-fallback (lines ~14333–14338). Struck the duplicate. Doc-only.

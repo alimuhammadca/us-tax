@@ -185,12 +185,30 @@ sections:
         label: Attorney fees and court costs for unlawful discrimination claims
         placeholder: 0.00
         help: Enter deductible attorney fees and court costs paid in connection with an unlawful discrimination claim.
+      - name: line24hGrossIncomeFromDiscriminationAction
+        type: amount
+        required: false
+        label: Income included from the discrimination judgment or settlement
+        placeholder: 0.00
+        help: >
+          Enter the amount of the judgment or settlement that was included in your income. Per IRC
+          §62(a)(20) the line 24h deduction cannot exceed this amount; if the fees above are larger,
+          they are automatically reduced to this amount. Leave blank if not applicable.
       - name: otherAdjustmentAttorneyFeesIrsAwardLine24i
         type: amount
         required: false
         label: Attorney fees and court costs for IRS whistleblower award claims
         placeholder: 0.00
         help: Enter deductible attorney fees and court costs paid in connection with an IRS whistleblower award.
+      - name: line24iWhistleblowerAwardIncludedInIncome
+        type: amount
+        required: false
+        label: Whistleblower award reported as income
+        placeholder: 0.00
+        help: >
+          Enter the IRS whistleblower award amount reported as income. Per IRC §62(a)(21) the line
+          24i deduction cannot exceed this amount; larger fees are automatically reduced to it.
+          Leave blank if not applicable.
       - name: otherAdjustmentHousingDeductionForm2555Line24j
         type: amount
         required: false

@@ -1,6 +1,13 @@
 ﻿# History
 
 
+## 2026-07-08 — Cross-line 0-vs-null audit: line 30 (refundable adoption credit) audited + locked in
+
+Next line: **line 30 (refundable adoption credit — Form 8839 line 13)**. Verified the Form 8839 refundable-adoption wiring conforms — line 30 is **null-or-positive**: set only when the refundable credit > 0, so a return with no adoption (or one whose adoption credit is fully nonrefundable) leaves it null. **No ZERO branch.** No compute change.
+
+Breadcrumb added at the wiring; lock-in `line30RefundableAdoptionCreditNullWhenNone` ($40k return with no adoption → line 30 null). Coverage table + outstanding.md updated. Remaining pending: lines 31–38.
+
+
 ## 2026-07-08 — Cross-line 0-vs-null audit: line 29 (refundable AOTC) audited + locked in
 
 Next line: **line 29 (refundable American Opportunity Credit — Form 8863 line 8)**. Verified the Form 8863 refundable-AOTC wiring conforms — line 29 is **null-or-positive**: set only when Form 8863 line 8 refundable AOTC > 0, so a return with no education credit (or one whose AOTC is fully nonrefundable / phased out) leaves it null. **No ZERO branch.** No compute change.

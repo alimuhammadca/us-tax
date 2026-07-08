@@ -1,6 +1,13 @@
 ﻿# History
 
 
+## 2026-07-08 — Cross-line 0-vs-null audit: line 31 (amount from Schedule 3 line 15) audited + locked in
+
+Next line: **line 31 (other payments and refundable credits — amount from Schedule 3 line 15)**. Verified `computeLine31ThroughLine38` conforms — line 31 is **null-or-positive**: it starts null and is set only when Schedule 3 line 15 > 0, so an absent or $0 total coalesces to null. This is the payments-side counterpart to line 20 (Schedule 3 line 8 nonrefundable). **No ZERO branch.** No compute change.
+
+Breadcrumb added at the wiring; lock-in `line31OtherPaymentsNullWhenNoSchedule3` ($40k return with no other payments → line 31 null). Coverage table + outstanding.md updated. Remaining pending: lines 32–38.
+
+
 ## 2026-07-08 — Cross-line 0-vs-null audit: line 30 (refundable adoption credit) audited + locked in
 
 Next line: **line 30 (refundable adoption credit — Form 8839 line 13)**. Verified the Form 8839 refundable-adoption wiring conforms — line 30 is **null-or-positive**: set only when the refundable credit > 0, so a return with no adoption (or one whose adoption credit is fully nonrefundable) leaves it null. **No ZERO branch.** No compute change.

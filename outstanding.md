@@ -427,7 +427,8 @@ Per-line checklist for the canonical-rule audit step:
 - ✅ Line 28 (additional child tax credit) — audited 2026-07-08 (CONFORMS: NULL-or-POSITIVE — set only when Schedule 8812 line 27 > 0, so a childless / fully-nonrefundable-CTC / low-earned-income return leaves it null; no ZERO branch; breadcrumb at the wiring + lock-in `line28AdditionalChildTaxCreditNullWhenNone`).
 - ✅ Line 29 (refundable AOTC) — audited 2026-07-08 (CONFORMS: NULL-or-POSITIVE — set only when Form 8863 line 8 refundable AOTC > 0, so a return with no education credit leaves it null; no ZERO branch; breadcrumb at the wiring + lock-in `line29RefundableAotcNullWhenNone`).
 - ✅ Line 30 (refundable adoption credit) — audited 2026-07-08 (CONFORMS: NULL-or-POSITIVE — set only when the Form 8839 line 13 refundable credit > 0, so a return with no adoption leaves it null; no ZERO branch; breadcrumb at the wiring + lock-in `line30RefundableAdoptionCreditNullWhenNone`).
-- ⏳ Lines 31–38 (Schedule 3 other payments, total payments, refund/owed) — pending future audits (folded into each remaining line audit).
+- ✅ Line 31 (amount from Schedule 3 line 15) — audited 2026-07-08 (CONFORMS: NULL-or-POSITIVE — set only when Schedule 3 line 15 > 0 (payments-side counterpart to line 20); no ZERO branch; breadcrumb at the wiring + lock-in `line31OtherPaymentsNullWhenNoSchedule3`).
+- ⏳ Lines 32–38 (total other payments, total payments, refund/owed) — pending future audits (folded into each remaining line audit).
 - ⏳ Lines 9–38 (totals, deductions, credits, payments) — pending future audits.
 
 **Why folded into per-line audits rather than a single sweep:**

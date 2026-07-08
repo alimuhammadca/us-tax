@@ -1,6 +1,13 @@
 ﻿# History
 
 
+## 2026-07-08 — Cross-line 0-vs-null audit: lines 13a/13b (QBI + additional deductions) audited + locked in
+
+Next line: **line 13 (13a QBI deduction + 13b additional deductions / Schedule 1-A)**. Verified both conform — line 13a is **null when there is no QBI workflow** (`computeLine13a` returns null on `!hasAnyQbiWorkflow`), and ZERO when a QBI workflow is present but the deduction computes to 0 (a net-QBI-loss year or a taxable-income limitation of 0). Line 13b is **null when there is no Schedule 1-A** (the `setAdditionalDeductions` setter is guarded on `schedule1A != null && getLine38Total() != null`), and ZERO if the tips/overtime/car-loan/senior amounts fully phase out. Both are non-negative deductions. No compute change.
+
+Breadcrumbs added at both null-exits; lock-in tests `line13aQbiNullWhenNoQbiWorkflow` and `line13bAdditionalDeductionsNullWhenNoSchedule1A` (a return with $40k wages but no QBI form / no Schedule 1-A → line 13a / line 13b null). Coverage table + outstanding.md updated. Remaining pending: lines 14–38.
+
+
 ## 2026-07-08 — Cross-line 0-vs-null audit: lines 12a–12e (deduction) audited + locked in
 
 Next line: **lines 12a–12e (standard/itemized deduction)**. Verified `computeStandardDeduction` / `computeLine12` conform — the standard deduction (and thus line 12e) is **null when there is no filing status** (the concept needs one). ★ Notably, ZERO here is **spec-mandated, not "no input"**: line 12b (MFS spouse itemizes) or line 12c (dual-status alien) forces a $0 standard deduction per IRC §63(c)(6) — a clean example of the canonical rule's ZERO category ("concept applies, computed value is zero"). Otherwise the deduction is a positive floor by filing status (dependents get the min-$1,350 worksheet, still positive). No compute change.

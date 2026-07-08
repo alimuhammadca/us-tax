@@ -1,6 +1,17 @@
 ﻿# History
 
 
+## 2026-07-08 — Form 2441 earned income (lines 18/19) now includes computed tips (IRC §21(d)(1))
+
+Partially closed the "Form 2441 / earned-income inputs" cross-cutting item (outstanding.md). Form 2441 lines 18/19 (the earned-income limit on the dependent-care credit) previously counted only W-2 box-1 wages, the manual `additionalEarnedIncome*` field, and student/disabled deemed income — a tipped worker's line-1c tips were omitted, understating the earned-income limit.
+
+**Change.** Per IRC §21(d)(1) (verified against J.K. Lasser 2025: earned income for the dependent-care credit includes wages, salaries, **tips**, and other taxable employee compensation), the computed per-person line-1c tips now flow into `taxpayerEarned`/`spouseEarned`. Surfaced the previously return-level-only tip total as per-person values on the `TipComputation` record (`taxpayerLine1c`/`spouseLine1c`, taken from the internal `TipResult` objects), passed `tips` into `computeDependentCareBenefits`, and added them to the per-person earned income (MFS spouse excluded, mirroring the existing `additionalEarnedIncomeSpouse` guard). `tips` is computed (compute order 843) before the Form 2441 call (863), so no reordering was needed.
+
+**Scope / remaining.** Form 8919 uncollected wages (line 1g) and other earned income (line 1h) are still captured only via the manual `additionalEarnedIncome*` field. Automatic inclusion is deferred: `OtherEarnedIncomeComputation.line1h` exposes only a return-level total (no per-person split needed for MFJ line-18-vs-19), and `computeOtherEarnedIncome`/`computeCombatPay` run *after* the Form 2441 call in compute order. Noted in outstanding.md.
+
+Tests: 2 unit (`dependentCareTipsIncludedInEarnedIncomeLines18And19` MFJ per-person; `dependentCareTipsIncludedForSingleFilerLine18`) + 1 e2e (`line1e-dependent-care.spec.ts` — Single filer, wages 30000 + non-cash tips 5000 → line 18/19 = 35000; credit correctly drops to 500 as the tips also raise AGI → 25% applicable percentage). Compute-only — no migration, no new persisted output field (line 18/19 already persist), so no GET-reload gap.
+
+
 ## 2026-07-07 — Schedule 1 Part II Post-AGI Refinement COMPLETE: line 24c Olympic ceiling (#2) + line 21 dependent rule verified (#5)
 
 Closed the last two sub-items of the "Schedule 1 Part II Post-AGI Refinement" item (10.md), which is now fully resolved (all five sub-items).

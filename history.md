@@ -1,6 +1,15 @@
 ﻿# History
 
 
+## 2026-07-08 — Cross-line 0-vs-null audit: lines 34/37/38 audited — ★ ENTIRE FORM 1040 (1a–38) COMPLETE
+
+Final lines: **line 34 (overpayment/refund) + line 37 (amount you owe) + line 38 (estimated-tax penalty)**. Verified `computeLine31ThroughLine38` conforms — lines 34 and 37 are **mutually exclusive** via strict `>` comparisons: overpaid (line33 > totalTax) creates a `Refund` (positive) and no `AmountOwed`; owed (totalTax > line33) creates an `AmountOwed` (positive) and no `Refund`; a break-even return (equal) creates neither, so both are null. There is no shown-ZERO for either. Line 38 (estimated-tax penalty) is **null-or-positive** — set only when Form 2210 produces a penalty > 0 that is not WAIVED. No compute change.
+
+Breadcrumbs at both the 34/37 branch and the line-38 wiring; lock-in test pair `line34RefundWhenOverpaidAmountOwedNull` ($60k wages + $8k withholding → refund positive, amount owed null) and `line37AmountOwedWhenUnderpaidRefundNull` ($60k wages, no withholding → amount owed positive, refund null).
+
+**★ This completes the Cross-Line 0-vs-null Compliance Audit for the ENTIRE Form 1040 (lines 1a through 38).** The audit item (opened 2026-05-10, income lines closed in the 1a–1z block) is now fully closed: every Form 1040 line has been verified against `knowledge/canonical-null-zero-semantic.md`, given a breadcrumb at its null-exit path, and locked in with test(s) asserting null-when-no-input and the appropriate ZERO/positive branch. **Every line CONFORMS — no compute changes were required across the entire audit; the code was already correct, and is now provably so.** Four distinct null/zero shapes were catalogued in the coverage table: (a) always-constructed null-preserving sum (2b/3b, 9, 14); (b) whole-record-null gate where an all-$0 entry → null (4/5/6/7/8, 15, 16, 18); (c) null-or-positive `> 0 ? : null` coalescing (10, 13, 17, 20, 21, 23, 25d, 26, 28–33, 38); (d) mirrors an always-computed sub-schedule total → 0 rather than null (19); plus spec-mandated ZERO floors (12 dual-status, 15/22 tax-floor) and mutual-exclusion (34/37).
+
+
 ## 2026-07-08 — Cross-line 0-vs-null audit: lines 32/33 (total other payments, total payments) audited + locked in
 
 Next line-pair: **line 32 (total other payments and refundable credits = 27a+28+29+30+31) + line 33 (total payments = 25d+26+32)**. Verified `computeLine31ThroughLine38` conforms — both are **null-or-positive**: `> 0 ? sum : null` coalesces a $0 total to null, and every addend is non-negative by IRS construction (each guarded against negatives). So line 32 is null when there are no refundable credits and line 33 is null when there are no payments at all. No compute change.

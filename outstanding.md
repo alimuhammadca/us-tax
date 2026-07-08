@@ -377,7 +377,7 @@ Per IRC §1(h)(11)(C) + IRS Pub. 550 + `lines/3ab.md` §4.3: not every dividend 
 
 ---
 
-## Cross-Line 0-vs-null Compliance Audit — Folded Into Each Remaining Line Audit — In Progress 2026-05-10
+## ~~Cross-Line 0-vs-null Compliance Audit — Folded Into Each Remaining Line Audit — In Progress 2026-05-10~~ **COMPLETE 2026-07-08 (all Form 1040 lines 1a–38 audited + lock-in tests; every line CONFORMS, no compute changes)**
 
 Per the canonical rule established 2026-05-10 (`knowledge/canonical-null-zero-semantic.md`, `rules.md`):
 
@@ -429,7 +429,8 @@ Per-line checklist for the canonical-rule audit step:
 - ✅ Line 30 (refundable adoption credit) — audited 2026-07-08 (CONFORMS: NULL-or-POSITIVE — set only when the Form 8839 line 13 refundable credit > 0, so a return with no adoption leaves it null; no ZERO branch; breadcrumb at the wiring + lock-in `line30RefundableAdoptionCreditNullWhenNone`).
 - ✅ Line 31 (amount from Schedule 3 line 15) — audited 2026-07-08 (CONFORMS: NULL-or-POSITIVE — set only when Schedule 3 line 15 > 0 (payments-side counterpart to line 20); no ZERO branch; breadcrumb at the wiring + lock-in `line31OtherPaymentsNullWhenNoSchedule3`).
 - ✅ Lines 32/33 (total other payments, total payments) — audited 2026-07-08 (CONFORMS: both NULL-or-POSITIVE — `> 0 ? : null` coalesces a $0 sum to null; every addend non-negative; breadcrumbs at both + lock-in `line32And33TotalPaymentsNullWhenNone`).
-- ⏳ Lines 34–38 (overpayment/refund, amount owed, estimated-tax penalty) — pending future audits (folded into each remaining line audit).
+- ✅ Lines 34/37/38 (refund, amount owed, penalty) — audited 2026-07-08 (CONFORMS: lines 34 (refund) and 37 (amount owed) MUTUALLY EXCLUSIVE via strict `>` — overpaid → Refund only, owed → AmountOwed only, break-even → both null; line 38 (estimated-tax penalty) NULL-or-POSITIVE — set only when Form 2210 penalty > 0 and not WAIVED; breadcrumbs at both + lock-in tests `line34RefundWhenOverpaidAmountOwedNull` / `line37AmountOwedWhenUnderpaidRefundNull`).
+- ✅ **ALL Form 1040 lines 1a–38 COMPLETE** (2026-07-08) — the entire Form 1040 has been audited for canonical 0-vs-null compliance, each line given a breadcrumb at its null-exit and a lock-in test; every line CONFORMS with no compute changes required. Four null/zero shapes catalogued: (a) always-constructed null-preserving sum, (b) whole-record-null gate (all-$0 → null), (c) null-or-positive `> 0 ? : null` coalescing, (d) mirrors an always-computed sub-schedule total.
 - ⏳ Lines 9–38 (totals, deductions, credits, payments) — pending future audits.
 
 **Why folded into per-line audits rather than a single sweep:**

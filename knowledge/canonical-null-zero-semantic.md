@@ -132,7 +132,8 @@ When auditing a new compute method or writing a new helper:
 | **29** | **Form 8863 refundable-AOTC wiring** | **CONFORMS — audited 2026-07-08** | Line 29 (refundable AOTC) NULL-or-POSITIVE — set only when Form 8863 line 8 refundable AOTC > 0, so a return with no education credit (or fully-nonrefundable / phased-out AOTC) leaves it null. No ZERO branch. Breadcrumb at the wiring; lock-in `line29RefundableAotcNullWhenNone`. |
 | **30** | **Form 8839 refundable-adoption wiring** | **CONFORMS — audited 2026-07-08** | Line 30 (refundable adoption credit, Form 8839 line 13) NULL-or-POSITIVE — set only when the refundable credit > 0, so a return with no adoption leaves it null. No ZERO branch. Breadcrumb at the wiring; lock-in `line30RefundableAdoptionCreditNullWhenNone`. |
 | **31** | **`computeLine31ThroughLine38`** | **CONFORMS — audited 2026-07-08** | Line 31 (amount from Schedule 3 line 15) NULL-or-POSITIVE — set only when Schedule 3 line 15 > 0 (payments-side counterpart to line 20). No ZERO branch. Breadcrumb at the wiring; lock-in `line31OtherPaymentsNullWhenNoSchedule3`. |
-| 32–38 | Downstream lines (total other payments, total payments, refund/owed) | UNAUDITED — pending future audit | Add 0-vs-null check per line. |
+| **32/33** | **`computeLine31ThroughLine38`** | **CONFORMS — audited 2026-07-08** | Line 32 (total other payments = 27a+28+29+30+31) and line 33 (total payments = 25d+26+32) both NULL-or-POSITIVE — `> 0 ? : null` coalesces a $0 sum to null; every addend non-negative. Breadcrumbs at both; lock-in `line32And33TotalPaymentsNullWhenNone`. |
+| 34–38 | Downstream lines (overpayment/refund, amount owed, penalty) | UNAUDITED — pending future audit | Add 0-vs-null check per line. |
 
 Audit plan: **The 0-vs-null compliance check is now a standard step in every Code Validation sheet for the remaining Form 1040 lines.** See `outstanding.md` "Cross-line 0-vs-null compliance audit — folded into each remaining line audit" entry.
 

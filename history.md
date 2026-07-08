@@ -1,6 +1,13 @@
 ﻿# History
 
 
+## 2026-07-08 — Cross-line 0-vs-null audit: lines 32/33 (total other payments, total payments) audited + locked in
+
+Next line-pair: **line 32 (total other payments and refundable credits = 27a+28+29+30+31) + line 33 (total payments = 25d+26+32)**. Verified `computeLine31ThroughLine38` conforms — both are **null-or-positive**: `> 0 ? sum : null` coalesces a $0 total to null, and every addend is non-negative by IRS construction (each guarded against negatives). So line 32 is null when there are no refundable credits and line 33 is null when there are no payments at all. No compute change.
+
+Breadcrumbs added at both totals; lock-in `line32And33TotalPaymentsNullWhenNone` (a $40k W-2 return with no withholding / estimated payments / refundable credits → line 32 and line 33 both null). Coverage table + outstanding.md updated. Remaining pending: lines 34–38.
+
+
 ## 2026-07-08 — Cross-line 0-vs-null audit: line 31 (amount from Schedule 3 line 15) audited + locked in
 
 Next line: **line 31 (other payments and refundable credits — amount from Schedule 3 line 15)**. Verified `computeLine31ThroughLine38` conforms — line 31 is **null-or-positive**: it starts null and is set only when Schedule 3 line 15 > 0, so an absent or $0 total coalesces to null. This is the payments-side counterpart to line 20 (Schedule 3 line 8 nonrefundable). **No ZERO branch.** No compute change.

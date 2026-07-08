@@ -1,6 +1,15 @@
 ﻿# History
 
 
+## 2026-07-08 — Cross-line 0-vs-null audit: line 8 (other income) audited — INCOME LINES 1a–8 COMPLETE
+
+Final income-line pair: **line 8 (other income, Schedule 1 Part I)**. Verified `computeOtherIncomes` conforms — the whole `OtherIncomeComputation` record is null on the `!hasAnySchedule1Input` early-return, so Form 1040 line 8 (a Schedule 1 line 10 pass-through) is **null when there's no Schedule 1 input**; an all-$0 Schedule 1 also yields null (the gate uses `hasNonZeroAmount`). **ZERO on line 8 only when genuine activity nets to exactly $0** (e.g. a taxable state refund offset by an equal NOL); line 8 may also be **negative** (net loss). No compute change.
+
+Breadcrumb added at the `hasAnySchedule1Input` gate; lock-in test pair `otherIncomeLine8NullWhenNoInput` (no input → null) and `otherIncomeLine8ZeroWhenRefundOffsetByNol` ($500 refund + $500 NOL → line 8 = 0).
+
+**★ This completes the Cross-Line 0-vs-null Compliance Audit for all Form 1040 income lines (1a–8).** Over this session's audit thread, lines 2a/2b, 3a/3b, 4a/4b/4c, 5a/5b, 6a/6b, 7a/7b, and 8 were each verified against `knowledge/canonical-null-zero-semantic.md`, given a breadcrumb at their null-exit, and locked in with a null-when-no-input + ZERO-when-concept-applies test pair (14 new tests total; all CONFORMS, no compute changes — the code was already correct, now provably so). Two shapes recur: (a) always-constructed record with null-preserving `addNonNull`/`subtractNonNegative`/`roundMoney` (2a/2b, 3a/3b), and (b) whole-record-null on a `hasOutput`/`hasAnyInput` gate so an all-$0 entry is treated as "no activity" (4/5/6/7/8). Remaining pending: lines 9–38 (totals, deductions, credits, payments), folded into each remaining line audit.
+
+
 ## 2026-07-08 — Cross-line 0-vs-null audit: lines 7a/7b (capital gain/loss) audited + locked in
 
 Next line-pair: **lines 7a/7b (capital gain or loss)**. Verified `computeCapitalGainLoss` conforms — the whole `CapitalGainLossComputation` record is null on the `!hasOutput` early-return, so line 7a is **null when there's no capital activity**. A computed $0 (Schedule D line 16 null → 0) does NOT count as output unless `hadAnyCapital` (real transactions) or a child capital gain is present. The dedicated `line7a == 0 && hadAnyCapital` clause in the gate is exactly the canonical **ZERO branch**: real transactions that net to exactly $0 show line 7a = 0 (not null). Line 7a may also be **negative** (a §1211(b)-capped loss). No compute change.

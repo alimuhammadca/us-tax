@@ -1,6 +1,15 @@
 ﻿# History
 
 
+## 2026-07-08 — Deep-pass: FE/BE statement-form drift found + FIXED (4 capital/property forms unreachable)
+
+Investigated the deep-pass "prevent FE/BE statement-form drift" item and found **genuine drift** (not just a risk). Diffed the backend `StatementFormCatalog` (42 forms) against the FE `statement-selection.service.ts` and found 4 forms in the backend but not the FE: **Form 4684 (Casualties and Thefts), 4797 (Sales of Business Property), 6781 (§1256 Contracts and Straddles), 8824 (Like-Kind Exchanges)**. These were **90% wired end-to-end** — present in the backend catalog, with complete `CAPITAL_STATEMENT_CONFIGS` entries (4684's config alone is ~1,140 lines), and read by the `form-capital-gain-loss-{taxpayer,spouse}` compute — but missing from all three FE registration points (`statement-selection.service.ts`, the shell template `*ngIf` render blocks, and the `capitalStatementFormIds` Set). Net effect: a user with a casualty loss, a sale of business property, a §1256 straddle, or a like-kind exchange had no way to add that statement, even though the app fully supports computing it. Classic "register in N places" incomplete wiring (mirrors the four backend register-in-N-places hazards). Sibling capital forms 2439 and 6252 were correctly registered, which made the omission clearly accidental.
+
+Fixed by adding the 4 forms at all three FE points, following the proven 8853/8889 generic-`FormCapitalStatement` render pattern (their configs are complete, so no new entry component was needed). FE and BE statement catalogs now match exactly (42 = 42, verified by `comm` diff — no BE-only, no FE-only). Angular build green (only pre-existing warnings).
+
+★ The vague "prevent drift" item surfaced a concrete, user-facing gap (4 supported forms unreachable). Fixed the instance; the item's original intent (a shared/generated catalog to PREVENT future drift — the two lists are still separate hardcoded sources) remains open and is noted in outstanding.md. E2E coverage for these 4 forms is tracked under the separate "[Capital forms E2E coverage]" item.
+
+
 ## 2026-07-08 — Deep-pass: both auth-security items MOOT (endpoints deleted 2026-04-28)
 
 Closed the two deep-pass "auth" recommendations by verification — both are moot because the vulnerable code was removed. The 2026-02-28 deep pass flagged (1) fixing the `disableUser`/`enableUser` state-mutation path in `AuthService` + `AuthServiceTest`, and (2) protecting the unauthenticated `/auth/users/disable` and `/auth/users/enable` admin endpoints. Per `us-tax-be/.../microservices/context.md`, on **2026-04-28** `AuthResource.java` (`POST /auth/users`, `/auth/users/disable`, `/auth/users/enable`), `AuthService.java`, and their unit tests were **deleted** — orphan email/password admin code with zero callers, removed during the phone-OTP auth migration (backend suite re-ran green 567/567). Confirmed today that no `AuthResource`/`AuthService` exists anywhere in the codebase. The security concern is resolved by deletion; both items predate the removal and were never re-introduced. No code change. outstanding.md deep-pass items marked moot.

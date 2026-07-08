@@ -1,6 +1,13 @@
 ﻿# History
 
 
+## 2026-07-08 — Cross-line 0-vs-null audit: line 27a (Earned Income Credit) audited + locked in
+
+Next line: **line 27a (Earned Income Credit)**. Verified `computeLine27aEIC` conforms — line 27a is **null when the credit is not claimed or the filer is disqualified**: each eligibility failure is an early `return null` (no EIC form, `claimsEIC != true`, Form 2555 present, nonresident alien, ITIN filer, unresolved Form 8862 gate, etc.). When the credit is claimed and allowed it is positive; it can be **ZERO** when earned income/AGI is above the phase-out completion point (the EIC table returns 0). No compute change.
+
+Breadcrumb added at the entry guards; lock-in `line27aEicNullWhenNotClaimed` ($40k wage return with no earned-income-credit form → line 27a null). Coverage table + outstanding.md updated. Remaining pending: lines 27b–38.
+
+
 ## 2026-07-08 — Cross-line 0-vs-null audit: line 26 (estimated tax payments) audited + locked in
 
 Next line: **line 26 (estimated tax payments)**. Verified `computeLine26EstimatedTax` conforms — line 26 is **null-or-positive**: it returns null when neither spouse's form indicates estimated payments were made, and the installment sum accumulates only positive amounts (a null-initialised total stays null if every installment is 0/absent). So there is **no natural ZERO-with-input case** — line 26 is null when no estimated payments were made and positive otherwise. No compute change.

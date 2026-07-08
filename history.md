@@ -1,6 +1,11 @@
 ﻿# History
 
 
+## 2026-07-08 — Deep-pass: inactivity-policy 1-hour-vs-5-minute mismatch reconciled (doc-align)
+
+Closed the deep-pass "align inactivity policy" item. The runtime and the docs disagreed: `us-tax-ui/src/app/app.settings.ts` sets `inactivityTimeoutMs = 60 * 60 * 1000` (**1 hour**, unchanged throughout the repo's visible history; `InactivityService.idleMs` reads it), while `CLAUDE.md` claimed "auto sign-out after 5 minutes." Resolved by making `inactivityTimeoutMs` the single source of truth and correcting the stale CLAUDE.md note to reference it (1 hour). ★ Direction of the fix: aligned the DOC to the CODE rather than the reverse — shortening the runtime timeout to 5 minutes would be a security/UX product change I won't make unilaterally, and 1 hour is the sensible value for a tax-prep app where users spend time reading and gathering documents. No runtime behavior change; no test dependency on the duration (`inactivity.service.spec.ts` only asserts sign-out-on-timeout behavior).
+
+
 ## 2026-07-08 — Doc-sync: Priority 6 UI Gaps re-verified (2 of 3 stale/resolved)
 
 Re-verified the three "Priority 6 — UI Gaps" against the current code (no code change):

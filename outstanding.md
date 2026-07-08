@@ -2644,7 +2644,7 @@ Original deferred work items (no longer planned):
 - Fix Auth user state mutation path: call `firebaseAuth.updateUser(...)` in `disableUser`/`enableUser`, then add assertions in `AuthServiceTest`.
 - Protect admin-like auth endpoints: require authenticated/authorized access for `/auth/users/disable` and `/auth/users/enable`.
 - Remove duplicate compute work: consolidate flags+compute flow to avoid running `prepare(uid)` twice per user action.
-- Align inactivity policy and implementation: reconcile 1-hour runtime vs 5-minute documented behavior and keep one source of truth.
+- ~~Align inactivity policy and implementation: reconcile 1-hour runtime vs 5-minute documented behavior and keep one source of truth.~~ **RESOLVED 2026-07-08** — the runtime is authoritative: `inactivityTimeoutMs = 60 * 60 * 1000` (1 hour) in `us-tax-ui/src/app/app.settings.ts` (unchanged throughout the repo's visible history; `InactivityService` reads it as `idleMs`), which is the single source of truth. The 1-hour idle timeout is the appropriate value for a tax-prep app where users spend time reading and gathering documents (5 minutes would be aggressively short). Updated the stale CLAUDE.md "5 minutes" note to reference `inactivityTimeoutMs` / 1 hour. Runtime behavior unchanged (no security/UX product change made unilaterally).
 - Increase targeted frontend tests: add non-smoke tests for high-complexity forms and critical compute-related workflows.
 - Prevent FE/BE statement-form drift: centralize/generate statement form catalog shared by UI and backend.
 

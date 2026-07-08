@@ -255,7 +255,7 @@ Forms are exported client-side via `pdf-lib`, using IRS PDF templates from `publ
 ### Other Behaviors
 
 - **Global loading overlay** (HTTP interceptor): "Loading data..." on GET, "Saving data..." on mutations.
-- **Inactivity logout**: auto sign-out after 5 minutes.
+- **Inactivity logout**: auto sign-out after the idle timeout defined by `inactivityTimeoutMs` in `src/app/app.settings.ts` (single source of truth) — currently **1 hour**.
 - **Reference data**: `ReferenceDataService` fetches tax-year constants from `GET /api/reference-data` (avoids hardcoding thresholds in UI).
 - **Statement gating**: forms count only entries with meaningful saved data; blank placeholder entries do not satisfy upload gates.
 - Imported statement fields remain user-editable (users may not have uploaded statements).

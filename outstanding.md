@@ -2110,13 +2110,13 @@ Incomes section. The Tax Return section for dependents is empty.
 
 ---
 
-### Priority 6 — UI Gaps
+### Priority 6 — UI Gaps — **Re-verified 2026-07-08 (2 of 3 stale/resolved; 1 clarified)**
 
-| Item | Location | Fix |
+| Item | Location | Status |
 |---|---|---|
-| `electsNoActc` checkbox missing | `form-ctc-actc-screening.component.ts` (taxpayer tab) | Add "Do not claim the Additional Child Tax Credit" yes/no field; bound to `electsNoActc` |
-| Schedule 8812 sidebar always visible | `shell.component.ts` `taxReturnBaseItems` | Move `tax-return-schedule8812` to conditional push (like Form 8880) — show only when `line14 > 0 \|\| line27 > 0` |
-| Line 36 no hard cap in UI | `form-apply-next-year.component.ts` | Display the `refund.overpaid` amount as the ceiling; enforce max on `amountToApply` |
+| ~~`electsNoActc` checkbox missing~~ | `form-ctc-actc-screening.component.ts` | **RESOLVED (stale) 2026-07-08** — the "Do not claim the Additional Child Tax Credit" Yes/No radio is present (`electsNoActcYes`/`electsNoActcNo`, bound to `electsNoActc`) and the backend reads it (`CtcActcScreeningMapper` → `computeSchedule8812` G4 opt-out). Likely landed during the ctc-actc-screening migration (MFS #50). |
+| Schedule 8812 sidebar always visible | `shell.component.ts` (`buildTaxReturnItems`, ~line 1414) | **PARTIALLY — conditional coded but toggled off.** The conditional push (`s8812 && (line14CtcOdcCredit > 0 \|\| line27ActcCredit > 0)`) is written but disabled via the TEMP-toggle convention `if (true /* … */)`, so Schedule 8812 is currently always shown. Flipping to the conditional (hide the empty Schedule 8812 when no CTC/ACTC) is a UI behavior decision, not a bug — deferred pending that call (and an e2e check that no test depends on the always-visible item). |
+| ~~Line 36 no hard cap in UI~~ | `form-apply-next-year.component.ts` | **RESOLVED (stale) 2026-07-08** — the `p-inputNumber` binds `[max]="overpaidCeiling ?? undefined"` and shows the ceiling hint when `overpaidCeiling != null` (matches the 2026-03-29 fix). |
 
 ---
 

@@ -1,6 +1,17 @@
 ﻿# History
 
 
+## 2026-07-08 — Doc-sync: Priority 6 UI Gaps re-verified (2 of 3 stale/resolved)
+
+Re-verified the three "Priority 6 — UI Gaps" against the current code (no code change):
+
+- **`electsNoActc` checkbox missing** — RESOLVED (stale). The "Do not claim the Additional Child Tax Credit" Yes/No radio is present in `form-ctc-actc-screening` (`electsNoActcYes`/`electsNoActcNo` bound to `electsNoActc`) and the backend reads it (`CtcActcScreeningMapper` → `computeSchedule8812` G4 opt-out). Likely landed with the ctc-actc-screening migration.
+- **Line 36 no hard cap in UI** — RESOLVED (stale). `form-apply-next-year` binds `[max]="overpaidCeiling ?? undefined"` and shows the ceiling hint (matches the 2026-03-29 fix).
+- **Schedule 8812 sidebar always visible** — clarified as PARTIAL: the conditional push (`s8812 && (line14CtcOdcCredit > 0 || line27ActcCredit > 0)`) is coded but disabled via the TEMP-toggle convention `if (true /* … */)` in `shell.component.ts` (~line 1414), so Schedule 8812 is currently always shown. Flipping to the conditional (hide the empty Schedule 8812) is a UI behavior decision — deferred pending that call + an e2e check that no test depends on the always-visible item.
+
+outstanding.md Priority 6 table updated.
+
+
 ## 2026-07-08 — Cross-line 0-vs-null audit: lines 34/37/38 audited — ★ ENTIRE FORM 1040 (1a–38) COMPLETE
 
 Final lines: **line 34 (overpayment/refund) + line 37 (amount you owe) + line 38 (estimated-tax penalty)**. Verified `computeLine31ThroughLine38` conforms — lines 34 and 37 are **mutually exclusive** via strict `>` comparisons: overpaid (line33 > totalTax) creates a `Refund` (positive) and no `AmountOwed`; owed (totalTax > line33) creates an `AmountOwed` (positive) and no `Refund`; a break-even return (equal) creates neither, so both are null. There is no shown-ZERO for either. Line 38 (estimated-tax penalty) is **null-or-positive** — set only when Form 2210 produces a penalty > 0 that is not WAIVED. No compute change.

@@ -1,6 +1,13 @@
 ﻿# History
 
 
+## 2026-07-08 — Cross-line 0-vs-null audit: line 17 (AMT / Schedule 2 line 3) audited + locked in
+
+Next line: **line 17 (alternative minimum tax + Schedule 2 line 3)**. Verified `wireLine17ToOutputs` conforms — line 17 is **null-or-positive by design**: both `setAlternativeMinimumTax` and `setAdditionalTaxSchedule2` use `amt > 0 ? amt : null`, so a computed $0 is coalesced to null. This matches the IRS "leave line 17 blank if there is no additional tax from Schedule 2" convention — the AMT concept only "applies" when tentative minimum tax exceeds the regular tax, so a $0 result is absent, not a shown zero. **There is deliberately no ZERO branch.** No compute change.
+
+Breadcrumb added at the wiring; lock-in `line17AmtNullWhenNoAmt` ($40k ordinary-income return → no AMT → line 17 AMT and Schedule 2 line 3 both null). Coverage table + outstanding.md updated. Remaining pending: lines 18–38.
+
+
 ## 2026-07-08 — Cross-line 0-vs-null audit: line 16 (tax) audited + locked in
 
 Next line: **line 16 (tax)**. Verified `computeLine16` conforms — when line 15 (taxable income) is null (the return has no income), computeLine16 returns at its entry gate before `TaxAndCredits`/`setTax` exists, so line 16 (getTax) is **null**. When line 15 ≤ 0 (taxable income floored to 0), the ZERO decision-tree branch sets regular tax = 0, so line 16 = **0** in the common low-income case. (Per spec §2.3, line 16 can still be > 0 at line 15 = 0 if a Form 8814 / Form 4972 / box-3 add-on applies.) No compute change.

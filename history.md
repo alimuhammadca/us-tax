@@ -1,6 +1,13 @@
 ﻿# History
 
 
+## 2026-07-08 — Cross-line 0-vs-null audit: lines 2a/2b (interest) audited + locked in
+
+Advanced the "Cross-Line 0-vs-null Compliance Audit" item (outstanding.md) by one line-pair: **lines 2a/2b (interest income)**. Verified `computeInterestIncome` conforms to the canonical 0-vs-null rule — line 2a (tax-exempt) and line 2b (taxable) are **null when no interest input exists** (every aggregation is `addNonNull` / `subtractNonNegative`, both null-preserving, and `roundMoney(null)=null`), and reach **ZERO only when the concept applies with a provided value** (e.g. an explicit $0 1099-INT box 1). No spec mandates ZERO here, so the code was already compliant — no compute change.
+
+Added a breadcrumb at the `InterestComputation` record return citing `knowledge/canonical-null-zero-semantic.md`, plus a lock-in test pair: `interestLine2aAnd2bNullWhenNoInput` (no input → both null) and `interestLine2bZeroForExplicitZeroEntryLine2aStillNull` ($0 1099-INT → line 2b = 0, line 2a stays null). Downstream is null-safe (line 9 sums via `addNonNull`; MAGI add-backs read line 2a via null-guarded reads). Updated the Audit Coverage table in `canonical-null-zero-semantic.md` (2a/2b → CONFORMS) and the outstanding.md coverage list. Remaining pending: 3a/3b, 4a/4b/4c, 5a/5b, 6a/6b, 7a/7b, 8.
+
+
 ## 2026-07-08 — Doc-sync: Line 12e dependent-worksheet full earned-income formula (2273) resolved
 
 Marked the "Line 12e / Dependent worksheet earned income not auto-imported" item fully resolved (was "partially resolved 2026-04-17" with the full formula deferred). Verification, no code change: `computeDependentWorksheetEarnedIncome(income, otherIncome, incomeAdjustments)` implements the full per-spec earned income = line 1z + Schedule 1 line 3 (business) + line 6 (farm) + line 8r (scholarship/fellowship) + line 8t + line 8u − line 15 (deductible SE tax), floored at 0, injected into the worksheet when the manual override is null. Matches the 2025 Form 1040 Dependent Standard Deduction Worksheet (Pub 501). The full formula landed via "12e.md Gap 1 closure 2026-06-08" — after the outstanding item was written — so the item was stale. Covered by `computesLine12DependentWorksheetAutoImportsWagesWhenEarnedIncomeNotEntered` + `dependentWorksheetEarnedIncomeIncludesScholarshipGrantsLine8r` (both green). Verify-first pattern again: the cited symbol already existed and was tested.

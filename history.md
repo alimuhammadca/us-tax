@@ -1,6 +1,13 @@
 ﻿# History
 
 
+## 2026-07-08 — Cross-line 0-vs-null audit: lines 5a/5b (pension/annuity) audited + locked in
+
+Next line-pair: **lines 5a/5b (pension/annuity)**. Verified `computePensionIncome` conforms — it mirrors the IRA cluster: the whole `PensionComputation` record is null on the `!hasOutput` early-return, so line 5a (gross) and line 5b (taxable) are **null when there's no pension activity**, and an all-$0 pension 1099-R also yields null (`hasOutput` uses `hasNonZeroAmount` — a $0 distribution is blank per IRS). **ZERO on line 5b is reached only when genuine activity nets nontaxable** (full rollover, PSO exclusion, or Simplified/General Rule basis recovery, where a 5c box / Form 5329 keeps `hasOutput` true). No compute change.
+
+Breadcrumb added at the `hasOutput` gate; lock-in test pair `pensionLine5aAnd5bNullWhenNoInput` (no input → both null) and `pensionLine5bZeroWhenFullRolloverOffsetsDistribution` (full rollover → line 5a = $5,000, line 5b = 0, 5c box 1 checked). Coverage table + outstanding.md updated. Remaining pending: 6a/6b, 7a/7b, 8.
+
+
 ## 2026-07-08 — Cross-line 0-vs-null audit: lines 4a/4b/4c (IRA) audited + locked in
 
 Next line-pair: **lines 4a/4b/4c (IRA distributions)**. Verified `computeIraDistributions` conforms (with a documented nuance): the WHOLE `IraComputation` record is null on the `!hasOutput` early-return, so line 4a (gross) and line 4b (taxable) are **null when there's no IRA activity**. Because `hasOutput` uses `hasNonZeroAmount`, an all-$0 1099-R also yields null — a deliberate, spec-appropriate difference from lines 2b/3b (a $0 IRA distribution is "no distribution", which the IRS leaves blank). **ZERO on line 4b is reached only when genuine activity nets fully nontaxable** (e.g. a full QCD or Form 8606 basis, where the exception / 4c box keeps `hasOutput` true). No compute change.

@@ -419,7 +419,8 @@ Per-line checklist for the canonical-rule audit step:
 - ✅ Line 18 (total tax before credits) — audited 2026-07-08 (CONFORMS: null when no tax computed (taxAndCredits null, line 15 was null); else = line16 + line17 (each coalesced to 0), so ZERO when taxable income is 0, positive otherwise; breadcrumb at the taxAndCredits-null guard + lock-in tests `line18TotalTaxBeforeCreditsNullWhenNoTaxableIncome` / `line18TotalTaxBeforeCreditsZeroWhenTaxableIncomeZero`).
 - ✅ Line 19 (CTC/ODC) — audited 2026-07-08 (CONFORMS: mirrors Schedule 8812 line 14; Schedule 8812 always computes so a childless return has line 14 = 0 → line 19 = 0 (IRS-defensible computed zero); NULL only when no tax context (TaxAndCredits null / no income); positive when CTC/ODC allowed; breadcrumb at the wiring + lock-in tests `line19ChildTaxCreditZeroWhenNoDependents` / `line19ChildTaxCreditNullWhenNoTaxContext`).
 - ✅ Line 20 (amount from Schedule 3 line 8) — audited 2026-07-08 (CONFORMS: NULL-or-POSITIVE by design — set only when Schedule 3 line 8 > 0, so an absent/$0 total coalesces to null; no ZERO branch; breadcrumb at the wiring + lock-in `line20OtherCreditsNullWhenNoSchedule3Credits`).
-- ⏳ Lines 21–38 (total credits, other taxes, payments) — pending future audits (folded into each remaining line audit).
+- ✅ Lines 21/22 (total credits, tax after credits) — audited 2026-07-08 (CONFORMS: line 21 NULL-or-POSITIVE — `> 0 ? : null` coalesces $0 to null; line 22 null only when no tax context, ZERO by the SPEC-MANDATED floor when credits ≥ tax-before-credits, positive otherwise; breadcrumbs at both + existing lock-in tests `line21_isNullWhenNoCreditsPresent` / `line21_line22FlooredAtZeroWhenCreditsAbsorbAllTax`).
+- ⏳ Lines 23–38 (other taxes, total tax, payments) — pending future audits (folded into each remaining line audit).
 - ⏳ Lines 9–38 (totals, deductions, credits, payments) — pending future audits.
 
 **Why folded into per-line audits rather than a single sweep:**

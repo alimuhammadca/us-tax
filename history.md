@@ -1,6 +1,13 @@
 ﻿# History
 
 
+## 2026-07-08 — Cross-line 0-vs-null audit: lines 21/22 (total credits, tax after credits) audited + locked in
+
+Next line-pair: **line 21 (total credits = 19 + 20) + line 22 (tax after credits = max(0, 18 − 21))**. Verified `computeLine20ThroughLine24` conforms — line 21 is **null-or-positive** (`> 0 ? line21 : null` coalesces a $0/no-credits total to null); line 22 is **null only when there is no tax context** (the method returns early when `tac == null`, i.e. no income), and otherwise **ZERO by the spec-mandated floor** when credits meet or exceed the tax before credits (`.max(ZERO)`), positive otherwise. No compute change — the null/zero contracts were already covered by the 2026-04-19 Line 21 audit tests (`line21_isNullWhenNoCreditsPresent`, `line21_line22FlooredAtZeroWhenCreditsAbsorbAllTax`); this pass adds the canonical breadcrumbs and cross-references those tests.
+
+Coverage table + outstanding.md updated. Remaining pending: lines 23–38.
+
+
 ## 2026-07-08 — Cross-line 0-vs-null audit: line 20 (amount from Schedule 3 line 8) audited + locked in
 
 Next line: **line 20 (amount from Schedule 3 line 8 — nonrefundable credits)**. Verified `computeLine20ThroughLine24` conforms — line 20 is **null-or-positive by design**: it starts null and is set only when Schedule 3 line 8 > 0, so an absent or $0 Schedule 3 nonrefundable-credit total coalesces to null (the IRS "leave line 20 blank if no credits" convention). **There is deliberately no ZERO branch** — the same shape as line 17. No compute change.

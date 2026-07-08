@@ -1,6 +1,11 @@
 ﻿# History
 
 
+## 2026-07-08 — Deep-pass: both auth-security items MOOT (endpoints deleted 2026-04-28)
+
+Closed the two deep-pass "auth" recommendations by verification — both are moot because the vulnerable code was removed. The 2026-02-28 deep pass flagged (1) fixing the `disableUser`/`enableUser` state-mutation path in `AuthService` + `AuthServiceTest`, and (2) protecting the unauthenticated `/auth/users/disable` and `/auth/users/enable` admin endpoints. Per `us-tax-be/.../microservices/context.md`, on **2026-04-28** `AuthResource.java` (`POST /auth/users`, `/auth/users/disable`, `/auth/users/enable`), `AuthService.java`, and their unit tests were **deleted** — orphan email/password admin code with zero callers, removed during the phone-OTP auth migration (backend suite re-ran green 567/567). Confirmed today that no `AuthResource`/`AuthService` exists anywhere in the codebase. The security concern is resolved by deletion; both items predate the removal and were never re-introduced. No code change. outstanding.md deep-pass items marked moot.
+
+
 ## 2026-07-08 — Deep-pass: "duplicate compute work" investigated (confirmed real, deferred)
 
 Investigated the deep-pass "remove duplicate compute work" item. Confirmed the duplication is real: the Compute button (`app.topbar.ts::onComputeReturn`) calls `taxReturnService.loadFlags()` → `GET /tax-return/flags` → `prepare(uid)` (pass 1, to preview blocking flags for the confirm dialog), then `computeAllAndOptimize()` → `POST /tax-return/compute` → `prepare(uid)` (pass 2, computes + persists) — so `prepare()` (the ~500 KB full Form 1040 computation) runs ≥2× per click. The `/compute` endpoint already returns the flags (409 body when blocking, `computation.flags()` on 200), so the `/flags` preview is redundant; the fix is to drive the blocking-flag dialog from the `/compute` 409 instead and retry with `overrideFlags=true` on "compute anyway", saving one `prepare()` on the happy path.

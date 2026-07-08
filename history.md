@@ -1,6 +1,11 @@
 ﻿# History
 
 
+## 2026-07-07 — Line 1c e2e coverage: added the Schedule 2 line 13 (box-12 A/B) round-trip test; item resolved
+
+The outstanding.md "Line 1c E2E Test Coverage Gaps" item was mostly stale — `line1c-tip-income.spec.ts` already covered scenarios 1 (timely tips), 9 (MFJ two Form 4137, asserting `form4137Spouse`), and 12 (RRTA), and has `retries: 1`. The one genuine gap was scenario 11 — W-2 box 12 codes A/B → Schedule 2 line 13 — which is the box-12 A/B/M/N compute path I implemented earlier this session with unit tests only. Added an e2e: a W-2 with box 12 code A ($120) + code B ($30) → Schedule 2 line 13 = $150, and line 1c (`tipIncome`) stays null (codes A/B are uncollected tax, not tip income). Gives that feature its round-trip coverage. Marked the item RESOLVED. Test authoring only; no code change.
+
+
 ## 2026-07-07 — Line 1z e2e coverage: added the MFJ taxpayer+spouse-wages test (item mostly stale)
 
 The outstanding.md "Line 1z: E2E Test Coverage" item claimed only one line-1z e2e existed, but `line1z-total-wages.spec.ts` had grown to 7 tests covering most of the listed gaps (negative line 1f × 2, null-when-all-null, five-sub-line aggregation, MFJ combat-pay exclusion). The one genuinely-missing, tractable scenario was MFJ taxpayer + spouse **wages** both summing into line 1a → 1z (test 6 covered MFJ combat pay, not wages). Added test 8: taxpayer $50k + spouse $30k W-2 → line 1a = line 1z = $80k (verified end-to-end). Marked the item substantially resolved; the only remaining gap is a single 8-way all-sub-lines return, well-proxied by the existing 5-way aggregation test (heavy/brittle to seed all 8 forms — left open as low-value). Test authoring only; no code change.

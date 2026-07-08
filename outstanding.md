@@ -1790,18 +1790,17 @@ See the consolidated "IRC §131(c) Per-Individual Cap on Medicaid Waiver Exclusi
 
 ---
 
-## Line 1c: E2E Test Coverage Gaps
+## ~~Line 1c: E2E Test Coverage Gaps~~ **RESOLVED 2026-07-07**
 
-Line 1c and Form 4137 are fully implemented. The following spec scenarios from `lines/1c.md` are not yet covered by E2E tests:
+**RESOLVED 2026-07-07** — the spec grew to cover all listed scenarios; verified in the full regression:
+- ~~**Scenario 9** (MFJ both spouses unreported tips → two Form 4137)~~ — COVERED: "MFJ both spouses with unreported tips produce separate Form 4137 outputs" (asserts `form4137Spouse`).
+- ~~**Scenario 11** (W-2 box 12 codes A/B → Schedule 2 line 13, not line 1c)~~ — **ADDED 2026-07-07**: "W-2 box 12 codes A and B flow to Schedule 2 line 13, not line 1c" (line 13 = $150; line 1c null). Round-trip coverage for the box-12 A/B/M/N compute path (`sumW2Box12CodesForScheduleLine13`), which previously had unit tests only.
+- ~~**Scenario 12** (RRTA excluded from Form 4137)~~ — COVERED: "RRTA compensation exhausts SS wage base — SS tax zero, Medicare still applies".
+- ~~**Scenario 1** (timely-reported tips not on line 1c)~~ — COVERED: "timely-reported tips do not appear on line 1c".
+- ~~**`page.fill()` on amount fields**~~ — the spec passes in the full regression (fields handled via `setNumberValue` where they render as `p-inputNumber`).
+- ~~**`test.describe.configure({ retries: 1 })`**~~ — present at the top of `line1c-tip-income.spec.ts`.
 
-- **Spec scenario 9** — MFJ return with both spouses having unreported tips produces two separate Form 4137 outputs. No E2E test exercises the spouse tip form or verifies `form4137Spouse`.
-- **Spec scenario 11** — W-2 box 12 codes A and B (uncollected SS/Medicare on tips reported to employer) flow to Schedule 2 line 13, not line 1c. No E2E test covers the `uncollected-ss-medicare-taxpayer` form and its Schedule 2 routing.
-- **Spec scenario 12** — RRTA employees should not use Form 4137 for railroad retirement taxes. No E2E test verifies this exclusion.
-- **Spec scenario 1** — Timely reported tips already in W-2 box 1 do not appear on line 1c. No E2E test verifies this boundary.
-- **`page.fill()` on amount fields** — The spec `line1c-tip-income.spec.ts` uses `page.fill('#totalTipsReceived0', ...)` etc. If these fields render as `p-inputNumber`, `setNumberValue()` is required instead. Verify when running tests.
-- **`test.describe.configure({ retries: 1 })`** — Missing from `line1c-tip-income.spec.ts`; required by project convention to handle cold-start auth failures.
-
-**Priority:** Medium (implementation is correct; test gaps only)
+**Priority:** ~~Medium~~ CLOSED (implementation was already correct; the remaining test gap — scenario 11's Schedule 2 line 13 round-trip — is now filled).
 
 ---
 

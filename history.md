@@ -1,6 +1,11 @@
 ﻿# History
 
 
+## 2026-07-07 — Line 1z e2e coverage: added the MFJ taxpayer+spouse-wages test (item mostly stale)
+
+The outstanding.md "Line 1z: E2E Test Coverage" item claimed only one line-1z e2e existed, but `line1z-total-wages.spec.ts` had grown to 7 tests covering most of the listed gaps (negative line 1f × 2, null-when-all-null, five-sub-line aggregation, MFJ combat-pay exclusion). The one genuinely-missing, tractable scenario was MFJ taxpayer + spouse **wages** both summing into line 1a → 1z (test 6 covered MFJ combat pay, not wages). Added test 8: taxpayer $50k + spouse $30k W-2 → line 1a = line 1z = $80k (verified end-to-end). Marked the item substantially resolved; the only remaining gap is a single 8-way all-sub-lines return, well-proxied by the existing 5-way aggregation test (heavy/brittle to seed all 8 forms — left open as low-value). Test authoring only; no code change.
+
+
 ## 2026-07-07 — Line 2b: Form 8815 line-by-line path now retroactively reduces Line 2b (Gap 3 — two-pass)
 
 Closed the deferred 2b.md Gap 3 / 8815.md Gap 7. Previously, filling the line-by-line Form 8815 intake WITHOUT the manual `savingsBondExclusionAmount` override computed the exclusion (line 14) but did NOT reduce Line 2b — because `computeInterestIncome` (Line 2b) runs before `computeForm8815`. The exclusion silently stayed in Line 2b → 9 → 11 → 15 → tax.

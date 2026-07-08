@@ -1769,16 +1769,15 @@ Implementation includes: backend `Form8815` POJO + `OutForm8815` entity + `Form8
 
 ---
 
-## Line 1z: E2E Test Coverage — Sub-Line Combination Scenarios
+## ~~Line 1z: E2E Test Coverage — Sub-Line Combination Scenarios~~ **SUBSTANTIALLY RESOLVED 2026-07-07**
 
-Only one E2E test exists for line 1z (`line1z-total-wages.spec.ts`), covering lines 1a + 1h with combat pay exclusion. The following scenarios are not covered:
+**SUBSTANTIALLY RESOLVED 2026-07-07.** This item is largely stale — `line1z-total-wages.spec.ts` grew to 8 tests. Of the four originally-listed gaps:
+- ~~**Negative line 1f (special-needs adoption)**~~ — COVERED by "Negative line 1f from special-needs adoption reduces line 1z (gap 3)" + "Line 1z can be negative when line 1f exceeds line 1a" (negative pass-through through line 9/11).
+- ~~**line 1z null when all sub-lines are null**~~ — COVERED by "Line 1z is null when no wage sub-lines are seeded".
+- ~~**MFJ taxpayer wages + spouse wages summed into 1a**~~ — **ADDED 2026-07-07**: "MFJ taxpayer + spouse W-2 wages both sum into line 1a and line 1z" (taxpayer $50k + spouse $30k → line 1a = line 1z = $80k; verified end-to-end).
+- **All 8 sub-lines simultaneously** — still not seeded as a single 8-way return, BUT a five-sub-line aggregation lock-in exists ("Line 1z aggregates five sub-lines (1a + 1b + 1d + 1g + 1h) and excludes line 1i"), which exercises the multi-sub-line sum across diverse sources. The full 8-way test is a low-value nice-to-have (heavy/brittle seeding of 8 forms) — left open.
 
-- **All 8 sub-lines contributing simultaneously** — no test seeds data for all of 1a, 1b, 1c, 1d, 1e, 1f, 1g, and 1h in the same return.
-- **Negative line 1f (special-needs adoption)** — Form 8839 line 31 can be negative; no E2E test verifies that a negative adoption benefits amount flows correctly through the line 1z sum.
-- **line 1z null when all sub-lines are null** — no E2E test verifies that `totalWages` is absent from the JSON response when no wage data is provided.
-- **MFJ return with taxpayer wages + spouse wages summed into 1a** — W-2 attribution by SSN verified in line 1a tests but not in the context of the final 1z subtotal.
-
-**Priority:** Low (implementation is correct; test gaps only)
+**Priority:** Low (implementation is correct; only the 8-way combined test remains, and it's well-proxied by the 5-way test).
 
 **Files:** `C:\us-tax\us-tax-be\e2e\tests\line1z-total-wages.spec.ts`
 

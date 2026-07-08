@@ -1,6 +1,13 @@
 ﻿# History
 
 
+## 2026-07-08 — Cross-line 0-vs-null audit: line 16 (tax) audited + locked in
+
+Next line: **line 16 (tax)**. Verified `computeLine16` conforms — when line 15 (taxable income) is null (the return has no income), computeLine16 returns at its entry gate before `TaxAndCredits`/`setTax` exists, so line 16 (getTax) is **null**. When line 15 ≤ 0 (taxable income floored to 0), the ZERO decision-tree branch sets regular tax = 0, so line 16 = **0** in the common low-income case. (Per spec §2.3, line 16 can still be > 0 at line 15 = 0 if a Form 8814 / Form 4972 / box-3 add-on applies.) No compute change.
+
+Breadcrumb added at the line-15 null gate; lock-in test pair `line16TaxNullWhenNoTaxableIncome` (no income → line 16 null) and `line16TaxZeroWhenTaxableIncomeZero` ($5,000 wages, std ded exceeds AGI → taxable income 0 → line 16 = 0). Coverage table + outstanding.md updated. Remaining pending: lines 17–38.
+
+
 ## 2026-07-08 — Cross-line 0-vs-null audit: lines 14/15 (total deductions, taxable income) audited + locked in
 
 Next line-pair: **line 14 (total deductions) + line 15 (taxable income)**. Verified `computeLine12` conforms — line 14 = `addNonNull(line12e, line13[, line13b])`, so it is **null only when there is no deduction at all** (no filing status → line 12e null, no QBI, no Schedule 1-A); with any filing status line 12e is a positive floor so line 14 is positive. Line 15 = `agi == null ? null : subtractNonNegative(agi, line14)`: **null when there is no income**, and **ZERO by the spec-mandated floor** when deductions meet or exceed AGI (`subtractNonNegative` floors negatives to 0) — the common low-income case where the standard deduction exceeds AGI. No compute change.

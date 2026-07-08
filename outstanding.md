@@ -405,7 +405,8 @@ Per-line checklist for the canonical-rule audit step:
 - ✅ Lines 4a/4b/4c — audited 2026-07-08 (CONFORMS, nuanced: whole record null on `!hasOutput` so no-IRA-activity → null; an all-$0 1099-R also → null via `hasNonZeroAmount` (spec-appropriate: "no distribution" is blank), unlike 2b/3b; ZERO on 4b only via activity that nets nontaxable e.g. full QCD; breadcrumb at the hasOutput gate + lock-in tests `iraLine4aAnd4bNullWhenNoInput` / `iraLine4bZeroWhenFullQcdOffsetsDistribution`).
 - ✅ Lines 5a/5b — audited 2026-07-08 (CONFORMS, nuanced: mirrors IRA — whole record null on `!hasOutput`; all-$0 pension 1099-R → null; ZERO on 5b only via activity that nets nontaxable e.g. full rollover; breadcrumb at the hasOutput gate + lock-in tests `pensionLine5aAnd5bNullWhenNoInput` / `pensionLine5bZeroWhenFullRolloverOffsetsDistribution`).
 - ✅ Lines 6a/6b — audited 2026-07-08 (CONFORMS: whole record null on `!hasOutput` so no-SS → null; ZERO is the natural case — benefits present but not taxable at low income → §86 "no-blank" rule forces line 6b = 0; breadcrumb at the hasOutput gate + lock-in `socialSecurityLine6aAnd6bNullWhenNoInput` (null) + existing `computesZeroTaxableSocialSecurityWhenBelowWorksheetThreshold` (ZERO)).
-- ⏳ Lines 7a/7b, 8 — pending future audits.
+- ✅ Lines 7a/7b — audited 2026-07-08 (CONFORMS: whole record null on `!hasOutput` so no-capital → null (a computed $0 counts as output only when `hadAnyCapital`); ZERO branch = real transactions netting to exactly $0 → line 7a = 0; line 7a may also be NEGATIVE (§1211(b) loss cap); breadcrumb at the hasOutput gate + lock-in tests `capitalLine7aNullWhenNoInput` / `capitalLine7aZeroWhenTransactionsNetToZero`).
+- ⏳ Line 8 — pending future audit.
 - ⏳ Lines 9–38 (totals, deductions, credits, payments) — pending future audits.
 
 **Why folded into per-line audits rather than a single sweep:**

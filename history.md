@@ -1,6 +1,13 @@
 ﻿# History
 
 
+## 2026-07-08 — Cross-line 0-vs-null audit: lines 7a/7b (capital gain/loss) audited + locked in
+
+Next line-pair: **lines 7a/7b (capital gain or loss)**. Verified `computeCapitalGainLoss` conforms — the whole `CapitalGainLossComputation` record is null on the `!hasOutput` early-return, so line 7a is **null when there's no capital activity**. A computed $0 (Schedule D line 16 null → 0) does NOT count as output unless `hadAnyCapital` (real transactions) or a child capital gain is present. The dedicated `line7a == 0 && hadAnyCapital` clause in the gate is exactly the canonical **ZERO branch**: real transactions that net to exactly $0 show line 7a = 0 (not null). Line 7a may also be **negative** (a §1211(b)-capped loss). No compute change.
+
+Breadcrumb added at the `hasOutput` gate; lock-in test pair `capitalLine7aNullWhenNoInput` (no input → null) and `capitalLine7aZeroWhenTransactionsNetToZero` (1099-B proceeds == basis → line 7a = 0). Coverage table + outstanding.md updated. Remaining pending: line 8.
+
+
 ## 2026-07-08 — Cross-line 0-vs-null audit: lines 6a/6b (social security) audited + locked in
 
 Next line-pair: **lines 6a/6b (social security benefits)**. Verified `computeSocialSecurityBenefits` conforms — the whole `SocialSecurityComputation` record is null on the `!hasOutput` early-return, so line 6a (benefits) and line 6b (taxable) are **null when no SS benefits exist**. Here the canonical **ZERO branch is the natural, common case**: when benefits are present (line 6a ≠ null) but the §86 taxability worksheet makes none taxable (low other income), the "no-blank" rule (`line6a != null && line6b == null → line6b = 0`) forces line 6b = 0 (not null) — a retiree whose only income is Social Security. No compute change.

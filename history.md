@@ -1,6 +1,13 @@
 ﻿# History
 
 
+## 2026-07-08 — Deep-pass: "duplicate compute work" investigated (confirmed real, deferred)
+
+Investigated the deep-pass "remove duplicate compute work" item. Confirmed the duplication is real: the Compute button (`app.topbar.ts::onComputeReturn`) calls `taxReturnService.loadFlags()` → `GET /tax-return/flags` → `prepare(uid)` (pass 1, to preview blocking flags for the confirm dialog), then `computeAllAndOptimize()` → `POST /tax-return/compute` → `prepare(uid)` (pass 2, computes + persists) — so `prepare()` (the ~500 KB full Form 1040 computation) runs ≥2× per click. The `/compute` endpoint already returns the flags (409 body when blocking, `computation.flags()` on 200), so the `/flags` preview is redundant; the fix is to drive the blocking-flag dialog from the `/compute` 409 instead and retry with `overrideFlags=true` on "compute anyway", saving one `prepare()` on the happy path.
+
+Deferred, not fixed: (1) marginal ROI — `computeAllAndOptimize` already runs the optimizer, which calls `prepare()` once per filing-status scenario, so the extra `/flags` prepare is ~1 of N+2 per click; (2) the change moves blocking-flag handling from a pre-compute preview to a 409-catch flow, altering a core user-facing path and its error handling, needing new e2e coverage. Recorded the precise fix + reasoning in outstanding.md for a future compute-path rework. No code change.
+
+
 ## 2026-07-08 — Deep-pass: inactivity-policy 1-hour-vs-5-minute mismatch reconciled (doc-align)
 
 Closed the deep-pass "align inactivity policy" item. The runtime and the docs disagreed: `us-tax-ui/src/app/app.settings.ts` sets `inactivityTimeoutMs = 60 * 60 * 1000` (**1 hour**, unchanged throughout the repo's visible history; `InactivityService.idleMs` reads it), while `CLAUDE.md` claimed "auto sign-out after 5 minutes." Resolved by making `inactivityTimeoutMs` the single source of truth and correcting the stale CLAUDE.md note to reference it (1 hour). ★ Direction of the fix: aligned the DOC to the CODE rather than the reverse — shortening the runtime timeout to 5 minutes would be a security/UX product change I won't make unilaterally, and 1 hour is the sensible value for a tax-prep app where users spend time reading and gathering documents. No runtime behavior change; no test dependency on the duration (`inactivity.service.spec.ts` only asserts sign-out-on-timeout behavior).

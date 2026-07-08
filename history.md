@@ -1,6 +1,13 @@
 ﻿# History
 
 
+## 2026-07-08 — Cross-line 0-vs-null audit: lines 25a–25d (withholding) audited + locked in
+
+Into the payments section: **lines 25a (W-2), 25b (1099), 25c (other), 25d (total withholding)**. Verified `computeLine31ThroughLine38` conforms — each sub-line is **null when there is no withholding of that type** (`x == null ? null : roundMoney(x)` preserves the null the aggregation returns), and positive when withholding exists. Withholding is non-negative, so there is **no natural ZERO-with-input case**. Line 25d (total) is **null-or-positive** — `> 0 ? total : null` coalesces a $0 total to null. No compute change.
+
+Breadcrumb added at the line-25d total; lock-in `line25WithholdingNullWhenNone` (a $40k W-2 with wages but no box-2 withholding, and no 1099/W-2G → 25a/25b/25c/25d all null). Coverage table + outstanding.md updated. Remaining pending: lines 26–38.
+
+
 ## 2026-07-08 — Cross-line 0-vs-null audit: lines 23/24 (other taxes, total tax) audited + locked in
 
 Next line-pair: **line 23 (other taxes from Schedule 2 Part II) + line 24 (total tax = 22 + 23)**. Verified conform — line 23 is **null-or-positive** in `finalizeSchedule2OtherTaxes` (set only when the Schedule 2 grand total > 0, so a return with no other taxes leaves it null). Line 24 in `computeLine20ThroughLine24` is **null only when there is no tax context** (early return when `tac == null`); otherwise it is **0-or-positive** — `> 0 ? line24 : ZERO` coalesces to a shown 0 (not null), so a low-income return with taxable income 0 and no other taxes has line 24 = 0. No compute change.

@@ -421,7 +421,8 @@ Per-line checklist for the canonical-rule audit step:
 - ✅ Line 20 (amount from Schedule 3 line 8) — audited 2026-07-08 (CONFORMS: NULL-or-POSITIVE by design — set only when Schedule 3 line 8 > 0, so an absent/$0 total coalesces to null; no ZERO branch; breadcrumb at the wiring + lock-in `line20OtherCreditsNullWhenNoSchedule3Credits`).
 - ✅ Lines 21/22 (total credits, tax after credits) — audited 2026-07-08 (CONFORMS: line 21 NULL-or-POSITIVE — `> 0 ? : null` coalesces $0 to null; line 22 null only when no tax context, ZERO by the SPEC-MANDATED floor when credits ≥ tax-before-credits, positive otherwise; breadcrumbs at both + existing lock-in tests `line21_isNullWhenNoCreditsPresent` / `line21_line22FlooredAtZeroWhenCreditsAbsorbAllTax`).
 - ✅ Lines 23/24 (other taxes, total tax) — audited 2026-07-08 (CONFORMS: line 23 NULL-or-POSITIVE — set only when Schedule 2 grand total > 0; line 24 null only when no tax context, else 0-or-POSITIVE — `> 0 ? : ZERO` coalesces to a shown 0; breadcrumbs at both + lock-in tests `line23OtherTaxesNullWhenNone` / `line24TotalTaxZeroWhenNoTax`).
-- ⏳ Lines 25–38 (withholding, payments, refund/owed) — pending future audits (folded into each remaining line audit).
+- ✅ Lines 25a–25d (withholding) — audited 2026-07-08 (CONFORMS: each sub-line null when no withholding of that type; withholding is non-negative so no natural ZERO-with-input; line 25d total NULL-or-POSITIVE — `> 0 ? : null` coalesces $0 to null; breadcrumb at line 25d + lock-in `line25WithholdingNullWhenNone`).
+- ⏳ Lines 26–38 (estimated tax, EIC/ACTC/AOTC, other payments, refund/owed) — pending future audits (folded into each remaining line audit).
 - ⏳ Lines 9–38 (totals, deductions, credits, payments) — pending future audits.
 
 **Why folded into per-line audits rather than a single sweep:**

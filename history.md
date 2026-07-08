@@ -1,6 +1,15 @@
 ﻿# History
 
 
+## 2026-07-07 — Schedule 1 line 21 student-loan-interest MAGI phase-out (IRC §221(b)(2))
+
+Implemented the deferred §221 phase-out (10.md "Schedule 1 Part II Post-AGI Refinement" item #1). Previously line 21 applied only the $2,500 statutory cap — filers with MAGI in the phase-out band ($85k–$100k Single/HOH/QSS, $170k–$200k MFJ) over-deducted. The phase-out needs AGI, which isn't known when `computeIncomeAdjustments` runs, so I used the **same post-AGI two-pass** I built for Form 8815: after `buildForm1040`, compute §221(b)(2)(C) MAGI (AGI + the deduction added back + §911/§931/§933 foreign exclusions), apply `computeStudentLoanInterestPhaseout` (IRS worksheet: reduction = capped × round((MAGI−start)/range, 3dp)), and if it reduces the deduction, re-run `prepare()` once with the phased value in the `LINE21_STUDENT_LOAN_PHASEOUT_CAP` ThreadLocal so it cascades through AGI → line 15 → 16 → all credits. MAGI is pre-deduction (invariant across passes) → deterministic single iteration; the ThreadLocal guard prevents a third pass (and it composes safely with the 8815 two-pass — max 3 nested passes).
+
+Verified against J.K. Lasser 2025 §33.13 (mechanism + MFS-disallowed + $2,500 statutory cap; the 2025 phase-out amounts are the Rev. Proc. 2024-40 values already in `ReferenceData`). MFJ uses the higher band; Single/HOH/QSS the lower (the `_SINGLE_HOH_QSS` constant grouping is correct — QSS uses the single band for §221). Compute-only — no migration, no new field (the student-loan-interest input already exists); the reduced line 21 uses the existing persisted output field, so no GET-reload gap.
+
+Tests: 4 unit (below-band full, mid-band half-reduction with AGI-cascade proof, above-end zero, MFJ-band — a Single filer at $185k would be $0 but MFJ gets $1,250) + 1 e2e ($2,500 → $1,250 at MAGI $92.5k, AGI $91,250 through the API). Full backend suite **1345/1345**; no regression on this common field. Closes item #1; items #2 (line-24c AGI ceiling) and #5 (line-21 dependent over-block) remain.
+
+
 ## 2026-07-07 — Schedule 1 lines 24h/24i attorney-fee income caps (IRC §62(a)(20)/(21)) + NIIT G4 doc-sync
 
 Two items. (1) **Doc-sync:** the "[Line 23 / G4] NIIT / Form 8960 not implemented" audit row was stale — verified `computeForm8960` + `applyForm8960ToSchedule2`, `Form8960` model, ~28 tests all exist. Struck it.

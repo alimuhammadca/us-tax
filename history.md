@@ -1,6 +1,13 @@
 ﻿# History
 
 
+## 2026-07-08 — Cross-line 0-vs-null audit: lines 14/15 (total deductions, taxable income) audited + locked in
+
+Next line-pair: **line 14 (total deductions) + line 15 (taxable income)**. Verified `computeLine12` conforms — line 14 = `addNonNull(line12e, line13[, line13b])`, so it is **null only when there is no deduction at all** (no filing status → line 12e null, no QBI, no Schedule 1-A); with any filing status line 12e is a positive floor so line 14 is positive. Line 15 = `agi == null ? null : subtractNonNegative(agi, line14)`: **null when there is no income**, and **ZERO by the spec-mandated floor** when deductions meet or exceed AGI (`subtractNonNegative` floors negatives to 0) — the common low-income case where the standard deduction exceeds AGI. No compute change.
+
+Breadcrumb added at the line-14/15 computation; lock-in test pair `line15TaxableIncomeNullWhenNoIncome` (filing status, no income → line 15 null while line 14 = $15,750 std ded) and `line15TaxableIncomeZeroWhenDeductionExceedsAgi` ($5,000 wages − $15,750 std ded → line 15 = 0, not −10,750). Coverage table + outstanding.md updated. Remaining pending: lines 16–38.
+
+
 ## 2026-07-08 — Cross-line 0-vs-null audit: lines 13a/13b (QBI + additional deductions) audited + locked in
 
 Next line: **line 13 (13a QBI deduction + 13b additional deductions / Schedule 1-A)**. Verified both conform — line 13a is **null when there is no QBI workflow** (`computeLine13a` returns null on `!hasAnyQbiWorkflow`), and ZERO when a QBI workflow is present but the deduction computes to 0 (a net-QBI-loss year or a taxable-income limitation of 0). Line 13b is **null when there is no Schedule 1-A** (the `setAdditionalDeductions` setter is guarded on `schedule1A != null && getLine38Total() != null`), and ZERO if the tips/overtime/car-loan/senior amounts fully phase out. Both are non-negative deductions. No compute change.

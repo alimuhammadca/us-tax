@@ -9,6 +9,8 @@ Fixed by adding the 4 forms at all three FE points, following the proven 8853/88
 
 ★ The vague "prevent drift" item surfaced a concrete, user-facing gap (4 supported forms unreachable). Fixed the instance; the item's original intent (a shared/generated catalog to PREVENT future drift — the two lists are still separate hardcoded sources) remains open and is noted in outstanding.md. E2E coverage for these 4 forms is tracked under the separate "[Capital forms E2E coverage]" item.
 
+Also added a **FE drift-guard unit test** (`statement-selection.service.spec.ts`): pins the picker's statement-form ID set to the canonical 42 (verified to equal the backend catalog exactly). It doesn't cross-check the backend (single-repo test), but it converts any silent FE-side list edit into a test failure that forces a deliberate, reviewed change and a reminder to sync the backend catalog — a bounded speed-bump against recurrence until a shared/generated catalog is built. Verified the pinned array matches the live service list exactly by diff (Karma `ng test` needs Chrome, not run in this env).
+
 
 ## 2026-07-08 — Deep-pass: both auth-security items MOOT (endpoints deleted 2026-04-28)
 

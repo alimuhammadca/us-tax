@@ -1,6 +1,13 @@
 ﻿# History
 
 
+## 2026-07-08 — Cross-line 0-vs-null audit: line 26 (estimated tax payments) audited + locked in
+
+Next line: **line 26 (estimated tax payments)**. Verified `computeLine26EstimatedTax` conforms — line 26 is **null-or-positive**: it returns null when neither spouse's form indicates estimated payments were made, and the installment sum accumulates only positive amounts (a null-initialised total stays null if every installment is 0/absent). So there is **no natural ZERO-with-input case** — line 26 is null when no estimated payments were made and positive otherwise. No compute change.
+
+Breadcrumb added at the screening gate; lock-in `line26EstimatedTaxNullWhenNone` ($40k wage return with no estimated-tax form → line 26 null). Coverage table + outstanding.md updated. Remaining pending: lines 27–38.
+
+
 ## 2026-07-08 — Cross-line 0-vs-null audit: lines 25a–25d (withholding) audited + locked in
 
 Into the payments section: **lines 25a (W-2), 25b (1099), 25c (other), 25d (total withholding)**. Verified `computeLine31ThroughLine38` conforms — each sub-line is **null when there is no withholding of that type** (`x == null ? null : roundMoney(x)` preserves the null the aggregation returns), and positive when withholding exists. Withholding is non-negative, so there is **no natural ZERO-with-input case**. Line 25d (total) is **null-or-positive** — `> 0 ? total : null` coalesces a $0 total to null. No compute change.

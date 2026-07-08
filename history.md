@@ -1,6 +1,13 @@
 ﻿# History
 
 
+## 2026-07-08 — Cross-line 0-vs-null audit: line 29 (refundable AOTC) audited + locked in
+
+Next line: **line 29 (refundable American Opportunity Credit — Form 8863 line 8)**. Verified the Form 8863 refundable-AOTC wiring conforms — line 29 is **null-or-positive**: set only when Form 8863 line 8 refundable AOTC > 0, so a return with no education credit (or one whose AOTC is fully nonrefundable / phased out) leaves it null. **No ZERO branch.** No compute change.
+
+Breadcrumb added at the wiring; lock-in `line29RefundableAotcNullWhenNone` ($40k return with no education credit → line 29 null). Coverage table + outstanding.md updated. Remaining pending: lines 30–38.
+
+
 ## 2026-07-08 — Cross-line 0-vs-null audit: line 28 (additional child tax credit) audited + locked in
 
 Next line: **line 28 (additional child tax credit — the refundable counterpart to line 19)**. Verified the Schedule 8812 ACTC wiring conforms — line 28 is **null-or-positive**: it is set only when Schedule 8812 line 27 > 0, so a childless return (or one whose CTC is fully nonrefundable on line 19, or whose earned income is too low for the refundable portion) leaves it null. **No ZERO branch.** No compute change.

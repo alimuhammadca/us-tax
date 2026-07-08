@@ -425,7 +425,8 @@ Per-line checklist for the canonical-rule audit step:
 - ✅ Line 26 (estimated tax payments) — audited 2026-07-08 (CONFORMS: NULL-or-POSITIVE — returns null when no estimated-payment gate is set, installment sum accumulates only positive amounts; no ZERO-with-input; breadcrumb at the gate + lock-in `line26EstimatedTaxNullWhenNone`).
 - ✅ Line 27a (Earned Income Credit) — audited 2026-07-08 (CONFORMS: null when not claimed / disqualified (no EIC form, claimsEIC != true, Form 2555, nonresident, ITIN, Form 8862 gate — each early return null); positive when allowed; can be ZERO when income above phase-out completion (EIC table returns 0); breadcrumb at the entry guards + lock-in `line27aEicNullWhenNotClaimed`).
 - ✅ Line 28 (additional child tax credit) — audited 2026-07-08 (CONFORMS: NULL-or-POSITIVE — set only when Schedule 8812 line 27 > 0, so a childless / fully-nonrefundable-CTC / low-earned-income return leaves it null; no ZERO branch; breadcrumb at the wiring + lock-in `line28AdditionalChildTaxCreditNullWhenNone`).
-- ⏳ Lines 29–38 (AOTC, recovery rebate, Schedule 3 other payments, total payments, refund/owed) — pending future audits (folded into each remaining line audit).
+- ✅ Line 29 (refundable AOTC) — audited 2026-07-08 (CONFORMS: NULL-or-POSITIVE — set only when Form 8863 line 8 refundable AOTC > 0, so a return with no education credit leaves it null; no ZERO branch; breadcrumb at the wiring + lock-in `line29RefundableAotcNullWhenNone`).
+- ⏳ Lines 30–38 (refundable adoption credit, Schedule 3 other payments, total payments, refund/owed) — pending future audits (folded into each remaining line audit).
 - ⏳ Lines 9–38 (totals, deductions, credits, payments) — pending future audits.
 
 **Why folded into per-line audits rather than a single sweep:**

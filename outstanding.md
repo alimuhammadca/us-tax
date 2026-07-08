@@ -1581,7 +1581,7 @@ When `hasRollover == true`, rollover reduction now starts from `gross1099R` (box
 
 ## Lines 5a/5b/5c: Remaining Deferred Items
 
-- [Line 5abc / box 2b taxable-not-determined] No unit test for the `hasAnyTaxableAmountNotDeterminedPension1099R` path. When box 2b is checked on a 1099-R, the backend uses box 1 gross as a proxy for taxable amount; this fallback has no dedicated assertion.
+- ~~[Line 5abc / box 2b taxable-not-determined] No unit test for the `hasAnyTaxableAmountNotDeterminedPension1099R` path.~~ **RESOLVED 2026-07-08** — Added `pensionBox2bTaxableAmountNotDeterminedUsesBox1GrossAsTaxable` (unit) + `1099-R box 2b … uses box 1 gross as taxable on line 5b` (e2e). Verified IRS-correct: when box 2b is checked and box 2a is empty, `taxable1099R == null` → box 1 gross is the proxy taxable amount on line 5b; box 2b counts as an exception (`hasAnyException`), so line 5a (gross disclosure) is populated rather than blanked. Test-coverage only — no compute change.
 - [Line 5abc / spouse upload gate] Spouse form has no statement upload confirmation section. Upload gating relies entirely on the taxpayer form for the whole return. If spouse-only pension statements exist with no corresponding taxpayer statements, no blocking flag is raised.
 
 ---

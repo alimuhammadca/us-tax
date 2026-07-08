@@ -1,6 +1,13 @@
 ﻿# History
 
 
+## 2026-07-08 — Line 5b test coverage: 1099-R box 2b "taxable amount not determined" fallback
+
+Closed the "Lines 5a/5b/5c: Remaining Deferred Items" box-2b gap (outstanding.md): the `taxableAmountNotDetermined` (box 2b) path — where the backend uses box 1 gross as the proxy taxable amount when box 2a is empty — had no dedicated assertion.
+
+Added a unit test (`pensionBox2bTaxableAmountNotDeterminedUsesBox1GrossAsTaxable`) and an e2e (`line5abc-pension-withdrawals.spec.ts`). Both seed a non-IRA 1099-R with box 1 = $20,000, box 2a omitted, box 2b checked, code 7, and assert line 5b = $20,000 and line 5a = $20,000. Verified the behavior is IRS-correct: `taxableBase1099R = taxable1099R == null ? gross1099R : taxable1099R` (box 1 fallback), and box 2b counts toward `hasAnyException`, so `fullyTaxableOverall` is false and line 5a (gross disclosure) is populated rather than blanked — matching the IRS rule that an undetermined taxable amount is reported as fully taxable with the gross shown on 5a. Test-coverage only — no compute change.
+
+
 ## 2026-07-08 — Form 8978 negative line 14 auto-routes to Schedule 3 line 6l (Line 20 audit G2)
 
 Closed the Line 20 / Schedule 3 audit item **G2** (previously marked BLOCKED). A negative Form 8978 line 14 (net decrease in tax from a BBA partnership push-out adjustment) does not go on Form 1040 line 16; the IRS routes it to **Schedule 3 line 6l** as a positive (absolute) amount — a nonrefundable credit. Previously the negative case was detected in `computeLine16()` but only produced a non-blocking "claim it manually" advisory flag; `Schedule3NonrefundableCredits.amountFromForm8978Line14` stayed null and the PDF field filled blank.

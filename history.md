@@ -1,6 +1,13 @@
 ﻿# History
 
 
+## 2026-07-08 — Cross-line 0-vs-null audit: line 18 (total tax before credits) audited + locked in
+
+Next line: **line 18 (total tax before credits = line 16 + line 17)**. Verified `computeLine18` conforms — line 18 is **null when no tax was computed** (`taxAndCredits == null`, i.e. line 15 taxable income was null so `computeLine16` returned before creating the object). Otherwise line 18 = line16 + line17 with each operand null-coalesced to 0, so it is **ZERO when taxable income is 0** (line 16 = 0, no line 17) and positive otherwise — always non-negative by construction. No compute change.
+
+Breadcrumb added at the `taxAndCredits == null` guard; lock-in test pair `line18TotalTaxBeforeCreditsNullWhenNoTaxableIncome` (no income → line 18 null) and `line18TotalTaxBeforeCreditsZeroWhenTaxableIncomeZero` ($5,000 wages, taxable income 0 → line 18 = 0). Coverage table + outstanding.md updated. Remaining pending: lines 19–38.
+
+
 ## 2026-07-08 — Cross-line 0-vs-null audit: line 17 (AMT / Schedule 2 line 3) audited + locked in
 
 Next line: **line 17 (alternative minimum tax + Schedule 2 line 3)**. Verified `wireLine17ToOutputs` conforms — line 17 is **null-or-positive by design**: both `setAlternativeMinimumTax` and `setAdditionalTaxSchedule2` use `amt > 0 ? amt : null`, so a computed $0 is coalesced to null. This matches the IRS "leave line 17 blank if there is no additional tax from Schedule 2" convention — the AMT concept only "applies" when tentative minimum tax exceeds the regular tax, so a $0 result is absent, not a shown zero. **There is deliberately no ZERO branch.** No compute change.

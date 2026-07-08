@@ -1,6 +1,13 @@
 ﻿# History
 
 
+## 2026-07-08 — Cross-line 0-vs-null audit: lines 12a–12e (deduction) audited + locked in
+
+Next line: **lines 12a–12e (standard/itemized deduction)**. Verified `computeStandardDeduction` / `computeLine12` conform — the standard deduction (and thus line 12e) is **null when there is no filing status** (the concept needs one). ★ Notably, ZERO here is **spec-mandated, not "no input"**: line 12b (MFS spouse itemizes) or line 12c (dual-status alien) forces a $0 standard deduction per IRC §63(c)(6) — a clean example of the canonical rule's ZERO category ("concept applies, computed value is zero"). Otherwise the deduction is a positive floor by filing status (dependents get the min-$1,350 worksheet, still positive). No compute change.
+
+Breadcrumb added in `computeStandardDeduction`; lock-in: new `line12eDeductionNullWhenNoFilingStatus` (no filing status → line 12e null; a non-null `someoneCanClaimYou=false` indicator keeps the Deductions block present so the null is observable in isolation) + the existing `computesLine12cForcesStandardDeductionToZeroForDualStatusAlien` (dual-status alien → line 12e = 0). Coverage table + outstanding.md updated. Remaining pending: lines 13–38.
+
+
 ## 2026-07-08 — Cross-line 0-vs-null audit: lines 11a/11b (AGI) audited + locked in
 
 Next line-pair: **lines 11a/11b (adjusted gross income)**. Verified the AGI computation in `buildAdjustments` conforms — `line11a = line9 == null ? null : roundMoney(subtractNonNegativeAllowNegative(line9, line10))`, so **AGI is null when there is no income** (line 9 null), *even if line-10 adjustments exist* — the ternary short-circuits to null before subtracting, because the AGI concept requires income. When income is present, line 11a = line 9 − line 10 and may be **ZERO** (adjustments exactly equal income) or **negative** (negatives preserved). Line 11b is a pure copy of 11a. No compute change.

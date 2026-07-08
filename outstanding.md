@@ -411,7 +411,8 @@ Per-line checklist for the canonical-rule audit step:
 - ✅ Line 9 (total income) — audited 2026-07-08 (CONFORMS: addNonNull of the 8 income lines → null when no income; ZERO when components net to $0 e.g. wages offset by an NOL; may be negative; breadcrumb at the sum + lock-in tests `line9TotalIncomeNullWhenNoIncome` / `line9TotalIncomeZeroWhenComponentsNetToZero`).
 - ✅ Line 10 (adjustments to income) — audited 2026-07-08 (CONFORMS: whole record null on `!hasAnySchedule1Input` so no-adjustments → null (all-$0 also → null); adjustments are NON-NEGATIVE so no natural ZERO-with-input branch — line 10 is null-or-positive; breadcrumb at the gate + lock-in `line10AdjustmentsNullWhenNoInput`).
 - ✅ Lines 11a/11b (AGI) — audited 2026-07-08 (CONFORMS: AGI null when no income (line 9 null) even with adjustments — the `line11a = line9==null ? null : line9−line10` ternary short-circuits; ZERO when adjustments equal income; may be negative; line 11b copies 11a; breadcrumb at the line-11a computation + lock-in tests `line11aAgiNullWhenNoIncomeEvenWithAdjustment` / `line11aAgiZeroWhenAdjustmentsEqualIncome`).
-- ⏳ Lines 12–38 (deductions, credits, payments) — pending future audits (folded into each remaining line audit).
+- ✅ Lines 12a–12e (standard/itemized deduction) — audited 2026-07-08 (CONFORMS: line 12e null when no filing status; ZERO is SPEC-MANDATED not "no input" — line 12b MFS-spouse-itemizes / line 12c dual-status alien → $0 per §63(c)(6); otherwise a positive floor by status; breadcrumb in `computeStandardDeduction` + lock-in `line12eDeductionNullWhenNoFilingStatus` (null) + existing `computesLine12cForcesStandardDeductionToZeroForDualStatusAlien` (ZERO)).
+- ⏳ Lines 13–38 (QBI, tax, credits, payments) — pending future audits (folded into each remaining line audit).
 - ⏳ Lines 9–38 (totals, deductions, credits, payments) — pending future audits.
 
 **Why folded into per-line audits rather than a single sweep:**

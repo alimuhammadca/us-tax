@@ -106,7 +106,7 @@ When auditing a new compute method or writing a new helper:
 | 1h | `computeOtherEarnedIncome` | CONFORMS (MIXED — all-zero-inputs ZERO documented in 1h #4(g)) | |
 | 1i | `computeCombatPay` | CONFORMS (MIXED — elected-no-Q ZERO is spec-driven §10.4) | |
 | **2a/2b** | **`computeInterestIncome`** | **CONFORMS — audited 2026-07-08** | Line 2a/2b null when no interest input (addNonNull / subtractNonNegative / roundMoney all null-preserving); ZERO only for an explicit $0 entry. Breadcrumb at the record return; lock-in tests `interestLine2aAnd2bNullWhenNoInput` + `interestLine2bZeroForExplicitZeroEntryLine2aStillNull`. |
-| 3a/3b | `computeDividendIncome` | UNAUDITED — pending future audit | Add 0-vs-null check. |
+| **3a/3b** | **`computeDividendIncome`** | **CONFORMS — audited 2026-07-08** | Line 3a/3b null when no dividend input (addNonNull aggregates; computeDividendForPerson all-null on !personHadDividend; roundMoney(null)=null; the 3a≤3b cap is hasPositiveAmount-guarded); ZERO only for an explicit $0 box-1a entry. Breadcrumb at the record return; lock-in tests `dividendLine3aAnd3bNullWhenNoInput` + `dividendLine3bZeroForExplicitZeroEntryLine3aStillNull`. |
 | 4a/4b/4c | `computeIraDistributions` | UNAUDITED — pending future audit | Add 0-vs-null check. |
 | 5a/5b | `computePensionIncome` | UNAUDITED — pending future audit | Add 0-vs-null check. |
 | 6a/6b | `computeSocialSecurityBenefits` | UNAUDITED — pending future audit | Add 0-vs-null check. |

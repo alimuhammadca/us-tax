@@ -401,7 +401,8 @@ Per-line checklist for the canonical-rule audit step:
 **Coverage so far** (from `knowledge/canonical-null-zero-semantic.md` § Audit Coverage):
 - ✅ Lines 1a, 1b, 1c, 1d, 1e, 1f, 1g, 1h, 1i, 1z — all audited and compliant.
 - ✅ Lines 2a/2b — audited 2026-07-08 (CONFORMS: null when no interest input, ZERO only for explicit $0 entry; breadcrumb at `computeInterestIncome` return + lock-in tests `interestLine2aAnd2bNullWhenNoInput` / `interestLine2bZeroForExplicitZeroEntryLine2aStillNull`).
-- ⏳ Lines 3a/3b, 4a/4b/4c, 5a/5b, 6a/6b, 7a/7b, 8 — pending future audits.
+- ✅ Lines 3a/3b — audited 2026-07-08 (CONFORMS: null when no dividend input, ZERO only for explicit $0 box-1a entry; breadcrumb at `computeDividendIncome` return + lock-in tests `dividendLine3aAnd3bNullWhenNoInput` / `dividendLine3bZeroForExplicitZeroEntryLine3aStillNull`).
+- ⏳ Lines 4a/4b/4c, 5a/5b, 6a/6b, 7a/7b, 8 — pending future audits.
 - ⏳ Lines 9–38 (totals, deductions, credits, payments) — pending future audits.
 
 **Why folded into per-line audits rather than a single sweep:**

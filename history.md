@@ -1,6 +1,13 @@
 ﻿# History
 
 
+## 2026-07-08 — Cross-line 0-vs-null audit: lines 3a/3b (dividends) audited + locked in
+
+Next line-pair in the "Cross-Line 0-vs-null Compliance Audit": **lines 3a/3b (dividends)**. Verified `computeDividendIncome` conforms — line 3a (qualified) and line 3b (ordinary) are **null when no dividend input exists** (`line3a`/`line3b` are `addNonNull` aggregates; `computeDividendForPerson` returns all-null on the `!personHadDividend` early-return in modern mode and produces null when no 1099-DIV entries exist in legacy mode; `roundMoney(null)=null`), and the line-3a-≤-line-3b cap is `hasPositiveAmount`-guarded so it never manufactures a value. **ZERO only when the concept applies** with a provided value (explicit $0 1099-DIV box 1a → line 3b = 0). No compute change.
+
+Breadcrumb added at the `DividendComputation` record return; lock-in test pair `dividendLine3aAnd3bNullWhenNoInput` (no input → both null) and `dividendLine3bZeroForExplicitZeroEntryLine3aStillNull` ($0 1099-DIV → line 3b = 0, line 3a null). Coverage table + outstanding.md updated. Remaining pending: 4a/4b/4c, 5a/5b, 6a/6b, 7a/7b, 8.
+
+
 ## 2026-07-08 — Cross-line 0-vs-null audit: lines 2a/2b (interest) audited + locked in
 
 Advanced the "Cross-Line 0-vs-null Compliance Audit" item (outstanding.md) by one line-pair: **lines 2a/2b (interest income)**. Verified `computeInterestIncome` conforms to the canonical 0-vs-null rule — line 2a (tax-exempt) and line 2b (taxable) are **null when no interest input exists** (every aggregation is `addNonNull` / `subtractNonNegative`, both null-preserving, and `roundMoney(null)=null`), and reach **ZERO only when the concept applies with a provided value** (e.g. an explicit $0 1099-INT box 1). No spec mandates ZERO here, so the code was already compliant — no compute change.

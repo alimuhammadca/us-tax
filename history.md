@@ -1,6 +1,17 @@
 ﻿# History
 
 
+## 2026-07-08 — Doc-sync: Form 8863 MAGI items (2197/2198) stale — Form 2555 add-back implemented + tested
+
+Closed two stale "Lines 20–38 / Form 8863" outstanding items by verification (no code change):
+
+- **[Form 8863 / MAGI auto-read from Form 2555 output]** — claimed the Form 2555 → Form 8863 MAGI bridge "is not implemented." It **is**: `computeForm8863()` builds `computedForm2555AddBack` from `computeForm2555ExclusionForSsWorksheet(taxpayer)` (+ spouse on MFJ) and uses it as authoritative over the manual add-back fields. Because the exclusion is netted out of AGI at Schedule 1 line 8d, the add-back restores exactly the computed exclusion. Covered by `computeForm8863_form2555AddBack_autoFilledFromForeignEarnedIncomeWhenManualBlank` + `computeForm8863_form2555AddBack_computedExclusionWinsWhenForm2555Present`.
+
+- **[Form 8863 / MAGI adjustments]** — premise corrected. Form 8863 MAGI = AGI + Form 2555 (line 45+50) + Puerto Rico excluded + Form 4563 (American Samoa) excluded — exactly the three add-backs on the 2025 Form 8863 line-3 MAGI worksheet. The item's claim that **student loan interest** should adjust MAGI is IRS-incorrect: education-credit MAGI never adds back or subtracts student loan interest (AGI already reflects the deduction). ★ Verifying against the IRS worksheet prevented an incorrect "fix" that would have wrongly reduced MAGI.
+
+Both marked resolved in outstanding.md. Verify-first pattern: grep the cited symbol before implementing — the bridge was already built (likely during the Form 2555 AGI-netting work) and tested.
+
+
 ## 2026-07-08 — Line 5b test coverage: 1099-R box 2b "taxable amount not determined" fallback
 
 Closed the "Lines 5a/5b/5c: Remaining Deferred Items" box-2b gap (outstanding.md): the `taxableAmountNotDetermined` (box 2b) path — where the backend uses box 1 gross as the proxy taxable amount when box 2a is empty — had no dedicated assertion.

@@ -1,6 +1,13 @@
 ﻿# History
 
 
+## 2026-07-08 — Cross-line 0-vs-null audit: line 19 (CTC / ODC) audited + locked in
+
+Next line: **line 19 (child tax credit / credit for other dependents)**. Verified the Schedule 8812 wiring conforms — line 19 mirrors Schedule 8812 line 14. ★ Principled-diagnosis finding: a childless return gives line 19 = **0, not null**, because `computeSchedule8812` always returns a non-null object and its line 14 is a computed 0 for a childless filer. That is IRS-defensible (Schedule 8812 line 14 = 0), not a bug — so I locked in 0 rather than "fixing" it to null. Line 19 is **null only when there is no tax context** (TaxAndCredits null — no income — because the setter is guarded), and positive when the CTC/ODC is allowed. No compute change.
+
+Breadcrumb added at the line-19 wiring; lock-in test pair `line19ChildTaxCreditZeroWhenNoDependents` (childless + income → line 19 = 0) and `line19ChildTaxCreditNullWhenNoTaxContext` (no income → line 19 absent/null). Coverage table + outstanding.md updated. Remaining pending: lines 20–38.
+
+
 ## 2026-07-08 — Cross-line 0-vs-null audit: line 18 (total tax before credits) audited + locked in
 
 Next line: **line 18 (total tax before credits = line 16 + line 17)**. Verified `computeLine18` conforms — line 18 is **null when no tax was computed** (`taxAndCredits == null`, i.e. line 15 taxable income was null so `computeLine16` returned before creating the object). Otherwise line 18 = line16 + line17 with each operand null-coalesced to 0, so it is **ZERO when taxable income is 0** (line 16 = 0, no line 17) and positive otherwise — always non-negative by construction. No compute change.

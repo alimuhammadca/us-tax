@@ -1,6 +1,13 @@
 ﻿# History
 
 
+## 2026-07-08 — Cross-line 0-vs-null audit: line 9 (total income) audited + locked in
+
+Extended the audit past the income sub-lines into the totals: **line 9 (total income)**. Verified the line-9 sum in `buildIncome` conforms — line 9 = `addNonNull` of the eight income lines (1z + 2b + 3b + 4b + 5b + 6b + 7a + 8), so it is **null when the return has no income at all** (every operand null → `addNonNull` null → `roundMoney(null)` = null; the setter is guarded `if (line9 != null)`). **ZERO when income components net to exactly $0** (e.g. wages offset by an equal NOL on line 8, or a §1211(b)-capped capital loss on 7a); line 9 may also be **negative**. No compute change.
+
+Breadcrumb added at the line-9 sum; lock-in test pair `line9TotalIncomeNullWhenNoIncome` (no income → null) and `line9TotalIncomeZeroWhenComponentsNetToZero` ($500 wages offset by a $500 NOL → line 9 = 0). Coverage table split (line 9 → CONFORMS; 10–38 still pending). Remaining pending: lines 10–38.
+
+
 ## 2026-07-08 — Cross-line 0-vs-null audit: line 8 (other income) audited — INCOME LINES 1a–8 COMPLETE
 
 Final income-line pair: **line 8 (other income, Schedule 1 Part I)**. Verified `computeOtherIncomes` conforms — the whole `OtherIncomeComputation` record is null on the `!hasAnySchedule1Input` early-return, so Form 1040 line 8 (a Schedule 1 line 10 pass-through) is **null when there's no Schedule 1 input**; an all-$0 Schedule 1 also yields null (the gate uses `hasNonZeroAmount`). **ZERO on line 8 only when genuine activity nets to exactly $0** (e.g. a taxable state refund offset by an equal NOL); line 8 may also be **negative** (net loss). No compute change.

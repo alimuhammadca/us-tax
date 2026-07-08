@@ -407,7 +407,9 @@ Per-line checklist for the canonical-rule audit step:
 - ✅ Lines 6a/6b — audited 2026-07-08 (CONFORMS: whole record null on `!hasOutput` so no-SS → null; ZERO is the natural case — benefits present but not taxable at low income → §86 "no-blank" rule forces line 6b = 0; breadcrumb at the hasOutput gate + lock-in `socialSecurityLine6aAnd6bNullWhenNoInput` (null) + existing `computesZeroTaxableSocialSecurityWhenBelowWorksheetThreshold` (ZERO)).
 - ✅ Lines 7a/7b — audited 2026-07-08 (CONFORMS: whole record null on `!hasOutput` so no-capital → null (a computed $0 counts as output only when `hadAnyCapital`); ZERO branch = real transactions netting to exactly $0 → line 7a = 0; line 7a may also be NEGATIVE (§1211(b) loss cap); breadcrumb at the hasOutput gate + lock-in tests `capitalLine7aNullWhenNoInput` / `capitalLine7aZeroWhenTransactionsNetToZero`).
 - ✅ Line 8 — audited 2026-07-08 (CONFORMS: whole record null on `!hasAnySchedule1Input` so no-Schedule-1-input → null (all-$0 also → null); ZERO only when genuine activity nets to $0 e.g. refund offset by an equal NOL; line 8 may also be NEGATIVE; breadcrumb at the gate + lock-in tests `otherIncomeLine8NullWhenNoInput` / `otherIncomeLine8ZeroWhenRefundOffsetByNol`).
-- ✅ **Income lines 1a–8 COMPLETE** (all Form 1040 income lines audited + lock-in tests). ⏳ Lines 9–38 (totals, deductions, credits, payments) — pending future audits (folded into each remaining line audit).
+- ✅ **Income lines 1a–8 COMPLETE** (all Form 1040 income lines audited + lock-in tests).
+- ✅ Line 9 (total income) — audited 2026-07-08 (CONFORMS: addNonNull of the 8 income lines → null when no income; ZERO when components net to $0 e.g. wages offset by an NOL; may be negative; breadcrumb at the sum + lock-in tests `line9TotalIncomeNullWhenNoIncome` / `line9TotalIncomeZeroWhenComponentsNetToZero`).
+- ⏳ Lines 10–38 (adjustments, AGI, deductions, credits, payments) — pending future audits (folded into each remaining line audit).
 - ⏳ Lines 9–38 (totals, deductions, credits, payments) — pending future audits.
 
 **Why folded into per-line audits rather than a single sweep:**

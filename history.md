@@ -1,6 +1,13 @@
 ﻿# History
 
 
+## 2026-07-08 — Cross-line 0-vs-null audit: line 10 (adjustments to income) audited + locked in
+
+Next line: **line 10 (adjustments to income, Schedule 1 Part II)**. Verified `computeIncomeAdjustments` / `buildAdjustments` conform — the whole `IncomeAdjustmentsComputation` record is null on the `!hasAnySchedule1Input` gate, so Form 1040 line 10 (a Schedule 1 line 26 pass-through) is **null when there is no Part II input** (`buildAdjustments` reads `incomeAdjustments == null ? null : …`); an all-$0 set of adjustments also yields null (the gate uses `hasNonZeroAmount`). **Unlike the income lines, adjustments are non-negative** — any real adjustment makes line 26 positive — so there is **no natural ZERO-with-input branch**; line 10 is null-or-positive. No compute change.
+
+Breadcrumb added at the `hasAnySchedule1Input` gate; lock-in `line10AdjustmentsNullWhenNoInput` (return with $40k wages but no adjustments → line 10 null, AGI = $40k). Coverage table + outstanding.md updated. Remaining pending: lines 11a/11b–38.
+
+
 ## 2026-07-08 — Cross-line 0-vs-null audit: line 9 (total income) audited + locked in
 
 Extended the audit past the income sub-lines into the totals: **line 9 (total income)**. Verified the line-9 sum in `buildIncome` conforms — line 9 = `addNonNull` of the eight income lines (1z + 2b + 3b + 4b + 5b + 6b + 7a + 8), so it is **null when the return has no income at all** (every operand null → `addNonNull` null → `roundMoney(null)` = null; the setter is guarded `if (line9 != null)`). **ZERO when income components net to exactly $0** (e.g. wages offset by an equal NOL on line 8, or a §1211(b)-capped capital loss on 7a); line 9 may also be **negative**. No compute change.

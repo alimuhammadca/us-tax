@@ -409,7 +409,8 @@ Per-line checklist for the canonical-rule audit step:
 - ✅ Line 8 — audited 2026-07-08 (CONFORMS: whole record null on `!hasAnySchedule1Input` so no-Schedule-1-input → null (all-$0 also → null); ZERO only when genuine activity nets to $0 e.g. refund offset by an equal NOL; line 8 may also be NEGATIVE; breadcrumb at the gate + lock-in tests `otherIncomeLine8NullWhenNoInput` / `otherIncomeLine8ZeroWhenRefundOffsetByNol`).
 - ✅ **Income lines 1a–8 COMPLETE** (all Form 1040 income lines audited + lock-in tests).
 - ✅ Line 9 (total income) — audited 2026-07-08 (CONFORMS: addNonNull of the 8 income lines → null when no income; ZERO when components net to $0 e.g. wages offset by an NOL; may be negative; breadcrumb at the sum + lock-in tests `line9TotalIncomeNullWhenNoIncome` / `line9TotalIncomeZeroWhenComponentsNetToZero`).
-- ⏳ Lines 10–38 (adjustments, AGI, deductions, credits, payments) — pending future audits (folded into each remaining line audit).
+- ✅ Line 10 (adjustments to income) — audited 2026-07-08 (CONFORMS: whole record null on `!hasAnySchedule1Input` so no-adjustments → null (all-$0 also → null); adjustments are NON-NEGATIVE so no natural ZERO-with-input branch — line 10 is null-or-positive; breadcrumb at the gate + lock-in `line10AdjustmentsNullWhenNoInput`).
+- ⏳ Lines 11a/11b–38 (AGI, deductions, credits, payments) — pending future audits (folded into each remaining line audit).
 - ⏳ Lines 9–38 (totals, deductions, credits, payments) — pending future audits.
 
 **Why folded into per-line audits rather than a single sweep:**

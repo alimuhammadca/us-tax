@@ -1,6 +1,13 @@
 ﻿# History
 
 
+## 2026-07-08 — Cross-line 0-vs-null audit: lines 23/24 (other taxes, total tax) audited + locked in
+
+Next line-pair: **line 23 (other taxes from Schedule 2 Part II) + line 24 (total tax = 22 + 23)**. Verified conform — line 23 is **null-or-positive** in `finalizeSchedule2OtherTaxes` (set only when the Schedule 2 grand total > 0, so a return with no other taxes leaves it null). Line 24 in `computeLine20ThroughLine24` is **null only when there is no tax context** (early return when `tac == null`); otherwise it is **0-or-positive** — `> 0 ? line24 : ZERO` coalesces to a shown 0 (not null), so a low-income return with taxable income 0 and no other taxes has line 24 = 0. No compute change.
+
+Breadcrumbs added at both computations; lock-in test pair `line23OtherTaxesNullWhenNone` ($40k wages, no other taxes → line 23 null) and `line24TotalTaxZeroWhenNoTax` ($5,000 wages, taxable income 0, no other taxes → line 24 = 0). Coverage table + outstanding.md updated. Remaining pending: lines 25–38.
+
+
 ## 2026-07-08 — Cross-line 0-vs-null audit: lines 21/22 (total credits, tax after credits) audited + locked in
 
 Next line-pair: **line 21 (total credits = 19 + 20) + line 22 (tax after credits = max(0, 18 − 21))**. Verified `computeLine20ThroughLine24` conforms — line 21 is **null-or-positive** (`> 0 ? line21 : null` coalesces a $0/no-credits total to null); line 22 is **null only when there is no tax context** (the method returns early when `tac == null`, i.e. no income), and otherwise **ZERO by the spec-mandated floor** when credits meet or exceed the tax before credits (`.max(ZERO)`), positive otherwise. No compute change — the null/zero contracts were already covered by the 2026-04-19 Line 21 audit tests (`line21_isNullWhenNoCreditsPresent`, `line21_line22FlooredAtZeroWhenCreditsAbsorbAllTax`); this pass adds the canonical breadcrumbs and cross-references those tests.

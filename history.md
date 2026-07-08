@@ -1,6 +1,13 @@
 ﻿# History
 
 
+## 2026-07-08 — Cross-line 0-vs-null audit: lines 11a/11b (AGI) audited + locked in
+
+Next line-pair: **lines 11a/11b (adjusted gross income)**. Verified the AGI computation in `buildAdjustments` conforms — `line11a = line9 == null ? null : roundMoney(subtractNonNegativeAllowNegative(line9, line10))`, so **AGI is null when there is no income** (line 9 null), *even if line-10 adjustments exist* — the ternary short-circuits to null before subtracting, because the AGI concept requires income. When income is present, line 11a = line 9 − line 10 and may be **ZERO** (adjustments exactly equal income) or **negative** (negatives preserved). Line 11b is a pure copy of 11a. No compute change.
+
+Breadcrumb added at the line-11a computation; lock-in test pair `line11aAgiNullWhenNoIncomeEvenWithAdjustment` ($250 educator expense, no income → line 10 = 250 but AGI null) and `line11aAgiZeroWhenAdjustmentsEqualIncome` ($5,000 wages − $5,000 IRA deduction → AGI = 0, line 11b copies 0). Coverage table + outstanding.md updated. Remaining pending: lines 12–38.
+
+
 ## 2026-07-08 — Cross-line 0-vs-null audit: line 10 (adjustments to income) audited + locked in
 
 Next line: **line 10 (adjustments to income, Schedule 1 Part II)**. Verified `computeIncomeAdjustments` / `buildAdjustments` conform — the whole `IncomeAdjustmentsComputation` record is null on the `!hasAnySchedule1Input` gate, so Form 1040 line 10 (a Schedule 1 line 26 pass-through) is **null when there is no Part II input** (`buildAdjustments` reads `incomeAdjustments == null ? null : …`); an all-$0 set of adjustments also yields null (the gate uses `hasNonZeroAmount`). **Unlike the income lines, adjustments are non-negative** — any real adjustment makes line 26 positive — so there is **no natural ZERO-with-input branch**; line 10 is null-or-positive. No compute change.

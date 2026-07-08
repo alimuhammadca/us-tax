@@ -1,6 +1,11 @@
 ﻿# History
 
 
+## 2026-07-08 — Doc-sync: Line 12e dependent-worksheet full earned-income formula (2273) resolved
+
+Marked the "Line 12e / Dependent worksheet earned income not auto-imported" item fully resolved (was "partially resolved 2026-04-17" with the full formula deferred). Verification, no code change: `computeDependentWorksheetEarnedIncome(income, otherIncome, incomeAdjustments)` implements the full per-spec earned income = line 1z + Schedule 1 line 3 (business) + line 6 (farm) + line 8r (scholarship/fellowship) + line 8t + line 8u − line 15 (deductible SE tax), floored at 0, injected into the worksheet when the manual override is null. Matches the 2025 Form 1040 Dependent Standard Deduction Worksheet (Pub 501). The full formula landed via "12e.md Gap 1 closure 2026-06-08" — after the outstanding item was written — so the item was stale. Covered by `computesLine12DependentWorksheetAutoImportsWagesWhenEarnedIncomeNotEntered` + `dependentWorksheetEarnedIncomeIncludesScholarshipGrantsLine8r` (both green). Verify-first pattern again: the cited symbol already existed and was tested.
+
+
 ## 2026-07-08 — Doc-sync: Form 8863 MAGI items (2197/2198) stale — Form 2555 add-back implemented + tested
 
 Closed two stale "Lines 20–38 / Form 8863" outstanding items by verification (no code change):

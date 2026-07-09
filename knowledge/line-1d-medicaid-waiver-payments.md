@@ -47,7 +47,8 @@ Cross-form integration:
 | `hasTradeOrBusinessProvidingHomeCare` | boolean | Schedule C path gate. When true AND amounts > 0 → blocking flag fires; line 1d returns null (Schedule C is out of scope). |
 | `programName` | text | Display only. Helps user trace which Medicaid program (e.g., HCBS §1915(c) waiver). NOT used by compute. |
 | `careRecipientRelationship` | text | Display only. Notice 2014-7 applies regardless of provider-recipient relationship. |
-| `livesWithCareRecipient` | boolean | Informational. Notice 2014-7 requires shared home, but compute trusts the user's `qualifiedNotice2014_7Amount` directly. (Issue #9 in 1d.xlsx — UI guidance gap noted.) |
+| `livesWithCareRecipient` | boolean | Home-sharing gate (escalated from advisory to blocking 2026-07-09). When `false` AND `qualifiedTotal > 0` AND the earned-income election is ON AND `notice2014_7HomeSharingExceptionApplies` is not set → `MEDICAID_WAIVER_NOTICE_2014_7_HOME_SHARING_VIOLATION_{TP,SP}` blocking flag (overrideable). Notice 2014-7 requires a shared home. |
+| `notice2014_7HomeSharingExceptionApplies` | boolean | Documented-exception attestation (added 2026-07-09; column V94). When `true`, suppresses the home-sharing violation flag — for legitimate exceptions (the care recipient's home is also the caregiver's with no separate home, or a qualifying non-§1915(c) state program). |
 
 ### Per-entry (`medicaidWaiverPayments[]`)
 

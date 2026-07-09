@@ -1009,7 +1009,11 @@ Per IRS 2025 Form 8839 Part III (and lines/1f.md §4.5 + §8), when a foreign ad
 
 ---
 
-## Notice 2014-7 Home-Sharing — Escalate Advisory to Blocking Flag — Deferred 2026-05-06
+## ~~Notice 2014-7 Home-Sharing — Escalate Advisory to Blocking Flag — Deferred 2026-05-06~~ ✅ **RESOLVED 2026-07-09**
+
+**Implemented 2026-07-09** with the exception escape-hatch the deferral called for (so legitimate exceptions are never hard-blocked). New blocking flag `MEDICAID_WAIVER_NOTICE_2014_7_HOME_SHARING_VIOLATION_{TAXPAYER,SPOUSE}` fires in `computeMedicaidForPerson` when `livesWithCareRecipient === false` AND `qualifiedTotal > 0` AND the earned-income election is ON AND the new `notice2014_7HomeSharingExceptionApplies` attestation is not set. The flag is **overrideable** (not in `NonOverrideableFlags`) — clean paths are fixing the inputs or checking the exception box; an informed caregiver who overrides bears their own audit risk (matching the deferral's stated risk framing). Per-person exception field added end-to-end: `PfMedicaidWaiver.notice20147HomeSharingExceptionApplies` + `MedicaidWaiverMapper` (read/write) + migration `V94` + both Angular components (checkbox shown when livesWith=No & qualified present, + help text) + both YAMLs. Coverage: 4 Java unit tests (blocks; election-off no-block; exception no-block; livesWith-Yes no-block) + 1 e2e (409 block → exception attestation → 200). Full medicaid-waiver e2e spec green (53/53). Did NOT reclassify qualified→taxable on override (the item's optional suggestion): honoring the override as-entered is simpler and more consistent with "override = file as I entered." Docs: `history.md` 2026-07-09, `lines/1d.md`, `knowledge/line-1d-medicaid-waiver-payments.md`.
+
+(original deferral note follows for reference)
 
 When the user answers `livesWithCareRecipient === false` on the medicaid-waiver form but has entered qualified Notice 2014-7 amounts, an inline yellow `.notice2014-warning` advisory callout is shown (since 2026-05-06 — see `knowledge/line-1d-medicaid-waiver-payments.md` §9). The advisory educates the user but does NOT block save or compute.
 

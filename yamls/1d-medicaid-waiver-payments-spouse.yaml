@@ -71,6 +71,12 @@ sections:
         required: false
         label: Did your spouse live with the care recipient for whom they provided care?
         help: This can be relevant for determining whether payments qualify as excludable difficulty-of-care payments.
+      - name: notice2014_7HomeSharingExceptionApplies
+        type: boolean
+        required: false
+        showIf: livesWithCareRecipient == false
+        label: A documented Notice 2014-7 exception applies (the care recipient's home is also your spouse's home with no separate home, or a qualifying state program)
+        help: Check only if an exception lets your spouse exclude the qualified payments despite answering No to living with the care recipient. Suppresses the blocking Notice 2014-7 home-sharing violation flag at compute time (fires when livesWithCareRecipient is No AND qualified amounts are present AND the earned-income election is on).
 
   - name: medicaidWaiverPayments
     title: Medicaid waiver payments

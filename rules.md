@@ -1380,6 +1380,17 @@ from it into `us-tax-ui`, port **per-change, never by copying files**. Guardrail
   phaseout — it validates the entered value, the phaseout reduces a valid one.
 
 
+## Null-aware summation: prefer `sumAmounts(...)` over nested `addNonNull` — 2026-07-09
+
+- For summing 3+ null-aware BigDecimal operands in `TaxReturnComputeService`,
+  use the flat varargs helper **`sumAmounts(a, b, c, ...)`**, NOT deep nested
+  `addNonNull(addNonNull(addNonNull(a, b), c), ...)` chains. `sumAmounts` is the
+  same null-aware left-fold (null on empty/all-null) but scans flat.
+- `addNonNull(BigDecimal, BigDecimal)` stays for genuine binary adds. Both live
+  together just below the QBI-phaseout helpers. All prior nested chains were
+  flattened 2026-07-09; don't reintroduce them.
+
+
 
 
 

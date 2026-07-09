@@ -460,7 +460,11 @@ Per-line checklist for the canonical-rule audit step:
 
 ---
 
-## TaxReturnComputeService — `addNonNullVarargs` Helper + Cross-Site Migration (~31 nested addNonNull chains) — Deferred 2026-05-10
+## ~~TaxReturnComputeService — `addNonNullVarargs` Helper + Cross-Site Migration (~31 nested addNonNull chains) — Deferred 2026-05-10~~ ✅ **RESOLVED 2026-07-09**
+
+**Resolved 2026-07-09.** ★ Deviation from the literal spec: the proposed `addNonNullVarargs` helper **already existed** as `sumAmounts(BigDecimal... values)` (defined immediately below `addNonNull` — identical null-aware left-fold, returns null on empty/all-null), so no duplicate helper was added; the 63 nested `addNonNull(addNonNull(...))` chains were flattened to flat `sumAmounts(...)` calls instead. Done in one coherent sweep via a balanced-paren transformer (recursively flattens only DIRECT addNonNull operands, leaves `addNonNull` buried inside other calls and plain binary `addNonNull(a,b)` untouched; only trees of ≥3 operands convert). Value-preserving by construction — BigDecimal money addition is associative + commutative, and `sumAmounts` is the same left-fold. 63 sites transformed, 0 nested chains remain, −153 lines. No dedicated helper micro-tests added (deviation): `sumAmounts` pre-existed with 74 prior call sites, and all 63 flattened sites are exercised by the behavioral suite — stronger than a reflection micro-test, and the test file has no reflection pattern to hook a private static. Full backend suite **1405/1405** green (compute 954/954). Rules guardrail added (prefer `sumAmounts` over nested `addNonNull`). No e2e needed — pure in-method arithmetic, no persistence/mapper/JSON path touched.
+
+(original deferral note follows for reference)
 
 The `addNonNull(BigDecimal, BigDecimal)` helper at `TaxReturnComputeService.java:11425` performs null-aware binary addition. It is composed into LEFT-FOLD CHAINS in many places — e.g., the line 1z chain at line 4140-4141 is `addNonNull(addNonNull(addNonNull(addNonNull(addNonNull(addNonNull(addNonNull(line1a, line1b), line1c), line1d), line1e), line1f), line1g), line1h)` — 7 nested calls to sum 8 operands. The same shape appears at line 4144-4145 for line 9, and at 29 other sites.
 

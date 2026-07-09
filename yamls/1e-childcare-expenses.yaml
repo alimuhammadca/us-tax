@@ -230,6 +230,53 @@ childcareExpenses:
           label: Worksheet A — Prior-year expenses paid this year
           help: Enter if you paid last-year care expenses during this year.
 
+        # Pub 503 Worksheet A prior-year (2024-return) inputs for the exact Form 2441 line 9b
+        # credit. Shown when priorYearQualifiedExpensesPaidThisYear > 0. Single 2024-return
+        # values, taken from the taxpayer (head) form. When any required input is blank, compute
+        # falls back to the IRC §21(c) outer-bound cap on line 9b.
+        - name: prior2024Form2441Line3
+          type: amount
+          required: false
+          showIf: priorYearQualifiedExpensesPaidThisYear > 0
+          label: 2024 Form 2441, line 3
+          help: Copy from your 2024 Form 2441, line 3 (Worksheet A line 1).
+        - name: prior2024Form2441Line6
+          type: amount
+          required: false
+          showIf: priorYearQualifiedExpensesPaidThisYear > 0
+          label: 2024 Form 2441, line 6
+          help: Copy from your 2024 Form 2441, line 6 (Worksheet A line 9).
+        - name: prior2024DeductedExcludedBenefits
+          type: amount
+          required: false
+          showIf: priorYearQualifiedExpensesPaidThisYear > 0
+          label: 2024 dependent care benefits excluded/deducted (2024 Form 2441 lines 24 + 25)
+          help: Worksheet A line 5. Enter 0 if you had no 2024 employer dependent care benefits.
+        - name: prior2024QualifyingPersonCount
+          type: integer
+          required: false
+          showIf: priorYearQualifiedExpensesPaidThisYear > 0
+          label: Number of qualifying persons in 2024
+          help: Selects the $3,000 (one) vs $6,000 (two or more) per-year ceiling on Worksheet A line 4.
+        - name: prior2024TaxpayerEarnedIncome
+          type: amount
+          required: false
+          showIf: priorYearQualifiedExpensesPaidThisYear > 0
+          label: Your 2024 earned income
+          help: Worksheet A line 7 (compared with your spouse's 2024 earned income on a joint return).
+        - name: prior2024SpouseEarnedIncome
+          type: amount
+          required: false
+          showIf: priorYearQualifiedExpensesPaidThisYear > 0
+          label: Your spouse's 2024 earned income (joint returns only)
+          help: Worksheet A line 7 — the smaller of your and your spouse's 2024 earned income is used.
+        - name: prior2024Agi
+          type: amount
+          required: false
+          showIf: priorYearQualifiedExpensesPaidThisYear > 0
+          label: 2024 adjusted gross income (2024 Form 1040, line 11)
+          help: Worksheet A line 11 — drives the applicable-percentage decimal (35% at ≤$15k down to 20% over $43k).
+
         # Line 9b: computed from Worksheet A; otherwise 0.
         - name: line9bPriorYearExpensesPaidThisYear
           type: amount

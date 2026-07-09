@@ -1085,7 +1085,11 @@ Backend tests: `line1dCap131c_withinLimits_noReduction`, `line1dCap131c_age19Plu
 
 ---
 
-## Pub 503 Worksheet A — Full Prior-Year Computation for Form 2441 Line 9b — Deferred 2026-05-31
+## ~~Pub 503 Worksheet A — Full Prior-Year Computation for Form 2441 Line 9b — Deferred 2026-05-31~~ ✅ **RESOLVED 2026-07-09**
+
+**Implemented 2026-07-09** — the full 13-line Pub 503 "Worksheet for 2024 Expenses Paid in 2025" (i2441 2025, p.7). ★ Reading the authoritative worksheet showed the item's original estimate was off: it needs **seven** 2024-return inputs (2024 Form 2441 line 3 and line 6, 2024 excluded/deducted benefits = 2024 lines 24+25, 2024 qualifying-person count, 2024 TP + spouse earned income, 2024 AGI), not the "$3k/$6k + 2024 line 31" the deferral sketched (line 31 was a mis-read). `computeDependentCareBenefits` now runs the worksheet when the taxpayer supplies those inputs (line 9b = the CREDIT = limited prior-year expenses × 2024-AGI applicable percentage), and falls back to the IRC §21(c) outer-bound cap + advisory when they're blank. Inputs are single 2024-return values taken from the taxpayer (head) form (not summed). Full stack: 7 `pf_childcare_expenses` columns (migration `V95`) + `ChildcareExpensesMapper` + the compute + a "2024 prior-year credit recovery" section on the childcare form (7 inputs, shown when prior-year expenses > 0) + `1e-childcare-expenses.yaml`. Tests: 3 Java unit (full worksheet → $132 on the i2441 example; line-10 stop → $0; incomplete → outer-cap fallback) + 1 e2e round-trip + the existing Gap-1 fallback e2e preserved; full `line1e-dependent-care.spec.ts` 22/22. The `DEPENDENT_CARE_WORKSHEET_A_PARTIAL` advisory now fires only on incomplete inputs. Docs: `history.md` 2026-07-09, `lines/1e.md`, `XLS/Computations/1e.md`.
+
+(original deferral note follows for reference)
 
 The 2026-05-31 closure of Line 1e Gap 1 added the **outer-bound cap** to Form 2441 line 9b (`prior-year qualified expenses paid this year`): `line9b ≤ IRC §21(c) per-year ceiling` ($3,000 for 1 qualifying person, $6,000 for 2+). This is provably correct under any prior-year scenario because the §21(c) cap is identical in 2024 and 2025, so the prior-year UNUSED expense limit can never exceed the same per-year ceiling. The cap catches the obvious "user entered $50,000" abuse.
 

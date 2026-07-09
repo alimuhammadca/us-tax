@@ -1,6 +1,11 @@
 ﻿# History
 
 
+## 2026-07-09 — Fix intermittent e2e flake in ensureStatementSelected (line2ab/line3ab "blocks save")
+
+The full regression (1119 tests) came back 1104 passed / 13 skipped / 2 flaky / 0 genuine failures. Both flakes — `line2ab-interest-income:110` and `line3ab-dividend-income:90` ("blocks save when no statements uploaded") — traced to the shared `ensureStatementSelected` helper (`ui-flow.ts`): `getSidebarSection('Statements')` can transiently return `null` right after navigation (section not yet rendered), leaving `statementLink` undefined, and `undefined.isVisible()` throws a **synchronous** TypeError that the trailing `.catch(() => false)` cannot trap — short-circuiting the retry loop that was designed to recover (which is why both passed on retry #1). Guarded both `statementLink.isVisible()` checks with a nullish `statementLink && …` so a transient null falls through to the loop's own retry instead of throwing. Stress-verified: the two tests, run 3× each with `--retries=0`, all pass (6/6). Behaviour is unchanged when the section is present (guard only adds the null check).
+
+
 ## 2026-07-09 — Saved-PDF e2e coverage extended to Forms 2210 / 8888 / 8911sa (all 8 migrated forms now guarded)
 
 Added three saved-PDF tests to `tax-return-saved-pdf.spec.ts`, completing end-to-end Save-as-PDF coverage across every form touched by the semantic-name migration:

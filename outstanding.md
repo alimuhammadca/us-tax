@@ -1191,7 +1191,9 @@ These are used by `computeTipsForPerson` ONLY when no matching W-2 with the pers
 
 ---
 
-## Adequate-Records Substantiated-Amount — Skipped Enhancement Options — Considered 2026-05-06
+## ~~Adequate-Records Substantiated-Amount — Skipped Enhancement Options — Considered 2026-05-06~~ ✅ **CLOSED (decision record — no action; 2026-07-09)**
+
+This is a **decision record**, not open work: three hardening options were considered on 2026-05-06 and intentionally rejected (Option 1 blocking flag — too aggressive; Option 2 auto-clear on save — silent data mutation; Option 3 always-required attribute — partially adopted, the conditional `[required]` is cleaner). Nothing to implement — implementing any of them would contradict the recorded decisions. **Revisit only if** a filing-time "Ready to file?" gate is added (which would naturally upgrade Option 1). Left in place as a guard so future audits don't re-propose these without context.
 
 When fixing 1c.xlsx Code Validation #4 (silent fallthrough on adequate-records claim), three additional hardenings were considered and intentionally skipped. Documented here so future audits don't re-propose them without context.
 

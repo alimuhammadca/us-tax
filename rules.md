@@ -1359,6 +1359,27 @@ from it into `us-tax-ui`, port **per-change, never by copying files**. Guardrail
   and hand-apply rejected hunks — taking presentation only, keeping real-data.
 
 
+## Traditional-IRA deduction compensation cap (IRC §219) — 2026-07-09
+
+- The entered Schedule 1 line-20 traditional IRA deduction is validated against a
+  compensation cap in `TaxReturnComputeService` (block after the Pub. 590-A MAGI
+  coordinator): deductible ≤ **min(§219(b)(5) dollar limit, compensation)**.
+  Dollar limit = `$7,000 + $1,000` catch-up at age ≥ 50 (`ReferenceData
+  .IRA_CONTRIBUTION_DOLLAR_LIMIT_2025` / `IRA_CATCHUP_50_PLUS_2025`).
+- **Compensation** (`computeIraCompensation`) = W-2 box 1 wages + nontaxable
+  combat pay (box 12 code Q, §219(f)(7)) — the underlying box-12 sum, NOT the
+  line-1i election. **Self-employment earnings are out of scope**, so a filer
+  whose only earned income is SE will be under-credited here (acceptable — SE is
+  out of scope project-wide).
+- **MFJ**: apply the §219(c) spousal limit — each leg caps at
+  `dollarLimit ⊓ (combinedComp − otherSpouseClaimed)`, never per-person comp.
+- Over-claim → **blocking but overrideable** `IRA_DEDUCTION_EXCEEDS_COMPENSATION_
+  {TAXPAYER,SPOUSE}`. Deliberately NOT in `NonOverrideableFlags.CODES`: an excess
+  contribution is the filer's §4973 6%-excise decision to make, not a
+  misrepresentation the app must hard-block. This cap is INDEPENDENT of the MAGI
+  phaseout — it validates the entered value, the phaseout reduces a valid one.
+
+
 
 
 

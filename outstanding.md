@@ -567,7 +567,11 @@ Per IRS Pub. 3 §7 (Armed Forces' Tax Guide, "Extension of Deadlines"), taxpayer
 
 ---
 
-## Line 1i — Nontaxable Combat Pay as IRA Contribution Compensation (IRC §219(f)(7)) — Deferred 2026-05-10
+## ~~Line 1i — Nontaxable Combat Pay as IRA Contribution Compensation (IRC §219(f)(7)) — Deferred 2026-05-10~~ ✅ **RESOLVED 2026-07-09**
+
+**Resolved 2026-07-09** by building the broader **IRC §219(b)(1)(B) traditional-IRA compensation cap** the item flagged as the missing prerequisite (user chose "Full cap + combat pay" + "Blocking flag"). New per-person helper `computeIraCompensation(w2Entries, ssn)` = W-2 box 1 wages (`sumW2Box1ForSsn`) + nontaxable combat pay via `sumW2Box12ByCodes(COMBAT_PAY_CODES)` — the underlying box-12 code-Q sum, **not** the line-1i election, so combat pay counts as compensation per §219(f)(7) regardless of the credit choice. `iraDollarLimitForAge` gives the §219(b)(5) limit ($7,000 base + $1,000 catch-up at age ≥ 50) from two new `ReferenceData` constants (`IRA_CONTRIBUTION_DOLLAR_LIMIT_2025`, `IRA_CATCHUP_50_PLUS_2025`). A new cap block after the Pub. 590-A coordination (`TaxReturnComputeService` ~line 1263) validates each present leg: deductible ≤ min(dollar limit, compensation); on MFJ the §219(c) Kay Bailey Hutchison spousal limit caps each leg at `dollarLimit ⊓ (combinedComp − otherSpouseClaimed)`, letting a low-comp spouse borrow the couple's combined compensation. Over-claim emits **blocking (overrideable)** `IRA_DEDUCTION_EXCEEDS_COMPENSATION_{TAXPAYER,SPOUSE}` (NOT added to `NonOverrideableFlags.CODES` — deliberately overrideable). Independent of the MAGI phaseout above; validates the entered line-20 value. 4 unit tests (`iraDeductionCapIncludesNontaxableCombatPayPerIrcSec219f7` — the item's exact case; over-comp blocking; §219(c) spousal borrow; age-50+ catch-up) + 3 e2e (`line10-ira-compensation-cap.spec.ts`). `TaxReturnComputeServiceTest` 954/954; line10 + line6abcd e2e 45/45 (no regression — all existing IRA seeds have wages ≥ deduction). Self-employment compensation remains out of scope.
+
+(original deferral note follows for reference)
 
 Per IRC §219(f)(7) and IRS Pub. 590-A Section 2, nontaxable combat pay counts as compensation for IRA contribution purposes — a statutory exception to the general rule that nontaxable income cannot support IRA contributions. This rule is **independent of the line-1i credit election**: combat pay counts as IRA compensation regardless of whether the taxpayer elected to include it on line 1i for EIC/ACTC purposes.
 

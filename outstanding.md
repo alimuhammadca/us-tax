@@ -1382,7 +1382,11 @@ The four header dialogs added 2026-04-28 ship with full unit-test coverage but n
 
 ---
 
-## Admin-Side Message Creation Tooling — Deferred 2026-04-28
+## ~~Admin-Side Message Creation Tooling — Deferred 2026-04-28~~ ✅ **BACKEND RESOLVED 2026-07-09** (admin UI still deferred)
+
+**Backend resolved 2026-07-09.** Built the **DB-backed role foundation** (user chose it over Firebase custom claims) that both this item and the Support Dashboard sat on: new `user_role` table (V98) + `RoleService` (`hasRole` / `requireRole` → 403 / `grantRole` / `revokeRole`, role `support`). `POST /api/admin/messages {uid, subject, body}` (`AdminMessageResource`, `@Authenticated`) calls `roleService.requireRole(caller, "support")` first, validates the target uid exists + field lengths, then `UserMessageService.createMessage(targetUid, ...)` writes to the existing `user_message` table. Roles are app-level and INTENTIONALLY survive `clearUserData`/reset (like profile/messages/support-requests — a tax-data reset must not de-privilege a support account), so `user_role` is not in `PARENT_TABLES_UID_CASCADE`. E2e-testable via a **dev-only** `POST /api/dev/roles/{grant,revoke}` (`@IfBuildProfile("dev")`, self-scoped, absent from prod). Tests: `AdminMessageResourceTest` (7 — forbidden-without-role, validation, trimmed persist) + `admin-messages.spec.ts` (3 e2e — 403 without role, create+inbox-visible, validation). Backend 1419/1419. **Still deferred:** the admin **UI** (a role-gated route for support staff to compose + target a uid) — pairs with the Support Dashboard item below; support staff can use the endpoint directly meanwhile.
+
+(original deferral note follows for reference)
 
 The Messages feature ships only the receive/list/delete pipe. Messages must currently be created by support staff via the Firebase Admin SDK or Firebase Console at `users/{uid}/messages/{auto-id}` with fields `subject`, `body`, `createdAt` (epoch ms).
 
@@ -1395,13 +1399,15 @@ The Messages feature ships only the receive/list/delete pipe. Messages must curr
 
 ---
 
-## Support Dashboard for `supportRequests` Collection — Deferred 2026-04-28
+## Support Dashboard for `supportRequests` Collection — Deferred 2026-04-28 — **role foundation now built (2026-07-09)**
 
-The Support dialog persists user-submitted requests to the `supportRequests` Firestore collection (one doc per submission, status='open' on create) but no support-team UI consumes it.
+**Update 2026-07-09:** the **role-based authz** this item needed is now in place — `RoleService` (`requireRole(uid, "support")` → 403) + `user_role` table (V98), built with the admin message-creation item above. Remaining work here is just the endpoints + UI (no new auth foundation needed): `GET /api/admin/support-requests?status=open` and `PATCH /api/admin/support-requests/{id}` guarded by `roleService.requireRole(caller, RoleService.ROLE_SUPPORT)`, over the `support_request` SQL table (already Postgres, `SupportRequestEntity`), plus the admin UI. Note the collection is a Postgres table now, not Firestore.
+
+The Support dialog persists user-submitted requests to the `support_request` SQL table (one row per submission, status='open' on create) but no support-team UI consumes it.
 
 **What's needed**:
 - Backend admin endpoints: `GET /api/admin/support-requests?status=open`, `PATCH /api/admin/support-requests/{id}` (to update status to `in_progress` / `resolved`, attach response notes).
-- Role-based authz, same as the message-creation case above.
+- Role-based authz — **DONE**: reuse `RoleService.requireRole(caller, RoleService.ROLE_SUPPORT)`.
 - Admin UI: list view, filters (status, date), detail view with the full `subject`/`message` and contact snapshot already stored on the request, plus a "Send response" action that creates a `users/{uid}/messages` doc closing the loop.
 - Audit logging on status transitions.
 

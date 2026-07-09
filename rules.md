@@ -1411,6 +1411,28 @@ from it into `us-tax-ui`, port **per-change, never by copying files**. Guardrail
   `PARENT_TABLES_UID_CASCADE` (codes persist for audit; FK is ON DELETE SET NULL).
 
 
+## Admin/support authorization: DB-backed roles — 2026-07-09
+
+- Admin/support endpoints are guarded by a **DB-backed role** (`user_role`
+  table, V98), NOT a Firebase custom claim. Every admin handler calls
+  `roleService.requireRole(callerUid, RoleService.ROLE_SUPPORT)` at the top
+  (explicit per-endpoint check, not a filter/annotation — matches the app's
+  per-endpoint style and the "explicit over implicit" preference). `requireRole`
+  throws `ForbiddenException` (403).
+- **Roles are app-level and MUST survive a user-data reset.** `user_role` is
+  intentionally NOT in `UserDataBulkDelete.PARENT_TABLES_UID_CASCADE` — same
+  rationale as profile / user_message / support_request: a tax-data reset must
+  not de-privilege a support account. (This is the opposite call from the
+  entitlement flag above, which IS reset — deliberate: entitlement is per-return,
+  a support role is not.)
+- Roles are granted in tests ONLY via the dev-only `POST /api/dev/roles/{grant,
+  revoke}` (`@IfBuildProfile("dev")`, self-scoped, absent from prod). No prod
+  self-grant API — production role management is the deferred admin-tooling item.
+- Keep admin resources plain-unit-testable: put entity lookups (e.g. target-user
+  existence) behind a mockable service method (`UserMessageService.userExists`),
+  never a raw `Entity.findById` in the resource body.
+
+
 
 
 

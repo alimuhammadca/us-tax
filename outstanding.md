@@ -8,11 +8,11 @@ Updated: 2026-07-01T00:00:00-04:00
 
 ---
 
-## Tax-return Save-as-PDF — two follow-ups after the 2026-07-08 semantic-name migration
+## ~~Tax-return Save-as-PDF — two follow-ups after the 2026-07-08 semantic-name migration~~ **ALL RESOLVED (2026-07-08 / 2026-07-09)**
 
-The 8-form semantic-name migration is complete (see `history.md` 2026-07-08), but two items remain:
+The 8-form semantic-name migration is complete (see `history.md` 2026-07-08). All three follow-ups are now closed:
 
-1. **`f8949_elements.json` `oldName` is a manual patch.** Form 8949 was the only element JSON generated without `oldName`; I derived it deterministically from `pdfs/f8949_field_map_semantic.csv` and patched it in (202/202 verified against the actual PDF). If that asset is ever regenerated, the generator MUST emit `oldName` (as it already does for the other 7 forms) — including the nested `Table_Line1_Part{P}[0].Row{M}[0].page{P}_0_table_line1_part{P}_0_row{M}_0_{leaf}` naming for row fields — or the patch is lost and 8949's Save-as-PDF silently reverts to a blank template. Best fix: update the element-JSON generator script to include 8949 with `oldName`.
+1. **`f8949_elements.json` `oldName` — ✅ RESOLVED 2026-07-09.** The manual `oldName` patch is now codified in a generator: `us-tax-be/scripts/generate-f8949-elements.js` re-derives each field's `oldName` = the ACTUAL `f8949_semantic_labels.pdf` FQN from `pdfs/f8949_field_map_semantic.csv` (flat for header/checkbox/totals; nested `Table_Line1_Part{P}[0].Row{M}[0].page{P}_0_table_line1_part{P}_0_row{M}_0_{leaf}` for the 8×11 row fields). Unlike the 2210/8888/8911sa generators (which set `oldName` = CSV `old_full_name` and let the component bridge via `semanticFqn`), 8949 fills by `oldName` directly, so the generator emits the real PDF FQN. Idempotent — re-running reproduces the committed asset with **zero diff** (202/202 fields). Regeneration can no longer silently drop `oldName`.
 
 2. **Saved-PDF e2e coverage — ✅ DONE 2026-07-08.** Revived `schedule1-pdf-render.spec.ts` (GAP-PDF-8z now passes — nested 8z description + amount round-trip) and added `tax-return-saved-pdf.spec.ts` covering the three previously-blank forms (Schedule 2 additional-medicare-tax, Schedule 3 fuel credit, Form 8949 transaction proceeds — all pass, reading back real values by FQN through the `__e2eSkipPdfFlatten` harness). Along the way fixed a real checkbox bug: the `setValue(PDFName.of('Yes'))` reinforcement threw `InvalidAcroFieldValueError` for checkboxes whose export value is `/1` (caught silently, but wrong) — now uses the field's actual `getOnValue()` (schedule1 + schedule2). Also added the `__e2eSkipPdfFlatten` hook to schedule2/schedule3 saveAsPdf (they flattened unconditionally, so the harness read 0 fields). Final: 4 passed / 1 skipped.
 

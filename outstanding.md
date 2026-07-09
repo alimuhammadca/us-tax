@@ -1323,7 +1323,16 @@ This is a more robust replacement for the line-based fallback. Implement only wh
 
 ---
 
-## Surface Missing-Fields List in the Extraction UI — Deferred 2026-04-28
+## Surface Missing-Fields List in the Extraction UI — Deferred 2026-04-28 — **STILL DEFERRED (revisit after statements subsystem settles; product notes 2026-07-09)**
+
+**Revisit later (2026-07-09).** The user's direction: the statement upload/extract subsystem is **still under active development**, so hold any extraction-UX changes until it settles. Product notes captured while it came up:
+- **Intended UX is "auto-extract → review before saving," NOT a missing-fields list.** User: *"auto-extract and then ask the user to review before hitting save. After that it does not matter which boxes are empty"* and *"there is no need to show the list of empty boxes."* So sub-features (1) missing-fields banner list and (2) highlight-empty-fields are **not wanted**.
+- That review-before-save UX is **already implemented on every upload+extract statement form.** Audit 2026-07-09: all 38 extraction-wired statement components (all 1099-*, 1095-*, W-2, W-2G, SSA/RRB-1099, K-1 1041/1065/1120S, 5498, 8606, 3921, 6252, capital-statement) render the `.extraction-banner` (`*ngIf="formDir?.extractedFromUpload"`) with a review-before-saving message. 1:1 wiring↔banner match — no coverage gap. (Every form lacking the wiring is a non-statement personal / tax-return-preview form, correctly excluded.)
+- Sub-feature (3) per-field confidence bar is independently **infeasible today**: `POST /api/statements/{formId}/extract` returns `Record<string,unknown>` (field→value) with no per-field confidence, so there is nothing to render without new backend work.
+
+No code change. When statements work resumes, re-evaluate whether anything beyond the existing review-before-save banner is needed (likely nothing, per the notes above).
+
+(original deferral note follows for reference)
 
 After upload extraction, the user has no explicit signal of which boxes did vs didn't extract. Today they discover gaps by scrolling the form and seeing empty fields. Better UX:
 

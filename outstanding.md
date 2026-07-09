@@ -1338,7 +1338,16 @@ Backend already returns `Map<String,Object>` of extracted fields; the gap list i
 
 ---
 
-## E2E Coverage for Header Dialogs (Account / Payment / Support / Messages) — Deferred 2026-04-28
+## E2E Coverage for Header Dialogs (Account / Payment / Support / Messages) — Deferred 2026-04-28 — **MOSTLY DONE 2026-07-09**
+
+**Added 2026-07-09 (`e2e/tests/header-dialogs.spec.ts`, 6/6 green):** the achievable coverage that needs no new backend endpoint or second test phone — (1) topbar profile menu lists Account/Payment/Support/Messages and each opens its dialog; (2) bell opens Messages (the empty backend falls back to `SEED_MESSAGES`, so the populated sample list renders — the empty-state is NOT reachable for the shared test user, correcting this item's original assumption); (3) Payment — full pure-UI flow for BOTH modes (code: 8-char validation gate → "submitted" message; card: field validation gate → "demo only — no charge" message); (4) Support — open + submit gated on subject+message, **not submitted** (POST /api/support-requests has no test-scoped reset, so submitting would pollute the shared Firestore collection); (5) Account — open, pre-filled fields, disabled Save, close.
+
+**Residuals still deferred (each needs new infra):**
+- **Support happy-path submit** — needs a test-scoped reset for the top-level `supportRequests` Firestore collection (or a delete-by-test-user endpoint) so runs don't accumulate rows.
+- **Messages populated-from-backend + true empty-state** — needs seeded `users/{uid}/messages` docs (no admin creation endpoint) AND a way to suppress the `SEED_MESSAGES` fallback to reach the empty-state.
+- **Account phone-change save** — needs a *second* Firebase test phone added in the Console (the OTP re-auth / `updatePhoneNumber` path); the current single shared-auth phone can't cover it.
+
+(original deferral note follows for reference)
 
 The four header dialogs added 2026-04-28 ship with full unit-test coverage but no Playwright E2E. Each has a different blocker:
 

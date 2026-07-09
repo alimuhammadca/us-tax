@@ -1,6 +1,11 @@
 ﻿# History
 
 
+## 2026-07-09 — Line 1b data-flow diagram refresh (diagrams/1b.drawio)
+
+Closed the deferred "Line 1b Diagram Refresh" item. The item's premise was partly stale — `1b.drawio` was already a rhombus-gate decision tree, not a basic 5-node box — so it was completed in place rather than reshaped to `1a.drawio`'s column style (the existing style is clearer). Verified every node against the live compute code and closed the real gaps: fixed the collision-guard gate to read `employerTreatedAsContractor` (→ Form 8919 line 1g), not the code-mismatched `reportedOnForm8919`; added the `MISSING_W2_EMPLOYMENT_INCOME_*` handoff on the `householdWork = false` path with a suppression annotation; added the per-employer `federalTaxWithheld` reconciliation branch (`validateWithholdingOnContractorHouseholdFirm` → `WITHHOLDING_ON_CONTRACTOR_HOUSEHOLD_FIRM_NEEDS_1099_STATEMENT_*`); added a legend. XML validated (49 cells). Doc-only, no compute change; `knowledge/line-1b-household-wages.md` updated.
+
+
 ## 2026-07-09 — Refactor: flatten nested addNonNull chains → sumAmounts (readability)
 
 Closed the deferred "addNonNullVarargs helper + cross-site migration" item. The proposed varargs helper already existed as `sumAmounts(BigDecimal...)` (identical null-aware left-fold), so instead of adding a duplicate, the 63 nested `addNonNull(addNonNull(...))` chains in `TaxReturnComputeService` were flattened to flat `sumAmounts(...)` calls in one sweep. Done with a balanced-paren transformer that recursively inlines only direct `addNonNull` operands (leaving `addNonNull` nested inside other calls and plain binary `addNonNull(a,b)` alone; only ≥3-operand trees convert). Value-preserving by construction — money-BigDecimal addition is associative + commutative and `sumAmounts` is the same fold. 63 sites, 0 nested chains left, −153 lines. Full backend suite 1405/1405 (compute 954/954); no e2e needed (pure in-method arithmetic). Guardrail added to rules.md.

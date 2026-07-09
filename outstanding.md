@@ -1273,7 +1273,11 @@ Plus a unit test that seeds a W-2 with box 8 + only a `you` form (no spouse), as
 
 ---
 
-## Line 1b Diagram Refresh — Deferred 2026-05-05
+## ~~Line 1b Diagram Refresh — Deferred 2026-05-05~~ ✅ **RESOLVED 2026-07-09**
+
+**Resolved 2026-07-09.** ★ The item's premise was partly stale: `1b.drawio` was already a decision-tree flowchart (rhombus gates, colour-coded nodes), not a "basic 5-node box diagram" — and its rhombus-gate style is arguably clearer than `1a.drawio`'s column-of-rectangles, so it was kept and completed rather than reshaped. Verified every node against the live compute code and closed the real gaps: (1) fixed the collision-guard gate — it reads `employerTreatedAsContractor` (→ Form 8919 line 1g), NOT `reportedOnForm8919` as the old diagram labelled it; (2) added the `MISSING_W2_EMPLOYMENT_INCOME_*` handoff on the `householdWork = false` path, annotated that `householdWork = true` / a W-2 / Form 4852 suppresses it (`validateEmploymentIncomeW2ForPerson`); (3) added the per-employer `federalTaxWithheld` reconciliation branch (`validateWithholdingOnContractorHouseholdFirm` → `WITHHOLDING_ON_CONTRACTOR_HOUSEHOLD_FIRM_NEEDS_1099_STATEMENT_*` when no matching 1099-MISC/NEC is on file); plus a legend. The `HOUSEHOLD_WORK_SELF_EMPLOYMENT_*` flag node and the five-gate cascade were already present. XML validated well-formed (49 cells). Doc-only; no compute change. `knowledge/line-1b-household-wages.md` diagram section + outstanding-items table updated.
+
+(original deferral note follows for reference)
 
 `diagrams/1b.drawio` is a basic 5-node box diagram (Inputs → Computation → Outputs). It accurately depicts the high-level data flow but does not match the decision-tree style established for `1a.drawio`. Specific gaps:
 

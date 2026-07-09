@@ -212,16 +212,20 @@ computation.
 
 ---
 
-## Issues in `diagrams/1b.drawio`
+## `diagrams/1b.drawio` — refreshed 2026-07-09 ✅
 
-The diagram is a basic 5-node box diagram (Inputs → Computation → Outputs). It accurately
-depicts the high-level data flow but:
-- Does not show the three-gate decision tree
-- Missing the blocking flag node (`HOUSEHOLD_WORK_SELF_EMPLOYMENT_*`)
-- Missing the Form 8919 collision guard (which would be a spec-vs-code gap node)
-- Predates the decision-tree flowchart style established for line 1a
-
-Consider upgrading to the 1a.drawio decision-tree style.
+The diagram is a full decision-tree flowchart (yellow diamond gates, colour-coded
+computation / blocking-flag / output nodes, a legend). It now shows, matching the code:
+- The five-gate cascade: `hasEmploymentIncome` → `householdWork` → `householdEmployeeUnderControlTest`
+  → `householdReceivedW2 == false` → `Filing status = MFS?`
+- The `HOUSEHOLD_WORK_SELF_EMPLOYMENT_{TAXPAYER|SPOUSE}` blocking-flag node (control-test = false)
+- The per-employer `employerTreatedAsContractor` collision guard with the Form 8919 → line 1g
+  handoff (corrected from the earlier `reportedOnForm8919` label, which did not match the code)
+- The `MISSING_W2_EMPLOYMENT_INCOME_*` handoff on the `householdWork = false` path, with the
+  note that `householdWork = true` (or a W-2 / Form 4852) suppresses it
+- The per-employer `federalTaxWithheld` reconciliation branch
+  (`validateWithholdingOnContractorHouseholdFirm`) →
+  `WITHHOLDING_ON_CONTRACTOR_HOUSEHOLD_FIRM_NEEDS_1099_STATEMENT_*` when no matching 1099 is on file
 
 ---
 
@@ -229,7 +233,7 @@ Consider upgrading to the 1a.drawio decision-tree style.
 
 | Item | Priority |
 |---|---|
-| Diagram refresh: `diagrams/1b.drawio` should adopt the decision-tree style of `1a.drawio` and add the `HOUSEHOLD_WORK_SELF_EMPLOYMENT_*` blocking-flag node | Low — cosmetic, no compute impact |
+| ~~Diagram refresh: `diagrams/1b.drawio` should adopt the decision-tree style of `1a.drawio` and add the `HOUSEHOLD_WORK_SELF_EMPLOYMENT_*` blocking-flag node~~ **DONE 2026-07-09** (full decision tree + SE flag + contractor collision guard + MISSING_W2 handoff + federalTaxWithheld branch) | Low — cosmetic, no compute impact |
 
 All other items previously listed (Form 8919 guard, MFS guard, unit-test gaps, spec
 corrections) are RESOLVED — see Issues 1–4 above.

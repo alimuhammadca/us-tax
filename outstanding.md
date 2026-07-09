@@ -629,7 +629,7 @@ After 1i.xlsx Code Validation #4 closure (Option A scope), the two combat-pay su
 
 ---
 
-## Line 28 — G13 — CTC Per-Child Amount Documentation Drift ($2,000 docs vs $2,200 code; OBBBA citation) — Drift Fixed 2026-05-16
+## ~~Line 28 — G13 — CTC Per-Child Amount Documentation Drift ($2,000 docs vs $2,200 code; OBBBA citation) — Drift Fixed 2026-05-16~~ ✅ **CLOSED (verified done — doc-hygiene 2026-07-09)**
 
 ★ **G13 NEW GAP surfaced at 28 #9 audit on 2026-05-16; drift fix applied at 28 #4.** The 2025 Form 1040 Schedule 8812 line 5 (CTC potential per qualifying child) had a documentation drift where 3 doc files (`lines/28.md` §3, `dependencies/28.md` §6 G10, `knowledge/line-28-actc-schedule-8812.md` §60) all claimed CTC was $2,000 per qualifying child (citing a "G10 fix 2026-04-20 — corrected to $2,000"), while the actual code at `TaxReturnComputeService.java:23074-23075` uses **$2,200** with comment citing "Rev. Proc. 2024-40 §3.08; increased from $2,000 in 2024", and the 19 #6 breadcrumb (planted 2026-05-14 during line 19 audit) cites "OBBBA + Rev. Proc. 2024-40 §3.08" for Part II-A verification.
 
@@ -1062,7 +1062,7 @@ When the user has multiple Medicaid waiver entries, they could mis-enter the sam
 
 ---
 
-## IRC §131(c) Per-Individual Cap on Medicaid Waiver Exclusion — IMPLEMENTED 2026-05-31
+## ~~IRC §131(c) Per-Individual Cap on Medicaid Waiver Exclusion — IMPLEMENTED 2026-05-31~~ ✅ **CLOSED (verified done — doc-hygiene 2026-07-09)**
 
 `computeMedicaidForPerson` applies the IRC §131(c) cap that limits the difficulty-of-care exclusion to **10 qualified individuals under age 19** plus **5 individuals age 19 or older**. When either threshold is exceeded, pro-rata reduction routes the over-cap portion of `qualifiedTotal` to Line 1d as ordinary taxable income (no Schedule 1 line 8s offset).
 
@@ -1785,7 +1785,7 @@ Per-payer dividend items are now populated in `scheduleBDividendItems` during `c
 
 ---
 
-## Line 3c — Child Dividend Disclosure Checkbox (Implemented 2026-04-14)
+## ~~Line 3c — Child Dividend Disclosure Checkbox (Implemented 2026-04-14)~~ ✅ **CLOSED (verified done — doc-hygiene 2026-07-09)**
 
 **Implemented.** Form 8814 line 9 (child qualified dividends) now flows to parent lines 3a and 3b; both line 3c checkboxes are set when applicable. See `history.md` for details.
 
@@ -2769,7 +2769,7 @@ Formula verified correct against 2025 Form 1040 (image confirmed): `line32 = lin
 
 ---
 
-## Line 32 / UI Audit — 23 Violations in 10 Input Forms — Fixed 2026-04-21
+## ~~Line 32 / UI Audit — 23 Violations in 10 Input Forms — Fixed 2026-04-21~~ ✅ **CLOSED (verified done — doc-hygiene 2026-07-09)**
 
 UI audit against `ui.md` (R1–R44) and `turbotax.md` patterns across all 12 forms feeding line 32 found 23 violations in 10 forms. `education-credits-taxpayer/spouse` and `31-other-payments` were clean. All violations fixed:
 
@@ -2789,7 +2789,7 @@ UI audit against `ui.md` (R1–R44) and `turbotax.md` patterns across all 12 for
 
 ---
 
-## Line 32 / UI Audit (Second Pass) — Additional Violations in 8863 and Other Forms — Fixed 2026-04-21
+## ~~Line 32 / UI Audit (Second Pass) — Additional Violations in 8863 and Other Forms — Fixed 2026-04-21~~ ✅ **CLOSED (verified done — doc-hygiene 2026-07-09)**
 
 Second-pass audit of all line 32 input forms revealed additional violations in the 8863 education-credits forms and two other YAMLs that were incorrectly marked clean in the first pass. All fixed:
 
@@ -2815,7 +2815,7 @@ Formula verified: `line33 = line25d + line26 + line32`. All PDF fields for lines
 
 - **[Line 33 / G3 / LOW / OPEN]** IRS rule: refund under $1 is not automatically issued (taxpayer must request in writing). The backend computes any positive overpayment as a refund without enforcing this floor. Practical impact is negligible (a sub-$1 overpayment requires very precise tax scenario), but the IRS rule is not modeled. Low priority.
 
-## Line 33 / UI Audit (Second Pass) — 2026-04-21 — All fixed
+## ~~Line 33 / UI Audit (Second Pass) — 2026-04-21 — All fixed~~ ✅ **CLOSED (verified done — doc-hygiene 2026-07-09)**
 
 UI audit of 5 line 33 downstream personal forms against `ui.md` (R1–R44) + `turbotax.md` patterns. **26-estimated-tax-payments-taxpayer/spouse: CLEAN — no violations.** Four downstream forms had violations in three categories; all fixed (Angular build passes):
 
@@ -2823,7 +2823,7 @@ UI audit of 5 line 33 downstream personal forms against `ui.md` (R1–R44) + `tu
 - **[FIXED — R10]** 29 user-facing fields were missing `helpText` / `HelpModalComponent`: 4 in `35-direct-deposit`, 2 in `36-apply-to-next-year`, 14 in `refund-allocation`, 9 in `prior-year-tax`. All YAML files updated with `helpText`; all Angular components updated with `helpMap`, `openHelp()`, `closeHelp()`, `HelpModalComponent` import, and `pi-info-circle` help icons.
 - **[FIXED — R33]** IRS line/form/box references removed from visible labels: `35-direct-deposit` section label + 3 field labels (removed "lines 35b–35d", "line 35b/c/d"); `36-apply-to-next-year` section label + Angular header (removed "Form 1040, line 36" / "(line 36)"); `refund-allocation` Angular template (removed "Line 1a/1b/1c/1d" through "Line 3a/3b/3c/3d" + "Line 5" total note); `prior-year-tax` 5 YAML field labels + Angular template labels + header "(Form 2210)" + section heading "Part II —".
 
-## Line 33 / Gap Closure (Third Pass) — 2026-04-21 — All fixed
+## ~~Line 33 / Gap Closure (Third Pass) — 2026-04-21 — All fixed~~ ✅ **CLOSED (verified done — doc-hygiene 2026-07-09)**
 
 Additional unit tests and E2E tests added after second-pass gap scan identified untested scenarios:
 
@@ -2847,7 +2847,7 @@ Additional unit tests and E2E tests added after second-pass gap scan identified 
 
 - ~~**[Form 8888 / G13 / LOW]** No E2E test for direct deposit suppressed when Form 8888 active.~~ **Fixed 2026-04-21** — added `form8888: direct deposit lines 35b/c/d suppressed when Form 8888 elected` to `form8888-refund-allocation.spec.ts`. Asserts DD fields absent on refund when both `35-direct-deposit` and `refund-allocation-taxpayer` are saved.
 
-## Line 33 / Gap Closure (Fourth Pass) — 2026-04-21 — All fixed
+## ~~Line 33 / Gap Closure (Fourth Pass) — 2026-04-21 — All fixed~~ ✅ **CLOSED (verified done — doc-hygiene 2026-07-09)**
 
 Additional tests and UI fix after third-pass scan:
 

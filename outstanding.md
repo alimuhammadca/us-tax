@@ -1399,19 +1399,21 @@ The Messages feature ships only the receive/list/delete pipe. Messages must curr
 
 ---
 
-## Support Dashboard for `supportRequests` Collection — Deferred 2026-04-28 — **role foundation now built (2026-07-09)**
+## Support Dashboard for `supportRequests` Collection — **BACKEND RESOLVED 2026-07-09; UI PARKED (user will revisit)**
 
-**Update 2026-07-09:** the **role-based authz** this item needed is now in place — `RoleService` (`requireRole(uid, "support")` → 403) + `user_role` table (V98), built with the admin message-creation item above. Remaining work here is just the endpoints + UI (no new auth foundation needed): `GET /api/admin/support-requests?status=open` and `PATCH /api/admin/support-requests/{id}` guarded by `roleService.requireRole(caller, RoleService.ROLE_SUPPORT)`, over the `support_request` SQL table (already Postgres, `SupportRequestEntity`), plus the admin UI. Note the collection is a Postgres table now, not Firestore.
+**Backend resolved 2026-07-09.** `SupportAdminResource` (`@Authenticated` + `roleService.requireRole(caller, "support")`): `GET /api/admin/support-requests?status=<open|in_progress|resolved|all>` lists newest-first; `PATCH /api/admin/support-requests/{id}` updates status (validated against the CHECK set) and/or attaches a `responseNote`, stamping `handled_by_uid` + `handled_at`. New handling columns on `support_request` (V99: `response_note`, `handled_by_uid`, `handled_at`) + `SupportService.listRequests`/`updateRequest`. Audit-logged (`support_requests_listed` / `support_request_updated`). Tests: `SupportAdminResourceTest` (7) + `admin-support-dashboard.spec.ts` (3 e2e: 403-without-role, full open→resolved lifecycle, filter/id/status validation). Backend 1426/1426. To send a reply that reaches the user's inbox, staff reuse `POST /api/admin/messages` (the request row carries the requester's uid).
 
-The Support dialog persists user-submitted requests to the `support_request` SQL table (one row per submission, status='open' on create) but no support-team UI consumes it.
+### ⏸ PARKED — Admin/Support UI (covers BOTH admin items) — user will come back later (2026-07-09)
 
-**What's needed**:
-- Backend admin endpoints: `GET /api/admin/support-requests?status=open`, `PATCH /api/admin/support-requests/{id}` (to update status to `in_progress` / `resolved`, attach response notes).
-- Role-based authz — **DONE**: reuse `RoleService.requireRole(caller, RoleService.ROLE_SUPPORT)`.
-- Admin UI: list view, filters (status, date), detail view with the full `subject`/`message` and contact snapshot already stored on the request, plus a "Send response" action that creates a `users/{uid}/messages` doc closing the loop.
-- Audit logging on status transitions.
+Per user request, the **frontend admin surface is parked**: both the admin **message-compose UI** (from "Admin-Side Message Creation Tooling" above) and the **support-dashboard UI** here. All backend + role-authz is in place; what remains is a role-gated Angular route for support staff:
+- Dashboard list of support requests + status filter (← `GET /api/admin/support-requests`), a detail view (subject / message / contact snapshot), and a triage action (`PATCH` status + response note).
+- A compose/send-reply action (← `POST /api/admin/messages` to the requester's uid).
+- Route-guarded by the `support` role.
+- **Open question for revisit:** the UI needs to know whether the current user is support — add a small self-role-read endpoint (e.g. `GET /api/roles/me` returning the caller's roles) so the route guard + nav can gate on it. Today only the dev-only grant/revoke exists; there is no production self-role-read.
 
-**Priority**: Medium — without this, support staff must read from Firebase Console.
+(historical detail retained)
+
+The Support dialog persists user-submitted requests to the `support_request` SQL table; the admin backend above now consumes it (UI parked). Backend endpoints + role-based authz + audit logging on status transitions are all **DONE**.
 
 ---
 

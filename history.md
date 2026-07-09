@@ -1,6 +1,11 @@
 ﻿# History
 
 
+## 2026-07-09 — Tip income: optional adequate-records description note (audit-trail only)
+
+Implemented the deferred "Adequate-Records Audit-Trail Storage" item (Option C). When a tipped worker claims `hasAdequateRecordsUnreportedLessThanAllocated=true` for an employer (actual unreported tips < W-2 box 8 allocated), they can now optionally describe the records they kept (e.g. "Daily POS tip log; pay stubs filed monthly"). Purely an audit trail — the IRS does not require record descriptions on the return, so **no compute reads it**. Full stack: per-employer `recordsDescriptionNotes` VARCHAR(2000) on `PfTipEmployer` (migration `V96`) + `TipIncomeMapper` read/write + an optional `<textarea>` (plain, `class="p-inputtext"` — no new PrimeNG module) below the substantiated amount on both tip-income components, shown only when adequate-records = Yes and cleared on normalize when the answer flips to No + `1c-tip-income-taxpayer.yaml`. Verified: a save→persist→GET round-trip e2e (the note survives the mapper) + full `line1c-tip-income.spec.ts` 15/15. Document upload was intentionally NOT added — that belongs in a future dedicated "Audit support records" feature. Closes the outstanding item.
+
+
 ## 2026-07-09 — Pub 503 Worksheet A: full prior-year computation for Form 2441 line 9b
 
 Implemented the deferred full "Worksheet for 2024 Expenses Paid in 2025" (Form 2441 instructions p.7) that computes the credit for prior-year (2024) qualified expenses paid in 2025 → Form 2441 line 9b. Previously line 9b was a coarse outer-bound cap (raw entered expenses capped at the §21(c) ceiling), which overstated the credit because it skipped the 2024-AGI applicable-percentage multiply and the prior-year-used clamp.

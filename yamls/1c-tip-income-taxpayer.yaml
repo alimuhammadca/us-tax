@@ -67,6 +67,14 @@ sections:
         placeholder: Actual unreported cash/charge tips (if lower than box 8)
         label: Substantiated unreported tips (if lower than allocated tips)
         help: Enter your actual unreported cash/charge tips only if you have adequate records and they are less than the allocated tips.
+      - name: recordsDescriptionNotes
+        type: text
+        required: false
+        showIf: hasAdequateRecordsUnreportedLessThanAllocated == true
+        maxLength: 2000
+        placeholder: e.g., Daily tip log via my POS system; pay stubs filed monthly
+        label: Describe your records (optional)
+        help: Optional audit-trail note describing the adequate records you kept (type of record, where stored, retention). Persist-only — not filed with your return and not used by compute.
       - name: line5Under20PerMonthTips
         type: amount
         required: false

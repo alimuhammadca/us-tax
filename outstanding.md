@@ -1141,7 +1141,11 @@ The 2026-05-31 closure of Line 1e Gap 1 added the **outer-bound cap** to Form 24
 
 ---
 
-## Adequate-Records Audit-Trail Storage — Deferred 2026-05-06
+## ~~Adequate-Records Audit-Trail Storage — Deferred 2026-05-06~~ ✅ **RESOLVED 2026-07-09**
+
+**Implemented 2026-07-09 (Option C — records-description text).** Added a per-employer `recordsDescriptionNotes` (VARCHAR(2000)) captured when `hasAdequateRecordsUnreportedLessThanAllocated=true`: entity column on `PfTipEmployer` (migration `V96`) + `TipIncomeMapper` read/write + an optional `<textarea>` below the substantiated amount on both `form-tip-income-{taxpayer,spouse}` (shown only when adequate-records = Yes; cleared on normalize when the answer flips to No) + `1c-tip-income-taxpayer.yaml`. **Persist-only — no compute reads it** (the IRS never sees record descriptions on the return). Verified: save→DB→GET round-trip e2e (the note survives) + full `line1c-tip-income.spec.ts` 15/15. Document upload was NOT added (out of scope — belongs in a future "Audit support records" feature). Docs: `history.md` 2026-07-09.
+
+(original deferral note follows for reference)
 
 When a user claims `hasAdequateRecordsUnreportedLessThanAllocated=true` on the tip-income form, the application currently captures only the boolean claim + the substantiated amount + (since 2026-05-06) IRS-guidance help text and inline reminder pointing to Pub 531 / Form 4070A. It does NOT capture WHAT records the user has (description, notes, document upload).
 

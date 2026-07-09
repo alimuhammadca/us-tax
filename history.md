@@ -1,6 +1,16 @@
 ﻿# History
 
 
+## 2026-07-09 — Saved-PDF e2e coverage extended to Forms 2210 / 8888 / 8911sa (all 8 migrated forms now guarded)
+
+Added three saved-PDF tests to `tax-return-saved-pdf.spec.ts`, completing end-to-end Save-as-PDF coverage across every form touched by the semantic-name migration:
+- **Form 8888** — W-2 with large withholding → refund, allocated via `refund-allocation-taxpayer`; asserts the seeded routing (`021000089`) and account number round-trip at the nested `Line1bCombfield`/`Line1dCombfield` FQNs.
+- **Form 2210** — $300k wages / zero withholding → regular-method penalty; asserts line 1 (`currentYearTax`) matches the computed value formatted with no decimals.
+- **Form 8911 Schedule A** — one alt-fuel property via `alt-fuel-credit-taxpayer`; asserts the seeded description, the `$2,000` cost, and a nested checkbox (`line17_installed_at_main_home_yes`) all round-trip.
+
+Assertions use the **semantic-leaf FQNs** (`topmostSubform[0].Page1[0].<semantic name>`), since these three templates carry fully-semantic leaf names (verified against the actual PDFs). Two harness touch-ups: `openTaxReturnPreview` now matches the Save-as-PDF button by text anywhere (not only under `.preview-toolbar`) so multi-attachment previews like 8911 Schedule A — whose button lives per-attachment under `.attachment-head` — are found. These three forms already had the `__e2eSkipPdfFlatten` hook, so no component changes were needed. **Both saved-PDF spec files: 8 passed / 0 skipped.**
+
+
 ## 2026-07-08 — V93: Schedule 1 line-7 unemployment-repayment now persists (compute→GET round-trip fixed); GAP-PDF-LINE7 un-skipped
 
 Root-caused and fixed why `schedule1.additionalIncome.unemploymentRepaymentAmount` was absent from `GET /api/tax-return` (the last skipped saved-PDF test). The output is persisted to Postgres via `Schedule1OutputMapper` ↔ the `out_schedule_1` entity, and that entity had **no column** for the field while the mapper never mapped it in any of its three spots (compute→row write, row→output read, reset). So compute set it in memory (POST response = 400) but `toRow()` had nowhere to put it and GET's `fromRow()` left it null — while the sibling `unemploymentCompensation` (mapped) survived, which is exactly why f1_12 filled but the line-7 disclosure stayed blank. **Same class of bug as V91** (combat-zone checkbox lost on reload for lack of an output column).

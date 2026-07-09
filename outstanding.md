@@ -1423,7 +1423,11 @@ The Payment dialog "Pay by card" tab ships as a UI shell only — submission log
 
 ---
 
-## Backend Redemption for Payment "Enter Code" Path — Deferred 2026-04-28
+## ~~Backend Redemption for Payment "Enter Code" Path — Deferred 2026-04-28~~ ✅ **RESOLVED 2026-07-09**
+
+**Resolved 2026-07-09** (user product decision: a code = **prepaid / full-access license**). New `access_code` table (V97) + `app_user.has_paid_access` boolean entitlement. `POST /api/payments/redeem-code {code}` (`PaymentResource`, `@Authenticated`) validates the 8-char alphanumeric format, then `AccessCodeRedemptionService.redeem(uid, code)` looks up the code, checks the validity window, and **race-safely** claims it (conditional bulk update `... where id=? and status='unused'`), setting `app_user.has_paid_access=true`. Idempotent for the same user; rejects unknown/expired/already-redeemed-by-another with a 400. `GET /api/payments/access` returns `{hasPaidAccess}`. Best-effort in-memory per-uid brute-force throttle + full audit logging of every attempt (`AUDIT action=access_code_redeemed/redeem_failed/throttled`). Entitlement is reset by the user-data reset (`UserDataBulkDelete.resetAllForUid` now clears `has_paid_access`, since `app_user` is never deleted there). Frontend: `payment-dialog.component.ts` `submitCode()` now calls the endpoint (was a console stub) and shows the server message; injects `ChangeDetectorRef` + `markForCheck()` for the post-await render (the app needs manual CD, mirroring support-dialog). Code minting: a **dev-only** `POST /api/dev/access-codes/seed` (`@IfBuildProfile("dev")`, compiled out of prod) exists so e2e can create-then-redeem — production code creation is the separate deferred admin-tooling item. Tests: `PaymentResourceTest` (7, resource validation/delegation) + `payment-code-redeem.spec.ts` (4 e2e: happy+idempotent, unknown→400, malformed→400, case-insensitive) + updated `header-dialogs.spec.ts` code-mode test. Backend suite 1412/1412; UI builds. The "Pay by card" tab remains a demo — real processor integration is still deferred (separate item). ★ `access_code` is intentionally NOT in `UserDataBulkDelete.PARENT_TABLES_UID_CASCADE` (codes persist as an audit record; `redeemed_by_uid` FK is `ON DELETE SET NULL`).
+
+(original deferral note follows for reference)
 
 The Payment dialog "Enter code" tab validates an 8-character alphanumeric code client-side and currently logs to console. There is no backend redemption logic.
 

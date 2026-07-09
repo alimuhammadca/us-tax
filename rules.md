@@ -1391,6 +1391,26 @@ from it into `us-tax-ui`, port **per-change, never by copying files**. Guardrail
   flattened 2026-07-09; don't reintroduce them.
 
 
+## Access-code redemption / paid-access entitlement — 2026-07-09
+
+- A redeemed Payment access code sets **`app_user.has_paid_access`** (an
+  account-level entitlement, V97). Redemption goes through
+  `AccessCodeRedemptionService.redeem(uid, code)`, which claims the code
+  **race-safely** via a conditional bulk update (`... where id=? and
+  status='unused'`) — never a read-then-write. A future paywall reads the flag.
+- **`has_paid_access` MUST be reset by any "wipe all user data" path.**
+  `UserDataBulkDelete.resetAllForUid` clears it explicitly because `app_user` is
+  the anchor row it never deletes — forget this and a redeemed code leaves the
+  shared e2e account permanently unlocked, contaminating later tests. This is a
+  new variant of the register-in-N-places hazard: entitlements on `app_user`
+  (not a child cascade table) need manual reset.
+- Codes are minted ONLY by the **dev-only** `POST /api/dev/access-codes/seed`
+  (`@IfBuildProfile("dev")`, compiled out of prod). There is intentionally no
+  production code-creation API yet — that is the deferred admin-tooling item.
+  E2e seeds via this endpoint. `access_code` is NOT in
+  `PARENT_TABLES_UID_CASCADE` (codes persist for audit; FK is ON DELETE SET NULL).
+
+
 
 
 

@@ -1,6 +1,11 @@
 ﻿# History
 
 
+## 2026-07-09 — Medicaid waiver: soft duplicate-entry advisory (EIC/ACTC over-claim guard)
+
+Implemented the deferred "cross-entry duplicate detection" item. With multiple Medicaid-waiver payer rows, a user could enter the same real-world payment twice; the AGI impact is neutralized by the Schedule 1 line 8s offset, but a duplicated `qualifiedNotInW2` inflates the earned-income basis used for the EIC / Additional Child Tax Credit. Added `entryLooksDuplicated(index)` to both `form-medicaid-waiver-{taxpayer,spouse}.component.ts`: a row is flagged when another row shares the same payer (name case-insensitively, OR EIN) AND the same positive `qualifiedNotice2014_7Amount`. A dismissible yellow `.advisory-hint.warning` renders per matching row (reusing the existing class — no new CSS), asking the user to verify it isn't a double-entry; the copy explicitly notes two genuinely-separate equal payments from one payer are fine (addressing the deferral's false-positive concern). Pure UI — no backend/compute/migration change. e2e added to `medicaid-waiver.spec.ts` (fill two matching rows → advisory visible); full spec 54/54. ★ E2E note: the multi-payer add flow needed an explicit `waitFor` on the second row's `#payerName1` before filling (an API-save-then-open shortcut failed to render the form). Closes the outstanding item.
+
+
 ## 2026-07-09 — Notice 2014-7 home-sharing: advisory escalated to a blocking flag (with exception escape-hatch)
 
 Implemented the deferred "escalate advisory to blocking" item for the Medicaid-waiver Notice 2014-7 home-sharing rule. The difficulty-of-care exclusion applies only to payments for care provided in the caregiver's own home shared with the care recipient; previously a caregiver who answered No to living with the recipient yet entered qualified amounts and elected to include them in earned income only got a soft yellow advisory and could file anyway.

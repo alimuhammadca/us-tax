@@ -1043,7 +1043,11 @@ This would prevent filing returns with qualified amounts that contradict the hom
 
 ---
 
-## UI Heuristic for Cross-Entry Duplicate Detection (Medicaid Waiver) — Deferred 2026-05-06
+## ~~UI Heuristic for Cross-Entry Duplicate Detection (Medicaid Waiver) — Deferred 2026-05-06~~ ✅ **RESOLVED 2026-07-09**
+
+**Implemented 2026-07-09.** `entryLooksDuplicated(index)` on both medicaid-waiver components flags a row when another row shares the same payer (name — case-insensitive/trimmed — OR EIN) AND the same positive `qualifiedNotice2014_7Amount`. A dismissible yellow `.advisory-hint.warning` renders per matching row asking the user to verify it isn't a double-entry (which would inflate the EIC/ACTC earned-income basis). Soft advisory only — never blocks, and the copy notes that two genuinely-separate equal payments from one payer are fine (addressing the false-positive concern). Pure UI, no backend/compute change. e2e added (two matching rows → advisory visible); full medicaid-waiver spec 54/54. Docs: `history.md` 2026-07-09.
+
+(original deferral note follows for reference)
 
 When the user has multiple Medicaid waiver entries, they could mis-enter the same real-world payment as separate entries. Backend math is robust (line 8s offset cancels the inflation in AGI per the §8.6 invariant in `lines/1d.md`), BUT earned-income basis for EIC/ACTC could be over-claimed by the duplicate amount because the duplicated `qualifiedNotInW2` flows through line 1d → line 1z → earned income.
 

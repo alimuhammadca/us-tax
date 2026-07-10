@@ -1,6 +1,11 @@
 ﻿# History
 
 
+## 2026-07-10 — Doc-hygiene: HOH-split optimizer item was stale (feature complete since 2026-06-20)
+
+Verified and closed the outstanding "Separate-Filing Optimizer — HOH/HOH and HOH/MFS splits" item, whose text still read "Phase A in progress / Phases B–E pending." The feature actually shipped 2026-06-20 (Phases A–F, design pivoted to a user-declared per-tab HoH/MFS election rather than an optimizer-derived comparison). Confirmed against current code: `ConsideredUnmarriedEligibilityService`, `MfsFormScoper.overrideFilingStatusToSeparate`, `TaxReturnComputeService.validateConsideredUnmarriedForHoh` + the three HOH_* blocking flags, the paired `form-filing-status-spouse` form, V79/V80 migrations, and `e2e/tests/hoh-split-filing.spec.ts`. `ConsideredUnmarriedEligibilityServiceTest` (18) + `Phase9OptimizerTest` (13) green; full backend suite 1432/1432. No code change. Non-blocking follow-up noted: the `tax_return_v2.filingStatus` row label still displays "MFS" for an HoH leg (cosmetic; compute uses the scoped status).
+
+
 ## 2026-07-10 — Form 8863 AOTC worksheet lines 27–29 surfaced (Gap 8863-5)
 
 Surfaced the per-student AOTC worksheet lines 27/28/29 (line 28 = line 27 − $2,000 floored at 0; line 29 = line 28 × 25%). `computeForm8863()` already computed these as locals feeding line 30 — only the model/preview surfacing was missing. Added `perStudentLine27/28/29` to `Form8863Student` + compute setters + preview mappings + V104 persistence. Also fixed a pre-existing preview inconsistency where line 27 rendered line 30's value (the AOTC total) instead of the true expenses — now line 27 shows the real capped-$4,000 expenses so lines 27–30 are self-consistent on the printed form. No intake change; no filed-return impact. 1 unit test + extended e2e. Backend 1432/1432; UI builds. This completes the Form 8863 view-shape cluster (8863-1 through 8863-5; only the structured address decomposition + attendance dates remain, deferred for needing new intake fields).

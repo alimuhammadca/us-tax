@@ -3456,9 +3456,21 @@ Added: 2026-06-14 (per `XLS/Computations/38.md` Gap H closure).
 
 ---
 
-## Separate-Filing Optimizer — HOH/HOH and HOH/MFS splits (LARGE feature; multi-phase; in progress)
+## ~~Separate-Filing Optimizer — HOH/HOH and HOH/MFS splits (LARGE feature; multi-phase)~~ ✅ **RESOLVED 2026-06-20 (verified 2026-07-10; item was stale)**
 
 Added: 2026-06-20 (during MFS-spouse migration Form #3 = Filing status).
+
+**Resolved 2026-06-20; verified against current code 2026-07-10.** ★ The item's premise was superseded: the design **pivoted from "optimizer-derived" to "user-declared per-tab election"** (design doc §0) — the family head selects MFS/HoH and the spouse tab elects `{MFS, HoH}` via a paired `filing-status-spouse` form; the optimizer is now always advisory and materializes nothing. Phases A–F are all **DONE & GREEN**, confirmed present in current code:
+- **A** — V79 kept-up-home inputs + `ConsideredUnmarriedEligibilityService` (pure POJO; `evaluate`, `hohElectionProblems`, `bothEligibleWithDistinctPersons`, `HohFlag`).
+- **B** — paired `form-filing-status-spouse.component.ts` + V80 (spouse_filing_status / spouse_qualifying_person_name / head_hoh_married_lived_apart) + MFJ-locks-spouse gating + `{MFS,HoH}` subset + Tier-1 advisory.
+- **C** — `MfsFormScoper.overrideFilingStatusToSeparate(side, electedStatus, …)` (`MfsFormScoper.java:700`, called for head leg :316 + spouse leg :628); each leg MFS or HoH; HoH leg carries the qualifying person and names no spouse.
+- **D** — dependents `claimedByMfs` broadened to married-HoH; MFS credit gates key on "Married filing separately" so a HoH leg re-enables EIC/8863/2441.
+- **E** — Tier-2 blocking-overrideable validation `TaxReturnComputeService.validateConsideredUnmarriedForHoh` (`:458`, called `:835`) → `HOH_HEAD_NOT_CONSIDERED_UNMARRIED` / `HOH_SPOUSE_NOT_CONSIDERED_UNMARRIED` / `HOH_DUPLICATE_QUALIFYING_PERSON` (blocking, NOT in `NonOverrideableFlags.CODES`).
+- **F** — `e2e/tests/hoh-split-filing.spec.ts`, 5/5 with IRS-hand-computed 2025 pins.
+
+Verification 2026-07-10: all artifacts present; `ConsideredUnmarriedEligibilityServiceTest` (18) + `Phase9OptimizerTest` (13) green; full backend suite 1432/1432. **Non-blocking follow-up (display-only):** `tax_return_v2.filingStatus` row label still reads "MFS" for an HoH leg — compute uses the scoped status, so this is cosmetic only.
+
+(original — stale "in progress" — note follows for reference)
 
 ### Gap HOH-Split — optimizer only models the separate alternative as MFS + MFS
 

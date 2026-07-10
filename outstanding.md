@@ -3274,9 +3274,32 @@ The migration preserved the existing data coverage (i.e., the same set of fields
 
   **Acceptance criteria:** add five boolean fields to `Form4972View` (`partIQuestion2Rollover`, `partIQuestion3BeneficiaryOfParticipantBornBefore1936`, `partIQuestion4FivePriorYearsParticipant`, `partIQuestion5UsedAfter1986`, `partIQuestion6NoTaxableDistribution`). Add five Yes/No radio questions to the lump-sum-distribution intake form. Wire each through the compute service so the per-person/per-distribution Form 4972 carries the answers. The buildSemanticValues maps in `form-tax-return-4972.component.ts` then populate all 10 checkbox slots. Same shape and severity as the analogous 8863 institution-disclosure gap below.
 
-#### Gap 4972-2 — Part II lines 17–24 (8 intermediate amount fields) ⚠️ LOW — **DEFERRED: not a clean add; needs a Part III box-mapping audit first (investigated 2026-07-09)**
+#### ~~Gap 4972-2 — Part II lines 17–24 (8 intermediate amount fields) ⚠️ LOW~~ ✅ **RESOLVED 2026-07-09 (full Part III box audit + fix)**
 
-**Investigated 2026-07-09 — NOT the "single backend write" this item claims.** `computeForm4972()` does produce all the intermediate values as locals (line8–line29), but the model stores several under **mismatched field names** and the preview places them at the **wrong IRS-line boxes**: `mda` (IRS line 16) is stored in `partIII_line14Mda`, local `line17` in `partIII_line15Reduced`, and local `line23` in `partIII_line16OneTenth`, which the preview shows at `part2_line_09/10/11` (= IRS 14/15/16 per the "+5" rule). Consequently **`line23`'s value is already displayed at the IRS-16 box** — adding the correct part2_line_19 (IRS-23) mapping would render the same number in two boxes. So closing this gap first requires an audit + fix of the existing Part III `part2_line_09..11` placement against `f4972_field_map_semantic.csv` coordinates + the 2025 PDF — a real correctness pass, not a cosmetic add. **Payoff is zero** (IRS: "keep these worksheet lines for your records"; no effect on the filed return), and a wrong-box mapping would be worse than the current honest blanks. Deferred as not-worth-the-risk until someone does the coordinate audit. The verified-correct anchors are `part2_line_21`→IRS 25 (`line25`) and `part2_line_24`→IRS 28 (`line28`), which flow to line 30 → 1040 line 16.
+**Resolved 2026-07-09.** The item under-scoped this: `computeForm4972()` produces all locals (line8–line29), but the model stored 3 under mismatched names AND the preview placed them at wrong boxes (`line23`'s value was already showing at the IRS-16 box). Fixed via a full box↔IRS-line audit from the `f4972_field_map_semantic.csv` coordinates + 3 verified anchors (part2_line_21→IRS25, part2_line_24→IRS28, part2_line_26→IRS30). The **box↔line table** (for future reference):
+
+| Box | IRS | source | note |
+|---|---|---|---|
+| part2_line_03..08 | 8–13 | partIII_line8..13 | already correct |
+| part2_line_09 | 14 | partIII_line14ExcessOver20k (NEW) | was showing MDA/IRS16 |
+| part2_line_10 | 15 | partIII_line15TwentyPct (NEW) | was showing IRS17 |
+| part2_line_11 | 16 | partIII_line14Mda (misnamed, holds MDA) | was showing IRS23 |
+| part2_line_12 | 17 | partIII_line15Reduced (misnamed, holds L17) | was blank |
+| part2_line_13 | 18 | — (federal estate tax, OOS) | blank |
+| part2_line_14 | 19 | partIII_line19Total (NEW) | was blank |
+| part2_line_15/16 | 20 | partIII_line20AnnuityRatio (NEW, decimal) | integer + fractional boxes |
+| part2_line_17 | 21 | partIII_line21MdaApportioned (NEW) | annuity |
+| part2_line_18 | 22 | partIII_line22AnnuityBalance (NEW) | annuity |
+| part2_line_19 | 23 | partIII_line16OneTenth (misnamed, holds L23) | was blank |
+| part2_line_20 | 24 | partIII_line24TaxOnLine23 (NEW) | extracted inline tax |
+| part2_line_21 | 25 | partIII_line25TaxOnLine13 | anchor ✓ |
+| part2_line_22 | 26 | partIII_line26TenPctLine22 (NEW) | annuity |
+| part2_line_23 | 27 | partIII_line27TaxOnLine26 (NEW) | annuity, extracted inline tax |
+| part2_line_24 | 28 | partIII_line28TaxOnLine16 | anchor ✓ |
+| part2_line_25 | 29 | partIII_line29TenYearTax | was blank (model had it) |
+| part2_line_26 | 30 | line30Total | anchor ✓ |
+
+Implementation: 9 new correctly-named `Form4972` fields + compute setters (extracting the two inline `Form4972TaxTable.computeTax` calls into `line24`/`line27` — **line25/28 byte-identical**, so the filed-return tax is unchanged), 9 persisted columns (V101, incl. reload fidelity), preview re-points + adds all mappings. The 3 historical-misnomer fields (`line14Mda`=IRS16, `line15Reduced`=IRS17, `line16OneTenth`=IRS23) kept (documented) to avoid a rename migration; preview now maps them to the correct boxes. Zero filed-return impact confirmed (existing 4972 tests unchanged). 1 unit test (`form4972_partIII_intermediateLinesMappedCorrectly_withAnnuity`, hand-computed annuity worksheet) + 1 e2e (asserts each box). Backend 1429/1429; UI builds.
 
 (original deferral note follows for reference)
 

@@ -3311,7 +3311,11 @@ Implementation: 9 new correctly-named `Form4972` fields + compute setters (extra
 
   **Acceptance criteria:** add eight `BigDecimal` fields to `Form4972View` (`partII_line17` through `partII_line24`) and emit them from the existing `computeForm4972()` worksheet logic. The semantic CSV names are already mapped; closing the gap is a single backend write.
 
-#### Gap 4972-3 — Part III worksheet (page 3) lines 1–18 ⚠️ LOW
+#### Gap 4972-3 — Part III worksheet (page 3) lines 1–18 ⚠️ LOW — **DEFERRED: item mis-specified; requires 3 unbuilt worksheets, not a view-shape fill (investigated 2026-07-10)**
+
+**Investigated 2026-07-10 — the item's premise is wrong on two counts.** Page 3 of the 2025 Form 4972 is NOT a "tax-rate worksheet" (the line 25/28 tax is a direct 1986 rate-schedule lookup in `Form4972TaxTable`, no worksheet). Reading the actual PDF page 3, the 18 `part3_worksheet_line_*` boxes are **three separate "keep for your records" worksheets**: the multiple-recipient **Step 5** worksheet (A–C → line 29), the **NUA Worksheet** (A–G, net unrealized appreciation, with a decimal C sub-box at boxes 06/07), and the **Death Benefit Worksheet** (A–F, pre-Aug-21-1996 deaths, decimal C sub-box at boxes 14/15). ★ The app **computes none of them** — it takes their OUTPUTS as direct user inputs (`deathBenefitExclusion` → line 9, box-6 NUA, `multipleRecipientPct` applied as a plain factor, NOT via Step 5). So there is nothing to "emit from existing logic"; filling these boxes would require **implementing all three IRS worksheets + new intake fields** for their inputs (1099-R box 3/6, per-recipient percentages, pre-1996 death-benefit amounts) — a real feature for rare edge cases, with **zero filed-return impact** (page 3 is never filed). A partial fill (e.g. surfacing only Death-Benefit line F from the existing line-9 input) would misleadingly show a worksheet "result" without its derivation, worse than an honest blank. **Recommendation: leave deferred / close as won't-do** unless the NUA / death-benefit / multiple-recipient worksheets are wanted as a standalone feature.
+
+(original — mis-stated — note follows)
 
 - **[Form 4972 / Backend view shape / LOW / DEFERRED]** Page 3 of the 2025 Form 4972 is a one-page tax-rate worksheet that the IRS uses to compute the line 25 / line 28 tax amounts. The `Form4972View` does not surface any of the 18 intermediate worksheet inputs:
 

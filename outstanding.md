@@ -2020,25 +2020,26 @@ identically. Two new unit tests: `schedule8812_worksheetA_subtractsEducationCred
 
 ---
 
-### Priority 2 — Form 4952 (Investment Interest Expense)
+### Priority 2 — Form 4952 (Investment Interest Expense) — **PARKED 2026-07-10: compute DONE; only the pure-HTML Tax Return preview remains**
 
 **Spec:** `C:\us-tax\lines\4952.md`
-**Current state:** Intake form (`form-interest-expense.component.ts`) exists; personal form
-`interest-expense-taxpayer` / `interest-expense-spouse` accepted by `PersonalResource`.
-`Form4952.java` output model exists. `TaxReturnComputation` + `TaxReturnDataService` already
-carry `form4952`. No compute logic and no Tax Return UI component exist.
 
-**What is needed:**
-- `computeForm4952()` in `TaxReturnComputeService`: reads personal form, computes Part I
-  (investment interest expense, net investment income, deductible amount, carryover), wires
-  deductible amount to Schedule A line 9 (`investmentInterestExpense`) and carries over the
-  disallowed amount to `Form4952.carryover`.
-- Register compute call in `prepare()` after Schedule A is built.
-- Angular `form-tax-return-4952.component.ts` Tax Return display; conditional sidebar entry
-  under Tax Return when `form4952 != null`.
-- YAML `C:\us-tax\yamls\4952-investment-interest-expense-taxpayer.yaml` (if not already complete).
-- Unit tests + E2E spec `line4952-investment-interest-expense.spec.ts`.
-- AMT recomputation path (`requiresAmtInvestmentInterestRecompute`) deferred to Form 6251 line 2c.
+**Current state (re-verified 2026-07-10 — the original "no compute logic" note was STALE):** Form 4952 is fully implemented and wired end-to-end **except** for a standalone Tax Return preview page:
+- ✅ **Compute** — `computeForm4952()` (`TaxReturnComputeService.java:24218`), wired into `prepare()`, with `mergeForm4952Inputs` / `needsForm4952` / `isMfjForm4952` (honors the §163(d) MFJ input-merge rule).
+- ✅ **Schedule A wiring** — `patchScheduleAInvestmentInterest()` sets line 9; the amount already renders on the Schedule A preview (`form-tax-return-schedulea.component.ts:233` → `line9_investment_interest_form_4952`).
+- ✅ **Persistence** — `Form4952Output` + `OutForm4952` entity (`out_form_4952`) + `Form4952OutputMapper`; carried on `TaxReturnComputation` + loaded by `TaxReturnDataService`.
+- ✅ **MFS scoping** — `MfsFormScoper` + `MfsScheduleAAllocator`.
+- ✅ **Intake** — `form-interest-expense.component.ts` + `PfInvestmentInterestExpense` / `InvestmentInterestExpenseMapper`; sidebar entry "Interest expense" under Deductions.
+- ✅ **Tests** — 9 refs in `TaxReturnComputeServiceTest`, plus `PersonalResourceTest`, `Phase7bComputeScopingTest`, and e2e `line4952-interest-expense.spec.ts`.
+- ✅ **Spec + YAML** — `lines/4952.md`, `yamls/4952-investment-interest-expense-deduction.yaml`.
+- ✅ **Semantic PDF assets (added 2026-07-10)** — canonical `pdfs/f4952_field_map_semantic.csv` + `pdfs/f4952_semantic_labels.pdf` generated with human-readable semantic field names (17 fields; map at `us-tax-be/scripts/semantic-maps/f4952.map.json`, generated via `generate-semantic-from-map.js`). This replaces the low-quality auto-named stub that previously existed only in `us-tax-ui/public/irs/` (names like `page1_0_f1_01_0`).
+
+**Remaining work (PARKED — revisit when building the pure-HTML preview):**
+- Build `form-tax-return-4952.component.ts` (+ html/scss) as a pure-HTML/CSS Tax Return preview, following the established pattern (imperative element renderer + `buildSemanticValues` keyed by the semantic field names now in the CSV).
+- Generate the renderer asset `us-tax-ui/public/irs/f4952_elements.json` (via the `generate-f<form>-elements.js` recipe) and **publish the new semantic CSV + labels PDF** over the stale UI copy so `public/irs/` matches `pdfs/`.
+- Add a conditional Tax Return **sidebar** entry that shows the preview when `form4952 != null`.
+- **Note:** this is a **record-keeping page only** — no data/compute gap. Form 4952's numbers already surface on the Schedule A preview (line 9); the standalone preview just reproduces the 4952 worksheet (Part I/II/III) for the user's records.
+- AMT recomputation path (`requiresAmtInvestmentInterestRecompute`) remains deferred to Form 6251 line 2c (out of scope per the Gap 2 close — no AMT preference compute exists).
 
 ---
 
@@ -2141,26 +2142,22 @@ Credit Limit Worksheet B implemented in `applyAdoptionCredit()`. Call site moved
 
 ---
 
-### Priority 4 — Form 8615 Full Parent-Rate Computation (Kiddie Tax)
+### Priority 4 — Form 8615 Full Parent-Rate Computation (Kiddie Tax) — **COMPUTE DONE 2026-07-10; display/persistence + QDCG paths deferred**
 
 **Spec:** `C:\us-tax\lines\8615.md`
-**Current state:** Line 16 conditionally routes through Form 8615 when `form8615` is present.
-The user manually enters `childFinalTaxLine18` (the result of the parent-rate computation).
-If null, the backend falls back to bracket method with a warning log.
 
-**What is needed (lines 9–13 of Form 8615):**
-- Lines 9–13 require the parent's taxable income, filing status, and qualified
-  dividends/capital-gains data. These must be read from the parent's return (a cross-return
-  lookup from the child's `kiddie-income-taxpayer` personal form which stores parent SSN/filing
-  status manually).
-- Compute line 9 (parent's taxable income + child's net unearned income), line 10 (tax on line 9
-  at parent's rate), line 11 (tax on parent's taxable income alone), line 12 (subtract), line 13
-  (allocate child's share), store in `Form8615` output model, wire to child's line 16.
-- Eliminate the manual `childFinalTaxLine18` field once the compute is live (or keep as override).
+**Done 2026-07-10 — the parent-rate computation is live in the legacy `prepare()` path.** The child's Form 1040 line 16 now **auto-computes** the kiddie tax; the manual `childFinalTaxLine18` is no longer required (kept as an explicit override).
+- `Form8615.java` output model (lines 1–18: Part I net unearned income, Part II tentative tax at parent's rate incl. 12a/12b sibling allocation, Part III child's tax).
+- `computeForm8615(kiddie, childTaxableIncome, childStatus, uid)` in `TaxReturnComputeService` computes all 18 lines from the `kiddie-income-taxpayer` intake (child line 1/2, parent line 6, sibling line 7, parent filing status) + the child's own computed line 15 (line 4) and filing status. Line 10 (tax on the parent's income alone) is **computed** via `computeTaxBracket`, not entered — so no parent-return load is required in the legacy path. New `normalizeKiddieFilingStatus` handles the intake's hyphenated status values.
+- `computeLine16` branch 3 priority: manual `childFinalTaxLine18` override → auto-computed line 18 → defensive bracket fallback.
+- 2 unit tests (`line16Form8615AutoComputesKiddieTaxAtParentRate` — child $20k wages + $20k declared unearned + parent $200k Single → line 18 = $1,360, i.e. the $4,250 net unearned income taxed at the parent's 32% rate not the child's 10%; `line16Form8615ManualOverrideWins`). Full `TaxReturnComputeServiceTest` 965/965.
 
-**Blocked by:** Cross-return data access — `kiddie-income-taxpayer` stores the parent SSN; the
-backend would need to load the parent's computed `form1040` output from Firestore to read
-`taxableIncome` and `regularTax`. Design decision required before implementation.
+**Blocker was stale.** The "cross-return data access — design decision required" note no longer applies: `KiddieTaxParentReader` (in `multireturn/`, exposes `getParentTaxableIncome`) was built for the flag-gated multi-return path, and the legacy path uses the manual `parentTaxableIncomeLine6` field, so no Firestore parent-load is needed to make the compute correct.
+
+**Remaining follow-ups (deferred):**
+- **Display + persistence.** `Form8615` is computed but not yet threaded into the `TaxReturnComputation` record (65-field positional record with 5 construction sites incl. 3 tests + `TaxReturnDataService` — the known wide-record hazard) nor persisted (`OutForm8615` entity + mapper + migration). Wire these so the existing `form-tax-return-8615` preview renders the computed lines and they survive a GET reload. Until then the breakdown is compute-only (the line-16 tax itself persists via Form 1040).
+- **Preferential-rate paths.** Lines 9/15/17 use the ordinary Tax Table / Tax Computation Worksheet. The QDCG / Schedule D Tax Worksheet paths (when the child or parent has qualified dividends or net capital gain) are deferred — the manual `childFinalTaxLine18` override covers those cases.
+- **Cross-return auto-fill.** In the multi-return path, `parentTaxableIncomeLine6` could be auto-populated from `KiddieTaxParentReader` instead of manual entry (extend the reader to also expose the parent's tax + filing status).
 
 ---
 

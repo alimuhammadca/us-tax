@@ -1,6 +1,11 @@
 ﻿# History
 
 
+## 2026-07-09 — Reload-persistence for the Form 8863 + Form 4972 checkbox booleans (V100)
+
+Hardened the Form 8863 Part III (4 line-22 1098-T disclosures + 4 line 23-26 disqualifiers) and Form 4972 Part I (Q2-Q5) checkbox answers just shipped: they were compute-view only, so they rendered from the POST /compute response but went blank after a page reload (which re-fetches via GET /api/tax-return). V100 adds the 8 + 4 boolean columns to `out_form_8863_student` / `out_form_4972` and maps them both directions in `Form8863OutputMapper` + `AbstractForm4972OutputMapper`, so the answers now round-trip through GET. Lock-in e2e `form-checkbox-reload-persistence.spec.ts` computes → reloads → asserts the checkboxes still render (2/2). Full backend suite 1428/1428. Also investigated Gap 4972-2 (Part II worksheet lines 17-24) and deferred it: it's not the "single backend write" the item claims — the existing Part III box↔IRS-line mapping has inconsistencies (e.g. `line23` already shown at the IRS-16 box), so it needs a coordinate audit first, and the payoff is zero (keep-for-records lines, no filed-return effect).
+
+
 ## 2026-07-09 — Form 4972 Part I eligibility questions 2–5 surfaced on the preview (Gap 4972-1)
 
 Surfaced the Form 4972 Part I question 2–5 Yes/No answers on the printed/previewed form (they rendered blank before). The answers were already collected as intake radios and already read by `computeForm4972()` for the eligibility gate, so no intake change was needed — the gap was only the view-shape handoff: 4 `Boolean` fields on `Form4972`, set from the literal intake answers after `setEligible`, and `part1_question_02..05_yes/no` mapped in `form-tax-return-4972.component.ts`. Compute-view only (not persisted, same pattern as Gap 8863-1). Q1 already came from the aggregate `eligible` verdict. Question 6 is deferred as a larger follow-up — it's not collected anywhere and would need a new intake radio plus an eligibility-logic change (Q6=No required to qualify), not just a display fill. 1 unit test + extended `form4972-8863-preview-render.spec.ts`. Compute suite 956/956; UI builds.

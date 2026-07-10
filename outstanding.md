@@ -3344,7 +3344,11 @@ Implementation: 9 new correctly-named `Form4972` fields + compute setters (extra
 
   **Acceptance criteria:** add four boolean fields per institution to `Form8863StudentView` (or to a nested `EducationalInstitutionView` carried in a `List<EducationalInstitutionView>`): `received1098TFor2025`, `received1098TFor2024WithBox7Checked` × (institution1 + institution2). Add intake fields to the education-credits personal form. Wire through `computeForm8863()`. The buildSemanticValues map in `form-tax-return-8863.component.ts` then populates all 8 checkbox slots. **Highest-severity gap of all six identified — IRS audit risk on every AOTC/LLC claim.**
 
-#### Gap 8863-2 — Per-institution structured address (line 22a/22b address cells + EIN + attendance dates) ⚠️ MEDIUM
+#### Gap 8863-2 — Per-institution structured address (line 22a/22b address cells + EIN + attendance dates) ⚠️ MEDIUM — **EIN + 2nd-institution identity RESOLVED 2026-07-10; structured decomposition deferred**
+
+**Resolved 2026-07-10 (the achievable, high-value, no-intake-change part).** ★ Like Gap 8863-1, the EIN (`institution1EinLine22` / `institution2EinLine22`) and the second institution's name/address were **already collected** on the education-credits intake form — they just weren't surfaced. A blank EIN on line 22 is the actual IRS audit trigger this item is about, so that's the value. Added `institution1Ein`, `institution2Name`, `institution2Address`, `institution2Ein` to `Form8863Student` + `computeForm8863()` wiring + preview mappings (`part3_line22a_institution_ein`, `part3_line22b_institution_name_line1` / `_address_street` / `_institution_ein`) + persisted via V102 (`OutForm8863Student` + `Form8863OutputMapper`) so they survive a reload. 1 unit test (`form8863_institutionEinAndSecondInstitution_carriedToStudentView`) + 1 e2e. Backend 1430/1430; UI builds. **Still deferred (needs new intake fields — a visual change):** the structured city / state / ZIP / foreign country-province-postal **decomposition** of the address (currently one combined freeform field, which the IRS accepts in the street cell — so lower value) and the **attendance-dates** field (not collected at all). Those require adding structured intake fields to the education-credits form.
+
+(original note follows for reference)
 
 - **[Form 8863 / Backend view shape + intake / MEDIUM / DEFERRED]** Form 8863 Part III line 22 requires a STRUCTURED institution address on the printed return — city, state, ZIP, foreign country / province / postal code, plus the institution's federal Employer Identification Number (EIN) and the student's attendance dates. The current `Form8863StudentView` stores `institution1Name` as a single freeform string and `institution1Address` as a single freeform string mapped to the street cell; the remaining cells stay blank.
 
@@ -3361,7 +3365,11 @@ Implementation: 9 new correctly-named `Form4972` fields + compute setters (extra
 
   **Acceptance criteria:** restructure `Form8863StudentView` to carry a `List<EducationalInstitutionView>` where each `EducationalInstitutionView` has the structured fields: `name`, `nameLine2`, `street`, `city`, `state`, `zip`, `foreignCountry`, `foreignProvince`, `foreignPostalCode`, `ein`, `attendanceDates`. Update the education-credits intake to collect structured address + EIN per institution. Update the buildSemanticValues map in `form-tax-return-8863.component.ts` to populate all 9 cells per institution. Closes the entire 22a + 22b structured-address surface.
 
-#### Gap 8863-3 — Entire second institution (line 22b) is blank ⚠️ LOW for one-institution students; HIGH for transfers
+#### Gap 8863-3 — Entire second institution (line 22b) is blank ⚠️ LOW for one-institution students; HIGH for transfers — **mostly RESOLVED 2026-07-10**
+
+**Mostly resolved 2026-07-10** (with Gap 8863-2 + 8863-1). Line 22b now renders the second institution's **name, address, and EIN** (Gap 8863-2 work above) and its **four 1098-T disclosure checkboxes** (Gap 8863-1). All were already collected on the intake form and are now surfaced + persisted (V102). Remaining: only the structured city/state/ZIP/foreign decomposition + attendance dates (shared with Gap 8863-2's deferred part — needs new structured intake fields).
+
+(original note follows for reference)
 
 - **[Form 8863 / Backend view shape + intake / LOW (common case) / HIGH (transfers) / DEFERRED]** The `Form8863StudentView` stores only `institution1Name` + `institution1Address` (singular). Students who transferred mid-year attend two institutions and need both line 22a AND line 22b populated. The semantic CSV expects 11 fields for 22b (same shape as 22a):
 

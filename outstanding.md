@@ -3290,7 +3290,11 @@ The migration preserved the existing data coverage (i.e., the same set of fields
 
 ### Form 8863 — 46 of 77 IRS fields populated; 31 blank
 
-#### Gap 8863-1 — Per-institution 1098-T disclosure checkboxes (lines 22a/22b questions b + c) ⚠️ HIGH
+#### ~~Gap 8863-1 — Per-institution 1098-T disclosure checkboxes (lines 22a/22b questions b + c) ⚠️ HIGH~~ ✅ **RESOLVED 2026-07-09**
+
+**Resolved 2026-07-09.** ★ The item's premise was partly stale: the four disclosure answers were **already collected** on the education-credits intake form (`institution1Received1098T`, `institution1PriorYear1098TBox7Checked`, and the institution-2 pair) and already persisted by `EducationCreditsMapper` — no intake-form change, no Form 8863 layout change, and no 1098-T/statement work were needed (the line-22 checkboxes are the taxpayer's own attestations, and the 8 checkbox cells already exist on the IRS f8863 template). The gap was purely the backend→preview handoff: added 4 `Boolean` fields to `Form8863Student`, set them in `computeForm8863()` (next to the existing line 23-26 disqualifier answers), added the 4 fields to the frontend `Form8863StudentView`, and mapped the 8 `part3_line22a/22b_question_b/c_1098t_*` checkbox slots in `form-tax-return-8863.component.ts`. Matches the existing line 23-26 pattern (compute-view carried, no output-entity persistence). 1 unit test (`form8863_line22Disclosures_carriedToStudentView`) + 1 e2e (`form4972-8863-preview-render.spec.ts` — mixed Yes/No across both institutions). Compute suite 955/955; UI builds. ★ **Known shared caveat (follow-up):** these disclosure booleans, like the line 23-26 booleans, are compute-only — they render from the in-memory `computation()` (POST /compute response) but are NOT in `OutForm8863Student`, so they're blank after a page reload (which reloads via `GET /api/tax-return`). Persisting the whole Part III boolean set (disclosure + line 23-26) through the output entity/mapper is a separate small follow-up if reload-fidelity is wanted.
+
+(original deferral note follows for reference)
 
 - **[Form 8863 / Backend view shape + intake / HIGH / DEFERRED]** Form 8863 Part III line 22 requires four Yes/No disclosure checkboxes PER institution to substantiate the AOTC/LLC claim. The `Form8863StudentView` does not carry these per-institution flags. The semantic CSV expects:
 
@@ -3379,6 +3383,8 @@ The migration preserved the existing data coverage (i.e., the same set of fields
 Added: 2026-06-14 (per `XLS/Computations/38.md` Gap H closure).
 
 ### Gap 2210-Rate — `F2210_PENALTY_ANNUAL_RATE` requires yearly refresh from the IRS Revenue Rulings
+
+> **Verified 2026-07-09 — no action for TY2025.** `F2210_PENALTY_ANNUAL_RATE` = `new BigDecimal("0.07")` (`ReferenceData.java:580`), correct for the app's current tax year (2025), pinned by `TaxReturnComputeServiceTest.form2210_fires_when_balance_due_over_1000_and_safe_harbor_missed`. This is a **future recurring task**: perform the steps below only when preparing to deploy for tax year 2026 (the Q1-2026 Revenue Ruling publishes late 2025). Do NOT change the constant while the app is on TY2025.
 
 - **[Form 2210 / Backend reference data / MEDIUM / RECURRING ANNUAL TASK]** The Internal Revenue Service sets the underpayment interest rate quarterly via Revenue Ruling per Internal Revenue Code §6621. The rate equals the federal short-term rate plus 3 percentage points and changes when the federal short-term rate changes (typically every 1-2 quarters). For tax year 2025 the rate has been 7% all year (Revenue Ruling 2024-25 set the rate for Q1 2025; subsequent quarterly rulings confirmed 7% through Q4 2025). The constant `F2210_PENALTY_ANNUAL_RATE` at `src/main/java/com/ustax/microservices/ReferenceData.java:559` hardcodes this rate.
 

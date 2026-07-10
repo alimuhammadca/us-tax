@@ -1,6 +1,11 @@
 ﻿# History
 
 
+## 2026-07-09 — Form 8863 line-22 per-institution 1098-T disclosure checkboxes (Gap 8863-1)
+
+Closed Gap 8863-1 — the printed/previewed Form 8863 Part III line 22 was missing the four Yes/No 1098-T disclosure checkboxes per institution (an IRS audit trigger on every AOTC/LLC claim). The taxpayer's answers were already collected + persisted by the education-credits intake form; the gap was only the backend→preview handoff. Added 4 `Boolean` fields to `Form8863Student`, set them in `computeForm8863()`, added them to the frontend `Form8863StudentView`, and mapped the 8 `part3_line22a/22b_question_b/c_1098t_*` checkbox cells in `form-tax-return-8863.component.ts`. No change to the IRS Form 8863 layout (fills existing cells), no intake-form change (fields already there), no 1098-T/statement work (the line-22 questions are taxpayer attestations). Matches the existing line 23-26 compute-view pattern (not persisted to the output entity → renders from the compute response, blank after a reload; persisting the whole Part III boolean set is a noted follow-up). 1 unit test + 1 e2e (`form4972-8863-preview-render.spec.ts`). Compute suite 955/955; UI builds.
+
+
 ## 2026-07-09 — Doc-hygiene: Rule 7 combat-pay item was stale (already fixed 2026-04-22)
 
 Verified and closed the outstanding "Line 1g / Form 8919: UI Violations (Rule 7)" item's remaining bullet — the `electCombatPay` boolean rendered as a `p-select`. It was already converted to an explicit `p-radiobutton` Yes/No group in both `form-combat-pay-taxpayer.component.ts` and `form-combat-pay-spouse.component.ts` back in commit bf5dbc0 (2026-04-22), after the item was written; outstanding.md just never got updated. Confirmed neither component has any `p-select`/`p-dropdown`/`<select>`. No code change — marked resolved.

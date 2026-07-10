@@ -3382,7 +3382,11 @@ Implementation: 9 new correctly-named `Form4972` fields + compute setters (extra
 
   **Acceptance criteria:** subsumed by Gap 8863-2's restructure to `List<EducationalInstitutionView>` — once the view holds a list, populating the second institution is a matter of the intake form supporting "Add another institution" and the buildSemanticValues map iterating the list to populate `_line22a_*` for index 0 and `_line22b_*` for index 1.
 
-#### Gap 8863-4 — Line 7 nonresident-alien checkbox ⚠️ MEDIUM
+#### ~~Gap 8863-4 — Line 7 nonresident-alien checkbox ⚠️ MEDIUM~~ ✅ **RESOLVED 2026-07-10 (item mis-specified — it's the under-24 box)**
+
+**Resolved 2026-07-10.** ★ The item mis-identified the box. Reading the actual 2025 Form 8863 line 7: *"If you were under age 24 at the end of the year and meet the conditions..., you can't take the refundable American opportunity credit; skip line 8, enter the amount from line 7 on line 9, and check this box."* — it is the **"under age 24" refundable-AOTC disqualifier**, NOT a nonresident-alien box (NRA is handled separately by the §25A(g)(7) hard block that returns null). The CSV semantic field `part1_line_07_nonresident_alien_checkbox` is simply mis-named. Under-24 restriction is **already fully implemented** (`refundableAotcRestrictionApplies` collected on the intake form + compute zeroes line 8 at `computeForm8863`) — only the checkbox wasn't surfaced. Added `line7Under24RefundableRestriction` to `Form8863` + compute setter (set from the existing `restrictRefundable` boolean) + preview mapping to `part1_line_07_nonresident_alien_checkbox` (with a comment noting the misnomer) + persisted via V103 (`OutForm8863` + `Form8863OutputMapper`) so it survives a reload. No intake change (data already collected). 1 unit test (`form8863_line7Under24RestrictionSurfacedAsCheckbox`) + 1 e2e. Backend 1431/1431; UI builds.
+
+(original — mis-stated — note follows)
 
 - **[Form 8863 / Backend view shape + intake / MEDIUM / DEFERRED]** The 2025 Form 8863 line 7 has a "nonresident alien" checkbox before the line-7 amount cell. When the taxpayer (or spouse on MFJ) is a nonresident alien, the AOTC is generally disallowed — the IRS uses this checkbox to flag eligibility. The current `Form8863View` does not carry a nonresident-alien flag. The semantic CSV expects:
 

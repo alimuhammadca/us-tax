@@ -1,6 +1,11 @@
 ﻿# History
 
 
+## 2026-07-10 — Form 8863 line-7 under-24 refundable-AOTC checkbox (Gap 8863-4)
+
+Surfaced the Form 8863 line-7 checkbox. The item called it a "nonresident alien" box, but reading the actual 2025 form it's the "under age 24" refundable-AOTC disqualifier (the CSV field name `part1_line_07_nonresident_alien_checkbox` is mis-named; NRA is handled separately by a hard block). The under-24 restriction was already fully implemented (`refundableAotcRestrictionApplies` intake field + compute zeroing line 8) — only the checkbox wasn't surfaced. Added `line7Under24RefundableRestriction` to `Form8863`, set from the existing `restrictRefundable` boolean, mapped to the (mis-named) checkbox field, persisted via V103. No intake change. 1 unit test + 1 e2e. Backend 1431/1431; UI builds.
+
+
 ## 2026-07-10 — Form 8863 line-22 institution EIN + second institution (Gap 8863-2 / 8863-3)
 
 Surfaced the Form 8863 line-22 institution EIN (a blank EIN is an IRS audit trigger) and the second institution's name/address/EIN on the preview. Like Gap 8863-1, all were already collected on the education-credits intake form — only the backend→preview handoff was missing. Added `institution1Ein` + `institution2Name/Address/Ein` to `Form8863Student` + `computeForm8863()` + the preview mappings (`part3_line22a_institution_ein`, `part3_line22b_institution_name_line1`/`_address_street`/`_institution_ein`), persisted via V102 (`OutForm8863Student` + `Form8863OutputMapper`) so they survive a reload. Together with the 8863-1 checkboxes this makes line 22b (mid-year transfers) render fully. Deferred: the structured city/state/ZIP/foreign address decomposition + attendance dates — those need new structured intake fields (a visual change), and the combined address is already IRS-accepted in the street cell. 1 unit test + 1 e2e. Backend 1430/1430; UI builds.

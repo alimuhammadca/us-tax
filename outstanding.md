@@ -1933,13 +1933,13 @@ Part II adoption credit (refundable line 13 → Form 1040 line 30; nonrefundable
 
 ---
 
-## Line 1g / Form 8919: UI Violations (Rule 7 — Boolean Fields Must Use Radio Buttons)
+## ~~Line 1g / Form 8919: UI Violations (Rule 7 — Boolean Fields Must Use Radio Buttons)~~ ✅ **RESOLVED (both fields; verified 2026-07-09)**
 
 ~~**`received1099MiscOrNec`** in `form-uncollected-ss-medicare-taxpayer.component.ts` and the spouse variant~~ — **Fixed 2026-04-12**: replaced with radio buttons; `irsDeterminationDate` now conditionally rendered; help text, W-2 SS wages attribution banner, descriptive reason code labels, currency mode, and dynamic section titles also added.
 
-- **`electCombatPay`** in `form-combat-pay-taxpayer.component.ts` and the spouse variant — a boolean Yes/No field rendered as `p-select`. **Still outstanding.**
+~~**`electCombatPay`** in `form-combat-pay-taxpayer.component.ts` and the spouse variant — a boolean Yes/No field rendered as `p-select`.~~ — **Already fixed 2026-04-22 (commit bf5dbc0); item was stale.** Verified 2026-07-09: both `form-combat-pay-taxpayer.component.ts` and `form-combat-pay-spouse.component.ts` render `electCombatPay` as an explicit `p-radiobutton` Yes/No group (`RadioButtonModule` imported); neither component contains any `p-select`/`p-dropdown`/`<select>`. Rule 7 compliant. No code change needed.
 
-**Priority:** Medium (functional; visual/UX consistency violation)
+**Priority:** ~~Medium (functional; visual/UX consistency violation)~~ — DONE.
 
 ---
 

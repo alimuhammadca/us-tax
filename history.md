@@ -1,6 +1,11 @@
 ﻿# History
 
 
+## 2026-07-09 — Doc-hygiene: Rule 7 combat-pay item was stale (already fixed 2026-04-22)
+
+Verified and closed the outstanding "Line 1g / Form 8919: UI Violations (Rule 7)" item's remaining bullet — the `electCombatPay` boolean rendered as a `p-select`. It was already converted to an explicit `p-radiobutton` Yes/No group in both `form-combat-pay-taxpayer.component.ts` and `form-combat-pay-spouse.component.ts` back in commit bf5dbc0 (2026-04-22), after the item was written; outstanding.md just never got updated. Confirmed neither component has any `p-select`/`p-dropdown`/`<select>`. No code change — marked resolved.
+
+
 ## 2026-07-09 — Support Dashboard backend (list + triage support requests); admin UI parked
 
 Built the backend of the "Support Dashboard for supportRequests" item on the role foundation from the same day. `SupportAdminResource` (support-role guarded): `GET /api/admin/support-requests?status=<open|in_progress|resolved|all>` lists newest-first; `PATCH /api/admin/support-requests/{id}` sets status (validated) and/or a response note, stamping handled_by_uid + handled_at. New V99 handling columns on support_request (response_note, handled_by_uid, handled_at) + `SupportService.listRequests`/`updateRequest` + a shared toDto. Audit-logged. Tests: `SupportAdminResourceTest` (7) + `admin-support-dashboard.spec.ts` (3 e2e — 403 without role, full open→resolved lifecycle, filter/id/status validation). Backend 1426/1426. Per user request, the frontend admin surface (both the message-compose UI and the support-dashboard UI) is PARKED in outstanding.md for later — the open follow-up is a self-role-read endpoint (e.g. GET /api/roles/me) for the UI route guard, since only the dev-only grant/revoke exists today.

@@ -1,6 +1,11 @@
 ﻿# History
 
 
+## 2026-07-10 — Priority 7 (PDF Fill-Export Backlog) verify-and-closed — stale
+
+Closed the "PDF Fill-Export Backlog" with no code change: it predates the Tax-Return pure-HTML preview migration. All 11 listed forms (4868, 5695, 8396, 8801, 8834, 8859, 8863, 8888, 8911, 8912, Schedule R) now have pure-HTML `form-tax-return-*` preview components that fill the semantic fields via `buildSemanticValues`, so the "structured summary instead of filled PDF" concern no longer applies. Residual per-field blanks are tracked under the view-shape-gaps section, not here.
+
+
 ## 2026-07-10 — Form 8615 (kiddie tax) display/persistence wired (Priority 4 follow-up)
 
 Threaded the computed `Form8615` into the output pipeline so the parent-rate worksheet (lines 1–18) is carried on the computation and survives a GET reload. Added `Form8615` as the 66th field of the `TaxReturnComputation` record (before `flags`), updating all 5 positional construction sites (production assembly, `TaxReturnDataService` load path, `MicroserviceModelsTest`, 3× `TaxReturnResourceTest`) — the known wide-record hazard, handled by appending the field last. Moved `computeForm8615` into `prepare()` (computed before `computeLine16`, which now receives it as a parameter and sets `manualOverrideUsed`). Persistence: new `OutForm8615` entity (`out_form_8615`, V107) + `Form8615OutputMapper` (save/load all 18 lines + `manualOverrideUsed`), wired into `TaxReturnDataService` save + load orchestration (CDI-discovered, discriminator "default"). Healthy backend boot ran V107 and passed Hibernate schema validation (entity ↔ table match). `TaxReturnComputeServiceTest` 965/965 + `MicroserviceModelsTest`/`TaxReturnResourceTest` green. No UI change (presentation handled separately; no `form-tax-return-8615` preview component exists yet, though the f8615 semantic assets are present). Remaining Priority 4 follow-ups: QDCG/Schedule-D preferential-rate paths for lines 9/15/17 and multi-return auto-fill of the parent's taxable income.

@@ -2188,7 +2188,11 @@ Incomes section. The Tax Return section for dependents is empty.
 
 ---
 
-### Priority 7 — PDF Fill-Export Backlog
+### ~~Priority 7 — PDF Fill-Export Backlog~~ ✅ **RESOLVED (stale — superseded by the pure-HTML preview migration) 2026-07-10**
+
+**Resolved 2026-07-10 — no code change.** This item predates the Tax-Return pure-HTML preview migration. It listed 11 forms that "render structured UI summaries instead of filling IRS PDF fields," but every one of them now has a pure-HTML `form-tax-return-*` preview that fills the semantic fields via `buildSemanticValues` (the imperative renderer draws each value at its field rect). Verified all 11 preview components exist: `form-tax-return-4868`, `-5695`, `-8396`, `-8801`, `-8834`, `-8859`, `-8863`, `-8888`, `-8911`, `-8912`, `-schedule-r`. The "structured summary vs. filled PDF" concern the backlog described no longer applies. (Form 8863's previously-"partial" fill was completed during the 8863 view-shape gap closures — see MEMORY.) Any residual per-field blanks are tracked form-by-form under the "Pure-HTML Preview Migration — View-Shape Backend Gaps" section, not here.
+
+(original backlog table follows for reference)
 
 The following forms have semantic PDF+CSV assets published but render structured UI summaries
 instead of filling IRS PDF fields. No blocking issues — cosmetic/completeness only.

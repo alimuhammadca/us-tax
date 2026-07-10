@@ -2162,19 +2162,18 @@ Credit Limit Worksheet B implemented in `applyAdoptionCredit()`. Call site moved
 
 ---
 
-### Priority 5 — Dependent Return Generation
+### ~~Priority 5 — Dependent Return Generation~~ ✅ **RESOLVED (built via the multi-return architecture) 2026-07-10; multi-dependent disambiguation fixed**
 
-**Current state:** Dependent tabs show Capital gain/loss and Kiddie income intake forms in the
-Incomes section. The Tax Return section for dependents is empty.
+**Resolved 2026-07-10 — the "Tax Return section is empty" state was stale (pre-multi-return).** The dependent's own return is fully implemented end-to-end by the multi-return architecture (Phases 7–9) and is **not** behind any runtime feature gate — the Phase 7/8/9 gates were removed, and the only surviving flag `multi_return.read.enabled` (default false) is **referenced nowhere** (vestigial, gates nothing). Verified the full path:
+- **Backend compute:** `TaxReturnComputeService.prepare(long taxReturnId)` routes a `dependent_own` return through `scopeForDependentOwn()` → `DependentOwnFormScoper.scope()` (injects the dependent's identity as the filer, forces Single, seeds the Form 8615 line-6 parent income via `KiddieTaxParentReader`) → `prepare(uid)`, producing a full child `Form1040` (lines 1z, 7a/7b, 9, 15, 16 with Form 8615 kiddie-tax routing).
+- **Lifecycle + REST:** `TaxReturnV2LifecycleService.enableDependentOwn/disableDependentOwn` + `TaxReturnV2Resource` (`GET /api/tax-return-v2`, `POST /api/tax-return-v2/dependent-own/{enable,disable}/{dependentId}`) + per-return compute `POST /api/tax-return/compute/{taxReturnId}`.
+- **Data model:** `person` (`files_own_return`), `tax_return_v2` (`return_kind='dependent_own'`), `tax_return_v2_person` (filer link); dependent-scoped `capital-gain-loss-dependent` / `kiddie-income-dependent` forms stored with `owner_role='dependent'`.
+- **Frontend:** `dependent-own-toggle-panel` ("Generate dependent's own return"); `shell.component.ts` shows the dependent Tax Return section when a matching `dependent_own` row exists; `form-tax-return-1040` renders per return via its `taxReturnId` input → `computationForReturn(id)` (populated by `computeReturnForReturn`).
+- **E2E:** dedicated specs `dependent-own-basic.spec.ts`, `dependent-own-eic-ineligible.spec.ts`, `dependent-own-kiddie-tax.spec.ts` (+ `line8615-kiddie-income`, `mfs-dependent-tiebreaker`).
 
-**What is needed:**
-- Backend: a separate compute path for dependent returns (triggered per dependent uid) that
-  produces a child `Form1040` with at minimum: lines 1z, 7a/7b, 9, 15, 16 (via Form 8615 or
-  bracket), and the capital-gain/loss schedule D path.
-- Wire `capital-gain-loss-dependent` inputs (from `child-interest-dividends` statements and
-  the existing dependent capital gain personal form) into the child Schedule D / Form 8949.
-- Wire `kiddie-income-dependent` inputs into the child Form 8615 compute path.
-- Frontend: a dependent Tax Return section that renders child-return output forms.
+**One genuine gap fixed 2026-07-10 (multi-dependent disambiguation):** `shell.component.ts` `activeTabTaxReturnId()` and `dependent-own-toggle-panel.component.ts` `isEnabled()` both checked "*any* `dependent_own` row exists" (the old "Phase 8c-2 deferred" note) instead of filtering by the active dependent's id, so a household with 2+ dependents filing own returns could display/toggle the wrong dependent's return. The list endpoint now surfaces `dependentId` (`TaxReturnSummary.dependentId`), so both now filter by the active/input dependent id — consistent with the section-visibility check. Behavior-preserving for single-dependent households (unchanged; existing e2e specs cover that). UI builds clean.
+
+**Remaining deferred (documented in the multi-return notes, not blockers):** §152 dependent self-claim blocking + EIC self-claim blocking for dependents (Phase 8d/9); multi-dependent **e2e** coverage for the disambiguation fix (the fix is build- + code-review-verified; existing specs are single-dependent).
 
 ---
 

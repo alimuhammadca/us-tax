@@ -1,6 +1,13 @@
 ﻿# History
 
 
+## 2026-07-10 — Priority 5 (Dependent Return Generation) resolved — built via multi-return; multi-dependent disambiguation fixed
+
+Investigated Priority 5 and found it already implemented end-to-end by the multi-return architecture (Phases 7–9); the outstanding "Tax Return section is empty" note was stale (pre-multi-return). Verified the full path is runtime-reachable and NOT flag-gated — the Phase 7/8/9 feature gates were removed and the surviving `multi_return.read.enabled` flag (default false) is referenced nowhere (vestigial). A `dependent_own` return computes a full child Form 1040 via `prepare(long taxReturnId)` → `scopeForDependentOwn` → `DependentOwnFormScoper` (dependent identity as filer, Single, Form 8615 line-6 parent income via `KiddieTaxParentReader`); lifecycle + REST (`TaxReturnV2Resource`, `POST /compute/{taxReturnId}`), data model (`person.files_own_return` / `tax_return_v2` / `tax_return_v2_person`), and frontend (`dependent-own-toggle-panel`, shell Tax-Return-section gating, `form-tax-return-1040` per-return via `taxReturnId`) are all present, with 3 dedicated e2e specs (dependent-own-basic / -eic-ineligible / -kiddie-tax). Corrects the earlier memory note that the feature was "gated by `multi_return.feature.*=false`" — those gates were removed.
+
+Fixed the one genuine remaining gap (multi-dependent disambiguation, previously deferred as "Phase 8c-2"): `shell.component.ts` `activeTabTaxReturnId()` and `dependent-own-toggle-panel.component.ts` `isEnabled()` checked "any dependent_own row exists" rather than filtering by the active dependent's id, so a 2+-dependent household could display/toggle the wrong dependent's return. Both now filter by the active/input `dependentId` (the list endpoint surfaces `TaxReturnSummary.dependentId`), consistent with the section-visibility check. Behavior-preserving for single-dependent households; UI builds clean. Deferred: multi-dependent e2e coverage + §152/EIC dependent self-claim blocking (Phase 8d/9).
+
+
 ## 2026-07-10 — Priority 7 (PDF Fill-Export Backlog) verify-and-closed — stale
 
 Closed the "PDF Fill-Export Backlog" with no code change: it predates the Tax-Return pure-HTML preview migration. All 11 listed forms (4868, 5695, 8396, 8801, 8834, 8859, 8863, 8888, 8911, 8912, Schedule R) now have pure-HTML `form-tax-return-*` preview components that fill the semantic fields via `buildSemanticValues`, so the "structured summary instead of filled PDF" concern no longer applies. Residual per-field blanks are tracked under the view-shape-gaps section, not here.

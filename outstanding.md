@@ -3396,7 +3396,11 @@ Implementation: 9 new correctly-named `Form4972` fields + compute setters (extra
 
   **Acceptance criteria:** add a boolean field to `Form8863View` (`taxpayerIsNonresidentAlien`) and read it from the existing identification-taxpayer / identification-spouse forms (or from a new education-credits-specific intake question if the existing identification forms don't capture nonresident-alien status). Update the buildSemanticValues map to emit the value to `part1_line_07_nonresident_alien_checkbox`.
 
-#### Gap 8863-5 — Line 28 (subtract $2,000) + Line 29 (multiply 25%) — AOTC worksheet intermediates ⚠️ LOW
+#### ~~Gap 8863-5 — Line 28 (subtract $2,000) + Line 29 (multiply 25%) — AOTC worksheet intermediates ⚠️ LOW~~ ✅ **RESOLVED 2026-07-10**
+
+**Resolved 2026-07-10.** `computeForm8863()` already computed `line27`/`line28`/`line29` as locals (they feed line 30) — just not surfaced. Added `perStudentLine27`/`28`/`29` to `Form8863Student` + compute setters + preview mappings (`part3_line_27/28/29`) + persisted via V104 (`OutForm8863Student` + `Form8863OutputMapper`). ★ Also fixed a pre-existing preview inconsistency: line 27 (`part3_line_27_aotc_adjusted_qualified_expenses_amount`) was rendering line 30's value (the AOTC total, e.g. $2,500) instead of the true line-27 expenses (e.g. $4,000), which would have been self-contradictory once lines 28/29 rendered (27 − 2,000 ≠ 28). Line 27 now shows the real expenses (capped at $4,000). No intake change; no filed-return impact (line 30 already carried the final AOTC). 1 unit test (`form8863_aotcWorksheetLines27to29_carriedToStudentView` — $4k → 27=4,000/28=2,000/29=500/30=2,500) + extended e2e. Backend 1432/1432; UI builds.
+
+(original note follows for reference)
 
 - **[Form 8863 / Backend view shape / LOW / DEFERRED]** Form 8863 Part III line 28 = `line 27 - 2000` (capped at zero); line 29 = `line 28 × 25%`. Both are intermediate steps that feed line 30 (the per-student AOTC = `2000 + line 29` when line 27 ≥ 2000, else `line 27 × 100%`). The current `Form8863StudentView` stores `perStudentLine30` (the final AOTC) but not the line 28 / line 29 intermediate steps.
 

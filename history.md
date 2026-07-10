@@ -1,6 +1,11 @@
 ﻿# History
 
 
+## 2026-07-10 — Form 8863 AOTC worksheet lines 27–29 surfaced (Gap 8863-5)
+
+Surfaced the per-student AOTC worksheet lines 27/28/29 (line 28 = line 27 − $2,000 floored at 0; line 29 = line 28 × 25%). `computeForm8863()` already computed these as locals feeding line 30 — only the model/preview surfacing was missing. Added `perStudentLine27/28/29` to `Form8863Student` + compute setters + preview mappings + V104 persistence. Also fixed a pre-existing preview inconsistency where line 27 rendered line 30's value (the AOTC total) instead of the true expenses — now line 27 shows the real capped-$4,000 expenses so lines 27–30 are self-consistent on the printed form. No intake change; no filed-return impact. 1 unit test + extended e2e. Backend 1432/1432; UI builds. This completes the Form 8863 view-shape cluster (8863-1 through 8863-5; only the structured address decomposition + attendance dates remain, deferred for needing new intake fields).
+
+
 ## 2026-07-10 — Form 8863 line-7 under-24 refundable-AOTC checkbox (Gap 8863-4)
 
 Surfaced the Form 8863 line-7 checkbox. The item called it a "nonresident alien" box, but reading the actual 2025 form it's the "under age 24" refundable-AOTC disqualifier (the CSV field name `part1_line_07_nonresident_alien_checkbox` is mis-named; NRA is handled separately by a hard block). The under-24 restriction was already fully implemented (`refundableAotcRestrictionApplies` intake field + compute zeroing line 8) — only the checkbox wasn't surfaced. Added `line7Under24RefundableRestriction` to `Form8863`, set from the existing `restrictRefundable` boolean, mapped to the (mis-named) checkbox field, persisted via V103. No intake change. 1 unit test + 1 e2e. Backend 1431/1431; UI builds.

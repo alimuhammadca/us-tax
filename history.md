@@ -1,6 +1,11 @@
 ﻿# History
 
 
+## 2026-07-10 — Form 8814 worksheet ratios + Part II branch surfaced (Pure-HTML view-shape Gap 3)
+
+Surfaced the Form 8814 Part I allocation ratios (line 7 = 2b/4, line 8 = 3/4), line 11, the Part II line-14 base, and the line-15 branch decision on the preview. `buildForm8814` already computed all of these as locals — only the surfacing was missing. Added 6 fields to `Form8814` + compute setters + preview mappings (ratios split across the whole/decimal boxes; branch drives the two Part II checkboxes) + V105 persistence. No filed-return impact (the parent's 1040 uses only line 12 / line 15). 1 unit test (child $4k mixed income → line7=0.5/line8=0.25/line11=975/line14=2650/$135 no-branch). Backend 1433/1433; UI builds; healthy boot validated the V105 schema. No bespoke preview e2e — the render mechanisms are already e2e-proven (Form 4972 line-20 ratio split + 8863/4972 checkboxes). Next up: Gap 1 (Schedule 1-A worksheet intermediates).
+
+
 ## 2026-07-10 — Doc-hygiene: HOH-split optimizer item was stale (feature complete since 2026-06-20)
 
 Verified and closed the outstanding "Separate-Filing Optimizer — HOH/HOH and HOH/MFS splits" item, whose text still read "Phase A in progress / Phases B–E pending." The feature actually shipped 2026-06-20 (Phases A–F, design pivoted to a user-declared per-tab HoH/MFS election rather than an optimizer-derived comparison). Confirmed against current code: `ConsideredUnmarriedEligibilityService`, `MfsFormScoper.overrideFilingStatusToSeparate`, `TaxReturnComputeService.validateConsideredUnmarriedForHoh` + the three HOH_* blocking flags, the paired `form-filing-status-spouse` form, V79/V80 migrations, and `e2e/tests/hoh-split-filing.spec.ts`. `ConsideredUnmarriedEligibilityServiceTest` (18) + `Phase9OptimizerTest` (13) green; full backend suite 1432/1432. No code change. Non-blocking follow-up noted: the `tax_return_v2.filingStatus` row label still displays "MFS" for an HoH leg (cosmetic; compute uses the scoped status).

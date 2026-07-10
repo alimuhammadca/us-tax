@@ -1,6 +1,11 @@
 ﻿# History
 
 
+## 2026-07-09 — Form 4972 Part I eligibility questions 2–5 surfaced on the preview (Gap 4972-1)
+
+Surfaced the Form 4972 Part I question 2–5 Yes/No answers on the printed/previewed form (they rendered blank before). The answers were already collected as intake radios and already read by `computeForm4972()` for the eligibility gate, so no intake change was needed — the gap was only the view-shape handoff: 4 `Boolean` fields on `Form4972`, set from the literal intake answers after `setEligible`, and `part1_question_02..05_yes/no` mapped in `form-tax-return-4972.component.ts`. Compute-view only (not persisted, same pattern as Gap 8863-1). Q1 already came from the aggregate `eligible` verdict. Question 6 is deferred as a larger follow-up — it's not collected anywhere and would need a new intake radio plus an eligibility-logic change (Q6=No required to qualify), not just a display fill. 1 unit test + extended `form4972-8863-preview-render.spec.ts`. Compute suite 956/956; UI builds.
+
+
 ## 2026-07-09 — Form 8863 line-22 per-institution 1098-T disclosure checkboxes (Gap 8863-1)
 
 Closed Gap 8863-1 — the printed/previewed Form 8863 Part III line 22 was missing the four Yes/No 1098-T disclosure checkboxes per institution (an IRS audit trigger on every AOTC/LLC claim). The taxpayer's answers were already collected + persisted by the education-credits intake form; the gap was only the backend→preview handoff. Added 4 `Boolean` fields to `Form8863Student`, set them in `computeForm8863()`, added them to the frontend `Form8863StudentView`, and mapped the 8 `part3_line22a/22b_question_b/c_1098t_*` checkbox cells in `form-tax-return-8863.component.ts`. No change to the IRS Form 8863 layout (fills existing cells), no intake-form change (fields already there), no 1098-T/statement work (the line-22 questions are taxpayer attestations). Matches the existing line 23-26 compute-view pattern (not persisted to the output entity → renders from the compute response, blank after a reload; persisting the whole Part III boolean set is a noted follow-up). 1 unit test + 1 e2e (`form4972-8863-preview-render.spec.ts`). Compute suite 955/955; UI builds.

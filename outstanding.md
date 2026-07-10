@@ -3254,7 +3254,13 @@ The migration preserved the existing data coverage (i.e., the same set of fields
 
 ### Form 4972 — 22 of 58 IRS fields populated; 36 blank
 
-#### Gap 4972-1 — Part I eligibility questions 2–6 (10 checkboxes) ⚠️ MEDIUM-HIGH
+#### Gap 4972-1 — Part I eligibility questions 2–6 (10 checkboxes) ⚠️ MEDIUM-HIGH — **Q2–Q5 RESOLVED 2026-07-09; Q6 deferred**
+
+**Q2–Q5 resolved 2026-07-09.** ★ The item's premise was partly stale: questions 2–5 were **already collected** as Yes/No radios on the lump-sum-distribution intake form and **already read** by `computeForm4972()` (for the eligibility gate), so no intake change was needed. The gap was only the view-shape handoff: added 4 `Boolean` fields to `Form4972` (`partIQ2RolledOver`, `partIQ3BornBefore1936OrBeneficiary`, `partIQ4FiveYearsParticipation`, `partIQ5PriorElection`), set them from the literal intake answers in `computeForm4972()` (right after `setEligible`), and mapped `part1_question_02..05_yes/no` in `form-tax-return-4972.component.ts`. Each intake radio binds Yes→true / No→false, so the preview shows the taxpayer's literal answer. Q1 was already surfaced via the aggregate `eligible` verdict. Compute-view only (not persisted — same pattern as 8863 Gap 8863-1). 1 unit test (`form4972_partIQuestions2to5_carriedToModel`) + extended `form4972-8863-preview-render.spec.ts` e2e. Compute suite 956/956; UI builds.
+
+**Q6 deferred (needs intake + eligibility work).** Question 6 ("no taxable distribution from a qualified plan for the year") is **not collected at all** — no intake field, and `computeForm4972()`'s eligibility gate (`q1 && q2noRollover && q3orQ4 && q5noPrior`) does not reference it. Surfacing Q6 requires: (1) a NEW Yes/No radio on the intake form (a visual change), and (2) wiring Q6 into the eligibility logic (per the 2025 instructions, Q6 must be "No" to qualify — a tax-correctness change, not just a display fill). Deferred as a distinct, larger follow-up; its `part1_question_06` slot stays blank meanwhile.
+
+(original deferral note follows for reference)
 
 - **[Form 4972 / Backend view shape + intake / MEDIUM-HIGH / DEFERRED]** The 2025 Form 4972 Part I requires SIX Yes/No eligibility questions to be answered. The `Form4972View` model only carries `eligible` (question 1: born before January 2, 1936, or surviving spouse / beneficiary of a participant born before that date). Questions 2–6 are missing from the data model entirely; the semantic CSV expects these checkbox pairs:
 

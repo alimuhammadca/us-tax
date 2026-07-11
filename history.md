@@ -1,6 +1,17 @@
 ﻿# History
 
 
+## 2026-07-11 — Prior-year-data foundation: State/Local Refund Taxable-Portion Worksheet (Step 1 + Step 2)
+
+Built the prior-year-data foundation the owner chose as the next item. The `prior-year-tax-taxpayer` form (previously Form-2210-only) now also carries the 2024 deduction detail needed to tax a state/local income-tax refund correctly under the tax-benefit rule (Pub. 525) rather than naively taxing the full 1099-G box 2 gross.
+
+**Step 1 — storage.** 6 new nullable columns on `pf_prior_year_tax` (V112): prior-year filing status, itemized-or-not, total itemized deductions, standard deduction available, state/local taxes before the SALT cap, and taxable income. Extended `PfPriorYearTax` + `PriorYearTaxMapper` (save/load) — no new register-in-N-places sites (the form was already in PERSONAL_FORMS and the mapper already existed). Extended the Angular `form-prior-year-tax.component.ts` with a "2024 Deduction Detail" section (filing-status select + itemized yes/no radio + 4 amounts gated behind itemized=Yes) and 6 help entries. Healthy boot ran V112 + passed schema validation; UI builds clean.
+
+**Step 2 — worksheet + wiring.** Pure static `computeStateLocalRefundTaxablePortion(...)`: $0 if the prior year used the standard deduction; otherwise taxable = min(gross refund, SALT-cap benefit [recomputed with vs. without the refund; $5,000 cap MFS / $10,000 others], itemized-over-standard excess), further reduced by any negative prior-year taxable income. Injected in `prepare()` only when prior-year data is present and the user hasn't already overridden line 1 — it writes `imported1099GLine1TaxableRefunds`, the field that REPLACES `computeOtherIncomes`'s naive full-gross 1099-G box 2 auto-sum, and applies even when it computes $0. Tests: 4-case unit (`stateLocalRefundWorksheet_taxBenefitRule`) + end-to-end unit (`…_wiresToSchedule1Line1` → $2,000); `TaxReturnComputeServiceTest` 973/973. New e2e `prior-year-state-refund-worksheet.spec.ts` (3 cases, all green): itemized/under-cap → full $2,000 taxable; standard-deduction year → $0 (overrides the naive auto-sum); SALT above cap → only the $1,000 benefited portion taxable.
+
+**Step 3 (unemployment §1341 claim-of-right repayment) deferred** per the owner. Tracked in outstanding.md.
+
+
 ## 2026-07-11 — "Form 8889 / 8853 / 4797 standalone compute" section verify-and-closed
 
 Closed the section: Form 8889 (HSA) and Form 8853 (Archer MSA + LTC) are both complete end-to-end (compute → dedicated intake form + persistence → Schedule 1/2 wiring → output persistence → e2e), shipped across V108–V111. Form 4797 (Sales of Business Property) is deferred by design — it is not a same-pattern build: full scope needs Schedule C/SE/F + Form 4562 depreciation (gated on self-employment, out of scope), and even the Schedule E rental slice needs new per-asset depreciation tracking. The non-blocking `OTHER_INCOME_FORM_4797_REQUIRED_TO_BE_FILED_SEPARATELY` advisory keeps the deferral silent-loss-free. Documented the revisit triggers in outstanding.md.

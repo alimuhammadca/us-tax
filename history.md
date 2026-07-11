@@ -1,6 +1,11 @@
 ﻿# History
 
 
+## 2026-07-11 — Form 8853 (Archer MSA + LTC) Increment 2c: Angular MSA/LTC form
+
+New standalone `form-msa-ltc.component.ts` (`formId` input for `msa-ltc-taxpayer`/`-spouse`) with a screening gate and Section A (Archer MSA — coverage, deductible, contributions, compensation, unreimbursed medical, 20%-exception), Section B (Medicare Advantage MSA — unreimbursed medical, 50%-exception), and Section C (Long-Term Care — insured name/SSN, qualified per-diem, accelerated death benefits, days in period, service costs, reimbursements, terminally-ill flag) behind a collapsed details. Loads/saves via `PersonalDataService`; wired into the shell (import + imports[] + routes + two "Archer MSA / LTC (Form 8853)" sidebar items). UI builds clean. Remaining: Increment 3 (`OutForm8853` output persistence) + 4 (e2e).
+
+
 ## 2026-07-11 — Form 8853 (Archer MSA + LTC) Increment 2a+2b: intake persistence + Schedule wiring
 
 Made Form 8853 flow end-to-end (backend). **2a:** `PfForm8853` entity (`pf_form_8853`, V110) + `Form8853Mapper` (`msa-ltc-taxpayer`/`-spouse`, ~23 fields), registered in PERSONAL_FORMS + UserDataBulkDelete + the changelog (all three hazards); healthy boot validated the schema. **2b:** `computeForm8853` wrapper resolves the form inputs + sums line 6a from Archer-flagged 1099-SA, line 10 from MA-MSA-flagged 1099-SA, line 17 from per-diem 1099-LTC (read-only), computed for taxpayer + spouse in `prepare()` and injected put-if-absent into the existing input maps (line 5 → Schedule 1 line 23 `archerMsaDeductionLine23`; lines 8/12/26 → Schedule 1 line 8e `otherIncomeForm88538e`; line 9b → Schedule 2 line 17e; line 13b → line 17f) — manual entries still override. End-to-end unit test (msa-ltc form + 1099-SA Archer + 1099-LTC per-diem → Schedule 1 line 23 $1,000, line 8e $7,600). `TaxReturnComputeServiceTest` 971/971. Remaining: Increment 2c (Angular MSA/LTC form), 3 (`OutForm8853` output persistence), 4 (e2e). No Form 8853 tax-return preview and no 1099-SA/1099-LTC statement changes.

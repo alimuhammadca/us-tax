@@ -1,6 +1,11 @@
 ﻿# History
 
 
+## 2026-07-11 — Form 8889 (HSA) Increment 4: e2e — feature COMPLETE
+
+Added `e2e/tests/line8889-hsa.spec.ts` and ran it green (33s): it seeds a W-2, a 1099-SA HSA distribution ($2,000 box 1), and the `hsa-taxpayer` form (self-only, full-year, $3,000 contributed, $1,500 qualified medical), then computes and asserts the full stack — Schedule 1 line 13 = $3,000 (deduction), line 8f = $500 (taxable distributions), Schedule 2 line 17c = $100 (20% tax) — with no manual entry on the Schedule 1/2 fields. This verifies the whole path through real auth + REST + form-save + persistence, not just the unit compute. **Form 8889 is now complete end-to-end** (compute algorithm → dedicated intake form + persistence → Schedule 1/2 wiring → output persistence → e2e). Form 8853 and Form 4797 remain deferred.
+
+
 ## 2026-07-11 — Form 8889 (HSA) Increment 3: output persistence
 
 Threaded the computed `Form8889` into the output pipeline so the per-person worksheet (lines 1–21) survives a GET reload. Added `form8889Taxpayer` + `form8889Spouse` to the `TaxReturnComputation` record (2 fields; all 5 positional construction sites updated — production assembly, `TaxReturnDataService` load, `MicroserviceModelsTest`, 3× `TaxReturnResourceTest`) and persistence via `OutForm8889` (`out_form_8889`, one row per (uid, owner_role), V109) with an `AbstractForm8889OutputMapper` + `Form8889Taxpayer/SpouseOutputMapper` concrete pair (mirrors the Form 8606 per-person owner_role pattern), wired into the `TaxReturnDataService` save + load orchestration. Healthy boot ran V109 + passed Hibernate schema validation with no mapper-conflict warning. `TaxReturnComputeServiceTest` 969/969. Only Increment 4 (e2e) remains.

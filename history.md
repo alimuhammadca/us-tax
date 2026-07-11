@@ -1,6 +1,17 @@
 ﻿# History
 
 
+## 2026-07-11 — Form 8615 (kiddie tax) preferential-rate paths — QDCG worksheet on lines 9/15/17
+
+Closed the Priority-4 "preferential-rate paths" deferral. Form 8615 lines 9/15/17 now use the Qualified Dividends and Capital Gain Tax Worksheet (0%/15%/20%) when the child has qualified dividends or net long-term capital gain — the usual kiddie-tax trigger — instead of always taxing at ordinary rates. This matters because a child's unearned income is frequently qualified dividends / capital gains, and the parent-rate portion (line 13) was over-taxed at the parent's ordinary bracket.
+
+**Change (compute-only; no new fields, no migration):** extracted the 0%/15%/20% stacking from `computeQDCGWorksheet` into a shared `computePreferentialRateTax(taxableIncome, filingStatus, preferentialIncome)` that takes an explicit preferential amount (QDCG now delegates to it — behavior-preserving). `computeForm8615` derives the child's preferential income from the child's own computed return (`childPreferentialIncome` = qualified dividends line 3a + net LTCG from Schedule D / line 7a) and layers the right slice on each line: line 9 taxes the preferential portion pulled into net unearned income (`min(line5, childPref)`) at the parent's preferential rate (parent's line-6 income treated as ordinary, which cancels in line 11 when the parent has no preferential income); line 15 taxes the child's remaining preferential income; line 17 taxes all of it. Falls back to the ordinary bracket path when the child has no qualified dividends / cap gains (existing tests unchanged).
+
+**Tests:** new `line16Form8615PreferentialRateOnQualifiedDividends` (child $20k wages + $10k qualified dividends, parent $200k Single → line 13 = $1,095 at the parent's 15% rate, line 18 = $1,523 vs ~$3,034 on the ordinary path). Full backend suite 1451/1451 green (the QDCG refactor left every existing line-16 QDCG case unchanged).
+
+**Deferred (documented, manual `childFinalTaxLine18` override covers):** the parent's *own* qualified dividends / net capital gain (no input field captures them; line 10 stays bracket-based) and the 28%/§1250 Schedule D Tax Worksheet path (rare for a child).
+
+
 ## 2026-07-11 — Prior-year-data foundation: State/Local Refund Taxable-Portion Worksheet (Step 1 + Step 2)
 
 Built the prior-year-data foundation the owner chose as the next item. The `prior-year-tax-taxpayer` form (previously Form-2210-only) now also carries the 2024 deduction detail needed to tax a state/local income-tax refund correctly under the tax-benefit rule (Pub. 525) rather than naively taxing the full 1099-G box 2 gross.

@@ -10,6 +10,21 @@ Closed the last piece of Gap 4972-1: the 2025 Form 4972 Part I has six eligibili
 **Tests:** `form4972PartIQ6BeneficiaryPriorElectionDisqualifies` (Q6=Yes → null form + FORM4972_TAXPAYER_INELIGIBLE flag), a Q6 assertion added to `form4972_partIQuestions2to5_carriedToModel`, and an extended `form4972-8863-preview-render.spec.ts` e2e (part1_question_06_no renders through the full intake→compute→persistence→preview chain, 6/6 green). Core suite 976/976; UI builds; healthy boot applied V113.1 + V113.2.
 
 
+## 2026-07-11 — Dependent statements — curated "Select statement" picker (mirrors the spouse mechanism)
+
+Analyzed and documented whether the app produces standalone dependent returns (yes — full stack) and its limitations (in outstanding.md), then gave dependents their own statements the same way the spouse has them.
+
+**How the spouse mechanism actually works (verified):** statements are stored per household (`uid`) and routed to a person tab purely by the `recipientTIN`/SSN filter (`statementFormBelongsHere`). The frontend never stamps `owner_role` on statements — it defaults to `taxpayer` in the mapper and is NOT the routing key. So "spouse's own statements" = the spouse tab renders the Statements section and statements whose recipient SSN matches route there. No `dependent_id`/`owner_role` work is needed to mirror it for dependents.
+
+**Are all statement types applicable to a dependent? No** (full analysis in outstanding.md). A dependent reports only their own income; several types are out-of-scope (self-employment) or flow to the parent who claims them.
+
+**Implementation:** `StatementSelectionService.formSectionsFor(personKind)` filters the picker to the dependent-applicable subset via `DEPENDENT_INAPPLICABLE_FORM_IDS` = {1099-nec, 1099-k (self-employment); 1098-t, 1099-e (education credit / student-loan interest → parent); 1095-a/b/c (health/PTC → parent); 1099-sa (HSA); child-interest-dividends (Form 8814 — the mutually-exclusive alternative to the dependent filing their own return)}. `form-statements-select` gained a `personKind` input + `visibleSections`; the shell passes `[personKind]="selectedPerson.kind"` and the prior hard-coded auto-offer of 1099-int/1099-div for dependents was removed for a consistent spouse-like picker. Taxpayer + spouse still get the full picker.
+
+**Tests:** `dependent-statement-picker.spec.ts` e2e (dependent picker offers w-2/1099-int/div/b/r/2439, excludes the 6 inapplicable types; Family Head picker is full) — green. `statement-selection.service.spec.ts` unit test added (the existing Karma suite can't run headless here due to two pre-existing unrelated broken specs; the app build type-checks the change). UI build clean.
+
+**Residual:** entering a statement doesn't pre-fill the recipient SSN from the active tab (same as the spouse today) — a per-tab recipient-SSN default would improve both.
+
+
 ## 2026-07-11 — dependent_own scoping fixes: dependent standard deduction + Form 8814 leak
 
 Fixed two pre-existing `dependent_own` scoping bugs surfaced while building the multi-child kiddie e2e (both backend-only, no migration).

@@ -3063,7 +3063,17 @@ Per XLS/Computations/8.md §4.8 + §4.9, these three forms remain user-fill-only
 
 **Resolution criteria:** GAP-PDF-8z + GAP-PDF-LINE7 both pass under `--workers=1`, the spec is un-skipped, and `test_cases/8.md` Honourable mention #9 can be marked CLOSED. Bonus scope: extend the same translator pattern to the other forms' `buildAcroFormValues` flows.
 
-## Kiddie Income (Form 8615) Backend Compute + Statement Auto-Detection — Deferred 2026-06-07
+## Kiddie Income (Form 8615) Backend Compute + Statement Auto-Detection — **#3 compute + #1 auto-detect + #2 parent auto-pull DONE 2026-07-10; #4 form simplification IN PROGRESS**
+
+**Progress 2026-07-10:**
+- **#3 (backend Form 8615 compute) — DONE** via Priority 4 (`Form8615` model + `computeForm8615` lines 1–18 + `OutForm8615` persistence; wired to Line 16).
+- **#1 (auto-detect child unearned income) — DONE.** `computeForm8615` now derives `childUnearnedIncomeLine1` from the child's own computed return (`deriveChildUnearnedIncome` = total income line 9 − wages line 1z) when not hand-entered. This is what makes the `dependent_own` path actually produce Form 8615 (previously the scoper seeded `hasKiddieTaxUnearnedIncome` but no line 1, so compute fell back to bracket tax).
+- **#2 (auto-pull parent taxable income + status) — DONE, full IRS parent selection.** `KiddieTaxParentReader.getParentReturnInfo(uid)` now returns the parent's taxable income **and** filing status, selecting the correct parent per Form 8615: **MFJ** → joint `primary` return; **MFS** → the higher-taxable-income leg; **HOH-split** → the custodial (sole Head-of-Household) leg, else higher income (`selectSplitParent`). `DependentOwnFormScoper.scope` now also seeds `parentFilingStatus` (fixing a latent bug where the parent was treated as Single for line-9 brackets). Unit tests: `selectSplitParent` (MFS higher-income / HOH custodial / both-HoH), `isHoh`, `deriveChildUnearnedIncome`, `scopeInjectsParentFilingStatus`. Full `TaxReturnComputeServiceTest` 966/966 + multireturn 228/228.
+- **#4 (form simplification) — IN PROGRESS.** Collapse the now-redundant manual worksheet fields on `form-kiddie-income-taxpayer.component.ts` (the Manual kiddie-tax result section), keeping `childFinalTaxLine18` as an advanced override.
+
+**Deferred:** extending `dependent-own-kiddie-tax.spec.ts` to pin the now-real kiddie tax value (it currently asserts income flow only); MFS/HOH-split kiddie e2e coverage.
+
+(original open-work write-up follows for reference)
 
 **Origin.** UX evaluation rounds 1+2 on `form-kiddie-income-taxpayer.component.ts` (per-dependent form for Form 8615 kiddie tax). The form is currently a manual transcription of IRS Form 8615 — the user is expected to do the worksheet by hand and type the results in. Two of the four sections collect the user-computed outputs of the IRS worksheet (Section "Manual kiddie-tax result"). UX rounds 1+2 made the form safer (removed cleartext parent SSN re-entry; auto-pulled parent identity) and clearer (plain-English labels, gloss for "kiddie tax" / "Form 8615", inline advisories) but did not address the underlying transcription model.
 

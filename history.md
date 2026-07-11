@@ -1,6 +1,11 @@
 ﻿# History
 
 
+## 2026-07-11 — "Form 8889 / 8853 / 4797 standalone compute" section verify-and-closed
+
+Closed the section: Form 8889 (HSA) and Form 8853 (Archer MSA + LTC) are both complete end-to-end (compute → dedicated intake form + persistence → Schedule 1/2 wiring → output persistence → e2e), shipped across V108–V111. Form 4797 (Sales of Business Property) is deferred by design — it is not a same-pattern build: full scope needs Schedule C/SE/F + Form 4562 depreciation (gated on self-employment, out of scope), and even the Schedule E rental slice needs new per-asset depreciation tracking. The non-blocking `OTHER_INCOME_FORM_4797_REQUIRED_TO_BE_FILED_SEPARATELY` advisory keeps the deferral silent-loss-free. Documented the revisit triggers in outstanding.md.
+
+
 ## 2026-07-11 — Form 8853 (Archer MSA + LTC) Increment 4: e2e — feature COMPLETE
 
 Added `e2e/tests/line8853-msa-ltc.spec.ts` and ran it green (11s): it seeds a W-2, a 1099-SA Archer-MSA distribution ($800), a 1099-LTC per-diem benefit ($20,000), and the `msa-ltc-taxpayer` form (self-only $3k deductible, $1k contributed, $50k compensation, $600 unreimbursed medical, $20k qualified LTC over 30 days), then computes and asserts the full stack — Schedule 1 line 23 (Archer MSA deduction) = $1,000 and line 8e (Archer taxable $200 + LTC taxable $7,400) = $7,600 — with no manual entry. **Form 8853 is now complete end-to-end** (compute algorithm → dedicated intake form + persistence → Schedule 1/2 wiring → output persistence → e2e), matching the Form 8889 build. Form 4797 remains the only deferred form in this section (pulls in self-employment; out of scope for now).

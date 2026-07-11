@@ -2996,7 +2996,12 @@ When the deferred items above land, update `STATEMENT_SSN_RULES` and remove the 
 
   **Deferred** because the project is mid-migration from `<app-pdf-readonly-preview>` PDF embeds to pixel-perfect HTML/CSS forms (see the 2026-05-18 Form 1040 migration entry above). HTML forms bind directly by semantic name with no PDF-field-position mapping required, so this entire class of bug disappears once Schedule 2 is migrated. Re-curating the existing PDF mapping would be throwaway work. **When Schedule 2 is rebuilt in HTML/CSS, verify Test 1 visually shows $4 on line 5 only, with lines 3 and 6 empty.**
 
-## Form 8889 / Form 8853 / Form 4797 — standalone compute (Form 8889 ✅ COMPLETE 2026-07-11; 8853/4797 deferred)
+## Form 8889 / Form 8853 / Form 4797 — standalone compute — ✅ **Form 8889 + Form 8853 COMPLETE 2026-07-11; Form 4797 DEFERRED (self-employment prerequisite)**
+
+**Section status (verify-and-closed 2026-07-11):** Two of the three forms are fully implemented end-to-end (compute → dedicated intake form + persistence → Schedule 1/2 wiring → output persistence → e2e); the third is deferred by design.
+- **Form 8889 (HSA) — ✅ COMPLETE** (see below).
+- **Form 8853 (Archer MSA + LTC) — ✅ COMPLETE** (see below).
+- **Form 4797 (Sales of Business Property) — DEFERRED (not a same-pattern build).** Unlike the two MSA/HSA forms, Form 4797 does not reuse an established pattern and cannot be done standalone without new infrastructure: the **full scope requires Schedule C + Schedule SE + Schedule F + Form 4562 (depreciation)** as prerequisites (~50–70 working days) and is **gated on the product expanding to self-employment** (out of scope today). The only viable standalone slice — **Schedule E rental** §1245/§1250 recapture (~10–15 days) — still needs new per-asset depreciation tracking (a `pf_prior_year_1231_net_loss` entity + prior-year data plumbing for the §1231 5-year lookback). Backstop already in place: the non-blocking `OTHER_INCOME_FORM_4797_REQUIRED_TO_BE_FILED_SEPARATELY` advisory fires when the user-fill `otherGainsLossesLine4` is non-zero, so there is **no silent-loss risk** while deferred. Revisit when (a) self-employment goes on the roadmap for the full form, or (b) rental depreciation tracking is prioritized for the Schedule E slice.
 
 **Form 8889 (HSA) — DONE 2026-07-11 (Full Parts I+II+III + dedicated HSA intake form).** All four increments landed:
 - **Increment 4 — e2e — DONE.** `e2e/tests/line8889-hsa.spec.ts` seeds the `hsa-taxpayer` form + a 1099-SA distribution and asserts the full stack (UI auth → REST → form save → compute → persistence): Schedule 1 line 13 = $3,000, line 8f = $500, Schedule 2 line 17c = $100. Passes.

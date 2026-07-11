@@ -10,6 +10,17 @@ Closed the last piece of Gap 4972-1: the 2025 Form 4972 Part I has six eligibili
 **Tests:** `form4972PartIQ6BeneficiaryPriorElectionDisqualifies` (Q6=Yes → null form + FORM4972_TAXPAYER_INELIGIBLE flag), a Q6 assertion added to `form4972_partIQuestions2to5_carriedToModel`, and an extended `form4972-8863-preview-render.spec.ts` e2e (part1_question_06_no renders through the full intake→compute→persistence→preview chain, 6/6 green). Core suite 976/976; UI builds; healthy boot applied V113.1 + V113.2.
 
 
+## 2026-07-11 — dependent_own scoping fixes: dependent standard deduction + Form 8814 leak
+
+Fixed two pre-existing `dependent_own` scoping bugs surfaced while building the multi-child kiddie e2e (both backend-only, no migration).
+
+**Dependent standard deduction (systematic under-taxation).** A dependent filing their own return was getting the FULL standard deduction ($15,750) instead of the dependent-limited one (`max($1,350, earned income + $450)`, capped at the full amount). So a child with $10k of interest showed $0 taxable income instead of ~$8,650 — every dependent_own return under-taxed. Root cause: `DependentOwnFormScoper` never seeded `someoneCanClaimYou` (which gates the dependent-deduction worksheet), and a dependent-own filer is by definition claimable as a dependent. Fix: the scoper now seeds `standard-deductions-taxpayer` with `someoneCanClaimYou = true`; earned income auto-imports from the computed line 1z wages.
+
+**Form 8814 leak.** The child's scoped compute still auto-built Form 8814 (a parent's election to report a child's interest/dividends) from the household's 1099-INT/DIV + dependents list — firing the non-overrideable `FORM8814_CHILD_GROSS_INCOME_TOO_HIGH` blocker on the child's OWN return when a child's gross income was ≥ $13,500. Fix: the scoper marks `filing-status.dependentOwnReturn = true` and `prepare()` skips `computeChildInterestDividends` on that path. Form 8814 stays available on primary/MFS returns.
+
+**Payoff:** these two fixes unblocked the multi-child Form 8615 line-7 sibling-pool e2e that was deferred earlier the same day — now green (`dependent-own-kiddie-tax.spec.ts`: a 2-child household → child A's line 7 = child B's line 5). Full backend suite 1464/1464; `dependent-own-basic` / `-eic-ineligible` / `-kiddie-tax` e2e all green. The only test churn was updating the scoper form-count assertions (3→4 forms, now emitting the standard-deductions form).
+
+
 ## 2026-07-11 — Form 8615 (kiddie tax) — 28%/§1250 rates + sibling line-7 auto-derive
 
 Closed the two remaining Form 8615 preferential-rate deferrals, both backend-only.

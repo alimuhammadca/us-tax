@@ -1,6 +1,11 @@
 ﻿# History
 
 
+## 2026-07-11 — Form 8853 (Archer MSA + LTC) standalone compute started — Increment 1: algorithm
+
+Began Form 8853 (the sibling of Form 8889 — "complete Form 8853 if required" appears on Form 8889 itself), user chose Full Sections A+B+C + a dedicated intake form. Increment 1: `Form8853` output model (Section A lines 1–9b, Section B lines 10–13b, Section C lines 14a–26) + pure static `computeForm8853FromInputs`: Section A Archer MSA (line 3 limit = 65% self-only / 75% family of the HDHP deductible, prorated; line 5 deduction = smallest of L2/L3/L4 → Schedule 1 line 23; line 8 taxable → line 8e; line 9b 20% tax → Schedule 2 line 17e), Section B Medicare Advantage MSA (line 12 taxable → line 8e; line 13b 50% tax → line 17f), Section C Long-Term Care ($420/day per-diem limitation vs. costs less reimbursements → line 26 taxable → line 8e). 2025 constants added to `ReferenceData`. Kept the algorithm pure/static (like 8889) so it unit-tests without touching the record. 1 unit test (worked example across all 3 sections → line5 $1,000 / line8 $200 / line9b $40 / line12 $300 / line13b $150 / line21 $12,600 / line26 $7,400). `TaxReturnComputeServiceTest` 970/970; additive only. Remaining increments (intake form + persistence + Schedule 1/2 wiring + output persistence + e2e) mirror the Form 8889 build. No Form 8853 tax-return preview and no 1099-SA/1099-LTC statement changes (per user constraint).
+
+
 ## 2026-07-11 — Form 8889 (HSA) Increment 4: e2e — feature COMPLETE
 
 Added `e2e/tests/line8889-hsa.spec.ts` and ran it green (33s): it seeds a W-2, a 1099-SA HSA distribution ($2,000 box 1), and the `hsa-taxpayer` form (self-only, full-year, $3,000 contributed, $1,500 qualified medical), then computes and asserts the full stack — Schedule 1 line 13 = $3,000 (deduction), line 8f = $500 (taxable distributions), Schedule 2 line 17c = $100 (20% tax) — with no manual entry on the Schedule 1/2 fields. This verifies the whole path through real auth + REST + form-save + persistence, not just the unit compute. **Form 8889 is now complete end-to-end** (compute algorithm → dedicated intake form + persistence → Schedule 1/2 wiring → output persistence → e2e). Form 8853 and Form 4797 remain deferred.

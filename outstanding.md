@@ -3011,7 +3011,11 @@ Multi-increment build:
 - **Increment 3 — output persistence + reload** (`OutForm8889` + mapper + migration + `TaxReturnComputation` record for taxpayer/spouse). **Increment 4 — e2e.**
 - **Constraint (per user 2026-07-11):** no `form-tax-return-8889` preview, no 1099-SA statement-form changes; confirm any new user-input field before adding (dedicated-form fields pre-approved).
 
-**Form 8853 / Form 4797 — still deferred** (per the original write-up below).
+**Form 8853 (Archer MSA + LTC) — IN PROGRESS 2026-07-11 (Full Sections A+B+C + dedicated form).** Same 4-increment shape as Form 8889.
+- **Increment 1 — compute algorithm — DONE 2026-07-11.** `Form8853` model (Sections A lines 1–9b, B lines 10–13b, C lines 14a–26) + pure static `computeForm8853FromInputs`: Section A (Archer contributions → line 5 deduction = smallest of L2/L3/L4 where L3 = 65%/75% of the HDHP deductible prorated; distributions → line 8 taxable + line 9b 20% tax); Section B (MA MSA distributions → line 12 taxable + line 13b 50% tax); Section C (LTC per-diem: $420/day × days vs. costs less reimbursements → line 26 taxable). 2025 constants in `ReferenceData` (`MSA_LIMIT_PERCENT_SELF_ONLY`=0.65/`_FAMILY`=0.75, `MSA_ARCHER_ADDITIONAL_TAX_RATE`=0.20, `MSA_MEDICARE_ADVANTAGE_ADDITIONAL_TAX_RATE`=0.50, `LTC_PER_DIEM_LIMIT`=420). 1 unit test (worked example across all 3 sections → line5 $1,000 / line8 $200 / line9b $40 / line12 $300 / line13b $150 / line21 $12,600 / line26 $7,400). `TaxReturnComputeServiceTest` 970/970.
+- **Increments 2–4 (next)** mirror Form 8889: dedicated `msa-ltc-taxpayer`/`-spouse` intake form + `PfForm8853` persistence; service wrapper (line 6a from MSA-flagged 1099-SA, line 10 from MA-MSA-flagged 1099-SA, line 17 from per-diem 1099-LTC) + wiring (line 5 → Schedule 1 line 23, lines 8/12/26 → Schedule 1 line 8e, line 9b → Schedule 2 line 17e, line 13b → line 17f); `OutForm8853` output persistence; e2e. **Constraint:** no `form-tax-return-8853` preview or 1099-SA/1099-LTC statement changes; new intake fields pre-approved (dedicated form).
+
+**Form 4797 — still deferred** (per the original write-up below).
 
 Per XLS/Computations/8.md §4.8 + §4.9, these three forms remain user-fill-only stubs:
 

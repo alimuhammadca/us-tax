@@ -10,6 +10,11 @@ Closed the last piece of Gap 4972-1: the 2025 Form 4972 Part I has six eligibili
 **Tests:** `form4972PartIQ6BeneficiaryPriorElectionDisqualifies` (Q6=Yes → null form + FORM4972_TAXPAYER_INELIGIBLE flag), a Q6 assertion added to `form4972_partIQuestions2to5_carriedToModel`, and an extended `form4972-8863-preview-render.spec.ts` e2e (part1_question_06_no renders through the full intake→compute→persistence→preview chain, 6/6 green). Core suite 976/976; UI builds; healthy boot applied V113.1 + V113.2.
 
 
+## 2026-07-11 — Full e2e regression — GREEN (1144 passed / 0 failed / 13 skipped)
+
+Ran the complete Playwright regression suite (`npm run test:regression -- --workers=1`) after the day's work. **1157 tests: 1144 passed, 0 genuine failures, 13 skipped, ~2.1h.** The 13 skips are the intentional `test.skip`s (e.g., the deferred line-16 Box-3 multi-code 500 case), not regressions; no flakes in the summary. Validates the full suite end-to-end including everything shipped this session: the Form 8615 kiddie-tax family (child + parent preferential income, 28%/§1250 rates, sibling pooling), the dependent-own return path + its two correctness fixes (dependent standard deduction, Form 8814 blocker leak), dependent statements (curated picker) + recipient-SSN auto-fill, the explicit EIC/§152 advisory, Form 4972 Part I Q6, and the prior-year state-refund worksheet.
+
+
 ## 2026-07-11 — Dependent's own return: explicit EIC / §152 self-claim advisory
 
 Made the dependent-return credit limitations explicit instead of correct-by-omission. On a `dependent_own` return the filer can, by definition, be claimed as a dependent on another return, so the Earned Income Credit is structurally unavailable (IRC §32(c)(1)(A)(ii)(III)/§32(m)) and they can't claim their own personal exemption or dependents (§151(d)(2)/§152(b)(1)). The app already computed the return correctly (EIC never seeded on the scoped map; dependent-limited standard deduction), but gave no user-facing reason.

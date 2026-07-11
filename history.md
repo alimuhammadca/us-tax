@@ -10,6 +10,15 @@ Closed the last piece of Gap 4972-1: the 2025 Form 4972 Part I has six eligibili
 **Tests:** `form4972PartIQ6BeneficiaryPriorElectionDisqualifies` (Q6=Yes → null form + FORM4972_TAXPAYER_INELIGIBLE flag), a Q6 assertion added to `form4972_partIQuestions2to5_carriedToModel`, and an extended `form4972-8863-preview-render.spec.ts` e2e (part1_question_06_no renders through the full intake→compute→persistence→preview chain, 6/6 green). Core suite 976/976; UI builds; healthy boot applied V113.1 + V113.2.
 
 
+## 2026-07-11 — Statement recipient-SSN auto-fill (routes to the active person tab)
+
+Closed the residual from the dependent-statements work: a newly-created statement entry now pre-fills its recipient SSN with the active person tab's SSN, so it routes to that tab automatically instead of the user having to type the spouse's / dependent's SSN to make the recipientTIN/SSN filter match. Benefits taxpayer, spouse, and dependent alike.
+
+New `PersonScopeService` (a signal holding the active tab's formatted SSN); the shell's `syncActivePersonScope()` publishes it on every tab change (`selectPerson`/`selectDependent`/`addDependent`/`handleDependentCreated`) and after identification SSNs load (`refreshPersonTabs`). `StatementEntryStateService.newEntrySeed()` reads it and seeds both create paths (`refreshEntries` auto-first-entry + `addEntry`) with the SSN under every recipient-field key used across the statement types — recipientTIN / employeeSSN / beneficiarySSN / shareholderTIN — since each mapper reads only its own field and ignores the rest (the backend `createEntry` applies the payload via `applyParent`, so the pre-fill persists). Empty when the active person's SSN is unknown → same blank-create as before.
+
+Verified: new e2e `statement-recipient-ssn-autofill.spec.ts` (dependent tab 1099-INT pre-fills 333-33-3333; Family Head 1099-DIV pre-fills 111-11-1111) — green. UI build clean. No e2e asserts an empty recipient on a fresh UI statement.
+
+
 ## 2026-07-11 — Dependent statements — curated "Select statement" picker (mirrors the spouse mechanism)
 
 Analyzed and documented whether the app produces standalone dependent returns (yes — full stack) and its limitations (in outstanding.md), then gave dependents their own statements the same way the spouse has them.

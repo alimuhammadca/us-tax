@@ -10,6 +10,13 @@ Closed the last piece of Gap 4972-1: the 2025 Form 4972 Part I has six eligibili
 **Tests:** `form4972PartIQ6BeneficiaryPriorElectionDisqualifies` (Q6=Yes → null form + FORM4972_TAXPAYER_INELIGIBLE flag), a Q6 assertion added to `form4972_partIQuestions2to5_carriedToModel`, and an extended `form4972-8863-preview-render.spec.ts` e2e (part1_question_06_no renders through the full intake→compute→persistence→preview chain, 6/6 green). Core suite 976/976; UI builds; healthy boot applied V113.1 + V113.2.
 
 
+## 2026-07-11 — Dependent's own return: explicit EIC / §152 self-claim advisory
+
+Made the dependent-return credit limitations explicit instead of correct-by-omission. On a `dependent_own` return the filer can, by definition, be claimed as a dependent on another return, so the Earned Income Credit is structurally unavailable (IRC §32(c)(1)(A)(ii)(III)/§32(m)) and they can't claim their own personal exemption or dependents (§151(d)(2)/§152(b)(1)). The app already computed the return correctly (EIC never seeded on the scoped map; dependent-limited standard deduction), but gave no user-facing reason.
+
+`prepare()` now emits a non-blocking advisory `DEPENDENT_OWN_RETURN_EIC_AND_SELF_CLAIM_DISALLOWED`, gated on the `filing-status.dependentOwnReturn` marker (the same marker added for the Form 8814 gate). Compute-only, no migration. `TaxReturnComputeServiceTest` 977/977 (the flag only fires on the dependent_own path, which unit tests don't exercise); `dependent-own-eic-ineligible.spec.ts` extended to assert the advisory is present + non-blocking while line 27a stays absent — green.
+
+
 ## 2026-07-11 — Statement recipient-SSN auto-fill (routes to the active person tab)
 
 Closed the residual from the dependent-statements work: a newly-created statement entry now pre-fills its recipient SSN with the active person tab's SSN, so it routes to that tab automatically instead of the user having to type the spouse's / dependent's SSN to make the recipientTIN/SSN filter match. Benefits taxpayer, spouse, and dependent alike.

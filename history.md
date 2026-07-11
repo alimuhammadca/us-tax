@@ -1,6 +1,11 @@
 ﻿# History
 
 
+## 2026-07-11 — Form 8853 (Archer MSA + LTC) Increment 4: e2e — feature COMPLETE
+
+Added `e2e/tests/line8853-msa-ltc.spec.ts` and ran it green (11s): it seeds a W-2, a 1099-SA Archer-MSA distribution ($800), a 1099-LTC per-diem benefit ($20,000), and the `msa-ltc-taxpayer` form (self-only $3k deductible, $1k contributed, $50k compensation, $600 unreimbursed medical, $20k qualified LTC over 30 days), then computes and asserts the full stack — Schedule 1 line 23 (Archer MSA deduction) = $1,000 and line 8e (Archer taxable $200 + LTC taxable $7,400) = $7,600 — with no manual entry. **Form 8853 is now complete end-to-end** (compute algorithm → dedicated intake form + persistence → Schedule 1/2 wiring → output persistence → e2e), matching the Form 8889 build. Form 4797 remains the only deferred form in this section (pulls in self-employment; out of scope for now).
+
+
 ## 2026-07-11 — Form 8853 (Archer MSA + LTC) Increment 3: output persistence
 
 Threaded the computed `Form8853` into the output pipeline so the per-person worksheet (lines 1–26) survives a GET reload. Added `form8853Taxpayer` + `form8853Spouse` to the `TaxReturnComputation` record (2 fields; all 5 positional construction sites updated) + persistence via `OutForm8853` (`out_form_8853`, one row per (uid, owner_role), V111) with `AbstractForm8853OutputMapper` + `Form8853Taxpayer/SpouseOutputMapper` (mirrors `OutForm8889`), wired into `TaxReturnDataService` save + load. Healthy boot ran V111 + passed Hibernate schema validation with no mapper-conflict warning. `TaxReturnComputeServiceTest` 971/971. Only Increment 4 (e2e) remains.

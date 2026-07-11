@@ -1,6 +1,11 @@
 ﻿# History
 
 
+## 2026-07-11 — Form 8853 (Archer MSA + LTC) Increment 3: output persistence
+
+Threaded the computed `Form8853` into the output pipeline so the per-person worksheet (lines 1–26) survives a GET reload. Added `form8853Taxpayer` + `form8853Spouse` to the `TaxReturnComputation` record (2 fields; all 5 positional construction sites updated) + persistence via `OutForm8853` (`out_form_8853`, one row per (uid, owner_role), V111) with `AbstractForm8853OutputMapper` + `Form8853Taxpayer/SpouseOutputMapper` (mirrors `OutForm8889`), wired into `TaxReturnDataService` save + load. Healthy boot ran V111 + passed Hibernate schema validation with no mapper-conflict warning. `TaxReturnComputeServiceTest` 971/971. Only Increment 4 (e2e) remains.
+
+
 ## 2026-07-11 — Form 8853 (Archer MSA + LTC) Increment 2c: Angular MSA/LTC form
 
 New standalone `form-msa-ltc.component.ts` (`formId` input for `msa-ltc-taxpayer`/`-spouse`) with a screening gate and Section A (Archer MSA — coverage, deductible, contributions, compensation, unreimbursed medical, 20%-exception), Section B (Medicare Advantage MSA — unreimbursed medical, 50%-exception), and Section C (Long-Term Care — insured name/SSN, qualified per-diem, accelerated death benefits, days in period, service costs, reimbursements, terminally-ill flag) behind a collapsed details. Loads/saves via `PersonalDataService`; wired into the shell (import + imports[] + routes + two "Archer MSA / LTC (Form 8853)" sidebar items). UI builds clean. Remaining: Increment 3 (`OutForm8853` output persistence) + 4 (e2e).

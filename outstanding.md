@@ -2996,7 +2996,15 @@ When the deferred items above land, update `STATEMENT_SSN_RULES` and remove the 
 
   **Deferred** because the project is mid-migration from `<app-pdf-readonly-preview>` PDF embeds to pixel-perfect HTML/CSS forms (see the 2026-05-18 Form 1040 migration entry above). HTML forms bind directly by semantic name with no PDF-field-position mapping required, so this entire class of bug disappears once Schedule 2 is migrated. Re-curating the existing PDF mapping would be throwaway work. **When Schedule 2 is rebuilt in HTML/CSS, verify Test 1 visually shows $4 on line 5 only, with lines 3 and 6 empty.**
 
-## Form 8889 / Form 8853 / Form 4797 — standalone compute deferred (2026-06-07)
+## Form 8889 / Form 8853 / Form 4797 — standalone compute (Form 8889 IN PROGRESS 2026-07-11; 8853/4797 deferred)
+
+**Form 8889 (HSA) — user chose Full Parts I+II+III + a dedicated HSA intake form (2026-07-11).** Multi-increment build:
+- **Increment 1 — backend compute algorithm — DONE 2026-07-11.** `Form8889` output model (lines 1–21) + pure static `TaxReturnComputeService.computeForm8889FromInputs` (Part I contributions/deduction incl. self-only/family limit proration + $1,000 age-55 catch-up; Part II distributions → taxable → 20% tax; Part III recapture → 10% tax) + 2025 constants in `ReferenceData` (`HSA_CONTRIBUTION_LIMIT_SELF_ONLY`=4300, `_FAMILY`=8550, `HSA_CATCHUP_CONTRIBUTION`=1000, `HSA_RECAPTURE_ADDITIONAL_TAX_RATE`=0.10). 2 unit tests (worked example → line 13=5,000 / line 16=500 / line 17b=100; proration + 17a-exception). `TaxReturnComputeServiceTest` 968/968. **Note: the catch-up is $1,000 fixed by statute, not the $1,100 an early research draft guessed.**
+- **Increment 2 (next) — intake + wiring.** New dedicated `hsa-taxpayer` / `hsa-spouse` personal form (entity + mapper + migration + `PersonalResource` allow-list + `UserDataBulkDelete` catalog + Angular form + sidebar); service wrapper `computeForm8889` that resolves the form inputs + sums line 14a from the person's HSA-flagged 1099-SA statements (read-only) + derives catch-up from DOB; wire line 13 → Schedule 1 line 13, line 16/line 20 → Schedule 1 line 8f, line 17b → Schedule 2 line 17c, line 21 → Schedule 2 line 17d (prefer computed over the existing manual fields, keep manual as override).
+- **Increment 3 — output persistence + reload** (`OutForm8889` + mapper + migration + `TaxReturnComputation` record for taxpayer/spouse). **Increment 4 — e2e.**
+- **Constraint (per user 2026-07-11):** no `form-tax-return-8889` preview, no 1099-SA statement-form changes; confirm any new user-input field before adding (dedicated-form fields pre-approved).
+
+**Form 8853 / Form 4797 — still deferred** (per the original write-up below).
 
 Per XLS/Computations/8.md §4.8 + §4.9, these three forms remain user-fill-only stubs:
 

@@ -1,6 +1,17 @@
 ﻿# History
 
 
+## 2026-07-11 — Form 8615 (kiddie tax) — parent's own preferential income auto-derived (line 10 QDCG)
+
+Follow-up to the same-day preferential-rate work: the parent's own qualified dividends + net capital gain now feed Form 8615 line 9 and line 10, so line 10 uses the Qualified Dividends and Capital Gain Tax Worksheet on the parent's income instead of the ordinary bracket. This makes line 11 (the parent-rate tentative tax) exact when the parent has preferential income and the child's net unearned income has an ordinary component — previously line 10 was bracket-only, which only cancelled out when the parent had no preferential income.
+
+**Auto-derived, no input field.** Because the person filing is never themselves the kiddie-tax child (kiddie tax only arises on the `dependent_own` path, where the "parent" is the household's own computed return), the parent's preferential income is pulled from the parent's computed return rather than entered by hand — mirroring how the parent's taxable income + filing status are already auto-seeded. `KiddieTaxParentReader.ParentReturnInfo` gained a `preferentialIncome` field (computed by a new `preferentialIncomeOf(Form1040, ScheduleD)` that mirrors the child-side derivation); `DependentOwnFormScoper` seeds it onto the synthetic kiddie form as `parentQualifiedDivCapGainLine6`; `computeForm8615` reads it (`parentPref`, capped at line 6) into line 9's preferential income and line 10's QDCG. (An earlier draft added a manual input field + DB column for this; it was backed out in favour of the auto-derive once we confirmed the filer is never the child.)
+
+**Tests:** `line16Form8615PreferentialRateParentOwnCapitalGains` (compute math → line 13 $3,432 vs $4,439 without the parent's preferential income), `preferentialIncomeOf` + scoper-seed unit tests (7 new in `KiddieTaxCrossReturnReadTest`), and e2e `dependent-own-kiddie-tax.spec.ts` (parent $200k wages + $40k qualified dividends → Form 8615 line 6 = $224,250, line 10 = $43,067 QDCG vs $48,823 bracket — pins independent of the child's standard deduction). Full backend suite 1458/1458.
+
+**Still deferred:** the other affected children's preferential income (Form 8615 line 7, multi-child families) and the 28%/§1250 Schedule D Tax Worksheet path — the manual `childFinalTaxLine18` override covers both.
+
+
 ## 2026-07-11 — Form 8615 (kiddie tax) preferential-rate paths — QDCG worksheet on lines 9/15/17
 
 Closed the Priority-4 "preferential-rate paths" deferral. Form 8615 lines 9/15/17 now use the Qualified Dividends and Capital Gain Tax Worksheet (0%/15%/20%) when the child has qualified dividends or net long-term capital gain — the usual kiddie-tax trigger — instead of always taxing at ordinary rates. This matters because a child's unearned income is frequently qualified dividends / capital gains, and the parent-rate portion (line 13) was over-taxed at the parent's ordinary bracket.

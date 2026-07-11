@@ -1,6 +1,15 @@
 ﻿# History
 
 
+## 2026-07-11 — Form 4972 Part I Question 6 — collect + enforce (kiddie-tax-style eligibility gate fix)
+
+Closed the last piece of Gap 4972-1: the 2025 Form 4972 Part I has six eligibility questions, but Q6 was neither collected nor checked. Q6 is the beneficiary counterpart of Q5 — if you receive a lump-sum distribution as the beneficiary of a deceased participant and already used Form 4972 for another distribution for that same participant after 1986, you're disqualified. The eligibility gate (`q1 && q2noRollover && q3orQ4 && q5noPrior`) never tested it, so a repeat beneficiary election would incorrectly still qualify — a real tax-correctness gap, not just a blank preview checkbox.
+
+**Added end-to-end, mirroring Q5:** a new Yes/No card "Q6" on the Lump-sum distributions intake form (`form-lump-sum-distribution.component.ts`, Incomes section, serving both taxpayer + spouse via the `person`/prefix logic) → `PfLumpSumDistribution` column + `LumpSumDistributionMapper` (V113.1) → `computeForm4972` folds `q6noPrior` into the `eligible` gate and sets `Form4972.partIQ6PriorBeneficiaryElection` → `OutForm4972` column (V113.2, so the checkbox survives a reload) → `form-tax-return-4972.component.ts` maps `part1_question_06_yes/no`. The new input field was surfaced for the owner's sign-off before adding, per the field-add gate.
+
+**Tests:** `form4972PartIQ6BeneficiaryPriorElectionDisqualifies` (Q6=Yes → null form + FORM4972_TAXPAYER_INELIGIBLE flag), a Q6 assertion added to `form4972_partIQuestions2to5_carriedToModel`, and an extended `form4972-8863-preview-render.spec.ts` e2e (part1_question_06_no renders through the full intake→compute→persistence→preview chain, 6/6 green). Core suite 976/976; UI builds; healthy boot applied V113.1 + V113.2.
+
+
 ## 2026-07-11 — Form 8615 (kiddie tax) — parent's own preferential income auto-derived (line 10 QDCG)
 
 Follow-up to the same-day preferential-rate work: the parent's own qualified dividends + net capital gain now feed Form 8615 line 9 and line 10, so line 10 uses the Qualified Dividends and Capital Gain Tax Worksheet on the parent's income instead of the ordinary bracket. This makes line 11 (the parent-rate tentative tax) exact when the parent has preferential income and the child's net unearned income has an ordinary component — previously line 10 was bracket-only, which only cancelled out when the parent had no preferential income.

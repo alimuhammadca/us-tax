@@ -1,6 +1,34 @@
 ﻿# History
 
 
+## 2026-07-12 — Full e2e regression + statement-picker e2e fix
+
+Ran the **full Playwright e2e regression** against the live stack (Docker Postgres Dev Services + backend
+`:8080` + UI `:4200`, phone auth): **1170 passed / 1 failed / 13 skipped / 0 flaky** of 1184 tests
+(`--workers=1`, 2.2 h). The 13 skips are pre-existing intentional `test.skip`s (e.g. the parked multi-code
+Box-3 line-16 500).
+
+The single failure — **`dependent-statement-picker.spec.ts`** — was a **stale assertion from the earlier
+statement-picker cleanup**, not an app regression. When Forms **8814 (`child-interest-dividends`), 6252, and
+8606** were removed from the "Select statement" picker (us-tax-ui `857e68e` — they are tax-return forms the
+taxpayer files, not received information statements), the *frontend* unit spec was updated but this *backend*
+e2e spec was missed. It asserted 8814 still appears in the taxpayer's "full" picker. Fixed the spec to assert
+`child-interest-dividends` is absent (`toHaveCount(0)`) on the taxpayer tab too, keeping `1099-nec` / `1099-sa`
+as the taxpayer-vs-dependent picker-breadth evidence; re-ran green (25.8 s). Verified the other
+`child-interest-dividends` / `6252` / `8606` e2e references are API entry-creation or Incomes-sidebar
+navigation (the form still exists — only its picker entry was removed), so they were unaffected. us-tax-be
+`b166d0a`.
+
+Context (same session, SQA-only): authored **Tier B2 — commercial-conformance blocking/validation scenarios**
+`sc_00255`–`sc_00266` (12 cases) in `c:/us-tax-sqa`, folding the app's blocking-with/without-override
+situations into the suite but designed to run against a **third-party commercial product** — each pins the
+IRS-correct outcome as the pass criterion and records the product's enforcement style (block / warn /
+silent-correct = PASS; silent-wrong = FAIL) as an observation, deliberately NOT encoding our
+overrideable/non-overrideable flag taxonomy or HTTP-409. SQA suite 254 → 266. Remaining blocking families
+(deferred candidates + deliberately-excluded intake-completeness flags) recorded in `outstanding.md`
+(us-tax `f8fd148`); suite committed in us-tax-sqa `2c3d515`.
+
+
 ## 2026-07-12 — SQA↔e2e gap-closure Phase 7 (self-employment SQA scenarios) + PROGRAM COMPLETE
 
 **Phase 7 (SQA-only, no backend/e2e):** authored 22 comprehensive self-employment test scenarios

@@ -1,6 +1,106 @@
 ﻿# History
 
 
+## 2026-07-12 — SQA↔e2e gap-closure Phase 7 (self-employment SQA scenarios) + PROGRAM COMPLETE
+
+**Phase 7 (SQA-only, no backend/e2e):** authored 22 comprehensive self-employment test scenarios
+(`sc_00233`–`sc_00254`) in `c:/us-tax-sqa` — a new IRS-oracle domain (Schedule C/SE/F was out of scope in the
+base suite). Covers Schedule C + Schedule SE basics (sole-prop full flow, net loss, 1099-NEC, 1099-K,
+above/at the $176,100 SS base, W-2-reduces-base, <$400 floor, statutory employee), SE deductions (SE health,
+SEP-IRA, home office, standard mileage $0.70, §179, meals 50%), QBI on SE income (below threshold, SSTB above
+ceiling → $0, non-SSTB wage limit), and Schedule F / hobby / Qualified Joint Venture / multiple businesses /
+estimated-tax penalty. Added a self-employment constants block to `_shared/2025_tax_constants.md`; generated
+the QA xlsx; rebuilt the master rollup to **254 scenarios** (save-suppression, zero collateral); updated
+`coverage_index.md`. These are gap-finders until self-employment compute is built.
+
+**★ SQA↔e2e gap-closure program COMPLETE — all 8 phases (0–7) done & green.** Phases 0–6 delivered verified
+us-tax-be backend + UI + e2e (medical/SALT floors + NIIT; mortgage $750k/$1M limitation; charitable
+60/50/30% AGI limits; casualty Form 4684 floors; Schedule E rental + §280A; §465 at-risk + §469 passive
+limits; K-1 ordinary income → line 5). Migrations V114–V118; rules.md guardrails #11–#17; new e2e specs
+`form8960-niit`, `schedule-a-itemized` (15 tests), `schedule-e-rental-income` (9 tests). The SQA suite grew
+225 → 254. See memory `project_sqa_e2e_gap_closure_program` for the full phase log.
+
+
+## 2026-07-12 — SQA↔e2e gap-closure Phase 6 (Schedule K-1 ordinary business income → Schedule 1 line 5)
+
+Routed Schedule K-1 ordinary business income to Schedule 1 line 5 (Schedule E Part II) — previously only the K-1 capital-gain portions were routed (to Schedule D); box-1/box-6 ordinary income was stored but dropped. Closes SQA sc_00089.
+
+**Compute-only change** (no statement or Tax Return form touched — the K-1 forms are received *statements*, see below): new `sumK1OrdinaryBusinessIncome(...)` sums `part3Line1OrdinaryBusinessIncomeLoss` (1065 & 1120-S box 1) + `part3Line6OrdinaryBusinessIncome` (1041 box 6) across all K-1 statement entries via `parseAmount`, and adds it to Schedule 1 line 5 in `computeOtherIncomes` (new param). Added to the `hadAnyAdditionalIncome` gate so a K-1-only return builds Schedule 1. Treated as nonpassive.
+
+**IRS classification confirmed (user question):** Schedule K-1 is an information statement the taxpayer *receives* from the entity, NOT a form the individual files — per the K-1 instructions (quoted in J.K. Lasser 2025 §12.15): "reported to you (and the IRS) by the fiduciary on Schedule K-1... **You do not file Schedule K-1 with your return; keep it for your records.**" The taxpayer uses it to fill their Schedule E / D / B. So the K-1 forms correctly belong in the **Statements** section (same category as W-2/1099); the earlier "added by mistake" premise was wrong. User confirmed keeping them in Statements.
+
+**Verified:** e2e `schedule-e-rental-income.spec.ts` sc_00089 (K-1 1065 box 1 $18,000 + $70k wages → line 5 $18,000, line 9 $88,000) green on the live dev backend (hot-reloaded; no migration). `TaxReturnComputeServiceTest` unchanged (the Java harness lacks K-1 statement support; the e2e is authoritative). **Parked in outstanding.md:** passive/nonpassive K-1 §469 determination, MFS attribution of K-1 entries, the K-1 forms' non-semantic String fields + eventual semantic-field rework, other K-1 box types, a Schedule E Part II preview form.
+
+
+## 2026-07-12 — SQA↔e2e gap-closure Phase 5 (passive-activity Form 8582 + at-risk Form 6198 + RE professional)
+
+Layered the §465 at-risk and §469 passive-loss limitations onto the Phase 4 rental engine — previously an ordinary rental loss flowed to Schedule 1 line 5 unlimited. Closes SQA sc_00073–00078.
+
+**New fields on the `rental-income` form** (+ entity + mapper + **V118**): per-property `amountAtRisk`, `activeParticipation`, `materialParticipation`, `priorYearSuspendedPassiveLoss`, `fullyDisposedInCurrentYear`; return-level `isRealEstateProfessional`, `otherPassiveIncome`. Angular component + payload/load extended.
+
+**Compute** (`computeRentalScheduleE`, now takes modified AGI): ordered — (1) **§465 at-risk** caps each loss at the amount at risk (excess → `rentalAtRiskCarryforward`); (2) **RE professional / material participation** → nonpassive (full loss); (3) **§469** nets passive losses against passive income (incl. `otherPassiveIncome`), allows up to the **$25,000 active-participation special allowance** (phased out 50% of MAGI over $100k, gone at $150k), suspends the excess (`rentalPassiveLossCarryforward`), and **releases ALL suspended losses on full disposition** (§469(g)). Modified AGI = income lines 1z–7 (wages + interest/dividends/IRA/pension/cap-gain, excluding taxable SS and the passive loss), computed at the call site.
+
+**Verified:** 6 Java unit tests (full suspension MAGI>$150k; allowance phaseout $15k allowed/$3k suspended; disposition releases $22k; passive netting $0/$3k suspended; at-risk $15k allowed/$5k suspended; RE-professional full $40k) — `TaxReturnComputeServiceTest` 999/999 green. e2e `schedule-e-rental-income.spec.ts` now **8/8** (added sc_00074/75/77/78 on the live stack, V118). Frontend `npm run build` clean (after fixing the model literal for the two new required props). sc_00073 (full suspension) and sc_00076 (netting) net to $0 on line 5 — whose empty Schedule 1 Part I the serializer prunes — so they are covered by the Java unit tests (same $0-Part-I limitation as Phase 4).
+
+
+## 2026-07-12 — SQA↔e2e gap-closure Phase 4 (Schedule E rental/royalty net income + §280A)
+
+Built the first income-side gap closure: a real Schedule E Part I computation. Previously `rentalRealEstateRoyaltiesLine5` was a single user-entered number on the other-incomes form with no computation (Schedule E was only a required-attachment marker) — the intake-only gap SQA sc_00066–00071/00218 flagged.
+
+**New dedicated personal form `rental-income-taxpayer`/`-spouse`** (repeatable per property): parent `PfRentalIncome` + child `PfRentalProperty` entities, `RentalIncomeMapper` (child list under `taxpayerProperties`/`spouseProperties`), migration **V117** (two tables, uid+parent cascade), `PERSONAL_FORMS` allowlist, `UserDataBulkDelete` catalog, and a standalone Angular `FormRentalIncomeComponent` (add/remove properties) wired into the Incomes sidebar for both tabs. 11 per-property fields (type, description, rents/royalties, mortgage+tax, other operating expenses, depreciation, depletion, rental/personal days, below-market flag).
+
+**Compute** (`computeRentalScheduleE` → Schedule 1 line 5): per property net = income − expenses − depreciation/depletion; royalty depletion auto-computes at **15% percentage depletion**; a **§280A personal residence** (personal use > max(14 days, 10% of rental days), or below-market) applies the ordered deduction limit (mortgage/taxes → operating → depreciation), allows **no loss**, and carries disallowed depreciation forward (`Schedule1AdditionalIncome.rentalDepreciationCarryforward`). Ordinary rentals may show a loss (passive-activity limits are Phase 5). Threaded one param through `computeOtherIncomes`; when properties exist the computed net replaces the manual field. MFS suppresses the spouse leg.
+
+**Verified:** 5 Java unit tests (basic net $3,000; royalty w/ 15% depletion $16,000; §280A net $0 + $1,900 carryover; below-market no-loss; 3-property aggregate $22,000) — `TaxReturnComputeServiceTest` 993/993 green. e2e `schedule-e-rental-income.spec.ts` **4/4** on the live stack (V117), asserting Schedule 1 line 5 + carryforward + Form 1040 line 9. Frontend `npm run build` clean. **Deferred (outstanding.md):** a $0-net rental-only return has its Schedule 1 Part I pruned by the output serializer (hides the carryforward until any non-zero additional income is present — the e2e pairs the §280A property with a positive rental to exercise it); multi-return dual-write trigger for the new tables; a dedicated Schedule E preview form.
+
+
+## 2026-07-12 — SQA↔e2e gap-closure Phase 3 (Schedule A casualty Form 4684 §165(h) floors)
+
+Implemented the Form 4684 Section A personal-casualty computation — previously `personalCasualtyAndTheftLoss` was intake-only (user pre-computed the net loss; no floors, no disaster gate). These were the intake-only gaps SQA sc_00135–00137 flagged.
+
+**New fields (4)** on the deductions form: `casualtyPropertyAdjustedBasis`, `casualtyFmvDecline`, `casualtyInsuranceReimbursement`, `casualtyIsFederallyDeclaredDisaster` — entity + `StandardDeductionsMapper` (in/out) + migration **V116** + Angular UI (added the 3 raw inputs under the existing disaster gate; kept the legacy net field as an optional fallback). **Compute** (`buildScheduleA`): deductible = `max(0, (min(basis, FMVdecline) − insurance) − $100/event − 10%×AGI)`, only when a federally declared disaster (else $0 — covers the non-disaster/theft negatives sc_00136/00137); when the raw inputs are absent it falls back to the pre-computed net loss. `ReferenceData` constants ($100, 10%). sc_00138 (qualified-disaster $500 floor → standard-deduction increase) was already handled via the existing `netQualifiedDisasterLoss` path.
+
+**★ Cross-phase UI bug caught + fixed:** the deductions form's save payload is an explicit allowlist, and the Phase 1 (mortgage limitation) and Phase 2 (charitable capital-gain) UI fields had **never been added to it** — they rendered but were silently dropped on a UI save (the e2e passed only because it saves via API, bypassing the builder). Added all Phase 1/2/3 fields to the save payload, the load-time section-gate derivations, and the casualty required-field validation (now satisfied by either the raw inputs or the net field).
+
+**Verified:** 2 new Java unit tests (disaster loss $11,900 after floors; non-disaster → $0 with only mortgage surviving) — `TaxReturnComputeServiceTest` 988/988 green (0 regressions). e2e `schedule-a-itemized.spec.ts` now **15/15** (sc_00135/136/137) on the live stack (backend restarted for V116). Frontend build clean. Single-event Form 4684 (multi-event deferred); §1033 involuntary-conversion gain deferral (sc_00139/140) is a separate mechanism, out of this phase (outstanding.md).
+
+
+## 2026-07-12 — SQA↔e2e gap-closure Phase 2 (Schedule A charitable 60/30/20% AGI limits + carryover)
+
+Implemented the IRC §170(b) charitable-contribution AGI ceilings — previously cash + non-cash + prior carryover were summed with **no ceiling**, so gifts above 60%/30% of AGI were over-deducted and no carryover was generated (the intake-only gaps SQA sc_00127–00134 flagged).
+
+**New field (1):** `charitableCapitalGainPropertyContributions` on the deductions form (long-term appreciated property donated at FMV → 30% bucket) — entity + `StandardDeductionsMapper` (in/out) + migration **V115** + Angular UI. Existing `charitableCashContributions` → 60% bucket; `charitableNonCashContributions` relabeled "at cost basis" → 50% bucket. **New output:** `ScheduleA.charitableCarryforwardToNextYear` (model-only, like the investment-interest carryforward).
+
+**Compute** (`buildScheduleA`): each bucket capped at its % of AGI; per-bucket excess summed into the next-year carryover; line 11 = deductible cash, line 12 = deductible basis + capital-gain property. Independent per-bucket limits (the combined 50% overall ceiling + ordering rule for simultaneous large cash+capital-gain gifts is deferred — no SQA case exercises it). Prior-year carryover applied to the cash bucket before its ceiling.
+
+**Two bugs found + fixed during test (principled diagnosis, not test-tweaking):** (1) `minAmount(null, ceiling)` returns the ceiling, so an *absent* bucket injected a phantom deduction equal to its AGI limit (null capital-gain bucket added 0.30×AGI = $30,000 to an unrelated regression test) — fixed by guarding each bucket on non-null. (2) The "is Schedule A empty?" short-circuit didn't include the new capital-gain field, so a capital-gain-only return returned a null Schedule A — added `charitableCapGain == null` to the guard.
+
+**Verified:** 5 new Java unit tests (60% cash full/over+carryover, 30% capital-gain full/over+carryover, 50% basis) — `TaxReturnComputeServiceTest` 986/986 green (0 regressions). e2e `schedule-a-itemized.spec.ts` now 13/13 (sc_00127/128/129/130/134) on the live stack (backend restarted for V115). Frontend build clean. **Liquibase gotcha hit + fixed:** V115's header comment had wrapped lines starting with "property" (a reserved directive word) → `ChangeLogParseException`; reworded to flat prose (see `feedback_liquibase_formatted_sql_bullet_block`). sc_00131/132/133 (quid-pro-quo, donated car, appraisal) stay pass-through (user enters the net deductible amount).
+
+
+## 2026-07-12 — SQA↔e2e gap-closure Phase 1 (Schedule A home-mortgage-interest limitation + points amortization)
+
+Implemented the Pub 936 home-acquisition-debt limitation and points amortization on Schedule A — previously `homeMortgageInterestPaid` / `homeMortgagePointsPaid` were summed intake-only (the user pre-limited them), so the software never enforced the $750k/$1M caps and always deducted refinance points in full. These were the intake-only gaps the SQA suite (sc_00120–00125) flagged.
+
+**New intake fields** on the deductions personal form (`standard-deductions-taxpayer`/`-spouse`; surfaced for sign-off before adding — not a statement or tax-return form): `homeAcquisitionDebtAverageBalance`, `mortgageAcquisitionDebtLimitTier` (POST_2017 $750k/$375k MFS · Y1987_2017 $1M/$500k MFS · GRANDFATHERED unlimited), `homeMortgagePointsType` (DEDUCT_IN_FULL vs AMORTIZE), `homeMortgagePointsLoanTermMonths`, `homeMortgagePointsMonthsThisYear` (default 12). Entity + `StandardDeductionsMapper` (in/out) + migration **V114** + Angular UI (interest section, tier radio shown only when a balance is entered; amortization inputs shown only for refinance points).
+
+**Compute** (`buildScheduleA`): deductible interest = interest × (limit ÷ average balance) when the average acquisition-debt balance exceeds the tier limit (grandfathered/unset tier = no limit → legacy rows unchanged); refinance points amortize as points ÷ term-months × months-in-2025; purchase points deduct in full. New `mortgageAcquisitionLimit(tier, status)` helper (mirrors the SALT-limit helper); `ReferenceData` constants added. Backward compatible: blank balance or balance ≤ limit reproduces prior behavior.
+
+**Verified:** 4 new Java unit tests (acquisition proration $40k→$30k, grandfathered $900k full, refinance points $6k/360×6=$100, purchase points full) — `TaxReturnComputeServiceTest` 981/981 green. e2e `schedule-a-itemized.spec.ts` extended with sc_00121/00122/00124/00125 — 8/8 green on the live stack (backend restarted for V114). Frontend `npm run build` clean. sc_00123 (home-equity use-of-proceeds tracing) stays pass-through — it's a user-judgment call at intake, not a computation (logged in outstanding.md).
+
+
+## 2026-07-11 — SQA↔e2e gap-closure Phase 0 (NIIT + itemized Schedule A e2e coverage; 7 new SQA oracles)
+
+Kicked off an 8-phase program (0→7) to close the two-way coverage gap between the IRS-oracle SQA scenario suite (`c:/us-tax-sqa`) and the Playwright e2e suite. A suite comparison found the e2e suite had **no value-level coverage** of two features the backend already computes: **NIIT (Form 8960)** and the **itemized Schedule A medical 7.5% floor / SALT $40k cap + 30% phasedown** (the existing `line12e` spec seeded no wages, so AGI was null and the floor/cap never bit).
+
+**Phase 0 (zero-risk, no backend change) — DONE & GREEN (7/7):**
+- `e2e/tests/form8960-niit.spec.ts` — pins NIIT to IRS oracle values: sc_00174 (MAGI $240k → $1,520, capped by the $40k MAGI-excess not the $60k NII), sc_00186 boundary (MAGI exactly $200k → $0), and the MFJ combine ($2,660 against the $250k threshold).
+- `e2e/tests/schedule-a-itemized.spec.ts` — seeds real wages so the math bites: medical floor sc_00106 ($4,500 floor / $5,500 deductible), SALT cap sc_00114 ($50k→$40k), SALT phasedown sc_00116 (MAGI $550k → $25k cap), itemize-vs-standard election sc_00100. The software's outputs matched the SQA hand-computed oracle values exactly, cross-validating both.
+- SQA side: 7 new oracle scenarios **sc_00226–sc_00232** (Schedule R elderly/disabled, Form 8834 QEV, 8911 alt-fuel, 8912 bond, 8859 D.C. homebuyer carryforward, 8815 savings-bond exclusion, 8853-LTC per-diem excess) — these are e2e-tested features that previously had no IRS oracle. Master rollup rebuilt to 232 without disturbing the 225 existing sheets' tester-entered data.
+
+Ran locally against the full dev stack (Docker Postgres + Quarkus dev + Angular), phone/code auth, `--workers=1`. Phases 1–6 (mortgage $750k cap, charitable AGI limits, casualty 4684 floors, Schedule E rental, passive-loss 8582 / at-risk 6198, K-1 ordinary routing) implement currently intake-only compute and each open with a new-field sign-off gate; Phase 7 is a comprehensive self-employment SQA set (SQA-only).
+
+
 ## 2026-07-11 — Form 4972 Part I Question 6 — collect + enforce (kiddie-tax-style eligibility gate fix)
 
 Closed the last piece of Gap 4972-1: the 2025 Form 4972 Part I has six eligibility questions, but Q6 was neither collected nor checked. Q6 is the beneficiary counterpart of Q5 — if you receive a lump-sum distribution as the beneficiary of a deceased participant and already used Form 4972 for another distribution for that same participant after 1986, you're disqualified. The eligibility gate (`q1 && q2noRollover && q3orQ4 && q5noPrior`) never tested it, so a repeat beneficiary election would incorrectly still qualify — a real tax-correctness gap, not just a blank preview checkbox.

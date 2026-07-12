@@ -3597,3 +3597,37 @@ Verification 2026-07-10: all artifacts present; `ConsideredUnmarriedEligibilityS
   **Status:** Phase A in progress (kept-up-home inputs + eligibility service). Phases B–E pending. S0 (MFJ) and S1 (MFS+MFS) paths stay byte-for-byte identical — all new behavior is additive and flag-gated.
 
   **Open verification items (design §8):** §7703(b) reference-chain nuance for the MFS-leg-coupled-to-HOH-leg case (implemented conservatively); residency semantics ("with claiming parent"); §152(e) release representability; community-property states (out of scope, flagged); feature-flag sub-flag for staged HOH rollout.
+
+## Schedule A mortgage interest — home-equity tracing (sc_00123) — user-judgment, not computed (2026-07-12)
+
+Gap-closure Phase 1 implemented the Pub 936 $750k/$1M acquisition-debt limitation and points amortization (see history 2026-07-12). One related Chapter-17 case is deliberately **not** auto-computed: **sc_00123 home-equity use-of-proceeds tracing** (§17.3). Whether home-equity-loan interest is deductible depends on whether the proceeds were used to buy/build/substantially improve the securing home — a fact the software cannot derive from amounts. The user enters only the deductible (acquisition-debt) interest on `homeMortgageInterestPaid`; the field help already states "only interest on acquisition debt is deductible." Treated as intake guidance (pass-through), consistent with the analogous charitable/casualty user-precomputed inputs. No compute or blocker planned.
+
+## Schedule A charitable — combined 50% ceiling + user-entered special cases (2026-07-12)
+
+Gap-closure Phase 2 implemented the IRC §170(b) per-bucket AGI ceilings (60% cash / 50% basis / 30% capital-gain FMV) + carryover (history 2026-07-12). Deferred/pass-through:
+- **Combined 50%-of-AGI overall ceiling + ordering rule** when a return has BOTH large cash and large capital-gain-property gifts in the same year — the buckets interact (30% capital-gain is further limited so total ≤ 50%). Implemented as independent per-bucket limits; no SQA scenario exercises the interaction. Revisit if a combined-large-gift case surfaces.
+- **Carryover character-tracking:** prior-year carryover (`priorYearCharitableContributionCarryover`) is applied to the cash/60% bucket before its ceiling; IRS tracks carryover by original bucket character. No scenario tests carryover-in-with-limit.
+- **sc_00131 (quid pro quo), sc_00132 (donated car → gross sales proceeds), sc_00133 (property >$5k appraisal/Form 8283):** user enters the already-net/limited deductible amount (pass-through, like sc_00123). Form 8283 trigger banners already exist in the UI.
+
+## Schedule A casualty — multi-event Form 4684 + §1033 involuntary conversion (2026-07-12)
+
+Gap-closure Phase 3 implemented single-event Form 4684 Section A ($100/event + 10%-AGI floors, disaster-gated; history 2026-07-12). Deferred:
+- **Multi-event Form 4684:** the current fields model ONE casualty event. A return with multiple separate casualties (each its own $100 floor) would need a repeatable per-event structure. No SQA scenario exercises multi-event.
+- **§1033 involuntary-conversion gain deferral (sc_00139 full, sc_00140 partial):** a different mechanism from a casualty LOSS — gain from insurance proceeds > basis, deferred if reinvested in replacement property. Not a Schedule A item; would need its own compute (recognized gain = proceeds − reinvested, capped at realized gain). Pass-through/deferred.
+
+## Schedule E rental — deferred items (2026-07-12)
+
+Gap-closure Phase 4 implemented Schedule E Part I net rental/royalty income + §280A (history 2026-07-12). Deferred:
+- **$0-net rental-only Schedule 1 Part I pruning:** when a return's ONLY additional income is a rental that nets to $0 (e.g. a §280A vacation home with all deductions absorbed), the output serializer prunes the empty Schedule 1 Part I, which also hides `rentalDepreciationCarryforward`. The carryforward surfaces whenever any non-zero additional income (another property, other Schedule 1 line) is present. Low impact; revisit if a Schedule E preview form needs the carryforward on a $0-net return.
+- **Multi-return dual-write trigger:** `pf_rental_income`/`pf_rental_property` carry a `person_id` column but no V66/V67-style trigger yet; the mapper queries by uid+owner_role (single-return path works). Add a trigger when rental is integrated into the MFS/dependent-own multi-return scoping.
+- **Dedicated Schedule E preview form:** the net flows to Schedule 1 line 5 and Schedule E remains a required-attachment marker; a full per-property Schedule E output/preview (lines 3–26) is not built.
+- **Passive-activity loss limits (Form 8582) + at-risk (Form 6198):** ordinary rentals may currently show a full loss on line 5 — the $25k allowance / MAGI phaseout / suspension is Phase 5 (sc_00073–00078).
+
+## Schedule K-1 ordinary income — parked follow-ups (2026-07-12)
+
+Gap-closure Phase 6 routed K-1 ordinary business income (1065/1120-S box 1, 1041 box 6) to Schedule 1 line 5 as **nonpassive** (history 2026-07-12; closes sc_00089). **IRS classification settled:** Schedule K-1 is a received information statement ("you do not file Schedule K-1 with your return; keep it for your records" — Schedule K-1 instructions / J.K. Lasser 2025 §12.15), so it correctly stays in the **Statements** section (not a Tax Return form). Parked:
+- **Passive vs. nonpassive K-1 determination + §469:** currently all routed K-1 ordinary income is treated nonpassive. A passive K-1 (no material participation) should net against other passive income and be subject to the §469 limitation (like rental). The material-participation flags exist (`part3Line22/23`) but are not yet reliable. Passive K-1 income is enterable manually via the rental form's `otherPassiveIncome` (Phase 5) as an interim path.
+- **K-1 forms rework:** the Schedule K-1 statement forms (1041/1065/1120-S) store amounts as raw **String** fields (non-semantic) and are pending a rework with semantic field names. Phase 6 parses them defensively via `parseAmount`. Revisit the routing keys after the rework.
+- **MFS attribution:** K-1 entries are summed across all entries without per-spouse (recipient TIN) filtering — same as the existing K-1 → Schedule D cap-gain routing. Add MFS attribution when the forms are reworked.
+- **Other K-1 boxes:** rental real estate (1065 box 2 / 1120-S box 2), guaranteed payments, §179, other income boxes — not routed. Only box-1 ordinary income (this phase) and the capital-gain boxes (pre-existing → Schedule D) flow today.
+- **Schedule E Part II preview form** in the Tax Return section (the form the K-1 flows into) — not built; the net reaches Schedule 1 line 5 directly.

@@ -3631,3 +3631,32 @@ Gap-closure Phase 6 routed K-1 ordinary business income (1065/1120-S box 1, 1041
 - **MFS attribution:** K-1 entries are summed across all entries without per-spouse (recipient TIN) filtering — same as the existing K-1 → Schedule D cap-gain routing. Add MFS attribution when the forms are reworked.
 - **Other K-1 boxes:** rental real estate (1065 box 2 / 1120-S box 2), guaranteed payments, §179, other income boxes — not routed. Only box-1 ordinary income (this phase) and the capital-gain boxes (pre-existing → Schedule D) flow today.
 - **Schedule E Part II preview form** in the Tax Return section (the form the K-1 flows into) — not built; the net reaches Schedule 1 line 5 directly.
+
+## SQA Tier B2 — remaining blocking families not converted to scenarios (2026-07-12)
+
+Follow-on to the SQA↔e2e gap-closure program: the application's blocking-with/without-override situations were folded into `c:/us-tax-sqa` as **Tier B2** commercial-conformance scenarios **sc_00255–sc_00266** (12 cases, IRS-correct-outcome pass criterion + enforcement-style observation; run against a third-party product, so they deliberately do NOT encode our overrideable/non-overrideable flag taxonomy or HTTP-409). Source landscape: 207 `TaxReturnFlag` emissions, ~103 blocking, 64 §17 non-overrideable codes (44 distinct rules after collapsing `_TAXPAYER`/`_SPOUSE` twins). What was **not** converted, and why:
+
+### A. IRS-universal, portable — candidate future Tier B2 cases (deferred, not yet authored)
+Each has a gradeable IRS-correct outcome; deferred only to keep the case count within the QA team's daily throughput.
+- **Premium Tax Credit MFS disallowance** (`PREMIUM_TAX_CREDIT_MFS_DISALLOWED`) — §36B(c)(1)(C), plus the abandoned-spouse/DV exception AND the APTC-repayment-still-required nuance (partial-handling, not a clean $0). sc_00255 covers EIC/education/SLI MFS but not PTC.
+- **Schedule 8812 ITIN → ACTC blocked** (`SCHEDULE_8812_ITIN_ACTC_BLOCKED`) — child must have an SSN for CTC/ACTC; ITIN filer/child interplay with credit-for-other-dependents.
+- **Student-loan-interest — can-be-claimed-as-dependent disallowed** (`SCHEDULE1_LINE21_STUDENT_LOAN_INTEREST_DEPENDENT_DISALLOWED`) — distinct from the MFS bar already in sc_00255.
+- **Attorney / whistleblower fees capped** (`SCHEDULE1_LINE24H_ATTORNEY_FEES_CAPPED_TO_INCOME`, `..._LINE24I_WHISTLEBLOWER_FEES_CAPPED_TO_AWARD`) — the above-the-line deduction is capped to the related income/award.
+- **OID box-2 tax-exempt exceeds total** (`OID_BOX2_TAX_EXEMPT_EXCEEDS_TOTAL_*`) — data-sanity; correct taxable-OID result.
+- **General Rule pension exclusion ratio** (`PENSION_GENERAL_RULE_EXCLUSION_RATIO_OUT_OF_RANGE_*`) — sc_00263 tests the Simplified Method only; the General Rule annuity taxable-amount path is untested.
+- **SS lump-sum election full computation** — sc_00263 tests behavior (requires prior-year data) but pins no computed taxable figure via the lump-sum worksheet.
+- **Form 5329 early-distribution penalty exception coding** (`FORM5329_EXCEPTION_REASON_MISSING`) — the 10% additional-tax exception result.
+- **Medicaid-waiver specific variants** (`MEDICAID_WAIVER_CODE_II_MISSING_QUALIFIED_*`, `..._W2_BOX1_UNSPECIFIED_*`, `..._LINE1D_TAXABLE_OVERLAPS_W2_BOX1_*`) — sc_00262 covers the base Notice 2014-7 exclusion only.
+- **Household-employer / contractor 8919 mismatch specifics** (`MISMATCH_CONTRACTOR_HOUSEHOLD_NEEDS_FORM_8919_*`, `WITHHOLDING_ON_CONTRACTOR_HOUSEHOLD_FIRM_NEEDS_1099_STATEMENT_*`, `FORM8919_CODE_H_1099_*`) — sc_00262 covers general Form 8919 only.
+- **Unemployment large repayment §1341** (`OTHER_INCOME_UNEMPLOYMENT_LARGE_REPAYMENT_OUT_OF_SCOPE_*`) — sc_00266 covers the §1341 claim-of-right mechanic generically, not the unemployment-specific case.
+
+### B. Intake-completeness / data-integrity flags — deliberately NOT portable (excluded by design)
+These validate that **our** intake forms collected complete/consistent data; a commercial product collects data through its own flow, so there is no IRS-outcome to grade against. Intentionally left out of the conformance suite.
+- Pension input defects: `PENSION_1099R_IRA_SEP_SIMPLE_FLAG_NOT_DETERMINED`, `PENSION_ROLLOVER_FLAG_WITHOUT_AMOUNT_*`, `PENSION_WRITE_IN_CODE_REQUIRES_TEXT_*`, `PENSION_PSO_ELECTED_WITHOUT_PENSION_INCOME_*`, `PENSION_SIMPLIFIED_METHOD_INPUTS_MISSING_*`.
+- `MISSING_FORM4852_AFTER_USER_REPORTED_MISSING_W2_*`, `ADEQUATE_RECORDS_MISSING_SUBSTANTIATED_AMOUNT_*`, `STATEMENT_DOES_NOT_BELONG_TO_FAMILY`, `SELLER_FINANCED_LOAN_MISSING_REQUIRED_FIELDS_*`, `SCHEDULE_1A_STATEMENTS_NOT_CONFIRMED_UPLOADED`.
+- SS input defects: `SOCIAL_SECURITY_SSI_AMOUNT_REQUIRED_*`, `..._EXCESS_REPAYMENT_REQUIRES_MANUAL_HANDLING`, `..._LUMP_SUM_ALLOCATION_REQUIRED`, `..._LUMP_SUM_PRIOR_YEAR_DEFAULTS_APPLIED`, `..._LUMP_SUM_PRIOR_YEAR_REPORTED_REQUIRED`, `..._LINE6D_MFS_RESIDENCE_INCONSISTENT`.
+
+### C. Already covered elsewhere (no new Tier B2 case needed)
+- Schedule C / F out-of-scope (`OTHER_INCOME_SCHEDULE_C_OUT_OF_SCOPE`, `..._SCHEDULE_F_...`, `MEDICAID_WAIVER_SCHEDULE_C_*`) → self-employment block **sc_00233–sc_00254**.
+- §962 (`OTHER_INCOME_SECTION_962_ELECTION_OUT_OF_SCOPE`) → **sc_00266**; Form 8997/QOF + 1099-S real-estate (`FORM_8997_REQUIRED_MANUAL_FILL`, `FORM_1099S_REAL_ESTATE_REPORTED`) → **sc_00265** (positive-computation).
+- Form 8814 child-income ceiling (`FORM8814_CHILD_GROSS_INCOME_TOO_HIGH`) → **sc_00258** (+ original sc_00192); education-credit MFS ineligible (`EDUCATION_CREDITS_MFS_INELIGIBLE`) → **sc_00255/sc_00256**.

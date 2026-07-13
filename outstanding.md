@@ -2578,7 +2578,7 @@ No further outstanding items beyond those captured in cross-cutting sections bel
 
 ## Form 1040 Line 16 — Implemented (2026-03-20); Remaining Deferred Box-3 Items
 
-- [Line 16 / Box 3 / 962] Section 962 election tax — requires CFC inclusion statement and Form 1118 credits.
+- ~~[Line 16 / Box 3 / 962] Section 962 election tax — requires CFC inclusion statement and Form 1118 credits.~~ **DONE 2026-07-13 (#18 regime 1).** `computeSection962Tax` computes the §962 tax from the CFC inclusions: 21% × (subpart-F + GILTI×50% §250 deduction) − §960 deemed-paid FTC (capped ≥ 0), used when inclusions are entered; the manual `section962TaxAmount` − Form 1118 credits stays as a fallback. V124 (4 columns on pf_line16_tax) + entity + mapper + compute + UI (§962 section on the Line 16 tax form; the other-incomes out-of-scope blocker softened to a pointer). Unit + e2e (subpart-F $100k + GILTI $200k → $22k). **Simplifications:** the §960 FTC is entered by the user (80% GILTI haircut / §904 basket limit applied on their Form 1118, not recomputed here); this is the individual-shareholder §962 tax, not a full Form 5471/8992 CFC-attribute compute.
 - [Line 16 / Box 3 / 1291TAX] Form 8621 line 16e PFIC section 1291 tax — requires Form 8621 implementation.
 - [Line 16 / Box 3 / Form 8978] Form 8978 line 14 BBA partnership push-out adjustment tax — requires Form 8978 implementation.
 - [Line 16 / Box 3 / 965INC] Section 965(i) triggered deferred net tax liability — requires Form 965-A implementation.

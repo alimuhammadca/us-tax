@@ -1,6 +1,27 @@
 ﻿# History
 
 
+## 2026-07-13 — §962 election full compute (#18, international regime 1 of 4)
+
+The §962 election (a U.S. individual taxed at corporate rates on CFC inclusions) was intake-only —
+the user entered the final tax, and the other-incomes form showed an out-of-scope blocker. Now the
+app computes it:
+
+- `computeSection962Tax`: 21% × [subpart-F (§951) + GILTI (§951A) × 50% §250 deduction] − §960
+  deemed-paid foreign tax credit (capped so the tax ≥ 0), used when inclusions are entered; the
+  pre-existing manual `section962TaxAmount` − Form 1118 credits remains a fallback. Result → line 16
+  Box 3, code "962".
+- V124 adds 4 columns to `pf_line16_tax` (subpart-F, GILTI, §250-election, deemed-paid taxes) +
+  entity + `Line16TaxMapper`. UI: a §962 section on the Line 16 tax form (election + inclusions +
+  §250 Yes/No + deemed-paid FTC + an "enter the tax directly" advanced fallback); the other-incomes
+  §962 out-of-scope blocker is softened to a pointer.
+- Unit `line16Section962FullComputeFromInclusionsTaxesAtCorporateRate` + e2e (subpart-F $100k + GILTI
+  $200k → $22k §962 tax). Full suite 1502 green; UI build green.
+- Simplification: the §960 FTC amount is user-provided (they apply the 80% GILTI haircut / §904 basket
+  limit on Form 1118); this is the individual §962 tax, not a full Form 5471/8992 CFC-attribute build.
+- Remaining #18 regimes: Form 8621 (PFIC §1291), Form 8978 (BBA pushout), §965(i) transition tax.
+
+
 ## 2026-07-13 — Form 8962 MFS-spouse standalone mirror (#17)
 
 Before #17, `premium-tax-credit-spouse` was a thin MFJ MAGI-addback supplement that `MfsFormScoper`

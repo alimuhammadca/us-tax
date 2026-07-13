@@ -1,6 +1,44 @@
 ﻿# History
 
 
+## 2026-07-12 — SQA suite consolidation (266→240) + Group-3 overlap review
+
+Consolidated the `c:/us-tax-sqa` scenario suite to reduce the test-case count **without changing coverage**,
+in two passes, then reviewed the remaining overlap candidates.
+
+**Pass 1 — merge into multi-run folders (`93a316a`):** merged **19 groups** of related scenarios (contrast
+pairs + topic clusters) into single **multi-run folders** (Run A/B/C…), keeping the lowest number and retiring
+the absorbed number(s) as gaps. Every input and every graded assertion of each source is preserved — coverage
+unchanged. **266 → 240** folders (26 retired). Scope was **sc_00038 onward only**: sc_00001–00037 hold tester
+Actual data and were left untouched. Master rollup rebuilt via save-suppression (no Actuals lost). Merges:
+early-distribution penalty/exception, IRA early penalty/first-home, Roth conversion/qualified, state-refund
+taxable/excluded, COD taxable/insolvency, student-loan-interest full/phaseout, alimony pre/post-2018, Form 2106
+reservist/artist, itemize-vs-standard, medical over/below-floor, medical components (4-way), mortgage
+<750k/>750k/$1M (3-way), cash & property charitable within/over-ceiling, charitable valuation (4-way), casualty
+disaster/non-disaster/theft (3-way), involuntary conversion full/partial, accountable/non-accountable, est-tax
+penalty de-minimis/safe-harbor/applies (3-way).
+
+**Pass 2 — renumber to contiguous (`9a1b31a`):** renumbered the 240 survivors to a gap-free **sc_00001–sc_00240**
+(195 folders shifted; sc_00001–00045 unchanged). Scripted rewrite of every `sc_00NNN` reference across all
+scenario `.md`, `coverage_index.md`, and the corrections worklist; genericized Pass-1 provenance notes; the one
+real external cross-ref (sc_00183 → old sc_00121) remapped to sc_00107; two-phase folder/file rename; xlsx
+regenerated for folders ≥ 38; master rebuilt. Integrity verified: folder = filename = header number for all 240,
+no references to sc_ > 240, no temp folders, **37/37 tester Actuals intact**.
+
+**coverage_index reconcile (`b3e25b3`):** fixed 130 stale `scenario_00NNN` folder-name tokens (Pass 2 had updated
+the `(sc_00NNN)` ids but protected folder-names) so folder-name = sc-id = actual folder; corrected the case
+counts that shrank from the merges (base 175→149; running grand-totals 225→199→206→228→**240**); added a
+consolidation note.
+
+**Group-3 overlap review (`9ba8d67`, review only — not executed):** examined the deferred overlap candidates.
+Findings: Form 8814 sc_00166 (app §17 block) is superseded by the broader/portable Tier-B2 sc_00232; the excess
+IRA/Roth base trio (sc_00057/00171/00176) is a mergeable cluster distinct from Tier-B2 sc_00234 (which is
+excise-only); saver's-credit ineligibility (sc_00172/00173) and clean-vehicle disallowance (sc_00174/00175) are
+clean cluster pairs; Simplified-Method sc_00044 vs sc_00237 = keep both (different inputs/purpose). Potential
+further −4/−5 if ever approved; per user decision the suite stays at **240**. All recorded in
+`_shared/consolidation-pass1-ledger.md`. (SQA-only; no application code touched.)
+
+
 ## 2026-07-12 — Full e2e regression + statement-picker e2e fix
 
 Ran the **full Playwright e2e regression** against the live stack (Docker Postgres Dev Services + backend

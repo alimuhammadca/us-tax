@@ -1,6 +1,17 @@
 ﻿# History
 
 
+## 2026-07-13 — Form 1116 high-tax kickout (passive → general reclassification)
+
+`applyPassiveHighTaxKickout` runs per country before the category merge in `computeForm1116`: a
+passive-basket country whose effective foreign tax rate (foreign taxes ÷ net foreign taxable income)
+exceeds the highest US individual rate (37%, `HIGHEST_US_INDIVIDUAL_RATE_2025`) is split into a
+general-category entry; low-taxed countries stay passive. Implements §904(d)(2)(F) / Treas. Reg.
+§1.904-4(c) so high-taxed passive income cannot be averaged with low-taxed passive income to soak up
+excess credit. Unit `form1116HighTaxKickoutReclassifiesPassiveToGeneral` (50%-taxed $10k → general
+basket) + e2e `form1116-foreign-tax-credit.spec.ts` Test 4. Full suite 1493 green; spec 4/4 green.
+
+
 ## 2026-07-13 — Form 6251 line 8 AMT foreign tax credit (Form 1116 AMT limitation)
 
 Closed the long-deferred AMT foreign tax credit (Form 6251 line 8, previously hardcoded

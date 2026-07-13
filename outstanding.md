@@ -2482,7 +2482,7 @@ Knowledge: `C:\us-tax\knowledge\knowledge_line27abc.md` · Flowchart: `C:\us-tax
 ## Form 1116 — Implemented (2026-03-23); Remaining Deferred Items
 
 - ~~[Form 1116 / Form 1040 line 20 / Schedule 3 line 1]~~ **Resolved 2026-03-26** — `finalizeSchedule3Totals()` sums Schedule 3 line 8 and line 15; both are now wired into Form 1040 lines 20 and 31.
-- [Form 1116 / AMT FTC] Form 6251 line 8 (AMT foreign tax credit) defaults to 0. Requires separate FTC AMT recomputation path — deferred.
+- ~~[Form 1116 / AMT FTC] Form 6251 line 8 (AMT foreign tax credit) defaults to 0. Requires separate FTC AMT recomputation path — deferred.~~ **DONE 2026-07-13.** `computeAmtForeignTaxCredit` re-runs the limitation under the simplified election (§59(a)(3)): line 8 = min(foreign taxes available, TMT × foreign-source-TI / AMTI), computed in the post-Form-1116 `correctLine17ForFtc` pass and capped so line 9 ≥ 0. Unit `line17AmtForeignTaxCreditReducesTentativeMinimumTaxLine8` + e2e `line17-amt-gaps.spec.ts` Test 5 (line 8 = $7,346).
 - [Form 1116 / carryover Schedule B] Per-category carryover tracking uses user-entered `priorYearCarryover` values only; the automatic 1-year-back / 10-year-forward carryover ledger (Form 1116 Schedule B) is not built.
 - [Form 1116 / high-tax kickout] Passive income with an effective foreign tax rate above the highest US bracket should be reclassified to general category. Not implemented.
 - [Form 1116 / Part IV consolidation] When more than one Form 1116 exists, Part IV uses the category with the largest line 24. Only 4 categories are routed (indices 0–3); expand if needed.
@@ -2497,7 +2497,7 @@ Knowledge: `C:\us-tax\knowledge\knowledge_line27abc.md` · Flowchart: `C:\us-tax
 - [Line 17 / Form 6251 line 2f] Alternative tax NOL deduction (ATNOLD) — requires AMT NOL carryover tracking; deferred.
 - [Line 17 / Form 6251 line 2i] ISO spread (incentive stock options) — out of scope; no stock-option intake in this application.
 - [Line 17 / Form 6251 line 2m] Passive activity AMT adjustment — requires Schedule E / rental income; deferred.
-- [Line 17 / Form 6251 line 8] AMT foreign tax credit — deferred; requires separate FTC computation. Defaults to 0.
+- ~~[Line 17 / Form 6251 line 8] AMT foreign tax credit — deferred; requires separate FTC computation. Defaults to 0.~~ **DONE 2026-07-13** (see the Form 1116 / AMT FTC entry above).
 - [Line 17 / Schedule 2 line 1z] Clean-energy credit recapture — out of scope; set to 0.
 
 ## Form 1040 Line 17 — Additional Gaps Identified (2026-04-18) — All Fixed

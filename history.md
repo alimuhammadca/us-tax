@@ -1,6 +1,27 @@
 ﻿# History
 
 
+## 2026-07-13 — Form 6251 line 8 AMT foreign tax credit (Form 1116 AMT limitation)
+
+Closed the long-deferred AMT foreign tax credit (Form 6251 line 8, previously hardcoded
+`null // deferred`). Full unit suite green (1492); `line17-amt-gaps.spec.ts` 5/5 e2e green.
+
+- **`computeAmtForeignTaxCredit(Form6251, List<Form1116>)`** implements the simplified limitation
+  election (§59(a)(3)): line 8 = min(total foreign taxes available, TMT × foreign-source-TI / AMTI),
+  where TMT = Form 6251 line 7, AMTI = line 4, and foreign-source TI reuses the regular Form 1116
+  line 17 (not refigured for AMT — consistent with the app's no-adjustment 1116 model). Ratio capped
+  at 1.0; result capped at line 7 so line 9 never goes negative.
+- Wired into the existing post-Form-1116 `correctLine17ForFtc` pass (Form 6251 is built before
+  Form 1116 in `prepare()`, so line 8 must be set in the reconciliation step). The method now also
+  sets line 8, recomputes line 9 = line 7 − line 8, and folds it into the line 10/11 correction.
+  Gotcha resolved: with a single income category, one category form is *designated* the summary
+  in-place (not a separate aggregate), so the summed foreign-source TI / taxes-available must include
+  every form in the list — skipping `isSummaryForm` zeroed the credit.
+- Unit `line17AmtForeignTaxCreditReducesTentativeMinimumTaxLine8`: Single, $200k wages + $100k PAB
+  interest + a full Form 1116 ($40k foreign income, $8k tax) → AMTI 300,000, TMT 55,094, line 8 =
+  55,094 × (40,000/300,000) = $7,346, line 9 = $47,748. e2e Test 5 pins the same on the live stack.
+
+
 ## 2026-07-12 — Form 8615 kiddie tax: parent 28%/§1250 rate slices + MFJ/MFS/HOH parent-selection e2e
 
 Closed the outstanding Form 8615 residuals (outstanding.md item 4, first feature). Full

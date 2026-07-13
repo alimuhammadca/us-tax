@@ -1,6 +1,25 @@
 ﻿# History
 
 
+## 2026-07-13 — Form 4972 NUA-inclusion election + QDRO alternate-payee gate (V121)
+
+Two new lump-sum-distribution intake fields (user-approved), full-stack:
+
+- **NUA-inclusion election** (`electToIncludeNuaInTaxableAmount`). Box 2a already excludes the
+  box-6 net unrealized appreciation on employer securities (taxed later as capital gain when sold),
+  so the default is correct and unchanged. When the taxpayer elects to include it, box 6 is added to
+  the Part III line-8 taxable amount subject to 10-year averaging. UI checkbox appears only when box 6
+  > 0 and the 10-year option is elected.
+- **QDRO alternate-payee gate** (`isQdroAlternatePayee` + `qdroParticipantBornBefore1936`). A QDRO
+  alternate payee qualifies for Form 4972 when the PLAN PARTICIPANT (not the payee) was born before
+  Jan 2, 1936 — added as a third path into the Part I `q3orQ4` eligibility test. The UI disqualified-
+  verdict banner suppresses the Q3/Q4 reasons when the QDRO path qualifies.
+- Plumbing: V121 (3 nullable columns on `pf_lump_sum_distribution`) + `PfLumpSumDistribution` +
+  `LumpSumDistributionMapper` + `computeForm4972` + `form-lump-sum-distribution.component.ts`.
+  Unit tests (NUA include $14,000 / default-exclude $10,000 / QDRO eligible) + e2e
+  `line4972-lump-sum-distribution.spec.ts` (9/9). Full suite 1496 green; UI build green.
+
+
 ## 2026-07-13 — Form 1116 high-tax kickout (passive → general reclassification)
 
 `applyPassiveHighTaxKickout` runs per country before the category merge in `computeForm1116`: a

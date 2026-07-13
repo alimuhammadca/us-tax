@@ -2628,9 +2628,9 @@ No further outstanding items beyond those captured in cross-cutting sections bel
 
 ## Form 4972 — Implemented; Remaining Deferred Items
 
-- [Form 4972 / NUA worksheet] Net unrealized appreciation (box 6) from employer securities requires the NUA worksheet. Box 6 is stored but not used in any computation.
+- ~~[Form 4972 / NUA worksheet] Net unrealized appreciation (box 6) from employer securities requires the NUA worksheet. Box 6 is stored but not used in any computation.~~ **DONE 2026-07-13.** New `electToIncludeNuaInTaxableAmount` election (V121): box 2a already excludes NUA by default (taxed later as capital gain when the securities are sold); when the taxpayer elects to include it, box 6 is added to the Part III line-8 taxable amount. Migration + entity + mapper + compute + UI (checkbox shown when box 6 > 0 and Part III elected) + unit `form4972NuaElectionIncludesBox6InLine8` / `...ExcludedFromLine8ByDefault` + e2e.
 - [Form 4972 / multiple participants] Multiple Form 4972 elections for beneficiaries of more than one deceased participant are not modeled; current implementation supports one election per spouse.
-- [Form 4972 / QDRO alternate payee] QDRO alternate payee Form 4972 eligibility is not gated or modeled.
+- ~~[Form 4972 / QDRO alternate payee] QDRO alternate payee Form 4972 eligibility is not gated or modeled.~~ **DONE 2026-07-13.** New `isQdroAlternatePayee` + `qdroParticipantBornBefore1936` (V121): a QDRO alternate payee qualifies for Form 4972 when the PLAN PARTICIPANT (not the payee) was born before Jan 2, 1936 — added as a third path into the Part I `q3orQ4` eligibility test. Migration + entity + mapper + compute + UI (QDRO checkboxes in Part I; the disqualified-verdict banner suppresses Q3/Q4 when the QDRO path qualifies) + unit `form4972QdroAlternatePayeeQualifiesWhenParticipantBornBefore1936` + e2e.
 
 ---
 

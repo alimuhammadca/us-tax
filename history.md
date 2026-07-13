@@ -1,6 +1,29 @@
 ﻿# History
 
 
+## 2026-07-13 — Form 8962 MFS-spouse standalone mirror (#17)
+
+Before #17, `premium-tax-credit-spouse` was a thin MFJ MAGI-addback supplement that `MfsFormScoper`
+DROPPED on the `mfs_spouse` leg, so a spouse with her own Marketplace policy produced no Form 8962 on
+her separate return. #17 makes it a full standalone mirror — no migration (the spouse row already had
+every taxpayer-scoped column):
+
+- `PremiumTaxCreditMapper`: for `owner_role='spouse'`, store the full standalone set from `spousePtc*`
+  keys + spouse shared-policy child rows (additive; the legacy MFJ supplement is untouched, so MFJ is
+  unchanged).
+- `MfsFormScoper.normalizePremiumTaxCreditSpouse`: un-prefix `spousePtc<UpperCamel>` → bare keys onto
+  the taxpayer slot on her leg; drop only when she filled nothing standalone (legacy-only → empty).
+- `computeForm8962` call site: on an MFS leg, filter 1095-A statements by `recipientSSN` to this
+  filer's own policies (exclude the other spouse's) — same SSN-attribution guard as the W-2 line-1a /
+  1099-B filters.
+- UI: a "Separate return with her own Marketplace coverage (MFS)" section on the shared PTC form (her
+  PTC gate, tax-household size, FPL region, abuse/abandonment exception, 1095-A gate).
+- Scoper unit test + e2e `mfs-spouse-premium-tax-credit.spec.ts` (head $15k vs spouse $8.4k → her leg
+  uses HER $8.4k, proving the SSN filter). Full suite 1501 green; UI build green.
+- Remaining rarer sub-edges (spouse Form 2555 MAGI add-backs, alt-calc-for-year-of-marriage,
+  standalone dependent-MAGI rows) documented in outstanding.md.
+
+
 ## 2026-07-13 — Form 6251 line 2c: investment interest expense AMT adjustment (Form 4952 refigured)
 
 Line 2c (previously deferred) refigures the Form 4952 investment-interest deduction under AMT.

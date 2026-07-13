@@ -3636,8 +3636,12 @@ Gap-closure Phase 6 routed K-1 ordinary business income (1065/1120-S box 1, 1041
 
 Follow-on to the SQA↔e2e gap-closure program: the application's blocking-with/without-override situations were folded into `c:/us-tax-sqa` as **Tier B2** commercial-conformance scenarios **sc_00255–sc_00266** (12 cases, IRS-correct-outcome pass criterion + enforcement-style observation; run against a third-party product, so they deliberately do NOT encode our overrideable/non-overrideable flag taxonomy or HTTP-409). Source landscape: 207 `TaxReturnFlag` emissions, ~103 blocking, 64 §17 non-overrideable codes (44 distinct rules after collapsing `_TAXPAYER`/`_SPOUSE` twins). What was **not** converted, and why:
 
-### A. IRS-universal, portable — candidate future Tier B2 cases (deferred, not yet authored)
-Each has a gradeable IRS-correct outcome; deferred only to keep the case count within the QA team's daily throughput.
+### A. IRS-universal, portable — candidate future Tier B2 cases ✅ **AUTHORED 2026-07-12 (sc_00241–sc_00251)**
+All 11 were authored as Tier-B2 scenarios in `c:/us-tax-sqa` (sc_00241 PTC-MFS + APTC repayment, 00242 ITIN
+child CTC/ACTC→ODC, 00243 SLI dependent-disallowed, 00244 attorney/whistleblower fee caps, 00245 OID box-2
+sanity, 00246 General-Rule annuity exclusion ratio, 00247 SS lump-sum election, 00248 Form 5329 exception coding,
+00249 Medicaid-waiver variants, 00250 Form 8919 reason-code variants, 00251 §1341 unemployment repayment). Suite
+240 → 251. The original candidate list (kept below for provenance):
 - **Premium Tax Credit MFS disallowance** (`PREMIUM_TAX_CREDIT_MFS_DISALLOWED`) — §36B(c)(1)(C), plus the abandoned-spouse/DV exception AND the APTC-repayment-still-required nuance (partial-handling, not a clean $0). sc_00255 covers EIC/education/SLI MFS but not PTC.
 - **Schedule 8812 ITIN → ACTC blocked** (`SCHEDULE_8812_ITIN_ACTC_BLOCKED`) — child must have an SSN for CTC/ACTC; ITIN filer/child interplay with credit-for-other-dependents.
 - **Student-loan-interest — can-be-claimed-as-dependent disallowed** (`SCHEDULE1_LINE21_STUDENT_LOAN_INTEREST_DEPENDENT_DISALLOWED`) — distinct from the MFS bar already in sc_00255.

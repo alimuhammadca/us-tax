@@ -1,6 +1,27 @@
 ﻿# History
 
 
+## 2026-07-13 — Form 2555 high-cost-locality housing cap (Notice 2025-16, V123)
+
+The foreign-housing-exclusion cap was a flat $39,000 (30% of the FEIE limit). The IRS publishes higher
+limits for specific high-cost localities each year. V123 adds a curated locality table + dropdown so
+filers in listed high-cost cities get the correct (higher) cap.
+
+- `FORM2555_HIGH_COST_HOUSING_LIMITS_2025` — 30 major localities from IRS Notice 2025-16 (sourced live
+  from the notice: Hong Kong $114,300, Geneva $102,600, Moscow $108,000, Osaka-Kobe $90,664, Bermuda
+  $90,000, Singapore $82,900, Tokyo $67,700, London $67,000, Paris $65,700, …). When the taxpayer
+  selects a listed locality, `computeForm2555Exclusions` uses that limit (prorated by qualifying days)
+  instead of the base $39,000; unlisted/blank falls back to the base cap (unchanged behavior).
+- Plumbing: V123 (`foreign_housing_high_cost_locality` on `pf_foreign_earned_income`) + entity +
+  `ForeignEarnedIncomeMapper` + compute param threaded through all three `computeForm2555Exclusions`
+  call sites. UI: a filterable high-cost-locality `p-select` on `form-foreign-earned-income` (taxpayer
+  + spouse via the shared component), with the info banner reworded to reflect that the app now applies
+  the higher cap automatically. `HIGH_COST_LOCALITY_OPTIONS` mirrors the backend keys.
+- Unit (Geneva → $102,600; unlisted → $39,000) + e2e (2 tests). Full suite 1499 green; UI build green.
+- **Annual revision required** — both the backend map and the UI options must be refreshed from each
+  year's new IRS Notice. Documented in outstanding.md + inline `⚠️ REVISE ANNUALLY` code comments.
+
+
 ## 2026-07-13 — Form 6251 line 2b: Schedule 1 line-8z tax-refund subset (G-new-7, V122)
 
 Form 6251 line 2b removes taxable state/local tax refunds from AMTI. It previously covered only the

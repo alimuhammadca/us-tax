@@ -1,6 +1,24 @@
 ﻿# History
 
 
+## 2026-07-13 — Form 4952 pure-HTML Tax Return preview (Priority 2 — last numbered priority, DONE)
+
+Built the record-keeping Form 4952 preview (compute was already complete). `form-tax-return-4952`
+(ts/html/scss) is a faithful copy of the Form 4972 imperative element renderer, gated in the Tax
+Return sidebar as `tax-return-4952` when `form4952 != null` (one-per-return, not owner-split).
+
+- **Layout asset:** no external `Downloads/f4952/pdf_elements_v2.json` existed, so
+  `us-tax-be/scripts/generate-f4952-elements.py` extracts the layout (texts/lines/rects) straight from
+  `docs/IRS-Forms/f4952.pdf` with pdfplumber (form page only), converting to the PDF bottom-left
+  convention the renderer expects, and attaches the 17 fields from the canonical semantic CSV. The
+  canonical human-readable `f4952_field_map_semantic.csv` + `f4952_semantic_labels.pdf` were published
+  over the stale auto-named UI stub.
+- **Verified:** coordinate sanity (title at y=737 matches 4972; line-1 field aligns with its label) +
+  e2e `form4952-preview-render.spec.ts` (computed line 1/3/6/7/8 render at the correct semantic fields).
+- Bumped the Angular initial-bundle error budget 8 MB → 10 MB (cumulative UI additions this session).
+- Corrected the stale outstanding.md note claiming AMT line 2c was still deferred (built earlier today).
+
+
 ## 2026-07-13 — International regimes 3 & 4 (Form 8978, §965(i)): documented correct-as-manual; #18 COMPLETE
 
 The last two international regimes were assessed and — like Form 8801 line 12 — determined to be

@@ -2045,7 +2045,13 @@ identically. Two new unit tests: `schedule8812_worksheetA_subtractsEducationCred
 
 ---
 
-### Priority 2 — Form 4952 (Investment Interest Expense) — **PARKED 2026-07-10: compute DONE; only the pure-HTML Tax Return preview remains**
+### Priority 2 — Form 4952 (Investment Interest Expense) — **✅ COMPLETE 2026-07-13 (preview built; compute + AMT line 2c already done)**
+
+**Resolved 2026-07-13 — the pure-HTML Tax Return preview is now built.** `form-tax-return-4952.component.ts` (+ html/scss) renders the IRS form via the imperative element renderer (faithful copy of the Form 4972 preview), gated in the Tax Return sidebar as `tax-return-4952` when `form4952 != null`. The layout asset `us-tax-ui/public/irs/f4952_elements.json` was extracted directly from `docs/IRS-Forms/f4952.pdf` by the new `us-tax-be/scripts/generate-f4952-elements.py` (pdfplumber — no external `Downloads/f4952/` layout was available), and the canonical human-readable semantic CSV + labels PDF (`pdfs/f4952_*`) were published over the stale auto-named UI stub. e2e `form4952-preview-render.spec.ts` proves the 17 computed values land at the correctly-named semantic fields. **AMT line 2c is also DONE** (see the 2026-07-13 Form 6251 line-2c history entry). This closes the last numbered Priority.
+
+**(historical PARKED note below)**
+
+### ~~Priority 2 — Form 4952 (Investment Interest Expense) — PARKED 2026-07-10: compute DONE; only the pure-HTML Tax Return preview remains~~
 
 **Spec:** `C:\us-tax\lines\4952.md`
 
@@ -2064,7 +2070,7 @@ identically. Two new unit tests: `schedule8812_worksheetA_subtractsEducationCred
 - Generate the renderer asset `us-tax-ui/public/irs/f4952_elements.json` (via the `generate-f<form>-elements.js` recipe) and **publish the new semantic CSV + labels PDF** over the stale UI copy so `public/irs/` matches `pdfs/`.
 - Add a conditional Tax Return **sidebar** entry that shows the preview when `form4952 != null`.
 - **Note:** this is a **record-keeping page only** — no data/compute gap. Form 4952's numbers already surface on the Schedule A preview (line 9); the standalone preview just reproduces the 4952 worksheet (Part I/II/III) for the user's records.
-- AMT recomputation path (`requiresAmtInvestmentInterestRecompute`) remains deferred to Form 6251 line 2c (out of scope per the Gap 2 close — no AMT preference compute exists).
+- ~~AMT recomputation path (`requiresAmtInvestmentInterestRecompute`) remains deferred to Form 6251 line 2c (out of scope per the Gap 2 close — no AMT preference compute exists).~~ **DONE 2026-07-13** — Form 6251 line 2c now refigures the Form 4952 deduction under AMT (PAB interest added to net investment income) via `computeAmtInvestmentInterestAdjustment`; see the 2026-07-13 line-2c history entry.
 
 ---
 

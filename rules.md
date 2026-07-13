@@ -1346,6 +1346,15 @@ Guardrails:
   / education credits / dependent-care.
 - Each HoH return needs its own **distinct** qualifying child; per-dependent
   attribution is `dependent.claimedByMfs` (required under HoH).
+- **Read a split leg's filing status from the COMPUTED return, never `tax_return_v2.
+  filingStatus`.** The row enum still reads MFS on an HOH-split leg — the per-leg HoH
+  election is resolved by `MfsFormScoper` only at compute time. Any consumer that
+  branches on a leg's status (e.g. `KiddieTaxParentReader.selectSplitParent`'s
+  custodial-HoH tiebreaker) must compute the leg and read
+  `form1040.getFilingStatus().getStatus()` (helper `extractFilingStatus(comp,
+  fallback)`), or it will mis-classify the HoH leg. Unit tests miss this (they
+  construct the status string directly); only the cross-return e2e caught it
+  (2026-07-12, Form 8615 GAP B).
 
 
 ## Tax Return form previews — sandbox look-and-feel port — 2026-07-06

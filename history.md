@@ -1,6 +1,30 @@
 ﻿# History
 
 
+## 2026-07-12 — Form 8615 kiddie tax: parent 28%/§1250 rate slices + MFJ/MFS/HOH parent-selection e2e
+
+Closed the outstanding Form 8615 residuals (outstanding.md item 4, first feature). Full
+`TaxReturnComputeServiceTest` green; 3 new e2e green on the live stack.
+
+- **GAP A — parent's own 28%-rate collectible + unrecaptured §1250 slices.** A parent's preferential income
+  (Form 8615 line 10) can itself contain 28%-rate collectible gain (Schedule D line 18) or unrecaptured §1250
+  gain (line 19), which must be taxed at min(28%/25%, marginal), not the plain 0/15/20 QDCG rate.
+  `KiddieTaxParentReader.ParentReturnInfo` gained `twentyEightPercentRateGain`/`unrecaptured1250Gain`
+  (auto-derived from the parent's computed Schedule D via `extract28RateGain`/`extractUnrecaptured1250`);
+  `scopeForDependentOwn` injects `parent28RateGainLine6`/`parent1250GainLine6` onto the synthetic kiddie form
+  post-scope; `computeForm8615` caps them within `parentPref`, computes `parentRegularPref`, and layers all
+  three rate buckets into lines 9 and 10 through `computePreferentialRateTax`. No new user fields. Unit test:
+  parent line 10 = $49,047 with a $40k collectible slice (vs $43,847 at the plain 15% rate).
+- **GAP B — "which parent's return" e2e across filing shapes.** 3 specs in `dependent-own-kiddie-tax.spec.ts`
+  pin Form 8615 line 6: MFJ joint return (228,500), MFS split → higher-income leg (184,250), HOH split →
+  custodial HoH leg regardless of income (36,375).
+- **Bug caught by the HOH-split spec.** `KiddieTaxParentReader.computeInfo` passed `tr.filingStatus` (the raw
+  `tax_return_v2` row enum — still "MFS" on an HOH-split leg, since the per-leg HoH election is resolved by
+  `MfsFormScoper` only at compute time) into `selectSplitParent`. The custodial HoH parent was therefore never
+  recognized as HoH and lost the tiebreaker to the higher-income MFS spouse. Fixed by selecting on the COMPUTED
+  status: new `extractFilingStatus(computation, fallback)` reads `form1040.getFilingStatus().getStatus()`.
+
+
 ## 2026-07-12 — Schedule A compute: combined charitable ceiling, §1033 deferral, multi-event casualty
 
 Implemented three previously-deferred Schedule A computations in us-tax-be, each verified by a Java unit test

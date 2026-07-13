@@ -1,6 +1,28 @@
 ﻿# History
 
 
+## 2026-07-12 — SQA Tier B2: 3 Schedule A itemized-computation conformance scenarios (sc_00252–00254)
+
+Authored three harder **Schedule A** edge cases (beyond the base Ch 17–19 scenarios) as Tier-B2 commercial-
+conformance cases in `c:/us-tax-sqa` — IRS-correct outcome graded + enforcement-style observation. Suite **251 →
+254**, contiguous.
+
+- **sc_00252 — home-equity interest tracing:** interest on a home-equity loan is deductible only for the portion
+  of proceeds used to buy/build/substantially improve the home; mixed use (60% improvement / 40% personal) →
+  deduct only 60% × $6,000 = $3,600.
+- **sc_00253 — charitable combined AGI ceiling + ordering:** when large **cash** (60% category) and **appreciated
+  property** (30% category) gifts mix, the property deduction is limited to the lesser of 30% AGI or *50% AGI −
+  cash allowed* — cash crowds it out (property capped at $20,000, $20,000 carryover) — the tricky interaction.
+- **sc_00254 — multiple casualty events:** two separate federally-declared disasters → a **$100 floor per event**
+  (two of them), then a **single 10%-AGI floor** → $26,800 deductible. (§1033 gain deferral is covered by
+  sc_00139.)
+
+All 3 **independently verified** against 2025 IRS rules (0 discrepancies; the charitable-ordering crux confirmed).
+These are **gap-finders** — our own app's compute for all three remains deferred (outstanding.md updated to note
+the scenarios). generate-qa-spreadsheet.py `group_of()` Tier B2 range extended to 229–254; coverage_index Tier B2
+section extended (23→26 cases, grand total→254); master rebuilt. us-tax-sqa `f864342`, us-tax `9d0da1d`.
+
+
 ## 2026-07-12 — SQA Tier B2: 11 remaining IRS-universal blocking-family scenarios (sc_00241–00251)
 
 Authored the 11 deferred Tier-B2 candidates from the `outstanding.md` backlog (Section A), each an IRS-universal

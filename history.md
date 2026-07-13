@@ -1,6 +1,24 @@
 ﻿# History
 
 
+## 2026-07-13 — International regimes 3 & 4 (Form 8978, §965(i)): documented correct-as-manual; #18 COMPLETE
+
+The last two international regimes were assessed and — like Form 8801 line 12 — determined to be
+correctly user-entered, not auto-computable in the current architecture:
+
+- **Form 8978 (BBA partnership push-out):** line 14 is the aggregate change in tax across the reviewed
+  years, requiring each prior year's return to be reconstructed WITH and WITHOUT the pushed-out
+  adjustments. The app doesn't persist prior-year returns, so the delta can't be recomputed. Stays
+  user-entered; the app already routes it (+ → line 16 Box 3, − → Schedule 3 line 6l). Code breadcrumb.
+- **§965(i) transition tax:** the triggered amount is the net §965 liability computed in the 2017/2018
+  transition year and deferred; §965 is a one-time transition tax, so recomputing it in 2025 would be
+  non-conforming. Stays user-entered. Code breadcrumb.
+
+**#18 international full-compute is COMPLETE:** §962 (V124) and Form 8621 §1291 (V125) got genuine
+full compute; Form 8978 and §965(i) are documented correct-as-manual with the shared prior-year-data
+rationale. That closes the entire outstanding.md item 4 "per-form compute residuals" program.
+
+
 ## 2026-07-13 — Form 8621 PFIC §1291 full compute (#18, international regime 2 of 4)
 
 The PFIC §1291 excess-distribution tax (line 16 Box 3, code "1291TAX") was intake-only. Now:

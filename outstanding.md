@@ -2529,7 +2529,7 @@ No further outstanding items beyond those captured in cross-cutting sections bel
 ## Form 8801 — Implemented (2026-03-24); Remaining Deferred Items
 
 - ~~[Form 8801 / Wire Schedule 3 line 6b → Form 1040 line 20]~~ **Resolved 2026-03-26** — Schedule 3 line 8 is now wired into Form 1040 line 20.
-- [Form 8801 / line 12 MTFTCE automation] Automate Form 8801 line 12 minimum-tax foreign tax credit from Form 1116 workpapers instead of manual user input.
+- ~~[Form 8801 / line 12 MTFTCE automation] Automate Form 8801 line 12 minimum-tax foreign tax credit from Form 1116 workpapers instead of manual user input.~~ **WON'T-IMPLEMENT (correct as-is) 2026-07-13.** Line 12 is a PRIOR-YEAR figure (the prior year's exclusion-item minimum-tax FTC), alongside Form 8801's other prior-year inputs (lines 1/2/3/14, prior-year filing status + exemption). It is NOT the current-year Form 6251 line 8 AMT-FTC. The app does not persist prior-year returns, so there is no in-app source to derive it from; auto-filling from the current-year Form 1116 would be a tax-year error. Documented with a code breadcrumb at the line-12 read. (Consistent with the deferred prior-year-import item — same root cause.)
 - [Form 8801 / semantic PDF fill-export] The 2025 semantic assets are generated and published, but the Tax Return section renders a structured summary rather than filling/exporting the IRS PDF fields directly.
 - [Form 8801 / Part III special-case paths] Rare MFS threshold path beyond standard filing-status thresholds is deferred.
 - [Form 8801 / prior-year automation] Prior-year Form 6251 / Form 8801 worksheet values rely on manual entry; automated import deferred.

@@ -196,10 +196,14 @@ Line 16 = `regular_tax + Form8814.tax + Form4972.tax + section962_tax + ECR + Fo
 
 | Form | Multiplicity | Purpose |
 |---|---|---|
-| Form 8863 | One per return; one Part III per student | Education credits (AOTC $2,500/student refundable → line 29; LLC nonrefundable → Sched 3 line 3); MAGI limit $90k/$180k MFJ |
-| Form 8615 | One per child return | Kiddie tax; unearned income >$2,700; line 18 → child's line 16 |
-| Form 2555 | One per claiming spouse (max 2) | Foreign earned income; feeds Foreign Earned Income Tax Worksheet → Line 16 |
 | Form 4952 | One per return (MFJ combined) | Investment interest expense; AMT requires second computational copy |
+
+**Now fully computed (formerly listed here — corrected 2026-07-12):** Form 8863
+(education credits — AOTC → line 29 refundable, LLC → Sched 3 line 3, MAGI phaseout,
+all eligibility gates); Form 8615 (kiddie tax — parent-rate incl. 28%/§1250 slices,
+sibling pooling, MFJ/MFS/HOH parent selection); Form 2555 (foreign earned income +
+housing exclusion, routed through Schedule 1 line 8d and the Foreign Earned Income
+Tax Worksheet).
 
 ### Form Multiplicity Rules
 

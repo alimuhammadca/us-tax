@@ -1,6 +1,24 @@
 ﻿# History
 
 
+## 2026-07-13 — Form 6251 line 2b: Schedule 1 line-8z tax-refund subset (G-new-7, V122)
+
+Form 6251 line 2b removes taxable state/local tax refunds from AMTI. It previously covered only the
+Schedule 1 line-1 income-tax refund; per the 2025 line-2b instructions ("tax refund from Schedule 1,
+line 1, **or line 8z**") it must also cover line-8z refunds of state/local property, sales, or foreign
+taxes itemized in a prior year. Line-8z items are free-form, so a new per-item flag
+(`isStateLocalTaxRefundForAmt`, user-approved) identifies them.
+
+- V122 adds `is_state_local_tax_refund_for_amt` to `pf_other_income_item`; `PfOtherIncomeItem` +
+  `OtherIncomesMapper` (save/load the child flag) + `sumLine8zTaxRefundForAmt(personalForms)` summed
+  across taxpayer + spouse and passed into `computeLine17`, where line 2b now negates line-1 + flagged
+  line-8z refunds.
+- UI: a per-8z-item checkbox on both `form-other-incomes-taxpayer` and `-spouse` (with help text
+  distinguishing it from the auto-handled line-1 income-tax refund).
+- Unit `line17AmtLine2bIncludesSchedule1Line8zTaxRefundSubset` ($3,000 property-tax refund → line 2b
+  = −3,000) + e2e `line17-amt-gaps.spec.ts` Test 6. Full suite 1497 green; spec 6/6 green; UI build green.
+
+
 ## 2026-07-13 — Form 4972 NUA-inclusion election + QDRO alternate-payee gate (V121)
 
 Two new lump-sum-distribution intake fields (user-approved), full-stack:

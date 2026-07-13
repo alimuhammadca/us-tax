@@ -1,6 +1,37 @@
 ﻿# History
 
 
+## 2026-07-12 — Schedule A compute: combined charitable ceiling, §1033 deferral, multi-event casualty
+
+Implemented three previously-deferred Schedule A computations in us-tax-be, each verified by a Java unit test
+**and** a live-stack e2e (matching the SQA oracles sc_00253 / sc_00117 / sc_00254). Full
+`TaxReturnComputeServiceTest` green (1003), 3/3 new e2e green.
+
+- **#2 Combined charitable AGI ceiling + ordering (IRC §170(b) / Pub. 526).** Replaced the three independent
+  per-bucket caps (60% cash / 50% basis / 30% capital-gain) in `buildScheduleA` with the sequenced ordering:
+  cash first (60% AGI), then basis and capital-gain property share the remaining 50%-of-AGI base (cash counts
+  against it), with capital-gain further capped at 30% AGI. Large cash gifts now correctly crowd out property
+  into the carryover (sc_00253: property $40k → $20k allowed + $20k carryover). No new fields. `53ba29d`.
+- **#3B §1033 involuntary-conversion gain deferral.** New auto-compute on the capital gain/loss form: realized =
+  proceeds − basis; recognized = the portion not deferred by reinvesting in replacement property within the
+  period; recognized gain routes to Schedule D line 11/4 (reusing the Form 8824 injection point). V119 (6
+  nullable columns on pf_capital_gain_loss) + entity + mapper + compute. UI: recognized gain enters via the
+  existing line-11 "other forms (casualty/involuntary conversion)" field (config-driven form; the auto-compute
+  fields are API/e2e-seedable). `d711e08`.
+- **#3A Multi-event casualty (Form 4684).** New repeatable `pf_casualty_event` child table (V120; cascades from
+  pf_standard_deductions) so each disaster gets its OWN $100 floor before the single 10%-AGI floor on the
+  combined total (previously only one $100 floor — silently understating the floors). Entity + mapper child-list
+  + compute loop + a repeatable "additional casualty events" UI on the deductions form. `6f8b435` + UI (us-tax-ui
+  `593cee2`).
+
+**Two issues the e2e surfaced (unit tests missed — they bypass Liquibase + persistence), fixed in `39bd329`:**
+(1) V119 Liquibase `ChangeLogParseException` — a wrapped header comment line began with the reserved word
+"property" (the known formatted-SQL gotcha); reworded to flat prose. (2) `PfCasualtyEvent` created_at/updated_at
+inserted NULL → `ConstraintViolationException`; added `insertable=false, updatable=false` so the DB DEFAULT
+applies (mirrors PfRentalProperty). Home-equity proceeds-tracing (the third itemized item) stays user-judgment
+pass-through by design.
+
+
 ## 2026-07-12 — SQA Tier B2: 3 Schedule A itemized-computation conformance scenarios (sc_00252–00254)
 
 Authored three harder **Schedule A** edge cases (beyond the base Ch 17–19 scenarios) as Tier-B2 commercial-

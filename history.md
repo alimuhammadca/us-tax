@@ -1,6 +1,29 @@
 ﻿# History
 
 
+## 2026-07-12 — SQA Tier B2: 11 remaining IRS-universal blocking-family scenarios (sc_00241–00251)
+
+Authored the 11 deferred Tier-B2 candidates from the `outstanding.md` backlog (Section A), each an IRS-universal
+blocking/validation rule, as new scenarios **sc_00241–sc_00251** in `c:/us-tax-sqa`. Same Tier-B2 pattern: the
+graded pass criterion is the **IRS-correct outcome** (a $0 disallowance or a specific computed figure), with the
+product's enforcement style recorded as an observation. Suite **240 → 251**, contiguous.
+
+Cases: PTC disallowed for MFS + APTC repayment still owed (00241); child with an ITIN → CTC/ACTC blocked but $500
+ODC allowed (00242); student-loan-interest deduction disallowed when the filer is claimable as a dependent
+(00243); attorney/whistleblower fee deduction capped at the related income (00244); 1099-OID tax-exempt (box 2)
+cannot exceed total (box 1), taxable OID floored at $0 (00245); General-Rule annuity exclusion ratio from the
+actuarial tables (00246); Social Security lump-sum election → the lower taxable amount (00247); Form 5329
+early-distribution 10% penalty exception coding — none/education/medical (00248); Medicaid-waiver exclusion
+variants — in-home / not-in-home / EIC election (00249); Form 8919 uncollected-FICA reason-code variants A vs H
+(00250); §1341 claim-of-right repayment of prior-year unemployment > $3,000 — credit vs deduction (00251).
+
+All 11 **independently verified** against 2025 IRS rules (0 discrepancies). Also fixed a latent bug: the
+generator's `group_of()` range labels were stale after the Pass-2 renumber (they'd have mislabeled the master's
+Group column) — corrected for the contiguous numbering and extended to the 229–251 Tier B2 range. coverage_index
+Tier B2 section extended (12→23 cases, grand total→251); master rebuilt via save-suppression; outstanding.md
+Section A marked authored. (SQA-only; no application code touched.) us-tax-sqa `18fa22d`, us-tax `5fa373d`.
+
+
 ## 2026-07-12 — SQA suite consolidation (266→240) + Group-3 overlap review
 
 Consolidated the `c:/us-tax-sqa` scenario suite to reduce the test-case count **without changing coverage**,

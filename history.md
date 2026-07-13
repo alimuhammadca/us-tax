@@ -1,6 +1,24 @@
 ﻿# History
 
 
+## 2026-07-13 — Form 8621 PFIC §1291 full compute (#18, international regime 2 of 4)
+
+The PFIC §1291 excess-distribution tax (line 16 Box 3, code "1291TAX") was intake-only. Now:
+
+- `computeForm8621Section1291Tax`: the excess distribution allocated to prior PFIC years × 37% (the
+  flat highest ordinary rate — exact for 2018+ holding periods) → Form 8621 line 16e. The manual
+  `form8621Line16eAmount` remains a fallback.
+- V125 adds `section1291_prior_year_excess_allocation` to `pf_line16_tax` + entity + `Line16TaxMapper`.
+  UI: a §8621 section on the Line 16 tax form (PFIC gate + prior-year excess allocation + a direct
+  line-16e fallback).
+- Unit + e2e ($50k prior-year excess × 37% = $18,500). Full suite 1503 green; UI build green.
+- Simplifications (user-approved): the user does the ratable per-day holding-period allocation; the
+  flat 37% approximates each prior year's highest rate; the §6621 interest charge (line 16f) stays
+  user-entered on Schedule 2 line 17p (compounded quarterly back-year interest needs a historical
+  §6621 rate table).
+- Remaining #18 regimes: Form 8978 (BBA pushout), §965(i) transition tax.
+
+
 ## 2026-07-13 — §962 election full compute (#18, international regime 1 of 4)
 
 The §962 election (a U.S. individual taxed at corporate rates on CFC inclusions) was intake-only —

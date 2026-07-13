@@ -215,7 +215,6 @@ Line 16 = `regular_tax + Form8814.tax + Form4972.tax + section962_tax + ECR + Fo
 
 - Self-employment (Schedule C / SE / F)
 - Form 8959 Additional Medicare Tax
-- Form 8839 Part II credit (MAGI required)
 
 ---
 

@@ -1,6 +1,23 @@
 ﻿# History
 
 
+## 2026-07-13 — Form 6251 line 2c: investment interest expense AMT adjustment (Form 4952 refigured)
+
+Line 2c (previously deferred) refigures the Form 4952 investment-interest deduction under AMT.
+`computeAmtInvestmentInterestAdjustment` adds the private-activity-bond interest (line 2g — taxable
+for AMT, tax-exempt for regular) to net investment income, so the AMT deduction can be larger; line 2c
+= regular deduction (line 8) − AMT deduction, a ≤ 0 adjustment that reduces AMTI. Gated on itemizing
+(investment interest is deducted only on Schedule A). Pure compute — reuses the already-computed
+regular Form 4952; the intake gate `requiresAmtInvestmentInterestRecompute` already existed, so **no
+new field** (the earlier "needs a field" triage note was wrong).
+
+- Added `line2cInvestmentInterest` to the Form6251 output model (derived field) + set it in the main
+  build path AND both PAB-present stub paths (the AMT-zero stubs previously set 2a/2b/2g but not 2c) +
+  included it in line 4 (AMTI). `computeLine17` gained a `Form4952Output` param threaded from the call
+  site. Unit `line17AmtInvestmentInterestLine2cRefiguresForm4952WithPabInterest` (regular $6,000 − AMT
+  $10,000 = −$4,000) + e2e `line17-amt-gaps.spec.ts` Test 7. Full suite 1500 green.
+
+
 ## 2026-07-13 — Form 2555 high-cost-locality housing cap (Notice 2025-16, V123)
 
 The foreign-housing-exclusion cap was a flat $39,000 (30% of the FEIE limit). The IRS publishes higher

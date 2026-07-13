@@ -2493,7 +2493,7 @@ Knowledge: `C:\us-tax\knowledge\knowledge_line27abc.md` · Flowchart: `C:\us-tax
 ## Form 1040 Line 17 — Implemented (2026-03-21); Remaining Deferred Items
 
 - [Line 17 / MFS add-back rule] For MFS filers with AMTI > $900,350, the 25% add-back capped at $68,500 is deferred — applies only to rare high-income MFS filers.
-- [Line 17 / Form 6251 line 2c] AMT investment interest expense adjustment — requires second Form 4952 recomputation under AMT rules; deferred.
+- ~~[Line 17 / Form 6251 line 2c] AMT investment interest expense adjustment — requires second Form 4952 recomputation under AMT rules; deferred.~~ **DONE 2026-07-13 (pure compute — no new field).** `computeAmtInvestmentInterestAdjustment` refigures the already-computed regular Form 4952 with private-activity-bond interest added to net investment income (taxable for AMT), so the AMT deduction can be larger; line 2c = regular deduction (line 8) − AMT deduction (≤ 0, reduces AMTI). Gated on itemizing. Added `line2cInvestmentInterest` to the Form6251 output model + all three stub paths + line 4. Unit `line17AmtInvestmentInterestLine2cRefiguresForm4952WithPabInterest` (−$4,000) + e2e.
 - [Line 17 / Form 6251 line 2f] Alternative tax NOL deduction (ATNOLD) — requires AMT NOL carryover tracking; deferred.
 - [Line 17 / Form 6251 line 2i] ISO spread (incentive stock options) — out of scope; no stock-option intake in this application.
 - [Line 17 / Form 6251 line 2m] Passive activity AMT adjustment — requires Schedule E / rental income; deferred.
@@ -2704,7 +2704,7 @@ No further outstanding items beyond those captured in cross-cutting sections bel
 - ~~[Line 8 / UI: line 8d help text outdated after auto-wire fix]~~ **Fixed 2026-04-16** — Help text updated in both taxpayer and spouse components: "If you completed the Foreign Earned Income (Form 2555) section, this field is filled automatically — leave it blank."
 - ~~[Line 8 / UI: line 8h help text missing line 24a pointer]~~ **Fixed 2026-04-16** — Help text updated in both components to direct users to Income Adjustments → "Jury duty pay given to employer (line 24a)."
 - ~~[Line 8 / UI: line 8l help text missing line 24b pointer]~~ **Fixed 2026-04-16** — Help text updated in both components: gross income here, related expenses in Income Adjustments line 24b.
-- [Form 4952 / AMT recomputation] Generate the AMT-side Form 4952 computation artifact when `requiresAmtInvestmentInterestRecompute` is true and Form 6251 line 2c is implemented.
+- ~~[Form 4952 / AMT recomputation] Generate the AMT-side Form 4952 computation artifact when `requiresAmtInvestmentInterestRecompute` is true and Form 6251 line 2c is implemented.~~ **DONE 2026-07-13** — the AMT recompute is folded into `computeAmtInvestmentInterestAdjustment` (Form 6251 line 2c). A standalone AMT-side Form4952 *output artifact* is not emitted (the adjustment is what matters for AMTI); revisit only if the PDF needs a second Form 4952 copy.
 - [Form 4952 / Tax Return UI] Tax Return sidebar/component wiring for `form4952` output is deferred; the field is persisted in `TaxReturnComputation` and `TaxReturnDataService` but has no Tax Return view component.
 
 ---

@@ -1,6 +1,29 @@
 ﻿# History
 
 
+## 2026-07-14 — prepare() caching: memoize the §63(c)(6) resolution per request (optimizer perf)
+
+Cut the redundant `prepare()` work inside the joint-vs-separate optimizer. Computing an MFS leg with an
+AUTO standard-vs-itemized election calls `resolveSection63c6Election(uid)`, which recomputes BOTH legs to
+pick the household-coordinated method. The optimizer computes both MFS legs in one request, so that
+resolution — and its two inner full-return computes — ran TWICE per optimize request for the identical
+household (~7 prepare() executions where ~5 suffice).
+
+Fix: new `@RequestScoped ComputeRequestCache` memoizing the resolution keyed by uid. Being request-scoped,
+it is created fresh per request and destroyed at request end — no cross-request staleness or thread-leak
+risk (unlike a raw ThreadLocal on a pooled worker), and within a request the household forms cannot change.
+`resolveSection63c6Election` is now a thin cached wrapper over `computeSection63c6Election`; it degrades to
+uncached when the cache isn't injected (reflection-based unit tests) or no request scope is active.
+
+Verified: dev log shows "resolutions in optimize request: 1" (was 2); results byte-for-byte identical
+(hoh-split 5/5 + new `optimizer-joint-vs-separate.spec.ts` pinning MFJ 40,534 / MFS-combined 40,534 / TIE —
+also fills the previously-missing optimizer e2e). Full suite green.
+
+Still deferred (genuinely low): the CROSS-request duplicate — `/compute` then `/optimize` recompute the
+primary across two separate HTTP requests — needs an input-versioned persistent cache with save
+invalidation (staleness risk), so it's left as-is.
+
+
 ## 2026-07-14 — Fix stale tax_return_v2.filing_status for HoH-split legs
 
 Verified the four "cross-cutting" multi-return items and fixed the one real data-correctness bug.

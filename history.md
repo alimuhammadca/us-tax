@@ -1,6 +1,30 @@
 ﻿# History
 
 
+## 2026-07-14 — Front-end component tests for the multi-return / optimizer UI
+
+Closed the "targeted FE tests" gap for the three flagship multi-return components that had zero
+`*.component.spec.ts` (the service layer was already covered by `multi-return.service.spec.ts`, 19 tests,
+but the component render/interaction layer was not). Added Karma/Jasmine specs — 22 tests, all green:
+
+- `optimizer-comparison-panel.component.spec.ts` (8): no-table-until-result; four total-tax columns; the
+  MFJ/MFS/TIE recommendation branch + savings/extra-cost display + CSS class; error + running states;
+  `runComparison()` delegates to `TaxReturnService.computeAllAndOptimize`.
+- `persistent-mfs-toggle-panel.component.spec.ts` (6): loads returns on init; enable-vs-disable render by
+  `isMfsEnabled`; toggling/error states; `enable`/`disable` delegate to the service.
+- `dependent-own-toggle-panel.component.spec.ts` (8): per-dependent `isEnabled` (matches only THIS
+  dependent's `dependent_own` row — the multi-dependent disambiguation); string→number `dependentId`
+  coercion; disabled without an id; no-op enable without an id; delegation; error surfacing.
+
+Run headless with `ng test --watch=false --browsers=ChromeHeadless` (Karma finds system Chrome via
+CHROME_BIN). Verified all 22 pass. Stubs follow the existing `form-filing-status-taxpayer.component.spec.ts`
+convention (TestBed + standalone import + provider stubs; writable signals drive the render).
+
+Still untested (minor): `eic-comparison-panel`, `form-filing-status` parent, `form-filing-status-spouse`.
+Noted separately: the pre-existing `form-filing-status-taxpayer` spec has 2 failing async-`onSubmit` tests —
+an unmaintained pre-existing issue, not touched here.
+
+
 ## 2026-07-14 — prepare() caching: memoize the §63(c)(6) resolution per request (optimizer perf)
 
 Cut the redundant `prepare()` work inside the joint-vs-separate optimizer. Computing an MFS leg with an

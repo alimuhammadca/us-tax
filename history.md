@@ -1,6 +1,26 @@
 ﻿# History
 
 
+## 2026-07-14 — Production self-role-read endpoint: GET /api/roles/me
+
+Built the small production endpoint the parked support/admin route guard needs (outstanding.md
+Admin/Support "open question for revisit"). Previously only the dev-only `/api/dev/roles` grant/revoke
+existed — no way for the UI to ask "is the current user support staff?".
+
+- `RoleResource` (`@Authenticated`, `@Path("/api/roles")`, `GET /me`) → `MyRolesResponse { uid, roles:
+  string[], support: boolean }`. Any signed-in user reads their OWN roles; a regular filer gets `roles: []`
+  + `support: false`. Read-only — it never mutates and cannot read another account's roles (distinct from
+  the dev-only self-grant/revoke). The `support` convenience flag lets the route guard branch without
+  inspecting the list.
+- `RoleService.listRoles(uid)` — new; returns all `user_role` rows for the uid (empty for the common case).
+- Tests: `RoleResourceTest` (4 unit, plain Mockito — no `@QuarkusTest`, mirrors `SupportAdminResourceTest`)
+  + `roles-me.spec.ts` (3 e2e: regular-filer empty/`support:false`; grant→`support:true`→revoke→false;
+  401 unauthenticated). All green; the running dev server live-reloaded the new resource.
+
+Scope note: this ONLY removes the blocker. The Angular route guard + nav gating that consumes the endpoint,
+and the support-dashboard / admin message-compose UI, remain PARKED per the 2026-07-09 owner decision.
+
+
 ## 2026-07-14 — FE component tests: remaining multi-return components (gap CLOSED)
 
 Finished the "targeted FE tests" gap: added specs for the three remaining previously-untested

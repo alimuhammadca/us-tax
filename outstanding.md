@@ -1500,7 +1500,7 @@ Per user request, the **frontend admin surface is parked**: both the admin **mes
 - Dashboard list of support requests + status filter (← `GET /api/admin/support-requests`), a detail view (subject / message / contact snapshot), and a triage action (`PATCH` status + response note).
 - A compose/send-reply action (← `POST /api/admin/messages` to the requester's uid).
 - Route-guarded by the `support` role.
-- **Open question for revisit:** the UI needs to know whether the current user is support — add a small self-role-read endpoint (e.g. `GET /api/roles/me` returning the caller's roles) so the route guard + nav can gate on it. Today only the dev-only grant/revoke exists; there is no production self-role-read.
+- ~~**Open question for revisit:** the UI needs to know whether the current user is support — add a small self-role-read endpoint (e.g. `GET /api/roles/me` returning the caller's roles) so the route guard + nav can gate on it.~~ **✅ BUILT 2026-07-14.** `RoleResource` (`@Authenticated`, `GET /api/roles/me`) returns `{ uid, roles: string[], support: boolean }` — any signed-in user reads their OWN roles (empty list + `support:false` for a regular filer); it never mutates and can't read another account's roles (distinct from the dev-only `/api/dev/roles` grant/revoke). Backed by new `RoleService.listRoles(uid)`. Tests: `RoleResourceTest` (4 unit) + `roles-me.spec.ts` (3 e2e: regular-filer empty, grant→support:true→revoke, 401 unauthenticated). **The Angular route guard + nav gating that consumes this endpoint, plus the admin UI, remain PARKED** (this only removes the blocker).
 
 (historical detail retained)
 

@@ -1450,14 +1450,16 @@ Backend already returns `Map<String,Object>` of extracted fields; the gap list i
 
 ---
 
-## E2E Coverage for Header Dialogs (Account / Payment / Support / Messages) — Deferred 2026-04-28 — **MOSTLY DONE 2026-07-09**
+## E2E Coverage for Header Dialogs (Account / Payment / Support / Messages) — Deferred 2026-04-28 — **MOSTLY DONE 2026-07-09; 2 of 3 residuals CLOSED 2026-07-14 (only the phone-change save remains — externally blocked on a 2nd Firebase test phone)**
 
 **Added 2026-07-09 (`e2e/tests/header-dialogs.spec.ts`, 6/6 green):** the achievable coverage that needs no new backend endpoint or second test phone — (1) topbar profile menu lists Account/Payment/Support/Messages and each opens its dialog; (2) bell opens Messages (the empty backend falls back to `SEED_MESSAGES`, so the populated sample list renders — the empty-state is NOT reachable for the shared test user, correcting this item's original assumption); (3) Payment — full pure-UI flow for BOTH modes (code: 8-char validation gate → "submitted" message; card: field validation gate → "demo only — no charge" message); (4) Support — open + submit gated on subject+message, **not submitted** (POST /api/support-requests has no test-scoped reset, so submitting would pollute the shared Firestore collection); (5) Account — open, pre-filled fields, disabled Save, close.
 
-**Residuals still deferred (each needs new infra):**
-- **Support happy-path submit** — needs a test-scoped reset for the top-level `supportRequests` Firestore collection (or a delete-by-test-user endpoint) so runs don't accumulate rows.
-- **Messages populated-from-backend + true empty-state** — needs seeded `users/{uid}/messages` docs (no admin creation endpoint) AND a way to suppress the `SEED_MESSAGES` fallback to reach the empty-state.
-- **Account phone-change save** — needs a *second* Firebase test phone added in the Console (the OTP re-auth / `updatePhoneNumber` path); the current single shared-auth phone can't cover it.
+**Residuals — 2 of 3 CLOSED 2026-07-14; 1 externally blocked:**
+- ~~**Support happy-path submit**~~ **✅ DONE 2026-07-14.** Added dev-only `DELETE /api/dev/support-requests/mine` (`SupportDevResource`, `@IfBuildProfile("dev")`, self-scoped → `SupportService.deleteRequestsForUid`) so the e2e can submit through the Support dialog and clean up (support_request is intentionally excluded from `clearUserData`). `header-dialogs.spec.ts` now submits + asserts the confirmation + resets. Unit: `SupportDevResourceTest`.
+- ~~**Messages populated-from-backend + true empty-state**~~ **✅ DONE 2026-07-14.** Populated: seed a real message via the `POST /api/admin/messages` shipped 2026-07-09 (grant support → self-uid → post) and assert it renders (not the seed). Empty-state: new test-only `window.__e2eSuppressSeedMessages` hook in `messages-dialog.component.ts` disables the `SEED_MESSAGES` demo fallback so the real empty list renders; the e2e clears the inbox (list + `DELETE /api/messages/{id}`) then asserts "There are no messages at this point." (`header-dialogs.spec.ts`, now 9/9 green).
+- **Account phone-change save** — STILL DEFERRED (externally blocked). Needs a *second* Firebase test phone added in the Console (the OTP re-auth / `updatePhoneNumber` path); the current single shared-auth phone can't cover it — not resolvable in code.
+
+★ Selector gotcha fixed alongside: the new support-only "Support dashboard" nav item made `getByRole('menuitem', { name: 'Support' })` match two items (substring). Header-dialog menu selectors are now `exact: true`, and the admin-ui specs revoke the support role at test end to avoid cross-spec leakage.
 
 (original deferral note follows for reference)
 

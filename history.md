@@ -1,6 +1,26 @@
 ﻿# History
 
 
+## 2026-07-14 — Header-dialog e2e residuals: support submit + messages populated/empty-state
+
+Closed 2 of the 3 deferred header-dialog e2e residuals (the 3rd — Account phone-change save — stays deferred,
+externally blocked on a second Firebase test phone).
+
+- **Support happy-path submit.** New dev-only `DELETE /api/dev/support-requests/mine` (`SupportDevResource`,
+  `@IfBuildProfile("dev")`, self-scoped → `SupportService.deleteRequestsForUid`) lets the e2e submit through
+  the Support dialog and then clean up — `support_request` is intentionally excluded from `clearUserData`, so
+  there was otherwise no reset. `header-dialogs.spec.ts` now fills + submits + asserts the confirmation +
+  resets. Unit: `SupportDevResourceTest`.
+- **Messages populated + true empty-state.** Populated: seed a real message via `POST /api/admin/messages`
+  (grant support → self-uid → post) and assert it renders instead of the demo seed. Empty-state: new
+  test-only `window.__e2eSuppressSeedMessages` hook in `messages-dialog.component.ts` disables the
+  `SEED_MESSAGES` fallback; the e2e clears the inbox (list + `DELETE /api/messages/{id}`) then asserts the
+  "There are no messages at this point." empty-state. `header-dialogs.spec.ts` now 9/9 green.
+- **Selector gotcha.** The new support-only "Support dashboard" nav item made
+  `getByRole('menuitem', { name: 'Support' })` match two items (substring). Menu selectors are now `exact:true`,
+  and the admin-ui specs revoke the support role at test end to prevent cross-spec role leakage.
+
+
 ## 2026-07-14 — Admin/Support UI: /admin/support dashboard route + support role guard
 
 Built the role-gated support-staff surface that was parked pending `GET /api/roles/me` (now done). Closes the

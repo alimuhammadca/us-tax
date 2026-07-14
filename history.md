@@ -1,6 +1,29 @@
 ﻿# History
 
 
+## 2026-07-14 — Passive K-1 §469 routing + material-participation field (V129)
+
+Wired passive K-1s through the §469 passive-loss limiter. **Correction surfaced during the work:** the
+`part3Line22/23` flags the old deferred note called "material-participation" are actually the IRS
+"more than one activity for at-risk / passive purposes" DISCLOSURE checkboxes — material participation is
+NOT on the IRS K-1 (it's a taxpayer determination), so nothing existed to wire. Added it as a new field
+(user-approved).
+
+- **New field** `materiallyParticipatedInActivity` (Yes/No) on all three K-1 statement forms:
+  `SeScheduleK11041/1065/1120s` entities + mappers + V129 migration + a supplemental question in each
+  PDF-overlay form's active view (saved via `saveEntry(model)`). `null`/`true` = nonpassive (safe default,
+  today's behavior); `false` = passive.
+- **Compute:** `sumK1OrdinaryBusinessIncome` now returns NONPASSIVE only (→ Schedule 1 line 5);
+  new `sumPassiveK1OrdinaryNet` feeds passive K-1s into `computeRentalScheduleE` as "other passive". The
+  §469 loss pool is split — rental-RE losses keep the $25,000 active-participation special allowance;
+  other-passive (K-1) losses only offset passive income and are otherwise suspended (no allowance). The
+  refactor is behavior-equivalent when there is no other-passive loss (the 9 existing rental §469 tests are
+  unchanged). Passive K-1s show on Form 8582 line 2.
+- **Verify:** 2 unit tests (passive loss suspended no-allowance; passive K-1 income absorbs rental loss) +
+  2 e2e (passive loss suspended off line 5 → Form 8582 line 2b; nonpassive K-1 → line 5). Full suite green;
+  UI builds; V129 applied on a clean boot; rental e2e 11/11 green.
+
+
 ## 2026-07-13 — Form 8582 + Form 6198 Tax-Return preview forms (V128) — passive-loss / at-risk worksheets
 
 Built the two standalone preview forms behind the §469 passive-loss and §465 at-risk limitations. The loss

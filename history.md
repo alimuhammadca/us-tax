@@ -1,6 +1,32 @@
 ﻿# History
 
 
+## 2026-07-14 — FE component tests: remaining multi-return components (gap CLOSED)
+
+Finished the "targeted FE tests" gap: added specs for the three remaining previously-untested
+multi-return/optimizer components. Combined with the earlier wave, **all 6 specs now pass — 46 tests green**.
+
+- `eic-comparison-panel.component.spec.ts` (12): hidden entirely when `hasCombatPay=false`; ok-outcome
+  renders the both-ways table + winning-cell highlight + with/without/tie recommendation tone
+  (positive/negative/neutral); EIC-ineligible note; error + blocked outcomes (with flag messages);
+  `runComparison()` delegates to `EicComparisonService.compareBothWays` and emits `comparisonComplete`;
+  `autoRun` runs the comparison on `ngOnInit`; the stale banner flips on when `PersonalDataService.updated()`
+  increments after a settled comparison (the OnPush `effect` staleness watcher).
+- `form-filing-status.component.spec.ts` (5): init merges the saved row into the model; `filingStatus`
+  required for validity; save writes the model under `filing-status`; no save when invalid; the
+  nonresident-spouse name input is revealed only when the election box is checked.
+- `form-filing-status-spouse.component.spec.ts` (7): head-jointly locks the spouse to MFJ; head-separately
+  offers the MFS/HoH election (status then required); head-neither shows the info note; HoH reveals the
+  considered-unmarried inputs + advisory; switching away from HoH clears those fields; save payloads for
+  MFS (HoH residue blanked), HoH (kept), and non-electing (all blank).
+
+Spec-authoring gotcha captured (outstanding.md): a test that re-creates the component via a
+`createComponent()` helper (which calls `ngOnInit()` manually **and** `detectChanges()`, re-triggering an
+unawaited `ngOnInit`) and then immediately `await onSubmit()` races the second `ngOnInit`'s brief
+`loading=true` window — the submit short-circuits and nothing saves. Fix: mutate the field under test
+directly on the already-settled component instead of re-creating it.
+
+
 ## 2026-07-14 — Front-end component tests for the multi-return / optimizer UI
 
 Closed the "targeted FE tests" gap for the three flagship multi-return components that had zero

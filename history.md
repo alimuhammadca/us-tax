@@ -1,6 +1,36 @@
 ﻿# History
 
 
+## 2026-07-14 — Fix stale tax_return_v2.filing_status for HoH-split legs
+
+Verified the four "cross-cutting" multi-return items and fixed the one real data-correctness bug.
+
+**The bug:** `TaxReturnV2LifecycleService.enableMfs` stamps both separate legs' `tax_return_v2.filing_status`
+= "Married filing separately" once at enable time and **never updates it**. A spouse who is "considered
+unmarried" (§7703(b)) can later elect **Head of Household** on the filing-status form — after which the row
+still reported "MFS" for a leg that actually computes as HoH. Invisible in the UI today (labels derive from
+the computed form or use neutral text), but a genuinely wrong stored value that a consumer reading the column
+(e.g. the kiddie-tax parent-status fallback) would get wrong.
+
+**The fix:** new `@Transactional TaxReturnV2LifecycleService.syncLegFilingStatus(taxReturnId, resolvedStatus)`
+— idempotent update of the row to the leg's actual elected status. `TaxReturnComputeService.prepare(long
+taxReturnId)` calls it in the MFS branch using the status the `MfsFormScoper` already resolved onto the scoped
+`filing-status` form (MFS, or HoH for a considered-unmarried filer), so the column stays honest across later
+election changes regardless of which endpoint computes the leg. Injected via `Instance<>` (matching the
+KiddieTaxParentReader pattern; unit tests that set fields directly skip it via a null/unsatisfied guard).
+
+Verified by extending `hoh-split-filing.spec.ts`: legs read "Married filing separately" at enable, then
+"Head of household" after computing the HoH legs; the MFS+MFS test confirms genuine MFS legs stay "MFS"
+(correct no-op). Full HOH spec 5/5.
+
+**The other three cross-cutting items (verified, left as-is):** (1) **duplicate `prepare()` runs** — REAL:
+the optimizer computes MFJ + both MFS legs each run and `/compute` recomputes the primary, so the primary
+prepares twice in a compute+optimize cycle, no caching — a performance redundancy, results correct;
+(2) **line-20/31/32/33 test gaps** — largely CLOSED: line 31 excellent, 32/33 very strong, line 20 the
+thinnest but adequately covered; (3) **targeted FE tests** — REAL gap: 1 of 7 multi-return/optimizer Angular
+components has a component spec (the optimizer panel has none), though the multi-return SERVICE has 19 tests.
+
+
 ## 2026-07-14 — K-1 statement MFS per-spouse attribution
 
 Made each MFS spouse's Schedule K-1 income land only on their own separate return. K-1s are statements

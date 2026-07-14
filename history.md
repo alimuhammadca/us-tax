@@ -1,6 +1,25 @@
 ﻿# History
 
 
+## 2026-07-13 — Form 8863 structured institution address (Gap 8863-3, V127) — user-approved field add
+
+Closed the last item-8 piece. Form 8863 Part III wants each school's address in SEPARATE PDF boxes
+(street/city/state/ZIP for domestic + foreign country/province/postal for foreign schools), but the app stored
+it as one combined free-text field and dumped the whole thing in the street box, leaving the rest blank.
+
+User signed off (AskUserQuestion) on the full 7-piece scope and on deleting the old combined field with no data
+migration (no production data). Replaced the single `institution{N}AddressLine22` blob on each of the two
+institution slots with seven structured fields — `institution{N}Address{Street,City,State,Zip,ForeignCountry,
+ForeignProvince,ForeignPostalCode}Line22` — each mapping 1:1 to its IRS box.
+
+Touched every layer: `PfEducationStudent` + `OutForm8863Student` entities; `EducationCreditsMapper` +
+`Form8863OutputMapper` (save+load); `Form8863Student` output model; `computeForm8863`; the 8863 preview
+`buildSemanticValues`; and the education-credits intake UI (street/city/state/ZIP always visible; a non-persisted
+"outside the U.S." checkbox reveals the 3 foreign inputs and auto-shows when foreign data is present). V127 drops
+the 2 old columns and adds 14 new across both tables (no data migration). 5/5 8863 unit tests green; backend
+compiles; UI builds. V127 applies on the next backend restart. Item-8 "PDF-render / view-shape" fully closed.
+
+
 ## 2026-07-13 — Save-as-PDF "silent blank-field" bug: the ~10–15-form FQN sweep (9 forms fixed)
 
 Verified the four sub-items of the old "PDF-render / view-shape" roadmap line and fixed the real one.

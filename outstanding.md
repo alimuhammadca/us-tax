@@ -48,6 +48,26 @@ toggle reveals the 3 foreign inputs, auto-shown when foreign data exists). V127 
 14 new on both `pf_education_student` and `out_form_8863_student`. Unit test updated (5/5 8863 tests green);
 backend compiles + UI builds. **Item-8 "PDF-render / view-shape" roadmap line is now fully closed.**
 
+## Form 2210 underpayment-penalty interest-rate refresh — DEFERRED to TY2026 (2026-07-14)
+
+**Status: not an open bug — a forward-dated yearly maintenance action.** Form 2210 is fully implemented
+(`computeForm2210()` → Form 1040 line 38: $1,000 no-penalty threshold, 90%/110% safe harbors, MFS $75k /
+others $150k high-AGI test, waiver boxes, 4-period regular method). The penalty rate constant
+`ReferenceData.F2210_PENALTY_ANNUAL_RATE = 0.07` is the **correct TY2025 value** (IRS 7% = federal
+short-term + 3%, uniform across all four 2025 periods) and is live — nothing to do for TY2025 correctness.
+The other six F2210 constants are statutory/stable and never need refreshing.
+
+**Deferred action (do when the app moves to TY2026 / when IRS publishes the Q1-2026 rate, ~Dec 2025):**
+1. If the 2026 rate is **uniform** across all four quarters → change the single `F2210_PENALTY_ANNUAL_RATE`
+   constant (data-only, "tiny effort").
+2. If the rate **varies quarter-to-quarter** → the single constant is insufficient: extend it to a
+   per-quarter array and update `computeForm2210()` to apply the correct rate per period (small code change).
+   This same refactor also closes the current single-blended-rate approximation (the IRS Part III worksheet
+   applies each quarter's rate to the slice of the underpayment period that falls in that quarter).
+
+The maintenance recipe is also documented in-source at `ReferenceData.java:605–632`. Failure to refresh yields
+a line-38 penalty off by the rate ratio. **Owner decision 2026-07-14: leave deferred; revisit for TY2026.**
+
 **★ MFS Spouse-Forms Migration — ✅ COMPLETE (#12–#50 all done), 2026-06-24.** Every Spouse-tab form now produces a correct standalone Married-Filing-Separately return; MFJ is never broken. The final stretch #46–#50 each corrected a "Bucket D / defer" first-guess (all carried per-filer data): #46 Form 4868 full mirror; #47 estimated-tax verification-only; #48 Form 8862 owner_role split (V87 — fixed a cross-leg recertification leak); #49 31-other-payments owner_role split (V88 — fixed a household double-count); #50 ctc-actc-screening owner_role split (V89 — fixed a lost CTC gate that undermined #48). No blocking items remain. ~~The only deferred items are minor per-form enhancements tracked in their form sections below (all filing-convenience / rare-edge, NOT credit-value bugs): Form 8936 #33 (spouse MAGI add-back + prior-year-MAGI); Form 8834 #36 (spouse confirm-available field → cosmetic advisory note); Form 8859 #38 (spouse Schedule 8812 Worksheet B line-2 override); Form 8962 #39 (standalone spouse-leg APTC repayment via her own 1095-A / shared-policy allocation — needs a full mirror).~~ **ALL FOUR RESOLVED: #39 Form 8962 (2026-07-13, full mirror — see the Form 8962 section); #33/#36/#38 (2026-07-13, V126 — see their form sections). No MFS spouse-form residuals remain.** New rare-edge defers from the final stretch: Form 4868 #46 (spouse standalone extension only on a non-MFJ return — the MFJ supplement path is unchanged); 31-other-payments #49 / Form 8862 #48 carry no residual gaps (full per-filer mirrors). See `history.md` 2026-06-24 completion milestone + `rules.md` (MFS Spouse-Forms Migration — Canonical Rules, now incl. the owner_role-split playbook + dev-restart gotcha) + `C:\us-tax\mfs-spouse-migration.md`.
 
 ## Dependent-Own Returns — capabilities, limitations, and the dependent-statements gap (analysis 2026-07-11)

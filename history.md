@@ -1,6 +1,29 @@
 ﻿# History
 
 
+## 2026-07-13 — Save-as-PDF "silent blank-field" bug: the ~10–15-form FQN sweep (9 forms fixed)
+
+Verified the four sub-items of the old "PDF-render / view-shape" roadmap line and fixed the real one.
+
+**The bug.** Every IRS semantic-labels PDF nests terminal fields under `topmostSubform[0].Page1[0].<leaf>`
+(or `form1[0].Page1[0].<leaf>`). pdf-lib resolves by FULLY QUALIFIED name, so any `fillAcroForm` that passed a
+bare semantic leaf (e.g. `taxpayer_name`) to `getTextField()` threw internally, the catch swallowed it, and the
+downloaded PDF came out **entirely blank**. On-screen previews were fine (separate coordinate renderer), so it
+went unnoticed. Confirmed with a Node save/reload round-trip: for all 9 forms the old bare-leaf call throws and
+the new resolver's value persists (`oldBareThrew=true`, `newFill=OK`).
+
+**The fix.** New shared helper `us-tax-ui/src/app/utils/pdf-acroform.utils.ts` → `fillAcroFormByLeaf(form, values)`
+builds a leaf→FQN map from the LIVE form and resolves each key before writing. Convention-agnostic, no-op for
+flat forms, safe (no duplicate leaves in any form). Delegated all 9 bare-name `fillAcroForm` methods to it:
+Forms **6251, 8814, 8834, 8396, 8606, 8995, 8995-A, 4952, 2441**. Form 4952 also dropped its stale
+`semanticToAcroForm` CSV map (pointed at the pre-rename FQN `…f1_01[0]`). UI build green.
+
+**Verified already-done (stale notes corrected):** Form 4972 Part III worksheet (27 lines) and Form 8888
+Save-as-PDF are both fully implemented. **Still open:** (a) 3 forms whose semantic PDFs were never field-renamed
+— `f8801`, `f1040s1a` (Schedule 1-A), `f1040sd` (Schedule D) — need semantic-asset regeneration before the
+resolver can fill them; (b) Form 8863 per-institution address decomposition (Gap 8863-3, needs new intake fields).
+
+
 ## 2026-07-13 — MFS spouse-form residuals: Forms 8834 / 8859 / 8936 (V126) — the migration's last leftovers
 
 The three remaining low-priority residuals from the MFS Spouse-Forms Migration — small optional fields

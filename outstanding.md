@@ -2,6 +2,40 @@
 
 Updated: 2026-07-01T00:00:00-04:00
 
+## ~~Save-as-PDF "silent blank-field" bug — the ~10–15-form FQN sweep~~ **RESOLVED for 9 forms 2026-07-13; 3 asset-blocked forms remain**
+
+Verified the four sub-items of the old "PDF-render / view-shape" roadmap line and fixed the real one.
+
+**The bug (confirmed, not theoretical).** Every IRS semantic-labels PDF nests its terminal fields under a
+parent hierarchy (`topmostSubform[0].Page1[0].<leaf>` or `form1[0].Page1[0].<leaf>`). pdf-lib resolves fields
+by their FULLY QUALIFIED name, so a form whose `fillAcroForm` passed a bare semantic leaf (e.g. `taxpayer_name`)
+to `getTextField()` threw internally, the catch swallowed it, and the exported PDF came out **entirely blank**.
+The on-screen preview was unaffected (separate coordinate renderer), which is why it went unnoticed — users
+e-file and rarely download. A Node round-trip proved it: for all 9 fixed forms the old bare-leaf call threw and
+the new resolver's value survives save+reload.
+
+**The fix.** New shared helper `us-tax-ui/src/app/utils/pdf-acroform.utils.ts` → `fillAcroFormByLeaf(form, values)`
+builds a leaf→FQN map from the LIVE form and resolves each semantic key to its real field before writing.
+Convention-agnostic (works whether the template kept the original leaf or renamed it; no-op for flat forms) and
+safe (no duplicate leaves in any of the 9 forms). Delegated all 9 previously-bare `fillAcroForm` methods to it:
+**Form 6251, 8814, 8834, 8396, 8606, 8995, 8995-A, 4952, 2441.** (Form 4952 additionally dropped its stale
+`semanticToAcroForm` CSV map, which pointed at the pre-rename FQN `…f1_01[0]` that no longer exists.)
+The "safe" forms already resolved FQNs (Schedule 1/2/3/8812/A/B, 1116, 2210, 8888, 8889, 8949, 8911, 8962, 8815).
+
+**Still open — 3 forms need semantic-asset regeneration, NOT a code fix:** `f8801` (Form 8801), `f1040s1a`
+(Schedule 1-A), `f1040sd` (Schedule D). Their semantic-labels PDFs were never field-renamed — the terminal
+leaves are still the original IRS names (`f1_1`, `page1_0_f1_1_0`) and the elements JSON carries no `oldName`,
+so there is no map from the human semantic names (used by the preview + `buildSemanticValues`) to the real
+FQNs. Leaf-matching resolves 0/N for these. Fix path: re-run the semantic-labeling generator for these three so
+their PDF fields are renamed to the human semantic names (like the other 9), then add them to the
+`fillAcroFormByLeaf` delegation. Schedule D + Schedule 1-A are common forms, so worth doing next.
+
+**The other three sub-items were already done** (verified 2026-07-13): Form 4972 Part III worksheet (all 27
+lines computed + mapped + rendered — the old "DEFERRED" note below is stale); Form 8888 Save-as-PDF (full
+component + `saveAsPdf` + assets + backend model present — the old "no saveAsPdf code" note below is stale).
+Form 8863 per-institution **address decomposition remains genuinely open** (Gap 8863-3 — combined address dumps
+into the street box only; needs new structured intake fields, so it is gated on field sign-off).
+
 **★ MFS Spouse-Forms Migration — ✅ COMPLETE (#12–#50 all done), 2026-06-24.** Every Spouse-tab form now produces a correct standalone Married-Filing-Separately return; MFJ is never broken. The final stretch #46–#50 each corrected a "Bucket D / defer" first-guess (all carried per-filer data): #46 Form 4868 full mirror; #47 estimated-tax verification-only; #48 Form 8862 owner_role split (V87 — fixed a cross-leg recertification leak); #49 31-other-payments owner_role split (V88 — fixed a household double-count); #50 ctc-actc-screening owner_role split (V89 — fixed a lost CTC gate that undermined #48). No blocking items remain. ~~The only deferred items are minor per-form enhancements tracked in their form sections below (all filing-convenience / rare-edge, NOT credit-value bugs): Form 8936 #33 (spouse MAGI add-back + prior-year-MAGI); Form 8834 #36 (spouse confirm-available field → cosmetic advisory note); Form 8859 #38 (spouse Schedule 8812 Worksheet B line-2 override); Form 8962 #39 (standalone spouse-leg APTC repayment via her own 1095-A / shared-policy allocation — needs a full mirror).~~ **ALL FOUR RESOLVED: #39 Form 8962 (2026-07-13, full mirror — see the Form 8962 section); #33/#36/#38 (2026-07-13, V126 — see their form sections). No MFS spouse-form residuals remain.** New rare-edge defers from the final stretch: Form 4868 #46 (spouse standalone extension only on a non-MFJ return — the MFJ supplement path is unchanged); 31-other-payments #49 / Form 8862 #48 carry no residual gaps (full per-filer mirrors). See `history.md` 2026-06-24 completion milestone + `rules.md` (MFS Spouse-Forms Migration — Canonical Rules, now incl. the owner_role-split playbook + dev-restart gotcha) + `C:\us-tax\mfs-spouse-migration.md`.
 
 ## Dependent-Own Returns — capabilities, limitations, and the dependent-statements gap (analysis 2026-07-11)
@@ -2998,7 +3032,7 @@ UI audit of `form-refund-and-amount-owed.component.ts` + `refund-and-amount-owed
 
 - **[UI / R38 / LOW / DEFERRED]** `ChangeDetectionStrategy.OnPush` missing from `form-refund-and-amount-owed.component.ts`. No other form component in the project uses OnPush — adding it to one form would be inconsistent. Deferred for project-wide adoption across all form components.
 
-- **[Form 8888 / PDF / LOW / DEFERRED]** Form 8888 PDF fill/export not implemented. Semantic assets (`f8888_semantic_labels.pdf` + `f8888_field_map_semantic.csv`) are published but no client-side `saveAsPdf()` code exists yet. Blocked on Form 8888 tax-return display component.
+- ~~**[Form 8888 / PDF / LOW / DEFERRED]** Form 8888 PDF fill/export not implemented. Semantic assets (`f8888_semantic_labels.pdf` + `f8888_field_map_semantic.csv`) are published but no client-side `saveAsPdf()` code exists yet. Blocked on Form 8888 tax-return display component.~~ **STALE — RESOLVED (verified 2026-07-13):** `form-tax-return-8888.component.ts` exists with a full `saveAsPdf()` (FQN-resolving via `semanticFqn`), the shell routes/sidebars it, and the backend `Form8888` model + `OutForm8888(Account)` entities + mapper are all present.
 
 - **[Form 8888 / IRA-HSA / LOW / DEFERRED]** Form 8888 account type dropdown only offers Checking/Savings. IRS Form 8888 also supports IRA, HSA, Coverdell ESA, and Archer MSA account types. Requires backend validation changes + new dropdown options.
 
@@ -3124,7 +3158,7 @@ Chosen by the project owner as the next foundation after the 8889/8853 forms dra
 
 2. **Verify the GAP-PDF-8z assertion lands** after a hard dev-server restart. The fix is in source; last run still failed which means hot-reload was missing the change. A clean `npm start` should resolve it but needs re-verification.
 
-3. **Comprehensive field-map audit** — beyond the two specific fields the harness targets, EVERY other entry in `buildAcroFormValues` for Schedule 1, Form 1040, Form 8839, Form 8995, Form 8995A, Form 8606, Form 4972, Form 8814, Form 8919, Form 4137, Schedule 1-A, Schedule 2, Schedule 3 etc. is at risk of the same short-name → FQN mismatch. The Schedule 1 resolver helper handles the common `f<P>_NN[0]` and `c<P>_N[0]` cases mechanically, but each form's `buildAcroFormValues` needs the same translator and a per-form sweep for ReadOrder-nested fields. Estimated effort: ~1-2 days per form, ~10-15 forms total.
+3. **Comprehensive field-map audit** — ✅ **RESOLVED 2026-07-13 (see the dated section at the top of this file).** A live-form leaf→FQN resolver (`fillAcroFormByLeaf`) replaced the bare-name `fillAcroForm` in the 9 at-risk forms (6251, 8814, 8834, 8396, 8606, 8995, 8995-A, 4952, 2441); fix proven by a Node save/reload round-trip. The other forms already resolved FQNs. Remaining: 3 forms (8801, Schedule 1-A, Schedule D) whose semantic PDFs were never field-renamed — they need asset regeneration, not the resolver. Original note follows. ~~beyond the two specific fields the harness targets, EVERY other entry in `buildAcroFormValues` for Schedule 1, Form 1040, Form 8839, Form 8995, Form 8995A, Form 8606, Form 4972, Form 8814, Form 8919, Form 4137, Schedule 1-A, Schedule 2, Schedule 3 etc. is at risk of the same short-name → FQN mismatch.~~ The Schedule 1 resolver helper handles the common `f<P>_NN[0]` and `c<P>_N[0]` cases mechanically, but each form's `buildAcroFormValues` needs the same translator and a per-form sweep for ReadOrder-nested fields.
 
 4. **Skip the harness spec in CI for now** — `schedule1-pdf-render.spec.ts` currently fails. The spec file is annotated with the deferral note + `test.skip` so regression runs stay green until the underlying issue is solved.
 

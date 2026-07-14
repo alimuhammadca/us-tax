@@ -19,9 +19,19 @@ Forms **6251, 8814, 8834, 8396, 8606, 8995, 8995-A, 4952, 2441**. Form 4952 also
 `semanticToAcroForm` CSV map (pointed at the pre-rename FQN `…f1_01[0]`). UI build green.
 
 **Verified already-done (stale notes corrected):** Form 4972 Part III worksheet (27 lines) and Form 8888
-Save-as-PDF are both fully implemented. **Still open:** (a) 3 forms whose semantic PDFs were never field-renamed
-— `f8801`, `f1040s1a` (Schedule 1-A), `f1040sd` (Schedule D) — need semantic-asset regeneration before the
-resolver can fill them; (b) Form 8863 per-institution address decomposition (Gap 8863-3, needs new intake fields).
+Save-as-PDF are both fully implemented.
+
+**Follow-on same day — the 3 asset-blocked forms fixed too.** `f8801`, Schedule 1-A (`f1040s1a`), and Schedule D
+(`f1040sd`) had STALE published semantic PDFs (an older generator left leaves as original IRS names, so nothing
+mapped the human `buildSemanticValues` keys to real FQNs). Re-ran the current generators
+(`generate-semantic-{1040sd,1040s1a}-2025.js`, `generate-semantic-f8801.js` — each renames every field to the
+human leaf, 0 unmapped), replaced the 3 `public/irs/*_semantic_labels.pdf` (+ CSVs), and delegated the 3
+components to `fillAcroFormByLeaf`. Renaming doesn't move fields, so the coordinate-based previews + unchanged
+`*_elements.json` are unaffected. Verified 100% key resolution (53/53, 54/54, 57/57) + round-trip fill; UI build
+green. **All 12 blank-download forms now fixed.**
+
+**Still open:** Form 8863 per-institution address decomposition (Gap 8863-3 — needs new structured intake fields,
+gated on field sign-off).
 
 
 ## 2026-07-13 — MFS spouse-form residuals: Forms 8834 / 8859 / 8936 (V126) — the migration's last leftovers

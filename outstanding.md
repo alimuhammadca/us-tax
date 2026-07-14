@@ -22,13 +22,16 @@ safe (no duplicate leaves in any of the 9 forms). Delegated all 9 previously-bar
 `semanticToAcroForm` CSV map, which pointed at the pre-rename FQN `…f1_01[0]` that no longer exists.)
 The "safe" forms already resolved FQNs (Schedule 1/2/3/8812/A/B, 1116, 2210, 8888, 8889, 8949, 8911, 8962, 8815).
 
-**Still open — 3 forms need semantic-asset regeneration, NOT a code fix:** `f8801` (Form 8801), `f1040s1a`
-(Schedule 1-A), `f1040sd` (Schedule D). Their semantic-labels PDFs were never field-renamed — the terminal
-leaves are still the original IRS names (`f1_1`, `page1_0_f1_1_0`) and the elements JSON carries no `oldName`,
-so there is no map from the human semantic names (used by the preview + `buildSemanticValues`) to the real
-FQNs. Leaf-matching resolves 0/N for these. Fix path: re-run the semantic-labeling generator for these three so
-their PDF fields are renamed to the human semantic names (like the other 9), then add them to the
-`fillAcroFormByLeaf` delegation. Schedule D + Schedule 1-A are common forms, so worth doing next.
+**~~Still open — 3 forms need semantic-asset regeneration~~ ✅ RESOLVED 2026-07-13:** `f8801` (Form 8801),
+`f1040s1a` (Schedule 1-A), `f1040sd` (Schedule D). Their published semantic-labels PDFs were STALE — produced by
+an older generator that left the terminal leaves as original IRS names (`f1_1`, `page1_0_f1_1_0`), so there was
+no map from the human semantic names (preview + `buildSemanticValues`) to the real FQNs. Fix: re-ran the current
+generators (`generate-semantic-1040sd-2025.js`, `generate-semantic-1040s1a-2025.js`, `generate-semantic-f8801.js`
+— each renames every field to the human leaf from its `schedule-mappings/*.json` / inline map, 0 unmapped),
+replaced the 3 `public/irs/*_semantic_labels.pdf` (+ CSVs) with the renamed output, and delegated the 3
+components' `fillAcroForm` to `fillAcroFormByLeaf`. Renaming does NOT move fields, so the coordinate-based
+previews and their unchanged `*_elements.json` are unaffected. Verified: all 3 live PDFs resolve 100% of their
+component keys (53/53, 54/54, 57/57) and round-trip fill. UI build green. **All 12 blank-download forms fixed.**
 
 **The other three sub-items were already done** (verified 2026-07-13): Form 4972 Part III worksheet (all 27
 lines computed + mapped + rendered — the old "DEFERRED" note below is stale); Form 8888 Save-as-PDF (full

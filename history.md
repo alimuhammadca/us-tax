@@ -1,6 +1,22 @@
 ﻿# History
 
 
+## 2026-07-14 — K-1 statement MFS per-spouse attribution
+
+Made each MFS spouse's Schedule K-1 income land only on their own separate return. K-1s are statements
+(read per-uid / household) and were summed across all entries. `filterK1EntriesForMfs` now drops entries
+whose `recipientTIN` matches `filing-status.mfsOtherSpouseSsn` — the same exclusion the 1099-B / PTC /
+W-2-line-1a filters already use — applied to all three K-1 lists before summing (both the nonpassive →
+Schedule 1 line 5 path and the passive → §469 path use the filtered lists). Entries with a blank/other TIN
+are kept; no-op on joint/single returns (the key is unset). Pure compute — no migration.
+
+1 unit test (`k1MfsAttributionExcludesOtherSpouseByRecipientTin`) + 1 MFS e2e
+(`mfs-spouse-k1-income.spec.ts`: head K-1 $18k on his leg, spouse K-1 $25k on hers). Full suite 1512 green.
+
+★ Aside the e2e surfaced: `schedule-k1-1120s` (and likely `-1041`) is not creatable via the statement
+`/entries` API — a facet of the pending K-1 semantic rework; the test uses two `schedule-k1-1065` entries.
+
+
 ## 2026-07-14 — Rental income wired into MFS multi-return scoping (V130)
 
 Made an MFS spouse's rental appear on her own separate return. Two parts:

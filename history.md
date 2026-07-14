@@ -1,6 +1,27 @@
 ﻿# History
 
 
+## 2026-07-14 — Rental income wired into MFS multi-return scoping (V130)
+
+Made an MFS spouse's rental appear on her own separate return. Two parts:
+
+- **Per-spouse attribution (scoper):** rental income (Schedule E Part I) is an owner_role two-row form with
+  a role-suffixed per-property child list (`taxpayerProperties` / `spouseProperties`) — the same shape as
+  Form 8911 (#34). `MfsFormScoper`'s generic `-spouse`→`-taxpayer` rename kept the `spouseProperties` key,
+  but `computeRentalScheduleE` reads the filer slot's `taxpayerProperties`, so on the `mfs_spouse` leg the
+  spouse's rental silently vanished. Added `normalizeRentalIncomeSpouse` (routes `spouseProperties` →
+  `taxpayerProperties`; the bare scalars `hasRentalOrRoyaltyIncome`/`isRealEstateProfessional`/
+  `otherPassiveIncome` pass through) + the special-case ahead of the generic rename.
+- **Dual-write trigger (V130):** added the V66-style `person_id` BEFORE-INSERT/UPDATE trigger on
+  `pf_rental_income` that was missing when the V66 batch was authored (rental wasn't yet integrated).
+  `pf_rental_property` is a child (`parent_id`), so it needs no `person_id`.
+
+Only affects MFS where both spouses have rental — joint and single-rental cases are unchanged. Scoper unit
+test + MFS e2e (`mfs-spouse-rental-income.spec.ts`: head rental $3k on his leg, spouse rental $8k on hers).
+Full suite 1511 green; V130 applied on a clean boot. (K-1 statement MFS attribution by recipient-TIN is a
+separate, still-deferred item.)
+
+
 ## 2026-07-14 — Passive K-1 §469 routing + material-participation field (V129)
 
 Wired passive K-1s through the §469 passive-loss limiter. **Correction surfaced during the work:** the

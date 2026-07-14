@@ -1,6 +1,28 @@
 ﻿# History
 
 
+## 2026-07-14 — Admin/Support UI: /admin/support dashboard route + support role guard
+
+Built the role-gated support-staff surface that was parked pending `GET /api/roles/me` (now done). Closes the
+frontend half of the Admin/Support outstanding item.
+
+- **`SupportDashboardComponent`** (`/admin/support`) — status-filter chips (open/in_progress/resolved/all →
+  `GET /api/admin/support-requests`), request table + detail panel (message + contact snapshot), triage
+  (`PATCH` status + internal note), and reply-to-inbox compose (`POST /api/admin/messages` to the requester's
+  uid — folds in the old admin message-compose item). A triaged row leaves a now-mismatched filter view.
+- **`supportRoleGuard`** — auth + `support` role (via `RoleService` → `/api/roles/me`); non-support → `/app`,
+  unauthenticated → `/auth/sign-in`; fails closed on error. Route uses `[authGuard, supportRoleGuard]`.
+- **`RoleService`** (Angular) — session-cached `/api/roles/me` (`isSupport`/`roles`/`loaded` signals,
+  `ensureLoaded`/`refresh`/`reset`). **`SupportAdminService`** — list/triage/reply wrappers with bearer auth.
+- **Topbar** — support-only "Support dashboard" menu item, rebuilt once roles resolve, cleared on sign-out.
+- Tests: `support-role.guard.spec.ts` (3) + `support-dashboard.component.spec.ts` (9) Karma (12 green) +
+  `admin-support-dashboard-ui.spec.ts` (3 e2e green: non-support redirect, triage-to-resolved, nav gating).
+  Full UI build green.
+
+Still deferred (minor): a standalone compose-to-arbitrary-uid admin screen (staff can POST directly); the
+payment card-processor + header-dialog e2e residuals remain in their own sections.
+
+
 ## 2026-07-14 — Production self-role-read endpoint: GET /api/roles/me
 
 Built the small production endpoint the parked support/admin route guard needs (outstanding.md

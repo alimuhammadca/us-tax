@@ -1,6 +1,31 @@
 ﻿# History
 
 
+## 2026-07-13 — Form 8582 + Form 6198 Tax-Return preview forms (V128) — passive-loss / at-risk worksheets
+
+Built the two standalone preview forms behind the §469 passive-loss and §465 at-risk limitations. The loss
+*math* already ran (see the same-day Schedule E note), but nothing surfaced the worksheet that derives the number
+on Schedule 1 line 5 or the carryforward amounts — this closes that gap.
+
+- **Assets:** generated semantic PDF + CSV + elements JSON for `f8582` (205 fields, 3 pages) and `f6198`
+  (34 fields) from the IRS source PDFs via new reproducible generators
+  (`generate-semantic-f8582/f6198.js` + `generate-f8582/f6198-elements.py`), mirroring the f8801/f4952 pipeline.
+  100% leaf-resolution verified.
+- **Backend:** `Form8582Output` (summary lines 1a–11: the $25k special-allowance computation + total losses
+  allowed) and `Form6198Output` (Part I loss / simplified Part II amount-at-risk / Part IV deductible loss),
+  populated inside `computeRentalScheduleE` from the aggregate intermediates (built only when a passive loss /
+  at-risk cap exists). Threaded onto `TaxReturnComputation`, saved/loaded via the `OutputMapper` registry
+  (`Form8582OutputMapper`/`Form6198OutputMapper`), persisted by V128 (`out_form_8582` / `out_form_6198`).
+- **Frontend:** `form-tax-return-8582` / `form-tax-return-6198` pure-HTML previews (clone of the f4952 imperative
+  renderer) with `buildSemanticValues` → own IRS box, Save-as-PDF via `fillAcroFormByLeaf`, wired into the shell
+  and sidebar-gated on `computation.form8582` / `.form6198` presence.
+- **Scope:** the per-activity worksheet tables (8582 Parts IV–IX; 6198 detailed Part III) render blank — this app
+  limits passive/at-risk losses on the aggregate, not per activity, so only the summary lines carry values.
+- **Verify:** 2 unit tests (allowance/at-risk population) + 2 e2e assertions on the existing rental spec
+  (sc_00074 §469, sc_00077 §465). Full suite 1508 green; UI builds; V128 applied on a clean boot (schema OK);
+  all component keys resolve 19/19 + 11/11 against the live PDFs.
+
+
 ## 2026-07-13 — Form 8863 structured institution address (Gap 8863-3, V127) — user-approved field add
 
 Closed the last item-8 piece. Form 8863 Part III wants each school's address in SEPARATE PDF boxes

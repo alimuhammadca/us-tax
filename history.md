@@ -1,6 +1,25 @@
 ﻿# History
 
 
+## 2026-07-13 — MFS spouse-form residuals: Forms 8834 / 8859 / 8936 (V126) — the migration's last leftovers
+
+The three remaining low-priority residuals from the MFS Spouse-Forms Migration — small optional fields
+the spouse copies of Forms 8834 / 8859 / 8936 lacked. Each mirrors an optional field on the taxpayer
+form and is used only on the spouse's own MFS leg (un-prefixed by MfsFormScoper). None affect the MFJ
+path or the common-case credit value. (Form 8962 #39, the fourth, was already resolved earlier today as #17.)
+
+- **Form 8834 (#36):** `spouseConfirmReleasedQevCreditAvailable` → the bare `confirmReleasedQevCreditAvailable`
+  key, so the cosmetic advisory note is suppressed on her leg.
+- **Form 8859 (#38):** `spouseUseSchedule8812CreditLimitWorksheetBOverride` +
+  `spouseSchedule8812CreditLimitWorksheetBLine14Override` → the bare override keys (rare CTC/ODC interplay).
+- **Form 8936 (#33):** `spouseCurrentYearAdditionalMagiAddbacks` + `spousePriorYearMagi` → the bare MAGI keys,
+  enabling her foreign-income MAGI add-back + prior-year-MAGI election.
+- V126 (5 nullable columns across pf_electric_vehicle_credit / pf_carryforward_homebuyer_credit /
+  pf_clean_car_credit) + entities + mappers + three `MfsFormScoper.normalize*Spouse` un-prefixes + MFS-only
+  spouse UI fields on each form. 3 scoper unit tests; full suite 1506 green; UI build green; healthy boot
+  applied V126. Closes the MFS Spouse-Forms Migration's last residuals.
+
+
 ## 2026-07-13 — Form 4952 pure-HTML Tax Return preview (Priority 2 — last numbered priority, DONE)
 
 Built the record-keeping Form 4952 preview (compute was already complete). `form-tax-return-4952`

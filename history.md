@@ -1,6 +1,34 @@
 ﻿# History
 
 
+## 2026-07-15 — Authentication redesign: Password + Phone-SMS two-factor (Firebase Identity Platform MFA)
+
+Replaced the single-factor phone-SMS sign-in (SIM-swap exposed, plus a `/profiles/exists`
+enumeration oracle) with **email + password as the first factor and phone SMS as an enrolled
+second factor**, reusing the existing Firebase Identity Platform. Backend token verification
+(Firebase Admin SDK) is unchanged and still sound. No data migration — development-stage, single user.
+
+- **Frontend (`us-tax-ui`):** rewrote `auth.service.ts` (`signUp`/`signIn`→`{user|mfaResolver}`/
+  `startPhoneEnrollment`/`completePhoneEnrollment`/`sendMfaChallenge`/`resolveMfa`/
+  `sendPasswordReset`/email-verification helpers), `auth-sign-in` (email+password → MFA challenge +
+  forgot-password), `auth-sign-up` (name/email/password/confirm-password/phone + terms → verify-email
+  success panel), `auth-verify-code` (dual-mode enroll/challenge). New `mfaEnrolledGuard` blocks the
+  app until a second factor is enrolled; `guestGuard` lets signed-in-but-unenrolled users through to
+  enrollment. Dev-only `appVerificationDisabledForTesting` honours Firebase Console test numbers.
+- **Unverified-email hardening:** enrollment requires a verified email (Firebase). If a user signs in
+  before verifying, `auth-verify-code` now shows a **"Verify your email first"** gate (resend +
+  "I've verified — continue") instead of dead-ending on `auth/unverified-email`; also fixed the NG0100
+  from kicking off the SMS send inside the initial change-detection pass (deferred to next tick).
+- **Backend (`us-tax-be`):** removed the `@PermitAll GET /profiles/exists` enumeration oracle;
+  `ProfileService.upsertProfile` now deletes orphaned profile rows holding the same phone/email under a
+  different uid before insert (fixes the duplicate-key HTTP 500 seen when re-creating a deleted account).
+- **Tests:** `ProfileResourceTest` trimmed to 4 (obsolete exists-probe cases removed), passing;
+  `auth.guards.spec` / `auth.service.spec` updated; e2e auth helper keeps direct-token injection
+  (marks `e2eInjectedSession` so the MFA guard admits injected sessions), `auth.spec` rewritten.
+- Design doc: `docs/auth-redesign.md`. Manual end-to-end flow (sign-up → verify email → sign-in →
+  enroll → SMS code) confirmed working by the user.
+
+
 ## 2026-07-14 — Header-dialog e2e residuals: support submit + messages populated/empty-state
 
 Closed 2 of the 3 deferred header-dialog e2e residuals (the 3rd — Account phone-change save — stays deferred,

@@ -1,6 +1,35 @@
 ﻿# History
 
 
+## 2026-07-17 — Full production release: backend + migrations + both frontends + admin CSP fix
+
+Shipped all of `main` to prod. Backend rebuilt on ACR and rolled out to Container
+App `ca-ustax-be` (health UP; Liquibase V131–V135 confirmed applied against the
+Azure Postgres Flexible Server, which was started for the release). Both SPAs
+redeployed to their Static Web Apps: DIY (`swa-ustax-ui`) and admin
+(`swa-ustax-admin-ui`). CORS + Firebase authorized domains already covered
+`admin.taxbeans.com`. Prod admin seeded.
+
+Paywall shipped **off**: `LICENSING_ENFORCE_PAID_COMPUTE=false` on the Container
+App (Stripe not built yet — enforcing it would lock out all users). Flip to `true`
+once billing exists. `PROFILE_ENFORCE_UNIQUE_PHONE` remains prod-default `true`.
+
+**Admin-ui CSP/styling bug fixed (root cause).** The deployed admin dashboard
+rendered completely unstyled with two `script-src` CSP console violations. Cause:
+Angular's production `optimization.styles.inlineCritical` (default `true`) loads
+the full stylesheet via `<link media="print" onload="this.media='all'">`; the
+`onload` inline event handler is blocked by the strict `script-src 'self'`, so the
+sheet never switches from `print` to `screen` and nothing is styled. Fix:
+`inlineCritical: false` in `angular.json` → plain `<link rel="stylesheet">`, no
+handler, strict CSP retained (no `'unsafe-inline'`). Verified on the prod SWA:
+plain stylesheet link, `script-src 'self' …`, zero inline handlers/scripts, 0 CSP
+console errors, `.btn` computes to `#23305a` (login screenshot styled). Admin UI
+commit `4899933`; documented in `us-tax-admin-ui/DEPLOYMENT.md` §7.
+
+Remaining manual items: (1) user adds the GoDaddy DNS record for
+`admin.taxbeans.com`; (2) Stripe/billing before enabling the paywall.
+
+
 ## 2026-07-16 — Licensing/roles refinement: dev compute bypass, single-role model, DIY-admin split
 
 Follow-on to the admin dashboard. Backend `3c96ee5`, DIY UI `8d1d498`, admin UI `b73f00d`.

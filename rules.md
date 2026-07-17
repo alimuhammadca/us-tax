@@ -1526,6 +1526,26 @@ backend** under `/api/admin/**`; the admin **UI is a separate app/repo**
 - **Self-demotion is blocked:** an admin can't change their own role out of admin (403),
   so you can't lock yourself out of the dashboard.
 
+**Refinement 2026-07-16 (admin user directory + phone uniqueness):**
+- **The admin user directory enriches from Firebase Auth, not just the SQL profile.**
+  `UserAccountService` reads name/email/phone from the `profile` table, but a profile row
+  exists only once a user saves it — so accounts show blank without it. It now falls back
+  to Firebase (`FirebaseAdminService.lookup`) for email / display name / phone. **The MFA
+  phone is NOT available via firebase-admin 9.7.0** (no `MultiFactor` classes) — get it
+  from the Identity Platform Admin REST endpoint `projects/{id}/accounts:lookup`
+  (service-account OAuth token; `mfaInfo[].phoneInfo`), not the SDK.
+- **Two `diy` users may not share a phone in production; admins are exempt.** On profile
+  save, `ProfileService.upsertProfile` rejects a **filer's** save with 409 when another
+  **diy** account already uses that phone (`anotherDiyUserHasPhone`, joins `user_role`).
+  Config-gated by `profile.enforce-unique-phone` (true in prod, `false` in `%dev`/`%test`
+  so the shared Firebase test number can back several accounts). The gate can't be
+  exercised in the dev server — validate the join query directly against the DB.
+- **`profile.phone` is NOT DB-unique (only `ix_profile_phone`); only `email` is
+  (`uq_profile_email`).** So never "orphan-delete" a row by phone to make room for an
+  insert — that silently STEALS another account's profile (it did, wiping a profile that
+  shared the test phone). Phone uniqueness is an app-layer, prod-only, diy-scoped rule.
+  The email orphan-delete stays because email really is uniquely constrained.
+
 
 
 

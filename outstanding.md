@@ -1,6 +1,73 @@
 # Outstanding Items
 
-Updated: 2026-07-01T00:00:00-04:00
+Updated: 2026-07-16T00:00:00-04:00
+
+## Admin SWA — GitHub Actions deploy workflow (drafted, not yet activated) — 2026-07-16
+
+The admin app (`C:\us-tax\us-tax-admin-ui`, repo `alimuhammadca/us-tax-admin-ui`) has no CI deploy yet.
+Below is the ready-to-use workflow, mirroring the DIY app's `azure-static-web-apps.yml` (auto-deploy on
+push DISABLED — manual `workflow_dispatch` only; build happens in the Node step, then the prebuilt output
+is uploaded with `skip_app_build: true`). **Parked here on purpose** — activating it before the SWA + token
+exist would just red every run. See `us-tax-admin-ui/DEPLOYMENT.md` for the SWA/CORS/Firebase steps.
+
+**To activate:**
+1. Create the SWA (`swa-ustax-admin-ui`, RG `ocr`) — `DEPLOYMENT.md` §2.
+2. Get its deploy token: `az staticwebapp secrets list --name swa-ustax-admin-ui --resource-group ocr --query properties.apiKey -o tsv`.
+3. Add it as repo secret **`AZURE_STATIC_WEB_APPS_API_TOKEN_ADMIN`** (GitHub → repo Settings → Secrets → Actions).
+4. Save the YAML below as `.github/workflows/azure-static-web-apps.yml` in the admin repo; commit + push.
+5. Deploy from the Actions tab → "Run workflow" (or uncomment the `push:` block to auto-deploy on main).
+
+```yaml
+name: Azure Static Web Apps CI/CD (admin)
+
+on:
+  # Auto-deploy on push is DISABLED (matches the DIY app). Deploy manually via the
+  # Actions tab. To enable auto-deploy, uncomment the push block below.
+  # push:
+  #   branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    name: Build and deploy
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: false
+          lfs: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Angular (production)
+        run: npm run build -- --configuration production
+
+      - name: Deploy to Azure Static Web Apps
+        id: deploy
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_ADMIN }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          action: upload
+          app_location: dist/us-tax-admin-ui/browser
+          api_location: ''
+          output_location: ''
+          skip_app_build: true
+```
+
+Notes: `app_location` is the **prebuilt** output dir (with `skip_app_build: true`), so `staticwebapp.config.json`
+must be inside it — it is (copied from `public/` by the angular.json assets glob). Separate token secret name
+(`…_ADMIN`) so it never collides with the DIY app's `AZURE_STATIC_WEB_APPS_API_TOKEN`. Remember the two manual
+deploy-time steps from `DEPLOYMENT.md`: append the admin origin to the backend `CORS_ORIGINS` env var, and add
+`admin.taxbeans.com` to Firebase authorized domains.
+
 
 ## ~~Save-as-PDF "silent blank-field" bug — the ~10–15-form FQN sweep~~ **RESOLVED for 9 forms 2026-07-13; 3 asset-blocked forms remain**
 

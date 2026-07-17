@@ -1507,6 +1507,25 @@ backend** under `/api/admin/**`; the admin **UI is a separate app/repo**
 - Deferred: Stripe payment integration (codes-only gating for now); admin-UI
   deployment (SWA + `admin.taxbeans.com` + backend CORS for that origin).
 
+**Refinement 2026-07-16 (dev bypass + single-role):**
+- **The compute license gate is enforced only in production.**
+  `licensing.enforce-paid-compute` is `true` by default but `false` in `%dev`/`%test`
+  (application.properties). `TaxReturnResource.requirePaidAccess` returns early when
+  off — so dev + e2e always compute, prod requires paid access. A hand-built unit
+  test must set `resource.enforcePaidCompute = true` to exercise the 402.
+- **Roles are single, not additive: a user is exactly one of `{admin, diy}`.** Assign
+  via `RoleService.setExclusiveRole` (removes the others) — the admin UI uses
+  `PUT /api/admin/users/{uid}/role`, not grant/revoke. `AppUserBootstrap` grants `diy`
+  only `WHERE NOT EXISTS (any role for uid)`, so promoting to admin sticks (diy is never
+  re-added on the next request). An admin therefore never holds `diy`.
+- **`diyOnlyGuard` blocks admins from the DIY `/app`.** Admins belong in the separate
+  admin dashboard. The guard **fails open** on a role-read error (never lock a real filer
+  out — the backend still gates admin endpoints) and honours the `e2eInjectedSession`
+  bypass. Because injection bypasses BOTH `mfaEnrolledGuard` and `diyOnlyGuard`, the block
+  can only be exercised by a real login — not reachable via the injection e2e path.
+- **Self-demotion is blocked:** an admin can't change their own role out of admin (403),
+  so you can't lock yourself out of the dashboard.
+
 
 
 

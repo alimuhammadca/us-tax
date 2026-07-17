@@ -1,6 +1,29 @@
 ﻿# History
 
 
+## 2026-07-16 — Licensing/roles refinement: dev compute bypass, single-role model, DIY-admin split
+
+Follow-on to the admin dashboard. Backend `3c96ee5`, DIY UI `8d1d498`, admin UI `b73f00d`.
+
+- **Compute gate is now environment-aware.** `licensing.enforce-paid-compute` (application.properties)
+  is `true` in prod, `false` in `%dev`/`%test` — so local use + e2e always Compute Tax, production
+  requires paid access (paid license or redeemed code). `TaxReturnResource.requirePaidAccess` returns
+  early when the flag is off. (The Phase-4 e2e entitlement re-grant in `clearUserData` is now redundant
+  but harmless — left in place.)
+- **Single-role model.** A user is exactly one of `{admin, diy}`. `RoleService.setExclusiveRole` removes
+  the other role(s) when assigning; `AdminUserResource` `PUT /api/admin/users/{uid}/role` replaces the
+  brief grant/revoke pair (self-demotion → 403). `AppUserBootstrap` now grants `diy` ONLY when the user
+  has no role yet, so an admin never gets `diy` re-added on their next authenticated request.
+- **Admins can't use the DIY filing app.** New `diyOnlyGuard` on `/app` denies accounts holding the
+  `admin` role (they belong in the separate admin dashboard). Fails OPEN on a role-read error (never
+  lock a real filer out) and is bypassed for injected e2e sessions. Backend still gates admin endpoints
+  independently.
+- **Admin UI:** the Make/Remove-admin toggle became a role `<select>` (diy / admin) per row — future
+  roles are one line in `roleOptions` + the backend `ASSIGNABLE_ROLES` allow-list. Own row is read-only.
+- Verified live: setRole→[admin] (diy dropped), bootstrap re-run keeps [admin], self-demote 403, and
+  dev compute returns 200 (not 402) while unpaid. All affected backend tests green; both UIs build clean.
+
+
 ## 2026-07-16 — Admin dashboard + licensing (7 phases): separate admin UI, admin API in the main backend
 
 Built the admin dashboard and license gating for the DIY tax app. Architecture decision (user-chosen):

@@ -1,6 +1,51 @@
 ﻿# History
 
 
+## 2026-07-16 — Admin dashboard + licensing (7 phases): separate admin UI, admin API in the main backend
+
+Built the admin dashboard and license gating for the DIY tax app. Architecture decision (user-chosen):
+**separate admin frontend** (new repo `C:\us-tax\us-tax-admin-ui`, deployed apart so admin code never
+ships to end users) with the **admin API kept in the main backend** under `/api/admin/**`, guarded by a
+DB-backed `admin` role — a clean seam to extract into its own service later. Payment integration is
+deferred (codes-only gating for now). Delivered in 7 committed phases; all backend unit tests green,
+both UIs build clean. Backend commits `26c759b` → `99b36f3`; DIY UI `e872fc1`/`b6422f5`; admin UI repo
+`e4f8cbc`.
+
+- **Phase 1 — Roles (`admin` + explicit `diy`).** `RoleService` gains `ROLE_ADMIN`/`ROLE_DIY` +
+  `isStaff`/`requireStaff` (legacy `support` kept as a temporary alias); `AppUserBootstrap` grants
+  `diy` to every account; `GET /api/roles/me` exposes an `admin` flag. V131 promotes existing
+  `support` grants → `admin` and backfills `diy`.
+- **Phase 2 — User directory + disable.** V132 adds `app_user.enabled` + `disabled_at`. New
+  `FirebaseAdminService` wires the (previously unused) Firebase Admin SDK to disable/enable the
+  Firebase user. `AdminUserResource`: `GET /api/admin/users` (search/paged join of
+  app_user+profile+roles+entitlement), `GET /{uid}`, `POST /{uid}/disable|enable|grant-access`.
+  `AppUserBootstrapFilter` rejects a disabled account (403) as defense in depth.
+- **Phase 3 — Bulk activation codes.** V133 adds `batch_id`/`created_by_uid`/`note`.
+  `AdminAccessCodeService` mints unique 8-char codes from an unambiguous 31-char alphabet
+  (`23456789A-Z` minus `I/L/O`), a strict subset of `[A-Z0-9]` so redemption is unchanged.
+  `AdminAccessCodeResource`: generate / list / export-to-`.txt`.
+- **Phase 4 — License-gated compute.** `TaxReturnResource` both compute paths require
+  `has_paid_access` else **402 Payment Required**. Dev-only `POST /api/dev/access-codes/grant-access`
+  + e2e `clearUserData` re-grants entitlement after each reset (the reset clears the flag), so the
+  suite stays green. DIY UI: `TaxReturnService.licenseRequired` signal opens the existing payment
+  dialog on 402.
+- **Phase 5 — Notifications broadcast.** `POST /api/admin/notifications {subject, body, audience:
+  all|selected, uids?}` fans out into `user_message` (the existing bell displays them). DIY UI hides
+  the redundant "Messages" dropdown item (the bell remains).
+- **Phase 6 — Persistent audit log.** V134 `audit_log` (no FK on uids so it survives account
+  deletion; kept out of `UserDataBulkDelete`). `AuditService.record` in a REQUIRES_NEW tx; wired into
+  admin user disable/enable/grant, code generation, notification broadcast, support triage, compute,
+  and code redemption. `GET /api/admin/audit?user=&action=&limit=` for the viewer.
+- **Phase 7 — Admin UI (`us-tax-admin-ui`).** Angular 21 standalone, zoneless, plain HTML/CSS;
+  Firebase email/password + phone-SMS MFA; `adminGuard` (fails closed to `/login`); screens for
+  Users, Support (reply-by-email `mailto`), Notifications, Access codes, Audit log. Own git repo
+  (GitHub `alimuhammadca/us-tax-admin-ui`), gitignored in the parent like `us-tax-ui`/`us-tax-be`.
+
+Migrations V131–V134 apply on the next full backend restart. Deferred: payment-processor integration
+(Stripe), full e2e regression run (Docker), and admin-UI deployment (SWA + `admin.taxbeans.com` +
+backend CORS for that origin).
+
+
 ## 2026-07-15 — Authentication redesign: Password + Phone-SMS two-factor (Firebase Identity Platform MFA)
 
 Replaced the single-factor phone-SMS sign-in (SIM-swap exposed, plus a `/profiles/exists`

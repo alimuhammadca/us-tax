@@ -1460,6 +1460,54 @@ from it into `us-tax-ui`, port **per-change, never by copying files**. Guardrail
   never a raw `Entity.findById` in the resource body.
 
 
+## Admin dashboard + licensing — 2026-07-16
+
+Built as 7 phases (V131–V134). Architecture: **admin API stays in the main
+backend** under `/api/admin/**`; the admin **UI is a separate app/repo**
+(`C:\us-tax\us-tax-admin-ui`, own GitHub origin, gitignored in the parent like
+`us-tax-ui`/`us-tax-be`) so admin code never ships to DIY users.
+
+- **Roles are now `admin` + explicit `diy`** (superseding the single `support`
+  role). New staff endpoints call **`roleService.requireStaff(uid)`** (accepts
+  `admin`; `support` is a temporary back-compat alias — V131 migrated existing
+  `support` grants → `admin`, and `AppUserBootstrap` grants `diy` to every
+  account). `GET /api/roles/me` returns an `admin` flag (plus `support` = isStaff
+  for the DIY app's legacy support-dashboard until it's retired). Removing the
+  `support` alias later means updating `isStaff` + the 3–4 tests that grant
+  `"support"` at runtime.
+- **Compute is license-gated.** `TaxReturnResource.compute` (both the `/compute`
+  and `/compute/{taxReturnId}` paths) calls `requirePaidAccess(uid)` FIRST →
+  **402** if `!has_paid_access`, short-circuiting before any computation. Two
+  hazards: (a) this reds EVERY compute-based unit + e2e test — e2e `clearUserData`
+  re-grants via the dev-only `POST /api/dev/access-codes/grant-access` after each
+  reset (the reset clears the flag); a compute resource unit test must stub
+  `hasPaidAccess`→true. (b) The DIY UI reads `TaxReturnService.licenseRequired`
+  (set on 402) and opens the payment dialog.
+- **Two new "app-level, not tax-data" tables stay OUT of `UserDataBulkDelete`:**
+  `audit_log` (V134) and the access-code batch columns live on the audit/entitlement
+  side, not per-user cascade. `audit_log` has NO FK on its uid columns so rows
+  survive account deletion. Same rationale as `user_role`/`profile`/`access_code`.
+- **`AuditService.record` runs in `REQUIRES_NEW`** so an audit write is never lost
+  to a caller rollback nor poisons the caller's persistence context. It complements
+  (does not replace) the existing `LOG.infof AUDIT ...` operational logging. Query
+  via `AuditService.query(user, action, limit)` where `user` matches actor OR subject.
+- **Register-in-N-places, admin edition:** adding an `@Inject` field to a resource
+  that already has a no-`@QuarkusTest` unit test (they build the resource by hand
+  and set fields) means EVERY such test must set the new mock or it NPEs on the
+  path that reaches it. Hit when wiring `AuditService`/`AccessCodeRedemptionService`
+  into `TaxReturnResource`, `PaymentResource`, `SupportAdminResource`, and the three
+  new admin resources.
+- **Activation codes** are generated from an unambiguous 31-char alphabet
+  (`23456789` + `A-Z` minus `I/L/O`), a strict subset of `[A-Z0-9]` so the
+  `PaymentResource` redemption regex `^[A-Z0-9]{8}$` is unchanged. Bulk generation
+  is admin-only (`AdminAccessCodeResource`); the dev-only single-seed endpoint stays.
+- **Notifications reuse `user_message`** — a broadcast is a fan-out of one row per
+  recipient (single `INSERT ... SELECT` for "all"), displayed by the existing bell.
+  No new delivery channel; support ticket responses go by email (`mailto`), not in-app.
+- Deferred: Stripe payment integration (codes-only gating for now); admin-UI
+  deployment (SWA + `admin.taxbeans.com` + backend CORS for that origin).
+
+
 
 
 

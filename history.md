@@ -1,6 +1,26 @@
 ﻿# History
 
 
+## 2026-07-18 — Full e2e regression after the day's three shipments: 1209 passed / 0 failed / 0 flaky
+
+Post-deployment full regression validating everything shipped 2026-07-18 in combination —
+(1) the statements pure-HTML look-and-feel migration (38 forms + K-1 render infra),
+(2) the tax-return preview merge (shared `pure-pdf-preview` caution/TIP badges + native
+black-X checkboxes + Form 5695 pin fields), and (3) the complete K-1 slot→semantic
+rework (1065/1120-S/1041, V136, §199A harmonization, mapper activations).
+
+**Result: 1221 queued → 1209 passed / 12 skipped / 0 failed / 0 flaky (2.3h, 1 worker).**
+A clean sweep — even the two habitual flakes (`line4868-extension-of-time` select-timing
+and `personal-per-person-forms:157` line12c accordion) passed without retry. The suite
+grew 1215 → 1221 with the six new K-1 tests (3 UI-typed round-trip specs + 3
+`statement-mapper-roundtrip` cases), all green in full-suite context.
+
+Prod state at time of run: backend revision 143 (`29a7c8e`) Running/Healthy, both SPAs
+current — local, prod, and the full suite in agreement. (Two earlier same-day full runs
+were deliberately cut short for higher-priority work: 610/1215 and mid-run, both at 0
+failures when stopped; this run supersedes them.)
+
+
 ## 2026-07-18 — K-1 slot→semantic rework COMPLETE: all three K-1s (1065/1120-S/1041) UI-enterable end-to-end
 
 Closed the parked "K-1 statement forms NOT properly implemented" gap. The K-1 UIs bound

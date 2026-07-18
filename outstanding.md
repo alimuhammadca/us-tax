@@ -1,5 +1,179 @@
 # Outstanding Items
 
+## Self-Employment / Business Income — Detailed Implementation Plan — Authored 2026-07-18
+
+Scope decision (2026-07-18): self-employment income moves **into scope**. This plan covers
+Schedule C (sole-proprietor business), Schedule SE (SE tax), Schedule F (farm), completion of
+Schedule E (rental/royalty/pass-through), and the SE-adjacent deductions/taxes — all in the
+context of the **personal (Form 1040) return only**. Corporate/entity returns (1120, 1120-S,
+1065, 941/940 payroll filings) remain **out of scope**; we consume their K-1s/1099s only.
+
+### A. Where we stand today (ground truth, verified 2026-07-18)
+
+**Already implemented (do NOT rebuild):**
+- **Schedule E Part I rental/royalty compute** — `computeRentalScheduleE()` (TaxReturnComputeService
+  ~15688): per-property intake (`form-rental-income`, `pf_rental_income`/`pf_rental_property`),
+  §280A vacation-home limit, §465 at-risk cap, §469 passive-loss limit incl. $25k special
+  allowance/MAGI phaseout, carryforwards, **Form 8582 + Form 6198 outputs + pure-HTML previews**
+  (completed 2026-07-13). Net flows to Schedule 1 line 5.
+- **K-1 box 1 ordinary income** → Schedule 1 line 5 (nonpassive direct; passive via the §469
+  limiter keyed on `materiallyParticipatedInActivity`). MFS recipient-TIN attribution done.
+- **Form 8960 NIIT** — fully computed (interest/dividends/cap-gain base) → Schedule 2 line 12.
+- **Form 8959 Additional Medicare** — Parts I/III/V computed (W-2 + 4137 + 8919 wages);
+  **Part II (SE income) is the only gap**.
+- **Form 2210** — computed, but its base excludes SE tax (must be extended).
+- **QBI engine (8995/8995-A)** — full, fed by K-1 §199A + REIT divs; Schedule C/F sources are
+  gate-blocked (`LINE13A_SELF_EMPLOYMENT_OUT_OF_SCOPE_*`), so the seam is ready.
+- Statement capture UIs for 1099-NEC / 1099-K / 1099-MISC / 1099-PATR / 1099-G / W-2 / K-1s —
+  fields captured; business routing NOT wired.
+
+**Blockers to retire (flag codes + the YAML screening questions that drive them):**
+`OTHER_INCOME_SCHEDULE_C_OUT_OF_SCOPE`, `OTHER_INCOME_SCHEDULE_F_OUT_OF_SCOPE`,
+`LINE13A_SELF_EMPLOYMENT_OUT_OF_SCOPE_TAXPAYER/_SPOUSE`,
+`INCOME_ADJUSTMENTS_LINE15/16/17_OUT_OF_SCOPE`, `STATUTORY_EMPLOYEE_W2_OUT_OF_SCOPE`,
+`MEDICAID_WAIVER_SCHEDULE_C_TAXPAYER/_SPOUSE` (becomes a real Schedule C routing choice).
+Each removal = flag code + `NonOverrideableFlags.CODES` entry + compute trigger + YAML screening
+question + lines/ spec + e2e §17 tests that pin the blocker (rewrite to pin the computation).
+YAMLs carrying blockers: `8-other-incomes-*`, `10-income-adjustments-*`, `13a-qualified-business-
+income-*`, `13b-additional-deductions-*`, `2555-*` (SE foreign income note), plus "employee-only"
+scope notes across 1e/1f/1g/2ab/4abc/7ab.
+
+**Known dormant/parked items this plan absorbs:**
+- K-1 statement forms store raw PDF-slot keys; `schedule-k1-1120s` + `schedule-k1-1041` mappers
+  are DORMANT (only 1065 works end-to-end). Semantic-key rework + activation is a prerequisite
+  for Schedule E Part II completeness.
+- outstanding.md "Line 23 / G1 / HIGH — SE tax not implemented"; "Schedule E rental — deferred
+  items"; "Schedule K-1 ordinary income — parked follow-ups" — all superseded/absorbed here.
+- "Investment income" per se (interest/dividends/cap gains/4952/8960) is already implemented;
+  its completion items live in Phase 6 (8960 rental/passive inclusion, royalty depletion, K-1
+  portfolio-box routing audit).
+
+### B. New STATEMENTS (received documents)
+
+Almost everything needed already exists as a statement type — the work is **routing**, not new
+capture. Only one genuinely new statement:
+
+| # | Statement | Status | Work |
+|---|---|---|---|
+| S1 | **Form 1098 (Mortgage Interest Statement)** | MISSING | New statement component + `se_form_1098` table + mapper + StatementFormCatalog + picker entry. Feeds Schedule E per-property mortgage interest (and cross-checks Schedule A). Lower priority — rental interest is already enterable manually. |
+| S2 | 1099-NEC box 1 | exists | Route to the owning Schedule C business (by recipient TIN + user assignment), replacing the tips-only path. |
+| S3 | 1099-K box 1a | exists | Business-vs-personal classification UI; business portion routes to a Schedule C (or Schedule E for rentals) as gross receipts; personal-items disclosure path stays. |
+| S4 | 1099-MISC boxes 1/2 (rents/royalties) → Schedule E; boxes 5/9/10/11 → Schedule C/F | exists | Wire routing. |
+| S5 | 1099-PATR | exists | Route to Schedule F (co-op distributions) / Schedule C where applicable. |
+| S6 | 1099-G box 7 (agriculture payments) | exists | Route to Schedule F. |
+| S7 | W-2 box 13 statutory employee | exists (blocked) | Route box 1 to a statutory-employee Schedule C (expenses allowed, **no SE tax**), retiring the blocker. |
+| S8 | K-1 1065/1120-S/1041 | exists (2 of 3 dormant) | Semantic-key rework; activate 1120-S + 1041 mappers; route box 14A (SE earnings) to Schedule SE; audit portfolio boxes (interest/dividends/cap-gain) routing. |
+
+### C. New USER INPUT (personal) forms
+
+Per-person (taxpayer/spouse) unless noted; each = YAML spec in `C:\us-tax\yamls\` + Angular
+component + `pf_*` entity/mapper + Liquibase migration + registration (see §G hazards):
+
+| # | Form id (proposed) | Models | Key sections |
+|---|---|---|---|
+| U1 | `business-income-{taxpayer,spouse}` | Schedule C — **multiplicity: multiple (one per business)** | Business profile (name/EIN/activity code/accounting method/material participation/QJV election/statutory-employee link); Income (gross receipts w/ 1099-NEC/K/MISC auto-import + reconciliation, returns & allowances, other income); COGS (Part III); Expenses (Part II lines 8–27 incl. 50% meals); Vehicle (per-vehicle; standard mileage $0.70/mi vs actual); Assets/depreciation (per-asset → §179/bonus/MACRS, feeds Form 4562); Home office (simplified $5×≤300 sqft vs Form 8829 actual); hobby/not-for-profit gate (routes to Schedule 1 line 8j instead). |
+| U2 | `farm-income-{taxpayer,spouse}` | Schedule F — multiple (per farm) | Cash-method income (livestock/produce/co-op 1099-PATR/ag-program 1099-G/crop insurance/custom hire); expenses (lines 10–32); CCC loans; accrual Part III deferred. |
+| U3 | `se-tax-options-{taxpayer,spouse}` | Schedule SE | Church employee income ($108.28 floor); clergy/minister housing + Form 4361/4029 exemption; farm & nonfarm **optional methods**; Notice 2014-7 in-SE election. |
+| U4 | `se-deductions-{taxpayer,spouse}` | Sched 1 lines 16–17 | SE health insurance premiums (→ Form 7206 limit incl. long-term-care limits); SEP/SIMPLE/qualified-plan contributions (line 16 limit calc: 20% of net SE after ½-SE-tax for sole props; dollar caps). |
+| U5 | `farm-rental-{taxpayer,spouse}` | Form 4835 — multiple | Phase 5; crop-share landlord not materially participating (no SE tax; passive rules apply). |
+| U6 | EXTEND `rental-income-*` | Schedule E | Form 1098/1099-MISC import hooks; §199A rental safe-harbor question (QBI); real-estate-professional question (§469(c)(7), unblocks 8960 exclusion + passive re-class). |
+| U7 | UPDATE existing forms | — | `8-other-incomes`: replace line-3/line-6 out-of-scope amounts with computed values; `10-income-adjustments`: lines 15–17 become computed (15) / routed (16–17); `13a-qbi`: remove SE gate, feed C/F QBI; W-2 form: statutory-employee routing question; `medicaid-waiver`: "report on Schedule C" option; 1099-K classification questions. |
+
+### D. New TAX RETURN (output/preview) forms
+
+Backend output model + `TaxReturnComputation` field + view-shape + preview wiring + Save-as-PDF
++ sidebar gating (Shape A iteration for multi-instance):
+
+| # | Form | Cardinality | Assets | Notes |
+|---|---|---|---|---|
+| T1 | **Schedule C** | one per business | ✓ `f1040sc_*` present; preview component exists (blank) | Wire `buildSemanticValues()` to new `ScheduleC` output. |
+| T2 | **Schedule SE** | one per person with ≥$400 net SE | ✓ present — **naming gotcha: `f1040se_*` assets are Schedule SE, and the current `form-tax-return-schedule-e` preview mistakenly renders them** | New `form-tax-return-schedule-se` preview; fix Schedule E preview to real Schedule E assets (`schedule_e_*`). |
+| T3 | **Schedule E (full)** | one per return (pages by property count) | ✓ `schedule_e_*` present | Full per-property Part I lines 3–26 + Part II (K-1s) view; today only net→line 5. |
+| T4 | **Schedule F** | one per farm | ✗ generate from `docs/IRS-Forms/Schedule F.pdf` | Semantic PDF+CSV+elements pipeline (us-tax-be/scripts). |
+| T5 | **Form 4562** | one per activity w/ current-year assets | ✗ generate (`f4562.pdf` present) | Depreciation/§179/bonus/listed property. |
+| T6 | **Form 8829** | one per business electing actual home office | ✗ generate (`f8829.pdf` present) | Simplified method needs no form. |
+| T7 | **Form 7206** | per person claiming SE health | ✗ generate (`f7206.pdf` present) | SE health insurance deduction limit. |
+| T8 | **Form 4835** | one per farm-rental | ✗ generate (`f4835.pdf` present) | Phase 5. |
+| T9 | **Form 8959 Part II** | extend existing | ✓ | SE income section (lines 8–13). |
+| T10 | **Form 8960 extension + preview** | extend | ✗ preview assets missing (`f8960.pdf` source present) | Add line 4a/4b rental/royalty/passive net income (non-RE-professional) + line 7 adjustments; build the missing preview. |
+| T11 | Schedule 1 / Schedule 2 / 2210 | extend | ✓ | S1 lines 3/5/6 + 15/16/17 population; S2 line 4 SE tax; 2210 penalty base + farmer/fisherman ⅔ safe-harbor question. |
+| T12 | Form 8582 / 6198 extension | extend | ✓ | Accept Schedule C/F activities as §469/§465 inputs (rental-only today). |
+
+### E. Compute-engine phases (each: lines/ spec first → constants → unit tests → paired e2e)
+
+1. **Phase SE-1 — Schedule C core.** `pf_business` parent + child tables (income, COGS,
+   expense lines, vehicles, assets, home-office); `computeScheduleC()` per business → net profit
+   → Schedule 1 line 3; statement routing S2–S4/S7; QJV split (two Schedule Cs, one per spouse,
+   by ownership %); hobby gate → line 8j; statutory-employee variant; multi-business aggregation.
+   *No depreciation engine yet: only §179 full expensing + simplified home office in this phase.*
+2. **Phase SE-2 — Schedule SE + downstream.** Net earnings = net profit × 92.35%; 12.4% OASDI
+   on min(net earnings, $176,100 − W-2 SS wages [+ RRTA]) + 2.9% Medicare unlimited; $400 floor;
+   church-employee $108.28; → Schedule 2 line 4; ½-SE-tax → Schedule 1 line 15; **Form 8959
+   Part II**; **Form 2210 base extension**; K-1 box 14A inclusion. Optional methods in SE-5.
+3. **Phase SE-3 — SE deductions + QBI unblock.** Form 7206 SE health (limit = net profit −
+   ½SE − line 16, per policy/business); SEP/SIMPLE line 16 (20%-of-net rule + dollar caps);
+   QBI: remove 13a gates, QBI base = net profit − ½SE − SE health − SE retirement (per SQA
+   constants doc); SSTB + W-2-wage/UBIA paths already exist in 8995-A.
+4. **Phase SE-4 — Depreciation engine + vehicle actual + Form 4562/8829.** MACRS tables
+   (5/7-yr DB, half-year/mid-quarter), §179 dollar/phaseout + business-income limit, bonus %,
+   luxury-auto caps, listed property, standard-mileage↔actual consistency rules; Form 8829
+   actual-expense home office with gross-income limit + carryover.
+5. **Phase SE-5 — Schedule F + Form 4835.** Farm income/expense compute → Schedule 1 line 6;
+   SE tax on farm; farm + nonfarm optional methods; 1099-PATR/G routing; farmer estimated-tax
+   safe harbor (⅔) in 2210.
+6. **Phase SE-6 — Schedule E completion + investment-income closure.** Full Schedule E
+   output/preview (fix the SE/E asset swap, T2/T3); K-1 semantic rework + activate 1120-S/1041
+   mappers; K-1 boxes beyond 1/14A (rental box 2 → 8582 path, guaranteed payments, §179
+   passthrough, portfolio boxes audit); royalty 15% depletion; 8960 line 4; RE-professional +
+   rental QBI safe harbor.
+7. **Phase SE-7 — Cross-cutting closure.** Multi-return: `owner_role`/person scoping for every
+   new `pf_*` table (MFS legs, QJV, optimizer `prepare()` path); §461(l) excess business loss
+   ($313k/$626k MFJ — verify) basic guard; retire all §A blockers + YAML questions + update
+   `CLAUDE.md` Out-of-Scope section, `lines/8.md`/`10.md`/`13ab.md`, rules.md; full e2e pairing.
+
+### F. New 2025 constants for ReferenceData (verify each against 2025 IRS books before coding)
+
+SE: 15.3% / 12.4% / 2.9%, net-earnings factor 92.35%, $400 floor, church $108.28, SS base
+$176,100 (exists). Mileage $0.70/mi. Home office $5/sqft, 300 sqft cap. Meals 50%.
+§179 $1,250,000 / $3,130,000 phaseout **(⚠ SQA constants doc says $1.25M, but OBBBA raised
+§179 to ~$2.5M/$4M and restored 100% bonus for property acquired after 2025-01-19 — reconcile
+the SQA backbone with OBBBA before Phase SE-4 and re-pin sc_00245 if needed)**. SEP: lesser of
+20% net SE (after ½SE) / dollar cap (~$70k — verify); SIMPLE $16.5k + catch-up (verify).
+§461(l) thresholds (verify). Optional-method amounts (verify). NIIT/Add-Medicare thresholds exist.
+
+### G. Registry hazards checklist (apply to EVERY new form/table — the five known traps)
+
+1. `PERSONAL_FORMS` allow-list in `PersonalResource.java` (silent 400 otherwise).
+2. `PARENT_TABLES_UID_CASCADE` in `UserDataBulkDelete.java` (stale-row e2e contamination).
+3. `db.changelog-master.xml` `<include>` for every new V*.sql (+ formatted-SQL header rules;
+   full backend restart after new migrations — dev live-reload does NOT apply them).
+4. `NonOverrideableFlags.CODES` — this time mostly REMOVALS; also remove paired §17 e2e pins.
+5. Statement catalog + picker + `MfsFormScoper` + dual-write triggers for any new person-scoped
+   tables (multi-return architecture).
+
+### H. Acceptance targets (SQA chapter already authored — program logic must match IRS outcomes)
+
+`C:\us-tax-sqa\test_scenarios\` **scenario_00233–00254**: sole-proprietor C+SE (00233), C net
+loss (00234), 1099-NEC→C (00235), 1099-K goods+COGS (00236), SE above SS base (00237), W-2+SE
+base coordination (00238), <$400 floor (00239), statutory employee (00240), SE health (00241),
+SEP-IRA (00242), home-office simplified (00243), vehicle standard mileage (00244), §179 (00245),
+meals 50% (00246), QBI below threshold (00247), QBI SSTB phaseout (00248), QBI wage limit
+(00249), Schedule F (00250), hobby income (00251), QJV spouses (00252), multiple Schedule Cs
+(00253), SE estimated-tax underpayment (00254). Each phase lands with: lines/ spec, unit tests
+in `TaxReturnComputeServiceTest`, and a paired e2e spec with **exact IRS-pinned dollar values**
+(never `> 0`), plus MFS-leg + optimizer coverage for person-scoped data.
+
+### I. Still out of scope after this plan
+
+Corporate/partnership return preparation (1120/1120-S/1065), payroll filings (941/940, W-2
+issuance — employee wages remain deductible on Schedule C line 26), Schedule J farm income
+averaging, Schedule H household employment, accrual-method farm Part III, depletion other than
+15% royalty, Form 3800 general-business-credit stack (beyond credits already implemented),
+Form 8995-A Schedules C/D edge cases (loss netting/patrons) unless a scenario demands them.
+
+---
+
+
 Updated: 2026-07-16T00:00:00-04:00
 
 ## ~~Admin SWA — GitHub Actions deploy workflow (drafted, not yet activated) — 2026-07-16~~ **RESOLVED 2026-07-18**

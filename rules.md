@@ -2,6 +2,39 @@
 
 ---
 
+## Frontend Static Web App CSP — `inlineCritical` Gotcha — Established 2026-07-17
+
+Applies to any Angular SPA deployed to Azure Static Web Apps with a
+Content-Security-Policy in `staticwebapp.config.json` (currently the admin UI,
+`us-tax-admin-ui`).
+
+**Rule:** if the SWA ships a strict `script-src` (i.e. `'self'` **without**
+`'unsafe-inline'`), you MUST set `optimization.styles.inlineCritical: false` in the
+production build target of `angular.json`.
+
+**Why:** Angular's production build defaults `inlineCritical` to `true`. It inlines
+critical CSS and loads the full stylesheet via
+`<link rel="stylesheet" media="print" onload="this.media='all'">`. That `onload` is an
+**inline event handler** — a strict `script-src 'self'` blocks it, so the stylesheet
+never switches from `print` to `screen` and the **entire app renders unstyled** (plus a
+`script-src` console violation). With `inlineCritical: false` the stylesheet loads via a
+plain `<link rel="stylesheet">` (no handler) and the strict CSP holds.
+
+**Do NOT** "fix" this by adding `'unsafe-inline'` to `script-src` — that reopens the
+main XSS vector. Disable `inlineCritical` instead; it keeps the strict CSP intact.
+
+**Verification after deploy** (the CSP only applies on the deployed SWA, never on local
+dev, so it can't be caught locally): fetch the served `index.html` and confirm the
+stylesheet `<link>` has no `onload`/`media="print"`, and that a browser smoke reports
+zero CSP console errors with a styled render.
+
+**Contrast — the DIY app (`us-tax-ui`) ships NO CSP**, so it keeps `inlineCritical` ON
+and its `media=print onload` loader works fine. The interaction only bites SWAs that
+have both a strict `script-src` and `inlineCritical` on. Full write-up in
+`us-tax-admin-ui/DEPLOYMENT.md` §7.
+
+---
+
 ## Compute-Validation Guardrails (IRS 2025) — Established 2026-06-30
 
 An 8-agent audit of `TaxReturnComputeService` against the IRS 2025 forms/pubs fixed seven bugs (`b70b864`). Each invariant below has a Java unit pin AND an e2e pin; changing any shifts pinned dollar values — always re-pin to the IRS-correct value (verify against the form/pub), never match the test to old output.

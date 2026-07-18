@@ -1,6 +1,34 @@
 ﻿# History
 
 
+## 2026-07-17 — Post-deployment verification: both prod apps healthy end-to-end
+
+Final sign-off after the full release + admin CSP fix + custom-domain binding. Both
+apps verified live, authenticated, and talking to the prod backend
+(`ca-ustax-be` Container App). Authenticated smokes used the Admin-SDK
+custom-token → Identity-Toolkit ID-token exchange (same mechanism as the e2e suite);
+the interactive password→SMS UI step isn't automatable (no SMS receipt) but was
+exercised manually — everything downstream of auth is confirmed.
+
+- **Azure custom domain** `admin.taxbeans.com`: `az staticwebapp hostname show` →
+  status **Ready** (created 2026-07-17T23:07:53Z), Azure-managed TLS bound. Matches
+  the portal's green Ready badge.
+- **Admin dashboard** (`https://admin.taxbeans.com`, prod admin
+  `ali.muhammad.ca@outlook.com`, uid `pcPYvZxY9bW3iEG2hgsn60Rtkdz2`): landed on
+  `/users`, prod backend authorized the admin role and returned **3 real user rows**,
+  **0 CSP errors** under the strict policy, dashboard fully styled.
+- **DIY app** (`https://www.taxbeans.com`, user `ali.muhammad.ca@gmail.com`, uid
+  `WhKrBwVnw8WCBEPS6yF1iBqzkxT2`): apex `taxbeans.com` → 301 → www → 200 (valid
+  cert); authenticated boot routed to `/app` (not login); **18 backend API calls all
+  200** (`/api/roles/me`, `/api/personal/*`, `/api/statements/*`); **0 page errors**;
+  full app shell rendered (footer "Tax Year 2025 · Built Jul 17 2026" confirms the
+  fresh redeploy). DIY keeps `inlineCritical` ON but ships **no CSP**, so its
+  `media=print onload` stylesheet loader is unaffected — the CSP/inlineCritical
+  interaction only bit the admin app.
+
+Nothing regressed from the release, CSP fix, or custom-domain work. Prod stack green.
+
+
 ## 2026-07-17 — Admin custom domain: admin.taxbeans.com bound to the SWA + verified
 
 Wired the admin dashboard to its custom domain, following the full prod release

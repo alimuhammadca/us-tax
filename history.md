@@ -1,6 +1,38 @@
 ﻿# History
 
 
+## 2026-07-17 — Admin custom domain: admin.taxbeans.com bound to the SWA + verified
+
+Wired the admin dashboard to its custom domain, following the full prod release
+earlier the same day.
+
+- **GoDaddy DNS** (user): CNAME `admin` → `polite-plant-0b442c810.7.azurestaticapps.net`
+  (subdomain CNAME, unlike the apex `taxbeans.com` which 301-forwards). Confirmed
+  resolving before binding.
+- **Azure** (CLI): `az staticwebapp hostname set -n swa-ustax-admin-ui -g ocr
+  --hostname admin.taxbeans.com --validation-method cname-delegation`. Note: CNAME
+  validation checks the record resolves **at add time** — it can't be pre-staged
+  before the DNS exists (first attempt failed `BadRequest: CNAME Record is invalid`).
+  Once the CNAME resolved, it went straight to **Ready** with an Azure-managed TLS
+  cert.
+- **Firebase authorized domains**: `admin.taxbeans.com` was already present (added
+  during the earlier release), so no change. Also clarified: email/password +
+  phone-MFA authenticate directly against the Identity Toolkit REST API by API key
+  and never consult the authorized-domains list — that list only gates OAuth
+  popup/redirect and email-link flows (via the firebaseapp.com auth handler). So the
+  domain entry is future-proofing, not a login requirement for this app.
+
+Verified on `https://admin.taxbeans.com`: HTTPS 200 with valid cert; strict CSP
+served (`script-src 'self' …`, no `'unsafe-inline'`); plain `<link rel=stylesheet>`
+(no inline `onload`); unauthenticated login smoke = 0 CSP errors + styled. Full
+**authenticated** smoke via Admin-SDK custom-token → ID-token exchange (prod admin
+`ali.muhammad.ca@outlook.com`, uid `pcPYvZxY9bW3iEG2hgsn60Rtkdz2`): landed on
+`/users`, prod backend authorized the admin role and returned 3 real user rows, 0
+CSP errors, dashboard fully styled. The interactive password→SMS UI step wasn't
+automatable (no SMS receipt) but was exercised manually; everything downstream of
+auth is confirmed on the custom domain.
+
+
 ## 2026-07-17 — Full production release: backend + migrations + both frontends + admin CSP fix
 
 Shipped all of `main` to prod. Backend rebuilt on ACR and rolled out to Container

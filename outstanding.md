@@ -39,9 +39,11 @@ income-*`, `13b-additional-deductions-*`, `2555-*` (SE foreign income note), plu
 scope notes across 1e/1f/1g/2ab/4abc/7ab.
 
 **Known dormant/parked items this plan absorbs:**
-- K-1 statement forms store raw PDF-slot keys; `schedule-k1-1120s` + `schedule-k1-1041` mappers
+- ~~K-1 statement forms store raw PDF-slot keys; `schedule-k1-1120s` + `schedule-k1-1041` mappers
   are DORMANT (only 1065 works end-to-end). Semantic-key rework + activation is a prerequisite
-  for Schedule E Part II completeness.
+  for Schedule E Part II completeness.~~ **✅ DONE 2026-07-18** — all three K-1s reworked to the
+  semantic contract and mappers activated (see the updated "Schedule K-1 ordinary income —
+  parked follow-ups" section); the Phase SE-6 K-1 prerequisite is already satisfied.
 - outstanding.md "Line 23 / G1 / HIGH — SE tax not implemented"; "Schedule E rental — deferred
   items"; "Schedule K-1 ordinary income — parked follow-ups" — all superseded/absorbed here.
 - "Investment income" per se (interest/dividends/cap gains/4952/8960) is already implemented;
@@ -62,7 +64,7 @@ capture. Only one genuinely new statement:
 | S5 | 1099-PATR | exists | Route to Schedule F (co-op distributions) / Schedule C where applicable. |
 | S6 | 1099-G box 7 (agriculture payments) | exists | Route to Schedule F. |
 | S7 | W-2 box 13 statutory employee | exists (blocked) | Route box 1 to a statutory-employee Schedule C (expenses allowed, **no SE tax**), retiring the blocker. |
-| S8 | K-1 1065/1120-S/1041 | exists (2 of 3 dormant) | Semantic-key rework; activate 1120-S + 1041 mappers; route box 14A (SE earnings) to Schedule SE; audit portfolio boxes (interest/dividends/cap-gain) routing. |
+| S8 | K-1 1065/1120-S/1041 | all 3 LIVE (semantic rework done 2026-07-18) | ~~Semantic-key rework; activate 1120-S + 1041 mappers~~ ✅ done; remaining: route box 14A (SE earnings) to Schedule SE; audit portfolio boxes (interest/dividends/cap-gain) routing. |
 
 ### C. New USER INPUT (personal) forms
 
@@ -122,7 +124,7 @@ Backend output model + `TaxReturnComputation` field + view-shape + preview wirin
    SE tax on farm; farm + nonfarm optional methods; 1099-PATR/G routing; farmer estimated-tax
    safe harbor (⅔) in 2210.
 6. **Phase SE-6 — Schedule E completion + investment-income closure.** Full Schedule E
-   output/preview (fix the SE/E asset swap, T2/T3); K-1 semantic rework + activate 1120-S/1041
+   output/preview (fix the SE/E asset swap, T2/T3); ~~K-1 semantic rework + activate 1120-S/1041~~ (done 2026-07-18)
    mappers; K-1 boxes beyond 1/14A (rental box 2 → 8582 path, guaranteed payments, §179
    passthrough, portfolio boxes audit); royalty 15% depletion; 8960 line 4; RE-professional +
    rental QBI safe harbor.
@@ -3964,12 +3966,12 @@ added the §465 at-risk + §469 passive-loss machinery. Deferred:
 
 Gap-closure Phase 6 routed K-1 ordinary business income (1065/1120-S box 1, 1041 box 6) to Schedule 1 line 5 as **nonpassive** (history 2026-07-12; closes sc_00089). **IRS classification settled:** Schedule K-1 is a received information statement ("you do not file Schedule K-1 with your return; keep it for your records" — Schedule K-1 instructions / J.K. Lasser 2025 §12.15), so it correctly stays in the **Statements** section (not a Tax Return form). Parked:
 - ~~**Passive vs. nonpassive K-1 determination + §469:** currently all routed K-1 ordinary income is treated nonpassive. A passive K-1 (no material participation) should net against other passive income and be subject to the §469 limitation (like rental). The material-participation flags exist (`part3Line22/23`) but are not yet reliable.~~ **✅ DONE 2026-07-14 (V129).** ★ Correction: `part3Line22/23` are the IRS "more than one activity for at-risk/passive purposes" DISCLOSURE boxes — they are NOT material-participation flags, and the IRS K-1 does not report material participation at all (it's a taxpayer determination). Added a new supplemental field `materiallyParticipatedInActivity` (Yes/No) to all three K-1 statement forms (entity + mapper + V129 + a supplemental question in each PDF-overlay form's active view, sent via `saveEntry(model)`). Compute: `sumK1OrdinaryBusinessIncome` now returns NONPASSIVE only (→ line 5); `sumPassiveK1OrdinaryNet` feeds passive K-1s into `computeRentalScheduleE` as "other passive" — passive income helps absorb rental losses, a passive loss offsets passive income and is suspended, and it gets NO $25k rental special allowance (the §469 loss pool is now split rental-RE vs other-passive; the refactor is behavior-equivalent when there is no other-passive loss — 9 rental tests unchanged). Shows on Form 8582 line 2. `null`/`true` = nonpassive (safe default). 2 unit + 2 e2e (passive loss suspended / nonpassive to line 5). The manual `otherPassiveIncome` box remains as a secondary path.
-- **★ K-1 statement forms NOT properly implemented — semantic rework PARKED (owner note 2026-07-14).** The three K-1 statement forms (1041/1065/1120-S) are only half-wired, so **manual K-1 entry does not work end-to-end** and only `schedule-k1-1065` is creatable via the API at all. Two languages that don't line up:
-  - **UI (data entry):** the PDF-overlay components (`form-schedule-k1-*.component.ts`) store every value under raw PDF-slot keys (`pdfRaw['page1_0_...']`), and `saveEntry(model)` sends that raw `model`.
-  - **Mappers (persistence):** `ScheduleK1Form*Mapper` read/write SEMANTIC keys (`part3Line1OrdinaryBusinessIncomeLoss`, etc.).
-  - **Dormant switches:** each mapper's `formIds()` is the on/off switch. `ScheduleK1Form1065Mapper` is ON (`Set.of("schedule-k1-1065")`) so the e2e / API can create+save with semantic keys — but a real UI save (raw keys) would read nothing under the semantic keys and **silently null the row**. `ScheduleK1Form1120sMapper` and `ScheduleK1Form1041Mapper` return `Set.of()` (**DORMANT**) precisely to avoid that null-out, which means **`schedule-k1-1120s` / `-1041` are not creatable via the statement `/entries` API** (create calls `requireMapper` → throws; compute's `listEntriesWithData` is lenient → returns empty, so reads don't error).
-  - **What DOES work today (via the semantic API/OCR path, not manual UI):** box-1/box-6 ordinary income → Schedule 1 line 5 (nonpassive, Phase 6), the `materiallyParticipatedInActivity` §469 passive routing (V129), and the recipient-TIN MFS attribution — all validated by e2e that seed `schedule-k1-1065` with semantic keys.
-  - **The rework:** convert the three K-1 intake components to semantic camelCase fields (matching the mapper keys) instead of raw PDF-slot keys, then activate all three mappers' `formIds()` consistently and verify a UI save round-trips. Only after that are S-corp/trust K-1s enterable and the 1065 null-out risk removed. Also revisit `parseAmount` string parsing and the remaining routing items below once the shape is semantic.
+- ~~**★ K-1 statement forms NOT properly implemented — semantic rework PARKED (owner note 2026-07-14).**~~ **✅ DONE 2026-07-18 — all three K-1s live and UI-enterable end-to-end.** The slot→semantic rework was executed for 1065 (ui `034ff3f`/be `a1d8929`), 1120-S (ui `04c856b`/be `9ace25f`), and 1041 (ui `5261e91`/be `29a7c8e`):
+  - **UI:** each component's `model` now speaks the mapper's semantic camelCase contract; `pdfRaw` keeps the renderer's slot keys; `syncFormToPdf/syncPdfToForm` translate via a per-form fieldMap generated from the semantic CSVs (verified 1:1 both ways: 111/114/74 fields). `recipientTIN` mirrors the on-form TIN box (partner E / shareholder E / beneficiary F). `savedMessage` became a signal (zoneless NG0100 — the toast never rendered before).
+  - **Mappers:** all three `formIds()` are ON. 1120-S and 1041 became creatable/enterable for the first time.
+  - **Fixed along the way:** V136 widened the 11 K-1 name/address columns (opaque-slot NVARCHAR(40) → 500; a real name+address 500'd on save); 1120-S + 1041 §199A output keys harmonized to capital-A (`section199A*` — the compute QBI reader's spelling; lowercase output would have hidden their 199A data from QBI).
+  - **Locked in by e2e:** three UI-TYPED round-trip specs (`k1-1065/1120s/1041-ui-roundtrip` — type → save → semantic persistence → reload re-render → Schedule 1 line 5 exact pin) + three `statement-mapper-roundtrip` cases; 13/13 green with MFS attribution + SSN autofill unregressed.
+  - **Still open from the original note:** revisit `parseAmount` string parsing, and the routing items below (other K-1 boxes; Schedule E Part II preview).
 - ~~**MFS attribution:** K-1 entries are summed across all entries without per-spouse (recipient TIN) filtering — same as the existing K-1 → Schedule D cap-gain routing.~~ **✅ DONE 2026-07-14.** `filterK1EntriesForMfs` drops K-1 statement entries whose `recipientTIN` matches `filing-status.mfsOtherSpouseSsn` (the same exclusion the 1099-B / PTC / W-2-line-1a filters use), applied to all three K-1 lists before summing (nonpassive → line 5 and passive → §469 both use the filtered lists). No-op on joint/single returns. 1 unit + 1 MFS e2e (`mfs-spouse-k1-income.spec.ts`: head K-1 $18k on his leg, spouse K-1 $25k on hers). ★ Aside surfaced by the e2e: `schedule-k1-1120s` (and likely `-1041`) is not creatable via the statement `/entries` API — part of the K-1 semantic-rework gap below; the test uses two `schedule-k1-1065` entries. The K-1 → Schedule D cap-gain routing still lacks MFS attribution (separate).
 - **Other K-1 boxes:** rental real estate (1065 box 2 / 1120-S box 2), guaranteed payments, §179, other income boxes — not routed. Only box-1 ordinary income (this phase) and the capital-gain boxes (pre-existing → Schedule D) flow today.
 - **Schedule E Part II preview form** in the Tax Return section (the form the K-1 flows into) — not built; the net reaches Schedule 1 line 5 directly.

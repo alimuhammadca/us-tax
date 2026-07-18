@@ -1,6 +1,50 @@
 ﻿# History
 
 
+## 2026-07-18 — Statements: migrate pure-HTML look-and-feel from statements-ui sandbox → prod
+
+Ported the look-and-feel-corrected statement forms from the `C:\statements-ui`
+styling sandbox into us-tax-ui's real Statements section — **38 forms + 2 new K-1
+render-infra files** (`k1-html-statement.component.ts` + `k1-html-form-data.ts`).
+The sandbox advanced the visual layer toward the authentic IRS "Copy A" look (Arial
+not Georgia, black rules, form-id markers, `name=` attributes, VOID/CORRECTED splits)
+and renamed the internal **display** keys (`pdfRaw`) to semantic names; the persisted
+component `model` is unchanged, so save/load + backend mappers are unaffected.
+
+**Diagnosis gotcha:** both repos are CRLF, which inflated raw line-diffs ~4×. After
+normalizing (`diff -w --strip-trailing-cr`), the shared pieces were byte-identical
+(`official-statement-view`, `statement-form.directive`; `styles.scss` differed only by
+us-tax-ui's self-hosted `@font-face` block, which is a superset — no change). Real
+per-form change = template + styles + `pdfRaw` display-key rename.
+
+**Method — surgical, preserve-wiring (not a blind copy).** The safety invariant: every
+persisted `model` field (top-level `m.*`, nested `item.*`, `model.*`) must survive. A
+field-token scan across all forms found only **5** with persisted-field divergence; the
+other 33 were strictly sandbox-ahead → wholesale copy. Reconciled the 5:
+- **form-w-2**: reverted the sandbox's `item.box12Code` → `item.code` (backend W-2
+  mapper + existing saved data expect `code`; box12Amount/Notes already matched).
+- **form-1099-misc**: the sandbox greyed out box 14; user confirmed **2025 IRS 1099-MISC
+  box 14 is unused** → kept it greyed and dropped `excessGoldenParachutePayments` (first
+  restored it as a flag, then reverted per the confirmation).
+- **form-schedule-k1-1041/1065/1120s**: restored the "materially participate?" (§469
+  passive-activity) radio + `model.materiallyParticipatedInActivity` that the sandbox
+  dropped; added the sandbox's `k1-html-statement` renderer + `k1-html-form-data`.
+Excluded **form-statements-select** (kept us-tax-ui's dependent-scoped picker; the
+earlier 8814/6252/8606 picker removal stands in both repos).
+
+**Verification:** `npm run build` green; **67 statement e2e tests** green (mapper
+round-trip w-2/1099-int/1099-div/1095-a/8606/1098-t; W-2 UI; K-1; 1099-INT UI save+
+reload; child interest/dividends; SSN autofill); **full regression 1201 passed / 0
+genuine failures** (the 2 reds — `line4868` select-timing, `personal-per-person-forms:157`
+line12c accordion-animation — are pre-existing flakes, both pass on re-run).
+
+**Shipped to prod:** us-tax-ui `b7c55e7` (migration) + `a091113` (box 14 grey-out);
+auto-deploy green; `www.taxbeans.com` confirmed serving the new bundle. statements-ui
+sandbox change was `325e44a` (picker) earlier. e2e auth uses the Admin-SDK token-
+injection path (`E2E_SHARED_AUTH_PHONE/EMAIL/CODE`, service-account defaults baked into
+`auth.ts`) — no password needed.
+
+
 ## 2026-07-17 — Post-deployment verification: both prod apps healthy end-to-end
 
 Final sign-off after the full release + admin CSP fix + custom-domain binding. Both

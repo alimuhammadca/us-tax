@@ -2,7 +2,15 @@
 
 Updated: 2026-07-16T00:00:00-04:00
 
-## Admin SWA — GitHub Actions deploy workflow (drafted, not yet activated) — 2026-07-16
+## ~~Admin SWA — GitHub Actions deploy workflow (drafted, not yet activated) — 2026-07-16~~ **RESOLVED 2026-07-18**
+
+**Done 2026-07-18.** Created `.github/workflows/azure-static-web-apps.yml` in the admin repo (commit `70909dd`),
+set repo secret `AZURE_STATIC_WEB_APPS_API_TOKEN` (via the GitHub REST API + libsodium sealed box — `gh` isn't
+installed locally), and confirmed a real run green (build + SWA deploy). Two deviations from the parked draft
+below: (1) secret name is the plain `AZURE_STATIC_WEB_APPS_API_TOKEN`, not `…_ADMIN` — the admin repo is a
+separate repo so there's no collision with the DIY app's secret; (2) shipped **prod-only with auto-deploy on
+push ENABLED** (no PR previews), then re-enabled push on all three workflows the same day. The CORS + Firebase
+authorized-domain steps were already done during the earlier prod release. Draft retained below for reference.
 
 The admin app (`C:\us-tax\us-tax-admin-ui`, repo `alimuhammadca/us-tax-admin-ui`) has no CI deploy yet.
 Below is the ready-to-use workflow, mirroring the DIY app's `azure-static-web-apps.yml` (auto-deploy on

@@ -1,6 +1,46 @@
 ﻿# History
 
 
+## 2026-07-18 — K-1 slot→semantic rework COMPLETE: all three K-1s (1065/1120-S/1041) UI-enterable end-to-end
+
+Closed the parked "K-1 statement forms NOT properly implemented" gap. The K-1 UIs bound
+their `model` to raw PDF-slot keys (`page1_0_...`) while the semantic mappers read
+camelCase — so a user-TYPED 1065 silently saved a row of nulls, and 1120-S/1041 were not
+creatable at all (mappers deliberately DORMANT as a fail-loud tripwire). Rework per form:
+`model` = the mapper's semantic contract; `pdfRaw` keeps the renderer slot keys; the
+syncs translate via a fieldMap **generated from the semantic CSVs** and verified 1:1
+against both the component slots and mapper keys before editing (111/114/74 fields —
+1120-S needs `-`→`_` for its `Lines1-12` section names). `recipientTIN` mirrors the
+on-form TIN box (partner E / shareholder E / beneficiary F) so SSN-autofill renders and
+typed TINs drive MFS attribution. All three mappers flipped LIVE.
+
+**Bugs surfaced and fixed by the new tests:** (1) **V136** — the K-1 tables applied the
+opaque-slot NVARCHAR(40) convention to name+address columns; a real name+address 500'd
+on save → widened 11 columns to 500 across all 3 tables. (2) **Zoneless toast** — the
+`savedMessage` property set after `await` never rendered (NG0100); now a signal.
+(3) **§199A capitalization** — 1120-S/1041 mappers emitted lowercase `section199a*`
+while the compute QBI reader wants `section199A*`; their 199A data would have been
+invisible to QBI → capital-A canonical out, coalesce both in. (4) e2e gotchas: the
+entry toolbar activates its first entry ASYNCHRONOUSLY (wait for "#1" before saving);
+the `/entries` list endpoint returns id-only summaries; `k1-html-statement` inputs got
+`data-name="<slot>"` for stable Playwright selection; material-participation radios got
+`role="radiogroup"` (helper compat + a11y).
+
+**Verification:** three UI-TYPED round-trip specs (type → save → semantic persistence →
+reload re-render → Schedule 1 line 5 exact pins $18k/$22k/$9k — 1041 is BOX 6) + three
+`statement-mapper-roundtrip` cases; **13/13 green** with MFS attribution + SSN autofill
+unregressed. Commits: 1065 ui `034ff3f`/be `a1d8929`, 1120-S ui `04c856b`/be `9ace25f`,
+1041 ui `5261e91`/be `29a7c8e`; all deployed. Also satisfies the SE-plan Phase SE-6 K-1
+prerequisite (outstanding.md updated, `e10afcd`).
+
+**Prod incident during the first deploy:** the Azure PG server was found **Stopped** →
+the new revision `ActivationFailed` (Liquibase can't connect) AND the old revision's
+health checks hung (0-byte ingress) — prod down ~40 min. Restored: start PG, restart the
+old revision, then `az containerapp update --revision-suffix` for a fresh activation
+(restarting an ActivationFailed revision does NOT retry it). **PG must stay running
+while prod is live.**
+
+
 ## 2026-07-18 — Statements: migrate pure-HTML look-and-feel from statements-ui sandbox → prod
 
 Ported the look-and-feel-corrected statement forms from the `C:\statements-ui`

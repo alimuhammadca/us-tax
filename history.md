@@ -1,28 +1,32 @@
 ﻿# History
 
 
-## 2026-07-19 — Flake fix: personal-per-person §157 line12cChecked/line12aChecked form-open GET race
+## 2026-07-19 — Flake fix: personal-per-person §157 line12a/line12c — zoneless view→model sync (verified 20/20)
 
 Hardened `personal-per-person-forms.spec.ts` "Standard deductions and election map per person"
-(§157), the sole product-logic flake in the 2026-07-19 regression (recovered on retry).
+(§157), the sole product-logic flake in the 2026-07-19 regression. **Reproduced in isolation**
+via `--repeat-each` (~30–40% fail rate) — contradicting the 2026-07-06 note's "passes in
+isolation" claim — which made it directly debuggable.
 
-**Root cause — the "Form component race condition" (e2e/CLAUDE.md), not a compute bug.**
-`clickSidebarItem` activates the sidebar link but returns *before* the Standard-deductions
-form's async `ngOnInit` finishes. `ngOnInit` (form-standard-deductions.component.ts:519) awaits
-`loadModel()` → `GET /api/personal/standard-deductions-{taxpayer,spouse}`, which sets
-`this.model`. The test set the radios immediately after opening; when `loadModel()` resolved
-*after* a selection, its callback overwrote `this.model`, silently discarding
-`youWereDualStatusAlien` (→ `line12cChecked`) / `someoneCanClaimYou` (→ `line12aChecked`). Save
-still PUT 200 with the stale `false`, so the derived line-12 checkbox came back `false` at
-compute. The pre-existing visibility guard (2026-07-06) does not cover this: `selectRadioOption`
-polls `isChecked()`, which reads the *native DOM* checked state, and the late GET resets it out
-from under the poll — which is why it only surfaced under full-regression load.
+**Diagnosis (not a compute bug):** logged the save PUT body — `youWereDualStatusAlien` /
+`someoneCanClaimYou` went out as **`null`, not `false`** (the model was never written), and
+compute faithfully mirrored it (`null → line12cChecked/line12aChecked false`). So it is 100% a
+frontend UI race. **Root cause:** under the app's ZONELESS change detection, the generic
+`selectRadioOption` helper polls the native `<input type=radio>`'s `isChecked()`, which is a
+**false positive** — the browser marks the radio checked while Angular's
+`RadioControlValueAccessor` view→model sync intermittently never fires, so `selectRadioOption`
+"succeeds" yet Save PUTs the initial `null`. This is why the 2026-07-06 visibility guard AND two
+throwaway attempts this session (a form-open GET wait, then a full `networkidle` settle) all
+failed — every one addressed DOM readiness, not the value-accessor sync. These fields sit in
+`<details class="uncommon-collapsible">` accordions, which is why only they (and not the
+always-visible age/blind radios) were affected.
 
-**Fix (test-only, no production change):** both legs now arm a `page.waitForResponse` for the
-form's `ngOnInit` GET *before* `clickSidebarItem` and `await` it before touching any radio, so
-`this.model` is populated from the backend first and selections land after the reset. Matches
-the repo idiom (line4abc / line1e / w2-required specs wait on the form's GET). Spec parses clean
-(`--list` → 7 tests). Verification pending next authenticated run.
+**Fix (test-only, superseded commit 7e5b32c):** new `setUncommonYes()` helper clicks the Yes
+input directly, **dispatches a native `change`** to force the accessor's `onChange`
+(deterministic view→model write), then **verifies the summary status badge** — which is
+`*ngIf`-bound to `model.<field> === true` — actually renders, i.e. the MODEL (not the DOM) is
+true, with retries. Applied to all four uncommon-collapsible accordions (taxpayer + spouse).
+**Verified 20/20 consecutive green** via `--repeat-each=10 ×2`. Commit `be 3c8d831`.
 
 
 ## 2026-07-19 — Full e2e regression: green (1217 passed / 2 failed / 2 flaky / 12 skipped, 2.5h)

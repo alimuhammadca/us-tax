@@ -1,6 +1,28 @@
 ﻿# History
 
 
+## 2026-07-19 — e2e auth: email-first token injection + gitignored .env (kills the slow UI-auth fallback)
+
+Follow-up to the regression triage: the two `line1b-household` "failures" (and the shared-auth
+flakes) were never product bugs — they were the slow UI email/password + phone-MFA fallback
+timing out at `auth.ts:183`. Root cause, proven with an Admin-SDK probe: the shared account's
+phone (`+19056193359`) is an enrolled **MFA second factor**, so `getUserByPhoneNumber` returns
+`auth/user-not-found` **every** time; `mintIdTokenForPhone` tried phone FIRST and re-threw that
+"no user record" whenever `E2E_SHARED_AUTH_EMAIL` was unset — silently forcing all ~1215 tests
+onto the UI path (6126 fallbacks in the 2026-07-19 run's log). `getUserByEmail(
+ali.muhammad.ca@gmail.com)` succeeds and mints a token deterministically (no SMS, no UI, no
+password).
+
+Fixes: (1) **`auth.ts` `mintIdTokenForPhone`** now looks up **email first**, phone only as a
+secondary, and if neither resolves throws an actionable `set E2E_SHARED_AUTH_EMAIL` error
+instead of the misleading "no user record" — the fast path is the default whenever email is
+present. (2) New **gitignored `e2e/.env`** (E2E_SHARED_AUTH_EMAIL/PHONE/CODE) + a zero-dependency
+loader at the top of `playwright.config.ts` (real exported vars still win; workers inherit).
+Verified by running the §157 test with a fully clean shell env (no exports, no password) → green
+via token injection, zero fallback warnings. Net effect: regression runs use the fast,
+deterministic auth path by default, eliminating the UI-auth timeout failures.
+
+
 ## 2026-07-19 — Flake fix: personal-per-person §157 line12a/line12c — zoneless view→model sync (verified 20/20)
 
 Hardened `personal-per-person-forms.spec.ts` "Standard deductions and election map per person"

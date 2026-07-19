@@ -53,11 +53,22 @@ scope notes across 1e/1f/1g/2ab/4abc/7ab.
 ### B. New STATEMENTS (received documents)
 
 Almost everything needed already exists as a statement type — the work is **routing**, not new
-capture. Only one genuinely new statement:
+capture.
+
+**★ CAPTURE DONE 2026-07-18 (be `dc71685` / ui `e16ecc1`, shipped to prod):** a batch of 11
+new received-statement types was built full-stack (component + entity + `se_form_*` table
+V137–V140 + mapper + catalog + picker + shell + bulk-delete + a `statement-mapper-roundtrip`
+case each; 22/22 e2e green): **1098** (S1 below), **5498-SA / 5498-ESA / 5498-QA**, **3922**,
+**1097-BTC**, **1099-LS / 1099-SB**, **1098-C**, **1098-Q**, **1042-S**. These are
+**capture-only** — none is routed into compute yet; routing is the SE-phase work. Party-naming
+convention: the taxpayer-TIN field keeps its on-form name and the mapper mirrors the app-wide
+`recipientTIN` alias (so SSN auto-fill + MFS attribution work). Not built (per owner decision):
+1098-MA (duplicate source PDF — awaiting the real file), 8283 (filed form, not a statement),
+Schedule K-3 (deferred), 1099-H (expired), W-2c (edit the W-2 entry).
 
 | # | Statement | Status | Work |
 |---|---|---|---|
-| S1 | **Form 1098 (Mortgage Interest Statement)** | MISSING | New statement component + `se_form_1098` table + mapper + StatementFormCatalog + picker entry. Feeds Schedule E per-property mortgage interest (and cross-checks Schedule A). Lower priority — rental interest is already enterable manually. |
+| S1 | **Form 1098 (Mortgage Interest Statement)** | ✅ CAPTURE DONE 2026-07-18 (`se_form_1098` / V137) | Capture built. Remaining: ROUTE box 1 mortgage interest → Schedule E per-property interest (and cross-check Schedule A). Lower priority — rental interest is already enterable manually. |
 | S2 | 1099-NEC box 1 | exists | Route to the owning Schedule C business (by recipient TIN + user assignment), replacing the tips-only path. |
 | S3 | 1099-K box 1a | exists | Business-vs-personal classification UI; business portion routes to a Schedule C (or Schedule E for rentals) as gross receipts; personal-items disclosure path stays. |
 | S4 | 1099-MISC boxes 1/2 (rents/royalties) → Schedule E; boxes 5/9/10/11 → Schedule C/F | exists | Wire routing. |

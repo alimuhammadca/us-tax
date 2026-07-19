@@ -2,6 +2,50 @@
 
 ---
 
+## New Statement Form — Build Recipe + recipientTIN-Alias Convention — Established 2026-07-18
+
+When adding a new received-statement (payee-document) type, follow the 1098 exemplar
+(`Se1098.java` / `Form1098Mapper.java` / `form-1098.component.ts` / `V137__se_form_1098.sql`).
+Full-stack checklist — **each is a "register in N places" hazard**; missing one fails silently:
+
+1. **Entity** `Se<Form>.java` `@Table se_form_<x>` — Panache; `uid` / `owner_role` (CHECK
+   `'taxpayer','spouse'`) / `tax_year` / `legacy_doc_id` / `corrected` / `calendar_year`;
+   money = `DECIMAL(19,4)` precision=19 scale=4 `Amount` + `text` `Notes`; `created_at`/
+   `updated_at` `OffsetDateTime insertable=false updatable=false`.
+2. **Migration** `V<n>__…sql` — `--liquibase formatted sql` header + `--changeset claude:<id>`;
+   FK `REFERENCES app_user(uid) ON DELETE CASCADE`; flat single-sentence comment lines (the
+   parser breaks on wrapped lines starting with reserved words); **add the `<include>` to
+   `db.changelog-master.xml`** and do a **full backend restart** (dev live-reload does NOT
+   apply a new V*.sql).
+3. **Mapper** `Form<X>Mapper.java` implements `StatementMapper` — `formIds()` returns the id;
+   `PayloadCoercion.string/bool/decimal/integer`.
+4. **`StatementFormCatalog.java`** (`form(sectionId, sectionLabel, id, code, title)`),
+   **`UserDataBulkDelete.PARENT_TABLES_UID_CASCADE`** (the table name), **picker**
+   (`statement-selection.service.ts`), **shell** (`shell.component.ts` import + imports-array
+   token + `<form-x *ngIf>` mount).
+5. **Component** — pure HTML/CSS Copy B replica (trace from the PDF's Copy B page with PyMuPDF
+   `page.get_text("blocks")`); reuse the exemplar's `statement-shell`/`irs-statement` 24-col
+   grid CSS; `pdfRaw` display keys + semantic `model` bridged by `syncFormToPdf`/`syncPdfToForm`
+   with `parseAmountAndNotes`/`formatAmountAndNotes`; **`savedMessage = signal('')`** (zoneless —
+   a plain property set after `await` never renders the toast, NG0100); TIN inputs `appTin="any"`.
+6. **e2e** — add a `statement-mapper-roundtrip` CASE (payload + verify), including the
+   `recipientTIN` assertion below.
+
+**★ recipientTIN-alias convention (the load-bearing rule):** the app-wide new-entry SSN
+auto-fill seed and all person/MFS attribution filters key on `recipientTIN`. On many statements
+the taxpayer is NOT the "recipient" (they are the PAYER/BORROWER on a 1098, the PARTICIPANT on a
+5498-SA, the DONOR on a 1098-C, the EMPLOYEE on a 3922, the SELLER on a 1099-SB…). So: keep the
+taxpayer-TIN field under its **on-form name**, and in the mapper **accept `recipientTIN` as an
+input fallback** (`payerBorrowerTIN` ?? `recipientTIN`) and **emit `recipientTIN` as an output
+alias** mirroring it. In the component, `syncFormToPdf` copies `recipientTIN → <onFormTin>` when
+the box is empty (auto-fill lands first) and `syncPdfToForm` copies `<onFormTin> → recipientTIN`.
+NEVER map the payer's on-form TIN (bank/trustee/issuer/donee) to `recipientTIN` — that
+mis-attributes the statement to the payer. Where the taxpayer literally IS the recipient
+(1097-BTC, 1042-S), use plain `recipientTIN` with no alias. Assert both in the round-trip test:
+`expect(data.recipientTIN).toBe('<taxpayer SSN>')`, not the payer's TIN.
+
+---
+
 ## Frontend Static Web App CSP — `inlineCritical` Gotcha — Established 2026-07-17
 
 Applies to any Angular SPA deployed to Azure Static Web Apps with a

@@ -1,6 +1,54 @@
 ﻿# History
 
 
+## 2026-07-18 — Self-employment program: 11 new received-statement types (backend + pure-HTML Copy B forms)
+
+First build wave of the self-employment program's intake layer: eleven new payee-statement
+types the app previously lacked, sourced from user-supplied Copy B PDFs in
+`C:\us-tax\se-statements`. Built: **1098** (mortgage interest), **5498-SA / 5498-ESA /
+5498-QA** (contribution info), **3922** (ESPP §423 transfer), **1097-BTC** (bond tax credit),
+**1099-LS / 1099-SB** (life-insurance sale pair), **1098-C** (vehicle donation), **1098-Q**
+(QLAC), **1042-S** (NRA withholding). Each is full-stack: Copy B traced from the PDF with
+PyMuPDF `get_text("blocks")` → pure HTML/CSS statement component (the established
+statement-shell/irs-statement 24-col-grid pattern, `pdfRaw` display keys + semantic `model`,
+`parseAmountAndNotes` money boxes, `savedMessage` as a **signal** for zoneless) → Panache
+entity → Liquibase table (**V137** solo pattern-setter, then **V138/V139/V140** batched) →
+`StatementMapper` → StatementFormCatalog + UserDataBulkDelete + picker + shell registrations.
+
+**Party-naming convention (new, reusable):** each form's taxpayer-TIN field keeps its
+on-form name (`payerBorrowerTIN` / `participantTIN` / `beneficiaryTIN` / `employeeTIN` /
+`paymentRecipientTIN` / `sellerTIN` / `donorTIN`), and the mapper **accepts** `recipientTIN`
+as an input fallback and **emits** it as an output alias — so the app-wide new-entry SSN
+auto-fill seed and the person/MFS `recipientTIN` attribution rules work unchanged. The
+on-form "RECIPIENT/LENDER/TRUSTEE/ISSUER TIN" (the payer) is deliberately NOT mapped to
+`recipientTIN` to avoid mis-attributing the statement to the bank. 1097-BTC and 1042-S use
+plain `recipientTIN` (the taxpayer literally is the recipient there).
+
+**Execution:** 1098 built by hand as the exemplar (screenshot-verified), then three parallel
+general-purpose agents produced the other ten from the exemplar files (new-files-only, no
+shared-file edits — they returned paste-ready registration fragments the orchestrator
+integrated in one pass, honoring the register-in-N-places hazards). PDF-fidelity deviations
+the agents found and followed: 5498-QA's Dec-2026 revision adds box 7 "Code" + box 8
+"Trump-account-to-ABLE rollover" and box 6 is text not a checkbox; 3922 has no calendar-year
+box; 1097-BTC has issuer-indicator checkboxes + a reserved empty box 4; 1042-S box 13o (not
+13e/f) holds the account number; 1099-LS/SB Copy B is PDF page 2 (page 0 is the "Attention"
+cover).
+
+**Skipped per user decision:** 1098-MA (supplied PDF is a byte-identical duplicate of f1098 —
+awaiting the real file), Form 8283 (a taxpayer-FILED form, not a received statement — same
+reasoning that removed 8814/6252/8606 from the picker), Schedule K-3 (21-page, deferred),
+1099-H (HCTC expired after 2021), W-2c (edit the existing W-2 entry instead).
+
+**Verification:** backend boots clean (V137–V140 applied on a fresh dev DB, Hibernate
+validate "No validation errors found"); UI build green; **22/22 statement e2e** — the
+`statement-mapper-roundtrip` spec grew 10→20 cases (one per new type, each pinning the
+`recipientTIN` attribution alias) plus the picker-grouping and SSN-auto-fill specs; 1098 /
+5498-SA / 1042-S visually spot-checked against the source PDFs. Capture-only for now —
+routing into compute arrives with the SE compute phases (outstanding.md §B updated).
+**Shipped to prod:** be `dc71685`, ui `e16ecc1`; both deploys green, `www.taxbeans.com`
+confirmed serving the new bundle. Prod on Container App revision (V137–V140 applied on boot).
+
+
 ## 2026-07-18 — Full e2e regression after the day's three shipments: 1209 passed / 0 failed / 0 flaky
 
 Post-deployment full regression validating everything shipped 2026-07-18 in combination —

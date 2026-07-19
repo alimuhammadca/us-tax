@@ -1,6 +1,27 @@
 ﻿# History
 
 
+## 2026-07-19 — Full e2e regression: fully green (1220 passed / 0 failed / 0 flaky / 12 skipped, 3.4h)
+
+Validation run after the §157 flake fix and the email-first token-injection auth change, launched
+unattended via the new gitignored `e2e/.env` (no exports, no password). **Cleanest run on record:
+1220 passed, 0 failed, 0 flaky, 12 skipped — not a single retry** (0 `x`-marked attempts across
+all 1232 tests).
+
+- **0 auth-fallback warnings** — every test used the fast Admin-SDK token-injection path via
+  `E2E_SHARED_AUTH_EMAIL` from `.env`; the UI email/password + phone-MFA path was never touched.
+- **The two `line1b-household` failures are gone** — confirmed they were UI-auth-flow timeouts
+  (`auth.ts:183`), not product bugs, now that no test hits that path.
+- **`personal-per-person §157` "Standard deductions and election map per person" — green**,
+  confirming the `setUncommonYes()` zoneless view→model fix holds under full-suite load (it was the
+  only product-logic flake in the prior run).
+
+Duration 3.4h (vs the prior 2.5h UI-auth run — slower wall-clock but zero flakiness; the extra
+time is per-test `page.goto('/auth/sign-in')` + networkidle in the injection path, not a
+regression). Slowest files: line1h-other-earned-income (9.0m), medicaid-waiver (6.4m),
+line8814-child-interest-dividends (6.1m).
+
+
 ## 2026-07-19 — e2e auth: email-first token injection + gitignored .env (kills the slow UI-auth fallback)
 
 Follow-up to the regression triage: the two `line1b-household` "failures" (and the shared-auth

@@ -1,6 +1,51 @@
 ﻿# History
 
 
+## 2026-07-19 — Flake fix: personal-per-person §157 line12cChecked/line12aChecked form-open GET race
+
+Hardened `personal-per-person-forms.spec.ts` "Standard deductions and election map per person"
+(§157), the sole product-logic flake in the 2026-07-19 regression (recovered on retry).
+
+**Root cause — the "Form component race condition" (e2e/CLAUDE.md), not a compute bug.**
+`clickSidebarItem` activates the sidebar link but returns *before* the Standard-deductions
+form's async `ngOnInit` finishes. `ngOnInit` (form-standard-deductions.component.ts:519) awaits
+`loadModel()` → `GET /api/personal/standard-deductions-{taxpayer,spouse}`, which sets
+`this.model`. The test set the radios immediately after opening; when `loadModel()` resolved
+*after* a selection, its callback overwrote `this.model`, silently discarding
+`youWereDualStatusAlien` (→ `line12cChecked`) / `someoneCanClaimYou` (→ `line12aChecked`). Save
+still PUT 200 with the stale `false`, so the derived line-12 checkbox came back `false` at
+compute. The pre-existing visibility guard (2026-07-06) does not cover this: `selectRadioOption`
+polls `isChecked()`, which reads the *native DOM* checked state, and the late GET resets it out
+from under the poll — which is why it only surfaced under full-regression load.
+
+**Fix (test-only, no production change):** both legs now arm a `page.waitForResponse` for the
+form's `ngOnInit` GET *before* `clickSidebarItem` and `await` it before touching any radio, so
+`this.model` is populated from the backend first and selections land after the reset. Matches
+the repo idiom (line4abc / line1e / w2-required specs wait on the form's GET). Spec parses clean
+(`--list` → 7 tests). Verification pending next authenticated run.
+
+
+## 2026-07-19 — Full e2e regression: green (1217 passed / 2 failed / 2 flaky / 12 skipped, 2.5h)
+
+Post-mirror sign-off run (`run-all-tests.ps1`, `--project=regression --workers=1`, run
+`run-20260719-000413`). **No product regression** from the 6 new self-employment supporting
+Tax Return forms (8960/4835/7206/8829/4562/Schedule F) or anything else.
+
+The 2 hard failures are **shared-phone-auth login timeouts**, not logic bugs — both terminate
+at `helpers/auth.ts:183` (`toHaveURL(/\/app$/)` after clicking Verify) inside
+`clearUserData → signInWithPhone → runUiAuthFlow`, i.e. the test died at re-login *before* any
+test body ran. Failure-snapshot error-context confirms the page was stuck on the Sign-in
+screen. Both are in `line1b-household.spec.ts` (`:181` Form 4852 banner, `:194`
+contractor-excluded wages); the same file's `:250` failed with the *identical* auth timeout but
+self-recovered on retry (flaky) — the cluster is transient Firebase test-phone-auth throttling
+during that one file's run; `:181`/`:194` just lost on both the attempt and the single retry.
+Second flaky (recovered): `personal-per-person-forms.spec.ts:157` — a real assertion
+(`line12aChecked` expected true, got false) that passed on retry; a per-person age/blind
+standard-deduction checkbox persistence race worth watching, but not currently red.
+
+Effectively 1219/1219 non-skipped green modulo shared-auth flakiness.
+
+
 ## 2026-07-18 — Self-employment program: 11 new received-statement types (backend + pure-HTML Copy B forms)
 
 First build wave of the self-employment program's intake layer: eleven new payee-statement

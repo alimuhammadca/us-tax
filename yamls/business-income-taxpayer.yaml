@@ -331,6 +331,11 @@ sections:
         required: false
         label: Some investment is not at risk (line 32b, requires Form 6198)
         help: Answer only if the business had a loss.
+      - name: isSpecifiedServiceTradeOrBusiness
+        type: boolean
+        required: false
+        label: Is this a specified service trade or business (SSTB)? (for the QBI deduction)
+        help: SSTB includes health, law, accounting, consulting, financial/brokerage services, performing arts, athletics, and any trade whose principal asset is the reputation or skill of its owners. Above the QBI income threshold, an SSTB's deduction phases out.
 
   - name: vehicles
     title: Vehicle information (Part IV)

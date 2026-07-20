@@ -1,6 +1,31 @@
 ﻿# History
 
 
+## 2026-07-20 — SE Stage 2 C3: self-employed deductions (lines 16/17) + QBI unblock (line 13a)
+
+**C3a — Schedule 1 lines 16/17** (`be c29ce12`): `computeSeDeductions()` reads the se-deductions form +
+Schedule C/SE base, per person. Earned-income ceiling = net profit − ½SE. Line 16 (SEP/SIMPLE/qualified)
+= min(contributions, ceiling, §415(c) $70,000). Line 17 (§162(l) health) = min(medical+LTC+Medicare,
+ceiling − line 16). Marketplace/APTC → non-blocking Pub 974 advisory. Retired the LINE16/17_OUT_OF_SCOPE
+blockers (GAP-K2/K3 rewritten). New constant SE_RETIREMENT_DOLLAR_CAP 70000.
+
+**C3b — QBI from Schedule C** (`be 65a18f0`): Schedule C businesses now feed the existing 8995/8995-A
+engine as §199A activities. `buildScheduleCQbi()` reduces each business's net profit by the attributable
+SE deductions (½SE + line 16 + line 17, allocated by net profit per person) per §199A(c)(4); W-2 wages =
+line-26 employee wages; UBIA = 0 (C4). `computeLine13a` treats Schedule C QBI as a workflow on its own
+(computes even when the separate qbi-deduction form is blank), adds it to the below-threshold 20% base,
+and merges it into the 8995-A per-activity path (SSTB + W-2/UBIA limits). Retired
+LINE13A_SELF_EMPLOYMENT_OUT_OF_SCOPE (Schedule F QBI deferred to C5 but Schedule F is already blocked at
+Sch 1 line 6); `validateQbiThresholdPath` no longer blocks a Schedule-C-only above-threshold filer. New
+**SSTB flag full-stack** (V149 + entity + mapper + component radio + YAML; owner-confirmed field add).
+
+Verified: schedule-c-qbi.spec.ts 5/5 — line 16 = 18,000 / line 17 = 9,600 (+ health-ceiling 7,294);
+QBI below-threshold line 13a = 15,437; SSTB above upper threshold fully disallowed (0); non-SSTB
+above-threshold wage-limit path computes > 0 (previously blocked). Full existing K-1 QBI suite still
+green (8 total). C3 remaining edge cases (deferred): clergy/church/optional methods (C2), Schedule F QBI
+(C5). Next major line: C4 (full MACRS/§179 depreciation + Form 8829 actual) or C5 (Schedule F).
+
+
 ## 2026-07-20 — SE Stage 2 C2 add-ons: Form 8959 Part II + EIC earned income + §219 IRA compensation
 
 Three tax-affecting add-ons layered on the C2 core (each committed + verified, no regression on 45

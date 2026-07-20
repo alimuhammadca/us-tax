@@ -1,6 +1,35 @@
 ﻿# History
 
 
+## 2026-07-20 — Self-employment Stage 1 COMPLETE: all 8 SE input forms built + verified (capture-only)
+
+Per the owner-locked SE plan (all-forms-first, then compute), Stage 1 delivered every self-employment
+INPUT form full-stack (YAML → `pf_*` migration → entities → mapper → registration → Angular component →
+shell wiring → save/load e2e). Capture-only: no compute, no blockers removed yet (that is Stage 2).
+Each form built by mirroring the `rental-income` pattern; each verified with a paired e2e (round-trip of
+all fields incl. nested children + per-person taxpayer/spouse isolation).
+
+| # | Form | id | Migration | Tables | e2e |
+|---|---|---|---|---|---|
+| F1 | Schedule C | `business-income-*` | V141 | pf_business → activity → vehicle/other_expense | 2/2 |
+| F2 | Schedule F | `farm-income-*` | V142 | pf_farm → activity (cash + accrual Part III) → other_expense | 2/2 |
+| F3 | Form 7206 SE health + SEP/SIMPLE | `se-deductions-*` | V143 | pf_se_deductions (scalar) | 2/2 |
+| F4 | Schedule SE elections | `se-tax-options-*` | V144 | pf_se_tax_options (scalar) | 2/2 |
+| F5 | Form 4562 depreciation | `depreciation-asset-*` | V145 | pf_depreciation → asset | 2/2 |
+| F6 | Form 8829 home office | `home-office-actual-*` | V146 | pf_home_office → entry (direct/indirect pairs) | 2/2 |
+| F7 | §199A rental safe harbor (extend rental) | `rental-income-*` | V147 | pf_rental_income +col | 2/2 (+existing 11/11) |
+| F8 | Form 4835 farm rental | `farm-rental-*` | V148 | pf_farm_rental → activity → other_expense | 2/2 |
+
+Full edge-case scope captured (statutory employee, QJV fields, hobby gate, clergy/church/optional
+methods, accrual-method farm Part III, full MACRS input set). Each new `pf_*` parent registered in
+`PersonalResource.PERSONAL_FORMS` + `UserDataBulkDelete.PARENT_TABLES_UID_CASCADE` + `db.changelog-
+master.xml`; each new backend migration applied via full `run-dev.ps1` restart. Commits: be
+5595b87/8347acf/b5eeb22/3863c60/1ed2165/736d5a0/3f2fec7/0d2286a; ui + root paired per form.
+
+Next: Stage 2 (compute, 1040 line-by-line) — C1 Schedule C → Schedule 1 line 3, retiring
+`OTHER_INCOME_SCHEDULE_C_OUT_OF_SCOPE`.
+
+
 ## 2026-07-19 — Full e2e regression: fully green (1220 passed / 0 failed / 0 flaky / 12 skipped, 3.4h)
 
 Validation run after the §157 flake fix and the email-first token-injection auth change, launched

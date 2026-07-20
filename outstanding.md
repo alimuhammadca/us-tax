@@ -59,14 +59,17 @@ passes). Owner decisions:
 
 **Revised phase plan (replaces §E):**
 
-- **Stage 1 — ALL input forms (capture only; blockers remain, no compute):**
-  F1 `business-income-*` (Schedule C, ~70 fields, multi-business) · F2 `farm-income-*` (Schedule F,
-  ~37 fields incl. accrual Part III, multi-farm) · F3 `se-deductions-*` (7206 health + SEP/SIMPLE) ·
-  F4 `se-tax-options-*` (Schedule SE: church/clergy/4361/4029/optional methods/Notice 2014-7) ·
-  F5 `depreciation-asset-*` (Form 4562, per-asset, multi) · F6 `home-office-actual-*` (Form 8829) ·
-  F7 EXTEND `rental-income-*` (§199A safe-harbor + RE-professional Qs) · F8 `farm-rental-*` (Form 4835).
-  Each = YAML + component + `pf_*` parent/child + mapper + migration + register-in-N-places (§G) +
-  sidebar + a save/load e2e. Field lists derived from the IRS semantic CSVs (captured this pass).
+- **Stage 1 — ALL input forms (capture only; blockers remain, no compute): ✅ COMPLETE 2026-07-20.**
+  F1 `business-income-*` (Schedule C, V141) · F2 `farm-income-*` (Schedule F incl. accrual Part III,
+  V142) · F3 `se-deductions-*` (7206 health + SEP/SIMPLE, V143) · F4 `se-tax-options-*` (Schedule SE:
+  church/clergy/4361/4029/optional methods/Notice 2014-7, V144) · F5 `depreciation-asset-*` (Form 4562,
+  V145) · F6 `home-office-actual-*` (Form 8829, V146) · F7 EXTEND `rental-income-*` (§199A safe-harbor;
+  RE-professional already existed, V147) · F8 `farm-rental-*` (Form 4835, V148).
+  All 8 full-stack (YAML + component + `pf_*` parent/child + mapper + migration + register-in-N-places
+  §G + sidebar) with a paired save/load e2e each (16/16 green: round-trip + per-person isolation);
+  existing rental compute suite still 11/11 after the F7 extension. Field lists derived from the IRS
+  semantic CSVs. See history.md 2026-07-20 for the form/migration/commit table. Remaining Stage-1
+  deferrals to Stage 2 (routing, not capture): F7 Form 1098/1099-MISC import hooks.
 - **Stage 2 — Compute, 1040 line-by-line, retiring blockers as each lands:**
   C1 Schedule C → Sch1 L3 (+ statutory-employee, medicaid-waiver-C, hobby→8j, QJV split, multi-biz).
   C2 Schedule SE → Sch2 L4 + ½SE→Sch1 L15 + 8959 Part II→Sch2 L11 + church/clergy(L27b)/optional

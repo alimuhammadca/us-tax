@@ -21,7 +21,9 @@ passes). Owner decisions:
    retiring each blocker as its compute lands.
 2. **Depreciation = FULL MACRS engine up front** (5/7-yr 200/150DB, half-year + mid-quarter
    conventions, listed property, luxury-auto caps, §179 + 100% bonus, Form 8829 actual — not just
-   §179/bonus).
+   §179/bonus). **C4a DONE 2026-07-20** (§179 + 100% bonus → Schedule C line 13, two-phase §179
+   income limit; constants verified from IRS.gov). Remaining: C4b MACRS multi-year tables + conventions;
+   C4c luxury-auto caps + listed property + vehicle mileage; C4d Form 8829 actual.
 3. **Edge cases = FULL SCOPE, nothing deferred:** statutory employee + QJV, hobby/not-for-profit
    routing (→ Sch 1 line 8j), clergy + church-employee + optional SE methods, AND accrual-method
    farm Part III. (§I "still out of scope" now shrinks to true entity/payroll items only.)

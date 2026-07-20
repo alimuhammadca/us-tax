@@ -1,6 +1,37 @@
 ﻿# History
 
 
+## 2026-07-20 — Prod incident: Azure Postgres stopped → backend deploys failing (RESOLVED)
+
+The us-tax-be GitHub deploy had been failing since 2026-07-18 at the `/q/health/ready` smoke test
+(504→000). Root cause: the Azure Postgres Flexible Server `pg-ustax-9u14g` was **Stopped**, so the app
+(Liquibase migrate-at-start) couldn't boot — new revision `0000148` ActivationFailed, prod down. Not a
+code issue; the SE migrations V141–V149 were fine but couldn't run against a stopped server. This is the
+recurring incident from memory ("PG must stay running while prod is live"). Fix: `az postgres
+flexible-server start` → Ready, then `az containerapp update --revision-suffix` forced a fresh revision
+that booted, ran V141–V149 cleanly, and went Healthy on image `ustax-be:65a18f0` (C3b). Prod verified
+UP (liveness 200, DB check UP); the C3b deploy workflow went green. **Hardening follow-up:** the deploy
+workflow should start the DB before the smoke test (or an auto-start guard) so a stopped Burstable DB
+can't take prod down again.
+
+
+## 2026-07-20 — SE Stage 2 C4a: depreciation engine (§179 + 100% bonus) → Schedule C line 13
+
+Constants verified from IRS.gov (i4562 2025 / Rev. Proc. 2025-16 / Notice 2025-5) and pinned in
+ReferenceData (`be f1add12`): §179 max $2.5M / phaseout $4M / SUV $31,300; 100% bonus for property
+acquired after 2025-01-19 (OBBBA); passenger-auto caps 20,200/19,600/11,800/7,060; mileage $0.70.
+
+`computeScheduleC` refactored to two phases so the §179 business-income limit (circular with net profit)
+is correct: Phase 1 computes each business's net profit BEFORE §179 (line 13 = computed bonus/MACRS from
+matched depreciation-asset entries, else the manual field); Phase 2 applies the aggregate §179 limit =
+min(elected, dollar-cap+phaseout [MFS half], aggregate trade-or-business income incl. W-2 wages),
+allocates the allowed §179 across businesses, and carries the disallowed amount forward
+(SCHEDULE_C_SECTION_179_LIMITED advisory). Per-asset: §179 capped at cost×business-use%; 100% bonus on
+the post-§179 basis when elected and placed in service after 2025-01-19; remaining basis →
+DEPRECIATION_MACRS_PENDING advisory. Verified 3/3 (§179 80,000; bonus 70,000; income-limited 0); full
+C1–C4a Schedule C suite green (17). MACRS multi-year tables + luxury-auto + Form 8829 = C4b/c/d.
+
+
 ## 2026-07-20 — SE Stage 2 C3: self-employed deductions (lines 16/17) + QBI unblock (line 13a)
 
 **C3a — Schedule 1 lines 16/17** (`be c29ce12`): `computeSeDeductions()` reads the se-deductions form +

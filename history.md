@@ -47,6 +47,15 @@ luxury-auto §280F caps — a passenger auto's total §179+bonus+MACRS capped at
 (V150). Verified: mileage 10k mi → 7,000; listed 40%-use → ADS 400; $60k auto → 20,200; 80%-use →
 16,160. Full C1–C4c Schedule C suite green (22); depreciation spec 10/10. Remaining: C4d Form 8829.
 
+**C4d — Form 8829 actual home office** (`be 7add4f4`): computeHomeOfficeDeduction() selects the
+business's method — simplified ($5×sqft, gross-income-limited) or actual (Form 8829 from the matched
+home-office-actual entry). Form 8829: business-use % = business sqft / total home sqft; allowable =
+direct (100%) + indirect × % + home depreciation ((basis − land) × % / 39-yr SL); capped at the
+business's gross income (tentative profit before home office and §179), disallowed amount carries
+forward (HOME_OFFICE_LIMITED_BY_GROSS_INCOME advisory). Verified: full 8829 10%-use → 3,267 (net
+96,733); gross-income limit → capped 2,000 + advisory. **★ C4 COMPLETE** — the full MACRS/§179/bonus
+depreciation engine + luxury-auto + Form 8829 is built. Full C1–C4 Schedule C suite green (26).
+
 
 ## 2026-07-20 — SE Stage 2 C3: self-employed deductions (lines 16/17) + QBI unblock (line 13a)
 

@@ -8,6 +8,77 @@ Schedule E (rental/royalty/pass-through), and the SE-adjacent deductions/taxes �
 context of the **personal (Form 1040) return only**. Corporate/entity returns (1120, 1120-S,
 1065, 941/940 payroll filings) remain **out of scope**; we consume their K-1s/1099s only.
 
+---
+
+### ★ DECISIONS LOCKED 2026-07-19 (owner) — supersedes the phase order in §E and the depreciation caveat in §F below
+
+Grounded this date against the IRS semantic field maps (`pdfs/` Schedule C/SE/F, 7206, 8829, 4562),
+the `lines/*.md` specs, and a backend flag/gate sweep with `file:line` citations (four research
+passes). Owner decisions:
+
+1. **Sequencing = ALL INPUT FORMS FIRST, then line-by-line compute.** Stage 1 builds every SE
+   capture form (data persists, existing blockers stay); Stage 2 works the 1040 lines top-down,
+   retiring each blocker as its compute lands.
+2. **Depreciation = FULL MACRS engine up front** (5/7-yr 200/150DB, half-year + mid-quarter
+   conventions, listed property, luxury-auto caps, §179 + 100% bonus, Form 8829 actual — not just
+   §179/bonus).
+3. **Edge cases = FULL SCOPE, nothing deferred:** statutory employee + QJV, hobby/not-for-profit
+   routing (→ Sch 1 line 8j), clergy + church-employee + optional SE methods, AND accrual-method
+   farm Part III. (§I "still out of scope" now shrinks to true entity/payroll items only.)
+
+**Newly-found gaps NOT in the original §A blocker list (add to the retire-list + registry checklist):**
+- `HOUSEHOLD_WORK_SELF_EMPLOYMENT_<label>` blocker — `TaxReturnComputeService.java:6718-6720`
+  (household worker failing the control test → SE reporting). Retire/re-route to Schedule C when
+  statutory/SE routing lands; needs its YAML question + `NonOverrideableFlags` entry accounted for.
+- `computeIraCompensation()` — `TaxReturnComputeService.java:1464-1465` — must add **net SE earnings**
+  to the §219 IRA-compensation cap (today reads only W-2 box 1 + combat pay). Add to Stage 2 C2/C3.
+- Form 1040 **line 27b clergy checkbox** wiring — `outstanding.md:2633` — a boolean on the main
+  form (not on Schedule SE), easy to miss; wire in the Schedule SE compute slice.
+
+**Part 2 — 1040 line-by-line SE-gap table (Stage 2 implements these, in this order):**
+
+| Line | Skipped SE calc | Gate (file:line) | Should compute |
+|---|---|---|---|
+| Sch 1 L3 | Schedule C net profit | `OTHER_INCOME_SCHEDULE_C_OUT_OF_SCOPE` TRCS:16068 | `computeScheduleC()` per business → L3 |
+| Sch 1 L6 | Schedule F farm income | `OTHER_INCOME_SCHEDULE_F_OUT_OF_SCOPE` :16076 | Schedule F (cash + accrual Part III) → L6 |
+| Sch 2 L4 | **SE tax (Schedule SE)** | silent — never built; :3103 | net×92.35%; 12.4% OASDI to $176,100−W2-SS + 2.9% Medicare; $400 floor → L4 |
+| Sch 1 L15 | ½ SE tax | `..LINE15_OUT_OF_SCOPE` :16602 | ½×SE tax → L15 (also feeds QBI base :7923) |
+| Sch 1 L16 | SEP/SIMPLE/Solo-401k | `..LINE16_OUT_OF_SCOPE` :16610 | 20%-of-net rule + caps → L16 |
+| Sch 1 L17 | SE health (Form 7206) | `..LINE17_OUT_OF_SCOPE` :16618 | Form 7206 limit → L17 |
+| 1040 L13a | QBI from C/F | `LINE13A_SELF_EMPLOYMENT_OUT_OF_SCOPE_*` :8618 | feed C/F net (−½SE−health−retire) into 8995/8995-A |
+| Sch 2 L11 | 8959 Part II (Add'l Medicare on SE) | silent omit :23/:3081 | 8959 Part II lines 8–13 → L11 |
+| 1040 L1a→C | Statutory-employee W-2 | `STATUTORY_EMPLOYEE_W2_OUT_OF_SCOPE` :23233 | box 1 → statutory-employee Schedule C, no SE tax |
+| 1040 L1d→C | Medicaid-waiver home-care business | `MEDICAID_WAIVER_SCHEDULE_C_*` :22886 | Notice 2014-7 on Schedule C |
+| L27a | EIC earned income excl. net SE | hardcoded :2638 | add net SE earnings to EIC base |
+| L27b | clergy checkbox always false | :2633 | check for clergy filing Sch SE |
+| §219 IRA cap | net SE excl. from compensation | `computeIraCompensation` :1464 | add net SE earnings to §219 cap |
+| Form 2210 | SE tax excl. from penalty base | :24 | include Sch 2 L4 + farmer/fisherman ⅔ safe harbor (2210-F) |
+| Form 8960 | rental/passive not in NIIT | :111 | add Sch E/K-1 passive net + RE-professional |
+| Sch 1 L8p §461(l) | excess business loss | `lines/8.md:324` | apply once C/F/E losses flow |
+| Household work | control-test-fail → SE | `HOUSEHOLD_WORK_SELF_EMPLOYMENT` :6718 | route to Schedule C |
+
+**Revised phase plan (replaces §E):**
+
+- **Stage 1 — ALL input forms (capture only; blockers remain, no compute):**
+  F1 `business-income-*` (Schedule C, ~70 fields, multi-business) · F2 `farm-income-*` (Schedule F,
+  ~37 fields incl. accrual Part III, multi-farm) · F3 `se-deductions-*` (7206 health + SEP/SIMPLE) ·
+  F4 `se-tax-options-*` (Schedule SE: church/clergy/4361/4029/optional methods/Notice 2014-7) ·
+  F5 `depreciation-asset-*` (Form 4562, per-asset, multi) · F6 `home-office-actual-*` (Form 8829) ·
+  F7 EXTEND `rental-income-*` (§199A safe-harbor + RE-professional Qs) · F8 `farm-rental-*` (Form 4835).
+  Each = YAML + component + `pf_*` parent/child + mapper + migration + register-in-N-places (§G) +
+  sidebar + a save/load e2e. Field lists derived from the IRS semantic CSVs (captured this pass).
+- **Stage 2 — Compute, 1040 line-by-line, retiring blockers as each lands:**
+  C1 Schedule C → Sch1 L3 (+ statutory-employee, medicaid-waiver-C, hobby→8j, QJV split, multi-biz).
+  C2 Schedule SE → Sch2 L4 + ½SE→Sch1 L15 + 8959 Part II→Sch2 L11 + church/clergy(L27b)/optional
+  methods/Notice 2014-7 + §219 IRA-comp + EIC(L27a). C3 SE deductions → Sch1 L16/L17 + QBI unblock
+  L13a. C4 Full MACRS depreciation engine + Form 4562 + vehicle actual↔mileage + Form 8829 actual.
+  C5 Schedule F → Sch1 L6 (cash + accrual Part III) + farm SE + 1099-PATR/G routing + farmer 2210-F
+  safe harbor. C6 Schedule E full + Form 8960 rental/passive + §461(l) L8p + Form 2210 SE base.
+  C7 Cross-cutting: multi-return/MFS/optimizer scoping for every new `pf_*`; retire remaining
+  blockers; docs (CLAUDE.md Out-of-Scope, lines/8·10·13ab, rules.md); SQA sc_00233–00254 pinned e2e.
+
+---
+
 ### A. Where we stand today (ground truth, verified 2026-07-18)
 
 **Already implemented (do NOT rebuild):**

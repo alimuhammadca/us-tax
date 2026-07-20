@@ -1,0 +1,424 @@
+# Schedule C sole-proprietor business income (taxpayer/family head).
+# Self-employment Phase SE-1 (Stage 1 capture). One entry per business; each business
+# nests per-vehicle (Part IV) and per-other-expense (Part V) repeatable rows.
+# Compute (net profit -> Schedule 1 line 3, Schedule SE) is added in Stage 2.
+name: business-income-taxpayer
+title: Business income (Schedule C, taxpayer/family head)
+multiplicity: single
+formName: Schedule C
+category: income
+instructions:
+  - Report income and expenses from a sole-proprietor business or profession (Schedule C).
+  - Add one entry per business. Amounts from Forms 1099-NEC, 1099-K, and 1099-MISC can be imported and reconciled against gross receipts.
+  - This form captures your data; the net profit, self-employment tax, and QBI are computed later and carried to Schedule 1 line 3 and Schedule 2.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: hasBusinessIncome
+        type: boolean
+        required: true
+        label: Did you operate a sole-proprietor business or profession in 2025?
+        help: Select Yes if you had self-employment income reported on Schedule C (freelance, gig, consulting, a shop, etc.).
+
+  - name: business
+    title: Business
+    multiplicity: multiple
+    showIf: hasBusinessIncome == true
+    instructions:
+      - Complete one business per Schedule C. Vehicle and other-expense line items repeat within a business.
+    fields:
+      # Part I header / profile (lines A-J)
+      - name: principalBusinessOrProfession
+        type: text
+        required: true
+        label: Principal business or profession (line A)
+        help: e.g. Consulting, Software development, Rideshare driver.
+      - name: principalBusinessCode
+        type: text
+        required: true
+        label: Business code (line B)
+        help: The 6-digit NAICS code from the Schedule C instructions that best fits your activity.
+      - name: businessName
+        type: text
+        required: false
+        label: Business name (line C)
+        help: Leave blank if the business has no separate name.
+      - name: businessEin
+        type: text
+        required: false
+        label: Employer ID number (EIN, line D)
+        help: Enter only if the business has its own EIN. Format NN-NNNNNNN.
+      - name: businessAddressStreet
+        type: text
+        required: false
+        label: Business address (line E)
+      - name: businessAddressCityStateZip
+        type: text
+        required: false
+        label: City, state, ZIP (line E)
+      - name: accountingMethod
+        type: select
+        required: true
+        label: Accounting method (line F)
+        options:
+          - cash
+          - accrual
+          - other
+      - name: accountingMethodOtherSpecify
+        type: text
+        required: false
+        label: Other accounting method (specify)
+        help: Shown only when accounting method is Other.
+      - name: materiallyParticipated
+        type: boolean
+        required: true
+        label: Did you materially participate in this business in 2025? (line G)
+        help: Material participation makes the profit or loss nonpassive (fully deductible).
+      - name: startedOrAcquiredThisYear
+        type: boolean
+        required: false
+        label: Did you start or acquire this business during 2025? (line H)
+      - name: requiredToFile1099s
+        type: boolean
+        required: false
+        label: Did you make payments in 2025 that required filing Form(s) 1099? (line I)
+      - name: filed1099s
+        type: boolean
+        required: false
+        label: If Yes, did you or will you file the required Form(s) 1099? (line J)
+        help: Shown only when line I is Yes.
+      - name: statutoryEmployeeW2Link
+        type: boolean
+        required: false
+        label: This income was reported on a W-2 with the "statutory employee" box checked
+        help: If checked, expenses are allowed but no self-employment tax applies.
+
+      # Part I income (lines 1, 2, 6)
+      - name: grossReceiptsOrSales
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Gross receipts or sales (line 1)
+        help: Total business income before expenses. Imported 1099-NEC/1099-K/1099-MISC amounts can pre-fill this.
+      - name: returnsAndAllowances
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Returns and allowances (line 2)
+      - name: otherIncome
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Other income, including fuel tax credit or refund (line 6)
+
+      # Part III cost of goods sold (lines 33-41)
+      - name: inventoryMethod
+        type: select
+        required: false
+        label: Inventory valuation method (line 33)
+        options:
+          - cost
+          - lower_of_cost_or_market
+          - other
+      - name: inventoryMethodChanged
+        type: boolean
+        required: false
+        label: Was there a change in determining quantities, costs, or valuations? (line 34)
+      - name: inventoryAtBeginningOfYear
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Inventory at beginning of year (line 35)
+      - name: purchasesLessPersonalUse
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Purchases less cost of items withdrawn for personal use (line 36)
+      - name: costOfLabor
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Cost of labor (line 37)
+      - name: materialsAndSupplies
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Materials and supplies (line 38)
+      - name: otherCosts
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Other costs (line 39)
+      - name: inventoryAtEndOfYear
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Inventory at end of year (line 41)
+
+      # Part II expenses (lines 8-27a)
+      - name: advertising
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Advertising (line 8)
+      - name: carAndTruckExpenses
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Car and truck expenses (line 9)
+        help: If claimed, complete the Vehicle section below.
+      - name: commissionsAndFees
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Commissions and fees (line 10)
+      - name: contractLabor
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Contract labor (line 11)
+      - name: depletion
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Depletion (line 12)
+      - name: depreciation
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Depreciation and section 179 (line 13)
+        help: Computed from the depreciation-asset form in a later phase; enter a known amount for now.
+      - name: employeeBenefitPrograms
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Employee benefit programs (line 14)
+      - name: insuranceOtherThanHealth
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Insurance other than health (line 15)
+      - name: interestMortgage
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Interest - mortgage (line 16a)
+      - name: interestOther
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Interest - other (line 16b)
+      - name: legalAndProfessionalServices
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Legal and professional services (line 17)
+      - name: officeExpense
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Office expense (line 18)
+      - name: pensionAndProfitSharingPlans
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Pension and profit-sharing plans (line 19)
+      - name: rentVehiclesMachineryEquipment
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Rent - vehicles, machinery, equipment (line 20a)
+      - name: rentOtherBusinessProperty
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Rent - other business property (line 20b)
+      - name: repairsAndMaintenance
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Repairs and maintenance (line 21)
+      - name: supplies
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Supplies (line 22)
+      - name: taxesAndLicenses
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Taxes and licenses (line 23)
+      - name: travel
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Travel (line 24a)
+      - name: meals
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Deductible meals (line 24b, full amount)
+        help: Enter the full meal cost; the 50% limit is applied when the return is computed.
+      - name: utilities
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Utilities (line 25)
+      - name: wages
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Wages, less employment credits (line 26)
+      - name: energyEfficientCommercialBldgsDeduction
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Energy efficient commercial buildings deduction (line 27b / Form 7205)
+
+      # Line 30 home office
+      - name: homeOfficeMethod
+        type: select
+        required: false
+        label: Home office deduction method (line 30)
+        options:
+          - none
+          - simplified
+          - form8829
+      - name: homeOfficeTotalSqft
+        type: number
+        required: false
+        label: Total square footage of your home
+        help: Simplified method only.
+      - name: homeOfficeBusinessSqft
+        type: number
+        required: false
+        label: Square footage used for business (max 300)
+        help: Simplified method only; deduction is $5 per square foot up to 300.
+
+      # Part IV shared vehicle questions (lines 46-47)
+      - name: anotherVehicleAvailablePersonalUse
+        type: boolean
+        required: false
+        label: Do you (or your spouse) have another vehicle available for personal use? (line 46)
+      - name: evidenceToSupportDeduction
+        type: boolean
+        required: false
+        label: Do you have evidence to support the vehicle deduction? (line 47a)
+      - name: evidenceIsWritten
+        type: boolean
+        required: false
+        label: If Yes, is the evidence written? (line 47b)
+
+      # Gates
+      - name: operatedForProfit
+        type: boolean
+        required: true
+        label: Is this activity carried on with the intent to make a profit?
+        help: If No, it is a hobby; income is reported on Schedule 1 line 8j and no self-employment tax applies.
+      - name: hobbySupportingDocs
+        type: text
+        required: false
+        label: If a hobby, briefly describe the activity
+      - name: allInvestmentAtRisk
+        type: boolean
+        required: false
+        label: All investment in this activity is at risk (line 32a)
+        help: Answer only if the business had a loss.
+      - name: someInvestmentNotAtRisk
+        type: boolean
+        required: false
+        label: Some investment is not at risk (line 32b, requires Form 6198)
+        help: Answer only if the business had a loss.
+
+  - name: vehicles
+    title: Vehicle information (Part IV)
+    multiplicity: multiple
+    showIf: hasBusinessIncome == true
+    instructions:
+      - Add one row per vehicle used in the business. Required when car and truck expenses are claimed.
+    fields:
+      - name: description
+        type: text
+        required: false
+        label: Vehicle description
+      - name: inServiceMonth
+        type: number
+        required: false
+        label: Month placed in service
+      - name: inServiceDay
+        type: number
+        required: false
+        label: Day placed in service
+      - name: inServiceYear
+        type: number
+        required: false
+        label: Year placed in service
+      - name: businessMiles
+        type: number
+        required: false
+        label: Business miles (line 44a)
+      - name: commutingMiles
+        type: number
+        required: false
+        label: Commuting miles (line 44b)
+      - name: otherMiles
+        type: number
+        required: false
+        label: Other miles (line 44c)
+      - name: availableForPersonalUse
+        type: boolean
+        required: false
+        label: Was the vehicle available for personal use during off-duty hours? (line 45)
+
+  - name: otherExpenses
+    title: Other expenses (Part V)
+    multiplicity: multiple
+    showIf: hasBusinessIncome == true
+    instructions:
+      - List other expenses not covered by lines 8-27a. The total flows to line 27a.
+    fields:
+      - name: description
+        type: text
+        required: false
+        label: Description
+      - name: amount
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Amount
+
+  - name: importedStatementFields
+    title: Imported statement amounts
+    multiplicity: single
+    readOnly: true
+    instructions:
+      - Backend-only. Gross receipts pre-fill candidates imported from statements; not rendered directly.
+    fields:
+      - name: imported1099NecBox1
+        type: amount
+        readOnly: true
+        label: 1099-NEC box 1 (nonemployee compensation)
+      - name: imported1099KBox1a
+        type: amount
+        readOnly: true
+        label: 1099-K box 1a (payment card / third-party network)
+      - name: imported1099MiscBusinessBoxes
+        type: amount
+        readOnly: true
+        label: 1099-MISC business boxes (3/5/6/etc.)
+
+  - name: computedOutputs
+    title: Computed outputs
+    multiplicity: single
+    readOnly: true
+    computed: true
+    instructions:
+      - Backend-only computed results (Stage 2). Not rendered by the UI.
+    fields:
+      - name: netProfitOrLoss
+        type: amount
+        readOnly: true
+        computed: true
+        label: Schedule C line 31 net profit or loss (to Schedule 1 line 3)

@@ -1,0 +1,93 @@
+# Schedule SE elections and special situations (taxpayer/family head).
+# Single-instance capture: church employee income, clergy + Form 4361/4029, optional
+# methods, Notice 2014-7 election, prior-year unreported tips, group-term-life additions.
+# The Schedule SE computation is added in Stage 2.
+name: se-tax-options-taxpayer
+title: Self-employment tax options (taxpayer/family head)
+multiplicity: single
+formName: Schedule SE
+category: income
+instructions:
+  - Complete this only if a Schedule SE special situation applies (church employee, clergy, optional methods, or the Medicaid-waiver election).
+  - Most self-employed filers can answer No and skip this form.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: hasSeTaxOptions
+        type: boolean
+        required: true
+        label: Do any Schedule SE special situations apply to you?
+
+  - name: churchClergy
+    title: Church employee and clergy
+    multiplicity: single
+    showIf: hasSeTaxOptions == true
+    fields:
+      - name: churchEmployeeIncome
+        type: amount
+        required: false
+        label: Church employee income (W-2 with no Social Security tax withheld)
+      - name: isClergy
+        type: boolean
+        required: false
+        label: Are you a member of the clergy filing Schedule SE?
+      - name: clergyHousingAllowance
+        type: amount
+        required: false
+        label: Housing / parsonage allowance (subject to SE tax)
+      - name: form4361Exemption
+        type: boolean
+        required: false
+        label: Form 4361 approved - exempt from SE tax on ministerial earnings
+      - name: form4029Exemption
+        type: boolean
+        required: false
+        label: Form 4029 approved - recognized religious sect exemption
+
+  - name: optionalMethods
+    title: Optional methods
+    multiplicity: single
+    showIf: hasSeTaxOptions == true
+    fields:
+      - name: farmOptionalMethod
+        type: boolean
+        required: false
+        label: Use the farm optional method
+      - name: nonfarmOptionalMethod
+        type: boolean
+        required: false
+        label: Use the nonfarm optional method
+
+  - name: other
+    title: Other
+    multiplicity: single
+    showIf: hasSeTaxOptions == true
+    fields:
+      - name: medicaidWaiverIncludeInSe
+        type: boolean
+        required: false
+        label: Elect to include Medicaid-waiver payments (Notice 2014-7) in SE earnings
+      - name: priorYearUnreportedTips
+        type: amount
+        required: false
+        label: Prior-year unreported tips subject to SE tax
+      - name: groupTermLifeAdditions
+        type: amount
+        required: false
+        label: Group-term-life insurance additions to SE income
+
+  - name: computedOutputs
+    title: Computed outputs
+    multiplicity: single
+    readOnly: true
+    computed: true
+    instructions:
+      - Backend-only computed results (Stage 2). Not rendered by the UI.
+    fields:
+      - name: scheduleSeTax
+        type: amount
+        readOnly: true
+        computed: true
+        label: Schedule SE self-employment tax (to Schedule 2 line 4)

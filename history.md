@@ -1,6 +1,31 @@
 ﻿# History
 
 
+## 2026-07-20 — SE Stage 2 C1: Schedule C net profit → Schedule 1 line 3 (blocker retired)
+
+First compute slice of Stage 2. `computeScheduleC()` (TaxReturnComputeService) reads the `pf_business`
+form (`business-income-taxpayer`/`-spouse`) and computes each sole-proprietor business's net profit —
+gross receipts − returns − COGS (Part III) + other income − expenses (Part II, **meals at 50%**) −
+**simplified home office** ($5 × min(sqft, 300)) — aggregated and routed to **Schedule 1 line 3**
+(`Schedule1AdditionalIncome.businessIncomeLoss`), mirroring the `computeRentalScheduleE` → line 5 seam.
+A **§183 hobby** activity (`operatedForProfit=false`) routes its gross income to **line 8j** instead
+(TCJA: no hobby expense deduction) and produces no SE earnings; **statutory-employee** income is tracked
+out of the SE base. **Statement auto-routing**: 1099-NEC box 1 + 1099-K box 1a attributed by recipient
+TIN auto-fill a single business's blank gross receipts and otherwise raise a non-blocking
+`SCHEDULE_C_GROSS_RECEIPTS_1099_MISMATCH` reconciliation advisory (retiring the former blocker's slot).
+
+**Blocker retired:** `OTHER_INCOME_SCHEDULE_C_OUT_OF_SCOPE` removed from the gate (TRCS ~16068) and from
+`NonOverrideableFlags.CODES`; the legacy `hasScheduleCBusinessIncomeOutOfScope` toggle on the
+Other-incomes form is now inert. The §17 e2e that pinned the blocker (`line8-other-incomes.spec.ts`
+GAP-A4-C) was rewritten to pin the retirement; Schedule F's blocker (GAP-A4-D) is untouched (gated until
+C5). Per-person `netForSe` is carried on the result for the Stage-2 C2 Schedule SE computation.
+
+Verified: `schedule-c-compute.spec.ts` 4/4 green (net profit 94,200; COGS+other 47,000; hobby→8j 9,000;
+1099-NEC auto-fill 77,000) — all no-`overrideFlags` (proves the blocker is gone). Deferred to later
+slices: SE tax + ½SE (C2), QBI (C3), full MACRS/§179 + Form 8829 actual (C4). Docs: outstanding.md gap
+table row marked done; lines/8.md §6.3 to follow.
+
+
 ## 2026-07-20 — Self-employment Stage 1 COMPLETE: all 8 SE input forms built + verified (capture-only)
 
 Per the owner-locked SE plan (all-forms-first, then compute), Stage 1 delivered every self-employment

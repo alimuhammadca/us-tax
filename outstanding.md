@@ -39,7 +39,7 @@ passes). Owner decisions:
 
 | Line | Skipped SE calc | Gate (file:line) | Should compute |
 |---|---|---|---|
-| Sch 1 L3 | Schedule C net profit | `OTHER_INCOME_SCHEDULE_C_OUT_OF_SCOPE` TRCS:16068 | `computeScheduleC()` per business → L3 |
+| Sch 1 L3 | Schedule C net profit | ✅ DONE 2026-07-20 (C1) — blocker retired | `computeScheduleC()` per business → L3 (COGS, meals 50%, simplified home office, hobby→8j, statutory-employee out of SE base, 1099-NEC/K auto-fill + reconciliation advisory). SE tax/QBI in C2/C3. |
 | Sch 1 L6 | Schedule F farm income | `OTHER_INCOME_SCHEDULE_F_OUT_OF_SCOPE` :16076 | Schedule F (cash + accrual Part III) → L6 |
 | Sch 2 L4 | **SE tax (Schedule SE)** | silent — never built; :3103 | net×92.35%; 12.4% OASDI to $176,100−W2-SS + 2.9% Medicare; $400 floor → L4 |
 | Sch 1 L15 | ½ SE tax | `..LINE15_OUT_OF_SCOPE` :16602 | ½×SE tax → L15 (also feeds QBI base :7923) |

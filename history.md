@@ -1,6 +1,31 @@
 ﻿# History
 
 
+## 2026-07-20 — SE Stage 2 C2 (core): Schedule SE → Schedule 2 line 4 + ½SE → Schedule 1 line 15
+
+`computeScheduleSE()` takes the per-person Schedule C net-for-SE base from C1's `ScheduleCResult` and
+computes self-employment tax: net earnings = net profit × 92.35%; when ≥ $400, SE tax = 12.4% × min(net
+earnings, $176,100 − the person's own W-2 box-3 SS wages) + 2.9% × net earnings (Medicare uncapped).
+Each spouse files their own Schedule SE, so SE tax and the deductible half (§164(f)) are rounded
+per-person (whole-dollar) and summed → **Schedule 2 line 4** (`Schedule2OtherTaxes.selfEmploymentTax`,
+threaded through `finalizeSchedule2OtherTaxes`, creating the other-taxes container when SE is the only
+Part II item) and **Schedule 1 line 15** (`deductibleSelfEmploymentTax`, threaded into
+`computeIncomeAdjustments`, feeding AGI + the QBI base). New `ReferenceData` constants
+SE_NET_EARNINGS_RATE 0.9235 / SE_SOCIAL_SECURITY_RATE 0.124 / SE_MEDICARE_RATE 0.029 /
+SE_MINIMUM_NET_EARNINGS 400 / SE_CHURCH_EMPLOYEE_FLOOR 108.28 (SS base 176,100 already present).
+
+**Blocker retired:** `INCOME_ADJUSTMENTS_LINE15_OUT_OF_SCOPE` gate removed (it was overrideable-blocking,
+not in NonOverrideableFlags); the legacy `hasDeductibleSelfEmploymentTaxLine15OutOfScope` toggle is
+inert. `line10-income-adjustments.spec.ts` GAP-K1 rewritten to pin the retirement; lines 16/17 stay
+gated until C3.
+
+Verified: `schedule-c-se-tax.spec.ts` 3/3 green — SE tax 14,130 / ½SE 7,065 (net profit 100k, no W-2);
+SS-base coordination 3,435 / 1,717 (W-2 SS wages 170k → only $6,100 of base left); $400 floor (net
+earnings 397.1 < 400 → no SE tax, line 3 still 430). **C2 add-ons still to do:** Form 8959 Part II
+(Add'l Medicare on SE → Sch 2 L11), §219 IRA-comp inclusion, EIC earned income (L27a), clergy L27b +
+church-employee + optional methods + Notice 2014-7. QBI unblock = C3.
+
+
 ## 2026-07-20 — SE Stage 2 C1: Schedule C net profit → Schedule 1 line 3 (blocker retired)
 
 First compute slice of Stage 2. `computeScheduleC()` (TaxReturnComputeService) reads the `pf_business`

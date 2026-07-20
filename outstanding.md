@@ -41,8 +41,8 @@ passes). Owner decisions:
 |---|---|---|---|
 | Sch 1 L3 | Schedule C net profit | ✅ DONE 2026-07-20 (C1) — blocker retired | `computeScheduleC()` per business → L3 (COGS, meals 50%, simplified home office, hobby→8j, statutory-employee out of SE base, 1099-NEC/K auto-fill + reconciliation advisory). SE tax/QBI in C2/C3. |
 | Sch 1 L6 | Schedule F farm income | `OTHER_INCOME_SCHEDULE_F_OUT_OF_SCOPE` :16076 | Schedule F (cash + accrual Part III) → L6 |
-| Sch 2 L4 | **SE tax (Schedule SE)** | silent — never built; :3103 | net×92.35%; 12.4% OASDI to $176,100−W2-SS + 2.9% Medicare; $400 floor → L4 |
-| Sch 1 L15 | ½ SE tax | `..LINE15_OUT_OF_SCOPE` :16602 | ½×SE tax → L15 (also feeds QBI base :7923) |
+| Sch 2 L4 | **SE tax (Schedule SE)** | ✅ DONE 2026-07-20 (C2) | `computeScheduleSE()` per person: net×92.35%; 12.4% OASDI on min(net, 176,100−W2-SS) + 2.9% Medicare; $400 floor → Sch 2 L4. Optional methods/church/clergy = C2 add-on. |
+| Sch 1 L15 | ½ SE tax | ✅ DONE 2026-07-20 (C2) — blocker retired | per-person ½×SE tax → L15 (feeds AGI + QBI base) |
 | Sch 1 L16 | SEP/SIMPLE/Solo-401k | `..LINE16_OUT_OF_SCOPE` :16610 | 20%-of-net rule + caps → L16 |
 | Sch 1 L17 | SE health (Form 7206) | `..LINE17_OUT_OF_SCOPE` :16618 | Form 7206 limit → L17 |
 | 1040 L13a | QBI from C/F | `LINE13A_SELF_EMPLOYMENT_OUT_OF_SCOPE_*` :8618 | feed C/F net (−½SE−health−retire) into 8995/8995-A |

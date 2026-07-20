@@ -1,0 +1,311 @@
+# Schedule F farm income (taxpayer/family head).
+# Self-employment Stage 1 capture. One entry per farm; each farm nests per-other-expense
+# (line 32) rows and captures either cash-method (Part I) or accrual-method (Part III) income.
+# Compute (net farm profit -> Schedule 1 line 6, Schedule SE) is added in Stage 2.
+name: farm-income-taxpayer
+title: Farm income (Schedule F, taxpayer/family head)
+multiplicity: single
+formName: Schedule F
+category: income
+instructions:
+  - Report income and expenses from farming (Schedule F). Add one entry per farm.
+  - Choose cash or accrual accounting; the form shows the matching income section.
+  - This form captures your data; the net farm profit, self-employment tax, and QBI are computed later and carried to Schedule 1 line 6 and Schedule 2.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: hasFarmIncome
+        type: boolean
+        required: true
+        label: Did you operate a farm in 2025?
+        help: Select Yes if you had farm income reported on Schedule F.
+
+  - name: farm
+    title: Farm
+    multiplicity: multiple
+    showIf: hasFarmIncome == true
+    instructions:
+      - Complete one farm per Schedule F. Other-expense line items (line 32) repeat within a farm.
+    fields:
+      - name: principalProduct
+        type: text
+        required: true
+        label: Principal crop or activity (line A)
+      - name: activityCode
+        type: text
+        required: false
+        label: Activity code (line B)
+      - name: accountingMethod
+        type: select
+        required: true
+        label: Accounting method (line C)
+        options:
+          - cash
+          - accrual
+      - name: materiallyParticipated
+        type: boolean
+        required: true
+        label: Did you materially participate in the operation of this farm? (line E)
+      - name: madePaymentsRequiring1099
+        type: boolean
+        required: false
+        label: Did you make payments in 2025 that required filing Form(s) 1099? (line F)
+      - name: filed1099s
+        type: boolean
+        required: false
+        label: If Yes, did you or will you file the required Form(s) 1099? (line G)
+
+      # Part I cash-method income (lines 1-8)
+      - name: livestockResaleSales
+        type: amount
+        required: false
+        label: Sales of purchased livestock and other resale items (line 1a)
+      - name: livestockResaleCostBasis
+        type: amount
+        required: false
+        label: Cost or other basis of purchased livestock resold (line 1b)
+      - name: produceGrainsSales
+        type: amount
+        required: false
+        label: Sales of raised livestock, produce, grains (line 2)
+      - name: coopDistributions
+        type: amount
+        required: false
+        label: Cooperative distributions from Form 1099-PATR (line 3a)
+      - name: coopDistributionsTaxable
+        type: amount
+        required: false
+        label: Cooperative distributions taxable amount (line 3b)
+      - name: agProgramPayments
+        type: amount
+        required: false
+        label: Agricultural program payments from Form 1099-G (line 4a)
+      - name: agProgramPaymentsTaxable
+        type: amount
+        required: false
+        label: Agricultural program payments taxable amount (line 4b)
+      - name: cccLoansReported
+        type: amount
+        required: false
+        label: CCC loans reported under election (line 5a)
+      - name: cccLoansForfeited
+        type: amount
+        required: false
+        label: CCC loans forfeited (line 5b)
+      - name: cccLoansForfeitedTaxable
+        type: amount
+        required: false
+        label: CCC loans forfeited taxable amount (line 5c)
+      - name: cropInsuranceReceived
+        type: amount
+        required: false
+        label: Crop insurance proceeds received in 2025 (line 6a)
+      - name: cropInsuranceTaxable
+        type: amount
+        required: false
+        label: Crop insurance taxable amount (line 6b)
+      - name: cropInsuranceDeferElection
+        type: boolean
+        required: false
+        label: Elect to defer crop insurance proceeds to 2026 (line 6c)
+      - name: cropInsuranceDeferredAmount
+        type: amount
+        required: false
+        label: Amount of crop insurance deferred to 2026 (line 6d)
+      - name: customHireIncome
+        type: amount
+        required: false
+        label: Custom hire (machine work) income (line 7)
+      - name: otherIncome
+        type: amount
+        required: false
+        label: Other income, including federal and state gasoline or fuel tax credit (line 8)
+
+      # Part II expenses (lines 10-31)
+      - name: carAndTruck
+        type: amount
+        required: false
+        label: Car and truck expenses (line 10)
+      - name: chemicals
+        type: amount
+        required: false
+        label: Chemicals (line 11)
+      - name: conservationExpenses
+        type: amount
+        required: false
+        label: Conservation expenses (line 12)
+      - name: customHireExpense
+        type: amount
+        required: false
+        label: Custom hire (machine work) (line 13)
+      - name: depreciation
+        type: amount
+        required: false
+        label: Depreciation and section 179 (line 14)
+      - name: employeeBenefitPrograms
+        type: amount
+        required: false
+        label: Employee benefit programs (line 15)
+      - name: feed
+        type: amount
+        required: false
+        label: Feed (line 16)
+      - name: fertilizersAndLime
+        type: amount
+        required: false
+        label: Fertilizers and lime (line 17)
+      - name: freightAndTrucking
+        type: amount
+        required: false
+        label: Freight and trucking (line 18)
+      - name: gasolineFuelOil
+        type: amount
+        required: false
+        label: Gasoline, fuel, and oil (line 19)
+      - name: insuranceOtherThanHealth
+        type: amount
+        required: false
+        label: Insurance, other than health (line 20)
+      - name: interestMortgage
+        type: amount
+        required: false
+        label: Interest - mortgage paid to banks (line 21a)
+      - name: interestOther
+        type: amount
+        required: false
+        label: Interest - other (line 21b)
+      - name: laborHired
+        type: amount
+        required: false
+        label: Labor hired, less employment credits (line 22)
+      - name: pensionAndProfitSharing
+        type: amount
+        required: false
+        label: Pension and profit-sharing plans (line 23)
+      - name: rentVehiclesMachineryEquipment
+        type: amount
+        required: false
+        label: Rent or lease - vehicles, machinery, equipment (line 24a)
+      - name: rentOther
+        type: amount
+        required: false
+        label: Rent or lease - other land, animals (line 24b)
+      - name: repairsAndMaintenance
+        type: amount
+        required: false
+        label: Repairs and maintenance (line 25)
+      - name: seedsAndPlants
+        type: amount
+        required: false
+        label: Seeds and plants (line 26)
+      - name: storageAndWarehousing
+        type: amount
+        required: false
+        label: Storage and warehousing (line 27)
+      - name: supplies
+        type: amount
+        required: false
+        label: Supplies (line 28)
+      - name: taxes
+        type: amount
+        required: false
+        label: Taxes (line 29)
+      - name: utilities
+        type: amount
+        required: false
+        label: Utilities (line 30)
+      - name: veterinaryBreedingMedicine
+        type: amount
+        required: false
+        label: Veterinary, breeding, and medicine (line 31)
+
+      # Part III accrual-method income (lines 37-48), shown when accounting method is accrual
+      - name: accrualSales
+        type: amount
+        required: false
+        label: Sales of livestock, produce, grains (accrual, line 37)
+      - name: accrualCoopDistributions
+        type: amount
+        required: false
+        label: Cooperative distributions (accrual, line 38a)
+      - name: accrualCoopDistributionsTaxable
+        type: amount
+        required: false
+        label: Cooperative distributions taxable (accrual, line 38b)
+      - name: accrualAgProgram
+        type: amount
+        required: false
+        label: Agricultural program payments (accrual, line 39a)
+      - name: accrualAgProgramTaxable
+        type: amount
+        required: false
+        label: Agricultural program payments taxable (accrual, line 39b)
+      - name: accrualCccReported
+        type: amount
+        required: false
+        label: CCC loans reported under election (accrual, line 40a)
+      - name: accrualCccForfeited
+        type: amount
+        required: false
+        label: CCC loans forfeited (accrual, line 40b)
+      - name: accrualCccForfeitedTaxable
+        type: amount
+        required: false
+        label: CCC loans forfeited taxable (accrual, line 40c)
+      - name: accrualCropInsurance
+        type: amount
+        required: false
+        label: Crop insurance proceeds (accrual, line 41)
+      - name: accrualCustomHire
+        type: amount
+        required: false
+        label: Custom hire income (accrual, line 42)
+      - name: accrualOtherIncome
+        type: amount
+        required: false
+        label: Other income (accrual, line 43)
+      - name: accrualInventoryBeginning
+        type: amount
+        required: false
+        label: Inventory of livestock/produce at beginning of year (line 45)
+      - name: accrualCostOfProductsPurchased
+        type: amount
+        required: false
+        label: Cost of livestock and products purchased during the year (line 46)
+      - name: accrualInventoryEnd
+        type: amount
+        required: false
+        label: Inventory of livestock/produce at end of year (line 48)
+
+  - name: otherExpenses
+    title: Other expenses (line 32)
+    multiplicity: multiple
+    showIf: hasFarmIncome == true
+    instructions:
+      - List other farm expenses not covered by lines 10-31. The total flows to line 32.
+    fields:
+      - name: description
+        type: text
+        required: false
+        label: Description
+      - name: amount
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Amount
+
+  - name: computedOutputs
+    title: Computed outputs
+    multiplicity: single
+    readOnly: true
+    computed: true
+    instructions:
+      - Backend-only computed results (Stage 2). Not rendered by the UI.
+    fields:
+      - name: netFarmProfitOrLoss
+        type: amount
+        readOnly: true
+        computed: true
+        label: Schedule F line 34 net farm profit or loss (to Schedule 1 line 6)

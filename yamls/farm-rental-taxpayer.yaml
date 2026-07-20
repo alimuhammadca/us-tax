@@ -1,0 +1,211 @@
+# Farm rental income (Form 4835) - taxpayer/family head.
+# Crop-share or livestock-share landlord who does NOT materially participate (passive, no SE tax).
+# Per-property multi-instance capture. Net income routes to Schedule 1 line 5 via passive rules (Stage 2).
+name: farm-rental-taxpayer
+title: Farm rental income (Form 4835, taxpayer/family head)
+multiplicity: single
+formName: Form 4835
+category: income
+instructions:
+  - Use this only if you are a crop-share or livestock-share landlord and do NOT materially participate.
+  - Income is passive and not subject to self-employment tax. Add one property per Form 4835.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: hasFarmRental
+        type: boolean
+        required: true
+        label: Did you receive crop-share or livestock-share rental income (without materially participating) in 2025?
+
+  - name: property
+    title: Property
+    multiplicity: multiple
+    showIf: hasFarmRental == true
+    fields:
+      - name: propertyDescription
+        type: text
+        required: false
+        label: Property description
+      - name: activeParticipation
+        type: boolean
+        required: false
+        label: Actively participated (eligible for the $25,000 special allowance)
+      - name: incomeFromProduction
+        type: amount
+        required: false
+        label: Income from production (crop/livestock shares) (line 1)
+      - name: coopDistributions
+        type: amount
+        required: false
+        label: Cooperative distributions - 1099-PATR (line 2a)
+      - name: coopDistributionsTaxable
+        type: amount
+        required: false
+        label: Cooperative distributions taxable (line 2b)
+      - name: agProgramPayments
+        type: amount
+        required: false
+        label: Agricultural program payments - 1099-G (line 3a)
+      - name: agProgramPaymentsTaxable
+        type: amount
+        required: false
+        label: Ag program payments taxable (line 3b)
+      - name: cccLoansReported
+        type: amount
+        required: false
+        label: CCC loans reported under election (line 4a)
+      - name: cccLoansForfeited
+        type: amount
+        required: false
+        label: CCC loans forfeited (line 4b)
+      - name: cccLoansForfeitedTaxable
+        type: amount
+        required: false
+        label: CCC loans forfeited taxable (line 4c)
+      - name: cropInsuranceReceived
+        type: amount
+        required: false
+        label: Crop insurance proceeds received (line 5a)
+      - name: cropInsuranceTaxable
+        type: amount
+        required: false
+        label: Crop insurance taxable (line 5b)
+      - name: cropInsuranceDeferElection
+        type: boolean
+        required: false
+        label: Elect to defer crop insurance proceeds to 2026
+      - name: cropInsuranceDeferredAmount
+        type: amount
+        required: false
+        label: Amount of crop insurance deferred to 2026
+      - name: otherIncome
+        type: amount
+        required: false
+        label: Other income (line 6)
+      - name: carAndTruck
+        type: amount
+        required: false
+        label: Car and truck expenses (line 8)
+      - name: chemicals
+        type: amount
+        required: false
+        label: Chemicals (line 9)
+      - name: conservationExpenses
+        type: amount
+        required: false
+        label: Conservation expenses (line 10)
+      - name: customHireExpense
+        type: amount
+        required: false
+        label: Custom hire (machine work) (line 11)
+      - name: depreciation
+        type: amount
+        required: false
+        label: Depreciation and section 179 (line 12)
+      - name: employeeBenefitPrograms
+        type: amount
+        required: false
+        label: Employee benefit programs (line 13)
+      - name: feed
+        type: amount
+        required: false
+        label: Feed (line 14)
+      - name: fertilizersAndLime
+        type: amount
+        required: false
+        label: Fertilizers and lime (line 15)
+      - name: freightAndTrucking
+        type: amount
+        required: false
+        label: Freight and trucking (line 16)
+      - name: gasolineFuelOil
+        type: amount
+        required: false
+        label: Gasoline, fuel, and oil (line 17)
+      - name: insuranceOtherThanHealth
+        type: amount
+        required: false
+        label: Insurance, other than health (line 18)
+      - name: interestMortgage
+        type: amount
+        required: false
+        label: Interest - mortgage (line 19a)
+      - name: interestOther
+        type: amount
+        required: false
+        label: Interest - other (line 19b)
+      - name: laborHired
+        type: amount
+        required: false
+        label: Labor hired, less employment credits (line 20)
+      - name: pensionAndProfitSharing
+        type: amount
+        required: false
+        label: Pension and profit-sharing plans (line 21)
+      - name: rentVehiclesMachineryEquipment
+        type: amount
+        required: false
+        label: Rent or lease - vehicles, machinery, equipment (line 22a)
+      - name: rentOther
+        type: amount
+        required: false
+        label: Rent or lease - other land, animals (line 22b)
+      - name: repairsAndMaintenance
+        type: amount
+        required: false
+        label: Repairs and maintenance (line 23)
+      - name: seedsAndPlants
+        type: amount
+        required: false
+        label: Seeds and plants (line 24)
+      - name: storageAndWarehousing
+        type: amount
+        required: false
+        label: Storage and warehousing (line 25)
+      - name: supplies
+        type: amount
+        required: false
+        label: Supplies (line 26)
+      - name: taxes
+        type: amount
+        required: false
+        label: Taxes (line 27)
+      - name: utilities
+        type: amount
+        required: false
+        label: Utilities (line 28)
+      - name: veterinaryBreedingMedicine
+        type: amount
+        required: false
+        label: Veterinary, breeding, and medicine (line 29)
+
+  - name: otherExpenses
+    title: Other expenses (line 32)
+    multiplicity: multiple
+    showIf: hasFarmRental == true
+    fields:
+      - name: description
+        type: text
+        required: false
+        label: Description
+      - name: amount
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Amount
+
+  - name: computedOutputs
+    title: Computed outputs
+    multiplicity: single
+    readOnly: true
+    computed: true
+    instructions:
+      - Backend-only computed results (Stage 2). Not rendered by the UI.
+    fields:
+      - name: netFarmRentalIncome
+        type: amount
+        readOnly: true
+        computed: true
+        label: Net farm rental income or loss (Form 4835 line 32, to Schedule 1 line 5)

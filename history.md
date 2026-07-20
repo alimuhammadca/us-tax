@@ -39,6 +39,14 @@ in-service date, so prior-year assets get the correct current-year percentage; �
 first-year-only (gated to placed-this-year) but always reduce the MACRS basis. Verified: 5-yr half-year
 yr1 2,000; prior-year (2023) recovery yr3 1,920; mid-quarter Q4 500. Depreciation spec 6/6.
 
+**C4c — vehicle mileage + listed property + luxury auto** (`be 25215b4` + `be 6e12d48`): (1) vehicle
+standard mileage (line 9) = business miles × $0.70, only when the actual carAndTruckExpenses is blank;
+(2) listed property ≤50% business use → ADS straight line (no §179/bonus/accelerated, §280F(b)); (3)
+luxury-auto §280F caps — a passenger auto's total §179+bonus+MACRS capped at the 2025 annual limit
+($20,200 yr1 w/bonus … $7,060) × business-use %, via a new owner-confirmed isPassengerAutomobile field
+(V150). Verified: mileage 10k mi → 7,000; listed 40%-use → ADS 400; $60k auto → 20,200; 80%-use →
+16,160. Full C1–C4c Schedule C suite green (22); depreciation spec 10/10. Remaining: C4d Form 8829.
+
 
 ## 2026-07-20 — SE Stage 2 C3: self-employed deductions (lines 16/17) + QBI unblock (line 13a)
 

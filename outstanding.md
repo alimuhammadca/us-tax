@@ -24,7 +24,8 @@ passes). Owner decisions:
    §179/bonus). **C4a + C4b DONE 2026-07-20** (§179 + 100% bonus + MACRS multi-year tables [3/5/7/10/15/
    20-yr half-year + 5/7-yr mid-quarter + SL half-year + real-property SL mid-month], recovery year from
    in-service date, §179/bonus first-year-gated → Schedule C line 13; constants verified from IRS.gov).
-   Remaining: C4c luxury-auto caps + listed property + vehicle standard-mileage; C4d Form 8829 actual.
+   **C4c DONE 2026-07-20** (vehicle standard-mileage $0.70; listed-property ≤50% → ADS SL; luxury-auto
+   §280F caps via new isPassengerAutomobile field). Remaining: C4d Form 8829 actual home office.
 3. **Edge cases = FULL SCOPE, nothing deferred:** statutory employee + QJV, hobby/not-for-profit
    routing (→ Sch 1 line 8j), clergy + church-employee + optional SE methods, AND accrual-method
    farm Part III. (§I "still out of scope" now shrinks to true entity/payroll items only.)

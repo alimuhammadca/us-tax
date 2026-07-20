@@ -46,12 +46,12 @@ passes). Owner decisions:
 | Sch 1 L16 | SEP/SIMPLE/Solo-401k | `..LINE16_OUT_OF_SCOPE` :16610 | 20%-of-net rule + caps → L16 |
 | Sch 1 L17 | SE health (Form 7206) | `..LINE17_OUT_OF_SCOPE` :16618 | Form 7206 limit → L17 |
 | 1040 L13a | QBI from C/F | `LINE13A_SELF_EMPLOYMENT_OUT_OF_SCOPE_*` :8618 | feed C/F net (−½SE−health−retire) into 8995/8995-A |
-| Sch 2 L11 | 8959 Part II (Add'l Medicare on SE) | silent omit :23/:3081 | 8959 Part II lines 8–13 → L11 |
+| Sch 2 L11 | 8959 Part II (Add'l Medicare on SE) | ✅ DONE 2026-07-20 (C2 add-on) | 8959 Part II lines 8–13 → L11 (verified 693 on $300k SE) |
 | 1040 L1a→C | Statutory-employee W-2 | `STATUTORY_EMPLOYEE_W2_OUT_OF_SCOPE` :23233 | box 1 → statutory-employee Schedule C, no SE tax |
 | 1040 L1d→C | Medicaid-waiver home-care business | `MEDICAID_WAIVER_SCHEDULE_C_*` :22886 | Notice 2014-7 on Schedule C |
-| L27a | EIC earned income excl. net SE | hardcoded :2638 | add net SE earnings to EIC base |
+| L27a | EIC earned income excl. net SE | ✅ DONE 2026-07-20 (C2 add-on) | SE earned income = net profit − ½SE (Pub 596 Wksht B) added to EIC base (verified $649 childless plateau) |
 | L27b | clergy checkbox always false | :2633 | check for clergy filing Sch SE |
-| §219 IRA cap | net SE excl. from compensation | `computeIraCompensation` :1464 | add net SE earnings to §219 cap |
+| §219 IRA cap | net SE excl. from compensation | ✅ DONE 2026-07-20 (C2 add-on) | per-person net earnings − ½SE added to §219 compensation (§401(c)(2)); §404 SE-retirement reduction = C3 |
 | Form 2210 | SE tax excl. from penalty base | :24 | include Sch 2 L4 + farmer/fisherman ⅔ safe harbor (2210-F) |
 | Form 8960 | rental/passive not in NIIT | :111 | add Sch E/K-1 passive net + RE-professional |
 | Sch 1 L8p §461(l) | excess business loss | `lines/8.md:324` | apply once C/F/E losses flow |

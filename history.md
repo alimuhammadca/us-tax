@@ -1,6 +1,25 @@
 ﻿# History
 
 
+## 2026-07-20 — SE Stage 2 C2 add-ons: Form 8959 Part II + EIC earned income + §219 IRA compensation
+
+Three tax-affecting add-ons layered on the C2 core (each committed + verified, no regression on 45
+existing EIC/IRA tests):
+- **Form 8959 Part II** (`be 0271af3`): Additional Medicare Tax on SE net earnings (lines 8–13) folded
+  into line 18 → Schedule 2 line 11; removed the early null-line-4 return so SE-only filers build the
+  form; added Part II fields to the Form8959 model. Verified 693 on $300k SE.
+- **EIC earned income** (`be 5618f95`): Pub 596 Worksheet B — earned income now includes Schedule C
+  net **profit** − ½SE (not the 92.35% amount). Threaded scheduleC/scheduleSE through
+  computeLine31ThroughLine38 → computeLine27aEIC (both call sites). Verified $649 (2025 childless
+  plateau) for an SE-only filer, matching the wage-based pin.
+- **§219 IRA compensation** (`be 5618f95`): §401(c)(2) — per-person net **earnings** − ½SE added to
+  IRA compensation (added taxpayerHalfSe/spouseHalfSe to ScheduleSEResult). §404 SE-retirement
+  reduction lands in C3.
+
+Remaining C2 add-ons (edge cases, drive off `se-tax-options`): clergy L27b + church-employee income +
+farm/nonfarm optional methods + Notice 2014-7. Next major line: C3 (QBI unblock from Schedule C/F).
+
+
 ## 2026-07-20 — SE Stage 2 C2 (core): Schedule SE → Schedule 2 line 4 + ½SE → Schedule 1 line 15
 
 `computeScheduleSE()` takes the per-person Schedule C net-for-SE base from C1's `ScheduleCResult` and

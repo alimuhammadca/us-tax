@@ -1,0 +1,120 @@
+# Depreciable business assets (Form 4562) — taxpayer/family head.
+# Per-asset multi-instance capture of the inputs the MACRS / section 179 / bonus engine needs.
+# The depreciation computation is added in Stage 2.
+name: depreciation-asset-taxpayer
+title: Depreciable assets (Form 4562, taxpayer/family head)
+multiplicity: single
+formName: Form 4562
+category: income
+instructions:
+  - Enter each business asset placed in service. The depreciation is computed and carried to the depreciation line of the related Schedule C, F, or E.
+  - Add one entry per asset.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: hasDepreciableAssets
+        type: boolean
+        required: true
+        label: Do you have depreciable business assets?
+
+  - name: asset
+    title: Asset
+    multiplicity: multiple
+    showIf: hasDepreciableAssets == true
+    fields:
+      - name: description
+        type: text
+        required: false
+        label: Description
+      - name: activityType
+        type: select
+        required: false
+        label: Used for
+        options:
+          - schedule_c
+          - schedule_f
+          - rental
+          - other
+      - name: activityDescription
+        type: text
+        required: false
+        label: Which business/farm/property (name)
+      - name: datePlacedInService
+        type: text
+        required: false
+        placeholder: 2025-03-01
+        label: Date placed in service (YYYY-MM-DD)
+      - name: costBasis
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Cost or basis
+      - name: businessUsePercent
+        type: number
+        required: false
+        label: Business-use percentage
+      - name: recoveryPeriodYears
+        type: select
+        required: false
+        label: Recovery period (years)
+        options:
+          - '3'
+          - '5'
+          - '7'
+          - '10'
+          - '15'
+          - '20'
+          - '25'
+          - '27.5'
+          - '39'
+      - name: depreciationMethod
+        type: select
+        required: false
+        label: Depreciation method
+        options:
+          - 200db
+          - 150db
+          - sl
+          - ads
+      - name: convention
+        type: select
+        required: false
+        label: Convention
+        options:
+          - half_year
+          - mid_quarter
+          - mid_month
+      - name: section179Election
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Section 179 expense elected
+      - name: bonusDepreciationElected
+        type: boolean
+        required: false
+        label: Elect bonus depreciation
+      - name: isListedProperty
+        type: boolean
+        required: false
+        label: Listed property (vehicle, computer, etc.)
+      - name: priorDepreciation
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Prior-year accumulated depreciation
+
+  - name: computedOutputs
+    title: Computed outputs
+    multiplicity: single
+    readOnly: true
+    computed: true
+    instructions:
+      - Backend-only computed results (Stage 2). Not rendered by the UI.
+    fields:
+      - name: currentYearDepreciation
+        type: amount
+        readOnly: true
+        computed: true
+        label: Current-year depreciation (to the related schedule)

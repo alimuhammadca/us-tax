@@ -1,6 +1,22 @@
 ﻿# History
 
 
+## 2026-07-20 — SE Stage 2 C5: Schedule F farm income → Schedule 1 line 6 (+ farm SE + QBI)
+
+computeScheduleF() computes net farm profit per farm — cash method (raised produce/livestock sales +
+resold-livestock net + taxable co-op/ag-program/CCC/crop-insurance + custom hire + other − expenses) or
+accrual Part III (income less the beginning-inventory + purchases − ending-inventory cost of goods) −
+expenses (lines 10–32) — aggregated to Schedule 1 line 6. Farm net earnings (materially participating;
+the non-participating crop-share path is Form 4835) and farm QBI (never SSTB; W-2 wages = hired labor)
+merge into the self-employment base via mergeFarmIntoSelfEmployment(), so Schedule SE (line 4), QBI
+(line 13a), SE deductions (16/17), EIC, and §219 all pick up farm income with no per-consumer changes
+(line 3 stays Schedule-C-only). Retired OTHER_INCOME_SCHEDULE_F_OUT_OF_SCOPE (gate + NonOverrideableFlags);
+GAP-A4-D rewritten to pin the retirement. Farm depreciation uses the manual line-14 field (depreciation-
+asset-form farm integration + the cross-schedule §179 limit is a follow-up). Verified: cash farm net
+96,000 (line 6) + SE tax 13,564 + total income 96,000; farm QBI 15,437; accrual net 50,000. Full
+Schedule C+F suite green (17). Next: C6 (Schedule E full + Form 8960 + §461(l) + Form 2210 base), C7.
+
+
 ## 2026-07-20 — Prod incident: Azure Postgres stopped → backend deploys failing (RESOLVED)
 
 The us-tax-be GitHub deploy had been failing since 2026-07-18 at the `/q/health/ready` smoke test

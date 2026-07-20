@@ -46,7 +46,7 @@ passes). Owner decisions:
 | Line | Skipped SE calc | Gate (file:line) | Should compute |
 |---|---|---|---|
 | Sch 1 L3 | Schedule C net profit | ✅ DONE 2026-07-20 (C1) — blocker retired | `computeScheduleC()` per business → L3 (COGS, meals 50%, simplified home office, hobby→8j, statutory-employee out of SE base, 1099-NEC/K auto-fill + reconciliation advisory). SE tax/QBI in C2/C3. |
-| Sch 1 L6 | Schedule F farm income | `OTHER_INCOME_SCHEDULE_F_OUT_OF_SCOPE` :16076 | Schedule F (cash + accrual Part III) → L6 |
+| Sch 1 L6 | Schedule F farm income | ✅ DONE 2026-07-20 (C5) — blocker retired | computeScheduleF() cash + accrual Part III → L6; farm SE + QBI merged into the SE base; verified cash 96,000 / accrual 50,000. Farm depreciation = manual line-14 (asset-form = follow-up). |
 | Sch 2 L4 | **SE tax (Schedule SE)** | ✅ DONE 2026-07-20 (C2) | `computeScheduleSE()` per person: net×92.35%; 12.4% OASDI on min(net, 176,100−W2-SS) + 2.9% Medicare; $400 floor → Sch 2 L4. Optional methods/church/clergy = C2 add-on. |
 | Sch 1 L15 | ½ SE tax | ✅ DONE 2026-07-20 (C2) — blocker retired | per-person ½×SE tax → L15 (feeds AGI + QBI base) |
 | Sch 1 L16 | SEP/SIMPLE/Solo-401k | ✅ DONE 2026-07-20 (C3a) — blocker retired | computeSeDeductions(): min(contrib, net profit−½SE, §415(c) $70k) → L16 |

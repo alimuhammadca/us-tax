@@ -31,6 +31,14 @@ the post-§179 basis when elected and placed in service after 2025-01-19; remain
 DEPRECIATION_MACRS_PENDING advisory. Verified 3/3 (§179 80,000; bonus 70,000; income-limited 0); full
 C1–C4a Schedule C suite green (17). MACRS multi-year tables + luxury-auto + Form 8829 = C4b/c/d.
 
+**C4b — MACRS multi-year tables** (`be 40cbd84`): computeMacrsDepreciation() replaces the
+DEPRECIATION_MACRS_PENDING advisory with real MACRS on the basis remaining after §179/bonus — GDS
+half-year (Pub 946 Table A-1) for 3/5/7/10/15/20-year, mid-quarter (A-2..A-5) for 5/7-year, SL half-year
+for personal property, SL mid-month for real property (27.5/39-yr). Recovery year is derived from the
+in-service date, so prior-year assets get the correct current-year percentage; §179 and bonus are
+first-year-only (gated to placed-this-year) but always reduce the MACRS basis. Verified: 5-yr half-year
+yr1 2,000; prior-year (2023) recovery yr3 1,920; mid-quarter Q4 500. Depreciation spec 6/6.
+
 
 ## 2026-07-20 — SE Stage 2 C3: self-employed deductions (lines 16/17) + QBI unblock (line 13a)
 

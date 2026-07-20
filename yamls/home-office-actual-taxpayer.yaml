@@ -1,0 +1,136 @@
+# Home office - actual expenses (Form 8829) - taxpayer/family head.
+# Per-business multi-instance capture. The simplified $5/sqft method is on the Schedule C form.
+# Allocation and gross-income limit are computed in Stage 2.
+name: home-office-actual-taxpayer
+title: Home office - actual expenses (Form 8829, taxpayer/family head)
+multiplicity: single
+formName: Form 8829
+category: deductions
+instructions:
+  - Use this only for the actual-expense home office method. Enter one home office per business.
+  - Direct expenses apply only to the business area; indirect expenses apply to the whole home.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: hasActualHomeOffice
+        type: boolean
+        required: true
+        label: Do you use the actual-expense home office method?
+
+  - name: homeOffice
+    title: Home office
+    multiplicity: multiple
+    showIf: hasActualHomeOffice == true
+    fields:
+      - name: activityDescription
+        type: text
+        required: false
+        label: Which business (name)
+      - name: businessSqft
+        type: number
+        required: false
+        label: Area used for business (sq ft, line 1)
+      - name: totalHomeSqft
+        type: number
+        required: false
+        label: Total area of home (sq ft, line 2)
+      - name: daycareDays
+        type: number
+        required: false
+        label: Days used for daycare (line 4, if applicable)
+      - name: casualtyLossesDirect
+        type: amount
+        required: false
+        label: Casualty losses - direct (line 9)
+      - name: casualtyLossesIndirect
+        type: amount
+        required: false
+        label: Casualty losses - indirect (line 9)
+      - name: mortgageInterestDirect
+        type: amount
+        required: false
+        label: Deductible mortgage interest - direct (line 10)
+      - name: mortgageInterestIndirect
+        type: amount
+        required: false
+        label: Deductible mortgage interest - indirect (line 10)
+      - name: realEstateTaxesDirect
+        type: amount
+        required: false
+        label: Real estate taxes - direct (line 11)
+      - name: realEstateTaxesIndirect
+        type: amount
+        required: false
+        label: Real estate taxes - indirect (line 11)
+      - name: excessMortgageInterestDirect
+        type: amount
+        required: false
+        label: Excess mortgage interest - direct (line 16)
+      - name: excessMortgageInterestIndirect
+        type: amount
+        required: false
+        label: Excess mortgage interest - indirect (line 16)
+      - name: insuranceDirect
+        type: amount
+        required: false
+        label: Insurance - direct (line 17)
+      - name: insuranceIndirect
+        type: amount
+        required: false
+        label: Insurance - indirect (line 17)
+      - name: rentDirect
+        type: amount
+        required: false
+        label: Rent - direct (line 18)
+      - name: rentIndirect
+        type: amount
+        required: false
+        label: Rent - indirect (line 18)
+      - name: repairsMaintenanceDirect
+        type: amount
+        required: false
+        label: Repairs and maintenance - direct (line 19)
+      - name: repairsMaintenanceIndirect
+        type: amount
+        required: false
+        label: Repairs and maintenance - indirect (line 19)
+      - name: utilitiesDirect
+        type: amount
+        required: false
+        label: Utilities - direct (line 20)
+      - name: utilitiesIndirect
+        type: amount
+        required: false
+        label: Utilities - indirect (line 20)
+      - name: otherExpensesDirect
+        type: amount
+        required: false
+        label: Other expenses - direct (line 21)
+      - name: otherExpensesIndirect
+        type: amount
+        required: false
+        label: Other expenses - indirect (line 21)
+      - name: homeAdjustedBasis
+        type: amount
+        required: false
+        label: Adjusted basis of home (smaller of cost or FMV, line 37)
+      - name: landValue
+        type: amount
+        required: false
+        label: Value of land included above (line 38)
+
+  - name: computedOutputs
+    title: Computed outputs
+    multiplicity: single
+    readOnly: true
+    computed: true
+    instructions:
+      - Backend-only computed results (Stage 2). Not rendered by the UI.
+    fields:
+      - name: allowableHomeOfficeDeduction
+        type: amount
+        readOnly: true
+        computed: true
+        label: Allowable home office expense (Form 8829 line 36, to Schedule C line 30)

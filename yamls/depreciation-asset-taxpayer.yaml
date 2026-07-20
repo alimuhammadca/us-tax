@@ -99,6 +99,10 @@ sections:
         type: boolean
         required: false
         label: Listed property (vehicle, computer, etc.)
+      - name: isPassengerAutomobile
+        type: boolean
+        required: false
+        label: Passenger automobile (subject to the annual luxury-auto depreciation caps)
       - name: priorDepreciation
         type: amount
         required: false

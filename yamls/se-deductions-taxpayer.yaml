@@ -1,0 +1,86 @@
+# Self-employed deductions (taxpayer/family head): Schedule 1 lines 16-17.
+# Single-instance capture of Form 7206 self-employed health insurance inputs and
+# self-employed retirement plan contributions. Compute (Form 7206 limit, line-16
+# 20%-of-net calc) is added in Stage 2.
+name: se-deductions-taxpayer
+title: Self-employed deductions (taxpayer/family head)
+multiplicity: single
+formName: Schedule 1
+category: deductions
+instructions:
+  - Enter self-employed health insurance premiums and self-employed retirement plan contributions.
+  - The deductible amounts are limited to your self-employment earnings and computed later; they flow to Schedule 1 lines 16 and 17.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: hasSeDeductions
+        type: boolean
+        required: true
+        label: Did you pay self-employed health insurance or make self-employed retirement contributions in 2025?
+
+  - name: health
+    title: Self-employed health insurance (Form 7206)
+    multiplicity: single
+    showIf: hasSeDeductions == true
+    fields:
+      - name: seHealthInsurancePremiums
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Medical, dental, and vision premiums paid
+      - name: seLongTermCarePremiums
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Qualified long-term-care premiums (age-limited)
+      - name: medicarePremiums
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Medicare premiums (Part B, Part D, Medigap)
+      - name: marketplacePlan
+        type: boolean
+        required: false
+        label: These premiums were for a Marketplace plan with advance premium tax credit
+
+  - name: retirement
+    title: Self-employed retirement contributions (line 16)
+    multiplicity: single
+    showIf: hasSeDeductions == true
+    fields:
+      - name: sepIraContribution
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: SEP-IRA contribution
+      - name: simpleIraContribution
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: SIMPLE-IRA contribution
+      - name: qualifiedPlanContribution
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Other qualified plan contribution (Solo 401(k), defined benefit)
+
+  - name: computedOutputs
+    title: Computed outputs
+    multiplicity: single
+    readOnly: true
+    computed: true
+    instructions:
+      - Backend-only computed results (Stage 2). Not rendered by the UI.
+    fields:
+      - name: line17SeHealthDeduction
+        type: amount
+        readOnly: true
+        computed: true
+        label: Schedule 1 line 17 self-employed health insurance deduction
+      - name: line16SeRetirementDeduction
+        type: amount
+        readOnly: true
+        computed: true
+        label: Schedule 1 line 16 self-employed retirement deduction

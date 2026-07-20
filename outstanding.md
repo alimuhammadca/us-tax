@@ -59,7 +59,7 @@ passes). Owner decisions:
 | L27b | clergy checkbox always false | :2633 | check for clergy filing Sch SE |
 | §219 IRA cap | net SE excl. from compensation | ✅ DONE 2026-07-20 (C2 add-on) | per-person net earnings − ½SE added to §219 compensation (§401(c)(2)); §404 SE-retirement reduction = C3 |
 | Form 2210 | SE tax in penalty base | ✅ DONE 2026-07-20 (C6a) — auto-fixed by C2 | line 2 reads Schedule 2 otherTaxes incl. SE tax; verified otherTaxes=14,130. Remaining: farmer/fisherman ⅔ safe harbor (2210-F) — deferred. |
-| Form 8960 | rental/passive not in NIIT | :111 | add Sch E/K-1 passive net + RE-professional |
+| Form 8960 | rental/passive not in NIIT | ✅ DONE 2026-07-20 (C6b) | Form 8960 line 4a/4b/4c wired: 4a = Schedule 1 line 5 total; 4b backs out RE-professional / materially-participated (non-§1411) rental + non-passive K-1; 4c = passive net → line 8. New `RentalScheduleEResult.passiveNetForNiit` (= passiveIncome − losses allowed). IRS-pinned e2e (passive $30k→NIIT $760; RE-pro→$0; interest+rental line8=$70k). |
 | Sch 1 L8p §461(l) | excess business loss | `lines/8.md:324` | apply once C/F/E losses flow |
 | Household work | control-test-fail → SE | `HOUSEHOLD_WORK_SELF_EMPLOYMENT` :6718 | route to Schedule C |
 

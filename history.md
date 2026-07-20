@@ -1,6 +1,26 @@
 ﻿# History
 
 
+## 2026-07-20 — SE Stage 2 C6b: Form 8960 line 4 — passive rental/royalty/passthrough → NIIT
+
+Form 8960 (Net Investment Income Tax) previously omitted line 4 entirely (line 8 summed only interest,
+dividends, annuities, and net gain). C6b wires line 4a/4b/4c: 4a = the full Schedule 1 line 5 net
+rental/royalty/passthrough total; 4b = a negative adjustment that backs out the portion NOT subject to
+NIIT — real-estate-professional and materially-participated (non-passive §162 trade-or-business) rentals
+and non-passive K-1 income (Reg. §1.1411-4(b)/-5); 4c = 4a + 4b = the passive net, which flows into
+line 8. The passive figure comes from a new `RentalScheduleEResult.passiveNetForNiit` field
+(= passiveIncome − passive losses allowed, i.e. netIncome − nonpassiveTotal), computed inside
+computeRentalScheduleE where the §469 passive/non-passive split already exists; it naturally includes
+passive K-1 net (folded through the §469 other-passive pool) and excludes RE-professional/material-
+participation rentals and non-passive K-1s. computeForm8960 gains two params (Schedule 1 line 5 total +
+the passive NII net), read at the call site from the assembled `schedule1` and the rental result.
+IRS-pinned e2e (form8960-niit.spec.ts): Single wages $190k + passive rental $30k → MAGI $220k, line 4c
+$30k, line 8 $30k, NIIT $760; the same rental as a real estate professional raises AGI to $220k but line
+4b backs it out → line 4c $0 → no Form 8960 / $0 NIIT; interest $40k + passive rental $30k stack on line
+8 = $70k → NIIT $760. All 6 NIIT tests green (3 pre-existing unregressed). Next: C6c (§461(l) excess
+business loss → Schedule 1 line 8p), C6d (Schedule E full preview), C7.
+
+
 ## 2026-07-20 — SE Stage 2 C5: Schedule F farm income → Schedule 1 line 6 (+ farm SE + QBI)
 
 computeScheduleF() computes net farm profit per farm — cash method (raised produce/livestock sales +

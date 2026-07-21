@@ -1,6 +1,25 @@
 ﻿# History
 
 
+## 2026-07-20 — SE Stage 2 C7d (sc_00210): 1099-K + COGS e2e — fixes a 1099-K attribution bug
+
+First C7d gap implemented (SQA sc_00210, 1099-K goods-sold Schedule C), and it surfaced a real compute
+bug. `sumScheduleCStatements()` — which sums a person's Schedule C gross-receipts statements (1099-NEC
+box 1 + 1099-K box 1a) by TIN to auto-fill blank gross receipts — read `recipientTIN` for BOTH statement
+types. But Form 1099-K's canonical recipient field is `payeeTIN` (per Form1099KMapper + the "1099-k"
+StatementSsnRule); `recipientTIN` is the 1099-NEC field. So every 1099-K was dropped from the auto-fill
+and 1099-K income never reached Schedule C. The earlier auto-fill e2e only covered 1099-NEC, so it
+slipped through. Fix: the kEntries loop now reads `payeeTIN` (fallback `recipientTIN`). Principled
+diagnosis (traced field name via mapper), not a test tweak.
+
+IRS-pinned e2e (schedule-c-1099k-cogs.spec.ts, sc_00210): 1099-K box 1a $30,000 auto-fills the blank
+gross receipts; COGS $18,000 (purchases) → net profit $12,000; net earnings $11,082 → SE tax $1,696
+(Sch 2 L4), ½SE $848 (Sch 1 L15); AGI $11,152 (< $15,750 std ded → taxable income 0, no income tax, no
+QBI), total tax $1,696 — the KEY assertion being that the $30k gross is NOT taxable income. Regression:
+schedule-c-compute 4/4 (1099-NEC auto-fill unaffected). Remaining C7d gap: sc_00226 QJV (likely a
+compute gap — assess first).
+
+
 ## 2026-07-20 — SE Stage 2 C7c: retire the last self-employment blockers → Schedule C advisories
 
 With Schedule C now in scope, the two remaining "SE out of scope" BLOCKING flags become NON-blocking

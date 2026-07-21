@@ -105,8 +105,10 @@ passes). Owner decisions:
     home-office (`schedule-c-depreciation`), Schedule F farm net + farm SE (`schedule-f-compute`),
     statutory-employee carve-out (`line1a-carveouts`), Form 2210 SE penalty base (`schedule-c-se-tax` /
     `form2210-underpayment-penalty`), multiple Schedule C aggregation.
-  - **GAP — sc_00210 (1099-K gross − COGS → SE tax):** e2e gap only; compute path likely works (1099-K
-    ingest + COGS). Write an e2e pinning 1099-K box 1a $30k − COGS $18k = $12k net → SE tax.
+  - ~~**GAP — sc_00210 (1099-K gross − COGS → SE tax)**~~ ✅ DONE 2026-07-20 (`schedule-c-1099k-cogs.spec.ts`).
+    Surfaced + fixed a real bug: `sumScheduleCStatements` read `recipientTIN` for 1099-K, but its canonical
+    TIN field is `payeeTIN` → 1099-K never attributed/auto-filled. Now pinned: gross $30k → net $12k →
+    SE tax $1,696, AGI $11,152, total tax $1,696 (gross not taxable).
   - **GAP — sc_00226 (Qualified Joint Venture, spouse 50/50 split → dual Schedule SE):** likely a
     COMPUTE gap (QJV split not implemented — needs the election on business-income, per-spouse Schedule C
     + one Schedule SE each, MFS scoping), not just e2e. Assess compute support first.

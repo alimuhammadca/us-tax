@@ -1,6 +1,20 @@
 ﻿# History
 
 
+## 2026-07-20 — SE Stage 2 C7d (sc_00226): Qualified Joint Venture — assessment + outcome e2e
+
+Assessed SQA sc_00226 (Qualified Joint Venture). There is NO QJV election field or auto-split anywhere
+in the app (grep for qualifiedJointVenture/qjv/jointVenture is empty). BUT the tax OUTCOME is already
+achievable: Schedule SE is per-person (C2), so a jointly-owned $80k business elected QJV 50/50 —
+represented as two half-businesses (taxpayer $40k + spouse $40k on MFJ) — yields each spouse their own
+Schedule SE. New e2e (schedule-c-qjv.spec.ts) pins it (no code change): Schedule 1 line 3 $80,000; each
+spouse SE $5,652 → combined $11,304 (Sch 2 L4); ½SE $5,652 (Sch 1 L15); AGI $74,348; QBI $8,570 (MFJ
+aggregation); other taxes $11,304 — matching sc_00226. The remaining gap is only the QJV ELECTION UX:
+entering ONE joint business + a "split 50/50" checkbox that auto-creates the two Schedule Cs (needs a new
+business-income field + split logic in computeScheduleC — deferred pending owner sign-off on the field).
+C7d gaps now closed for the tax math; QJV election UX is the sole deferred enhancement.
+
+
 ## 2026-07-20 — SE Stage 2 C7d (sc_00210): 1099-K + COGS e2e — fixes a 1099-K attribution bug
 
 First C7d gap implemented (SQA sc_00210, 1099-K goods-sold Schedule C), and it surfaced a real compute

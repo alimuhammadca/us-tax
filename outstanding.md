@@ -109,9 +109,13 @@ passes). Owner decisions:
     Surfaced + fixed a real bug: `sumScheduleCStatements` read `recipientTIN` for 1099-K, but its canonical
     TIN field is `payeeTIN` → 1099-K never attributed/auto-filled. Now pinned: gross $30k → net $12k →
     SE tax $1,696, AGI $11,152, total tax $1,696 (gross not taxable).
-  - **GAP — sc_00226 (Qualified Joint Venture, spouse 50/50 split → dual Schedule SE):** likely a
-    COMPUTE gap (QJV split not implemented — needs the election on business-income, per-spouse Schedule C
-    + one Schedule SE each, MFS scoping), not just e2e. Assess compute support first.
+  - **sc_00226 (Qualified Joint Venture)** — ASSESSED + outcome e2e DONE 2026-07-20
+    (`schedule-c-qjv.spec.ts`). The tax OUTCOME already works: per-person Schedule SE (C2) + MFJ QBI
+    aggregation give the exact sc_00226 numbers when the joint business is entered as two half-businesses
+    (taxpayer $40k + spouse $40k) — combined SE $11,304, ½SE $5,652, AGI $74,348, QBI $8,570. The ONLY
+    remaining gap is the QJV ELECTION UX (one joint business + a "split 50/50" checkbox that auto-creates
+    two Schedule Cs) — a new `business-income` field + split logic in computeScheduleC. DEFERRED pending
+    owner sign-off on the field (per confirm-before-adding-field rule).
   - **VERIFY — sc_00225 (hobby not-for-profit):** cross-check it's pinned by the `schedule-c-compute`
     hobby→line-8j test (it appears covered).
 

@@ -114,8 +114,11 @@ passes). Owner decisions:
     aggregation give the exact sc_00226 numbers when the joint business is entered as two half-businesses
     (taxpayer $40k + spouse $40k) — combined SE $11,304, ½SE $5,652, AGI $74,348, QBI $8,570. The ONLY
     remaining gap is the QJV ELECTION UX (one joint business + a "split 50/50" checkbox that auto-creates
-    two Schedule Cs) — a new `business-income` field + split logic in computeScheduleC. DEFERRED pending
-    owner sign-off on the field (per confirm-before-adding-field rule).
+    two Schedule Cs) — a new `business-income` field + split logic in computeScheduleC. ✅ BUILT
+    2026-07-20 (owner-approved): field `qualifiedJointVenture` (+ `qjvTaxpayerSharePercent`, default 50) on
+    pf_business_activity (V151) + entity + mapper + UI radio/percent field; computeScheduleC Phase 2 splits
+    a QJV business's net between the spouses (two Schedule SEs + per-side QBI). Election-path e2e green
+    (one $80k business → combined SE $11,304, QBI $8,570). **C7d COMPLETE** (sc_00210 + sc_00226 done).
   - **VERIFY — sc_00225 (hobby not-for-profit):** cross-check it's pinned by the `schedule-c-compute`
     hobby→line-8j test (it appears covered).
 

@@ -1,6 +1,27 @@
 ﻿# History
 
 
+## 2026-07-20 — SE Stage 2 C7d (sc_00226): Qualified Joint Venture ELECTION + auto-split (full-stack)
+
+Built the QJV election (owner-approved). IRC §761(f): a married couple filing jointly who jointly own and
+operate a business can elect to split it into two Schedule Cs / two Schedule SEs (each spouse credited
+with Social Security earnings) instead of filing a Form 1065. New per-business field
+`qualifiedJointVenture` (+ optional `qjvTaxpayerSharePercent`, default 50) on pf_business_activity
+(migration V151), entity + BusinessIncomeMapper, and a form-business-income UI field (radio + conditional
+share %, MFJ-only per the help text; the compute enforces MFJ). computeScheduleC Phase 2: for a QJV
+business on MFJ, the net profit is split — taxpayer share → side-0 SE base + QBI activity, spouse share →
+side-1 — so the existing per-person Schedule SE (C2) and per-side QBI (C3b, reduced by each side's ½SE)
+produce two Schedule SEs and a correctly-aggregated QBI. Schedule 1 line 3 stays the full net. Line 26
+W-2 wages split proportionally for the QBI wage limit. Refactored the Phase 2 loop (statutory `continue`
++ QJV if/else) with no behavior change for non-QJV businesses.
+
+IRS-pinned e2e (schedule-c-qjv.spec.ts, sc_00226): the ELECTION path — one $80,000 business +
+qualifiedJointVenture flag on MFJ auto-splits 50/50 → each spouse SE $5,652 → combined $11,304 (Sch 2 L4),
+½SE $5,652 (Sch 1 L15), AGI $74,348, QBI $8,570, other taxes $11,304 — matching sc_00226. Plus the
+two-half-business path (same values). Regression: 30 Schedule C/SE/QBI/depreciation tests green (Phase 2
+refactor safe); UI build green. C7d complete: both gaps closed (sc_00210 1099-K fix + sc_00226 QJV).
+
+
 ## 2026-07-20 — SE Stage 2 C7d (sc_00226): Qualified Joint Venture — assessment + outcome e2e
 
 Assessed SQA sc_00226 (Qualified Joint Venture). There is NO QJV election field or auto-split anywhere

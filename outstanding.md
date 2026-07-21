@@ -92,8 +92,26 @@ passes). Owner decisions:
   rename; MFS business+farm e2e). C7c ✅ DONE 2026-07-20 (retired
   HOUSEHOLD_WORK_SELF_EMPLOYMENT + STATUTORY_EMPLOYEE_W2 blockers → non-blocking Schedule C advisories;
   statutory box-1 still excluded from line 1a → statutory-employee Schedule C). Remaining: C7b direct e2e
-  for depreciation/home-office + dependent_own SE scoping; C7d SQA sc_00233–00254 pinned e2e; optimizer
+  for depreciation/home-office + dependent_own SE scoping; C7d SQA e2e pairing (see below); optimizer
   prepare() path verification.
+
+  **C7d — SQA↔e2e coverage analysis (2026-07-20, ANALYSIS ONLY; implementation deferred to a fresh
+  session).** The SE scenario range on disk is **`scenario_00207`–`scenario_00228`** (22 scenarios) — the
+  earlier "sc_00233–00254" reference was from a stale environment listing and is WRONG. Gap analysis
+  (agent-assisted; a few spec attributions were loose — the concept coverage is the reliable signal):
+  - **COVERED (≈19 of 22)** by existing SE e2e — core SE tax + ½SE + $400 floor + SS-wage-base
+    coordination (`schedule-c-se-tax`), 1099-NEC + COGS + hobby→8j + meals-50% (`schedule-c-compute`),
+    QBI below-threshold / SSTB phaseout / 8995-A wage-limit (`schedule-c-qbi`), §179 + standard-mileage +
+    home-office (`schedule-c-depreciation`), Schedule F farm net + farm SE (`schedule-f-compute`),
+    statutory-employee carve-out (`line1a-carveouts`), Form 2210 SE penalty base (`schedule-c-se-tax` /
+    `form2210-underpayment-penalty`), multiple Schedule C aggregation.
+  - **GAP — sc_00210 (1099-K gross − COGS → SE tax):** e2e gap only; compute path likely works (1099-K
+    ingest + COGS). Write an e2e pinning 1099-K box 1a $30k − COGS $18k = $12k net → SE tax.
+  - **GAP — sc_00226 (Qualified Joint Venture, spouse 50/50 split → dual Schedule SE):** likely a
+    COMPUTE gap (QJV split not implemented — needs the election on business-income, per-spouse Schedule C
+    + one Schedule SE each, MFS scoping), not just e2e. Assess compute support first.
+  - **VERIFY — sc_00225 (hobby not-for-profit):** cross-check it's pinned by the `schedule-c-compute`
+    hobby→line-8j test (it appears covered).
 
 ---
 
@@ -255,7 +273,12 @@ the SQA backbone with OBBBA before Phase SE-4 and re-pin sc_00245 if needed)**. 
 
 ### H. Acceptance targets (SQA chapter already authored — program logic must match IRS outcomes)
 
-`C:\us-tax-sqa\test_scenarios\` **scenario_00233–00254**: sole-proprietor C+SE (00233), C net
+> **NUMBERING CORRECTION (2026-07-20):** the folder numbers below are STALE — the SE scenarios on disk
+> are **`scenario_00207`–`scenario_00228`** (offset −26 from the numbers listed here). The concept order
+> is unchanged (sole-proprietor C+SE = 00207, … SE estimated-tax underpayment = 00228). See the C7d
+> coverage analysis earlier in this file for the covered-vs-gap breakdown.
+
+`C:\us-tax-sqa\test_scenarios\` **scenario_00233–00254** (STALE NUMBERS — actual = 00207–00228): sole-proprietor C+SE (00233), C net
 loss (00234), 1099-NEC→C (00235), 1099-K goods+COGS (00236), SE above SS base (00237), W-2+SE
 base coordination (00238), <$400 floor (00239), statutory employee (00240), SE health (00241),
 SEP-IRA (00242), home-office simplified (00243), vehicle standard mileage (00244), §179 (00245),
@@ -4105,6 +4128,6 @@ These validate that **our** intake forms collected complete/consistent data; a c
 - SS input defects: `SOCIAL_SECURITY_SSI_AMOUNT_REQUIRED_*`, `..._EXCESS_REPAYMENT_REQUIRES_MANUAL_HANDLING`, `..._LUMP_SUM_ALLOCATION_REQUIRED`, `..._LUMP_SUM_PRIOR_YEAR_DEFAULTS_APPLIED`, `..._LUMP_SUM_PRIOR_YEAR_REPORTED_REQUIRED`, `..._LINE6D_MFS_RESIDENCE_INCONSISTENT`.
 
 ### C. Already covered elsewhere (no new Tier B2 case needed)
-- Schedule C / F out-of-scope (`OTHER_INCOME_SCHEDULE_C_OUT_OF_SCOPE`, `..._SCHEDULE_F_...`, `MEDICAID_WAIVER_SCHEDULE_C_*`) → self-employment block **sc_00233–sc_00254**.
+- Schedule C / F out-of-scope (`OTHER_INCOME_SCHEDULE_C_OUT_OF_SCOPE`, `..._SCHEDULE_F_...`, `MEDICAID_WAIVER_SCHEDULE_C_*`) → self-employment block **sc_00207–sc_00228** (was mislabeled sc_00233–sc_00254; corrected 2026-07-20). These blockers were retired by SE Stage 2 C1/C5/C7c.
 - §962 (`OTHER_INCOME_SECTION_962_ELECTION_OUT_OF_SCOPE`) → **sc_00266**; Form 8997/QOF + 1099-S real-estate (`FORM_8997_REQUIRED_MANUAL_FILL`, `FORM_1099S_REAL_ESTATE_REPORTED`) → **sc_00265** (positive-computation).
 - Form 8814 child-income ceiling (`FORM8814_CHILD_GROSS_INCOME_TOO_HIGH`) → **sc_00258** (+ original sc_00192); education-credit MFS ineligible (`EDUCATION_CREDITS_MFS_INELIGIBLE`) → **sc_00255/sc_00256**.

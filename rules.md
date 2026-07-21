@@ -1633,3 +1633,79 @@ backend** under `/api/admin/**`; the admin **UI is a separate app/repo**
 
 
 
+
+## Self-employment program complete + SE compute conventions — 2026-07-21
+
+The whole SE program (Schedule C/SE/F, MACRS/§179/bonus depreciation, §199A QBI,
+Form 8829, Form 8959, §461(l), NIIT rental, QJV, Form 4835 farm rental, clergy/
+church-employee, dependent_own gig income, and §1402 optional methods) is now
+computed. Conventions established while closing the last gaps:
+
+- **§179 aggregate limit spans Schedule C + F, computed ONCE over merged inputs.**
+  §179(b) (the $2.5M dollar cap, $4M phaseout, and the trade-or-business income
+  ceiling) is per-taxpayer across ALL trades/businesses. `computeFarmIntermediates()`
+  builds a per-farm §179-requested + net-before-§179 pre-pass; `computeScheduleC`'s
+  Phase-2 aggregates C businesses + farms together and pro-rata-allocates the allowed
+  §179 to each (the last item across the combined C+F list absorbs rounding drift);
+  `computeScheduleF` is a thin finalizer (net = netBefore179 − allocated §179). Same
+  "merge inputs, compute once under a statutory limit" pattern as Form 4952 §163(d)
+  and MFJ QBI. Do NOT sum per-schedule §179 outputs.
+- **Form 4835 farm rental is a PASSIVE activity — pool it into the shared §469 engine**
+  (`computeRentalScheduleE`), sharing the $25,000 active-participation allowance and
+  Form 8582 with rental real estate; split the allowed net back out into
+  `farmRentalNetForLine40` for Schedule E Part V line 40 (line 26 / passiveNetForNiit
+  EXCLUDE it, but it IS added to Schedule 1 line 5 and Form 8960 line 4 — passive NII).
+- **Schedule SE runs BEFORE `mergeFarmIntoSelfEmployment`** so the optional methods can
+  see pre-merge nonfarm (Schedule C) vs farm (Schedule F) net + gross separately. The
+  REGULAR method still combines them (farm loss nets against nonfarm profit) — only the
+  optional methods separate per category. Any future SE-base change must preserve the
+  no-optional regular path exactly (combined net × 92.35%).
+- **§1402 optional-method 2025 constants are DERIVED, verified against the 2024 form:**
+  max reportable = 4 × the SSA quarter-of-coverage amount ($1,810 for 2025 → $7,240);
+  net-profit eligibility threshold = max / 0.9235 ($7,840); farm-gross threshold = max
+  × 1.5 ($10,860); 72.189% nonfarm-gross test is fixed. Applied only when income-eligible;
+  else a non-blocking `SE_OPTIONAL_METHOD_ELIGIBILITY_*` advisory fires and regular is used.
+- **A stopped prod DB is NOT a bug to "fix."** The clergy/optional-method/dependent SE
+  work is compute-only; the SE forms remain owner_role taxpayer/spouse (a dependent's SE
+  income arrives only via 1099-NEC/1099-K statements matched by SSN, synthesized into a
+  Schedule C in `scopeForDependentOwn`).
+
+## e2e auth: never pass E2E_SHARED_AUTH_* on the command line — 2026-07-21
+
+`e2e/playwright.config.ts` loads the gitignored `e2e/.env` but only fills a var
+`if (process.env[key] === undefined)`, so any `E2E_SHARED_AUTH_EMAIL/PHONE/CODE/PASSWORD`
+set on the CLI **shadows** the real `.env` credentials. The CLAUDE.md "Required env vars"
+block (`testuser@example.com` / `password`) is a PLACEHOLDER, not the real account. A wrong
+EMAIL breaks `mintIdTokenForPhone`'s `getUserByEmail` → the run falls back to the slow UI
+email/password flow → wrong password → repeated attempts trip Firebase `auth/too-many-requests`,
+which masks the real error until the throttle decays (10+ min). **Run `npx playwright test …`
+with NO auth env prefix** — the config's `.env` loader supplies EMAIL/PHONE/CODE and the primary
+admin-token-injection path authenticates with no UI, no password, no throttle. Cost 3 red runs
+before this was root-caused. See `[[feedback_e2e_no_cli_auth_env_overrides]]`.
+
+## Output `out_*` tables must FK to `tax_return(uid) ON DELETE CASCADE` — 2026-07-21
+
+Every persisted computed-output table (e.g. `out_schedule_e`, V152) MUST declare
+`CONSTRAINT fk_… FOREIGN KEY (tax_return_uid) REFERENCES tax_return(uid) ON DELETE CASCADE`,
+matching the canonical pattern in V7/V9. That cascade is HOW these rows are cleaned on a
+`/api/user-data/reset` (the reset deletes `tax_return` by uid; children cascade) — `out_*`
+tables are NOT in `UserDataBulkDelete.PARENT_TABLES_UID_CASCADE` (those key on a `uid` column;
+`out_*` key on `tax_return_uid`). V128 (`out_form_8582`/`out_form_6198`) OMITTED the FK — a
+latent reset-leak; do not repeat it. The save/load wiring in `TaxReturnDataService`
+(`single(uid, X.class, "default", …)` / `loadOne(…)`) already exists for every
+`TaxReturnComputation` field and silently no-ops when no `OutputMapper<X>` is registered — so
+persisting a new output = migration + entity + `OutputMapper` (a dynamic field map goes in a
+`fields_json` TEXT column via Jackson), no data-service edit.
+
+## Prod is ON-DEMAND — a stopped Postgres is by design, not an incident — 2026-07-21
+
+The prod Postgres `pg-ustax-9u14g` (Burstable B2ms, RG `ocr`) is kept STOPPED to save cost —
+local dev/e2e use a Docker DB, and the ~$30/mo server runs only when `taxbeans.com` needs live
+traffic or during a deploy. A local Windows Scheduled Task `AzurePostgresAutoStop` (daily
+11:00 AM EDT) re-stops it (also against Azure's 7-day auto-restart of stopped Flexible Servers).
+**A Stopped prod DB is the normal resting state — do NOT "fix" it unless the site actually needs
+to be live.** To bring prod up: `az postgres flexible-server start -n pg-ustax-9u14g -g ocr`.
+`backend-deploy.yml` has an "Ensure prod Postgres is running" step (after Azure login, before the
+Container App roll) that starts the DB so deploys succeed regardless of the resting state; the
+deploy step and the auto-stop task coexist by design. No Azure Automation/Logic App is involved.
+See `[[reference_azure_deployment]]`.

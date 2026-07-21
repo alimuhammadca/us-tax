@@ -607,7 +607,7 @@ When listing "input forms" and "output forms" for a given line:
 ## Scope Extension (2025 Lines 2a-9)
 - Implementation scope now extends beyond wages to lines 2a/2b, 3a/3b, 4a/4b/4c, 5a/5b/5c, 6a/6b/6c/6d, 7a/7b, 8, and 9 with spouse-aware inputs and conditional output forms.
 - Use the rule specs in C:\us-tax\lines (for example 2ab.md, 3ab.md, 4abc, 5abc.md, 6abcd.md, 7ab.md, 8.md, 9.md) as authoritative implementation references.
-- Self-employment income remains out of scope for this app; block or exclude Schedule C/F paths unless explicitly enabled later.
+- ~~Self-employment income remains out of scope~~ — **CORRECTED 2026-07-20: self-employment is now fully IN scope and computed** (Schedule C/SE/F, depreciation, §199A QBI, §461(l), Form 8959 Part II). See `outstanding.md` SE program and `history.md` C1–C6d. Do NOT re-add SE out-of-scope blockers.
 
 ## Global Rules
 - Imported fields are prepopulated from statements/personal forms but remain editable; users may have no statements and must enter or override values manually.
@@ -729,7 +729,7 @@ Context and documentation hygiene rule:
 Line-10 YAML pattern rule:
 - Use spouse-split YAMLs for line 10 (taxpayer and spouse) with title "Income adjustments".
 - Keep return-level statement-upload confirmations on taxpayer form only.
-- Keep self-employment adjustments (Schedule 1 lines 15-17) as explicit out-of-scope blockers.
+- ~~Keep self-employment adjustments (Schedule 1 lines 15-17) as explicit out-of-scope blockers.~~ **CORRECTED 2026-07-20: lines 15/16/17 are now computed (SE Stage 2 C2/C3); the blockers were retired.**
 - Keep imported statement fields and computed outputs in backend-only sections and do not render them in form components.
 
 ## YAML creation standards (canonical, supersedes malformed escaped entries)

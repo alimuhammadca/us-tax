@@ -167,6 +167,12 @@ DELETE /api/user-data/reset             Clear all user data (test use)
 - **13b** — Additional deductions (Schedule 1-A: tips, overtime, car loan interest, enhanced senior)
 - **14–15** — `line14 = line12e + line13a + line13b`; `line15 = max(0, line11b - line14)`
 
+**Self-employment (2026-07-20):** Schedule 1 line 3 (Schedule C), line 6 (Schedule F), and line 8p
+(§461(l) excess business loss, Form 461) are computed; Schedule 2 line 4 (Schedule SE self-employment
+tax) and line 11 (Form 8959 Part II Additional Medicare on SE); Schedule 1 lines 15/16/17 (½ SE tax, SE
+retirement, SE health); line 13a QBI on business income; Form 4562 depreciation (MACRS/§179/bonus), Form
+8829 home office, Form 8960 line 4 (passive rental/royalty/passthrough → NIIT), and a Schedule E output.
+
 ### Line 16 (Next Implementation)
 
 Line 16 = `regular_tax + Form8814.tax + Form4972.tax + section962_tax + ECR + Form8621.line16e + Form8978.line14 + section965i_tax`
@@ -217,8 +223,15 @@ Tax Worksheet).
 
 ### Out of Scope
 
-- Self-employment (Schedule C / SE / F)
-- Form 8959 Additional Medicare Tax
+- Corporate/entity returns (Form 1120, 1120-S, 1065) and payroll filings (Form 941/940) — their K-1s/1099s are consumed, but the entity returns themselves are not produced.
+- Form 2210-F (farmers/fishermen ⅔ estimated-tax safe harbor).
+- Multi-year NOL carryforward tracking (Form 172) — the §461(l) disallowed loss is computed and surfaced for the current year, but prior/next-year NOL plumbing is not built.
+
+**Now IN scope (formerly out — corrected 2026-07-20):** Self-employment — Schedule C (sole-proprietor
+business), Schedule SE (SE tax), Schedule F (farm), the SE-adjacent deductions/taxes, full MACRS/§179/
+bonus depreciation (Form 4562), Form 8829 home office, §199A QBI on business income, §461(l) excess
+business loss (Form 461 → Schedule 1 line 8p), and Form 8959 Additional Medicare Tax (all Parts, incl.
+Part II on SE income). See `outstanding.md` (SE program §A–I) and `[[project_se_income_implementation]]`.
 
 ---
 
@@ -280,7 +293,7 @@ Additional conventions:
 - Taxpayer form owns all return-level gating questions; spouse form has spouse-only supplemental inputs.
 - `multiplicity: multiple` marks repeatable sections (e.g., per-vehicle, per-employer, per-transaction).
 - `showIf` provides conditional rendering based on field values.
-- Self-employment paths use explicit out-of-scope blockers.
+- Self-employment intake forms (`business-income`, `farm-income`, `se-deductions`, `se-tax-options`, `depreciation-asset`, `home-office-actual`, `farm-rental`) are fully in scope and computed (the former out-of-scope blockers were retired).
 
 ---
 

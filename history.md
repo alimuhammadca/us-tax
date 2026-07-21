@@ -1,6 +1,29 @@
 ﻿# History
 
 
+## 2026-07-20 — SE Stage 2 C6c: §461(l) excess business loss (Form 461) → Schedule 1 line 8p computed
+
+Schedule 1 line 8p (§461(l) excess business loss adjustment) was a manual user field; it is now
+computed from Form 461 (2025). The aggregate net of all trades/businesses — Schedule C (line 3),
+Form 4797 other business gains/losses (line 4), Schedule F (line 6), non-passive K-1 trade/business
+income, and the non-passive (RE-professional / materially-participated) portion of rental — is the
+Form 461 line 14 business net. A net loss beyond the 2025 threshold ($313,000, or $626,000 MFJ, per
+Rev. Proc. 2024-40 §2.32, verified against the uploaded IRS Form 461) is disallowed and added back as
+a positive "ELA" number on line 8p, then carried forward as a next-year NOL (an advisory
+SECTION_461L_EXCESS_BUSINESS_LOSS_CARRYFORWARD flag surfaces the amount; multi-year Form 172 tracking
+is deferred). Per Form 461's structure, investment capital gains/losses (backed out in Part II as
+non-§162) and passive rental (already §469-limited) are NOT in the aggregate, and W-2 wages never
+appear on the form. New ReferenceData constants SECTION_461L_THRESHOLD_SINGLE/MFJ + a
+section461lThreshold(status) helper (only MFJ gets the doubled amount — unlike NIIT, QSS uses the
+base). computeOtherIncomes gains a filingStatus param. The computed value is authoritative whenever
+any business is present; the legacy manual field is a fallback only when there's no business data.
+IRS-pinned e2e (section461l-excess-business-loss.spec.ts): Single $400k Schedule C loss → deduct
+$313k, $87k disallowed on line 8p, total income $187k; MFJ $500k loss under $626k → fully deductible,
+no addback; Single $400k loss + $150k non-passive K-1 income → aggregate −$250k under $313k → no
+addback. Schedule C (4) + Schedule E rental (11) regression green, no drift. Next: C6d (Schedule E
+full preview + Form 461 output), C7 (MFS/optimizer scoping for the new pf_* tables).
+
+
 ## 2026-07-20 — SE Stage 2 C6b: Form 8960 line 4 — passive rental/royalty/passthrough → NIIT
 
 Form 8960 (Net Investment Income Tax) previously omitted line 4 entirely (line 8 summed only interest,

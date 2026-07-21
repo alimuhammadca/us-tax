@@ -1,6 +1,27 @@
 ﻿# History
 
 
+## 2026-07-20 — SE Stage 2 C7b: MFS multi-return scoping for the self-employment forms
+
+The SE intake forms `business-income`, `farm-income`, `depreciation-asset`, and `home-office-actual`
+are owner_role two-row forms whose per-entity child list is role-suffixed (taxpayerBusinesses /
+spouseBusinesses, taxpayerFarms / spouseFarms, taxpayerAssets / spouseAssets, taxpayerHomeOffices /
+spouseHomeOffices) and read side-indexed by compute (the taxpayer<List> from the filer slot). On the
+mfs_spouse leg, MfsFormScoper's generic `-spouse → -taxpayer` rename kept the spouse<List> key, so
+computeScheduleC/F (and the depreciation / home-office readers) found an empty taxpayer<List> and the
+spouse's business/farm/assets/home-office VANISHED from her own separate return — the exact bug the
+rental-income scoping (normalizeRentalIncomeSpouse) already fixed for Schedule E. Added four explicit
+`scopeForMfsSpouse` branches that route spouse<List> → taxpayer<List> via a shared `moveChildList`
+helper (twin of the rental fix). `se-deductions` and `se-tax-options` need no branch — their mappers
+store bare keys per owner_role, so the generic rename already works; `farm-rental` (Form 4835) is not
+yet computed. The mfs_head leg was already correct (it keeps the taxpayer<List>). IRS-pinned e2e
+(mfs-spouse-se-income.spec.ts): MFS business head $60k / spouse $50k on line 3; MFS farm head $96k /
+spouse $70k on line 6 — each appears only on its owner's leg. MFS rental regression green.
+Deferred within C7b: direct e2e for depreciation/home-office (wired identically, covered by the shared
+pattern); dependent_own SE scoping. Next: C7c (retire HOUSEHOLD_WORK / statutory-employee blockers),
+C7d (SQA sc_00233–00254 e2e).
+
+
 ## 2026-07-20 — SE Stage 2 C6d: Schedule E (Form 1040) output model + data-bound preview
 
 The Schedule E preview rendered a blank form (no data binding). C6d wires it. First, a correction: the

@@ -86,8 +86,12 @@ passes). Owner decisions:
   C6c §461(l) L8p (Form 461), C6d Schedule E output model + data-bound preview. Remaining C6 deferrals:
   Form 2210-F farmer/fisherman ⅔ safe harbor (OOS), Schedule E persistence (out_schedule_e table/mapper),
   Form 4835 line 40, granular Schedule E expense lines 5–17, Schedule SE preview.
-  C7 Cross-cutting: multi-return/MFS/optimizer scoping for every new `pf_*`; retire remaining
-  blockers; docs (CLAUDE.md Out-of-Scope, lines/8·10·13ab, rules.md); SQA sc_00233–00254 pinned e2e.
+  C7 Cross-cutting: C7a ✅ DONE 2026-07-20 (docs: CLAUDE.md Out-of-Scope + lines/10·13ab + rules.md
+  retire stale SE-OOS text). C7b ✅ DONE 2026-07-20 (MfsFormScoper: business/farm/depreciation/
+  home-office spouse<List> → taxpayer<List> on mfs_spouse; se-deductions/se-tax-options work via generic
+  rename; MFS business+farm e2e). Remaining: C7b direct e2e for depreciation/home-office + dependent_own
+  SE scoping; C7c retire HOUSEHOLD_WORK_SELF_EMPLOYMENT + STATUTORY_EMPLOYEE_W2 blockers (route to
+  Schedule C); C7d SQA sc_00233–00254 pinned e2e; optimizer prepare() path verification.
 
 ---
 

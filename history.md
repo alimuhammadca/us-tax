@@ -1,6 +1,23 @@
 ﻿# History
 
 
+## 2026-07-20 — SE Stage 2 C7c: retire the last self-employment blockers → Schedule C advisories
+
+With Schedule C now in scope, the two remaining "SE out of scope" BLOCKING flags become NON-blocking
+advisories that direct the user to the Schedule C path. (1) Statutory-employee W-2 (box 13): its box 1
+is still excluded from line 1a — that income belongs on Schedule C, not wages — but instead of the
+blocking STATUTORY_EMPLOYEE_W2_OUT_OF_SCOPE it now raises the non-blocking
+STATUTORY_EMPLOYEE_W2_SCHEDULE_C advisory telling the user to add a statutory-employee business entry
+(statutoryEmployeeW2Link; box 1 → gross receipts, expenses deductible, no SE tax — the compute infra
+already exists in computeScheduleC). (2) Household work failing the control test:
+HOUSEHOLD_WORK_SELF_EMPLOYMENT_* is now non-blocking and explains the worker is self-employed (report on
+Schedule C, SE tax applies). Neither flag was in NonOverrideableFlags, so no §17 registry change was
+needed. Updated the Java unit test (computesLine1aExcludesStatutoryEmployeeW2AndFlags → non-blocking
+assertion), the e2e (line1a-carveouts: statutory now computes cleanly without overrideFlags), two
+docstrings, and rules.md. 10/10 line1a-carveouts e2e green. Remaining C7: C7d (SQA sc_00233–00254 e2e),
+C7b tail (depreciation/home-office direct e2e + dependent_own SE scoping + optimizer prepare()).
+
+
 ## 2026-07-20 — SE Stage 2 C7b: MFS multi-return scoping for the self-employment forms
 
 The SE intake forms `business-income`, `farm-income`, `depreciation-asset`, and `home-office-actual`

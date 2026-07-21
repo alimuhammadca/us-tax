@@ -1,6 +1,43 @@
 ﻿# History
 
 
+## 2026-07-20 — SE Stage 2 C6d: Schedule E (Form 1040) output model + data-bound preview
+
+The Schedule E preview rendered a blank form (no data binding). C6d wires it. First, a correction: the
+long-noted "Schedule E preview mistakenly renders Schedule SE assets" was a MISREAD of the `f1040se`
+filename — `f1040se` IS Schedule E (its CSV/elements carry rents/royalties/partnership/line 41; zero
+self-employment-tax markers), and the component already pointed at it correctly. There is no Schedule SE
+preview asset (a separate, deferred item).
+
+Backend: `RentalScheduleEResult` now retains a per-property `SchedulePropertyLine` list (description,
+type, rents, royalties, mortgage+tax, operating, depreciation/depletion, total expenses, income/loss,
+deductible loss), captured in the property loop. New `com.ustax.model.output.ScheduleE` output +
+`computeScheduleEOutput()` builds Part I per-property lines 3–22 (first three properties printed; all
+roll into the line 23–26 totals), Part II nonpassive K-1 (lines 29/32), and the Part V line 41 grand
+total. Line 26 = the exact §469-limited rental aggregate; line 41 = line 26 + nonpassive K-1 + Form 4835
+(deferred → 0) = the value routed to Schedule 1 line 5. The model carries a semantic-name → value `fields`
+map (keys verbatim from f1040se_field_map_semantic.csv) plus typed line 26/32/41 getters. Threaded into
+`TaxReturnComputation` (new `scheduleEDetail` field) at both construction sites; the two wide-record test
+constructors got a null placeholder.
+
+Coarse-intake mapping (documented): per-property expenses map to line 12 (mortgage + taxes combined),
+line 18 (depreciation/depletion), line 19 (other operating); granular lines 5–17 are deferred but line 20
+total and line 41 grand total are exact. Passive K-1 is folded into the Part I §469 aggregate rather than
+shown in Part II; Part IV (REMICs) deferred.
+
+Frontend: `form-tax-return-schedule-e.component.ts` reads `computation().scheduleEDetail.fields` and passes
+it to the shared `<pure-pdf-preview>` `[values]`. The compute POST response carries `scheduleEDetail`
+directly (TaxReturnService stores the response), so the preview shows data immediately after compute.
+PERSISTENCE DEFERRED: no `out_schedule_e` table/mapper yet (would need a migration + full restart), so the
+preview is blank after a cold reload until recompute — the `single`/`loadOne` calls are forward-compatible
+no-ops until a mapper is added.
+
+IRS-pinned e2e (schedule-e-output.spec.ts): two rentals ($3k + $3k) + nonpassive K-1 $18k → line 26 $6k,
+line 32 $18k, line 41 $24k = Schedule 1 line 5, with field-map keys (line3_property_a=24000,
+line23a=36000); royalty $20k − 15% depletion → line 18 $3k, line 26 $16k, type code 6. 2 new + 17
+regression (rental + NIIT) green; UI build green. Next: C7 (MFS/optimizer scoping for the pf_* tables).
+
+
 ## 2026-07-20 — SE Stage 2 C6c: §461(l) excess business loss (Form 461) → Schedule 1 line 8p computed
 
 Schedule 1 line 8p (§461(l) excess business loss adjustment) was a manual user field; it is now

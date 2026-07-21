@@ -82,7 +82,10 @@ passes). Owner decisions:
   methods/Notice 2014-7 + §219 IRA-comp + EIC(L27a). C3 SE deductions → Sch1 L16/L17 + QBI unblock
   L13a. C4 Full MACRS depreciation engine + Form 4562 + vehicle actual↔mileage + Form 8829 actual.
   C5 Schedule F → Sch1 L6 (cash + accrual Part III) + farm SE + 1099-PATR/G routing + farmer 2210-F
-  safe harbor. C6 Schedule E full + Form 8960 rental/passive + §461(l) L8p + Form 2210 SE base.
+  safe harbor. C6 ✅ DONE 2026-07-20: C6a Form 2210 SE base (via C2), C6b Form 8960 rental/passive line 4,
+  C6c §461(l) L8p (Form 461), C6d Schedule E output model + data-bound preview. Remaining C6 deferrals:
+  Form 2210-F farmer/fisherman ⅔ safe harbor (OOS), Schedule E persistence (out_schedule_e table/mapper),
+  Form 4835 line 40, granular Schedule E expense lines 5–17, Schedule SE preview.
   C7 Cross-cutting: multi-return/MFS/optimizer scoping for every new `pf_*`; retire remaining
   blockers; docs (CLAUDE.md Out-of-Scope, lines/8·10·13ab, rules.md); SQA sc_00233–00254 pinned e2e.
 

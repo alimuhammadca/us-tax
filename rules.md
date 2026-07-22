@@ -2,6 +2,77 @@
 
 ---
 
+## "Complete" Claims Require an Adversarial Completeness Audit — Established 2026-07-21
+
+Do **not** declare a program/feature "100% complete" or "no remaining gaps" on the strength of
+passing tests alone. In the SE program this claim was made **three times** and each was wrong — an
+adversarial audit then found **three genuine compute gaps** (K-1 box 14A never routed to Schedule SE;
+Schedule C/F losses never §465 at-risk-limited; Schedule SE line 1b CRP exclusion never computed).
+
+- **Passing tests prove the code does what the tests check — not that every IRS-required behavior is
+  wired.** A field can be captured, persisted, round-tripped, and shown in the UI yet **never read by
+  the compute** (box 14A was captured by the K-1 mapper but had zero references in the compute service).
+- **Before claiming completeness, run an adversarial audit** (delegate a skeptical agent): enumerate the
+  IRS-required behaviors for the area from the form/instructions, then for EACH one grep the compute for
+  where it's consumed. Flag anything that is intake-only ("captured but never read"), stubbed, or where
+  the field exists but isn't in the computation. Verdict per item: IMPLEMENTED / PARTIAL / NOT HANDLED.
+- **Correct the record when wrong.** When an audit invalidates an earlier "complete" claim, fix it
+  everywhere it was written (history.md, context.md, outstanding.md, memory) — don't leave stale
+  victory-lap text. The completeness claim is only true once the audit backs it.
+- Ties to [[feedback_principled_diagnosis_over_test_tweaking]] and the Java-unit-≠-e2e guardrail.
+
+## §465 At-Risk on a New Loss-Generating Activity — Established 2026-07-21
+
+When adding any activity that can produce a deductible **loss** (Schedule C/F, rental, Form 4835, etc.):
+
+- **Cap the per-activity loss at the amount at risk** when the activity is flagged "some investment not
+  at risk" (Schedule C line 32b / Schedule F line 36b), and suspend the excess. Apply the cap **before**
+  the loss reaches Schedule 1 line 3/6, the SE base, QBI, and (downstream) **§461(l)** — at-risk (§465,
+  per-activity) is computed BEFORE the excess-business-loss aggregate (§461(l)). Multi-year carryforward
+  of the suspended amount is not tracked (consistent with the no-NOL simplification).
+- **Regression-safe gate:** a blank amount at risk = fully at risk = no limitation, byte-identical to
+  prior behavior. Never limit when the amount is null.
+- **Form 6198 preview:** build it via the shared `buildAtRiskForm6198(rawLoss, atRiskAmount)` helper
+  (deductible loss = amount at risk). There is ONE Form 6198 slot on `TaxReturnComputation`; the rental
+  path owns it when it limited a passive loss, else the combined Schedule C+F at-risk fills it. If both a
+  rental and a C/F loss are at-risk-limited (very rare) only one preview renders, but every loss is still
+  correctly capped in the tax computation.
+- **Threading without constructor churn:** carry cross-method accumulators as **mutable fields set after
+  construction** on the result record (e.g. `ScheduleCResult`/`ScheduleFResult.atRiskRawLoss/atRiskAmount/
+  atRiskSuspended`), mirroring `FarmIntermediate.allocated179` — this avoids touching every positional
+  constructor call site.
+
+## Verifying Compute-Only Changes on Prod (Paid-Access Gate) — Established 2026-07-21
+
+The compute **license gate (402 Payment Required) is enforced only in production**
+(`licensing.enforce-paid-compute` is false in %dev/%test), and `clearUserData` resets the shared test
+account's `has_paid_access` to false. Therefore you **cannot verify a compute change on prod by running
+the e2e** — it would both strip the test account and get blocked at compute.
+
+- **Compute-only change:** verify by confirming the **exact fix-commit image is the live, healthy
+  Container App revision** — `az containerapp revision list -n ca-ustax-be -g ocr --query "[?properties.active]…"`
+  → image tag == the pushed commit, `healthState=Healthy`, `runningState=Running`, and
+  `https://www.taxbeans.com/api/q/health/ready` == 200. Compute correctness is already proven by the
+  local e2e against the identical source (no prod-only config affects the math).
+- **UI change:** verify with a **strictly read-only** Playwright check against `E2E_BASE_URL=https://www.taxbeans.com`
+  — sign in via token injection, interact **in-memory only** (add rows, toggle gates), assert the new
+  field/preview renders. **NO clearUserData / save / compute** → zero prod data mutated. Delete the
+  one-off prod-render spec afterward (it targets prod and shouldn't run in the regular suite).
+- Never pass `E2E_SHARED_AUTH_*` on the CLI (see [[feedback_e2e_no_cli_auth_env_overrides]]); only set
+  `E2E_BASE_URL`.
+
+## Derive Signals From Existing Statement Data, Don't Re-Ask — Established 2026-07-21
+
+Before adding an intake field to capture a condition, check whether the condition is already derivable
+from statements the taxpayer entered. Example: the Schedule SE line 1b CRP exclusion needs "receives
+Social Security retirement/disability benefits" — auto-detected from a non-zero SSA-1099
+(`netBenefitsAmount`, matched by `beneficiarySSN`) or RRB-1099 (`netSSEBAmount`, by `recipientIdNumber`)
+via `personReceivesSocialSecurityBenefits()`, rather than adding a redundant checkbox. Add a field only
+for data that genuinely isn't already present (the CRP amount itself). Complements the confirm-before-
+field-add discipline ([[feedback_confirm_before_field_add_delete]]).
+
+---
+
 ## New Statement Form — Build Recipe + recipientTIN-Alias Convention — Established 2026-07-18
 
 When adding a new received-statement (payee-document) type, follow the 1098 exemplar

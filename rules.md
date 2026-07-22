@@ -19,6 +19,11 @@ Schedule C/F losses never §465 at-risk-limited; Schedule SE line 1b CRP exclusi
 - **Correct the record when wrong.** When an audit invalidates an earlier "complete" claim, fix it
   everywhere it was written (history.md, context.md, outstanding.md, memory) — don't leave stale
   victory-lap text. The completeness claim is only true once the audit backs it.
+- **The audit must be COMPREHENSIVE, not scoped.** A first SE audit (5 specific areas) found 3 gaps; after
+  fixing them the claim was re-asserted — and a SECOND, broader audit found 4 more (including a real
+  OASDI-overpayment bug in Schedule SE line 8b/8c). A scoped audit only clears the areas it checked.
+  Enumerate the FULL surface (every line of the form + its instructions) before the claim holds. Even
+  then, the honest posture is "no known gaps after an N-area audit," not "provably complete."
 - Ties to [[feedback_principled_diagnosis_over_test_tweaking]] and the Java-unit-≠-e2e guardrail.
 
 ## §465 At-Risk on a New Loss-Generating Activity — Established 2026-07-21

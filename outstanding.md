@@ -2,6 +2,17 @@
 
 ## Self-Employment / Business Income — Detailed Implementation Plan — Authored 2026-07-18
 
+> ## ★ STATUS 2026-07-21 — SELF-EMPLOYMENT PROGRAM COMPLETE (audit-backed). This supersedes every "deferred / gap / still out of scope" note in the SE plan below.
+>
+> The entire SE program (C1–C7) plus all follow-ups are implemented, e2e-verified, and deployed to prod. A **2026-07-21 adversarial completeness audit** corrected an earlier premature "100% complete" claim by finding 3 genuine compute gaps — **all now closed:**
+> - **Gap 1 — partnership K-1 (Form 1065) box 14A → SE tax.** ✅ `sumK1PartnershipSelfEmploymentEarnings` folds box 14 code A into the nonfarm SE base (independent of the Schedule E income-tax treatment). Commit `270ae57`.
+> - **Gap 2 — §465 at-risk on Schedule C / Schedule F LOSSES (Form 6198).** ✅ V156 + `amount_at_risk` (C had the line-32 flags; F got line-36 + amount) + BizIntermediate/FarmIntermediate + `buildAtRiskForm6198()`; a C/F loss is capped at the amount at risk before line 3/6, SE, QBI, §461(l). Commit `5a6d1af`.
+> - **Gap 3 — Schedule SE line 1b CRP-payments exclusion.** ✅ V157 + `crp_payments` on pf_farm_activity + `personReceivesSocialSecurityBenefits()` auto-detect (SSA-1099/RRB-1099); CRP excluded from the farm SE base only (income tax + QBI keep it). Commit `735845c`.
+>
+> Also completed since the plan was written (formerly "deferred/tail" here): Schedule E persistence (out_schedule_e, V152); Form 4835 farm-rental compute (`3dacaf0`) + its §175/§465/line-5d simplifications (V154); farm asset depreciation + merged §179; clergy/church-employee; farm/nonfarm optional methods; dependent_own SE scoping; granular Schedule E expense lines 5–17 (V153); the dedicated **Schedule SE preview** asset (V155, taxpayer+spouse, `form-tax-return-schedule-se-*`).
+>
+> **Remaining SE-1040 compute deferrals (OOS-by-design):** Form 2210-F (farmer/fisherman ⅔ estimated-tax safe harbor) and multi-year NOL carryforward tracking (Form 172). Everything else in the SE plan below is DONE. (The broader "never in SE-1040 scope" items — entity/partnership return preparation, payroll filings, Schedule J farm-income averaging, Schedule H, etc. — are unchanged; see §I below.) See `history.md` (2026-07-20 → 2026-07-21) and memory `project_se_income_implementation.md` for the authoritative detail.
+
 Scope decision (2026-07-18): self-employment income moves **into scope**. This plan covers
 Schedule C (sole-proprietor business), Schedule SE (SE tax), Schedule F (farm), completion of
 Schedule E (rental/royalty/pass-through), and the SE-adjacent deductions/taxes — all in the
@@ -83,9 +94,9 @@ passes). Owner decisions:
   L13a. C4 Full MACRS depreciation engine + Form 4562 + vehicle actual↔mileage + Form 8829 actual.
   C5 Schedule F → Sch1 L6 (cash + accrual Part III) + farm SE + 1099-PATR/G routing + farmer 2210-F
   safe harbor. C6 ✅ DONE 2026-07-20: C6a Form 2210 SE base (via C2), C6b Form 8960 rental/passive line 4,
-  C6c §461(l) L8p (Form 461), C6d Schedule E output model + data-bound preview. Remaining C6 deferrals:
-  Form 2210-F farmer/fisherman ⅔ safe harbor (OOS), Schedule E persistence (out_schedule_e table/mapper),
-  Form 4835 line 40, granular Schedule E expense lines 5–17, Schedule SE preview.
+  C6c §461(l) L8p (Form 461), C6d Schedule E output model + data-bound preview. Former C6 deferrals — now
+  ALL DONE 2026-07-21 (Schedule E persistence V152, Form 4835 line 40, granular Schedule E lines 5–17 V153,
+  Schedule SE preview V155); ONLY Form 2210-F farmer/fisherman ⅔ safe harbor remains OOS-by-design.
   C7 Cross-cutting: C7a ✅ DONE 2026-07-20 (docs: CLAUDE.md Out-of-Scope + lines/10·13ab + rules.md
   retire stale SE-OOS text). C7b ✅ DONE 2026-07-20 (MfsFormScoper: business/farm/depreciation/
   home-office spouse<List> → taxpayer<List> on mfs_spouse; se-deductions/se-tax-options work via generic
@@ -191,7 +202,7 @@ Schedule K-3 (deferred), 1099-H (expired), W-2c (edit the W-2 entry).
 | S5 | 1099-PATR | exists | Route to Schedule F (co-op distributions) / Schedule C where applicable. |
 | S6 | 1099-G box 7 (agriculture payments) | exists | Route to Schedule F. |
 | S7 | W-2 box 13 statutory employee | exists (blocked) | Route box 1 to a statutory-employee Schedule C (expenses allowed, **no SE tax**), retiring the blocker. |
-| S8 | K-1 1065/1120-S/1041 | all 3 LIVE (semantic rework done 2026-07-18) | ~~Semantic-key rework; activate 1120-S + 1041 mappers~~ ✅ done; remaining: route box 14A (SE earnings) to Schedule SE; audit portfolio boxes (interest/dividends/cap-gain) routing. |
+| S8 | K-1 1065/1120-S/1041 | all 3 LIVE (semantic rework done 2026-07-18) | ~~Semantic-key rework; activate 1120-S + 1041 mappers~~ ✅ done; ~~route box 14A (SE earnings) to Schedule SE~~ ✅ DONE 2026-07-21 (gap 1, `270ae57`); remaining: audit portfolio boxes (interest/dividends/cap-gain) routing. |
 
 ### C. New USER INPUT (personal) forms
 
@@ -216,7 +227,7 @@ Backend output model + `TaxReturnComputation` field + view-shape + preview wirin
 | # | Form | Cardinality | Assets | Notes |
 |---|---|---|---|---|
 | T1 | **Schedule C** | one per business | ✓ `f1040sc_*` present; preview component exists (blank) | Wire `buildSemanticValues()` to new `ScheduleC` output. |
-| T2 | **Schedule SE** | one per person with ≥$400 net SE | ✓ present — **naming gotcha: `f1040se_*` assets are Schedule SE, and the current `form-tax-return-schedule-e` preview mistakenly renders them** | New `form-tax-return-schedule-se` preview; fix Schedule E preview to real Schedule E assets (`schedule_e_*`). |
+| T2 | **Schedule SE** | one per person with ≥$400 net SE | ✅ DONE 2026-07-21 (V155) | New `form-tax-return-schedule-se-taxpayer/-spouse` previews render `f1040sse_elements.json` (from `f1040sse_field_map_semantic.csv`); Schedule E preview already uses the real `schedule_e_*`/`f1040se_*` assets. The former naming gotcha is resolved. |
 | T3 | **Schedule E (full)** | one per return (pages by property count) | ✓ `schedule_e_*` present | Full per-property Part I lines 3–26 + Part II (K-1s) view; today only net→line 5. |
 | T4 | **Schedule F** | one per farm | ✗ generate from `docs/IRS-Forms/Schedule F.pdf` | Semantic PDF+CSV+elements pipeline (us-tax-be/scripts). |
 | T5 | **Form 4562** | one per activity w/ current-year assets | ✗ generate (`f4562.pdf` present) | Depreciation/§179/bonus/listed property. |
@@ -226,7 +237,7 @@ Backend output model + `TaxReturnComputation` field + view-shape + preview wirin
 | T9 | **Form 8959 Part II** | extend existing | ✓ | SE income section (lines 8–13). |
 | T10 | **Form 8960 extension + preview** | extend | ✗ preview assets missing (`f8960.pdf` source present) | Add line 4a/4b rental/royalty/passive net income (non-RE-professional) + line 7 adjustments; build the missing preview. |
 | T11 | Schedule 1 / Schedule 2 / 2210 | extend | ✓ | S1 lines 3/5/6 + 15/16/17 population; S2 line 4 SE tax; 2210 penalty base + farmer/fisherman ⅔ safe-harbor question. |
-| T12 | Form 8582 / 6198 extension | extend | ✓ | Accept Schedule C/F activities as §469/§465 inputs (rental-only today). |
+| T12 | Form 8582 / 6198 extension | extend | ✓ | ~~Accept Schedule C/F activities as §469/§465 inputs (rental-only today).~~ §465 at-risk for Schedule C/F LOSSES ✅ DONE 2026-07-21 (gap 2, V156, `5a6d1af`). §469 passive-loss for C/F is N/A (Schedule C/F imply material participation → non-passive by definition). |
 
 ### E. Compute-engine phases (each: lines/ spec first → constants → unit tests → paired e2e)
 

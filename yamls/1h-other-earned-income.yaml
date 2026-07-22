@@ -156,12 +156,12 @@ sections:
     multiplicity: single
     showIf: taxpayerHasSimpleDeferral
     instructions:
-      - SECURE 2.0 Act §117 lets certain SIMPLE plans (employers with ≤25 employees, or certain larger ones that elect higher matching) use an elevated $17,600 contribution cap for 2025 instead of the standard $16,500. The worker must self-declare because the W-2 carries no §117 indicator.
+      - SECURE 2.0 Act §117 makes the elevated $17,600 SIMPLE cap for 2025 (vs. the standard $16,500) AUTOMATIC when the employer has 25 or fewer employees; 26-100-employee employers may also adopt it. We ask about the employer's size/adoption because the W-2 carries no §117 indicator.
     fields:
       - name: usesSimple117ElevatedLimits
         type: boolean
         required: false
-        label: Did the SIMPLE plan that paid you use the elevated $17,600 cap?
+        label: Did your employer have 25 or fewer employees, or otherwise offer the higher $17,600 SIMPLE limit?
 
   - name: electiveDeferralsSpouse
     title: Step 2b - SIMPLE plan elevated limit (spouse, §117)
@@ -173,7 +173,7 @@ sections:
       - name: usesSimple117ElevatedLimits
         type: boolean
         required: false
-        label: Did the SIMPLE plan that paid your spouse use the elevated $17,600 cap?
+        label: Did your spouse's employer have 25 or fewer employees, or otherwise offer the higher $17,600 SIMPLE limit?
 
   - name: special457bTaxpayer
     title: Step 2c - 457(b) 3-year special pre-retirement catch-up (taxpayer)

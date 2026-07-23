@@ -376,6 +376,16 @@ sections:
         type: boolean
         required: false
         label: Was the vehicle available for personal use during off-duty hours? (line 45)
+      - name: parkingFees
+        type: number
+        required: false
+        label: Parking fees
+        help: Business parking fees — deductible on top of the standard mileage rate.
+      - name: tolls
+        type: number
+        required: false
+        label: Tolls
+        help: Business tolls — deductible on top of the standard mileage rate.
 
   - name: otherExpenses
     title: Other expenses (Part V)

@@ -1,6 +1,33 @@
 ﻿# History
 
 
+## 2026-07-24 — Form 4361: per-business "ministerial income" flag so a self-employed minister's Schedule C is exempt
+
+Fixed a Schedule SE / Form 4361 scoping bug surfaced by the full e2e regression (schedule-se-clergy-church
+"Form 4361 exemption → no SE tax" was red: expected SE tax 0, got 5,652). Root cause: the 2026-07-21 audit-7
+change narrowed Form 4361 to exempt only the ministerial base (housing + ministerial W-2 wages) and treated
+ALL Schedule C as non-ministerial/SE-taxable — over-correcting. IRS reality (Pub. 517): Form 4361 exempts a
+minister's earnings from the exercise of ministry, which for a self-employed minister are on Schedule C; a
+SEPARATE secular business is not exempt. The engine couldn't tell them apart. (The method docstring still
+described the old "whole SE profit exempt" behavior — a stale contradiction with the code.)
+
+Fix (user-chosen: per-business flag, most IRS-accurate): new per-business `ministerialIncome` boolean on
+business-income (migration V164 on pf_business_activity, entity + BusinessIncomeMapper + form-business-income
+UI radio). computeScheduleC now tracks the ministerial-flagged slice of each person's netForSe
+(taxpayer/spouseMinisterialNetForSe on ScheduleCResult, threaded via BizIntermediate through the §179/QJV
+finalize loop). computeScheduleSE pulls that slice out of the regular Schedule C SE base (cNet) and folds it
+into ministerialBase, so a Form 4361 election zeroes ministerial businesses' net + housing + ministerial
+wages while an unflagged secular business stays SE-taxed. Ministerial income still reports on Schedule 1
+line 3 / QBI / EIC (netForSe and taxpayerNetForSe unchanged) — only the SE-tax base moves. No behavior change
+when 4361 is not elected (ministerialBase already carried the same amount). Docstring + inline comment
+corrected to match.
+
+Verified: schedule-se-clergy-church 4/4 (incl. the previously-red 4361 test + a NEW mixed-case test —
+ministerial business exempt + secular business SE-taxed under one 4361 → SE tax 1,696 on the secular $12k
+only, line 3 = 52k), se-clergy-notary-optional 4/4 (sibling "non-ministerial Schedule C still SE-taxed" stays
+green), TaxReturnComputeServiceTest 1019/1019, UI build clean, V164 applied on restart.
+
+
 ## 2026-07-24 — Schedule 1 line 12: Form 2106 Part I split so the backend applies the 50% meals limit
 
 Fixed a real backend gap surfaced by SQA sc_00090: the reservist / qualified-performing-artist / fee-basis

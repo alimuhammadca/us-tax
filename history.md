@@ -1,6 +1,31 @@
 ﻿# History
 
 
+## 2026-07-24 — Schedule 1 line 12: Form 2106 Part I split so the backend applies the 50% meals limit
+
+Fixed a real backend gap surfaced by SQA sc_00090: the reservist / qualified-performing-artist / fee-basis
+Schedule 1 line 12 deduction was a **single pre-netted amount** (`reservistPerformingArtistFeeBasisExpensesLine12`),
+so the app trusted the user to hand-apply the 50% meals limit and could silently over-deduct. The commercial
+reference app deducts lodging + transportation at 100% and meals at 50% (sc_00090: 800 + 600 + 50%×400 = **1,600**,
+not the 1,800 my earlier oracle produced). NOTE: 4a/4b and 5a/5b were **already correct** in us-tax-be
+(`line4a/line5a = fullyTaxable ? null : gross`) — verified live (5a/4a return null for fully-taxable) — so only
+tax2025.js and the .md expected values needed the earlier fix; no us-tax-be change there.
+
+Full Form 2106 Part I split (user-chosen scope): new columns on pf_income_adjustments (migration **V163**) — line1
+vehicle, line2 parking/tolls/transportation, line3 travel (lodging, not meals), line4 other, line5 meals, line7
+reimbursement (non-meals + meals columns), and a DOT-hours-of-service flag (80% meals). Compute helper
+`form2106Line10()` per person: (line1..4 − non-meals reimb, floored) + mealsRate×(line5 − meals reimb, floored),
+mealsRate = 50% (80% under DOT), line10 = colA + colB → Schedule 1 line 12. The legacy single column is retained
+as a fallback for rows with no split entered (backward-compatible; existing API-seed e2e stay green). Entity +
+IncomeAdjustmentsMapper (read/echo) + both income-adjustments UI forms (taxpayer/spouse: the single input replaced
+by the categorized fields, DOT checkbox via new CheckboxModule, per-field help, running-total now nets meals at
+50/80%). The V66 person_id trigger is column-agnostic, so no trigger change.
+
+Verified: 6 REST-path compute variants (sc90=1600, DOT80%=320, reimb-net=650, legacy=1600, meals-only=200,
+mix=1200) all PASS; TaxReturnComputeServiceTest **1019/1019**; line10-income-adjustments.spec.ts **20 passed**
+(UI-driven test now drives `#form2106Line4OtherBusinessExpenses`; API-seed GAP-I/GAP-S green via fallback).
+
+
 ## 2026-07-20 — SE Stage 2 C7d (sc_00226): Qualified Joint Venture ELECTION + auto-split (full-stack)
 
 Built the QJV election (owner-approved). IRC §761(f): a married couple filing jointly who jointly own and

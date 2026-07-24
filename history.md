@@ -1,6 +1,35 @@
 ﻿# History
 
 
+## 2026-07-24 — Form 4952 investment interest now reaches Form 1040 line 12 (ordering fix)
+
+Fixed a real compute bug surfaced by SQA sc_00111: the Form 4952 allowable investment-interest
+deduction (line 8) was computed AFTER computeLine12 and merely patched onto the Schedule A output
+object (patchScheduleAInvestmentInterest), so Form 1040 line 12 / taxable income never included it —
+the deduction was silently dropped from the return even though Schedule A showed the correct total.
+(sc_00111: line 8 = 6,000, Schedule A line 17 = 25,000, but line 12 stayed 19,000 → tax 11,860 instead
+of 10,540.) It could also wrongly force the standard deduction when the Form 4952 amount was what tipped
+itemized over the standard.
+
+Fix: compute Form 4952 BEFORE computeLine12 (in prepare(): buildScheduleHeader + mergeForm4952Inputs +
+computeForm4952 moved up) and thread the Form4952Output into computeLine12 → buildScheduleA, which now
+uses Form 4952's line 8 (allowable), line 1 (paid), line 6 (net investment income), line 3 (total), and
+line 7 (carryforward) as authoritative when the dedicated investment-interest-expense-deduction form is
+present — so the deduction is in the itemized total that drives the itemize-vs-standard decision and
+line 12 by construction. Removed the post-hoc patchScheduleAInvestmentInterest (now dead). No change to
+the simple standard-deductions investmentInterestPaid/netInvestmentIncome path (which already worked).
+
+Also confirmed sc_00117B was a seeding gap, not a bug: a 1099-B capital gain needs the companion
+capital-gain-loss personal form (hadCapitalGainOrLoss + upload confirmations) for Schedule D to be
+emitted; without it the internal LINE7B consistency guard correctly 409s. With the form, sc_00117B
+matches (LTCG 50,000 → tax 16,555). sc_00117A line 7 is null vs the scenario's 0 (canonical null/zero —
+no capital transaction; all tax figures match).
+
+Verified: sc_00111 now matches (line 12 = 25,000, tax 10,540); TaxReturnComputeServiceTest 1019/1019; new
+regression e2e in line4952-interest-expense.spec.ts pinning the Form 4952 → line 12 flow (the prior test
+only checked save/load); sc_00111–00120 all green (117A cosmetic null/0).
+
+
 ## 2026-07-24 — Form 4361: per-business "ministerial income" flag so a self-employed minister's Schedule C is exempt
 
 Fixed a Schedule SE / Form 4361 scoping bug surfaced by the full e2e regression (schedule-se-clergy-church

@@ -1,6 +1,29 @@
 ﻿# History
 
 
+## 2026-07-25 — Excess IRA/Roth contribution 6% excise (Form 5329 Part III/IV) — sc_00171/00176
+
+Implemented the §4973 6% excise on excess traditional (Part III) and Roth (Part IV) IRA contributions.
+NEW per-person inputs on the income-adjustments form (V165 → pf_income_adjustments): traditional/Roth
+current-year contribution, prior-year uncorrected excess (carryover), and optional year-end fair market
+value (the excise is 6% of the SMALLER of the excess or that value; absent → no value cap). Compute
+(computeExcessContributionExcisePerson): traditional excess = contribution − min(annual dollar limit,
+compensation) — the active-participant phaseout reduces DEDUCTIBILITY, not the contribution limit, so it
+is not applied to the excess; Roth excess = contribution − the MAGI-phased §408A(c) limit (new
+computeRothContributionLimit + constants: single/HOH $150–165k, MFJ/QSS $236–246k, MFS-with-spouse
+$0–10k). Total excess = prior-year + current; excise = 6%. Routed through the Form 5329 object (created
+when there was no early distribution) → Schedule 2 line 8 (additionalTaxOnIras, now summing early-dist +
+excess-trad + excess-Roth) → Form 1040 line 23. Form 5329 model + OutForm5329 + Form5329OutputMapper +
+V166 (out_form_5329 columns) carry the two new excise amounts.
+
+sc_00171 (traditional $7,000 contribution / $4,000 compensation → $4,000 deduction + $3,000 excess → $180
+excise, total tax $1,655) and sc_00176 (Roth $7,000 at MAGI $170,000 > $165k ceiling → $0 allowed →
+$7,000 excess → $420 excise, total tax $30,287) both compute exactly to the records — no record edits.
+New e2e in line10-income-adjustments.spec.ts. Documented simplifications (outstanding.md): Roth MAGI uses
+AGI (no traditional-deduction / student-loan / Form 2555 add-backs); traditional and Roth excess computed
+independently (no combined-$7k / traditional-reduces-Roth interaction); no year-end-value cap default.
+
+
 ## 2026-07-25 — SQA sc_00171–00180: IRA active-participant phaseout filing-status bug + MFS withholding leak
 
 Two real fixes surfaced by the sc_00171–00180 batch.

@@ -455,6 +455,24 @@ toggle reveals the 3 foreign inputs, auto-shown when foreign data exists). V127 
 14 new on both `pf_education_student` and `out_form_8863_student`. Unit test updated (5/5 8863 tests green);
 backend compiles + UI builds. **Item-8 "PDF-render / view-shape" roadmap line is now fully closed.**
 
+## Form 5329 Part III/IV excess-contribution 6% excise — implemented with documented simplifications (2026-07-25)
+
+**Status: implemented (sc_00171/00176), with three scoped simplifications left for a future refinement.**
+The §4973 6% excise on excess traditional/Roth IRA contributions is computed (V165/V166 inputs+outputs;
+`computeExcessContributionExcisePerson` → Form 5329 → Schedule 2 line 8). Simplifications:
+1. **Roth MAGI = AGI.** The §408A(c) Roth phaseout uses AGI directly; the Roth-MAGI add-backs (traditional
+   IRA deduction, student-loan interest, Form 2555 foreign-earned-income/housing exclusions) are not added
+   back. Over-states the allowed Roth limit slightly when those items are present (the SQA cases have
+   AGI == MAGI).
+2. **Traditional and Roth excess computed independently.** The combined per-person $7,000 (+catch-up) cap
+   across BOTH account types, and the §408A(c) rule that a traditional contribution reduces the Roth limit,
+   are not modeled — a person contributing to both could have an under-counted excess. Correct when the
+   filer contributes to only one type (as the SQA cases do).
+3. **No year-end-value cap default.** The excise is 6% of the smaller of the excess or the account's
+   year-end fair market value; the value field is optional and, when absent, the full excess is used (no
+   cap). Correct when value ≥ excess (the common case).
+Revisit if an SQA scenario exercises Roth-MAGI add-backs, dual-type contributions, or a value-capped excise.
+
 ## Line 5b §72(t): early-distribution penalty base nets rollover only, not basis/PSO — DEFERRED (2026-07-24)
 
 **Status: partial-scope refinement, not an active bug.** The sc_00144 fix (2026-07-24) makes the IRC §72(t)

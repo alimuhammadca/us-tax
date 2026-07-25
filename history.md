@@ -1,6 +1,29 @@
 ﻿# History
 
 
+## 2026-07-25 — SQA sc_00161–00170 (boundaries + blocking); new MFS itemize-match flag; sc_00168 record
+
+Validated the sc_00161–00170 batch (5 numeric boundaries + 5 blocking/disallowance). All numeric boundaries
+correct: 00161 (capital loss exactly $3,000 → fully deductible, $0 carryover), 00162 (student loan interest
+MAGI $100k → phased to $0; line 10 null = canonical zero), 00163 (interest $1,501 → Schedule B), 00164 (tips
+exactly $25,000 cap → line 13b), 00165 (HSA family exactly $8,550). Blocking: 00166 (Form 8814 child gross
+≥ $13,500 → non-overrideable 409), 00167 (MFS EIC → $0, advisory, compute succeeds, refund $172), 00170
+(interest upload gate → INTEREST_STATEMENT_UPLOAD_REQUIRED 409) all match.
+
+**New code (sc_00169):** an MFS taxpayer who explicitly elects the standard deduction while the spouse
+itemizes on their separate return now triggers a BLOCKING (overrideable) flag MFS_ITEMIZE_MUST_MATCH in
+computeLine12. §63(c)(6)(A) already hard-zeroes the standard deduction when line12b (spouse-itemizes) is set,
+but that was silent — the return computed with std=$0 and no explanation. The flag fires only on an explicit
+STANDARD election (AUTO already picks the better method); overriding accepts the forced $0 std deduction.
+New e2e in line12e-standard-deductions.spec.ts (409 + MFS_ITEMIZE_MUST_MATCH, then override → std $0).
+
+**Record correction (sc_00168, us-tax-be CORRECT):** an MFS filer claiming education credits — us-tax-be
+hard-blocks (EDUCATION_CREDITS_MFS_INELIGIBLE, non-overrideable), consistent with its MFS-disallowed-credit
+playbook (§25A(g)(6) is a flat statutory bar with no exception → hard block; contrast EIC's separated-spouse
+exception → advisory). The record wrongly expected a computed return with the credit zeroed. Rewrote
+sc_00168 .md + .xlsx to the blocking format (409, 3 checks). No code change — the block is correct.
+
+
 ## 2026-07-25 — dependent-own return: no spurious CTC/ODC + Form 8615 boundary (sc_00151); sc_00141–160 batch
 
 Two real fixes surfaced by SQA sc_00151 (kiddie: unearned exactly $2,700 → no Form 8615), both in the

@@ -1,6 +1,30 @@
 ﻿# History
 
 
+## 2026-07-24 — Two fixes from SQA 121–130: excess bond premium (line 16) + ISO exercise AMT (Form 6251 line 2i)
+
+**sc_00122 — excess amortizable bond premium → Schedule A line 16.** When taxable-bond premium (1099-INT
+box 11/12) exceeds the bond's interest (box 1/3), the interest netting floored line 2b at 0 but the excess
+was dropped instead of deducted (§171 / Pub. 550). Fix: `computeInterestForPerson` now accumulates the
+per-entry excess (premium − interest, floored) into a new `InterestPersonTotals.excessTaxableBondPremium`;
+`computeInterestIncome` aggregates it onto `InterestComputation`; and prepare() folds it into the existing
+Schedule A line-16 `autoOtherItemizedAddon` so it flows through buildScheduleA and the itemize-vs-standard
+election. (sc_00122: $500 excess → itemized 19,500, tax 6,030.) New e2e in line2ab-interest-income.spec.ts.
+
+**sc_00130 — ISO exercise-and-hold AMT preference (was out of scope).** The Form 6251 line 2i ISO bargain
+element was explicitly unmodeled. Form 3921 (Exercise of an ISO) already exists as a statement with the
+strike/FMV/shares boxes, so no new intake was needed. New `computeIsoAmtAdjustmentLine2i` sums (FMV − strike)
+× shares across Form 3921 entries attributed to the filer(s), excluding entries flagged
+`disqualifyingDispositionSameYear` (same-year sale → ordinary income, not AMT); emits a non-blocking advisory
+so the filer confirms the hold. Threaded into `computeLine17` (AMTI line 4 += line 2i) with a new
+`Form6251.line2iIsoExercise` output field. (sc_00130: $300k bargain element → AMT 71,483, total tax 96,550;
+regular taxable income unchanged.) New e2e in line17-amt-gaps.spec.ts.
+
+Verified: sc_00121–00130 all match (129 is the cosmetic AMT null-vs-0, total tax equal); 126/127 were my
+seeding gaps (Form 2555 needs a W-2 for the foreign wages; collectibles need the capital-gain-loss form's
+28%-gain fields), both match with correct seeding. TaxReturnComputeServiceTest 1019/1019.
+
+
 ## 2026-07-24 — Form 4952 investment interest now reaches Form 1040 line 12 (ordering fix)
 
 Fixed a real compute bug surfaced by SQA sc_00111: the Form 4952 allowable investment-interest

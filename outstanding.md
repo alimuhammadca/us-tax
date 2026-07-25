@@ -455,6 +455,25 @@ toggle reveals the 3 foreign inputs, auto-shown when foreign data exists). V127 
 14 new on both `pf_education_student` and `out_form_8863_student`. Unit test updated (5/5 8863 tests green);
 backend compiles + UI builds. **Item-8 "PDF-render / view-shape" roadmap line is now fully closed.**
 
+## Line 5b §72(t): early-distribution penalty base nets rollover only, not basis/PSO — DEFERRED (2026-07-24)
+
+**Status: partial-scope refinement, not an active bug.** The sc_00144 fix (2026-07-24) makes the IRC §72(t)
+early-distribution penalty base (`earlyDistributionBaseTenPercent`/`…TwentyFivePercent` in
+`computePensionForPerson`) net out the **rollover** amount — a rolled-over distribution is not includible in
+gross income, so §72(t) cannot reach it. This resolves the reported case (full rollover of a code-1
+distribution → zero penalty base, no spurious `FORM5329_REQUIRED` flag).
+
+**Still not netted (pre-existing behavior, unchanged by the fix):** the base is taken from 1099-R box 2a and
+reduced only by the rollover, NOT by the employee-basis offset (box 5 already-taxed contributions) nor the
+PSO §402(l) health-premium exclusion. Both of those also reduce the amount *includible in gross income*
+(they flow into line 5b), so a strict reading of §72(t)(1) ("the portion … includible in gross income")
+would net them too. Example (the line-48 kitchen-sink e2e): box 2a $4,500, rollover $200, box 5 $100, PSO
+$500 → line 5b $4,200, but the §72(t) base is $4,300 (rollover only) → penalty $430, whereas a fully
+includible-amount base would be $4,200 → $420. Deferred because (a) the reported gap (rollover) is closed,
+(b) allocating an aggregated line-5b reduction back to specific code-1 vs code-S entries needs care with
+multiple 1099-Rs, and (c) the PSO/§72(t) interaction is subtle at the edges. Revisit if an SQA scenario
+pins a basis- or PSO-reduced early-distribution penalty.
+
 ## Form 2210 underpayment-penalty interest-rate refresh — DEFERRED to TY2026 (2026-07-14)
 
 **Status: not an open bug — a forward-dated yearly maintenance action.** Form 2210 is fully implemented

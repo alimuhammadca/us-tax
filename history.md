@@ -1,6 +1,30 @@
 ﻿# History
 
 
+## 2026-07-24 — §72(t) early-distribution penalty base now nets out rollovers (sc_00144)
+
+Fixed a real bug surfaced by SQA sc_00144 (indirect rollover, 20% withholding). The IRC §72(t) 10%/25%
+early-distribution penalty base was accumulated from the 1099-R box 2a taxable amount and NEVER reduced by
+a rollover — even though the rollover correctly zeroes the taxable amount on line 5b. So a code-1
+distribution rolled over in full (box 2a $100,000, rollover $100,000, line 5b $0) still produced a $100,000
+penalty base, which (with the user opting out of Form 5329) tripped the FORM5329_REQUIRED_FOR_EARLY_
+DISTRIBUTION §17-consistency flag → a spurious 409 on a return where nothing was taxable. Fix
+(computePensionForPerson, ~line 12732): after the entry loop and before computing the §72(t) tax, reduce
+the 10% tier (code 1) then the 25% tier (code S) by the rollover amount — but only when a positive rollover
+AMOUNT is present (a boolean-only rollover has no figure to net). §72(t) applies only to the amount
+INCLUDED in gross income, and a rollover removes the rolled amount from income. sc_00144 now computes with
+NO override (5a=100,000, 5b=0, refund $22,145). Two new e2e in line5abc-pension-withdrawals.spec.ts pin the
+full-rollover (no flag, no penalty) and partial-rollover (penalty on the un-rolled remainder only: $4,000 ×
+10% = $400) paths. The pre-existing no-rollover code-1 opt-out test (FORM5329_REQUIRED fires) is unaffected.
+
+SQA batch sc_00141–00150 fully validated: 141 (mortgage interest credit/MCC), 143 (backup withholding), 144
+(rollover — fixed above), 145 (unemployment 1099-G withholding), 146A/B/C (estimated-tax penalty safe
+harbors), 147 (Additional Medicare Tax/8959), 148 (NIIT/8960), 149 (both, MFJ), 150 (interest exactly
+$1,500 → no Schedule B), and 142 (Premium Tax Credit reconciliation/Form 8962 — us-tax-be CORRECT; seeded
+1095-A monthly premiums so actual PTC $5,200 > APTC $4,000 → net PTC $1,200 refundable → refund $2,125). No
+record edits needed for this batch.
+
+
 ## 2026-07-24 — Form 8814 child income now reaches taxable income (line 15), not just AGI
 
 Fixed a real bug surfaced by SQA sc_00133: the child income a parent reports via Form 8814 (line 6 over

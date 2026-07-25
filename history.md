@@ -1,6 +1,27 @@
 ﻿# History
 
 
+## 2026-07-24 — Form 8814 child income now reaches taxable income (line 15), not just AGI
+
+Fixed a real bug surfaced by SQA sc_00133: the child income a parent reports via Form 8814 (line 6 over
+the $2,700 base → Schedule 1 line 8z) reached Form 1040 line 9 and AGI (line 11a/11b) but NOT the
+taxable-income base (line 15), so it was never taxed at the parent's rate — only the Form 8814 child-slice
+tax (line 15 of the child's 8814) was added. Root cause: computeLine12 sets line 15 at ~line 1759, BEFORE
+applyForm8814Line12ToSchedule1 (~1822) adds the child income; the existing delta-reconciliation block
+(GAP-C1, 2026-06-07) bumped line 9 + AGI but never re-derived line 15, and for a return with no Schedule
+1-A / QBI second pass (the common Form 8814 case) line 15 was never recomputed. Fix: in that same block,
+re-derive line 15 = max(0, bumped AGI − line 14 total deductions) after the AGI bump. (sc_00133: taxable
+income 98,500 → 100,800, tax 11,639 → 12,139.) New e2e in line8814-child-interest-dividends.spec.ts pins
+the flow (the prior 8814 tests only checked the Form 8814 output lines). TaxReturnComputeServiceTest
+1019/1019.
+
+Also from the SQA 131–140 pass: sc_00131/00132 (kiddie tax) — us-tax-be is CORRECT; the records have a
+$3 oracle error each. Form 8615 line 15 (child's taxable income not subject to kiddie tax) must be figured
+via the Tax Table (per the 8615 instructions) — 1,350 → $138, 2,250 → $228 — but the oracle used exact 10%
+($135 / $225). Every other value matches. sc_00134–00140 (EIC/CTC/ACTC/care/energy/EV) all match with
+correct seeding; no bugs.
+
+
 ## 2026-07-24 — Two fixes from SQA 121–130: excess bond premium (line 16) + ISO exercise AMT (Form 6251 line 2i)
 
 **sc_00122 — excess amortizable bond premium → Schedule A line 16.** When taxable-bond premium (1099-INT

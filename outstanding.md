@@ -4164,3 +4164,15 @@ These validate that **our** intake forms collected complete/consistent data; a c
 - Schedule C / F out-of-scope (`OTHER_INCOME_SCHEDULE_C_OUT_OF_SCOPE`, `..._SCHEDULE_F_...`, `MEDICAID_WAIVER_SCHEDULE_C_*`) → self-employment block **sc_00207–sc_00228** (was mislabeled sc_00233–sc_00254; corrected 2026-07-20). These blockers were retired by SE Stage 2 C1/C5/C7c.
 - §962 (`OTHER_INCOME_SECTION_962_ELECTION_OUT_OF_SCOPE`) → **sc_00266**; Form 8997/QOF + 1099-S real-estate (`FORM_8997_REQUIRED_MANUAL_FILL`, `FORM_1099S_REAL_ESTATE_REPORTED`) → **sc_00265** (positive-computation).
 - Form 8814 child-income ceiling (`FORM8814_CHILD_GROSS_INCOME_TOO_HIGH`) → **sc_00258** (+ original sc_00192); education-credit MFS ineligible (`EDUCATION_CREDITS_MFS_INELIGIBLE`) → **sc_00255/sc_00256**.
+
+## Form 8814 vs dependent_own kiddie (Form 8615) — mutually-exclusive coordination (2026-07-24)
+
+When a household has a child with investment income AND the child files a `dependent_own` return
+(Form 8615 kiddie tax), the parent's PRIMARY return can still generate a Form 8814 for that same
+child (electing to report the child's income) — so the income is modeled on both returns. Form 8814
+(parent reports) and Form 8615 (child files) are mutually exclusive; the parent's return should
+suppress the Form 8814 for a child who is enabled as dependent_own. The parent's primary compute runs
+BEFORE dependent-own enablement, so it does not currently know. Surfaced by the Form 8814 → line 15
+fix (sc_00133): the parent's 8814 income is now correctly taxed, which raised the parent taxable income
+that the child's Form 8615 line 6 reads (kiddie-tax outcome unchanged — same bracket). Deferred as a
+multi-return coordination change.

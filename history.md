@@ -1,6 +1,42 @@
 ﻿# History
 
 
+## 2026-07-25 — dependent-own return: no spurious CTC/ODC + Form 8615 boundary (sc_00151); sc_00141–160 batch
+
+Two real fixes surfaced by SQA sc_00151 (kiddie: unearned exactly $2,700 → no Form 8615), both in the
+dependent-own return path:
+
+1. **Spurious CTC/ODC on a dependent's own return (material).** `loadScopedDependents` returns the FULL
+   household dependents list on a `dependent_own` return (the MFS side-scoping does not apply), and
+   `computeSchedule8812` was called with that list — so the child's own return granted a $500 Credit for
+   Other Dependents (capped to the child's tiny tax), wrongly zeroing it. A filer who can be claimed as
+   another person's dependent cannot claim ANY dependent (IRC §152(b)(1)). Fix: pass an empty dependents
+   list to `computeSchedule8812` when `isDependentOwnReturn` (mirrors the existing Form 8814 gate). A code
+   comment at ~line 1057 had claimed dependents were already excluded — they were not. sc_00151 total tax
+   0 → 138.
+2. **Form 8615 applied at exactly the $2,700 threshold (boundary).** `computeForm8615` gated only on
+   `hasKiddieTaxUnearnedIncome`, never checking that unearned income EXCEEDS $2,700, so at exactly $2,700 it
+   ran (tax-neutral, but mislabeled the method FORM_8615). Fix: return null when childUnearnedIncome ≤
+   `KIDDIE_TAX_UNEARNED_INCOME_THRESHOLD` — the caller then figures the child's tax at the child's own rate
+   (method TAX_TABLE). Form 8615 filing is required only when unearned income is MORE THAN $2,700.
+
+Two new e2e in dependent-own-kiddie-tax.spec.ts pin the exactly-$2,700 boundary (no Form 8615, no ODC,
+total tax 138) and the CTC/ODC gate above the threshold (Form 8615 applies but still no ODC). Existing
+kiddie suite unaffected (8/8).
+
+SQA batch sc_00141–00160 validated. 00151–00160 (all boundary/threshold edge cases): 00154 (IRA full
+deduction at $79k floor), 00155 (IRA $200-minimum rule), 00156 (excess-SS exactly at wage base → no
+credit), 00157 (mortgage acquisition debt exactly $750k → full interest, proration only when balance
+STRICTLY exceeds the limit), 00158 (medical exactly at 7.5% floor → $0) all match; 00152 (5a blank when
+pension fully taxable — IRS-correct), 00159 (Add'l Medicare wages exactly $200k → no tax), 00160 (NIIT MAGI
+exactly $200k → no tax) are us-tax-be-correct with cosmetic null-vs-0 record display; 00151 fixed above.
+
+**Record correction (us-tax-be CORRECT, oracle error):** sc_00153 (CTC phaseout at exactly $400k MFJ) —
+the record forgot the Additional Medicare Tax. $400,000 combined MFJ wages exceed the $250,000 threshold by
+$150,000 → 0.9% × $150,000 = $1,350 on line 23. Corrected sc_00153 .md + .xlsx: added the line-23 row,
+line 24 $69,734 → $71,084, refund $18,266 → $16,916 (11 checks now).
+
+
 ## 2026-07-24 — §72(t) early-distribution penalty base now nets out rollovers (sc_00144)
 
 Fixed a real bug surfaced by SQA sc_00144 (indirect rollover, 20% withholding). The IRC §72(t) 10%/25%

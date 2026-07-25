@@ -1,6 +1,36 @@
 ﻿# History
 
 
+## 2026-07-25 — SQA sc_00171–00180: IRA active-participant phaseout filing-status bug + MFS withholding leak
+
+Two real fixes surfaced by the sc_00171–00180 batch.
+
+1. **IRA active-participant phaseout used the wrong filing-status range (sc_00180).** `applyPub590aIraPhaseout`
+   compared the filing status against enum-style literals (`"MarriedFilingJointly"`, `"MarriedFilingSeparately"`,
+   `"QualifyingSurvivingSpouse"` — no spaces), but the caller passes `normalizeFilingStatus(...)` which returns
+   DISPLAY form (`"Married filing jointly"`, with spaces). The comparisons never matched, so MFJ/QSS/MFS active
+   participants ALL fell through to the Single $79k–$89k range: MFJ/QSS under-deducting (MAGI $130k gave $0
+   instead of $5,600), MFS-lived-with-spouse over-deducting (sc_00180 gave the full $7,000 instead of $0), and
+   the MFJ spouse-only case getting no phaseout at all. Fixed to display-form `equalsIgnoreCase` comparisons.
+   Verified: MFJ MAGI $130k → $5,600; sc_00180 → $0. 57 IRA e2e green; new e2e in line10-income-adjustments.
+
+2. **MFS W-2 withholding leak (sc_00177).** Line 1a wages are SSN-attributed to the scoped filer
+   (`computeLine1aWages` via `filing-status.scopedFilerSsn`), but the line-25a W-2 withholding sum
+   (`sumFederalWithholdingFromEntries(w2Entries)`) applied no such filter — so an MFS leg claimed BOTH spouses'
+   withholding ($16,500 vs $6,500), inflating the refund while wages were correctly isolated. Fixed by
+   filtering the W-2 list to the scoped filer (positive `scopedFilerSsn` + MFS spouse-SSN exclusion) before
+   summing withholding, mirroring the wage path; no-op on Single/MFJ/HOH/QSS. New e2e in
+   mfs-spouse-income-adjustments (head leg withholding $6,500, refund $2,625).
+
+Batch validation: 00172/00173 (saver's credit disallowed — student/dependent), 00174/00175 (clean vehicle
+disallowed — MAGI/MSRP), 00178/00179 (MFS Social Security 85%/base-$25k), 00180 (MFS active IRA $0 after
+fix) all match. **Deferred (in progress):** 00171 (excess traditional IRA) + 00176 (excess Roth IRA) — the
+6% excess-contribution excise (Form 5329 Part III/IV) is being built (separate-contribution-field input +
+prior-year excess carryover, per owner decision); 00175's MSRP cap is not explicitly enforced (latent gap,
+outcome still $0). 00177 withholding leak likely also affects 1099-series withholding on MFS legs (same
+missing SSN filter) — noted for follow-up.
+
+
 ## 2026-07-25 — SQA sc_00161–00170 (boundaries + blocking); new MFS itemize-match flag; sc_00168 record
 
 Validated the sc_00161–00170 batch (5 numeric boundaries + 5 blocking/disallowance). All numeric boundaries

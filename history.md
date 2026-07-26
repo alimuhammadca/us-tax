@@ -1,6 +1,22 @@
 ﻿# History
 
 
+## 2026-07-26 — §199A rental QBI Part 1: first-class QBI activity (refactor of the auto-flow)
+
+Reworked the safe-harbor rental QBI auto-flow from a QBI-form injection into a first-class QBI business
+activity, to remove the double-count vector's mechanism and the statement-gate work-around. The rental net
+is now combined into the `scheduleCQbi` computed-activity track (a `QbiBusinessActivity` per person's
+rental) at the build site, instead of being added to the QBI form's `manualQualifiedBusinessIncomeAdjustment`
+(which also required forcing `hadQualifiedBusinessIncomeInputs=true` and defaulting the statement-upload
+confirmation). Result: each rental is its own Form 8995 line (IRS-line-correct), the manual field is
+untouched (so it stays for genuinely-other QBI), and `validateQbiStatementGating` is no longer in play.
+Removed `injectSafeHarborRentalQbi`. Verified single filer + MFS spouse-leg (sc_00185) still auto-flow to
+$4,000; control (no safe harbor) → no QBI. The residual double-count (user elects the safe harbor AND also
+types the rental into the QBI form) is unchanged — it is a UI/data-entry issue; Part 2 (QBI form surfaces the
+auto-included rental read-only + relabels the manual field + a small backend field exposing the amount) is
+drafted for owner review, not yet implemented.
+
+
 ## 2026-07-26 — §199A rental safe-harbor QBI auto-flow + advisory (sc_00185 follow-up)
 
 Closed the input-model gap logged from sc_00185: a rental real-estate enterprise electing the §199A safe

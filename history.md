@@ -1,6 +1,51 @@
 ﻿# History
 
 
+## 2026-07-26 — SQA validation batch sc_00211–00220 (8 clean; Schedule SE ½-SE-tax rounding fixed)
+
+Ran the 10-scenario self-employment batch. **8 clean matches** (211 SS wage-base cap · 212 W-2 SS wages
+reduce SE base · 213 <$400 net-earnings floor → no SE tax · 214 statutory employee → Schedule C, no SE tax
+· 215 SE health-insurance line 17 · 216 SEP-IRA line 16 · 217 simplified home office · 218 standard mileage
+$0.70 · 220 business meals 50%). One real compute fix, hit by **sc_00211 and sc_00219** (same root cause):
+
+**Schedule SE line 13 (½-SE-tax deduction) rounding order.** us-tax-be derived line 13 from the *unrounded*
+SE-tax cents (`roundMoney(rawSeTax × 0.5)`), so when the whole-dollar line 12 is odd it rounded $1 low —
+13,596 vs 13,597 (sc_00211, line 12 = 27,193) and 2,119 vs 2,120 (sc_00219, line 12 = 4,239) — inflating
+AGI by $1. Per Schedule SE the deduction is *line 12 × 50%* off the **whole-dollar** line 12, so x.50 rounds
+up (IRS half-up). Fix (`computeScheduleSE`, ~line 17632): compute `line12WholeSe = roundMoney(rawPersonSe)`
+once, derive `personHalfSe = roundMoney(line12WholeSe × 0.5)` from it, and reuse it for the line-12 total and
+the Schedule SE preview (deduped the later `line12Whole`). Post-fix both scenarios match (211 ½SE 13,597 /
+AGI 186,403; 219 ½SE 2,120 / AGI 27,880). New e2e in `schedule-c-compute.spec.ts` (SS-base cap + odd-line-12
+half-up pin). No SQA record change — us-tax-be was the side that was wrong.
+
+
+## 2026-07-26 — SQA validation batch sc_00201–00210 (9 clean; §54A(f) bond-credit gross-up fixed)
+
+Ran the 10-scenario comparison batch. **9 clean matches** on the first pass (201 Form 8834 QEV credit ·
+202 Form 8911 alt-fuel refueling · 204 Form 8859 DC homebuyer carryforward · 205 Form 8815 savings-bond
+exclusion · 206 Form 8853 §C LTC per-diem excess · 207 sole-proprietor Schedule C+SE+QBI · 208 Schedule C
+net loss · 209 1099-NEC→Schedule C · 210 1099-K+COGS). One real compute gap found and fixed:
+
+**sc_00203 — IRC §54A(f) tax-credit-bond gross-up (real us-tax-be fix).** The scenario was purpose-built as
+the oracle for this gap. us-tax-be flowed the $740 tax-credit-bond credit to Schedule 3 line 6k / line 20
+correctly, but omitted the §54A(f) requirement that the **current-year** bond credit also be *included in
+gross income as interest* (Form 1040 line 2b). Pre-fix: line 2b = 0, taxable income $104,250, tax $17,867,
+total tax $17,127. Post-fix: line 2b = $740, total income $120,740, taxable income $104,990, tax $18,045,
+total tax $17,305, refund $2,695 — matches the record.
+
+Implementation (`TaxReturnComputeService`): new `computeCurrentYearBondCreditGrossUp(...)` +
+`currentYearBondCreditForOwner(...)` helpers mirror Form 8912's line 1 (Part III 1097-BTC) + line 2
+(Part IV direct-bond allowed) build — the **current-year** credit only; the prior-year carryforward
+(line 3) is excluded because it was grossed up in its origin year, and the amount is "determined without
+regard to subsection (c)" so it is the full credit, not the tax-limited line 12. The amount is computed at
+the interest-aggregation call site (independent of the tax-liability limit, so no circularity) and threaded
+into `computeInterestIncome` as a new param, added to the pre-savings-bond-exclusion taxable-interest total
+so it lands on line 2b and every downstream MAGI/AGI consumer (incl. the Form 8815 §135 add-back). Null
+no-op for every return without a bond-credit form. New e2e in `line8912-bond-credit.spec.ts` pins the exact
+sc_00203 values (line 2b 740 → total tax 17305, refund 2695); existing 8912 + 8815 fullflow specs stay
+green (9 passed).
+
+
 ## 2026-07-26 — SQA validation batch sc_00191–00200 (9 clean; sc_00194 record corrected)
 
 Ran the 10-scenario comparison batch against us-tax-be (compute with `?overrideFlags=true`). **9 clean

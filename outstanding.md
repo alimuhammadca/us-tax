@@ -3104,6 +3104,7 @@ No further outstanding items beyond those captured in cross-cutting sections bel
 ## Form 8912 — Implemented (2026-03-25); Remaining Deferred Items
 
 - ~~[Form 8912 / Wire Schedule 3 line 6k → Form 1040 line 20]~~ **Resolved 2026-03-26** — Schedule 3 line 8 is now wired into Form 1040 line 20.
+- ~~[Form 8912 / IRC §54A(f) income gross-up]~~ **Resolved 2026-07-26 (SQA sc_00203)** — the current-year tax-credit-bond credit (Form 8912 line 1 + line 2, current-year only; carryforward line 3 excluded) is now included in gross income as interest on Form 1040 line 2b, per IRC §54A(f). Computed at the interest-aggregation stage via `computeCurrentYearBondCreditGrossUp`; e2e-pinned in `line8912-bond-credit.spec.ts`.
 - [Form 8912 / semantic PDF fill-export] The 2025 semantic assets are generated and published, but the Tax Return section renders a structured summary rather than filling/exporting the IRS PDF fields directly.
 - [Form 8912 / Form 1097-BTC automation] Automate Form 1097-BTC statement intake; current implementation relies on manual Part III row entry.
 - [Form 8912 / direct-bond worksheet] Automate Treasury credit-rate lookup and direct-bond worksheet; current implementation relies on manual direct-bond amounts.

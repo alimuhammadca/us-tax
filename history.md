@@ -1,6 +1,22 @@
 ﻿# History
 
 
+## 2026-07-26 — SQA validation batch sc_00191–00200 (9 clean; sc_00194 record corrected)
+
+Ran the 10-scenario comparison batch against us-tax-be (compute with `?overrideFlags=true`). **9 clean
+matches**, no us-tax-be code bug:
+- 191 (4 CTC children, MFJ) · 192 (3-property rental aggregate +6000) · 193 (3 pension 1099-R) ·
+  195 (QDCG + NIIT) · 196 (SS 85% + QDCG) · 197 (excess SS + Additional Medicare) ·
+  198 (itemized + rental §199A QBI + cap gain — the new safe-harbor QBI auto-flow fired, 13a=6000) ·
+  199 (tips + overtime) · 200 (Schedule R elderly/disabled credit).
+
+**sc_00194 record corrected** (oracle omission, us-tax-be IRS-correct): three employers × $70,000 gives
+combined Medicare wages $210,000 > $200,000 Single threshold → Form 8959 Additional Medicare Tax
+0.9% × $10,000 = **$90** on line 23. The record computed only income tax ($39,467) and omitted the $90, so
+its total tax ($39,467) and amount owed ($1,365) were understated. Corrected to line 23 = $90, line 24 =
+$39,557, line 37 owe = $1,455 (both `.md` and `.xlsx`). Same class of miss as the earlier sc_00153 fix.
+
+
 ## 2026-07-26 — §199A rental QBI Part 2 (UI): surface the auto-included rental + scope the manual field
 
 Frontend (us-tax-ui) counterpart to Part 1 — makes the auto-included safe-harbor rental visible on the QBI

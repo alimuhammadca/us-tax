@@ -1,6 +1,31 @@
 ﻿# History
 
 
+## 2026-07-26 — SQA validation batch sc_00251–00254 (suite end); §163(h)(3) home-equity use-tracing built
+
+Ran the final four scenarios (all Schedule A / itemized conformance). Three matched us-tax-be as-is:
+**251** IRC §1341 claim-of-right credit (unemployment repaid > $3,000 → Schedule 3 line 13 credit $600);
+**253** charitable combined 50% ceiling + ordering (cash 60% first crowds out 30% property → property
+limited to lesser of 30% AGI or 50% AGI − cash = $20,000, carryover $20,000, current-year total $50,000,
+tax $4,565); **254** multi-event casualty Form 4684 (two events each with its own $100 floor, then a single
+10%-of-AGI floor → deductible $26,800, tax $4,949). The §170 ordering and the per-event/combined casualty
+floors are both non-trivial and computed correctly.
+
+**sc_00252 — IRC §163(h)(3) home-equity interest use-tracing (new feature).** us-tax-be previously limited
+home-mortgage interest only by acquisition-debt *balance* (Pub 936 $750k tier) and had no way to trace
+home-equity proceeds *use*, so a user entering the full mixed/personal home-equity interest got the full
+deduction. Built the tracing (owner approved): **V167** adds three per-person columns to
+`pf_standard_deductions` (`home_equity_loan_interest_paid`, `home_equity_loan_total_proceeds`,
+`home_equity_proceeds_used_for_improvement`); entity + `StandardDeductionsMapper` extended; compute
+(`computeItemizedDeductions`, right after the acquisition-debt tier proration) adds the deductible home-equity
+portion = interest × (improvement proceeds ÷ total proceeds), capped at the interest and floored at 0. Additive
+and opt-in — returns that leave the fields blank are unchanged; interest supplied without a proceeds split is
+treated as fully qualifying (same trust convention as the primary field). Verified sc_00252 A/B/C: 60%
+improvement → mortgage $19,600 / itemized $29,600 / tax $14,808 / refund $5,192; all-improvement → $22,000;
+all-personal → $16,000. Three new e2e in `schedule-a-itemized.spec.ts`. Migration needed a full backend
+restart (dev live-reload skips Liquibase). This is the last scenario in the SQA suite (ends at sc_00254).
+
+
 ## 2026-07-26 — SQA validation batch sc_00241–00250 (conformance; no bugs; sc_00245/00246 record fixes)
 
 Ran the 10-scenario conformance batch. **No us-tax-be bugs.** Directly validated: **242** CTC ITIN child →

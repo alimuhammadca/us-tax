@@ -457,13 +457,17 @@ backend compiles + UI builds. **Item-8 "PDF-render / view-shape" roadmap line is
 
 ## ~~§199A rental safe-harbor QBI does not auto-populate the QBI deduction~~ **RESOLVED 2026-07-26**
 
-Implemented the auto-flow (history.md 2026-07-26): a rental real-estate enterprise electing the §199A safe
-harbor (`claims199aRentalSafeHarbor`) now auto-populates the Form 8995 QBI base from its net income
-(`safeHarborRentalNetForQbi` → `injectSafeHarborRentalQbi`, positive-net only), with a non-blocking advisory
-`QBI_RENTAL_SAFE_HARBOR_AUTO_INCLUDED`. A user no longer has to re-declare the rental QBI on the qbi-deduction
-form. **Residual caveat:** the injection ADDS to any manual QBI adjustment, so electing the safe harbor AND
-manually entering the same rental QBI double-counts (the advisory warns the user). Also unchanged: negative
-(loss) safe-harbor rentals do not create QBI here (negative-QBI netting is separately deferred).
+Implemented the auto-flow (history.md 2026-07-26). A rental real-estate enterprise electing the §199A safe
+harbor (`claims199aRentalSafeHarbor`) auto-populates the Form 8995 QBI base from its net income, with a
+non-blocking advisory `QBI_RENTAL_SAFE_HARBOR_AUTO_INCLUDED`. **Part 1** (`safeHarborRentalNetForQbi` →
+combined into the `scheduleCQbi` activity track as a first-class Form 8995 line, positive-net only) keeps it
+OUT of the QBI form's manual field. **Part 2** (UI) surfaces the auto-included rental on the QBI form (info
+notice + relabeled manual field "Additional QBI not shown above") and adds a note on the rental form, so the
+double-entry is visible and self-correcting. **Residual (accepted):** if a user STILL both elects the safe
+harbor and manually types the rental QBI, it double-counts — but the compute keeps them as distinct sources,
+the QBI-form notice + relabel steer against it, and the advisory warns. Optional enhancement: a read-only
+display of the exact auto-included $ on the QBI form (needs the compute output piped into the data-entry
+form). Also unchanged: negative (loss) safe-harbor rentals do not create QBI (negative-QBI netting deferred).
 
 ## Form 5329 Part III/IV excess-contribution 6% excise — implemented with documented simplifications (2026-07-25)
 

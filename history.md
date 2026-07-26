@@ -1,6 +1,22 @@
 ﻿# History
 
 
+## 2026-07-26 — §199A rental QBI Part 2 (UI): surface the auto-included rental + scope the manual field
+
+Frontend (us-tax-ui) counterpart to Part 1 — makes the auto-included safe-harbor rental visible on the QBI
+data-entry form so the residual double-entry becomes self-correcting. `form-qbi-deduction.component` now
+loads this person's rental-income form (`rental-income-{person}`) and, when `claims199aRentalSafeHarbor` is
+elected, sets `hasSafeHarborRental` → shows an info notice in the advanced/supplemental section ("Your §199A
+safe-harbor rental is already included … do not re-enter it below") and relabels the manual QBI field from
+"Manual qualified business income adjustment" → "Additional qualified business income (not shown above)"
+with help text warning not to include the safe-harbor rental / Schedule C / K-1 (double-count). The
+rental-income form gains a note under the safe-harbor election ("Electing this automatically claims the 20%
+QBI deduction … you do not need to enter it again on the QBI form"). Pure UI (labels/help + one conditional
+notice), no compute change. Two UI e2e in line13a-qbi-deduction (notice shown when elected; absent when not).
+UI build green. Deferred (optional): a read-only display of the exact auto-included $ would need the compute
+output piped into the data-entry form — the notice conveys the point without that plumbing.
+
+
 ## 2026-07-26 — §199A rental QBI Part 1: first-class QBI activity (refactor of the auto-flow)
 
 Reworked the safe-harbor rental QBI auto-flow from a QBI-form injection into a first-class QBI business

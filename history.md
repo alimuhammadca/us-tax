@@ -1,6 +1,33 @@
 ﻿# History
 
 
+## 2026-07-26 — SQA validation batch sc_00221–00230 (QBI/SE/education; §25A(g)(8) fix + NIIT record fixes)
+
+Ran the 10-scenario QBI + self-employment + credit-conformance batch. **8 matched us-tax-be as-is**
+(221 QBI below threshold · 224 Schedule F + SE · 225 hobby line-8j no-SE no-QBI · 226 QJV spouse split ·
+227 multiple Schedule C → one Schedule SE · 228 SE estimated-tax penalty, line 37 correctly folds the
+$699 penalty in per IRS · 229 MFS sweep: EIC $0, SLI hard-blocked §221(e)(2), education MFS-blocked
+§25A(g)(6) · 230 A/B/C education bars each → $0). One real fix + two record corrections:
+
+**sc_00230 variant D — IRC §25A(g)(8) 1098-T requirement (real us-tax-be fix).** No education credit is
+allowed unless a Form 1098-T was received, absent a stated exception. us-tax-be previously fired only an
+*advisory* flag and still delivered the AOTC ($2,500) — a behavior that had been *deliberately pinned* by
+the `line8863` G-NEW-7 test. Corrected to conform: `computeForm8863` now bars the credit (blocking flag +
+`return null`) when the user affirms both "no 1098-T received" AND "no alternative-documentation exception,"
+matching the sibling dependent/NRA/TIN bars (§25A(g)(3)/(7)/(1)). The alternative-documentation election
+still preserves the credit (institution-not-required exception, etc.). Guard: `Boolean.FALSE.equals(...)`
+so a null flag stays compliant — only returns that *explicitly* set no-1098-T without an exception are
+affected. Updated G-NEW-7 to expect the disallowance + added a §25A(g)(8)-exception e2e (credit preserved);
+education-credit specs 37/37 green.
+
+**sc_00222 & sc_00223 — NIIT omission in the records (us-tax-be correct).** Both scenarios have large
+taxable interest with MAGI over the $200,000 single threshold, so Form 8960 Net Investment Income Tax
+applies — the records left it out. 222: NIIT 3.8% × ($265,761 − $200,000) = **$2,499** → line 23 $10,977,
+total tax **$68,044** (was $65,545). 223: NIIT 3.8% × ($274,348 − $200,000) = **$2,825** → line 23 **$14,129**.
+Corrected both records (.md + .xlsx). QBI values (222 SSTB → $0; 223 wage-limit → $10,000) matched
+us-tax-be exactly.
+
+
 ## 2026-07-26 — SQA validation batch sc_00211–00220 (8 clean; Schedule SE ½-SE-tax rounding fixed)
 
 Ran the 10-scenario self-employment batch. **8 clean matches** (211 SS wage-base cap · 212 W-2 SS wages

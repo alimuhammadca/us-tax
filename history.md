@@ -1,6 +1,24 @@
 ﻿# History
 
 
+## 2026-07-26 — §199A rental safe-harbor QBI auto-flow + advisory (sc_00185 follow-up)
+
+Closed the input-model gap logged from sc_00185: a rental real-estate enterprise electing the §199A safe
+harbor (`claims199aRentalSafeHarbor`) had its net income reach AGI (Schedule 1 line 5) but did NOT populate
+the Form 8995/8995-A QBI base — the flag was captured but never read by the compute, so the user had to
+re-declare the same income on the qbi-deduction form or silently lose the 20% deduction. Now: after the
+rental engine runs, each person's safe-harbor rental net (recomputed in isolation so the pooled §469 result
+doesn't mix spouses; positive-net only) is injected into their QBI form map — added to
+`manualQualifiedBusinessIncomeAdjustment`, forcing `hadQualifiedBusinessIncomeInputs=true`, and defaulting
+`confirmAllReceivedQbiStatementsUploaded=true` put-if-absent (a computed source has no statements to upload,
+so the line-13a upload gate is trivially met). Mirrors the `injectHsaDeduction` form-map-injection pattern.
+A non-blocking advisory `QBI_RENTAL_SAFE_HARBOR_AUTO_INCLUDED` tells the user the amount was auto-included
+(and to remove any duplicate manual entry). Verified: single filer with a $20k safe-harbor rental and NO
+QBI form → line 13a $4,000, taxable income $40,250, advisory fires; no-safe-harbor control → no QBI; MFS
+spouse-leg (sc_00185) auto-flows on the spouse leg without a QBI form. New e2e in line13a-qbi-deduction
+(auto-flow + no-safe-harbor control). outstanding.md observation marked RESOLVED.
+
+
 ## 2026-07-26 — SQA sc_00181–00190 validated CLEAN (no bugs, no code changes)
 
 All 10 scenarios match us-tax-be exactly; no record edits. Single-return: 00181 (MFS EIC ALLOWED via the

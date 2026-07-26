@@ -1,6 +1,20 @@
 ﻿# History
 
 
+## 2026-07-26 — MFS 1099-series/W-2G withholding attribution (sc_00177 follow-up)
+
+Extended the sc_00177 W-2 withholding fix to the rest of the withholding lines. Line 25b (1099-series +
+SSA-1099 + RRB) and line 25c (W-2G) summed ALL statement entries with no SSN filter, so on an MFS /
+dependent_own leg each spouse claimed BOTH spouses' 1099/W-2G withholding while their income was correctly
+isolated (verified: each MFS leg's 25b = $1,200 = both spouses' $500 + $700, should be own only). Fix: two
+new helpers — `extractStatementRecipientTin` (tries the non-uniform recipient/payee-TIN field names across
+the 1099/RRB/SSA/W-2G mappers) + `filterWithholdingEntriesForScopedFiler` (positive scopedFilerSsn match +
+MFS spouse-SSN exclusion, mirroring the W-2 carve-out) — applied to every 1099 list, the SSA list, and the
+W-2G list before summing. No-op on Single/MFJ/HOH/QSS. Verified: MFS head leg 25b now $500 (own only),
+total withholding $7,000. New e2e in mfs-spouse-income-adjustments. Full regression before this fix:
+1371 passed / 1 UI-timing flake (passes in isolation) / 12 skipped.
+
+
 ## 2026-07-25 — Excess IRA/Roth contribution 6% excise (Form 5329 Part III/IV) — sc_00171/00176
 
 Implemented the §4973 6% excise on excess traditional (Part III) and Roth (Part IV) IRA contributions.

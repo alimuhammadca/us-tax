@@ -1,6 +1,21 @@
 ﻿# History
 
 
+## 2026-07-26 — SQA sc_00181–00190 validated CLEAN (no bugs, no code changes)
+
+All 10 scenarios match us-tax-be exactly; no record edits. Single-return: 00181 (MFS EIC ALLOWED via the
+§32(d)(2) separated-spouse exception → EIC $4,328, refund $4,500), 00182 (MFS child-and-dependent-care
+credit disallowed → $0, CTC still $4,400, tax $675), 00188/00189/00190 (filing-status sweep: same $120k
+wages → Single $17,867 / MFJ $10,146 / HOH $14,378). MFS spouse-leg attribution (via mfs/enable, computing
+the mfs_spouse leg): 00183 (pension), 00184 (interest + Schedule B), 00185 (rental §199A QBI $4,000), 00186
+(LT capital gain + MFS QDCG worksheet, $4,010), 00187 (IRA distribution) — each spouse's income computes on
+her own leg, isolated from the head. Seeding notes: an EIC qualifying child requires `relationship` +
+`monthsLivedWithTaxpayer` (>6) to count (else childless-EIC → $0 at $20k); rental income needs the
+`hasRentalOrRoyaltyIncome` gate + the `spouseProperties` child key; a §199A safe-harbor rental does NOT
+auto-populate the QBI deduction — the QBI is declared on the qbi-deduction form
+(`manualQualifiedBusinessIncomeAdjustment`), noted in outstanding.md as a minor input-model observation.
+
+
 ## 2026-07-26 — MFS 1099-series/W-2G withholding attribution (sc_00177 follow-up)
 
 Extended the sc_00177 W-2 withholding fix to the rest of the withholding lines. Line 25b (1099-series +

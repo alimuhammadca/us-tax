@@ -455,6 +455,18 @@ toggle reveals the 3 foreign inputs, auto-shown when foreign data exists). V127 
 14 new on both `pf_education_student` and `out_form_8863_student`. Unit test updated (5/5 8863 tests green);
 backend compiles + UI builds. **Item-8 "PDF-render / view-shape" roadmap line is now fully closed.**
 
+## §199A rental safe-harbor QBI does not auto-populate the QBI deduction — input-model observation (2026-07-26)
+
+**Status: not a bug — an input-model / UX observation from sc_00185.** A rental real-estate enterprise that
+elects the §199A safe harbor (`claims199aRentalSafeHarbor` on the rental-income form) has its net income flow
+to Schedule 1 line 5 → total income, but that net does NOT automatically become qualified business income
+for the Form 8995/8995-A deduction. The user must separately declare the QBI on the qbi-deduction form
+(`manualQualifiedBusinessIncomeAdjustment`). The compute is correct once entered (sc_00185: $20,000 rental →
+$4,000 QBI deduction), and the SQA outcome matches — but a user who expects the safe-harbor rental to
+auto-generate the QBI deduction could under-claim it. Potential enhancement: auto-derive QBI from a
+safe-harbor rental enterprise (net rental income, before/after the passthrough netting rules). Revisit if an
+SQA scenario requires the auto-flow rather than the manual declaration.
+
 ## Form 5329 Part III/IV excess-contribution 6% excise — implemented with documented simplifications (2026-07-25)
 
 **Status: implemented (sc_00171/00176), with three scoped simplifications left for a future refinement.**

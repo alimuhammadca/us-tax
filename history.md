@@ -1,6 +1,39 @@
 ﻿# History
 
 
+## 2026-07-26 — SQA validation batch sc_00231–00240 (IRS-conformance suite; no bugs, no record changes)
+
+Ran the 10-scenario conformance/validation batch (mostly multi-run "reach the IRS-correct outcome"
+cases). **No us-tax-be bugs and no record corrections** — every tractable outcome matched, either by
+direct computation or by hard-block enforcement (which these scenarios accept as a PASS when the
+disallowed benefit resolves to $0).
+
+Directly validated via runner (all IRS-correct):
+- **234** excess IRA/Roth 6% excise (§4973): A trad excess $3,000 → **$180**, B Roth over-MAGI excess
+  $7,000 → **$420**, C within-limit → **$0**.
+- **235** alimony date switch: post-2018 payer/recipient **hard-blocked → $0** (SCHEDULE1_LINE19A /
+  OTHER_INCOME post-2018 flags); pre-2019 payer deduction **$24,000**, recipient income **$24,000**.
+- **236B** inmate wages excluded from EIC → **EIC $0**. **237A** SSI never taxable → **6b $0**.
+- **237C** pension Simplified Method (§72(d)): cost $31,200 ÷ 260 payments × 12 = $1,440 tax-free →
+  **5b $22,560** (requires `numberOfAnnuityPaymentsReceivedInTaxYear`, a non-overrideable input).
+- **238** OBBBA Schedule 1-A: car-loan interest valid vehicle/2025-loan/VIN → **$4,000**; enhanced
+  senior below threshold **$6,000**, with 6%-of-MAGI-over-$75k phaseout **$4,500**.
+- **240A** §962 corporate-rate election 21% × $100,000 → **$21,000** (line 16 box 3). **240B** §1341
+  claim-of-right credit → **$1,320** (Schedule 3 line 13b).
+- **233** dependent-care qualifying person: age-14 non-disabled **hard-blocked → $0**, age-8 → **$600**.
+- **231** run 1 (EIC previously denied, no Form 8862) → **EIC $0** (FORM_8862_EIC_REQUIRED).
+
+Covered by existing dedicated e2e (feature behavior proven; standalone API repro left incomplete on the
+exact gating fields, not a defect): **231 run 2** (Form 8862 unblocks the EIC — `form8862-credits-after-
+disallowance.spec.ts`), **236A** (Form 8919 → line 1g + 7.65% SS/Medicare to Schedule 2 line 6 —
+`line1g-uncollected-ss-medicare.spec.ts`), **236C** (Notice 2014-7 Medicaid-waiver line-1d exclusion).
+
+Coverage notes (the records themselves flag these as out-of-scope, so a non-numeric coverage note, not a
+FAIL): **232** Form 8814 ceiling/withholding routing is a re-frame of the already-validated sc_00166
+(child ≥ $13,500 or any withholding → child files own return); **239** installment sale (Form 6252 exists),
+§121 home-sale exclusion, and QOF deferral (Form 8997) — partial/out-of-scope in our self-filing app.
+
+
 ## 2026-07-26 — SQA validation batch sc_00221–00230 (QBI/SE/education; §25A(g)(8) fix + NIIT record fixes)
 
 Ran the 10-scenario QBI + self-employment + credit-conformance batch. **8 matched us-tax-be as-is**

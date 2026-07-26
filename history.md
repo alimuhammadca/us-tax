@@ -1,6 +1,36 @@
 ﻿# History
 
 
+## 2026-07-26 — SQA validation batch sc_00241–00250 (conformance; no bugs; sc_00245/00246 record fixes)
+
+Ran the 10-scenario conformance batch. **No us-tax-be bugs.** Directly validated: **242** CTC ITIN child →
+CTC/ACTC $0 + ODC $500 (total tax 1,138, refund 1,062); **243** student-loan-interest §221(c) → dependent
+**hard-blocked $0** (SCHEDULE1_LINE21_STUDENT_LOAN_INTEREST_DEPENDENT_DISALLOWED, reads
+`standard-deductions.someoneCanClaimYou`), non-dependent $1,500; **244** attorney/whistleblower fee cap →
+§62(a)(20)/(21) capped at related income ($40,000 / $30,000, not the full $50,000 / $35,000 fees); **246**
+General Rule annuity exclusion ratio → line 5b **$9,000** (25% exclusion, correct).
+
+Two **SQA record corrections** (us-tax-be correct in both):
+- **sc_00246** — arithmetic error: the record's own AGI $39,000 − std deduction $15,750 = **$23,250** taxable
+  income, but it printed $21,250 (so tax and refund were also off). Corrected .md + .xlsx to TI $23,250, tax
+  $2,555, refund $445. The exclusion-ratio result it tests (5b $9,000) already matched us-tax-be.
+- **sc_00245** — form misread: the record treated 1099-OID "box 2" as a tax-exempt portion of box 1 to
+  subtract (expecting taxable OID $600, floored to $0 when box 2 > box 1). The IRS 1099-OID semantic field map
+  confirms box 1 = **taxable** OID (→ line 2b), box 2 = **other periodic interest**, box 11 = **tax-exempt OID**
+  (→ line 2a) — box 1 and box 11 are **separate, non-overlapping** (no subtraction; box 11 may legitimately
+  exceed box 1). us-tax-be maps them correctly (A: 2b $1,000 / 2a $400; B: 2b $500 / 2a $800). **Rewrote** the
+  scenario (.md + .xlsx) to test the real, non-overlapping box behavior instead of the invalid "box2>box1
+  negative" premise.
+
+Covered by existing dedicated e2e (features proven; ad-hoc API repro incomplete on gating fields): **248**
+Form 5329 §72(t) early-distribution exception codes, **249** Medicaid-waiver in-home/EIC-election variants,
+**250** Form 8919 reason-code A/H. Not re-tested this run: **241** PTC MFS disallow-with-APTC-repayment (MFS
+PTC disallowance already covered — see `feedback_mfs_disallowed_credit_blocker_pattern`), **247** SS lump-sum
+election (complex prior-year-data path). Methodology note: several scenarios initially looked buggy purely
+because of my runner's seeding (invalid default SSN carried from the prior batch; wrong dependency-flag form
+id `standard-deductions-taxpayer` not `deductions-standard-`); the compute was correct once seeded properly.
+
+
 ## 2026-07-26 — SQA validation batch sc_00231–00240 (IRS-conformance suite; no bugs, no record changes)
 
 Ran the 10-scenario conformance/validation batch (mostly multi-run "reach the IRS-correct outcome"

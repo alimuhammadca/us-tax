@@ -1,6 +1,36 @@
 ﻿# History
 
 
+## 2026-07-27 — Form 172 (NOL): semantic artifacts + pure-HTML preview + Part I worksheet compute
+
+Full Form 172 build-out across all four repos.
+
+**Semantic artifacts** (`C:\us-tax\pdfs`): from the IRS source `docs/IRS-Forms/f172.pdf`,
+`gen-taxreturn-artifacts.py f172` produced `f172_field_map_semantic.csv` (109 fields, 3 pages) +
+`us-tax-ui/public/irs/f172_elements.json`; `gen-taxreturn-labels-pdf.js f172` produced
+`f172_semantic_labels.pdf`.
+
+**Pure-HTML preview** (us-tax-ui): new `form-tax-return-172` component (adapted from the 8912 pattern) —
+reads the elements JSON, renders Form 172 read-only, maps the computed `form1040.form172` values onto the
+Part I/II fields, Save-as-PDF via the labeled template. Registered in the Tax Return sidebar
+("Form 172"). Ported to the `us-tax-return-forms` sandbox with its `sampleValueFor` fallback.
+
+**Part I NOL worksheet compute (the gap)** — expanded `form1040.form172` from the carryforward summary to
+the IRC §172(c)/(d) Part I current-year NOL computation. Line 1 = unfloored taxable income (AGI − std/
+itemized − QBI − line 13b); the §172(d) add-backs that cannot create/increase an NOL are applied — the
+prior-year NOL deduction (line 8a), the §199A QBI deduction, and nonbusiness deductions to the extent they
+exceed nonbusiness income (interest/dividends/IRA/pension/taxable-SS/net-capital-gain). The resulting
+current-year NOL now feeds the carryforward: **carryforward-to-next-year = unused prior-year NOL + §461(l)
+EBL + Part I NOL** (the three are disjoint — the §461(l) EBL is the loss removed from income, the Part I NOL
+is the loss remaining in negative taxable income — so summing doesn't double-count). Verified: $100k
+Schedule C loss + $5k interest → Part I NOL $100,000 (nonbusiness add-back $10,750); $400k Schedule C loss
+(single) → $87,000 §461(l) EBL + $313,000 Part I NOL = **$400,000** total carryforward. New `Form172` Part I
+fields; e2e in `section172-nol-carryforward.spec.ts` (now 4 tests incl. the pure-loss + updated §461(l)
+carryforward). Deferred detail (transparent): Part I capital-loss lines (2–5, 10–14) and the §1202 exclusion
+line 17 are computed where data exists but not fully broken out; Part II per-year carryover columns and an
+`out_form_172` persistence table are not built (the carryforward is surfaced in the compute response).
+
+
 ## 2026-07-26 — NOL carryforward plumbing: §172 80% limit + §461(l)→next-year (Form 172)
 
 Closed the previously-out-of-scope NOL carryforward gap (owner: "nothing is out of scope"). Two parts:

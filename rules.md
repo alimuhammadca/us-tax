@@ -2,6 +2,45 @@
 
 ---
 
+## Prior-Year Carryforward Bridge Pattern (Multi-Year) — Established 2026-07-27
+
+When a form computes a value that carries **into next year's return** (a §163(j) disallowed-interest
+carryforward, an NOL, an unused credit), wire a **bridge** so year N auto-imports year N−1's persisted
+value. Canonical shape (Form 172 NOL and Form 8990 §163(j) both follow it):
+
+- **Read the prior year off its own anchor.** Add `loadByTaxReturnId(id)` to the OutputMapper (distinct
+  from the current-context `load(uid)`), then a compute helper that resolves the **prior-year primary**
+  `tax_return_v2` row — `find("uid=?1 and returnKind='primary' and taxYear=?2", uid, currentContext.taxYear()-1)`
+  — and reads its persisted carryforward. Inject the mapper via `Instance<>` so reflection unit tests
+  (no CDI) don't fail on an unsatisfied bean; null-out the whole path when `currentContext`/mapper absent.
+- **Primary path only.** Guard the import with `SCOPED_FORMS_OVERRIDE.get() == null` — scoped MFS/dependent
+  legs have no prior-year primary anchor. Compute it once at prepare() start; pass into every call site.
+- **User entry always wins.** `imported` is a *fallback*: `value = hasPositiveAmount(userEntry) ? userEntry
+  : imported`. Never overwrite a user's explicit line — mirror it so an override silently beats the import.
+- **Record provenance in its own column** (e.g. `imported_prior_year_carryforward`), set to the RAW available
+  amount **even when the user overrode**, so the intake UI can show "imported from your prior-year return:
+  $X" distinctly from the line value. Surface it by injecting `TaxReturnService`, reading
+  `computation().form<N>.<provenanceField>` (cast the computation object — new preview forms aren't declared
+  on the `TaxReturnComputation` TS interface), green banner when applied / muted banner when overridden.
+- **Zero-regression gate:** with no prior-year return the import is null and behavior is byte-identical;
+  single-year users (no `X-Tax-Year` header ⇒ 2025 default) are unaffected.
+
+## Multi-Year Behavior Needs a Multi-Year e2e — Established 2026-07-27
+
+A **scratchpad Node script that passes is NOT standing coverage** — it lives in a temp dir and never runs
+in `test:regression`. The full regression is **all single-year (2025)**, so it proves "nothing else broke"
+but never *exercises* a cross-year feature. Port the proof into a permanent Playwright spec in the
+`regression` project (extends [[feedback_java_unit_passing_doesnt_mean_e2e_passing]]).
+
+- Drive two tax years for the one shared account via the **`X-Tax-Year` request header**; year-scoped
+  save/compute/GET go inline through `page.evaluate`+fetch (the §17-blocker raw-fetch pattern) — no shared
+  api-flow helper carries a per-call header, and threading it through the ~6 helper layers is too much
+  blast radius for a single spec. Auth/reset still via the shared `clearUserData` helper.
+- Assert the **whole bridge in one test:** year N−1 produces the carryforward; year N imports it (and it
+  flows into the dependent line); **year isolation** (N−1 unchanged after N computes); provenance
+  round-trips persist→load→API; explicit user entry overrides the import. Pin exact hand-computed IRS
+  values, never `>0` ([[feedback_e2e_exact_value_pins]]).
+
 ## "Complete" Claims Require an Adversarial Completeness Audit — Established 2026-07-21
 
 Do **not** declare a program/feature "100% complete" or "no remaining gaps" on the strength of

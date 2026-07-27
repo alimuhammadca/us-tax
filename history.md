@@ -1,6 +1,34 @@
 ﻿# History
 
 
+## 2026-07-26 — NOL carryforward plumbing: §172 80% limit + §461(l)→next-year (Form 172)
+
+Closed the previously-out-of-scope NOL carryforward gap (owner: "nothing is out of scope"). Two parts:
+
+**§172(a)(2)(B) 80%-of-taxable-income limit on the NOL deduction.** The Schedule 1 line 8a NOL carryforward
+(`otherIncomeNetOperatingLoss8a`) was deducted in full with no limit. Now capped at 80% of modified taxable
+income — MTI = max(0, (AGI line 11, pre-floor) + NOL applied − standard/itemized deduction − Schedule 1-A
+line 13b); QBI (line 13a) and §250 are intentionally not subtracted per §172(d). When the cap binds,
+`prepare()` re-runs once with `NOL_DEDUCTION_LIMIT_OVERRIDE` set to the allowed amount (same ThreadLocal
+two-pass pattern as the Form 8815 line-by-line exclusion; guarded against a third pass). Key subtlety fixed
+during build: MTI must be derived from AGI *pre-floor*, not from the floored taxable income — a NOL that
+drives income negative floors line 15 at 0, and adding the NOL back to 0 overstates MTI.
+
+**§461(l) excess business loss → next-year NOL, now a structured output.** The disallowed EBL (already added
+back on Schedule 1 line 8p) was only surfaced via an advisory flag; it's now exposed on a **Form 172** output
+object (`form1040.form172`) with: prior-year NOL carryforward, modified taxable income, the 80% limit, the
+NOL deduction allowed, the current-year §461(l) EBL, and the **total NOL carryforward to next year** =
+(prior-year available − allowed) + current §461(l) EBL.
+
+Implementation (additive, opt-in — returns without an NOL/EBL are unchanged, no migration; the input reuses
+the existing line-8a field): new `Form172` output model + `form1040.form172` field/getter/setter; a
+`NOL_DEDUCTION_LIMIT_OVERRIDE` ThreadLocal + the §172 block at `prepare()`-end; `excessBusinessLoss461l` added
+to the `OtherIncomeComputation` record so the EBL is readable at prepare()-end; line 8a in `computeOtherIncomes`
+now honors the override. Verified: $200k NOL vs $100k wages → allowed $67,400 / carryforward $132,600 / TI
+$16,850; $20k NOL → fully deducted, no carryforward; $400k Schedule C loss → §461(l) EBL $87,000 → carryforward
+$87,000. New e2e `section172-nol-carryforward.spec.ts` (3 tests). Gated on a full regression.
+
+
 ## 2026-07-26 — SQA validation batch sc_00251–00254 (suite end); §163(h)(3) home-equity use-tracing built
 
 Ran the final four scenarios (all Schedule A / itemized conformance). Three matched us-tax-be as-is:

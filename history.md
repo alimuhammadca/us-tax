@@ -1,6 +1,27 @@
 ﻿# History
 
 
+## 2026-07-27 — Form 172 Part I: capital-loss lines (2–22) + §1202 exclusion (line 17)
+
+Completed the previously-deferred Part I worksheet detail. Line 1 corrected to the form's definition —
+AGI − standard/itemized only (QBI and Schedule 1-A line 13b are NOT subtracted, so per §172(d) they can't
+create/increase an NOL; the prior QBI add-back was dropped). Added the capital-loss adjustment (lines 2–22)
+and the §1202 exclusion (line 17):
+- Net capital gain/loss BEFORE the $3,000 limit comes from Schedule D line 16 (`getLine16NetCapitalGainOrLoss`,
+  falling back to Form 1040 line 7). Capital gains/losses are treated as nonbusiness (business capital
+  gains/losses — lines 11–12 — are out of scope for the individual return). A net capital *gain* becomes
+  nonbusiness income (line 5); a net capital *loss* flows to line 4 → line 15/16, and lines 18–22 cap the
+  add-back at the $3,000/$1,500-MFS amount actually deducted.
+- **§1202 exclusion** (line 17): new per-person `section_1202_exclusion_amount` input on the capital form
+  (**V168** on `pf_capital_gain_loss` + entity + `CapitalGainLossMapper`), added back on line 17.
+- Line 24 NOL now combines lines 1, 9, 17, 21, 22, 23. New `Form172` fields `part1CapitalLossAddback` +
+  `part1Section1202Exclusion` (replacing the vestigial QBI add-back); component maps them to Part I lines
+  15/17. Verified: $50k business loss + $10k net capital loss → NOL **$50,000** (line-22 add-back $3,000);
+  §1202 exclusion $8,000 → NOL reduced to **$42,000**. Existing pure-loss ($100k) and §461(l) ($400k)
+  results unchanged. e2e `section172-nol-carryforward.spec.ts` now 6 tests. Migration → full backend
+  restart.
+
+
 ## 2026-07-27 — Form 172 (NOL): semantic artifacts + pure-HTML preview + Part I worksheet compute
 
 Full Form 172 build-out across all four repos.

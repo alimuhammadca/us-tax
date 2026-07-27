@@ -1785,3 +1785,35 @@ to be live.** To bring prod up: `az postgres flexible-server start -n pg-ustax-9
 Container App roll) that starts the DB so deploys succeed regardless of the resting state; the
 deploy step and the auto-stop task coexist by design. No Azure Automation/Logic App is involved.
 See `[[reference_azure_deployment]]`.
+
+## Multi-year architecture (Option 2b, 2026-07-27)
+
+Every return is keyed by **`(uid, tax_year)`**, not `uid` alone. A user holds one isolated
+Form 1040 per tax year (create/edit/view concurrently), and last year's carryforward auto-imports
+into next year. Guardrails:
+
+- **The tax year rides on the request**, not method signatures. `CurrentContextFilter`
+  (`AUTHENTICATION+1`) stamps `CurrentContext {uid, taxYear}` from the **`X-Tax-Year`** header;
+  **absent ⇒ 2025** (backward-compat shim — KEEP it; do not make the header required). The
+  compute engine implements only 2025 law today, so all years compute with the 2025 engine — the
+  year is purely a storage/isolation dimension until per-year law is added.
+- **The anchor is `tax_return_v2`** keyed `(uid, return_kind, tax_year)`; `primary` is unique per
+  `(uid, tax_year)`. `AppUserBootstrap.ensure(uid, year)` auto-creates the primary row for the
+  request's year. `out_*` tables are keyed by `tax_return_v2.tax_return_id` (Phase 2 re-key).
+- **New per-year tables MUST scope by year.** A new `pf_*` table → add `tax_year` and key by
+  `(uid, tax_year[, owner_role])` (mapper injects `CurrentContext`, keys `find("uid=?1 and
+  taxYear=?2 …")`, stamps `row.taxYear` on insert; `deleteForUid` stays uid-wide for reset). A new
+  `se_*` statement → add `return_tax_year` (distinct from the document-metadata `tax_year`), key
+  the list/compute read + `deleteAllForUid` by it. A new `out_*` → key by `tax_return_id` via
+  `OutputAnchorResolver.primaryTaxReturnId(uid)`. A new composite-FK child of a per-year parent →
+  add `parent_tax_year` and extend the FK/unique.
+- **deleteForUid / account reset stay uid-wide (all years)** — that is correct for account reset
+  (`UserDataBulkDelete`). A per-`(uid, year)` "delete this year" is a separate future capability.
+- **Legacy `tax_return` (PK=uid) is retained** as the vestigial existence-gate + old `out_*` FK
+  anchor; fully dropping it + renaming `tax_return_v2`→`tax_return` is deferred Phase-10 tech debt
+  (no feature value, high risk). The dual-write decompose/`tax_return_id` triggers (V67/V70-73)
+  feed the multi-return normalized schema that **compute does not read** (the reader delegates to
+  the year-scoped `mapper.load`), so their year-blindness is benign — don't "fix" them without a
+  reader that consumes them.
+- Multi-year is proven end-to-end: different per-year inputs → different per-year returns; and a
+  2024 Schedule C loss auto-imports as the 2025 line-8a NOL under the §172 80% limit.

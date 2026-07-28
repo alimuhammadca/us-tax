@@ -97,9 +97,19 @@ _Authored 2026-07-27. Status: **Phases 1–4 DONE & e2e-verified (2026-07-27/28)
   QBI); absent an activity link on the 4797 entry it is routed to Schedule 1 line 4 ordinary (taxed, but not
   as SE income / QBI). Correct activity attribution is a Phase 5 refinement.
 
-**Phase 5 — Integration + precedence**
-- Computed-vs-transcribed precedence (keep transcription as fallback or supersede); Sch D line 11/19 consumers
-  stay correct; QBI interaction (§1231 excluded from QBI; ordinary recapture IS QBI); AMT; Form 6252 / 8824.
+**Phase 5 — Integration + precedence** _(IN PROGRESS — QBI/SE attribution ✅ DONE 2026-07-28; rest deferred)_
+- ✅ **QBI (§199A) / SE-tax (§1402) attribution** — the recapture is attributed to the person's single
+  Schedule C business by treatment: Part IV §179/§280F business-use-drop recapture → the originating
+  Schedule C net income (Schedule 1 line 3 + **SE tax** + QBI), MOVED off line 4; Part II/III §1245/§1250
+  sale recapture → stays on line 4 (AGI) + the **QBI base only** (not SE — §1402(a)(3)). Attribution via a
+  single-Schedule-C heuristic (`hasSingleScheduleCBusiness`, non-QJV); 0 or >1 businesses → conservative
+  fallback to line 4 (pre-Phase-5 behavior). `computeScheduleC` gained two per-side recapture seeds
+  (SE→netProfit, QBI-only→the ScheduleCQbiComponent). e2e `form4797-recapture-qbi-se.spec.ts` (3): §179 →
+  line 3 56k + SE 7913; §1245 → line 4 20k + QBI 66,467 + SE unchanged 7065; no-business → line-4 fallback.
+- STILL DEFERRED (Phase 5 remainder): §1231 netting correctness (net §1231 LOSS → Schedule 1 line 4 ordinary;
+  multi-entry consolidation so Schedule D gets the true net); computed-vs-transcribed precedence when both
+  styles coexist; §1250-lookback interaction (unrecaptured §1250 reduced by lookback recharacterization);
+  Form 6252 (installment) / 8824 (like-kind) interplay; AMT.
 
 ## Cross-cutting
 - **Multi-year**: Phase 1 (lookback) + Phase 4 (prior deprec) need prior-year data — the bridge pattern

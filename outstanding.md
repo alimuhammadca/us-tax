@@ -521,7 +521,24 @@ taxable). So line 5b and the §72(t) base are now consistent on the non-rollover
 e2e `line5b-nonrollover-box5-basis.spec.ts` (gross $50k / box-5 $5k / code-1, no rollover): box-2b-not-
 determined (box 2a $50k) and box-2a-determined ($45k) BOTH → line 5b $45k, penalty $4,500.
 
-## Form 6251 AMT depreciation — line 2l DONE (2026-07-28); line 2k (disposition) still deferred
+## Form 6251 AMT — line 2l + line 2m (K-1) DONE (2026-07-28); line 2k (disposition) + rental/Form-8582 AMT deferred
+
+**Line 2m (passive-activity AMT adjustment) — passthrough K-1 slice DONE 2026-07-28.** The post-1986
+depreciation AMT adjustment (code "A") passed through on a Schedule K-1's "AMT items" box now routes to
+Form 6251 line 2m when the K-1 activity is PASSIVE (`materiallyParticipatedInActivity=false`), and to line
+2l when NON-passive (i6251 line 2l/2m routing) — these boxes were captured but never read. Helper
+`sumK1AmtDepreciationAdjustment(..., wantPassive)` reads 1065 box 17 (`part3Line17Code`/`...Amount`),
+1120-S box 15 (5 rows), 1041 box 12 (3 boxes), filtered to code A (code B = adjusted gain/loss → line 2k
+deferred; codes C–F map to other lines). New `Form6251.line2mPassiveActivity` output field → AMTI line 4.
+e2e `form6251-line2m-passive-k1-amt.spec.ts` (passive→2m $8k, non-passive→2l $8k, code-B excluded). No
+field, no migration. **Still deferred (needs new inputs / large):** (a) passive **rental real-estate**
+asset-level AMT depreciation — rental depreciation is a single manual `depreciationAmount` per property
+with no 27.5/39 vs 5/7-year asset split, so there is no captured personal-property 150%DB adjustment to
+route (needs a rental depreciation-asset input); (b) the full **Form 8582 AMT passive-loss recompute** — a
+parallel §469 pass with AMT figures + AMT prior-year suspended carryovers (none exist today).
+
+**Line 2l (post-1986 depreciation adjustment) — ✅ DONE 2026-07-28** (own-asset Schedule C/F 150%DB + now
+non-passive K-1 code A). (details below)
 
 **Line 2l (post-1986 depreciation adjustment) — ✅ DONE 2026-07-28.** The AMT now refigures depreciation
 for 3/5/7/10-year property depreciated for the regular tax with 200% DB, using 150% DB over the same

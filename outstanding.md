@@ -18,7 +18,7 @@
 > - **Optional-method prior-year / 5-time gates** — the nonfarm optional method's "net SE ≥ $400 in 2 of the prior 3 years" test and the 5-times-lifetime limit CANNOT be verified from a single year of data. The app now emits the `SE_OPTIONAL_METHOD_APPLIED_UNVERIFIED_GATES_*` advisory whenever an optional method is applied (2026-07-22); enforcement needs multi-year data (part of the no-multi-year stance).
 >
 > **Known pre-existing (NOT from the SE fixes; surfaced by the 2026-07-22 combinatorial audit; deferred as a separate QBI-engine effort):**
-> - **§199A negative-QBI netting across businesses** — `buildScheduleCQbi` adds a QBI component only when `netProfit > 0`, so a LOSS business's negative QBI is dropped and does not net against other businesses' positive QBI → aggregate QBI (and the deduction) overstated for a filer with both a profitable and a loss trade. Independent of the UBIA fix; fixing it needs careful negative-QBI handling + the §199A loss-carryforward path in the 8995/8995-A engine (regression-sensitive), so it is deferred to a dedicated effort rather than bundled with the SE fixes.
+> - ~~**§199A negative-QBI netting across businesses**~~ **✅ RESOLVED 2026-07-27:** loss trades are now included in the QBI components (Schedule C main path, QJV per-spouse split, Schedule F), so a LOSS business's negative QBI **nets** against other businesses' positive QBI (Form 8995 line 1 aggregation). The per-person ½SE/line-16/line-17 deductions are allocated over positive-profit trades only, so all-profit returns are byte-identical (no regression). e2e `qbi-negative-netting.spec.ts` (profit $100k + loss $40k → aggregate QBI $55,761 not $92,935; pure loss → −$40k floored to $0). **Remaining (separate):** the Form 8995-A above-threshold per-activity Part IV loss allocation, and auto-import of a negative aggregate as next year's QBI-loss carryforward (input field exists; bridge does not).
 >
 > **Large SE features intentionally handled by a "file the form yourself" advisory (NOT built — surfaced by the 2026-07-22 deep audit; documented scope boundaries):**
 > - **Form 4797 depreciation/§179 RECAPTURE on disposition** — §1245/§1250 sale recapture and §179/§280F business-use-drop recapture are NOT computed. Form 4797 is a manual pass-through: the `OTHER_INCOME_FORM_4797_REQUIRED_TO_BE_FILED_SEPARATELY` advisory tells the filer to complete the form externally (including any recapture) and hand-enter the result. A taxpayer who sells a fully-§179'd asset must compute the ordinary recapture themselves. Building full Form 4797 (disposition tracking + Part III recapture) is a large dedicated feature, deferred.
@@ -467,7 +467,7 @@ double-entry is visible and self-correcting. **Residual (accepted):** if a user 
 harbor and manually types the rental QBI, it double-counts — but the compute keeps them as distinct sources,
 the QBI-form notice + relabel steer against it, and the advisory warns. Optional enhancement: a read-only
 display of the exact auto-included $ on the QBI form (needs the compute output piped into the data-entry
-form). Also unchanged: negative (loss) safe-harbor rentals do not create QBI (negative-QBI netting deferred).
+form). Also unchanged: negative (loss) safe-harbor rentals do not create QBI (business-trade negative-QBI netting is now done for Schedule C/F/QJV — 2026-07-27; the rental-QBI path is separate).
 
 ## Form 5329 Part III/IV excess-contribution 6% excise — implemented with documented simplifications (2026-07-25)
 

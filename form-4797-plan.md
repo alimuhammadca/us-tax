@@ -1,6 +1,6 @@
 # Form 4797 Recapture Engine — Implementation Plan
 
-_Authored 2026-07-27. Status: **Phases 1–3 DONE & e2e-verified (2026-07-27/28)**; Phases 4–5 deferred._
+_Authored 2026-07-27. Status: **Phases 1–4 DONE & e2e-verified (2026-07-27/28)**; Phase 5 deferred._
 
 ## Current state (verified)
 - The Form 4797 intake is a **full transcription** of the already-filled IRS form (statement `se_form_4797`,
@@ -82,9 +82,20 @@ _Authored 2026-07-27. Status: **Phases 1–3 DONE & e2e-verified (2026-07-27/28)
   `form4797-section1250-recapture.spec.ts` (2): MACRS SL → ordinary 0 + unrecaptured §1250 @ 25% (Sch D
   line 19); accelerated → ordinary recapture + unrecaptured §1250 + §1231.
 
-**Phase 4 — §179/§280F business-use-drop recapture (Part IV)**
-- Add businessUsePercentAtDisposal + prior-year §179/depreciation (bridge or user-entered). Recapture =
-  accelerated − SL/ADS allowed → ordinary. Tests: §179 drops to 40% → recapture; §280F vehicle drop.
+**Phase 4 — §179/§280F business-use-drop recapture (Part IV)** _(✅ DONE 2026-07-28)_
+- ★ DEVIATION (leaner, no new field): the plan said "add businessUsePercentAtDisposal + prior-year §179/
+  depreciation," but the existing 4797 statement already has the Part IV lines — line 33a/33b (prior §179 /
+  §280F accelerated deduction) and line 34a/34b (recomputed straight-line/ADS). So the engine computes line
+  35 directly; no new intake field, no prior-year bridge.
+- ✅ Per entry with Part IV inputs (line 33 present): line 35a = max(0, line 33a − line 34a) §179 recapture;
+  line 35b = max(0, line 33b − line 34b) §280F recapture. Pure ordinary income (no §1231, no Schedule D) →
+  Schedule 1 line 4 (per owner). The entry gate now also admits Part IV-only entries; the Part I line 7/9
+  overwrite is guarded to Part III entries so a Part IV-only entry never clobbers a transcribed §1231.
+- ✅ Form4797Recapture gains section179Recapture + section280fRecapture (V188). e2e
+  `form4797-part4-recapture.spec.ts` (3): §179 recapture; §280F vehicle; recomputed ≥ prior → floored at 0.
+- SCOPE BOUNDARY (→ Phase 5): IRS routes line 35 back to the ORIGINATING Schedule C/E/F activity (SE tax +
+  QBI); absent an activity link on the 4797 entry it is routed to Schedule 1 line 4 ordinary (taxed, but not
+  as SE income / QBI). Correct activity attribution is a Phase 5 refinement.
 
 **Phase 5 — Integration + precedence**
 - Computed-vs-transcribed precedence (keep transcription as fallback or supersede); Sch D line 11/19 consumers

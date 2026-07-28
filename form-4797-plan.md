@@ -112,9 +112,13 @@ _Authored 2026-07-27. Status: **Phases 1–4 DONE & e2e-verified (2026-07-27/28)
   Schedule 1 line 4 + the §199A QBI base (via qbiRecapture, not SE), where it was previously DROPPED. e2e:
   updated §1245 scenario C (loss → line 4 −5000 + recorded for lookback) + new multi-entry netting test
   (20k gain + 5k loss → 15k net → Schedule D).
-- STILL DEFERRED (Phase 5 remainder): computed-vs-transcribed precedence when both styles coexist; §1250-
-  lookback interaction (unrecaptured §1250 reduced by lookback recharacterization); Form 6252 (installment) /
-  8824 (like-kind) interplay; AMT; multi-business attribution + advisory.
+- ✅ **§1250-lookback interaction** (2026-07-28) — `capUnrecapturedSection1250`: when the §1231(c) lookback
+  recharacterizes part of a net §1231 gain as ordinary, the unrecaptured §1250 (line 26b → Schedule D line 19,
+  25%) is CAPPED at the residual capital gain (line 9 after the recharacterization delta), since the 25%
+  slice can't exceed the remaining capital gain. Two-year e2e `form4797-section1250-lookback-cap.spec.ts`:
+  prior §1231 loss 40k + current §1250 gain 50k → recharacterize 40k, capital 10k, line 19 capped 30k→10k.
+- STILL DEFERRED (Phase 5 remainder): computed-vs-transcribed precedence when both styles coexist; Form 6252
+  (installment) / 8824 (like-kind) interplay; AMT; multi-business attribution + advisory.
 
 ## Cross-cutting
 - **Multi-year**: Phase 1 (lookback) + Phase 4 (prior deprec) need prior-year data — the bridge pattern

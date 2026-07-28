@@ -471,21 +471,23 @@ form). Also unchanged: negative (loss) safe-harbor rentals do not create QBI (bu
 
 ## Form 5329 Part III/IV excess-contribution 6% excise — implemented with documented simplifications (2026-07-25)
 
-**Status: implemented (sc_00171/00176), with three scoped simplifications left for a future refinement.**
+**Status: implemented (sc_00171/00176); simplifications #1 and #2 REFINED 2026-07-28, #3 unchanged.**
 The §4973 6% excise on excess traditional/Roth IRA contributions is computed (V165/V166 inputs+outputs;
-`computeExcessContributionExcisePerson` → Form 5329 → Schedule 2 line 8). Simplifications:
-1. **Roth MAGI = AGI.** The §408A(c) Roth phaseout uses AGI directly; the Roth-MAGI add-backs (traditional
-   IRA deduction, student-loan interest, Form 2555 foreign-earned-income/housing exclusions) are not added
-   back. Over-states the allowed Roth limit slightly when those items are present (the SQA cases have
-   AGI == MAGI).
-2. **Traditional and Roth excess computed independently.** The combined per-person $7,000 (+catch-up) cap
-   across BOTH account types, and the §408A(c) rule that a traditional contribution reduces the Roth limit,
-   are not modeled — a person contributing to both could have an under-counted excess. Correct when the
-   filer contributes to only one type (as the SQA cases do).
-3. **No year-end-value cap default.** The excise is 6% of the smaller of the excess or the account's
-   year-end fair market value; the value field is optional and, when absent, the full excess is used (no
-   cap). Correct when value ≥ excess (the common case).
-Revisit if an SQA scenario exercises Roth-MAGI add-backs, dual-type contributions, or a value-capped excise.
+`computeExcessContributionExcisePerson` → Form 5329 → Schedule 2 line 8).
+1. **Roth MAGI add-backs — ✅ PARTIAL 2026-07-28.** The §408A(c)(3) Roth contribution MAGI now adds back
+   the traditional IRA deduction + the student-loan-interest deduction (the two dominant, in-scope-here
+   add-backs) to AGI. **Still deferred:** the Form 2555 FEI/housing exclusion add-back (Form 2555 is
+   computed later in `prepare()` than this call site) and the Roth-conversion-income subtraction. e2e
+   `form5329-excess-contribution-refine.spec.ts` (#1): a $5k deductible traditional contribution lifts MAGI
+   over the $165k ceiling → Roth limit $0 → $120 excise.
+2. **Combined $7,000 cap / traditional-reduces-Roth — ✅ DONE 2026-07-28.** Per §408A(c)(2) the Roth limit
+   is now reduced by this year's traditional IRA contribution (the shared §219 dollar limit; traditional
+   counted first, so a split contribution over the combined $7,000/$8,000 lands as a Roth excess). e2e (#2):
+   $5k traditional + $5k Roth (combined limit $7k) → $3k Roth excess = $180 (was $0 pre-fix — computed
+   independently against the full $7k).
+3. **No year-end-value cap default — unchanged (reasonable).** The excise is 6% of the smaller of the
+   excess or the account's year-end FMV; when the (optional) value field is PRESENT the code already caps
+   at min(excess, value), and when absent uses the full excess — a correct conservative default. No change.
 
 ## Line 5b §72(t): early-distribution penalty base nets rollover only, not basis/PSO — DEFERRED (2026-07-24)
 

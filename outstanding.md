@@ -509,6 +509,26 @@ rollover branch where the payer did NOT pre-net box 5 into box 2a (there line 5b
 box 1 gross, but the per-code §72(t) base still uses box 2a): a subtle per-entry, per-code allocation.
 Revisit if an SQA scenario pins a box-5-reduced early-distribution penalty in a rollover context.
 
+## Form 6251 AMT depreciation — line 2l DONE (2026-07-28); line 2k (disposition) still deferred
+
+**Line 2l (post-1986 depreciation adjustment) — ✅ DONE 2026-07-28.** The AMT now refigures depreciation
+for 3/5/7/10-year property depreciated for the regular tax with 200% DB, using 150% DB over the same
+recovery period + convention (IRC §56(a)(1)). New `MACRS_150DB_HALF_YEAR` (IRS Pub. 946 published
+percentages) + `MACRS_150DB_MID_QUARTER` tables + `computeAmtMacrsDepreciation`;
+`assetDepreciationSection179AndBonus` returns a per-asset delta (regular MACRS − AMT MACRS, §179/bonus
+cancel, §280F cap applied to both) accumulated across Schedule C + Schedule F assets → `computeLine17` →
+`Form6251.line2lPost1986Depreciation` → AMTI line 4 (signed). SL/ADS/real-property/15-20yr/§179/bonus →
+no adjustment. e2e `form6251-amt-depreciation-line2l.spec.ts` (positive year-2 +650, negative year-5
+−514, §179 control). No migration/field.
+
+**Line 2k (disposition — AMT vs regular gain/loss difference) — STILL DEFERRED.** Requires a NEW input
+field (AMT adjusted basis / AMT accumulated depreciation) on the Form 4797 disposition — owner sign-off
+needed. Why it can't be derived: the app is single-year (no multi-year AMT-basis carryover), the
+`se_form_4797` disposition carries only regular-tax figures (no AMT basis, no placed-in-service date or
+method), and there is no link from a 4797 disposition back to a `pf_depreciation_asset` to recompute the
+150% DB schedule over the asset's life. Line 2l (now built) is the prerequisite engine; line 2k adds the
+disposition catch-up once the AMT-basis input exists.
+
 ## Form 2210 underpayment-penalty interest-rate refresh — DEFERRED to TY2026 (2026-07-14)
 
 **Status: not an open bug — a forward-dated yearly maintenance action.** Form 2210 is fully implemented

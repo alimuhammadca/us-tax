@@ -1,6 +1,6 @@
 # Form 4797 Recapture Engine — Implementation Plan
 
-_Authored 2026-07-27. Status: **Phase 1 DONE & e2e-verified (2026-07-27)**; Phases 2–5 deferred._
+_Authored 2026-07-27. Status: **Phases 1–2 DONE & e2e-verified (2026-07-27/28)**; Phases 3–5 deferred._
 
 ## Current state (verified)
 - The Form 4797 intake is a **full transcription** of the already-filled IRS form (statement `se_form_4797`,
@@ -46,11 +46,25 @@ _Authored 2026-07-27. Status: **Phase 1 DONE & e2e-verified (2026-07-27)**; Phas
 - ✅ e2e `section1231-lookback-bridge.spec.ts` (GREEN): loss-year → gain-year recharacterized; routing to
   Sch 1 L4; year isolation. TODO if revisited: loss >5 yrs ago excluded; partial recapture; multi-year chain.
 
-**Phase 2 — Raw disposition intake + §1245 recapture** _(recapture-engine foundation; largest)_
-- New `asset-disposition-taxpayer/-spouse` intake (mapper + entity + migration + `PERSONAL_FORMS` +
-  `PARENT_TABLES_UID_CASCADE` + UI + shell + PurePdfPreview).
-- §1245: ordinary = min(depreciation, gain); excess → §1231 Part I. Build Form 4797 Part III/II/I output.
-- Tests: gain < deprec → all ordinary; gain > deprec → deprec ordinary + excess §1231; loss → §1231.
+**Phase 2 — Raw disposition intake + §1245 recapture** _(recapture-engine foundation — ✅ DONE 2026-07-28)_
+- ★ DEVIATION from the original plan (and the leaner path): NO new `asset-disposition` form was built. The
+  reconnaissance found the existing `se_form_4797` statement ALREADY carries the raw Part III per-property
+  inputs (line 20 gross sales price, line 21 cost + expense of sale, line 22 depreciation, per property
+  A–D). The plan's "new form" assumed these fields didn't exist — they do. So the engine computes directly
+  from that existing intake: no new entity/mapper/migration/PERSONAL_FORMS/UI.
+- ✅ `computeForm4797Part3Recapture` (per entry, per property A–D): line 23 = 21−22, line 24 = 20−23; held
+  ≤1yr → all Part II ordinary; held >1yr gain → line 25b §1245 recapture = min(gain, deprec) ordinary +
+  excess → §1231; held >1yr loss → §1231 loss. OVERWRITES the entry's computed display slots (23/24/25a/25b)
+  and Part I line 7/9 with the computed §1231 (so the §1231(c) lookback + Schedule D pick it up), superseding
+  any transcribed line 7 for that entry. Gated on Part III raw present AND no §1250 line-26 fields — entries
+  without Part III raw data are untouched (regression-safe). §1245 ordinary recapture → Schedule 1 line 4
+  (per owner). `Form4797Recapture` output (nested in Form1040) + `OutForm4797Recapture` + `V186` +
+  `Form4797RecaptureOutputMapper` persist the computed breakdown for the preview.
+- ✅ e2e `form4797-section1245-recapture.spec.ts` (3 GREEN): gain<cost → all ordinary; gain>cost → deprec
+  ordinary + excess §1231 → Schedule D; loss → §1231 loss recorded.
+- SCOPE BOUNDARY (→ Phase 5): multi-entry §1231 netting across entries, §1231-loss routing to Schedule 1
+  line 4 (the net §1231 loss flows through line 7 to the lookback record, matching the transcribed path's
+  existing scope), and transcribed-vs-computed precedence when both styles coexist on one return.
 
 **Phase 3 — §1250 recapture + unrecaptured §1250 @ 25%**
 - Add straightLineDepreciation; compute §1250 ordinary (excess accel over SL) + unrecaptured §1250 → Sch D

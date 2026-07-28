@@ -117,8 +117,12 @@ _Authored 2026-07-27. Status: **Phases 1–4 DONE & e2e-verified (2026-07-27/28)
   25%) is CAPPED at the residual capital gain (line 9 after the recharacterization delta), since the 25%
   slice can't exceed the remaining capital gain. Two-year e2e `form4797-section1250-lookback-cap.spec.ts`:
   prior §1231 loss 40k + current §1250 gain 50k → recharacterize 40k, capital 10k, line 19 capped 30k→10k.
+- ✅ **Multi-business advisory** (2026-07-28) — when a recapture can't be attributed because the owner has
+  >1 Schedule C (or a QJV), a non-blocking `FORM_4797_RECAPTURE_MULTI_BUSINESS` advisory surfaces that the
+  recapture fell back to Schedule 1 line 4 (not in that business's QBI, and any §179/§280F not in the SE
+  base). e2e in `form4797-recapture-qbi-se.spec.ts`.
 - STILL DEFERRED (Phase 5 remainder): computed-vs-transcribed precedence when both styles coexist; Form 6252
-  (installment) / 8824 (like-kind) interplay; AMT; multi-business attribution + advisory.
+  (installment) / 8824 (like-kind) interplay; AMT (recapture generally has no separate AMT adjustment).
 
 ## Cross-cutting
 - **Multi-year**: Phase 1 (lookback) + Phase 4 (prior deprec) need prior-year data — the bridge pattern

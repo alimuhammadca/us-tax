@@ -106,10 +106,15 @@ _Authored 2026-07-27. Status: **Phases 1–4 DONE & e2e-verified (2026-07-27/28)
   fallback to line 4 (pre-Phase-5 behavior). `computeScheduleC` gained two per-side recapture seeds
   (SE→netProfit, QBI-only→the ScheduleCQbiComponent). e2e `form4797-recapture-qbi-se.spec.ts` (3): §179 →
   line 3 56k + SE 7913; §1245 → line 4 20k + QBI 66,467 + SE unchanged 7065; no-business → line-4 fallback.
-- STILL DEFERRED (Phase 5 remainder): §1231 netting correctness (net §1231 LOSS → Schedule 1 line 4 ordinary;
-  multi-entry consolidation so Schedule D gets the true net); computed-vs-transcribed precedence when both
-  styles coexist; §1250-lookback interaction (unrecaptured §1250 reduced by lookback recharacterization);
-  Form 6252 (installment) / 8824 (like-kind) interplay; AMT.
+- ✅ **§1231 netting correctness** (2026-07-28) — per-owner consolidation (`consolidateSection1231`): each
+  person's computed Part III §1231 entries net into a carrier entry so the §1231(c) lookback + Schedule D see
+  the true NET (not the sum of only the gain entries); a net §1231 LOSS (§1231(a)(2)) is ordinary → routed to
+  Schedule 1 line 4 + the §199A QBI base (via qbiRecapture, not SE), where it was previously DROPPED. e2e:
+  updated §1245 scenario C (loss → line 4 −5000 + recorded for lookback) + new multi-entry netting test
+  (20k gain + 5k loss → 15k net → Schedule D).
+- STILL DEFERRED (Phase 5 remainder): computed-vs-transcribed precedence when both styles coexist; §1250-
+  lookback interaction (unrecaptured §1250 reduced by lookback recharacterization); Form 6252 (installment) /
+  8824 (like-kind) interplay; AMT; multi-business attribution + advisory.
 
 ## Cross-cutting
 - **Multi-year**: Phase 1 (lookback) + Phase 4 (prior deprec) need prior-year data — the bridge pattern

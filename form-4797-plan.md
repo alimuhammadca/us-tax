@@ -1,6 +1,6 @@
 # Form 4797 Recapture Engine — Implementation Plan
 
-_Authored 2026-07-27. Status: **Phases 1–2 DONE & e2e-verified (2026-07-27/28)**; Phases 3–5 deferred._
+_Authored 2026-07-27. Status: **Phases 1–3 DONE & e2e-verified (2026-07-27/28)**; Phases 4–5 deferred._
 
 ## Current state (verified)
 - The Form 4797 intake is a **full transcription** of the already-filled IRS form (statement `se_form_4797`,
@@ -66,9 +66,21 @@ _Authored 2026-07-27. Status: **Phases 1–2 DONE & e2e-verified (2026-07-27/28)
   line 4 (the net §1231 loss flows through line 7 to the lookback record, matching the transcribed path's
   existing scope), and transcribed-vs-computed precedence when both styles coexist on one return.
 
-**Phase 3 — §1250 recapture + unrecaptured §1250 @ 25%**
-- Add straightLineDepreciation; compute §1250 ordinary (excess accel over SL) + unrecaptured §1250 → Sch D
-  25% worksheet (now computed). Tests: MACRS real-property sale → §1250 ordinary $0 + unrecaptured §1250 @ 25%.
+**Phase 3 — §1250 recapture + unrecaptured §1250 @ 25%** _(✅ DONE 2026-07-28)_
+- ★ DEVIATION (leaner, no new field): the plan said "add straightLineDepreciation," but the existing 4797
+  statement already has line 26a "additional depreciation after 1975" (= accelerated over straight-line, a
+  real Form 4797 field). So line 26a's PRESENCE discriminates §1250 (real property) from §1245, and IS the
+  additional-depreciation input (0 for the dominant post-1986 MACRS straight-line case). No new intake field.
+- ✅ Per §1250 property held >1yr with a gain: §1250 ordinary recapture (line 26g) = min(gain, line 26a) →
+  Part II ordinary → Schedule 1 line 4; unrecaptured §1250 = min(gain, line 22 depreciation) − line 26g →
+  Schedule D line 19 (max 25%); residual gain → §1231 (line 7 → lookback → Schedule D LT). The unrecaptured
+  §1250 is written to the entry's line 26b (this codebase's existing Schedule D line-19 reader channel).
+- ★ Fixed TWO pre-existing gaps that blocked any 4797 §1231 gain from reaching Schedule D: (1) `scheduleDRequired`
+  now also fires on a 4797 net §1231 gain (line 9 > 0), and (2) `computeCapitalForPerson` no longer
+  early-returns empty for a person with a 4797 §1231 gain but no capital form / capital-gains flag.
+- ✅ Form4797Recapture gains section1250Recapture + unrecapturedSection1250 (V187). e2e
+  `form4797-section1250-recapture.spec.ts` (2): MACRS SL → ordinary 0 + unrecaptured §1250 @ 25% (Sch D
+  line 19); accelerated → ordinary recapture + unrecaptured §1250 + §1231.
 
 **Phase 4 — §179/§280F business-use-drop recapture (Part IV)**
 - Add businessUsePercentAtDisposal + prior-year §179/depreciation (bridge or user-entered). Recapture =

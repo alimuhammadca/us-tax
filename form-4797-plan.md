@@ -121,8 +121,14 @@ _Authored 2026-07-27. Status: **Phases 1–4 DONE & e2e-verified (2026-07-27/28)
   >1 Schedule C (or a QJV), a non-blocking `FORM_4797_RECAPTURE_MULTI_BUSINESS` advisory surfaces that the
   recapture fell back to Schedule 1 line 4 (not in that business's QBI, and any §179/§280F not in the SE
   base). e2e in `form4797-recapture-qbi-se.spec.ts`.
-- STILL DEFERRED (Phase 5 remainder): computed-vs-transcribed precedence when both styles coexist; Form 6252
-  (installment) / 8824 (like-kind) interplay; AMT (recapture generally has no separate AMT adjustment).
+- ✅ **Computed-vs-transcribed precedence** (2026-07-28) — verified the rule (a Part III raw entry supersedes
+  a transcribed line 7 on the same entry) and added a non-blocking `FORM_4797_MIXED_COMPUTED_TRANSCRIBED`
+  advisory when a computed disposition and a separately-transcribed §1231 amount coexist (they net at the
+  §1231(c) lookback but not per-entry for Schedule D). e2e `form4797-precedence.spec.ts` (2).
+- STILL DEFERRED (Phase 5 remainder, thin edges): Form 6252 (installment) / 8824 (like-kind) interplay —
+  §453(i) recapture-in-full / §1031 recapture limitation (separate inputs; a guidance advisory at most); AMT
+  disposition adjustment (recapture itself has no separate AMT adjustment; the AMT-vs-regular depreciation
+  basis difference on disposition would need AMT-depreciation tracking the 4797 statement doesn't carry).
 
 ## Cross-cutting
 - **Multi-year**: Phase 1 (lookback) + Phase 4 (prior deprec) need prior-year data — the bridge pattern

@@ -537,6 +537,20 @@ with no 27.5/39 vs 5/7-year asset split, so there is no captured personal-proper
 route (needs a rental depreciation-asset input); (b) the full **Form 8582 AMT passive-loss recompute** — a
 parallel §469 pass with AMT figures + AMT prior-year suspended carryovers (none exist today).
 
+**Lines 2e / 2f (regular NOL add-back + ATNOLD) — ✅ DONE 2026-07-28.** The app's AMTI base (line 1b) is
+AGI-derived, so it already reflected the REGULAR NOL deduction (Schedule 1 line 8a) — but for AMT the
+regular NOL is disallowed and replaced by the ATNOLD. Now: line 2e ADDS BACK the regular NOL deducted this
+year (positive, read from the capped Schedule 1 line 8a), line 2f SUBTRACTS the ATNOLD (negative), limited
+to 90% of AMTI figured without the ATNOLD (IRC §56(d)). `atnolAvailable` = the regular NOL carryforward
+available (Schedule 1 line 8a input, seeded with the prior-year Form 172 carryforward, pre-§172-cap) —
+used as the ATNOL (documented simplification: the app has no separate AMT NOL track; exact when the loss
+year had no AMT adjustments). New computeLine17 param `atnolAvailable` + Form6251.line2e/line2f fields →
+AMTI line 4. e2e `form6251-line2f-atnold.spec.ts`: NOL $1M on $1M income → 2e $787,400 (80% §172-capped
+regular NOL) / 2f −$900,000 (90% ATNOLD limit binds) / AMTI $100,000; small NOL below both limits → 2e and
+2f cancel. No field, no migration. **Deferred:** a true separate AMT NOL computation (AMT-adjusted §172,
+persisted + bridged like Form 172) so the ATNOL differs from the regular NOL when the loss year had AMT
+adjustments.
+
 **Line 2d (depletion AMT adjustment) — passthrough K-1 slice DONE 2026-07-28.** The depletion AMT item
 (code "C") passed through on a 1065 box 17 / 1120-S box 15 K-1 now routes to Form 6251 line 2d when the
 activity is NON-passive, and to line 2m when PASSIVE (i6251 depletion routing; passive activity AMT items

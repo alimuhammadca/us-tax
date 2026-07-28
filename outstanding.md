@@ -537,6 +537,19 @@ with no 27.5/39 vs 5/7-year asset split, so there is no captured personal-proper
 route (needs a rental depreciation-asset input); (b) the full **Form 8582 AMT passive-loss recompute** — a
 parallel §469 pass with AMT figures + AMT prior-year suspended carryovers (none exist today).
 
+**Line 2d (depletion AMT adjustment) — passthrough K-1 slice DONE 2026-07-28.** The depletion AMT item
+(code "C") passed through on a 1065 box 17 / 1120-S box 15 K-1 now routes to Form 6251 line 2d when the
+activity is NON-passive, and to line 2m when PASSIVE (i6251 depletion routing; passive activity AMT items
+refigure together on 2m). 1041 box 12 is EXCLUDED for code C — its "C" is a different item, not depletion.
+The K-1 AMT helper was generalized (`sumK1AmtItems(..., codes)`, replacing the code-A-only
+`sumK1AmtDepreciationAdjustment`); new `Form6251.line2dDepletion` output field → AMTI line 4. e2e
+`form6251-line2d-depletion-k1-amt.spec.ts` (non-passive→2d $6k, passive→2m $6k, passive A+C→2m $14k). No
+field, no migration. **Still deferred (correct routing, needs more than the captured box amounts):** K-1
+codes D/E (oil & gas) → line 2t is the **IDC-preference computation** (excess IDC over 65% of net well
+income), which needs the IDC amount — box 17 D/E are only partial inputs, so a raw pass-through would be
+wrong; code F ("other AMT items") → line 3 needs the K-1's per-item statement to place; own-activity
+(non-K-1) depletion/2t refigure; and code B → line 2k (disposition, separately deferred).
+
 **Line 2l (post-1986 depreciation adjustment) — ✅ DONE 2026-07-28** (own-asset Schedule C/F 150%DB + now
 non-passive K-1 code A). (details below)
 

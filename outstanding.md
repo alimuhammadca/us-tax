@@ -502,12 +502,20 @@ reaches. PSO is allocated to the NON-early (normal) pension first; only the exce
 the $400 non-early) = 4,200 → penalty 420 (was 430). Java unit `computesPensionDistributionsWithLine5cAnd
 OutputForms` (stale 450, never updated for the 2026-07-24 rollover fix) + e2e updated to 420; new e2e
 `Line 5b — PSO exclusion reduces the §72(t) early-distribution penalty base` (clean $10k code-1 + $3k PSO →
-$700). **Still not netted (subtler edge, deferred):** the box-5 employee-basis offset. Box 2a is ALREADY the
-post-basis taxable amount on the non-rollover path (line 5b uses box 2a as-is), so the base is correctly NOT
-re-reduced by box 5 in the common case — subtracting it would double-count. The residual edge is only the
-rollover branch where the payer did NOT pre-net box 5 into box 2a (there line 5b subtracts box5Offset from
-box 1 gross, but the per-code §72(t) base still uses box 2a): a subtle per-entry, per-code allocation.
-Revisit if an SQA scenario pins a box-5-reduced early-distribution penalty in a rollover context.
+$700). **★ BOX-5 BASIS OFFSET NETTED 2026-07-28.** The §72(t) per-entry base now nets the box-5 employee
+basis (recovered tax-free, never includible in gross income) — but ONLY when box 2b ("taxable amount not
+determined") is checked, i.e. the payer left box 2a = box 1 gross with the basis NOT removed. When box 2a
+IS determined it is already the post-basis taxable amount and is used as-is (subtracting box 5 there would
+double-count — the Pub. 575 Gap-4 trap the rollover path already guards). Per-entry: `entryTaxableFor72t =
+box2a; if (taxableAmountNotDetermined) entryTaxableFor72t −= box5;` before the code-1/code-S tier split; the
+rollover reduction then applies on top, mirroring line 5b's `box1 − rollover − box5Offset` reconstruction.
+e2e `line5b-72t-box5-basis-rollover.spec.ts` — gross $50k / box-5 $5k / rollover $30k / code-1: box-2b-not-
+determined (box 2a $50k) AND box-2a-determined ($45k pre-netted) BOTH yield the same includible early
+amount $15k → penalty $1,500 (representation-invariant; was $2,000 on the not-determined path pre-fix). No
+field, no migration. **Separate pre-existing gap (NOT this fix, still open):** on the NON-rollover
+not-determined path line 5b itself uses box 2a un-netted (overstates by box 5) — line 5b only nets box5Offset
+on the rollover path; the §72(t) base is now correct there regardless, but line 5b would need its own
+non-rollover box-5 netting.
 
 ## Form 6251 AMT depreciation — line 2l DONE (2026-07-28); line 2k (disposition) still deferred
 

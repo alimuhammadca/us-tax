@@ -512,10 +512,14 @@ rollover reduction then applies on top, mirroring line 5b's `box1 − rollover �
 e2e `line5b-72t-box5-basis-rollover.spec.ts` — gross $50k / box-5 $5k / rollover $30k / code-1: box-2b-not-
 determined (box 2a $50k) AND box-2a-determined ($45k pre-netted) BOTH yield the same includible early
 amount $15k → penalty $1,500 (representation-invariant; was $2,000 on the not-determined path pre-fix). No
-field, no migration. **Separate pre-existing gap (NOT this fix, still open):** on the NON-rollover
-not-determined path line 5b itself uses box 2a un-netted (overstates by box 5) — line 5b only nets box5Offset
-on the rollover path; the §72(t) base is now correct there regardless, but line 5b would need its own
-non-rollover box-5 netting.
+field, no migration. **Separate pre-existing gap — ✅ RESOLVED 2026-07-28.** On the NON-rollover
+not-determined path line 5b itself now nets the box-5 basis of the box-2b-checked entries
+(`employeeContributionsBox5NotDetermined`, a per-entry accumulator kept separate from the all-entries box-5
+sum so determined entries — whose box 2a already excludes basis — are not double-netted). Applied ONLY on
+the plain box-2a taxable path (per-stream / Simplified Method / General Rule already compute post-basis
+taxable). So line 5b and the §72(t) base are now consistent on the non-rollover not-determined path too.
+e2e `line5b-nonrollover-box5-basis.spec.ts` (gross $50k / box-5 $5k / code-1, no rollover): box-2b-not-
+determined (box 2a $50k) and box-2a-determined ($45k) BOTH → line 5b $45k, penalty $4,500.
 
 ## Form 6251 AMT depreciation — line 2l DONE (2026-07-28); line 2k (disposition) still deferred
 

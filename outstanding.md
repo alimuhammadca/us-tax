@@ -495,16 +495,19 @@ early-distribution penalty base (`earlyDistributionBaseTenPercent`/`…TwentyFiv
 gross income, so §72(t) cannot reach it. This resolves the reported case (full rollover of a code-1
 distribution → zero penalty base, no spurious `FORM5329_REQUIRED` flag).
 
-**Still not netted (pre-existing behavior, unchanged by the fix):** the base is taken from 1099-R box 2a and
-reduced only by the rollover, NOT by the employee-basis offset (box 5 already-taxed contributions) nor the
-PSO §402(l) health-premium exclusion. Both of those also reduce the amount *includible in gross income*
-(they flow into line 5b), so a strict reading of §72(t)(1) ("the portion … includible in gross income")
-would net them too. Example (the line-48 kitchen-sink e2e): box 2a $4,500, rollover $200, box 5 $100, PSO
-$500 → line 5b $4,200, but the §72(t) base is $4,300 (rollover only) → penalty $430, whereas a fully
-includible-amount base would be $4,200 → $420. Deferred because (a) the reported gap (rollover) is closed,
-(b) allocating an aggregated line-5b reduction back to specific code-1 vs code-S entries needs care with
-multiple 1099-Rs, and (c) the PSO/§72(t) interaction is subtle at the edges. Revisit if an SQA scenario
-pins a basis- or PSO-reduced early-distribution penalty.
+**★ PSO NETTED 2026-07-28.** The §72(t) base now also nets the PSO §402(l) exclusion — it removes up to
+$3,000 of qualifying premiums from the amount includible in gross income, which is exactly what §72(t)(1)
+reaches. PSO is allocated to the NON-early (normal) pension first; only the excess reduces the early base
+(10% tier first, then 25%), floored at 0. Example above: base 4,300 (after rollover) − 100 (PSO excess over
+the $400 non-early) = 4,200 → penalty 420 (was 430). Java unit `computesPensionDistributionsWithLine5cAnd
+OutputForms` (stale 450, never updated for the 2026-07-24 rollover fix) + e2e updated to 420; new e2e
+`Line 5b — PSO exclusion reduces the §72(t) early-distribution penalty base` (clean $10k code-1 + $3k PSO →
+$700). **Still not netted (subtler edge, deferred):** the box-5 employee-basis offset. Box 2a is ALREADY the
+post-basis taxable amount on the non-rollover path (line 5b uses box 2a as-is), so the base is correctly NOT
+re-reduced by box 5 in the common case — subtracting it would double-count. The residual edge is only the
+rollover branch where the payer did NOT pre-net box 5 into box 2a (there line 5b subtracts box5Offset from
+box 1 gross, but the per-code §72(t) base still uses box 2a): a subtle per-entry, per-code allocation.
+Revisit if an SQA scenario pins a box-5-reduced early-distribution penalty in a rollover context.
 
 ## Form 2210 underpayment-penalty interest-rate refresh — DEFERRED to TY2026 (2026-07-14)
 

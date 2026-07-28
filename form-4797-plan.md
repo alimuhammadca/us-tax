@@ -1,6 +1,6 @@
 # Form 4797 Recapture Engine — Implementation Plan
 
-_Authored 2026-07-27. Status: **Phases 1–4 DONE & e2e-verified (2026-07-27/28)**; Phase 5 deferred._
+_Authored 2026-07-27. Status: **Phases 1–5 COMPLETE & e2e-verified (2026-07-27/28).**_
 
 ## Current state (verified)
 - The Form 4797 intake is a **full transcription** of the already-filled IRS form (statement `se_form_4797`,
@@ -125,10 +125,23 @@ _Authored 2026-07-27. Status: **Phases 1–4 DONE & e2e-verified (2026-07-27/28)
   a transcribed line 7 on the same entry) and added a non-blocking `FORM_4797_MIXED_COMPUTED_TRANSCRIBED`
   advisory when a computed disposition and a separately-transcribed §1231 amount coexist (they net at the
   §1231(c) lookback but not per-entry for Schedule D). e2e `form4797-precedence.spec.ts` (2).
-- STILL DEFERRED (Phase 5 remainder, thin edges): Form 6252 (installment) / 8824 (like-kind) interplay —
-  §453(i) recapture-in-full / §1031 recapture limitation (separate inputs; a guidance advisory at most); AMT
-  disposition adjustment (recapture itself has no separate AMT adjustment; the AMT-vs-regular depreciation
-  basis difference on disposition would need AMT-depreciation tracking the 4797 statement doesn't carry).
+- ✅ **Form 6252 / 8824 interplay** (2026-07-28) — non-blocking `FORM_4797_RECAPTURE_INSTALLMENT_LIKEKIND`
+  advisory when a computed §1245/§1250 recapture coexists with a Form 6252 (installment, §453(i) recapture-in-
+  full) or Form 8824 (like-kind, §1031 recapture limited to boot); the app computes the forms independently.
+  Activated Form8824Mapper (backend/API, out of the FE picker like 4797); 6252 stays inert (it's in the FE
+  picker with raw-slot keys). e2e `form4797-installment-likekind.spec.ts` (2).
+- ✅ **AMT** (2026-07-28, analyzed — NO code needed): depreciation recapture, §1231, and unrecaptured §1250
+  @ 25% are IDENTICAL for regular tax and AMT — no separate AMT adjustment. The only real AMT effect is the
+  disposition basis difference (Form 6251 line 2k) when an asset's AMT depreciation differed from regular
+  (e.g. §1245 personal property, 200%DB regular vs 150%DB AMT); that needs AMT-accumulated-depreciation the
+  4797 statement doesn't carry — a separate feature (AMT-depreciation tracking), deferred.
+
+**Phase 5 COMPLETE (2026-07-28).** The Form 4797 recapture engine (Phases 1–5) is done: §1231(c) lookback,
+§1245/§1250/§179/§280F recapture, QBI/SE attribution, §1231 netting, §1250-lookback cap, and the precedence /
+multi-business / installment-likekind advisories — all computed from the existing se_form_4797 inputs, no new
+intake forms. Remaining out-of-scope (separate features, not Phase 5): the AMT disposition basis-difference
+adjustment (needs AMT-depreciation tracking); activating the 6252 statement mapper (blocked by its raw-slot FE
+config); full computed installment/like-kind recapture reconciliation (currently advisory + independent forms).
 
 ## Cross-cutting
 - **Multi-year**: Phase 1 (lookback) + Phase 4 (prior deprec) need prior-year data — the bridge pattern

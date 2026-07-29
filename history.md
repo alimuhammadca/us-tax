@@ -1,6 +1,36 @@
 ﻿# History
 
 
+## 2026-07-29 — Charitable carryover: per-category character + 5-year expiration — IRC §170(d)(1) (V199)
+
+The Schedule A charitable-contribution carryover was a single aggregate dumped into the next year's **cash
+(60%) bucket**, losing the 30%/50% property character, and it never expired. Now each category's excess
+carries forward **as that category** and expires 5 years after the contribution year.
+
+- **Per-category character:** a capital-gain-property (30%) excess stays 30% property next year (it competes
+  within the 30% ceiling), a basis-property (50%) excess stays 50%, cash stays cash — instead of everything
+  collapsing into cash. New `computeCharitableDeduction` helper applies the §170(b) combined-ceiling
+  ordering with, within each category, the current-year gift first then carryovers oldest-first (FIFO); the
+  unused newest amounts carry forward.
+- **5-year expiration (§170(d)(1)):** carryover is vintage-tagged by contribution year; a vintage from year
+  Y is usable Y+1..Y+5 and is dropped once `currentYear − Y > 5` (`ageCharityVintages`, applied in the
+  bridge when importing the prior year's detail).
+- **Persistence (V199):** `out_schedule_a.charitable_carryover_detail` TEXT column — a compact
+  `year:cash:basis:capGain;…` encoding (chosen over JSON to avoid a Jackson dependency in the compute
+  class). The existing aggregate `charitable_carryforward_to_next_year` is kept (= sum of the detail) for
+  display. `ScheduleA` model + `OutScheduleA` entity + `ScheduleAOutputMapper` extended.
+- **Bridge:** `importedPriorYearCharitableCarryoverDetail` reads + ages the prior-year detail and seeds it
+  via the `CHARITABLE_CARRYOVER_DETAIL` ThreadLocal (primary path only; scoped MFS/dependent legs ignore
+  it). A manual line-13 entry still wins (treated as a cash-category vintage). A prior year without the
+  detail column falls back to the aggregate as a cash vintage.
+- **Scope note:** the 20% bucket (capital-gain property to private foundations) is still not modeled — there
+  is no intake field for it (no new intake field was added).
+- **Tests:** `CharitableCarryoverTest` (8 unit — per-category FIFO, current-year-first ordering, 5-year
+  aging, encode/decode round-trip). The existing `charitable-carryover-bridge.spec.ts` was updated to the
+  corrected per-category behavior (the 2024 $20k cap-gain excess now imports into 2025 **line 12** as 30%
+  property with line 11 staying $10k, instead of collapsing into line 11 cash $30k).
+
+
 ## 2026-07-29 — Form 6251 line 2m (rental real-estate AMT depreciation) — IRC §56(a)(1)/§469 (V198)
 
 Extends Form 6251 line 2m (passive-activity AMT depreciation) to rental real estate. Rental real property

@@ -526,7 +526,21 @@ taxable). So line 5b and the §72(t) base are now consistent on the non-rollover
 e2e `line5b-nonrollover-box5-basis.spec.ts` (gross $50k / box-5 $5k / code-1, no rollover): box-2b-not-
 determined (box 2a $50k) and box-2a-determined ($45k) BOTH → line 5b $45k, penalty $4,500.
 
-## Form 6251 AMT — line 2l + line 2m (K-1) DONE (2026-07-28); line 2k (disposition) + rental/Form-8582 AMT deferred
+## Form 6251 AMT — line 2l + line 2m (K-1) DONE (2026-07-28); line 2k (disposition) DONE (2026-07-29, V197); rental/Form-8582 AMT deferred
+
+**Line 2k (disposition of property — AMT vs regular gain/loss difference) — DONE 2026-07-29 (V197).** IRC
+§56(a)(6). On a disposed depreciable asset the AMT gain/loss differs from the regular gain/loss by exactly
+(AMT accumulated depreciation − regular accumulated depreciation) — proceeds cancel — because AMT 150%DB is
+slower than regular 200%DB (higher AMT basis ⇒ smaller AMT gain ⇒ a negative AMTI adjustment). The regular
+depreciation is on Form 4797 Part III line 22, but the AMT figure can't be derived from the stored 4797
+data (no method/recovery), so **V197** adds 4 per-property columns
+`se_form_4797.partiii_line22_property_{a..d}_amt_depreciation_allowed_or_allowable` (+ SeForm4797 fields +
+Form4797Mapper). The Part III recapture engine accumulates `line2k = Σ(AMT depr − regular line-22 depr)`
+over disposed slots → `Form4797RecaptureResult.line2kDispositionAdjustment` → `computeLine17`
+(`amtDispositionLine2k`) → AMTI (`amtiBeforeAtnold`, beside 2l/2m) → `Form6251.line2kDisposition`. Blank AMT
+figure ⇒ no adjustment (e.g. post-1998 SL real property). Not columnized on out_form_6251 (recomputed each
+compute, like 2d/2l/2m). e2e `form6251-line2k-disposition-amt.spec.ts` (§1245 GSP 30k/cost 50k/reg 40k/AMT
+28k → line 2k = −12,000; AMTI exactly 12,000 lower with vs. without; regular §1245 recapture 20k unchanged).
 
 **Line 2m (passive-activity AMT adjustment) — passthrough K-1 slice DONE 2026-07-28.** The post-1986
 depreciation AMT adjustment (code "A") passed through on a Schedule K-1's "AMT items" box now routes to
@@ -534,7 +548,8 @@ Form 6251 line 2m when the K-1 activity is PASSIVE (`materiallyParticipatedInAct
 2l when NON-passive (i6251 line 2l/2m routing) — these boxes were captured but never read. Helper
 `sumK1AmtDepreciationAdjustment(..., wantPassive)` reads 1065 box 17 (`part3Line17Code`/`...Amount`),
 1120-S box 15 (5 rows), 1041 box 12 (3 boxes), filtered to code A (code B = adjusted gain/loss → line 2k
-deferred; codes C–F map to other lines). New `Form6251.line2mPassiveActivity` output field → AMTI line 4.
+via a K-1 passthrough — still NOT wired; the DIRECT Form 4797 line-2k disposition path is now DONE, see
+below; codes C–F map to other lines). New `Form6251.line2mPassiveActivity` output field → AMTI line 4.
 e2e `form6251-line2m-passive-k1-amt.spec.ts` (passive→2m $8k, non-passive→2l $8k, code-B excluded). No
 field, no migration. **Still deferred (needs new inputs / large):** (a) passive **rental real-estate**
 asset-level AMT depreciation — rental depreciation is a single manual `depreciationAmount` per property

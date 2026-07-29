@@ -1,6 +1,31 @@
 ﻿# History
 
 
+## 2026-07-29 — Form 6251 line 2k (AMT disposition of property) — IRC §56(a)(6) (V197)
+
+The last unmodeled Form 6251 AMTI adjustment. When a depreciable asset is sold, its AMT gain/loss differs
+from the regular-tax gain/loss because AMT depreciation (150% DB) is slower than regular MACRS (200% DB),
+leaving a higher AMT basis. The difference equals exactly **(AMT accumulated depreciation − regular
+accumulated depreciation)** for the asset — the sale proceeds cancel — so it is a (typically negative) AMTI
+adjustment reducing the AMT gain.
+
+- **Input (V197):** the regular depreciation is already captured per Form 4797 Part III property slot
+  (line 22), but the AMT figure can't be derived from what the 4797 stores (no method/recovery/convention).
+  Added 4 columns `se_form_4797.partiii_line22_property_{a,b,c,d}_amt_depreciation_allowed_or_allowable`
+  (+ `SeForm4797` fields + `Form4797Mapper` save/load). Existing table → no bulk-delete/allow-list change.
+- **Compute:** the Form 4797 Part III recapture engine (`computeForm4797Part3Recapture`) accumulates
+  `line2k = Σ(AMT depr − regular line-22 depr)` over disposed slots (only when an AMT figure is supplied;
+  blank ⇒ no difference, e.g. post-1998 SL real property) and returns it on `Form4797RecaptureResult`.
+  `prepare()` threads it into `computeLine17` as `amtDispositionLine2k`; line 2k joins the AMTI assembly
+  (`amtiBeforeAtnold`) beside 2l/2m and is set on `Form6251.line2kDisposition`. Consistent with 2d/2l/2m,
+  line 2k is recomputed each compute (not columnized on `out_form_6251`).
+- **e2e `form6251-line2k-disposition-amt.spec.ts`:** §1245 machine GSP $30k / cost $50k / regular depr $40k
+  / AMT depr $28k → line 2k = −$12,000; same return with vs. without the AMT field → AMTI (line 4) is
+  exactly $12,000 lower, while the regular §1245 recapture ($20,000 → Schedule 1 line 4) is unchanged.
+- **Still deferred (separate features):** passive rental real-estate AMT depreciation (line 2m rental —
+  needs a rental depreciation-asset input) and the full Form 8582 AMT passive-loss recompute.
+
+
 ## 2026-07-29 — Form 2441 earned income now includes line 1g / 1h (IRC §21(d)(1))
 
 The dependent-care credit (Form 2441) is limited to the smaller spouse's **earned income**, which under

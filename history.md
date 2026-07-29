@@ -1,6 +1,34 @@
 ﻿# History
 
 
+## 2026-07-29 — Form 6251 line 2m (rental real-estate AMT depreciation) — IRC §56(a)(1)/§469 (V198)
+
+Extends Form 6251 line 2m (passive-activity AMT depreciation) to rental real estate. Rental real property
+(27.5/39-yr) uses straight-line for both regular tax and AMT (no adjustment); only the 5/7-yr **personal
+property** inside a rental (appliances, carpet, furniture) is depreciated 200% DB for regular tax and 150%
+DB for AMT. Rental real estate is a passive activity (§469), so the difference rides **line 2m** (passive),
+not line 2l.
+
+- **Input (V198):** the rental captures only a single lumped Schedule E line-18 depreciation amount, so the
+  AMT-relevant split is supplied per property — 2 columns on `pf_rental_property`:
+  `personal_property_depreciation` (200%-DB regular portion) + `personal_property_amt_depreciation` (150%-DB
+  AMT). `PfRentalProperty` fields + `RentalIncomeMapper` save/load. Existing child table → no registry
+  change.
+- **Compute:** `computeRentalScheduleE` accumulates `line2m = Σ(regular − AMT)` over the household's rental
+  properties (blank ⇒ 0, e.g. real property SL) → new non-final `RentalScheduleEResult.line2mAmtDepreciation`
+  (set after construction, so the existing constructor call sites are untouched). `prepare()` folds it into
+  `amtPassiveActivityLine2m` (the existing line-2m aggregate, beside passive K-1 depreciation) → AMTI →
+  `Form6251.line2mPassiveActivity`. No new Form6251 field (aggregates into existing line 2m).
+- **Simplification:** the raw method difference on the entered amounts; the interaction with a §280A
+  personal-residence or §469 passive-loss limit on the *deduction* is not separately refigured for AMT
+  (correct when the depreciation is fully deductible — the dominant case). The full Form 8582 AMT
+  passive-loss recompute remains the one deferred AMT item.
+- **e2e `form6251-line2m-rental-amt-depreciation.spec.ts`:** rental personal-property regular depr $7,000 /
+  AMT depr $5,250 → line 2m = +$1,750; same return with vs. without the split → AMTI exactly $1,750 higher,
+  AGI (Form 6251 line 1b) unchanged (the split is AMT-only; the rental deduction still uses the lumped
+  $20,000).
+
+
 ## 2026-07-29 — Form 6251 line 2k (AMT disposition of property) — IRC §56(a)(6) (V197)
 
 The last unmodeled Form 6251 AMTI adjustment. When a depreciable asset is sold, its AMT gain/loss differs

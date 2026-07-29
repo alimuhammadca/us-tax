@@ -526,7 +526,7 @@ taxable). So line 5b and the §72(t) base are now consistent on the non-rollover
 e2e `line5b-nonrollover-box5-basis.spec.ts` (gross $50k / box-5 $5k / code-1, no rollover): box-2b-not-
 determined (box 2a $50k) and box-2a-determined ($45k) BOTH → line 5b $45k, penalty $4,500.
 
-## Form 6251 AMT — line 2l + line 2m (K-1) DONE (2026-07-28); line 2k (disposition) DONE (2026-07-29, V197); rental/Form-8582 AMT deferred
+## Form 6251 AMT — line 2l/2m-K1 DONE (2026-07-28); line 2k disposition (V197) + line 2m rental (V198) DONE (2026-07-29); only Form 8582 AMT recompute deferred
 
 **Line 2k (disposition of property — AMT vs regular gain/loss difference) — DONE 2026-07-29 (V197).** IRC
 §56(a)(6). On a disposed depreciable asset the AMT gain/loss differs from the regular gain/loss by exactly
@@ -551,11 +551,16 @@ Form 6251 line 2m when the K-1 activity is PASSIVE (`materiallyParticipatedInAct
 via a K-1 passthrough — still NOT wired; the DIRECT Form 4797 line-2k disposition path is now DONE, see
 below; codes C–F map to other lines). New `Form6251.line2mPassiveActivity` output field → AMTI line 4.
 e2e `form6251-line2m-passive-k1-amt.spec.ts` (passive→2m $8k, non-passive→2l $8k, code-B excluded). No
-field, no migration. **Still deferred (needs new inputs / large):** (a) passive **rental real-estate**
-asset-level AMT depreciation — rental depreciation is a single manual `depreciationAmount` per property
-with no 27.5/39 vs 5/7-year asset split, so there is no captured personal-property 150%DB adjustment to
-route (needs a rental depreciation-asset input); (b) the full **Form 8582 AMT passive-loss recompute** — a
-parallel §469 pass with AMT figures + AMT prior-year suspended carryovers (none exist today).
+field, no migration. **(a) passive rental real-estate asset-level AMT depreciation — DONE 2026-07-29
+(V198).** Two per-property columns `pf_rental_property.personal_property_depreciation` (200%-DB regular) +
+`personal_property_amt_depreciation` (150%-DB AMT) capture the AMT-relevant personal-property split of the
+lumped Schedule E line-18 depreciation; `computeRentalScheduleE` sums `Σ(regular − AMT)` → new non-final
+`RentalScheduleEResult.line2mAmtDepreciation` → folded into `amtPassiveActivityLine2m` (line 2m, §469
+passive) → AMTI. Simplification: the §280A/§469 deduction-limit interaction with AMT is not separately
+refigured (correct when depreciation is fully deductible). e2e `form6251-line2m-rental-amt-depreciation.spec.ts`
+(reg 7,000 / AMT 5,250 → line 2m +1,750; AMTI 1,750 higher, AGI unchanged). **Still deferred:** (b) the full
+**Form 8582 AMT passive-loss recompute** — a parallel §469 pass with AMT figures + AMT prior-year suspended
+carryovers (none exist today). This is now the ONLY remaining Form 6251 AMT gap.
 
 **Lines 2e / 2f (regular NOL add-back + ATNOLD) — ✅ DONE 2026-07-28.** The app's AMTI base (line 1b) is
 AGI-derived, so it already reflected the REGULAR NOL deduction (Schedule 1 line 8a) — but for AMT the

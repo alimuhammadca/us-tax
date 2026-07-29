@@ -1,6 +1,20 @@
 ﻿# History
 
 
+## 2026-07-29 — sc_00149 both Additional Medicare + NIIT — validated + e2e coverage added (no code change)
+
+SQA validation of scenario 149 (both taxes on one MFJ return). Confirmed the app is IRS-correct on the
+scenario's subject: two $150,000 earners (neither over the $200k per-employer withholding trigger) → combined
+Medicare wages $300,000 > $250,000 MFJ → **Additional Medicare Tax $450** (Form 8959); $100,000 interest,
+MAGI $400,000 → **NIIT $3,800** (Form 8960); both sum on Schedule 2; regular tax $74,134; total tax $78,384.
+**No code change.** Finding: the app also computes a **Form 2210 estimated-tax penalty of $25** (withholding
+$70,000 < the 90% safe harbor of $70,546, balance due > $1,000), folded into amount owed → **$8,409** (the SQA
+expected of $8,384 omitted the Form 2210 penalty — a defensible modeling nuance, not a clear-cut omission, so
+the SQA expected was left unchanged). Added permanent e2e `both-additional-medicare-and-niit.spec.ts` — the
+individual taxes were covered but their combination + the combined-MFJ-wage Additional-Medicare aggregation
+were not.
+
+
 ## 2026-07-29 — sc_00127 collectibles 28%-rate gain — validated + e2e coverage added (no code change)
 
 SQA validation of scenario 127 (collectibles 28%-rate gain, IRC §1(h)(4)). Confirmed the app is IRS-correct:

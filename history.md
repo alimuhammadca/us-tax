@@ -1,6 +1,25 @@
 ﻿# History
 
 
+## 2026-07-29 — §199A UBIA recovery-window drop-off (§199A(b)(6))
+
+Old assets were never dropped from UBIA of qualified property, slightly over-stating the 2.5%-UBIA
+alternative in the above-threshold QBI wage/UBIA cap. `assetUbia` now applies the §199A(b)(6)(A)/(B)
+depreciable-period test via a new `assetDepreciablePeriodEndedBeforeYearClose` helper: an asset is
+excluded from UBIA once its depreciable period — the LATER of (i) 10 years after placed-in-service or
+(ii) the last full year of the §168 recovery period — has ended before the close of the tax year.
+- Uses the existing per-asset `datePlacedInService` + `recoveryPeriodYears` (no new intake field);
+  `windowYears = max(10, ceil(recoveryPeriodYears))`, ended if `placed + windowYears < Dec 31 TAX_YEAR`.
+- Covers Schedule C and Farm (both aggregate UBIA through `assetUbia`); K-1 §199A UBIA is a transcribed
+  passthrough amount (the entity already applied the drop-off) and is correctly untouched.
+- Conservative fallbacks: missing/unparseable placed-in-service date → KEEP (never silently drop);
+  blank recovery period → 10-year floor.
+- e2e `qbi-ubia-recovery-window-dropoff.spec.ts` (above-threshold, $0 wages, $1M asset, cap = 2.5%×UBIA):
+  7-yr placed 2011 → depreciable period ended (10-yr floor) → dropped → QBI ded $0; 7-yr placed 2020 →
+  in window → $25,000; 20-yr placed 2010 → the recovery>10 branch keeps a same-vintage asset qualified →
+  $25,000. Existing `qbi-schedule-c-ubia.spec.ts` (39-yr placed 2025 → window ends 2064) unchanged.
+
+
 ## 2026-07-29 — Pub. 974 §162(l)↔PTC: both-spouses / >1-business coordination (V192) + deploy build-guard
 
 **Pub. 974 both-spouses (V192).** The §162(l) SE-health ↔ §36B PTC fixed-point solve previously coordinated

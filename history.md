@@ -1,6 +1,30 @@
 ﻿# History
 
 
+## 2026-07-29 — Form 2441 earned income now includes line 1g / 1h (IRC §21(d)(1))
+
+The dependent-care credit (Form 2441) is limited to the smaller spouse's **earned income**, which under
+IRC §21(d)(1) is all wages/tips **plus other taxable employee compensation**. The per-person earned income
+used only W-2 box 1 + tips (line 1c), silently dropping **line 1g** (Form 8919 uncollected-SS/Medicare
+wages) and the earned portion of **line 1h** (excess elective deferrals + disability pension wages +
+foreign earned wages). A low-box-1 spouse whose real earned income arrived via 1g/1h had their credit
+understated.
+
+- **Compute-ordering fix:** `computeOtherEarnedIncome` now runs **before** `computeDependentCareBenefits`
+  (it previously ran after — the ordering blocker), and both `uncollected` (line 1g) and `otherEarned`
+  (line 1h) are passed into `computeDependentCareBenefits`.
+- **Per-person plumbing:** `UncollectedComputation` gained `taxpayerLine1g` / `spouseLine1g`
+  (= per-side `line6TotalWages`); `OtherEarnedIncomeComputation` gained `taxpayerEarnedLine1h` /
+  `spouseEarnedLine1h` (= `sumAmounts(disabilityAfterPso, excessDeferrals, foreignEarnedWages)` per side —
+  **excludes** corrective distributions, which are not earned income, and strike benefits, which are not
+  per-side tracked). These are added to each person's Form 2441 earned income right after the tips block.
+- The manual `additionalEarnedIncome*` field now covers only amounts the app can't compute (e.g. net SE
+  earnings) — filers no longer hand-enter 1g/1h.
+- **No new field, no migration.** e2e `form2441-earned-income-1g-1h.spec.ts`: spouse with $1,000 W-2 box 1
+  + $16,500 excess-deferral (line 1h) → Form 2441 spouse earned income $17,500, limited expenses $3,000,
+  credit $600 (vs $200 without the fix).
+
+
 ## 2026-07-29 — §465 Schedule C/F business at-risk carryforward bridge (V196)
 
 Sixth cross-year carryforward bridge (after Form 172 NOL, §163(j), Schedule A charitable, §199A QBI loss,

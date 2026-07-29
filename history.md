@@ -1,6 +1,36 @@
 ﻿# History
 
 
+## 2026-07-29 — SE nonfarm optional method: prior-year / 5-time gates enforced + auto-derived (V195)
+
+Closed the last "Minor" SE deferral. The nonfarm optional method (Schedule SE Part II) has three §1402(a)
+gates: income eligibility (already checked), net SE earnings ≥ $400 in 2 of the prior 3 years, and used
+< 5 times (lifetime). The last two are NONFARM-only (the farm method has neither) and were previously only
+advised. Now ENFORCED via self-certification, PRE-FILLED (hybrid) from the taxpayer's own prior-year returns.
+
+**Phase 1 — enforce from self-certification.** Two `pf_se_tax_options` fields (V195):
+`metTwoOfThreePriorYearsSe400`, `nonfarmOptionalMethodPriorUses`. `nonfarmOptApplied &&=
+nonfarmOptionalGatesPass(opt)` (met2of3 not "No" AND priorUses < 5); an ineligible election falls back to
+the regular method with a non-blocking `SE_NONFARM_OPTIONAL_METHOD_GATE_FAILED_<who>`. A fully
+self-certified election suppresses the old `SE_OPTIONAL_METHOD_APPLIED_UNVERIFIED_GATES` advisory; a null
+answer keeps the benefit of the doubt (advisory still fires → no behavior change for existing returns). The
+applied-advisory is now nonfarm-only. UI: two fields on `form-se-tax-options` (shown when electing nonfarm).
+
+**Phase 2 — auto-derive pre-fill (multi-year).** Persist per year/side `se_net_earnings` +
+`nonfarm_optional_method_used` on `out_schedule_se` (V195; ScheduleSE model + AbstractScheduleSEOutputMapper
++ ScheduleSEResult flags set from the SE compute). `importedNonfarmOptionalGateData(uid, ownerRole)` reads
+this person's prior-year primary Schedule SE rows → `[#prior-3-years with SE ≥ $400, #nonfarm-optional uses
+lifetime]`, and `seedNonfarmOptionalGates` pre-fills the two self-cert fields (only when electing nonfarm;
+a user answer wins per field). CONSERVATIVE: confirms the 2-of-3 as TRUE only when ≥ 2 qualifying years are
+visible (never disconfirms from partial data); seeds the prior-uses count as a lower bound. Only counts
+years filed with us — the retained advisory covers the pre-app / first-year caveat.
+
+e2e: `se-nonfarm-optional-gates.spec.ts` (2-of-3=No → $0 SE tax + gate-failed; 5 prior uses → $0 +
+gate-failed; self-certified → $612 no advisory; unanswered → $612 + advisory) and
+`se-nonfarm-optional-autoderive.spec.ts` (2022/2023 regular SE + 2024 nonfarm-optional → 2025 auto-derives
+met2of3 + 1 prior use → applied $612, no advisory; year isolation). 12/12 green incl. the SE regression.
+
+
 ## 2026-07-29 — Form 8829 home-office carryforward bridge (V194)
 
 Fifth cross-year carryforward bridge. The §280A(c)(5) home-office deduction disallowed because it

@@ -1,6 +1,36 @@
 ﻿# History
 
 
+## 2026-07-29 — Form 8829 home-office carryforward bridge (V194)
+
+Fifth cross-year carryforward bridge. The §280A(c)(5) home-office deduction disallowed because it
+exceeded the business's gross income was only surfaced in advisory text — now structured, persisted, and
+auto-imported into next year (Form 8829 lines 25/31 carryover), where it re-tests against that year's
+gross-income limit.
+- **Capture:** `computeHomeOfficeDeduction` gained a `priorCarryover` param (added to the operating tier,
+  Form 8829 line 25) and a `disallowedOut` accumulator; `computeScheduleC` sums the disallowed across all
+  businesses/sides into `ScheduleCResult.homeOfficeCarryforward` (a new settable field, preserved across
+  the farm merge). The prior carryover is applied to the FIRST form8829 home office (consume once); any
+  unconsumed remainder (no form8829 business / a simplified-method year, which allows no carryover
+  deduction) carries forward unchanged.
+- **Persist:** `homeOfficeCarryforward` on `Schedule1AdditionalIncome` → `out_schedule_1`
+  `add_inc_home_office_carryforward` (V194); `Schedule1OutputMapper` save/load/clear +
+  `loadByTaxReturnId` extended to carry both it and the §465 at-risk carryforward.
+- **Input/bridge:** form-level `priorYearHomeOfficeCarryover` on `pf_home_office` (V194) + entity +
+  mapper + `form-home-office-actual` UI field; `importedPriorYearHomeOfficeCarryover(uid)` resolves the
+  prior-year primary's persisted amount (primary-path guard) and seeds it (user entry wins).
+- **Gate fix (principled diagnosis):** a home office limited to a break-even ($0-net) business made every
+  Schedule 1 line net to $0, so `hasAnySchedule1Input` dropped the whole record (and the carryforward).
+  Year 1 of the bridge ALWAYS nets to 0 when the home office is limited, so the bridge would never persist
+  anything — added the home-office carryforward to the Schedule 1 gate.
+- **Simplification (documented):** single aggregate (operating + depreciation combined into the operating
+  tier), like the charitable carryover; applied to the first form8829 home office.
+- e2e `home-office-carryforward-bridge.spec.ts`: 2024 gross $2k, operating $3k → $2k allowed, $1k
+  disallowed; 2025 gross $10k auto-imports the $1k → business net $7,000 (vs $8,000 without), carryforward
+  null; year isolation; user override $500 → net $7,500; single-year re-suspension ($5k carryover, $2k
+  limit → $3k re-suspends). 12/12 green incl. Schedule C / §280A-tiers / at-risk regressions.
+
+
 ## 2026-07-29 — §465 at-risk prior-year carryforward bridge (rental Schedule E, V193)
 
 Fourth cross-year carryforward bridge (after Form 172 NOL, Form 8990 §163(j), Schedule A charitable).

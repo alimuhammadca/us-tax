@@ -1,6 +1,34 @@
 ﻿# History
 
 
+## 2026-07-29 — §465 at-risk prior-year carryforward bridge (rental Schedule E, V193)
+
+Fourth cross-year carryforward bridge (after Form 172 NOL, Form 8990 §163(j), Schedule A charitable).
+A rental loss disallowed by the §465 at-risk limit is now **persisted** and **auto-imported** into the
+next year, where it is released against that year's amount-at-risk headroom.
+- **Persist:** `rentalAtRiskCarryforward` (was model-only on `Schedule1AdditionalIncome`) now stored on
+  `out_schedule_1.add_inc_rental_at_risk_carryforward` (V193) + `Schedule1OutputMapper` save/load/clear +
+  a new `loadByTaxReturnId` (reads a specific anchor's carryforward for the bridge).
+- **Input:** form-level `priorYearAtRiskCarryforward` on `pf_rental_income` (V193) + entity + mapper +
+  `form-rental-income` UI field. Aggregate across the taxpayer's rental activities (the engine limits at
+  the aggregate).
+- **Bridge:** `importedPriorYearRentalAtRisk(uid)` resolves the prior-year primary's persisted
+  carryforward (Instance<Schedule1OutputMapper>, primary-path only via SCOPED_FORMS_OVERRIDE guard) and
+  seeds it in-memory at prepare() start; an explicit user entry (either spouse) wins.
+- **Release (compute):** `computeRentalScheduleE` accumulates `atRiskHeadroom = Σ max(0, amountAtRisk −
+  |capped loss|)` per at-risk-tracked property (rental + Form 4835 farm rental), then releases
+  `min(priorCarryover, headroom)` into the passive-loss pool (flowing through §469); the remainder
+  re-suspends into the new carryforward. Never releases more than current headroom → cannot over-deduct.
+- **Simplification (documented):** aggregate treatment (not per-activity identity across years), matching
+  the rest of the §465/§469 engine. Schedule C / Schedule F business at-risk (Form 6198) and Form 8829
+  home office remain single-year (home office is the next bridge).
+- e2e `rental-at-risk-carryforward-bridge.spec.ts`: 2024 $30k loss capped at $10k at risk → $20k
+  suspended; 2025 at-risk raised to $50k (headroom $45k) auto-imports and releases all $20k → rental net
+  −$25,000, carryforward null; year isolation; user override $8,000 wins → net −$13,000; plus a
+  single-year partial case (headroom $3k of a $20k carryover → $3k released, $17k re-suspended). 13/13
+  green incl. all existing rental specs.
+
+
 ## 2026-07-29 — §199A UBIA recovery-window drop-off (§199A(b)(6))
 
 Old assets were never dropped from UBIA of qualified property, slightly over-stating the 2.5%-UBIA

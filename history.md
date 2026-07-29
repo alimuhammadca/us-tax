@@ -1,6 +1,19 @@
 ﻿# History
 
 
+## 2026-07-29 — sc_00127 collectibles 28%-rate gain — validated + e2e coverage added (no code change)
+
+SQA validation of scenario 127 (collectibles 28%-rate gain, IRC §1(h)(4)). Confirmed the app is IRS-correct:
+a $20,000 long-term collectibles gain (Single, wages $75,000) designated as the Schedule D line-18 28%-rate
+amount routes through the **Schedule D Tax Worksheet** and — because the marginal rate (22%) is below 28% —
+is taxed at the ordinary rate → total tax **$12,355**, refund **$1,645**, matching the hand-computed
+expected. **No code change** (the compute was already correct). Findings: a 1099-B sale carries no reliable
+collectibles indicator, so the 28%-rate portion is designated by the taxpayer on the capital-gain/loss form
+(`twentyEightPercentRateGainWorksheetAmountLine18`); `collectibles28PercentGainAmount` is a **1099-DIV** box-2d
+field (distributions), not 1099-B. Added permanent e2e `collectibles-28-percent-rate.spec.ts` — the prior
+line-7ab coverage exercised the collectibles path only with a null line 18, so this fills a real gap.
+
+
 ## 2026-07-29 — Form 8582 AMT passive-loss recompute + AMT carryover bridge — IRC §469/§56 (V200)
 
 The last Form 6251 AMT gap. The §469 passive-loss limitation is now refigured with AMT figures, and the AMT

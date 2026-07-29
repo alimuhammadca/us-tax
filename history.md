@@ -1,6 +1,35 @@
 ﻿# History
 
 
+## 2026-07-28 — Form 2555 income-flow disambiguator: foreign wages → line 1h when not in a W-2 (V191)
+
+Closed the last Form 2555 income-flow gap. The `foreign-earned-income` form is exclusion-only — it
+computes the §911 exclusion (Schedule 1 line 8d, negative) but never puts the foreign wages INTO income.
+That is correct when the wages arrived on a US W-2 (already on line 1a and netted by the exclusion), but a
+filer whose foreign employer issues **no W-2** types the amount by hand, so the income exists nowhere and
+only the negative exclusion lands — understating AGI by the exclusion amount.
+
+An earlier "always add foreign wages to line 1h" attempt was **reverted** because it double-counts the
+common foreign-wages-in-a-W-2 case (caught by `line28-actc-schedule8812.spec.ts:1155`). The two cases are
+indistinguishable to the engine, so this adds a user-input disambiguator instead:
+
+- **New intake field `foreignWagesAlreadyInIncome`** (Boolean) on the foreign-earned-income form (taxpayer
+  + spouse), a yes/no beneath the foreign-wages amount. **V191** (`pf_foreign_earned_income` column) +
+  entity + `ForeignEarnedIncomeMapper` save/load + Angular `form-foreign-earned-income` radio/help + both
+  2555 YAMLs.
+- **Compute** (`computeOtherEarnedIncome`, new `foreignEarnedWagesNotYetInIncome` helper): adds
+  `foreignWagesAmount` to Form 1040 line 1h **only when the flag is explicitly FALSE** (no W-2). NULL or
+  TRUE (already reported) adds nothing — so every legacy return and the in-W-2 case keep today's behavior
+  byte-for-byte. Wages only (self-employed foreign income routes through Schedule C). MFS: the spouse's
+  foreign wages never land on the taxpayer leg's line 1h.
+- UI guidance: when a W-2 matching the foreign country is detected the form nudges toward "Yes"; choosing
+  "No" shows a note that the wages are added to line 1h then netted by the exclusion (AGI effect ~0 up to
+  the cap).
+- Verified (`form2555-foreign-wages-income-flow.spec.ts`, 3 cases): No → line 1h $50k, AGI $30k;
+  Yes → line 1h $0, AGI $30k; null → line 1h $0, AGI $30k. Regression guard green: `line28` (MAGI $60k,
+  no double-count), `line16` FEITW, `form5329` 2555 MAGI add-back — 8/8.
+
+
 ## 2026-07-27 — Form 172 Part I: capital-loss lines (2–22) + §1202 exclusion (line 17)
 
 Completed the previously-deferred Part I worksheet detail. Line 1 corrected to the form's definition —

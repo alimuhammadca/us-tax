@@ -134,6 +134,15 @@ sections:
         placeholder: 0.00
         label: Total foreign wages and salary in USD
         help: Enter the total wages and salary you earned from work performed in a foreign country, converted to US dollars.
+      - name: foreignWagesAlreadyInIncome
+        type: boolean
+        required: false
+        label: Are these foreign wages already included in a W-2 or other income you reported on this return?
+        help: >-
+          Yes (or leave unanswered) if a W-2 already reports these wages (they are on Form 1040 line 1a and the
+          exclusion nets them out). No if a foreign employer paid them with no US W-2 and you entered them on no
+          other income form; the wages are then added to Form 1040 line 1h so they exist as income before the
+          foreign earned income exclusion removes them. Prevents an understated AGI on foreign-only wages.
 
   - name: housingExclusion
     title: Foreign housing exclusion (optional)

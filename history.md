@@ -1,6 +1,36 @@
 ﻿# History
 
 
+## 2026-07-29 — Form 8582 AMT passive-loss recompute + AMT carryover bridge — IRC §469/§56 (V200)
+
+The last Form 6251 AMT gap. The §469 passive-loss limitation is now refigured with AMT figures, and the AMT
+suspended passive loss is a carryover track distinct from the regular §469 carryover (8th cross-year bridge).
+This also **refines** the V198 line-2m rental add-back.
+
+- **Parallel §469 pass:** the §469 pooling/allowance/disposition logic was extracted into a `compute469`
+  helper and run twice. In the property loop, each rental activity's **AMT net = regular net + its
+  personal-property depreciation delta** (200% DB − 150% DB) is accumulated into parallel AMT passive
+  income/loss aggregates (K-1/farm identical in both runs, so they cancel — no double count with the
+  separate K-1 line-2m).
+- **Form 6251 line 2m (rental) = AMT passive net − regular passive net** (passive net = passiveIncome −
+  §469 losses allowed). This is strictly more correct than V198's raw depreciation add-back: a **profitable**
+  rental still yields the depreciation delta (V198's e2e passes unchanged), but a **fully SUSPENDED** loss
+  now correctly yields **0** (the delta only shrinks the suspended amount that carries forward — no current
+  add-back), and a partially-allowed / disposed loss yields the §469-limited portion.
+- **AMT suspended-loss carryover (V200):** persisted on `out_schedule_1.add_inc_amt_passive_loss_carryforward`
+  (`Schedule1AdditionalIncome.amtPassiveLossCarryforward` + entity + `Schedule1OutputMapper` save/load/
+  loadByTaxReturnId/clear). Auto-imports into next year's AMT §469 pass via `importedPriorYearAmtPassiveLoss`
+  (8th bridge, mirroring the §465 rental at-risk bridge; primary path only; year-1 fallback = the regular
+  prior-suspended, so **no new intake field**).
+- **Gate fix:** a fully-suspended passive loss nets every Schedule 1 line to $0, so the `hasAnySchedule1Input`
+  gate dropped the whole record before the carryforward persisted (the V194 home-office gotcha again). Added
+  the rental passive/AMT/at-risk carryforwards to that gate.
+- **e2e `form6251-line2m-amt-469-recompute.spec.ts`** (3): suspended loss → line 2m null + AMT carryover
+  $38,250 vs regular $40,000 (separate tracks); §469(g) disposition → line 2m $1,750; two-year bridge
+  (2024 $38,250 AMT suspended auto-imports, releases on 2025 disposition, year isolation holds). V198's
+  profitable-rental e2e passes unchanged. **This completes the Form 6251 AMT suite (2d/2e/2f/2i/2k/2l/2m).**
+
+
 ## 2026-07-29 — Charitable carryover: per-category character + 5-year expiration — IRC §170(d)(1) (V199)
 
 The Schedule A charitable-contribution carryover was a single aggregate dumped into the next year's **cash

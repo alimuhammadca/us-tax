@@ -526,7 +526,7 @@ taxable). So line 5b and the §72(t) base are now consistent on the non-rollover
 e2e `line5b-nonrollover-box5-basis.spec.ts` (gross $50k / box-5 $5k / code-1, no rollover): box-2b-not-
 determined (box 2a $50k) and box-2a-determined ($45k) BOTH → line 5b $45k, penalty $4,500.
 
-## Form 6251 AMT — line 2l/2m-K1 DONE (2026-07-28); line 2k disposition (V197) + line 2m rental (V198) DONE (2026-07-29); only Form 8582 AMT recompute deferred
+## Form 6251 AMT — COMPLETE (2026-07-28/29): 2d/2e/2f/2i/2k(V197)/2l/2m-K1/2m-rental(V198)/Form-8582-AMT-recompute(V200). No remaining Form 6251 AMT gaps.
 
 **Line 2k (disposition of property — AMT vs regular gain/loss difference) — DONE 2026-07-29 (V197).** IRC
 §56(a)(6). On a disposed depreciable asset the AMT gain/loss differs from the regular gain/loss by exactly
@@ -558,9 +558,17 @@ lumped Schedule E line-18 depreciation; `computeRentalScheduleE` sums `Σ(regula
 `RentalScheduleEResult.line2mAmtDepreciation` → folded into `amtPassiveActivityLine2m` (line 2m, §469
 passive) → AMTI. Simplification: the §280A/§469 deduction-limit interaction with AMT is not separately
 refigured (correct when depreciation is fully deductible). e2e `form6251-line2m-rental-amt-depreciation.spec.ts`
-(reg 7,000 / AMT 5,250 → line 2m +1,750; AMTI 1,750 higher, AGI unchanged). **Still deferred:** (b) the full
-**Form 8582 AMT passive-loss recompute** — a parallel §469 pass with AMT figures + AMT prior-year suspended
-carryovers (none exist today). This is now the ONLY remaining Form 6251 AMT gap.
+(reg 7,000 / AMT 5,250 → line 2m +1,750; AMTI 1,750 higher, AGI unchanged). **(b) Form 8582 AMT passive-loss
+recompute — DONE 2026-07-29 (V200).** The §469 pooling was extracted into `compute469` and run twice (regular
++ AMT); each rental activity's AMT net = regular net + its personal-property depreciation delta. Form 6251
+line 2m (rental) = (AMT passive net − regular passive net), which supersedes the V198 raw add-back: a
+profitable rental still yields the delta, but a fully SUSPENDED loss now yields 0 (no add-back), and a
+disposed/allowed loss yields the §469-limited portion. The AMT suspended passive loss persists on
+`out_schedule_1.add_inc_amt_passive_loss_carryforward` (V200) and auto-imports into next year's AMT §469 pass
+(`importedPriorYearAmtPassiveLoss`, 8th bridge; year-1 fallback = regular prior-suspended → no new intake
+field). Gate fix: the fully-suspended-loss case (every Schedule 1 line $0) added to `hasAnySchedule1Input`.
+e2e `form6251-line2m-amt-469-recompute.spec.ts` (3). **★ The Form 6251 AMT suite (2d/2e/2f/2i/2k/2l/2m) is
+now COMPLETE — no remaining Form 6251 AMT gaps.**
 
 **Lines 2e / 2f (regular NOL add-back + ATNOLD) — ✅ DONE 2026-07-28.** The app's AMTI base (line 1b) is
 AGI-derived, so it already reflected the REGULAR NOL deduction (Schedule 1 line 8a) — but for AMT the

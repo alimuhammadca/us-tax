@@ -1,6 +1,42 @@
 ﻿# History
 
 
+## 2026-07-29 — Pub. 974 §162(l)↔PTC: both-spouses / >1-business coordination (V192) + deploy build-guard
+
+**Pub. 974 both-spouses (V192).** The §162(l) SE-health ↔ §36B PTC fixed-point solve previously coordinated
+only ONE self-employed spouse with a Marketplace plan; two SE-Marketplace spouses fell back to the naive
+per-side cap + a "not modeled" advisory. Now generalized: because the PTC is one household credit that
+depends only on total MAGI, the deduction fixed point is solved once on the TOTAL specified premiums
+(bisection on `g(D)=min(totalSpecified − PTC(M0−D), Σ remaining §162(l) ceilings)`) and then split across
+the two ceilings per a new **`marketplacePremiumSharePercent`** intake field (V192 on `pf_se_deductions`
++ entity + `SeDeductionsMapper` + `form-se-deductions` %-field/help + both se-deductions YAMLs). For one
+side the solve reduces exactly to the former single-side result (verified — the existing e2e is unchanged).
+- Share resolution: single side → 100%; both declared → normalized by their sum; one declared → the
+  complement; neither → even 50/50. Each side's deduction is capped at its own remaining ceiling (any
+  excess a bound side can't absorb is lost — documented).
+- **PTC-discontinuity clamp:** the PTC is a step function of MAGI (per-month contribution rounds to the
+  dollar), so at a rounding boundary there is no exact integer fixed point — adjacent branches point at
+  each other (e.g. deduction 1,320↔PTC 4,668 vs 1,332↔4,680). Added a conservative clamp
+  (`dStar = min(dStar, totalSpecified − PTC(M0−dStar))`) so the Pub. 974 invariant *deduction + allocable
+  PTC ≤ specified premiums* always holds and the result is deterministic regardless of which side of the
+  discontinuity the bisection's final midpoint landed on. No-op on clean fixed points (single-side
+  2,676/3,324 unchanged). The advisory now fires only on true fallbacks (no 1095-A, or zero earned-income
+  ceiling); both-spouses emits the APPLIED note.
+- e2e `pub974-both-spouses-se-health-ptc.spec.ts`: A (30k/30k, 50/50) → line 17 1,320 + PTC 4,668 = 5,988
+  ≤ 6,000, APPLIED; B1 (share to the 6k-profit spouse, PTC forced 0) → deduction capped at that business's
+  §162(l) ceiling 5,576; B2 (share to the 80k spouse) → full 6,000. 5/5 green incl. the single-side spec.
+
+**Deploy build-guard.** Root-caused the recurring prod-deploy failures (2026-07-28, 4 pushes): NOT the
+Burstable Postgres, but a test-source that no longer compiled — `Dockerfile.azure` runs
+`mvn package -DskipTests`, which still COMPILES tests, so a stale positional `TaxReturnComputation(...)`
+call (missing the `form2210f` record component) failed `az acr build` at TestCompilerMojo ~3 min in, no
+image, prod stuck on the prior revision. `mvnw compile` (main only) and the e2e (running server) never
+exercise test-compile. Fixes: (1) threaded `form2210f` into the 4 positional test constructors; (2) added
+a fast `build-check` job (`mvnw test-compile`) that `build-and-deploy` now `needs:`, so a compile break
+stops the pipeline before any ACR build or Postgres wake, with a clear red on the commit; (3) widened the
+Postgres start-wait to ~10 min and the smoke-test to 300s as defensive hardening.
+
+
 ## 2026-07-28 — Form 2555 income-flow disambiguator: foreign wages → line 1h when not in a W-2 (V191)
 
 Closed the last Form 2555 income-flow gap. The `foreign-earned-income` form is exclusion-only — it

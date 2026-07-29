@@ -44,6 +44,18 @@ sections:
         type: boolean
         required: false
         label: These premiums were for a Marketplace plan with advance premium tax credit
+      - name: marketplacePremiumSharePercent
+        type: amount
+        required: false
+        showIf: marketplacePlan == true
+        placeholder: e.g. 40
+        label: Share of the Marketplace premium for this business (%)
+        help: >-
+          Only needed when BOTH spouses are self-employed with Marketplace coverage. The percentage
+          (0-100) of the household Marketplace enrollment premium (Form 1095-A col A) attributable to this
+          business, used to split the §162(l) self-employed-health deduction and the premium tax credit
+          across each business's earned-income limit (Pub. 974 "More than one trade or business"). Blank
+          defaults to an even 50/50 split; ignored when only one spouse is self-employed.
 
   - name: retirement
     title: Self-employed retirement contributions (line 16)

@@ -1,6 +1,32 @@
 ﻿# History
 
 
+## 2026-07-29 — §465 Schedule C/F business at-risk carryforward bridge (V196)
+
+Sixth cross-year carryforward bridge (after Form 172 NOL, §163(j), Schedule A charitable, §199A QBI loss,
+§465 rental at-risk). A Schedule C/F business loss disallowed by the §465 at-risk limit (Form 6198) was
+single-year — the suspended excess was dropped. Now persisted and auto-imported.
+- **Persist:** `businessAtRiskCarryforward` on `Schedule1AdditionalIncome` (= Schedule C `atRiskSuspended`
+  + Schedule F `atRiskSuspended`, set in `computeOtherIncomes`; the farm merge now also preserves
+  `atRiskSuspended`) → `out_schedule_1.add_inc_business_at_risk_carryforward` (V196) + `Schedule1OutputMapper`
+  save/load/clear + `loadByTaxReturnId` (now carries all three at-risk/home-office carryforwards).
+- **Input/bridge:** form-level `priorYearBusinessAtRiskCarryforward` on `pf_se_tax_options` (V196) + entity
+  + mapper + `form-se-tax-options` UI. `importedPriorYearBusinessAtRisk(uid)` resolves the prior-year
+  primary's carryforward (primary-path guard) and seeds it (user entry wins).
+- **Release (elegant):** the aggregate prior carryover is injected into the FIRST at-risk business's net
+  profit in `computeScheduleC` BEFORE the existing at-risk cap, so the cap re-tests the combined loss
+  against this year's amount at risk — releasing what now fits (flowing to line 3, the SE base, and QBI
+  exactly like a current-year loss) and re-suspending the rest into the new carryforward. No separate
+  headroom math needed; reuses the per-business cap machinery.
+- **Simplification:** aggregate, applied to the first at-risk Schedule C business (the common
+  single-business case). A Schedule-F-only at-risk taxpayer's carryforward still persists (source = C + F)
+  but releases through a Schedule C business.
+- e2e `business-at-risk-carryforward-bridge.spec.ts`: 2024 net −$30k capped at $12k at risk → $18k
+  suspended; 2025 at-risk raised to $50k → the $18k prior loss fully releases (line 3 −$23k), cf null; year
+  isolation; user override $6k → −$11k; single-year partial (headroom $3k of a $20k carryover → $17k
+  re-suspended). 17/17 green incl. Schedule C / SE / home-office / QBI / optional-gate regressions.
+
+
 ## 2026-07-29 — SE nonfarm optional method: prior-year / 5-time gates enforced + auto-derived (V195)
 
 Closed the last "Minor" SE deferral. The nonfarm optional method (Schedule SE Part II) has three §1402(a)

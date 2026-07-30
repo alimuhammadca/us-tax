@@ -1,5 +1,127 @@
 # Outstanding Items
 
+## ★ MAGI/PHASEOUT ADVERSARIAL AUDIT — 2026-07-30
+
+A 4-agent read-only audit verified ~14 income-driven computations against their IRS MAGI/base definitions.
+This session's three prior fixes (IRA/SS Pub 590-A WS1, Roth conversion subtraction, EIC §32(i)) and the
+core bases (§86 SS, Sch 1-A tips/overtime/car-loan, §221 student-loan, §25A education, §199A QBI taxable-
+income base, §36B PTC, §3101(b) Additional Medicare) were all **verified CORRECT**.
+
+**FIXED + committed (batch 1, 2026-07-30) — see history.md:**
+- **[HIGH] Schedule 1-A senior deduction ($6,000/person) per-person phaseout** — was applied once to the
+  combined base (`max(0, 12000 − reduction)`) instead of per-person (`2 × max(0, 6000 − reduction)`);
+  MFJ-both-65+ overstated up to $6,000. Corrected the wrong lock-in test ($10,200 → $8,400) + 2 more tests.
+- **[MOD] Form 8960 NIIT MAGI** — removed the §911(a)(2) housing-exclusion add-back (§1411 adds only the
+  §911(a)(1) FEIE).
+- **[MOD] Form 8880 saver's credit** — added the §25B(e) §911/931/933 add-back to the AGI test + rate (+test).
+- **[MOD] Roth §408A MAGI** — added the Form 8815 + Form 8839 add-backs (to match the traditional-IRA MAGI).
+- **[MOD] Schedule 8812 CTC/ODC MAGI** — added the Puerto Rico (§933) + Form 4563 (§931) add-backs.
+
+**LOW-materiality findings:**
+- ~~**#7 Adoption §137 auto-MAGI**~~ **✅ FIXED 2026-07-30.** Re-derived the Form 8839 "Modified AGI
+  Worksheet--Line 25" (i8839 line 675+) relative to AGI: MAGI = AGI + EXCLUDED adoption benefits (Form 8839
+  line 30) + student-loan interest + Form 2555 (45+50) + Form 4563 + Puerto Rico. Removed the wrong
+  savings-bond and foreign-housing-DEDUCTION add-backs; added the excluded-benefits term (sourced from
+  `form8839.getPart3Line30TotalExcludedBenefits()`). Advisory-only cross-check
+  (`ADOPTION_MAGI_MANUAL_VS_AUTO_MISMATCH`), so no credit impact. **Adjacent fix:** the traditional-IRA §219
+  and Roth §408A MAGI both used `adoption.line1f()` (the TAXABLE benefits, already in AGI) as the §137
+  add-back — corrected to the EXCLUDED benefits (line 30), which is ~$0 with line1f in the common
+  full-exclusion case.
+- ~~**#6 Form 8880 line 4 testing period**~~ **✅ FIXED 2026-07-30 (V205).** Added per-person
+  `distributions2026ThroughDueDate` (savings-credit form + entity + mapper + V205) summed into line 4 — the
+  Form 8880 testing period runs through the return due date, so early-2026 distributions reduce eligible
+  contributions. Unit + e2e (`form8880-savings-credit` early-2026 test).
+
+**LOW findings — ALL RESOLVED 2026-07-30 (batch 3):**
+- ~~**#8 IRA §219 MFS spouse-covered**~~ **✅ FIXED.** `isCoveredSp` now reads the household spouse coverage
+  flag on MFS too (explicit flag only, not W-2 attribution), and `applyPub590aIraPhaseout` gained the
+  MFS-lived-with-spouse "self-not-covered / spouse-covered" $0–$10,000 branch (§219(g)(7)). Unit test.
+- ~~**#9 Form 8815 §135 default-path MAGI**~~ **✅ FIXED.** The default line-9 MAGI now adds back the Form
+  2555 (FEIE + housing) + Form 4563 + Puerto Rico exclusions (§135(c)(4)(B)) — previously only the worksheet
+  / manual-override paths did. Threaded a `foreignExclusionAddback` param into `computeForm8815`. Unit test.
+- ~~**#10 Form 8863 §25A spouse-side PR/4563**~~ **✅ VERIFIED NON-ISSUE.** The PR/Form-4563 add-backs are
+  MANUAL household fields (`magiAddBackPuertoRicoExcludedIncome` / `...Form4563ExcludedIncome`) on the
+  taxpayer education form only — there is NO spouse-side field, so the user enters the household total on
+  the taxpayer form (the Form 2555 add-back IS auto-computed for both spouses). No code change needed.
+
+_(historical LOW list below — superseded)_
+- **#8 IRA §219 MFS "spouse-covered" phaseout** — an MFS non-participant whose spouse IS an active
+  participant should use the $0–$10,000 range; the code returns the full deduction. Compounded because MFS
+  legs force `isCoveredSp=false` (separate returns) — a cross-leg coordination gap.
+- **#9 Form 8815 §135 default-path MAGI** — doesn't auto-add the Form 2555/4563 exclusions (only the
+  worksheet path / manual `form8815ManualMagiOverride` does). Documented deferral; escape-hatch exists.
+- **#10 Form 8863 §25A spouse-side PR/§4563** — the PR/Form-4563 add-backs are MANUAL fields
+  (`magiAddBackPuertoRicoExcludedIncome` etc.) read only from the taxpayer form; likely a non-issue since
+  the user enters the household total there (the Form 2555 add-back IS auto-computed for both spouses).
+
+## ★ VERIFICATION SWEEP — 2026-07-29 (verify deferrals against code + IRS source)
+
+A 7-agent read-only sweep verified ~21 "deferred/gap" items below against the actual compute code and
+primary IRS sources. **~57% were stale or false-premise** — already implemented, or describing a rule that
+doesn't exist. Authoritative status (supersedes the in-place notes at the cited lines):
+
+**STALE / ALREADY-DONE — close these (implementation confirmed with file:line):**
+- Form 8815 savings-bond exclusion (§2284) — `computeForm8815` TRCS:5303 (full line 1–14 + worksheets).
+- Form 8615 lines 9–13 parent-rate + sibling aggregation (§3258) — TRCS:6675–6683.
+- Form 6251 line 2k AMT disposition (§613) — computed V197, TRCS:1238–1240 / 25534.
+- Schedule SE → Schedule 2 line 4 (§3423) — `computeScheduleSE` TRCS:19813 → 31467 ("SE out of scope" is stale).
+- Schedule E per-property output/preview (§4293) — `computeScheduleEOutput` TRCS:4579 (only granular lines 5–17 + Part IV REMIC remain).
+- Form 4972 Q6 eligibility gate (§4033) — resolved 2026-07-11, TRCS:8116–8120.
+- Line 27c EIC checkbox (§1371) — auto-derived (frontend-wired + tested).
+- Student-loan-interest dependent-on-another guard (§2190) — TRCS:22357–22377.
+- §74(d)(2) Olympic-medal AGI ceiling + flag (§3879) — TRCS:4340–4356 / 22400–22410.
+- Form 8839 foreign-child finality retroactive exclusion (§1658) — TRCS:28009–28014.
+- Form 2441 Worksheet A tighter cap (§1767) — resolved 2026-07-09 (V95, 7 prior-year fields exist).
+- Form 5695 Part II + Form 8936 clean-vehicle credit (§3319) — computed (TRCS:32199 / 34878); only E2E coverage remains.
+
+**CORRECT-AS-IS (current behavior is IRS-correct; note is a fair scope boundary):**
+- Line 2f AMT NOL / ATNOLD (§583) — correct whenever the loss year had no AMT adjustments; separate AMT-§172 track is a narrow-edge needs-field item.
+- Form 8606 nondeductible advisory (§2216) — compute complete; only a flag-text nudge is missing (trivial UX).
+- §461(l) EBL "carryforward" and Form 8978 negative-exceeds-tax — already confirmed correct earlier this session (NOL path / §6226(b) floor).
+
+**REAL, ACTIONABLE, COMPUTE-ONLY — ✅ BOTH FIXED 2026-07-29 (no new intake field):**
+- ~~EIC §32(i) investment-income ceiling omits Schedule E rental/royalty/passive (§2962).~~ **FIXED.** `computeInvestmentIncomeForEic` now adds the Schedule E NII-includable passive net (`form8960RentalNiitNet` = passive rental RE + passive passthrough + royalties + Form 4835 farm rental), floored at $0 — Pub. 596 Worksheet 1 lines 10 + 13 / §32(i)(2)(C)/(E). Threaded through `computeLine27aEIC` + `computeLine31ThroughLine38`. e2e `eic-investment-income-passive-rental.spec.ts` (rental net $12k → EIC disqualified; $5k → allowed). Simplifications documented in the method javadoc (combined-vs-per-tier flooring; §1231/4797 capital-gain refinement not applied).
+- ~~Roth §408A(c)(3)(B)(i) conversion-income subtraction from the Roth-limit MAGI (§482).~~ **FIXED.** `excMagi` now subtracts the taxable Roth conversion (Form 8606 Part II line 18, both spouses) before the §4973 excess-Roth excise. e2e `roth-magi-conversion-exclusion.spec.ts` (paired: $60k conversion excluded → no excise; equal wages → $420 excise). 1021 unit tests + affected EIC/Roth e2e green.
+
+**REAL, NEEDS NEW INTAKE FIELD (owner sign-off) or larger:**
+- ~~K-1 oil & gas IDC → Form 6251 line 2t (codes D/E) + code F → line 3 (§594).~~ **✅ DONE 2026-07-29 (V203).** Line 2t = the entity-reported oil/gas/geothermal IDC AMT preference (§57(a)(2)) via a new dedicated K-1 field `part3OilGasIdcAmtPreferenceAmount` on 1065 (box 17) + 1120-S (box 15) — the entity applies the §57(a)(2)(E) independent-producer 40%/65%-of-net-income math; the 1040 consumer includes the reported share (the app does not re-derive it — net oil/gas income isn't on the 1040). Code F ("other AMT items") → line 3, routed from the existing coded K-1 slots (no new field). Both new Form 6251 fields (`line2tIntangibleDrillingCosts`, `line3OtherAdjustments`) fold into AMTI line 4 (not persisted, matching the 2k/2m/2d pattern). e2e `form6251-line2t-idc-line3-k1-amt.spec.ts` (line 2t & line 3 each verified via a with/without AMTI delta; 1065 + 1120-S paths). Codes D/E gross-income/deductions themselves remain informational only.
+- ~~Form 1116 automatic FTC carryover ledger, §904(c) 1-back/10-forward (§3144).~~ **✅ DONE 2026-07-29 (V202) — the CARRYFORWARD (10-yr) half.** 9th cross-year carryforward bridge: unused foreign tax per §904(d) basket (line 14 − line 24) is vintage-tagged, persisted (`out_form_1116.ftc_carryover_detail`), and auto-imported into next year's line 10 (aged for the 10-yr expiry; §951A/GILTI excluded; user-entered `priorYearCarryover` wins per basket; Reg. §1.904-2(b) ordering — current-year taxes first, then carryovers oldest-first). No new INTAKE field (only an `out_` migration). **Still deferred:** the 1-year CARRYBACK (needs an amended prior-year return, like the forward-only NOL bridge); the §907(f) oil-&-gas special carryover rules. e2e `form1116-ftc-carryforward-bridge.spec.ts` + unit `ftcCarryoverVintageEncodeDecodeRoundTripsAndAgesOutTenYearsAndGilti`.
+- Form 4972 Part III page-3 worksheets (§4086) — 3 unbuilt worksheets, **zero filed-return impact → recommend close as won't-do**.
+
+**AMT / Form 6251 adversarial audit 2026-07-30 (4 agents) — deferred findings (fixed: #1/#2/#4 Part III carve-out, #3 line-10 Form 8978, #5 line-2h QSBS — see history.md):**
+- **#6 MFS §55(d)(3)(B) AMTI add-back** — MFS with AMTI > $900,350 must add back 25% of the excess (capped at $68,500 at AMTI ≥ $1,174,350) on line 4. Already an acknowledged deferral (TRCS ~25890, comment). Rare path; HIGH-per-return.
+- **#7 Form 6251 line 10 line-1z proxy** — line 10 uses only APTC repayment (Sch 2 line 1a) as the "line 1z" addend; misses clean-vehicle recapture (1b/1c, Form 8936) and net-EPE recapture (1d, Form 4255). Reachability depends on whether those recaptures are computed at all (unconfirmed). Would over-state AMT with a recapture + AMT.
+- **#8 Form 2555 + capital gains skips Part III** — a 2555 filer with LTCG/QDCG takes the AMT FEITW branch instead of ALSO running Part III → over-states TMT. Rare combination.
+- **Kiddie-tax §59(j) AMT exemption limit** — a `dependent_own` return for a §1(g) child would grant the full $88,100 exemption instead of the earned-income + $9,550 cap. Uncertain whether a dependent_own return reaches computeLine17 with Form 8615; investigate.
+- **Form 8801 line 22 over-includes Form 8912 credit** — i8801 line 22 excludes the Form 8912 credit from the subtracted credits; the code includes it. Very rare intersection (Form 8912 + prior-year MTC).
+- **MFS 20% QDCG floor $300,025 vs form's $300,000** (ReferenceData.java:357) — a "G5 spec fix" that disagrees with the printed 2025 f6251 line 25; ≤ a few dollars.
+- **Confirm `getDeductibleTaxes()` = full Sch A line 7** (incl. line 6 "other taxes"), not just line 5e — if it omits line 6, Form 6251 line 2a is understated for itemizers with line-6 taxes. One-line confirmation, not verified.
+- **§1202 line 2h UI surfacing** — both §1202 fields (`section1202ExclusionAmount`, `section1202ExclusionPercentage`) are backend/API-only; neither is in the Angular capital-gain-loss form. A frontend task to add the intake UI (amount + acquisition-vintage/percentage dropdown).
+
+**Credits-stack adversarial audit 2026-07-30 (4 agents) — deferred findings (fixed: #1 credit ordering, #2 ACTC SE earned income, #3 adoption CLW-B, #4 MFJ EIC age, #5 Schedule R CLW — commit e92c5eb):**
+- **#6 EIC uses a rate formula, not the IRS EIC Table midpoint method** (TRCS:eicTableLookup) — computes the credit as a continuous function of exact income; the IRS mandates the $50-bracket-midpoint table. Diverges by ≤ ~$11 (45% phase-in) / ~$5 (phaseout) per return but affects EVERY EIC return. LOW-MED.
+- **#7 Ordering: education (8863) and saver's (8880) CLWs reference elderly (6d) computed later** → their limits are overstated, but masked by the line-22 floor (Sch 3 line 8 can exceed line 18, no refund leak). To fully fix, Schedule R would move before education/saver's too. LOW.
+- **#8 Form 2441 dep-care CLW uses an over-broad helper** (sumSchedule3NonrefundableCreditsExcluding5695) — right answer only because dep-care runs at slot #2; omits 6l at runtime (Form 8978 applied at #19) and is fragile to reordering. LOW.
+- **Line 6l latency**: several CLWs now correctly LIST Schedule 3 line 6l (negative Form 8978) but it's applied at slot #19, so it reads null wherever subtracted (CTC CLW-A, adoption, Schedule R). To make 6l real, move applyOtherPaymentsFormToSchedule3's 6l wiring early. Rare (BBA negative + credits). LOW.
+- **#9 CTC under-17 age + child SSN/ITIN not enforced** (TRCS:computeSchedule8812) — numCtcChildren/numOdcDependents come straight from user booleans; nothing verifies the child is under 17 or has an SSN (vs ITIN → ODC). Intake-validation gap, consistent with self-filing design. LOW-MOD.
+- **#10 EIC Pub 596 Rule 10** (filer/spouse is themselves a qualifying child of another) not tested on either path. Niche; may need a new intake field. LOW.
+- **#11 Form 8936 new-vehicle credit has no $7,500 ceiling** on the seller-reported `newVehicleTentativeCreditAmount` (TRCS:~35499) — matches the IRS Schedule A "seller-reported" design but has no defensive cap (used-vehicle path IS capped at $4,000). LOW.
+- **#12 Form 5695 `otherDoorCosts` bucket lacks a per-door $250 sub-cap** (TRCS:computeDoorCredit) — bounded by the $500 aggregate cap, so limited real overstatement. LOW.
+- **Not fully verified** (flagged by agents, worth a follow-up pass): Form 8801 §53 internal limit vs "regular tax − TMT"; Form 8936 6f/6m and Form 8396 CLW subtraction lists.
+
+**Capital-gains / Schedule D adversarial audit 2026-07-30 (4 agents) — deferred findings (fixed batch 1: #2 §1202→line18, #7 §1250 worksheet, #4 carryover bridge — commit 7572d83):**
+- ~~**#1 Schedule D Tax Worksheet stacking is REVERSED (HIGH).**~~ **✅ FIXED 2026-07-30 (commit 6d033e4).** New `computeScheduleDTaxWorksheetExact` implements the IRS worksheet lines 1-47 literally (special 28%/§1250 gains stacked BELOW the regular 0/15/20 pool; 28%/25% are ceilings not floors; line-47 final min cap added — closes #9). Shared by `computeScheduleDTaxWorksheet`, `computePreferentialRateTax` (QDCG), and Form 8615. Only one unit test moved (Form 8615 collectibles, to IRS-correct values); QDCG + collectibles-only + §1250-only cases unchanged. Reflection regression pins MFJ $30,328 / pure-collectibles $28,847 / §1250 $69,563.
+- ~~**#3 Form 4952 line 4g ignored (HIGH-if-live).**~~ **✅ FIXED 2026-07-30 (commit e7a6771).** VERIFIED the 4952 investment-interest deduction IS applied to Schedule A (TRCS:10754/10906), so the double benefit was real. Threaded electedInvestmentIncome4g into computeLine16 → both worksheets (subtracted from the pref pool) + added the routing gate. Sample $56,063→$62,863.
+- ~~**#5 Capital-loss carryover taxable-income limitation (MEDIUM).**~~ **✅ FIXED 2026-07-30 (commit e7a6771).** Overloaded computeCapitalLossCarryover with a taxable-income param (worksheet lines 1-4); recompute post-line-15 with TI = line 11b − line 14 (allowing negative).
+- ~~**#8 MFS 20% floor $300,025 vs $300,000.**~~ **✅ FIXED 2026-07-30 (commit e7a6771).** ReferenceData:357 → $300,000 (matches the 2025 filed worksheets).
+- **#6 / #10 / #11 / #12 — CLOSE (already coverable; no new intake field warranted).** Corrected 2026-07-30 after review: the special-rate amounts these findings concern are all designated by the taxpayer on ONE intake form, `capital-gain-loss-taxpayer` (+ `-spouse`), which already has the fields — `twentyEightPercentRateGainWorksheetAmountLine18` (total 28%-rate gain from ANY source: collectibles via Form 6781/6252/8824/4684, §1202 taxable portion) → line18RawTotal, and `unrecapturedSection1250GainWorksheetAmountLine19` (total §1250 from ANY source incl. installment via Form 6252) → line19RawTotal, plus the §1202 fields and manualForm8949Transactions. This matches IRS design (the 28% Rate Gain + Unrecaptured §1250 worksheets are "keep for your records"; only the RESULT goes on Sch D line 18/19). The agents' findings were about AUTO-EXTRACTION from the STATEMENT forms (Form 6252/6781/8824/4684/8814 statement entries) not pre-populating those designations — which is (a) statement-form scope, out of scope to modify, and (b) a convenience, not a correctness gap (a taxpayer enters the amounts on the designation fields and gets the correct 25%/28% treatment today). NOT deferred field-adds; closed. ~~#9 min cap~~ DONE with #1.
+
+**STILL VALID OUT-OF-SCOPE / MULTI-RETURN (leave open):**
+- ~~Schedule H household employment tax (§3424) — stub-amount intake exists; full form deferred.~~ **✅ BUILT 2026-07-30 (V204).** New `schedule-h-taxpayer/-spouse` intake form (`pf_schedule_h`) + `computeScheduleH`: Part I Social Security 12.4% / Medicare 2.9% / employer Additional Medicare 0.9% / federal income tax withheld → line 8; Part II FUTA Section A (net 0.6%) or Section B (6.0% gross less min(state contributions, 5.4%) credit); Part III line 26 → Schedule 2 line 9 → Form 1040 line 23 (a computed Schedule H overrides the legacy manual stub; MFJ sums both spouses). Form-faithful (taxpayer enters the aggregate wage lines, per the paper form). Simplification: Section B uses the aggregate state-contribution total, not the per-state experience-rate columns (documented; Section A common case is exact). e2e `schedule-h-household-employment.spec.ts` (Section A $4,102 / Section B $4,180 / stub fallback $750). Full `pf_*` register-in-N-places done (entity, mapper, PERSONAL_FORMS, PARENT_TABLES_UID_CASCADE, V204).
+- ~~Form 8814 vs dependent-own kiddie mutual-exclusion coordination (§4343).~~ **✅ DONE 2026-07-29.** The parent's primary return now SUPPRESSES Form 8814 for any child with an active `dependent_own` return (§1(g)(7) mutual exclusion; child-return-wins). `KiddieTaxParentReader.dependentOwnFilerSsns(uid)` → the child's Dependent SSN; `computeChildInterestDividends` skips that child (both statement + manual paths) BEFORE the qualifying/gross-income gates — so the non-overrideable `FORM8814_CHILD_GROSS_INCOME_TOO_HIGH` no longer falsely 409s the parent when the child (correctly, ≥$13,500) files their own return. Non-blocking advisory `FORM8814_SUPPRESSED_CHILD_FILES_OWN_RETURN`. Pure compute (no migration). e2e `form8814-dependent-own-mutual-exclusion.spec.ts` (before/after suppression + the $14k ceiling false-409 avoidance).
+
+---
+
 ## Self-Employment / Business Income — Detailed Implementation Plan — Authored 2026-07-18
 
 > ## ★ STATUS 2026-07-21 — SELF-EMPLOYMENT PROGRAM: NO KNOWN GAPS after THREE adversarial audits. This supersedes every "deferred / gap / still out of scope" note in the SE plan below.
@@ -12,7 +134,7 @@
 > Also completed since the plan was written (formerly "deferred/tail" here): Schedule E persistence (out_schedule_e, V152); Form 4835 farm-rental compute (`3dacaf0`) + §175/§465/line-5d (V154); farm asset depreciation + merged §179; clergy/church-employee; farm/nonfarm optional methods; dependent_own SE scoping; granular Schedule E lines 5–17 (V153); the dedicated **Schedule SE preview** asset (V155, `form-tax-return-schedule-se-*`).
 >
 > **Documented SE simplifications (INTENTIONAL — not bugs; surfaced by audit 3 and deliberately left):**
-> - ~~**Form 8829 home-office carryforward**~~ **✅ RESOLVED 2026-07-29 (V194).** The gross-income-limit-disallowed home-office excess is now structured (`Schedule1AdditionalIncome.homeOfficeCarryforward`), persisted (out_schedule_1), and auto-imported into next year's form-level `home-office-actual.priorYearHomeOfficeCarryover` (Form 8829 line 25 operating tier), re-tested against that year's gross-income limit; the excess re-suspends. Fixed the `hasAnySchedule1Input` gate so a break-even ($0-net) home-office business still persists the carryforward. Single aggregate (operating + depreciation), applied to the first form8829 home office. e2e `home-office-carryforward-bridge.spec.ts`. **NOTE (updated 2026-07-29):** SEVEN carryforwards now bridge across years (Form 172 NOL, Form 8990 §163(j), Schedule A charitable, §199A QBI loss, §465 rental at-risk, Form 8829 home office, §465 Schedule C/F business at-risk). Only **§461(l) disallowed excess business loss** remains single-year. **§465 RENTAL at-risk bridges (V193):** `rentalAtRiskCarryforward` → `rental-income.priorYearAtRiskCarryforward`, released against amount-at-risk headroom (`rental-at-risk-carryforward-bridge.spec.ts`). **§465 SCHEDULE C/F BUSINESS at-risk bridges (V196, 2026-07-29):** `businessAtRiskCarryforward` (Sch C + F suspended) persisted (out_schedule_1) → `se-tax-options.priorYearBusinessAtRiskCarryforward`, injected into the first at-risk business's net profit before the at-risk cap re-tests it (`business-at-risk-carryforward-bridge.spec.ts`).
+> - ~~**Form 8829 home-office carryforward**~~ **✅ RESOLVED 2026-07-29 (V194).** The gross-income-limit-disallowed home-office excess is now structured (`Schedule1AdditionalIncome.homeOfficeCarryforward`), persisted (out_schedule_1), and auto-imported into next year's form-level `home-office-actual.priorYearHomeOfficeCarryover` (Form 8829 line 25 operating tier), re-tested against that year's gross-income limit; the excess re-suspends. Fixed the `hasAnySchedule1Input` gate so a break-even ($0-net) home-office business still persists the carryforward. Single aggregate (operating + depreciation), applied to the first form8829 home office. e2e `home-office-carryforward-bridge.spec.ts`. **NOTE (updated 2026-07-29):** SEVEN carryforwards now bridge across years (Form 172 NOL, Form 8990 §163(j), Schedule A charitable, §199A QBI loss, §465 rental at-risk, Form 8829 home office, §465 Schedule C/F business at-risk). ~~Only **§461(l) disallowed excess business loss** remains single-year.~~ **CORRECTED 2026-07-29:** the §461(l) disallowed excess business loss is **NOT** a separate single-year/§461(l)-specific carryforward — per the 2025 Instructions for Form 461 it "is treated as a net operating loss (NOL) carryover for subsequent years. See Form 172," and the code already does exactly this (`ebl461` is summed into `nolCarryforwardToNextYear` at `TaxReturnComputeService.java:4514`), which is then auto-imported into next year's Schedule 1 line 8a NOL by the **existing Form 172 NOL bridge** (`importedPriorYearNolCarryforward`). A dedicated §461(l) import would DOUBLE-COUNT the loss (once as line 8a NOL, once as a §461(l) field). So all disallowed-loss carryforwards are now bridged; there is no "8th" §461(l) bridge to build. The EBL→NOL→next-year chain is verified end-to-end by `e2e/tests/section461l-ebl-becomes-nol-bridge.spec.ts` (a §461(l) EBL of $87,000 in 2024 → 2025 line-8a NOL, 80% limit, residue chains). **§465 RENTAL at-risk bridges (V193):** `rentalAtRiskCarryforward` → `rental-income.priorYearAtRiskCarryforward`, released against amount-at-risk headroom (`rental-at-risk-carryforward-bridge.spec.ts`). **§465 SCHEDULE C/F BUSINESS at-risk bridges (V196, 2026-07-29):** `businessAtRiskCarryforward` (Sch C + F suspended) persisted (out_schedule_1) → `se-tax-options.priorYearBusinessAtRiskCarryforward`, injected into the first at-risk business's net profit before the at-risk cap re-tests it (`business-at-risk-carryforward-bridge.spec.ts`).
 > - **§179(b)(2) investment phaseout basis** — the phaseout above $4,000,000 is keyed on the §179 amount *elected* rather than the total *cost of §179 property placed in service*. Rarely material (only bites near the $4M threshold); a precise fix needs the aggregate cost-placed basis.
 > - ~~**§199A UBIA recovery-window drop-off**~~ **✅ RESOLVED 2026-07-29.** `assetUbia` now applies the §199A(b)(6)(A)/(B) depreciable-period test: an asset is dropped from UBIA once its depreciable period — the LATER of 10 years after placed-in-service or the last full year of the §168 recovery period — has ended before the close of the tax year (`assetDepreciablePeriodEndedBeforeYearClose`, from the existing per-asset `datePlacedInService` + `recoveryPeriodYears`, no new field). Covers Schedule C and Farm (both route UBIA through `assetUbia`); K-1 199A UBIA is a transcribed passthrough amount and correctly untouched. Missing/unparseable placed-in-service date → conservatively KEEP (never silently drop); blank recovery period → 10-year floor. e2e `qbi-ubia-recovery-window-dropoff.spec.ts` (7-yr placed 2011 → dropped → QBI ded $0; 7-yr placed 2020 → kept → $25,000; 20-yr placed 2010 → kept via the recovery>10 branch → $25,000); existing `qbi-schedule-c-ubia.spec.ts` (39-yr placed 2025) unchanged.
 > - ~~**Optional-method prior-year / 5-time gates**~~ **✅ RESOLVED 2026-07-29 (V195).** The nonfarm optional method's "net SE ≥ $400 in 2 of the prior 3 years" test and the 5-times-lifetime limit (both NONFARM-only) are now ENFORCED from two `se-tax-options` self-cert fields (`metTwoOfThreePriorYearsSe400`, `nonfarmOptionalMethodPriorUses`) — an ineligible election falls back to the regular method (`SE_NONFARM_OPTIONAL_METHOD_GATE_FAILED_<who>`); a fully self-certified election suppresses the old advisory. HYBRID: the answers are PRE-FILLED from the taxpayer's prior-year Schedule SE (persisted `out_schedule_se.se_net_earnings` + `nonfarm_optional_method_used`; `importedNonfarmOptionalGateData` counts prior-3-year SE≥$400 + lifetime nonfarm uses), conservatively (confirms 2-of-3 only when ≥2 qualifying years are visible; never disconfirms from partial data; null → benefit of the doubt + retained advisory for the pre-app caveat). e2e `se-nonfarm-optional-gates.spec.ts` + `se-nonfarm-optional-autoderive.spec.ts`.
@@ -2290,7 +2412,9 @@ Unit tests: `lumpSumElectionUsesFullPub915Worksheet3WhenPriorYearIncomeProvided`
 
 Non-blocking advisory flag `SOCIAL_SECURITY_IRA_COORDINATION_MANUAL_REVIEW` emitted when `iraDeduction > 0` AND `taxableSocialSecurityBenefits > 0`. Flag text directs user to verify IRA MAGI eligibility per Pub. 590-A Worksheet 1. Unit test `emitsIraCoordinationAdvisoryFlagWhenIraDeductionAndTaxableSsCoexist` added.
 
-**Still deferred:** Full iterative solve for the Pub. 590-A / Pub. 915 mutual-dependency loop (IRA deduction affects SS taxability which affects MAGI for IRA eligibility). Requires covered-workplace-plan flag on the IRA form and multi-pass compute. Affects only IRA contributors covered by a workplace plan who also have taxable SS.
+~~**Still deferred:** Full iterative solve for the Pub. 590-A / Pub. 915 mutual-dependency loop...~~ **DONE (corrected 2026-07-29 — was implemented 2026-06-05 "6b.md Gap 5 closure"; this note was stale).** `runPub590aCoordination` (TaxReturnComputeService) is a live bidirectional coordinator: the SS worksheet already sees the IRA deduction (Pub. 915 subset incl. line 20), and the IRA-deduction MAGI sees taxable SS. Coverage comes from `isCoveredByWorkplaceRetirementPlanTaxpayer`/`...Spouse` OR any W-2 box 13. The old `SOCIAL_SECURITY_IRA_COORDINATION_MANUAL_REVIEW` advisory was replaced by two real flags (`..._DEDUCTION_REDUCED_BY_PHASEOUT` / `..._VERIFIED_NO_PHASEOUT`). 5 Java unit tests.
+
+**Bug found + FIXED 2026-07-29 (Appendix B Worksheet 1):** the coordinator fed the *with-deduction* taxable SS (Appendix B Worksheet 3, for the return's line 6b) into the IRA-deduction **MAGI**, but Pub. 590-A **Worksheet 1** requires the MAGI's taxable SS figured *without* the IRA deduction. This under-stated the MAGI and **over-allowed** the deduction wherever the SS phase-in region overlaps a phaseout band — materially for **MFS lived-with-spouse** (IRA phaseout band $0–$10,000). Fix: compute a loop-invariant `taxableSsForMagi` from `worksheetLine6WithoutIraDeduction` and use it for the MAGI; keep the with-deduction figure for line 6b. This also makes the coordinator deterministic (WS1 is why Appendix B is non-iterative). New unit test `iraCoordinationMagiUsesWorksheet1TaxableSsWithoutDeductionForMfsLivedWithSpouse` (allowed $1,330 not $3,000) + first end-to-end e2e `ira-ss-coordination-pub590a.spec.ts` (closes the Java-unit-≠-e2e-parity gap). The 5 pre-existing unit tests stay green (all use capped-SS Single, insensitive to the deduction).
 
 ---
 
@@ -2739,8 +2863,15 @@ into Form 1040 line 20, naturally floored by `line22 = max(0, line18 − line21)
 `lines/8978.md` (negative line 14 → Schedule 3 line 6l, a nonrefundable credit — earlier flag text
 incorrectly said "refundable"). 1 unit test (`line16Box3Form8978NegativeRoutesToSchedule3Line6l`)
 + 1 e2e (`line16-tax.spec.ts`). Compute-only — no migration; `amountFromForm8978Line14` already
-serialized (round-trips on GET). **Still deferred:** the Form 8978 worksheet for a negative amount
-that *exceeds* available tax (carryforward of the unused decrease).
+serialized (round-trips on GET). ~~**Still deferred:** the Form 8978 worksheet for a negative amount
+that *exceeds* available tax (carryforward of the unused decrease).~~ **RESOLVED 2026-07-29 — the
+premise was wrong; there is NO carryforward.** Per **IRC §6226(b)(1)–(2)**, the correction amounts
+merely *adjust* the reporting-year chapter 1 tax; the statute provides no refund of, and no carryforward
+for, a net decrease that exceeds the tax. The current behavior is therefore correct: the full abs value
+lands on Schedule 3 line 6l as a NONREFUNDABLE credit and is floored at `line22 = max(0, line18 − line21)`
+— total tax goes to $0 and the unused excess is simply lost. Locked by new unit test
+`line16Form8978NegativeExceedingTaxFloorsToZeroWithNoRefundOrCarryforward` (line 6l $5,000, total tax $0,
+no refund). The Form 8978 line-14 handling is complete.
 
 ---
 

@@ -1,6 +1,30 @@
 ﻿# History
 
 
+## 2026-07-30 — QBI / §199A adversarial audit (4 agents; commits 839f16d + 12ae17a)
+
+Four read-only agents audited Form 8995 / 8995-A. Most verified correct (wage/UBIA greater-of + cap,
+non-SSTB phase-in, 2025 thresholds, per-business application, current-year cross-business netting, QBI
+component inclusion/exclusion incl. guaranteed payments + reasonable comp, routing). Fixes:
+
+- **#1 (HIGH) SSTB phase-in skipped Form 8995-A Part III.** An SSTB in the phase-in band got only line 11
+  (min(tentative, wage/UBIA cap)) and never the Part III phased-in reduction (greater(line 11, line 26))
+  the non-SSTB branch applies → understated the deduction whenever the wage limit binds (common
+  service-business profile). Two agents independently hand-traced it ($5,460 → $8,441). The one prior
+  SSTB phase-in test used non-binding wages, hiding it. Now routes through the same Part III shape.
+- **#2 (MOD) Form 8995 line 12 net capital gain** now = smaller of Sch D line 15/16 (0 if either ≤ 0);
+  was line 15 only → overstated with a net short-term loss → understated the QBI cap.
+- **#4 (MOD, compliance) safe-harbor rental LOSS** now nets against other QBI (was dropped → over-stated).
+- **#3 (MOD) REIT/PTP-loss carryforward bridge** (11th cross-year bridge, V207) — a net REIT/PTP loss now
+  persists (netQualifiedReitAndPtpAfterCarryforward) and auto-imports into next year's line 7, separate
+  from the QBI-loss track. Was never stored/bridged.
+- **#5 (MOD) QBI-loss gap-year fix** — the loss-carryforward seed now sets hadQualifiedBusinessIncomeInputs
+  so Form 8995 is emitted in a no-current-QBI gap year; previously the carryforward vanished.
+
+Deferred LOW/feature: #6 above-threshold-SSTB loss-apportionment edge; #7 §1.199A-5(c)(1) de-minimis;
+#8 elective aggregation (Schedule B); #9 §461(l)-in-QBI (genuinely ambiguous). Tests: reflection pin for
+#1 ($8,441) + two-year e2e for #3/#5; suite green (1040).
+
 ## 2026-07-30 — Capital-gains audit: Form 4952 4g (#3), carryover TI limit (#5), MFS floor (#8) (commit e7a6771)
 
 - **#3 Form 4952 line 4g.** Verified the 4952 investment-interest deduction IS applied to Schedule A, so

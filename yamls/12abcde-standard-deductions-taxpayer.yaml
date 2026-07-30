@@ -116,6 +116,16 @@ sections:
         type: number
         required: false
         label: Charitable non-cash contributions
+      - name: charitableCashBenefitReceivedAmount
+        type: number
+        required: false
+        label: Value of goods or services received for a cash gift (quid pro quo)
+        help: If you received something in return for a cash gift (a dinner, tickets, merchandise), enter the fair market value of what you received. Only the amount of your gift that EXCEEDS this value is deductible (IRC §170(f)(8)).
+      - name: charitableVehicleDonationAmount
+        type: number
+        required: false
+        label: Donated vehicle / boat / airplane (claimed value)
+        help: Enter the claimed value of a donated vehicle, boat, or airplane. If the charity sold it, your deduction is automatically limited to the gross sales proceeds shown in box 4c of the Form 1098-C you upload (IRC §170(f)(12)).
       - name: priorYearCharitableContributionCarryover
         type: number
         required: false

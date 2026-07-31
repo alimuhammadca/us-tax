@@ -211,6 +211,17 @@ sections:
         label: Spouse exclusion ratio override (General Rule)
         placeholder: 0.000000
         help: Enter spouse override ratio only when required by reviewed computation support.
+      - name: rmdShortfallAmount
+        type: number
+        required: false
+        label: Required minimum distribution (RMD) your spouse failed to take this year
+        help: If your spouse did not take the full required minimum distribution, enter the shortfall. A 25% additional tax (Form 5329 Part IX, IRC §4974) applies, reduced to 10% if corrected within the two-year correction window.
+      - name: rmdShortfallCorrectedTimely
+        type: boolean
+        required: false
+        showIf: rmdShortfallAmount > 0
+        label: Was the RMD shortfall corrected within the two-year correction window?
+        help: Yes reduces the §4974 additional tax from 25% to 10%. No means the 25% rate applies.
 
   # Backend-only statement imports. Not rendered in form component.
   - name: importedStatementFields

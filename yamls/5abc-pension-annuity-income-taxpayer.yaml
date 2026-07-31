@@ -292,6 +292,17 @@ sections:
         showIf: hasEarlyDistributionAdditionalTaxForForm5329 == true
         label: I confirm no IRC §72(t)(2) exception applies — I am paying the full additional tax.
         help: Check this box to explicitly affirm that no exception (disability, age-55-separation-from-service, SEPP, qualified higher-education expenses, first-time home purchase, etc.) applies to your early distribution. Required when the exception reason above is left blank so the application can confirm you intentionally elected to pay the full 10% (or 25% for SIMPLE-IRA first-2-years) additional tax.
+      - name: rmdShortfallAmount
+        type: number
+        required: false
+        label: Required minimum distribution (RMD) you failed to take this year
+        help: If you were required to take a minimum distribution from a retirement account and did not withdraw the full amount, enter the shortfall. A 25% additional tax (Form 5329 Part IX, IRC §4974) applies, reduced to 10% if corrected within the two-year correction window.
+      - name: rmdShortfallCorrectedTimely
+        type: boolean
+        required: false
+        showIf: rmdShortfallAmount > 0
+        label: Did you correct the RMD shortfall within the two-year correction window?
+        help: Yes reduces the §4974 additional tax from 25% to 10% (the missed distribution was taken and a waiver is requested within two years). No means the 25% rate applies.
 
   # Backend-only statement imports. Not rendered in form component.
   - name: importedStatementFields

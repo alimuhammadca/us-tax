@@ -134,10 +134,16 @@ sections:
         type: number
         required: false
         label: Personal casualty and theft losses from a federally declared disaster (separate from the net qualified disaster loss standard-deduction increase)
+        help: Enter the FINAL deductible amount from Form 4684 — already reduced by the $100-per-event floor and the 10%-of-AGI floor (IRC §165(h)). To have these reductions applied automatically, use the per-event casualty inputs (adjusted basis, FMV decline, insurance reimbursement, disaster indicator) instead.
       - name: foreignTaxesPaid
         type: number
         required: false
         label: Foreign taxes paid (not subject to the SALT cap; use only when not claiming the foreign tax credit)
+      - name: gamblingLossesDeduction
+        type: number
+        required: false
+        label: Gambling losses
+        help: Enter your total gambling losses for the year. These are deductible only up to the gambling winnings you reported as income (Schedule 1 line 8b), per IRC §165(d). Any excess is automatically dropped.
       - name: otherAllowedItemizedDeductions
         type: number
         required: false

@@ -80,6 +80,11 @@ sections:
         required: false
         label: Are these moving expenses for storage fees only?
         help: Select Yes if the moving expense amount consists entirely of storage fees.
+      - name: isActiveDutyMilitaryMoveLine14
+        type: boolean
+        required: false
+        label: Are you an active-duty Armed Forces member moving under a military order?
+        help: For tax years 2018-2025, moving expenses are deductible ONLY for members of the Armed Forces on active duty who move pursuant to a military order and permanent change of station (IRC §217(k)). If No, the moving-expense amount above will not be deducted.
       - name: penaltyOnEarlyWithdrawalOfSavingsLine18
         type: amount
         required: false

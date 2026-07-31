@@ -1856,3 +1856,19 @@ into next year. Guardrails:
   reader that consumes them.
 - Multi-year is proven end-to-end: different per-year inputs → different per-year returns; and a
   2024 Schedule C loss auto-imports as the 2025 line-8a NOL under the §172 80% limit.
+
+## Input-side statutory-reduction guardrail (2026-07-30)
+
+When an intake field feeds a deduction/adjustment/exclusion, check whether a per-item statute
+(floor / cap / valuation-reduction / eligibility gate) must reduce the raw number BEFORE it flows
+into the aggregate — and enforce it in compute, do NOT trust the entered value. This is the
+silent-OVERSTATEMENT class (opposite of most compute-audit understatements) and is invisible to
+math-given-correct-input audits. Two structural traps to watch:
+- **Cross-path bypass**: a dedicated form enforces the limit, but a shortcut/legacy field
+  duplicating it reaches AGI uncapped (e.g. the HSA `hsaDeductionLine13` direct field vs Form 8889 —
+  fixed V209 by making Form 8889 authoritative + a $9,550 backstop cap).
+- **Catch-all / no-dedicated-field**: losses/expenses enter via a generic "other" field with no cap
+  (gambling §165(d) → dedicated `gamblingLossesDeduction` field capped to line-8b winnings, V209).
+Eligibility gates (§217(k) active-duty moving) follow the alimony date-gate pattern: disallow + a
+blocking flag when the amount is present without the affirmation. See
+[[feedback_input_side_statutory_reduction_audit_lens]].

@@ -126,6 +126,31 @@ sections:
         required: false
         label: Donated vehicle / boat / airplane (claimed value)
         help: Enter the claimed value of a donated vehicle, boat, or airplane. If the charity sold it, your deduction is automatically limited to the gross sales proceeds shown in box 4c of the Form 1098-C you upload (IRC §170(f)(12)).
+      - name: charitableUnrelatedUseTangibleFmv
+        type: number
+        required: false
+        label: Tangible personal property put to an unrelated use (claimed value)
+        help: Appreciated tangible personal property (art, collectibles, equipment) donated to a charity that uses it for a purpose UNRELATED to its exempt function is deductible only at cost basis, not FMV (IRC §170(e)(1)(B)(i)). Enter the claimed value; the app reduces it to the basis below.
+      - name: charitableUnrelatedUseTangibleBasis
+        type: number
+        required: false
+        label: Cost basis of the unrelated-use property
+        help: Your cost basis in the tangible personal property put to an unrelated use. The deduction is limited to this amount.
+      - name: charitableCapGainPrivateFoundation
+        type: number
+        required: false
+        label: Appreciated property donated to a private foundation (fair market value)
+        help: Long-term appreciated property to a private (non-operating) foundation is deductible only at basis unless it is qualified appreciated stock (IRC §170(e)(1)(B)(ii)).
+      - name: charitablePfCapGainBasis
+        type: number
+        required: false
+        label: Cost basis (private-foundation appreciated property)
+        help: Cost basis in the appreciated property donated to the private foundation. Used when the property is NOT qualified appreciated stock — the deduction is reduced to basis (30%-of-AGI limit).
+      - name: charitablePfCapGainIsQualifiedAppreciatedStock
+        type: boolean
+        required: false
+        label: Is the private-foundation gift qualified appreciated stock (publicly traded)?
+        help: If Yes, the gift stays deductible at fair market value (20%-of-AGI limit); if No, it is reduced to cost basis (30%-of-AGI limit) per IRC §170(e)(1)(B)(ii).
       - name: priorYearCharitableContributionCarryover
         type: number
         required: false

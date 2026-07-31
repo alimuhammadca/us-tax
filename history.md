@@ -1,6 +1,43 @@
 ﻿# History
 
 
+## 2026-07-31 — Self-employment adversarial audit (4 agents; commits 4fabf82 + 3e26bba + 63aee84)
+
+Four read-only agents audited the SE tax chain (Schedule SE core, optional methods/clergy, §199A QBI
+reductions, Form 8959). Most verified correct: 0.9235 net-earnings factor, 2025 SS wage base $176,100 +
+W-2 SS-wage offset, uncapped 2.9% Medicare, two-tier above-base, ½-SE deduction → Sch 1 line 15,
+per-spouse MFJ separation; ALL 2025 optional-method constants ($7,240 / $10,860 / $7,840 / 72.189%);
+§1402(a)(8) clergy housing inclusion; Form 8959 MFS $125k threshold, SE-threshold-reduced-by-wages, MFJ
+aggregation, Part IV/V reconciliation. Fixes:
+
+- **#1 (MOD) K-1 partner §199A QBI not reduced by attributable SE deductions.** Per §1.199A-3(b)(1)(vi)
+  the ½SE / SE-health / SE-retirement reduce a general partner's K-1 QBI, but that reduction lived only on
+  the Schedule C/F path — a partner with box-14A SE income and no Schedule C passed K-1 QBI through raw
+  (overstated line 13a → understated tax). Now `QbiBusinessActivity` carries an `seIncome` field (box-14A
+  for GP 1065 K-1; null for S-corp/estate-trust/limited-partner/REIT/safe-harbor rental); `buildScheduleCQbi`
+  expands the allocation denominator to the combined SE base (Sch C/F net profit + K-1 box-14A) and returns
+  the partnership share (`k1SeDeductionToApply`); `computeLine13a` applies it per-activity (`applyK1SeDeduction`)
+  + mirrors it in the aggregate. Pure-Schedule-C returns byte-identical. Sample (single GP, K-1 QBI $100k,
+  box-14A $100k, no Sch C): Form 8995 QBI $100,000 → $92,935 (−$7,065 ½SE). Unit test + e2e
+  `qbi-k1-partner-se-deduction.spec.ts`; the 10 existing QBI specs (both carryforward bridges + line-13a
+  suite) stay green.
+- **#2 (LOW) Schedule SE line-4c church-employee exception.** Sub-$400 regular net + SE-taxable
+  church-employee income now zeroes line 4c (only line 5b church net carries into line 6); was combining
+  them → over-taxed SE + inflated the line-15 ½-SE deduction. Byte-identical for all other cases (optional
+  methods and the no-church sub-$400 case unaffected).
+- **#3 (LOW, docs) Form 8959 Part II.** Removed stale "Part II out of scope" comments in
+  `TaxReturnComputeService.buildForm8959` javadoc + `Form8959.java` that contradicted the working (and
+  audit-verified-correct) Part II SE-income implementation.
+- **#4 (LOW, plumbing) Form 8959 RRTA intake advisory.** Non-blocking `FORM_8959_RRTA_INTAKE_INCOMPLETE`
+  flag when RRTA compensation (line 14, from the W-2 statement) and RRTA Additional Medicare Tax withheld
+  (line 23, from the tip-income form) are inconsistently filled → prevents a silently lost line-25c
+  withholding credit (or omitted Part III tax) for railroad filers.
+
+Deferred LOW/edge: nonfarm-optional eligibility base uses adjusted net vs raw Sch C line 31 + notary
+denominator; un-capped clergy-housing input (no §107 lesser-of / parsonage FRV — input-side). Tests:
+reflection unit ctor updated to the 5-arg `QbiBusinessActivity` + new `applyK1SeDeduction` distribution
+test; `TaxReturnComputeServiceTest` green (1050).
+
 ## 2026-07-30 — QBI / §199A adversarial audit (4 agents; commits 839f16d + 12ae17a)
 
 Four read-only agents audited Form 8995 / 8995-A. Most verified correct (wage/UBIA greater-of + cap,

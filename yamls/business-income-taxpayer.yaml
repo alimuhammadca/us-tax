@@ -331,6 +331,11 @@ sections:
         required: false
         label: Some investment is not at risk (line 32b, requires Form 6198)
         help: Answer only if the business had a loss.
+      - name: priorYearAtRiskCarryforward
+        type: amount
+        required: false
+        label: Prior-year suspended at-risk loss for this business (Form 6198)
+        help: First year filing with us — the §465 disallowed loss carried into this business from last year, released against this year's amount at risk.
       - name: isSpecifiedServiceTradeOrBusiness
         type: boolean
         required: false

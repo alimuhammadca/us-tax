@@ -120,6 +120,14 @@ sections:
         type: amount
         required: false
         label: Value of land included above (line 38)
+      - name: priorYearOperatingCarryover
+        type: amount
+        required: false
+        label: Prior-year operating-expense carryover for this office (Form 8829 line 25)
+      - name: priorYearDepreciationCarryover
+        type: amount
+        required: false
+        label: Prior-year depreciation carryover for this office (Form 8829 line 31)
 
   - name: computedOutputs
     title: Computed outputs

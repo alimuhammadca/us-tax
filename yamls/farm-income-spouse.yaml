@@ -48,6 +48,11 @@ sections:
         type: boolean
         required: true
         label: Did your spouse materially participate in the operation of this farm? (line E)
+      - name: priorYearAtRiskCarryforward
+        type: amount
+        required: false
+        label: Prior-year suspended at-risk loss for this farm (Form 6198)
+        help: First year filing with us — the §465 disallowed loss carried into this farm from last year, released against this year's amount at risk.
       - name: madePaymentsRequiring1099
         type: boolean
         required: false

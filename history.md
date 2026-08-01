@@ -1,6 +1,38 @@
 ﻿# History
 
 
+## 2026-08-01 — First-year carryforward gap-closure program (10 gaps; V213–V221)
+
+A 4-agent read-only audit mapped how a BRAND-NEW (first-year) filer enters prior-year carryforwards —
+the auto-import bridges are dead in year one, so the manual intake field is the only on-ramp. Captured
+as a coverage-matrix artifact (28 carryforwards: 20 fully enterable, 3 partial, 5 gap). All 10 gaps then
+fixed, each a validated per-gap commit (`TaxReturnComputeServiceTest` green (1050) + UI build clean each):
+
+- **#1 AMT §469 passive** (V213) — per-property `priorYearAmtSuspendedPassiveLoss`; precedence manual →
+  AMT bridge → regular default. Kills the silent substitution (year-1 AMT track had reused the regular figure).
+- **#10 capital-loss line-21 term** — exposed the ST/LT selector (backend V50 column already read it, no UI).
+- **#3-4835 farm-rental passive** (V214) — per-activity `priorYearSuspendedPassiveLoss` → §469 pool.
+- **#8 Form 8829 carryover** (V215) — split operating (line 25/tier 2) vs depreciation (line 31/tier 3),
+  §280A(c)(5) order; legacy aggregate kept as fallback.
+- **#7 FTC §904(c)** (V216) — per-source `priorYearCarryoverOriginYear` → correct 10-year expiration.
+- **#6 charitable §170(d)** (V217) — per-category fields (cash 60% / basis / cap-gain 30% / PF cash / PF
+  cap-gain) + origin year; character preserved (was a single lump forced into the 60% cash bucket).
+- **#4 Form 5405 repayment** (V218, NEW FORM `pf_form_5405`) — installment / accelerated (ceased) /
+  gain-capped (sold) → Schedule 2 line 10 (output field existed, nothing set it; grandTotal "line 10
+  reserved" comment corrected).
+- **#3-K1 passive-K-1 suspended loss** (V219, NEW FORM `pf_passive_activity_carryforward`) — companion
+  form (the K-1 is an untouchable statement) → §469 pool.
+- **#2 AMT capital-loss** (V220) — signed `amtCapitalGainLossAdjustment` → Form 6251 line 2k. A full
+  per-transaction AMT Schedule D is INFEASIBLE (statement transactions carry no AMT basis, statements are
+  off-limits), so the manual line-2k adjustment is the maximal correct channel.
+- **#5 Form 3800 GBC** (V221, NEW FORM `pf_general_business_credit`) — §39 carryforward applied under the
+  §38(c) tax-liability limit (net income tax − greater(TMT, 25% × net regular tax over $25,000)) → Schedule 3
+  line 6a (already summed into the nonrefundable total). Component-credit forms remain out of scope.
+
+3 net-new personal forms (each full register-in-N-places, auto-discovered via `FormMapperRegistry`);
+9 migrations V213–V221. Commits — be: 0007d92 / b8de0d2 / 564a7ce / d9187c1 / 65152ca / 680495c / 44e1ae4;
+ui: 143ac54 / 176d5d5 / 3c33574 / 6fb4ec8 / 8be4b3a / 540a6f3 / 0769808 / fb9c4b8.
+
 ## 2026-07-31 — Self-employment adversarial audit (4 agents; commits 4fabf82 + 3e26bba + 63aee84)
 
 Four read-only agents audited the SE tax chain (Schedule SE core, optional methods/clergy, §199A QBI

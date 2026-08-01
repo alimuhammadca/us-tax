@@ -4479,3 +4479,29 @@ BEFORE dependent-own enablement, so it does not currently know. Surfaced by the 
 fix (sc_00133): the parent's 8814 income is now correctly taxed, which raised the parent taxable income
 that the child's Form 8615 line 6 reads (kiddie-tax outcome unchanged — same bracket). Deferred as a
 multi-return coordination change.
+
+## §465 at-risk carryforward — pre-V225 provenance transition (2026-08-01, accepted/documented)
+
+V225 split the persisted §465 at-risk carryforward into Schedule C (`businessAtRiskCarryforward`) and
+Schedule F (`farmAtRiskCarryforward`) provenance so a farm-origin suspended loss re-imports against a farm,
+not a Schedule C business (closing the audit's "farm-conflation" over-release). Steady state (both years
+post-V225) is correct and e2e-locked.
+
+TRANSITION LIMITATION (bounded, self-healing, NOT fixable from persisted data): a return whose PRIOR year
+was computed BEFORE V225 has the OLD combined C+F sum in `add_inc_business_at_risk_carryforward` and NULL
+in the new `add_inc_farm_at_risk_carryforward`. The business bridge re-imports the combined value as a
+Schedule C aggregate, so a farm-origin portion can still be released against a line-32b Schedule C business
+for the transition. It is:
+- **Bounded**: the aggregate is released only against the first at-risk-limited (line 32b) Schedule C
+  business, where the §465 cap re-tests the combined loss — so the over-deduction can't exceed that
+  business's amount-at-risk headroom (never an uncapped release; never against a fully-at-risk business).
+- **Narrow**: requires a pre-V225 farm-origin at-risk carryforward AND a transition-year at-risk-limited
+  Schedule C business with headroom.
+- **Self-healing**: any recompute of the prior-year return post-V225 re-splits it (sets the farm column).
+- **Not backfillable**: the old scalar is an information-losing C+F sum; a SQL UPDATE cannot recover the
+  split. The only faithful remedy is a targeted prior-year RECOMPUTE when `farmAtRiskCarryforward IS NULL
+  AND businessAtRiskCarryforward IS NOT NULL AND the prior year had a Schedule F` — deferred (the bridge is
+  a lightweight read; recompute is an architectural change with its own side-effect/perf risk).
+
+Decision: accepted for now (bounded + self-healing). Revisit if multi-year farm filers with a pre-V225
+carryforward prove material — then implement the prior-year recompute path.

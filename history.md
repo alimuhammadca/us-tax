@@ -1,6 +1,27 @@
 ﻿# History
 
 
+## 2026-08-01 — Carryforward bridges for the new gap-closure tables (V222; commit 5fe87b3)
+
+Year-over-year auto-import for two of the three new first-year forms, so a returning filer doesn't
+re-enter (user entry still wins), mirroring the home-office / at-risk / NOL bridges:
+- **Form 3800 GBC** — the unused portion (available − §38-allowed) persists on `out_schedule_1`
+  (`add_inc_gbc_carryforward`) and seeds next year's `general-business-credit-taxpayer` form.
+- **Form 5405** — the balance remaining after this year's repayment persists
+  (`add_inc_form5405_remaining_carryforward`) and seeds next year's `remainingBalanceBeforeThisYear`
+  (default $500 installment when absent).
+- **Passive-K-1 (`pf_passive_activity_carryforward`)** — left MANUAL by design: its next-year value is
+  a §469 aggregate (rental+farm+K-1) not cleanly attributable to the K-1 source (same as rental/farm).
+
+Mechanism: 2 "bridge source, not a line" fields on `Schedule1AdditionalIncome` → `OutSchedule1` cols
+(V222) → `Schedule1OutputMapper` (all 5 spots); readers mirror `importedPriorYearHomeOfficeCarryover`
+via the injected `schedule1Mapper`; seeds run on the primary path only (`SCOPED_FORMS_OVERRIDE` guard).
+Gotcha caught on first boot: the entity table is `out_schedule_1` (underscore), not `out_schedule1` —
+the migration failed until fixed. Unit 1050 green; two-year e2e `carryforward-new-forms-bridge.spec.ts`
+(GBC unused chains + re-applies under §38; Form 5405 remaining chains + repays) passed after the V222
+restart. Also `carryforward-new-forms.spec.ts` (current-year Sch 2 line 10 / Sch 3 line 6a) + a 23-test
+regression subset across the changed forms green.
+
 ## 2026-08-01 — First-year carryforward gap-closure program (10 gaps; V213–V221)
 
 A 4-agent read-only audit mapped how a BRAND-NEW (first-year) filer enters prior-year carryforwards —

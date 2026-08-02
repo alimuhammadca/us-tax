@@ -1,6 +1,44 @@
 ﻿# History
 
 
+## 2026-08-02 — EIC §32 (line 27a) audit fixes: earned-income-vs-AGI Worksheet A gate + spouse Form 2555 + dependent_own
+
+Three-agent adversarial read-only audit (Explore agents) of the Earned Income Credit (`computeLine27aEIC`,
+`eicTableLookup`, `computeInvestmentIncomeForEic`, `countEicQualifyingChildren`) against 2025 Pub 596 /
+Rev. Proc. 2024-40 / Schedule EIC. All 72 EIC table constants + the $50-bracket midpoint snap + phaseout
+continuity verified CORRECT. Three defects fixed in `TaxReturnComputeService.java`:
+
+- **F1 — Unconditional `min(creditFromEarned, creditFromAgi)` (CRITICAL, taxpayer-harmful; flagged by 2 of 3
+  agents + §32(a)(2) statutory analysis).** Pub 596 Worksheet A lines 4-6: the phase-in credit is based on
+  EARNED income; the AGI lookup only CAPS it once AGI reaches the phaseout-begin threshold. Below that
+  threshold the credit is the earned-income credit alone. The prior code took `min()` UNCONDITIONALLY, so
+  whenever AGI < earned income in the phase-in region (any above-the-line adjustment — IRA/HSA/½SE/educator/
+  student-loan) it picked the lower AGI-based figure → understated EIC, and when adjustments drove AGI ≤ 0 it
+  zeroed the credit entirely. It also silently clawed back the nontaxable-combat-pay election (which raises
+  earned income but not AGI — defeating the election's whole purpose). Fixed by gating the AGI cap on
+  `agi >= eicPhaseoutStart(status, children)` (a new helper mirroring `eicTableLookup`'s phaseout-start; the
+  threshold values match Worksheet A line 5 exactly). Example: Single, 1 child, wages $12k, $4k IRA → AGI $8k
+  → EIC $4,088 (was $2,728). Unit `line27aUsesEarnedIncomeCreditWhenAgiBelowPhaseoutThreshold` + e2e.
+- **F2 — MFJ spouse's Form 2555 ignored (HIGH, wrongly-allows).** The §32(c)(1)(C) disqualifier checked only
+  the taxpayer's `hasForm2555`; on a joint return the spouse's Form 2555 must also bar EIC (both spouses are
+  "the taxpayer"). Added `isMfj && eicSpouse.spouseHasForm2555` gate. Unit `line27aBlockedWhenMfjSpouseFilesForm2555`.
+- **F3 — dependent_own self-claim not enforced (HIGH, wrongly-allows).** A dependent filing their own return
+  is claimable as another's dependent, so EIC is unavailable (§32(c)(1)(A)(ii)(III)), but only a non-blocking
+  advisory fired — and the with-qualifying-child path never checked the dependent flag, so a dependent_own
+  filer with a child got EIC. Threaded `isDependentOwnReturn` into `computeLine27aEIC` (both call sites) with
+  an early `return null`. Unit `line27aBlockedOnDependentOwnReturnEvenWithQualifyingChild`.
+
+Documented, not fixed (outstanding.md): the §32(i) royalty-vs-passive combined-flooring (MEDIUM — royalty
+tier (C) and passive tier (E) are floored separately by §32(i)(2), so a passive loss masking royalty income
+under-disqualifies; a correct fix must split the pooled `netPassiveRentalRoyaltyForEic`); the EIC-table
+FLOOR-vs-round question (LOW — `27abc.md` asserts FLOOR is the IRS convention; needs a published-table
+bracket to confirm); the attestation-vs-ground-truth Form 2555 coupling; and LOW relationship-set /
+Medicaid-waiver-intake / mid-year-child edges.
+
+All three fixes are compute-only (no schema change). Unit 1061/1061 green (+3); e2e
+`line27a-earned-income-credit.spec.ts` AGI-below-threshold case green.
+
+
 ## 2026-08-01 — Social Security §86 (lines 6a–6b) audit fixes: adoption add-back + lump-sum MFS branch + Pub 590-A form8815 double-count
 
 Three-agent adversarial read-only audit (Explore agents) of the §86 Social Security taxability subsystem

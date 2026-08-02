@@ -1,6 +1,56 @@
 ﻿# History
 
 
+## 2026-08-01 — NIIT §1411 (Form 8960) audit fixes: line-9a investment interest auto-flow + MFS FEIE MAGI guard
+
+Three-agent adversarial read-only audit (Explore agents) of the Net Investment Income Tax subsystem
+(`computeForm8960`, the passive/non-passive line-4 split, MAGI/threshold/tax, Schedule 2 wiring) against
+the 2025 Form 8960 + §1411 regs. Two actionable defects fixed in `TaxReturnComputeService.java`, plus a
+comment correction:
+
+- **F-A — Line 9a investment interest expense not flowed (MEDIUM/HIGH, taxpayer-unfavorable).** The app
+  fully computes the §163(d)-allowable investment interest deduction (`deductibleInvestmentInterest` =
+  Form 4952 line 8 / Schedule A) but Form 8960 line 9a was **override-only**, so for any itemizer with
+  investment interest expense who left the manual override blank, line 11 was understated → line 12 NII
+  and line 17 NIIT **overstated**. Per Reg. §1.1411-4(f)(3)(i) it is a properly allocable deduction. Fixed
+  by defaulting line 9a to the computed Schedule A value **only when the taxpayer itemizes**
+  (`scheduleA.getUsedForItemizedDeduction()` — §163(d) allows no deduction under the standard deduction, so
+  none reduces NII); a taxpayer override still wins. Example: Single, MAGI $310k, NII $60k, $20k investment
+  interest → NIIT $1,520 (was $2,280). Unit `form8960AutoFlowsComputedInvestmentInterestToLine9aForItemizer`;
+  e2e `form8960-niit.spec.ts` line-9a case.
+- **F-B — MFS: the other spouse's Form 2555 FEIE leaked into line-13 MAGI (HIGH).** The `computeForm8960`
+  call site passed `form2555Spouse` unguarded — the ONE Form-2555-spouse consumer missing the established
+  `isMfsReturn ? null : form2555Spouse` guard that Schedule 1-A MAGI (line 3605), line 16 FEITW (4128), and
+  line 17 AMT (4233) already have. On an MFS leg the stale spouse's §911(a)(1) exclusion inflated line 13
+  MAGI → line 15 → over-collected the 3.8% NIIT. Fixed by adding the guard at the call site. Unit
+  `mfsExcludesSpouseForm2555FromForm8960Niit` (line 13 = AGI $200k, not $260k), matching the four sibling
+  `mfsExcludesSpouseForm2555From*` locks. (The same unguarded `form2555Spouse` also leaks into the Roth-
+  contribution MAGI at 3390 and another MAGI consumer at 4367 — sibling defects, documented in
+  outstanding.md for a separate Roth-scoped fix, not touched here.)
+- **Line 4b comment** corrected: the "negative (or zero) adjustment" note was wrong — line 4b is POSITIVE
+  when the backed-out non-passive activity is a net loss (both directions IRS-correct; math was already right).
+
+Verified CORRECT (clean bills): thresholds ($200k Single/HOH, $250k MFJ/QSS, $125k MFS) + status mapping
+(QSS→$250k via the dedicated NIIT constant, §6013(g)→MFJ), 3.8% rate, line-13 MAGI = AGI + §911(a)(1) FEIE
+only (not housing), line-12 NII floor, lesser-of/rounding, Schedule 2 line-12 wiring (no double-count),
+tax-exempt interest excluded from line 1, §199A REIT dividends included in line 2, capital-loss reduces NII,
+line-4c passive/non-passive arithmetic, §469-suspended passive losses excluded from NII, farm-rental passive,
+single-emission, MFS K-1 attribution by `mfsOtherSpouseSsn`.
+
+Documented, not fixed (outstanding.md — needs designation field / §469 subsystem change / conservative):
+line-5b sign-convention vs the printed-form "combine" (tax correct under the app's positive-magnitude
+convention; reconciling the preview spans compute+UI+preview and needs the visual-change protocol);
+active-business disposition gains in line 5a removable only by override (needs taxpayer designation, same
+class as the cap-gains character rule); RE-professional flag over-excludes non-materially-participated
+rentals (§469 per-activity classification, broad blast radius); no self-rental §469(f)(6) recharacterization
+(needs new field + sign-off); passive-K-1 default non-passive (§469 default, cross-subsystem); annuity line-3
+default-0 and interest/dividend business carve-out (conservative/defensible); the sibling Roth/4367 FEIE
+leaks; and the known MFS null-TIN statement catch-all leak (NIIT is a downstream victim).
+
+Both fixes are compute-only (no schema/entity/mapper change; hot-reloaded). Unit 1055/1055 green; e2e
+`form8960-niit.spec.ts` 7/7 green.
+
+
 ## 2026-08-01 — QBI §199A audit fixes: prior-year loss carryforward on Form 8995-A + both-forms straddle
 
 Three-agent adversarial read-only audit (Explore agents — no Edit/Write, so zero concurrent-edit risk)

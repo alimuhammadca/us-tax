@@ -1,6 +1,43 @@
 ﻿# History
 
 
+## 2026-08-02 — Form 8863 (education credits §25A) audit: qualified expenses reduced by tax-free assistance
+
+Three-agent adversarial read-only audit (Explore agents) of Form 8863 — AOTC per-student math, LLC, the MAGI
+phaseout, the Credit Limit Worksheet, the eligibility gates, and the wiring — against the 2025 Form 8863 +
+§25A. Broad verification passed: the AOTC 100%/25% formula (incl. the G-NEW-1 expenses-≤-$2k branch, max
+$2,500), the eligibility disqualifiers, the 40% refundable split + under-24 restriction (§25A(i)), the LLC
+20%-of-$10k return-level cap, the LLC=AOTC 2025 phaseout ($80-90k/$160-180k), the Credit Limit Worksheet
+priorCredits set (FTC + dependent-care + elderly + Form 8978, matching the IRS CLW), all §25A(g) bars
+(dependent/NRA/TIN/1098-T/MFS-non-overrideable), the MAGI add-backs, and the refundable→line-29 /
+nonrefundable→Schedule-3-line-3 wiring (no double-count). One HIGH defect fixed in `TaxReturnComputeService.java`:
+
+- **Qualified expenses NOT reduced by tax-free assistance (HIGH, silent over-credit).** §25A(g)(2) requires
+  qualified education expenses to be reduced by tax-free scholarships/grants, §529/Coverdell tax-free
+  distributions, and §127 employer assistance. The intake collects GROSS tuition in
+  `adjustedQualifiedEducationExpenses` (the UI labels it "Tuition and required fees paid") and the tax-free
+  assistance SEPARATELY in `taxFreeEducationAssistanceReductionAmount` — a field that was mapped, persisted,
+  and round-tripped but IGNORED by compute (grep = 0 matches). The UI nets the two only FOR DISPLAY
+  (`adjustedExpensesNet`, "for display only"), saving both raw. So the engine used GROSS tuition as if net →
+  over-credit. Verified the UI contract directly (gross field + separate reduction field + a "scholarship >
+  tuition" warning). Fixed by netting `expenses = max(0, gross − taxFreeAssistance)` in the per-student loop.
+  Example: $5,000 gross − $4,000 scholarship = $1,000 net → AOTC $1,000 (refundable $400), not the gross-based
+  $2,500. Unit `form8863_qualifiedExpensesReducedByTaxFreeAssistance` + e2e (save-and-compute contract).
+
+Documented, not fixed (outstanding.md): **Schedule R credit-ordering** — `computeScheduleR` (Schedule 3
+line 6d) runs at ~4526, AFTER Form 8863 (~4432) and ~10 other credit Credit-Limit-Worksheets that subtract
+the elderly/disabled credit (they read line 6d as $0), so those individual nonrefundable credits can
+over-allow; the aggregate Form 1040 line-22 floor usually absorbs it (total tax typically unchanged) but the
+FILED Schedule 3 values can be wrong with a rare ripple to refundable ACTC. It's a PERVASIVE ordering issue
+(Schedule R computed late), so a correct fix is a dedicated credit-ordering pass with per-CLW verification —
+too broad/risky for this audit. Also LOW: null "at least half-time" defaults to denied-AOTC (conservative);
+no LLC fallback for an AOTC-tagged student failing a gate (relies on the user's per-student election);
+MAGI manual-fallback add-backs read only the taxpayer form (household-total contract); §529/Coverdell (Form
+1099-Q) not auto-coordinated against expenses (trusted input); `8863.md` stale line-13/line-30 doc entries.
+
+Compute-only (no schema change). Unit 1066/1066 green (+1); e2e `line20-nonrefundable-credits.spec.ts` netting case green.
+
+
 ## 2026-08-02 — Form 8959 (Additional Medicare Tax §3101(b)(2)) audit: essentially a clean bill + Part II MFS spouse-SE guard
 
 Three-agent adversarial read-only audit (Explore agents) of Form 8959 — Part I (Medicare wages), Part II

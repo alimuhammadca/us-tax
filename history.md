@@ -1,6 +1,40 @@
 ﻿# History
 
 
+## 2026-08-02 — Form 2210 underpayment-penalty audit: two HIGH gate bugs fixed
+
+Three-agent adversarial read-only audit of `computeForm2210` (safe-harbors / penalty-rate math /
+withholding-timing lenses) against the 2025 Form 2210 + IRC §6654. **Verified correct** (no change): the
+7% §6621 underpayment rate (all TY2025 quarters + Q1 2026 are 7%, so a single flat rate is exact this
+year), the four due-dates/25%-split/365-denominator/overpayment-carry-forward regular-method math, the
+even-spreading of withholding (§6654(g)), the 110%/$150k/$75k-MFS high-income safe harbor, and the
+line-37/38 stacking (no double-count). Two independent agents converged on the same two defects — both let
+untimely estimated payments or refund returns erase a real penalty; fixed in `TaxReturnComputeService.java`:
+
+- **Gate base wrong (HIGH).** The $1,000 de-minimis stop used Form 1040 `amountOwed` (tax − ALL payments,
+  incl. estimated + refundable credits) and the annual safe-harbor short-circuit compared the required
+  annual payment to withholding + estimated payments. Per Form 2210 lines 4/6/7 and §6654(e)(1)/(b) both
+  bases are **current-year tax minus WITHHOLDING ONLY** — estimated payments are credited per period in
+  Part III, where their timing matters. Fixed both gates (the code even deviated from its own
+  `lines/2210.md §10` spec). A refund return or a late catch-up estimate can no longer zero a real penalty.
+- **Estimated payments read from the wrong form (HIGH, taxpayer-unfavorable).** Form 2210 read
+  `payment1-4Amount` from `refund-and-amount-owed`/`prior-year-tax`, but Form 1040 line 26 reads
+  `installment1-4Amount` from `estimated-tax-payments-taxpayer` — two disjoint forms. A taxpayer who
+  entered estimates in the natural place got a **fabricated** penalty. New helper
+  `estimatedPaymentsPerQuarterForForm2210(...)` reads the same source as line 26 (MFJ aggregates the
+  spouse form; prior-year/amended overpayments → first installment period). Same fix applied to Form 2210-F.
+
+Also (Fix D): the `waivePartialPenalty` intake label promised an annualized-method reduction the app never
+delivers (Schedule AI is out of scope). Reworded (both `form-refund-and-amount-owed` and
+`form-prior-year-tax`) to say the app reports the full computed penalty and the IRS reviews the waiver
+request. **Documented as still-deferred** (`lines/2210.md`): Schedule AI (annualized income), Box B
+waiver-amount subtraction, Box E joint→separate proration, prior-year short-year/non-filed gating, and the
+fixed 4/15/2026 day counts (overstates for early payers). One existing unit test that had encoded the old
+buggy behavior (estimates on the prior-year field + NO_PENALTY via the annual short-circuit) was corrected
+to the IRS-correct expectation. Unit 1596/1596 green; e2e `form2210-underpayment-penalty.spec.ts` 10/10
+(2 new: timely estimates → $0; late Q4-only estimate → penalty still owed) + `form2210f-farmer-fisher` green;
+UI build green. Compute-only (no migration; hot-reloaded).
+
 ## 2026-08-02 — Schedule A line 16 "Other Itemized Deductions" — structured items + Form 4684 Sec B fix (V226)
 
 Built the four Schedule A line 16 items that survive the 2018-2025 TCJA misc-2%/personal-casualty

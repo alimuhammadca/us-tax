@@ -1,6 +1,35 @@
 ﻿# History
 
 
+## 2026-08-02 — Schedule A line 16 "Other Itemized Deductions" — structured items + Form 4684 Sec B fix (V226)
+
+Built the four Schedule A line 16 items that survive the 2018-2025 TCJA misc-2%/personal-casualty
+suspensions (SQA sc_00118-00121; J.K. Lasser ch.20), each deductible in FULL with no floor, plus a line-16
+write-in description string. Six-phase build; all four items pinned to the exact hand-computed 2025 values.
+
+- **§67(d) impairment-related work expenses** — new `impairmentRelatedWorkExpenses` (+ gate) → line 16, no
+  2%-of-AGI floor. sc_00118: TI $45,000.
+- **§691(c) estate tax on income in respect of a decedent** — new `estateTaxOnIrdDeduction` (+ gate) → line
+  16. sc_00121: TI $73,000 (slice tested at $33,000). Was entirely absent before.
+- **§1341 claim-of-right repayment >$3,000 (deduction method)** — new `claimOfRightRepaymentDeduction` →
+  line 16; ≤$3,000 excluded (suspended misc-2%); advisory notes the §1341 credit (Sch 3 13b) alternative.
+  sc_00120: TI $56,000.
+- **Form 4684 Section B income-producing (investment) casualty/theft loss — CORRECTNESS FIX.** Line 38b
+  (`partbPartiiLine38bAmountFromLine35BiiIncomeProducingProperty`) is an itemized deduction on Schedule A
+  line 16 with NO $100/10% floor (those apply only to personal-use Section A) — NOT a Schedule D capital
+  loss. The prior code negated these losses onto Schedule D lines 4/11 (reading never-populated legacy
+  fields); that routing is removed and replaced by `computeForm4684SectionBLine16Loss(...)` →
+  Schedule A line 16. Three `fix4_*` unit tests that encoded the old (wrong) Schedule D routing were
+  corrected to assert the loss no longer reaches Schedule D. sc_00119: $20,000 → TI $53,000.
+
+Plumbing (V226): 8 `pf_standard_deductions` columns (3 amounts + 2 gates + 3 `*_paid_by` MFS attestations)
++ 5 `out_schedule_a` columns (4 amounts + `line16_description`); entity/mapper/output-mapper/`ScheduleA`
+model wiring; the 3 new amounts registered in `MfsScheduleAAllocator.SCHEDULE_A_AMOUNT_FIELDS` (per-person,
+default joint 50/50); Angular `form-standard-deductions` intake (Yes/No gates + amount fields + help);
+YAML `12abcde-standard-deductions-taxpayer.yaml` (free-form "other" label de-duplicated). Backend unit
+1594/1594 green; e2e `schedule-a-line16-other-itemized.spec.ts` 4 passed (sc_00118/00120/00121 + §1341
+below-threshold), 1 skipped (dormant 4684 statement — unit-covered). UI build green.
+
 ## 2026-08-02 — Form 8863 (education credits §25A) audit: qualified expenses reduced by tax-free assistance
 
 Three-agent adversarial read-only audit (Explore agents) of Form 8863 — AOTC per-student math, LLC, the MAGI

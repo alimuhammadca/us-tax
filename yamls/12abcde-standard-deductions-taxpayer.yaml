@@ -172,7 +172,35 @@ sections:
       - name: otherAllowedItemizedDeductions
         type: number
         required: false
-        label: Other allowed itemized deductions (such as attorney fees from unlawful discrimination claims or impairment-related work expenses)
+        label: Other allowed itemized deductions (such as attorney fees from unlawful discrimination claims, amortizable bond premium, or other Schedule A line 16 write-ins)
+        help: For impairment-related work expenses, estate tax on income in respect of a decedent, a claim-of-right repayment, or an investment-property casualty/theft loss, use the dedicated fields below instead.
+      # Schedule A line 16 structured "Other Itemized Deductions" — items that survive the 2018-2025
+      # misc-2%/personal-casualty suspensions. Each is deductible in full (no floors) (V226).
+      - name: hasImpairmentRelatedWorkExpenses
+        type: boolean
+        required: false
+        label: You have a physical or mental impairment and paid work expenses that let you work (impairment-related work expenses)
+      - name: impairmentRelatedWorkExpenses
+        type: number
+        required: false
+        label: Impairment-related work expenses (Schedule A line 16)
+        help: Attendant care at your workplace and similar expenses needed for a person with a disability to work are deductible in full with NO 2%-of-AGI floor (IRC §67(d)). Enter only the impairment-related portion.
+        showIf: hasImpairmentRelatedWorkExpenses == true
+      - name: receivedIrdWithEstateTaxPaid
+        type: boolean
+        required: false
+        label: You reported income in respect of a decedent (IRD) on which federal estate tax was paid
+      - name: estateTaxOnIrdDeduction
+        type: number
+        required: false
+        label: Estate tax attributable to income in respect of a decedent (Schedule A line 16)
+        help: The federal estate tax attributable to the IRD you reported (IRC §691(c)) — the estate tax computed WITH the IRD minus the estate tax computed WITHOUT it. Relieves the estate + income double tax.
+        showIf: receivedIrdWithEstateTaxPaid == true
+      - name: claimOfRightRepaymentDeduction
+        type: number
+        required: false
+        label: Claim-of-right repayment over $3,000 — deduction method (Schedule A line 16)
+        help: If you repaid more than $3,000 that you included in income in an earlier year under a claim of right, you may deduct it here (IRC §1341). Alternatively you can take the §1341 credit (Schedule 3 line 13b) — use whichever gives the lower tax. Repayments of $3,000 or less are not deductible for 2025.
       - name: netQualifiedDisasterLoss
         type: number
         required: false

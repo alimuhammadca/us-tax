@@ -1,6 +1,39 @@
 ﻿# History
 
 
+## 2026-08-02 — Form 8889 (HSA §223) audit: 5 fixes (catch-up proration, family split, box-12-W, 65+ exception, excess flag)
+
+Three-agent adversarial read-only audit of Form 8889 (Part I limits / Part II distributions / Part III
+recapture + deduction wiring) against the 2025 Form 8889 + IRC §223 + Rev. Proc. 2024-25. **Verified
+correct** (unchanged): all 2025 constants ($4,300/$8,550/$1,000, 20% / 10% / 6% rates, $9,550 one-person
+max), the 14a–16 taxable-distribution arithmetic + line-14b subtraction, routing (Sch 1 line 13 deduction,
+line 8f taxable, Sch 2 17c/17d — the 2025 layout), the 10%-not-20% last-month-rule recapture, the deduction
+cap excluding employer contributions, SSN attribution, the Archer-MSA offset, and no SE-health double-count.
+Five fixes in `TaxReturnComputeService.java` (two HIGH found by two agents each):
+
+- **Catch-up not prorated (HIGH).** Line 3 prorated by eligible months but the $1,000 age-55 catch-up
+  (line 7) was a flat $1,000 in every branch — overstating the deduction and hiding an excess. Now prorated
+  the same way (full only under the last-month rule or full-year eligibility; §223(b)(3)).
+- **Married family-limit double-count (HIGH).** Both MFJ spouses with family coverage each got the full
+  $8,550 (combined $17,100). Per §223(b)(5) it's ONE shared limit — now the default equal split ($4,275
+  each) applies when neither set a line-6 allocation, with an advisory; a mixed self-only/family pairing is
+  flagged for manual allocation.
+- **Employer contributions not auto-sourced (MEDIUM, double-dip risk).** Line 9 was manual-only; W-2 box 12
+  code W (already pretax-excluded from box 1) is now auto-sourced per person when line 9 is blank, so it
+  reduces the deductible limit.
+- **20% additional-tax exception no age derivation (MEDIUM).** §223(f)(4)(C) exception was a bare checkbox;
+  now auto-applies when the beneficiary was 65+ for the whole year (age ≥ 66 at year end) — the taxable
+  amount still enters income, only the 20% tax is suppressed; a mid-year-65 filer keeps the checkbox.
+- **Excess-contribution 6% excise not computed (MEDIUM).** The constant existed but was unused. Full excise
+  (Form 5329 Part VII) needs the year-end HSA value to cap the base (no intake field) — so a
+  `FORM_8889_EXCESS_HSA_CONTRIBUTION_*` advisory now fires when own contributions exceed the deductible
+  limit, directing a corrective withdrawal; full computation documented as deferred.
+
+Documented-simplification tier (unchanged): line-15 qualified-expenses trust, put-if-absent 8f/17c/17d
+income path, Part III death/disability via user-zeroed inputs, mid-year coverage-change per-month blend.
+Unit 1601/1601 (5 new); e2e `line8889-hsa.spec.ts` 3/3 (2 new: box-12-W → $1,300; MFJ split → $8,550);
+compute-only (no migration; hot-reloaded).
+
 ## 2026-08-02 — Form 2210 underpayment-penalty audit: two HIGH gate bugs fixed
 
 Three-agent adversarial read-only audit of `computeForm2210` (safe-harbors / penalty-rate math /

@@ -1,6 +1,36 @@
 ﻿# History
 
 
+## 2026-08-03 — Form 5695 (Residential Energy Credits §25C/§25D) audit: 3 fixes + ordering issues documented
+
+Three-agent adversarial read-only audit of Form 5695 (§25C limits / §25D + carryforward / wiring+ordering)
+against the 2025 Form 5695 + IRC §25C/§25D + `lines/5695.md`. **Verified correct** (unchanged): the 30%
+rates, the §25C $1,200 aggregate + all per-item sublimits (doors $250/$500, windows $600, audit $150,
+AC/water-heater/furnace $600) + the SEPARATE additive $2,000 heat-pump/biomass bucket ($3,200 max), the
+§25C no-carryforward rule, §25D's 30%-with-no-cap + the line-16 carryforward + prior-year import, the
+fuel-cell $500/half-kW isolation, the Schedule 3 5a/5b routing, and multiplicity (one form/return, MFJ
+combined, separate-main-home supplemental). Three fixes in `TaxReturnComputeService.java`:
+
+- **Heat-pump line 29 not gated by Section B eligibility (HIGH, over-claim).** Lines 22-25 were guarded by
+  `sectionBEligible` (21a/21b) but line 29 (the $2,000 heat-pump/biomass bucket) was computed
+  unconditionally — an ineligible taxpayer (not the original user / not a residence) got up to $2,000. Now
+  gated, per the form's "Skip lines 22 through 25 AND line 29."
+- **Line 18b (insulation) not capped at $1,200 (LOW, display fidelity).** Added the per-form "Do not enter
+  more than $1,200" cap — guarded on a positive line 18a, because `minAmount(null, 1200)` returns the
+  $1,200 CAP (a phantom credit), the same null-returns-the-cap trap the heat-pump guard already avoids.
+- **Fuel-cell line 10 lacked the "<0.5 kW → 0" floor (LOW).** Property under a half-kilowatt cannot claim
+  the credit (§25D(b)(1)); now zeroed.
+
+**Documented as deferred (credit-ordering — a dedicated pass; high cross-form blast radius):** the §25C
+limit worksheet omits the elderly/disabled credit (Schedule R runs after Form 5695) and the §25D limit
+worksheet omits adoption/mortgage/DC credits (computed after the §25D re-finalize) → narrow over-claims for
+specific multi-credit + tax-constrained returns; a latent CTC-in-§25C-limit landmine (masked because the
+CTC is 0 at §25C compute time); and Form 8936 reading a stale §25D 5a. These are rooted in the tightly-
+ordered two-phase credit sequence where §25D 5a is read by 7+ downstream credit limits — a reorder must be
+its own carefully-verified change. Also deferred: line 17e zeroes all of Section A vs only the
+construction-related items (under-claim), and battery-kWh/joint-occupancy self-attestation. Unit 1604/1604;
+e2e `line5695-energy-credit.spec.ts` 3/3 (1 new: 21b=No → $0 heat-pump); compute-only (no migration).
+
 ## 2026-08-02 — Schedule 8812 (CTC/ACTC/ODC §24) audit: 3 fixes (child demotion, ODC preservation, line-10)
 
 Three-agent adversarial read-only audit of Schedule 8812 (eligibility+amounts / phaseout / refundable ACTC)

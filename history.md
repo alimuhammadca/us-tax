@@ -1,6 +1,42 @@
 ﻿# History
 
 
+## 2026-08-02 — PTC §36B (Form 8962) audit fixes: MFS repayment-cap column + <100% FPL applicable-taxpayer gate
+
+Three-agent adversarial read-only audit (Explore agents) of the Premium Tax Credit (`computeForm8962`, the
+monthly Part II reconciliation, repayment caps, MFS, and the Pub 974 SE-health↔PTC fixed-point solve)
+against the 2025 Form 8962 / §36B / Rev. Proc. 2024-40. Extensive verification passed (2024 FPL constants,
+all three MAGI add-backs, no-400%-cliff, Table 5 cap VALUES, net-PTC/repayment arithmetic, Schedule 2/3
+wiring, MFS disallow + abuse exception + 1095-A scoping, and the entire Pub 974 bisection solve). Two
+tax-affecting defects fixed in `TaxReturnComputeService.java`:
+
+- **F1 — MFS routed to the SINGLE (lower) repayment-cap column (HIGH, IRS-adverse).** Form 8962 Table 5 has
+  two columns: "Single" ($375/$975/$1,625) and "All Other Filing Statuses" — MFJ/MFS/HOH/QSS ($750/$1,950/
+  $3,250, doubled). `isSingleOrMfs` treated MFS as single (its own comment even asserted "both use the lower
+  caps"), so an MFS filer's excess-APTC repayment was under-capped → under-collected. Renamed to
+  `usesSingleRepaymentCapColumn` returning true ONLY for literal Single. Example: MFS, 250% FPL, $3,000 APTC
+  → repay $1,950 (was capped at $975). Unit `form8962MfsRepaymentUsesDoubledAllOtherCapColumn` + e2e.
+- **F2 — No <100% FPL applicable-taxpayer gate (HIGH, over-credit).** §36B(c)(1)(A) requires household income
+  ≥ 100% FPL. Below 100% the <150% applicable figure of 0 made the contribution $0, so col D = full SLCSP and
+  the FULL benchmark credit was granted to an ineligible sub-100% filer. Added a gate: when line-6 % < 100
+  AND no APTC was paid (so the Treas. Reg. §1.36B-2(b)(6) relief — which requires APTC on a ≥100% Marketplace
+  projection — cannot apply), disallow the net credit (there is no advance to reconcile either). A <100%
+  filer WITH APTC still reconciles (relief). Example: Single, $12,000 income (79% FPL), no APTC → $0 (was
+  ~$4,800). Unit `form8962Below100PctFplWithoutAptcIsNotAnApplicableTaxpayer`.
+
+Also corrected the stale 2025-Schedule-2-redesign comment (excess APTC is line 1a, AMT is line 2).
+
+Documented, not fixed (outstanding.md): shared-policy allocation %s captured but not applied to col A/B/F
+(HIGH, but the correct fix needs per-policy matching + the intake contract confirmed — full vs pre-allocated
+amounts — else it double-applies); no corrected-SLCSP path (MEDIUM, data-model gap); line-11 annual emission
+for partial-year (MEDIUM, form-integrity, tax correct); 300–400% applicable-figure DOWN-truncation vs Table 2
+(LOW, needs the authoritative table to fix without a different small error); per-month-vs-round-once rounding
+drift on lines 24/25 (LOW); the §36B(c)(1)(B) immigrant-exception has no intake flag (advisory follow-up);
+dependents-required-to-file filter; QSEHRA; and the FPL/percentage line-label off-by-one.
+
+Both fixes are compute-only (no schema change). Unit 1063/1063 green (+2); e2e `ptc-mfs-aptc-repayment-total-tax.spec.ts` 2/2.
+
+
 ## 2026-08-02 — EIC §32 (line 27a) audit fixes: earned-income-vs-AGI Worksheet A gate + spouse Form 2555 + dependent_own
 
 Three-agent adversarial read-only audit (Explore agents) of the Earned Income Credit (`computeLine27aEIC`,

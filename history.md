@@ -1,6 +1,41 @@
 ﻿# History
 
 
+## 2026-08-03 — Form 8839 (Adoption Credit §23/§137) audit: no-double-dip fix + line-3 relabel
+
+Three-agent adversarial read-only audit of Form 8839 (credit limits+special-needs / phaseout+refundability /
+Part III benefits) against the 2025 Form 8839 + IRC §23/§137 (the repo's `i8839.pdf` is the stale 2024
+edition — verified rules against the live 2025 instructions). **Verified correct** (unchanged): the $17,280
+per-child lifetime cap + prior-year reduction, W-2 box-12-T sourcing per SSN, the $259,190–$299,190 MAGI
+phaseout (applied after the per-child limit, same range for credit + exclusion), the special-needs full
+exclusion/credit deemed mechanism, the OBBBA-2025 **$5,000 refundable cap PER CHILD** + the
+refundable(→line 30)/nonrefundable(→Sch 3 6c)/carryforward split with no double-count, and Credit Limit
+Worksheet B's credit list. Two fixes:
+
+- **No-double-dip not enforced (HIGH, over-claim).** §23(b)(3)/§137(d): the same dollars can't feed both
+  the Part III employer-benefit exclusion AND the Part II credit. Credit line 5 subtracted only an
+  overrideable user "reimbursement" input, never cross-checked against the child's actual box-12-T benefit —
+  so a taxpayer could exclude $17,280 AND credit $17,280 on the same adoption (up to $5,000 of it refunded).
+  Fix: line 5 reimbursement = max(user input, the child's box-T benefit); advisory
+  `ADOPTION_CREDIT_EXPENSES_REDUCED_BY_EMPLOYER_BENEFITS`. Special-needs children bypass line 5 (deemed cap),
+  unaffected. (The prior "structural enforcement" comment was false; the spec's own §14 listed it
+  "outstanding.")
+- **Line 3 UI collected the wrong value (HIGH-if-live, over-claim → UI relabel).** Form 8839 line 3 needs
+  the prior-year lines 3+6 (qualified expenses ALREADY USED — this enforces the per-child lifetime cap), but
+  the UI label ("Prior-year adoption credit") + help asked for the prior-year credit dollar. A tax-limited
+  prior credit is smaller than the expenses used, so entering it breaches the lifetime cap. Reworded the
+  label + help to "prior-year qualified expenses used (Form 8839 lines 3 + 6)".
+
+Documented as deferred (with reasons): the auto-derived CREDIT MAGI over-adds student-loan interest,
+savings-bond exclusion, and the SE foreign-housing deduction (not in the §23(b)(2)(B) line-7 list) — but the
+same auto-MAGI feeds the Part III exclusion phaseout too, so a correct fix needs credit-vs-exclusion MAGI
+separation (mostly inert: the first two are $0 near the $259k threshold; taxpayer-unfavorable); the nonrefundable
+Credit Limit Worksheet omits Sch 3 6d/6f/6g/6m because adoption computes before Schedule R / clean-vehicle /
+mortgage (the SAME credit-ordering tangle documented for Form 5695 — a dedicated ordering pass); and the
+special-needs deemed credit fires for "final 2025 or earlier" rather than only the 2025 finality year (needs
+a finality-year field). Unit 1606/1606 (1 new); e2e `form8839-adoption-credits.spec.ts` (1 new: box-T →
+$0 credit base) + existing credit/phaseout green; UI build green.
+
 ## 2026-08-03 — Form 2441 (Child & Dependent Care §21/§129) audit: deemed-income one-per-month fix + MFS flag
 
 Three-agent adversarial read-only audit of Form 2441 (Part II expenses+earned-income / Part III benefits /

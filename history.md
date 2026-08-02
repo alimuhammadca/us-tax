@@ -1,6 +1,36 @@
 ﻿# History
 
 
+## 2026-08-03 — Form 2441 (Child & Dependent Care §21/§129) audit: deemed-income one-per-month fix + MFS flag
+
+Three-agent adversarial read-only audit of Form 2441 (Part II expenses+earned-income / Part III benefits /
+rate-table+wiring) against the 2025 Form 2441 + `i2441.pdf` + IRC §21/§129. **Verified correct** (unchanged):
+the 35%→20% applicable-percentage table (exact $2,000 breakpoints + the 20% floor), the credit math, AGI as
+the rate base, the Schedule 3 line-2 wiring + pre-CTC ordering, the $3,000/$6,000 expense limits, the
+smallest-of earned-income limit, the MFS credit-disallowance gate, the $5,000/$2,500-MFS exclusion cap, W-2
+box-10 SSN sourcing, line-1e routing, and — critically — the anti-double-dip that reduces the $3k/$6k limit
+by excluded benefits (line 27-31 → line 3). Two findings addressed in `TaxReturnComputeService.java`:
+
+- **Both spouses claiming deemed income simultaneously (HIGH, over-credit).** §21(d)(2): in any month both
+  spouses are a student/disabled, only ONE may be treated as having the $250/$500 deemed earned income. The
+  code gave BOTH the full deemed floor, so two full-year-student spouses each got e.g. $6,000 → inflated the
+  credit base. Fix: when the marked months overlap (combined > 12), cap the total deemed months at 12 (one
+  per month) and SPLIT them to maximize the SMALLER earned income (the taxpayer-optimal, IRS-compliant
+  assignment — two full-year students → 6 months each = $3,000, not $6,000). Advisory
+  `DEPENDENT_CARE_BOTH_SPOUSES_DEEMED_INCOME_SPLIT`. (Non-overlapping months ≤ 12 are unchanged.) The
+  correct value is a balanced split, NOT $0 — so a naive "zero one spouse" would have under-credited.
+- **MFS §129(b) spouse earned-income limit not applied (MEDIUM, over-exclusion → documented+flagged).** For
+  an MFS filer not "considered unmarried" (may exclude but not claim the credit), Form 2441 line 19 should be
+  the SPOUSE's earned income — but a separate MFS return doesn't carry the other spouse's income, so the app
+  used only the taxpayer's, over-excluding when the spouse earned less. Data limitation (no spouse income on
+  MFS); added advisory `DEPENDENT_CARE_MFS_SPOUSE_EARNED_INCOME_LIMIT` directing the filer to adjust line 1e.
+
+Documented as accepted simplifications (unchanged): the line-9b outer-cap fallback (already user-flagged as an
+over-estimate), the over-broad Credit-Limit-Worksheet helper (latent, correct only by call ordering), sole-
+prop/partnership DCAP hardcoded $0, grace-period/forfeiture trusted, and the deemed max-vs-per-month-sum for
+part-year (taxpayer-unfavorable). Unit 1605/1605 (1 new); e2e `line1e-dependent-care.spec.ts` (1 new: both
+full-year students → $3,000 each) + existing deemed/MFJ green; compute-only (no migration).
+
 ## 2026-08-03 — Form 5695 (Residential Energy Credits §25C/§25D) audit: 3 fixes + ordering issues documented
 
 Three-agent adversarial read-only audit of Form 5695 (§25C limits / §25D + carryforward / wiring+ordering)

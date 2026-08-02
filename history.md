@@ -37,11 +37,16 @@ CLEAN bill (all worksheet lines 1–19 reproduced exactly, incl. the compact-for
 
 Also corrected the tier-helper JavaDoc (~25472) that enshrined the wrong "line 1f adoption" field.
 
-Documented, not fixed (outstanding.md): **F-D** — when the Pub 590-A coordinator reduces the IRA deduction
-it overwrites line 6b with the normal-method value but preserves a `true` line-6c lump-sum election checkbox,
-discarding a beneficial §86(e) election (line 6b rises, 6c stays checked). A correct fix must re-run the
-lump-sum election inside the coordination loop (worksheet line 6 changes with the IRA deduction); LOW severity
-and extremely narrow (needs lump-sum back payment + IRA-coordination + phaseout reduction simultaneously).
+**F-D — Pub 590-A coordination now re-runs a beneficial lump-sum election (fixed 2026-08-01, follow-up).**
+When the coordinator reduced the IRA deduction it overwrote line 6b with the normal-method value but preserved
+a `true` line-6c checkbox, discarding a beneficial §86(e) election (line 6b rose, 6c stayed checked). Because
+reducing the IRA deduction lowers worksheet line 6 and RAISES provisional income (changing the lump-sum
+current-year base), the fix RE-RUNS `computeTaxableSocialSecurityLumpSum` with the coordinated worksheet line 6
+and re-applies the same lesser-of gate used in `computeSocialSecurityBenefits` (~24797): line 6b = the
+coordinated lump-sum value when still beneficial (6c=true), else the coordinated normal (6c=false) — 6b and 6c
+always consistent. Only bites when a lump-sum back payment + IRA-coordination + phaseout reduction coincide.
+Unit `iraCoordinationRerunsBeneficialLumpSumElectionAfterDeductionReduced` (line 6b $10,200 not the
+coordinated-normal $17,000). Also removed the now-inaccurate "coordination always uses normal method" comment.
 
 Verified CORRECT (clean bills): the entire core tier worksheet (lines 1–19, plateau cap ordering, 85% cap,
 MFS-lived-with-spouse restrictive branch, all three zero-floors), worksheet line 3 income sum, line 4

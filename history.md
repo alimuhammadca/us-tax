@@ -1,6 +1,42 @@
 ﻿# History
 
 
+## 2026-08-02 — Form 8959 (Additional Medicare Tax §3101(b)(2)) audit: essentially a clean bill + Part II MFS spouse-SE guard
+
+Three-agent adversarial read-only audit (Explore agents) of Form 8959 — Part I (Medicare wages), Part II
+(self-employment), Part III (RRTA), Part IV total, and Part V (withholding reconciliation) — against the
+2025 Form 8959 + §3101(b)(2)/§1401(b)(2). Verdict: NO live tax defect. Both feared critical vectors are
+CORRECTLY implemented — Part II line 8 uses Schedule SE line 6 (92.35%-adjusted net earnings, NOT raw net
+profit → no ~8.25% overstatement), and Part II line 10 = line 4 with NO RRTA (matching the form). Verified
+correct: box-5 sourcing (not box 1), Form 4137 line 6 / Form 8919 line 6 inputs, the threshold reduction
+(line 11 = threshold − wages), SE-loss no-offset, RRTA's full independent threshold (line 15), all threshold
+values (Single/HOH/QSS $200k, MFJ $250k, MFS $125k — QSS correctly NOT $250k), MFJ-combine vs non-MFJ per-SSN
+scoping, the Part V reconciliation (line 22 = box-6 − 1.45%×box-5, line 24 → Form 1040 line 25c as a PAYMENT
+not netted, line 18 → Schedule 2 line 11 as tax), and the G3 supersede (clean overwrite, no double-count).
+
+One consistency fix in `TaxReturnComputeService.java`:
+- **Part II line 8 missing the MFS guard (LATENT, defensive).** `line8 = addNonNull(taxpayerNetEarnings,
+  spouseNetEarnings)` added the spouse's SE net earnings UNCONDITIONALLY, unlike the mfj-gated spouse addend
+  on lines 1 (wages), 14 (RRTA), and 19 (withholding). It was latent — the spouse's Schedule C/F is nulled
+  upstream on an MFS leg (2528/2546) so `spouseNetEarnings` is null there — but the missing guard was a real
+  scoping inconsistency and a regression hazard (a future change populating spouse SE on MFS would assess
+  phantom tax on the taxpayer). Added `mfj ? spouseNetEarnings : null`. Locked by the method-level unit test
+  `form8959PartIIExcludesSpouseSeEarningsOnMfs` (MFS, taxpayer SE $100k + spouse SE $100k → taxpayer $100k <
+  $125k → no form; pre-guard would have produced $675).
+
+Documented, not fixed (outstanding.md): the whole-dollar rounding of the 0.9% products (lines 7/13/17 summed
+unrounded then rounded once vs per-line rounding — ≤$1-2 only when a filer has excesses in 2-3 Parts
+simultaneously; genuinely ambiguous per Pub 17's "keep cents when adding, round the total" rule, so left as
+the defensible current behavior); the output model storing lines 7/13/17/18 unrounded (presentation, only a
+PDF renderer would show it); line 22 subtracting the unrounded line 21 (≤$1 at a boundary); the blank-primary-
+SSN cross-spouse W-2 leak in the SSN-scoped helpers (requires a missing `you.ssn` — unusual for a filed
+return; pre-existing defensive fallback); and the apparently-superseded legacy `computeAdditionalMedicareTax`
+(Part-I-only) — confirm it is dead code before removal.
+
+Compute-only (no schema change). Unit 1065/1065 green (+1). (The Part II guard is a no-op through the current
+pipeline, so no e2e can distinguish it — the method-level unit test locks the intent.)
+
+
 ## 2026-08-02 — Line 16 cap-gains audit: Schedule D Tax Worksheet §1250/28% cap at net capital gain
 
 Three-agent adversarial read-only audit (Explore agents) of the Form 1040 line-16 capital-gains machinery —

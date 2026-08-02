@@ -1,6 +1,45 @@
 ﻿# History
 
 
+## 2026-08-02 — Line 16 cap-gains audit: Schedule D Tax Worksheet §1250/28% cap at net capital gain
+
+Three-agent adversarial read-only audit (Explore agents) of the Form 1040 line-16 capital-gains machinery —
+the Qualified Dividends & Capital Gain Tax Worksheet, the Schedule D Tax Worksheet (28%-rate gain +
+unrecaptured §1250), the routing tree, and `computeTaxBracket` (Tax Table vs Tax Computation Worksheet) —
+against §1(h)/§1(j) and the 2025 worksheets. Extensive verification passed: all 8 QDCG breakpoints (incl.
+the MFS $300,000 subtlety), all 5 filing-status bracket schedules + subtraction constants, the 0/15/20
+stacking (hand-verified stress tests), the branch precedence, the net-loss skip, FEITW's internal
+preferential rates, the §1250/28% exclusion from the 0/15/20 pool, and — notably — `computeTaxBracket`
+correctly performs the IRS **Tax Table $50-row midpoint lookup** below $100,000 (verified against a real
+published table row) and the exact formula ≥$100,000. One real defect fixed in `TaxReturnComputeService.java`:
+
+- **Schedule D Tax Worksheet omitted the "smaller of line 9" caps (lines 12 & 35) (HIGH, IRS-adverse,
+  understates tax).** `computeScheduleDTaxWorksheet` passed the RAW Schedule D line 18 (28%-rate) and line 19
+  (unrecaptured §1250) amounts to the worksheet, assuming net LTCG ≥ their sum. Schedule D line 19 comes from
+  its own Unrecaptured §1250 Gain Worksheet and can EXCEED net capital gain; when capital LOSSES shrink net
+  LTCG below line 18 + line 19, the code taxed *ordinary* income at 25%/28%. Reachability confirmed: line 19
+  is set (17381) with no net-capital-gain cap, and the only other cap (`capUnrecapturedSection1250`, 1239)
+  fires solely in the §1231(c)-lookback path — an unrelated stock loss reaches the worksheet uncapped. Fixed
+  by capping each special gain at net LTCG (§1250 takes priority per line 35 = smaller of line 9 or Sch D
+  line 19; the 28% gain gets the residual) before delegating to the exact worksheet — a no-op when
+  netLtcg ≥ gain28 + §1250. Example: Single, $300k wages + $50k §1250 gain net of a $45k LT loss → net LTCG
+  $5,000 → tax $75,797.25 (was $71,297.25, a $4,500 understatement = $45,000 × (35%−25%)). Unit
+  `capGainsAudit4_scheduleDTaxWorksheetCapsSpecialGainsAtNetCapitalGain`.
+
+Also corrected the `computeTaxBracket` JavaDoc, which wrongly claimed the $100k boundary produces
+"mathematically identical results across both ranges" — it actually does a real Tax Table lookup below
+$100k; the misleading comment invited a future regression (a maintainer "simplifying" it to a pure formula
+would reintroduce a ~$1–$12-per-lookup Tax Table divergence, compounded across worksheet lines 44/46).
+
+Documented, not fixed (outstanding.md): the §1250 cap fix's full-path e2e (§1250 Form 4797 recapture + a
+separate LT capital loss — intricate multi-form assembly; the fix is unit-tested through the real caller +
+reachability code-confirmed); `16.md` MFS QDCG typo ($300,025 → $300,000, code correct); a stale Branch-3
+kiddie-fallback comment; the sub-$25 Tax Table row width (unreachable); and the local i1040gi doc being 2024
+data. No other line-16 tax-math defect found (QDCG worksheet, routing, brackets, Tax Table all clean).
+
+Compute-only (no schema change). Unit 1064/1064 green (+1).
+
+
 ## 2026-08-02 — PTC §36B (Form 8962) audit fixes: MFS repayment-cap column + <100% FPL applicable-taxpayer gate
 
 Three-agent adversarial read-only audit (Explore agents) of the Premium Tax Credit (`computeForm8962`, the

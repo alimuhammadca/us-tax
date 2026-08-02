@@ -1,6 +1,59 @@
 ﻿# History
 
 
+## 2026-08-01 — Social Security §86 (lines 6a–6b) audit fixes: adoption add-back + lump-sum MFS branch + Pub 590-A form8815 double-count
+
+Three-agent adversarial read-only audit (Explore agents) of the §86 Social Security taxability subsystem
+(core tier worksheet, provisional-income inputs, lump-sum election, Pub 590-A IRA↔SS coordination, MFS)
+against the 2025 IRS Social Security Benefits Worksheet + Pub 915 + Pub 590-A. The core tier math got a
+CLEAN bill (all worksheet lines 1–19 reproduced exactly, incl. the compact-formula equivalence and the
+`w7 = secondBase` boundary). Three defects fixed in `TaxReturnComputeService.java`:
+
+- **F-B — Worksheet line 5 adoption add-back used the TAXABLE amount, not the EXCLUDED benefits
+  (HIGH, IRS-adverse; found independently by two agents).** Line 24635 read `adoption.line1f()` (Form 8839
+  line 31 taxable portion, already inside line 1z → worksheet line 3) instead of the §137-EXCLUDED benefits
+  (Form 8839 line 30). In the common full-exclusion case line 1f ≈ $0, so the legitimate add-back was
+  OMITTED → provisional income under-stated → SS under-taxed (and it double-counted the taxable part
+  otherwise). The identical fix was applied to the two sibling MAGI sites (~2873 Pub 590-A IRA, ~3399
+  excMagi) on 2026-07-30 but not propagated here; Form 2555/possession helpers already use the excluded
+  amounts. Fixed to `getPart3Line30TotalExcludedBenefits()`. Example: Single, SS $20k, wages $30k, $5k fully
+  excluded → line 6b $13,850 (was $9,600). Unit `socialSecurityWorksheetLine5AddsBackExcludedAdoptionBenefitsNotTaxablePortion`.
+- **F-A — Lump-sum election current-year base ignored MFS-lived-with-spouse (MED, IRS-adverse).**
+  `computeTaxableSocialSecurityLumpSum` Step 3 (line 25653) hard-coded the `mfsLivedWithSpouseAnyTime`
+  argument to `false`, while `taxableNormal` uses `isMfs && livedWithSpouseAnyTime` and the prior-year
+  Step-4 recompute honors the per-year flag. An MFS-lived-with-spouse current filer electing §86(e) got the
+  generous $25k base instead of the §86(c)(1)(D) restrictive 85% branch → understated current-year base.
+  Threaded `isMfs && livedWithSpouseAnyTime` through a new parameter. Example: MFS-lived-with, SS $30k +
+  $30k other, $5k lump sum → line 6b $21,250 (was $11,725). Unit `lumpSumCurrentYearBaseUsesMfsLivedWithSpouseRestrictiveBranch`
+  + e2e `line6abcd-social-security-benefits.spec.ts` MFS-lived-with-spouse case.
+- **F-C — Pub 590-A coordination MAGI double-counted the Form 8815 savings-bond exclusion
+  (LOW-MED, taxpayer-harmful).** The with-SS branch set `line9MinusLine6b = worksheetLine3FromIncome()`,
+  whose line-2b term already includes the Form 8815 add-back, and then `magiAdditionalAddbacks` added Form
+  8815 again → MAGI over-stated → IRA deduction over-phased-out. The no-SS branch deliberately uses plain
+  line 2b "to avoid double-counting"; the with-SS branch now strips Form 8815 once (guarded, no-op when
+  absent) to match. Verified by inspection + the six existing IRA-coordination tests stay green; a dedicated
+  numeric regression test is deferred (needs a 5-condition phaseout-edge setup whose exact value is hard to
+  hand-pin — documented in outstanding.md).
+
+Also corrected the tier-helper JavaDoc (~25472) that enshrined the wrong "line 1f adoption" field.
+
+Documented, not fixed (outstanding.md): **F-D** — when the Pub 590-A coordinator reduces the IRA deduction
+it overwrites line 6b with the normal-method value but preserves a `true` line-6c lump-sum election checkbox,
+discarding a beneficial §86(e) election (line 6b rises, 6c stays checked). A correct fix must re-run the
+lump-sum election inside the coordination loop (worksheet line 6 changes with the IRA deduction); LOW severity
+and extremely narrow (needs lump-sum back payment + IRA-coordination + phaseout reduction simultaneously).
+
+Verified CORRECT (clean bills): the entire core tier worksheet (lines 1–19, plateau cap ordering, 85% cap,
+MFS-lived-with-spouse restrictive branch, all three zero-floors), worksheet line 3 income sum, line 4
+tax-exempt-interest add-back, Form 8815 savings-bond carve-out, the Form 2555/possession portion of line 5,
+the line-6 Schedule-1 subset (excludes line 21), benefits/line-6a (SSA-1099 box 5 net, RRB SSEB, repayments
+netted, Medicare premiums not subtracted, MFS attribution), lump-sum non-indexed bases + lesser-of gate +
+per-year handling + prior-year MAGI, coordination convergence + special formula, output/gating + null/zero.
+
+All three fixes are compute-only (no schema change; hot-reloaded). Unit 1057/1057 green (+2 new); e2e
+`line6abcd-social-security-benefits.spec.ts` MFS-lived-with-spouse case green.
+
+
 ## 2026-08-01 — NIIT §1411 (Form 8960) audit fixes: line-9a investment interest auto-flow + MFS FEIE MAGI guard
 
 Three-agent adversarial read-only audit (Explore agents) of the Net Investment Income Tax subsystem

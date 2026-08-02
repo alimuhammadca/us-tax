@@ -1,6 +1,37 @@
 ﻿# History
 
 
+## 2026-08-02 — Schedule 8812 (CTC/ACTC/ODC §24) audit: 3 fixes (child demotion, ODC preservation, line-10)
+
+Three-agent adversarial read-only audit of Schedule 8812 (eligibility+amounts / phaseout / refundable ACTC)
+against the 2025 Schedule 8812 + IRC §24 + `lines/s8812.md`. **Verified correct** (unchanged): the OBBBA
+TY2025 constants ($2,200 CTC / $500 ODC / $1,700 ACTC cap — the audit prompt's "$2,000" was pre-OBBBA), the
+phaseout math ($400k MFJ / $200k others incl. the QSS edge, round-UP-to-$1,000 CEILING, 5% rate, MAGI with
+§911/§931/§933 add-backs, combined-line-8 floor), the 15%-over-$2,500 ACTC formula, the 3-or-more-children
+Part II-B alternative (implemented + larger-of, despite a stale "Deferred" spec note), the Form 2555 bar,
+Credit Limit Worksheet A ordering, mutual exclusion, and the dependent-own exclusion. Three fixes in
+`TaxReturnComputeService.java` (two HIGH found by the eligibility agent):
+
+- **No backend SSN/age validation of CTC-vs-ODC (HIGH, over-claim).** The bucketing trusted the intake
+  `qualifiesForCTC` flag with no cross-check, while a comment falsely claimed it enforced the SSN/age gates.
+  A child flagged CTC-eligible but **age 17+** (§24(c)) or holding an **ITIN** (leading 9, not an SSN;
+  §24(h)(7)) was silently granted $2,200 + up to $1,700 refundable. Now demoted to the $500 ODC (with a
+  `SCHEDULE_8812_CTC_DEMOTED_TO_ODC` advisory) whenever the DOB/TIN unambiguously contradicts the flag; a
+  blank DOB/TIN leaves the intake flag untouched.
+- **Filer-SSN block wiped the $500 ODC (MEDIUM, under-claim).** The 2025 OBBBA filer-SSN rule blocks the
+  CTC + ACTC ONLY, not the ODC — but the block zeroed the combined line 14. The code's own comment
+  documented the fix; now line 14 becomes the ODC portion after phaseout (line 7 − line 11, capped by tax),
+  ACTC stays $0.
+- **Line 10 stored the raw excess instead of the rounded-up multiple (LOW, e-file consistency).** An earlier
+  "G5" change stored the raw excess ($425) in the PDF line-10 cell, but the IRS form (and `s8812.md`) require
+  the excess ROUNDED UP to the next $1,000 ($1,000) — so the filed form was internally inconsistent (line 11
+  ≠ line 10 × 5%). Credit dollars were always correct (they use the rounded value); now the stored cell is
+  too. One unit test that pinned the raw value was corrected to the IRS value.
+
+Documented as deferred: Credit Limit Worksheet A omits Schedule 3 line 6l (Form 8978 BBA push-out) — LOW,
+near-zero incidence for an ACTC claimant. Unit 1604/1604 (3 new); e2e `line19-child-tax-credit.spec.ts` 6/6
+(1 new: 17-year-old → $500 ODC); compute-only (no migration; hot-reloaded).
+
 ## 2026-08-02 — Form 8889 (HSA §223) audit: 5 fixes (catch-up proration, family split, box-12-W, 65+ exception, excess flag)
 
 Three-agent adversarial read-only audit of Form 8889 (Part I limits / Part II distributions / Part III

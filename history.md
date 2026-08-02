@@ -1,6 +1,53 @@
 ﻿# History
 
 
+## 2026-08-01 — QBI §199A audit fixes: prior-year loss carryforward on Form 8995-A + both-forms straddle
+
+Three-agent adversarial read-only audit (Explore agents — no Edit/Write, so zero concurrent-edit risk)
+of the §199A QBI subsystem (`computeLine13a`, `compute8995AQbiDeductionComponent`, form routing/gating,
+output/persistence) against the 2025 Form 8995 / 8995-A. Two HIGH defects found (F-A independently
+confirmed by two agents), both fixed in `TaxReturnComputeService.java`:
+
+- **F-A (HIGH — over-stated deduction / under-stated tax).** A prior-year qualified-business net-loss
+  carryforward was folded into `netQualifiedBusinessIncome` and applied on the BELOW-threshold Form 8995
+  path (via `qbiComponentBase`), but the ABOVE-threshold Form 8995-A path took its component solely from
+  `compute8995AQbiDeductionComponent(...)`, whose signature never received the carryforward — so it was
+  silently dropped above the threshold. The carryforward was still stored for next-year bridging, making
+  the drop invisible; and the audit-#5 gap-year bridge actively seeds it, so it was reachable. Per
+  §199A(c)(2) / §1.199A-1(d)(2)(iii) the carryforward is a loss from a separate qualified business, netted
+  against positive QBI before the per-activity W-2/UBIA limits. Fixed by threading `priorYearCarryforward`
+  into the 8995-A helper and adding it to `lossToApportion` (so it apportions against positive activities,
+  or zeroes the component when it swamps all positive QBI). Example: MFJ, TI-before-QBI $500k, one non-SSTB
+  activity QBI $100k / W-2 $200k, carryforward $60k → net QBI $40k → component $8,000 (was $20,000).
+  Unit test `qbiAudit_priorYearLossCarryforwardNetsOnForm8995APath` (3 cases incl. swamp-to-zero); e2e
+  `qbi-8995a-carryforward-and-integrity.spec.ts` F-A (above-threshold K-1 end-to-end).
+- **F-B (HIGH — output integrity; tax number was already correct).** The two-pass line-13a wiring seeds
+  `form8995`/`form8995A` from the first pass (line13b = 0 → taxable-income-before-QBI at its maximum), then
+  the authoritative second pass (line13b subtracted) only CONDITIONALLY overwrote each form. When line13b
+  pushed the base from above the threshold (first pass → 8995-A) to at/below it (second pass → 8995), the
+  stale first-pass 8995-A was never cleared → BOTH forms emitted (an invalid, e-file-rejectable attachment
+  set carrying above-threshold figures that disagree with the 8995 feeding line 13a). Fixed by
+  unconditionally overwriting BOTH forms from the second pass (exactly one is non-null → the null sibling
+  clears the stale form), mirroring the already-correct blocked/no-QBI else-branch. e2e F-B (W-2 overtime
+  straddle: first-pass base 198,250 → 8995-A, second-pass 192,150 after $6,100 line-13b → 8995 only).
+
+Verified CORRECT across all three lenses (clean bills): W-2/UBIA "greater of" (50% vs 25%+2.5%), the
+within-band phase-in reduction ratio (Part III), the SSTB applicable-percentage haircut (applied to QBI +
+W-2 + UBIA), the 20% component rate, the overall taxable-income limit (20% × (TI-before-QBI − net cap gain
+− qual. div.), using AGI−12e−13b not line 15), REIT/PTP component + negative-net carryforward (applied on
+BOTH paths, unlike F-A), §199A-dividend box-5 TIN attribution, threshold basis + per-status values
+(MFS = $197,300, QSS = $197,300), and the MFS spouse-QBI null-shadow guard at both call sites.
+
+Documented, not fixed (see outstanding.md — principled disposition): F-C (above-threshold null W-2 → $0,
+no flag: IRS-correct taxpayer-conservative result; a flag would false-positive on legit no-employee
+sole-props), F-D (MFS TIN-less statement → taxpayer leg: shared `belongsToPerson`, low reachability, same
+class as the known MFS catch-all leak), F-E (loss-netting-before-SSTB-haircut ordering: second-order, both
+proportional, trigger largely blocked by `LINE13A_NEGATIVE_K1_QBI_THRESHOLD_UNSUPPORTED`).
+
+Both fixes are compute-only (no schema/entity/mapper change; hot-reloaded). Unit 1053/1053 green;
+`qbi-8995a-carryforward-and-integrity.spec.ts` 2/2 + existing QBI e2e regression green.
+
+
 ## 2026-08-01 — Form 6251 AMT audit fixes: Part III cap-gains bracket + MFS §55(d)(3) flush
 
 Adversarial read-only audit of the AMT computation (exemption / TMT / Part III cap-gains worksheet)

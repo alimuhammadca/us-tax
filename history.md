@@ -1,6 +1,46 @@
 ﻿# History
 
 
+## 2026-08-04 — Form 1116 Foreign Tax Credit (§904) adversarial audit — four over-credit fixes
+
+Three-agent read-only audit (§904(a) limitation core / numerator+baskets / carryover+AMT+interactions).
+A rich audit — a cluster of confirmed over-credit (under-tax) defects, two convergent. Fixed the four
+clean, verifiable ones; documented the rest (which need apportionment bases or feature work).
+
+**FIXED (all over-credit / under-tax):**
+- **§904(j) simplified exception threshold not enforced (SEVERE, convergent A5=C1).** The $300/$600
+  threshold was computed and logged but never applied — any user toggling `claimsSimplifiedException`
+  (with an override) got `min(foreignTax, US tax)` with NO §904 ratio limitation, at any amount. Now the
+  simplified election is used ONLY when foreign taxes ≤ threshold; above it the taxpayer is ineligible and
+  falls through to the full Form 1116.
+- **Line 19 fraction not capped at 1.0 (A3).** "If line 17 is more than line 18, enter 1" — added
+  `.min(ONE)` so the limitation (line 21) never exceeds the US tax when a US-source loss shrinks line 18.
+- **No line-33 cap (A4).** Total FTC across baskets = `min(line 20, line 32)`; the summed per-basket
+  credits are now capped at the total US tax (was the uncapped sum → could exceed the entire US tax).
+- **Per-country net floored at $0 (convergent A2=B3).** Each country's line-7 net was floored at 0 before
+  summing, so an intra-basket loss country couldn't offset gains → numerator + fraction over-stated. Now
+  a country net may be a loss (line 7 "taxable income or (loss)") and the CATEGORY TOTAL (line 17) is
+  floored at 0.
+
+Tests: `form1116SimplifiedExceptionOver300FallsThroughNoUncappedCredit` + `...Under300IsAllowed` +
+`form1116IntraBasketCountryLossOffsetsGain`; corrected the existing `simplifiedExceptionCapAtUsLimit`
+(had pinned an over-$300 override). Full suite 1628/1628. **Verified correct:** per-basket separation
+(§904(d)), HTKO, the line-20 tax base (line 16 + Sch 2 line 1z, AMT excluded), line 24 = min(line21,
+line14), AMT FTC numerator/denominator (§59(a)), the Form 6251 line-8→11 wiring, no AMT↔regular
+circularity, per-basket carryover separation, and the Schedule 3 summation.
+
+**DOCUMENTED (not fixed — need apportionment bases / feature work; direction noted):**
+- Line 3g pro-rata standard/itemized deduction apportionment is hardcoded 0 (B1) — SYSTEMATIC over-credit
+  (every deduction-bearing return), but needs a gross-income-from-all-sources base not cleanly available;
+  an imprecise proxy risks over-correcting (over-tax).
+- No §904(b)(2)(B) qualified-dividend/cap-gain rate adjustment (B2) — over-credit for large foreign QDCG.
+- Line 18 omits the 2025 Sch 1-A line-37 senior-deduction add-back (A1) — narrow (65+ binding ratio);
+  needs Schedule 1-A threaded in.
+- Silent 3-country truncation (B4, needs multi-Form-1116); no FEIE double-count guard (B5); §904(c)
+  carryforward lost in whole-return/per-basket gap years (C2, UNDER-credit); 1-year carryback not
+  implemented (C3, documented simplification).
+
+
 ## 2026-08-03 — Form 8960 NIIT (§1411) adversarial audit — real-estate-professional classification bug
 
 Three-agent read-only audit (Part I income + deductions / Part III MAGI+threshold+lesser-of / edge

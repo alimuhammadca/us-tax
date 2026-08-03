@@ -1,6 +1,40 @@
 ﻿# History
 
 
+## 2026-08-03 — AMT (Form 6251 / line 17) adversarial audit
+
+Three-agent read-only audit (AMTI add-backs+NOL / exemption+phaseout+26-28%-rate / Part III cap-gains+FEITW+4952).
+Convergent-verified correct: exemption/phaseout with 2025 constants ($137,000/$88,100/$68,500; phaseout
+$1,252,700/$626,350; MFS §55(d)(3) flush at $900,350→$1,174,350), the 26/28% breakpoints ($239,100 /
+$119,550 MFS), AMTI lines 1a/1b/2a/2g, the Part III bracket engine, AMT FTC limitation, and Schedule 2
+line-3 summation. Fixes:
+
+- **C#1 (HIGH over-claim) — AMT Foreign Earned Income Tax Worksheet ignored preferential rates.**
+  A Form 2555 filer with qualified dividends / net capital gain had every FEITW leg taxed at flat 26/28%
+  instead of routed through Part III (0/15/20%). Added `amtTaxForFeitwLeg(...)` which calls
+  `computeAmtPartIII` per leg when cap gains are present; threaded `form1040`/`scheduleD`/`hasCapGains`
+  into `computeAmtForeignEarnedIncomeTaxWorksheet`. New unit `amtFeitwWithCapGainsUsesPartIIIPreferentialRatesNotFlat`.
+- **C#2 — Form 4952 line-4g elected investment income left in the AMT preferential pool.** 4g income is
+  taxed at ordinary rates for the regular tax, so it must leave the AMT 0/15/20% pool too. Threaded
+  `electedInvestmentIncome4g` through `computeLine17 → computeAmtPartIII → populateAmtPartIIIFields`
+  (AMT line 13 now subtracts it) and into the FEITW gate.
+- **A#1/B#1 — `computeAmtDirectRate` used binary `double`.** Converted to exact `BigDecimal` (26% to the
+  breakpoint, 28% above); every other tax routine here is BigDecimal, and the double could tip a $1 boundary.
+- **C#3 — comment claimed the MFS 20%-rate floor was $300,025 ("half of MFJ").** Verified against IRS
+  Rev. Proc. 2024-40 §3.03: MFS max-15%-rate amount is **$300,000** (rounded, NOT half of MFJ's $600,050).
+  The code constant `QDCG_TWENTY_RATE_FLOOR_MFS = $300,000` was already correct; fixed the stale comment.
+- **C#4 — comment mislabeled AMT as "Schedule 2 line 1a".** Verified against the 2025 f1040s2 semantic
+  field map: APTC repayment is line 1a→1z, **AMT is line 2**, line 3 = sum. Code was correct; fixed the comment.
+- **B#2/B#4 (cleanups)** — corrected the stale "MFS add-back cap deferred/not implemented" comment (the
+  §55(d)(3) flush IS implemented on line 4); removed a dead `isHoh` local.
+- **A#2 (NOT fixed — documented feature-scale gap)** — the ATNOLD (line 2f) reuses the regular NOL
+  carryforward as the AMT NOL (no separate AMT-NOL track). Capping line 2f at the line-2e add-back would
+  wrongly forfeit the legitimate 90%-vs-80% cap difference; a true fix needs a separate AMT-NOL
+  carryforward (loss-year AMT adjustments). Left as the existing documented simplification.
+
+Full backend suite green: **1616/1616**. Compute-only; hot-reloads in Quarkus dev.
+
+
 ## 2026-08-03 — §199A QBI deduction (line 13a / Form 8995 / 8995-A) adversarial audit
 
 Three-agent read-only audit (core+wage/UBIA / SSTB+overall+REIT-PTP / losses+carryforward+aggregation).

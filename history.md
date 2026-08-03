@@ -1,6 +1,49 @@
 ﻿# History
 
 
+## 2026-08-02 — Close the deferred audit gaps (credit-ordering, Form 8839 MAGI, Form 5695/2441) — no more deferrals
+
+Directive: fix every gap the recent audits had documented as "deferred," not defer them again. All
+verified against the 2025 IRS worksheets (Form 8839, Form 5695, Schedule 8812, Form 2441). Backend
+compute-only (no migration); unit 1606/1606 throughout. Three commits.
+
+**Batch 1 — credit-ordering + Form 8839 MAGI.**
+- Form 8839 credit MAGI (Line 7 worksheet): the only add-backs are the Puerto Rico exclusion, Form
+  2555 lines 45/50, and Form 4563 line 15. Removed the erroneous student-loan interest, savings-bond
+  interest exclusion, and Schedule 1 foreign-housing DEDUCTION add-backs (a §911(c)(4) deduction is
+  not an exclusion) — they overstated MAGI and over-phased-out the credit.
+- Form 8839 exclusion MAGI (Line 23 worksheet): separated from the credit MAGI. The exclusion
+  worksheet includes the full employer benefits, so Part III now phases out on (credit MAGI + line-23
+  benefits) with its own fraction.
+- Form 5695 §25C limit: now subtracts EXACTLY Schedule 3 lines 6l, 1, 2, 6d, 3, 4 (no CTC, no
+  6-series). Schedule R (6d) is now computed BEFORE Form 5695 so §25C can subtract it.
+- Form 5695 §25D limit: rewritten to the full IRS list (6l,1,2,6d,3,4,§25C,6m,6f,CTC,6g,6c,6h);
+  removed the dead over-broad helper.
+- Schedule 8812 Credit Limit Worksheet A: added the missing Schedule 3 line 6l (Form 8978).
+- Form 2441 line 10: now subtracts exactly Schedule 3 line 1 + 6l per the IRS worksheet (was the
+  over-broad helper, correct only by ordering).
+
+**Batch 2 — Form 5695 §25D final-pass timing.** §25D carries forward and is the LAST personal credit;
+moved its re-finalize to after Form 8859 so its limit subtracts the real adoption (6c), mortgage (6g),
+clean-vehicle (6f/6m), and DC-homebuyer (6h) values (they were null when it ran right after the CTC).
+Removed the §25D (line 5a) subtraction from the Form 8396 and Form 8936 line-6m limits — since §25D is
+applied after those credits, they cannot also subtract it (a mutual-subtraction cycle that
+under-claimed both).
+
+**Batch 3 — Form 5695 line 17e + Form 2441 line 9b.**
+- Form 5695 §25C Section A: line 17e ("related to construction?") is a caution, not a skip gate —
+  removed it from the eligibility test (it was zeroing all of doors/windows/insulation → under-claim);
+  17a/17b/17c remain genuine gates.
+- Form 2441 line 9b (prior-year expenses paid this year): line 9b is a CREDIT (capped expenses ×
+  applicable %), not the raw expense. When the full Pub 503 Worksheet A inputs are absent, the capped
+  expenses are now carried into Phase 2 and multiplied by the current-year applicable percentage
+  (proxy for 2024), instead of being used raw (a 3-5× overstatement); the WORKSHEET_A_PARTIAL advisory
+  still fires.
+
+Still requiring new intake fields (schema + UI, tracked): Form 8889 6% §4973(g) excise (year-end HSA
+value), Form 8839 special-needs finality-year, Form 2441 MFS spouse earned income, Form 2210 Schedule
+AI / Box B waiver / Box E proration.
+
 ## 2026-08-03 — Form 8839 (Adoption Credit §23/§137) audit: no-double-dip fix + line-3 relabel
 
 Three-agent adversarial read-only audit of Form 8839 (credit limits+special-needs / phaseout+refundability /

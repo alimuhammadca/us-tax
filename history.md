@@ -1,6 +1,38 @@
 ﻿# History
 
 
+## 2026-08-03 — Form 8962 (Premium Tax Credit §36B) adversarial audit
+
+Three-agent read-only audit (core computation / reconciliation+repayment / eligibility+special calcs),
+verified against the 2025 Form 8962 + Schedule 2 + §36B. **Verified correct, unchanged:** the
+reconciliation core (Parts I–III), the MFS disallowance + doubled "all other" repayment-cap column, the
+<100% FPL floor (with the APTC-paid relief), the 2025 enhanced applicable-figure schedule (0%→8.5%, NO
+400% cliff), the 2024 FPL tables (prior-year FPL for a 2025 return), the 2025 Table-5 repayment caps,
+the four-component MAGI, net-PTC direction → Schedule 3 line 9, excess-APTC → Schedule 2 line 1a, and the
+SE-health↔PTC thread-isolated fixed-point solve. (The prompt's "MFS uses the halved single cap" premise
+was wrong — married filers, incl. MFS, correctly get the full column.) Fixes (compute-only, unit 1613):
+
+- **Part IV shared-policy allocation (CRITICAL, over-claim).** The allocation percentages were captured
+  and printed on the form but never applied — the credit/repayment was computed on 100% of a policy
+  shared with another tax family. Now col A/B/F are scaled by the taxpayer's agreed premium/SLCSP/APTC
+  percentages (matched by 1095-A policy number, scoped to the allocated months, clamped [0,100], divorce
+  "same %" default).
+- **§36B(c)(1)(D) dependent bar.** A filer who can be claimed as a dependent (dependent-own return or the
+  "someone can claim you" box) is not an applicable taxpayer → net PTC disallowed (line 24 = 0), APTC
+  still repaid — mirrors the MFS bar.
+- **Input-side family-size guard.** Flag when the entered tax family size exceeds the return's actual
+  family (an inflated size raises the FPL and overstates the credit).
+- **Part V alt-calc for year of marriage.** Election recorded but not yet computed (feature); added an
+  advisory that the standard full-year method may overstate repayment.
+- **Applicable figure 300–400% precision.** Replaced the piecewise DOWN-rounded interpolation with the
+  exact single-linear IRS Table 2 segment (slope 0.00025/pt, HALF_UP).
+- **Pub 974 SE-health helper.** Added the <100%-FPL/no-APTC zeroing so the fixed point doesn't solve
+  against a phantom credit; corrected stale "Schedule 2 line 2" APTC comments to line 1a.
+
+Documented (not fixed): full Part V computation (feature-scale), dependent-MAGI "required to file" gate
+(needs per-dependent filing-requirement data), and the FPL line-numbering / dual line-11+12-23 form
+population (no dollar impact; needs a frontend field-map check).
+
 ## 2026-08-02 — Close the field-requiring deferred gaps (new intake fields + migrations + UI)
 
 The four remaining deferred gaps each needed a new intake field. Built fully (entity → mapper →

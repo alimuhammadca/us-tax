@@ -23,6 +23,10 @@ reads with no Schedule C double-count. One real defect (Agents A + B converged):
   Restructured to build the includible view first, net on it, then compute each component (one path now
   serves SSTB and non-SSTB).
 
+Follow-up (2026-08-03, commit a133b34): the two input-side over-claim vectors are now surfaced as
+non-blocking advisories — LINE13A_MANUAL_QBI_BELOW_THRESHOLD_UNVERIFIED (below-threshold manual QBI taken
+at face value) and LINE13A_QBI_SSTB_UBIA_INPUTS_UNVERIFIED (above-threshold SSTB status + UBIA trust).
+
 Documented for follow-up (not fixed this pass): SSTB QBI still in the next-year carryforward subtotal
 (low); the uncapped `manualQualifiedBusinessIncomeAdjustment` below threshold and the SSTB
 self-designation / UBIA face-value trust (input-side over-claim vectors); the Schedule-C-only

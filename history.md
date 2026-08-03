@@ -1,6 +1,47 @@
 ﻿# History
 
 
+## 2026-08-03 — Schedule 8812 (Child Tax Credit / ACTC / ODC, §24) adversarial audit
+
+Three-agent read-only audit (core+§24(h) phaseout / refundable ACTC Part II-A&B / Credit Limit Worksheet
+A&B + ordering). Two agents converged on one high-confidence defect; the Part I core, the CLW-A
+subtracted-credit set, and the credit ordering were independently verified correct.
+
+- **Line-24 composition (HIGH, convergent B+C) — FIXED.** Schedule 8812 Part II-B line 24 must be
+  Form 1040 line 27a (EIC) **+ Schedule 3 line 11 (excess Social Security / tier-1 RRTA tax withheld)**
+  (2025 IRS i1040s8.pdf Credit Limit Worksheet B; verified via pdftotext). The code instead computed
+  EIC **+ refundable AOTC** (`getAmericanOpportunityCredit`) — two errors: it omitted the excess-SS term
+  (line 25 too high → **over-claim** ACTC) and added an alien term (line 25 too low → **under-claim**),
+  each in the hundreds–$1k on Part II-B returns (3+ qualifying children or a PR resident where the SS-tax
+  method wins). `computeExcessSocialSecurityTax` runs after `computeSchedule8812`, so line 24 now
+  populates Schedule 3 line 11 in place (idempotent with the later call). Removed the now-dead refundable-
+  AOTC pre-set. Rewrote the two tests that had locked in the AOTC behavior + added
+  `schedule8812_partIIB_line24UsesExcessSsNotAotc`. The spec `lines/s8812.md` shared the same mislabel —
+  corrected.
+- **Missing-SSN CTC child (input-side over-statement) — advisory added.** A CTC-flagged child with a
+  blank SSN is not demoted (the ITIN demotion only fires on a leading-"9" TIN), so it silently keeps the
+  full $2,200 CTC. §24(h)(7) requires a valid SSN; added non-blocking advisory
+  `SCHEDULE_8812_CTC_CHILD_SSN_UNVERIFIED` + test.
+- **Recalibration (NOT a bug):** the 2025 CTC is **$2,200/child** (One Big Beautiful Bill Act, July 2025;
+  refundable ACTC $1,700), and the code correctly uses $2,200 — do NOT "correct" it to the old $2,000.
+- **Verified correct, no change:** the §24(h) phaseout ($400k MFJ / $200k others, $50-per-$1k "or fraction"
+  ceiling rounding, combined-credit reduction), MAGI add-backs (§911/§931/§933), MFS $200k threshold with
+  no CTC bar, the CLW-A subtracted-credit set (Sch 3 lines 1,2,3,4,5b,6d,6f,6l,6m over Form 1040 line 18)
+  and its complete ordering (all nine credits before 8812), the $1,700 refundable cap on CTC children only,
+  the 15%-over-$2,500 earned-income formula (incl. SE net earnings − ½ SE tax), and the box-4+box-6 line-21
+  aggregation.
+- **Documented, NOT fixed (feature-scale / documented-scope):** the CLW-A **line 4 / CLW-B feedback** is
+  not implemented — the nonrefundable CTC limit omits the reservation of tax liability for the four CLW-B
+  credits (5695 Part I, 8839 adoption, 8396 mortgage-interest, 8859 DC homebuyer), so in the narrow
+  intersection of those credits + CTC children + insufficient liability the refundable ACTC is
+  UNDER-refunded (taxpayer-conservative). A correct fix needs the IRS's iterative CLW-A↔CLW-B allocation.
+  Also intake-trust: relationship/residency/support gates (§152) and the ODC citizenship test; and
+  territory/PR W-2 (499R-2/W-2PR box 21/23) payroll taxes are not summed into line 21 (territory-W-2
+  compute is out of scope).
+
+Full backend suite green: **1617/1617**. Compute-only; hot-reloads in Quarkus dev.
+
+
 ## 2026-08-03 — AMT (Form 6251 / line 17) adversarial audit
 
 Three-agent read-only audit (AMTI add-backs+NOL / exemption+phaseout+26-28%-rate / Part III cap-gains+FEITW+4952).

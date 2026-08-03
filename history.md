@@ -1,6 +1,33 @@
 ﻿# History
 
 
+## 2026-08-03 — §152(d)(1)(B) qualifying-relative gross-income test (QA sc_00009 fix)
+
+QA scenario sc_00009 (adult qualifying relative, age 22, non-student, $8,000 gross income > the $5,200
+2025 limit) expected the $500 Credit for Other Dependents to be DENIED, but the app granted it — it
+trusted the intake `qualifiesForODC` flag and never captured/enforced the §152(d)(1)(B) gross-income
+test (Rev. Proc. 2024-40 §2.24: 2025 exemption amount = **$5,200**). User-authorized field add.
+
+- **New dependent field `gross_income`** (V231 migration; `Dependent` entity; `DependentRecord` +
+  `DependentInput` records; `DependentService` save/load; UI `form-dependent` currency input + help).
+- **Compute**: `applyQualifyingRelativeGrossIncomeTest` runs at the top of compute — a dependent who is
+  a qualifying RELATIVE (NOT a qualifying child: not permanently disabled, not under 19, not under 24 +
+  full-time student) with gross income ≥ $5,200 is dropped from the dependents list (so no $500 ODC and
+  not counted for HOH/EIC/etc.), with a non-blocking flag `DEPENDENT_FAILS_GROSS_INCOME_TEST`. The test
+  only fires when a gross income is on file AND the person is not a qualifying child — so returns without
+  the (new, nullable) input are unaffected.
+- **`ReferenceData.QUALIFYING_RELATIVE_GROSS_INCOME_LIMIT = $5,200`** (single source of truth).
+- Qualifying children (under 19, or under 24 + student, or permanently disabled) and unknown-age
+  dependents are exempt (conservative — no false disqualification).
+- Hybrid note: the auto-compute-from-`dependent_own`-return half is feasible via the KiddieTaxParentReader
+  sub-compute pattern but deferred — it needs a cross-return gross-income read and a total-income≈gross-
+  income approximation; the field-based path fully enforces the test whenever income is captured.
+
+Unit +3 (`dependent_qualifyingRelativeOverGrossIncomeLimit_deniedOdcAndDroppedWithFlag` + two negative
+controls); full backend suite **1620/1620**. Migration applies cleanly + Hibernate validates the mapping;
+UI builds.
+
+
 ## 2026-08-03 — Schedule 8812 (Child Tax Credit / ACTC / ODC, §24) adversarial audit
 
 Three-agent read-only audit (core+§24(h) phaseout / refundable ACTC Part II-A&B / Credit Limit Worksheet

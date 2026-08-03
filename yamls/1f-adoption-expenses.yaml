@@ -116,6 +116,16 @@ adoptionBenefits8839:
           label: Was the adoption legally finalized in 2025 or earlier?
           help: Select Yes if the adoption was legally finalized in 2025 or any prior year. Required for the special-needs full-exclusion rule and to determine when foreign-child employer benefits become excludable.
 
+        # The tax year the adoption became final. For a special-needs child the deemed maximum
+        # credit/exclusion (§23(a)(2)(B)/§137(a)(2)) is allowed only in the finality year; a value
+        # before 2025 means it belonged to that prior year (carryforward), not the 2025 return.
+        - name: adoptionFinalYear
+          type: number
+          required: false
+          showIf: hasSpecialNeeds == true && adoptionFinal2025OrEarlier == true
+          label: Year the adoption became final
+          help: Enter the four-digit tax year the adoption became legally final. For a special-needs child the deemed maximum credit and employer-benefit exclusion apply only in the finality year; if before 2025, this year's credit is based on your actual qualified expenses. Leave blank if unsure.
+
         # V3: Gate before Part II inputs.
         - name: claimsAdoptionCredit
           type: boolean

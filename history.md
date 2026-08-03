@@ -1,6 +1,34 @@
 ﻿# History
 
 
+## 2026-08-03 — §199A QBI deduction (line 13a / Form 8995 / 8995-A) adversarial audit
+
+Three-agent read-only audit (core+wage/UBIA / SSTB+overall+REIT-PTP / losses+carryforward+aggregation).
+Two agents independently **verified the core correct** — 2025 constants ($197,300/$394,600, phase-in
+$50k/$100k, 20%/50%/25%/2.5%), the 8995-vs-8995-A routing (incl. the at-threshold boundary → 8995), the
+wage/UBIA "greater of 50% wages or 25%+2.5% UBIA" limit, the phase-in applicable-% direction and the
+SSTB applicable-% *complement*, the §1.199A-3 SE-deduction reduction on both the Schedule C and K-1
+feeds, the overall 20%-of-(TI − net capital gain) limit (excludes short-term gain), the un-limited
+REIT/PTP component, the separate (non-commingled) QBI vs REIT/PTP loss carryforwards, and K-1 per-activity
+reads with no Schedule C double-count. One real defect (Agents A + B converged):
+
+- **SSTB in the loss-apportionment denominator (over-claim).** `compute8995AQbiDeductionComponent` built
+  the loss-netting denominator from every activity's FULL QBI — including a fully-phased-out SSTB
+  (taxable income ≥ upper threshold) — and applied the SSTB applicable-% reduction only AFTER netting.
+  Per §1.199A-5(a)(2) / Form 8995-A Schedule A, the SSTB's includible QBI/W-2/UBIA is applicable-%-reduced
+  FIRST (to $0 above the upper threshold), and only those includible amounts enter the §1.199A-1(d)(2)(iii)
+  loss netting. The old order let a phased-out SSTB inflate the denominator, so the genuinely-qualified
+  businesses absorbed too little of the negative-QBI/prior-year-carryforward loss → over-claim (e.g.
+  Single TI $300k, non-SSTB $100k + SSTB $100k + $60k carryforward: $14,000 instead of $8,000).
+  Restructured to build the includible view first, net on it, then compute each component (one path now
+  serves SSTB and non-SSTB).
+
+Documented for follow-up (not fixed this pass): SSTB QBI still in the next-year carryforward subtotal
+(low); the uncapped `manualQualifiedBusinessIncomeAdjustment` below threshold and the SSTB
+self-designation / UBIA face-value trust (input-side over-claim vectors); the Schedule-C-only
+cooperative-patron block gap (§199A(b)(7)); and §1.199A-4 aggregation not offered (under-claim-safe).
+Unit 1615/1615.
+
 ## 2026-08-03 — Form 8962 (Premium Tax Credit §36B) adversarial audit
 
 Three-agent read-only audit (core computation / reconciliation+repayment / eligibility+special calcs),

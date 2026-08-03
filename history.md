@@ -1,6 +1,37 @@
 ﻿# History
 
 
+## 2026-08-04 — Schedule A (itemized deductions) adversarial audit — Form 8396 line-17 recompute bug
+
+Three-agent read-only audit (SALT cap + OBBBA phasedown / medical+mortgage+other / election+total+
+interactions). The 2025 OBBBA SALT machinery and most of Schedule A verified correct; one genuine
+over-taxation bug fixed.
+
+- **Form 8396 (mortgage-interest-credit) Schedule A recompute dropped line 6/15/16 (HIGH, over-tax) —
+  FIXED.** When the MCC reduces the Schedule A mortgage-interest deduction, `applyForm8396ReductionToScheduleA`
+  re-summed line 17 as only medical + capped-SALT + interest + charity + disaster-loss — silently DROPPING
+  line 6 (foreign taxes deducted), line 15 (casualty), and every line-16 item (gambling losses, impairment
+  expenses, estate tax on IRD, claim-of-right, Form 4684 §B). It then overwrote Form 1040 line 12/14/15 from
+  the truncated total → over-stated taxable income for any itemizer claiming the MCC with those deductions
+  (e.g. $20k interest + $3k foreign + $10k gambling, $2k credit → taxable income overstated $13k). Fix:
+  recompute line 17 as `originalTotal − actualInterestReduction` (only the interest line changes) — preserves
+  every component and is robust to future line-16 additions. Test
+  `form8396ScheduleAReductionPreservesNonInterestItemizedLines`. Also fixed three misleading stale comments
+  (the phasedown is 30% of MAGI over the threshold, NOT "$1-for-1"; the phasedown worksheet IS implemented).
+- **Verified correct:** the OBBBA 2025 SALT cap ($40k/$20k MFS) + high-income phasedown (30% of MAGI over
+  $500k/$250k, floor $10k/$5k, MFS values consistent, MAGI = AGI + §911 add-back), the income-vs-sales-tax
+  election, medical 7.5% floor, the $750k/$1M acquisition-debt limit + Pub 936 ratio, points amortization,
+  §163(d) investment interest, casualty §165(h) federally-declared-disaster gate (guided path), gambling ≤
+  winnings, §1341, the itemize-vs-standard §63 election, MFS both-must-itemize, the AMT SALT add-back (uses
+  the CAPPED line-7 amount), the §111 SALT-cap-aware refund taxability, and the FTC-vs-deduction foreign-tax
+  suppression (§275(a)(4)). Full suite 1629/1629.
+- **Documented (input-trust / scope / suspicion — not fixed):** §931/§933 possessions/PR exclusions omitted
+  from the phasedown MAGI (narrow); home-equity interest defaults to fully deductible + escapes the combined
+  $750k cap + points not ratio-limited on jumbo loans (input-trust over-deduction); a legacy pre-computed
+  casualty scalar bypasses the disaster gate (advisory-only); null-AGI medical-floor edge; MFS cross-leg
+  itemize-attestation not auto-derived.
+
+
 ## 2026-08-04 — Form 1116 Foreign Tax Credit (§904) adversarial audit — four over-credit fixes
 
 Three-agent read-only audit (§904(a) limitation core / numerator+baskets / carryover+AMT+interactions).

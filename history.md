@@ -1,6 +1,38 @@
 ﻿# History
 
 
+## 2026-08-03 — Form 8960 NIIT (§1411) adversarial audit — real-estate-professional classification bug
+
+Three-agent read-only audit (Part I income + deductions / Part III MAGI+threshold+lesser-of / edge
+cases+interactions). Two agents (A + C) independently converged on one genuine bug; Part III math and
+most of Part I verified correct.
+
+- **Real-estate-professional flag blanketed ALL properties (CONVERGENT, under-tax) — FIXED.** In
+  `computeRentalScheduleE`, `reProfessional` was a household-wide OR over BOTH spouses'
+  `isRealEstateProfessional`, then applied at the passive/non-passive classifier to EVERY property —
+  including the OTHER spouse's rentals and ROYALTY properties — without regard to ownership. Per §469(c)(7)
+  RE-professional status is a PER-PERSON determination that reaches only that person's own RENTAL real
+  estate; it never crosses to the other spouse's property and never applies to royalties (portfolio
+  income). Effect: the other spouse's passive rental income and royalty income were swept "non-passive" →
+  removed from Form 8960 line 4c → **NIIT under-stated** (e.g. a non-RE-pro spouse's $50k investment rental
+  → −$1,900 NIIT; an RE-pro's $50k royalty → −$1,900), and the other spouse's rental LOSSES were over-freed
+  on the 1040. Fix: track per-property ownership (`taxpayerPropertyCount`) and use the OWNER's RE-pro flag,
+  excluding royalties; `materialParticipation` remains the direct per-property non-passive signal. Tests
+  `reProfessionalDoesNotSweepOtherSpouseRentalNonpassive` + `reProfessionalDoesNotExcludeRoyaltyFromNiit`;
+  the existing `realEstateProfessionalLossIsNonpassiveAndFullyDeductible` still green. Suite 1625/1625.
+- **Verified correct (no change):** Part III lines 12–17 (net investment income, the $200k/$250k/**$125k**
+  thresholds, `min(NII, MAGI−threshold)`, 3.8% rate, rounding), the Schedule 2 line-12 → 1040 line-23 flow,
+  the MFS FEIE guard (nulls only the OTHER spouse's Form 2555), the $0-NIIT suppression, line 8 =
+  1+2+3+4c+5d+6+7, the K-1 passive/non-passive split (SE income correctly excluded), line 9a auto §163(d)
+  investment interest (itemizers only), and the $3,000 capital-loss limit on line 5.
+- **Documented limitations (not fixed):** line 13 MAGI adds back GROSS §911 FEIE, not net of §911(d)(6)
+  allocable deductions (Form 2555 exposes no line-44 figure — minor expat over-tax); materially-participated
+  trading-business income (§1411(c)(2)(B)) is not swept INTO NII (needs a trading-business flag — rare
+  under-tax); line 5b (business-asset/§1231 gain) and self-rental recharacterization rely on taxpayer
+  overrides; line 5b input is a positive-magnitude subtraction (self-consistent, but a latent sign trap
+  vs the IRS "combine" convention).
+
+
 ## 2026-08-03 — Form 4972 1986 Tax Rate Schedule mis-transcribed (us-tax-be bug, SQA sc_00047)
 
 Reframing the QA failures as "either us-tax-be OR the expected-value calculator (tax2025.js) is wrong"

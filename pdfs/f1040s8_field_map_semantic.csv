@@ -1,23 +1,42 @@
-page,old_name,new_name,field_type,rect,tooltip
-1,f1_1[0],taxpayer_name,txt,"36.000, 671.998, 460.050, 685.999",taxpayer_name (2025)
-1,f1_2[0],taxpayer_ssn,txt,"461.800, 671.998, 576.000, 685.999",taxpayer_ssn (2025)
-1,f1_3[0],line3_magi,txt,"504.000, 648.000, 576.000, 659.999",line3_magi (2025)
-1,f1_4[0],line4_qualifying_children,txt,"410.400, 636.001, 481.650, 648.000",line4_qualifying_children (2025)
-1,f1_5[0],line5_ctc_potential,txt,"410.400, 624.002, 481.650, 636.001",line5_ctc_potential (2025)
-1,f1_6[0],line6_other_dependents,txt,"410.400, 612.000, 481.650, 623.999",line6_other_dependents (2025)
-1,f1_7[0],line7_odc_potential,txt,"504.000, 600.001, 576.000, 612.000",line7_odc_potential (2025)
-1,f1_8[0],line8_total_potential,txt,"504.000, 588.002, 576.000, 600.001",line8_total_potential (2025)
-1,f1_9[0],line9_threshold_amount,txt,"410.400, 576.000, 482.400, 587.999",line9_threshold_amount (2025)
-1,f1_10[0],line10_phase_out_excess,txt,"504.000, 564.001, 576.000, 576.000",line10_phase_out_excess (2025)
-1,f1_11[0],line11_phase_out_reduction,txt,"410.400, 540.000, 482.400, 551.999",line11_phase_out_reduction (2025)
-1,f1_12[0],line12_credit_after_phase_out,txt,"504.000, 504.000, 576.000, 515.999",line12_credit_after_phase_out (2025)
-1,f1_13[0],line13_credit_limit_wkst_a,txt,"504.000, 492.001, 576.000, 504.000",line13_credit_limit_wkst_a (2025)
-1,f1_14[0],line14_ctc_odc_credit,txt,"504.000, 456.001, 576.000, 468.000",line14_ctc_odc_credit (2025)
-1,f1_15[0],line16a_excess_credit_over_tax,txt,"504.000, 408.002, 576.000, 420.001",line16a_excess_credit_over_tax (2025)
-1,f1_16[0],line16b_actc_ceiling,txt,"504.000, 396.000, 576.000, 407.999",line16b_actc_ceiling (2025)
-1,f1_17[0],line17_actc_potential,txt,"504.000, 384.001, 576.000, 396.000",line17_actc_potential (2025)
-1,f1_18[0],line18a_earned_income,txt,"504.000, 348.001, 576.000, 360.000",line18a_earned_income (2025)
-1,f1_19[0],line19_earned_income_over_floor,txt,"504.000, 336.002, 576.000, 348.001",line19_earned_income_over_floor (2025)
-2,f2_1[0],line20_earned_income_actc,txt,"504.000, 708.001, 576.000, 720.000",line20_earned_income_actc (2025)
-2,f2_2[0],line21_withheld_payroll_taxes,txt,"504.000, 696.002, 576.000, 708.001",line21_withheld_payroll_taxes (2025)
-2,f2_3[0],line27_actc_credit,txt,"376.100, 684.000, 435.600, 695.999",line27_actc_credit (2025)
+old_field_name,old_full_name,semantic_field_name,field_type,pages_0_indexed,rect_first_occurrence
+c1_1[0],topmostSubform[0].Page1[0].c1_1[0],line12_no_cannot_take_credit_checkbox,checkbox,0,"[65.200, 374.002, 73.200, 382.002]"
+c1_1[1],topmostSubform[0].Page1[0].c1_1[1],line12_yes_subtract_line11_from_line8_checkbox,checkbox,0,"[65.200, 362.000, 73.200, 370.000]"
+f1_1[0],topmostSubform[0].Page1[0].f1_1[0],name,text,0,"[36.000, 671.998, 460.050, 685.999]"
+f1_2[0],topmostSubform[0].Page1[0].f1_2[0],social_security_number,text,0,"[461.800, 671.998, 576.000, 685.999]"
+f1_3[0],topmostSubform[0].Page1[0].f1_3[0],line1_form1040_line11a_agi,text,0,"[504.000, 648.000, 576.000, 659.999]"
+f1_4[0],topmostSubform[0].Page1[0].f1_4[0],line2a_puerto_rico_excluded_income,text,0,"[410.400, 636.001, 481.650, 648.000]"
+f1_5[0],topmostSubform[0].Page1[0].f1_5[0],line2b_form2555_lines45_and_50,text,0,"[410.400, 624.002, 481.650, 636.001]"
+f1_6[0],topmostSubform[0].Page1[0].f1_6[0],line2c_form4563_line15,text,0,"[410.400, 612.000, 481.650, 623.999]"
+f1_7[0],topmostSubform[0].Page1[0].f1_7[0],line2d_add_lines_2a_through_2c,text,0,"[504.000, 600.001, 576.000, 612.000]"
+f1_8[0],topmostSubform[0].Page1[0].f1_8[0],line3_add_lines_1_and_2d,text,0,"[504.000, 588.002, 576.000, 600.001]"
+f1_9[0],topmostSubform[0].Page1[0].f1_9[0],line4_number_qualifying_children_under_17,text,0,"[410.400, 576.000, 482.400, 587.999]"
+f1_10[0],topmostSubform[0].Page1[0].f1_10[0],line5_multiply_line4_by_2200,text,0,"[504.000, 564.001, 576.000, 576.000]"
+f1_12[0],topmostSubform[0].Page1[0].f1_12[0],line7_multiply_line6_by_500,text,0,"[504.000, 504.000, 576.000, 515.999]"
+f1_13[0],topmostSubform[0].Page1[0].f1_13[0],line8_add_lines_5_and_7,text,0,"[504.000, 492.001, 576.000, 504.000]"
+f1_14[0],topmostSubform[0].Page1[0].f1_14[0],line9_phaseout_threshold_filing_status,text,0,"[504.000, 456.001, 576.000, 468.000]"
+f1_15[0],topmostSubform[0].Page1[0].f1_15[0],line10_subtract_line9_from_line3,text,0,"[504.000, 408.002, 576.000, 420.001]"
+f1_16[0],topmostSubform[0].Page1[0].f1_16[0],line11_multiply_line10_by_5_percent,text,0,"[504.000, 396.000, 576.000, 407.999]"
+f1_17[0],topmostSubform[0].Page1[0].f1_17[0],line12_subtract_line11_from_line8,text,0,"[504.000, 384.001, 576.000, 396.000]"
+f1_18[0],topmostSubform[0].Page1[0].f1_18[0],line13_credit_limit_worksheet_a,text,0,"[504.000, 348.001, 576.000, 360.000]"
+f1_19[0],topmostSubform[0].Page1[0].f1_19[0],line14_child_tax_credit_and_odc,text,0,"[504.000, 336.002, 576.000, 348.001]"
+f1_11[0],topmostSubform[0].Page1[0].Line6ReadOrder[0].f1_11[0],line6_number_other_dependents,text,0,"[410.400, 540.000, 482.400, 551.999]"
+c2_1[0],topmostSubform[0].Page2[0].c2_1[0],line19_no_enter_zero_on_line20_checkbox,checkbox,1,"[66.800, 602.001, 74.800, 610.001]"
+c2_1[1],topmostSubform[0].Page2[0].c2_1[1],line19_yes_subtract_2500_from_line18a_checkbox,checkbox,1,"[66.800, 590.002, 74.800, 598.002]"
+c2_2[0],topmostSubform[0].Page2[0].c2_2[0],line16b_5100_no_checkbox,checkbox,1,"[66.800, 554.002, 74.800, 562.002]"
+c2_2[1],topmostSubform[0].Page2[0].c2_2[1],line16b_5100_yes_checkbox,checkbox,1,"[66.800, 530.001, 74.800, 538.001]"
+f2_1[0],topmostSubform[0].Page2[0].f2_1[0],line15_reserved_for_future_use,text,1,"[504.000, 708.001, 576.000, 720.000]"
+f2_2[0],topmostSubform[0].Page2[0].f2_2[0],line16a_subtract_line14_from_line12,text,1,"[504.000, 696.002, 576.000, 708.001]"
+f2_3[0],topmostSubform[0].Page2[0].f2_3[0],line16b_number_qualifying_children_under_17,text,1,"[376.100, 684.000, 435.600, 695.999]"
+f2_4[0],topmostSubform[0].Page2[0].f2_4[0],line16b_multiply_by_1700_result,text,1,"[504.000, 672.001, 576.000, 684.000]"
+f2_5[0],topmostSubform[0].Page2[0].f2_5[0],line17_smaller_of_line16a_or_line16b,text,1,"[504.000, 648.000, 576.000, 659.999]"
+f2_6[0],topmostSubform[0].Page2[0].f2_6[0],line18a_earned_income,text,1,"[410.400, 636.001, 481.650, 648.000]"
+f2_7[0],topmostSubform[0].Page2[0].f2_7[0],line18b_nontaxable_combat_pay,text,1,"[316.800, 624.002, 388.050, 636.001]"
+f2_8[0],topmostSubform[0].Page2[0].f2_8[0],line19_subtract_2500_from_line18a,text,1,"[410.400, 588.002, 481.650, 600.001]"
+f2_9[0],topmostSubform[0].Page2[0].f2_9[0],line20_multiply_line19_by_15_percent,text,1,"[504.000, 576.000, 576.000, 587.999]"
+f2_10[0],topmostSubform[0].Page2[0].f2_10[0],line21_withheld_ss_medicare_addl_medicare_taxes,text,1,"[410.400, 456.001, 481.650, 468.000]"
+f2_11[0],topmostSubform[0].Page2[0].f2_11[0],line22_total_sched1_line15_sched2_lines5_6_13,text,1,"[410.400, 432.000, 481.650, 443.999]"
+f2_12[0],topmostSubform[0].Page2[0].f2_12[0],line23_add_lines_21_and_22,text,1,"[410.400, 420.001, 481.650, 432.000]"
+f2_13[0],topmostSubform[0].Page2[0].f2_13[0],line24_form1040_line27a_and_sched3_line11,text,1,"[410.400, 372.002, 481.650, 384.001]"
+f2_14[0],topmostSubform[0].Page2[0].f2_14[0],line25_subtract_line24_from_line23,text,1,"[504.000, 360.000, 576.000, 371.999]"
+f2_15[0],topmostSubform[0].Page2[0].f2_15[0],line26_larger_of_line20_or_line25,text,1,"[504.000, 348.001, 576.000, 360.000]"
+f2_16[0],topmostSubform[0].Page2[0].f2_16[0],line27_additional_child_tax_credit,text,1,"[504.000, 312.001, 576.000, 324.000]"

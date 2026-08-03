@@ -1,6 +1,25 @@
 ﻿# History
 
 
+## 2026-08-03 — §152(d) gross-income test: dependent_own auto-derivation (hybrid 2nd half)
+
+Completed the deferred half of the sc_00009 fix. When the parent has NOT hand-entered a dependent's
+gross income but that dependent files their own `dependent_own` return, the parent's compute now
+auto-derives the income and enforces the §152(d) test — no manual entry needed.
+
+- **`KiddieTaxParentReader.dependentOwnGrossIncomeBySsn(uid)`** — for each `dependent_own` return in the
+  household, nested-computes it (same pattern as kiddie tax) and maps the dependent's SSN → Form 1040
+  line 9 (total income, the §152 gross-income proxy).
+- **`applyQualifyingRelativeGrossIncomeTest`** — when a dependent's manual `grossIncome` is null, falls
+  back to the derived value; manual entry always wins. The flag notes "(from their own tax return)".
+- **Recursion guard (critical):** the household `uid` is shared by the parent and every child's own
+  return, so the nested sub-compute re-entered this method with the same uid and recomputed forever
+  (StackOverflowError — caught in e2e). Fixed with a `ThreadLocal` (`IN_DEPENDENT_GROSS_INCOME_DERIVATION`)
+  set around the outer derivation; the nested child compute sees it and skips.
+- e2e `dependent-gross-income-auto-from-own-return.spec.ts` (2 cases: dependent_own $8,000 → dropped +
+  "own tax return" flag; no own return → kept). All 5 gross-income e2e green; compute suite 1097/1097.
+
+
 ## 2026-08-03 — §152(d)(1)(B) qualifying-relative gross-income test (QA sc_00009 fix)
 
 QA scenario sc_00009 (adult qualifying relative, age 22, non-student, $8,000 gross income > the $5,200

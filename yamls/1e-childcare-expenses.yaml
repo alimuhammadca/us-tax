@@ -379,6 +379,15 @@ childcareExpenses:
           required: false
           label: Employer plan failed IRC §129(d) nondiscrimination test
 
+        # IRC §129(b)(1): an MFS filer's exclusion is limited to the smaller of the two spouses' earned
+        # income (Form 2441 line 19). A separate return does not carry the spouse's income, so it is
+        # entered here and compute applies the smaller-of limit (else an advisory prompts for it).
+        - name: mfsSpouseEarnedIncome
+          type: amount
+          required: false
+          showIf: filingStatus == 'Married filing separately'
+          label: Spouse's total earned income (MFS §129(b) exclusion limit)
+
         # Line 17: min(line 15, line 16).
         - name: line17SmallerOf15_16
           type: amount

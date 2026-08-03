@@ -1,6 +1,28 @@
 ﻿# History
 
 
+## 2026-08-03 — Form 4972 1986 Tax Rate Schedule mis-transcribed (us-tax-be bug, SQA sc_00047)
+
+Reframing the QA failures as "either us-tax-be OR the expected-value calculator (tax2025.js) is wrong"
+surfaced a genuine **us-tax-be** bug. `Form4972TaxTable` (the 1986 single-filer rate schedule for Form
+4972 Part III 10-year averaging) was mis-transcribed:
+- Wrong thresholds — 15% started at **$3,670** instead of the IRS **$4,530**; every boundary above
+  $2,270 was off (5470/7910/… instead of 6690/9170/…).
+- Wrong base amounts and even wrong top rates (read **45/49** where the IRS schedule is **48**).
+- It also rounded each bracket tax to whole dollars BEFORE the ×10, losing up to $5 on the final tax.
+
+Verified against `f4972.pdf` (pdftotext): $4,600 → $576.90 + 15% × ($4,600 − $4,530) = **$587.40**, ×10 =
+**$5,874** — the value SQA sc_00047 expected; the app had produced $5,870. Rewrote the bracket table to
+the exact IRS schedule (base amounts stored in cents) and made `computeTax` return the tax to the cent so
+only the final ×10 (line 25/28) is rounded. New `Form4972TaxTableTest` pins the boundaries + the $5,874
+case. Full backend suite **1620/1620**.
+
+Also fixed the **tax2025.js** QA reference calculator (`us-tax-sqa/_tools`): (1) `QDCG_15.mfs`
+$300,025 → **$300,000** (Rev. Proc. 2024-40 §3.03 — a rounded figure, not half of MFJ; matches us-tax-be);
+(2) `distributionLines` now returns `lineA:null` for a Form 4972 Part III lump sum (Form 4972 instructions
+rule 3: nothing on lines 5a/5b) instead of showing the gross on 5a.
+
+
 ## 2026-08-03 — §152(d) gross-income test: dependent_own auto-derivation (hybrid 2nd half)
 
 Completed the deferred half of the sc_00009 fix. When the parent has NOT hand-entered a dependent's

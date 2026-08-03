@@ -1,6 +1,33 @@
 ﻿# History
 
 
+## 2026-08-02 — Close the field-requiring deferred gaps (new intake fields + migrations + UI)
+
+The four remaining deferred gaps each needed a new intake field. Built fully (entity → mapper →
+Liquibase migration → Angular UI → compute → unit test). Unit 1610/1610. Migrations V227–V230.
+
+- **Form 8839 special-needs finality year (V227).** §23(a)(2)(B)/§137(a)(2): the deemed maximum
+  credit/exclusion for a special-needs child is allowed only in the finality year. New
+  `pf_adoption_child.adoption_final_year`; Part II line 6 and Part III line 24 apply the deemed maximum
+  only when the finality year is 2025 (or unspecified — legacy), else expense/benefit-based, with
+  advisory `ADOPTION_CREDIT_SPECIAL_NEEDS_DEEMED_PRIOR_YEAR`.
+- **Form 2441 MFS spouse earned income (V228).** IRC §129(b)(1): an MFS filer's dependent-care
+  exclusion is limited to the smaller of the two spouses' earned income (line 19). New
+  `pf_childcare_expenses.mfs_spouse_earned_income`; when supplied, line 19 uses it (else the advisory
+  still fires).
+- **Form 8889 / Form 5329 Part VII excess-HSA excise (V229).** IRC §4973(g): 6% excise on an excess
+  HSA contribution = 6% of the smaller of the excess and the year-end HSA value. New
+  `pf_form_8889_hsa.year_end_hsa_value` + `Form5329.additionalTaxOnExcessHsaContributions` →
+  Schedule 2 line 8 (via applyForm5329TaxToSchedule2). computeExcessHsaExcise computes it per person;
+  when the year-end value is absent it uses the full excess (advisory notes it can be reduced).
+- **Form 2210 Schedule AI + Box B/E (V230).** The annualized income installment method (§6654(d)(2)):
+  new `annualized_method_elected` + `annualized_income1-4`; computeScheduleAiRequiredInstallments
+  annualizes cumulative income (factors 4/2.4/1.5/1) × 22.5/45/67.5/90% and takes the smaller of the
+  annualized increment and the regular installment (can only lower it). Box B (`box_b_waiver_amount`)
+  subtracts the requested waiver from the penalty; Box E (`box_e_allocated_prior_year_tax`) supplies the
+  allocated prior-year tax for the safe harbor when the filing status changed. Remaining minor
+  refinement: Box D actual-payment-date day counts (default assumes payment on the period due date).
+
 ## 2026-08-02 — Close the deferred audit gaps (credit-ordering, Form 8839 MAGI, Form 5695/2441) — no more deferrals
 
 Directive: fix every gap the recent audits had documented as "deferred," not defer them again. All

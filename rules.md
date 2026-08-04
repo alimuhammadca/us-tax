@@ -2,6 +2,25 @@
 
 ---
 
+## Form 8606 (Nondeductible IRAs) — Pro-Rata + Basis Guardrails — Established 2026-08-04
+
+The Part I/II/III arithmetic is faithful. Guardrails:
+1. **Line 10 pro-rata ratio is capped at 1.000** (`line5.divide(line9, …).min(BigDecimal.ONE)`) — the form
+   says "If the result is 1.000 or more, enter '1.000'." Without the cap, basis > line 9 (after IRA losses)
+   understates line 14 (remaining basis carried forward) → future over-tax, and the printed form is invalid.
+2. **The line-6 year-end IRA value (pro-rata denominator) is REQUIRED when there is basis + a distribution/
+   conversion.** A BLANK line 6 (null, ≠ an explicit $0) is silently treated as $0, collapsing the
+   denominator and under-taxing (the conversion looks like pure nontaxable basis). Guarded by
+   `form8606ProrataYearEndValueMissing` → non-overrideable `FORM_8606_MISSING_YEAR_END_IRA_VALUE_*`.
+3. **Line 20 first-time-homebuyer expenses are capped at $10,000** (`.min(10000)`).
+
+Known confirmed gaps (documented, need feature work): IRA §72(t) 10% early-distribution penalty never
+computed (the IRA path skips Form 5329; needs IRA-side exception-affirmation intake fields — sign-off);
+the Form 8606 override can zero box-2a Roth taxable when Part III is blank but Part I present; no auto-import
+of prior-year 8606 basis (user-entry, matches Form 8801 pattern).
+
+---
+
 ## Prior-Year Carryforward Bridge Pattern (Multi-Year) — Established 2026-07-27
 
 When a form computes a value that carries **into next year's return** (a §163(j) disallowed-interest

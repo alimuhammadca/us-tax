@@ -1,6 +1,58 @@
 ﻿# History
 
 
+## 2026-08-04 — Form 8606 (Nondeductible IRAs) adversarial audit — three fixes
+
+Three-agent read-only audit (Part I pro-rata; Part II Roth conversions; Part III Roth distributions +
+integration), each verifying against the actual 2025 `f8606.pdf` + instructions (pdftotext). The Part I/II/III
+arithmetic (pro-rata denominator, basis ordering contributions→conversions→earnings, MFJ per-person
+separation, qualified-distribution gate, 4a-gross/4b-taxable wiring) is **faithful**. Three fixes:
+
+1. **Line-10 pro-rata ratio now capped at 1.000** (mod-high; future over-tax). The form says "If the result
+   is 1.000 or more, enter '1.000'." The cap was missing, so when basis (line 5) exceeded line 9 (year-end
+   value + non-QCD distributions + conversions — e.g. after IRA losses), the nontaxable portions (lines
+   11/12) exceeded the actual distribution/conversion and line 14 (remaining basis carried forward) was
+   understated → basis permanently lost → future over-tax; the printed form was also internally invalid
+   (line 12 > line 7). Fix: `.min(BigDecimal.ONE)` on the ratio. Pin
+   `form8606Line10RatioCappedAtOnePreservesBasisCarryforward` (line 14 = $3,000, was $0).
+2. **Missing line-6 year-end IRA value now blocks** (B2; HIGH under-tax). The pro-rata denominator requires
+   the 12/31 value of all traditional/SEP/SIMPLE IRAs; when it was left BLANK (null, distinct from an
+   explicit $0) with basis + a distribution/conversion, `sumAmounts` silently treated it as $0 — collapsing
+   the denominator, driving the ratio to 1.000, and treating the whole conversion as nontaxable basis (a
+   large pre-tax balance became invisible → under-tax of up to the full conversion). New
+   `form8606ProrataYearEndValueMissing` guard → non-overrideable blocking flag
+   `FORM_8606_MISSING_YEAR_END_IRA_VALUE_{TAXPAYER,SPOUSE}` (registered in `NonOverrideableFlags`; a
+   full-liquidation filer enters an explicit $0). Pin
+   `form8606MissingYearEndIraValueBlocksWhenBasisAndConversionPresent`.
+3. **Line-20 first-time-homebuyer expenses now capped at $10,000** (C5; low under-tax). "Do not enter more
+   than $10,000 …" — an over-entry understated line 21/25c. Fix: `.min(10000)`. Pin
+   `form8606Line20FirstTimeHomebuyerCappedAt10000`.
+
+Module suite 1660/1660. **Verified correct (do NOT "fix"):** line 9 denominator = line 6+7+8; QCD/HFD
+subtracted from line 7 (no double-count, no basis allocation); Part III ordering + qualified-distribution
+gate; MFJ per-person + MFS no-leakage; line 15c/18/25c → 4b once (replaces box-2a, no double-count);
+backdoor Roth (100% nontaxable); same-year distribution+conversion share one fraction.
+
+**Documented as confirmed gaps NOT fixed (require feature work / design sign-off):**
+- **C1 (HIGH under-tax) — Roth/IRA taxable amounts never feed the Form 5329 §72(t) 10% early-distribution
+  penalty.** The pension path computes §72(t) (codes 1/S per-entry) but the IRA path hard-skips it, and the
+  Form 5329 assembly lives in a separate method (`computePensionAnnuities`), gated on a pension-form user
+  flag, and requires per-distribution EXCEPTION AFFIRMATION (codes 01–12 or "no exception applies"). Adding
+  IRA §72(t) correctly needs new intake fields for the IRA-side exception affirmation (field-add sign-off
+  required) — auto-applying the 10% without exception handling would OVER-tax anyone with a valid exception
+  (disability, first-home, medical). A genuine design fork, surfaced to the user rather than bolted on.
+- **C2 (MED under-tax) — the Form 8606 override can discard box-2a Roth taxable when Part I is present but
+  Part III is left blank** (`sumAmounts` returns non-null on a $0 line-15c, so the override fires and zeros
+  the box-2a-derived Roth taxable). Narrow intake-gap; safe fix is a validation flag or an
+  override-refinement that needs careful design (avoid double-counting when Part III IS later filled).
+- **C3 (over-tax on omission) — no auto-import of prior-year Form 8606 basis** (traditional line 2, Roth
+  contribution/conversion basis all user-entered). Matches the app's general pattern (Form 8801 line 19 is
+  likewise user-entered); a cross-year carryforward-bridge feature.
+- **C4 (low over-tax) — line 25c not reduced by non-8915-F repayments treated as rollovers**; **A2
+  (cosmetic) — the "no distribution" Part I short-circuit prints lines 6/9/10 the form leaves blank** (no
+  numeric impact — line 14 still resolves to line 3).
+
+
 ## 2026-08-04 — Form 6251 (AMT) — the two remaining deferred items now implemented
 
 "Fix all identified gaps" — the two items previously deferred as documented decisions (#5 Form 2555 Part III

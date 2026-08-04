@@ -1,6 +1,38 @@
 ﻿# History
 
 
+## 2026-08-04 — Social Security benefits taxability (lines 6a/6b, §86 / Pub 915) adversarial audit — one MFS fix
+
+Three-agent read-only audit (core Pub 915 Worksheet 1 / MAGI-"other income" inputs / lump-sum + RRB + edges),
+each verifying against the actual 2025 IRS Pub 915 + Form 1040 worksheet text (pdftotext). **Two agents
+converged** on one genuine compute bug:
+
+**MFS: the non-filing spouse's Form 2555 (§911) and §931/§933 possession income exclusions were added to the
+taxpayer's Worksheet 1 line 5 without the `isMfsReturn` guard** (`:25450-25451`). All three sibling MAGI
+add-back sites (Pub 590-A IRA `:3075`, Schedule A SALT `:3422`, Schedule 1 line 8d `:23975`) guard the spouse
+term `isMfsReturn ? null : …`; this site did not, and the justifying comment falsely claimed the spouse forms
+were nulled upstream (`possession-residence-exclusion-spouse` is un-prefixed and read unconditionally at
+`:1987`; `foreign-earned-income-spouse` at `:1975`). Effect on an MFS leg with the non-filing spouse's
+exclusion present: provisional income over-stated → taxable SS pushed toward the 85% cap (over-taxation, up to
++$14,500 in the agents' example). **Fix:** guard both spouse terms with `isMfsReturn ? null`; corrected the
+false comment. Pin `mfsSocialSecurityWorksheetExcludesSpousePossessionExclusion` (MFS, taxpayer $20k SS + a
+leaked spouse $30k possession exclusion → line 6b must stay $0, not ~$9,600). Suite 1645/1645.
+
+**Verified correct (do NOT "fix"):** the two-tier 50%/85% arithmetic + constants ($25k/$32k base, $34k/$44k
+second tier → $9k/$12k deltas); the MFS-lived-with-spouse $0-base branch (`min(0.85·w1, 0.85·w7)`); the 85%
+cap + zero-floors + never-blank; line 6b self-excluded from WS line 3 (no chicken-and-egg); the tax-exempt-
+interest (§86(b)(2)(B)) and §137 adoption (Form 8839 excluded-benefits) add-backs; the Pub 915 Schedule-1
+subset (lines 11-20, 23, 25 — excludes student-loan interest); the Form 8815 savings-bond carve-back; the IRA-
+coordination re-subtraction (single, not double); the §86(e) lump-sum election (strictly opt-in, never worse
+than the normal method, combined box-5, per-year recompute); RRB-1099 tier-1 SSEB routing (SS-equivalent to
+line 6a, not double-counted); box-4 repayment netting; and line 6b → line 9 exactly once. **Documented (not
+fixed — negligible/scope):** the pre-1994 lump-sum path uses the modern two-tier worksheet rather than Pub 915
+Worksheet 3 (a ~32-year retroactive SSA payment is practically impossible on a 2025 return); the §86(e)
+election inputs are read from the taxpayer SS form only on joint returns (a defensible return-level design —
+line 6a still combines both spouses); the "Worksheet 3" naming label in comments/spec is cosmetic. See
+[[feedback_mfs_spouse_prefixed_form_scoper_unprefix]] and [[feedback_principled_diagnosis_over_test_tweaking]].
+
+
 ## 2026-08-04 — Form 8962 Premium Tax Credit (§36B) adversarial audit — five fixes (one CRITICAL)
 
 Three-agent read-only audit (core PTC math / repayment limitation / interactions), each verifying against the

@@ -20,6 +20,10 @@ statement nor a tax-return-preview form):
   independent). No matching entry / no TIN → fail CLOSED. When TINs are absent (older data) it falls back
   to the positional index, which also fails closed on overflow.
 
+Follow-up (same day): closed the "Someone else" residual — the Part IV intake now shows a **manual
+SSN/ITIN input** on the free-text-name path (the picker still auto-fills it), so a student not on the
+education-credits list still feeds the SSN join rather than falling to the fail-closed fallback.
+
 Verified end-to-end: unit suite **1636/1636**; dev boot applied V232 cleanly + Hibernate validated the new
 column ("ran successfully", "Listening on :8080", no validation errors); UI bundle built. New pin
 `form8863_form8862Gate_tinJoinGatesCorrectStudentWhenMisordered` (reversed recert list gates the correct

@@ -1,6 +1,36 @@
 ﻿# History
 
 
+## 2026-08-04 — §199A QBI: two deferred items now built (safe-harbor pooled §469 + elective aggregation)
+
+Followed up the QBI audit by building the two items it had documented as deferred.
+
+**1. Safe-harbor rental QBI now uses the POOLED §469-allowed net (not an isolated recompute).**
+`safeHarborRentalNetForQbi` recomputed each spouse's safe-harbor rental in §469 isolation (no passive-K1/
+farm pool, mis-sized $25k allowance), so its allowed/suspended split could diverge from what actually
+reached taxable income. Replaced with the MARGINAL contribution: pooled Schedule E netIncome minus the pooled
+netIncome recomputed with the safe-harbor rental(s) removed — the rental's true effect on the §469-allowed
+net, correct regardless of what nets in the pool. Byte-identical for a single-rental pool; both-spouses-elect
+splits by isolated-net magnitude (immaterial to the sum). Pin
+`qbiSafeHarborRental_usesPooled469AllowedNetNotIsolatedRecompute` (spouse passive income absorbs the
+taxpayer's safe-harbor loss → −$40k allowed → $12,000 vs the isolated $20,000). Commit `4e72237`.
+
+**2. Elective aggregation (Reg §1.199A-4) — full, incl. K-1, no statement-field edits.** Aggregated
+businesses now combine QBI + W-2 + UBIA into one unit before the wage/UBIA limit in
+`compute8995AQbiDeductionComponent` (SSTBs never aggregate — forced singletons; ungrouped = singletons).
+Each activity carries an aggregation KEY set at build — a K-1's entity EIN (`part1A*Ein`) or a Schedule C
+business name — and `computeLine13a` translates it to a group LABEL via the QBI-deduction form's
+`aggregationGroups` assignments (always applied, so raw keys never leak; inert when nothing is elected).
+Persisted as `pf_qbi_deduction.aggregation_groups_json` (V233, Jackson). UI: an "Aggregate businesses"
+section on the QBI-deduction form enumerates the user's Schedule C + K-1 businesses (K-1 entity name+EIN read
+from the statement) and assigns each a group — **no field added to any K-1 statement** (the election is keyed
+by the auto-derived business name / entity EIN and stored on the QBI form). Pins
+`qbiAggregation_combinesWagesAcrossGroupedBusinessesAboveThreshold` (engine, $10k→$60k) +
+`qbiAggregation_twoK1BusinessesSameGroupRaiseDeductionEndToEnd` (end-to-end by EIN, $14k→$64k). Commits
+`5eb7647` (engine) + `85909ab` (intake+persistence, dev-boot-verified V233) + UI. Suite 1641/1641. See
+[[feedback_principled_diagnosis_over_test_tweaking]] and [[feedback_confirm_before_field_add_delete]].
+
+
 ## 2026-08-04 — §199A QBI deduction (Form 8995 / 8995-A, line 13a) adversarial audit — one per-activity allocation fix
 
 Three-agent read-only audit (below-threshold Form 8995 / above-threshold Form 8995-A / interactions), each

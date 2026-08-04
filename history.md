@@ -1,6 +1,41 @@
 ﻿# History
 
 
+## 2026-08-04 — §199A QBI deduction (Form 8995 / 8995-A, line 13a) adversarial audit — one per-activity allocation fix
+
+Three-agent read-only audit (below-threshold Form 8995 / above-threshold Form 8995-A / interactions), each
+verifying against the actual 2025 IRS Form 8995 + 8995-A + instructions (pdftotext). **Both engines verified
+CLEAN with no compute bug** — the below-threshold netting + dual-track (QBI and REIT/PTP) negative→carryforward
++ taxable-income limitation, and the above-threshold W-2/UBIA greater-of, phase-in reduction sign/shape, and
+SSTB applicable-percentage all match the forms line-by-line (worked numerics confirmed). One genuine (LOW,
+per-activity) fix:
+
+**SE-deduction allocation must weight by SE income, not the QBI base.** In `buildScheduleCQbi`, the ½SE /
+SE-health / SE-retirement deductions were apportioned across a person's SE businesses using each Schedule C
+component's `netProfit` — which INCLUDES the §1245/§1250 QBI-only Form 4797 recapture injected into the QBI
+base (and statutory-employee income). But recapture is not self-employment income (§1402(a)(3)) and statutory
+income bears no SE tax, so neither should be a weight in the SE-deduction split. Effect: on above-threshold
+returns with (recapture or statutory income) + partnership K-1 SE income, the per-activity QBI shifted between
+the Schedule C and the K-1 (aggregate QBI unchanged, so below-threshold returns were unaffected). **Fix:** gave
+`ScheduleCQbiComponent` a separate `seBase` (SE income only; 0 for statutory; excludes QBI-only recapture),
+defaulting to `netProfit` so QJV / Schedule F sites are byte-identical; `buildScheduleCQbi` now weights the
+allocation by `seBase` while the QBI itself keeps `netProfit`. Also corrected the activity's `seIncome` field
+(unconsumed for Schedule C today, but its contract is SE income). Suite 1638/1638; pin
+`qbiScheduleC_seDeductionAllocationExcludesQbiOnlyRecapture` ($140k QBI / $10k K-1 share vs the old $138k/$8k).
+
+Also fixed a **stale spec doc**: `lines/13ab.md` still documented net capital gain as "Schedule D line 15
+only"; the code correctly uses `min(line15, line16)` when both are positive (a 2026-07-30 fix). Updated the
+spec to match the IRS-correct code so a future implementer can't "correct" the right code to the wrong formula.
+
+**Documented (not fixed) — LOW / conservative:** the §199A rental safe-harbor QBI is recomputed via a
+§469-isolated `computeRentalScheduleE` (no passive-K1/farm pool), so the allowed/suspended split can diverge
+from the real pooled Schedule E — typically an UNDER-deduction (taxpayer-safe) and a deliberate spouse-
+separation design; a faithful fix needs the pooled allowed-amount threaded into QBI (feature-scale). The
+above-threshold engine also does not offer the elective aggregation (Schedule B, Reg §1.199A-4) — the
+non-aggregated default is correct when no election is made. See
+[[feedback_principled_diagnosis_over_test_tweaking]] and [[feedback_prefer_irs_docs_over_web]].
+
+
 ## 2026-08-04 — Form 8863 follow-up: Form 8862 AOTC gate now joins by SSN/TIN (deferred item closed)
 
 Closed the one item the §25A audit deferred (C-F3). The Form 8862 Part IV per-student AOTC recert gate

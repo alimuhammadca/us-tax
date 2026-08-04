@@ -37,9 +37,14 @@ comment → "[0,1] decimal"). **Verified correct (do NOT "fix"):** the Table 5 r
 applicable-figure table incl. the **2025 no-400%-cliff (8.5% cap over 400%)**; MAGI add-backs (§103/§911/
 nontaxable SS); the monthly PTC (col D=max(0,B−contribution), E=min(A,D)); the MFS net-PTC disallowance while
 retaining the repayment; and the refundable flow to Schedule 3 line 9 / repayment to Schedule 2 line 1a.
-**Documented (not fixed — needs an intake field):** MFS Allocation-Situation-2 requires substituting the
-filer's OWN SLCSP rather than allocating the combined 1095-A SLCSP; there is no field to enter it. Suite
-1643/1643. See [[feedback_principled_diagnosis_over_test_tweaking]] and [[feedback_prefer_irs_docs_over_web]].
+**Follow-up (same day — deferred item BUILT):** MFS Allocation-Situation-2 now supports substituting the
+filer's OWN coverage family's monthly SLCSP for column B (instead of allocating the combined 1095-A SLCSP by
+a percentage). New optional per-shared-policy field `substituteMonthlySlcspAmount` (col A/APTC still
+allocated by %); persisted `pf_ptc_shared_policy.substitute_monthly_slcsp_amount` (V234, dev-boot-verified) +
+UI field on the premium-tax-credit form — no statement/tax-return field added. Pin
+`form8962SharedPolicySubstituteSlcspReplacesAllocatedColumnB` ($300 substitute used as col B, not the
+allocated $500). Suite 1644/1644. See [[feedback_principled_diagnosis_over_test_tweaking]] and
+[[feedback_prefer_irs_docs_over_web]].
 
 
 ## 2026-08-04 — §199A QBI: two deferred items now built (safe-harbor pooled §469 + elective aggregation)

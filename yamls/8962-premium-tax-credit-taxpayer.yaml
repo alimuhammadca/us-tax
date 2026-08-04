@@ -214,6 +214,17 @@ sections:
         placeholder: 12
         label: Allocation stop month (col. g, 1–12)
         help: Enter the last month the allocation applies. Leave blank if allocation applies all year.
+      - name: substituteMonthlySlcspAmount
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Your own monthly SLCSP premium (MFS Allocation Situation 2 — optional)
+        help: >-
+          Only for married-filing-separately Allocation Situation 2 (including the abuse/abandonment
+          exception). Enter YOUR coverage family's monthly second-lowest-cost silver plan (SLCSP) premium,
+          looked up from the Marketplace tax tool. When entered, this replaces the allocated 1095-A SLCSP
+          (column B) for the allocated months instead of applying the SLCSP percentage. Leave blank in all
+          other situations.
 
   - name: yearOfMarriageElection
     title: Alternative calculation for year of marriage (Part V)

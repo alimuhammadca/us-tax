@@ -1,6 +1,44 @@
 ﻿# History
 
 
+## 2026-08-04 — Schedule D / Form 8949 (capital-gains netting) adversarial audit — two fixes
+
+Three-agent read-only audit (Form 8949→Schedule D aggregation/netting; the $3,000 loss limit + §1212(b)
+carryover; special-rate designations + gate + interactions), verifying against the 2025 `f1040sd.pdf` +
+`f8949.pdf`. **The netting arithmetic and the entire $3,000-limit / ST-LT-carryover machinery are CONFIRMED
+CORRECT** (the carryover area is faithful to the Capital Loss Carryover Worksheet, incl. the cross-year
+bridge and the taxable-income refinement). Two fixes:
+
+1. **1099-B / 1099-DA holding period now derived from the acquisition/sale dates when the short/long flag is
+   blank** (HIGH, under-tax). Previously `derive1099BBox` / `derive1099DaBox` returned null when box 2 (1099-B)
+   / box 6 (1099-DA) carried neither the short- nor long-term flag, and the whole transaction was SILENTLY
+   DROPPED from Schedule D → line 7/15/16 understated (a dropped gain escaped tax entirely, no flag). Fix: when
+   both flags are absent, classify from `dateAcquired`/`dateSoldOrDisposed` (held >1 year = long-term) via the
+   existing `isLongTermHold` logic; only a truly undateable + flagless entry stays unclassified. Pin
+   `capital1099BWithoutShortLongFlagClassifiedByDatesNotDropped` (2020→2025 sale, no flag → $4,000 long-term).
+2. **Schedule D Part III lines 18/19/20 now gated on line 17 ("lines 15 AND 16 both gains")** (MED, over-tax
+   via Form 8615). The form's skip rules (line 17 No / line 16 loss / line 16 zero → skip 18-20) were not
+   applied — the 28%-rate gain (line 18) and unrecaptured §1250 (line 19) were set from the raw special-rate
+   totals regardless of the sign of line 15/16, leaving a PHANTOM 28%-rate gain. The regular-tax and AMT
+   paths re-derive the gate and were protected, but Form 8615 (kiddie tax) reads `getLine18/getLine19`
+   directly → the child's qualified dividends / regular LTCG were mis-rated at 28% (0% bracket lost). Fix:
+   populate lines 18/19/20 only when line 17 = Yes; null otherwise. Pin
+   `scheduleDLine18SkippedWhenLine15IsLossEvenIfLine16Gain`. Module suite 1664/1664.
+
+**Documented confirmed gaps NOT fixed:**
+- **Accrued market discount (1099-B box 1f, Form 8949 code D) is ignored** (MED, rate-difference under-tax).
+  The box-1f amount is currently taxed as capital gain but should be reported as ORDINARY interest income
+  with an offsetting Schedule D code-D negative adjustment. The correct fix is cross-subsystem (route box 1f
+  to line 2b interest AND reduce the capital gain) — a partial fix (reducing the gain only) would make the
+  amount UNTAXED (worse), so it's deferred as a feature rather than risk that. The amount is currently taxed,
+  just at the capital rate.
+- **Line-20 checkbox omits the "not filing Form 4952" condition** (cosmetic — no tax impact; the tax routing
+  independently handles the §4g election). Needs `form4952` threaded into `computeCapitalGainLoss` for a
+  printed checkbox.
+- **1099-B box 2 "Ordinary" flag ignored** (SUSPECTED, rare — requires the unusual both-Ordinary-and-
+  short/long-flags-set input); an ordinary 1099-B item could be netted as capital.
+
+
 ## 2026-08-04 — Form 8606 audit C1 — IRA §72(t) early-distribution penalty now implemented
 
 Follow-up to the Form 8606 audit ("implement the IRA §72(t) penalty with new intake fields, as long as the

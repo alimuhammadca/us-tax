@@ -2,6 +2,25 @@
 
 ---
 
+## Schedule D / Form 8949 — Holding-Period Classification + Part III Gate — Established 2026-08-04
+
+The netting arithmetic and the $3,000-limit / §1212(b) carryover machinery are verified correct. Guardrails:
+1. **A 1099-B / 1099-DA transaction with box 2 / box 6 (short/long) BLANK is classified from the
+   acquisition/sale dates** (held >1 year = long-term, via `isLongTermHold`), NOT dropped. A missing flag
+   previously returned a null Form-8949 box → the transaction was silently dropped from Schedule D → line
+   7/15/16 understated. Only a truly undateable + flagless entry stays unclassified.
+2. **Schedule D Part III lines 18/19/20 (28%-rate gain, unrecaptured §1250, the QDCG-vs-SchedD-Tax-Worksheet
+   routing) are populated ONLY when line 17 = Yes (lines 15 AND 16 BOTH gains)** — per the form's skip rules.
+   A phantom line-18/19 when line 15 is a loss but line 16 a gain is read directly by Form 8615 (kiddie tax)
+   and mis-rates the child's income at 28% (the regular/AMT paths re-derive the gate, but Form 8615 does not).
+
+Confirmed gaps (documented): accrued market discount (1099-B box 1f, code D) not routed to interest + a
+Schedule D code-D adjustment (cross-subsystem feature; currently taxed as capital gain — a rate-difference
+under-tax); the line-20 checkbox omits the "not filing Form 4952" condition (cosmetic); the 1099-B box-2
+"Ordinary" flag is not honored (SUSPECTED, rare).
+
+---
+
 ## Form 8606 (Nondeductible IRAs) — Pro-Rata + Basis Guardrails — Established 2026-08-04
 
 The Part I/II/III arithmetic is faithful. Guardrails:

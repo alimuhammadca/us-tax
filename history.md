@@ -1,6 +1,52 @@
 ﻿# History
 
 
+## 2026-08-04 — Form 6251 (AMT) — documented-deferred items resolved
+
+Follow-up to the AMT audit below ("fix the following" on the six documented-deferred items). **Three were
+real/tractable and are fixed; three were verified as needing no code change** (evidence below):
+
+**Fixed:**
+1. **AMT foreign tax credit now per-category, not lumped** (deferred → fixed; SUSPECTED under-AMT confirmed).
+   `computeAmtForeignTaxCredit` summed foreign-source TI and taxes across ALL Form 1116 categories then
+   applied ONE ratio — letting a low-taxed basket's unused §904 limitation absorb a high-taxed basket's
+   excess credit (over-credit → AMT understated). Now each category's AMT credit = min(its taxes, TMT × its
+   foreign-TI/AMTI), summed and capped at TMT (a loss category contributes no limitation). Pin
+   `amtForeignTaxCreditIsPerCategoryNotLumped` (two baskets → $3,000, not the lumped $6,000).
+2. **Part III line-15 cap now net of the Form 4952 §4g election** (deferred → fixed; narrow). The SchDTW
+   line-10 cap (`qualDiv + netLTCG`) did not subtract the §163(d)(4)(B) election that line 13 already
+   subtracts, so when a 4g election and §1250 gain co-occur too much landed in the 0/15/20/25 pool. Now
+   `schDTaxWorksheetLine10 = qualDiv + netLTCG − 4g`.
+3. **1041 K-1 box-12 code A now on line 2j, not the depreciation lines 2l/2m** (deferred → fixed; no
+   AMTI-total change). Per f6251, Schedule K-1 (Form 1041) box 12 code A is "Estates and trusts" line 2j;
+   only 1065/1120-S post-1986 depreciation belongs on 2l/2m. Added `Form6251.line2jEstatesTrusts` + rerouted
+   the 1041 code-A there (line 4 still combines all → total unchanged). Pin
+   `amt1041K1Box12CodeARoutesToLine2jNotDepreciationLines`.
+
+**Verified as needing no code change (documented with evidence):**
+4. **Line 10 omitting Schedule 2 lines 1b-1y — already correct.** The app models NO Schedule 2 line 1b-1y
+   ADDITION amounts (only line 1a APTC; the 1e/1f fields are Form 8962 allocation checkboxes, not amounts),
+   and the Form 1040 line-16 box-3 write-ins (ECR/§962/§965i/8621/8978) are already inside line 10 via the
+   full line-16 total (`getTax()` = regularTax + box1 + box2 + box3; line 10 subtracts only Form 4972). So
+   line 1z = line 1a and line 10 is complete for the app's scope. Agent C's finding assumed recaptures the
+   app does not compute.
+5. **Form 2555 Part III "certain modifications" ("AMT capital gain excess") — deferred as a documented
+   decision.** i6251 requires reducing Part III lines 13/14/15 by `max(0, (SchDTW line 10) − Form 6251 line
+   6)` for a Form 2555 filer with an AMT capital-gain excess. It is SUSPECTED (Agent B could not build a
+   counterexample; direction indeterminate), extremely narrow (Form 2555 + AMT liability + capital gains +
+   the excess condition), and the multi-step recompute is high-risk to implement speculatively. The app's
+   FEITW runs standard Part III on the combined base (a reasonable approximation). Retained deliberately —
+   IRS basis recorded rather than a speculative change.
+6. **Form 6251 "Who Must File" attachment triggers 2/3/4 — no tax impact, deliberate.** The form is emitted
+   whenever it matters computationally (AMT > 0, or line 6 > 0 so TMT is captured, or PAB present). The
+   remaining paper-attachment triggers (claiming Form 8801/8834/8911/GBC) yield TMT = 0 when line 6 = 0, and
+   the credit floors already read `form6251 == null → 0` correctly. This app files electronically with PDFs
+   as record-keeping only, so generating a $0-AMT stub adds ordering complexity + noise with no
+   computational benefit.
+
+Module suite 1655/1655.
+
+
 ## 2026-08-04 — Form 6251 (Alternative Minimum Tax) adversarial audit — four fixes
 
 Three-agent read-only audit (Part I AMTI construction lines 1-4; exemption/phaseout/TMT lines 5-9;

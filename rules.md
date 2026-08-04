@@ -213,6 +213,15 @@ correct. Fragile points:
 
 Pins: `amtMfsExcludesSpouseIsoBargainElementFromLine2i`, `amtNonItemizerDisasterLossNotAddedBackToAmti`.
 
+Follow-up (2026-08-04): the **AMT foreign tax credit is per-category** (§904), not one lumped cross-category
+ratio — each category = min(its taxes, TMT × its foreign-TI/AMTI), summed, capped at TMT. The **Part III
+line-15 SchDTW-line-10 cap is net of the Form 4952 §4g election** (like line 13). **1041 K-1 box-12 code A
+goes on line 2j** (Estates and trusts), not the 2l/2m depreciation lines (those are 1065/1120-S post-1986
+depreciation only). NOT changed (verified): line 10 already complete (app models no Schedule 2 line 1b-1y
+amounts; box-3 write-ins are inside the full line-16 `getTax()`); Form 2555 Part III "AMT capital gain
+excess" modifications deferred (SUSPECTED, narrow, high-risk to implement speculatively); "Who Must File"
+paper-attachment triggers 2/3/4 have no tax impact (credit floors already correct with `form6251==null→0`).
+
 ## Schedule 8812 — Credit Limit Worksheet B Feedback + ACTC Earned Income — Established 2026-08-04
 
 The Schedule 8812 arithmetic is faithful; two interaction points are fragile and MUST be preserved:

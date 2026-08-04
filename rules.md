@@ -194,6 +194,25 @@ have both a strict `script-src` and `inlineCritical` on. Full write-up in
 
 ---
 
+## Form 6251 (AMT) — MFS Guards, FEITW Asymmetry, Disaster Loss, TMT Floor — Established 2026-08-04
+
+The core AMT engine (exemption/phaseout/flush/26-28% split/Part III carve-out/line 9−10 floor) is verified
+correct. Fragile points:
+1. **Every spouse-attributed input to `computeLine17` needs the MFS null-shadow.** The Form 3921 ISO
+   preference (line 2i) is per-person (§56(b)(3)) — pass `isMfsReturn ? null : spouseSsn`, like
+   `form2555Spouse` and the ATNOL. The shared dataset holds both spouses' statements; without the guard the
+   other spouse's bargain element leaks into this leg's AMTI.
+2. **The AMT Foreign Earned Income Tax Worksheet is ASYMMETRIC.** Worksheet line 4 (amtBase+exclusion) uses
+   Part III when there are capital gains; worksheet line 5 (the exclusion leg) is ALWAYS flat 26/28%
+   (`computeAmtDirectRate`) — it has NO Part III branch (unlike the regular FEITW). Do not "symmetrize" it.
+3. **Net qualified disaster-loss add-back:** a non-itemizer's line 2a adds back only the BASE standard
+   deduction, not the disaster-loss-augmented line 12e (`line12e − netQualifiedDisasterLoss`) — the casualty
+   portion has no AMT adjustment.
+4. **The "tentative minimum tax" floor for credit limits is Form 6251 line 9** (TMT after AMT FTC, §55(b)(1)),
+   NOT line 7 — for the General Business Credit §38(c) as well as Form 8801/8911/8834.
+
+Pins: `amtMfsExcludesSpouseIsoBargainElementFromLine2i`, `amtNonItemizerDisasterLossNotAddedBackToAmti`.
+
 ## Schedule 8812 — Credit Limit Worksheet B Feedback + ACTC Earned Income — Established 2026-08-04
 
 The Schedule 8812 arithmetic is faithful; two interaction points are fragile and MUST be preserved:

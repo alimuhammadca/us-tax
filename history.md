@@ -1,6 +1,49 @@
 ﻿# History
 
 
+## 2026-08-04 — Form 6251 (Alternative Minimum Tax) adversarial audit — four fixes
+
+Three-agent read-only audit (Part I AMTI construction lines 1-4; exemption/phaseout/TMT lines 5-9;
+regular-tax comparison / AMT FTC / gating / interactions), each verifying against the actual 2025
+`f6251.pdf` + `i6251--2025.pdf` (pdftotext). The **core AMT engine is correct** — the 2025 exemption
+amounts ($88,100 / $137,000 / $68,500), the 25% phaseout + thresholds, the §55(d)(3) MFS flush, the 26%/28%
+split at $239,100 (algebraically identical to the "28% − $4,782" form text), the Part III capital-gains
+carve-out (0/15/20% + 25% §1250, same breakpoints as the regular QDCG worksheet), the line 9 − line 10
+floor, the line-10 FTC subtraction, the Schedule 2 wiring, and the standard-deduction/SALT/refund/NOL/PAB
+add-backs all reproduce the form. Four confirmed fixes:
+
+1. **MFS spouse ISO bargain element leaked into the taxpayer's line 2i** (HIGH, over-AMT). The Form 3921 ISO
+   preference (§56(b)(3)) was computed with the spouse SSN passed unconditionally — on a Married Filing
+   Separately leg the shared dataset holds the OTHER spouse's Form 3921, so the taxpayer absorbed the
+   spouse's exercise-and-hold bargain element ($200k in the pin → ~$52k phantom TMT). The one input to
+   `computeLine17` that the "17 #1" MFS-guard cascade missed. Fix: `isMfsReturn ? null : spouseSsn` at the
+   call site (mirrors the `form2555Spouse` / ATNOL guards). Pin
+   `amtMfsExcludesSpouseIsoBargainElementFromLine2i` (verified non-vacuous: $200,000 → $0).
+2. **AMT Foreign Earned Income Tax Worksheet line 5 (exclusion leg) used Part III preferential rates**
+   (MED, over-AMT). The AMT FEITW is ASYMMETRIC (unlike the regular FEITW): worksheet line 4 routes through
+   Part III for capital gains, but line 5 is ALWAYS flat 26/28%. The code ran both legs through Part III
+   when `hasCapGains`, giving the excluded ordinary earned income preferential-rate treatment → line 5
+   understated → AMT over-stated (~$4,400 in the worked case). Fix: `lineE =
+   computeAmtDirectRate(totalExclusion, filingStatus)` unconditionally.
+3. **Net qualified disaster-loss augmented standard deduction added back whole on line 2a** (MED, over-AMT,
+   rare). When Schedule A is filed only to claim a standard deduction increased by a net qualified disaster
+   loss, i6251 line 2a adds back only the BASE standard deduction (the casualty portion has no AMT
+   adjustment and stays deductible); the code added back the full augmented line 12e → AMTI overstated by
+   the disaster loss. Fix: non-itemizer line 2a = `line12e − netQualifiedDisasterLoss`. Pin
+   `amtNonItemizerDisasterLossNotAddedBackToAmti` (AMTI $148,000 not $150,000).
+4. **General Business Credit §38(c) floor used Form 6251 line 7 instead of line 9** (LOW, over-tax). §38(c)(1)
+   /§55(b)(1) define the TMT floor NET of the AMT foreign tax credit = line 9; Form 8801/8911/8834 already
+   use line 9, the GBC was the outlier (under-allowed the credit when the AMT FTC was non-zero). Fix:
+   `getLine9TentativeMinimumTaxAfterFtc()`. Also fixed the stale "$10,000" SALT-cap doc on `Form6251.line2a`.
+
+Module suite 1653/1653. **Documented not-fixed (low/rare/uncertain):** line 10 omits Schedule 2 lines 1b-1y
+additions (rare recapture/§965 — ordering; over-AMT); AMT FTC uses one lumped cross-category ratio not
+per-category (SUSPECTED under-AMT); Form 2555 Part III "certain modifications" on the line-4 leg (SUSPECTED);
+Part III line-15 cap not reduced by the §4952(4g) election (SUSPECTED, narrow); 1041 K-1 box-12-A routed to
+line 2l/2m not 2j (no AMTI-total impact); Form 6251 "Who Must File" attachment triggers 2/3/4 (compliance
+only — no traced miscalculation).
+
+
 ## 2026-08-04 — Schedule 8812 audit — three documented-deferred items now fixed
 
 Follow-up to the Schedule 8812 audit below ("fix these" on the three items previously left as design/scope):

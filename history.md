@@ -1,6 +1,38 @@
 ﻿# History
 
 
+## 2026-08-04 — Form 8959 Additional Medicare Tax adversarial audit — one under-credit fix
+
+Three-agent read-only audit (Part I wages + Part II SE / Part III RRTA + flow / Part IV-V withholding
+reconciliation), each verifying against the actual 2025 IRS Form 8959 + instructions (pdftotext, incl. the
+Kathleen/Liam MFJ and Bob SE-only worked examples). The core computation is **remarkably clean** — Parts I/II
+threshold coordination (line 10 = Part I wages, line 11 = threshold − wages, both floored) reproduces the IRS
+examples to the cent; Part III RRTA uses its own full threshold ("no equivalent rule for RRTA"); line 18 flows
+to Schedule 2 line 11 exactly once via the G3 supersede; line 24 → Form 1040 line 25c once (no 25a
+double-count). Two fixes:
+
+1. **Line 19 (Medicare tax withheld) omitted W-2 box 12 codes B and N** — uncollected Medicare tax on tips
+   (code B) and on group-term life over $50,000 for former employees (code N), which the 2025 line-19
+   instructions require ("Also include any uncollected Medicare tax on tips … box 12, code B, and … code N").
+   Omitting them under-stated the Additional Medicare Tax *withheld* → **under-credited Form 1040 line 25c**
+   (taxpayer loses withholding credit; the offsetting liability is unaffected). Fix: line 19 now adds
+   `sumW2Box12ByCodes(w2Entries, {B,N}, ssn)`, SSN-scoped like box 6 (both spouses on MFJ). Pin
+   `form8959Line19IncludesBox12CodeBAndNUncollectedMedicare` ($50 code B → line 22/24 $140 not $90).
+2. **De-minimis parity**: line 22 subtracted the UNROUNDED line 21; now it subtracts the whole-dollar
+   (rounded) line 19 and line 21 per the form's line-by-line convention (≤$1 in edge cases).
+
+**Verified correct (do NOT "fix"):** the $200k/$250k/$125k thresholds by filing status; MFJ two-spouse
+aggregation against the single threshold + MFS per-person with the spouse-leakage guards; Part I box-5
+sourcing (not box 3); Part II line-8 = Schedule SE §1402 net earnings (single 0.9235, SE-loss → 0); the
+wage↔SE shared-threshold reduction; Part III RRTA own-threshold + no double-count into Part I; line 18 → Sch 2
+line 11 once (G3); Part V line 20 = line 1 (not line 4) × 1.45% regular Medicare, floor at 0; line 24 → 1040
+line 25c once with no 25a double-count. **Documented (not fixed — negligible/edge):** lines 7/13/17 stored
+unrounded on the form object (no tax effect — line 18 is rounded); Part III line-14 MFJ SSN-scoping is
+stricter than Part I line-1 (a railroad W-2 with a MISSING SSN would be dropped — malformed-input edge); the
+`computeAdditionalMedicareTax` Part-I-only estimate is redundant (always superseded by G3). Suite 1646/1646.
+See [[feedback_prefer_irs_docs_over_web]] and [[feedback_principled_diagnosis_over_test_tweaking]].
+
+
 ## 2026-08-04 — Social Security benefits taxability (lines 6a/6b, §86 / Pub 915) adversarial audit — one MFS fix
 
 Three-agent read-only audit (core Pub 915 Worksheet 1 / MAGI-"other income" inputs / lump-sum + RRB + edges),

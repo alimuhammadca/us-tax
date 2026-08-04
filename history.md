@@ -1,6 +1,41 @@
 ﻿# History
 
 
+## 2026-08-04 — Schedule D Tax Worksheet adversarial audit — four Form 4952 line-4g fixes
+
+Three-agent read-only audit (routing/decision-tree; core 0/15/20% + §1250/28% arithmetic; Form 4952
+line-4g election interaction), each verifying against the 2025 IRS Schedule D Tax Worksheet, QDCG
+Worksheet, and Form 4952 instructions (pdftotext). **The core worksheets are faithful IRS ports** — the
+0%/15%/20% brackets, the 25% unrecaptured-§1250 slice (line 35–40), the 28%-rate slice (line 41–43), the
+line-47 tax-on-all-ordinary floor, and the QDCG↔Schedule D equivalence all reproduce the IRS worksheets to
+the cent; the `computeLine16` routing (Form 2555 → 8615 → Schedule D WS → QDCG WS → Tax Table/TCW) is
+correct. All genuine findings were narrow **Form 4952 line-4g** (investment-interest election, §163(d)(4)(B))
+edge cases:
+
+1. **`computeScheduleDTaxWorksheet` dropped line-7a cap-gain distributions when there is no Schedule D**
+   (med-low). When a 4g election forces the Schedule D Tax Worksheet but the return has cap-gain
+   distributions reported directly on line 7a (no Schedule D), the `line7aCapGainLoss` arg was **unused** →
+   the distributions fell to ordinary rates. Fix: net LTCG now falls back to `line7aCapGainLoss` when
+   `scheduleD == null`. Pin `capGainsSchedDWorksheetUsesLine7aDistributionsWhenNoScheduleD` (Schedule D WS
+   == QDCG WS for the same $100k distributions).
+2. **The 4g election reduced net LTCG AFTER the §1250/28% caps instead of before** (low). Per IRS worksheet
+   lines 5/6 & 8/9, the net-capital-gain part of the election `min(4g,4e)` reduces net LTCG **before** the
+   §1250 (line 35) and 28% (line 41) caps; the qual-div part `4g−4e` reduces qualified dividends. Rewrote
+   `computeScheduleDTaxWorksheet` to split the election accordingly (threaded Form 4952 line 4e =
+   `getLine4eNetCapitalGainUsed()` through `computeLine16`/FEITW). Pin
+   `capGainsSchedDWorksheet4gElectionReduces1250Base` ($305k, §1250 $50k, 4g/4e $30k → $74,297.25).
+3. **Foreign Earned Income Tax Worksheet called the no-4g worksheet overloads** (low). A Form 2555 filer
+   with capital gains + a 4g election under-taxed because the FEITW's inner Schedule D / QDCG calls omitted
+   4g/4e. Fix: `computeForeignEarnedIncomeTaxWorksheet` now threads 4g/4e into both inner worksheets and
+   routes to the Schedule D WS when `hasPositiveAmount(4g)`.
+4. **Sub-slice products not whole-dollar rounded** (cosmetic). Lines 31/34/40/43 (15%/20%/25%/28% products)
+   now `roundMoney(...)` per the form's line-by-line convention.
+
+Unit 1123/1123 green (2 new pins). Verified correct (do NOT "fix"): the bracket thresholds by filing status,
+the §1250/28% capping order given no election, the line-47 floor, and the QDCG worksheet's own line-7a
+handling.
+
+
 ## 2026-08-04 — Form 8959 Additional Medicare Tax adversarial audit — one under-credit fix
 
 Three-agent read-only audit (Part I wages + Part II SE / Part III RRTA + flow / Part IV-V withholding

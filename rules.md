@@ -194,6 +194,27 @@ have both a strict `script-src` and `inlineCritical` on. Full write-up in
 
 ---
 
+## Schedule D Tax Worksheet — Form 4952 Line-4g Election Interaction — Established 2026-08-04
+
+The 0/15/20% + §1250/28% arithmetic of the Schedule D Tax Worksheet is a faithful IRS port and verified;
+the fragile part is its interaction with the **Form 4952 line-4g** investment-interest election
+(§163(d)(4)(B), where the taxpayer elects to treat some net capital gain / qualified dividends as ordinary
+investment income). Guardrails:
+
+1. **`computeScheduleDTaxWorksheet` must honor line-7a cap-gain distributions when `scheduleD == null`.**
+   A 4g election can force the Schedule D Tax Worksheet even with no Schedule D (distributions reported
+   directly on line 7a). Net LTCG falls back to `line7aCapGainLoss` in that case — the arg is NOT dead.
+2. **The election reduces net LTCG BEFORE the §1250/28% caps.** Split per IRS worksheet lines 5/6 & 8/9:
+   the net-capital-gain part `ltcgElected = min(4g, 4e)` reduces net LTCG (worksheet line 9) ahead of the
+   §1250 (line 35) and 28% (line 41) caps; the qualified-dividend part `4g − 4e` reduces qualified
+   dividends (line 6). `4e` = Form 4952 `getLine4eNetCapitalGainUsed()`, threaded through `computeLine16`.
+3. **The Foreign Earned Income Tax Worksheet must thread 4g/4e** into its inner Schedule D / QDCG calls and
+   route to the Schedule D WS when `hasPositiveAmount(4g)` — else a Form 2555 filer with a 4g election
+   under-taxes.
+
+Pins: `capGainsSchedDWorksheetUsesLine7aDistributionsWhenNoScheduleD` (Sched D WS == QDCG WS),
+`capGainsSchedDWorksheet4gElectionReduces1250Base` ($74,297.25).
+
 ## Compute-Validation Guardrails (IRS 2025) — Established 2026-06-30
 
 An 8-agent audit of `TaxReturnComputeService` against the IRS 2025 forms/pubs fixed seven bugs (`b70b864`). Each invariant below has a Java unit pin AND an e2e pin; changing any shifts pinned dollar values — always re-pin to the IRS-correct value (verify against the form/pub), never match the test to old output.

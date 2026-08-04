@@ -194,6 +194,28 @@ have both a strict `script-src` and `inlineCritical` on. Full write-up in
 
 ---
 
+## Schedule 8812 — Credit Limit Worksheet B Feedback + ACTC Earned Income — Established 2026-08-04
+
+The Schedule 8812 arithmetic is faithful; two interaction points are fragile and MUST be preserved:
+
+1. **ACTC earned income (line 18a) includes ALL nontaxable combat pay (W-2 box 12 code Q), independent of
+   the EIC combat-pay election.** Source it via `actcNontaxableCombatPay()` (box 12 code Q, household-scoped),
+   NOT `getNontaxableCombatPayElection()` (which is populated only when the taxpayer elects combat pay into
+   EIC earned income). Earned Income Worksheet line 1b is election-independent.
+2. **Credit Limit Worksheet B must feed back into the CTC/ACTC split.** The four CLW-B credits (Form 8839
+   adoption, 8396 mortgage, 5695 Part I §25D, 8859 DC homebuyer) reserve only the PROJECTED nonrefundable CTC
+   (`schedule8812.getCreditLimitWorksheetBLine14()` = line 12 − pure CLW-B line 13), NOT the full Form 1040
+   line 19 — use `ctcLine19ForClwB(form1040, schedule8812)` in each credit's limit worksheet. After they post
+   to Schedule 3, `finalizeSchedule8812ClwB` sets CLW-A line 4 = Sch 3 (5a+6c+6g+6h), recomputes Schedule
+   8812 line 13/14/16a/27, and re-wires Form 1040 line 19 + line 28. Ordering: the finalize runs after the
+   §25D final pass and before the Form 1040 line 20-24 totals. The pure CLW-B line 13 is `min(line 16b, best
+   earned-income/SS method)` — computed BEFORE the line-16a cap (do not restore the `line16a == 0` early
+   return). Skipping this keeps CTC nonrefundable and permanently forfeits the refundable ACTC (which, unlike
+   the four credits, does not carry forward).
+
+Pins: `schedule8812ActcEarnedIncomeIncludesCombatPayWhenNotElectedForEic`,
+`schedule8812ClwBFeedbackShiftsCtcToRefundableActc`.
+
 ## Schedule D Tax Worksheet — Form 4952 Line-4g Election Interaction — Established 2026-08-04
 
 The 0/15/20% + §1250/28% arithmetic of the Schedule D Tax Worksheet is a faithful IRS port and verified;

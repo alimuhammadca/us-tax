@@ -1,6 +1,50 @@
 ﻿# History
 
 
+## 2026-08-04 — Schedule 8812 (Child Tax Credit / ACTC) adversarial audit — two refundable-side fixes
+
+Three-agent read-only audit (nonrefundable CTC/ODC Part I; refundable ACTC Part II-A/B; interactions/edges),
+each verifying against the actual 2025 Schedule 8812 + `i1040s8.pdf` instructions (pdftotext). The core
+arithmetic is a **faithful IRS port** — the $2,200/$500/$1,700 OBBBA amounts, the $400k/$200k MAGI phaseout
+(excess rounded UP to the next $1,000 × 5%), the Credit Limit Worksheet A nine-credit composition, the 15%
+earned-income method + $2,500 floor, the 3+-children SS/Medicare alternative (Part II-B), the OBBBA
+filer-SSN gate, and the dependent-own / gross-income-test exclusions all reproduce the form. Two confirmed
+fixes:
+
+1. **ACTC earned income dropped nontaxable combat pay unless the EIC election was made** (HIGH, under-refund).
+   The 2025 Earned Income Worksheet line 1b sources combat pay from Form 1040 line 1i OR W-2 box 12 code Q —
+   it is ALWAYS in ACTC earned income, independent of the EIC combat-pay election. The code read
+   `getNontaxableCombatPayElection()` (populated only on election), so a service member who did NOT elect
+   (rational — electing can lower the EIC while it always raises the ACTC) lost the full combat-pay
+   component → under-refund up to $1,700/child, hitting exactly the low-income military families ACTC
+   targets. Fix: new `actcNontaxableCombatPay()` sums box 12 code Q across the household (taxpayer + spouse,
+   taxpayer-only on MFS) without the election gate. Pin
+   `schedule8812ActcEarnedIncomeIncludesCombatPayWhenNotElectedForEic` (2 children, $30k code-Q combat pay
+   unelected → ACTC $3,400, was $0).
+2. **Credit Limit Worksheet B never fed back into the CTC/ACTC split** (under-refund, permanent). CLW-A
+   line 4 was effectively hard-coded 0, so the four "second-tier" nonrefundable credits (Form 8839 adoption,
+   8396 mortgage, 5695 Part I §25D, 8859 DC homebuyer) never reduced the CTC nonrefundable limit; Schedule
+   8812 ran before them and was never recomputed → too much CTC landed in the nonrefundable line 19 and too
+   little in the refundable ACTC (line 28). Because ACTC does not carry forward while those four credits do,
+   it permanently forfeited up to $1,700/child. Implemented the IRS CLW-A/CLW-B circularity: (a) the PURE
+   CLW-B line 13 (projected ACTC, independent of the line-16a cap) now drives `clwBLine14 = line12 −
+   pureLine13`; (b) §25D/8396/8859 reserve `clwBLine14` (like adoption already did) via the shared
+   `ctcLine19ForClwB` helper, not the full line 19; (c) new `finalizeSchedule8812ClwB` (mirroring the
+   existing §25D second pass) sets CLW-A line 4 = Sch 3 (5a+6c+6g+6h), recomputes line 13/14/16a/27, and
+   re-wires Form 1040 line 19 + line 28. Pin `schedule8812ClwBFeedbackShiftsCtcToRefundableActc` ($30k wages,
+   1 child, §25D $4,700 → line 19 CTC $500 + refundable ACTC $1,700; was CTC $2,200 / ACTC $0). Module suite
+   1650/1650.
+
+**Verified correct (do NOT "fix"):** OBBBA $2,200/$1,700/$500 amounts; MFS $200k threshold (not halved);
+dependent-own suppression; ITIN→ODC routing + OBBBA one-valid-SSN MFJ rule; MAGI 2555/§931/§933 add-backs;
+Part II-B line 24 = EIC + Sch 3 line 11 (not refundable AOTC); gross-income-test ODC exclusion.
+**Documented not-fixed (design/scope):** the blank-SSN CTC child stays at $2,200 via a deliberate advisory
+(both A + C flagged; demoting could under-credit a legit child whose SSN was merely unentered); the 2025
+`electsNoActc` opt-out (form removed the checkbox — UI-coupled, needs sign-off); Part II-B line 21 omits the
+Additional-Medicare/RRTA worksheet (near-zero $ exposure — AMT arises >$200k where the CTC is fully
+nonrefundable).
+
+
 ## 2026-08-04 — Schedule D Tax Worksheet adversarial audit — four Form 4952 line-4g fixes
 
 Three-agent read-only audit (routing/decision-tree; core 0/15/20% + §1250/28% arithmetic; Form 4952

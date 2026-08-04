@@ -26,10 +26,16 @@ aggregation against the single threshold + MFS per-person with the spouse-leakag
 sourcing (not box 3); Part II line-8 = Schedule SE §1402 net earnings (single 0.9235, SE-loss → 0); the
 wage↔SE shared-threshold reduction; Part III RRTA own-threshold + no double-count into Part I; line 18 → Sch 2
 line 11 once (G3); Part V line 20 = line 1 (not line 4) × 1.45% regular Medicare, floor at 0; line 24 → 1040
-line 25c once with no 25a double-count. **Documented (not fixed — negligible/edge):** lines 7/13/17 stored
-unrounded on the form object (no tax effect — line 18 is rounded); Part III line-14 MFJ SSN-scoping is
-stricter than Part I line-1 (a railroad W-2 with a MISSING SSN would be dropped — malformed-input edge); the
-`computeAdditionalMedicareTax` Part-I-only estimate is redundant (always superseded by G3). Suite 1646/1646.
+line 25c once with no 25a double-count.
+
+**Follow-up (same day — all three deferred items BUILT):** (1) lines 7/13/17 are now each `roundMoney`-wrapped
+so line 18 = the sum of whole-dollar lines (IRS line-by-line, matches the already-rounded line 21). (2) Part
+III line 14 on MFJ now sums ALL household RRTA W-2s (`sumW2RrtaCompensationForSsn(w2Entries, null)` — null SSN
+= no filter), matching Part I line 1's sum-all, so a railroad W-2 with a blank/mismatched SSN is no longer
+dropped (pin `form8959Line14MfjSumsAllRrtaIncludingBlankSsnW2`: blank-SSN $300k RRTA → $450). (3) removed the
+redundant Part-I-only `computeAdditionalMedicareTax` estimate entirely — Schedule 2 line 11 is now set solely
+from Form 8959 line 18 (the G3 path was already the sole effective source), eliminating the fragility.
+Suite 1647/1647.
 See [[feedback_prefer_irs_docs_over_web]] and [[feedback_principled_diagnosis_over_test_tweaking]].
 
 

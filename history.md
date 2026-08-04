@@ -22,7 +22,12 @@ statement nor a tax-return-preview form):
 
 Follow-up (same day): closed the "Someone else" residual — the Part IV intake now shows a **manual
 SSN/ITIN input** on the free-text-name path (the picker still auto-fills it), so a student not on the
-education-credits list still feeds the SSN join rather than falling to the fail-closed fallback.
+education-credits list still feeds the SSN join rather than falling to the fail-closed fallback. And to
+make the fail-closed fallback **non-silent**, the gate now emits a non-blocking advisory flag
+`AOTC_STUDENT_NOT_MATCHED_TO_FORM_8862_RECERT` (naming the student) whenever a student is blocked purely
+because their SSN matched no recert entry — a matched-but-ineligible entry does not flag. No new stored
+field — a computed flag surfaced in the existing flags panel. Suite 1637/1637; pin
+`form8863_form8862Gate_unmatchedStudentBlockedAndFlaggedNotSilent`.
 
 Verified end-to-end: unit suite **1636/1636**; dev boot applied V232 cleanly + Hibernate validated the new
 column ("ran successfully", "Listening on :8080", no validation errors); UI bundle built. New pin

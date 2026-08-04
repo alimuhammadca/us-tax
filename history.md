@@ -26,7 +26,11 @@ section on the QBI-deduction form enumerates the user's Schedule C + K-1 busines
 from the statement) and assigns each a group — **no field added to any K-1 statement** (the election is keyed
 by the auto-derived business name / entity EIN and stored on the QBI form). Pins
 `qbiAggregation_combinesWagesAcrossGroupedBusinessesAboveThreshold` (engine, $10k→$60k) +
-`qbiAggregation_twoK1BusinessesSameGroupRaiseDeductionEndToEnd` (end-to-end by EIN, $14k→$64k). Commits
+`qbiAggregation_twoK1BusinessesSameGroupRaiseDeductionEndToEnd` (end-to-end by EIN, $14k→$64k). **Deliberately
+excluded from aggregation (correct scope, NOT gaps):** SSTB businesses (§1.199A-4(b)(1)(iii) bars aggregating
+a specified service business — forced to a singleton regardless of label) and §199A safe-harbor rentals (they
+carry no W-2/UBIA, so aggregating them can't change the wage/UBIA limit; null aggregation key → singleton).
+Farm activities likewise carry no aggregation key today. Commits
 `5eb7647` (engine) + `85909ab` (intake+persistence, dev-boot-verified V233) + UI. Suite 1641/1641. See
 [[feedback_principled_diagnosis_over_test_tweaking]] and [[feedback_confirm_before_field_add_delete]].
 

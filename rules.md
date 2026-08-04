@@ -14,10 +14,18 @@ The Part I/II/III arithmetic is faithful. Guardrails:
    `form8606ProrataYearEndValueMissing` → non-overrideable `FORM_8606_MISSING_YEAR_END_IRA_VALUE_*`.
 3. **Line 20 first-time-homebuyer expenses are capped at $10,000** (`.min(10000)`).
 
-Known confirmed gaps (documented, need feature work): IRA §72(t) 10% early-distribution penalty never
-computed (the IRA path skips Form 5329; needs IRA-side exception-affirmation intake fields — sign-off);
-the Form 8606 override can zero box-2a Roth taxable when Part III is blank but Part I present; no auto-import
-of prior-year 8606 basis (user-entry, matches Form 8801 pattern).
+**IRA §72(t) early-distribution penalty (C1) — IMPLEMENTED 2026-08-04.** Early IRA distributions (box-7 code
+1 → 10%, code S → 25%, DETERMINED box-2a taxable only) now feed the single return-level Form 5329 via
+`computeIraForPerson` → `IraComputation.iraEarlyDistributionAdditionalTax` → `computePensionAnnuities`
+(folded into `aggregatedEarlyDist` / `requiresForm5329` / exception fields, all pension-OR-IRA). New IRA-form
+fields (personal form, not statement/preview): `hasEarlyDistributionAdditionalTaxForForm5329`,
+`form5329ExceptionCodeOrReason`, `noEarlyDistributionExceptionApplies` (PfIraIncome + IraIncomeMapper + V235).
+Bounded scope: codes 1/S determined-box-2a; Roth code-J earnings / 5-year conversion recapture out of scope
+(matches the pension path). Pins `iraEarlyDistributionCode1GetsSection72tPenaltyViaForm5329`,
+`iraDistributionWithExceptionCode2GetsNoSection72tPenalty`.
+
+Remaining confirmed gaps (documented): the Form 8606 override can zero box-2a Roth taxable when Part III is
+blank but Part I present; no auto-import of prior-year 8606 basis (user-entry, matches Form 8801 pattern).
 
 ---
 

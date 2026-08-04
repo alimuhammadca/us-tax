@@ -1,6 +1,39 @@
 ﻿# History
 
 
+## 2026-08-04 — Form 8606 audit C1 — IRA §72(t) early-distribution penalty now implemented
+
+Follow-up to the Form 8606 audit ("implement the IRA §72(t) penalty with new intake fields, as long as the
+fields are not on a statement or tax-return-preview form" — the IRA income form is a personal data-entry
+form, so authorized). The HIGH under-tax gap is now closed: early IRA distributions feed the Form 5329
+IRC §72(t) 10% additional tax (25% for a SIMPLE IRA in its first 2 years), mirroring the pension path.
+
+**Compute:** `computeIraForPerson` accumulates the §72(t) base per-entry from PAYER-DETERMINED box-2a taxable
+(box 2b unchecked) — code 1 → 10%, code S → 25% (codes 2–7/Q/T carry no tax, so no over-tax risk); the
+per-person `iraEarlyDistributionAdditionalTax` is carried on `IraPersonComputation` → `IraComputation`
+(return-level sum). `computePensionAnnuities` (which owns the single return-level Form 5329) now receives the
+IRA §72(t) tax + the IRA form and folds it into `aggregatedEarlyDist`, the Form 5329 additional-tax base,
+`requiresForm5329` (pension OR IRA opt-in), and the exception code/reason + "no exception applies"
+affirmation (pension OR IRA). So an IRA-only early distribution generates Form 5329, and the existing
+`FORM5329_REQUIRED_FOR_EARLY_DISTRIBUTION` / `FORM5329_EXCEPTION_REASON_MISSING` flags now cover IRAs too.
+
+**New intake fields** on the IRA income personal form (mirroring the pension form): `pf_ira_income` columns
+`has_early_distribution_additional_tax_for_form_5329`, `form_5329_exception_code_or_reason`,
+`no_early_distribution_exception_applies` (entity `PfIraIncome` + `IraIncomeMapper` + migration **V235** +
+Angular IRA income component + YAML `4abc-ira-income-taxpayer`). No statement or tax-return-preview form was
+touched.
+
+**Bounded scope:** codes 1/S with determined box-2a taxable (the clear, no-over-tax-risk case). Roth code-J
+earnings (Part III line 25c) and the 5-year conversion recapture (line 23), and the pro-rata-basis case where
+box 2a is blank, remain out of this pass — the pension path is likewise codes-1/S only.
+
+Pins `iraEarlyDistributionCode1GetsSection72tPenaltyViaForm5329` ($20k code-1 → $2,000) +
+`iraDistributionWithExceptionCode2GetsNoSection72tPenalty` (code 2 → no penalty, no over-tax). Unit suite
+1662/1662. (Migration is verified by inspection — exact column-name/type match to the entity and a mirror of
+V15/V45; the live dev-boot verification was blocked by sandbox Docker/Testcontainers registry friction, not a
+code issue.)
+
+
 ## 2026-08-04 — Form 8606 (Nondeductible IRAs) adversarial audit — three fixes
 
 Three-agent read-only audit (Part I pro-rata; Part II Roth conversions; Part III Roth distributions +

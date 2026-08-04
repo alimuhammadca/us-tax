@@ -282,6 +282,26 @@ sections:
         required: false
         label: Have you prepared the required line 4b exception breakout statement?
         help: Select Yes after preparing statement lines such as rollover, QCD, HFD, or other code amounts when required.
+      # Form 5329 §72(t) early-distribution additional tax on IRA distributions (C1, 2026-08-04).
+      # Mirrors the pension form; feeds the single return-level Form 5329.
+      - name: hasEarlyDistributionAdditionalTaxForForm5329
+        type: boolean
+        required: false
+        label: Did you receive IRA distributions before age 59½ and lack a qualifying exception to the 10% penalty?
+        help: Distribution code "1" (or "S" for a SIMPLE IRA in its first 2 years) on your 1099-R means no known exception applies. Exceptions include disability, SEPP, first-time home purchase, and qualified higher-education expenses.
+      - name: form5329ExceptionCodeOrReason
+        type: text
+        required: false
+        showIf: hasEarlyDistributionAdditionalTaxForForm5329 == true
+        label: Reason your penalty is reduced or waived (if applicable)
+        placeholder: Enter exception code or explanation
+        help: If a partial or full IRC §72(t)(2) exception applies, enter the IRS exception code (01–12) or a brief explanation. Leave blank if the full 10% penalty applies and you have explicitly confirmed below that no exception applies.
+      - name: noEarlyDistributionExceptionApplies
+        type: boolean
+        required: false
+        showIf: hasEarlyDistributionAdditionalTaxForForm5329 == true
+        label: I confirm no IRC §72(t)(2) exception applies — I am paying the full additional tax.
+        help: Check this box to explicitly affirm that no exception (disability, SEPP, first-time home purchase, qualified higher-education expenses, etc.) applies to your early IRA distribution. Required when the exception reason above is left blank so the application can confirm you intentionally elected to pay the full 10% (or 25% for a SIMPLE IRA in its first 2 years) additional tax.
 
   # Backend-only statement imports. Not rendered in form component.
   - name: importedStatementFields

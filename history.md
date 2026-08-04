@@ -1,6 +1,47 @@
 ﻿# History
 
 
+## 2026-08-04 — Form 8962 Premium Tax Credit (§36B) adversarial audit — five fixes (one CRITICAL)
+
+Three-agent read-only audit (core PTC math / repayment limitation / interactions), each verifying against the
+actual 2025 IRS Form 8962 + instructions (pdftotext). Five genuine fixes:
+
+1. **CRITICAL — shared-policy allocation was scaled ×100 too small.** The Part IV allocation percentages are
+   entered AS DECIMALS (0.50 = 50%, per the IRS boxes + the intake label + the display path), but
+   `allocationFraction` divided by 100 AGAIN → a 50% share became 0.5%. Every shared-policy return (divorced/
+   separated, or a dependent on another return) had its premium/SLCSP/APTC under-allocated 100× — corrupting
+   BOTH the net PTC (under-credit) and the excess-APTC repayment (under-collection). Fix: clamp to [0,1], no
+   /100. Pin `form8962SharedPolicyAllocationUsesDecimalFractionNotDividedBy100` (50% share → line24 $500 /
+   line25 $400 / net PTC $100, not $5/$4/$1). Corrected the existing test that had used "30" (only "right"
+   because of the bug) to the decimal 0.30.
+2. **Hawaii federal-poverty-line increment $6,230 → $6,190.** The 2024 HHS/IRS Hawaii table (Form 8962 Table
+   1-3) steps $6,190/person (1=$17,310, 2=$23,500, 3=$29,690). The wrong step over-stated the FPL for Hawaii
+   family size ≥2 → under-stated the FPL % → lower applicable figure → over-credit / under-repayment (material
+   near the 400% boundary). Fixed `ReferenceData.FORM8962_FPL_HAWAII_STEP` + the whole Hawaii column in
+   `lines/8962.md`. Pin `form8962HawaiiFederalPovertyLineIncrementIs6190`.
+3. **Alternative calculation for year of marriage — line 26 not zeroed.** The 2025 instructions: "If you
+   elected the alternative calculation for year of marriage, and line 24 is greater than line 25, enter -0- on
+   line 26 and skip lines 27 through 29." The code still posted the full-year net PTC to Schedule 3 line 9 (an
+   over-credit). Fix: force line 26 = 0 when the alt-calc is elected and line 24 > line 25.
+4. **Pub 974 SE-health↔PTC solver ignored the §36B(c)(1)(D) dependent bar.** For a dependent-own SE +
+   Marketplace return the PTC is barred (line 24 → 0), so there is no circular dependency — but the solver
+   credited a phantom PTC and lowered the §162(l) deduction, an over-tax (self-harm). Fix: added
+   `!ptcClaimableAsDependent` to the solve gate.
+5. **MFS spouse-Form-2555 MAGI leak.** `computeForm8962` was called with `form2555Spouse` UNGUARDED, unlike
+   the NIIT and 13b call sites — on an MFS leg the other spouse's §911 exclusion inflated this leg's household
+   MAGI (under-credit). Fix: `isMfsReturn ? null : form2555Spouse`.
+
+Also fixed two stale doc-comments (`getRepaymentCap` "Single or MFS" → Single-only; the "[0,100]" allocation
+comment → "[0,1] decimal"). **Verified correct (do NOT "fix"):** the Table 5 repayment caps (375/750,
+975/1,950, 1,625/3,250) + the ≥400% no-limitation rule + MFJ doubling + Single-only column; the
+applicable-figure table incl. the **2025 no-400%-cliff (8.5% cap over 400%)**; MAGI add-backs (§103/§911/
+nontaxable SS); the monthly PTC (col D=max(0,B−contribution), E=min(A,D)); the MFS net-PTC disallowance while
+retaining the repayment; and the refundable flow to Schedule 3 line 9 / repayment to Schedule 2 line 1a.
+**Documented (not fixed — needs an intake field):** MFS Allocation-Situation-2 requires substituting the
+filer's OWN SLCSP rather than allocating the combined 1095-A SLCSP; there is no field to enter it. Suite
+1643/1643. See [[feedback_principled_diagnosis_over_test_tweaking]] and [[feedback_prefer_irs_docs_over_web]].
+
+
 ## 2026-08-04 — §199A QBI: two deferred items now built (safe-harbor pooled §469 + elective aggregation)
 
 Followed up the QBI audit by building the two items it had documented as deferred.

@@ -1,6 +1,45 @@
 ﻿# History
 
 
+## 2026-08-04 — Earned Income Credit (EIC, §32) adversarial audit — two over-refund fixes
+
+Three-agent read-only audit (2025 table params + formula / earned-income + eligibility / qualifying
+children + interactions). The entire 2025 EIC table was verified against the ACTUAL text of **Rev. Proc.
+2024-40 §2.06** (pdftotext, not a summary): earned-income amounts $8,490/$12,730/$17,880/$17,880, max
+credits $649/$4,328/$7,152/$8,046, non-MFJ phaseout starts $10,620/$23,350, MFJ $17,730/$30,470, completed
+phaseouts $19,104/$50,434/$57,310/$61,555 (MFJ $26,214/$57,554/$64,430/$68,675), investment-income limit
+$11,950 — ALL match the code. Two genuine over-refund bugs fixed:
+
+- **Box 11 NQDC not excluded from EIC earned income (over-refund) — FIXED.** `computeLine27aEIC` summed the
+  wage base with `sumW2WagesBySsn` (raw box 1) and subtracted inmate wages separately, but NEVER subtracted
+  W-2 box 11 nonqualified deferred comp — even though the sibling helper `sumW2WagesAfterCarveOuts`'s javadoc
+  explicitly names this method as a caller. Box 11 is deferred comp (§32(c)(2)(B)(ii)), routed off line 1a
+  to Schedule 1 line 8t, so it's not earned income. Added `sumW2NonqualifiedPlansBySsn` + a per-SSN box-11
+  subtraction (couldn't reuse the carve-out helper — the EIC path must KEEP statutory-employee box 1, which
+  that helper drops). Test `eicEarnedIncomeExcludesBox11NonqualifiedDeferredComp` ($8k box 1 − $3k box 11 →
+  EIC $384 not $613).
+- **US-residency requirement not applied to the with-child path (over-refund) — FIXED.** The
+  `mainHomeInUsMoreThanHalfYear` gate (§32(c)(1)(A)(ii)(I)) was scoped to `numChildren == 0`; but Pub 596
+  Rule 9 also requires the qualifying child to have lived with the taxpayer IN THE US > half the year, so a
+  foreign-resident taxpayer with qualifying children who answered "no" still received EIC. Moved the check
+  to a top-level gate applying to ALL filers (null-tolerant — only an explicit "no" disqualifies, so
+  fixtures are unaffected). Test `eicWithChildRequiresUsResidencyLikeChildlessPath`.
+- **Verified correct:** the credit formula (phase-in/plateau/phase-out + $50-bracket midpoint), the
+  earned-income-vs-AGI dual lookup (min only at/above the phaseout start, per Pub 596 Wksht A), the MFJ
+  phaseout shift, the $11,950 investment-income disqualification (strict >), inmate-wage exclusion, the ½-SE
+  reduction, statutory-employee inclusion, the combat-pay election, the childless 25–64 age gate (ARPA
+  expansion reverted), the SSN-not-ITIN requirement, the MFS §32(d)(2) separated-spouse exception, Form 8862
+  recertification, the dedicated EIC qualifying-child count (distinct from CTC/dependents), the dependent-own
+  self-claim disallow, MFJ combined earned income, and the line-27 flow (idempotent with the Sch 8812
+  pre-EIC). Full suite 1631/1631.
+- **Documented (not fixed — field conflation / intake-mitigated / low):** the §32(c)(1)(B) "qualifying child
+  of another" bar is only checked on the childless path (the `taxpayerCanBeClaimedAsDependent` field
+  conflates it with the childless-only §(ii)(III) dependent bar); Form 4852 substitute wages omitted from
+  the EIC wage base (under-refund, narrow); the Jan-1 birthday day-before rule for the 25/65 age gate;
+  newborn/child-died-during-year not auto-treated as full-year residency (intake sets months=12);
+  relationship set omits great-grandchild/grandniece/adopted-child string variants (intake dropdown-dependent).
+
+
 ## 2026-08-04 — Schedule A (itemized deductions) adversarial audit — Form 8396 line-17 recompute bug
 
 Three-agent read-only audit (SALT cap + OBBBA phasedown / medical+mortgage+other / election+total+

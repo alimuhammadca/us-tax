@@ -19,13 +19,9 @@ sections:
           Child Tax Credit, Additional Child Tax Credit, or Other Dependent Credit. When you
           answer Yes, complete the Credits After Disallowance section in the sidebar.
 
-      - id: electsNoActc
-        label: Would you like to skip the Additional Child Tax Credit this year?
-        type: boolean
-        helpText: >
-          The Additional Child Tax Credit is refundable and worth up to $1,700 per qualifying
-          child in 2025. It is computed automatically when you qualify. Skipping it is unusual —
-          select Yes only if your tax professional has specifically advised you to do so.
+  # electsNoActc (the "skip the Additional Child Tax Credit" opt-out) was RETIRED for 2025:
+  # Schedule 8812 line 15 is now "Reserved for future use" and there is no 2025 mechanism to
+  # decline the ACTC while claiming the CTC. Removed from intake 2026-08-04 (credits audit).
 
   - id: rareSettings
     title: Less common situations

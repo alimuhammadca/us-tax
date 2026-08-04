@@ -216,6 +216,19 @@ The Schedule 8812 arithmetic is faithful; two interaction points are fragile and
 Pins: `schedule8812ActcEarnedIncomeIncludesCombatPayWhenNotElectedForEic`,
 `schedule8812ClwBFeedbackShiftsCtcToRefundableActc`.
 
+Additional 2025 Schedule 8812 rules (2026-08-04 follow-up):
+- **A CTC-flagged child with NO SSN on file is demoted to the $500 ODC**, like the ITIN and age≥17 cases
+  (line 4 = children "with the required social security number", §24(h)(7)). Keep the non-blocking
+  `SCHEDULE_8812_CTC_CHILD_SSN_UNVERIFIED` advisory so the filer can add the SSN to restore the CTC.
+- **There is NO 2025 ACTC opt-out.** The 2024 `electsNoActc` checkbox was removed (line 15 "Reserved for
+  future use") — never re-add a control that zeroes the ACTC on a user flag. The dead
+  `pf_ctc_actc_screening.elects_no_actc` / `out_schedule_8812.elects_no_actc` columns are intentionally
+  retained-but-unused.
+- **Part II-B line 21 uses the Additional Medicare Tax and RRTA Tax Worksheet** when Form 8959 is present:
+  box4 + box6 + F8959 line7 − F8959 line22 + ½×F8959 line13. (RRTA lines 8-15 out of scope — railroad/CT-2.)
+  This path is effectively unreachable (Part II-B needs low earned income; Additional Medicare Tax needs
+  >$200k) — keep the worksheet faithful anyway.
+
 ## Schedule D Tax Worksheet — Form 4952 Line-4g Election Interaction — Established 2026-08-04
 
 The 0/15/20% + §1250/28% arithmetic of the Schedule D Tax Worksheet is a faithful IRS port and verified;

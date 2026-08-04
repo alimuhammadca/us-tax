@@ -1,6 +1,37 @@
 ﻿# History
 
 
+## 2026-08-04 — Schedule 8812 audit — three documented-deferred items now fixed
+
+Follow-up to the Schedule 8812 audit below ("fix these" on the three items previously left as design/scope):
+
+1. **Blank-SSN CTC child now demoted to the $500 ODC** (was: kept at $2,200 CTC behind an advisory).
+   Schedule 8812 line 4 counts only "qualifying children under age 17 WITH THE REQUIRED social security
+   number" (§24(h)(7)); a child with no SSN on file belongs on line 6 (ODC), exactly like the ITIN and
+   age≥17 demotions already handled. Now `numOdcDependents++` (not `numCtcChildren++`); the non-blocking
+   advisory `SCHEDULE_8812_CTC_CHILD_SSN_UNVERIFIED` is retained (reworded) so the filer can add the SSN to
+   restore the full CTC. Prevents a $2,200 CTC + up to $1,700 ACTC over-claim per SSN-less child. Pin
+   `schedule8812_ctcChildWithBlankSsn_demotedToOdc`.
+2. **`electsNoActc` opt-out retired for 2025.** The 2024 "I do not want to claim the additional child tax
+   credit" checkbox was removed (Schedule 8812 line 15 is now "Reserved for future use") — there is no 2025
+   mechanism to decline the ACTC while claiming the CTC. Removed the compute early return that zeroed line
+   27 on the intake flag (so the refundable ACTC is always computed), retired the intake question (YAML +
+   Angular `form-ctc-actc-screening` control + Schedule 8812 display), and left the now-dead
+   `pf_ctc_actc_screening.elects_no_actc` / `out_schedule_8812.elects_no_actc` columns in place (never
+   read/written) to avoid a drop-column migration. Test updated:
+   `schedule8812_electsNoActcFlag2025Ignored_actcStillComputed` (stale `electsNoActc=true` now ignored →
+   ACTC $1,700).
+3. **Part II-B line 21 now applies the Additional Medicare Tax and RRTA Tax Worksheet** when Form 8959 is
+   present: line 21 = box 4 + box 6 + Form 8959 line 7 (Additional Medicare on WAGES) − Form 8959 line 22
+   (Additional Medicare WITHHELD) + ½ × Form 8959 line 13 (Additional Medicare on SE) — swapping the
+   withheld amount for the liability and adding the ½-SE component the bare box-4+box-6 sum omitted.
+   Verified against the actual 2025 worksheet text (pdftotext). Tier-1 RRTA (worksheet lines 8-15 — railroad
+   / Form CT-2) stays out of scope (no W-2 box-14 RRTA / CT-2 model). Correct-by-inspection, no unit test:
+   the path is **effectively unreachable** (Part II-B needs low earned income — the 15% method must fall
+   short of the 3-child $5,100 cap, i.e. wages under ~$36k — while Additional Medicare Tax arises only above
+   $200k), so the preconditions are contradictory. Module suite 1651/1651.
+
+
 ## 2026-08-04 — Schedule 8812 (Child Tax Credit / ACTC) adversarial audit — two refundable-side fixes
 
 Three-agent read-only audit (nonrefundable CTC/ODC Part I; refundable ACTC Part II-A/B; interactions/edges),

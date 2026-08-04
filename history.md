@@ -1,6 +1,52 @@
 ﻿# History
 
 
+## 2026-08-04 — Form 8863 Education Credits (§25A) adversarial audit — four fixes (verified vs 2025 IRS instructions)
+
+Three-agent read-only audit (AOTC formula + refundable split / LLC + dual MAGI phaseout / eligibility +
+interactions). The **actual 2025 Instructions for Form 8863** were downloaded and read via pdftotext (the
+form-only PDF was on disk; the instructions were not) — the Credit Limit Worksheet, the AOTC-vs-LLC
+comparison table, and the Part III line 23–26 routing were all verified against primary IRS text, not the
+app's internal spec. Four fixes, all in `TaxReturnComputeService`; suite 1635/1635:
+
+1. **CLW line 6d read as 0 (ordering).** The Form 8863 Credit Limit Worksheet line 5 subtracts Schedule 3
+   "lines 1, 2, **6d**, and 6l" (verified verbatim). Schedule R (line 6d, elderly/disabled) ran AFTER
+   Form 8863, so line 6d was always 0 → education-credit tax limit over-stated. **Fix:** relocated the
+   `computeScheduleR` + `applyScheduleRToSchedule3` block to BEFORE `computeForm8863`. No circular
+   dependency — Schedule R's own limit (line 21) subtracts only lines 1/2/6l, never education. Still runs
+   before Form 5695 (§25C CLW) and Schedule 8812 (CLW-A), preserving those constraints.
+2. **AOTC-disqualified student dropped instead of LLC fallback (under-credit, convergent A+B).** Form 8863
+   Part III lines 23–26 each route "Stop! Go to line 31 for this student" (LLC) — confirmed by the
+   instructions (Example 1: a 4-years-claimed student "would be eligible to claim only the lifetime
+   learning credit") and the AOTC-vs-LLC table. The four eligibility disqualifiers (4-prior-years /
+   half-time / first-4-years / felony-drug) did `continue` → $0. **Fix:** route those four to the LLC pool
+   (up to $2,000/return recovered). The student-TIN gate correctly still bars BOTH credits (the table
+   shows LLC also requires the student TIN by the due date — the old "LLC has no student-TIN rule" comment
+   was wrong and was corrected); it runs before the disqualifiers, so a TIN-less student never reaches the
+   fallback.
+3. **Dependent bar ignored the return-level flag (over-credit, C-F2).** §25A(g)(3) barred education
+   credits only on the 8863-specific field `claimedAsDependentOnAnotherReturn`; a `dependent_own` return
+   that left it null slipped through and claimed a (partly refundable) credit. **Fix:** the authoritative
+   filing-status flag `dependentOwnReturn` now also bars the credit.
+4. **Form 8862 Part IV positional-index over-credit (C-F3).** The per-student AOTC recert gate matches by
+   positional index across two independently-collected intake lists; an out-of-bounds (un-recertified)
+   student fell through the bounds guard and received AOTC with no recertification. **Fix:** fail CLOSED
+   (out-of-bounds → blocked). The order-independent SSN join is not possible today (Form8862OutputMapper
+   discards student SSNs, keeping only a `List<Boolean>`) — documented as a deferred field-add; a
+   mis-ORDERED same-length pair could still mis-gate.
+
+**Verified correct (do NOT "fix"):** the two-tier AOTC formula ($2k @ 100% + next $2k @ 25%, max $2,500,
+$4,000 cap) incl. the G-NEW-1 ≤$2,000 rule; the 40/60 refundable split; the §25A(i) under-24 refundable
+disallowance; the LLC 20% × $10,000 aggregate cap (once per return, not per student); the dual MAGI
+phaseouts ($80k–90k / $160k–180k, QSS uses the non-MFJ range); the MFS bar (§25A(g)(6)); the MAGI Form
+2555/4563/Puerto-Rico add-backs; §25A(g)(2) tax-free-assistance reduction applied to BOTH credits; no
+AOTC/LLC double-count. Pins: `form8863_creditLimitWorksheet_subtractsScheduleRLine6d` +
+`form8863_aotcDisqualifiedStudent_fallsBackToLlc` + `form8863_dependentOwnReturn_barsEducationCredit` +
+`form8863_form8862Gate_shorterRecertList_failsClosedForUnlistedStudent`; repurposed
+`computeForm8863_disqualifiedStudentFallsBackToLlc` (was `...Skipped`, pinned the old drop bug). See
+[[feedback_principled_diagnosis_over_test_tweaking]] and [[feedback_prefer_irs_docs_over_web]].
+
+
 ## 2026-08-04 — Earned Income Credit (EIC, §32) adversarial audit — two over-refund fixes
 
 Three-agent read-only audit (2025 table params + formula / earned-income + eligibility / qualifying

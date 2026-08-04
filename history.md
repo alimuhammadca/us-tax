@@ -1,6 +1,32 @@
 ﻿# History
 
 
+## 2026-08-04 — Form 6251 (AMT) — the two remaining deferred items now implemented
+
+"Fix all identified gaps" — the two items previously deferred as documented decisions (#5 Form 2555 Part III
+modifications, #6 "Who Must File" attachment triggers) are now BUILT and pinned:
+
+- **#5 — Form 2555 "AMT capital gain excess" Part III modification** (i6251). For a Form 2555 filer, the AMT
+  capital gain excess = `max(0, SchDTW line 10 − Form 6251 line 6)`; the excluded foreign earned income
+  displaces that much capital gain out of the preferential rates. `populateAmtPartIIIFields` now takes a
+  `form2555ExcessLine6Reference` (the REAL line 6): when set, it reduces line 13 (0/15/20 pool — mods 1+2)
+  then line 14 (§1250 — mod 4) by the excess, not below zero. Threaded ONLY into the AMT FEITW line-4 leg
+  (`computeAmtForeignEarnedIncomeTaxWorksheet` passes `amtBase`); null everywhere else (the standard Part III
+  path already caps the pool via line 16 = min(line12, line15)). Corrects an UNDER-statement of AMT for the
+  Form 2555 + capital-gains intersection. Pin `amtFeitwForm2555CapitalGainExcessReducesPreferentialPool`
+  (exclusion $100k, line 6 $30k, LTCG $50k → lineF $4,500, was $2,300).
+- **#6 — Form 6251 "Who Must File" attachment triggers 2/3/4.** The form is now attached (a $0-AMT record)
+  when line 6 = 0 but any of: (stmt 2/3) the return claims a general business credit or Form 8801/8834/8911
+  (`claimsForm6251TriggeringCredit`, computed at the call site from the credit-claim gating keys); or (stmt
+  4) the total of lines 2c-3 is negative and the tentative minimum tax computed without those lines would
+  exceed line 10. No tax impact (the credit floors were already correct); this makes the record-keeping PDF
+  match the paper attachment rule. Pin `amtForm6251AttachedWhenClaimingPriorMinTaxCreditEvenWithNoAmt`.
+
+New output field `Form6251` unchanged from the prior commit (no new field for these two). Module suite
+1657/1657. (Items #1 line-10, #2 AMT FTC per-category, #3 1041→line-2j, #4 Part III line-15 cap were
+resolved in the prior commit; all six AMT audit gaps are now closed.)
+
+
 ## 2026-08-04 — Form 6251 (AMT) — documented-deferred items resolved
 
 Follow-up to the AMT audit below ("fix the following" on the six documented-deferred items). **Three were

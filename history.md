@@ -1,6 +1,32 @@
 ﻿# History
 
 
+## 2026-08-04 — Form 8863 follow-up: Form 8862 AOTC gate now joins by SSN/TIN (deferred item closed)
+
+Closed the one item the §25A audit deferred (C-F3). The Form 8862 Part IV per-student AOTC recert gate
+matched the education-credit students by POSITIONAL index across two independently-collected intake lists,
+so a mis-ORDERED or shorter recert list gated the wrong student. Implemented the proper **SSN/TIN join**
+(user-authorized field-add — the Form 8862 *intake* and its computed *output model* are neither a
+statement nor a tax-return-preview form):
+
+- **UI** (`form-form8862.component.ts`): added `studentTin` to the Part IV `AotcStudent`, auto-filled from
+  the picked education-credits student (`existingAotcStudentTinByName`, built from `studentTinLine21`);
+  saved/loaded.
+- **Model/persistence:** `Form8862.aotcStudentTins` (parallel to `aotcStudentEligible`), encoded via
+  `Form8862OutputMapper` into `out_form_8862.aotc_student_tins_json` (**V232**), mirroring
+  `aotc_student_eligible_json`.
+- **Compute:** `computeForm8862` captures each recert student's TIN; `computeForm8863` builds a
+  normalized-TIN → eligibility map and matches each education student by `studentTinLine21` (order-
+  independent). No matching entry / no TIN → fail CLOSED. When TINs are absent (older data) it falls back
+  to the positional index, which also fails closed on overflow.
+
+Verified end-to-end: unit suite **1636/1636**; dev boot applied V232 cleanly + Hibernate validated the new
+column ("ran successfully", "Listening on :8080", no validation errors); UI bundle built. New pin
+`form8863_form8862Gate_tinJoinGatesCorrectStudentWhenMisordered` (reversed recert list gates the correct
+student — $2,000 not $2,500). See [[feedback_liquibase_master_changelog]] and
+[[feedback_principled_diagnosis_over_test_tweaking]].
+
+
 ## 2026-08-04 — Form 8863 Education Credits (§25A) adversarial audit — four fixes (verified vs 2025 IRS instructions)
 
 Three-agent read-only audit (AOTC formula + refundable split / LLC + dual MAGI phaseout / eligibility +

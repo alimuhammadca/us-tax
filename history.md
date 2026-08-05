@@ -1,6 +1,28 @@
 ﻿# History
 
 
+## 2026-08-05 — Form 8936 (Clean Vehicle Credit §30D/§25E) adversarial audit — core correct, 1 advisory added
+
+Audit run DIRECTLY (subagent pool exhausted). Verified `computeForm8936ScheduleAList` +
+`buildForm8936ScheduleAAttachment` against the 2025 rules + `f8936sa.pdf` + `8936sa.md`. **Core CONFIRMED
+correct:** new-vehicle MAGI limits ($300k MFJ/QSS, $225k HoH, $150k others) and used-vehicle limits ($150k/
+$112.5k/$75k); the §30D(f)(10) "lesser of current or prior year MAGI" rule (denied only when BOTH years
+exceed the limit); the used-credit min(30% × sale price, $4,000) with the $25,000 price cap; all disqualifiers
+(30-day resale, prior-3-years, use-not-resale, dependent); the business-vs-personal split (personal → Sch 3
+line 6f, used → line 6m, business → Form 3800 deferred); the OBBBA-2025 termination (credit denied for
+vehicles ACQUIRED after 9/30/2025, `CLEAN_VEHICLE_CREDIT_OBBBA_CUTOFF`); and the line-6f/6m tax-liability
+worksheets. The MAGI add-back is a documented manual field (UI: "e.g. foreign earned income exclusion") — a
+deliberate trust-the-user design like the manual prior-year MAGI, NOT a gap.
+
+ONE small revenue-risk edge FIXED with a non-blocking advisory: an eligible vehicle with **no acquisition date
+AND no placed-in-service date** silently bypasses the OBBBA cutoff (`form8936VehicleAcquiredAfterObbbaCutoff`
+returns false when the date is blank → credit allowed), which would grant a potentially-terminated credit for
+a late-2025 acquisition. New advisory `FORM_8936_ACQUISITION_DATE_MISSING_FOR_OBBBA_CUTOFF` (threaded a `flags`
+param into `computeForm8936ScheduleAList`) prompts the filer for the date rather than silently allowing (or
+denying) the usually-pre-cutoff credit. Pin `form8936MissingAcquisitionAndPlacedInServiceDateEmitsObbbaCutoffAdvisory`.
+Full suite 1684/1684 (+1). [[feedback_principled_diagnosis_over_test_tweaking]] [[feedback_prefer_irs_docs_over_web]]
+
+
 ## 2026-08-05 — Form 2210 (Underpayment of Estimated Tax) adversarial audit — 1 fix (Schedule AI other taxes)
 
 Audit run DIRECTLY (subagent pool exhausted). Verified `computeForm2210` + `computeScheduleAiRequiredInstallments`

@@ -1,6 +1,22 @@
 ﻿# History
 
 
+## 2026-08-05 — Form 2210 underpayment audit — 1 fix (period-2 off-by-one day)
+
+Audited `computeForm2210`. Verified against the downloaded 2025 f2210 + i2210: the §6621 underpayment rate
+is **7% for all four rate periods** (Apr 16 2025–Jun 30, Jul 1–Sep 30, Oct 1–Dec 31, **Jan 1 2026–Apr 15
+2026** — Rate Period 4 confirmed 0.07, divisor 365 → matches `F2210_PENALTY_DAILY_RATE`); safe harbors
+(90% current / 100% / **110% when prior AGI > $150k/$75k MFS**), $1,000 de-minimis stop, Box E prior-year
+allocation, §6654(g) withholding-paid-evenly annual short-circuit, 22.5/45/67.5/90% Schedule AI installments,
+and 25% regular installments all correct. **Fix:** `F2210_DEFAULT_DAYS_UNDERPAID[1]` was **303**; the 2025
+Form 2210 "Table 2. Chart of Total Days" gives column (b) 06/15/25 = **304** (15+92+92+105, day after the
+STATUTORY June 15 through Apr 15 2026). The prior value applied a §7503 weekend shift (June 15 2025 is a
+Sunday) that Form 2210's day-count column does NOT make — the weekend rule moves only the payment deadline
+(June 16), not the penalty column. Understated the second-installment penalty by one day's interest. Now
+{365, **304**, 212, 90}. Pin `form2210DefaultDaysUnderpaidMatchIrsTable2ColumnTotals` (ReferenceDataTest).
+Full module 1688/1688 green.
+
+
 ## 2026-08-05 — Excess Social Security / RRTA (Schedule 3 line 11) audit — 1 fix (per-employer cap)
 
 Audited `computeExcessSocialSecurityTax` / `computeExcessSsRrtaForPerson`. Constants correct (2025 SS wage

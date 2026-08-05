@@ -36,8 +36,17 @@ IMPLEMENTED 2026-08-04 (V237, the four narrower items — ALL prior gaps now clo
    `FORM_8889_MONTHS_ELIGIBLE_NEEDED_*` fires when there is HSA activity, not eligible-all-year, not
    last-month-rule, and the count is blank (the default still produces a return; the flag prompts the count).
 
-Only remaining latent item (not an HSA-compute gap): the Sch-2 HSA injectors miss an MFS guard (masked by the
-MfsFormScoper).
+8. **Schedule-2 HSA injector has an explicit MFS guard** — `injectHsaSchedule2Taxes` sums both spouses' line
+   17c/17d for the single JOINT Schedule 2 (correct for MFJ), but on an MFS leg it now drops the spouse copy
+   (`isMfs ? null : form8889Spouse`) so a leg carries only the filer's own 20%/10% HSA tax. The sibling line-13
+   / line-8f injectors write the spouse into a SEPARATE map so they were already safe; this one shares the
+   merged taxpayer map, so the guard lives at its call site. Previously this relied entirely on the
+   MfsFormScoper having nulled the other spouse's Form 8889 upstream (the scoper renames `hsa-spouse` →
+   `hsa-taxpayer` on the spouse leg and drops the head's copy, so the filer's form is always in the taxpayer
+   slot and the spouse slot is null) — the guard makes the injector robust on its own. Pin
+   `form8889_mfsLegSchedule2ExcludesTheOtherSpousesHsaAdditionalTax`.
+
+The HSA audit sweep now has NO known remaining gaps.
 
 ---
 

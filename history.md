@@ -1,6 +1,26 @@
 ﻿# History
 
 
+## 2026-08-04 — Form 8889 (HSA) — Schedule-2 MFS injector guard (the last latent item)
+
+Closes the one remaining latent HSA item (C4). `injectHsaSchedule2Taxes` sums BOTH spouses' line-17c (20%
+non-medical) and line-17d (10% recapture) HSA additional taxes into the single taxpayer Schedule-2 map — the
+right behavior for the one JOINT Schedule 2 of an MFJ return, but on an MFS leg each spouse files separately
+so a leg must carry only its OWN filer's HSA tax. The sibling line-13 / line-8f injectors were already safe
+(they write the spouse into a SEPARATE map that's dropped downstream on MFS); this one shares the merged
+taxpayer map, so nothing in the injector itself enforced the MFS split — it relied entirely on the
+`MfsFormScoper` having nulled the other spouse's `Form8889` upstream (the scoper renames `hsa-spouse` →
+`hsa-taxpayer` on the spouse leg and drops the head's copy, so on both legs the filer's form is in the
+taxpayer slot and the spouse slot is null — "masked, latent").
+
+FIX: an explicit MFS guard at the call site — `injectHsaSchedule2Taxes(line16TaxTaxpayer, form8889Taxpayer,
+isMfs ? null : form8889Spouse)` — so the injector drops the spouse copy on MFS on its own, robust regardless
+of upstream scoping. MFJ is unchanged (the sum still applies). Pin
+`form8889_mfsLegSchedule2ExcludesTheOtherSpousesHsaAdditionalTax` (MFS, both spouses take a $10k non-qualified
+distribution → the taxpayer leg reports its own $2,000, not the $4,000 combined). Compute-only, no migration.
+Full suite 1675/1675. **The HSA audit sweep now has no known remaining gaps.**
+
+
 ## 2026-08-04 — Form 8889 (HSA) — four remaining narrower items closed (V237)
 
 The last four documented HSA gaps ("smaller/narrower … fix these as well"), all on the `hsa-taxpayer`/
@@ -106,8 +126,8 @@ items" entry at the top of this file):
 - ~~Line 14b not auto-derived from returned excess contributions~~ → FIXED (V237 `sum1099SaCode2ExcessWithdrawal`);
   ~~line 14a has no manual fallback~~ → FIXED (V237 override field); ~~all-or-nothing 20%-exception~~ → FIXED
   (V237 partial-exempt-amount field); ~~`monthsEligibleCount` default-12 silent~~ → FIXED (advisory flag).
-- Still latent (not an HSA-compute gap): the Schedule-2 HSA injectors lack an MFS guard (C4 — currently masked
-  by the MfsFormScoper).
+- ~~The Schedule-2 HSA injectors lack an MFS guard~~ (C4) → FIXED (see the top-of-file entry — explicit MFS
+  guard on `injectHsaSchedule2Taxes`). The HSA audit sweep now has no known remaining gaps.
 
 
 ## 2026-08-04 — Schedule D / Form 8949 (capital-gains netting) adversarial audit — two fixes

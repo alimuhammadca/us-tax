@@ -1,6 +1,31 @@
 ﻿# History
 
 
+## 2026-08-05 — Form 8960 (NIIT §1411) adversarial re-audit — CLEAN, no code change
+
+Three read-only agents (income aggregation lines 1–8; deductions/MAGI/tax lines 9–17; interactions/wiring/
+gating) swept Form 8960. Verified against the actual 2025 `f8960.pdf` + downloaded `i8960.pdf` (Line 13 MAGI
+Worksheet). **No confirmed bug — the subsystem is IRS-correct and was already hardened + documented by the
+2026-08-03 audit (rules.md).** Every "finding" was a re-flag of already-verified-correct behavior:
+
+- **The one "CRITICAL" finding (line-13 MAGI omits the foreign HOUSING exclusion) is a FALSE POSITIVE.** The
+  agent assumed the Form 8960 worksheet pulls Form 2555 line 45 (FEIE + housing). It does NOT: the 2025
+  "Line 13—MAGI Worksheet" step 2(a) pulls **line 42** (FEIE = §911(a)(1)) only; the §911(a)(2) housing
+  exclusion is not added back (confirmed by pdftotext of `i8960.pdf`). The code adds back exactly the FEIE and
+  is correct — its defending comment already records this was mis-implemented once and fixed 2026-07-30.
+  "Fixing" it would OVER-tax every expat with a housing exclusion by 3.8% of it. Strengthened the rules.md
+  guardrail so a THIRD audit doesn't re-litigate it (two have now).
+- Royalty + `materialParticipation` excluded from NII: NOT a bug — §1411(c)(1)(A)(i) excludes royalties
+  derived in the ordinary course of a non-passive (materially-participated) trade or business; already decided
+  correct 2026-08-03 (pin `reProfessionalDoesNotExcludeRoyaltyFromNiit`).
+- Line-44 (§911(d)(6) allocable-deduction) netting not subtracted, non-qualified annuity (line 3) and active-
+  business gains / §1411(c)(4) adjustment (lines 5b/5c) override-only: documented known limitations (no data
+  source; over-tax/conservative or edge). Wiring end-to-end (line 17 → Sch 2 line 12 → 1040 line 23 → 24),
+  strict-over-threshold gating, NII floored at 0, MFS $125k per-leg thresholds, and §469 use of post-8582
+  ALLOWED passive losses all reconfirmed CORRECT. rules.md guardrail only; no code change.
+  [[feedback_principled_diagnosis_over_test_tweaking]] [[feedback_prefer_irs_docs_over_web]]
+
+
 ## 2026-08-05 — Full-regression triage: 6 stale credit e2e tests realigned (no compute bug)
 
 The full e2e regression (1537 passed / 6 failed / 11 skipped, 3.3h) surfaced 6 failures, all OUTSIDE the HSA

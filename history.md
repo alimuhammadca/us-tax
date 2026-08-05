@@ -1,6 +1,29 @@
 ﻿# History
 
 
+## 2026-08-05 — Form 4797 recapture / §1231 audit — CLEAN + new §1250-real-property advisory
+
+Adversarially audited the Form 4797 recapture engine (Part I §1231 netting, §1231(c) 5-year lookback,
+Part II/III §1245/§1250 recapture, Part IV §179/§280F). Verified correct against the IRS §1231/§1245/§1250
+rules: §1231 per-owner netting + net-loss→ordinary routing; the §1231(c) lookback (`Σ prior-5yr net losses −
+Σ already-recaptured`, floored at 0); §1245 recapture = min(gain, depr)→ordinary, excess→§1231; §1250
+recapture = min(gain, line-26a additional depr)→ordinary, unrecaptured §1250 = min(gain, depr) − ordinary →
+Schedule D line 19 @ 25% (wired at ~19394), residual → §1231; and the §1250-lookback cap. **No compute bug.**
+
+One deliberate, documented design boundary surfaced (outstanding.md Phase 3): the §1250-vs-§1245 split keys
+off `hasText(line 26a)`, so post-1986 STRAIGHT-LINE real property (line 26a legitimately blank) routes through
+the §1245 branch and has ALL its depreciation recaptured as ordinary income (up to 37%) instead of unrecaptured
+§1250 (max 25%) + §1231 capital. The correct path already exists on the capital-gain-loss intake form
+(§1250 designation field). Rather than add a statement field, added a **non-blocking advisory**
+`FORM_4797_POSSIBLE_SECTION_1250_REAL_PROPERTY`: fires when a Form 4797 Part III long-term GAIN routed through
+the §1245 branch has a description reading like real estate (`looksLikeRealProperty` keyword heuristic —
+building/real estate/rental/apartment/duplex/condo/warehouse…), steering the filer to the capital-gain-loss
+form. Description-only heuristic → advisory only, never a computation change; does not fire on equipment
+descriptions or once §1250 additional depreciation is entered. Unit test
+`form4797_realPropertyDescriptionOnSection1245PathFlagsPossible1250Misclassification` (building fires / truck
++ §1250-designated do not). Full module 1686/1686 green.
+
+
 ## 2026-08-05 — Form 8801 (Credit for Prior Year Minimum Tax §53) adversarial audit — 1 fix (line-22 Form 8912)
 
 Audit run DIRECTLY (subagent pool exhausted). Verified `computeForm8801` line-by-line against the 2025

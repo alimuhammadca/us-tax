@@ -1,6 +1,23 @@
 ﻿# History
 
 
+## 2026-08-05 — Excess Social Security / RRTA (Schedule 3 line 11) audit — 1 fix (per-employer cap)
+
+Audited `computeExcessSocialSecurityTax` / `computeExcessSsRrtaForPerson`. Constants correct (2025 SS wage
+base $176,100, 6.2%, max $10,918.20; Tier 1 RRTA same). Per-person (per-spouse by SSN) and the "2+ employers"
+gate (distinct EINs, W-2c dedupe) correct. **Fix:** the box-4 sum did NOT cap each employer at the per-person
+max. Per the 2025 Form 1040 instructions (Schedule 3 line 11): "if any one employer withheld more than
+$10,918.20, you can't claim the excess on your return" (→ employer adjustment / Form 843). Now each employer's
+aggregated box 4 is capped at $10,918.20 before summing, so a single employer's over-withholding (a payroll
+error) is excluded from the refundable credit; the genuine multi-employer excess still flows. No-op in the
+common case (each employer ≤ max). Unit
+`excessSocialSecurity_capsEachEmployerAtMaxSoSingleEmployerOverWithholdingIsNotClaimed` (2 employers, A over-
+withheld $12,000→capped, B $3,100 → excess $3,100, not the pre-fix $4,182). Full module 1687/1687 green.
+AMT (Form 6251) audited same day — CLEAN (exemptions $88,100/$137,000/$68,500, phaseout $626,350/$1,252,700,
+26/28% breakpoint $239,100/$119,550, MFS add-back $900,350/$1,174,350, and the new 2025 line 1a/1b senior-
+deduction §56(b)(5)(D) split — all verified against the downloaded i6251).
+
+
 ## 2026-08-05 — Form 4797 recapture / §1231 audit — CLEAN + new §1250-real-property advisory
 
 Adversarially audited the Form 4797 recapture engine (Part I §1231 netting, §1231(c) 5-year lookback,

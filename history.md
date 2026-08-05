@@ -1,6 +1,32 @@
 ﻿# History
 
 
+## 2026-08-05 — Schedule A (itemized deductions) adversarial audit — ROBUST, no change
+
+Audit run DIRECTLY (subagent pool exhausted). Verified `buildScheduleA` + `computeCharitableDeduction` +
+`saltLimitForStatusAndMagi` against the 2025 rules + `f1040sa.pdf`. **No confident defect** — one of the most
+mature subsystems:
+- Medical 7.5%-AGI floor (0.075); SALT $40,000/$20,000-MFS cap with the **OBBBA-2025 phasedown** ($500k/$250k
+  threshold, 30% of MAGI-excess, floored at $10k/$5k) — all constants correct (verified vs i1040sca mechanics).
+- Mortgage acquisition-debt limitation (proration by $750k/$1M ÷ average balance, MFS-halved); §163(h)(3)
+  home-equity improvement-use tracing; points amortization.
+- §163(d) investment interest (net-investment-income limit + prior-year carryover in + next-year carryforward
+  + the Form 4952 line-4g QDCG election).
+- §170(b) charitable — the full 60% cash / 50% base / 30% capgain / 30% PF-cash / 20% PF-capgain combined-
+  ceiling ordering (Pub 526) with per-category FIFO vintage carryover and the §170(e)(1)(B)(ii) QAS reduction.
+- §165(h) casualty (per-event $100 + single 10%-AGI floor + federally-declared-disaster gate + multi-event);
+  §165(d) gambling cap (100% of winnings for 2025; OBBBA 90% haircut noted for 2026); Form 1116 double-dip
+  suppression on foreign taxes.
+
+TWO narrow, UNVERIFIABLE candidate edges documented (NOT fixed — principled: no authoritative source, and both
+vanishingly rare): (1) the OBBBA SALT-phasedown MAGI adds back only §911 (Form 2555), not §931/§933 possessions
+exclusions — the i1040sca worksheet is inconclusive (references AGI line 11b) and the §911-only choice was a
+deliberate 12e.md Gap-3 decision, so left as-is; (2) the $750k acquisition-debt limit is applied to the primary
+mortgage's average balance only, not jointly across primary + home-equity-improvement debt — depends on whether
+the intake's `homeAcquisitionDebtAverageBalance` already includes home-equity-improvement debt (ambiguous).
+No code change; this entry is the record. [[feedback_principled_diagnosis_over_test_tweaking]] [[feedback_prefer_irs_docs_over_web]]
+
+
 ## 2026-08-05 — Schedule R (Credit for the Elderly or Disabled §22) adversarial audit — CLEAN, no change
 
 Audit run DIRECTLY (subagent pool exhausted). Verified every line of `computeScheduleR` against the 2025

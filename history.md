@@ -1,6 +1,42 @@
 ﻿# History
 
 
+## 2026-08-05 — Full-regression triage: 6 stale credit e2e tests realigned (no compute bug)
+
+The full e2e regression (1537 passed / 6 failed / 11 skipped, 3.3h) surfaced 6 failures, all OUTSIDE the HSA
+work (verified by diff — the HSA commits touch only HSA files). Three read-only diagnostic agents + my own
+IRS-source verification (Schedule 8812 instructions `i1040s8.pdf`, `s8812.md`, `8863.md`, §199A/§25A/§24(d))
+established that **all six are stale tests superseded by earlier deliberate, IRS-correct audit commits** — the
+compute is right in every case. Fixed the tests (and one stale spec note); no backend change.
+
+1. **`line13a-qbi-deduction:142`** — the test types a free-form manual QBI amount ($300) and asserted no
+   flags, but commit `a133b34` correctly added the non-blocking `LINE13A_MANUAL_QBI_BELOW_THRESHOLD_UNVERIFIED`
+   §199A advisory (fires only on the manual field, not on 1099-DIV box-5 REIT dividends / carryforward).
+   Updated the assertion to expect the one advisory.
+2. **`line8863-education-credits:429`** — a student barred from AOTC by the 4-prior-years limit (Line 23, an
+   AOTC-ONLY gate) still qualifies for the Lifetime Learning Credit (§25A(c) has no such gate). Commit
+   `c71c337` implemented the AOTC→LLC fallback; $800 (20% × $4,000, unphased at $70k MAGI) is IRS-correct. The
+   test's "no AOTC → no LLC" premise was wrong. Rewrote to expect no AOTC but the $800 LLC.
+3. **`line28-actc-schedule8812:37` (electsNoActc)** — the 2025 Schedule 8812 REMOVED the ACTC opt-out (line 15
+   "Reserved for future use"; `s8812.md` §6.1). Commit `ba82b79` made the flag ignored → ACTC still $1,700.
+   Rewrote to assert the flag is ignored.
+4. **`line28-actc-schedule8812:374` (combat pay)** — per the 2025 Sch 8812 Earned Income Worksheet (line 1b) +
+   Earned Income Chart, ALL nontaxable combat pay is in line 18a regardless of the §32(c)(2)(B)(vi) EIC
+   election. Commit `0fdfa57` made it unconditional. Baseline line 18a = $6,000 (not $4,000) and the election
+   makes no difference. Rewrote the test; also **corrected `s8812.md` §7** (was "combat pay if elected").
+5. **`line28-actc-schedule8812:567` (line-25 zero-floor)** — Sch 8812 line 24 = Form 1040 line 27a EIC +
+   Sch 3 line 11 excess SS/RRTA, NOT the refundable AOTC (commit `662251c`; `s8812.md` §8, CLW-B line 10).
+   Redesigned the scenario to drive line 24 with EIC (3 qualifying children, $4,000 earned → $1,811) so the
+   zero-floor (line 25 = max(0, 100 − 1811) = 0) is still exercised with the correct input.
+6. **`form8839-adoption-credits:605` (CLW-B line 14)** — IRS Credit Limit Worksheet B line 14 = line 1 (Sch
+   8812 line 12) − line 13, where CLW-B line 13 is the PROJECTED ACTC (min of children×$1,700 and the method
+   result) = $1,700 here, NOT the capped Sch 8812 line 27 (= 0 when the CTC is fully nonrefundable). Commit
+   `6e678af` made this correct → line 14 = max(0, 2200 − 1700) = $500. Fixed the test's formula to expect 500.
+
+VERIFIED: the 6 targeted tests GREEN; the full `line28-actc-schedule8812.spec.ts` (29 tests) GREEN — no
+collateral. Test-only + one line-spec doc correction; no compute change. [[feedback_principled_diagnosis_over_test_tweaking]] [[feedback_java_unit_passing_doesnt_mean_e2e_passing]] [[feedback_e2e_exact_value_pins]]
+
+
 ## 2026-08-04 — Form 8889 (HSA) — Schedule-2 MFS injector guard (the last latent item)
 
 Closes the one remaining latent HSA item (C4). `injectHsaSchedule2Taxes` sums BOTH spouses' line-17c (20%

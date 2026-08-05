@@ -1,6 +1,35 @@
 ﻿# History
 
 
+## 2026-08-05 — Form 8880 (Saver's Credit §25B) adversarial audit — CLEAN core, 1 UI label fix
+
+Audit run DIRECTLY (no subagents — session hit the 200-agent cap), verified against `f8880.pdf` (which
+carries the 2025 instructions + Credit Limit Worksheet). **The core is CONFIRMED correct on every
+IRS-checkable point:**
+- AGI ceilings — MFJ $79,000 / HoH $59,250 / Single·MFS·QSS $39,500 (matches the form's line-8 note).
+- The 2025 rate table (`saversCreditRate`) — MFJ 50/20/10% at $47,500/$51,000/$79,000; HoH $35,625/$38,250/
+  $59,250; others $23,750/$25,500/$39,500 — all correct.
+- $2,000/person contribution cap (line 6); line 7 = 6a+6b (MFJ); per-person disqualifier zeroes each column
+  (line 5a/5b) symmetrically.
+- **Credit Limit Worksheet (line 11) EXACTLY matches the 2025 form**: subtracts Schedule 3 "lines 1 through 3,
+  6d, and 6l" (FTC, CDCC, education, elderly, Form 8978) — nothing more.
+- §25B AGI add-back for §911/§931/§933 foreign exclusions (fixed 2026-07-30) present.
+- Line-4 distribution testing period (after 2022, before the due date incl. 2026-through-due-date) and the
+  MFJ **cross-column rule** (both spouses' distributions in BOTH columns) — matches the form verbatim.
+- The `bornAfter2007` field NAME is stale but its SEMANTICS are correct — the spec + UI ask the right TY2025
+  question ("born after January 1, 2008 … age 17 or younger as of January 1, 2026"). NOT a bug.
+- Line 12 → Schedule 3 line 4 wiring correct.
+
+ONE real issue (UI double-count risk, under-credit) fixed: the compute ADDS the manual
+`distributions2023to2025` field to the auto-imported 1099-R distribution sum, but the manual field's label
+told the user to enter ALL 2023-2025 distributions — so a filer with a 2025 1099-R who followed the label
+would double-count it (over-reducing the eligible contribution → under-credit). Fixed by clarifying the label
+(taxpayer + spouse forms): enter only distributions NOT already on an uploaded 1099-R. Documented limitation
+(outstanding.md): the 1099-R auto-sum excludes only rollover codes G/H, not Roth conversions / loans / excess-
+contribution returns, which can over-count line 4 (under-credit) — the manual field lets the user correct it.
+UI build green. [[feedback_principled_diagnosis_over_test_tweaking]] [[feedback_prefer_irs_docs_over_web]]
+
+
 ## 2026-08-05 — Form 5695 (Residential Energy Credits §25C/§25D) adversarial audit — 2 fixes
 
 Audit split across one agent (Part I §25D) + two lenses I ran DIRECTLY (Part II §25C; limits/wiring/

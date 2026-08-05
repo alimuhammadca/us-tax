@@ -2,6 +2,28 @@
 
 ---
 
+## Form 8889 (HSA) — Distribution Exception, Family-Limit Split, Excise — Established 2026-08-04
+
+The 2025 constants, line arithmetic, and Schedule-1/Schedule-2 wirings are verified correct. Guardrails:
+1. **A 1099-SA box-3 code 3 (Disability) / 4 (Death) auto-waives the 20% additional tax** (§223(f)(4)(C)),
+   in addition to the manual exception checkbox and the age≥66 auto-exception. The taxable amount still goes
+   to income (line 16 → Schedule 1 line 8f); only the 20% penalty (line 17b) is waived.
+2. **If EITHER MFJ spouse has family HDHP coverage, BOTH are treated as family and the single $8,550 limit is
+   split equally** (§223(b)(5)(A)) — this covers the MIXED (one family / one self-only) case too, not only
+   both-family. The line-6 allocation (split or user override) is capped at the spouse's own line 5 (= line 3
+   prorated limit − line 4 Archer MSA).
+3. **The 6% excess-contribution excise base is TOTAL contributions (own line 2 + employer/HFD line 11) over
+   the limit (line 8)**, `max(0, line2 + line11 − line8)` — not `own − deduction`, which drops the excess
+   employer portion when employer contributions alone exceed the limit.
+
+Confirmed gaps (documented, need features/datapoints): Part III last-month-rule testing-period recapture is
+manual-entry-only with no advisory; the 6% excise ignores prior-year excess carryforward (Form 5329 Part VII
+is cumulative); line 14b not auto-derived from returned excess (1099-SA code 2); line 14a has no manual
+fallback (TIN-mismatched 1099-SA dropped); the 20%-exception is all-or-nothing; `monthsEligibleCount`
+defaults to 12 when blank.
+
+---
+
 ## Schedule D / Form 8949 — Holding-Period Classification + Part III Gate — Established 2026-08-04
 
 The netting arithmetic and the $3,000-limit / §1212(b) carryover machinery are verified correct. Guardrails:

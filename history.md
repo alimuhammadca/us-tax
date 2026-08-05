@@ -1,6 +1,52 @@
 ﻿# History
 
 
+## 2026-08-04 — Form 8889 (HSA) adversarial audit — four fixes
+
+Three-agent read-only audit (Part I contributions/deduction limit; Part II distributions + 20% tax; Part III
+recapture / excise / interactions), verifying against the 2025 `f8889.pdf` + `f1099sa.pdf` + `f5329.pdf`. The
+2025 constants ($4,300/$8,550/$1,000, 20%/10%/6%), the line arithmetic, the W-2-box-12-W employer sourcing,
+the last-month-rule full-limit grant, and all Schedule-1 line 13 / line 8f + Schedule-2 line 17c/17d wirings
+are CONFIRMED CORRECT. Four fixes:
+
+1. **1099-SA box-3 code 3 (Disability) / 4 (Death) now waives the 20% additional tax** (HIGH, over-tax). The
+   payer's own §223(f)(4)(C) exception flag was ignored — only the manual checkbox or age≥66 exempted the
+   20%, so a disabled/deceased-beneficiary distribution was over-taxed 20% unless the user knew to tick the
+   box. Fix: new `has1099SaDisabilityOrDeathCode` OR'd into `exceptionApplies`. Pin
+   `hsa1099SaDisabilityCode3WaivesThe20PercentAdditionalTax` ($10k dist, code 3 → line 17b $0).
+2. **Mixed-coverage MFJ (one family, one self-only) now splits the $8,550 family limit** (HIGH,
+   over-deduction). §223(b)(5)(A): if EITHER spouse has family coverage, BOTH are treated as family and the
+   single $8,550 limit is divided. The code split only the both-family case; the mixed case merely flagged
+   and applied NO split → the self-only spouse kept a full separate $4,300 on top ($12,850 combined). Fix:
+   apply the equal split whenever either spouse is family. Pin
+   `hsaMixedFamilyAndSelfOnlyCoverageSplitsThe8550FamilyLimit` (combined $8,550, was $12,850).
+3. **The line-6 family-split / override is now capped at the spouse's own line 5** (MED, over-deduction —
+   A2 + C5). Line 6 is an allocation of line 5 (= line 3 monthly-prorated limit − line 4 Archer MSA), so it
+   can't exceed line 5. The flat $4,275 split previously over-allocated to a partial-year or Archer-MSA
+   spouse. Fix: `.min(line5)` on the allocation.
+4. **The 6% excess-excise base now includes employer contributions over the limit** (C3). The base is TOTAL
+   contributions (own line 2 + employer/HFD line 11) over the limit (line 8), not `own − deduction` — which
+   collapsed to just `own` when employer contributions ALONE exceeded the limit, dropping the excess
+   employer portion. Fix: `excess = max(0, line2 + line11 − line8)` (identical in the normal case). Pin
+   `hsaExcessExciseIncludesEmployerContributionsOverTheLimit` ($5k employer / $4,300 limit → $700 excess).
+
+Module suite 1667/1667.
+
+**Documented confirmed gaps NOT fixed (features / new datapoints):**
+- **Part III last-month-rule testing-period recapture is pass-through only** (CONFIRMED, under-tax). A failed
+  testing period should include the disallowed contribution in income + a 10% tax, but the app only reads a
+  manual line-18/19 entry and derives nothing (no prior-year last-month-rule datapoint) — and emits no
+  advisory. Needs a prior-year bridge + a warning flag.
+- **The 6% excise ignores prior-year excess carryforward** (CONFIRMED, under-tax). Form 5329 Part VII is
+  cumulative (line 42 = prior-year line 48); the app computes only the current-year excess. Needs a
+  prior-year-excess field + cross-year bridge.
+- **Line 14b not auto-derived from returned excess contributions (1099-SA box 3 code 2 / box 2 earnings)**
+  (B2, over-tax); **line 14a has no manual fallback and drops TIN-mismatched 1099-SAs** (B4, under-tax); the
+  **all-or-nothing 20%-exception boolean** can't express a partial-exempt amount (B3); `monthsEligibleCount`
+  defaults to 12 when blank (A3, over-deduction — reachability depends on intake gating); the Schedule-2 HSA
+  injectors lack an MFS guard (C4 — latent, currently masked by the MfsFormScoper).
+
+
 ## 2026-08-04 — Schedule D / Form 8949 (capital-gains netting) adversarial audit — two fixes
 
 Three-agent read-only audit (Form 8949→Schedule D aggregation/netting; the $3,000 loss limit + §1212(b)

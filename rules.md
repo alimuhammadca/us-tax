@@ -23,9 +23,21 @@ user-entered, matching the IRS form). (b) **cumulative 6% excise** — new field
 `priorYearExcessHsaContributionCarryforward`; excise base = `max(0, priorExcess − thisYearUnusedRoom) +
 currentExcess` (Form 5329 Part VII). Fields on `pf_form_8889_hsa` (V236).
 
-Remaining gaps (documented): line 14b not auto-derived from returned excess (1099-SA code 2); line 14a has no
-manual fallback (TIN-mismatched 1099-SA dropped); the 20%-exception is all-or-nothing; `monthsEligibleCount`
-defaults to 12 when blank; Sch-2 HSA injectors miss an MFS guard (latent, masked by the form scoper).
+IMPLEMENTED 2026-08-04 (V237, the four narrower items — ALL prior gaps now closed):
+4. **A 1099-SA box-3 code 2 (returned excess) is not a taxable HSA distribution** — `sum1099SaCode2ExcessWithdrawal`
+   routes the PRINCIPAL (box 1 − box 2) to line 14b (excluded from line 14c) and the EARNINGS (box 2) to line
+   16 (taxable income) but adds them to the 20%-exempt amount.
+5. **Line 14a manual override** — `totalHsaDistributionsLine14aOverride` wins over the summed 1099-SA box 1
+   (fallback when the 1099-SA didn't import / TIN didn't match).
+6. **Partial 20% exception** — `distributionExceptionPartialAmount` exempts a specific dollar amount:
+   `line 17b = 20% × max(0, line16 − exemptFrom20)`, where `exemptFrom20 = line16` if the full-exception flag
+   is set, else `min(line16, additionalTaxExemptAmount)` (`computeForm8889FromInputs` param).
+7. **monthsEligibleCount blank** — no longer silently defaults to 12 without notice: advisory
+   `FORM_8889_MONTHS_ELIGIBLE_NEEDED_*` fires when there is HSA activity, not eligible-all-year, not
+   last-month-rule, and the count is blank (the default still produces a return; the flag prompts the count).
+
+Only remaining latent item (not an HSA-compute gap): the Sch-2 HSA injectors miss an MFS guard (masked by the
+MfsFormScoper).
 
 ---
 

@@ -1,6 +1,41 @@
 ﻿# History
 
 
+## 2026-08-04 — Form 8889 (HSA) — four remaining narrower items closed (V237)
+
+The last four documented HSA gaps ("smaller/narrower … fix these as well"), all on the `hsa-taxpayer`/
+`hsa-spouse` personal form (no statement/preview form touched):
+
+1. **Line 14b auto-derived from returned excess contributions** (was CONFIRMED, mis-taxed). A 1099-SA box-3
+   code 2 (Excess contributions withdrawn by the due date) is not a taxable HSA distribution. New
+   `sum1099SaCode2ExcessWithdrawal` returns `[principal, earnings]` for the person's code-2 1099-SAs: the
+   PRINCIPAL (box 1 − box 2) is added to line 14b (excluded from line 14c → not taxable, no 20%), and the
+   EARNINGS (box 2) stay in line 16 (taxable income) but are added to the 20%-exempt amount. Pin
+   `hsa1099SaCode2ReturnedExcessPrincipalToLine14bEarningsTaxableButExemptFrom20Percent` ($2,000 gross / $200
+   earnings → line 14b $1,800, line 16 $200, line 17b $0).
+2. **Line 14a manual override** (item 2). New field `totalHsaDistributionsLine14aOverride` lets a filer enter
+   the total HSA distribution when the 1099-SA failed to import (or its recipient TIN didn't match) — it wins
+   over the sum of the person's 1099-SA box 1. Pin `hsaLine14aManualOverrideWinsWhenNo1099SaImported`
+   ($3,000 override / $1,000 medical → line 16 $2,000, line 17b $400).
+3. **Partial 20% exception** (item 3; was the all-or-nothing checkbox). New field
+   `distributionExceptionPartialAmount` exempts a specific dollar amount of line 16 from the 20% tax under a
+   partial §223(f)(4)(C) exception. `computeForm8889FromInputs` gained an `additionalTaxExemptAmount` param;
+   line 17b is now `20% × max(0, line16 − exemptFrom20)` where `exemptFrom20 = line16` when the full-exception
+   flag is set, else `min(line16, additionalTaxExemptAmount)`. The param also carries the item-1 returned-
+   excess earnings. Pin `hsaPartial20PercentExceptionAmountExemptsOnlyThatPortionOfLine16` ($10k dist / $4k
+   exempt → line 17b $1,200).
+4. **monthsEligibleCount default-12 no longer silent** (item 4). The line-3 limit is prorated by eligible
+   months when the filer is not eligible all year and not using the last-month rule; a blank count defaulted
+   to 12 (full limit → over-statement). New advisory `emitHsaMonthsEligibleDefaultAdvisory` emits
+   `FORM_8889_MONTHS_ELIGIBLE_NEEDED_{TAXPAYER,SPOUSE}` in exactly that case (the default still produces a
+   return — non-blocking). Pin `hsaMonthsEligibleNeededFlagWhenPartialYearAndCountBlank`.
+
+New fields on `pf_form_8889_hsa`: `total_hsa_distributions_line14a_override`,
+`distribution_exception_partial_amount` — entity `PfForm8889Hsa` + `Form8889HsaMapper` + migration **V237** +
+Angular HSA component. Full suite 1674/1674. (Migration verified by inspection — exact column-name/type match;
+live dev-boot blocked by sandbox Docker.) HSA audit sweep now has no known remaining gaps.
+
+
 ## 2026-08-04 — Form 8889 (HSA) — two feature-gaps implemented (recapture prompt + prior-year excess)
 
 Follow-up to the HSA audit ("take on the two feature-gaps … new HSA-form fields on the personal form only").
@@ -62,19 +97,17 @@ are CONFIRMED CORRECT. Four fixes:
 
 Module suite 1667/1667.
 
-**Documented confirmed gaps NOT fixed (features / new datapoints):**
-- **Part III last-month-rule testing-period recapture is pass-through only** (CONFIRMED, under-tax). A failed
-  testing period should include the disallowed contribution in income + a 10% tax, but the app only reads a
-  manual line-18/19 entry and derives nothing (no prior-year last-month-rule datapoint) — and emits no
-  advisory. Needs a prior-year bridge + a warning flag.
-- **The 6% excise ignores prior-year excess carryforward** (CONFIRMED, under-tax). Form 5329 Part VII is
-  cumulative (line 42 = prior-year line 48); the app computes only the current-year excess. Needs a
-  prior-year-excess field + cross-year bridge.
-- **Line 14b not auto-derived from returned excess contributions (1099-SA box 3 code 2 / box 2 earnings)**
-  (B2, over-tax); **line 14a has no manual fallback and drops TIN-mismatched 1099-SAs** (B4, under-tax); the
-  **all-or-nothing 20%-exception boolean** can't express a partial-exempt amount (B3); `monthsEligibleCount`
-  defaults to 12 when blank (A3, over-deduction — reachability depends on intake gating); the Schedule-2 HSA
-  injectors lack an MFS guard (C4 — latent, currently masked by the MfsFormScoper).
+**Documented confirmed gaps — ALL NOW FIXED** (the testing-period recapture + prior-year excess were closed by
+the "two feature-gaps" entry above, dated the same day; the remaining four by the "four remaining narrower
+items" entry at the top of this file):
+- ~~Part III last-month-rule testing-period recapture is pass-through only~~ → FIXED (V236 gate fields +
+  advisory).
+- ~~The 6% excise ignores prior-year excess carryforward~~ → FIXED (V236 cumulative-excise field).
+- ~~Line 14b not auto-derived from returned excess contributions~~ → FIXED (V237 `sum1099SaCode2ExcessWithdrawal`);
+  ~~line 14a has no manual fallback~~ → FIXED (V237 override field); ~~all-or-nothing 20%-exception~~ → FIXED
+  (V237 partial-exempt-amount field); ~~`monthsEligibleCount` default-12 silent~~ → FIXED (advisory flag).
+- Still latent (not an HSA-compute gap): the Schedule-2 HSA injectors lack an MFS guard (C4 — currently masked
+  by the MfsFormScoper).
 
 
 ## 2026-08-04 — Schedule D / Form 8949 (capital-gains netting) adversarial audit — two fixes

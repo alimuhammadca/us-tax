@@ -1,6 +1,35 @@
 ﻿# History
 
 
+## 2026-08-05 — Form 5695 (Residential Energy Credits §25C/§25D) adversarial audit — 2 fixes
+
+Audit split across one agent (Part I §25D) + two lenses I ran DIRECTLY (Part II §25C; limits/wiring/
+carryforward) because the session hit the 200-subagent cap. Verified against `f5695.pdf` + downloaded
+`i5695.pdf`. **Part II §25C CONFIRMED correct**: 30% rate, per-item sublimits ($600 windows / $600 per energy-
+property item / $250-per-door + $500-all-doors / $150 audit), the $1,200 aggregate (line 28), the SEPARATE
+$2,000 heat-pump/biomass bucket stacking on top (max $3,200), no carryforward. **Both Credit Limit Worksheets
+CONFIRMED correct**: §25C reserves the earlier credits but not §25D/CTC; §25D (last personal credit, carries
+forward) reserves §25C (line 32) + everything before it; ordering + the two-pass §8812 design sound. §25D
+carryforward (line 16 out / line 12 in) and Schedule 3 line 5a/5b wiring correct. Two §25D bugs fixed (both
+over-credit):
+
+1. **Battery line 5b — mixed-eligibility MFJ over-credit.** §25D battery eligibility (≥3 kWh) is PER PROPERTY,
+   but the code OR'd the two spouses' ≥3 kWh flags while SUMMING both costs → once either spouse's battery
+   qualified, the other spouse's sub-3-kWh (ineligible) battery cost swept into line 5b. Fix: include each
+   spouse's battery cost only when THAT spouse's flag is set. Pin
+   `form5695BatteryLine5bExcludesASpouseSub3kwhIneligibleBattery` ($10k eligible + $4k ineligible → line 5b
+   $10k, not $14k).
+2. **Fuel-cell line 10 — capacity not floored to half-kW increments.** §25D(b)(1) + i5695: "$500 per half
+   kilowatt … may only be claimed in half kW increments." The code multiplied raw kW × $1,000, so a 2.3 kW
+   cell yielded a $2,300 cap instead of the 4-complete-half-kW-units × $500 = $2,000 (over-credit up to ~$499
+   when line 10 binds). Fix: `floor(kW × 2) × $500`. Pin `form5695FuelCellCapacityFlooredToHalfKwIncrements`.
+
+Full suite 1682/1682 (+2). Deferred (documented in outstanding.md): fuel-cell joint-occupancy proration
+(§25D non-MFJ co-owners) is not auto-computed — the app exposes only a checkbox and relies on the user
+entering their pre-allocated share (trust-the-user, like other allocation-input gaps).
+[[feedback_principled_diagnosis_over_test_tweaking]] [[feedback_prefer_irs_docs_over_web]] [[feedback_e2e_exact_value_pins]]
+
+
 ## 2026-08-05 — Form 2441 (Child & Dependent Care Credit §21/§129) adversarial audit — 2 fixes
 
 Three read-only agents (Part II §21 credit; Part III §129 benefits; gates/MFS/wiring), verified against the

@@ -1,6 +1,28 @@
 ﻿# History
 
 
+## 2026-08-05 — Form 8801 (Credit for Prior Year Minimum Tax §53) adversarial audit — 1 fix (line-22 Form 8912)
+
+Audit run DIRECTLY (subagent pool exhausted). Verified `computeForm8801` line-by-line against the 2025
+`f8801.pdf` + downloaded `i8801.pdf`. **Core CONFIRMED correct:** the app's line numbering matches the actual
+form; Part I exclusion-item net-minimum-tax (2024 AMT exemption $133,300/$66,650/$85,700 and phaseout
+$1,218,700/$609,350, 25% phaseout, 26/28% or Part III QDCG tax); the deferral-item MTC (line 21 = line 18 +
+prior-year carryforward line 19 + unallowed QEV line 20); line 23 = current-year Form 6251 line 9 TMT; line 24
+= max(0, line 22 − line 23); line 25 = min(line 21, line 24) → Schedule 3 line 6b; line 26 carryforward; the
+prior-year manual inputs (lines 1/2/3/12/14/16) correctly NOT auto-derived (no persisted prior return).
+
+ONE confirmed deviation FIXED: **line 22 wrongly subtracted the Form 8912 credit.** The i8801 line-22
+instruction is "Form 1040 line 16 + Schedule 2 line 1z, minus Form 1040 line 19 and Schedule 3 lines 1
+through 6z — NOT including the prior-year-minimum-tax credit on line 6b OR any credit claimed on Form 8912."
+`sumSchedule3NonrefundableCreditsForForm8801Line22` correctly excluded line 6b but INCLUDED
+`getCreditToHoldersOfTaxCreditBonds()` (Form 8912, line 6k) → over-subtracted → line 22/24 understated → the
+minimum tax credit was under-allowed when a bond credit was present (taxpayer-unfavorable). Removed the Form
+8912 operand. Pin `form8801Line22ExcludesForm8912BondCreditPerInstruction` ($90k wages + a Form 8912 bond
+credit → line 22 = Form 1040 line 16, not line 16 − bond). Full suite 1685/1685 (+1). Near-nil practical
+frequency (Form 8912 tax-credit bonds are essentially defunct) but a clear instruction deviation.
+[[feedback_principled_diagnosis_over_test_tweaking]] [[feedback_prefer_irs_docs_over_web]] [[feedback_e2e_exact_value_pins]]
+
+
 ## 2026-08-05 — Form 8936 (Clean Vehicle Credit §30D/§25E) adversarial audit — core correct, 1 advisory added
 
 Audit run DIRECTLY (subagent pool exhausted). Verified `computeForm8936ScheduleAList` +

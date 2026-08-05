@@ -1,6 +1,36 @@
 ﻿# History
 
 
+## 2026-08-04 — Form 8889 (HSA) — two feature-gaps implemented (recapture prompt + prior-year excess)
+
+Follow-up to the HSA audit ("take on the two feature-gaps … new HSA-form fields on the personal form only").
+Both are now built with new fields on the `hsa-taxpayer`/`hsa-spouse` personal form (no statement/preview
+form touched):
+
+1. **Last-month-rule testing-period recapture prompt** (gap 1; was CONFIRMED under-tax). A filer who used the
+   last-month rule for the prior year but did not remain HSA-eligible for all of 2025 (the testing period)
+   must include the disallowed contribution on line 18 + a 10% additional tax (line 21). The recapture math
+   already flowed from the manual line-18 amount, but nothing prompted it. New gate fields
+   `usedLastMonthRuleForPriorYear` + `failedLastMonthRuleTestingPeriod` drive a new advisory
+   `FORM_8889_TESTING_PERIOD_RECAPTURE_{TAXPAYER,SPOUSE}` when both are set and the line-18 amount is blank
+   (`emitHsaTestingPeriodRecaptureAdvisory`). The disallowed amount stays user-entered — the IRS form has the
+   taxpayer compute line 18, and the app has no prior-year eligibility datapoint to derive it. Pin
+   `hsaTestingPeriodFailurePromptsRecaptureWhenAmountMissing`.
+2. **Prior-year excess carryforward folded into the 6% excise** (gap 2; was CONFIRMED under-tax). The §4973(g)
+   excise is cumulative (Form 5329 Part VII line 42 = prior-year line 48). New field
+   `priorYearExcessHsaContributionCarryforward`; `computeExcessHsaExcise` now computes cumulative excess =
+   `max(0, priorExcess − thisYearUnusedRoom) + currentExcess`, so an uncorrected prior-year excess is still
+   taxed (and this year's under-contribution absorbs it per line 44). Pins
+   `hsaPriorYearExcessCarryforwardIncludedInSixPercentExciseBase` ($1,000 prior + at-limit → excise on $1,000)
+   and `hsaPriorYearExcessAbsorbedByCurrentUnderContributionNoExcise` (under-contribute $1,000 → absorbed, no
+   excise).
+
+New fields on `pf_form_8889_hsa` (personal form): `prior_year_excess_hsa_contribution_carryforward`,
+`used_last_month_rule_for_prior_year`, `failed_last_month_rule_testing_period` — entity `PfForm8889Hsa` +
+`Form8889HsaMapper` + migration **V236** + Angular HSA component. Module suite 1670/1670. (Migration verified
+by inspection — exact column-name/type match to the entity; live dev-boot blocked by sandbox Docker.)
+
+
 ## 2026-08-04 — Form 8889 (HSA) adversarial audit — four fixes
 
 Three-agent read-only audit (Part I contributions/deduction limit; Part II distributions + 20% tax; Part III

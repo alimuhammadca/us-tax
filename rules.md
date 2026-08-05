@@ -16,11 +16,16 @@ The 2025 constants, line arithmetic, and Schedule-1/Schedule-2 wirings are verif
    the limit (line 8)**, `max(0, line2 + line11 − line8)` — not `own − deduction`, which drops the excess
    employer portion when employer contributions alone exceed the limit.
 
-Confirmed gaps (documented, need features/datapoints): Part III last-month-rule testing-period recapture is
-manual-entry-only with no advisory; the 6% excise ignores prior-year excess carryforward (Form 5329 Part VII
-is cumulative); line 14b not auto-derived from returned excess (1099-SA code 2); line 14a has no manual
-fallback (TIN-mismatched 1099-SA dropped); the 20%-exception is all-or-nothing; `monthsEligibleCount`
-defaults to 12 when blank.
+IMPLEMENTED 2026-08-04: (a) **testing-period recapture prompt** — new HSA-form fields
+`usedLastMonthRuleForPriorYear` + `failedLastMonthRuleTestingPeriod` drive
+`FORM_8889_TESTING_PERIOD_RECAPTURE_*` when both set + the line-18 amount is blank (line-18 amount stays
+user-entered, matching the IRS form). (b) **cumulative 6% excise** — new field
+`priorYearExcessHsaContributionCarryforward`; excise base = `max(0, priorExcess − thisYearUnusedRoom) +
+currentExcess` (Form 5329 Part VII). Fields on `pf_form_8889_hsa` (V236).
+
+Remaining gaps (documented): line 14b not auto-derived from returned excess (1099-SA code 2); line 14a has no
+manual fallback (TIN-mismatched 1099-SA dropped); the 20%-exception is all-or-nothing; `monthsEligibleCount`
+defaults to 12 when blank; Sch-2 HSA injectors miss an MFS guard (latent, masked by the form scoper).
 
 ---
 

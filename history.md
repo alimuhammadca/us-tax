@@ -1,6 +1,33 @@
 ﻿# History
 
 
+## 2026-08-05 — Form 2210 (Underpayment of Estimated Tax) adversarial audit — 1 fix (Schedule AI other taxes)
+
+Audit run DIRECTLY (subagent pool exhausted). Verified `computeForm2210` + `computeScheduleAiRequiredInstallments`
+against the 2025 Form 2210 + `f2210.pdf`. **Part I and the regular-method Part III are correct** (recently
+hardened by the 2026-08-02 audit): line 1 = 1040 line 22, line 2 = other taxes (incl. SE tax), line 4
+refundable credits (EIC/ACTC/AOTC/adoption + Sch 3 9/12/13a/13b/13c/13z), the withholding-only $1,000
+de-minimis and the annual safe-harbor short-circuit, the 90%-current vs 100%/110%-prior-year (>$150k/$75k AGI)
+required annual payment, Box E prior-tax allocation, Box A/B waivers, the per-quarter installments with even
+withholding (§6654(g)) and forward carryover, and the 7% penalty × days.
+
+ONE confirmed gap FIXED (under-penalty, revenue risk): **the annualized income installment method (Schedule
+AI) omitted the "other taxes" from the annualized tax.** `computeScheduleAiRequiredInstallments` figured each
+period's tax with `computeTaxBracket` (ordinary income tax ONLY), while the regular-method required annual
+payment INCLUDES SE tax + AMT + NIIT + Additional Medicare via Part I line 2. So an SE/AMT/NIIT taxpayer
+electing the annualized method got understated required installments → understated penalty. (The "SE out of
+scope" note in `2210.md` was stale — SE has been in scope since 2026-07-20.) Fix: add the full-year other
+taxes to each period's annualized tax, SCALED by that period's income-annualization ratio (annualized AGI ÷
+full-year AGI, capped at 1) — so back-loaded income keeps the early installments ~$0 (the method's purpose)
+while an even earner's installments carry the full other taxes; a proxy for the Schedule AI Part II per-period
+SE-tax annualization the app can't do without per-period SE income. Pin
+`form2210_annualizedMethodIncludesSelfEmploymentTaxInInstallments` (even $100k SE net → installments sum
+exceeds income-tax-after-credits; the existing back-loaded test still zeroes early installments). Full suite
+1683/1683 (+1). Documented (not fixed): the annualized income tax uses ordinary brackets, no QDCG preferential
+rate — taxpayer-UNFAVORABLE (can only raise the installment), so not a revenue risk. Also corrected the stale
+2210.md SE-scope note. [[feedback_principled_diagnosis_over_test_tweaking]] [[feedback_prefer_irs_docs_over_web]] [[feedback_e2e_exact_value_pins]]
+
+
 ## 2026-08-05 — Schedule A (itemized deductions) adversarial audit — ROBUST, no change
 
 Audit run DIRECTLY (subagent pool exhausted). Verified `buildScheduleA` + `computeCharitableDeduction` +

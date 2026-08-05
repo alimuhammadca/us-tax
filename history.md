@@ -1,6 +1,41 @@
 ﻿# History
 
 
+## 2026-08-05 — Form 2441 (Child & Dependent Care Credit §21/§129) adversarial audit — 2 fixes
+
+Three read-only agents (Part II §21 credit; Part III §129 benefits; gates/MFS/wiring), verified against the
+local `f2441.pdf` + `i2441.pdf`. Confirmed correct: the three-way "smallest of" earned-income limit (line 6),
+the AGI 35→20% step function with exact $15k/$43k boundaries, the Credit Limit Worksheet (line 10), the $5,000/
+$2,500-MFS benefit cap, the credit → Schedule 3 line 2 → 1040 line 20 wiring, taxable benefits → line 1e, and
+MFS credit-disallowal-with-$2,500-exclusion-still-applying. **Two headline agent findings were FALSE
+POSITIVES** (verified vs i2441): (a) "line 30 uses gross expenses → over-credit" — the per-person field is
+already NET of tax-free benefits per its UI ("Do not include amounts paid with tax-free employer benefits"),
+so line 30 is correct; (b) "deemed student/disabled income applied on non-joint returns → over-credit" — i2441
+explicitly extends the deemed rule to the taxpayer ("also apply to you if you were a student or disabled"),
+any filing status, so a single student parent legitimately gets it.
+
+But resolving the line-30 false positive surfaced its **mirror bug**, and one other, both fixed:
+
+1. **Line 16 (gross expenses) was under-stated for FSA filers → benefits wrongly taxed (over-tax).** Since the
+   per-person field is NET of benefits, when a filer with dependent-care benefits leaves the explicit gross
+   line-16 field blank, line 16 defaulted to the net sum → line 17 = min(line15, line16) collapsed → the
+   excludable benefits were pushed onto taxable Form 1040 line 1e. Fix: when benefits exist (and the filer
+   didn't answer "no care expenses"), estimate gross = net out-of-pocket + benefits used (line15) — exact in
+   the common FSA case; the explicit line-16 field still overrides. Pin
+   `dependentCareBenefitsExcludedWhenAllCarePaidByFsaAndLine16LeftBlank` ($5k FSA fully covers care → line 26
+   = 0, line 1e = 0).
+2. **A name-only qualifying-person row inflated the $3k→$6k cap (over-credit).** `countQualifyingPersons`
+   counted any row with a partial name; a stray name-only row (no SSN, no expenses) doubled the cap for a
+   single-child filer. Fix: count only a SUBSTANTIVE person (SSN or expenses); a real 2nd person with $0
+   expenses still counts via SSN. Pin `dependentCareNameOnlyQualifyingPersonRowDoesNotInflateTheExpenseCap`.
+
+Full suite 1680/1680 (+2). Confirmed-but-DEFERRED (documented in outstanding.md): disqualified-provider
+(§21(e)(6)) not checked (trust-the-user); MFS §129(b) spouse-earned-income falls back to the taxpayer's own
+when blank (existing advisory; candidate to promote to blocking); per-month vs annual deemed-income
+approximation (minor under-credit); considered-unmarried MFS flag differs from the filing-status flag.
+[[feedback_principled_diagnosis_over_test_tweaking]] [[feedback_prefer_irs_docs_over_web]] [[feedback_e2e_exact_value_pins]]
+
+
 ## 2026-08-05 — Social Security benefits (§86, lines 6a/6b) adversarial audit — CLEAN (no compute bug)
 
 Three read-only agents (core §86 worksheet; provisional-income inputs + IRA circularity; lump-sum/MFS/wiring),

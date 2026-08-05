@@ -1,6 +1,36 @@
 ﻿# History
 
 
+## 2026-08-05 — Social Security benefits (§86, lines 6a/6b) adversarial audit — CLEAN (no compute bug)
+
+Three read-only agents (core §86 worksheet; provisional-income inputs + IRA circularity; lump-sum/MFS/wiring),
+verified against downloaded Pub 915 (2025) Worksheet 1 + the lump-sum worksheets. **No confirmed compute
+defect** — the subsystem is faithful to §86 and Pub 915:
+
+- **Core worksheet CONFIRMED correct** (line-by-line, both algebraic branches): the 50%/85% two-tier engine,
+  the 2025 constants ($25k/$32k first tier, $34k/$44k second, $9k/$12k line-10, 0.50/0.85), the MFS-lived-with
+  $0-base restrictive branch, and the double-capped 85% ceiling.
+- **Provisional income CONFIRMED correct**: line-3 components + signs, tax-exempt-interest inclusion, the §911/
+  §137/§135/§931 add-backs, the Pub-915-subset adjustments subtraction (the old WS1 full-line-26 bug stays
+  fixed), and the IRA-deduction ↔ SS-taxability circularity (proper Pub 590-A iterative WS1/WS3 fixed point).
+- **Lump-sum / MFS / wiring CONFIRMED correct**: the §86(e) election (Pub 915 WS 2–4, lesser-of enforced),
+  taxpayer+spouse combination, RRB tier split, repayment/negative-benefit floors, and line-6b→total-income
+  wiring (line 6a is display-only).
+
+**The one "major" finding (F1: MFS spouse-leg residence flag not scoped) is a FALSE POSITIVE.** The agent
+trusted the stale V15 schema comment "MFS spousal facts (taxpayer form only)"; in fact BOTH SS forms collect
+`livedWithSpouseAnyTimeDuringTaxYear`/`livedApartFromSpouseEntireTaxYear` as bare-key answers (spouse
+component lines 356-357), the mapper round-trips them per owner_role, and the MfsFormScoper generic rename
+carries the spouse's own answer onto her leg — so `computeSocialSecurityBenefits` reads the correct per-leg
+fact with no special scoper case. Added a clarifying note at the read site. (Second confidently-wrong "major"
+finding this audit series, after the NIIT housing-exclusion — both caught by IRS-source/code verification.)
+
+Actionable outputs (no compute change): corrected the stale lump-sum JavaDoc (Gaps i/ii were closed by V48 but
+still described as deferred with stale line numbers); documented the one real DEFERRED scope gap — **foreign
+treaty-exempt Social Security (Canada/Germany, Pub 915) has no intake field** → a filer with such benefits
+would omit them (under-tax); no advisory today (outstanding.md). [[feedback_principled_diagnosis_over_test_tweaking]] [[feedback_prefer_irs_docs_over_web]]
+
+
 ## 2026-08-05 — Form 1116 (Foreign Tax Credit §901/§904) adversarial audit — 4 fixes
 
 Three read-only agents (Part I income + §904 numerator; Part II taxes + limitation + credit; categories/

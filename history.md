@@ -1,6 +1,31 @@
 ﻿# History
 
 
+## 2026-08-05 — Schedule R (Credit for the Elderly or Disabled §22) adversarial audit — CLEAN, no change
+
+Audit run DIRECTLY (subagent pool exhausted). Verified every line of `computeScheduleR` against the 2025
+Schedule R form + downloaded `i1040sr.pdf`. **No defect found** — the subsystem is faithful to §22:
+- Part I box determination (boxes 1–9) by filing status + age/disability, incl. QSS-as-single and the MFJ
+  one-65+/one-under-65-disabled (box 6) and one-65+/other-not-disabled (box 7) cases.
+- Line 10 initial amounts ($5,000 boxes 1/2/4/7; $7,500 boxes 3/5/6; $3,750 boxes 8/9) and line 15 AGI
+  thresholds ($7,500 boxes 1/2; $10,000 boxes 3–7; $5,000 boxes 8/9) — both match the form's tables.
+- Line 11 disability income (box-6 special = $5,000 + the under-65 spouse's taxable disability income); line
+  12 = min(10, 11) for the disability boxes else line 10.
+- Line 13a = nontaxable SS (6a−6b, incl. RRB SSEB, box 5 is pre-Medicare-premium so no adjustment needed);
+  **line 13b correctly stays a manual field** — i1040sr says line 13b EXCLUDES "amounts treated as a return
+  of your cost of a pension or annuity," so auto-deriving Form 1040 5a−5b would be WRONG (do not "fix" it).
+- Lines 14 (AGI; line11a≡line11b, always set together), 16–20, the 15% rate, line 22 = min(20, 21).
+- **Line 21 Credit Limit Worksheet EXACTLY matches the 2025 instructions**: subtract Schedule 3 "lines 1, 2,
+  and 6l" only (FTC + CDCC + Form 8978) — do NOT add education/saver's/energy/adoption. This is
+  counterintuitive (§22 is a late line-6d credit) but is what the worksheet says; a prior audit already
+  removed a wrong line-5a subtraction (17-credits audit #5). Compute ordering runs Schedule R before Form
+  8880/5695 which subtract line 6d.
+
+Only documented-latent edge (already in the code): a negative Form 8978 (Sch 3 line 6l) computed after
+Schedule R reads null in line 21 — extremely rare (BBA pushout + negative adj + elderly credit + binding tax
+limit); left as-is. No code change; this entry is the guardrail. [[feedback_principled_diagnosis_over_test_tweaking]] [[feedback_prefer_irs_docs_over_web]]
+
+
 ## 2026-08-05 — Form 8880 (Saver's Credit §25B) adversarial audit — CLEAN core, 1 UI label fix
 
 Audit run DIRECTLY (no subagents — session hit the 200-agent cap), verified against `f8880.pdf` (which

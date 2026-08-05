@@ -1,6 +1,38 @@
 ﻿# History
 
 
+## 2026-08-05 — Form 1116 (Foreign Tax Credit §901/§904) adversarial audit — 4 fixes
+
+Three read-only agents (Part I income + §904 numerator; Part II taxes + limitation + credit; categories/
+AMT-FTC/de-minimis/wiring) swept Form 1116, verified against `f1116.pdf` + downloaded `i1116.pdf`. Wiring
+(line 35 → Sch 3 line 1 → 1040 line 20 → line 22 → 24), the line-19 fraction cap at 1.0, the line-33 cap at
+US tax, per-country intra-basket loss offset, AMT-FTC coordination (separate limitation vs TMT/AMTI), and the
+§904(c) carryforward were CONFIRMED correct. Four confirmed bugs fixed (all verified vs the IRS source):
+
+1. **Line-18 §904 denominator omitted the §151(d)(5)(C) senior-deduction add-back** (over-credit, 2025-new).
+   Per the i1116 "New legislation" note + Line 18 instruction, line 18 = (1040 line 11b − line 14) + Schedule
+   1-A **line 37** (the $6,000/person age-65+ deduction). `line15` already has line 37 subtracted, so the
+   denominator was too small → line-19 fraction and the limitation overstated. Threaded the senior deduction
+   into `computeForm1116`/`buildFullForm1116` and add it back. Pin
+   `form1116Line18AddsBackTheSeniorDeductionToTheWorldwideDenominator` (line 18 = 28,250 + 6,000 = 34,250).
+   (Only line 37 adds back; car-loan interest line 30 → line 4b, other Schedule 1-A items do not.)
+2. **§901(j) sanctioned-country income still received a credit** (over-credit). §901(j) allows NO credit —
+   line 24 = $0, and the taxes are disallowed (not carried over). Forced `allowedCreditForCategory = 0` for
+   `section901j` and excluded it from the §904(c) carryforward (alongside GILTI). Pin
+   `form1116Section901jSanctionedCountryReceivesNoCreditAndCheckboxE`.
+3. **>3 countries per basket were truncated** (under-credit). The 3-column limit is DISPLAY-only; 4+ countries
+   combine across additional forms and the credit math must include every country's income + tax. Removed the
+   break-at-3. Pin `form1116IncludesAllCountriesInABasketNotJustTheFirstThree` (4 × $10k → line 17 $40k, tax
+   $2k, not the pre-fix $30k/$1.5k).
+4. **Category checkbox letters e/f/g mis-assigned** (form-integrity). Corrected to e=§901(j),
+   f=treaty-resourced, g=lump-sum per `f1116.pdf`. (No credit-amount change; keyed by category string.)
+
+Full suite 1678/1678 (+3). Confirmed-but-DEFERRED (larger features, documented in outstanding.md): the
+§904(b)(2)(B) QDCG rate adjustment (self-documented), line-3a–3g deduction apportionment, §911 FEIE
+coordination, de-minimis gate hardening, imported-1099-on-full-path, line-20 − Form 4972, and MFS-leg 1099
+scoping. [[feedback_principled_diagnosis_over_test_tweaking]] [[feedback_prefer_irs_docs_over_web]] [[feedback_e2e_exact_value_pins]]
+
+
 ## 2026-08-05 — Form 8960 (NIIT §1411) adversarial re-audit — CLEAN, no code change
 
 Three read-only agents (income aggregation lines 1–8; deductions/MAGI/tax lines 9–17; interactions/wiring/

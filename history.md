@@ -1,6 +1,21 @@
 ﻿# History
 
 
+## 2026-08-06 — Full e2e regression (1541 pass) + 2 stale Form 2441 line-16 assertions corrected
+
+Ran the full e2e regression (`test:regression`, 1554 tests, 1 worker, 3.1h): 1541 passed, 11 skipped, 2 failed
+— both in `line1e-dependent-care.spec.ts` (Form 2441 line 16), and BOTH stale, not compute bugs. The earlier
+`4c78a5f` fix correctly made Form 2441 Part III line 16 the GROSS qualified expenses (net per-person out-of-
+pocket + benefits used), because the per-person expense field is entered NET of tax-free employer benefits —
+CONFIRMED by the UI help text ("Do not include amounts paid with tax-free employer benefits") and by the same
+tests' own passing `line30QualifiedExpensesExcludingBenefits` assertion. The `2a6b00e` spec-parity commit
+updated 4 specs but missed these 2 line-16 assertions. Corrected: test 191 line 16 $2,100 → $4,100 (net $2,100
++ benefits $2,000); test 658 line 16 $5,000 → $9,600 (net $5,000 + benefits $4,600); plus the two misleading
+comments and the now-inaccurate test title. Re-ran the spec: 23/23 pass. All six of this session's compute
+fixes (§469 MFS, 5329 §72(t), 2210 Table-2, excess-SS, Schedule H FUTA, 4797 §1250) passed the full
+regression end-to-end. No compute change — the compute was verified correct against i2441 + the UI intake.
+
+
 ## 2026-08-06 — §469(i)(5) MFS passive-rental special allowance — over-deduction fix
 
 Audit found the §469 active-participation rental special allowance (`passiveRentalAllowance` + Form 8582

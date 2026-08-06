@@ -1,6 +1,23 @@
 ﻿# History
 
 
+## 2026-08-06 — Schedule H (household employment tax) audit — CLEAN + FUTA credit-reduction advisory
+
+Verified `computeScheduleH` against the 2025 figures: $2,800 SS/Medicare cash-wage threshold, SS 12.4% /
+Medicare 2.9% / Additional Medicare 0.9%, FUTA $7,000 wage base and 6.0%/5.4%/0.6% rates, $1,000/quarter FUTA
+trigger — all correct. Part I (lines 1-8), Part II Section A (net 0.6%) and Section B (6% gross − min(state
+contributions, 5.4%)), and the line-26 total → Schedule 2 line 9 all faithful. The per-employee $2,800 /
+$176,100-SS-cap filtering is deliberately the taxpayer's responsibility (form-faithful, documented). **One
+gap surfaced:** Section B grants the FULL 5.4% credit even when `isCreditReductionState` is true — but a
+credit-reduction state (outstanding federal unemployment loan) gets a REDUCED credit, so the app UNDERSTATES
+FUTA for such filers with no warning. Added non-blocking advisory
+`SCHEDULE_H_FUTA_CREDIT_REDUCTION_NOT_APPLIED` (fires on a Section-B credit-reduction state) telling the filer
+to complete the Schedule H credit-reduction worksheet and add the extra FUTA. The per-state credit-reduction
+worksheet + annually-published rate list remains a documented simplification. Unit
+`scheduleH_creditReductionStateSectionBEmitsFutaUnderstatementAdvisory` (SS $620 + Medicare $145 + Section B
+FUTA $42 → Schedule 2 line 9 $807, advisory present). Full module 1690/1690 green.
+
+
 ## 2026-08-05 — Form 5329 §72(t) exception AMOUNT (user-approved field-add) — over-taxation fix
 
 Audit found the §72(t) 10%/25% early-distribution additional tax was charged on the FULL box-2a taxable

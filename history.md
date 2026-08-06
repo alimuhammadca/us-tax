@@ -1,6 +1,23 @@
 ﻿# History
 
 
+## 2026-08-06 — §469(i)(5) MFS passive-rental special allowance — over-deduction fix
+
+Audit found the §469 active-participation rental special allowance (`passiveRentalAllowance` + Form 8582
+lines 5–9) used the fixed $25,000 allowance / $100k–$150k phaseout for EVERY filing status. §469(i)(5)(B)
+gives a married-filing-separately filer $12,500 (phaseout $50k–$75k) only if they lived APART from their
+spouse the entire year, and **$0** if they lived together at any time. So an MFS filer with active-
+participation rental losses was over-deducting up to $25,000 of passive losses (under-taxation). **Fix:**
+threaded a filing-status-derived `allowanceCap` / `phaseoutStart` through `computeRentalScheduleE` (new 9-arg
+overload; the 3/5/7-arg overloads default to $25,000/$100,000, so the 17 existing test callers are
+untouched) → `compute469` → `passiveRentalAllowance`, and into the Form 8582 line 5/8 ceiling. Computed at the
+one real caller in `prepare()` from `isMfsReturn` + the existing `mfsOrHohLivedApartOrLegallySeparated`
+filing-status flag (no field-add): MFS-apart → $12,500/$50k, MFS-otherwise → $0, non-MFS → $25,000/$100k.
+MFS never reaches `safeHarborRentalNetForQbi` (no spouse), so that path is unaffected. Unit
+`scheduleE_mfsPassiveRentalAllowanceHalvedOrZeroPerSection469i5` (non-MFS $25k / MFS-apart $12.5k /
+MFS-together $0 at MAGI $40k). Full module 1691/1691 green.
+
+
 ## 2026-08-06 — Schedule H (household employment tax) audit — CLEAN + FUTA credit-reduction advisory
 
 Verified `computeScheduleH` against the 2025 figures: $2,800 SS/Medicare cash-wage threshold, SS 12.4% /

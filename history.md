@@ -1,6 +1,25 @@
 ﻿# History
 
 
+## 2026-08-05 — Form 5329 §72(t) exception AMOUNT (user-approved field-add) — over-taxation fix
+
+Audit found the §72(t) 10%/25% early-distribution additional tax was charged on the FULL box-2a taxable
+amount of every code-1/code-S 1099-R (IRA + pension). The intake collected the exception CODE/REASON (text,
+labeled "Reason your penalty is reduced or waived") but the compute stored it as display text only and never
+subtracted an exempt amount — so a code-1 filer with a valid §72(t)(2) exception (first-home $10k, higher-
+education, medical, birth/adoption $5k, disaster, etc.) was over-taxed (payers stamp code 1 when they don't
+know an exception applies; the taxpayer claims it on Form 5329 Part I line 2). Root cause: no numeric exempt-
+amount field existed. **Fix (user-approved field-add, intake forms only — NOT statement/tax-return forms):**
+new `form5329ExceptionAmountNotSubjectToTax` (Form 5329 line 2) on the IRA-income + pension-income INTAKE
+forms; the compute subtracts it from the 10% (code-1) base first, then any remainder from the 25% (code-S
+SIMPLE) base, each floored at $0, only when a positive amount is entered (null-preserving no-early-dist path
+untouched). Touched: PfIraIncome + PfPensionAnnuityIncome entities, IraIncomeMapper + PensionAnnuityIncomeMapper,
+V238 migration (pf_ira_income + pf_pension_annuity_income), computeSchedule... IRA path + computePensionForPerson,
+4 intake components (ira/pension × taxpayer/spouse), 2 YAML specs. Unit
+`iraEarlyDistributionExceptionAmountReducesSection72tPenalty` ($20k code-1 − $12k exempt → $800, was $2,000).
+Backend 1689/1689 green; UI bundle build clean.
+
+
 ## 2026-08-05 — Form 2210 underpayment audit — 1 fix (period-2 off-by-one day)
 
 Audited `computeForm2210`. Verified against the downloaded 2025 f2210 + i2210: the §6621 underpayment rate

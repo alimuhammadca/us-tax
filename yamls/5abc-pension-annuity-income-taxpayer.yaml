@@ -286,6 +286,13 @@ sections:
         label: Reason your penalty is reduced or waived (if applicable)
         placeholder: Enter exception code or explanation
         help: If a partial or full exception applies, enter the IRS exception code or a brief explanation. Leave blank if the full 10% penalty applies and you have explicitly confirmed below that no exception applies.
+      - name: form5329ExceptionAmountNotSubjectToTax
+        type: amount
+        required: false
+        showIf: form5329ExceptionCodeOrReason != ''
+        label: Amount NOT subject to the additional tax (exempt portion)
+        placeholder: 0.00
+        help: Form 5329 Part I line 2 — the dollar amount of the early distribution the §72(t)(2) exception covers (NOT subject to the 10%/25% additional tax). Only the remainder is taxed. Leave blank if the full distribution is subject to the additional tax.
       - name: noEarlyDistributionExceptionApplies
         type: boolean
         required: false

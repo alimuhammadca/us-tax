@@ -1,6 +1,128 @@
 ﻿# History
 
 
+## 2026-08-08 - §108 cancellation-of-debt exclusions (insolvency + QPRI) on Schedule 1 line 8c
+
+Built QA feature-gaps 1+2 from the expansion sweep (sc_00360 insolvency / sc_00361 qualified principal
+residence). Cancellation-of-debt income (Schedule 1 line 8c, from 1099-C box 2 + manual entry) is now
+reduced by the §108 exclusions the engine previously ignored — it had taxed the FULL COD with no way to
+claim either exclusion. Six fields added to the `other-incomes` form (`PfOtherIncomes` + mapper + Liquibase
+V240): `codExcludeUnderInsolvency` + insolvency worksheet (`codTotalLiabilitiesBeforeDischarge`,
+`codFmvAssetsBeforeDischarge`), and `codExcludeQualifiedPrincipalResidence` + `codQprExclusionAmount` +
+`codHomeBasisBeforeReduction`. `computeCodSection108Exclusion` applies QPRI first (§108(a)(1)(E), capped at
+the elected amount) then insolvency on the remainder (§108(a)(1)(B) = liabilities − FMV assets immediately
+before discharge, §108(d)(3)), total exclusion ≤ gross COD; line 8c = max(0, gross COD − exclusion).
+Additive — returns 0 when no exclusion is elected, so existing returns are unchanged (all 34
+line8-other-incomes e2e green). sc_00360: $40k COD − $25k insolvency → taxable COD $15k, taxable income
+$109,250. sc_00361: $60k QPRI fully excluded → taxable income $103,500, total tax $12,598. New e2e
+cod-section108-exclusions.spec.ts. FOLLOW-UPS (not blocking correctness): Form 982 output/PDF attachment +
+the Angular intake UI (backend accepts the fields via API today); the §108(h)(1)/attribute basis reductions
+are captured as inputs but not yet applied to a tracked carryforward.
+
+## 2026-08-08 - Schedule D Tax Worksheet: preserve the 0% bracket when §1250 + 28% are both present
+
+Follow-up to the §1250 25%-rate fix, surfaced by QA sc_00330 (unrecaptured §1250 AND 28%-rate collectibles
+on one return with low ordinary income). `computeScheduleDTaxWorksheetExact` filled the 0% bracket
+(line 17 / line 22 — the amount of 0/15/20% gain taxed at 0%) using `line14 = line1 − 0/15/20%-pool`, which
+equals ordinary + §1250 + 28%. That let the §1250/28% slices consume the 0% bracket, zeroing the 0%-pool
+whenever those slices were present with low ordinary income → the 0/15/20% gain that belonged at 0% was
+taxed at 15%, which inflated the special-rate total above the all-ordinary cap so the return wrongly fell
+back to the all-ordinary tax. Per IRC §1(h) the 0% bracket beneath the 0/15/20% gain is filled by ORDINARY
+income only (line 18 = taxable − net LTCG); the §1250/28% slices stack above. Fixed `line17 = line18.min(
+line16)`. Diagnosed by instrumenting the worksheet with a temporary INFO trace (since removed) that showed
+`l22=0` (0%-pool wrongly zeroed) — and also revealed the original repro had seeded the 28% gain via the
+wrong field, which had masked the fix on the first attempt. Single, wages $40,000 + $130,000 LT gain
+($60,000 regular + $40,000 §1250 + $30,000 28%): now $26,460 ($2,675 ordinary + [$24,100@0% + $35,900@15%
+$5,385] + $40,000@25% $10,000 + $30,000@28% $8,400). New permanent regression; all 17 Schedule D / §1250 /
+collectibles / capital-gain-loss e2e green. Closes the sc_00330 residual noted in the prior §1250 entry.
+
+## 2026-08-08 - Schedule D Tax Worksheet: tax unrecaptured §1250 gain at 25%, not the ordinary rate
+
+Fixed a real under-taxation bug surfaced by the us-tax-hrb QA expansion (scenario sc_00329): the Schedule D
+Tax Worksheet (`computeScheduleDTaxWorksheetExact`) folded the unrecaptured §1250 gain (and 28%-rate gain)
+into the ordinary-rate base — `line21 = line18.max(line14.min(bracket32Start))`, where `line14` includes
+the §1250/28% slices. That made line 44 tax the §1250 gain at the ordinary marginal rate (~22–24%) and
+`line38 = line10 + line21 − line1` zeroed `line39`, so `line40` (§1250 × 25%) came out to 0 — under-taxing
+unrecaptured §1250 gain whenever it stacked below the 32% bracket. Per IRC §1(h)(1)(E)/(6) the §1250 slice
+is taxed at a flat 25% (line 40), with the overall maximum enforced by `line47 = min(specialRate,
+allOrdinary)`. The ordinary-rate base is now `line21 = line18` (ordinary income only); the §1250/28% slices
+get their own capped rates and the 0/15/20% gain stacks directly above ordinary (§1(h) order: ordinary →
+0/15/20% → 25% §1250 → 28%). For pure QDCG `line14 == line18`, so this is a no-op there. Single, wages
+$80,000 + $100,000 LT gain incl. $40,000 unrecaptured §1250: now $28,055 ($64,250 ordinary → $9,055 tax
+table + $60,000@15% $9,000 + $40,000@25% $10,000), was the buggy $26,867. New permanent regression in
+collectibles-28-percent-rate.spec.ts; all 16 existing Schedule D / collectibles / §1250 / capital-gain-loss
+e2e green (incl. the low-income 28% path, unchanged). Known follow-up: the rare §1250-AND-28%-together case
+(sc_00330) still has a residual ~$285 gap in the 0%-pool/28% stacking — separate from this fix, deferred.
+
+## 2026-08-08 - Form 1116: apportion the standard deduction to foreign-source income (§904 limitation)
+
+Fixed a real over-credit bug surfaced by the us-tax-hrb QA expansion (scenarios sc_00345/sc_00349): the
+Form 1116 §904 limitation did not apportion the standard deduction to foreign-source income. In
+`TaxReturnComputeService.buildFullForm1116` the per-country total deductions were `definitivelyRelatedDeds
++ otherInterest + foreignSourceLosses` only — Form 1116 Part I line 3a/3g (pro-rata share of the standard
+deduction / non-definitely-related deductions) was hardcoded to 0. That over-stated foreign-source taxable
+income (line 7/15), over-stated the §904 limitation fraction, and OVER-CREDITED the FTC for every
+standard-deduction filer with Form 1116 foreign income. `computeForm1116` now passes the line-12 deduction
+and line-9 gross income into `buildFullForm1116`, which apportions per country as
+`deduction × (countryGrossForeign ÷ totalGrossIncome)` (Form 1116 line 3f/3g), stores it in the model's
+`proRataDeductions` slot, and adds it to line 6 total deductions. Single filer, wages $120k + $20k foreign
+passive interest ($4k foreign tax): apportioned std ded = 15,750 × 20,000/140,000 = $2,250 → foreign
+taxable $17,750 → FTC $3,239 (was the buggy $3,649). sc_00349 → $4,678 (was $5,322). New permanent e2e
+regression in form1116-foreign-tax-credit.spec.ts; all 9 existing FTC/1116/§904(c)-carryover/MFS e2e green
+(they had foreign tax below the limitation, so unaffected). The residual $1 vs the hand-computed scenarios
+is the Form 1116 line-19 "round to at least 4 decimal places" fraction rule (app is IRS-form-compliant).
+
+
+## 2026-08-08 - Form 8936 §30D(f)(11) MSRP cap on the new clean vehicle credit
+
+Closed the third and final gap from the us-tax-hrb QA sweep (scenario sc_00175): the new (§30D) clean
+vehicle credit was granted in full even when the vehicle's manufacturer's suggested retail price exceeded
+the statutory cap ($55,000 cars / $80,000 vans, SUVs, pickups). The intake form captured only a "tentative
+credit amount" with no MSRP or vehicle class, so the compute could not apply the cap — unlike the used
+(§25E) path, which already caps the $25,000 sales price, and unlike the MAGI caps, which were already
+enforced. USER-AUTHORIZED FIELD-ADD (explicit sign-off): two new NEW-vehicle intake fields on the
+clean-car-credit form — `newVehicleType` (CAR vs VAN_SUV_PICKUP) and `newVehicleMsrp`. Full stack: entity
+`PfCleanCarVehicle` (2 cols) + Liquibase V239 (`pf_clean_car_vehicle`.new_vehicle_msrp / new_vehicle_type)
++ `CleanCarCreditMapper` read/write + `ReferenceData.CLEAN_VEHICLE_MSRP_CAP_CAR/_VAN_SUV_PICKUP` ($55k/$80k)
++ `TaxReturnComputeService.populateForm8936NewVehicleAttachment` MSRP-cap gate (disqualifies when
+MSRP > class cap; blank MSRP keeps prior behavior so partial rows are not denied) + `Form8936ScheduleA`
+output fields (newVehicleMsrp/Type/Cap + line8fMsrpAboveLimit) + Angular form-clean-car-credit
+(vehicle-type radio + MSRP input + over-cap inline warning + help text). sc_00175 (Single, W-2 $100k, sedan
+MSRP $60k) now yields credit $0, taxable income $84,250, total tax $13,455, refund $2,545. Three new e2e
+regressions (over-cap car → $0; car at exactly $55k → $7,500; SUV $60k under $80k → $7,500). All 7
+clean-car-credit + MFS e2e green; UI build green.
+
+## 2026-08-08 - Manual amortizable bond-premium excess → Schedule A line 16 (§171(e))
+
+Closed a second gap from the us-tax-hrb QA sweep (scenario sc_00122): when amortizable premium on a
+taxable bond is entered via the MANUAL "not in statements" interest fields
+(taxableBondPremiumAdjustmentNotInStatements + treasuryBondPremiumAdjustmentNotInStatements) and the
+premium exceeds the person's taxable interest, line 2b was correctly floored at $0 but the excess was
+silently DROPPED. The per-entry statement path (1099-INT box 11/12) already captured that excess for
+Schedule A line 16 (§171(e)/§67(b)(11), fixed 2026-07-24); the manual path did not. The per-person
+interest compute now mirrors that logic — the excess of the manual taxable+Treasury premium over the
+remaining taxable interest (after non-premium accrued/nominee/prior-year/frozen reductions) is added to
+the existing `excessTaxableBondPremium` accumulator, which already flows to Schedule A line 16.
+Tax-exempt-bond premium and OID acquisition premium are excluded (never deductible / merely reduce OID).
+sc_00122 (interest $1,500, premium $2,000) now yields line 2b $0, Schedule A line 16 $500, taxable
+income $50,500, tax $6,030, refund $3,970. New companion e2e regression in line2ab-interest-income.spec.ts
+(the box-11 statement-path test was already present); unit 1164/1164 and all 14 line-2ab e2e green.
+
+## 2026-08-08 - K-1 partnership §465 at-risk limitation on nonpassive box-1 losses
+
+Fixed a coverage gap surfaced by the us-tax-hrb QA re-derivation sweep (scenario sc_00074): a
+nonpassive Schedule K-1 (Form 1065) box-1 ordinary LOSS flowed straight to Schedule 1 line 5 with
+no §465 at-risk limitation (the limit was applied to rental and Schedule C/F losses but not to
+partnership K-1 losses). `TaxReturnComputeService.sumK1OrdinaryBusinessIncome` now caps a nonpassive
+partnership K-1 loss at the partner's amount at risk = capital contributed during the year
+(part2LCapitalContributedDuringYear) + recourse liabilities (part2K1RecourseEnding) + qualified
+nonrecourse financing (part2K1QualifiedNonrecourseFinancingEnding); the excess is suspended. The
+limit binds ONLY when the K-1 supplies at least one at-risk basis input, so K-1s captured without
+at-risk data keep the prior unlimited behaviour (no regression). S-corp (1120-S) and trust/estate
+(1041) K-1s are left unlimited (stock/debt-basis and DNI mechanics differ). sc_00074 now IRS-correct:
+a -$20,000 K-1 loss with $15,000 at risk deducts -$15,000 (AGI $70,000, tax $6,855). Green:
+1164/1164 TaxReturnComputeServiceTest; 15/15 K-1 / Schedule-E / §461(l) e2e specs.
+
 ## 2026-08-06 — Full e2e regression (1541 pass) + 2 stale Form 2441 line-16 assertions corrected
 
 Ran the full e2e regression (`test:regression`, 1554 tests, 1 worker, 3.1h): 1541 passed, 11 skipped, 2 failed
@@ -19769,3 +19891,57 @@ In `C:\us-tax\` (outside the repo):
 - 2026-08-01T21:00:00-0400 Holistic COMPOSITION audit of the whole §465 at-risk subsystem (1 agent, mixed C+F return: 2 businesses + 2 farms, at-risk-limited/fully-at-risk/per-activity mix, both aggregates, §179 spanning C+F). Six of seven cross-component properties traced CORRECT (C/F aggregate isolation — separate BigDecimal[] holders each passed only to its own method; per-schedule dedup uses only its own intermediate list; §179↔at-risk ordering — farm release uses netBefore179−allocated179, target chosen by someNotAtRisk not net; round-4 folds each remainder into its own provenance column; SE base C+F once pre-merge + QBI C+F once post-merge, no double-count; §461(l)/Form-6198-preview correct; MFS uniformly taxpayer-scoped). Found ONE real cross-year data-loss bug the per-piece audits missed: the prior-year at-risk AGGREGATE is silently DROPPED (lost forever) when its schedule has no activity this year — priorFarmAtRisk/priorBusinessAtRisk are built unconditionally from the bridge and passed in, but computeScheduleF early-returns on empty farmItems (computeScheduleC on no-business-and-no-farm) WITHOUT folding the aggregate. Reachable whenever a farm bridge value exists but there's no Schedule F this year (a business can exist) — more so on MFS (spouse activity excluded). FIX: both early-return paths now fold a positive prior aggregate into result.atRiskSuspended (mirroring round-4); AND the "force Schedule 1 production" gate now includes scheduleC/scheduleF.atRiskSuspended so a carryforward-only off-year return (line 3/6 = $0/absent) still persists the carryforward (also hardens the earlier round-4 fix). Direction: the bug LOST a deduction (over-taxed the filer) — safe-ish direction but wrong. NEGLIGIBLE not-fixed: a §179 sub-dollar rounding drift when farms exist but none request §179 (pre-existing, ≤ a couple cents, orthogonal to at-risk). VERIFIED: e2e +1 (farm suspends $15k → off-year with a business but no farm → $15k carries forward not lost, business untouched); all 18 farm/at-risk/bridge specs GREEN; TaxReturnComputeServiceTest 1050/1050. Compute-only, no migration. [[feedback_principled_diagnosis_over_test_tweaking]] [[project_carryforward_bridges]]
 
 - 2026-08-01T22:00:00-0400 Form 6251 AMT audit (3 read-only agents: AMTI Part I; exemption/TMT/Part III; AMT-FTC/output/gating), verified against the 2025 Form 6251 + i6251 (real PDF text) and the code. CONFIRMED CORRECT: the AGI-based line-1b AMTI start (no std-ded/QBI double-count; QBI stays AMT-allowed), all line-2 signs (2b/2f reduce AMTI), SALT add-back mutual exclusivity, ATNOLD 90% base, negative-AMTI floor, 2025 exemption/phaseout constants + 25% reduction, 26/28% breakpoint ($239,100/$119,550 MFS) + $4,782/$2,391 constant, §1250 carved to 25% (excluded from the 0/15/20 pool), 28%-rate gain to ordinary, line-8 AMTFTC actually computed by correctLine17ForFtc (the "deferred" comment was stale), line 10 FTC symmetry, Form 8801 §53 no-circularity, gating, Schedule 2 placement + §904 base excludes AMT. FIVE fixes applied: **(1) Part III lines 20/21/27 (MEDIUM, over-stated AMT)** — used full taxable income + line21=line20−line17; per the form these are the REGULAR-tax ordinary income (Sch D TW line 14/21 / QDCGW line 5 = taxableIncome−line13) and line21=line19−line20; over-filled the 0/15/20 brackets on threshold-straddle cap-gains returns (e.g. Single ord $370k + $100k LTCG: TMT $99,380→$97,550). **(2) Line 2a (Med-Low, understated AMT)** — added back only Schedule A line 5e SALT, omitting line 6 (foreign income taxes DEDUCTED not credited, which reduce line 1b); now adds getDeductibleForeignTaxes too (= Sch A line 7). **(3) Simplified §904(j) AMTFTC (LOW, over-stated AMT ≤$300/$600)** — the no-Form-1116 exception left adjustedNetForeignTi null → computeAmtForeignTaxCredit returned 0; per i6251 line 8 the AMTFTC EQUALS the regular FTC — now special-cased. **(4) MFS §55(d)(3) flush (LOW, understated AMT)** — MFS AMTI >$900,350 adds back min(25%×excess, $68,500) to line 4; was absent. **(5) stale comments** (Part III doc-block that mis-described the fixed formula; line-8 "deferred"; Form 1116 "line 16 + AMT"). VERIFIED NOT a gap: §59(j) child AMT exemption (the 2025 i6251 has no child-exemption worksheet). Deferred (bounded, documented): line 10 captures only Schedule 2 line 1a (PTC repayment), not the rarer 1b–1y additions (populated after computeLine17 → reorder risk). VERIFIED: 2 new unit tests (Part III straddle → $97,550; simplified AMTFTC → $250 not 0) + TaxReturnComputeServiceTest 1052/1052; existing AMT e2e (line17-amt + gaps + 2f-atnold) 25/25 GREEN. PROCESS NOTE: one audit subagent, though instructed READ-ONLY, applied its Part III + MFS fixes + a unit test concurrently with the main session — which briefly made the Part III finding look like a pre-existing fix (my momentary "false positive" call was that artifact; the finding was REAL) and DOUBLE-APPLIED the MFS §55(d)(3) add-back; caught via a `grep -c 900350` (=3) and the duplicate removed before commit. Compute-only, no migration. [[feedback_principled_diagnosis_over_test_tweaking]] [[feedback_java_unit_passing_doesnt_mean_e2e_passing]]
+
+## 2026-08-06 — Form 4972 line 24 whole-dollar rounding (SQA sc_00047 benchmark alignment)
+Form 4972 Part III line 25 ("Multiply line 24 by 10.0") now rounds line 24 to whole dollars BEFORE the
+×10 (`roundMoney(computeTax(line23))`), so the printed line 24 ($587) and line 25 ($5,870) reconcile and
+match the long-standing commercial benchmark. Previously line 25 used the unrounded schedule value
+($587.40 × 10 = $5,874) while displaying line 24 as $587 — internally inconsistent and $4 off the
+benchmark. Line 27→28 (annuity path) aligned the same way. IRS permits both conventions (whole-dollar
+rounding is optional); chose whole-dollar to match the benchmark and resolve the display inconsistency.
+Unit Form4972TaxTableTest updated to pin $5,870; TaxReturnComputeServiceTest 1164/1164 green. sc_00047's
+total-tax/owe rows also require the elective Schedule R elderly credit ($750; AGI $0 for a 4972-only 65+
+filer) — us-tax-be computes it correctly on opt-in (`claimsElderlyDisabledCredit`), giving owe $120 =
+benchmark. Related SQA validation: sc_00101/103 "failures" were reproduction artifacts (wrong Medicare
+field) — us-tax-be correctly includes the Additional Medicare Tax and matches the benchmark; the scenario
+Expected omitted it. sc_00009 (gross-income test) and sc_00149 (multi-W2 Add'l Medicare) are us-tax-be
+IRS-correct where the commercial benchmark diverges.
+
+## 2026-08-08 — Form 6251 ATNOL separate carryforward field (Gap 3 Phase 2, V241)
+- Backend a981e00 (main): pf_other_incomes.atnol_carryforward_amount (V241); OtherIncomesMapper
+  read/write; TaxReturnComputeService atnolAvailable now prefers the separate per-person ATNOL
+  input, defaulting to the regular §172 NOL carryforward when blank. AMT line 2f = ATNOL limited to
+  90% of AMTI (§56(d)). e2e sc_00338: ATNOL 3,000,000 → AMTI 260,000, total tax 44,694 (PASS).
+- UI 096e92f (main): optional ATNOL carryforward field on taxpayer + spouse Other Incomes forms,
+  gated to appear only when regular NOL (line 8a) is present. Build green.
+- Closes the last of the 3 built feature-gaps (Gap 1 COD insolvency §108(a)(1)(B), Gap 2 COD QPRI
+  §108(a)(1)(E), Gap 3 ATNOL §56(d)). Gap 4 (conservation-easement 50% ceiling) remains deferred.
+
+## 2026-08-08 — Charitable §170(b)(1)(E) qualified conservation contribution (Gap 4, V242)
+- Backend 9bf349f (main): a §170(h) qualified conservation contribution (donated perpetual easement)
+  now gets the enhanced 50%-of-AGI ceiling (not 30%) and a 15-year carryover (not 5). Added a 6th
+  "conservation" category to CharityVintage/CharitableDeductionResult; computeCharitableDeduction
+  deducts it last under a ceiling = 50% AGI − all other §170(b)(1) allowed contributions
+  (§170(b)(1)(E)(i)); ageCharityVintages keeps the conservation slice 15 yrs while ordinary slices of
+  the same vintage still expire at 5 (§170(b)(1)(E)(ii)); encode/decode extended to a 7th field
+  (back-compat 4/6). Fixed the no-itemized-data guard in buildScheduleA that omitted conservation (a
+  conservation-only return had wrongly fallen back to the standard deduction — found via temp trace).
+  PfStandardDeductions.charitableConservationEasement + mapper + V242. 5 unit tests + e2e
+  conservation-easement-170be (sc_00364): easement 150,000 / AGI 200,000 → deduction 100,000, taxable
+  100,000, tax 16,914, refund 13,086, carryforward 50,000. 26/26 charitable+Schedule-A e2e green.
+- UI 76812c2 (main): "Qualified conservation easement" field in the itemized-deductions charitable
+  section (help text + where-to-find). Build green.
+- Closes the LAST of the 4 FEATURE_GAP_PROPOSAL gaps. All 4 now built (COD insolvency, COD QPRI,
+  ATNOLD, conservation easement); nothing deferred.
+
+## 2026-08-09 — Full e2e regression: 1553 passed / 1 real regression caught + fixed
+- Ran the full suite (1565 tests, 318 specs, --workers=1, 3.1h): 1553 passed, 11 skipped, 1 failed.
+- The one failure (line17-amt-gaps AMT-FTC, line 8 = 6767 vs correct 7346) was a REAL regression from
+  this session's Form 1116 std-deduction apportionment fix (4b738f5): computeAmtForeignTaxCredit reused
+  the regular Form 1116 adjusted-net-foreign-TI, which the apportionment had reduced by the pro-rata
+  standard deduction — but the AMT disallows the standard deduction, so the AMT foreign-source numerator
+  was wrongly shrunk (7346 → 6767). FIX e43477f (main): Form1116 now retains the apportioned deduction
+  (transient) and computeAmtForeignTaxCredit adds it back, keeping the regular-1116 apportionment
+  AMT-neutral. line17-amt-gaps + form1116-foreign-tax-credit re-run: 15/15 green.
+- Net: entire suite green after the one fix. (17 throwaway _repro_* specs were parked in scratchpad
+  before the run so they didn't pollute results.)

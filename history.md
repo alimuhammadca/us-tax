@@ -19968,3 +19968,11 @@ IRS-correct where the commercial benchmark diverges.
   UI persists the allocation split as 0–1 decimals (percentToDecimal /100), so the backend correctly
   receives 0.5 and allocationFraction([0,1]-clamp) is right; seeding raw 50 clamped to 1.0. Lesson: check
   the UI persistence boundary before calling a percentage path a bug.
+
+## 2026-08-09 — Targeted pass: Schedule R box 3, Form 8880 boundaries, §1341 — all verified correct
+- Form 8880 saver's-credit rate boundaries (Single 50/20/10/0% tiers + $39,500 ceiling, 6 cases), Schedule R
+  box 3 (MFJ both 65+, base $7,500/threshold $10,000 worksheet), and IRC §1341 claim-of-right credit routing
+  (31-other-payments → Schedule 3 line 13b → total payments) all verified IRS-correct — no compute change.
+  New specs form8880-rate-boundaries + schedule-r-box3-and-section1341 (BE 5f7ab7e).
+- Noted (by design, not a bug): the 65+ additional standard deduction is gated on the user's age attestation
+  (youBornBeforeThreshold), not auto-derived from DOB — matches the IRS Form 1040 age/blind checkbox model.

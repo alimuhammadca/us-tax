@@ -19976,3 +19976,18 @@ IRS-correct where the commercial benchmark diverges.
   New specs form8880-rate-boundaries + schedule-r-box3-and-section1341 (BE 5f7ab7e).
 - Noted (by design, not a bug): the 65+ additional standard deduction is gated on the user's age attestation
   (youBornBeforeThreshold), not auto-derived from DOB — matches the IRS Form 1040 age/blind checkbox model.
+
+## 2026-08-09 — Standard deduction: auto-derive the 65+ age box from the identification DOB
+- Fix 5402a7e (main): the Form 1040 line-12 additional standard deduction for 65+ was gated only on a
+  user attestation (youBornBeforeThreshold/spouseBornBeforeThreshold) on the standard-deductions form; a
+  filer who entered their DOB but didn't also check that box silently lost the $2,000 (single/HOH) /
+  $1,600-per-person (MFJ) addition. buildStandardDeductionIndicators now auto-sets the age box from the DOB
+  (born before Jan 2, 1961 for TY2025). Blindness stays user-entered; spouse age auto-derives only when NOT
+  MFS (MFS keeps its narrow spouseMeetsAgeBlindnessMfsRequirements gate).
+- Impact: 133/135 DOB-seeded specs unaffected; 2 updated to the now-correct larger deduction — line13b
+  senior-AMTI (std ded 15,750→17,750), line1040sr (age-65 Schedule R credit correctly tax-limited to $0).
+  Added a Schedule R disability-path case (under 65, AGI 16,000 → genuine $26 credit on Schedule 3 line 6d)
+  to preserve positive-credit coverage. Java test-compile clean.
+- Note: an age-65 filer's Schedule R credit is essentially always $0 once the correct senior std deduction
+  applies (need AGI > std-ded for tax, but then the AGI-excess reduction wipes the base) — the old
+  positive value only existed because of the under-deduction this fix corrects.

@@ -19959,3 +19959,12 @@ IRS-correct where the commercial benchmark diverges.
   Capital-gains/Schedule D regression 17/17 green.
 - Other zero-coverage-but-implemented gaps identified (not yet verified): HSA last-month rule §223(b)(8)
   (9 refs), Form 8962 shared-policy allocation Part IV (71 refs).
+
+## 2026-08-09 — Coverage-gap audit cont.: HSA last-month + 8962 shared-policy VERIFIED CORRECT
+- HSA last-month rule §223(b)(8) (full limit for part-year eligibility + testing-period-failure recapture)
+  and Form 8962 Part IV shared-policy allocation both verified IRS-correct against the live backend — no
+  compute change. New regression specs hsa-last-month-rule + ptc-shared-policy-allocation (BE 2b2401a).
+- The 8962 allocation initially looked like a bug (50% split ignored) but was a seeding-format issue: the
+  UI persists the allocation split as 0–1 decimals (percentToDecimal /100), so the backend correctly
+  receives 0.5 and allocationFraction([0,1]-clamp) is right; seeding raw 50 clamped to 1.0. Lesson: check
+  the UI persistence boundary before calling a percentage path a bug.

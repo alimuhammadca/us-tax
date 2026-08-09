@@ -19945,3 +19945,17 @@ IRS-correct where the commercial benchmark diverges.
   AMT-neutral. line17-amt-gaps + form1116-foreign-tax-credit re-run: 15/15 green.
 - Net: entire suite green after the one fix. (17 throwaway _repro_* specs were parked in scratchpad
   before the run so they didn't pollute results.)
+
+## 2026-08-09 — Coverage-gap audit: §121 home-sale (1099-S) auto-derivation two field-name bugs FIXED
+- Audited the 389-scenario hrb suite for implemented-but-untested features. §121 principal-residence
+  sale exclusion (34 compute refs) had ZERO scenario coverage — verifying it exposed two real bugs in the
+  Phase 2F 1099-S → Schedule D auto-derivation, both statement field-name mismatches:
+  (1) proceeds read "grossProceeds" vs actual "grossProceedsAmount" → every 1099-S sale = $0 proceeds →
+      non-deductible §165 loss → §121 exclusion + gain never reported;
+  (2) address match read "addressOrLegalDescription" vs actual "propertyAddressOrLegalDescription" →
+      matching always failed → false FORM_1099S_REAL_ESTATE_REPORTED §17 blocker on any entered address.
+  Fix b9d5091 (main). New e2e section121-home-sale-exclusion (full $250k exclusion → $70k LTCG + §121(c)
+  partial-exclusion override). Also fixes second-home + investment-property 1099-S sales (same path).
+  Capital-gains/Schedule D regression 17/17 green.
+- Other zero-coverage-but-implemented gaps identified (not yet verified): HSA last-month rule §223(b)(8)
+  (9 refs), Form 8962 shared-policy allocation Part IV (71 refs).

@@ -1,5 +1,53 @@
 # Outstanding Items
 
+## ★ GAP — §213(d)(10) long-term-care premium cap is NOT enforced (found 2026-08-29, sc_00098)
+
+**Status: OPEN. Real, reproducible, silently OVERSTATES the medical deduction.**
+
+Schedule A takes medical as a single lump sum — `medicalDentalExpensesPaid` — and applies only the
+7.5%-of-AGI floor (`TaxReturnComputeService` ~line 12099). **No per-item statutory limit is applied**,
+so raw long-term-care premiums flow through uncapped.
+
+§213(d)(10) caps deductible qualified LTC premiums by the insured's age at year end. **2025 limits
+(Rev. Proc. 2024-40):**
+
+| Age at end of 2025 | Limit |
+|---|---|
+| 40 or less | $480 |
+| 41–50 | $900 |
+| 51–60 | $1,800 |
+| 61–70 | **$4,810** |
+| 71 or over | $6,020 |
+
+**Demonstrated** by `Sc00098SqaScenarioTest.ltcCapIsNotEnforced_inputSideGap()` (a 61–70 filer, AGI
+55,000, $6,000 of premiums + $3,000 other medical):
+- correctly capped to $4,810 → itemized total **18,685**
+- raw $6,000 entered → itemized total **19,875**
+- **$1,190 overstated, with nothing flagging it.**
+
+**What is missing:** (1) no LTC premium input field on `PfStandardDeductions` or in the us-tax-ui
+standard-deductions form — LTC is not separable from the medical lump sum; (2) no age-band constants
+anywhere in `ReferenceData` (grep for 4810/6020 returns nothing); (3) no warning text.
+
+**Why this stands out:** the same Schedule A code DOES auto-apply comparable limits — the SALT cap with
+its MAGI phasedown, the 7.5% floor, and the Pub 936 acquisition-debt limitation. §213(d)(10) is simply
+absent from a set of limits that are otherwise enforced, so this is an omission, not a "trust the user"
+design choice.
+
+**Note H&R Block has the same gap but is slightly ahead of us:** it has a dedicated Insurance-Premiums
+field and states the $4,810 cap in its own Learn More text — it just does not enforce it. We have
+neither the field nor the text.
+
+**Fix sketch:** add `longTermCarePremiumsPaid` + an insured-age input (or derive from DOB) to the
+deductions form; add the five age-band constants to `ReferenceData`; cap per person before adding into
+the medical total; surface the capped-vs-entered difference in the UI. Two people on MFJ each get their
+own age-band limit.
+
+**Related, same lens (input-side statutory reductions not auto-applied):** medical mileage is not
+computed either (2025 rate **$0.21/mile**, no constant in `ReferenceData`), nor is the capital-improvement
+FMV offset, nor the $50/night lodging limit. All are user-precomputed today.
+See `[[feedback_input_side_statutory_reduction_audit_lens]]`.
+
 ## ★ MAGI/PHASEOUT ADVERSARIAL AUDIT — 2026-07-30
 
 A 4-agent read-only audit verified ~14 income-driven computations against their IRS MAGI/base definitions.

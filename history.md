@@ -19991,3 +19991,27 @@ IRS-correct where the commercial benchmark diverges.
 - Note: an age-65 filer's Schedule R credit is essentially always $0 once the correct senior std deduction
   applies (need AGI > std-ded for tax, but then the AGI-excess reduction wipes the base) — the old
   positive value only existed because of the under-deduction this fix corrects.
+
+## 2026-08-29 — SQA cross-check vs H&R Block: §213(d)(10) LTC premium cap gap found
+
+Verifying SQA scenarios against `us-tax-be` by running the real `TaxReturnComputeService` in plain
+JUnit tests (no server/Firebase/Postgres). sc_00093/94/95/96/98 all match H&R Block line for line.
+
+**New OPEN gap (see `outstanding.md`):** the §213(d)(10) age-banded long-term-care premium cap is not
+enforced. Schedule A takes medical as one lump sum with only the 7.5% floor, so raw LTC premiums flow
+through uncapped — a 61–70 filer entering $6,000 instead of the $4,810 limit overstates itemized
+deductions by $1,190 with no warning. No LTC field, no age-band constants, no UI text.
+Demonstrated by `Sc00098SqaScenarioTest.ltcCapIsNotEnforced_inputSideGap()`.
+
+Same lens also flags: medical mileage ($0.21/mile for 2025) and the capital-improvement FMV offset are
+likewise user-precomputed, not derived.
+
+**Scenario-spec corrections made in `us-tax-sqa` (our specs were wrong, the software was right):**
+sc_00010 refund typo; sc_00011 + sc_00096 missing Additional Medicare Tax; sc_00019 pre-OBBBA adoption
+credit (now split $5,000 refundable / remainder nonrefundable); sc_00055 missing Saver's Credit;
+sc_00090 missing §274(n) 50% meal limit; sc_00095 Tax Table row width ($25 below $3,000, not $50);
+plus seven 4a/5a "blank when fully taxable" label fixes.
+
+**Also fixed in `us-tax-sqa/_tools/tax2025.js`:** QSS was using the MFJ Saver's Credit brackets; the
+2025 Form 8880 puts QSS in the Single/MFS column. A QSS filer at AGI 45,000 was getting 50% where the
+correct rate is 0%. Added the missing `seniorDeduction()` helper.

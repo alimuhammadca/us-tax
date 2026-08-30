@@ -20015,3 +20015,25 @@ plus seven 4a/5a "blank when fully taxable" label fixes.
 **Also fixed in `us-tax-sqa/_tools/tax2025.js`:** QSS was using the MFJ Saver's Credit brackets; the
 2025 Form 8880 puts QSS in the Single/MFS column. A QSS filer at AGI 45,000 was getting 50% where the
 correct rate is 0%. Added the missing `seniorDeduction()` helper.
+
+## 2026-08-29 — new advisory: BOND_PREMIUM_EXCEEDS_INTEREST (non-blocking)
+
+From QA sc_00122. When §171 amortizable premium on taxable bonds (Form 1099-INT box 11 + 12) exceeds
+that bond's interest (box 1 + 3), we already floored line 2b at 0 and carried the excess to Schedule A
+line 16 — correctly and automatically, which is more than H&R Block does (it needs a separate manual
+entry). But we did it SILENTLY. A premium larger than the year's interest is legitimate yet unusual,
+and far more often a data-entry slip (box 11 mistyped, or a multi-year premium against one year), so
+we now say so.
+
+Non-blocking, and NOT in `NonOverrideableFlags` — that registry is for §17 blocking flags, and the
+excess IS deductible. Raised where the excess is folded into the line-16 add-on so the value and the
+notice cannot drift apart. Mirrors `CHARITABLE_VEHICLE_CAPPED_TO_1098C`: when we silently adjust a
+user-supplied figure, we say so.
+
+Also added SQA scenario tests `Sc00107` (Pub 936 debt-limit tiers; asserts lines 16 and 24 separately
+because they differ once Additional Medicare applies; pins that the 200,000 threshold is "over" not
+"at or over"), `Sc00114` (charitable valuation — quid pro quo and the 1098-C vehicle cap are both
+automatic for us and manual in H&R Block), and `Sc00122`.
+
+Full suite: 14 pre-existing failures before and after, none related (Form 1116 baskets, Form 8615
+collectibles, 1099-S §121 blockers, Schedule R / 8863 wiring). No new failures.

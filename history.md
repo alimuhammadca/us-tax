@@ -1,6 +1,38 @@
 ﻿# History
 
 
+## 2026-08-30 - Form 8962 line 10: the annual-calculation election (QA sc_00142)
+
+`computeForm8962` always summed the twelve monthly rows (lines 12-23) for line 24, ignoring the line 10
+election entirely -- the `line10` slot on the output model was occupied by an unrelated
+`employerCoverageAffordability` flag. Per Instructions for Form 8962 (2025), "Line 10", the choice is
+DIRECTIVE, not free: check "Yes" and use the single line 11 Annual Totals row when the filer was enrolled
+all 12 months with a uniform column A (enrollment premium) AND a uniform column B (SLCSP); otherwise
+complete lines 12-23. The lists deliberately omit column C, so a mid-year APTC change does not force the
+monthly path (line 25 is the same annual sum either way -- only line 24 turns on the election).
+
+The two paths differ by a few dollars because line 8b rounds the monthly contribution to a whole dollar.
+sc_00142: household income 35,000 = 232% FPL, applicable figure 0.0328, line 8a = 1,148, line 8b = 96.
+Annual: 5,400 SLCSP - 1,148 = **4,252**. Monthly: 12 x (450 - 96) = 4,248 -- a $4 under-credit, which
+propagated to net PTC 252 vs 256 and refund 1,177 vs 1,181. H&R Block returns 4,252/256/1,181; we now
+match. Part IV shared-policy allocation and Part V alternative-calculation-for-year-of-marriage take
+precedence via line 9 and never route to line 11.
+
+`Form8962.line10UseAnnualCalculation` added (+ `out_form_8962.line10_use_annual_calculation`, Liquibase
+**V243**, + mapper both directions); `allMonthlyValuesEqual` helper implements the "same for every month"
+test with null-as-zero so a blank month cannot pass as uniform. Line 11 is still computed on both paths so
+the election stays auditable -- a filed PDF should print only the elected path, keyed off the new field.
+Pins: `Sc00142SqaScenarioTest#line10ElectsTheAnnualCalculationForFullYearUniformCoverage` (Yes path) and
+`#line10FallsBackToMonthlyWhenSlcspVariesMidYear` (No path -- column B changes mid-year, line 24 sums the
+monthly rows). No regressions: TaxReturnComputeServiceTest failure set identical before and after (15
+pre-existing, none PTC-related).
+
+NOT fixed (cosmetic, no output effect -- the PDF semantic map is correct): `Form8962.line5FederalPovertyLine`
+holds what the 2025 form calls line **4**, and `line6HouseholdIncomeAsPctOfFpl` holds line **5** (form line 6
+is "Reserved for future use"); `line10EmployerCoverageAffordability` is a misnomer kept for persistence
+compatibility. These names never reach the PDF -- renaming needs a column migration.
+
+
 ## 2026-08-08 - §108 cancellation-of-debt exclusions (insolvency + QPRI) on Schedule 1 line 8c
 
 Built QA feature-gaps 1+2 from the expansion sweep (sc_00360 insolvency / sc_00361 qualified principal

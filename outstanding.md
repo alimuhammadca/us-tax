@@ -43,10 +43,40 @@ deductions form; add the five age-band constants to `ReferenceData`; cap per per
 the medical total; surface the capped-vs-entered difference in the UI. Two people on MFJ each get their
 own age-band limit.
 
-**Related, same lens (input-side statutory reductions not auto-applied):** medical mileage is not
-computed either (2025 rate **$0.21/mile**, no constant in `ReferenceData`), nor is the capital-improvement
-FMV offset, nor the $50/night lodging limit. All are user-precomputed today.
+**Related, same lens (input-side statutory figures not derived):** medical mileage is not computed
+either (2025 rate **$0.21/mile**, no constant in `ReferenceData`), nor is the capital-improvement FMV
+offset, nor the $50/night lodging limit. All are user-precomputed today.
 See `[[feedback_input_side_statutory_reduction_audit_lens]]`.
+
+### Sub-gap — the Optional State/Local Sales Tax Table is not derived (found 2026-08-29, sc_00102)
+
+`stateLocalSalesTaxesPaid` is taken as user input and deducted as entered. There is no 2025 Optional
+State Sales Tax Table in the codebase, so a wrong figure cannot be detected. **This is how sc_00102's
+spec error survived:** it assumed a table amount of $1,800 where the real Texas value is **885**, and
+nothing in our stack contradicted it. H&R Block DOES perform the lookup, which is what surfaced it.
+
+The correct computation (2025 Schedule A instructions, *State and Local General Sales Tax Deduction
+Worksheet*, now downloaded to `docs/books/i1040sca_2025.pdf`):
+
+1. **Line 1** — Optional State Sales Tax Table by **state x income band x number of exemptions**.
+   (TX, $90k-$100k, 1 exemption = **885**.)
+2. **Line 2** — base local tax from the Optional LOCAL table, but only for the 17 listed states
+   (AL, AK, AZ, AR, CO, GA, IL, KS, LA, MS, MO, NY, NC, SC, TN, UT, VA); otherwise -0-.
+3. **Lines 3-6** — for every other state, the local add-on is a RATIO:
+   `line 1 x (local rate / state rate)`. (885 x 2.00/6.25 = **283**.)
+4. **Line 7** — sales tax paid on **specified items** (motor vehicles, boats, aircraft, home
+   building materials) is ADDED on top of the table amount.
+5. **Line 8** = lines 1 + 6 + 7 -> Schedule A line 5a. (885 + 283 + 2,500 = **3,668**.)
+
+Note the deduction is elective (IRC 164(b)(5)) and mutually exclusive with state/local INCOME tax on
+line 5a only -- real estate (5b) and personal property (5c) taxes stack with whichever is elected.
+That distinction is itself an open question on sc_00094, where HRB produced 3,809 and the QA tester
+overrode it to 3,000.
+
+Fix sketch: embed the 2025 state table (50 states x 10 income bands x 6 exemption counts) plus the
+local table for the 17 states, add state/local rate + exemption-count inputs, and compute line 5a
+when the user elects sales tax. Demonstrated by
+`Sc00102SqaScenarioTest.optionalSalesTaxTableIsNotDerived_inputSideGap()`.
 
 ## ★ MAGI/PHASEOUT ADVERSARIAL AUDIT — 2026-07-30
 

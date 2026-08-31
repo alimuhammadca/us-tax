@@ -20300,3 +20300,47 @@ settle that, and still needs a tester run.
 
 Full suite: 1,813 run, the same 14 pre-existing failures.
 
+---
+
+## 2026-08-31 — sc_00219 validated in full: stale §179 cap, and the election has no graded row
+
+Its Schedule SE rows were already corrected earlier today as part of the line-12 work. Validating the
+rest turned up three things.
+
+**The §179 dollar limits in the spec were pre-OBBBA.** It cited $1,250,000; IRS Publication 334 (2025)
+says "Beginning in 2025, the maximum section 179 expense deduction is $2.5 million. This limit is
+reduced by the amount by which the cost of section 179 property placed in service during the tax year
+exceeds $4 million." Our `ReferenceData` already carried 2,500,000 / 4,000,000. Immaterial at $30,000
+of equipment, but wrong on the page.
+
+**The scenario cannot grade its own subject.** Every graded value flows from the $30,000 of net profit,
+and that net profit is identical whether the equipment was expensed under §179 or written off as an
+ordinary business expense. Proven by experiment rather than argued: the two returns agree on line 9,
+line 11, line 23 and Schedule SE line 12. A run that never made the election passes the workbook
+outright.
+
+**And we could not close that gap from our side.** The §179 computation is sound — dollar cap,
+investment phase-out, the §179(b)(3)(A) business-income ceiling, allocation across Schedule C
+businesses and Schedule F farms, and an advisory naming the carryforward — but we emit **neither a
+Schedule C nor a Form 4562 output form**, so the election leaves no trace in the return beyond the net
+profit it produced. Form 4562 is filed with the 1040 whenever §179 is elected. Two follow-ups worth
+recording:
+
+  - Form 4562 (and Schedule C) as output forms, so the election is visible and gradeable.
+  - The §179 disallowed-amount carryforward is **advisory only** — the flag tells the filer it "carries
+    forward to next year", but unlike the eleven implemented cross-year bridges nothing persists it, so
+    they would have to re-enter it by hand.
+
+The income-limit path IS observable and is now pinned: $70,000 of equipment against $60,000 of income
+gives a net profit of zero rather than a $10,000 loss, with `SCHEDULE_C_SECTION_179_LIMITED` naming the
+$10,000 that carries over.
+
+A near-miss worth recording alongside it. My first run of the test read "the §179 election does not
+apply at all" — net profit came back 60,000 instead of 30,000 with no flag. The cause was my own
+seeding: `depreciationAssets()` is gated on `hasDepreciableAssets` being TRUE on the form, and without
+it the asset list is empty and the election is silently skipped while the return still computes.
+Another instance of [[feedback_verify_entry_not_outcome]] — and the gate is a sixth register-in-N
+hazard alongside `PERSONAL_FORMS`, `PARENT_TABLES_UID_CASCADE` and `NonOverrideableFlags.CODES`.
+
+Full suite: 1,817 run, the same 14 pre-existing failures.
+

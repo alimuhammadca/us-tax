@@ -20266,3 +20266,37 @@ Still unmeasured against the commercial software: no scenario has a fractional l
 on the form's own wording and the e-file integer argument rather than on a matched Actual. Worth a
 scenario.
 
+---
+
+## 2026-08-31 — sc_00211 and sc_00219 confirm the Schedule SE line-12 fix, and retire a citation
+
+Both were already sitting in the suite with matched H&R Block Actuals that disagreed with their own
+Expected values, and both disagreements are exactly the defect sc_00210 turned up earlier today. Three
+independent confirmations now, all measured against the software rather than argued from the form:
+
+    sc_00210   1,695  vs  1,696
+    sc_00211  27,192  vs  27,193
+    sc_00219   4,238  vs   4,239
+
+sc_00211 is the sharpest of the three because **its spec did not add up to itself**: its own line 10
+(21,836) plus its own line 11 (5,356) is 27,192, not the 27,193 it stated on line 12. The QA tester
+caught it by exactly that route and corroborated the figure twice more, from the QBI adjustment and
+from the AGI. Our engine now produces 27,192 / 13,596 / 186,404, matching every recorded Actual.
+
+**A citation retired.** The engine's line-13 comment cited "SQA sc_00211/00219" as the evidence that
+line 13 is 50% of the ROUNDED line 12 — the case where an odd line 12 puts line 13 on x.50 and it
+rounds up. The rule is right, but both of those specs had an odd line 12 *only because they were
+computing it the wrong way*; corrected they are 27,192 and 4,238, both even. The rule was resting on a
+defect for its only evidence. Sc00211SqaScenarioTest now builds an odd line 12 directly — at 55,000 of
+net profit, line 12 is 7,771 and line 13 is 3,885.50 → 3,886 — so the behaviour keeps a test that does
+not depend on one.
+
+sc_00219's §179 subject is untouched; only its Schedule SE rows moved. It still wants a scenario test
+of its own for the expensing election — what was added here is a cross-check of the SE arithmetic only.
+
+Neither scenario has a fractional line 4a (200,000 and 30,000 x 92.35% are both exact), so neither says
+anything about the line 6 rounding closed earlier today. sc_00390 remains the only scenario that can
+settle that, and still needs a tester run.
+
+Full suite: 1,813 run, the same 14 pre-existing failures.
+

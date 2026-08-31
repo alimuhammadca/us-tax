@@ -20912,3 +20912,52 @@ A ninth seeding trap: the capital pipeline has FOUR gates (`hadCapitalGainOrLoss
 no Schedule D at all.
 
 Full suite: 1,881 run, 8 failures - down from 14, the six Phase 2F fixtures being the difference.
+
+## 2026-08-31 - sc_00240: §962 and §1341 - two real defects, one of them a blocker that outlived its premise
+
+Both runs reproduce and BOTH are computed by us. The scenario's opening claim that these are "out of scope
+in our own application" was stale for the second scenario running - but here it was stale inside the engine
+too, as a live blocking flag.
+
+**Defect 1: the engine contradicted itself on §962.** Two surfaces exist for the same election. The one on
+the "Other tax items" form (`hasSection962Election`) computes it properly - 21% corporate rate, the §250
+deduction on GILTI, the §960 deemed-paid credit floored at zero, and the line 16 box 3 "962" write-in. The
+one on the "Other incomes" form (`hasSection962CfcElection`) raised a BLOCKING, non-overrideable flag
+reading "§962 election ... is out of scope for this product ... The application does not implement this
+path ... file your return through a preparer that supports §962" - and then described, as the thing we do
+not do, precisely what the other surface does: "the related tax is computed at corporate rates and added to
+Form 1040 line 16 with an attached statement". The blocker landed 2026-06-08; the compute landed 2026-07-13
+and never retired it. For seven weeks the same election, same amount, same filer produced a finished return
+on one form and a dead end on the other.
+
+Fixed by NARROWING rather than deleting, because what the gate was really guarding is real: leaving the
+inclusion on Schedule 1 lines 8n/8o while electing §962 taxes that income TWICE - once at graduated rates
+through AGI, once at 21% on line 16. The block now fires only on that double-count and points at the remedy
+(move the inclusion to the "Other tax items" form) instead of pointing out of the product.
+
+**Defect 2: nothing stopped a filer taking the §1341 deduction AND the credit.** §1341 is a choice -
+"whichever remedy is more beneficial" - never both. We compute both methods, which is more than the
+commercial product surfaces, and the deduction path even printed an advisory naming the credit as the
+alternative, but nothing enforced the either/or. Entering both produced a return carrying a $6,000 Schedule
+A line 16 deduction AND a $1,320 Schedule 3 line 13b credit for the same repayment with no blocking flag.
+Now `SECTION_1341_DEDUCTION_AND_CREDIT_BOTH_CLAIMED`, blocking and non-overrideable - the filer cannot see
+the conflict from either form alone, since each looks perfectly reasonable by itself.
+
+**The scenario conflates GILTI with Subpart F, and they differ by half.** Run A says "a $100,000
+GILTI/Subpart-F inclusion" as though interchangeable. Subpart F carries no §250 deduction, so the whole
+$100,000 meets 21% -> $21,000, the graded figure. A GILTI inclusion is first reduced by §250 - 50% for 2025
+- so the same $100,000 produces $10,500. Our default is to claim §250 (the ordinary, taxpayer-favourable
+case), so the graded value is reachable as subpart F or by declining §250 the way the run's own
+parenthetical does. Both routes pinned.
+
+**Grading, and the two trees split one row each.** Row 8: coverage gap, not FAIL - the HRB run found zero
+matches for `962|951|GILTI|controlled foreign|subpart` anywhere in the interview, and absence of a
+computation is not a wrong one; the us-tax-sqa FAIL is a mis-grading. Row 9: supported forms-mode-only, NOT
+a gap - us-tax-sqa got 1,320 out of the product via Show Form -> Schedule 3 while us-tax-hrb found no entry
+on a third GUIDED-mode attempt. Not in conflict, and by the standard the HRB tree itself set on sc_00239
+(forms mode is "the strongest probe available") the credit is supported. Neither tree connected the detail
+already in the HRB progress log's 2026-08-14 field map: `2.69 = Giving back property (claim-of-right
+repayment §1341)` on the guided Other Deductions screen is the DEDUCTION method, and it IS reachable. The
+product supports both remedies and surfaces only the deduction.
+
+Full suite: 1,891 run, the same 8 pre-existing failures - no regression from either engine change.

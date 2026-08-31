@@ -20837,3 +20837,35 @@ the right shape for a missing-input gate, and the opposite of the traps that qui
 
 Full suite: 1,868 run, the same 14 pre-existing failures.
 
+---
+
+## 2026-08-31 - sc_00238: OBBBA car-loan and enhanced-senior deductions verified
+
+All six runs reproduce, and both QA trees agree. A -> LINE13B_CAR_LOAN_VEHICLE_DOES_NOT_QUALIFY;
+B -> LINE13B_CAR_LOAN_INVALID_ORIGINATION_DATE; C -> LINE13B_CAR_LOAN_MISSING_VIN; D -> 4,000;
+E -> 6,000; F -> 4,500. All three car-loan gates are blocking and non-overrideable.
+
+**Rows 8 and 9 are one failure wearing two hats**, which is the useful way to state them: the commercial
+product validates that a field is PRESENT but never what it CONTAINS. Row 10 proves the shape - omit the
+VIN entirely and the deduction IS denied - while a Japanese VIN and a 2023 origination date both sail
+through. In both cases the product prints the rule on screen ("If your VIN doesn't begin with 1, 4, 5,
+or 7...", "Starting in 2025...") and leaves the user to apply it.
+
+**A difference in kind, recorded rather than claimed as a pass.** We do not decode the VIN either. Our
+US-assembly gate rides on a DECLARED answer (`vehicleFinalAssemblyInUs`), asked outright alongside
+new-to-taxpayer and secured-by-first-lien, so a Japanese VIN with that question answered "yes" still
+deducts. The distinction is that the question is asked and recorded - the filer has affirmed something
+they can be held to - rather than being shown a hint and left to self-police. Neither product validates
+VIN content, and the test says so explicitly so nobody reads our VIN field as more than it is.
+
+The senior phaseout is a RATE, not a cliff, and the scenario samples it twice - which cannot tell the
+two apart. Walked instead: 80,000 -> 5,700, 100,000 -> 4,500, 125,000 -> 3,000, and 175,000 -> 0, where
+6% x 100,000 has consumed the whole 6,000.
+
+An eighth seeding trap, and this one took two rounds: Schedule 1-A has TWO gates, the parent input flag
+`hadAdditionalDeductions` (not the `hasAdditionalDeductionInputs` I guessed from the spouse field) and a
+17 statements-confirmation blocker `confirmAllRelevantStatementsUploaded`. Both silent until satisfied;
+the first produced no Schedule 1-A at all and the second produced one with every figure null.
+
+Full suite: 1,875 run, the same 14 pre-existing failures.
+

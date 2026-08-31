@@ -20191,3 +20191,45 @@ the empty default — no unit test had ever driven Form 8853 Section C end to en
 
 Full suite: 1,801 run, the same 14 pre-existing failures before and after.
 
+---
+
+## 2026-08-31 — Schedule SE line 12 is "add lines 10 and 11", not one 15.3% step
+
+From QA sc_00210, and the first real tax-computation defect this batch of scenarios has turned up. The
+tester reported the commercial software at $1,695 against the scenario's $1,696 and diagnosed the cause
+exactly. They were right; both the scenario and we were $1 high.
+
+Schedule SE does not apply 15.3% in one step. Line 10 is the 12.4% Social Security portion, line 11 the
+2.9% Medicare portion, each its own entry box, and line 12 is "Add lines 10 and 11":
+
+    10   11,082 x 12.4% = 1,374.168  ->  1,374
+    11   11,082 x  2.9% =   321.378  ->    321
+    12   add lines 10 and 11             1,695        (one step: 11,082 x 15.3% = 1,695.546 -> 1,696)
+
+The general rounding rule is "if you do round to whole dollars, you must round **all** amounts", and
+lines 10 and 11 are each an amount. The competing sentence — "if you have to add two or more amounts to
+figure the amount to enter on a line, include cents when adding and round off only the total" — is about
+building ONE entry out of several source figures, not about lines that each have their own printed box.
+Decisively, every money element in the IRS e-file schema is a whole-dollar integer: lines 10, 11 and 12
+are all transmitted as integers and have to reconcile. There is no way to send 1,374.168.
+
+We had already half-noticed this. A comment admitted that independently rounding lines 10 and 11 "can
+sum to $1 more than that total, so the printed form wouldn't add up", and dealt with it by apportioning
+the whole-dollar line 12 back across the two sublines by largest fractional remainder — which printed
+Medicare as 322 where 2.9% of 11,082 is 321.378. A $1 error on line 12 was being paid for with a $1
+error on line 11. Rounding each line and adding lets all three be right at once, and the apportionment
+is gone.
+
+Line 13 is unchanged: still "line 12 x 50%" off the ROUNDED line 12 (sc_00211/sc_00219), which is what
+makes 1,695 -> 847.50 -> 848.
+
+Full suite: 1,806 run, the same 14 pre-existing failures before and after — no existing test had been
+pinned to the wrong value.
+
+**Left open, and pinned as a test so it stays visible.** The rates are still applied to net earnings
+carried at full precision from line 3 through 4a/4c/6, not to line 6 as printed. At $87,654 of net
+profit line 6 prints 80,948 while line 11 is computed from 80,948.469, giving 2,348 where 2.9% of the
+printed figure is 2,347. Same defect class one level up, same e-file argument — but no scenario has
+measured it against the commercial software yet, so it is recorded rather than changed on one reading.
+sc_00210 cannot see it: 12,000 x 92.35% is exactly 11,082.
+

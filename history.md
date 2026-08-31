@@ -20112,3 +20112,48 @@ exclusion and could wrongly rescue a filer sitting just above the start.
 
 Full suite: 1,790 run, the same 14 pre-existing failures before and after, none in Form 8815.
 
+---
+
+## 2026-08-31 — Form 8815: the MAGI ceiling now binds the manual-override path, and both paths reduce line 2b the same way
+
+Follow-on to yesterday. The ceiling suppression only covered the line-by-line path; the manual
+`savingsBondExclusionAmount` override skipped it, so an above-ceiling filer using that field still got
+their exclusion. Closing it turned out to require unifying how the exclusion reaches line 2b, because
+suppressing the FORM alone would have left the money.
+
+**The trap.** `computeInterestIncome` read `savingsBondExclusionAmount` directly and applied it to
+line 2b on pass 1, independently of `computeForm8815`. So the first attempt produced a return with no
+Form 8815 and the $4,000 benefit still taken — strictly worse than before, and the sort of thing that
+looks fixed from the form list. A test asserting the ENTRY (2b keeps the interest) rather than the
+outcome (no form) is what caught it.
+
+**Second trap, the reason the plumbing had to change rather than the check.** Because the override was
+applied on pass 1, line 11b was already net of it, so measuring the ceiling against line 11b would let
+a filer duck the ceiling by exactly the amount they were claiming. Both paths now reduce line 2b only
+on the SECOND pass: pass 1 computes the return with no exclusion applied, which is what makes line 11b
+a genuine pre-exclusion §135(c)(4) MAGI for the ceiling to be tested against. Whatever survives is
+injected into pass 2 through the existing `FORM8815_LINE_BY_LINE_EXCLUSION` recursion. The
+manual-override exemption in the recursion gate is gone; the paths differ now only in how line 14 is
+arrived at.
+
+**Four sites were reading the claim instead of the result.** `savingsBondExclusionAmount` is what the
+user asked for, not what the law allowed, and it stays on the return when the MFS bar or the MAGI
+ceiling denies the exclusion outright. Line 2b, the Social Security worksheet line 3 carve-out, the
+§86 combined-income add-back and the §4973 excess-contribution MAGI each read it directly and would
+each have granted or added back an exclusion that never happened. All four now go through
+`form8815ExclusionAppliedThisPass()`.
+
+Inside the phaseout band the override is still honoured verbatim — it means "I worked line 14 out
+myself" and we do not second-guess the arithmetic. Only the flat statutory bar binds, exactly as the
+override path already respected the §135(d)(2) MFS bar.
+
+One e2e fixture was resting on the old behaviour: the SS worksheet carve-out test claimed a $5,000
+exclusion against a ZERO-amount placeholder 1099-INT. An exclusion is now applied only when there is
+taxable interest to reduce, so that claim correctly produces no add-back — adding $5,000 to worksheet
+line 3 against interest the return never reported was fabricating income. The placeholder now carries
+the $5,000 of savings-bond interest the exclusion actually applies to; the expected line 6b of $9,600
+is unchanged.
+
+Full suite: 1,792 run, the same 14 pre-existing failures before and after — including the Social
+Security, IRA and excise paths the add-back change touches. The e2e edits are unrun.
+

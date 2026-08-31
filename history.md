@@ -20573,3 +20573,19 @@ see this.
 
 Full suite: 1,836 run, the same 14 pre-existing failures.
 
+## 2026-08-31 (cont.) — sc_00230 gains variants B2 and C2
+
+The same nonresident-alien and student-TIN bars, with the Lifetime Learning Credit requested DIRECTLY
+rather than reached as a fallback. A–D all request the AOTC and so cannot see a product that blocks it
+and then quietly allows the LLC under the same bar — which the 2026-08-31 run found on both products.
+
+The base-return note now gives the LLC counterfactual ($800 = 20% × $4,000) and says to run the base
+first, because a product that produces nothing on the base return will "pass" every bar for the wrong
+reason. Sc00230SqaScenarioTest has a matching second base case for the same reason.
+
+Workbook regenerated to 6 checks. The four recorded Actuals and the tester's notes were captured before
+regenerating and restored afterwards, so nothing was lost; B2 and C2 are blank and await a software run.
+us-tax-be reaches $0 on all six.
+
+Full suite: 1,837 run, the same 14 pre-existing failures. All four SQA linters green.
+

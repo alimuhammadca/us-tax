@@ -20535,3 +20535,41 @@ Each omission produced a complete, plausible return with no EIC and no flag to s
 
 Full suite: 1,831 run, the same 14 pre-existing failures.
 
+---
+
+## 2026-08-31 — sc_00230: we pass all four bars, and testing the one the software failed found a defect of ours
+
+Four statutory bars on an education credit, each of which must reach $0. We produce $0 on all four, and
+the base return was confirmed at the full $2,500 first ($1,000 refundable + $1,500 nonrefundable) so the
+zeros are known to be bars rather than an inert fixture.
+
+The tester's one FAIL is right: the commercial software has no input path for "student TIN not issued by
+the return due date" (variant C) and paid the complete $2,500. Instructions for Form 8863: "the American
+opportunity credit isn't allowed ... for a student who hasn't been issued a TIN by the due date of your
+2025 return (including extensions)." Our per-student gate drops that student.
+
+**The trap in this scenario is the credit left standing.** A check that looks only at the AOTC passes
+even when the Lifetime Learning Credit is quietly allowed under the same bar — which is exactly what the
+tester saw under variant B, where the software offered an $800 LLC alternative to the barred AOTC.
+§25A(g)(7) bars a nonresident alien from BOTH credits.
+
+Testing that same shape against variant C found **a real defect of our own**. The 2025 Instructions put
+"Students must have been issued a TIN by the due date of their 2025 return" on BOTH sides of the
+AOTC-vs-LLC comparison table, but our student-TIN gate sat INSIDE the `"aotc".equals(creditType)` branch.
+It therefore stopped an AOTC student falling back to the LLC — which its comment correctly claimed — but
+never ran at all for a student who requested the **LLC directly**, who kept a full $800 credit with no
+TIN. Hoisted above the credit-type branch, and the flag renamed `AOTC_STUDENT_TIN_NOT_BY_DUE_DATE` →
+`EDUCATION_CREDIT_STUDENT_TIN_NOT_BY_DUE_DATE` since it is no longer AOTC-only (three call sites updated,
+one of them an e2e assertion).
+
+**A near-miss on my side worth recording.** My first fixture passed `"AOTC"` where the compute compares
+`"aotc".equals(creditType)`, so no credit was ever built and all four bars "passed" on an empty return.
+The base-case test is the only reason that surfaced — without it the whole scenario would have been
+green and meaningless. Third instance this session of [[feedback_verify_entry_not_outcome]], and the
+first where the guard I had written specifically to catch it did its job.
+
+Suggested for the scenario: a C2 and B2 row requesting the LLC outright, since neither current row can
+see this.
+
+Full suite: 1,836 run, the same 14 pre-existing failures.
+

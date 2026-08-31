@@ -20465,3 +20465,33 @@ facilitate" shape — the IRS does not refund a penalty you volunteered. Offered
 
 Full suite: 1,826 run, the same 14 pre-existing failures.
 
+## 2026-08-31 (cont.) — the §6654(e)(2) gate is now a §17 blocker
+
+`FORM_2210_PRIOR_YEAR_TAX_UNANSWERED` fires when a Form 2210 penalty **is actually charged** and the
+prior-year total tax has not been entered, and it is registered in `NonOverrideableFlags` — without
+that, `overrideFlags=true` would charge the $699 anyway, which is the whole failure mode.
+
+Two things turn on that figure and both cut the penalty: the 100%/110% safe harbor caps the required
+annual payment, and a zero prior year bars the penalty outright. We cannot guess either, so we ask.
+This one **over-charges** rather than under-reports, but rule §17 covers it the same way — the IRS does
+not refund a penalty you volunteered.
+
+Placed after the penalty is computed rather than at the safe-harbor short-circuit, so a filer whose
+estimated payments turn out to have been timely reaches a zero penalty and is never asked a question
+that could not change their answer. An explicit **0 is a real answer** and never blocks — it drives
+line 8 to zero and the short-circuit returns NO_PENALTY before the gate is reached. A filer under the
+§6654(e)(1) de-minimis stop gets no Form 2210 at all and is likewise never asked. All three corners
+are pinned.
+
+The message names the amount and points at **"Refund and Amount Owed"** — the prior-year form is no
+longer in the sidebar, its fields having been consolidated there, so naming "Prior Year Tax" would
+have sent the user somewhere they cannot go.
+
+**Behavioural consequence worth knowing.** Any return with an underpayment penalty and a blank
+prior-year tax now 409s, and `overrideFlags` will not lift it. `e2e/tests/schedule-c-se-tax.spec.ts`
+is Schedule C income with no withholding across all seven of its computes, so its shared `seedSole`
+helper now answers the prior-year question explicitly — which is what a real filer in that position
+does. The other specs that touch Form 2210 already set it. The e2e edits are unrun.
+
+Full suite: 1,828 run, the same 14 pre-existing failures.
+

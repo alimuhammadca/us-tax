@@ -20233,3 +20233,36 @@ printed figure is 2,347. Same defect class one level up, same e-file argument �
 measured it against the commercial software yet, so it is recorded rather than changed on one reading.
 sc_00210 cannot see it: 12,000 x 92.35% is exactly 11,082.
 
+---
+
+## 2026-08-31 — Schedule SE carries whole dollars from line 4a down (closing the sc_00210 remainder)
+
+The other half of the entry above, closed the same way and for the same reasons. Lines 4a, 4b and 5b
+are each their own entry box and are each rounded; line 4c is "Combine lines 4a and 4b" and line 6 is
+"Add lines 4c and 5b", both sums of already-rounded lines; and the 12.4% / 2.9% rates on lines 10 and
+11 now apply to line 6 **as printed**.
+
+We had been carrying full precision from line 3 all the way to the rates, so the printed form could not
+reproduce its own line 11. At $87,654 of net profit:
+
+    4a/4c/6   87,654 x 92.35% = 80,948.469, printed as   80,948
+    line 11   from the unrounded 80,948.469 x 2.9%        2,348   (before)
+              from the printed  80,948     x 2.9%         2,347   (now)
+    line 12   10,038 + 2,347                             12,385   (was 12,386)
+
+A paper filer multiplies what is on line 6, and an IRS recomputation works from the integer line 6 the
+e-file schema transmits. sc_00210 itself cannot see this — 12,000 x 92.35% is exactly 11,082 — so it is
+pinned at a net profit that leaves a fraction.
+
+**One gate moved with it.** The $400 floor is now read off line 4c as printed: "Combine lines 4a and
+4b. If less than $400, stop." A return whose line 4c reads 400 while no SE tax is computed contradicts
+itself on its face. The band is narrow — it needs unrounded net earnings in [399.50, 400) — but it
+flips SE tax on or off rather than moving it by $1, so it is pinned on both sides: a $433 net profit
+prints 400 and owes $62; $432 prints 399 and owes nothing.
+
+Full suite: 1,807 run, the same 14 pre-existing failures before and after.
+
+Still unmeasured against the commercial software: no scenario has a fractional line 4a, so this rests
+on the form's own wording and the e-file integer argument rather than on a matched Actual. Worth a
+scenario.
+

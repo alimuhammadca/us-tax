@@ -20730,3 +20730,36 @@ why the assertion is on the flag rather than on the amount.
 
 Full suite: 1,852 run, the same 14 pre-existing failures.
 
+---
+
+## 2026-08-31 - sc_00235: a "blank" grading artifact, and an asymmetry in our own alimony guard
+
+TCJA 11051: alimony under a post-2018 agreement is neither deductible nor taxable. All four runs now
+reproduce - payer 0 / recipient 0 / payer 24,000 / recipient 24,000 - and both QA trees agree that HRB
+is correct on all four.
+
+**Row 8's FAIL is the sc_00229 grading artifact again.** The tester entered the word "blank" where
+line 19a is correctly empty; the Match formula compares the cell to 0 literally, so "blank" is not 0.
+Their own note says "Line 19a (Alimony paid) correctly blank = $0", and the us-tax-hrb tree records
+the same run as 0 VERIFIED. The spec now carries the convention: write 0 and say "blank in software"
+in Notes.
+
+**Run B found an asymmetry in our implementation.** The payer-side 215 guard had always ZEROED line
+19a after flagging. The recipient-side 71 guard only flagged - `validateAlimonyAgreementDate` was a
+`static void` validator - so line 2a kept the 24,000 and AGI stayed 84,000. Both raise a 17 blocker, so
+no return was produced either way and no filed return was ever wrong; but the two halves of one rule
+behaved differently, and the recipient direction is the one that OVER-taxes the filer. If that block
+were ever downgraded or bypassed, the payer was protected and the recipient was not.
+
+The validator now returns whether the side is disallowed and the caller drops that amount from line 2a,
+mirroring line 19a exactly. Both sides correct the figure as well as blocking it.
+
+Also pinned: the boundary is exact. TCJA 11051(c) applies the repeal to agreements executed AFTER
+December 31 2018, so 12/31/2018 keeps the old treatment and 01/01/2019 loses it.
+
+A fifth seeding trap for the collection: the other-income form key is `other-incomes-taxpayer`, PLURAL.
+`other-income-taxpayer` is silently ignored, and my first run showed the pre-2019 recipient with no
+income at all - which reads exactly like "we do not tax alimony".
+
+Full suite: 1,858 run, the same 14 pre-existing failures.
+

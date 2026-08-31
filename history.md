@@ -20344,3 +20344,40 @@ hazard alongside `PERSONAL_FORMS`, `PARENT_TABLES_UID_CASCADE` and `NonOverridea
 
 Full suite: 1,817 run, the same 14 pre-existing failures.
 
+---
+
+## 2026-08-31 — sc_00220: the fourth line-12 confirmation, and the first in the other direction
+
+Business meals at the §274(n) 50% limit. Our engine reproduces every value — net profit 42,000, SE tax
+5,935, half-deduction 2,968, AGI 39,032 — matching each recorded Actual.
+
+Five of its seven rows were FAIL for the same reason as sc_00210, sc_00211 and sc_00219, but this one
+goes the OTHER WAY:
+
+    10   38,787 x 12.4% = 4,809.588  ->  4,810
+    11   38,787 x  2.9% = 1,124.823  ->  1,125
+    12   add lines 10 and 11             5,935     (the 15.3% shortcut gives 5,934)
+
+In the other three the correct per-line figure was $1 BELOW the shortcut; here it is $1 ABOVE. That is
+worth having: the direction is not a property of the software, it is simply where the two fractions
+fall, and both directions on record rule out any "the commercial software just rounds down" reading.
+Four independent HRB-matched confirmations now:
+
+    sc_00210   1,695  vs  1,696      (correct is lower)
+    sc_00211  27,192  vs  27,193     (correct is lower)
+    sc_00219   4,238  vs   4,239     (correct is lower)
+    sc_00220   5,935  vs   5,934     (correct is HIGHER)
+
+**It also restores a test case that had been lost.** Line 13 is 50% of the ROUNDED line 12, so an odd
+line 12 puts line 13 on x.50 and it rounds up. sc_00211 and sc_00219 were cited for that rule, but
+their line 12 was odd only because it was being computed the wrong way; corrected, both are even.
+sc_00220's line 12 is a genuinely odd 5,935 → 2,967.50 → 2,968, and the software recorded exactly that.
+The engine comment now points here.
+
+One more internal inconsistency in the spec, of the sc_00211 kind: its counterfactual ("had the full
+$6,000 been deducted, SE tax $5,510") was computed the per-line way, while the table above it used the
+shortcut. The scenario disagreed with its own note. The haircut is worth $425 of SE tax, not the ~$424
+it quoted.
+
+Full suite: 1,820 run, the same 14 pre-existing failures.
+

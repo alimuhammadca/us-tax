@@ -20157,3 +20157,37 @@ is unchanged.
 Full suite: 1,792 run, the same 14 pre-existing failures before and after — including the Social
 Security, IRA and excise paths the add-back change touches. The e2e edits are unrun.
 
+---
+
+## 2026-08-31 — Form 8853 line 18 is now a §17 blocker
+
+From QA sc_00206, which our engine otherwise reproduced exactly on all fourteen graded values. The
+three FAILs there were the scenario's own line numbers, shifted by one; the gap below was found while
+checking how the inputs reach the computation, not from any failing row.
+
+Section C line 18 is "the part of the amount on line 17 that is from qualified LTC insurance
+contracts". It is an entry in its own right, and line 20 — hence the entire taxable computation — is
+built from **line 18, not line 17**. Left unanswered it read as zero, driving line 20 to zero and
+line 26 (the taxable excess over the $420-a-day limit) to zero, so the excess simply disappeared from
+Schedule 1 line 8e. On sc_00206's facts:
+
+    L17 60,000  L18 blank -> L20 0  ->  L26 0     no flags
+    refund 6,133 instead of a 1,813 balance due — $4,320 understated
+
+Nothing about that return looks wrong, and the IRS is holding the 1099-LTC.
+
+The application cannot guess its way out, which is why this asks rather than defaults: copying line 17
+would silently assert every contract is qualified, and defaulting to zero silently drops the income.
+So `FORM_8853_LTC_QUALIFIED_CONTRACT_PORTION_MISSING_TAXPAYER` / `_SPOUSE` blocks the compute, and both
+are registered in `NonOverrideableFlags` — without that, `overrideFlags=true` would drop the $18,000
+anyway, which is the whole failure mode the flag exists to prevent.
+
+An explicit **0 is accepted**: it is a real answer meaning no contract was qualified, and the canonical
+null/zero rule is what keeps the gate from trapping that filer. Only *no answer* blocks. A filer with
+no per-diem 1099-LTC never sees it.
+
+`TestStatementDataService` gained `1099-ltc` and `1099-sa` lists, which had been falling through to
+the empty default — no unit test had ever driven Form 8853 Section C end to end through `prepare()`.
+
+Full suite: 1,801 run, the same 14 pre-existing failures before and after.
+

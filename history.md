@@ -21032,3 +21032,40 @@ Schedule 1 by another route". The check that separates them is downstream and al
 the refund. An absent artifact is not evidence of a zero.
 
 Full suite: 1,904 run, the same 8 pre-existing failures.
+
+## 2026-08-31 - sc_00244: §62(a)(20)/(21) legal-fee caps - both runs pass, and "trust the entry" is closed
+
+Both runs reproduce: line 24h capped to the $40,000 settlement, line 24i to the $30,000 award, each with an
+advisory naming the reduction; AGI $60,000 in both.
+
+**Both QA trees agree for once**, and the commercial product fails both rows. us-tax-hrb pins it with
+arithmetic - Run A refund 5,125 (AGI 50,000) against the capped-correct 3,925 (AGI 60,000), the $1,200
+delta being $10,000 of excess deduction at 12% - then removes the wages in a variant C so the settlement is
+the only income, at which point the product reports AGI of -$10,000. It deducted past zero. us-tax-sqa
+supplies the mechanism: the cap rule appears in "Learn More" text only, with no cross-check against income
+already in the return.
+
+**The same hole existed on our side, one omission deeper.** Our cap keys on a SEPARATE user-entered basis
+field, and the old code said what happened when it was blank: "Basis omitted -> trust the entry." A filer
+who entered the fees and left the basis empty got the full uncapped deduction - the identical defect,
+reachable by omission rather than commission, and invisible to the graded runs because they supply the
+basis. This is the input-side statutory-reduction lens finding exactly what it is meant to find.
+
+Trusting the entry is not defensible for this deduction in particular: §62(a)(20) and (21) do not suggest a
+limit, they DEFINE the deduction as not exceeding the amount includible from the claim, so a fee figure
+with no related income is unanswerable rather than merely incomplete. Blocking is also the only safe
+direction - capping to a guess could understate a legitimate deduction, while trusting the entry overstates
+it, and only the filer knows the real number. Now
+`SCHEDULE1_LINE24H_ATTORNEY_FEES_INCOME_BASIS_MISSING` and
+`SCHEDULE1_LINE24I_WHISTLEBLOWER_FEES_AWARD_BASIS_MISSING`, blocking + non-overrideable.
+
+Three things the graded rows cannot show, pinned separately: the cap stops AT zero (variant C run against
+us gives AGI exactly 0, not -10,000); the cap is a ceiling and not a substitution ($12,000 of fees against
+a $40,000 settlement stays $12,000, with no advisory since nothing was reduced); and the two caps are
+independent ($40,000 + $30,000 = $70,000, never $85,000 of raw fees and never one cap applied twice).
+
+Note-hygiene for the us-tax-sqa tree: its row 9 Notes cell repeats row 8's text verbatim where it should
+describe 24i / $35,000 / $30,000. Actual and Match are right; only the prose was copied.
+
+Full suite: 1,910 run, the same 8 pre-existing failures - no existing fixture claimed these fees without a
+basis, so the new blockers cost nothing.

@@ -20495,3 +20495,43 @@ does. The other specs that touch Form 2210 already set it. The e2e edits are unr
 
 Full suite: 1,828 run, the same 14 pre-existing failures.
 
+---
+
+## 2026-08-31 — sc_00229: three FAILs that were a grading artifact, and all four results correct
+
+MFS credit-disallowance sweep. Our engine reaches all four of the required zeros and matches the
+commercial software exactly — every one of them **null**, the line never carried at all, which is the
+blank the software wrote.
+
+The three FAILs were the workbook formula, not the run. The tester entered the word "blank" where the
+software left the line empty; the Match formula compares the cell to `0` literally, so "blank" is not
+zero and it reported FAIL. Their notes said so on every row, and the scenario's own instructions already
+agree: "If the product prevents the entry entirely, the corresponding line simply never carries a value
+— treat that as the $0 outcome (PASS)." A convention is now written into the spec: enter `0` and say
+"blank in software" in Notes.
+
+Our enforcement style is a deliberate mix, and the scenario accepts any style that reaches $0:
+
+  - education credits (§25A(g)(6)) and student-loan interest (§221(e)(2)) are HARD BLOCKS, both
+    non-overrideable, because neither bar has an exception to reach for;
+  - EIC is an ADVISORY that names the §32(d)(2) exception rather than refusing, because a genuinely
+    separated filer really can qualify.
+
+Flipping the live-apart answer to Yes on the same facts produces an EIC of **$3,580** — the sc_00181
+contrast, now pinned, so the one input the whole distinction rests on has a test.
+
+**Three seeding surfaces for one child**, which cost two false readings before I got there. The
+dependent has to be added in all three places or the scenario silently under-computes:
+
+  1. `personalData.dependents` — via `listDependents()`, NOT a `personalForms` entry. A Map put under
+     "dependents" is ignored outright.
+  2. the wide `DependentRecord` constructor — the convenience one leaves `isFullTimeStudent` and the
+     residency months null, so a 20-year-old cannot qualify under §152(c)(3).
+  3. `eicQualifyingChildren` on the EIC form itself — EIC counts its own list and never reads the
+     dependents.
+
+Each omission produced a complete, plausible return with no EIC and no flag to say why — the
+[[feedback_verify_entry_not_outcome]] shape for the third time this session.
+
+Full suite: 1,831 run, the same 14 pre-existing failures.
+

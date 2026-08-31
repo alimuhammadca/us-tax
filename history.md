@@ -20869,3 +20869,46 @@ the first produced no Schedule 1-A at all and the second produced one with every
 
 Full suite: 1,875 run, the same 14 pre-existing failures.
 
+
+## 2026-08-31 - sc_00239: installment sale, §121, QOF - and six §121 fixtures that never fed the engine
+
+Rows 8, 9 and 10 pass on both QA trees. Row 11 is a COVERAGE GAP, not a numeric FAIL: the commercial
+product says so outright on its 1099-B screen ("Our program doesn't support reporting QOF Proceeds"),
+re-checked 2026-08-25 in forms mode - the strongest available probe, and the one through which Form 6252
+was eventually driven. The scenario's own rule makes non-support informational; the us-tax-sqa Match cell
+reads FAIL only because "N/A" is not 0 to a literal comparison.
+
+**The scenario's claim about OUR scope was stale** and the three runs are not alike, so the correction
+names each one rather than replacing one blanket statement with another:
+
+- **B - §121 - fully computed.** The exclusion applies against the $250k single / $500k MFJ cap from the
+  disposition's own facts, including 2-of-5 ownership and the §121(b)(3) two-year bar.
+- **A - Form 6252 - accepted and routed, not derived.** We read line 24 as a user entry and place it on
+  Schedule D, splitting long from short term by the line 2a/2b dates. The 40% gross-profit percentage is a
+  figure we CONSUME, not one we produce - so row 8 passes on an input.
+- **C - QOF - detected and blocked, not computed.** A deferral election raises the blocking
+  `FORM_8997_REQUIRED_MANUAL_FILL`, whose message says the app does not compute Form 8997 and the filer
+  must complete it. A narrower gap than the product's: it has no QOF concept at all, whereas we recognise
+  the election and refuse to file without the attachment.
+
+**Six unit tests were passing no data and had been red the whole time.** Run B's expected 0 is the one
+number incapable of distinguishing "the exclusion was applied" from "the sale was ignored", and that is
+exactly what had happened in the Phase 2F fixtures: they seeded the 1099-S statement with `grossProceeds`
+and `addressOrLegalDescription`, where the mapper writes `grossProceedsAmount` and
+`propertyAddressOrLegalDescription`. No proceeds ever reached the engine, so every §121 case computed a $0
+gain from a $0 selling price and the address match never fired - which is also why the conditional §17
+blocker kept firing on statements that did have matching dispositions. **The engine was right throughout;
+the fixtures were wrong.** Corrected, and the discriminating control is now pinned: at a $520,000 price
+exactly $20,000 emerges above the cap.
+
+Also pinned: the Form 6252 line 2a/2b dates are load-bearing on both sides. In the commercial product,
+leaving them blank printed a gross profit percentage of 0.0000 and an installment income of 0 while lines
+16 and 18 stayed correct. On our side the same two dates decide long versus short term - $5,960 against
+$6,855 of total tax on the fixture.
+
+A ninth seeding trap: the capital pipeline has FOUR gates (`hadCapitalGainOrLoss`,
+`hadCapitalAssetSalesOrExchanges`, `hasUploadedAtLeastOneCapitalStatement`,
+`confirmAllReceivedCapitalStatementsUploaded`). Miss one and the return still computes - it just contains
+no Schedule D at all.
+
+Full suite: 1,881 run, 8 failures - down from 14, the six Phase 2F fixtures being the difference.

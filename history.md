@@ -20589,3 +20589,38 @@ us-tax-be reaches $0 on all six.
 
 Full suite: 1,837 run, the same 14 pre-existing failures. All four SQA linters green.
 
+---
+
+## 2026-08-31 — sc_00231: the Run 1 FAIL did not test the rule, and the fair observation under it lands on us too
+
+§32(k) recertification after a prior EIC disallowance. Both runs reproduce in our engine: Run 1 (prior
+disallowance disclosed, no Form 8862) gives **$0** with a `FORM_8862_EIC_REQUIRED` advisory naming the
+fix; Run 2 (Form 8862 Part II passing) gives the full **$4,328**. Also pinned: a Form 8862 that is
+*attached but whose Part II fails* does not rescue the credit — filing the form is not the point,
+passing it is.
+
+**Run 1 was recorded FAIL, and it is a test-execution problem rather than a software defect.** The
+tester's own note says the prior disallowance was "not disclosed to the software" and the disallowance
+checkbox "was left unchecked" — so the input the scenario turns on was never entered, and the product
+then paid a credit it had no reason to withhold. The scenario lists the 2023 examination disallowance
+in its Inputs section precisely because it is an input. The spec now says so in bold, with the question
+wording to look for, and the row needs re-running.
+
+**But the observation underneath it is fair, and it is true of us as well.** Nothing in either flow
+REQUIRES the disclosure — it is an optional checkbox, so a filer who forgets or declines to tick it is
+paid a credit §32(k) denies them. Our gate is `eicPreviouslyDenied` on the EIC form, unset by default,
+and unset means paid. `withoutTheDisclosureWePayItToo()` pins that honestly rather than letting the
+scenario's green Run 2 imply we are covered.
+
+That is not a computation defect on either side: §32(k) turns on a fact only the filer holds, and the
+IRS enforces it from its own records. It is a question about whether the product ASKS, so it belongs in
+the scenario's Enforcement-observation section rather than as a FAIL on the amount. Recorded, not
+changed — making it a required question is an intake decision, not a compute one.
+
+A fourth seeding trap for the collection: `computeForm8862` is gated on `filedWithReturn`, and Part II
+eligibility is DERIVED from the line 7 / line 8 answers — there is no `eicEligible` input to set. My
+first Run 2 came back $0 with the recertification flag still raised, which reads exactly like "Form 8862
+does not unblock the credit".
+
+Full suite: 1,841 run, the same 14 pre-existing failures.
+

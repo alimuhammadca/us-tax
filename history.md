@@ -20663,3 +20663,36 @@ drivable?" in minutes, offline, and more conclusively than a live run would. Wor
 us-tax-be reaches $0 on all six sc_00230 variants and 0 / $4,328 on sc_00231. Full suite: 1,841 run,
 the same 14 pre-existing failures.
 
+---
+
+## 2026-08-31 - sc_00232: all four values verified; the Form 8814 withholding bar
+
+Both QA trees agree here - no divergence - and our engine reproduces every graded value. Run 1
+(13,499 of child dividends): 8814 line 6 = 10,799, line 15 = 135, parent AGI 140,799. Run 2 (13,500,
+at the ceiling): `FORM8814_CHILD_GROSS_INCOME_TOO_HIGH`, no Form 8814, 0 on the parent. Run 3
+(6,000 + withholding): blocking `FORM8814_CHILD_HAD_WITHHOLDING_OR_ESTIMATED_PAYMENTS`, 0 on the parent.
+
+Row 11's FAIL is right and well evidenced on both sides: the commercial software's Form 8814 interview
+has no field for the child's federal withholding at all - confirmed from the income checklist, a direct
+"8814" search and a full flow dump - so IRC 1(g)(7)(B)(ii) cannot be entered, let alone enforced, and it
+accepted the election and put 3,300 on the parent return.
+
+Two things worth recording beyond the graded rows.
+
+The instructions list THREE disqualifiers together, and a conformant product must catch all of them:
+estimated tax paid in the child's name, backup withholding, and a prior-year overpayment applied to the
+child's estimated tax. Our flag covers all three and each is now pinned separately, because a gate that
+catches one of three still reads as working.
+
+And what the misplaced income actually costs. The bar is not tidiness: the child's withheld 500 is
+credited to the CHILD's SSN, and no line on the parent's return can reach it. Allowing the election does
+not merely move 3,300 of income to the wrong return - it silently forfeits a refundable payment.
+
+The 135-on-line-16 row is now verified in isolation rather than inferred. In Run 1 the 135 arrives
+alongside 10,799 of extra income and the two are inseparable in the line-16 total. A child at exactly
+2,700 separates them: line 6 is nothing (null, not zero - no excess to carry, rather than an excess that
+came to zero), AGI is unchanged, and line 16 still moves 11,504 -> 11,639. The whole difference is the
+Form 8814 tax.
+
+Full suite: 1,846 run, the same 14 pre-existing failures.
+

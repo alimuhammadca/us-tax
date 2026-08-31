@@ -20803,3 +20803,37 @@ exclude W-2-reported waiver pay", the very defect the scenario is testing for.
 
 Full suite: 1,863 run, the same 14 pre-existing failures.
 
+---
+
+## 2026-08-31 - sc_00237: correct on both sides, a third "blank" artifact, and a weak row worth strengthening
+
+All four graded values reproduce - Run A line 6b 0; Run C monthly 120, tax-free 1,440, line 5b 22,560 -
+and both QA trees agree the commercial software gets them right too.
+
+**Row 8's FAIL is the "blank" grading artifact for the THIRD time**, after sc_00229 and sc_00235. The
+tester's own note says "Blank = correct $0 ... Match shows FAIL only because the sheet compares
+literally". That is now three scenarios where a correct answer graded itself red; the convention (write
+0, note "blank in software") is recorded on all three.
+
+**Run A's zero does not discriminate.** A return with no Social Security at all also shows line 6b = 0,
+so the row passes whether SSI was correctly EXCLUDED or simply NEVER ENTERED - and the recorded run was
+the latter ("nothing was entered anywhere on the return"). Proving the exclusion needs real benefits
+alongside the SSI, so that the section 86 worksheet has something to move: with 20,000 of SSA-1099
+benefits and 30,000 of wages, line 6b is 9,600 WITH and WITHOUT the 9,000 of SSI, and total income is
+39,600 either way. Pinned as a difference rather than an absolute, and suggested to the scenario as a
+run A2.
+
+Run C's arithmetic is exact by construction: the Pub. 575 factor for a single life aged 61-65 with an
+annuity starting after 18 November 1996 is 260, and 31,200 / 260 is 120 with no rounding. The failure it
+guards against is a product ignoring the cost basis and taxing the full 24,000 - 1,440 of phantom income
+a year for as long as the cost is being recovered, which is pinned by differencing against a
+box-2a-filled 1099-R.
+
+A seventh seeding trap: the Simplified Method wants `numberOfAnnuityPaymentsReceivedInTaxYear`, and my
+first attempt used a plausible-looking wrong name. Worth noting that this one FAILED SAFE and told me
+exactly what was missing - PENSION_SIMPLIFIED_METHOD_INPUTS_MISSING_TAXPAYER names all three required
+fields, and the taxable amount fell back to the full gross rather than silently under-reporting. That is
+the right shape for a missing-input gate, and the opposite of the traps that quietly drop a subsystem.
+
+Full suite: 1,868 run, the same 14 pre-existing failures.
+

@@ -20763,3 +20763,43 @@ income at all - which reads exactly like "we do not tax alimony".
 
 Full suite: 1,858 run, the same 14 pre-existing failures.
 
+---
+
+## 2026-08-31 - sc_00236: Run C's expectations were structurally impossible, and Run A is an overcharge
+
+All three runs reproduce in us-tax-be: Run A line 1g 30,000 with 2,295 to Schedule 2; Run B EIC 0;
+Run C total income 0.
+
+**Run C as written could not hold.** It states the pay is in W-2 box 1 and then expects line 1d =
+20,000 AND line 1a = 0. Form 1040 line 1d reads verbatim "Medicaid waiver payments NOT REPORTED ON
+FORM(S) W-2", so a W-2-sourced payment cannot go there - the tester caught that half. The line 1a half
+falls out of the same structure: the W-2 is reported AS ISSUED and the exclusion is backed out on
+Schedule 1 line 8s, whose own title is "Nontaxable amount of Medicaid waiver payments INCLUDED ON Form
+1040, line 1a or 1d", a negative entry. Zeroing line 1a would leave the return disagreeing with the
+W-2 the IRS already holds. Correct set: 1a 20,000, 1d blank, 8s (20,000), line 9 total income 0.
+
+I asserted the scenario's line 1a = 0 at first and it failed - my assertion was wrong, not the engine.
+Worth noting because the engine's answer looked like a defect until I read line 8s.
+
+**Two reporting shapes reach the same answer.** The modern one is W-2 box 12 code II with the payments
+already out of box 1 (nothing to back out, 8s empty); the scenario describes the legacy shape where the
+payer put them in box 1. The 1040 instructions say nontaxable waiver payments "should now be reported
+to you on Form(s) W-2 in box 12, code II". We model both, and both are pinned.
+
+**Run A's failure on the commercial side is an OVERCHARGE, not an omission**, and the two are opposite
+errors. Its exported return prints "Note: The program does not support Form 8919", routes the pay to
+Schedule C and charges SE tax at 15.3%. A misclassified employee files Form 8919 precisely to pay only
+the EMPLOYEE half: 2,295 against 4,239 on Schedule SE, over 1.8x. The product overcharges the worker
+the form exists to protect. Pinned as arithmetic rather than prose.
+
+Note also that the us-tax-sqa copy marks rows 8 and 9 PASS with actuals of 30,000 and 2,295 - stale,
+and its own row-8 note contradicts it ("Form 8919 doesn't exist in the software"). The us-tax-hrb tree,
+backed by the exported return, is the authoritative record. Second time this week the two trees have
+disagreed; see the memory on that.
+
+A sixth seeding trap: the waiver form is gated on `receivedMedicaidWaiverPayments`. Without it the
+entries are never read and the exclusion silently does not happen - which reads exactly like "we cannot
+exclude W-2-reported waiver pay", the very defect the scenario is testing for.
+
+Full suite: 1,863 run, the same 14 pre-existing failures.
+

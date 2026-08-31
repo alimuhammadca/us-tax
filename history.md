@@ -20999,3 +20999,36 @@ why the scenario is shaped as partial handling - hiding Form 8962 once the credi
 first row and silently loses the second.
 
 Full suite: 1,897 run, the same 8 pre-existing failures.
+
+## 2026-08-31 - sc_00243: §221(c) student-loan bar - both runs pass, and the two trees contradict
+
+Both runs reproduce. §221(c) is enforced off the single canonical `someoneCanClaimYou` field on the
+standard-deductions form, zeroing Schedule 1 line 21 with a blocking flag; run B allows the full $1,500.
+Run A taxable 14,250 / tax 1,475; run B taxable 12,750 / tax 1,295 - the dependency answer is worth $180.
+
+Also pinned: the §221(b) $2,500 cap and the dependency bar share one if/else chain, so at $4,000 of
+interest a non-dependent is capped to 2,500 while a dependent still gets nothing (the bar takes precedence
+rather than the two interfering); and §221(e)(2) MFS is a separate rule with its own flag, so a filer can
+tell which one caught them. §221(c) turns on CAN be claimed, not was actually claimed, and there is no
+competing "actually claimed" surface for the two to drift apart.
+
+**The trees flatly contradict each other on row 8** - not the usual "each probed something different", but
+the same question with two opposite answers. us-tax-sqa recorded "blank" read as $0 ("Not a real
+discrepancy"); us-tax-hrb recorded 1,500, the deduction GRANTED to a dependent, from an A/B pair where both
+runs produced "Student loan interest 1,500" and both returned refund 1,705.
+
+**The us-tax-hrb reading is correct, and our own engine corroborates its arithmetic independently.** We
+compute tax of 1,475 barred and 1,295 allowed; against $3,000 withheld those are refunds of exactly 1,525
+and 1,705 - the two figures that tree names, derived here from a separate implementation and hand-checked
+against the 2025 single brackets. A run that genuinely disallowed the deduction could not have refunded
+1,705.
+
+**Why "blank" was the wrong inference, and why this differs from sc_00229/00235/00237.** In those three a
+tester wrote "blank" where a value was correctly $0 and the Match column read FAIL on a literal comparison
+- grading artifacts. This is not that. Here "blank" was an INFERENCE from a worksheet that was never
+produced, while the refund is a MEASUREMENT, and they disagree. A blank worksheet is equally consistent
+with "the disqualifier applied" and with "the worksheet was never generated because the amount reached
+Schedule 1 by another route". The check that separates them is downstream and always available: the tax or
+the refund. An absent artifact is not evidence of a zero.
+
+Full suite: 1,904 run, the same 8 pre-existing failures.

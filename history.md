@@ -20069,3 +20069,46 @@ automatic for us and manual in H&R Block), and `Sc00122`.
 
 Full suite: 14 pre-existing failures before and after, none related (Form 1116 baskets, Form 8615
 collectibles, 1099-S §121 blockers, Schedule R / 8863 wiring). No new failures.
+
+---
+
+## 2026-08-30 — Form 8815: line 12 is skipped below the phaseout, and the form is not filed above the ceiling
+
+From QA sc_00205. Two corrections to the same block, both about completing lines the form tells you
+not to reach. The tax on the scenario itself was already right: 2b 0, AGI 60,000, TI 44,250, tax
+5,075, refund 925, with the whole 2,000 of box-3 interest excluded.
+
+**Line 12 below the phaseout.** Line 11 reads "Subtract line 10 from line 9. *If zero or less, skip
+line 12, enter -0- on line 13, and go to line 14.*" We were writing `0.000` on line 12. It is now
+null, with line 13 keeping the explicit zero the form does ask for — null means the line does not
+apply, zero means it applies and is zero. The commercial software left line 12 blank and was right;
+the scenario had expected `0` and was wrong. Cosmetic for the tax, but it is what the PDF export
+renders, and the in-band case still needs a real ratio, so a blanket null would be equally wrong.
+
+**At or above the MAGI ceiling the form is not produced at all.** Previously we emitted a filled-in
+Form 8815 carrying line 12 = 1.000 and line 14 = 0 — the right exclusion (zero) reached the wrong way.
+Six sources agree it should be suppressed: the Note between lines 9 and 10 ("If line 9 is $114,500 or
+more ... **stop. You cannot take the exclusion**"); "Who Can Take the Exclusion" test 4, which requires
+MAGI to be *less than* the ceiling; "Purpose of Form" ("figure the amount of any interest you may
+exclude"); Schedule B line 3, "Excludable interest ... **Attach Form 8815**", which is the only thing
+the form attaches to and is blank here; J.K. Lasser's Your Income Tax 2025 §33.4 ("No exclusion is
+allowed if MAGI equals or exceeds the ... limit"); and our own treatment of the identically worded
+line-4 stop, which has always returned null. A new non-blocking `FORM_8815_MAGI_ABOVE_CEILING` names
+the MAGI and the limit, so a filer who claimed the exclusion is told why it produced nothing instead
+of silently getting a fully taxable line 2b.
+
+The ceiling is exclusive on the low side and that boundary is now pinned: at $114,499 the form is
+still filed, with line 12 rounding to 1.000 and the exclusion rounding away to nothing.
+
+`form8815DefaultMagiAddsBackForeignEarnedIncomeExclusion` turned out to be mislabelled — its comment
+claimed the Form 2555 add-back pushed MAGI "into the phaseout", but the arithmetic lands at $120,000,
+past the ceiling, and the loose `< 3,000` assertion held either way. Split into the ceiling case
+(now suppressed) and a new in-band case pinned exactly: MAGI 100,000, line 11 = 500, ratio 0.033,
+line 13 = 99, line 14 = **2,901** — reduced by the add-back, not destroyed by it.
+
+Also recorded on the scenario: line 9 is the MAGI computed *without* this exclusion (§135(c)(4)) —
+62,000 rather than the 60,000 AGI. Computing it post-exclusion would understate MAGI by exactly the
+exclusion and could wrongly rescue a filer sitting just above the start.
+
+Full suite: 1,790 run, the same 14 pre-existing failures before and after, none in Form 8815.
+

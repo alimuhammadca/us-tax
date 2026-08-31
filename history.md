@@ -20696,3 +20696,37 @@ Form 8814 tax.
 
 Full suite: 1,846 run, the same 14 pre-existing failures.
 
+---
+
+## 2026-08-31 - sc_00233: a line-number mislabel, and a real 21(b)(1)(B) residency defect of ours
+
+Two findings, one on each side.
+
+**The scenario cites the wrong line, and the tester caught it.** It says "Schedule 3 line 6f"; the 2025
+Schedule 3 reads "2 Credit for child and dependent care expenses from Form 2441, line 11. Attach Form
+2441". Line 6f belongs to the unrelated 6a-6z other-nonrefundable block. Values were always right.
+
+**Run B found a real defect in us-tax-be.** The three 21(b)(1) qualifying-person tests are not the same
+kind: a child UNDER 13 (age), a spouse or dependent INCAPABLE OF SELF-CARE (condition), and - for that
+second class only - having lived with the taxpayer MORE THAN HALF THE YEAR (residency). We enforced
+family membership and age-plus-disability but not residency, so marking the person disabled satisfied
+the age gate and the whole $600 was paid to a dependent who had lived with the filer four months.
+
+Runs A and C both passed, which is why nothing else revealed it: residency is the only one of the three
+tests no other row in the scenario touches. Now a blocking, non-overrideable
+`DEPENDENT_CARE_QUALIFYING_PERSON_NOT_RESIDENT_MORE_THAN_HALF_YEAR`, using the months already on the
+dependent record - no new intake needed.
+
+The trap that made this easy to miss: **the 152 dependency test is not the 21 residency test.** A
+qualifying relative - an elderly parent, say - need never live with the filer at all, so a perfectly
+valid dependent can still fail 21. Reading "they are a dependent" as implying residency is what leaves
+the gap. Null-tolerant, and the boundary is *more than* six months, so six blocks and seven passes -
+both pinned, along with the fact that the gate must NOT touch an under-13 child, who carries no
+residency condition of their own.
+
+Our Run A behaviour is worth one note: the blocking flag fires but the computed credit object still
+holds 600. That is harmless - a non-overrideable blocker means no return is produced at all - but it is
+why the assertion is on the flag rather than on the amount.
+
+Full suite: 1,852 run, the same 14 pre-existing failures.
+

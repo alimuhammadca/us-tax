@@ -20624,3 +20624,42 @@ does not unblock the credit".
 
 Full suite: 1,841 run, the same 14 pre-existing failures.
 
+---
+
+## 2026-08-31 - sc_00230 / sc_00231 verification columns resolved, and a correction I have to own
+
+**I got sc_00231 wrong yesterday.** I called its row-8 FAIL "a test-execution problem rather than a
+software defect", on the strength of the us-tax-sqa note saying the disclosure was never entered. That
+note is the 2026-08-21 manual pass and is **stale**. The us-tax-hrb run of 2026-08-25 had already
+declared the disallowance - `rb_PrevViolation=100.12575` with a proven READBACK, and again `100.460`
+"None apply" - and HRB still paid $4,328 with no Form 8862 in the exported PDF. It is a confirmed
+product finding, and the record already said so before I wrote the opposite.
+
+The root cause is a process hazard worth naming: **Actual columns live in TWO unsynced trees.**
+us-tax-sqa is the tester's manual pass; us-tax-hrb is the automation's, backed by run logs, READBACK
+proofs and PDF exports. Each can be ahead of the other - sqa is newer on sc_00230, hrb on sc_00231.
+Both rows are now synced verbatim from the hrb workbook, and the spec carries the five-option
+`rb_PrevViolation` table so the next runner can answer the screen earlier runs left unanswered (the
+driver's logger sliced option labels at three and hid the two that matter). Row 9's $4,328 is re-noted
+as NON-DISCRIMINATING - the same figure came out of the `form8862:false` run.
+
+**sc_00230 B2/C2 resolved without a run.** Rather than drive HRB, I read the shipped product:
+`Screens/Tuition.cxml` - the education-credit screen - has no control for either condition. Its only
+checkboxes are academic-period Jan-Mar 2026, at-least-half-time, graduate student, insurance
+reimbursement, books-to-employer-assistance and foreign school address. The nonresident-alien text there
+is `static_macro` PROSE ("if you were a nonresident alien for any part of 2025, you must have elected to
+be treated as a resident alien"), and the TIN-by-due-date rule ships only as a help link on the
+dependent screen (`tc:TOPICHELP=Dpndt,hTaxIDNotIssued`) beside the name/SSN/DOB inputs.
+
+So HRB states both rules and relies on the filer to self-police. Neither variant is drivable, the Actual
+stays a deliberate blank, and this confirms from the product what the tester had inferred on variant C -
+also explaining why the hrb workbook left variant B blank "needs NRA-status entry" rather than recording
+a number.
+
+Decompressing `Program/US/Screens/*.cxml` (zlib, wbits 47) and looking for a real
+`<input type=checkbox|radio>` versus a `TOPICHELP` link or `static_macro` prose answers "is this
+drivable?" in minutes, offline, and more conclusively than a live run would. Worth reaching for first.
+
+us-tax-be reaches $0 on all six sc_00230 variants and 0 / $4,328 on sc_00231. Full suite: 1,841 run,
+the same 14 pre-existing failures.
+

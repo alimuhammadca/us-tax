@@ -20381,3 +20381,42 @@ it quoted.
 
 Full suite: 1,820 run, the same 14 pre-existing failures.
 
+---
+
+## 2026-08-31 — sc_00223 validated: all 13 rows match, and a defect on the other side we avoid by design
+
+QBI above the threshold for a non-SSTB: wage-limited to $10,000, not zeroed. Our engine reproduces
+every one of the thirteen graded rows — QBI 74,348, tentative 14,870, wage limit 10,000, deduction
+10,000, taxable income 248,598, line 23 of 14,129 (11,304 SE tax + 2,825 NIIT). Nothing to correct.
+
+The content is in the tester's note, which records a CONFIRMED DEFECT in the commercial software: its
+"Tell us the amount of employee wages" question populates Schedule C line 26 but NOT the separate
+QBI-specific "W-2 wages paid" field the §199A worksheet reads, so it produced a **$0** deduction until
+the tester entered the same $20,000 by Forms-mode override. The Actual column is the post-override run.
+
+We are not exposed, by construction rather than luck: our Schedule C QBI component reads the §199A
+wage figure from the SAME `wages` field that feeds line 26, so the two cannot drift apart. Pinned by a
+test that also runs the return with no wages stated and gets exactly the $0 the software produced.
+
+**The caveat is worth recording though.** §199A W-2 wages and Schedule C line 26 are not always the
+same number — wages capitalised into cost of goods sold count for §199A but never reach line 26, and
+line-26 amounts not reported on a filed W-2 do not qualify. Deriving one from the other is right for
+the common sole-proprietor case and silently wrong for those. Closing it needs an intake field of its
+own, so it is recorded rather than built.
+
+**A coverage limit found in yesterday's line-12 sweep.** sc_00223 states an SE tax with no
+`### Schedule SE` heading — it sits inside a QBI table — so the sweep never reads it. 21 specs are in
+that position. All 21 were hand-checked and every SE figure is correct, including sc_00226 (5,652 per
+spouse), sc_00286 Run A (8,195) and sc_00389 (21,194), each of which agrees under both rounding
+methods. The gap is now documented in the linter rather than closed: a looser text match generates
+false positives faster than it finds anything, and two proved it during the check — "exci**SE tax**"
+matches a word-boundary-less "SE tax", and back-solving net earnings from the answer mislabels correct
+figures as the round-once one. If it is ever widened, the SE base must come from the spec, never from
+the value.
+
+Noted in passing: sc_00389's computation note *describes* its SE tax as "138,525 × 0.153", the
+shortcut, even though the figure it reaches is right. Harmless today, but anyone editing those numbers
+by the stated method would reintroduce the defect.
+
+Full suite: 1,823 run, the same 14 pre-existing failures.
+

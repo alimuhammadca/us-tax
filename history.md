@@ -20961,3 +20961,41 @@ repayment §1341)` on the guided Other Deductions screen is the DEDUCTION method
 product supports both remedies and surfaces only the deduction.
 
 Full suite: 1,891 run, the same 8 pre-existing failures - no regression from either engine change.
+
+## 2026-08-31 - sc_00241: PTC barred on MFS but repaid anyway - both rows pass, two spec corrections
+
+Both graded rows reproduce: net PTC $0, repayment $4,000, Form 8962 still PRODUCED rather than hidden. No
+engine defect. This is the "partial handling" shape working as designed - the credit is disallowed but a
+non-credit output of the same form is still required, so §36B(c)(1)(C) forces Form 8962 line 24 to 0
+BEFORE Part III rather than suppressing the form.
+
+**Correction 1: the repayment is Schedule 2 line 1a for 2025, not line 2.** The QA tester's note is right
+and the spec was carrying the pre-2025 layout. Part I was restructured into an additions block - 1a excess
+APTC repayment, 1b/1c clean-vehicle credit repayments, 1d-1f Form 4255 recapture, 1y/1z other and total
+additions - and the AMT moved to line 2. Confirmed against the 2025 semantic field map
+(`f1_03[0] = line1a_excess_aptc_repayment`, `f1_16[0] = line2_alternative_minimum_tax`). Our engine already
+routes it to 1a via `schedule2Line1zAdditions` with AMT excluded, so this is a documentation fix only.
+
+**Correction 2: the ">400% FPL" framing is misleading for 2025.** $65,000 against the 2024 one-person line
+of $15,060 is 432%, and under pre-2021 law that was a cliff - above 400% the credit vanished. It is NOT a
+cliff for 2025: the ARPA structure extended by the IRA through 2025 removes it and caps the required
+contribution at 8.5% of household income, so a filer at 432% is still eligible. What being over 400% still
+does is remove the §36B(f)(2)(B) repayment LIMITATION, which is the part this scenario actually relies on.
+
+That distinction is load-bearing for the exception control, and the obvious assertion there is wrong. With
+§36B(c)(1)(C) relief claimed the net credit is STILL zero, because the $4,000 advance exceeds the $715
+allowance (6,240 SLCSP - 5,525 at 8.5%) and line 26 is nil either way - so "the credit becomes non-zero"
+would fail against correct behaviour. What moves is line 29: the repayment drops to $3,285. That difference
+is the only available proof the exception field is read by compute rather than merely stored and rendered.
+
+**The trees split on row 9 and the HRB tree is right about its own product.** us-tax-sqa recorded 4,000;
+us-tax-hrb recorded 0 with a specific finding - the "Your 1095-A Information" screen has no entry fields and
+both nav anchors jump to "Great job! you received the right premium tax credit". The product pre-determines
+PTC = $0 for the MFS case and then skips collecting the 1095-A, so the $4,000 is never entered and the
+repayment is never assessed; the refund stays at $2,245. That is exactly the FAIL the scenario was written
+to catch, and it is more interesting than a pass: the product lands on the right answer for row 8 FOR THE
+WRONG REASON, and the wrong reason is what costs $4,000 on row 9. It is also the clearest illustration of
+why the scenario is shaped as partial handling - hiding Form 8962 once the credit is disallowed passes the
+first row and silently loses the second.
+
+Full suite: 1,897 run, the same 8 pre-existing failures.

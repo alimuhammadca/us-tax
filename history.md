@@ -20420,3 +20420,48 @@ by the stated method would reintroduce the defect.
 
 Full suite: 1,823 run, the same 14 pre-existing failures.
 
+---
+
+## 2026-08-31 — sc_00228: the scenario had the law wrong, and it exposed a real §6654(e)(2) gap
+
+Ten of twelve rows passed; the two FAILs were the Form 2210 penalty determination, and the tester was
+right on both. The scenario expected a penalty and the commercial software produced none.
+
+**IRC §6654(e)(2)** bars the estimated-tax penalty outright when the filer (A) had no tax liability for
+the preceding year, (B) was a U.S. citizen or resident throughout it, and (C) that year was a 12-month
+taxable year. J.K. Lasser's Your Income Tax 2025 §27.1 contradicts the spec head-on:
+
+> "You are not subject to an estimated tax penalty ... **if you did not have to file** a ... return or
+> your ... total tax was zero. **This is so even if you owe $1,000 or more** (after withholdings) ...
+> and you do not qualify for either the 90% current-year exception, or the 100%/110% prior-year
+> exception."
+
+The spec had argued a $0 prior year "does not help a first-year filer with a balance ≥ $1,000" — which
+is precisely the case the exception exists for — and that the exception requires a return to have been
+filed, which it does not. It also shows on the form face without reaching for the statute: line 8 is
+the maximum required annual payment *based on prior year's tax*, so a $0 prior year makes line 8 zero,
+line 9 zero, and "Is line 9 more than line 6?" No.
+
+Every other value reproduces: AGI 74,348, QBI 11,720 (the 20%-of-taxable-income cap binds, not the 20%
+of QBI), taxable income 46,878, income tax 5,387, SE tax 11,304, total 16,691.
+
+**THE GAP.** We have no §6654(e)(2) test at all. We reach the right answer here only because a
+prior-year tax of ZERO drives line 8 to zero through the form's own arithmetic. Leave the field
+unanswered — the natural state for someone with no filing requirement, which is this scenario's own
+stated fact pattern — and line 8 falls back to 90% of the current-year tax and we charge **$699** the
+taxpayer does not owe:
+
+    prior-year 0      L7 0       L8 0          NO_PENALTY
+    prior-year blank  L7 null    L8 15,021.90  REGULAR_METHOD, penalty 699
+
+Null and zero are genuinely different here ("we don't know" against "it was nothing"), so this is not a
+blank-means-zero fix. §6654(e)(2) needs three facts and we capture none of them explicitly. Both
+branches are pinned in Sc00228SqaScenarioTest so the defect is visible rather than latent.
+
+The natural fix, matching the Form 8853 line-18 gate: when a penalty would be charged and the
+prior-year tax is unanswered, block and ask rather than assume. Over-charging a filer is the
+[[feedback_intentional_blocking_scenarios]] / rules §17 "self-harm the application should not
+facilitate" shape — the IRS does not refund a penalty you volunteered. Offered, not built.
+
+Full suite: 1,826 run, the same 14 pre-existing failures.
+

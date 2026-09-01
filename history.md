@@ -21069,3 +21069,49 @@ describe 24i / $35,000 / $30,000. Actual and Match are right; only the prose was
 
 Full suite: 1,910 run, the same 8 pre-existing failures - no existing fixture claimed these fees without a
 basis, so the new blockers cost nothing.
+
+## 2026-08-31 - sc_00249: Notice 2014-7 variants - the tester's line-1d correction is right, plus two real defects
+
+**The QA tester is right and the scenario spec is wrong on three of its five rows.** Runs A and C cite
+Form 1040 line 1d for payments the scenario itself puts in W-2 box 1. Verbatim from the 2025 IRS PDF:
+"d Medicaid waiver payments NOT REPORTED ON FORM(S) W-2 . . . 1d". Line 1d is structurally unavailable
+here and line 1a cannot drop to $0 - the return must agree with the W-2 the IRS also received.
+
+The correct mechanism is the one BOTH QA trees independently name: wages stay on line 1a and the
+exclusion is a negative on Schedule 1 line 8s, whose 2025 field label settles it -
+`line8s_nontaxable_medicaid_waiver_payments_included_line1a_or_1d` ("...included on Form 1040, line 1a
+OR 1d"). Line 8s exists precisely because the payment can arrive by either route. Same correction as
+sc_00236. Our engine already produced 1a = 20,000 / 8s = (20,000) / total income 0.
+
+**The two trees disagree about the product and both are describing something real.** us-tax-sqa saw the
+Schedule 1 offset applied; us-tax-hrb's 90-screen probe found the only two Medicaid-waiver fields in the
+whole flow are catch-all write-ins explicitly restricted to payments NOT on a W-2, so the guided
+interview never routes a W-2 fact pattern to an exclusion. Both hold: the mechanism exists as a write-in
+and the tester used it, while the interview will not lead you there. The automation's enforcement
+observation is the more valuable finding and the one the scenario asked for - across 90 screens the
+product never asks WHERE care was provided, so Runs A and B are indistinguishable to it and Run B
+reaches the right number for the wrong reason.
+
+**Defect 1: excluded payments counted as EIC earned income with no election.** Run C's graded $4,328 was
+produced - but so was $4,328 with the election OFF. The EIC base came straight from W-2 box 1 via
+`sumW2WagesBySsn` with nothing backing out the excluded Notice 2014-7 dollars. Under §32 an amount
+excluded from gross income is not earned income unless the filer ELECTS to include it, so a caregiver
+who excluded $20,000 and made no election was getting the exclusion AND the full one-child credit on the
+same dollars. Now subtracted exactly the way inmate wages already were (§32(c)(2)(B)(iv)) - same shape,
+same reason - and zero when the election is on, which is what the election buys.
+
+**Defect 2: the home-sharing gate was conditioned on the election.** Home sharing governs the EXCLUSION;
+the election is a separate optional choice about the EIC/ACTC base. But removing the condition outright
+over-fired, and an existing lock-in test caught it - correctly. The distinction is which sub-case is in
+play: qualified dollars in W-2 box 1 are backed out of income ALWAYS, so denying home-sharing there is a
+real unearned exclusion and must block regardless of the election; qualified dollars NOT in W-2 box 1
+are never reported as income without the election, so nothing was excluded and nothing should block. The
+gate now keys on the amount ACTUALLY removed from income - the same offset the line 8s computation uses
+- rather than on the raw qualified total. Both readings survive.
+
+Two things the graded rows cannot show, pinned separately: the in-home answer alone moves total income
+from $0 to $20,000 with `livesWithCareRecipient` the only difference (the row that separates a product
+applying the §-test from one that merely has no exclusion path); and the election alone moves the credit
+from nothing to $4,328, which before the fix it did not.
+
+Full suite: 1,917 run, the same 8 pre-existing failures.

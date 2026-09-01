@@ -21115,3 +21115,39 @@ applying the §-test from one that merely has no exclusion path); and the electi
 from nothing to $4,328, which before the fix it did not.
 
 Full suite: 1,917 run, the same 8 pre-existing failures.
+
+## 2026-08-31 - sc_00250: Form 8919 reason codes A and H - all four reproduce; the SQA workbook self-contradicts
+
+All four graded values reproduce. Code A: line 1g = 30,000, Schedule 2 line 6 = 2,295. Code H: line 1a =
+10,000 (the W-2 untouched), line 1g = 20,000, Schedule 2 line 6 = 1,530. Schedule 2 LINE 6 is confirmed
+correct for 2025 (`f1_14[0] = line6_uncollected_ss_medicare_wages`) - unlike sc_00241 and sc_00249, this
+scenario's line citation needed no correction.
+
+**The us-tax-sqa workbook contradicts itself on the two tax rows.** It records all four PASS - including
+2,295 and 1,530 - while its Notes say the figures were "achievable only via manual override (Form 1040
+line 1g direct override) + a buried manual tax entry (Schedule 2 ...)" and conclude "FAIL - structural
+gap, not a guided/supported path". Those Notes cells are MERGED across each run's two rows (8-9, 10-11),
+so the verdict covers the tax rows explicitly rather than being stray commentary on the wage row. A number
+the tester typed into a manual-entry box is not a number the product computed.
+
+**us-tax-hrb resolves it arithmetically.** The wage rows pass in both runs - the product genuinely
+reclassifies 1099-NEC income to wages through its own "Tell us where to report this 1099-NEC income"
+screen - while the tax rows are ZERO in both. Run A owes 1,475, reconciling as income tax alone on 14,250
+of taxable income with no withholding; run H owes 675, the same 1,475 less 800 of withholding. In place of
+computing the tax the product shows a fieldless screen reading "Take these steps to report your wages.
+File Form 8[919]". Correct grading: wage rows PASS, tax rows FAIL, on two independent runs with two
+different reason codes. Matches sc_00236 on the same form.
+
+Three things the graded rows cannot show, pinned separately. The RATE is the entire point and neither tax
+row demonstrates it alone - a product that omits the tax reports 0, one that charges SE tax reports a
+number too, just the wrong one; the same 30,000 costs 2,295 on Form 8919 and 4,590 on Schedule SE, so
+misclassification costs exactly double. The 2,295 is genuinely OWED - total tax 3,770 against 1,475 for
+the same 30,000 as ordinary W-2 wages. And run H's split is real: the 10,000 W-2 stays on line 1a so FICA
+is charged once (the us-tax-hrb note flags honestly that it could observe only the combined 30,000).
+
+The three reason-code gates all block; only FORM8919_CODE_H_1099_* is non-overrideable, and the split is
+principled - an invalid code or missing IRS determination date mis-documents the claim without changing
+the tax, whereas a code-H row with no 1099 may not qualify for Form 8919 at all, making the correct rate
+15.3%. That is an under-reporting risk, which is what rules.md §17 reserves the list for.
+
+Full suite: 1,925 run, the same 8 pre-existing failures.

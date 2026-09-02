@@ -4684,3 +4684,19 @@ Schedule C and F as well as rentals, since it turned out to be a blank display-o
 activity rather than a Schedule-E-only gap. Rental §199A UBIA is wired to the safe-harbor QBI activity,
 which had been passing null; above the threshold that had been zeroing the deduction outright, because a
 rental enterprise pays no W-2 wages and UBIA is the only term left.
+
+## Passive partnership K-1 losses bypass the §465 at-risk gate (raised 2026-09-02)
+
+Rentals, Schedule C and Schedule F all carry `someInvestmentNotAtRisk` / `amountAtRisk` and apply §465
+**before** §469 — verified by `Sc00279SqaScenarioTest`, which pins the 15,000/25,000 split and a
+fully-at-risk control. **A passive partnership K-1 has no at-risk field**, so its loss goes straight into
+the §469 pool without passing the at-risk gate.
+
+Raised by sc_00279, where both Actual trees used a K-1 and found the commercial product with the same
+gap. It is invisible in that scenario's graded rows for the reason the `us-tax-hrb` tree identified: with
+no passive income in Year 1, a two-gate and a one-gate implementation both deduct nothing.
+
+Direction: a partner who is not fully at risk has the excess released a year early once passive income
+appears — over-deduction. The §465 machinery already exists (`atRiskSuspended`, the Form 6198 output, the
+carryforward bridge); what is missing is an at-risk amount on the K-1 intake, which is a form-field
+addition and so wants sign-off.

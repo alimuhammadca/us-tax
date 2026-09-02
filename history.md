@@ -21630,3 +21630,38 @@ product treats PTPs as out of scope and asks the preparer to choose the §199A a
 leaving it blank is what lets the (5,000) PTP loss reach line 6 and carry on line 17.
 
 Unit suite 2,001, the same 8 pre-existing failures.
+
+## 2026-09-02 — sc_00279 validated: §465 before §469 confirmed for rentals; a K-1 at-risk gap found
+
+`Sc00279SqaScenarioTest` (5 tests). All five graded rows reproduce, including the two that actually
+discriminate: Year 1 splits **15,000** under §465 and **25,000** under §469, not one 40,000 all-passive
+bucket. A control the graded rows lack pins that the split is the gate biting — the same 40,000 loss when
+the filer is *fully at risk* goes entirely to the passive bucket (0 / 40,000).
+
+**★ The `us-tax-hrb` tree's observation is the key one and it shaped the test.** It marked rows 1, 4 and
+5 **non-discriminating** and said why: with no passive income in Year 1, a correct two-gate
+implementation and a §469-only one both deduct nothing; and in Year 2, releasing a single 40,000
+all-passive bucket against 25,000 of income gives the same 25,000-released / 15,000-retained answer.
+Three of five graded rows cannot tell them apart, so the scenario's real content is rows 2–3. That is a
+better reading than a bare PASS. `us-tax-sqa` marks rows 4–5 PASS without the caveat; its facts are right,
+the caveat is what tells you what the rows prove.
+
+**Both trees agree on the product**, from different angles — `us-tax-sqa` found Form 6198 computed but
+*inert* (line 21 = −25,000, never carried to Schedule E); `us-tax-hrb` found no Form 6198 in the return
+and traced it to a missing guided-mode entry. The product documents the gap itself on the printed
+Schedule E: *"you need to complete Form 6198… to make sure the At-Risk rules are applied BEFORE the
+Passive Activity rules. The At-Risk rules must be applied or you may overstate your losses."*
+
+**⚠️ The limit on my verification, and the same gap on our side.** I tested a **rental**; both trees used
+a **partnership K-1**. Our rental path applies §465 first and only then offers the capped loss to §469 —
+Schedule C and Schedule F carry the same `someInvestmentNotAtRisk`/`amountAtRisk` pair and ordering. But
+**a passive partnership K-1 has no at-risk field at all**, and its loss goes straight into the §469 pool
+without passing the §465 gate. On the exact activity type this scenario uses we therefore have the *same
+structural gap as the product* — invisible here for precisely the reason `us-tax-hrb` gave, since both
+answers are zero in Year 1.
+
+Direction: a partner who is not fully at risk would have the excess released a year early once passive
+income appears — over-deduction. Scoped, not built: adding an at-risk amount to the K-1 intake is a
+form-field addition, and the §465 machinery it would feed already exists.
+
+Unit suite 2,006, the same 8 pre-existing failures.

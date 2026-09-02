@@ -21555,3 +21555,36 @@ income is zero. Under the correct 80% limit no AMT arises — pinned, because "n
 that the regular deduction was computed correctly.
 
 Unit suite 1,993, the same 8 pre-existing failures.
+
+## 2026-09-02 — sc_00276 validated: §163(j) limit + carryforward reproduce; §448(c) exemption guidance added
+
+**No engine defect.** `Sc00276SqaScenarioTest` (4 tests) reproduces all four graded rows: Year 1 allowed
+**30,000** / disallowed **20,000**; Year 2 allowed **30,000** / carryforward **0**. A control pins that
+the Year-2 figure is the *released carryforward* — the same year without it allows only its own 10,000.
+
+**★ The `us-tax-hrb` comment is the more complete one.** Both trees observed the same product behaviour
+(no Form 8990 anywhere; the full $50,000 deducts on Schedule C line 16b), and `us-tax-sqa` documented it
+exhaustively. But `us-tax-hrb` added the point that changes how it reads: **§163(j)(3) exempts any
+taxpayer meeting the §448(c) gross-receipts test**, and a sole proprietor with $100,000 of income is
+nowhere near it — so on the facts the product can express, the full deduction *is* correct. Row 1's FAIL
+is a fail against the scenario's stipulation ("assumed not to apply"), not against the Code. The right
+summary is a genuine coverage gap (no Form 8990, no carryforward tracking, so the Year-2 rows cannot be
+exercised) sitting behind a Year-1 result that happens to be right anyway.
+
+**What we do.** Form 8990 is gated on an explicit opt-in — the filer must answer Yes to "Are you subject
+to the section 163(j) business interest limitation?" — so a small business that never opts in keeps its
+whole deduction. We do **not** auto-apply the 30% limit to every Schedule C carrying interest, which
+would have been the serious defect this scenario could have exposed.
+
+**Improvement made (UI guidance, no compute change).** That question stood alone, with no mention of the
+exemption anywhere on the form. Almost every individual filer is exempt, and a wrong Yes caps their
+interest deduction at 30% of ATI — a real cost on a question they were given nothing to answer with. The
+form now says most people answer No, explains the §448(c) threshold (about $31 million of average annual
+gross receipts) and its reach over sole proprietors, farms and small partnerships, and notes the
+§448(d)(3) tax-shelter carve-out where the exemption is unavailable at any size.
+
+*Caveat: the exact indexed 2025 §448(c) figure was not verified locally — neither the Form 8990
+instructions nor Rev. Proc. 2024-40 is in the repo. The wording says "about $31 million"; the statutory
+structure it turns on is not in doubt.*
+
+Unit suite 1,997, the same 8 pre-existing failures.

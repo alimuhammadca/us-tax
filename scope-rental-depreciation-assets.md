@@ -1,7 +1,11 @@
 # Scope — rental-tagged depreciation assets are collected but never computed
 
-**Status:** scoped, not built. Raised 2026-09-02 from sc_00272 (AMT passive-loss recompute), while
-answering "how does H&R Block implement the pre-1999 AMT depreciation adjustment?".
+**Status: BUILT 2026-09-02 (Phases 1 and 2).** Raised the same day from sc_00272 (AMT passive-loss
+recompute), while answering "how does H&R Block implement the pre-1999 AMT depreciation adjustment?".
+Phase 3 (Form 4562 for Schedule E; UBIA for the rental QBI safe harbor) remains open — see §8.
+
+> Everything below §7 is the original scoping analysis, kept as the record of what was decided and why.
+> §8 records what was actually built and how the open decisions were resolved.
 
 ---
 
@@ -169,3 +173,72 @@ Captured in `C:/us-tax-hrb/_pdf/sc00272_S272E_for_records.txt` lines 1788-1830.
 
 The phasing above converges on that architecture rather than adding a second parallel way to enter
 rental depreciation.
+
+---
+
+## 8. What was built (2026-09-02)
+
+### Phase 1 — the rental leg
+
+`TaxReturnComputeService`:
+
+- `rentalAssetsForProperty(...)` — matches rental-tagged assets to a property by `activityDescription`
+  vs `propertyDescription`, first-match-wins, blank description falling to the first property on that
+  side. **Decision 1 resolved:** a blank description attaches to the first property *and* raises
+  `RENTAL_DEPRECIATION_ASSET_UNNAMED` when the filer has more than one, because that is precisely the
+  case where the total stays right and the Schedule E split goes silently wrong.
+- `rentalAssetDepreciation(...)` — one asset's `[regular, AMT]` pair.
+- Schedule E line 18 now follows the Schedule C rule verbatim:
+  `matched.isEmpty() ? typedDepreciationAmount : computedFromAssets`. **Assets win; they do not add.**
+  Anyone who had done both is told which figure won, via
+  `RENTAL_DEPRECIATION_ASSETS_OVERRIDE_ENTERED_AMOUNT` — **decision 5 resolved**, since the change would
+  otherwise be silent for someone who had been relying on the typed number.
+- The asset AMT figure feeds the existing per-activity `amtDelta`, so it flows through the AMT §469
+  recompute to Form 6251 line 2m unchanged.
+
+**Decision 2 resolved, and it is the guard that mattered.** Two refusals, both advisory-backed:
+
+- `RENTAL_ASSET_SECTION179_NOT_APPLIED` — §179(d)(1) requires the ACTIVE CONDUCT of a trade or business;
+  property held to produce rental income does not qualify. Refused for every rental asset.
+- `RENTAL_REAL_PROPERTY_BONUS_NOT_APPLIED` — §168(k) qualified property needs a recovery period of 20
+  years or less, so a 27.5-year building never qualifies. **Keyed on the asset's recovery period, not on
+  the activity**, so the appliances inside the same rental keep their 100% bonus.
+
+Without these a filer could have expensed a building — flipping a missing deduction into a phantom one
+an order of magnitude larger. `bonusDepreciationIsRefusedOnTheBuilding` and
+`bonusIsStillAllowedOnFiveYearPropertyInsideTheRental` pin both sides.
+
+### Phase 2 — the pre-1999 AMT schedule
+
+`preTra97RealPropertyAmtDepreciation(...)`, called first from `computeAmtMacrsDepreciation`: real
+property (27.5 / 31.5 / 39) placed in service **before 1999-01-01** is refigured over **40 years,
+straight line, mid-month**, mirroring the regular real-property branch exactly. Everything else falls
+through to the existing post-1998 handling untouched.
+
+Scope boundary, deliberate: **only real property needs the branch.** Pre-1999 personal property was
+refigured over its ADS class life, and the longest of those (25 years) expired in 2023 for a 1998 asset
+— every pre-1999 personal-property schedule is exhausted on both tracks by 2025, so the adjustment is
+zero either way. This also fixes Form 6251 **line 2l** for pre-1999 business real property, which shared
+the same hole and needed no UI at all.
+
+### Coverage
+
+`RentalDepreciationAssetsTest`, 9 tests. The regression closed (an asset-only rental went from 14,000 of
+net income to the correct 4,000); the typed fallback intact; assets replacing rather than adding; both
+§179/bonus refusals plus the appliance that keeps its bonus; the 3,125 pre-1999 adjustment; **no**
+adjustment on a post-1998 building (the control that proves the date branch is real rather than a
+blanket 40-year rule); and the live 2025 case — a 1990-placed building whose regular recovery ended in
+2017 producing a **negative** 6,875 adjustment that reduces AMTI.
+
+Unit suite 1,978, same 8 pre-existing failures. **No UI change and no migration were needed** — the
+intake form already collected date, basis, method, convention and recovery period, and already offered
+"Rental property (Schedule E)".
+
+### Still open (Phase 3)
+
+- **Form 4562 for Schedule E.** Now that rentals carry assets, a rental asset placed in service during
+  the year should be reported on one. Compute is right; the output form is absent. New mapper/entity/
+  preview surface across two repos.
+- **UBIA for the rental §199A safe harbor.** Rentals still have no UBIA; `assetUbia` is called only from
+  the Schedule C and F paths. Only bites above the QBI threshold ($197,300 / $394,600), where a rental
+  building is exactly the large UBIA that matters. **Decisions 3 and 4 deferred, not resolved.**

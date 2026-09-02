@@ -21406,3 +21406,42 @@ liability) but one-directional. The consuming machinery already exists — `amtD
 recompute unchanged — so on the rental side this is one intake field.
 
 Unit suite 1,969, the same 8 pre-existing failures.
+
+## 2026-09-02 — rental depreciation assets wired + the pre-1999 AMT schedule (sc_00272 follow-through)
+
+Two phases, both built. Full record: `scope-rental-depreciation-assets.md` §8.
+
+**Phase 1 — the silent drop closed.** `form-depreciation-asset` has offered "Rental property
+(Schedule E)" since it was built, but compute read only `schedule_c` and `schedule_f`, so a rental-tagged
+asset was validated, saved, persisted and produced **no depreciation at all**, with no flag. The filer
+got the deduction only by also typing a figure into the rental form's box. Schedule E line 18 now follows
+the Schedule C rule verbatim — `matched.isEmpty() ? typed : computed` — so **assets win and do not add**;
+adding would have double-counted for anyone who did both.
+
+**Two refusals, and they are the part that mattered.** `RENTAL_ASSET_SECTION179_NOT_APPLIED` (§179(d)(1)
+needs the active conduct of a trade or business, which an ordinary rental is not) and
+`RENTAL_REAL_PROPERTY_BONUS_NOT_APPLIED` (§168(k) needs a recovery period ≤20 years). The second is keyed
+on the **asset's recovery period, not the activity**, so appliances inside the same rental keep their
+100% bonus. Without them a filer could have expensed a building — turning a missing deduction into a
+phantom one an order of magnitude larger. Both sides pinned.
+
+**Phase 2 — `preTra97RealPropertyAmtDepreciation`.** Real property (27.5 / 31.5 / 39) placed in service
+before 1999-01-01 is refigured over **40 years, straight line, mid-month**, mirroring the regular
+real-property branch. TRA'97 §704 ended that requirement only for property placed in service after
+1998-12-31, which the 2025 Form 6251 instructions state by exclusion ("Don't refigure depreciation for
+the AMT for… Residential rental property placed in service **after 1998**"). Only real property needs the
+branch: pre-1999 personal property was refigured over its ADS class life, and the longest (25 years)
+expired in 2023 for a 1998 asset. This also fixes **line 2l** for pre-1999 business real property, which
+shared the hole.
+
+**The live 2025 case is the reverse of the textbook one, and it ran against the filer.** A 1990-placed
+building finished its 27.5-year regular recovery in 2017 while the 40-year AMT track runs to 2030 — so
+the regular figure is 0, the AMT figure is still 6,875, and the adjustment is **negative**, reducing
+AMTI. Pinned at exactly −6,875.
+
+`RentalDepreciationAssetsTest`, 9 tests, including the control that proves the date branch is real: a
+post-1998 building produces **no** adjustment, which a blanket 40-year rule would have got wrong on every
+modern rental. Unit suite 1,978, same 8 pre-existing failures. **No UI change and no migration** — the
+intake form already collected date, basis, method, convention and recovery period.
+
+**Phase 3 open:** Form 4562 for Schedule E, and UBIA for the rental §199A safe harbor.

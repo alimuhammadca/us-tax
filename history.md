@@ -21665,3 +21665,35 @@ income appears — over-deduction. Scoped, not built: adding an at-risk amount t
 form-field addition, and the §465 machinery it would feed already exists.
 
 Unit suite 2,006, the same 8 pre-existing failures.
+
+## 2026-09-02 — sc_00280 validated: §461(l) EBL → NOL bridge reproduces all four rows
+
+**No engine defect.** `Sc00280SqaScenarioTest` (6 tests). Year 1: line 3 = −800,000, line 8p =
+**174,000**, AGI = **−626,000**. Year 2: NOL deducted **−174,000**, taxable income **126,000**.
+Thresholds cited and correct — $313,000 single / $626,000 MFJ, Rev. Proc. 2024-40 §2.32.
+
+**One figure to read carefully.** Year 1's *total* carryforward is **800,000**, not 174,000, and that is
+right: with no other income the 626,000 of *allowed* loss is itself a current-year NOL, and the 174,000
+disallowed under §461(l)(2) is added to it. The scenario's row 3 asks only about the EBL portion, which
+Form 172 tracks separately (`excessBusinessLoss461lThisYear` = 174,000). Worth stating because a reader
+comparing that row against the headline carryforward would otherwise think we disagree.
+
+**The two trees are in different states, and both are honest about it.** `us-tax-hrb` is BLOCKED on all
+four rows by a driver-level large-value refusal in the Schedule C expense box; it records that as a
+harness limitation rather than inferring a product verdict, and reasons correctly that the documented
+split-the-amount workaround cannot apply — §461(l) inherently requires a loss *above* the threshold. It
+also says plainly that whether the product *derives* the disallowance "remains untested". `us-tax-sqa`
+drove it by hand: full 800,000 allowed, line 8p = 0, no Form 461, no EBL→NOL conversion. Consistent
+findings from different evidence.
+
+**★ The `us-tax-sqa` row-4 note drove an extra test.** It passed the row numerically then qualified it:
+the product reaches 174,000 "only because it deducts whatever NOL carryforward is entered with NO §172
+80% cap… 174,000 happens to be within the 80% × 300,000 = 240,000 ceiling, so the missing cap does not
+bite here." Exactly right — that row as graded cannot distinguish a correct implementation from an
+uncapped one. Added the case that can: with a 300,000 carryforward we stop at the **240,000** ceiling and
+carry the unused **60,000** forward.
+
+Also added a below-threshold control the graded rows lack: a 400,000 loss draws no add-back at all, so
+the 174,000 is the threshold biting rather than a limitation applied to every business loss.
+
+Unit suite 2,012, the same 8 pre-existing failures.

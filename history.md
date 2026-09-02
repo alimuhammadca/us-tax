@@ -21263,3 +21263,32 @@ voluntarily declined … a single null check covers the whole gate matrix". But 
 **election**, not a result. Checking it for a filer who is merely ineligible asserts a choice they never
 made, and it tells the IRS not to figure the EIC for them — removing the backstop for anyone our own
 gate excluded wrongly. Fixing it needs a real decline signal in the output model (none exists today).
+
+## 2026-09-02 — line 27c: the reported defect was NOT one. Correction, plus coverage
+
+I reported that `line27c_no_schedule_eic_claim` was the mirror of the line 28 bug — marking an election
+the filer never made whenever `earnedIncomeCredit == null` — and set out to wire a real decline signal
+(a `Payments.electsNoEic` field, an `out_form_1040` column, V246, mapper and compute wiring). **That was
+wrong, and it has been reverted in full.** The 2025 Form 1040 instructions, Line 27c:
+
+> "Check the box on line 27c if you do not want to claim the earned income credit **or if you have been
+> instructed to check the box in the instructions for line 27a**."
+
+and the line 27a instructions issue that instruction at every disqualifying STOP — *"You can't take the
+credit. Check the box on Form 1040 or 1040-SR, line 27c."* — in Step 1/2 (investment income,
+can-be-claimed-as-a-dependent, the separated-spouse rule), for nonresident aliens, at EIC Worksheet A
+line 2 = 0, and at Worksheet B line 4b ≤ 0 or over the limit. So the box has **two** triggers, the
+existing null rule is the correct union of them, and narrowing it to an affirmative decline would have
+left it blank on most of the returns that require it. Verified against `docs/books/i1040gi_ty2025.pdf`.
+
+The error was reading the two checkboxes as symmetrical because they sit two lines apart and share a
+shape. **Line 28 has one trigger; line 27c has two.** `lines/27abc.md` §5 said so and cited the
+instruction; I acted on the form's printed label without opening the instructions it points to.
+
+Kept, as the useful residue:
+- `Line27cEicElectionTest` (4 tests) — pins the union: an explicit decline, a Form 2555 disqualification
+  and an over-the-limit filer all check the box; an allowed credit leaves it clear.
+- `form-tax-return-1040.component.ts` — the comment now carries the instruction text, so the null rule
+  reads as the rule it is rather than as a shortcut ("a single null check covers the whole gate matrix").
+- `lines/27abc.md` — **G12 CLOSED**: the frontend does write the checkbox; the search that reported it
+  unwired used the pre-rename field name. Records the trap so the narrowing is not attempted again.

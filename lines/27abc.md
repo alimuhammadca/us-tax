@@ -238,7 +238,19 @@ The backend stores no field for line 27c; the wiring is documented intent only. 
 // 27c (EIC opt-out checkbox) = auto-determined by eligibility (no separate stored field).
 ```
 
-★ **G12 OPEN** — the frontend does NOT yet write the AcroForm checkbox `line27c_eic_opt_out_checkbox`. The intended one-liner at PDF-fill time is:
+★ **G12 CLOSED (verified 2026-09-02)** — the frontend DOES write the checkbox; the field was renamed
+`line27c_no_schedule_eic_claim` in the semantic map, which is why a search for the old name found
+nothing. `form-tax-return-1040.component.ts` sets it from `payments.earnedIncomeCredit == null`, which
+is the correct union of both triggers (a decline and an instructed disqualification each null line 27a).
+
+> ⚠️ **Do not narrow this to the election alone.** On 2026-09-02, while fixing the mirror checkbox on
+> line 28 — where the ACTC opt-out had been wrongly hardwired to `false` — the null rule here was read as
+> the opposite error, "marking an election the filer never made", and was nearly rewired to fire only on
+> `claimsEIC === false`. That would have left the box blank on every instructed disqualification. The two
+> checkboxes look symmetrical and are not: **line 28 has one trigger, line 27c has two.** Verified
+> against `docs/books/i1040gi_ty2025.pdf`; pinned by `Line27cEicElectionTest`.
+
+The original G12 note recorded the intended one-liner as:
 
 ```ts
 values["line27c_eic_opt_out_checkbox"] =

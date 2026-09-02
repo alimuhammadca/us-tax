@@ -4679,5 +4679,8 @@ service before 1999 is refigured over 40 years for the AMT, which also fixes For
 business real property. No UI change and no migration were required. `RentalDepreciationAssetsTest`,
 9 tests.
 
-**Phase 3 remains open:** a Form 4562 for Schedule E (rentals now have assets to report on one), and
-UBIA for the rental §199A safe harbor (still absent; matters only above the QBI threshold).
+**Phase 3 is built too** (V247): Form 4562 is now compute-populated — **one per activity**, and for
+Schedule C and F as well as rentals, since it turned out to be a blank display-only page for *every*
+activity rather than a Schedule-E-only gap. Rental §199A UBIA is wired to the safe-harbor QBI activity,
+which had been passing null; above the threshold that had been zeroing the deduction outright, because a
+rental enterprise pays no W-2 wages and UBIA is the only term left.

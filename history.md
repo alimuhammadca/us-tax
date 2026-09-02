@@ -21445,3 +21445,39 @@ modern rental. Unit suite 1,978, same 8 pre-existing failures. **No UI change an
 intake form already collected date, basis, method, convention and recovery period.
 
 **Phase 3 open:** Form 4562 for Schedule E, and UBIA for the rental §199A safe harbor.
+
+## 2026-09-02 — Phase 3: Form 4562 made a real form, and rental §199A UBIA
+
+**A correction first.** I had recorded that Schedule C and F already produce a Form 4562 and only
+Schedule E lacked one. Wrong — `form-tax-return-4562.component.ts` was a `PurePdfPreviewComponent` with
+no reference to `TaxReturnService`: **a blank page for every activity.** The depreciation had been
+computed for Schedule C and F for a long time; nothing had ever populated the form that reports it. So
+this was the 7th compute-populated preview slice, covering all three activity types, not a
+Schedule-E-only patch.
+
+**Form 4562 — one per activity.** `Form4562` model + `OutForm4562` + `Form4562ListOutputMapper` + **V247**,
+a *list* because the form's own header line asks for the "Business or activity to which this form
+relates". Assets group by `activityType` + `activityDescription` — the same pairing the schedules match
+on — and `buildForm4562List` draws its figures from the **same per-asset helpers the schedules use**, so
+form and schedule cannot drift. Current-year assets fill their line-19 class row (month/year, basis,
+deduction); prior-year assets report on line 17.
+
+**The line-19 row keys came from the field map's rect coordinates, not the semantic names.** Those names
+are auto-generated and do not consistently carry the row letter — the CSV calls the 27.5-year row
+`linei_residential_rental` and includes 1-point-wide artifacts from preprinted labels. Guessing would
+have put real numbers in the wrong boxes on an exported PDF.
+
+The preview binds `computation().form4562List` with an **activity selector**, following the Form 8814
+per-child precedent; rendering only the first copy would have silently hidden the rest.
+
+**§199A UBIA for the rental safe harbor.** `rentalEnterpriseUbia` totals `assetUbia` over a filer's
+rental-tagged assets and attaches it to the safe-harbor QBI activity, which had been passing `null`.
+This matters more than "only above the threshold" suggests: above it the deduction is capped at the
+greater of 50% of W-2 wages or 25% of wages plus 2.5% of UBIA, and a rental enterprise typically pays
+**no wages at all** — so UBIA is the only term that can produce a deduction, and with it null the cap was
+zero and the safe-harbor election bought the filer nothing. Exactly backwards, since the building is the
+asset the 2.5% alternative exists for. Pinned at **6,875** (2.5% × 275,000) against **0** in the
+no-asset control.
+
+`Form4562AndRentalUbiaTest`, 6 tests. Unit suite 1,984, same 8 pre-existing failures. Full record:
+`scope-rental-depreciation-assets.md` §9.

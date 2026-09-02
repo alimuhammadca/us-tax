@@ -21369,3 +21369,40 @@ effective AMT marginal rate is 28% × 1.25 = **35%**, exactly the regular bracke
 leaving the excess unchanged.
 
 Unit suite 1,964, the same 8 pre-existing failures.
+
+## 2026-09-02 — sc_00272 validated: AMT passive recompute matches HRB to the dollar; one input gap found
+
+`Sc00272SqaScenarioTest` (5 tests). **Run B passes and our figures match the `us-tax-hrb` printed
+worksheet exactly**: regular carryforward **17,000**, AMT **13,875**, allowed **−15,000** on the same
+facts, from an independent implementation — including the §469(i)(3) phaseout to a 15,000 special
+allowance rather than the unphased 25,000. Pinned two ways beyond the bare divergence: with no AMT delta
+the two carryforwards are *equal*, and seeding a different AMT prior-year suspended loss moves only the
+AMT carryforward.
+
+**Run A — both trees are right, and the scenario's computation note is a simplification.** Line 2m is not
+the raw depreciation gap. The instructions: *"Refigure your passive activity gains and losses for the
+AMT… Enter the difference between the AMT and regular tax amount"* — the difference in what reaches AGI
+after §469, which collapses to the depreciation gap only when §469 is not limiting the activity. Hence
+3,125 on `us-tax-hrb`'s profitable rental and 1,125 on `us-tax-sqa`'s allowance-limited one. We reproduce
+both regimes (3,125 unlimited; 0 in run B where the loss is fully suspended on both tracks).
+
+**⚠️ Gap found, raised for decision rather than built.** Our per-activity AMT delta comes only from
+`personalPropertyDepreciation` / `personalPropertyAmtDepreciation` (200% vs 150% DB on appliances). There
+is **no input for the building's own 27.5-vs-40-year difference**, and on the business side
+`computeAmtMacrsDepreciation` returns the regular figure for every SL/27.5/39-year asset with no
+placed-in-service-date branch.
+
+That is correct for most property and wrong for one vintage. The 2025 Form 6251 instructions, under
+*"What Depreciation Isn't Refigured for the AMT?"*, exclude only **"Residential rental property placed in
+service after 1998"** — TRA'97 §704 ended the 40-year ADS requirement for property placed in service
+after 12/31/1998. Property placed in service **1987–1998 is still refigured**.
+
+**The live 2025 case runs against the taxpayer and is the reverse of the scenario's.** A 1990s building
+finished its 27.5-year regular recovery years ago while the 40-year AMT track runs to 2027–2038, so
+regular depreciation is 0 and AMT depreciation continues at ~2.5% of basis — a *negative* adjustment that
+should reduce AMTI. Omitting it **overstates** AMTI by up to the ADS annual amount (≈$6,875 on a $275,000
+building) for any such owner who reaches AMT. Narrow (needs a 27-plus-year-old property *and* an AMT
+liability) but one-directional. The consuming machinery already exists — `amtDelta` feeds the AMT §469
+recompute unchanged — so on the rental side this is one intake field.
+
+Unit suite 1,969, the same 8 pre-existing failures.

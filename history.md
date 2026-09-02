@@ -21183,3 +21183,30 @@ comparison, so the test asserts that the hurricane alone gives 16,900 and the wi
 9,900. The AGI floor is applied ONCE: per-event floors would leave 18,800, and the two warned-about
 errors push in opposite directions so both are pinned. And the disaster indicator is load-bearing:
 marking the second event non-declared removes it entirely rather than leaving it unfloored.
+
+## 2026-09-02 — sc_00261 validated: Form 8863 process gates (MFS bar, 8862 re-claim, TIN-by-due-date split)
+
+**Verdict: no engine change.** All five graded rows already reproduce, and `Sc00261SqaScenarioTest`
+(7 tests) now pins them along with the three distinctions the graded rows cannot express.
+
+- Run A (MFS) — no Form 8863 at all, `EDUCATION_CREDITS_MFS_INELIGIBLE`, blocking and
+  **non-overrideable** (§25A(g)(6) is a flat bar with no exception to weigh). A control run on the same
+  facts filed Single produces the $800 LLC, so the zero is a denial rather than an absence.
+- Run B (no Form 8862) — AOTC 0 on `FORM_8862_AOTC_REQUIRED`, **and the LLC survives at $800** with the
+  flag still raised. The LLC is not subject to recertification; a blanket zeroing of both credits would
+  satisfy the graded row and be wrong in the other direction.
+- Runs C/D (§25A(g)(1) TIN by due date) — these differ in KIND, not amount, and both graded rows read
+  $0 so neither shows it: the **taxpayer's** late TIN suppresses Form 8863 entirely and BLOCKS the
+  return; the **student's** leaves the return filable on an ADVISORY. Also pinned: the student bar
+  reaches the Lifetime Learning credit too (it sat inside the AOTC branch until 2026-08-31, so an
+  LLC-only student kept a full credit with no TIN).
+
+**The two Actual trees diverge on three of five rows.** Row B is a genuine disagreement — `us-tax-sqa`
+saw AOTC 2,500 (the product auto-generates a completed 8862 from the interview, so the premise is
+unreachable there), `us-tax-hrb` saw 0 — and the `us-tax-hrb` note correctly disowns its own PASS:
+three runs with identical facts, with and without the ban asserted, all returned refund 1,525 and an
+education credit of 800, so the row cannot distinguish "the gate applied" from "the AOTC was never on
+the table here". A row that cannot fail is not evidence. Rows C/D: `us-tax-sqa` is right that this is a
+product coverage gap; `us-tax-hrb`'s "state unreachable" reasoning concerns a MISSING SSN, which is a
+different question — the scenario is about a valid TIN **issued after the due date**, and §25A(g)(1)
+denies the credit for exactly that.

@@ -21521,3 +21521,37 @@ row is revisited, though the Credit Limit Worksheet is the operative instruction
 names mislead. Worth renaming when Form 4972 is next touched.
 
 Unit suite 1,988, the same 8 pre-existing failures.
+
+## 2026-09-02 — sc_00275 validated: §172 80% limit + carryforward all reproduce; both trees correct
+
+**No engine defect.** `Sc00275SqaScenarioTest` (5 tests) reproduces all three graded rows exactly:
+Schedule 1 line 8a = **−64,000**, AGI 31,750, taxable income **16,000**, Form 172 carryforward
+**36,000**, and no AMT.
+
+Our §172 base is the right one — 80% of taxable income computed *without* the NOL and *without* the
+§199A/§250 deductions (§172(a)(2)(B)(ii)): `MTI = max(0, (AGI + NOL applied) − standard/itemized −
+line 13b)`, QBI deliberately not subtracted. Here 95,750 − 15,750 = 80,000 → limit 64,000, and the engine
+re-runs once with the capped deduction.
+
+**The control is what makes those rows mean anything.** A 50,000 NOL sits under the limit and is deducted
+in full with no carryforward — so the cap bites only when it should, rather than clamping every NOL.
+
+**Both trees are right about the product, and they agree.** `us-tax-sqa` verified from the saved
+For-Records PDF that the full 100,000 reached line 8a with line 15 = 0, no Form 172 and no carryover
+worksheet. `us-tax-hrb` named the cause from the entry side: the only entry point is a **write-in**
+(field 1.243745, "NOL carryover not on a K-1") that behaves as a raw negative other-income amount and
+applies no limitation of its own.
+
+**★ The `us-tax-sqa` tree closes the open row in the `us-tax-hrb` tree, and the requested re-run is
+unnecessary.** That tree had recorded row 2 as NOT RESOLVED — a refund of 10,011 against 12,000 withheld
+implies ~1,989 of tax, matching neither hypothesis — and inferred "roughly 18,500 of taxable income".
+The inference was wrong. Taxable income really is **0**; the 1,989 is **AMT**. Form 6251 line 2e adds the
+entire NOL back, so AMTI = −4,250 + 100,000 = 95,750, less the 88,100 exemption = 7,650, × 26% =
+**1,989** exactly (confirmed arithmetically here).
+
+That makes the AMT a *second-order* consequence of the same defect: deduct the whole NOL for the regular
+tax, add the whole thing back for the AMT, and an AMT liability appears on a return whose regular taxable
+income is zero. Under the correct 80% limit no AMT arises — pinned, because "no AMT" is the quiet symptom
+that the regular deduction was computed correctly.
+
+Unit suite 1,993, the same 8 pre-existing failures.

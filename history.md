@@ -21332,3 +21332,40 @@ the **employee** share (7.65%), where Schedule SE charges both halves. We comput
 9,000 on line 1g.
 
 Unit suite 1,957, the same 8 pre-existing failures.
+
+## 2026-09-02 — sc_00271 validated: Form 6251 AMT edges; run B's Expected corrected
+
+**No engine defect.** `Sc00271SqaScenarioTest` (7 tests) reproduces every edge, and our AMT constants
+match the 2025 Form 6251 instructions exactly — exemptions 88,100 / 137,000 / 68,500, thresholds
+626,350 / 1,252,700 / 626,350, MFS add-back trigger 900,350 with the 68,500 cap from 1,174,350.
+
+**Run B — the scenario's Expected is wrong twice over, and both Actual trees caught it.** 2025 Form 6251
+instructions, Line 4: *"If your filing status is married filing separately and line 4 is more than
+**$900,350**, you must include an additional amount on line 4. If line 4 is **$1,174,350** or more,
+include an additional **$68,500**. Otherwise, include 25% of the excess of the amount on line 4 over
+$900,350."* The ceiling is the MFS exemption, not $45,704; and "$478,150" is not a 2025 figure — the spec
+derives it as "$626,350 ÷ 2", which is $313,175, so the arithmetic does not produce the number it states.
+**And the row is unreachable on its own inputs**: the stated AMTI of $900,000 is $350 *below* the
+trigger, so the correct add-back there is $0 and no product could have produced $45,704. Corrected to 0
+in the spec and both workbooks, with a note that exercising the full flush needs an input above
+$1,174,350 and an Expected of 68,500. We reproduce all three points: 0 at 900,000; 1,024,913 at
+1,000,000; 1,268,500 at 1,200,000.
+
+**Run A — a $1 rounding convention, no finding against anyone.** 88,100 − 25% × (700,000 − 626,350) =
+69,687.50. Per-line rounding makes worksheet line 5 = 18,413 and the exemption 69,687 (the product);
+carrying cents and rounding once gives 69,688 (the scenario, and us). The 1040 instructions lean toward
+the latter — *"include cents when adding the amounts and round off only the total"* — and only worksheet
+line 6 reaches a filed form, the worksheet being "Keep for Your Records". Worth $0.26 of AMT.
+
+**Run C — delta zero, the strongest evidence available.** Adding 100,000 of qualified dividends leaves
+the AMT *exactly* unchanged at 59,483 while AMTI rises by exactly 100,000, so the gain entered the
+computation and was not ignored. Line 17 is the *excess* of the tentative minimum tax over the regular
+tax; when both systems tax the gain at the same preferential rate, both rise by ~15,000 and the excess
+does not move. A 26/28% sweep would have pushed the AMT up by ~13,000.
+
+**Incidental confirmation.** Runs A and A-control return the same AMT (67,671) on very different AMTI —
+not a bug. Inside the exemption phaseout each extra dollar of AMTI adds $1.25 to the AMT base, so the
+effective AMT marginal rate is 28% × 1.25 = **35%**, exactly the regular bracket those dollars sit in,
+leaving the excess unchanged.
+
+Unit suite 1,964, the same 8 pre-existing failures.

@@ -19,15 +19,26 @@ sections:
           Child Tax Credit, Additional Child Tax Credit, or Other Dependent Credit. When you
           answer Yes, complete the Credits After Disallowance section in the sidebar.
 
-  # electsNoActc (the "skip the Additional Child Tax Credit" opt-out) was RETIRED for 2025:
-  # Schedule 8812 line 15 is now "Reserved for future use" and there is no 2025 mechanism to
-  # decline the ACTC while claiming the CTC. Removed from intake 2026-08-04 (credits audit).
-
   - id: rareSettings
     title: Less common situations
     instructions:
       - These situations apply to very few filers. Leave blank if neither applies.
     fields:
+      # RESTORED 2026-09-02. Removed on 2026-08-04 on the ground that Schedule 8812 line 15 is now
+      # "Reserved for future use" -- true, but the election MOVED rather than ended. The 2025 Form
+      # 1040 line 28 reads "Additional child tax credit (ACTC) from Schedule 8812. If you do not
+      # want to claim the ACTC, check here", alongside the new twin EIC opt-out at line 27c.
+      - id: electsNoActc
+        label: Would you like to skip the Additional Child Tax Credit this year?
+        type: boolean
+        helpText: >
+          The Additional Child Tax Credit is refundable and worth up to $1,700 per qualifying
+          child, so almost everyone answers No. The one common reason to say Yes: a return that
+          claims the ACTC (or the Earned Income Credit) cannot have any part of its refund
+          released before mid-February, so a filer owed a large withholding refund and only a
+          small ACTC can trade the credit for getting the rest of the money weeks sooner. Only
+          the refundable portion is given up -- the Child Tax Credit on Form 1040 line 19 is
+          unaffected.
       - id: isBonafidePuertoRicoResident
         label: Were you a full-year resident of Puerto Rico during 2025?
         type: boolean

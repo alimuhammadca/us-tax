@@ -21210,3 +21210,56 @@ the table here". A row that cannot fail is not evidence. Rows C/D: `us-tax-sqa` 
 product coverage gap; `us-tax-hrb`'s "state unreachable" reasoning concerns a MISSING SSN, which is a
 different question — the scenario is about a valid TIN **issued after the due date**, and §25A(g)(1)
 denies the credit for exactly that.
+
+## 2026-09-02 — sc_00262: the ACTC opt-out is a LIVE 2025 election; a 2026-08-04 removal REVERSED
+
+**A real regression, found because the commercial software honoured an election we had deleted.**
+
+The 2026-08-04 credits audit retired `electsNoActc` on this reasoning: *"the 2024 opt-out was removed
+for 2025 — Schedule 8812 line 15 is now 'Reserved for future use', and there is no 2025 mechanism to
+decline the ACTC while claiming the CTC."* Line 15 **is** reserved, and the instructions say exactly
+that. But the election was not abolished — **it moved to the return**:
+
+> **2025 Form 1040, line 28:** "Additional child tax credit (ACTC) from Schedule 8812. *If you do not
+> want to claim the ACTC, check here* ▸ ☐"
+
+The same 2025 Form 1040 gained the twin EIC opt-out at line 27c; Schedule 8812 line 15 went reserved
+*because* the checkbox was relocated. Our own shipped `f1040.pdf` carries the box in its AcroForm
+(`Page2[0].Line28_ReadOrder[0].c2_14[0]` → `line28_no_schedule8812_claim`) — the field map already
+named it. The audit read the right sentence on the wrong form, and the removal took the compute branch,
+the intake question, the YAML field and the PDF checkbox with it, then froze the result in a unit test
+and an e2e test.
+
+**Restored (2026-09-02):**
+- `TaxReturnComputeService.computeSchedule8812` — the `electsNoActc` early return (line 27 = 0, output
+  flag set, CLW-B line 14 = line 12). Three stale comment blocks corrected: the authority is Form 1040
+  line 28, not "a G4 design decision with no IRS basis".
+- `form-ctc-actc-screening.component.ts` + `form-tax-return-schedule8812.component.*` — the intake
+  question and its forfeit warning, reverse-applied from `us-tax-ui@7dbed04`.
+- `yamls/ctc-actc-screening-taxpayer.yaml` — the `electsNoActc` field.
+- `form-tax-return-1040.component.ts` — `line28_no_schedule8812_claim` now marks from the election
+  instead of being hardwired `false`.
+- `lines/s8812.md` §6.1 — the paragraph that asserted "There is no longer a user election to skip ACTC"
+  now states the relocation, with the trap named so it is not repeated.
+- Both frozen tests reversed (`schedule8812_electsNoActc_zeroesTheRefundableActcButNotTheCtc`, e2e
+  `line28-actc-schedule8812.spec.ts` scenario 1), each pinning that only the REFUNDABLE portion is
+  forfeited — line 19 still pays $428 on the $20,000 fixture.
+
+Why a filer wants it: §6402(m) holds the **entire** refund of any return claiming the ACTC or the EIC
+until mid-February, so someone owed a large withholding refund and a small ACTC can trade the credit for
+weeks of earlier payment. It costs the filer and never the fisc, which is why the IRS grants it on a
+bare checkbox.
+
+**Scenario verdict.** Rows A, B and C reproduce. Row D's Expected ("opt-out ignored → ALLOWED") is wrong
+for the same reason we were, so the tester's FAIL was a **false FAIL against a correct product** —
+corrected to $0 in the spec and both workbooks. Row A is weak as graded (the exclusion zeroes taxable
+income, so the ACTC is zero regardless) and is now backed by a variant where the US W-2 survives and the
+bar is what produces the zero. Unit suite 1,945, the same 8 pre-existing failures.
+
+**Adjacent finding, NOT fixed (belongs to line 27a/EIC).** `line27c_no_schedule_eic_claim` is the
+mirror image: `form-tax-return-1040.component.ts` marks it whenever `earnedIncomeCredit == null`, which
+the comment states deliberately — "whenever the taxpayer is disqualified for any reason … OR
+voluntarily declined … a single null check covers the whole gate matrix". But that box is an
+**election**, not a result. Checking it for a filer who is merely ineligible asserts a choice they never
+made, and it tells the IRS not to figure the EIC for them — removing the backstop for anyone our own
+gate excluded wrongly. Fixing it needs a real decline signal in the output model (none exists today).

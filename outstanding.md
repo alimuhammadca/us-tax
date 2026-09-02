@@ -4658,3 +4658,20 @@ for the transition. It is:
 
 Decision: accepted for now (bounded + self-healing). Revisit if multi-year farm filers with a pre-V225
 carryforward prove material — then implement the prior-year recompute path.
+
+## Rental-tagged depreciation assets are never computed (raised 2026-09-02)
+
+`form-depreciation-asset` offers **"Rental property (Schedule E)"**, and compute reads only
+`schedule_c` and `schedule_f` (`TaxReturnComputeService:21810`, `:22097`). A rental-tagged asset is
+saved and produces **no depreciation at all**, with no flag — the filer gets the deduction only if they
+also type a figure into the rental form's own `depreciationAmount` box. Taxpayer harm, ~$10,000/yr on a
+$275,000 building. Reachable: the asset form sits unconditionally in the Incomes sidebar.
+
+Full scope, blast radius and phasing: **[scope-rental-depreciation-assets.md](scope-rental-depreciation-assets.md)**.
+Short version — the MACRS arithmetic for 27.5/39-year real property already exists and the Schedule C
+`matched.isEmpty() ? typed : computed` rule settles the double-count question, so Phase 1 is wiring with
+no schema change. **The one thing that must not be missed: §179 and bonus have to be blocked for lodging
+real property**, or the fix flips from a missing deduction to an inflated one.
+
+Phase 2 (the pre-1999 AMT depreciation adjustment from sc_00272 — Form 6251 line 2m for rentals and
+line 2l for business real property) depends on Phase 1 for the placed-in-service date and needs no UI.

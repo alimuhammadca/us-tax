@@ -21151,3 +21151,35 @@ the tax, whereas a code-H row with no 1099 may not qualify for Form 8919 at all,
 15.3%. That is an under-reporting risk, which is what rules.md §17 reserves the list for.
 
 Full suite: 1,925 run, the same 8 pre-existing failures.
+
+## 2026-09-02 - sc_00254: multi-event casualty - the spec is right, the SQA note is not
+
+All eight graded values reproduce: 24,900 / 9,900 / 34,800 / 8,000 / 26,800 / 43,200 / 4,949 / 7,051.
+The engine applies the $100 floor PER EVENT (casualtyEventLossAfterPerEventFloor), sums, then applies a
+single 10%-of-AGI floor to the combined total.
+
+**The two QA trees disagree outright.** us-tax-hrb matched all eight. us-tax-sqa recorded all eight FAIL
+with a note arguing the SCENARIO is outdated: that because the inputs say federally declared disasters,
+these are "qualified disaster losses" under 2025 Form 4684 rules - $500 per event, no 10%-AGI floor,
+addable to the standard deduction - giving 34,000 deductible, taxable income 30,250, tax 3,395, refund
+8,605.
+
+**The mechanics in that note are real; the trigger is not.** The 2025 Form 4684 does carry them - line 11
+reads "Enter $100 ($500 if qualified disaster loss rules apply)" and line 15 routes such losses past the
+10%-AGI floor on line 17. But qualified status is not conferred by the FEMA declaration. Per J.K. Lasser
+2025 section 19.9, a qualified disaster loss is attributable to a presidentially declared MAJOR disaster
+"but only if Congress has designated the disaster as qualified in specific legislation." Being federally
+declared is what makes a personal casualty deductible AT ALL for 2018-2025 under 165(h)(5) - the entry
+requirement, not a promotion to the better regime. The scenario never asserts a congressional
+designation, so basic 165(h) is the correct reading of its own inputs and the expected values stand.
+
+The likeliest cause of the split is that the two runs answered a qualified-disaster ELECTION
+differently. That is user input, not something the software derives from "federally declared" - which is
+how one fact pattern produced two results, and lets both trees be honest reports of what they saw.
+
+Three things the graded rows cannot show, pinned separately. Each event brings its OWN $100: the
+scenario's stated failure mode differs by only $100 (26,900 vs 26,800) and is invisible without a
+comparison, so the test asserts that the hurricane alone gives 16,900 and the wildfire adds exactly
+9,900. The AGI floor is applied ONCE: per-event floors would leave 18,800, and the two warned-about
+errors push in opposite directions so both are pinned. And the disaster indicator is load-bearing:
+marking the second event non-declared removes it entirely rather than leaving it unfloored.

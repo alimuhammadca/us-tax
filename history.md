@@ -21292,3 +21292,43 @@ Kept, as the useful residue:
   reads as the rule it is rather than as a shortcut ("a single null check covers the whole gate matrix").
 - `lines/27abc.md` — **G12 CLOSED**: the frontend does write the checkbox; the search that reported it
   unwired used the pre-rename field name. Records the trap so the narrowing is not attempted again.
+
+## 2026-09-02 — sc_00264 validated: the non-blocking advisory sweep (all six runs reproduce)
+
+**No engine defect.** `Sc00264SqaScenarioTest` (8 tests) pins every run: each computes, none blocks, and
+each statutory clamp lands on the right figure — QCD 120,000 → line 4a 120,000 / line 4b **12,000**;
+educator 400 → **300**; two W-2s on one EIN → line 1a **55,000** aggregated; statutory employee → line 1a
+**45,000** with the rest to Schedule C; Form 8888 mismatch → advisory; reason code G → line 1g **9,000**
+with the SS-8 advisory; Form 8814 on MFS → election-review advisory. A control at exactly the 108,000 cap
+produces line 4b = 0 and no flag, so the 12,000 is the cap biting rather than an unrelated inclusion.
+
+**Row A — we apply the cap; the product does not.** Pub. 590-B: *"The maximum annual exclusion for QCDs
+is $108,000. Any QCD in excess of the $108,000 exclusion limit is included in income as any other
+distribution. If you file a joint return, your spouse can also have a QCD and exclude up to $108,000."*
+Per person, which our TAXPAYER/SPOUSE flag pair matches; $54,000 for the one-time split-interest election
+also confirmed. The product raises its own "cannot exceed $108,000" warning and then leaves the return
+unchanged — a preparer-tool stance, but on a self-filing product it understates income by 12,000.
+
+**Row E — our Expected is right; the product is stricter than the IRS requires.** Form 8888 instructions,
+Line 5: *"The total on line 5 must equal the total amount of the refund shown on your tax return… **If
+the total on line 5 is different, your refund may be delayed.**"* Delay, not rejection — so the return
+survives the defect and a non-blocking advisory is the correct style. Our flag says the same in the same
+terms. Both trees found the product hard-blocks; `us-tax-sqa` located it in the e-file direct-deposit
+wizard (OK-only modal, no override) while compute itself proceeds, which resolves its own hedge that the
+gate might be required IRS behaviour.
+
+**One improvement made (advisory text, no compute change).** `QCD_EXCEEDS_ANNUAL_CAP_TAXPAYER` /
+`..._SPOUSE` said the excess "is taxable" and stopped. Pub. 590-B cautions *"You can't claim a charitable
+contribution deduction for any QCD **not included** in your income"*, and its worked example deducts
+precisely the portion that **was** included — so the over-cap excess is deductible on Schedule A subject
+to the AGI limits. Nothing would prompt the filer, because a QCD is a trustee-to-charity transfer they
+have no reason to list among their charitable gifts. The message now names the remedy and says it must be
+entered by hand.
+
+**Noted, not graded.** Row F passes structurally everywhere, but the `us-tax-hrb` note records that the
+product prints *"The program does not support Form 8919"* and routes the misclassified pay to Schedule C
+with **self-employment tax**. That is more than a coverage gap: Form 8919 exists so the worker pays only
+the **employee** share (7.65%), where Schedule SE charges both halves. We compute Form 8919 and put the
+9,000 on line 1g.
+
+Unit suite 1,957, the same 8 pre-existing failures.

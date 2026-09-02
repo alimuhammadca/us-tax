@@ -21588,3 +21588,45 @@ instructions nor Rev. Proc. 2024-40 is in the repo. The wording says "about $31 
 structure it turns on is not in doubt.*
 
 Unit suite 1,997, the same 8 pre-existing failures.
+
+## 2026-09-02 — sc_00278 validated: §199A carryforwards work; rows 3–4 of the Expected corrected
+
+**No engine defect.** `Sc00278SqaScenarioTest` (4 tests). Rows 1, 2 and 5 reproduce as written; rows 3
+and 4 of the Expected are **wrong**, and both Actual trees caught it independently — we agree with them
+to the dollar.
+
+**The correction.** The scenario nets the Year-1 $(30,000) carryforward against the **gross** $50,000.
+QBI is not gross profit: Reg. §1.199A-3(b)(1)(vi) and the Form 8995 instructions require it to be net of
+the deductions attributable to the business — the §164(f) half of SE tax, §162(l) SE health insurance,
+and §404 retirement contributions.
+
+```
+half of SE tax = round(50,000 × 0.9235 × 0.153) / 2 = 7,065 / 2 = 3,533
+line 2 = 46,467   line 4 = 16,467   line 5 = 3,293      (scenario: 50,000 / 20,000 / 4,000)
+```
+
+Corrected Expected: **16,467** and **3,293**. Three independent implementations agree.
+
+**The shape of the discrepancy is the evidence.** Row 5 passes *exactly* at 600 in all three, because
+REIT dividends bear no SE tax and take no such reduction, while rows 3 and 4 are off by precisely the
+half-SE-tax figure. An error of exactly 3,533 in one component and zero in the other is a specific rule
+being applied, not noise.
+
+**The carryforward mechanic itself works.** Our control confirms it from the other side: without the
+carryforward the same Year-2 return takes 20% of the whole 46,467 = **9,293**, so the 3,293 is the 30,000
+netting off rather than an artefact of the SE reduction. Year 1 also behaves correctly — a QBI *loss* is
+not reduced by half-SE-tax, because a loss generates no SE tax, so line 2 is the full −30,000.
+
+**★ Worth keeping from `us-tax-hrb`.** Its row-2 reading proved the Form 8995 cell identity rather than
+assuming it — a 43-cell walk mapping 17 consecutive cells onto lines 2–17, split exactly as the form is,
+anchored on five independently known figures, and noting that line 16 is the only right-column line that
+*can* be negative. It also found a **print omission that is not a computation gap**: the product computes
+the Year-1 carryforward correctly but never shows it (Form 8995 is in the form list yet absent from the
+whole 1,701-line export; no interview screen mentions it), while its Year-2 flow requires the user to key
+that figure by hand — so the taxpayer is given no product-produced number to key.
+
+`us-tax-sqa` reached the same rows-3-and-4 conclusion independently, and added a seeding caution: the
+product treats PTPs as out of scope and asks the preparer to choose the §199A adjustment manually —
+leaving it blank is what lets the (5,000) PTP loss reach line 6 and carry on line 17.
+
+Unit suite 2,001, the same 8 pre-existing failures.

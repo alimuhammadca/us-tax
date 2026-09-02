@@ -21481,3 +21481,43 @@ no-asset control.
 
 `Form4562AndRentalUbiaTest`, 6 tests. Unit suite 1,984, same 8 pre-existing failures. Full record:
 `scope-rental-depreciation-assets.md` §9.
+
+## 2026-09-02 — sc_00274 validated: Form 4972 additive confirmed; run B's Expected corrected
+
+**No engine defect.** `Sc00274SqaScenarioTest` (4 tests).
+
+**Run A — 5,870 confirmed straight off the 2025 Form 4972.** Line 13 = min(50%, $10,000) = 10,000;
+line 15 = 20% × 30,000 = 6,000; line 16 (MDA) = **4,000**; line 17 = 46,000; line 23 = 4,600; line 24 =
+1986 rate 576.90 + 15% × 70 = 587.40 → 587; line 25 = **5,870**. Form 1040 line 16 rises by exactly that,
+pinned by a with/without delta rather than by the total alone. A **second independent** agreement with
+the published rate schedule: a $100,000 lump sum trips the form's own "if line 12 is $70,000 or more,
+skip lines 13 through 16" rule, giving line 23 = 10,000 and 1,297.70 + 18% × 830 → **14,470**. The
+`us-tax-hrb` 5,120 implies a base of 40,664 rather than 46,000; its FAIL is real.
+
+**⚠️ Run B — the scenario's Expected is wrong; `us-tax-sqa`'s "YES" is right.** The premise was that the
+Schedule R limit "references the regular tax liability". Schedule R line 21 actually reads *"Tax
+liability limit. Enter the amount from the Credit Limit Worksheet in the instructions"*, and that
+worksheet's first step is **Form 1040 line 18** — while the 2025 Form 1040 reads "16 Tax… Check if any
+from Form(s): 1 ☐ 8814 **2 ☐ 4972**…" and "18 Add lines 16 and 17". The averaging tax is *on* line 16, so
+it raises the limit. Our figures show it: with the lump sum, line 21 = 5,870 and the full 750 is allowed;
+without it, line 21 = 0 and the credit is 0. Corrected to **YES** in the spec and both workbooks.
+
+**The control matters as much as the finding.** At a $100,000 lump sum the limit rises to 14,470 but the
+credit stays at **750**. The limit is a ceiling, not the credit — nobody should read the corrected row as
+the credit scaling with the lump sum.
+
+`us-tax-hrb`'s "NO" is non-discriminating: it saw a $0 credit, consistent with several causes, and its
+own Form 4972 tax was 5,120 — a limit including that would not have produced zero. Not gone behind.
+
+**Caveat on my own authority.** The Schedule R instructions PDF is not in the repo, so the worksheet's
+first step was read from `lines/1040sr.md` (which cites Cat. No. 11357O) rather than the instructions
+themselves; the line 16/17/18 arithmetic is off the shipped form. **Unresolved:** whether IRC §26(b)
+excludes the §402(e) lump-sum tax from "regular tax liability" — worth checking against the Code if this
+row is revisited, though the Credit Limit Worksheet is the operative instruction for the form.
+
+**Observation, not a defect.** `Form4972`'s Part III getters carry an older line numbering —
+`getPartIII_line13OneTenth` returns the 50%-capped $10,000 (2025 line 13, not a tenth of anything) and
+`getPartIII_line14Mda` returns the MDA (2025 line **16**). Values right at every point checked; only the
+names mislead. Worth renaming when Form 4972 is next touched.
+
+Unit suite 1,988, the same 8 pre-existing failures.

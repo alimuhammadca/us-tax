@@ -21697,3 +21697,37 @@ Also added a below-threshold control the graded rows lack: a 400,000 loss draws 
 the 174,000 is the threshold biting rather than a limitation applied to every business loss.
 
 Unit suite 2,012, the same 8 pre-existing failures.
+
+## 2026-09-09 — sc_00290 validated: Run A's "MFS wins" premise is wrong; MFJ is the correct answer
+
+**No engine defect.** `Sc00290SqaScenarioTest` (5 tests).
+
+**Row 1 is right and works both ways.** MFS Spouse-A medical = 8,000 − 7.5% × 30,000 = **5,750**; on the
+joint return the same 8,000 deducts **0** against the 11,250 floor. All three implementations agree.
+
+**⚠️ Row 2 is wrong.** The scenario says the optimizer picks MFS. It picks MFJ, and the `us-tax-hrb` tree
+identified the reason: *"the MFS Schedule A total of 5,750 loses to the 15,750 MFS standard deduction, so
+the medical deduction never reaches the return."* Our engine shows both halves — left alone Spouse A
+takes the 15,750 standard deduction and no Schedule A is produced; **forcing** the itemization (§63(c)(6)(A),
+a separate filer whose spouse itemizes gets no standard deduction) raises Spouse A's tax from **1,475 to
+2,675**. The supposed medical win is a 1,200 loss. And the bracket penalty settles it regardless: MFS
+combined **19,342** against MFJ **15,898**. Corrected Expected: **MFJ**.
+
+To make that row test what it intends, Spouse A needs itemized totals *above* 15,750 — roughly 10,000
+more on top of the medical — and the saving must still beat a ~3,400 bracket penalty. A materially
+different fact pattern.
+
+**Rows 2–3 are ungradeable against the product**, and both trees establish that independently:
+`us-tax-sqa` searched Tools, Reports, Forms Central, the PLAN tab, Take Me To and the "Guide Me"
+filing-status wizard and found only generic "we recommend you file jointly" text with no dual
+computation; `us-tax-hrb` reached the same conclusion and ran the two legs separately. We do have one —
+`OptimizerService.compareJointVsSeparate`, lower total wins with ties to MFJ (deliberate: MFS drags the
+§63(c)(6)(A) itemize-matching and §86(c)(1)(C) social-security restrictions with it). That rule is
+already covered by `Phase9OptimizerTest`; this test supplies the input it acts on. Run B control: MFJ
+16,998 vs MFS 17,010 → MFJ, as expected.
+
+Noted from `us-tax-sqa` and orthogonal to the graded rows: the Nevada community-property 50/50 wage split
+was **not** applied — the product shows Pub 555 guidance but does not force Form 8958. It would change
+the arithmetic of any MFS comparison built on community-property facts.
+
+Unit suite 2,017, the same 8 pre-existing failures.

@@ -22011,3 +22011,46 @@ Unit suite 2,045, the same 8 pre-existing failures.
 each line entered at its allowable share), the §1402 SE-tax-deduction proration by the SE fraction, the
 tips/overtime source restriction (claimable only against income included in U.S. gross income), and the
 computed FTC reduction.
+
+## 2026-09-10 — sc_00302 validated: Form 8828 mortgage-subsidy recapture computed end to end
+
+**No engine defect.** `Sc00302SqaScenarioTest` (7 tests). All four Expected values are correct — checked
+line by line against the Rev. 11-2024 form — and we reproduce every one **from the seven raw inputs**:
+line 14 = 20,000, line 18 = 100, line 22 = 10,000, line 23 = min(20,000, 10,000) = 10,000 → Schedule 2
+line 17b, with total tax rising by exactly 10,000 (19,055 against 9,055).
+
+**★ All four graded rows together test the product on one of them, and weakly.** Both trees agree and
+both comments are right. `us-tax-sqa` confirmed three ways — search, Show All Forms, and the product's own
+assistant replying "Form 8828 may not be supported in the program" — and recorded rows 1–3 as **N/A**.
+`us-tax-hrb` found the single write-in box on a Miscellaneous Taxes screen and stated the consequence: the
+product "never sees the sales price, selling expenses, adjusted basis, modified AGI, qualifying income,
+subsidy amount or holding-period percentage, so it cannot compute this line". Row 4's PASS is therefore a
+**pass-through** — 10,000 computed by hand, typed in, read back. It demonstrates the plumbing to
+Schedule 2 line 17b and nothing about the computation.
+
+**What we pin beyond the graded rows:**
+- **The direction of the min().** The scenario *names* this failure mode — "a product that uses the
+  50%-gain cap instead of the smaller computed recapture FAILS" — but its own facts cannot test it,
+  because the computed recapture is already the smaller. Reversed with a 200,000 subsidy, line 22 becomes
+  200,000 and the 50%-gain cap binds: line 23 = **20,000**. An implementation that always took line 22
+  would pass every graded row.
+- **Both statutory stop conditions**: line 13 (a loss owes no recapture) and line 17 (modified AGI at or
+  below the adjusted qualifying income owes nothing even on a 40,000 gain — the income test doing its job,
+  since the subsidy was not misdirected).
+- **The partial income percentage**, the half the graded facts skip: an excess of 2,000 gives 40% and a
+  recapture of 4,000; 2,750 gives 55% per "round to the nearest whole percentage". Plus holding-period
+  scaling (40% → 4,000, 0% → nothing).
+
+**★ Observation raised, not built — the holding-period percentage is asked for, not derived.** We capture
+the closing date (line 5) and sale date (line 6) and then separately ask the filer for the line 20
+percentage, labelled only "(whole %, e.g. 100)". Neither date is used in the computation. §143(m)(4)(C)
+makes that percentage a function of the full years between closing and disposition, so we are asking for a
+table lookup we already hold the inputs for — and a wrong entry silently scales the recapture, line 20
+being a direct multiplier on line 19. The same dates would also let us check the 9-year window. Not built:
+the table lives in the Form 8828 instructions, which are not in `docs/`, and the figures should come from
+that source rather than memory.
+
+**Cosmetic, not a defect:** after a line-13 loss or a line-17 zero — both "stop here" — we still populate
+lines 15–20 on the rendered form. Line 23 is correctly 0 and no tax flows.
+
+Unit suite 2,052, the same 8 pre-existing failures.

@@ -4804,3 +4804,23 @@ the two disagree. Filling the duplicate or leaving it blank now gives the same r
 so it was left out rather than folded into this value (which would mis-attribute or double-count it).
 Giving Puerto Rico the same computed-first treatment needs its own change — the possession-residence
 form already captures the five-possession income items, so the raw material exists.
+
+## Form 8828 holding-period percentage is entered, not derived (raised 2026-09-10)
+
+The Form 8828 intake collects the **closing date** (line 5) and the **sale date** (line 6), then separately
+asks the filer for the line 20 **holding-period percentage** with no guidance beyond "(whole %, e.g. 100)".
+Neither date is used in `computeForm8828` — they are written to the PDF and nothing else.
+
+IRC §143(m)(4)(C) makes the holding-period percentage a function of the number of full years between
+closing and disposition, so this is a table lookup we already hold both inputs for. Line 20 multiplies
+line 19 directly, so a wrong entry silently scales the recapture in either direction, and nothing
+cross-checks it. The same two dates would also let us verify the disposition falls inside the 9-year
+recapture window at all — today a filer can enter a non-zero percentage for a sale well outside it.
+
+Verified by `Sc00302SqaScenarioTest`, which pins the scaling (40% → 4,000, 0% → nothing) but has to supply
+the percentage itself.
+
+**Blocked on a source, not on design:** the percentage table is in the *Instructions for Form 8828*, which
+are not in `C:\us-tax\docs\`. Fetch those first — the figures should not be written from memory. Once the
+table is in hand this is a derivation plus a mismatch advisory; no new intake field (both dates already
+exist), so no sign-off needed.

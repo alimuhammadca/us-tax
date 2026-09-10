@@ -21915,3 +21915,45 @@ rental-royalties / 13 farm. The PDF export already re-maps them and documents it
 sum. The scenario spec has the same staleness — it cites "Part III lines 7–14", now **Part II**.
 
 Unit suite 2,040, the same 8 pre-existing failures.
+
+## 2026-09-10 — sc_00301 gap 2 FIXED: the computed Form 4563 line 15 now drives the §931 MAGI add-backs
+
+**The defect.** Six add-back sites — Schedule 1-A line 2d, Schedule 8812 line 2c, the saver's credit
+(§25B(e)), Form 8815 (§135(c)(4)(B)), the Form 8839 adoption MAGI and Form 8863 — each read a §931 figure
+the filer had to type **again** on a second form (`form4563Line15ExcludedIncome`, and a *third* copy,
+`magiAddBackForm4563ExcludedIncome`, on the education-credits form). None read the Form 4563 line 15 that
+`populateForm4563` computes from Part II. Leave the duplicate blank and the add-back was zero — MAGI
+understated, every phaseout-limited benefit overstated, no flag.
+
+**The tell.** The asymmetry sat inside a single method: `computeSchedule1A` already received
+`form2555Taxpayer` and preferred the computed §911 exclusion, falling back to the manual field only when
+no Form 2555 existed. `form4563Taxpayer` was never passed in, so §931 went straight to the manual field —
+ten lines apart. `computeForm8863` had the same computed-first branch for §911 and the same raw read for
+§931. Third instance of the "keyed on a separate field" family, after sc_00244 and sc_00300.
+
+**The fix.** `form4563ComputedExclusion` is resolved once in `prepare()` where both Form 4563 objects
+exist — taxpayer + spouse, MFS-guarded so a separately-filing spouse's form does not leak into this leg —
+and threaded to all six sites through a shared `preferComputedExclusion(computed, manual)` helper.
+`computeSchedule1A` and `computeForm8863` gained a parameter each. The manual fields are demoted to
+overrides, honoured only when no Form 4563 exists, so returns that never used the possession form are
+unaffected. A non-blocking `FORM_4563_EXCLUSION_AMOUNT_MISMATCH` fires when the two figures disagree, with
+the computed total winning.
+
+**§933 Puerto Rico is deliberately untouched**: its add-back has its own field and no computed
+counterpart, so folding it into this value would mis-attribute or double-count it. Left in
+`outstanding.md`.
+
+**Measured on the Sc00301 fixture** (65+, 60,000 U.S.-source dividends, so the enhanced senior deduction's
+6%-over-$75,000 phaseout is what the add-back moves):
+
+| | MAGI | Senior deduction | Total tax |
+|---|---|---|---|
+| Before — duplicate blank | 60,000 | 6,000 | 4,115 |
+| Before — duplicate filled | 102,000 | 4,380 | 4,307 |
+| **After — either way** | **102,000** | **4,380** | **4,307** |
+
+`Sc00301SqaScenarioTest` grew 5 → 8 and pins the fix, the filled/blank parity, back-compatibility with a
+manual-only return, the mismatch advisory, and that the advisory does *not* fire when the two agree.
+
+Unit suite 2,043, the same 8 pre-existing failures. **Gap 1 (the Pub. 570 ch. 4 deduction allocation)
+remains open** — see `outstanding.md`.

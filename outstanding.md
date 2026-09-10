@@ -4747,7 +4747,7 @@ Scope: a deduction-allocation pass keyed on the presence of a §931 Form 4563 or
 the standard deduction, Schedule A, and the Form 1116 denominator. No new intake field — the numerator and
 denominator are both derivable from what is already captured. Sizeable but self-contained.
 
-### 2. The computed Form 4563 line 15 is orphaned from the MAGI add-backs (OVERSTATED BENEFITS)
+### 2. ~~The computed Form 4563 line 15 is orphaned from the MAGI add-backs~~ ✅ FIXED 2026-09-10
 
 Schedule 1-A line 2d, Schedule 8812 line 2c, the saver's credit, Form 8815, adoption and education credits
 all read `form4563Line15ExcludedIncome` — a figure the filer types **again** on the additional-deductions
@@ -4762,7 +4762,13 @@ family (after sc_00244 and sc_00300).
 Measured: with the duplicate field blank the enhanced senior deduction is 6,000 instead of 4,380 and the
 tax 4,115 instead of 4,307 — **under-taxed by 192**, no flag.
 
-Fix: thread `form4563Taxpayer`/`form4563Spouse` into `computeSchedule1A` and the other add-back sites,
-prefer the computed line 15, keep the manual field as an override, and flag when the two disagree —
-i.e. exactly the shape already used for Form 2555. No new intake field. The same question should be asked
-of the §933 Puerto Rico figure, which has no computed counterpart at all today.
+**FIXED 2026-09-10.** `form4563ComputedExclusion` is resolved once in `prepare()` (taxpayer + spouse,
+MFS-guarded) and threaded to all six sites via a shared `preferComputedExclusion(computed, manual)` helper;
+`computeSchedule1A` and `computeForm8863` gained a parameter each. The manual fields are demoted to
+overrides, so manual-only returns are unaffected. Non-blocking `FORM_4563_EXCLUSION_AMOUNT_MISMATCH` when
+the two disagree. Filling the duplicate or leaving it blank now gives the same return (4,380 / 4,307).
+
+**Still open, deliberately:** the §933 Puerto Rico add-back has its own field and no computed counterpart,
+so it was left out rather than folded into this value (which would mis-attribute or double-count it).
+Giving Puerto Rico the same computed-first treatment needs its own change — the possession-residence
+form already captures the five-possession income items, so the raw material exists.

@@ -21761,3 +21761,42 @@ self-checking and catch exactly the mistake the tester made by hand. The fields 
 statement, so it is a contained addition.
 
 Unit suite 2,020, the same 8 pre-existing failures.
+
+## 2026-09-09 — sc_00293 validated: §38(c) GBC limit + §39 carryforward reproduce
+
+**No engine defect.** `Sc00293SqaScenarioTest` (4 tests). The rule holds: `allowed = min(available,
+§38(c) limit)`, `carryforward = available − allowed`, with the unused portion persisted on Schedule 1 as
+the next-year bridge source.
+
+**The scenario treats the §38(c) limit as an input; it is an output.** "Year-1 Form 3800 tax-liability
+limit $6,000" is derived from the tax, and no ordinary income lands it on a round $6,000 — which is
+exactly why `us-tax-sqa` reports **5,997 / 4,003** and explains it: *"federal tax tables cannot land
+exactly on 6,000."* Its arithmetic is internally consistent (10,000 − 5,997 = 4,003), so those two
+"PARTIAL FAIL" rows are a fixture artefact rather than a computation error. Ours shows the same shape at
+a different income: tax 5,975 → allowed 5,975, carried 4,025.
+
+**★ The half none of the graded rows reach, and the easy way to get §38(c) wrong.** The floor is the
+**greater** of the tentative minimum tax and 25% of regular tax over $25,000 — and the TMT term dominates
+at ordinary incomes *even when no AMT is payable*:
+
+```
+regular tax 52,023, AMT 0
+  25% floor = 25% × (52,023 − 25,000)              =  6,756
+  TMT       = 26% × (250,000 AMTI − 88,100 exempt) = 42,094   ← the greater term
+  limit     = 52,023 − 42,094                      =  9,929
+```
+
+A 100,000 credit yields **9,929**, not 45,267. Modelling only the 25% term overstates it by 35,000 — the
+mistake I made on the first draft of this test. **The engine was right and the test was wrong**; it now
+derives the expectation from both terms, reading TMT off Form 6251 line 9 (net of the AMT foreign tax
+credit per §55(b)(1), which the code records as a prior fix).
+
+**Both trees are honest about different limits.** `us-tax-hrb` could not enter a GBC at all — the route
+it newly mapped ends at a screen headed *"Form 3800 — To claim the general business credit, click Whole
+Form and manually…"* with no input fields, so the product is directing the user to forms mode; it records
+the rows as not produced rather than inferring a verdict. `us-tax-sqa` went into forms mode and adds two
+findings: the product **does not auto-apply the carryforward** (line 34 and Part IV col (g) hand-keyed),
+and the Year-2 return then **keeps an Accuracy Review error that will not clear** — an e-file blocker.
+Ours applies the carryforward automatically.
+
+Unit suite 2,024, the same 8 pre-existing failures.

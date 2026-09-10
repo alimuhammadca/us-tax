@@ -4726,7 +4726,7 @@ needed no new field and was **fixed the same day** (`CHARITABLE_VEHICLE_1098C_RE
 Two independent gaps found by sc_00301, both invisible to that scenario's graded rows. Verified by
 `Sc00301SqaScenarioTest`.
 
-### 1. The Pub. 570 ch. 4 deduction allocation is not implemented (UNDER-TAX)
+### 1. ~~The Pub. 570 ch. 4 deduction allocation is not implemented~~ ✅ FIXED 2026-09-10 (residue below)
 
 A filer claiming the §931 (American Samoa) or §933 (Puerto Rico) exclusion may not take deductions
 definitely related to the excluded income, and must **prorate** those that are not definitely related by
@@ -4743,9 +4743,41 @@ We apply none of it. On sc_00301's facts the full 15,750 is taken where 3,029 is
 income 0 instead of 6,971, tax 0 instead of ~697. Direction: **understated tax**, growing with the ratio
 of excluded to total income.
 
-Scope: a deduction-allocation pass keyed on the presence of a §931 Form 4563 or §933 exclusion, applied to
-the standard deduction, Schedule A, and the Form 1116 denominator. No new intake field — the numerator and
-denominator are both derivable from what is already captured. Sizeable but self-contained.
+**FIXED 2026-09-10.** `territoryAllocationFraction(...)` is computed in `prepare()` from Form 1040 line 9
+and the excluded territory income, then applied in `computeLine12` to the standard deduction, the itemized
+total and line 12e — after the standard-vs-itemized election (both scale by the same fraction, so the
+choice is unchanged) and before line 13a/14/15, so QBI and the tax see the allowed figure. Schedule A's
+total is prorated in step so the later Form 8396 pass cannot restore the unallocated amount. Non-blocking
+`TERRITORY_EXCLUSION_DEDUCTION_ALLOCATION_APPLIED` carries the Pub. 570 disclosure wording. Scoped to
+American Samoa and Puerto Rico only — Guam/CNMI/USVI file *with* the territory under the §932/§935 mirror
+code and exclude nothing on a U.S. return. sc_00301: 15,750 → 3,029, taxable 6,971, tax 698.
+
+Pub. 570 is explicit that the **enhanced senior deduction is NOT prorated** ("you may claim the full amount
+of the allowed deduction") even though its MAGI test does count excluded income; the QBI deduction is also
+untouched, being definitely related to business income. Both are pinned by tests.
+
+**RESIDUE — still open:**
+
+- **Per-Schedule-A-line proration.** We prorate the itemized TOTAL; Pub. 570's worked example enters each
+  line at its allowable share (medical 11,000 → 8,800, real estate taxes 10,000 → 8,000, mortgage interest
+  16,250 → 13,000, charitable 5,000 → 4,000 at 96,000/120,000). Same line-12 answer, but the printed
+  Schedule A shows full amounts against a prorated total. Interacts with the SALT cap and the Form 8396
+  mortgage-interest reduction, so it wants its own change. The advisory tells the filer meanwhile.
+- **Itemized deductions definitely related to ONE type of income.** Pub. 570 splits itemized deductions
+  three ways — those specific to excluded income (not deductible), those specific to U.S.-taxable income
+  (fully allowable), and the rest (prorated). We prorate everything, which is right for the third and
+  wrong for the first two. Distinguishing them needs a per-item designation field → sign-off.
+- **§1402 SE-tax deduction.** Prorated by its own fraction (SE income subject to U.S. tax / total SE income
+  incl. excluded), not the general one. The possession form already captures
+  `businessGrossIncomeExcluded`, so the raw material exists.
+- **Tips / overtime deductions.** Not prorated — source-restricted: claimable "only with respect to income
+  that is included in your U.S. gross income". Needs a territory-source split on tips/overtime we do not
+  capture.
+- **IRA deduction.** "Do not take excluded income into account when figuring your deductible IRA
+  contribution." Believed already satisfied (excluded income never enters AGI) but unverified.
+- **Form 1116 reduction.** Advisory only today
+  (`TERRITORY_EXCLUSION_FOREIGN_TAX_CREDIT_REDUCTION_REQUIRED`). The formula needs the territory-tax income
+  base and two "deductible expenses based on that income" terms that a U.S. return does not carry.
 
 ### 2. ~~The computed Form 4563 line 15 is orphaned from the MAGI add-backs~~ ✅ FIXED 2026-09-10
 

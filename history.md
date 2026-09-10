@@ -21957,3 +21957,57 @@ manual-only return, the mismatch advisory, and that the advisory does *not* fire
 
 Unit suite 2,043, the same 8 pre-existing failures. **Gap 1 (the Pub. 570 ch. 4 deduction allocation)
 remains open** — see `outstanding.md`.
+
+## 2026-09-10 — sc_00301 gap 1 FIXED: the Pub. 570 ch. 4 territory deduction allocation
+
+**The defect.** A filer claiming the §931 (American Samoa) or §933 (Puerto Rico) exclusion took their
+deductions **in full**. Pub. 570 ch. 4 says deductions that specifically apply to the excluded territory
+income are not allowable at all, and deductions that do not apply to any particular type of income must be
+**divided** between the excluded income and everything else by
+
+    gross income subject to U.S. income tax / gross income from all sources (incl. excluded territory income)
+
+Pub. 570 names the **standard deduction** first, then "certain itemized deductions (such as medical
+expenses, charitable contributions, real estate taxes, and mortgage interest on your home)". On sc_00301's
+facts we took the full 15,750 where 10,000/52,000 × 15,750 = **3,029** is allowable — taxable income 0
+instead of **6,971**, tax 0 instead of **698**. Direction: **under-tax**, growing with the ratio of
+excluded to total income. Invisible to every graded row, because the scenario never asks for taxable
+income or tax.
+
+**The fix.** `territoryAllocationFraction(...)` is computed in `prepare()` from Form 1040 line 9 and the
+excluded territory income, and passed into `computeLine12`, which prorates the standard deduction, the
+itemized total and line 12e **immediately after** the standard-vs-itemized election and **before** line
+13a/14/15 are derived — so the QBI taxable-income limit and the tax both see the allowed figure. Applying
+it after the election is safe because both candidates scale by the same fraction, leaving the choice
+unchanged. Schedule A's total is prorated in step so the later Form 8396 mortgage-interest pass (which
+re-reads it) cannot restore the unallocated amount. A non-blocking
+`TERRITORY_EXCLUSION_DEDUCTION_ALLOCATION_APPLIED` carries the Pub. 570 disclosure wording.
+
+**Scoped to American Samoa and Puerto Rico only.** The chapter is headed "Deductions if Territory Income
+Is Excluded" and its prescribed disclosure names exactly §931 and §933. Guam, the CNMI and the USVI file
+*with* the territory under the §932/§935 mirror-code rules rather than excluding on a U.S. return, so
+sweeping them in would prorate deductions on a return that excluded nothing.
+
+**★ What Pub. 570 says must NOT be prorated, and now isn't.** The enhanced senior deduction counts
+excluded income when testing *eligibility* (that is gap 2's MAGI add-back) but is claimable in full — "If
+you are eligible for this deduction, you may claim the **full amount** of the allowed deduction on your
+U.S. tax return." Prorating it by analogy would have been the easy mistake: 4,380 → 2,576. The QBI
+deduction is likewise untouched, being definitely related to business income. A test pins both halves in
+one return: the standard deduction prorated 17,750 → 10,441 while the senior deduction stays 4,380.
+
+**The FTC half is an advisory, not a computation.** Taxes paid on excluded territory income are not
+creditable, and the Form 1116 line 12 reduction is
+`(excluded − expenses on it) / (total income subject to territory tax − expenses on it) × territory tax`.
+Both the denominator and the two expense terms are inputs a U.S. return does not carry, so a new
+`TERRITORY_EXCLUSION_FOREIGN_TAX_CREDIT_REDUCTION_REQUIRED` states the formula and asks the filer to enter
+the reduction rather than guessing it into their credit.
+
+`Sc00301SqaScenarioTest` 8 → 10: the prorated standard deduction with exact taxable income and tax, the
+senior deduction *not* prorated, and a control proving an ordinary return with no exclusion is untouched.
+
+Unit suite 2,045, the same 8 pre-existing failures.
+
+**Still open (see `outstanding.md`):** per-Schedule-A-line proration (we prorate the total; Pub. 570 shows
+each line entered at its allowable share), the §1402 SE-tax-deduction proration by the SE fraction, the
+tips/overtime source restriction (claimable only against income included in U.S. gross income), and the
+computed FTC reduction.

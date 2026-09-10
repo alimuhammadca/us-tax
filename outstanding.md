@@ -4720,3 +4720,49 @@ Closing it needs one new intake field (`hasQualifiedAppraisal`, gated on `fairMa
 `!isPubliclyTradedSecurity`) plus a blocking flag, which is a form-field addition and so wants sign-off.
 The sibling defect from the same scenario — the §170(f)(12) vehicle cap failing open with no Form 1098-C —
 needed no new field and was **fixed the same day** (`CHARITABLE_VEHICLE_1098C_REQUIRED`).
+
+## §931/§933 territory-exclusion gaps (raised 2026-09-10)
+
+Two independent gaps found by sc_00301, both invisible to that scenario's graded rows. Verified by
+`Sc00301SqaScenarioTest`.
+
+### 1. The Pub. 570 ch. 4 deduction allocation is not implemented (UNDER-TAX)
+
+A filer claiming the §931 (American Samoa) or §933 (Puerto Rico) exclusion may not take deductions
+definitely related to the excluded income, and must **prorate** those that are not definitely related by
+
+    gross income subject to U.S. tax / gross income from all sources (incl. excluded territory income)
+
+Pub. 570 names the **standard deduction** as the leading example, prescribes the disclosure ("in the space
+above line 9, enter 'Standard deduction modified due to income excluded under section 931 (if American
+Samoa) or section 933 (if Puerto Rico)'"), applies the same fraction to itemized deductions, requires the
+Form 1116 FTC to be reduced for taxes on excluded income, and prorates the §1402 SE-tax deduction by the
+analogous SE fraction.
+
+We apply none of it. On sc_00301's facts the full 15,750 is taken where 3,029 is allowable — taxable
+income 0 instead of 6,971, tax 0 instead of ~697. Direction: **understated tax**, growing with the ratio
+of excluded to total income.
+
+Scope: a deduction-allocation pass keyed on the presence of a §931 Form 4563 or §933 exclusion, applied to
+the standard deduction, Schedule A, and the Form 1116 denominator. No new intake field — the numerator and
+denominator are both derivable from what is already captured. Sizeable but self-contained.
+
+### 2. The computed Form 4563 line 15 is orphaned from the MAGI add-backs (OVERSTATED BENEFITS)
+
+Schedule 1-A line 2d, Schedule 8812 line 2c, the saver's credit, Form 8815, adoption and education credits
+all read `form4563Line15ExcludedIncome` — a figure the filer types **again** on the additional-deductions
+form — while `populateForm4563` computes line 15 from the possession-residence-exclusion form and nothing
+connects them.
+
+The asymmetry is inside a single method: `computeSchedule1A` is handed `form2555Taxpayer` and prefers the
+computed §911 exclusion, falling back to the manual field only when no Form 2555 exists.
+`form4563Taxpayer` is not passed in at all. Third instance of the "cap/figure keyed on a separate field"
+family (after sc_00244 and sc_00300).
+
+Measured: with the duplicate field blank the enhanced senior deduction is 6,000 instead of 4,380 and the
+tax 4,115 instead of 4,307 — **under-taxed by 192**, no flag.
+
+Fix: thread `form4563Taxpayer`/`form4563Spouse` into `computeSchedule1A` and the other add-back sites,
+prefer the computed line 15, keep the manual field as an override, and flag when the two disagree —
+i.e. exactly the shape already used for Form 2555. No new intake field. The same question should be asked
+of the §933 Puerto Rico figure, which has no computed counterpart at all today.

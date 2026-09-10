@@ -21867,3 +21867,51 @@ the overstatement without *computing* the limit, which is weaker than the row ap
 agree on Run B: 9,000 allowed, no block, no warning.
 
 Unit suite 2,035, the same 8 pre-existing failures.
+
+## 2026-09-10 — sc_00301 validated: §931 excludes by NON-REPORTING; two gaps found, neither graded
+
+**All three Expected values are correct and we reproduce them.** `Sc00301SqaScenarioTest` (5 tests).
+Form 4563 line 15 = 42,000 summed from Part II; Samoa wages/interest absent from lines 1a/2b; U.S.-source
+dividends 10,000 fully taxable; line 9 = 10,000.
+
+**★ The mechanism is not what the scenario or either tree assumes.** §931 has **no subtraction line** on
+Form 1040. The Form 4563 instructions: "To exclude your qualifying income from American Samoa, complete
+Form 4563 and attach it to your tax return… **You must report on your tax return your worldwide income for
+the tax year that does not qualify for the exclusion.**" Form 4563 *discloses* what was left off. That
+settles the ambiguity `us-tax-hrb` recorded and could not resolve — its reading (b) is correct and its
+refusal to file a defect was right: its seeding entered the Samoa income as an ordinary W-2 + 1099-INT
+**and** declared it on the exclusion screen, i.e. twice, so the product taxing it is what the statute
+asks. `us-tax-sqa`'s narrower finding stands: the product has no Form 4563, so row 1 is properly N/A.
+
+**★ GAP 1 — the Pub. 570 ch. 4 deduction allocation is not implemented (under-tax).** A §931 excluder must
+prorate deductions not definitely related to a type of income — **expressly including the standard
+deduction** — by `gross income subject to U.S. tax / gross income from all sources (incl. excluded)`. Here
+10,000 / 52,000 × 15,750 = **3,029**, taxable income **6,971**, tax **~697**. We take the full 15,750 and
+report taxable income 0. Pub. 570 even prescribes the disclosure ("Standard deduction modified due to
+income excluded under section 931"). Itemized deductions prorate by the same fraction, and the Form 1116
+FTC must be reduced for taxes on excluded income. Invisible to every graded row — which is why the
+`us-tax-hrb` counterfactual ("a working exclusion would give taxable 0, owe 0") is wrong.
+
+**★ GAP 2 — the computed Form 4563 line 15 is orphaned from the MAGI add-backs (overstated benefits).**
+Schedule 1-A line 2d, Schedule 8812 line 2c, the saver's credit, Form 8815, adoption and education credits
+all read `form4563Line15ExcludedIncome`, a figure the filer types **again** on the additional-deductions
+form; none reads the line 15 we compute. **The asymmetry is inside one method**: `computeSchedule1A`
+receives `form2555Taxpayer` and prefers the computed §911 exclusion, falling back to the manual field only
+when no Form 2555 exists — `form4563Taxpayer` is never passed in. Third instance of the "keyed on a
+separate field" family. Measured on a fixture built to expose it (65+, 60,000 U.S.-source dividends, so
+the enhanced senior deduction's 6%-over-$75,000 phaseout is what moves): duplicate field filled → MAGI
+102,000, senior 4,380, tax **4,307**; blank → MAGI 60,000, senior 6,000, tax **4,115**. Under-taxed by 192
+with no flag.
+
+**On the fixture.** The scenario's own facts cannot measure gap 2 at all — Schedule 1-A is `null` for a
+43-year-old with no tips, overtime or car-loan interest, so both runs return null and the comparison
+proves nothing. Rebuilt until it discriminated. Two seeding keys cost a cycle each: the gate is
+`hadAdditionalDeductions` (not `has`), and `confirmAllRelevantStatementsUploaded` must be true or
+Schedule 1-A returns null behind a blocking flag.
+
+**Cosmetic, not a defect:** our Java field suffixes carry the pre-2024 Form 4563 line numbers (10 rents /
+11 farm / 12 business / 13 capital gain); Rev. 9-2024 orders them 10 business / 11 capital gain / 12
+rental-royalties / 13 farm. The PDF export already re-maps them and documents it, and line 15 is their
+sum. The scenario spec has the same staleness — it cites "Part III lines 7–14", now **Part II**.
+
+Unit suite 2,040, the same 8 pre-existing failures.

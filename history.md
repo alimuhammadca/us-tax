@@ -21800,3 +21800,31 @@ and the Year-2 return then **keeps an Accuracy Review error that will not clear*
 Ours applies the carryforward automatically.
 
 Unit suite 2,024, the same 8 pre-existing failures.
+
+## 2026-09-09 — sc_00299 validated: Form 8611 LIHC recapture computed end to end
+
+**No engine defect.** `Sc00299SqaScenarioTest` (4 tests). Both Expected values reproduce **from the
+component inputs**: line 10 = 12,000, line 12 = 12,800, line 14 = 12,800, Schedule 2 line 16 = 12,800.
+
+**★ The row that reads as a clean PASS in both trees is not testing the product.** `us-tax-sqa` recorded
+row 1 as **N/A** and gave the reason: the product has **no Form 8611**, only a single write-in field on a
+Miscellaneous Taxes screen. The tester computed 12,000 + 800 externally and typed the *total* in — so the
+product never performs the line 10 + line 11 addition that row grades, and reading 12,800 back out merely
+confirms what was entered. `us-tax-hrb`'s unannotated 12,800 PASS on the same row is non-discriminating
+for the same reason. Row 2 is the only one that tests anything there: the typed figure does reach
+Schedule 2 line 16. That tree also found there is **no line 13 field**, so the unused-credit offset must
+be netted externally too.
+
+**What we pin beyond the graded rows:**
+- **The flow-through bypass**, the structural rule the scenario names. Seeded with *both* paths live —
+  lines 1–6 computing a line 7 of 30,000 alongside line 8's 12,000 — the base is line 8 (`base =
+  l8.signum() > 0 ? l8 : l7`, matching "Subtract line 9 from line 7 **or** line 8"). Using line 7 would
+  have given 30,800.
+- **The line 13 offset**, which the product cannot express: 5,000 of unused credits gives 7,800; 20,000
+  floors the tax at **zero** rather than going negative and turns the 7,200 excess into a line 15
+  carryforward.
+- **The control.** The recapture is an *additional tax*, so total tax rises by exactly 12,800 — 25,155
+  against 12,355. A form computing 12,800 correctly but never reaching the tax would pass every graded
+  row and still be wrong.
+
+Unit suite 2,028, the same 8 pre-existing failures.

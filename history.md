@@ -21828,3 +21828,42 @@ be netted externally too.
   row and still be wrong.
 
 Unit suite 2,028, the same 8 pre-existing failures.
+
+## 2026-09-09 — sc_00300 validated: TWO real defects found; the vehicle cap failed OPEN (fixed)
+
+**Both Expected values are correct (3,000 and 0) and neither Actual tree shows the product computing
+them.** `Sc00300SqaScenarioTest` (7 tests). This is the input-side statutory-reduction lens doing exactly
+what it exists for: it found **two defects on our side, both overstating the deduction.**
+
+**★ Defect 1 — the §170(f)(12) vehicle cap failed OPEN. FIXED.** The guard was
+`hasPositiveAmount(charitableVehicle) && hasPositiveAmount(vehicle1098cGrossProceeds) && …`, so with **no**
+Form 1098-C on file the second conjunct is false, the cap never ran, and the donor's full claimed value was
+deducted — *a missing document produced the largest possible deduction.* The statute runs the other way:
+§170(f)(12)(A)(i) allows **no deduction at all** for a vehicle claimed above $500 without the
+contemporaneous written acknowledgment. This is the "cap keyed on a separate field fails open" shape — a
+graded run never catches it, because a graded run always supplies the separate field.
+
+Fixed with a **blocking `CHARITABLE_VEHICLE_1098C_REQUIRED`** flag, not by zeroing: the 1098-C is also what
+decides *which* §170(f)(12) answer applies — box 4c gross proceeds (charity sold it) or full FMV (box 5a/5b
+significant intervening use or material improvement) — so unconditional zeroing would be wrong for the
+box-5 filer. Deliberately **overrideable** (absent from `NonOverrideableFlags`): the acknowledgment is the
+filer's own paperwork and may exist without having been uploaded. The **$500 boundary** has its own test so
+the new gate cannot over-fire on small gifts, and the pre-existing "ceiling, not substitution" behaviour
+(a 2,000 claim against 3,000 of proceeds stays 2,000) is pinned alongside it.
+
+**★ Defect 2 — §170(f)(11)(C) is absent. OPEN, raised for sign-off.** A 9,000 noncash gift with no
+qualified appraisal deducts in full. Not merely unenforced but **unexpressible**: the Form 8283 intake
+carries `isVehicle`, `vehicleVin`, `description`, `dateContributed`, `dateAcquired`, `howAcquired`,
+`costBasis`, `fairMarketValue`, `fmvMethod` and `isPubliclyTradedSecurity` — the last being the
+*exemption* from this very rule — but no appraisal field. Closing it needs a new intake field
+(`hasQualifiedAppraisal`), so it goes to `outstanding.md` rather than being patched.
+
+**On the two trees.** `us-tax-hrb` measured the product's computation directly (8,000, cap ignored) and
+evidenced it unusually well: the vehicle checkbox was ticked, the product's own three-screen Form 1098-C
+sub-flow was driven, 3,000 of gross proceeds was entered in its own field alongside the claimed 8,000, and
+it still took the larger. `us-tax-sqa`'s 3,000 is a PASS **only after a manual correction** — the full
+8,000 reached Schedule A and an Accuracy Review block forced it down by hand. The product *refuses to file*
+the overstatement without *computing* the limit, which is weaker than the row appears to grade. Both trees
+agree on Run B: 9,000 allowed, no block, no warning.
+
+Unit suite 2,035, the same 8 pre-existing failures.

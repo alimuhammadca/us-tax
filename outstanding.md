@@ -4700,3 +4700,23 @@ Direction: a partner who is not fully at risk has the excess released a year ear
 appears — over-deduction. The §465 machinery already exists (`atRiskSuspended`, the Form 6198 output, the
 carryforward bridge); what is missing is an at-risk amount on the K-1 intake, which is a form-field
 addition and so wants sign-off.
+
+## §170(f)(11)(C) qualified-appraisal gate is absent from Form 8283 (raised 2026-09-09)
+
+A noncash charitable gift over $5,000 is deductible **only** with a qualified appraisal (§170(f)(11)(C));
+without one the deduction is disallowed. We do not apply that gate — a 9,000 gift with no appraisal
+deducts in full, verified by `Sc00300SqaScenarioTest`.
+
+Not merely unenforced but **unexpressible**. The Form 8283 intake carries `isVehicle`, `vehicleVin`,
+`description`, `dateContributed`, `dateAcquired`, `howAcquired`, `costBasis`, `fairMarketValue`,
+`fmvMethod` and `isPubliclyTradedSecurity` — no appraisal field. The last of those is the *exemption* from
+this very rule (publicly traded securities are excused from the appraisal requirement), so the exception is
+modelled while the rule it excepts from is not.
+
+Direction: **overstatement.** Raised by sc_00300, where both Actual trees found the commercial product
+failing exactly the same way — 9,000 allowed, no block, no warning, no Accuracy Review issue.
+
+Closing it needs one new intake field (`hasQualifiedAppraisal`, gated on `fairMarketValue > 5000` and
+`!isPubliclyTradedSecurity`) plus a blocking flag, which is a form-field addition and so wants sign-off.
+The sibling defect from the same scenario — the §170(f)(12) vehicle cap failing open with no Form 1098-C —
+needed no new field and was **fixed the same day** (`CHARITABLE_VEHICLE_1098C_REQUIRED`).

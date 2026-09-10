@@ -21731,3 +21731,33 @@ was **not** applied — the product shows Pub 555 guidance but does not force Fo
 the arithmetic of any MFS comparison built on community-property facts.
 
 Unit suite 2,017, the same 8 pre-existing failures.
+
+## 2026-09-09 — sc_00291 validated: the Expected is right; the SQA FAILs are a tester input error
+
+**No engine defect.** `Sc00291SqaScenarioTest` (3 tests).
+
+**The two trees diverge only because they entered different inputs.** The taxpayer gives up property
+worth 150,000 and receives like-kind property *plus* 20,000 cash, so line 16 (like-kind received) is
+**130,000**, not 150,000. `us-tax-hrb` entered 130,000 and matched all four rows. `us-tax-sqa` entered
+150,000 — the relinquished FMV — double-counting the boot (amount realized 170,000, realized gain 70,000)
+— and **diagnosed its own error** in the note. Rows 1 and 3 are therefore a tester input error, not a
+product defect. Rows 2 and 4 agree everywhere because both are insensitive to it: recognized gain is
+min(boot, realized) with boot binding either way, and the basis formula cancels the error.
+
+**What we compute, stated plainly.** Form 8824 is a **transcription statement** here — the filer enters
+Part III and we do not derive lines 17/19/20/22/23/24/25 from 15/16/18. Three of the four graded rows are
+the filer's arithmetic, not the engine's, and nothing on our side would have caught the double-counted
+boot either.
+
+**Where we are ahead: the routing.** Line 22 carries automatically to Schedule D line 11 = **20,000** and
+on to Form 1040 line 7 (AGI 110,000). `us-tax-sqa` found the product *"does not auto-carry the 20,000
+recognized gain to Schedule D — it shows a message requiring a manual Sch D line 4/11 + line 18
+mini-worksheet entry."* Controls pinned: no exchange → no capital gain, so the 20,000 is the 8824 carry;
+and a **negative** line 22 does not become a deductible loss, since §1031(c) makes like-kind exchange
+losses non-deductible.
+
+**Raised, not built:** deriving Part III lines 17/19/20/22/23/24/25 from 15/16/18 would make the form
+self-checking and catch exactly the mistake the tester made by hand. The fields already exist on the
+statement, so it is a contained addition.
+
+Unit suite 2,020, the same 8 pre-existing failures.

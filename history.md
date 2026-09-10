@@ -22054,3 +22054,50 @@ that source rather than memory.
 lines 15–20 on the rendered form. Line 23 is correctly 0 and no tax flows.
 
 Unit suite 2,052, the same 8 pre-existing failures.
+
+## 2026-09-10 — sc_00303 validated: Form 2210-F correct; the ⅔ gate divided by NET farm income (fixed)
+
+**Every Expected value is correct, and both of the spec's asides check out.** `Sc00303SqaScenarioTest`
+(7 tests).
+
+**The 0.667 rate is the IRS's, not ours.** The spec's "(app rate 0.667)" reads as though the Expected came
+from our implementation — worth checking, since ⅔ × 10,000 = 6,666.67. The 2025 Form 2210-F line 7 prints
+*"Multiply line 6 by 66⅔% (0.667)"*, so 6,670 is the form's own arithmetic. **CLAUDE.md's "out of scope"
+note for Form 2210-F was also stale** — corrected today; the form is fully computed and routes its penalty
+to Form 1040 line 38.
+
+**What we compute:** line 7 = 0.667 × current-year tax, line 11 = min(line 7, prior-year tax), line 13 =
+the single-installment shortfall, line 16 = underpayment × 7% × 90/365. All three penalty constants trace
+to the form (0.07, ÷365, and 90 days = 16 + 28 + 31 + 15; 2026 is not a leap year).
+
+**★ The product genuinely fails, and `us-tax-sqa` isolated why.** Its Run A row is the one that matters:
+6,700 paid against a true farmer requirement of 6,670 — harbor met, penalty must be 0 — yet the product
+charged **371**, because having *asked* the ⅔ question it measured against the ordinary 8,000
+prior-year figure. Its Run B note is equally sharp: the 2,000 "underpayment" is one quarterly column of
+25% × the wrong 8,000, not the farmer's single installment of 1,670. `us-tax-hrb` saw a smaller version
+(22 on Run A) and **deliberately declined to call it**, since its own driver enters one lump payment dated
+04/15/2025 against a §6654(i) installment due 01/15/2026. That caution was right in isolation; read with
+the SQA tree's 371 *and the wrong requirement visible on the form*, the two agree on the defect and differ
+only in how much of the cause each could see.
+
+**★ Defect found on OUR side and FIXED — the ⅔ gate divided by net farm income.** §6654(i)(2) compares
+**gross** farm income to **total gross income**. The gate was `grossFarm × 3 ≥ line9 × 2` — a gross
+numerator over Form 1040 line 9, which carries the farm's **net** profit. Since gross ≥ net the denominator
+was understated and the ratio overstated, so the gate could only ever be **too generous**:
+
+    statute : 150,000 gross farm / 250,000 total GROSS income = 60%  → NOT a farmer
+    old gate: 150,000 × 3 = 450,000 ≥ (120,000 net + 100,000) × 2 = 440,000 → qualified
+
+A non-farmer got the 66⅔% harbor instead of 90% — **understated required payment and penalty**. Fixed by
+adding the gross-minus-net difference back into the denominator; a farm *loss* makes the net negative and
+subtracting it correctly *raises* total gross income, since gross income is never reduced by a deduction.
+Pinned both ways: the 60% filer is excluded, and a genuine farmer with heavy expenses (200,000 gross /
+250,000 = 80%, net only 50,000) still qualifies. **No graded row could see this** — every run in the
+scenario is a pure farmer.
+
+**★ Second gate gap raised, not built.** §6654(i)(2)(A) allows the ⅔ test to be met on **either** the
+current or the **preceding** year. We test the current year only, so a farmer with an unrepresentative year
+is denied the harbor and measured against the 90% rules — **overstating** the payment and penalty, the
+opposite direction. Needs a prior-year gross-farm-income field → sign-off. See `outstanding.md`.
+
+Unit suite 2,059, the same 8 pre-existing failures.

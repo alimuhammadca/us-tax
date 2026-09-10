@@ -224,7 +224,7 @@ Tax Worksheet).
 ### Out of Scope
 
 - Corporate/entity returns (Form 1120, 1120-S, 1065) and payroll filings (Form 941/940) — their K-1s/1099s are consumed, but the entity returns themselves are not produced.
-- Form 2210-F (farmers/fishermen ⅔ estimated-tax safe harbor).
+- ~~Form 2210-F (farmers/fishermen ⅔ estimated-tax safe harbor).~~ **NOW IN SCOPE (corrected 2026-09-10, sc_00303):** `computeForm2210F` computes lines 1–16 — the 66⅔% required payment at the form's printed 0.667, the 100%-of-prior-year cap, the single-installment underpayment and the line 16 penalty (× 90/365 × 7%) — and routes it to Form 1040 line 38.
 - ~~Multi-year NOL carryforward tracking (Form 172)~~ **NOW IN SCOPE (formerly out — corrected 2026-07-27):** the §172(a)(2)(B) 80% limit and `nolCarryforwardToNextYear` (incl. the §461(l) disallowed loss) are computed and persisted (`out_form_172`, V175), and the carryforward **auto-imports** into the next year's Schedule 1 line 8a NOL via the `importedPriorYearNolCarryforward` bridge (primary path; user entry wins). One of three cross-year carryforward bridges (with Form 8990 §163(j) and Schedule A charitable). Two-year e2e `nol-carryforward-bridge.spec.ts`.
 
 **Now IN scope (formerly out — corrected 2026-07-20):** Self-employment — Schedule C (sole-proprietor

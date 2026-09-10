@@ -4824,3 +4824,31 @@ the percentage itself.
 are not in `C:\us-tax\docs\`. Fetch those first — the figures should not be written from memory. Once the
 table is in hand this is a derivation plus a mismatch advisory; no new intake field (both dates already
 exist), so no sign-off needed.
+
+## Form 2210-F ⅔ farmer test: prior-year alternative + non-farm gross income (raised 2026-09-10)
+
+The §6654(i)(2) farmer/fisher gate was corrected on 2026-09-10 (sc_00303) to compare **gross** farm income
+to **total gross income** rather than to Form 1040 line 9, which carries net farm profit. Two related
+items remain.
+
+### 1. The preceding-year alternative is not available (needs an intake field)
+
+§6654(i)(2)(A) lets the ⅔ test be met on **either** the current year or the **preceding** year — J.K.
+Lasser states it as "at least 66⅔% of their 2023 *or* 2024 gross income from farming or fishing". We test
+the current year only, so a farmer whose current year was unrepresentative (a bad harvest, a large one-off
+non-farm gain) is denied the Form 2210-F harbor and measured against the ordinary 90% Form 2210 rules
+instead. Direction: **overstated required payment and penalty** — the opposite of the defect just fixed.
+
+There is no prior-year gross-farm-income input on the return, so this needs a new intake field and
+therefore sign-off. Pinned as present behaviour by `Sc00303SqaScenarioTest`.
+
+### 2. Non-farm business gross receipts still enter the denominator as NET
+
+The fix restores the *farm* side to gross. Total gross income should likewise include a Schedule C
+business's **gross receipts**, not its net profit, and the same is true of Schedule E rents. A filer with
+a low-margin non-farm business therefore still has a slightly understated denominator, in the same
+over-permissive direction as the bug just fixed, though far smaller in the farmer population that reaches
+this gate at all.
+
+No new field needed — Schedule C gross receipts and Schedule E gross rents are already computed; it is the
+same add-back pattern applied to two more sources.

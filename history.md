@@ -22439,3 +22439,40 @@ have no field identifying the taxable ESA/QTP portion separately from the line 8
 Adding one would close sc_00313's 529 path through the Part II that now exists. Raised in `outstanding.md`.
 
 Backend suite 2,102, the same 8 pre-existing failures. UI `tsc --noEmit` clean.
+
+## 2026-09-11 — sc_00320 validated: Expected values correct, but "app gap" is the wrong framing
+
+**Both Expected values are correct as statements of law**, with the 2025 cap taken from the primary source
+rather than recalled — IRS **Notice 2024-80**: "The limitation on premiums paid for a qualifying longevity
+annuity contract under §1.401(a)(9)-6(q)(2)(ii) is increased from $200,000 to **$210,000**." Run B's
+230,000 − 210,000 = 20,000 follows. `Sc00320SqaScenarioTest` (5 tests).
+
+**★ But this is not an app gap, and `us-tax-sqa` diagnosed it first.** That tree wrote that Form 1098-Q is
+"info-copy-only (not filed with the return, per IRS)" and that the cap "is enforced by the **annuity issuer
+at purchase**, not on the tax return". Both halves check out against the IRS documents, downloaded today:
+
+- *Instructions for Form 1098-Q*, Who Must File: "Any person who **issues** a contract intended to be a
+  QLAC … must file Form 1098-Q."
+- The form's *Instructions for Participant*: "The information on this Form 1098-Q is submitted to the IRS
+  **by the issuer** … **to report the status of the contract**" — the participant is given no action.
+- Same: "the value of any QLAC … **is not included when calculating the required minimum distribution**" —
+  and the RMD is the custodian's calculation. There is no "RMD base" line on any Form 1040 schedule.
+
+So neither figure has a home on a Form 1040. Under the project's scope rule (a form not submitted with the
+1040 is out of scope) Form 1098-Q is **correctly out of scope** — added to CLAUDE.md's Out of Scope list
+with the sourcing. The spec's instruction to record our Updated Expected as $0 is right for the wrong
+reason: $0 is not a shortfall, it is the correct content of a Form 1040.
+
+**Verified inert:** no QLAC, 150,000 within cap, and 230,000 **over** cap all produce total tax of
+**4,115** — identical, because the limit is the issuer's to enforce and no excess-premium line exists.
+
+**★ The one path a QLAC really does affect already works.** The exclusion lowers the custodian's RMD,
+which lowers any §4974 shortfall reported on Form 5329 Part IX — a shortfall we take as the filer's figure,
+correctly, since the custodian computes the RMD. Pinned: 8,000 of shortfall → 2,000 of §4974 tax; 3,000 →
+750. The exclusion is worth 1,250 to that taxpayer and arrives as a smaller shortfall, not a QLAC field.
+
+**Citation note:** the spec cites "Treas. Reg. §1.401(a)(9)-6 Q&A-17"; the 2024 final RMD regulations
+replaced the Q&A format, and both Notice 2024-80 and the current instructions cite §1.401(a)(9)-6(q).
+
+Unit suite 2,107, the same 8 pre-existing failures. Added `n-24-80.pdf`, `i1098q.pdf` and `f1098q.pdf` to
+`docs/IRS-Forms/`.

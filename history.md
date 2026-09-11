@@ -22476,3 +22476,38 @@ replaced the Q&A format, and both Notice 2024-80 and the current instructions ci
 
 Unit suite 2,107, the same 8 pre-existing failures. Added `n-24-80.pdf`, `i1098q.pdf` and `f1098q.pdf` to
 `docs/IRS-Forms/`.
+
+## 2026-09-11 — sc_00322 validated: three blockers confirmed; Run A stale, and an over-block found
+
+**All three blockers exist, fire, and are non-overrideable**, so all three Expected values are right.
+`Sc00322SqaScenarioTest` (8 tests). Two descriptions have drifted, and one premise does not survive the
+IRS document.
+
+**★ Run A's description is stale.** The spec says a §962 election on other income blocks. It does not, on
+its own: **§962 is computed** (corporate-rate tax on line 16 with the "962" box-3 write-in), and the
+blocker was narrowed to the genuine double-count — election **and** the inclusion still on Schedule 1 line
+8n/8o, which would tax the same income twice. A bare election blocks nothing, and shouldn't: that would be
+the "out-of-scope blocker outlives the implementation" failure this blocker was already narrowed once to
+avoid. Pinned both ways plus a no-election control.
+
+This reframes the product's row too. `us-tax-hrb` put it best — "the §962 election **cannot be made in HRB
+at all**, so there is no out-of-scope state for it to block." And `us-tax-sqa`'s "GILTI taxed at ordinary
+rates" is not a product error: **absent the election, that is correct.**
+
+**Run C's flag name** in the spec omits the per-person `_TAXPAYER` / `_SPOUSE` suffix. A nit, except that
+this sweep exists so a regression cannot silently drop a block — a code matching nothing defeats it.
+
+**★★ A finding — the over-$3,000 block denies a deduction the IRS grants.** The blocker's premise is that
+such a repayment needs the §1341 credit or a Schedule A line 16 deduction. Pub. 525, under *Unemployment
+Benefits*: "Deduct the repayment in the later year as an **adjustment to gross income** … **Include the
+repayment on Schedule 1 (Form 1040), line 24e.** If the amount … is more than $3,000, you **may be able**
+to take a credit … **instead of** deducting." So it is an above-the-line deduction at any amount, and
+§1341 is merely an alternative. We hard-block the filer out of it, and our message tells them to "remove
+the over-$3,000 entry" — forfeiting it. Verified: nothing reaches line 24e on the blocked return.
+Over-block, with our own remedy causing the loss. Raised in `outstanding.md`; no new field needed, since
+the intake already states the cross-year case and a line 24e field exists.
+
+Also noted: the ≤ $3,000 path nets against line 7 (the *same-year* treatment) rather than line 24e — same
+AGI effect today, wrong line, worth fixing in the same change.
+
+Unit suite 2,115, the same 8 pre-existing failures. Added `p525.pdf` to `docs/IRS-Forms/`.

@@ -5041,3 +5041,41 @@ the ABLE side, because we have **no field identifying the taxable ESA/QTP portio
 of the line 8z write-in catch-all — there is nothing to read. Adding one would close **sc_00313's 529 path**
 through the Part II that now exists, so the remaining work is one intake field plus a one-line addition to
 Part II line 5. Needs sign-off for the field.
+
+## Cross-year unemployment repayment: block denies the Schedule 1 line 24e deduction (raised 2026-09-11, sc_00322)
+
+`OTHER_INCOME_UNEMPLOYMENT_LARGE_REPAYMENT_OUT_OF_SCOPE_TAXPAYER` / `_SPOUSE` hard-blocks (non-overrideably)
+any `unemploymentRepaymentAdjustment` over $3,000. Its stated premise is that such a repayment "qualif[ies]
+for the §1341 credit … OR the **Schedule A line 16** deduction", neither of which we compute.
+
+**Pub. 525 says otherwise**, under *Unemployment Benefits*:
+
+> "If you repay the benefits in a later year … **Deduct the repayment in the later year as an adjustment to
+> gross income** on Form 1040 or 1040-SR. **Include the repayment on Schedule 1 (Form 1040), line 24e.** If
+> the amount you repay in a later year is more than $3,000, you **may be able** to take a credit … **instead
+> of** deducting the amount repaid."
+
+So the later-year repayment is an **above-the-line adjustment on Schedule 1 line 24e**, available at any
+amount and needing no itemizing. The §1341 credit is an *optional alternative* over $3,000 — not the only
+route, and not Schedule A line 16.
+
+**Effect.** We block the filer out of a deduction the IRS plainly grants, and the message tells them to
+"remove the over-$3,000 entry", which forfeits it. Direction: **over-block**, with our own suggested remedy
+causing the loss. Verified by `Sc00322SqaScenarioTest`: nothing reaches line 24e on the blocked return.
+
+**Fix.** Route `unemploymentRepaymentAdjustment` to Schedule 1 line 24e and downgrade the blocker to a
+non-blocking advisory naming the §1341 alternative for amounts over $3,000. Everything needed already
+exists:
+
+- the intake is unambiguous that this is the **cross-year** case — its help text reads "If you received
+  more unemployment compensation than you were entitled to **in a prior year** and repaid part or all of it
+  in 2025";
+- a line 24e field already exists (`otherAdjustmentTradeActRepaymentLine24e`). Pub. 525 directs regular
+  unemployment repayments to that same line despite its printed Trade-Act-of-1974 label, so the line is
+  used more broadly than its caption.
+
+**No new intake field**, so no sign-off needed — just the decision to replace a block with a computation.
+
+**Fix the ≤ $3,000 path in the same change.** It is currently netted against line 7, which is the *same-year*
+treatment. Same reduction in AGI, so no tax effect today, but it is the wrong line and it would diverge the
+moment either line is used for anything else.

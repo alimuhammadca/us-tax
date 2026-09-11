@@ -22137,3 +22137,39 @@ adjustment is `line3 += (current-year interest already deducted) − (line 30 al
 explain. Chasing the discrepancy instead of quietly fixing the seed is what exposed the asymmetry.
 
 Unit suite 2,067, the same 8 pre-existing failures.
+
+## 2026-09-10 — sc_00308 validated: two Expected values wrong; senior deduction needs an opt-in it shouldn't
+
+**The §86 ↔ §1(h) interaction is right and we reproduce it; two of the four Expected values are not.**
+`Sc00308SqaScenarioTest` (7 tests).
+
+**★ Row 4 — the tax is 663, not 660.** The scenario took 10% × the 6,600 ordinary slice from the *rate
+schedule*. Taxable income is under $100,000, so the **Tax Table** is mandatory, and its 6,600–6,650 band
+is taxed at the 6,625 midpoint: 662.50 → **663**. Both trees reported 663 independently and both concluded
+the software was right. They are. The scenario's own note half-anticipates it ("before any rounding to the
+tax tables").
+
+**★ Row 2 — 46,600 contradicts the scenario's own stated facts, and `us-tax-hrb` caught it.** §1 says
+"Single retiree … age 67", but 46,600 uses a **15,750** standard deduction, i.e. an under-65 filer. At 67
+the deduction is 17,750 (the 2,000 age-65 addition) *plus* the 6,000 OBBBA senior deduction (AGI 62,350 is
+under the 75,000 phaseout) → taxable income **38,600**. That tree ran it **both ways** and filed a
+scenario error; `us-tax-sqa` ran only the under-65 reading and its rows describe a different taxpayer.
+**On the stated facts the tax is zero** — 40,000 of qualified dividends exceeds taxable income of 38,600,
+so the ordinary slice is nil and everything sits under the 48,350 ceiling. A scenario built to pin "0%
+QDCG plus a small ordinary tax" produces no tax at all as written.
+
+**What we pin beyond the graded rows:** the interaction in both directions — remove the dividends and the
+same 30,000 of benefits is entirely untaxed (provisional 15,000 < the 25,000 base); and the dividends that
+made the benefits taxable still pay 0%, since line 16 is the tax on the 6,600 ordinary slice *alone*.
+
+**★ Defect found on our side — the enhanced senior deduction requires an opt-in.** It is a statutory
+entitlement for a 65+ filer under the phaseout, with no election, and our age derivation from the date of
+birth is correct. But `computeSchedule1A` returns null without `hadAdditionalDeductions`, so a 67-year-old
+who never opens the Additional Deductions form silently loses **6,000** — taxable income 44,600 instead of
+38,600, tax **463 instead of 0**, the entire liability. Direction: **over-tax**, no flag. The same date of
+birth already drives the age-65 *standard-deduction* addition automatically, so the return knows the filer
+is 65+ before Schedule 1-A is consulted; the commercial product applies the 6,000 from the DOB alone. The
+[[feedback_child_list_gated_by_parent_boolean]] shape. Raised in `outstanding.md` with the fix direction
+and the caveat that the same early return guards a statement-upload blocker Parts II/III need.
+
+Unit suite 2,074, the same 8 pre-existing failures.

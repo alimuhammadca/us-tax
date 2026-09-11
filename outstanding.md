@@ -4891,3 +4891,33 @@ is already passed to `computeForm8990`, so no new input is needed.
 **Not patched blind:** this changes income for every Form 8990 filer and interacts with the existing
 §163(j) bridge e2e (`section163j-bridge`), so it wants a deliberate change with the e2e re-run rather than
 a drive-by. No new intake field, so no sign-off needed — just scope.
+
+## The enhanced senior deduction requires an opt-in it should not (raised 2026-09-10, sc_00308)
+
+The OBBBA Schedule 1-A Part V enhanced senior deduction ($6,000 per qualifying individual aged 65+, phased
+out at 6% of MAGI over $75,000 / $150,000 MFJ) is a **statutory entitlement**, not an election. Our
+eligibility test derives correctly from the date of birth — but the whole of `computeSchedule1A` returns
+null unless the filer has set `hadAdditionalDeductions` on the Additional Deductions form:
+
+    boolean taxpayerHadInputs = getBoolean(deductionsTaxpayer, "hadAdditionalDeductions") || ...;
+    if (!taxpayerHadInputs && !spouseHadInputs) return null;
+
+So a 65+ filer who never opens that form silently loses the deduction. On `Sc00308SqaScenarioTest`'s facts
+(Single, 67, SS 30,000, qualified dividends 40,000) that is taxable income of **44,600 instead of 38,600**
+and tax of **463 instead of 0** — the entire liability. Direction: **over-tax**, with no flag.
+
+The same date of birth already drives the age-65 *standard-deduction* addition automatically, so the
+return demonstrably knows the filer is 65+ before Schedule 1-A is ever consulted. The commercial product
+applies the 6,000 from the date of birth alone (`us-tax-hrb` sc_00308 run A).
+
+This is the [[feedback_child_list_gated_by_parent_boolean]] shape: a screening boolean meant to skip
+irrelevant questions also suppresses a computation the filer is entitled to.
+
+**Fix direction:** make Part V independent of the opt-in — either compute Schedule 1-A whenever any Part
+has a basis (age 65+ alone being sufficient for Part V), or short-circuit the early return when the
+age-65 derivation succeeds. Parts II/III/IV can stay behind the opt-in, since tips/overtime/car-loan
+interest genuinely need user input. No new intake field.
+
+**Care needed:** the early return also guards the blocking `SCHEDULE_1A_STATEMENTS_NOT_CONFIRMED_UPLOADED`
+flag, which exists because Parts II/III are statement-backed. A senior-only Schedule 1-A has no statement
+dependency and must not trip it.

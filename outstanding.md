@@ -4892,7 +4892,7 @@ is already passed to `computeForm8990`, so no new input is needed.
 §163(j) bridge e2e (`section163j-bridge`), so it wants a deliberate change with the e2e re-run rather than
 a drive-by. No new intake field, so no sign-off needed — just scope.
 
-## The enhanced senior deduction requires an opt-in it should not (raised 2026-09-10, sc_00308)
+## ~~The enhanced senior deduction requires an opt-in it should not~~ ✅ FIXED 2026-09-10 (sc_00308)
 
 The OBBBA Schedule 1-A Part V enhanced senior deduction ($6,000 per qualifying individual aged 65+, phased
 out at 6% of MAGI over $75,000 / $150,000 MFJ) is a **statutory entitlement**, not an election. Our
@@ -4918,6 +4918,17 @@ has a basis (age 65+ alone being sufficient for Part V), or short-circuit the ea
 age-65 derivation succeeds. Parts II/III/IV can stay behind the opt-in, since tips/overtime/car-loan
 interest genuinely need user input. No new intake field.
 
-**Care needed:** the early return also guards the blocking `SCHEDULE_1A_STATEMENTS_NOT_CONFIRMED_UPLOADED`
-flag, which exists because Parts II/III are statement-backed. A senior-only Schedule 1-A has no statement
-dependency and must not trip it.
+**FIXED 2026-09-10.** `seniorDeductionEligibleFromAge(...)` applies the three statutory tests the 2025
+Form 1040 instructions give for filling out Part V — born before January 2, 1961; valid SSN; joint return
+if married — and lets Part V through the opt-in. Parts II–IV stay behind it. The MAGI phaseout and
+per-person arithmetic stay inside Part V, so an over-threshold filer gets a computed zero rather than an
+exclusion. The statement-upload blocker is guarded on the opt-in and so never fires on the senior-only
+path; that is pinned by its own test rather than left to inspection.
+
+Four existing tests moved by exactly the 6,000 (or its tax consequence) and were re-derived by hand — see
+`history.md`. Notably `Sc00152`'s javadoc had already *documented* this gate as "a seeding gate rather
+than an age determination", which is what a rationalised defect looks like in a comment.
+
+**Known limitation, not introduced by the fix:** the instructions deny Part V to a taxpayer born before
+January 2, 1961 who died in 2025 before reaching 65 ("a person is considered to reach age 65 on the day
+before the person's 65th birthday"). We do not model a date of death here.

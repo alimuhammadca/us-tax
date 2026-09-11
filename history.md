@@ -22173,3 +22173,45 @@ is 65+ before Schedule 1-A is consulted; the commercial product applies the 6,00
 and the caveat that the same early return guards a statement-upload blocker Parts II/III need.
 
 Unit suite 2,074, the same 8 pre-existing failures.
+
+## 2026-09-10 — sc_00308 fix: the enhanced senior deduction no longer requires an opt-in
+
+**The defect.** The OBBBA Schedule 1-A Part V enhanced senior deduction is a statutory entitlement, but
+`computeSchedule1A` returned null without `hadAdditionalDeductions`, so a 65+ filer who never opened the
+Additional Deductions form silently lost $6,000 — on the sc_00308 facts, taxable income of 44,600 instead
+of 38,600 and a tax of **463 instead of 0**, the entire liability, with no flag. Over-tax.
+
+**The authority, checked before touching four existing tests.** The 2025 Form 1040 instructions fill out
+Part V **"only if"** (a) you or your spouse on a joint return were born before January 2, 1961, and (b)
+you have a valid SSN — plus "if you are married, you must file a joint return with your spouse to claim
+this deduction". Nothing to elect, and claimable "whether you claim the standard deduction or itemize".
+
+**The fix.** `seniorDeductionEligibleFromAge(...)` applies exactly those three tests (explicit
+`taxpayerBornBeforeJan2_1961` / `spouseBornBeforeJan2_1961` fields win when set, else the date of birth)
+and lets Part V through the opt-in. Parts II–IV stay behind it — tips, overtime and car-loan interest all
+need user input. The MAGI phaseout, per-person arithmetic and $0 floor stay in Part V, so a filer over the
+threshold gets a correctly computed zero rather than being excluded before the worksheet runs. The
+statement-upload blocker is guarded on the opt-in, so a senior-only Schedule 1-A never trips it — pinned
+by its own test.
+
+**Blast radius, measured.** Four existing tests moved, all by exactly 6,000 or its tax consequence, and
+every new value was re-derived by hand rather than copied from the engine:
+
+- `Sc00098` (medical, born 1958, **itemizes**) — A 45,250, B 27,030, D 30,315, and **C 57,650**: MAGI
+  90,000 is 15,000 over the threshold, so 6% × 15,000 = 900 cuts the 6,000 to 5,100. That hand-derivation
+  matching the engine independently confirms the phaseout arithmetic was already right; only the gate was
+  wrong. The line-17 itemized totals the scenario is actually about are unchanged.
+- `Sc00152` (age boundary) — its javadoc had *documented* this gate as "a seeding gate rather than an age
+  determination". Now the same single day moves **8,000**: 2,000 of age-65 standard deduction plus the
+  6,000 senior deduction.
+- `line14_ageBlindAdjustmentsFlowIntoTotalDeductions` (MFJ, both 65+) — line 14 = 37,900 + 6,000.
+- `scheduleRAgeBasedCreditSurvivesToSchedule3WhenTheFilerItemises` — the line 21 tax limit falls with
+  taxable income.
+
+`Sc00308SqaScenarioTest` 7 → 9, adding the fix, an under-65 control proving the opt-in still governs
+Parts II–IV, and the blocker control.
+
+**Known limitation, not introduced here:** the instructions deny Part V to a taxpayer born before
+January 2, 1961 who *died in 2025 before reaching 65*. We do not model date of death in this test.
+
+Unit suite 2,076, back to the same 8 pre-existing failures.

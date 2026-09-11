@@ -4853,7 +4853,7 @@ this gate at all.
 No new field needed — Schedule C gross receipts and Schedule E gross rents are already computed; it is the
 same add-back pattern applied to two more sources.
 
-## §163(j) income adjustment is one-directional (raised 2026-09-10, sc_00305)
+## ~~§163(j) income adjustment is one-directional~~ ✅ FIXED 2026-09-10 (sc_00305)
 
 The Form 8990 result reaches the return through exactly one line in `computeOtherIncomes`:
 
@@ -4888,9 +4888,18 @@ positive when current-year interest is cut back (the case the present code gets 
 carryforward is released. `deriveBusinessInterest8990(personalForms)` already computes the first term and
 is already passed to `computeForm8990`, so no new input is needed.
 
-**Not patched blind:** this changes income for every Form 8990 filer and interacts with the existing
-§163(j) bridge e2e (`section163j-bridge`), so it wants a deliberate change with the e2e re-run rather than
-a drive-by. No new intake field, so no sign-off needed — just scope.
+**FIXED 2026-09-10.** `computeForm8990` publishes line 1 on the model (compute-only — no output-mapper
+or schema change) and `prepare()` computes the signed adjustment, applied to Schedule 1 line 3. A test pins
+that current-year interest cut back by the limit is STILL added back, so the fix could not turn the
+over-tax into an under-tax.
+
+`form8990-carryforward-bridge.spec.ts` asserts only Form 8990's own fields (lines 1/2/5/30/31 and the
+carryforwards), none of which this change touches, so it is expected to be unaffected — **but it was not
+re-run** (Playwright does not run in the agent sandbox). Its own numbers illustrate the old bug neatly:
+line 1 = 100,000 deducted, line 30 = 80,000 allowable, line 31 = 40,000; the old code added back 40,000
+where only 20,000 had ever been deducted.
+
+**Worth a targeted e2e run** at the next opportunity to confirm income moved as expected end to end.
 
 ## ~~The enhanced senior deduction requires an opt-in it should not~~ ✅ FIXED 2026-09-10 (sc_00308)
 

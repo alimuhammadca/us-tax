@@ -22215,3 +22215,44 @@ Parts II–IV, and the blocker control.
 January 2, 1961 who *died in 2025 before reaching 65*. We do not model date of death in this test.
 
 Unit suite 2,076, back to the same 8 pre-existing failures.
+
+## 2026-09-10 — sc_00305 fix: the §163(j) income adjustment is now signed
+
+**The defect.** The §163(j) result reached income through one line — the disallowed amount (Form 8990 line
+31) **added** to Schedule 1 line 3 — while `getAllowableDeduction()` (line 30) was persisted and consumed
+by nothing. Both halves over-taxed:
+
+1. **A released carryforward never became a deduction.** With ample ATI, Form 8990 reported the full
+   carryforward as allowable while total income stayed at the bare wages. sc_00305's row 1 passed *as
+   graded* because the row reads the form, not the return.
+2. **A re-disallowed carryforward was added back as phantom income.** Line 5 is lines 1–4 *including* line
+   2, so line 31 can be interest that was never deducted this year — and it recurred every year the
+   carryforward stayed disallowed. §163(j)(2) treats a carryforward as interest paid in the succeeding
+   year only so that it competes for the limit; losing again simply carries it forward.
+
+**The fix.** `computeForm8990` publishes line 1 on the model (compute-only, no mapper or schema change),
+and `prepare()` computes a signed `form8990InterestIncomeAdjustment` = **line 1 − line 30**, applied to
+Schedule 1 line 3. Line 1 is the only part of the line-5 pool already deducted in arriving at this return's
+income, which is what makes it the right bound. Positive cuts back an over-deduction; negative is a
+released carryforward becoming a deduction; zero — everything allowable, nothing carried — leaves line 3
+alone.
+
+**The guard that matters.** A test pins that **current-year** interest cut back by the limit is *still*
+added back. Without it, a fix that merely stopped adding back would have turned an over-tax into an
+under-tax.
+
+**The existing bridge e2e illustrates the old bug in its own numbers**: line 1 = 100,000 deducted, line 30
+= 80,000 allowable, line 31 = 40,000. The old code added back 40,000 where only 20,000 had ever been
+deducted; the new expression gives exactly 20,000. `form8990-carryforward-bridge.spec.ts` asserts only
+Form 8990's own fields (lines 1/2/5/30/31 and the carryforwards), none of which this change touches, so it
+is unaffected — **but it has not been re-run** (Playwright does not run in this sandbox).
+
+**Fixture rebase.** `Sc00305SqaScenarioTest` wages rose 58,750 → 68,750, since the §163(j) deduction now
+actually reduces income: 68,750 − 3,000 capital − 10,000 interest − 15,750 standard deduction = 40,000.
+That makes the fixture *more* faithful — the spec's own phrase, taxable income before NOL "(after the
+§163(j) and capital-loss items)", was unreachable while the §163(j) item had no income effect. All five of
+the scenario's Expected values still reproduce: base 40,000, limit 32,000, allowed 32,000, carryforward
+18,000, capital −3,000.
+
+Unit suite 2,077, the same 8 pre-existing failures — no other test depended on the one-directional
+behaviour.

@@ -4805,25 +4805,39 @@ so it was left out rather than folded into this value (which would mis-attribute
 Giving Puerto Rico the same computed-first treatment needs its own change — the possession-residence
 form already captures the five-possession income items, so the raw material exists.
 
-## Form 8828 holding-period percentage is entered, not derived (raised 2026-09-10)
+## Form 8828: the early-repayment Holding Period Percentage Worksheet (corrected 2026-09-11)
 
-The Form 8828 intake collects the **closing date** (line 5) and the **sale date** (line 6), then separately
-asks the filer for the line 20 **holding-period percentage** with no guidance beyond "(whole %, e.g. 100)".
-Neither date is used in `computeForm8828` — they are written to the PDF and nothing else.
+**CORRECTION.** This item was first raised as "the holding-period percentage is derivable from the closing
+and sale dates, so asking for it is a gap". The *Instructions for Form 8828* (Rev. 11-2024), downloaded
+2026-09-11, say otherwise:
 
-IRC §143(m)(4)(C) makes the holding-period percentage a function of the number of full years between
-closing and disposition, so this is a table lookup we already hold both inputs for. Line 20 multiplies
-line 19 directly, so a wrong entry silently scales the recapture in either direction, and nothing
-cross-checks it. The same two dates would also let us verify the disposition falls inside the 9-year
-recapture window at all — today a filer can enter a non-zero percentage for a sale well outside it.
+> **Line 20.** "You will find your holding period percentage on the **same line of the table from which you
+> obtained your adjusted qualifying income**" — and that table comes from "notification in writing from the
+> **bond issuer or the lender**".
 
-Verified by `Sc00302SqaScenarioTest`, which pins the scaling (40% → 4,000, 0% → nothing) but has to supply
-the percentage itself.
+It is the issuer's own table, not a statutory schedule, and it varies by issue. **Asking the filer for line
+20 is correct and was never a gap.** The original claim is withdrawn.
 
-**Blocked on a source, not on design:** the percentage table is in the *Instructions for Form 8828*, which
-are not in `C:\us-tax\docs\`. Fetch those first — the figures should not be written from memory. Once the
-table is in hand this is a derivation plus a mismatch advisory; no new intake field (both dates already
-exist), so no sign-off needed.
+**The real gap.** One case *is* computable and we neither compute it nor collect its input — the
+**Holding Period Percentage Worksheet**, for a filer who "fully repaid the federally subsidized loan within
+4 years of the closing date of the loan, and before selling or otherwise disposing of your home":
+
+- C = years from the closing date (line 5) to the **repayment date (line 8)**, rounded **up**
+- D = 20% / 40% / 60% / 80% for C = 1 / 2 / 3 / 4
+- F = years from the repayment date to the sale date (line 6), rounded **up**
+- G = 100% / 80% / 60% / 40% / 20% / 0% for F = 1 / 2 / 3 / 4 / 5 / 6+
+- H = D x G, rounded to the nearest whole percentage -> line 20
+
+Guards from the worksheet: skip when the repayment date is more than 4 years after closing, and "do not use
+this worksheet if lines 6 and 8 of Form 8828 are the same date".
+
+**We do not capture the line 8 repayment date**, so we can neither compute this nor tell the filer the
+worksheet applies. A filer who repaid early and reads line 20 off the issuer's table — as the base-case
+instruction directs — **overstates** the percentage and the recapture, since the worksheet exists to reduce
+it. Direction: over-tax.
+
+Needs one new intake field (the line 8 repayment date) -> sign-off. The arithmetic is fully specified above
+and now sourced, so it is ready to build the moment the field is approved.
 
 ## Form 2210-F ⅔ farmer test: prior-year alternative + non-farm gross income (raised 2026-09-10)
 
@@ -4942,7 +4956,7 @@ than an age determination", which is what a rationalised defect looks like in a 
 January 2, 1961 who died in 2025 before reaching 65 ("a person is considered to reach age 65 on the day
 before the person's 65th birthday"). We do not model a date of death here.
 
-## Form 8997 blocker keys on a checkbox, not on the deferral (raised 2026-09-10, sc_00315)
+## ~~Form 8997 blocker keys on a checkbox, not on the deferral~~ ✅ FIXED 2026-09-11 (sc_00315)
 
 `FORM_8997_REQUIRED_MANUAL_FILL` fires on the `hasQofDeferralOrTermination` screening boolean. That boolean
 carries **no amount**, and nothing connects it to the Form 8949 negative adjustment that actually performs
@@ -4966,5 +4980,13 @@ separate instructions. Those are not in `C:\us-tax\docs\`. Our compute passes `a
 without reading it, so the letter is transcription today — but the fix would make it load-bearing, and it
 should come from the instructions rather than from memory.
 
-Same blocker class as the Form 8828 holding-period percentage table (sc_00302): fetch the instructions
-first. No new intake field either way — `adjustmentCode` already exists on manual Form 8949 transactions.
+**FIXED 2026-09-11.** The 2025 *Instructions for Form 8949* were downloaded and give the discriminator:
+code **Z** = "You are electing to postpone all or part of your gain under the rules explained in the
+Schedule D instructions for investments in QOFs"; code **Y** = "You are reporting your gain from a QOF
+investment that you deferred in a prior tax year". Form 8997 is required "for each year you hold the
+investment and for the year you dispose of the investment", so both letters imply it.
+
+`qofActivityRequiringForm8997(...)` now fires on any of three signals: the screening boolean (as before), a
+manual Form 8949 row carrying code Y or Z, or a 1099-B / 1099-DA QOF-proceeds box. No new intake field —
+`adjustmentCode` already existed. A boundary test pins that code **W** (wash sale), the commonest adjustment
+there is, does NOT demand Form 8997.

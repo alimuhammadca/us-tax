@@ -22290,3 +22290,46 @@ the fix would make it load-bearing, and it should come from the instructions. Sa
 Form 8828 holding-period table (sc_00302). Raised in `outstanding.md`.
 
 Unit suite 2,084, the same 8 pre-existing failures.
+
+## 2026-09-11 — instruction PDFs downloaded; sc_00315 fixed, sc_00302's observation CORRECTED
+
+Downloaded `i8949.pdf` (2025) and `i8828.pdf` (Rev. 11-2024) from irs.gov into `docs/IRS-Forms/` — the two
+documents that had blocked sc_00315 and sc_00302. One closed a fix; the other **overturned** the finding.
+
+### sc_00315 — FIXED: the Form 8997 blocker now keys on the deferral, not just a checkbox
+
+The instructions give the discriminator: code **Z** = "You are electing to postpone all or part of your
+gain … for investments in QOFs"; code **Y** = "You are reporting your gain from a QOF investment that you
+deferred in a prior tax year". Form 8997 is required "for each year you hold the investment and for the
+year you dispose of the investment", so both letters imply it.
+
+`qofActivityRequiringForm8997(...)` now fires on three signals — the screening boolean, a manual Form 8949
+row with code Y or Z, or a 1099-B / 1099-DA QOF-proceeds box. A filer who enters the roll-over and skips
+the checkbox is now blocked, where before the return filed with a §1400Z-2 deferral and no Form 8997. No
+new intake field — `adjustmentCode` already existed. **The boundary is pinned**: code **W** (wash sale)
+does *not* demand Form 8997; widening a gate is how a silent hole becomes a wall of spurious blocks.
+
+### sc_00302 — CORRECTION: the holding-period observation was wrong and is withdrawn
+
+sc_00302 §5 claimed the Form 8828 line 20 holding-period percentage "is a pure function of the full years
+between closing and disposition, so we are asking for a table lookup we already hold both inputs for". The
+instructions say the opposite:
+
+> **Line 20.** "You will find your holding period percentage on the **same line of the table from which you
+> obtained your adjusted qualifying income**" — and that table arrives by "notification in writing from the
+> **bond issuer or the lender**".
+
+It is the issuer's own table, not a statutory schedule, and it varies by issue. **Asking the filer for line
+20 is correct and was never a gap.** Withdrawn.
+
+**The real gap the instructions do reveal**, newly identified: the **Holding Period Percentage Worksheet**,
+for a filer who fully repaid the subsidized loan within 4 years of closing *and* before selling. It is
+fully computable — C = years closing→repayment rounded up; D = 20/40/60/80% for C = 1/2/3/4; F = years
+repayment→sale rounded up; G = 100/80/60/40/20/0% for F = 1/2/3/4/5/6+; H = D × G rounded to a whole
+percentage → line 20. **We do not capture the line 8 repayment date**, so we can neither compute it nor
+tell the filer it applies; such a filer reading line 20 off the issuer's table **overstates** the
+percentage and the recapture. Needs one new intake field → sign-off. The arithmetic is now sourced and
+ready to build.
+
+`Sc00315SqaScenarioTest` 7 → 9. `Sc00302SqaScenarioTest` unchanged and still green — its subject was never
+the holding-period source. Unit suite 2,086, the same 8 pre-existing failures.

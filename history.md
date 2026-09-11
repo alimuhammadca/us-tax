@@ -22256,3 +22256,37 @@ the scenario's Expected values still reproduce: base 40,000, limit 32,000, allow
 
 Unit suite 2,077, the same 8 pre-existing failures — no other test depended on the one-directional
 behaviour.
+
+## 2026-09-10 — sc_00315 validated: all three Expected reproduce; the 8997 blocker keys on a checkbox
+
+**All three Expected values are correct and we produce all three.** `Sc00315SqaScenarioTest` (7 tests):
+Run A line 7 = **0** with total income at the bare 90,000 of wages; Run B `FORM_8997_REQUIRED_MANUAL_FILL`
+blocking **and non-overrideable**; Run C the acknowledgment clears it. Controls: without the roll-over the
+same gain is fully taxable at 100,000, and a partial 60,000 roll-over leaves 40,000 — §1400Z-2 is not
+all-or-nothing.
+
+**★ `us-tax-hrb` has the sharper reading of rows B and C.** Both trees prove the product has no
+§1400Z-2 / Form 8997 / QOF feature at all, several ways each, so Run A genuinely fails there. But rows B
+and C test **our own construct** — `qofForm8997AcknowledgedExternallyFiled` has no counterpart in any
+third-party product — so that tree's "NOT APPLICABLE" is the right characterisation where `us-tax-sqa`'s
+**FAIL** reads as a product deficiency. (Its row C already reaches the same place: "the return does file,
+but not because an acknowledgment released a block".)
+
+**★ Run A's mechanism is not the one the scenario describes.** The spec implies an election field that
+subtracts the invested amount; `hasQofDeferralOrTermination` is a bare boolean with no amount. What we
+have is the IRS's own mechanism — the gain is reported on Form 8949 and backed out by a negative
+column-(g) adjustment, which `computeGainOrLoss(proceeds, basis, adjustment)` carries into the gain. So
+the scenario's note that we "compute only the attachment marker" understates what is there.
+
+**★ The gap the blocker was built to close, and does not.** The screening boolean carries no amount and
+nothing connects it to the adjustment that performs the deferral. A 100,000 roll-over entered as a Form
+8949 adjustment with the indicator left false defers the gain to **0** and fires **no Form 8997 block** —
+the return files with a §1400Z-2 deferral and no Form 8997, reached by skipping a checkbox.
+
+**Not patched, for a concrete reason:** distinguishing a QOF roll-over adjustment from a wash sale needs
+the Form 8949 **adjustment-code legend**, which the form PDF defers to separate instructions that are not
+in `docs/`. Our compute passes the code through without reading it, so the letter is transcription today —
+the fix would make it load-bearing, and it should come from the instructions. Same blocker class as the
+Form 8828 holding-period table (sc_00302). Raised in `outstanding.md`.
+
+Unit suite 2,084, the same 8 pre-existing failures.

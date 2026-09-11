@@ -4941,3 +4941,30 @@ than an age determination", which is what a rationalised defect looks like in a 
 **Known limitation, not introduced by the fix:** the instructions deny Part V to a taxpayer born before
 January 2, 1961 who died in 2025 before reaching 65 ("a person is considered to reach age 65 on the day
 before the person's 65th birthday"). We do not model a date of death here.
+
+## Form 8997 blocker keys on a checkbox, not on the deferral (raised 2026-09-10, sc_00315)
+
+`FORM_8997_REQUIRED_MANUAL_FILL` fires on the `hasQofDeferralOrTermination` screening boolean. That boolean
+carries **no amount**, and nothing connects it to the Form 8949 negative adjustment that actually performs
+the §1400Z-2 deferral. The two are never reconciled, so a filer can:
+
+- tick the indicator and enter no roll-over — harmless, a spurious block the filer can clear; or
+- **enter a roll-over and never tick the indicator** — the gain is deferred to zero and **no Form 8997
+  block fires at all**.
+
+The second is the failure. Verified by `Sc00315SqaScenarioTest`: a 100,000 deferral entered as a Form 8949
+adjustment with the screening boolean left false gives line 7 = 0 and no flag. The return files with a
+§1400Z-2 deferral and no Form 8997 — exactly what the blocker was built to prevent, reached by skipping a
+checkbox.
+
+**Fix direction:** key the blocker on the deferral itself — a Form 8949 row whose adjustment code marks a
+QOF roll-over — in addition to the screening boolean.
+
+**Blocked on a source, not on design:** telling a QOF roll-over adjustment apart from a wash sale or any
+other Form 8949 adjustment needs the **adjustment code legend**, which the Form 8949 PDF defers to its
+separate instructions. Those are not in `C:\us-tax\docs\`. Our compute passes `adjustmentCode` through
+without reading it, so the letter is transcription today — but the fix would make it load-bearing, and it
+should come from the instructions rather than from memory.
+
+Same blocker class as the Form 8828 holding-period percentage table (sc_00302): fetch the instructions
+first. No new intake field either way — `adjustmentCode` already exists on manual Form 8949 transactions.

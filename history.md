@@ -22333,3 +22333,37 @@ ready to build.
 
 `Sc00315SqaScenarioTest` 7 → 9. `Sc00302SqaScenarioTest` unchanged and still green — its subject was never
 the holding-period source. Unit suite 2,086, the same 8 pre-existing failures.
+
+## 2026-09-11 — Form 8828 Holding Period Percentage Worksheet BUILT (V248, sc_00302)
+
+Closes the gap the downloaded instructions revealed. **One new field on the Form 8828 *intake* form** —
+`loanFullyRepaidDate` (line 8), beside the closing date (line 5) and sale date (line 6) already collected.
+No statement change, no tax-return form change, no new allow-list entry (`form-8828` was already a
+registered personal form).
+
+**Surfaces:** `form-form-8828.component.ts` (input + model), `PfForm8828` (`loan_fully_repaid_date`),
+`Form8828Mapper` (read + write), `V248__pf_form_8828_loan_repaid_date.sql` + master registration, and
+`holdingPeriodPercentageWorksheet(...)` in `TaxReturnComputeService`.
+
+**The worksheet, implemented literally:** C = years closing → repayment rounded **up**; D = 20/40/60/80%
+for C = 1/2/3/4; F = years repayment → sale rounded **up**; G = 100/80/60/40/20/0% for F = 1/2/3/4/5/6+;
+H = D × G to the nearest whole percentage → line 20. Worked example: closing 2021-05-14, repaid
+2023-02-01, sold 2025-08-01 → C = 2 (40%), F = 3 (60%), **H = 24%**. The filer had entered 100 from the
+issuer's notification, so the recapture falls 10,000 → **2,400** — exactly the over-tax predicted.
+
+**Both of the worksheet's own guards are applied, each with a test:** skip when the repayment is more than
+4 years after closing, and skip when the repayment and sale dates are the same ("the loan repaid out of
+the sale proceeds" is the ordinary case, not an early repayment). A third test pins that a repayment
+*after* the sale is out of scope too.
+
+**A computed zero is an answer, not an absence.** F ≥ 6 puts G at 0%, so line 20 is 0 and no recapture is
+owed — but "you still must complete and file Form 8828", so the form is produced and line 20 prints **0**.
+The shared `form8611Pct` helper drops zeros and is used by Form 8611, so it was left alone; the explicit
+render is confined to this one field and only when the worksheet computed it. A line 20 the filer never
+entered still prints blank — the canonical null-vs-zero distinction.
+
+**Nothing changes for a blank field**, which is every existing return — the worksheet is opt-in by data,
+pinned by a control asserting the scenario's own graded answer of 10,000 is untouched.
+
+`Sc00302SqaScenarioTest` 7 → 12. Backend suite 2,091, the same 8 pre-existing failures. UI
+`tsc --noEmit` clean, `ng build` complete.

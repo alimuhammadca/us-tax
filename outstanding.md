@@ -4805,7 +4805,7 @@ so it was left out rather than folded into this value (which would mis-attribute
 Giving Puerto Rico the same computed-first treatment needs its own change — the possession-residence
 form already captures the five-possession income items, so the raw material exists.
 
-## Form 8828: the early-repayment Holding Period Percentage Worksheet (corrected 2026-09-11)
+## ~~Form 8828: the early-repayment Holding Period Percentage Worksheet~~ ✅ BUILT 2026-09-11 (V248)
 
 **CORRECTION.** This item was first raised as "the holding-period percentage is derivable from the closing
 and sale dates, so asking for it is a gap". The *Instructions for Form 8828* (Rev. 11-2024), downloaded
@@ -4836,8 +4836,12 @@ worksheet applies. A filer who repaid early and reads line 20 off the issuer's t
 instruction directs — **overstates** the percentage and the recapture, since the worksheet exists to reduce
 it. Direction: over-tax.
 
-Needs one new intake field (the line 8 repayment date) -> sign-off. The arithmetic is fully specified above
-and now sourced, so it is ready to build the moment the field is approved.
+**BUILT 2026-09-11 (V248)** after sign-off on the field. `loanFullyRepaidDate` was added to the Form 8828
+**intake** form (beside the closing and sale dates it already collects) -- not a statement, not a
+tax-return form. `holdingPeriodPercentageWorksheet(...)` implements the worksheet with both of its stated
+guards, and a computed zero renders as 0 because "you still must complete and file Form 8828". Nothing
+changes for a return that leaves the field blank. sc_00302 example: line 20 falls 100 -> 24 and the
+recapture 10,000 -> 2,400.
 
 ## Form 2210-F ⅔ farmer test: prior-year alternative + non-farm gross income (raised 2026-09-10)
 

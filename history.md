@@ -22367,3 +22367,38 @@ pinned by a control asserting the scenario's own graded answer of 10,000 is unto
 
 `Sc00302SqaScenarioTest` 7 → 12. Backend suite 2,091, the same 8 pre-existing failures. UI
 `tsc --noEmit` clean, `ng build` complete.
+
+## 2026-09-11 — sc_00317 validated: all four Expected correct; ABLE gap has two structural halves
+
+**All four Expected values are IRS-correct**, verified against Pub. 907 (2025), downloaded for this.
+Table 1: nontaxable = (QDE ÷ total distributions) × earnings → Run B taxable **750**; Run A "no amount is
+taxable" → **0**; and "the tax … is increased by 10%. Figure this tax on Form 5329, Part II" → **75**.
+`Sc00317SqaScenarioTest` (5 tests).
+
+**★ The routing both trees found the product failing.** Form 5329 Part II's header names the ABLE line
+outright — "Complete this part if you included an amount in income … on Schedule 1 (Form 1040), **line
+8q**, from an ABLE account" — and its line 8 sends 10% to Schedule 2 line 8. `us-tax-sqa`'s diagnosis
+("the taxable ABLE distribution on Sch 1 line 8q is NOT carried into Form 5329 Part II") is exactly right.
+
+**★ Adjudicated the question `us-tax-hrb` explicitly flagged.** It found the same $750 giving $75 in the
+529/QTP and ESA fields but **$0** in the ABLE field and asked whether that was an ABLE disability exception
+or a gap. **It is a gap**, on three grounds: (1) every ABLE beneficiary is disabled by definition
+(§529A(e)(1)), so reading Form 5329 line 6's "death or disability" exception that way would nullify
+§529A(c)(3) for everyone — note its other three bullets each say "from an *education* account", which is
+what invites the misreading; (2) Pub. 907, written for disabled beneficiaries, states the 10% flatly; and
+(3) **the product asked the 10%-exception question, was told no exception applied, and still computed $0**
+— which only emerges by combining the trees, since `us-tax-sqa` recorded the interview and `us-tax-hrb`
+recorded the three-field experiment.
+
+**Our own gap has two structural halves**, both raised in `outstanding.md`:
+- **The ratio is unexpressible.** The 1099-QA captures box 1 gross, box 2 earnings and box 3 basis — two of
+  Table 1's three terms — and **qualified disability expenses are captured nowhere**. The divisor does not
+  exist. Same shape as the §170(f)(11)(C) appraisal gate.
+- **The 10% has no home.** We have Form 5329 Parts I, III and IV but **not Part II**. Under-tax.
+
+What works and is pinned: the statement is captured and attributed, and a filer who applies Table 1 can
+enter the result on Schedule 1 line 8q where it becomes real income — the control shows total tax moving by
+90 (12% of 750), so it is live plumbing, not a display slot.
+
+Unit suite 2,096, the same 8 pre-existing failures. Also added `p907.pdf`, `i5329.pdf` and `f5329.pdf` to
+`docs/IRS-Forms/`.

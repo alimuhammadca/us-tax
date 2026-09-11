@@ -4994,3 +4994,41 @@ investment and for the year you dispose of the investment", so both letters impl
 manual Form 8949 row carrying code Y or Z, or a 1099-B / 1099-DA QOF-proceeds box. No new intake field —
 `adjustmentCode` already existed. A boundary test pins that code **W** (wash sale), the commonest adjustment
 there is, does NOT demand Form 8997.
+
+## ABLE (§529A) distribution taxability — Form 1099-QA (raised 2026-09-11, sc_00317)
+
+Two structural halves, both verified by `Sc00317SqaScenarioTest` and sourced from Pub. 907 (2025) and the
+Form 5329 instructions, now in `docs/IRS-Forms/`.
+
+### 1. The earnings ratio is unexpressible (filer must compute it)
+
+Pub. 907 Table 1: nontaxable = (qualified disability expenses ÷ total distributions) × earnings portion.
+The 1099-QA statement captures box 1 gross, box 2 earnings and box 3 basis — **two of the three terms** —
+and **qualified disability expenses are captured nowhere on the return**. The divisor does not exist, so
+the ratio cannot be computed at all. Same shape as the §170(f)(11)(C) appraisal gate: unsayable, not merely
+unenforced.
+
+A filer who applies Table 1 themselves *can* enter the result on Schedule 1 line 8q
+(`otherIncomeAbleDistributions8q`), and it becomes real income — that path works and is pinned.
+
+### 2. The 10% additional tax has no home (UNDER-TAX)
+
+Pub. 907: "The tax on any distribution included in your taxable income is increased by 10%. Figure this
+tax on Form 5329, Part II." Form 5329 Part II's header names the ABLE line explicitly — "Complete this part
+if you included an amount in income … **on Schedule 1 (Form 1040), line 8q, from an ABLE account**" — and
+its line 8 routes 10% to Schedule 2 line 8.
+
+We have Form 5329 **Parts I, III and IV but not Part II**, so a taxable ABLE amount on line 8q reaches
+income and stops. On the sc_00317 facts that is 75 of tax never charged.
+
+**Both commercial paths fail the same way**, and the two QA trees between them prove it is a gap rather
+than a disability exception: the interview asks the 10%-exception question, is told no exception applies,
+and still computes $0; and the identical $750 yields $75 in the 529/QTP and ESA fields but $0 in the ABLE
+field. (A disability exception cannot be the answer — every ABLE beneficiary is disabled by definition
+under §529A(e)(1), so it would nullify §529A(c)(3) entirely.)
+
+### Scope
+
+Needs one new intake field (qualified disability expenses for the year) **plus** Form 5329 Part II with its
+line 6 exception handling → sign-off. Part II is shared with Coverdell ESA and QTP distributions on
+Schedule 1 line 8z, so building it closes those too — worth checking against sc_00313 before starting.

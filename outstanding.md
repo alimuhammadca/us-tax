@@ -5042,7 +5042,7 @@ of the line 8z write-in catch-all — there is nothing to read. Adding one would
 through the Part II that now exists, so the remaining work is one intake field plus a one-line addition to
 Part II line 5. Needs sign-off for the field.
 
-## Cross-year unemployment repayment: block denies the Schedule 1 line 24e deduction (raised 2026-09-11, sc_00322)
+## ~~Cross-year unemployment repayment: block denies the Schedule 1 line 24e deduction~~ ✅ FIXED 2026-09-11
 
 `OTHER_INCOME_UNEMPLOYMENT_LARGE_REPAYMENT_OUT_OF_SCOPE_TAXPAYER` / `_SPOUSE` hard-blocks (non-overrideably)
 any `unemploymentRepaymentAdjustment` over $3,000. Its stated premise is that such a repayment "qualif[ies]
@@ -5076,6 +5076,9 @@ exists:
 
 **No new intake field**, so no sign-off needed — just the decision to replace a block with a computation.
 
-**Fix the ≤ $3,000 path in the same change.** It is currently netted against line 7, which is the *same-year*
-treatment. Same reduction in AGI, so no tax effect today, but it is the wrong line and it would diverge the
-moment either line is used for anything else.
+**FIXED 2026-09-11.** The repayment flows to Schedule 1 line 24e at any amount; the over-$3,000 case is a
+non-blocking `..._SECTION_1341_MAY_BE_BETTER_*` advisory; both old codes removed from
+`NonOverrideableFlags`. Line 7 now carries the FULL benefit, which Pub. 525 requires for a later-year
+repayment ("you must include the full amount of the benefits in your income for the year you received
+them") — the ≤ $3,000 path is fixed by the same change rather than separately. Two existing tests moved and
+were re-derived; suite back to its 8 pre-existing failures.

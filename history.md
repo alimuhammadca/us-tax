@@ -22511,3 +22511,34 @@ Also noted: the ≤ $3,000 path nets against line 7 (the *same-year* treatment) 
 AGI effect today, wrong line, worth fixing in the same change.
 
 Unit suite 2,115, the same 8 pre-existing failures. Added `p525.pdf` to `docs/IRS-Forms/`.
+
+## 2026-09-11 — sc_00322 fix: the cross-year unemployment repayment is deducted, not blocked
+
+**The defect.** `OTHER_INCOME_UNEMPLOYMENT_LARGE_REPAYMENT_OUT_OF_SCOPE_*` hard-blocked, non-overrideably,
+any repayment over $3,000, on the premise that it needs the §1341 credit or a Schedule A line 16
+deduction. Pub. 525, under *Unemployment Benefits*, says the repayment is deducted "as an **adjustment to
+gross income** … on **Schedule 1 (Form 1040), line 24e**", at any amount and without itemizing, with the
+§1341 credit only an alternative over $3,000. The block denied a deduction the IRS grants, and its own
+advice — "remove the over-$3,000 entry" — forfeited it.
+
+**The fix.** The repayment now flows to **Schedule 1 line 24e**, and the over-$3,000 case is a
+**non-blocking** advisory (`..._SECTION_1341_MAY_BE_BETTER_*`) telling the filer the credit may be worth
+more — a comparison only they can make, costing them nothing to decline since the deduction is already
+applied. Both old codes were removed from `NonOverrideableFlags`: with nothing out of scope to block,
+leaving them would have marked a non-blocking advisory non-overrideable.
+
+**Line 7 changed too, and sc_00322 §5 under-stated this.** That note called the netting "the wrong line,
+but the same reduction in AGI, so no tax effect". The AGI half is right, but Pub. 525 is explicit: for a
+later-year repayment "you must include the **full amount** of the benefits in your income for the year you
+received them". Netting understated the benefits the filer is *required to report*. A 12,000 benefit with
+a 4,000 repayment now shows line 7 = **12,000** and line 24e = **4,000**.
+
+**Pinned:** 4,000 → no blocking flag, 4,000 on line 24e, advisory present; 3,000 → the same deduction and
+**no** advisory (the threshold was never about whether the deduction exists); a Trade Act entry and an
+unemployment repayment **add** on line 24e (1,500 + 4,000 = 5,500).
+
+**Blast radius, measured.** Two existing tests moved, both re-derived:
+`computesSchedule1AndLine8FromOtherIncomesForms` (630 → **680**) and
+`unemploymentRepaymentAmountIsSurfacedForLine7Disclosure`, whose premise *was* the netting.
+
+`Sc00322SqaScenarioTest` 8 → 9. Unit suite 2,116, the same 8 pre-existing failures.

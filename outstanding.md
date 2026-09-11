@@ -4852,3 +4852,42 @@ this gate at all.
 
 No new field needed — Schedule C gross receipts and Schedule E gross rents are already computed; it is the
 same add-back pattern applied to two more sources.
+
+## §163(j) income adjustment is one-directional (raised 2026-09-10, sc_00305)
+
+The Form 8990 result reaches the return through exactly one line in `computeOtherIncomes`:
+
+    if (hasPositiveAmount(form8990DisallowedInterest)) line3 += form8990DisallowedInterest;
+
+and `Form8990.getAllowableDeduction()` is persisted by the output mapper and **consumed by nothing**. Two
+consequences, both **over-tax**, both verified by `Sc00305SqaScenarioTest`.
+
+### 1. A released carryforward never becomes a deduction
+
+With ample ATI, Form 8990 reports the full 10,000 carryforward as allowable while total income stays at the
+bare wages. The §163(j) bridge imports last year's disallowed interest into line 2 and computes it as
+deductible — and then the number never reaches taxable income. On sc_00305 the graded row passes because it
+reads the *form*, not the *return*.
+
+### 2. A re-disallowed carryforward is added back as phantom income
+
+Form 8990 line 5 is lines 1–4 **including line 2**, the prior-year carryforward, so line 31 can consist
+wholly of interest that was never deducted this year. A filer with a 10,000 carryforward and no ATI gains
+10,000 of income that was never subtracted — and it recurs every year the carryforward stays disallowed.
+§163(j)(2) treats a carryforward as interest paid in the succeeding year *for the purpose of competing for
+the limit*; losing again simply carries it forward, with no income effect.
+
+### The fix
+
+One expression replaces the one-directional add-back:
+
+    line3 += (current-year business interest already deducted in Schedule C/F net profit)
+             − (Form 8990 line 30 allowable)
+
+positive when current-year interest is cut back (the case the present code gets right), negative when a
+carryforward is released. `deriveBusinessInterest8990(personalForms)` already computes the first term and
+is already passed to `computeForm8990`, so no new input is needed.
+
+**Not patched blind:** this changes income for every Form 8990 filer and interacts with the existing
+§163(j) bridge e2e (`section163j-bridge`), so it wants a deliberate change with the e2e re-run rather than
+a drive-by. No new intake field, so no sign-off needed — just scope.

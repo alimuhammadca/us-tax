@@ -22101,3 +22101,39 @@ is denied the harbor and measured against the 90% rules — **overstating** the 
 opposite direction. Needs a prior-year gross-farm-income field → sign-off. See `outstanding.md`.
 
 Unit suite 2,059, the same 8 pre-existing failures.
+
+## 2026-09-10 — sc_00305 validated: three-bridge collision correct; §163(j) income adjustment is one-directional
+
+**All five Expected values are correct on the scenario's stated facts and we reproduce every one.**
+`Sc00305SqaScenarioTest` (8 tests): §163(j) allowable 10,000 / carryforward 0; capital line 7 −3,000 with
+nothing carried; §172 base 40,000, 80% limit 32,000, NOL allowed 32,000, carryforward 18,000; taxable
+income 8,000. Both trees are right that the product deducted the whole 50,000 with no cap.
+
+**★ "Taxable income before NOL = $40,000" is listed as an INPUT and it is an OUTPUT** — the sc_00293
+fixture problem again, and exactly what the two trees diverge on. `us-tax-hrb` read the 40,000 as *wages*
+and computed the base honestly as 40,000 − 3,000 − 15,750 = 21,250 → ~17,000. That is right for that
+seeding; it differs from 32,000 because the two are describing different returns. Reaching taxable income
+before NOL of exactly 40,000 needs **wages of 58,750**. Recorded in the spec so the scenario can be run
+faithfully.
+
+**The interaction guard, both directions.** Removing the NOL leaves the capital-loss and §163(j)
+deductions byte-identical — each applies under its own statute. Removing the capital loss raises the §172
+base by exactly 3,000 (→ 43,000, limit 34,400), which is correct: §172(a)(2)(B) is "taxable income computed
+without regard to §172, §199A and §250", *not* without regard to §1211.
+
+**★ Defect found on our side, outside every graded row.** The §163(j) result reaches income through one
+line — `line3 += form8990DisallowedInterest` — and `getAllowableDeduction()` is persisted but **consumed by
+nothing**. So (1) a **released** carryforward never becomes a deduction: with ample ATI Form 8990 reports
+10,000 allowable while income stays at the bare wages, so sc_00305's row 1 passes *as graded* while the
+10,000 never reaches taxable income; and (2) a **re-disallowed** carryforward is added back as phantom
+income, because line 5 includes line 2 — a filer with a 10,000 carryforward and no ATI gains 10,000 of
+income that was never deducted, recurring every year it stays disallowed. Both over-tax. The single correct
+adjustment is `line3 += (current-year interest already deducted) − (line 30 allowable)`. Raised in
+`outstanding.md` rather than patched: it moves income for every Form 8990 filer and interacts with the
+§163(j) bridge e2e.
+
+**How it was found:** I first seeded the ATI field under the wrong key (`line6TaxableIncome` instead of
+`line6TentativeTaxableIncome`), starving ATI to zero and producing a 10,000 discrepancy I could not
+explain. Chasing the discrepancy instead of quietly fixing the seed is what exposed the asymmetry.
+
+Unit suite 2,067, the same 8 pre-existing failures.

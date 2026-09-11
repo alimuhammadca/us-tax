@@ -4995,7 +4995,7 @@ manual Form 8949 row carrying code Y or Z, or a 1099-B / 1099-DA QOF-proceeds bo
 `adjustmentCode` already existed. A boundary test pins that code **W** (wash sale), the commonest adjustment
 there is, does NOT demand Form 8997.
 
-## ABLE (§529A) distribution taxability — Form 1099-QA (raised 2026-09-11, sc_00317)
+## ~~ABLE (§529A) distribution taxability — Form 1099-QA~~ ✅ BUILT 2026-09-11 (V249, sc_00317)
 
 Two structural halves, both verified by `Sc00317SqaScenarioTest` and sourced from Pub. 907 (2025) and the
 Form 5329 instructions, now in `docs/IRS-Forms/`.
@@ -5029,6 +5029,15 @@ under §529A(e)(1), so it would nullify §529A(c)(3) entirely.)
 
 ### Scope
 
-Needs one new intake field (qualified disability expenses for the year) **plus** Form 5329 Part II with its
-line 6 exception handling → sign-off. Part II is shared with Coverdell ESA and QTP distributions on
-Schedule 1 line 8z, so building it closes those too — worth checking against sc_00313 before starting.
+**BUILT 2026-09-11 (V249)** after sign-off. Both fields went on the other-incomes **intake** form
+(taxpayer and spouse): `ableQualifiedDisabilityExpenses` and `form5329Line6ExceptionAmount`. The ratio
+applies Pub. 907 Table 1 literally and Form 5329 Part II routes 10% to Schedule 2 line 8. Computed-first
+with the manual line 8q as an override; a computed zero is an answer; program-to-program transfers are
+excluded from both sides of the ratio; line 6 removes the 10% without untaxing the income.
+
+**STILL OPEN — ESA/QTP on Part II line 5.** Form 5329 Part II covers "a Coverdell education savings account
+(ESA) or a qualified tuition program (QTP)" on Schedule 1 line 8z as well as ABLE on line 8q. We wired only
+the ABLE side, because we have **no field identifying the taxable ESA/QTP portion separately** from the rest
+of the line 8z write-in catch-all — there is nothing to read. Adding one would close **sc_00313's 529 path**
+through the Part II that now exists, so the remaining work is one intake field plus a one-line addition to
+Part II line 5. Needs sign-off for the field.

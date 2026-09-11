@@ -22402,3 +22402,40 @@ enter the result on Schedule 1 line 8q where it becomes real income — the cont
 
 Unit suite 2,096, the same 8 pre-existing failures. Also added `p907.pdf`, `i5329.pdf` and `f5329.pdf` to
 `docs/IRS-Forms/`.
+
+## 2026-09-11 — Form 5329 Part II + the ABLE qualified-disability-expenses field BUILT (V249, sc_00317)
+
+Closes both halves of the sc_00317 gap. `Sc00317SqaScenarioTest` 5 → 11; we now produce all four Expected
+values from the raw inputs with no hand arithmetic.
+
+**Two fields, both on the other-incomes INTAKE form** (taxpayer and spouse), beside the line 8q amount
+they work with — not on the 1099-QA statement, since neither appears on the payer's form:
+`ableQualifiedDisabilityExpenses` (Pub. 907 Table 1's missing divisor) and `form5329Line6ExceptionAmount`.
+The second is **constitutive of Part II, not an extra**: without it Part II would tax a distribution made
+on or after the beneficiary's death, turning one gap into another.
+
+**The ratio** (`computeAbleTaxableEarnings`) applies Table 1 literally — nontaxable = (QDE ÷ total
+distributions) × earnings, taxable = earnings − nontaxable — summing box 1 and box 2 across every 1099-QA
+on the return, since Table 1 speaks of "the YEAR'S total distributions". **Form 5329 Part II** then runs
+line 5 → 6 → 7 → 8 = 10% and lands on Schedule 2 line 8, as the form's own line 8 instructs.
+
+| Case | line 8q | Schedule 2 line 8 |
+|---|---|---|
+| QDE 5,000 of 8,000, earnings 2,000 | **750** | **75** |
+| QDE 8,000 | — | — |
+| QDE 3,000 | **1,250** | **125** |
+| Line 6 exception 750 / 250 | 750 | **none** / **50** |
+| Manual entry, no 1099-QA | 750 | **75** |
+| 20,000 program-to-program transfer also on file | **750** (ignored) | 75 |
+
+**Four deliberate details:** computed-first with the manual line 8q as an override (the §931 pattern from
+sc_00301), and it now draws the 10% it always should have; a computed **zero** is an answer, not an
+absence; **program-to-program transfers are excluded from both sides of the ratio** — counting the 20,000
+above would have made it 5,000/28,000 and *understated* the tax, so that has its own test; and line 6 is
+**not** an income exclusion — the excepted distribution stays in income and only the 10% disappears.
+
+**Not built:** ESA/QTP (Schedule 1 line 8z) is not wired into Part II line 5. The form covers it, but we
+have no field identifying the taxable ESA/QTP portion separately from the line 8z write-in catch-all.
+Adding one would close sc_00313's 529 path through the Part II that now exists. Raised in `outstanding.md`.
+
+Backend suite 2,102, the same 8 pre-existing failures. UI `tsc --noEmit` clean.

@@ -22623,3 +22623,27 @@ non-result: on that fixture the alternative raises the credit 6,360 -> 7,200 but
 1,950, because the 200-300% Table 5 cap binds under both methods. The election helped; the cap hid it.
 
 Suite 2,141 with the same 8 pre-existing failures.
+
+## 2026-09-11 - Drop the Form 8962 Part V fields that computing Part V made redundant (V252)
+
+Cleanup after the Part V build. Six INTAKE fields never matched the form they claimed to feed: the two
+"Months using alternative method" and two "Months with Marketplace coverage" entries are COUNTS, where
+lines 35/36 columns (c)/(d) want a start month and a stop month -- a count cannot say WHICH months -- and
+both are now derived by Pub. 974 Worksheet I lines 8-9. The two "Average monthly second-lowest silver plan
+cost" entries answer a column Part V does not have; the SLCSP reaches the calculation through Worksheet
+II/IV column B, straight off the 1095-A.
+
+KEPT DELIBERATELY: the two alternative monthly contribution entries. That IS a real quantity (Worksheet I
+line 7) and, though computed now, a filer who worked Pub. 974 by hand keeps their figure as an override
+rather than losing it to automation.
+
+Also dropped: the eight out_form_8962 line35a-h columns, an invented eight-field shape from an earlier
+reading of Part V, dead since V251 added the eight real ones. A misnamed line-numbered column is exactly
+what caused the line 34 defect fixed in V250, so they went rather than stay to mislead a future reader.
+
+Worth recording as a process note: the Angular template is a string literal, so tsc passed with six
+ORPHANED input fragments left behind by the removal -- bindings to properties that no longer existed.
+Only reading the template and running the AOT build caught it. A green tsc is not evidence that a
+component template is intact.
+
+Suite 2,141 with the same 8 pre-existing failures; AOT build clean.

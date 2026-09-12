@@ -22575,3 +22575,51 @@ keep the better one.
 
 Sc00323SqaScenarioTest 13 tests. Suite 2,129, same 8 pre-existing failures (verified against a pre-fix
 worktree).
+
+## 2026-09-11 - Form 8962 Part V: the alternative calculation for year of marriage is now COMPUTED
+
+Closes the gap sc_00323 was written to document. A couple who married mid-year may use each spouse's OWN
+half of household income for the pre-marriage months, which usually lowers the excess-APTC repayment. We
+honoured the election, computed the standard full-year amount anyway, and raised an advisory saying so --
+filer-adverse, because the full-year method over-states the repayment. Worse, the Part V figures a filer
+worked out by hand from Pub. 974 were stored on the form and then ignored: runs with and without them were
+byte-identical.
+
+**Pub. 974 Worksheets I-V now run.** Worksheet I derives each spouse's alternative monthly contribution
+from data we already held -- Form 8962 line 3, the federal poverty table, Table 2 applicable figures --
+given three facts captured nowhere, which **V251** adds to the Premium Tax Credit intake: the month of
+marriage (Worksheet I line 9 caps the pre-marriage window there) and each spouse's alternative family
+size. The family sizes cannot be inferred from the return: Pub. 974 lets a dependent who qualifies under
+BOTH spouses be placed in either alternative family, which is a taxpayer allocation, not a computation.
+
+Worksheets II and IV work each spouse's OWN pre-marriage policy, so the 1095-A entries are now split by
+recipient alongside the household aggregate the rest of the form uses.
+
+**The election is not unconditional, and this is the part worth remembering.** Worksheet V line 14: "Is
+column A more than column B? ... No. The alternative calculation does not reduce your excess APTC. Leave
+Form 8962, Part V, blank." The property that the election never hurts is PROCEDURAL, not arithmetic -- so
+the engine computes both methods and keeps the better. An engine that simply applied the alternative
+amounts could land a filer HIGHER than the gap did. A test pins exactly that case (both spouses at
+alternative family size 1, so their two contributions of 400 each exceed the household's 768).
+
+**Verified against the worked example published in Pub. 974** (Paulette Oak and Quentin Cedar, p. 44-46):
+every printed figure reproduces -- alternative contributions of $400 and $148, line 24 of $7,021 against
+$5,481 without the election, line 27 $1,402, line 28 $3,250, and a repayment of $1,402 against $2,942.
+Using the IRS's own example matters: it is a case the IRS chose, not one chosen to be easy.
+
+Also corrected: line 26 is -0- for an electing filer in the REPAYMENT direction too. The Form 8962
+line-26 instruction's general rule is "if line 25 is greater than line 24, leave line 26 blank", but
+Pub. 974 Step 8 governs the alternative calculation and its example enters -0-. Nothing downstream
+changes; the form now matches the IRS's own filled-in example.
+
+UI: three intake fields with help text on the rule that trips people up (a dependent qualifying under
+both spouses counts on one side only), and lines 35/36 rendered with all four columns each, two-digit
+months, blank when Worksheet V says the alternative does not help.
+
+Form8962PartVAlternativeMarriageTest 12 tests. Sc00323SqaScenarioTest re-derived -- two of its tests
+asserted the gap (the advisory saying Part V was uncomputed, and the inertness of the supplied entries);
+both were rewritten from the new behaviour rather than re-pointed. One of them now records an honest
+non-result: on that fixture the alternative raises the credit 6,360 -> 7,200 but the repayment stays at
+1,950, because the 200-300% Table 5 cap binds under both methods. The election helped; the cap hid it.
+
+Suite 2,141 with the same 8 pre-existing failures.

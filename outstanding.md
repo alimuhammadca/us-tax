@@ -235,8 +235,15 @@ doesn't exist. Authoritative status (supersedes the in-place notes at the cited 
   published Table 2 keypoints (325→0.0663, 350→0.0725, 375→0.0788) and every intermediate integer percent.
   Leaving both listed as open risked a second "fix" of working code.
 
-- **⭐ Form 8962 Part V — alternative calculation for year of marriage: NOT COMPUTED (sc_00323, needs 3 new
-  intake fields — awaiting sign-off).** We honour the election, compute the standard full-year amount and
+- **✅ Form 8962 Part V — alternative calculation for year of marriage: BUILT 2026-09-11 (V251).**
+  Pub. 974 Worksheets I–V are computed; the three intake fields (month of marriage, each spouse's
+  alternative family size) were added to the Premium Tax Credit form, and lines 35/36 render with all
+  four columns each. Verified against the worked example published in Pub. 974 (Paulette Oak and
+  Quentin Cedar) — every printed figure reproduces. Both methods are computed and the better kept,
+  per Worksheet V line 14, so the election can never leave a filer worse off. Original text follows.
+
+- ~~**⭐ Form 8962 Part V — alternative calculation for year of marriage: NOT COMPUTED (sc_00323, needs 3 new
+  intake fields — awaiting sign-off).**~~ We honour the election, compute the standard full-year amount and
   raise the non-blocking `PREMIUM_TAX_CREDIT_ALT_MARRIAGE_CALC_NOT_COMPUTED` advisory. The direction is
   filer-adverse (over-stated repayment) — worth up to **$1,200** on the `Sc00323SqaScenarioTest` fixture.
   The Part V figures a filer works out from Pub. 974 are stored on the form and then **ignored**: runs with

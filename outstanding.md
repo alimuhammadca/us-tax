@@ -225,6 +225,48 @@ doesn't exist. Authoritative status (supersedes the in-place notes at the cited 
 - **Shared-policy allocation %s captured but NOT applied to col A/B/F (HIGH, deferred).** The monthly loop (~8549) sums `monthlyEnrollmentPremiumsAmount`/`monthlySLCSPPremiumAmount`/`monthlyAdvancePaymentPTCAmount` from each 1095-A RAW; the `sharedPolicyAllocation` percentages (premium/SLCSP/APTC, per-policy with start/stop months) are read at ~8660 and stored into `Form8962PolicyAllocation` for Part IV display ONLY — never multiplied into `sumColA/B/F`. For a genuinely shared policy this fabricates credit/over-repayment (50% allocation ignored → e.g. line 24 $12,000 vs correct $4,800). A correct fix must (a) confirm the intake contract — whether the 1095-A fields hold the FULL policy amount (then apply the %) or the taxpayer's PRE-ALLOCATED share (then applying would double-apply) — and (b) match each allocation to its policy by number and apply per-month within [startMonth, stopMonth]. Rare (divorced/separated parents splitting a marketplace policy); deferred to a scoped pass with the UI intake contract verified.
 - **No corrected-SLCSP path (MEDIUM, data-model gap).** Col B comes solely from the 1095-A `monthlySLCSPPremiumAmount`. Marketplaces routinely leave 1095-A col B blank ($0) when no APTC was paid; the taxpayer must supply the correct SLCSP. With col B = 0 → col D = 0 → col E = 0, a legitimate credit is DENIED. Needs a corrected-SLCSP intake field (or a benchmark lookup) consumed by the monthly build.
 - **Line 11 (annual) emitted for partial-year with a full-year col C (MEDIUM, form-integrity; tax correct).** Line 11 is populated unconditionally alongside the monthly rows (~8597), and its col C is the full-year `annualContribution` even when coverage is partial-year, so line 11's col E disagrees with the line-24 monthly total. line 24 (the tax figure) derives from the monthly rows and is correct; only the rendered line 11 is wrong/spurious. Emit line 11 only when all 12 months are covered with identical amounts (the true annual shortcut), else clear it.
+- **✅ STALE — CORRECTED 2026-09-11 (sc_00323).** The two items immediately above and below were both
+  verified against the compute code today and are **already fixed**; they were never un-deferred here.
+  (a) *Shared-policy allocation %s not applied to col A/B/F* — fixed 2026-08-03, with the
+  `allocationFraction` /100 double-scaling corrected 2026-08-04: `allocationByPolicy` is built from
+  `sharedPolicyAllocation`, keyed by normalized policy number, and scales col A/B/F per month within
+  [startMonth, stopMonth]. (b) *300–400% applicable figure interpolated DOWN* — fixed: `getApplicableFigure`
+  now uses the single linear segment `0.0600 + (p−300) × 0.00025` rounded HALF_UP, which reproduces the
+  published Table 2 keypoints (325→0.0663, 350→0.0725, 375→0.0788) and every intermediate integer percent.
+  Leaving both listed as open risked a second "fix" of working code.
+
+- **⭐ Form 8962 Part V — alternative calculation for year of marriage: NOT COMPUTED (sc_00323, needs 3 new
+  intake fields — awaiting sign-off).** We honour the election, compute the standard full-year amount and
+  raise the non-blocking `PREMIUM_TAX_CREDIT_ALT_MARRIAGE_CALC_NOT_COMPUTED` advisory. The direction is
+  filer-adverse (over-stated repayment) — worth up to **$1,200** on the `Sc00323SqaScenarioTest` fixture.
+  The Part V figures a filer works out from Pub. 974 are stored on the form and then **ignored**: runs with
+  and without them are byte-identical. H&R Block does not offer the election either (verified positively in
+  `us-tax-hrb` run S323B), so this is a shared gap, not a divergence.
+
+  Pub. 974 Worksheet I is computable from what we already hold (line 3 household income, the FPL table,
+  Table 2) **except three inputs captured nowhere**: **month of marriage** (Worksheet I line 9: the stop
+  month is the earlier of last coverage month and the month of marriage), and **alternative family size**
+  for the taxpayer (Worksheet I line 1) and the spouse (Worksheet III line 1). All three belong on the
+  existing *Premium Tax Credit* intake form, in the year-of-marriage section that is already there.
+
+  **Two traps for whoever builds it.** (1) The "never higher" property is **not arithmetic** — it is
+  Pub. 974 Worksheet V line 14: *"Is column A more than column B? ... No. The alternative calculation does
+  not reduce your excess APTC. Leave Form 8962, Part V, blank."* An engine that simply applies the
+  alternative amounts can land HIGHER than today's gap; it must compute both methods and keep the better.
+  (2) Eligibility is gated on excess APTC actually having been paid (Table 4 Q5, Worksheet 3 line 14) —
+  Part V is repayment-side only and can never raise a net credit.
+
+  Separately, the existing Part V intake is structurally mismatched to the form: it collects month *counts*
+  ("Months using alternative method") where lines 35/36 columns (c)/(d) want a **start month** and **stop
+  month**, and an "Average monthly second-lowest silver plan cost" that Part V has no column for, while
+  omitting the **alternative family size** column (a) requires.
+
+- **Form 8962 line 4 a/b/c federal-poverty-table checkbox is never rendered (LOW, sc_00323).** Line 4's
+  a/b/c boxes record which FPL table was used (Alaska / Hawaii / Other 48 states and DC). We hold
+  `fplRegion` on the intake and use it to pick the right FPL, but no box is checked on the produced form.
+  Values are right; the form is incomplete. (The model fields named `line4aCheckBelowFplException` /
+  `line4bCheckLineZero` are unrelated legacy leftovers that render nowhere.)
+
 - **300–400% applicable figure interpolated with `RoundingMode.DOWN` (LOW).** `getApplicableFigure` interpolates between pre-rounded 25-point keypoints and truncates DOWN, landing up to 0.0001 below the published Table 2 half-up value at odd offsets → contribution slightly understated → PTC slightly overstated (≤ a few $/yr). `8962.md:170` says "do not interpolate — use the table." Fix by using the exact linear `0.06 + (p−300)×0.00025` rounded HALF_UP (matches Table 2) or hardcoding the 100 Table-2 rows — deferred pending the authoritative table to avoid substituting one small rounding error for another.
 - **Per-month vs round-once rounding drift on lines 24/25 (LOW).** `totalColE`/`totalColF` accumulate UNROUNDED monthly col E/F then round once, while each displayed monthly row is rounded — so the printed line-12(e)…23(e) entries can sum to a few dollars off line 24 (Form 8962 rounds each month then sums). Round each month's col E/F before accumulating.
 - **§36B(c)(1)(B) immigrant-exception + dependents-required-to-file have no intake flags (LOW).** The <100% gate (fixed) denies a lawfully-present-immigrant-below-Medicaid filer who has no APTC (no flag to detect the exception — advisory/flag follow-up). Dependents' MAGI is summed with no "required to file" filter (§36B(d)(2)(A)(ii)) — no such flag captured. Both need new intake fields.

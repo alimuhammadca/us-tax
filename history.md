@@ -22542,3 +22542,36 @@ unemployment repayment **add** on line 24e (1,500 + 4,000 = 5,500).
 `unemploymentRepaymentAmountIsSurfacedForLine7Disclosure`, whose premise *was* the netting.
 
 `Sc00322SqaScenarioTest` 8 → 9. Unit suite 2,116, the same 8 pre-existing failures.
+
+## 2026-09-11 - sc_00323: Form 8962 line 34 restored to its real meaning; PTC tax family size no longer defaults to one
+
+Validating sc_00323 (Form 8962 Part V, alternative calculation for year of marriage) confirmed the
+scenario's documented gap is real and its description of our code accurate -- but turned up two unrelated
+defects, both now fixed.
+
+**Line 34 was answering the wrong question.** Line 34 reads "Have you completed all policy amount
+allocations?", a PART IV question. We stored the Part V year-of-marriage election in a column named
+`line34_use_alternative_calculation` and the UI mapped it onto the line-34 "Yes" checkbox, so an electing
+filer's produced Form 8962 asserted an unrelated Part IV claim -- and could never produce the "No, more
+than four allocations, statement attached" answer. Line 34 is now computed from the allocation list
+(TRUE at <= 4, FALSE above, NULL when Part IV does not apply). The election moved to
+`partVAlternativeCalculationElected` and stays unrendered, correctly: it has no checkbox on the form, only
+line 9 = Yes plus completed lines 35/36, both of which were already right. **V250** renames both columns
+and clears stale line-34 values that carried the old meaning.
+
+**PTC tax family size defaulted to 1.** A blank Form 8962 line 1 became a household of one, shrinking the
+federal poverty line, raising income-as-%-of-FPL, shrinking the credit and enlarging the repayment. The
+existing cross-check fired only when the entered size EXCEEDED the return's family; nothing caught the
+blank or the under-statement. Both now share one `returnTaxFamilySize` helper -- their drift was the bug --
+and a `PREMIUM_TAX_CREDIT_FAMILY_SIZE_BELOW_RETURN` advisory mirrors the EXCEEDS guard. Cost on the
+reference fixture: **$1,300** (339% of FPL instead of 250%, a $3,250 cap instead of $1,950).
+
+Not fixed, and still open: Form 8962 Part V itself is not computed. Pub. 974 Worksheet I needs three
+inputs captured nowhere -- month of marriage, and alternative family size per spouse. Noted in
+`outstanding.md`. Also learned while validating: the "never higher" property of the alternative
+calculation is NOT arithmetic, it is Worksheet V line 14 ("the alternative calculation does not reduce
+your excess APTC. Leave Form 8962, Part V, blank"), so any implementation must compute both methods and
+keep the better one.
+
+Sc00323SqaScenarioTest 13 tests. Suite 2,129, same 8 pre-existing failures (verified against a pre-fix
+worktree).

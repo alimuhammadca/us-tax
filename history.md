@@ -22647,3 +22647,32 @@ Only reading the template and running the AOT build caught it. A green tsc is no
 component template is intact.
 
 Suite 2,141 with the same 8 pre-existing failures; AOT build clean.
+
+## 2026-09-11 - Schedule D Tax Worksheet: restore lines 17/20/21, so 25%/28% are ceilings again (sc_00329)
+
+Validating sc_00329 found us-tax-be taxing unrecaptured 1250 gain at a FLAT 25% (and 28%-rate gain at a
+flat 28%) even when the slice sat in the 22%/24% brackets. On that scenario it produced 28,055 where
+H&R Block produced 26,867; the statute and the printed worksheet both say 26,867.
+
+25% and 28% are CEILINGS. IRC 1(h)(1)(A) taxes at ordinary rates the GREATER of (i) taxable income less
+net capital gain, or (ii) the LESSER of the income "taxed at a rate below 25 percent" and taxable income
+less ADJUSTED net capital gain -- and adjusted net capital gain EXCLUDES the 1250/28% slices, so clause
+(ii) deliberately pulls them into the ordinary-rate base. That clause is Schedule D Tax Worksheet line 20,
+and line 21 is "Enter the LARGER of line 18 or line 20". 1(h)(1)(E) then applies 25% only to the 1250 gain
+above it, which is why line 39 subtracts line 38.
+
+THE REGRESSION WAS INTRODUCED IN THE NAME OF THIS SCENARIO. A change on 2026-08-08 replaced worksheet
+line 14 with line 18 in BOTH line 17 and line 21, reasoning that 1(h) stacks 1250/28% gain above ordinary
+income so it must always bear its own rate. It made the engine agree with the scenario's (wrong) Expected
+values instead of with HRB. Restored to the printed worksheet.
+
+THE SUITE HAD BEEN SAYING SO. capGainsAudit1_scheduleDTaxWorksheetStacksSpecialGainsBelowRegularPreferential
+asserts the ceiling-not-floor rule in as many words, and had been RED since that change, along with two
+Form 8615 collectibles tests. All three went green with no edit to any of them -- backend failures 8 -> 5.
+
+sc_00330 is the same defect with a collectibles slice alongside and is fixed by the same restoration:
+24,655 against that scenario's expected 26,460. Our engine now matches HRB on every worksheet INTERNAL the
+tester recorded (1250 slice 0, 15% portion 9,000, 28% slice 0), not merely on the total.
+
+Both scenarios' Expected values corrected in the workbooks and specs. New Sc00329SqaScenarioTest (6 tests)
+including a control proving the 25% ceiling still binds above the 24% bracket.

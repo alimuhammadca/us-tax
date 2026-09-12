@@ -235,6 +235,16 @@ doesn't exist. Authoritative status (supersedes the in-place notes at the cited 
   published Table 2 keypoints (325→0.0663, 350→0.0725, 375→0.0788) and every intermediate integer percent.
   Leaving both listed as open risked a second "fix" of working code.
 
+- **§1202 QSBS: the backend exclusion fields have NO UI surface (sc_00331, 2026-09-11).**
+  `section1202ExclusionAmount` and `section1202ExclusionPercentage` live on the backend
+  capital-gain-loss form and drive two computations — the §57(a)(7) AMT preference (Form 6251 line 2h) and
+  the taxable 28%-rate portion under §1(h)(4) — but the Angular UI collects neither. A filer zeroes a QSBS
+  gain with the generic Form 8949 adjustment, leaving both null. For post-9/27/2010 stock that is harmless
+  (the answer is zero anyway, per §1202(a)(4)(C)), which is why sc_00331 passes. For **pre-9/28/2010
+  50%/75% stock it under-taxes**: the 7% preference and the 28%-rate portion are both silently omitted,
+  with no flag. Narrow — the stock must have been held since before September 2010 — but real. Fix is two
+  intake fields on the capital-gain-loss form; needs sign-off.
+
 - **✅ Form 8962 Part V — alternative calculation for year of marriage: BUILT 2026-09-11 (V251).**
   Pub. 974 Worksheets I–V are computed; the three intake fields (month of marriage, each spouse's
   alternative family size) were added to the Premium Tax Credit form, and lines 35/36 render with all

@@ -235,7 +235,13 @@ doesn't exist. Authoritative status (supersedes the in-place notes at the cited 
   published Table 2 keypoints (325→0.0663, 350→0.0725, 375→0.0788) and every intermediate integer percent.
   Leaving both listed as open risked a second "fix" of working code.
 
-- **§59(a)(4) SIMPLIFIED LIMITATION ELECTION for the AMT foreign tax credit is not implemented
+- **✅ §59(a)(4) SIMPLIFIED LIMITATION ELECTION — BUILT 2026-09-13 (V253).** Implemented as a THREE-STATE
+  status question (elected / not_elected / first_year + the live first-year decision) rather than a
+  checkbox, because the election is a historical fact that binds every later year and “barred” vs “declined”
+  give the same tax this year but different futures. Unanswered keeps the pre-existing no-election path.
+  Original entry follows.
+
+- ~~**§59(a)(4) SIMPLIFIED LIMITATION ELECTION for the AMT foreign tax credit is not implemented
   (sc_00337, 2026-09-13).** The AMT-FTC numerator has two lawful forms. Without the election you recompute
   foreign-source income under AMT rules (i6251 Step 2, "only income and deductions that are allowed for the
   AMT"), so the standard deduction is not apportioned. WITH the election you skip Part I and reuse the
@@ -245,7 +251,7 @@ doesn't exist. Authoritative status (supersedes the in-place notes at the cited 
   election). Correct for a filer who never elected; for one who did we **over-credit by ~1,760 and
   understate the AMT by the same**. The election is irrevocable and must be made in the first year an
   AMT-FTC is claimed, so an affected filer cannot just be told to ignore it. Fix is one boolean on the
-  foreign-tax-credit intake plus a branch in `computeAmtForeignTaxCredit`; needs sign-off.
+  foreign-tax-credit intake plus a branch in `computeAmtForeignTaxCredit`; needs sign-off.~~
 
 - **§1202 QSBS: the backend exclusion fields have NO UI surface (sc_00331, 2026-09-11).**
   `section1202ExclusionAmount` and `section1202ExclusionPercentage` live on the backend

@@ -22701,3 +22701,31 @@ scenario itself expected 1,027, wrong in a third way - it stacked the AMT gain o
 instead of the regular ordinary income that line 20 requires. Final AMT is 0 under all three.
 
 Sc00336SqaScenarioTest (6 tests). Suite 2,176, all green.
+
+## 2026-09-13 - 59(a)(4) simplified limitation election for the AMT foreign tax credit (V253)
+
+The AMT foreign tax credit's 904 numerator has two lawful forms. WITHOUT the election, foreign-source
+income is refigured under AMT rules - the standard deduction is disallowed, so the regular Form 1116
+line-3g apportionment is added back. WITH the election, the regular line 17 is reused verbatim. We only
+ever implemented the first, so a filer holding the election was over-credited and under-taxed (sc_00337:
+34,638 against the correct 32,881, about 1,760 of AMT).
+
+MODELLED AS A THREE-STATE STATUS, not a checkbox. The election must be made in the FIRST year an AMTFTC is
+claimed, cannot be made later if skipped then, and once made binds every later year (revocable only with
+IRS consent). So the intake asks which of three worlds the filer is in: elected / not_elected /
+first_year, with the live decision captured separately in the first-year case.
+
+The reason for three: not_elected and a declining first_year produce the SAME tax this year. Under a plain
+checkbox a first-time claimant who left the box empty would irrevocably surrender the option with nothing
+in the return to show it happened. A test asserts the two agree this year specifically to document that.
+
+Unanswered falls to the no-election path, so no existing return changes.
+
+Also corrected a comment that claimed the app always took the election path - it did not; the 2026-08-08
+apportionment work made it the no-election path without updating the text.
+
+UI: status question plus a conditional permanent-choice follow-up behind a warning, with help text saying
+plainly that this is one of the few entries that cannot be revisited next year. The optimizer is
+deliberately NOT wired to it - it binds future years, so minimising this year with it would be wrong.
+
+Sc00337SqaScenarioTest 14 tests covering all three states. Suite 2,190, all green.

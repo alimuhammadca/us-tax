@@ -22676,3 +22676,28 @@ tester recorded (1250 slice 0, 15% portion 9,000, 28% slice 0), not merely on th
 
 Both scenarios' Expected values corrected in the workbooks and specs. New Sc00329SqaScenarioTest (6 tests)
 including a control proving the 25% ceiling still binds above the 24% bracket.
+
+## 2026-09-13 - Form 6251 Part III now refigures the capital gain for the AMT (sc_00336)
+
+Form 6251 line 13 takes the capital gain "as refigured for the AMT, if necessary", and line 14 says the
+same of Schedule D line 19. We were not refiguring: Part III read the REGULAR Schedule D lines 15/16, so an
+asset whose AMT basis differs from its regular basis - the classic case being ISO shares, whose AMT basis
+is the FMV at exercise - was measured at its regular gain inside the AMT.
+
+Direction: UNDER-TAX. A larger apparent capital-gain pool puts more of the AMT base at 15%/20% and less at
+26%/28%. On sc_00336 it gave a tentative minimum tax of 7,785 instead of 7,994.
+
+The filer already supplies the difference as the signed amtCapitalGainLossAdjustment on the
+capital-gain/loss form - the field whose own comment names "ISO exercise basis" as its purpose. It fed
+line 2k (correctly reducing AMTI) but never reached Part III. Fixed by building an AMT-refigured view of
+Schedule D (amtRefiguredScheduleD) and passing it to the Part III and FEITW paths; returns with nothing to
+refigure get the original object back unchanged. Only the MANUAL capital-gain piece refigures the pool -
+the Form 4797 recapture half of line 2k is 1231/ordinary and deliberately does not move the preferential
+rates.
+
+H&R BLOCK HAS THE SAME DEFECT and reported 7,785 for the same reason; the us-tax-hrb automation caught it
+independently, recording HRB Part III lines 13/15 reading 100,000 where the AMT figure is 50,000. The
+scenario itself expected 1,027, wrong in a third way - it stacked the AMT gain on the AMT ordinary base
+instead of the regular ordinary income that line 20 requires. Final AMT is 0 under all three.
+
+Sc00336SqaScenarioTest (6 tests). Suite 2,176, all green.

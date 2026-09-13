@@ -235,6 +235,18 @@ doesn't exist. Authoritative status (supersedes the in-place notes at the cited 
   published Table 2 keypoints (325→0.0663, 350→0.0725, 375→0.0788) and every intermediate integer percent.
   Leaving both listed as open risked a second "fix" of working code.
 
+- **§59(a)(4) SIMPLIFIED LIMITATION ELECTION for the AMT foreign tax credit is not implemented
+  (sc_00337, 2026-09-13).** The AMT-FTC numerator has two lawful forms. Without the election you recompute
+  foreign-source income under AMT rules (i6251 Step 2, "only income and deductions that are allowed for the
+  AMT"), so the standard deduction is not apportioned. WITH the election you skip Part I and reuse the
+  regular Form 1116 line 17. us-tax-be always takes the first path -- there is no input for the election;
+  the only similarly-named field, `claimsSimplifiedException`, is the §904(j) $300/$600 de minimis
+  exception, a different rule. On sc_00337 that is 34,638 against H&R Block's 32,878 (HRB enabled the
+  election). Correct for a filer who never elected; for one who did we **over-credit by ~1,760 and
+  understate the AMT by the same**. The election is irrevocable and must be made in the first year an
+  AMT-FTC is claimed, so an affected filer cannot just be told to ignore it. Fix is one boolean on the
+  foreign-tax-credit intake plus a branch in `computeAmtForeignTaxCredit`; needs sign-off.
+
 - **§1202 QSBS: the backend exclusion fields have NO UI surface (sc_00331, 2026-09-11).**
   `section1202ExclusionAmount` and `section1202ExclusionPercentage` live on the backend
   capital-gain-loss form and drive two computations — the §57(a)(7) AMT preference (Form 6251 line 2h) and

@@ -161,6 +161,63 @@ sections:
             label: Foreign taxes paid or accrued (in U.S. dollars)
             placeholder: 0.00
             help: Enter the US dollar equivalent of foreign taxes paid or accrued to this country.
+          - name: foreignTaxWithheldDividendsUsd
+            type: amount
+            required: false
+            label: "Of that, tax withheld at source on dividends (USD)"
+            placeholder: 0.00
+            help: >-
+              Form 1116 Part II column (q). Leave the four "of that" boxes blank if you do not have the
+              split -- the total above is then reported as other foreign taxes in column (t). If you do
+              fill any of them, they replace the total above, because the form defines the row total as
+              the sum of columns (q) through (t).
+          - name: foreignTaxWithheldRentsRoyaltiesUsd
+            type: amount
+            required: false
+            label: "Of that, tax withheld at source on rents and royalties (USD)"
+            placeholder: 0.00
+            help: Form 1116 Part II column (r).
+          - name: foreignTaxWithheldInterestUsd
+            type: amount
+            required: false
+            label: "Of that, tax withheld at source on interest (USD)"
+            placeholder: 0.00
+            help: Form 1116 Part II column (s).
+          - name: otherForeignTaxesPaidUsd
+            type: amount
+            required: false
+            label: "Of that, other foreign taxes paid or accrued (USD)"
+            placeholder: 0.00
+            help: >-
+              Form 1116 Part II column (t). Anything not withheld at source on dividends, rents and
+              royalties, or interest.
+          - name: foreignTaxWithheldDividendsForeignCurrency
+            type: amount
+            required: false
+            label: "In foreign currency: tax withheld on dividends"
+            placeholder: 0.00
+            help: >-
+              Form 1116 Part II column (m). Disclosure only -- Part II is the one place the form asks for
+              amounts in the foreign currency, and it never affects the credit, which is always figured in
+              U.S. dollars. Leave blank if you do not have it.
+          - name: foreignTaxWithheldRentsRoyaltiesForeignCurrency
+            type: amount
+            required: false
+            label: "In foreign currency: tax withheld on rents and royalties"
+            placeholder: 0.00
+            help: Form 1116 Part II column (n). Disclosure only.
+          - name: foreignTaxWithheldInterestForeignCurrency
+            type: amount
+            required: false
+            label: "In foreign currency: tax withheld on interest"
+            placeholder: 0.00
+            help: Form 1116 Part II column (o). Disclosure only.
+          - name: otherForeignTaxesPaidForeignCurrency
+            type: amount
+            required: false
+            label: "In foreign currency: other foreign taxes paid or accrued"
+            placeholder: 0.00
+            help: Form 1116 Part II column (p). Disclosure only.
           - name: datePaidOrAccrued
             type: text
             required: false

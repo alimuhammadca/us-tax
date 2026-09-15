@@ -22868,3 +22868,40 @@ it properly needs per-country breakdown fields on the intake form.
 
 Sc00345SqaScenarioTest gains two tests pinning the data the checkbox reads (paid -> (j), accrued -> (k))
 and the USD/row-total relationship. Suite 2,227 green; both Angular builds clean.
+
+
+## 2026-09-15 - Form 1116 Part II: the per-country withholding-type breakdown, end to end
+
+Closes the gap left open earlier the same day, at the user's request. Part II splits each country's
+foreign tax four ways in each of two currencies and totals only the dollar side:
+
+  In foreign currency   (m) Dividends  (n) Rents and royalties  (o) Interest  (p) Other
+  In U.S. dollars       (q) Dividends  (r) Rents and royalties  (s) Interest  (t) Other
+  (u) Total = "add cols. (q) through (t)"
+
+The intake collected ONE unclassified figure per country, so seven boxes printed empty and the amount sat
+in the residual (t). Eight optional fields now collect the filer's own split, on BOTH the taxpayer and
+spouse forms.
+
+THE DESIGN DECISION WORTH REMEMBERING. foreignTaxesPaidUsd stays as the legacy single total. When ANY of
+the four U.S.-dollar boxes is filled the breakdown becomes authoritative - for the CREDIT, not only for
+the printed page. That is deliberate and follows the rule this same day established twice over: (u) is
+DEFINED as the sum of (q) through (t), so deriving the total from anything else prints a row whose parts
+do not add to its own total. A legacy total that disagrees is surfaced as the advisory
+FORM_1116_COUNTRY_TAX_BREAKDOWN_DISAGREES_WITH_TOTAL rather than being silently dropped. With no
+breakdown nothing changes at all - which is every return that exists today, and there is a test that says
+so.
+
+The foreign-currency columns never touch the credit. Form 1116's header reads "Report all amounts in U.S.
+dollars except where specified in Part II"; (m)-(p) are that exception and are disclosure only. They stay
+NULL when unanswered so the boxes print empty rather than "0.00".
+
+FIVE PLACES, NOT THREE. The silent-drop hazard bit at exactly the right moment: a new personal-form field
+needs the YAML, the Angular model, the intake ENTITY (PfFtcCountry) and BOTH directions of
+ForeignTaxCreditMapper. Miss the mapper and the API accepts the value, the mapper discards it, and the
+filer watches their entry vanish on reload with no error anywhere. V255 covers the output table
+(out_form_1116_country), V256 the intake table (pf_ftc_country). Form1116Part2FieldWiringTest pins all
+five surfaces, and was verified to FAIL on a planted missing field before being trusted.
+
+Suite 2,234 green; both Angular builds clean; dev boot applied V254 (3) + V255 (8) + V256 (8) changesets
+with health 200.

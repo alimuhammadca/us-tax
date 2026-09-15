@@ -22838,3 +22838,33 @@ Pinned by Sc00345SqaScenarioTest#theLine3ApportionmentBlockIsCompleteAndFootsAsP
 3c x 3f multiplication off the stored values the way an examiner would and requires it to reproduce 3g.
 
 Suite 2,225 green; both Angular builds clean; dev boot replayed V254 (3 changesets) with health 200.
+
+
+## 2026-09-15 - Form 1116 Part II: a boolean was being printed into a money column
+
+Second half of the Form 1116 rendering work. The Part II mapping carried a real defect, not just missing
+granularity.
+
+`Form1116Country.taxesPaid` is a BOOLEAN - "true if taxes were paid (cash basis), false if accrued". The
+Angular type declared it `number | string | null`, and the mapping ran it through the amount formatter
+into `line8_country_X_foreign_currency_other_taxes`, i.e. column (p), a foreign-currency MONEY box. At the
+same time Part II's (j) Paid / (k) Accrued pair - headed "Credit is claimed for taxes (YOU MUST CHECK
+ONE)" - was never rendered, so a mandatory box was blank on every filed Form 1116.
+
+Both boxes were already catalogued (`part2_credit_claimed_for_taxes_paid_checkbox` /
+`..._accrued_checkbox`) in the semantic CSV and elements.json, so no asset regeneration was needed - the
+component simply never set them. It is a form-level election: compute derives it from the category's
+creditBasis and stamps the same value on every country, so reading the first country is right.
+
+WHAT IS DELIBERATELY STILL BLANK. Part II splits the tax four ways in each of two currencies - (m)-(p)
+dividends / rents and royalties / interest / other in foreign currency, (q)-(t) the same in U.S. dollars -
+with (u) the row total defined as "add cols. (q) through (t)", the USD columns only. The intake collects
+ONE figure per country (foreignTaxesPaidUsd) with no withholding-type split and no original-currency
+amount, so the foreign-currency columns stay empty rather than carrying a re-converted invention, and the
+USD figure sits in the residual (t). (u) and line 8 are correct either way. The engine DOES separate
+1099-DIV box 7 from 1099-INT box 6 at import, but only as return-level totals for the simplified-exception
+path - neither can be attributed to a country, so splitting (q)/(r)/(s) from them would be a guess. Doing
+it properly needs per-country breakdown fields on the intake form.
+
+Sc00345SqaScenarioTest gains two tests pinning the data the checkbox reads (paid -> (j), accrued -> (k))
+and the USD/row-total relationship. Suite 2,227 green; both Angular builds clean.

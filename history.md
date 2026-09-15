@@ -22764,3 +22764,41 @@ Guarded three ways: a valid full rollover owes nothing AND raises no flag; a PAR
 rollover switches §72(t) off"; declining Form 5329 on a code-1 distribution still blocks.
 
 Sc00344SqaScenarioTest 8 tests. Suite 2,210, all green - nothing else depended on the old behaviour.
+
+
+## 2026-09-15 - sc_00345: Form 1116 has two ratios and we rounded them differently
+
+SQA sc_00345 (passive-basket FTC capped by the §904(a) limitation) is right on the substance - the credit
+is the limitation and not the 4,000 paid, the standard deduction is apportioned against foreign-source
+income, the excess carries forward under §904(c) - and wrong on the last $2. So were we, in exactly the
+same way.
+
+Form 1116 carries TWO ratios. Line 3f apportions deductions by gross income; line 19 is the §904
+limitation fraction. The engine divided line 3f at TEN decimal places while line 19 had always used FOUR.
+That mixture produced a 3,239 credit, which no consistent reading of the form yields: rounding both gives
+3,237, full precision on both gives 3,238. The scenario document made the identical mixture, which is why
+the two agreed with each other and disagreed with H&R Block - whose 3,237 is recorded in BOTH Actuals
+trees, agreeing with each other here.
+
+The Instructions for Form 1116, "Line 3f", settle it with a worked example: "Divide line 3d by line 3e and
+round off the result to at least four decimal places (for example, if your result is 0.8756782, round off
+to 0.8757, not to 0.876 or 0.88). Enter the result, but don't enter more than '1.'" Both ratios now round
+to four places -> apportioned deduction 2,251, net foreign TI 17,749, fraction 0.1428, credit 3,237,
+carryover 763, refund 2,570. All H&R Block's figures.
+
+CONFIRMED BY AN UNRELATED SCENARIO. Sc00337SqaScenarioTest had already recorded the rule and then not
+applied it: its javadoc said "the same convention makes the apportioned deduction 7,608 rather than 7,607"
+- H&R Block's number - while its assertion pinned our 7,607. Fixing line 3f turned that row into 142,392
+by itself, with no change to the assertion's logic. Two scenarios, two baskets, one rounding rule. The
+note has been rewritten; an expected value is prior work, not an oracle.
+
+Also recorded: the document mislabels three lines (the apportioned deduction is 3g not 3b; foreign taxes
+available is line 14 not line 22; line 19 divides line 17 not line 15), and line 18 is NOT simply Form
+1040 line 15 - the form says "line 11b minus line 14, plus Schedule 1-A line 37", so the 2025
+tips/overtime/car-loan/senior deductions are added back to the §904 denominator.
+
+Housekeeping: swept all 390 SQA workbooks for the freeze-pane fault. sc_00345 (A27) plus sc_00347 (A22),
+sc_00348 (A15), sc_00349 (A16), sc_00351 (A16) froze 14-26 rows and could not scroll; all reset to A7. The
+remaining A8/A9 cases are harmless - they include the section-label row.
+
+Sc00345SqaScenarioTest 6 tests. Suite 2,224, all green.

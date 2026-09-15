@@ -22809,3 +22809,32 @@ sc_00348 (A15), sc_00349 (A16), sc_00351 (A16) froze 14-26 rows and could not sc
 remaining A8/A9 cases are harmless - they include the section-label row.
 
 Sc00345SqaScenarioTest 6 tests. Suite 2,224, all green.
+
+
+## 2026-09-15 - Form 1116 Part I line 3 now renders the whole apportionment, on the right lines
+
+Found while checking whether line 3f was printed (it was not) during the sc_00345 rounding argument.
+
+Form 1116 walks the apportionment of not-definitely-related deductions through SEVEN sub-lines, each with
+its own column A/B/C box: 3a the deduction going in, 3b other deductions, 3c their sum, 3d gross foreign
+source income, 3e gross income from all sources, 3f the ratio 3d/3e, 3g the product 3c x 3f.
+
+The engine computed only the 3g RESULT and kept it in pro_rata_deductions; 3a, 3e and 3f lived as locals
+inside the compute loop and were thrown away. The renderer then wrote that result onto line **3a** - the
+box for the deduction going IN - and left 3c through 3g blank. So the filed page showed an apportioned
+figure on the wrong line with none of the arithmetic that produced it.
+
+Now: V254 adds apportionable_deduction_line3a, gross_income_all_sources_line3e and
+apportionment_ratio_line3f to out_form_1116_country; compute records all three; the mapper round-trips
+them; and both UI repos render 3a/3c/3d/3e/3f/3g with 3g finally carrying the apportioned amount. 3c and
+3d needed no columns - 3d is already gross_foreign_income and 3c = 3a + 3b with 3b unmodelled.
+
+WHY 3f IS STORED RATHER THAN RE-DERIVED IN THE RENDERER. Line 3g is computed from the ratio rounded to
+four decimals. A renderer dividing 3d by 3e itself at full precision would print 0.142857 beside a 2,251
+that only 0.1429 produces, and the page would not foot when read line by line. Persisting the exact value
+3g was computed from removes the possibility. Same reasoning as the line 19 fraction.
+
+Pinned by Sc00345SqaScenarioTest#theLine3ApportionmentBlockIsCompleteAndFootsAsPrinted, which re-does the
+3c x 3f multiplication off the stored values the way an examiner would and requires it to reproduce 3g.
+
+Suite 2,225 green; both Angular builds clean; dev boot replayed V254 (3 changesets) with health 200.

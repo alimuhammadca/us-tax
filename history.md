@@ -22925,3 +22925,27 @@ yields undefined - indistinguishable from a dropped field. The spec now names th
 Second, the guard was verified by SABOTAGE: deleting one putIfNotNull line from ForeignTaxCreditMapper
 turned test 1 red, and restoring it turned it green again. A round-trip test that has never been seen to
 fail is not yet evidence of anything.
+
+
+## 2026-09-15 - UI-level e2e for the Form 1116 Part II breakdown, and two facts about the harness
+
+`form1116-part2-breakdown-ui.spec.ts` drives the real form: types into the eight controls, saves with the
+Save button, RELOADS THE BROWSER, reopens the form and reads the values back out of the inputs. The API
+spec next to it would keep passing if the inputs were deleted from the template, because it never opens
+the form - a field that saves perfectly and is invisible is not a feature. A second test asserts the boxes
+are ABSENT before an income source is added, so "they are present afterwards" means something.
+
+TWO HARNESS FACTS LEARNED THE HARD WAY, both worth keeping:
+
+1. PORT 4200 SERVES THE BUILT dist/, NOT A LIVE-RELOADING DEV SERVER. The node process on 4200 dates from
+   2026-08-29 and does not pick up source edits. UI changes need `npm run build` BEFORE the e2e run or the
+   test silently exercises the previous bundle. A sabotage that "passed" was what exposed this.
+2. p-inputNumber's `inputId` lands DIRECTLY on the inner <input> - there is no `_input` suffix, whatever
+   e2e/CLAUDE.md still says. Every existing spec already uses the bare id; only the doc is stale.
+
+VERIFIED BY SABOTAGE, and the first attempt failed instructively. Removing a field from `normalizeOnLoad`
+does not compile at all: `ForeignCountryEntry` declares it non-optional, so TypeScript rejects the
+omission - a stronger guard than any test, and worth knowing rather than testing around. The sabotage that
+does bite is deleting the <p-inputNumber> from the TEMPLATE, which the compiler cannot see because the
+template is a string literal. That turned the spec red with "Part II column (s) interest, USD is missing
+from the form", and restoring it turned it green. 7 of 7 across both Part II specs.

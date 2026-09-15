@@ -22905,3 +22905,23 @@ five surfaces, and was verified to FAIL on a planted missing field before being 
 
 Suite 2,234 green; both Angular builds clean; dev boot applied V254 (3) + V255 (8) + V256 (8) changesets
 with health 200.
+
+
+## 2026-09-15 - e2e for the Form 1116 Part II breakdown
+
+Five specs in `form1116-part2-withholding-breakdown.spec.ts`, covering the half no unit test in this repo
+can reach: save/load runs through Panache and units here do not use @QuarkusTest, so only an e2e can prove
+the ROUND TRIP - the dangerous half, because a missing mapper line drops the value silently.
+
+  1. all eight fields survive save and reload   <- the silent-drop guard
+  2. the USD split derives the row total (u) and the credit follows (3,237, carryover 763)
+  3. a disagreeing split WINS and raises the non-blocking advisory
+  4. no breakdown -> legacy total and credit untouched, boxes blank not 0.00
+  5. foreign-currency columns are recorded and never reach the credit
+
+TWO THINGS WORTH RECORDING. First, test 1 failed on its first run and the bug was in the TEST: GET
+/api/personal/{formId} answers `{ formId, data: { ... } }`, and reading the envelope as if it were the form
+yields undefined - indistinguishable from a dropped field. The spec now names that trap in a comment.
+Second, the guard was verified by SABOTAGE: deleting one putIfNotNull line from ForeignTaxCreditMapper
+turned test 1 red, and restoring it turned it green again. A round-trip test that has never been seen to
+fail is not yet evidence of anything.

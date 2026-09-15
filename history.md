@@ -22775,10 +22775,17 @@ same way.
 
 Form 1116 carries TWO ratios. Line 3f apportions deductions by gross income; line 19 is the §904
 limitation fraction. The engine divided line 3f at TEN decimal places while line 19 had always used FOUR.
-That mixture produced a 3,239 credit, which no consistent reading of the form yields: rounding both gives
-3,237, full precision on both gives 3,238. The scenario document made the identical mixture, which is why
-the two agreed with each other and disagreed with H&R Block - whose 3,237 is recorded in BOTH Actuals
-trees, agreeing with each other here.
+That produced a 3,239 credit where four-at-both gives 3,237 and full-precision-at-both gives 3,238. The
+scenario document made the same choice, which is why the two agreed with each other and disagreed with H&R
+Block - whose 3,237 is recorded in BOTH Actuals trees, agreeing with each other here.
+
+CORRECTION TO AN EARLIER CLAIM IN THIS ENTRY'S FIRST DRAFT: 3,239 was NOT "unreachable by any consistent
+reading". That assumed both ratios must carry the same precision. They need not - "at least four decimal
+places" is a floor, and line 3f is not printed on our Form 1116, so a filer carrying 3f exactly and line 19
+at the printed four decimals files a return that foots. The old behaviour was defensible; the change is a
+convention alignment to what the IRS demonstrates and what H&R Block does, not the repair of an error.
+Line 19 IS constrained, and that asymmetry is the durable lesson: its fraction is printed, so line 21 must
+be computed from the printed four decimals or the filed return will not foot.
 
 The Instructions for Form 1116, "Line 3f", settle it with a worked example: "Divide line 3d by line 3e and
 round off the result to at least four decimal places (for example, if your result is 0.8756782, round off

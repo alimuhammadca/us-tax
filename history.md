@@ -22949,3 +22949,28 @@ omission - a stronger guard than any test, and worth knowing rather than testing
 does bite is deleting the <p-inputNumber> from the TEMPLATE, which the compiler cannot see because the
 template is a string literal. That turned the spec red with "Part II column (s) interest, USD is missing
 from the form", and restoring it turned it green. 7 of 7 across both Part II specs.
+
+
+## 2026-09-15 - Spouse UI e2e for the Form 1116 Part II breakdown, and an id inconsistency I had shipped
+
+`form1116-part2-breakdown-spouse-ui.spec.ts`. The spouse form is a SEPARATE Angular component with its own
+template, its own model keys (spouseForeignIncomeSources, spouseHasForeignTaxCredit) and its own
+normalizeOnLoad, so the taxpayer spec passing says nothing about it. An edit applied twice is exactly where
+one copy quietly goes wrong.
+
+FIRST IT CAUGHT MY OWN SLOPPINESS. The generator that added the eight boxes built the spouse control ids by
+string concatenation and produced `spouseforeignTaxWithheldDividendsUsd` - lowercase after the prefix,
+against the component's own `spouseGrossForeignIncome` / `spouseForeignTaxesPaid` convention. These ids are
+DOM-facing and selectors depend on them, so they were renamed to proper camelCase before the spec was
+written against them.
+
+TWO TESTS. The first types into the real controls, saves with the Save button, reloads the browser,
+re-selects the Spouse tab and reads the values back out. The second is the control that matters for a
+DUPLICATED form: it asserts the spouse template exposes the spouse-prefixed ids and NOT the taxpayer ones,
+and that the taxpayer form does not render the spouse ids -- the failure where both forms write to each
+other's controls would otherwise pass the round trip happily. Reaching the form at all needs MFJ, a seeded
+spouse and the Spouse tab, which is itself worth covering: a form nobody can navigate to is not shipped.
+
+Verified by sabotage as before: deleting the spouse (s)-interest <p-inputNumber> turned it red with
+"Spouse Part II column (s) interest, USD is missing from the form"; restoring it turned it green.
+9 of 9 across all three Part II specs.

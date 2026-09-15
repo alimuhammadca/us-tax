@@ -22729,3 +22729,38 @@ plainly that this is one of the few entries that cannot be revisited next year. 
 deliberately NOT wired to it - it binds future years, so minimising this year with it would be wrong.
 
 Sc00337SqaScenarioTest 14 tests covering all three states. Suite 2,190, all green.
+
+
+## 2026-09-15 - sc_00344: the 10% early-distribution tax reached money that was never income
+
+SQA sc_00344 (second 60-day IRA rollover within 12 months, §408(d)(3)(B)/Bobrow) passes on every graded
+row - 50,000 taxable, 5,000 penalty, tax 23,867, refund 1,133. The scenario itself needed no change.
+
+What it exposed is a different case. The §72(t) base was accumulated PER 1099-R ENTRY from box 2a, while
+the line-4c exclusions (rollover / QCD / HFD) were applied LATER and at FORM level, to line 4b only. The
+penalty never saw them.
+
+The case that matters is not this scenario's barred rollover but the ordinary VALID 60-day indirect
+rollover, which is mainstream: the payer cannot know the money will be rolled over, so it stamps box 7
+code 1 and box 2a = the gross. On those facts we charged 10% on money that never entered income - and
+because the blocking FORM5329_REQUIRED_FOR_EARLY_DISTRIBUTION flag keys on a positive penalty, the filer
+could not file without first accepting the charge. One fix cured both: with the base at zero the flag
+stops firing on its own.
+
+Three IRS statements set the base, all saying the same thing - i5329 line 1 ("early distributions
+INCLUDIBLE IN INCOME"), and Pub. 590-B twice ("10% of the amount of the early distribution THAT YOU MUST
+INCLUDE IN YOUR GROSS INCOME" / "applies to THE PART OF THE DISTRIBUTION THAT YOU HAVE TO INCLUDE IN GROSS
+INCOME"). §408(d)(3)(A)(i) keeps a valid rollover out of income entirely. The base is now capped at the
+person's line 4b, capped rather than recomputed per entry because the exclusions are entered as form-level
+totals - which 1099-R a rollover came from is not knowable from the data.
+
+The two Actuals trees CONTRADICT each other on this scenario, and neither is faulty: the tester's H&R
+Block run taxed the 50,000, the us-tax-hrb automation's run excluded it, because the automation told H&R
+Block the money was rolled over and the tester followed the scenario's instruction not to. Feeding our
+engine the automation's seeding reproduces 79,250 / 12,355 / 17,645 - H&R Block's figures to the dollar.
+
+Guarded three ways: a valid full rollover owes nothing AND raises no flag; a PARTIAL rollover still costs
+10% on the unrolled balance (30,000 of 50,000 rolled -> 2,000), so the ceiling cannot degrade into "any
+rollover switches §72(t) off"; declining Form 5329 on a code-1 distribution still blocks.
+
+Sc00344SqaScenarioTest 8 tests. Suite 2,210, all green - nothing else depended on the old behaviour.

@@ -23491,3 +23491,43 @@ persistence and re-read. That is the whole argument for the two-year e2e, and it
 first run.
 
 Suite 2,286 green; 4 new e2e green; the 13 sibling bridge e2e tests that share both loaders still green.
+
+
+## 2026-09-16 (later still) - Auditing the other eleven bridges, and the §163(d) standard-deduction hole
+
+I checked all fourteen bridges for the two failure modes that had just bitten me.
+
+STRUCTURAL - every `loadByTaxReturnId` inspected for a narrow copy list and for an extra early-return
+guard. Form172, ScheduleD, Form8990, Form8995, Form8995A and Form1116List are each narrow but copy
+exactly their own field(s) with only a `row == null` guard; Section1231Recapture calls toModel and is
+safe by construction. Schedule1 now carries all nine of its bridges' fields; ScheduleA carries both of
+its. GBC and Form 5405 turned out to be immune to the `hasAnySchedule1Input` gate by a DIFFERENT
+mechanism - they CREATE their own AdditionalIncome rather than relying on the one the gate can null,
+which is why they were correctly absent from the escape hatch.
+
+EMPIRICAL - all fourteen do have two-year coverage (including AMT §469, which I had listed as a gap until
+I read its spec). 30 bridge e2e tests run, all green.
+
+★ THE REAL FIND CAME FROM APPLYING THE §280A LENS RATHER THAN RE-RUNNING TESTS: is there a shape where
+the CONTAINER is absent while the carryforward exists? Both Schedule A bridges are exposed, and my own
+§163(d) test had seeded $30,000 of mortgage interest so the filer itemised. Take that away and Schedule A
+is dropped by `usesScheduleA` - so a filer with investment interest and no other large itemised
+deductions lost the disallowed amount PERMANENTLY, even though Form 4952 line 7 is "subtract line 6 from
+line 3", the net-investment-income excess computed without any reference to itemising, and §163(d)(2)
+carries it forward indefinitely.
+
+FIX (option (a), user's choice): retain Schedule A when a positive §163(d) carryforward exists. TWO
+THINGS MADE THIS SAFER THAN IT LOOKED. There was already a precedent - `usedForStandardDeductionIncrease`
+is an existing case where Schedule A survives into a standard-deduction return. And NOTHING downstream
+branches on nullness: all 14 sites key off `getUsedForItemizedDeduction()`, set false two lines above, so
+the retained object cannot be mistaken for a claimed one. That was the risk worth checking, because a
+wrong answer there would have silently corrupted AMT for every standard-deduction filer with investment
+interest. The allowable portion is still lost, correctly - it was allowed by §163(d)(1) and not claimed.
+
+Suite 2,286 green; 5 bridge e2e green; 84-test Schedule A / AMT / deduction subset green.
+
+NOT ESTABLISHED, and worth its own work: the CHARITABLE carryover in a standard-deduction year. My probe
+was badly designed (60,000 of gifts against zero AGI, so the percentage limit was degenerate) and proves
+nothing. It is the more interesting case because Reg. §1.170A-10(a)(2) CONSUMES the carryover in a
+standard-deduction year rather than preserving it - the opposite of §163(d) - so the two must not be
+fixed by analogy.

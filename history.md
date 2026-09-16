@@ -23457,3 +23457,37 @@ CarryforwardBridgesV261Test 3 tests. Suite 2,286 green; dev boot applied V261 wi
 
 That takes the cross-year bridges from eleven to fourteen in one day (V260 §280A depreciation, V261 §469
 regular passive loss and §163(d) investment interest).
+
+
+## 2026-09-16 (later) - The two-year e2e found that the bridges I had just "finished" never fired
+
+I wrote the two-year e2e for the three newest bridges (V260 §280A depreciation, V261 §469 passive loss,
+V261 §163(d) investment interest). THREE OF THE FOUR TESTS FAILED ON FIRST RUN, and every failure was a
+real defect in work already committed and reported green.
+
+ALL THREE WERE THE SAME HAZARD: A NEW CARRYFORWARD MUST BE REGISTERED IN AN ALLOW-LIST, and nothing
+fails when it is not.
+
+1. `Schedule1OutputMapper.loadByTaxReturnId` is a NARROW loader - it does not call `toModel`, it copies a
+   hand-written list of seven fields, and it had an early-return that returned NULL unless one of those
+   seven was set. A return carrying only a newer carryforward loaded as nothing. Nine bridges share this
+   loader; exactly my two rental ones were missing from the list. I DELETED THE GUARD rather than adding
+   to it - every caller reads one field and null-checks it, so an all-null object was already equivalent
+   to null and the guard bought nothing while costing a whole class of silent breakage.
+2. `ScheduleAOutputMapper.loadByTaxReturnId` is the same shape, written for the charitable bridge alone.
+   Its name reads general, which is how the §163(d) bridge came to call it and receive null forever.
+3. `hasAnySchedule1Input` - the gate that decides whether Schedule 1 exists at all - carries explicit
+   escape hatches so a $0 line still persists its carryforwards. It lists the §469 regular, AMT and §465
+   rental carryforwards and NOT §280A depreciation.
+
+★ #3 IS THE ONE WORTH REMEMBERING. §280A(c)(5) caps deductions AT gross rental income, so line 5 nets to
+EXACTLY $0 whenever the cap binds - which is precisely and only when there is a disallowed-depreciation
+carryforward to preserve. The figure was discarded in 100% of the cases it exists for. The column, the
+mapper and the importer added by V260 could never once have fired. Not lossy: DEAD ON ARRIVAL.
+
+WHY NO UNIT TEST COULD SEE ANY OF IT. The compute half returns the right number in all three cases -
+`Section280ADepreciationCarryforwardTest` asserts 6,000 and is correct. The loss happens downstream, at
+persistence and re-read. That is the whole argument for the two-year e2e, and it paid for itself on the
+first run.
+
+Suite 2,286 green; 4 new e2e green; the 13 sibling bridge e2e tests that share both loaders still green.

@@ -23630,3 +23630,42 @@ keeps their figure. Each country in a multi-country basket bears its pro-rata sh
 
 Sc00348SqaScenarioTest now 11 tests. Suite 2,297 green; the 6 Form 1116 e2e tests green. ALL 30 GRADED
 VALUES NOW REPRODUCE.
+
+
+## 2026-09-16 - sc_00349: the comment is correct and the engine already agreed with it
+
+No defect this time. All 23 graded values reproduce, INCLUDING the one the scenario gets wrong: the
+§904(c) carryover is 7,322 (12,000 - 4,678), not the Expected 7,323, and us-tax-be and H&R Block both
+produce 7,322. The automation tester had diagnosed it correctly and independently.
+
+The scenario is INTERNALLY INCONSISTENT rather than merely off by a dollar. It states the credit as 4,678
+but carries 4,677 through that one subtraction, and its own "Computation notes" then say "20,267 - 4,678
+= 15,590" and "Refund = 410" while its table says 15,589 and 411. The table and the graded rows are
+right; the notes and the 7,323 are the stragglers.
+
+★ THE LIMITATION CONVENTION HELD UP UNDER A SECOND SCENARIO. The limitation is figured from the FOUR-PLACE
+printed fraction: 20,267 x 0.2308 = 4,677.62 -> 4,678. At full precision it would be 20,267 x 0.23076586
+= 4,676.93 -> 4,677. Line 19 IS rendered onto the filed form, so only 4,678 lets the return foot under an
+examiner's pencil - the same reasoning settled in sc_00345, now confirmed on an independent scenario with
+H&R Block landing on 4,678 as well. The tester also noted this scenario is insensitive to round-vs-truncate
+at four places, unlike sc_00345 where truncation cost two dollars.
+
+★ THE BASKET IS NOT WHAT THE SCENARIO CALLS IT, AND WE ARE RIGHT. 12,000 of tax on 30,000 of interest is a
+40% effective rate, above the highest U.S. individual rate, so §904(d)(2)(B)(iii)(II) and Reg. §1.904-4(c)
+KICK THE INCOME OUT of the passive basket and reclassify it as general. `applyPassiveHighTaxKickout` does
+this, which is why our Form 1116 reports the general category against a scenario headed "Passive
+category". No graded value moves - there is only one basket either way - but the §904(c) carryover is
+tagged GENERAL, and that is what decides which basket can absorb it next year.
+
+NOT MODELLED, stated rather than left implied: the Instructions for Form 1116 want the kickout PRESENTED
+on two forms - "HTKO" on line i of both, the income as a negative in the passive form's HTKO column and a
+positive in the general form's. We emit only the general form. The credit, limitation and carryover are
+identical either way because the passive form nets to zero; it is the filed presentation that is
+incomplete. Building it needs an HTKO column on the output model, so it needs sign-off.
+
+Two further LABEL points the tester caught, both harmless: the 3,635 prints on line 3g (not 3b) and the
+12,000 on line 14 (not line 22) - the same class of mislabel corrected in sc_00348.
+
+Sc00349SqaScenarioTest 7 tests, including a below-threshold CONTROL (9,000 of tax = 30%) that stays in
+the passive basket, which is what proves the kickout assertion measures Reg. §1.904-4(c) rather than a
+hardcoded category. Suite 2,304 green.

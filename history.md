@@ -23528,6 +23528,42 @@ Suite 2,286 green; 5 bridge e2e green; 84-test Schedule A / AMT / deduction subs
 
 NOT ESTABLISHED, and worth its own work: the CHARITABLE carryover in a standard-deduction year. My probe
 was badly designed (60,000 of gifts against zero AGI, so the percentage limit was degenerate) and proves
-nothing. It is the more interesting case because Reg. §1.170A-10(a)(2) CONSUMES the carryover in a
-standard-deduction year rather than preserving it - the opposite of §163(d) - so the two must not be
-fixed by analogy.
+nothing. [CORRECTED 2026-09-16, see the next entry: my reading of Reg. §1.170A-10(a)(2) here was BACKWARDS.
+That paragraph PRESERVES the carryover in a standard-deduction contribution year, the same shape as
+§163(d). The consumption rule is §1.170A-10(b)(2) and governs a different year.]
+
+
+## 2026-09-16 - The charitable standard-deduction case: two rules, opposite directions, one fix
+
+I GOT THE RULE BACKWARDS IN THE PREVIOUS ENTRY and the source says so plainly. Reg. §1.170A-10(a)(2):
+"The carryover provisions apply with respect to contributions made during a taxable year in excess of the
+applicable percentage limitation EVEN THOUGH the taxpayer elects ... to take the standard deduction in
+that year." A contribution year behaves EXACTLY like §163(d) - the statutory excess carries regardless of
+itemising. What I was half-remembering is a different paragraph governing a different year.
+
+THE TWO RULES:
+  §1.170A-10(a)(2)  CONTRIBUTION year - the carryover IS CREATED.
+  §1.170A-10(b)(2)  CARRYOVER year    - the carryover is CONSUMED, "treated as paid (but not allowable
+                                        as a deduction)" up to the ceiling headroom; only the remainder
+                                        survives. The reg's own Example 2 works it through.
+
+Both were broken, both by the same cause as §163(d): Schedule A dropped whenever it was not the chosen
+method, taking the carryover with it. Case A lost $18,000 outright; case B lost the ENTIRE imported
+carryover instead of consuming $12,000 of it.
+
+★ ONE FIX COVERED BOTH, and that is the finding worth keeping. Extending the usesScheduleA retention to
+the charitable carryforward fixed the contribution year AND the carryover year, because THE CONSUMPTION
+ARITHMETIC UNDERNEATH WAS ALREADY CORRECT - it produced the regulation's own numbers ($12,000 deemed
+paid, $6,000 surviving) the moment the object stopped being discarded. No new absorption logic.
+
+PUB. 526 IS WHY THIS SURVIVED. It lists both rules under "additional rules for carryovers" and then
+declines to state them: "Because of their complexity and the limited number of taxpayers to whom these
+additional rules apply, they aren't discussed in this publication." The publication a developer reaches
+for deliberately omits the answer. The CFR has it.
+
+Test design is load-bearing: AGI $20,000, so the 60% cash ceiling ($12,000) sits BELOW the $15,750
+standard deduction - the only way to have a real §170(b) excess and still take the standard deduction.
+The pre-existing charitable tests force deductionElection ITEMIZED, which is exactly why they never saw
+any of this, and why my earlier zero-AGI probe was worthless.
+
+Suite 2,286 green; charitable spec 3/3 green.

@@ -4636,7 +4636,45 @@ Gap-closure Phase 2 implemented the IRC §170(b) per-bucket AGI ceilings (60% ca
 - **Multi-year carryover — ✅ RESOLVED 2026-07-27 (V184):** the current-year disallowed charitable contribution (`ScheduleA.charitableCarryforwardToNextYear`) now **persists** (`out_schedule_a`) and **auto-imports** into the next year's Schedule A line 13 (`priorYearCharitableContributionCarryover`), mirroring the Form 172 NOL and Form 8990 §163(j) carryforward bridges (sc_00253 $20k → next year; e2e `charitable-carryover-bridge.spec.ts`; primary path only, user entry wins). **Remaining simplifications** (consistent with the single-value line-13 input model, NOT the closed boundary): the carryover is a single aggregate applied to the cash/60% bucket — it does **not** retain per-category (30%/50%) character, and the 5-year expiration is not tracked.
 - **sc_00131 (quid pro quo), sc_00132 (donated car → gross sales proceeds), sc_00133 (property >$5k appraisal/Form 8283):** user enters the already-net/limited deductible amount (pass-through, like sc_00123). Form 8283 trigger banners already exist in the UI.
 
-## Schedule A casualty — multi-event Form 4684 + §1033 involuntary conversion (2026-07-12)
+## ~~Schedule A casualty — multi-event Form 4684 + §1033 involuntary conversion~~ ✅ BOTH VERIFIED DONE 2026-09-16
+
+**Both sub-items below were already resolved 2026-07-12 and are confirmed by inspection** (the heading
+simply had not been struck through): `casualtyEventLossAfterPerEventFloor` applies the $100 floor per
+event and a single 10%-of-AGI floor to the combined total, backed by `pf_casualty_event` (V120); and
+`computeInvoluntaryConversionRecognizedGain` reads proceeds / adjusted basis / amount reinvested / within
+replacement period.
+
+### ⚠️ NEW GAP FOUND WHILE VERIFYING — §165(h)(5)(B) casualty-gain offset (raised 2026-09-16)
+
+`casualtyEventLossAfterPerEventFloor` returns **null** whenever the event is not a federally declared
+disaster, so a non-disaster personal casualty loss is discarded outright. That is right for 2018–2025 in
+the ordinary case, but the statute has an exception the engine does not implement. Instructions for Form
+4684 (2025), verbatim:
+
+> "An exception to the rule above limiting the personal casualty and theft loss deduction to losses
+> attributable to a federally declared disaster applies **if you have personal casualty gains for the tax
+> year**. In this case, you will **reduce your personal casualty gains by any casualty losses not
+> attributable to a federally declared disaster**. Any excess gain is used to reduce losses from a
+> federally declared disaster."
+
+So it is a TWO-step mechanic, and the two steps move in opposite directions:
+1. **Non-disaster losses reduce the casualty GAIN** → we currently tax the gain in full while discarding a
+   real loss. **Over-taxation.**
+2. **Any excess gain then reduces DISASTER losses** → we currently allow the disaster loss in full against
+   an untouched gain. **Over-deduction.**
+
+Both halves are live today because both sides exist: the gain arrives from a Form 4684 **statement**
+(Section A line 16, `partaLine16AddLines13And15SubtractLine14`) and is routed to Schedule D line 11 as
+long-term, while the loss comes from the guided Schedule A inputs on the deductions form. They never meet.
+
+**Why it was not fixed in the same pass:** the two sides sit in different pipelines. The gain is routed
+inside the capital-gains computation, which takes only statement-entry lists and has no access to the
+deductions form; the loss is computed in `buildScheduleA`, which runs later because it needs AGI. Closing
+it needs the non-disaster loss computed early (it needs only the guided inputs and the $100 floor, not
+AGI), threaded into the capital pipeline for step 1, and the resulting excess gain threaded into
+`buildScheduleA` for step 2. No new field is required — every input already exists.
+
+
 
 Gap-closure Phase 3 implemented single-event Form 4684 Section A ($100/event + 10%-AGI floors, disaster-gated; history 2026-07-12). Status:
 - **Multi-event Form 4684:** ✅ **RESOLVED 2026-07-12.** New repeatable `pf_casualty_event` child table (V120, cascades from pf_standard_deductions) + entity + mapper child-list + compute loop + a repeatable "additional casualty events" UI on the deductions form. Each event gets its own $100 floor; a single 10%-AGI floor then applies to the combined total. Unit + live e2e green (sc_00254 → $26,800). "Event 1" stays the existing scalar fields.

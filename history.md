@@ -23319,3 +23319,34 @@ Schedule E Part II preview. Guaranteed payments raise a Schedule SE question —
 today either — so they want their own pass rather than being bolted on here.
 
 Suite 2,279 green.
+
+
+## 2026-09-16 - Schedule A casualty: the stated items were already done; verifying them found a new gap
+
+Both sub-items ("multi-event Form 4684", "§1033 involuntary conversion") were marked RESOLVED 2026-07-12
+and the heading had simply never been struck through. Verified by inspection rather than taken on trust:
+casualtyEventLossAfterPerEventFloor applies the $100 floor per event with a single 10%-of-AGI floor on the
+combined total, backed by pf_casualty_event (V120); computeInvoluntaryConversionRecognizedGain reads
+proceeds / adjusted basis / amount reinvested / within-replacement-period. Both genuinely implemented.
+Heading struck.
+
+★ THE VERIFICATION TURNED UP SOMETHING ELSE. casualtyEventLossAfterPerEventFloor returns NULL whenever the
+event is not a federally declared disaster, discarding the loss outright. Correct for 2018-2025 in the
+ordinary case, but §165(h)(5)(B) has an exception we do not implement. Instructions for Form 4684 (2025):
+"An exception ... applies if you have personal casualty gains for the tax year. In this case, you will
+reduce your personal casualty gains by any casualty losses not attributable to a federally declared
+disaster. Any excess gain is used to reduce losses from a federally declared disaster."
+
+TWO steps, moving in OPPOSITE directions: non-disaster losses reduce the GAIN (we over-tax), and any
+excess gain then reduces DISASTER losses (we over-deduct). Both halves are live, because both sides exist
+and never meet: the gain arrives from a Form 4684 STATEMENT (Section A line 16) and is routed to Schedule
+D line 11, while the loss comes from the guided Schedule A inputs on the deductions form.
+
+NOT FIXED IN THIS PASS, deliberately. The two sides sit in different pipelines - the gain is routed inside
+the capital-gains computation, which takes only statement-entry lists and cannot see the deductions form;
+the loss is computed in buildScheduleA, which runs later because it needs AGI. Closing it means computing
+the non-disaster loss early (it needs only the guided inputs and the $100 floor, not AGI), threading it
+into the capital pipeline for step 1, and threading the resulting excess gain into buildScheduleA for step
+2. No new field is needed - every input exists. Recorded in outstanding.md with the statutory text and the
+mechanic rather than half-implemented at the end of a long run: doing only step 1 would fix the
+over-taxation and leave the over-deduction standing.

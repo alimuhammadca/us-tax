@@ -23567,3 +23567,38 @@ The pre-existing charitable tests force deductionElection ITEMIZED, which is exa
 any of this, and why my earlier zero-AGI probe was worthless.
 
 Suite 2,286 green; charitable spec 3/3 green.
+
+
+## 2026-09-16 - sc_00348: we granted the §911 double benefit the statute exists to deny
+
+THE COMMENT IS CORRECT AND THE SCENARIO FOUND A REAL DEFECT IN US. Before this fix the engine reproduced
+H&R Block's output LINE FOR LINE - credit 21,576 instead of 20,000, total tax 0 instead of 1,576, refund
+2,000 instead of 424 - because Form 1116 line 12 was never computed. The return excluded $130,000 of
+salary under §911 AND credited the full $46,000 of foreign tax paid on all $230,000.
+
+THE EXPECTED COLUMN IS RIGHT, verified rather than assumed. Form 1116 instructions, Line 12 ("Taxes on
+income excluded on Form 2555"): multiply the foreign taxes on foreign earned income by excluded / total
+foreign earned income. 46,000 x 130,000/230,000 = 26,000, leaving 20,000. The FEITW re-derives too -
+tax(214,250) = 45,623 and tax(130,000) = 24,047 both confirmed against the scenario suite's OWN
+tax2025.js, so the 21,576 is independent of my arithmetic.
+
+★ WHY THIS IS COMPUTED WHEN THE §931/§933 TERRITORY TWIN, TEN LINES BELOW THE SAME CALL SITE, IS ONLY
+ADVISORY. They look like one rule and the difference is the DENOMINATOR. Pub. 570's territory version
+divides by "total income subject to the TERRITORY's tax" - a figure a U.S. return does not carry - so it
+is named for the filer rather than guessed, and that was the right call. The §911 denominator is TOTAL
+FOREIGN EARNED INCOME, which is Form 2555 line 27. Both terms are already on the return, so the reduction
+is exact. The existing advisory is not precedent for leaving this one alone.
+
+Applied to the GENERAL category only: foreign earned income is general-category income, while passive tax
+sits on dividends/interest that §911 never excluded. Reported via
+FOREIGN_EARNED_EXCLUSION_TAX_REDUCTION_APPLIED, since Form 1116 line 12 has no field on our output model.
+
+TWO DOCUMENT CORRECTIONS, both of which the automation tester had already caught independently:
+  - Row "9 - Creditable foreign taxes = 20,000" is MISLABELLED. Line 9 is the gross tax from Part II
+    (46,000); the post-reduction 20,000 is line 14.
+  - Line 1a: the instructions say "wages not excluded on Form 2555", so the Expected 100,000 is right and
+    our 230,000 is not. LEFT OPEN - that figure is the filer's own gross-income entry and re-cutting it
+    needs sign-off. It does not move this credit: line 19 caps the fraction at 1 either way.
+
+Sc00348SqaScenarioTest 8 tests, incl. a no-exclusion CONTROL proving the assertion measures the new rule
+and not some unrelated cap. Suite 2,294 green. xlsx G/H updated in BOTH Actuals trees.

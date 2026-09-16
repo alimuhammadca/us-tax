@@ -23283,3 +23283,39 @@ a looser assertion would have "passed" against an inert seed. Corrected, 4/4 gre
 Section280ADepreciationCarryforwardTest 4 tests (carryforward created; carry-in spent to the extent of
 headroom; a large carry-in cannot create a loss; depreciation that fits invents nothing). Suite 2,275
 green; dev boot applied V260 with health 200.
+
+
+## 2026-09-16 - K-1 boxes 2 and 3 routed: a rental on a K-1 reached the return at all for the first time
+
+From the parked K-1 follow-ups: "Other K-1 boxes: rental real estate (1065 box 2 / 1120-S box 2),
+guaranteed payments, §179, other income boxes — not routed."
+
+Boxes 2 and 3 (net rental real estate income/loss, other net rental income/loss) were CAPTURED on both the
+1065 and 1120-S statements and read by nothing. So a K-1 rental contributed nothing whatever: income
+escaped tax and a loss was silently forfeited. No field additions were needed — the columns already
+existed, so this is pure routing.
+
+★ THEY ARE NOT KEYED ON MATERIAL PARTICIPATION, unlike box 1, and that asymmetry is the trap. §469(c)(2)
+makes a rental activity PER SE passive however much the partner participates, so boxes 2/3 always join the
+passive pool. Mirroring sumPassiveK1OrdinaryNet's materiallyParticipatedInActivity gate — the obvious
+symmetry, and what I would have written on autopilot — would let a partner who answered "yes" drop a
+rental loss straight onto Schedule 1 line 5 with no §469 limit at all.
+
+★ AND NO $25,000 SPECIAL ALLOWANCE. That needs ACTIVE participation, which §469(i)(6)(C) denies outright
+for a limited partnership interest, and the K-1 does not say whether the holder is general or limited. So
+they feed the "other passive" pool rather than the rental-real-estate pool — the same treatment passive
+box-1 income already gets — where a loss offsets passive income and is otherwise suspended.
+
+1041 needs nothing: a trust or estate reports rental on its own Schedule E and passes the net through
+box 5/6, which was already routed.
+
+K1RentalBoxRoutingTest 4 tests: box-2 income is taxed (an exact 20,000 with/without delta, so an unread
+box fails rather than passing quietly); the participation answer changes nothing; a rental loss is
+SUSPENDED rather than offsetting wages (no special allowance); but it DOES absorb other passive income,
+which is what proves the loss reached the §469 pool instead of the floor.
+
+STILL PARKED from the same note: guaranteed payments (4a/4b), §179 (box 12), other income boxes, and the
+Schedule E Part II preview. Guaranteed payments raise a Schedule SE question — box 1 does not feed SE tax
+today either — so they want their own pass rather than being bolted on here.
+
+Suite 2,279 green.

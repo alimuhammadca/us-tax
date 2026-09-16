@@ -23602,3 +23602,31 @@ TWO DOCUMENT CORRECTIONS, both of which the automation tester had already caught
 
 Sc00348SqaScenarioTest 8 tests, incl. a no-exclusion CONTROL proving the assertion measures the new rule
 and not some unrelated cap. Suite 2,294 green. xlsx G/H updated in BOTH Actuals trees.
+
+
+## 2026-09-16 - sc_00348 follow-up: Form 1116 line 1a excludes the §911 income too
+
+"Enter on line 1a wages NOT EXCLUDED on Form 2555" (Instructions for Form 1116, Part I). We carried the
+filer's gross 230,000, exactly as H&R Block does, instead of the 100,000 that is actually taxable by the
+United States. It did not move sc_00348's credit -- line 19 caps the apportionment fraction at 1 either
+way -- but it inflates the foreign share of taxable income generally, and wherever that fraction would
+otherwise fall below 1 it over-states the limitation and the credit.
+
+★ LINE 1A AND THE LINE-3F APPORTIONMENT RATIO MOVE INDEPENDENTLY, and conflating them is the easy way to
+get this wrong. Lines 3d and 3e explicitly INCLUDE the excluded income ("Include any foreign earned
+income you have excluded on Form 2555"), so the standard-deduction apportionment must keep dividing
+230,000 by 230,000 and apportion the whole 15,750. Had the fix simply reduced `gross` everywhere -- the
+obvious one-line change -- the apportioned deduction would have dropped to 6,848 and line 15 to 93,152:
+wrong, and plausible enough to survive a review. Only line 1a, the net that follows it and the category
+total move. theDeductionApportionmentIsUnmoved pins the ratio at 1 and the deduction at 15,750 precisely
+so that change cannot be made silently later.
+
+★ THE GUARD IS THE REST OF THE DIFFICULTY. `grossForeignIncome` is the filer's OWN entry and nothing on
+the form records whether they typed the gross figure or one already net of the exclusion. Reducing an
+already-net entry would halve the §904 numerator with no symptom. So the reduction applies only when the
+entered total still EXCEEDS the non-excluded foreign earned income -- i.e. it still looks like it
+contains the excluded part. A filer who enters 100,000 against a 230,000 salary and a 130,000 exclusion
+keeps their figure. Each country in a multi-country basket bears its pro-rata share.
+
+Sc00348SqaScenarioTest now 11 tests. Suite 2,297 green; the 6 Form 1116 e2e tests green. ALL 30 GRADED
+VALUES NOW REPRODUCE.

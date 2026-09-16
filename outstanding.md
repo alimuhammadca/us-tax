@@ -4667,7 +4667,24 @@ Both halves are live today because both sides exist: the gain arrives from a For
 (Section A line 16, `partaLine16AddLines13And15SubtractLine14`) and is routed to Schedule D line 11 as
 long-term, while the loss comes from the guided Schedule A inputs on the deductions form. They never meet.
 
-**Why it was not fixed in the same pass:** the two sides sit in different pipelines. The gain is routed
+**★ UPDATE 2026-09-16 — a larger defect underneath it, now FIXED.** Reading the form to get this mechanic
+right showed the engine was routing the WRONG Section A line to Schedule D: it read line 16 (the residual
+LOSS, which line 17 floors and line 18 sends to Schedule A) and added a positive value to Schedule D as a
+long-term GAIN, while line 15 — the line the form actually sends to Schedule D — was read by nothing. A
+casualty loss taxed as a capital gain, and the real gain escaping entirely. Three unit tests encoded the
+same inversion and were corrected. See history.md 2026-09-16.
+
+That also narrows THIS item: on the Form 4684 statement path the §165(h)(5)(B) offset is the FILER's job,
+applied when they compute line 14 (Worksheet 1-1). It remains genuinely open only on the MIXED path — a
+casualty gain on a 4684 statement together with non-disaster losses entered through the guided Schedule A
+inputs, which never meet.
+
+**A second item surfaced:** `partaLine18SubtractLine17FromLine16` is persisted and read by nothing, so the
+Section A itemized deduction from a filed Form 4684 never reaches Schedule A at all. Not fixed, because it
+would double-count against the guided deductions-form path that computes the same floors from basis / FMV /
+insurance — that interaction needs deciding first.
+
+**Why the mixed-path offset was not fixed in the same pass:** the two sides sit in different pipelines. The gain is routed
 inside the capital-gains computation, which takes only statement-entry lists and has no access to the
 deductions form; the loss is computed in `buildScheduleA`, which runs later because it needs AGI. Closing
 it needs the non-disaster loss computed early (it needs only the guided inputs and the $100 floor, not

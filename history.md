@@ -23350,3 +23350,51 @@ into the capital pipeline for step 1, and threading the resulting excess gain in
 2. No new field is needed - every input exists. Recorded in outstanding.md with the statutory text and the
 mechanic rather than half-implemented at the end of a long run: doing only step 1 would fix the
 over-taxation and leave the over-deduction standing.
+
+
+## 2026-09-16 - Form 4684 Section A: a casualty LOSS was being taxed as a capital GAIN
+
+Went in to build the §165(h)(5)(B) casualty-gain offset. Reading the form to get the mechanic right turned
+up something larger sitting underneath it.
+
+THE FORM, verbatim:
+  15  "If line 13 is more than line 14, enter the difference here AND ON SCHEDULE D. Do not complete the
+       rest of this section."
+  16  "Add lines 13 and 15. Subtract the result from line 14."
+  17   10% of AGI
+  18  "Subtract line 17 from line 16 ... enter the result on Schedule A, line 15."
+
+So line 15 is the net GAIN and the only Section A figure that belongs on Schedule D; line 16 is the
+residual LOSS, which is why line 17 floors it at 10% of AGI and line 18 sends it to Schedule A. You never
+even reach line 16 when there is a gain - the form tells you to stop at 15.
+
+The engine read LINE 16 and added a positive value to Schedule D line 11 as a long-term gain. That taxed a
+casualty LOSS as a capital GAIN, while the real gain on line 15 was read by nothing and escaped Schedule D
+entirely. Wrong in both directions simultaneously, and the normal case: the form only asks for line 16
+when there IS a net loss, so "positive line 16" is the ordinary shape, not an edge case.
+
+THREE UNIT TESTS ENCODED THE SAME INVERSION, one of them named
+phase2D_form4684_sectionAPositiveLine16FlowsToScheduleDLine11 and asserting in its message that "line 16
+positive (net personal-use casualty gain) must flow to Schedule D line 11". All three corrected. A fourth
+(negativeLine16...DoesNotFlowToScheduleD) had been passing for the wrong reason - the old code did read
+line 16 and merely skipped it for being negative - and its rationale is rewritten.
+
+THE MISREADING IS FOSSILISED IN THE FIELD NAME: the semantic map calls it
+`sectiona_line16_add_lines_13_and_15_subtract_line14`, inverting the form's "add lines 13 and 15, subtract
+THE RESULT FROM line 14". The name does not change what the filer typed in the box; a comment now says so
+at the read site, because the name will keep arguing for the wrong reading.
+
+ON THE §165(h)(5)(B) OFFSET I ORIGINALLY CAME FOR: on this path it is the FILER's job, not ours. The
+statement carries their completed lines 13-18, and the exception is applied when they compute line 14
+(Instructions for Form 4684, Worksheet 1-1: non-disaster losses are deductible to the extent of casualty
+gains, and any remaining gain reduces deductible federal casualty losses). Our job is to route the right
+lines, which is what was broken. The offset remains genuinely open only on the MIXED path - a filer with a
+casualty gain on a 4684 statement AND non-disaster losses entered through the guided Schedule A inputs -
+which is recorded in outstanding.md.
+
+ALSO STILL OPEN AND NOW NAMED: `partaLine18SubtractLine17FromLine16` is persisted and read by nothing, so
+the Section A itemized deduction from a filed Form 4684 never reaches Schedule A. Not fixed here because
+it would double-count against the guided deductions-form path, which computes the same floors from basis /
+FMV / insurance - that interaction needs deciding first.
+
+Suite 2,279 green.

@@ -4855,10 +4855,13 @@ untouched, being definitely related to business income. Both are pinned by tests
   **1,600** the right way vs **3,040** the wrong way (over-deduction); SALT 60,000 against the 40,000 OBBBA
   cap → **40,000** vs **32,000** (under-deduction). Medical and the four SALT components are now prorated at
   their INPUTS in `buildScheduleA`, with `computeLine12` prorating only the remainder so nothing is doubled.
-  **STILL OPEN:** the other lines carry full amounts on the printed form while being prorated in the total
-  (arithmetically identical, presentation only), and **charitable contributions** have the same order
-  sensitivity through their AGI-percentage ceilings — deliberately left with the charitable machinery.
-  `TerritoryPerLineScheduleATest`.
+  **CHARITABLE ALSO FIXED 2026-09-16** — and it was the costliest, landing in TWO years: an 80,000 gift at
+  AGI 96,000, fraction 0.8, gave 57,600 allowed / 6,400 carried the right way versus 46,080 / 22,400 the
+  wrong way, so 11,520 of under-deduction plus a 16,000 carryover overstatement flowing into the next
+  return. The six current-year buckets are prorated just before `computeCharitableDeduction`; prior-year
+  carryovers deliberately are NOT (already reduced when created). **STILL OPEN, presentation only:** the
+  remaining lines carry full amounts on the printed form while being prorated in the total —
+  arithmetically identical, so the return is correct. `TerritoryPerLineScheduleATest` (8).
 - **Itemized deductions definitely related to ONE type of income.** Pub. 570 splits itemized deductions
   three ways — those specific to excluded income (not deductible), those specific to U.S.-taxable income
   (fully allowable), and the rest (prorated). We prorate everything, which is right for the third and

@@ -23206,3 +23206,41 @@ AGI-percentage ceilings and carryovers - left alone deliberately rather than reb
 floor/cap work, and still open.
 
 TerritoryPerLineScheduleATest 5 tests. Suite 2,268 green.
+
+
+## 2026-09-16 - Charitable contributions prorated before the §170(b) ceilings: a TWO-YEAR defect closed
+
+The last computational piece of the sc_00301 §931/§933 residue, and the costliest, because the error landed
+in two years rather than one.
+
+Pub. 570's worked example prorates the 5,000 cash gift to 4,000 and enters THAT on line 11, so the AGI
+percentage ceilings act on the reduced figure. We prorated at the total instead, which put the ceiling
+before the fraction:
+
+  cash gift 60,000, AGI 96,000, 60% ceiling 57,600, fraction 0.8
+    Pub. 570     min(48,000, 57,600) = 48,000 allowed, NOTHING carried
+    total-level  min(60,000, 57,600) x 0.8 = 46,080 allowed, 2,400 carried   <- a carryover invented
+  cash gift 80,000
+    Pub. 570     min(64,000, 57,600) = 57,600 allowed,  6,400 carried
+    total-level                        46,080 allowed, 22,400 carried
+
+So up to 11,520 of under-deduction in the current year AND a 16,000 overstatement of the §170(d)(1)
+carryover, which then propagates into the next return through the carryforward bridge. At the smaller gift
+the old order invents a carryover out of a gift that was entirely deductible.
+
+The fix is one contained change: the six CURRENT-year buckets (cash, non-cash, capital-gain, private-
+foundation cash, private-foundation capital-gain, conservation) are prorated immediately before
+computeCharitableDeduction, which is the single entry point into the ceiling engine - no need to touch the
+fifteen-odd individual inputs or the bucket machinery. computeLine12's remainder proration now subtracts
+the charitable total alongside medical and SALT, so nothing is prorated twice.
+
+PRIOR-YEAR CARRYOVERS ARE DELIBERATELY NOT PRORATED. A vintage arising in an earlier territory year was
+already reduced when it was created; applying the fraction again would shrink it a second time and compound
+every year it survives. Only the current-year buckets move, which is exactly what the publication's example
+does.
+
+The tests pin the CARRYOVER as well as the deduction - that is the half that leaves the year - plus a
+no-exclusion control showing the ceiling machinery itself is unmoved (80,000 still caps at 57,600 with
+22,400 carried when there is no exclusion).
+
+TerritoryPerLineScheduleATest now 8 tests. Suite 2,271 green.

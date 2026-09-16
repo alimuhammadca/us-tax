@@ -23244,3 +23244,42 @@ no-exclusion control showing the ceiling machinery itself is unmoved (80,000 sti
 22,400 carried when there is no exclusion).
 
 TerritoryPerLineScheduleATest now 8 tests. Suite 2,271 green.
+
+
+## 2026-09-16 - §280A(c)(5): the rental depreciation carryforward was computed and thrown away (V260)
+
+Working the Schedule E deferred items. Two bullets remained; one was STALE and the other was understated.
+
+STALE: "Dedicated Schedule E preview form ... not built". It exists - ScheduleE output (lines 26/32/41 plus
+a per-property fields map) and form-tax-return-schedule-e.component.ts, built with the C6d work. Marked.
+
+UNDERSTATED, and the real find: "$0-net rental-only Schedule 1 Part I pruning ... the output serializer
+prunes the empty Schedule 1 Part I, which also hides rentalDepreciationCarryforward. Low impact."
+
+It was neither confined to $0-net returns nor low impact. On a personal-residence rental (a vacation home
+let part of the year, or a below-market let) §280A caps deductions at gross rental income and takes them
+in three tiers - mortgage interest and taxes, then operating expenses, then depreciation. Depreciation is
+last, so it is what gets squeezed out, and §280A(c)(5) carries the squeezed-out amount forward to the
+succeeding year with no expiry.
+
+The engine computed that amount correctly and set it on the Schedule 1 output model. Then it stopped:
+NO COLUMN, no entity field, no output-mapper reference, no importer. grep confirmed
+getRentalDepreciationCarryforward() was referenced by nothing outside the model itself. So the figure was
+discarded when the return was saved and a §280A filer forfeited the disallowed depreciation PERMANENTLY -
+on every return, not only the $0-net shape where someone happened to notice it missing from the preview.
+The pruning was a symptom, not the cause.
+
+V260 adds add_inc_rental_depreciation_carryforward to out_schedule_1; the mapper round-trips it (all three
+sites, including the reset); importedPriorYearRentalDepreciationCarryover mirrors
+importedPriorYearRentalAtRisk; and computeRentalScheduleE spends the carried-in amount against whatever
+headroom each §280A property has left AFTER current-year depreciation, rolling the remainder forward
+again. It can never create a loss - the cap is the point of the subsection.
+
+THE TESTS FAILED FIRST, USEFULLY. I guessed the expense field names (mortgageInterest / repairs /
+depreciation); the engine reads mortgageInterestAndPropertyTaxes / otherOperatingExpenses /
+depreciationAmount. With the wrong names no §280A squeeze occurred at all and the carryforward was null -
+a looser assertion would have "passed" against an inert seed. Corrected, 4/4 green.
+
+Section280ADepreciationCarryforwardTest 4 tests (carryforward created; carry-in spent to the extent of
+headroom; a large carry-in cannot create a loss; depreciation that fits invents nothing). Suite 2,275
+green; dev boot applied V260 with health 200.

@@ -5251,3 +5251,38 @@ non-blocking `..._SECTION_1341_MAY_BE_BETTER_*` advisory; both old codes removed
 repayment ("you must include the full amount of the benefits in your income for the year you received
 them") — the ≤ $3,000 path is fixed by the same change rather than separately. Two existing tests moved and
 were re-derived; suite back to its 8 pre-existing failures.
+
+
+## ⚠️ Unpersisted carryforwards — sweep result (2026-09-16)
+
+Three "computed and thrown away" defects turned up in one day (§280A rental depreciation, K-1 boxes 2/3,
+Form 4684 line 18), so the codebase was swept for the same shape rather than continuing item by item.
+
+**Method and how it narrowed.** 983 statement fields are persisted but never read by compute — almost all
+false positives, because statements legitimately feed INTAKE forms and compute reads those (1099-G box 1
+is read as `unemploymentRepaymentAdjustment` off `other-incomes-taxpayer`; 1099-MISC rents/royalties as
+`rentsReceived`/`royaltiesReceived` off the rental form). Switching to output-model fields that compute
+SETS but nothing persists gave 135 — still mostly false positives, because a form whose output is not
+persisted at all (Form 8960, Schedule H) is simply RECOMPUTED on load and loses nothing.
+
+**The discriminator: a carryforward cannot be recomputed.** Everything else can be rebuilt from this
+year's inputs; a carryforward depends on last year. Filtering to carryforward-shaped fields gives three,
+of which two are real:
+
+1. **`Schedule1AdditionalIncome.rentalPassiveLossCarryforward`** — the REGULAR §469 suspended rental loss.
+   Set by compute, never persisted, never imported. **Its AMT shadow twin
+   (`amtPassiveLossCarryforward`) has a column (V200), both mapper directions, and a working
+   `importedPriorYearAmtPassiveLoss` bridge.** The shadow track survives the year and the track it
+   shadows does not, which is backwards.
+2. **`ScheduleA.nextYearInvestmentInterestCarryforward`** — the §163(d) disallowed investment interest
+   (Form 4952 line 7). Set by compute, never persisted, no importer.
+3. `Form2210.priorYearTax` — not a real hit: an echo of a user-entered input, not a carryforward out.
+
+**Both survivors have a user-entry path** (`priorYearSuspendedPassiveLoss` per rental property;
+`priorYearInvestmentInterestCarryover` on the deductions form), so they are missing BRIDGES rather than
+being wholly unreachable — a filer who re-types last year's figure is fine, and one who forgets silently
+loses the deduction. That is the same gap the eleven existing bridges exist to close, and the same shape
+as the §280A bridge added earlier today (V260). Fixing each is the established recipe: one column on
+`out_schedule_1` / the Schedule A output, both mapper directions, an `importedPriorYear…` mirroring
+`importedPriorYearRentalAtRisk`, and consumption with user-entry winning.
+

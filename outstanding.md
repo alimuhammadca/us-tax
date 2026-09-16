@@ -4864,7 +4864,10 @@ untouched, being definitely related to business income. Both are pinned by tests
   exclusion denies it outright, per Pub. 570's first sentence. `TerritorySelfEmploymentDeductionTest`.
 - **Tips / overtime deductions.** Not prorated — source-restricted: claimable "only with respect to income
   that is included in your U.S. gross income". Needs a territory-source split on tips/overtime we do not
-  capture.
+  capture. **STILL OPEN.** Its Schedule 1-A siblings were resolved 2026-09-16: line 30 car loan interest
+  IS apportioned by the general fraction (was missing — overstated deduction), and line 37 enhanced senior
+  is correctly NOT apportioned though its MAGI counts excluded income. Do not approximate tips/overtime
+  with the general fraction; the statute restricts the SOURCE rather than apportioning the amount.
 - ~~**IRA deduction.**~~ ✅ **VERIFIED CORRECT 2026-09-16.** Possession exclusions are deliberately absent
   from the Pub. 590-A IRA-deduction MAGI add-backs (they are SS-worksheet line 5 add-backs only; Pub. 590-A
   lists Form 2555 foreign-source and not possession exclusions). The reasoning was already written out in

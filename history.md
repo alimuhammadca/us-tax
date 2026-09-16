@@ -23139,3 +23139,35 @@ the qualified passenger vehicle loan interest deduction is prorated by the GENER
 checked against our Schedule 1-A implementation.
 
 TerritorySelfEmploymentDeductionTest 5 tests. Suite 2,261 green.
+
+
+## 2026-09-16 - Pub. 570: the car loan interest deduction was never apportioned
+
+Checked on the back of the §1402 work, and it was a real gap. Pub. 570 ch. 4 gives the qualified
+passenger vehicle loan interest deduction TWO rules at once:
+
+  (a) "For purposes of determining eligibility for this deduction, you must include your excluded
+      territory income in your modified adjusted gross income."   -> ALREADY SATISFIED. The Schedule 1-A
+      MAGI adds back the Puerto Rico and Form 4563 exclusions.
+  (b) "If you take the qualified passenger vehicle loan interest payment deduction, you generally must
+      apportion the deduction between the income included in your U.S. tax return and all other income
+      ... multiply ... by: Gross income subject to U.S. income tax / Gross income from all sources."
+      -> MISSING. We took it whole. Overstated deduction, understated tax.
+
+Only (b) needed fixing, and only on LINE 30. Prorating the Schedule 1-A TOTAL would have been the easy
+wrong implementation, because the other three parts are each governed differently:
+  - line 37 enhanced senior: MAGI counts excluded income, but the allowed amount is claimed in FULL.
+  - lines 13/21 tips and overtime: SOURCE-restricted, not apportioned - allowed "only with respect to the
+    qualified tips or qualified overtime compensation that you did not exclude". Needs a territory-source
+    split of the tips/overtime themselves, which the intake does not capture. Left open rather than
+    approximated with the wrong fraction.
+
+THE SENIOR TEST FAILED FIRST, AND USEFULLY. Adding excluded income drops the senior deduction 4,924 ->
+1,324, and my first assertion read that as proration. It is the 6%-over-75,000 MAGI phaseout doing exactly
+what Pub. 570 prescribes - the two rules pull in opposite directions on the same line. The test now uses a
+SAME-MAGI control: 60,000 of excluded territory interest versus 60,000 of U.S. interest give identical
+Schedule 1-A MAGI (the excluded amount is added back), so the phaseout is identical and only the territory
+fraction differs. Equal deductions therefore prove the fraction was never applied to line 37 - and prove
+the car-loan proration landed on line 30 specifically.
+
+TerritorySelfEmploymentDeductionTest now 7 tests. Suite 2,263 green.

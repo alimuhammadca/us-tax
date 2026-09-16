@@ -22974,3 +22974,36 @@ spouse and the Spouse tab, which is itself worth covering: a form nobody can nav
 Verified by sabotage as before: deleting the spouse (s)-interest <p-inputNumber> turned it red with
 "Spouse Part II column (s) interest, USD is missing from the form"; restoring it turned it green.
 9 of 9 across all three Part II specs.
+
+
+## 2026-09-15 - sc_00347: two Form 2555 defects the scenario itself could never have caught
+
+SQA sc_00347 (FEIE + housing exclusion + the Foreign Earned Income Tax Worksheet) passes on every graded
+value - 139,200 excluded, 25,050 taxable, tax 6,012, refund 488 - and H&R Block agrees throughout. The
+§911(f) stacking is pinned against its counterfactual: the same 25,050 with no exclusion underneath costs
+2,771, so the stacking rule is worth 3,241.
+
+Probing the variants around it found two real defects, neither of which moves this scenario:
+
+(1) THE HOUSING CAP WAS APPLIED TO THE EXCLUSION, NOT THE EXPENSES. The form says line 30 = "the smaller
+of line 28 or line 29b" and line 33 = "Subtract line 32 from line 30" - the limit trims the EXPENSES and
+the base comes off what survives. The engine subtracted the base first and capped the RESULT, so the base
+was never really subtracted once the cap bound: 60,000 of expenses gave 39,000 where the form gives
+min(60,000, 39,000) - 20,800 = 18,200. A 20,800 over-exclusion for every filer in an expensive city, which
+is exactly the population the cap exists for. The tell: a housing exclusion can never EQUAL its own expense
+limit, and two unit tests had pinned precisely that (102,600 Geneva, 39,000 unlisted) - both corrected.
+
+(2) FORM 2555 LINE 41 WAS MISSING. "Subtract line 36 from line 27" limits the FEIE to foreign earned income
+NET of the housing exclusion; line 42 is the smaller of that and the prorated maximum. Without it the two
+exclusions could together exceed the income they exclude - 100,000 of wages with a 9,200 housing exclusion
+produced a 109,200 total exclusion and a NEGATIVE total income. Now the FEIE is 90,800, the exclusions
+total exactly the 100,000 earned, and line 9 is zero. The 170,800 the tester recorded from H&R Block on a
+mislabelled row IS line 41 - H&R Block had it right all along.
+
+The housing exclusion is now computed BEFORE the FEIE, because line 41 depends on line 36.
+
+Also recorded: the doc mislabels three Form 2555 lines (27, 42, 36 - values right, numbers wrong; the
+tester caught two independently), and its aside that a naive tax on 25,050 "would give 2,768" uses the
+exact rate schedule where the Tax Table's 50-dollar bands apply (2,771). Nothing graded depends on it.
+
+Sc00347SqaScenarioTest 8 tests. Suite 2,242, all green.

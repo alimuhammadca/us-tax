@@ -4762,7 +4762,12 @@ activity rather than a Schedule-E-only gap. Rental §199A UBIA is wired to the s
 which had been passing null; above the threshold that had been zeroing the deduction outright, because a
 rental enterprise pays no W-2 wages and UBIA is the only term left.
 
-## Passive partnership K-1 losses bypass the §465 at-risk gate (raised 2026-09-02)
+## ~~Passive partnership K-1 losses bypass the §465 at-risk gate~~ ✅ FIXED 2026-09-15 (V258)
+
+**Closed.** `someK1InvestmentNotAtRisk` + `k1AmountAtRisk` added to the §469 companion INTAKE form (`passive-activity-carryforward-taxpayer`/`-spouse`) — not the K-1, which is a statement, and which in any case never reports the partner's at-risk basis. §465 now caps the passive K-1 loss before §469 sees it, and the suspended amount joins Schedule C/F in the Form 6198 carryforward. See history.md 2026-09-15 and rules.md.
+
+<details><summary>original entry</summary>
+
 
 Rentals, Schedule C and Schedule F all carry `someInvestmentNotAtRisk` / `amountAtRisk` and apply §465
 **before** §469 — verified by `Sc00279SqaScenarioTest`, which pins the 15,000/25,000 split and a
@@ -4777,6 +4782,8 @@ Direction: a partner who is not fully at risk has the excess released a year ear
 appears — over-deduction. The §465 machinery already exists (`atRiskSuspended`, the Form 6198 output, the
 carryforward bridge); what is missing is an at-risk amount on the K-1 intake, which is a form-field
 addition and so wants sign-off.
+
+</details>
 
 ## ~~§170(f)(11)(C) qualified-appraisal gate is absent from Form 8283~~ ✅ FIXED 2026-09-15 (V257)
 

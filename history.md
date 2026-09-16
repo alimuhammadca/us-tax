@@ -23038,3 +23038,33 @@ CharitableQualifiedAppraisalGateTest 5 tests (fires, explicit-no fires, confirmi
 threshold is real, the publicly-traded-security exemption survives at any value). Sc00300's
 defect-recording test rewritten to the design actually shipped. Suite 2,247 green; dev boot applied V257
 with health 200.
+
+
+## 2026-09-15 - §465 at-risk now gates PASSIVE K-1 losses (V258)
+
+Rentals, Schedule C and Schedule F all run the at-risk gate BEFORE the §469 passive gate. A passive K-1
+did not - its loss went straight into the §469 pool - so a partner who is not fully at risk had the excess
+released a year early, as soon as any passive income appeared. Direction: OVER-DEDUCTION. Invisible in
+sc_00279's graded rows for the reason the us-tax-hrb tree identified: with no passive income in year 1, a
+two-gate and a one-gate implementation both deduct nothing. Both Actuals trees found the commercial
+product with the same gap.
+
+WHERE THE FIELD LIVES. NOT on the K-1: a K-1 is a STATEMENT and no field may be added to one. The
+restriction and the tax law agree - the partnership does not report the partner's at-risk basis on the K-1
+at all, because it turns on the partner's own facts (which debt is recourse, what has been personally
+guaranteed, what stop-loss arrangements exist). So `someK1InvestmentNotAtRisk` + `k1AmountAtRisk` go on the
+§469 companion INTAKE form (`passive-activity-carryforward-taxpayer`/`-spouse`), which already exists for
+exactly this reason and already carries the K-1 prior-year suspended passive loss.
+
+Aggregate, matching the form it sits on; opt-in, so a filer who never answers is fully at risk and never
+silently limited. The suspended amount joins Schedule C and Schedule F in the Form 6198 carryforward, so a
+§465-disallowed loss is DEFERRED, not lost.
+
+THE FIRST TEST RUN FAILED, USEFULLY: I seeded the K-1 loss as `ordinaryBusinessIncome` when the engine
+reads `part3Line1OrdinaryBusinessIncomeLoss`, so the loss never landed and Form 6198 was never produced.
+Had the assertion been looser the gate would have "passed" while doing nothing. The K-1 slot->semantic
+naming bites again.
+
+PassiveK1AtRiskGateTest 4 tests (the gate fires; an unanswered filer is NOT limited; an at-risk amount
+above the loss suspends nothing; being limited can never REDUCE tax). Suite 2,251 green; dev boot applied
+V257 + V258 with health 200.

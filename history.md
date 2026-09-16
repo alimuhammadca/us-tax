@@ -23171,3 +23171,38 @@ fraction differs. Equal deductions therefore prove the fraction was never applie
 the car-loan proration landed on line 30 specifically.
 
 TerritorySelfEmploymentDeductionTest now 7 tests. Suite 2,263 green.
+
+
+## 2026-09-16 - Pub. 570 per-line Schedule A proration: NOT cosmetic after all
+
+The residue note called this presentational - "same line-12 answer, but the printed Schedule A shows full
+amounts against a prorated total". That is true only for a deduction that is a plain multiplication. Where
+a FLOOR or a CAP sits between the input and the line, prorating the input and prorating the total give
+different answers, and they differ in OPPOSITE directions:
+
+  medical 11,000, AGI 96,000, fraction 0.8
+    Pub. 570     11,000 x 0.8 = 8,800, less the 7.5% floor 7,200   ->   1,600
+    total-level  (11,000 - 7,200) x 0.8                            ->   3,040   OVER-deducted by 1,440
+
+  state/local taxes 60,000, 2025 OBBBA cap 40,000, fraction 0.8
+    Pub. 570     60,000 x 0.8 = 48,000, capped                     ->  40,000
+    total-level  min(60,000, 40,000) x 0.8                         ->  32,000   UNDER-deducted by 8,000
+
+The rule itself is explicit: "Enter on Schedule A (Form 1040) only the allowable portion of EACH
+deduction", and the worked example prorates each INPUT - medical on line 1, real estate taxes on line 5b -
+letting the form's own floors and ceilings act on the reduced figure.
+
+So medical and the four SALT components are now prorated at their INPUTS in buildScheduleA, before the
+floor and the cap. computeLine12 prorates only the REMAINDER of the itemized total, adding those two lines
+back at the figures Schedule A already carries, so nothing is prorated twice. The tests use Pub. 570's own
+example numbers and pin both directions plus a no-exclusion control for each, so the assertions measure
+the proration rather than some unrelated medical or SALT behaviour.
+
+SCOPE, STATED PLAINLY - this does NOT close the item. The other Schedule A lines still carry their full
+amounts on the printed form while being prorated in the total; for them the arithmetic is identical either
+way, so the return is correct and only the presentation differs from the worked example. CHARITABLE
+CONTRIBUTIONS are the one remaining case where order could genuinely matter, since they carry their own
+AGI-percentage ceilings and carryovers - left alone deliberately rather than rebuilt alongside the
+floor/cap work, and still open.
+
+TerritoryPerLineScheduleATest 5 tests. Suite 2,268 green.

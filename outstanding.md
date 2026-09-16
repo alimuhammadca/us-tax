@@ -4849,11 +4849,16 @@ untouched, being definitely related to business income. Both are pinned by tests
 
 **RESIDUE — still open:**
 
-- **Per-Schedule-A-line proration.** We prorate the itemized TOTAL; Pub. 570's worked example enters each
-  line at its allowable share (medical 11,000 → 8,800, real estate taxes 10,000 → 8,000, mortgage interest
-  16,250 → 13,000, charitable 5,000 → 4,000 at 96,000/120,000). Same line-12 answer, but the printed
-  Schedule A shows full amounts against a prorated total. Interacts with the SALT cap and the Form 8396
-  mortgage-interest reduction, so it wants its own change. The advisory tells the filer meanwhile.
+- **Per-Schedule-A-line proration.** ⚠️ **PARTIALLY FIXED 2026-09-16 — and the "same line-12 answer" claim
+  above was WRONG.** It holds only for a plain multiplication. With a FLOOR or a CAP between the input and
+  the line the two orders differ, in opposite directions: medical 11,000 at AGI 96,000, fraction 0.8 →
+  **1,600** the right way vs **3,040** the wrong way (over-deduction); SALT 60,000 against the 40,000 OBBBA
+  cap → **40,000** vs **32,000** (under-deduction). Medical and the four SALT components are now prorated at
+  their INPUTS in `buildScheduleA`, with `computeLine12` prorating only the remainder so nothing is doubled.
+  **STILL OPEN:** the other lines carry full amounts on the printed form while being prorated in the total
+  (arithmetically identical, presentation only), and **charitable contributions** have the same order
+  sensitivity through their AGI-percentage ceilings — deliberately left with the charitable machinery.
+  `TerritoryPerLineScheduleATest`.
 - **Itemized deductions definitely related to ONE type of income.** Pub. 570 splits itemized deductions
   three ways — those specific to excluded income (not deductible), those specific to U.S.-taxable income
   (fully allowable), and the rest (prorated). We prorate everything, which is right for the third and

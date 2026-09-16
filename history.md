@@ -23068,3 +23068,33 @@ naming bites again.
 PassiveK1AtRiskGateTest 4 tests (the gate fires; an unanswered filer is NOT limited; an at-risk amount
 above the loss suspends nothing; being limited can never REDUCE tax). Suite 2,251 green; dev boot applied
 V257 + V258 with health 200.
+
+
+## 2026-09-16 - Form 2210-F ⅔ farmer gate: both remaining defects closed (V259)
+
+Two items left open when the gate was corrected on 2026-09-10 (sc_00303), now both fixed. They pull in
+OPPOSITE directions, which is why neither was obvious from the other.
+
+(1) THE DENOMINATOR STILL CARRIED NET FOR TWO SOURCES. The September fix restored the FARM side to gross,
+but Form 1040 line 9 also carries NET for Schedule C (line 3) and Schedule E (line 5). Leaving those net
+understates the denominator in the same over-permissive direction: gross farm 100,000 against a business
+with 200,000 of receipts and 190,000 of expenses is 100,000/300,000 = 33% by statute, but reading the
+business at its 10,000 NET gives 91% and hands over the harbour. Both gross figures already existed -
+Schedule C's as taxpayerGrossNonfarm + spouseGrossNonfarm (computed for the SE optional method), Schedule
+E's as the per-property rents and royalties already on the Part I lines. No new field needed.
+
+(2) THE PRECEDING YEAR WAS NEVER TESTED. §6654(i)(2)(A) allows the ⅔ test to be met on the taxable year OR
+the preceding one. Testing only the current year denies the harbour to a farmer whose year was
+unrepresentative - a bad harvest, a one-off non-farm gain - and measures them against the ordinary 90%
+rules. Direction: OVERSTATED required payment and penalty, the opposite of the defect fixed in September
+on the same gate. The preceding year's figures cannot be derived (last year's gross farm income is not on
+this return, and the stored prior-year AGI is a NET figure that cannot answer a GROSS ratio), so the filer
+supplies them on the prior-year intake form that already carries the other preceding-year facts. Both
+optional - blank leaves the current-year-only behaviour untouched, so no existing return moves.
+
+Form2210FGrossIncomeGateTest 5 tests, mutually validating: the preceding-year case flips the SAME inputs
+from not-a-farmer to farmer by changing only the prior-year fields, which is what proves the gate is doing
+the deciding rather than Form 2210-F being absent for some other reason. A failing preceding year changes
+nothing, so merely answering the question is not a back door.
+
+Suite 2,256 green; dev boot applied V257 + V258 + V259 with health 200.

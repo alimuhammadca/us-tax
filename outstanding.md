@@ -4934,7 +4934,12 @@ guards, and a computed zero renders as 0 because "you still must complete and fi
 changes for a return that leaves the field blank. sc_00302 example: line 20 falls 100 -> 24 and the
 recapture 10,000 -> 2,400.
 
-## Form 2210-F ⅔ farmer test: prior-year alternative + non-farm gross income (raised 2026-09-10)
+## ~~Form 2210-F ⅔ farmer test: prior-year alternative + non-farm gross income~~ ✅ FIXED 2026-09-16 (V259)
+
+**Both closed.** (1) Schedule C gross receipts and Schedule E gross rents now join the farm add-back in the denominator — no new field, both figures already existed. (2) §6654(i)(2)(A)'s preceding-year alternative is tested, with `priorYearGrossFarmIncome` / `priorYearTotalGrossIncome` on the prior-year INTAKE form (they cannot be derived: last year's gross farm income is not on this return, and the stored prior-year AGI is net). Both optional, so no existing return moves. See history.md 2026-09-16.
+
+<details><summary>original entry</summary>
+
 
 The §6654(i)(2) farmer/fisher gate was corrected on 2026-09-10 (sc_00303) to compare **gross** farm income
 to **total gross income** rather than to Form 1040 line 9, which carries net farm profit. Two related
@@ -4961,6 +4966,8 @@ this gate at all.
 
 No new field needed — Schedule C gross receipts and Schedule E gross rents are already computed; it is the
 same add-back pattern applied to two more sources.
+
+</details>
 
 ## ~~§163(j) income adjustment is one-directional~~ ✅ FIXED 2026-09-10 (sc_00305)
 

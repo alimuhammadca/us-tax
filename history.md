@@ -23098,3 +23098,44 @@ the deciding rather than Form 2210-F being absent for some other reason. A faili
 nothing, so merely answering the question is not a back door.
 
 Suite 2,256 green; dev boot applied V257 + V258 + V259 with health 200.
+
+
+## 2026-09-16 - §931/§933 residue: the §1402 SE-tax deduction is prorated (and the IRA item verified)
+
+Continuing the sc_00301 residue. Two of the six open items resolved; the rest classified below.
+
+THE §1402 HALF-SE-TAX DEDUCTION. Pub. 570 ch. 4 is in two parts, both quoted verbatim in the code: "if
+you are a bona fide resident of American Samoa or Puerto Rico and you exclude ALL of your self-employment
+income from gross income, you cannot take the deduction on Schedule 1 (Form 1040), line 15, because the
+deduction is related to excluded income"; and "If only part of your self-employment income is excluded,
+the part of the deduction that is based on the nonexcluded income is allowed", by the fraction SE income
+subject to U.S. income tax / total SE income including excluded. We took the whole deduction regardless -
+UNDERSTATED TAX, the filer deducting half the SE tax on income the return never taxed.
+
+THIS IS NOT THE GENERAL PUB. 570 FRACTION, and that is the part worth remembering. The standard/itemized
+proration divides gross income subject to U.S. tax by gross income from ALL sources; this one uses
+SELF-EMPLOYMENT income only. A filer whose excluded territory income is all investment income therefore
+prorates their standard deduction while line 15 stays whole. The test suite pins exactly that case,
+because a test using only excluded business income would pass with either fraction wired in.
+
+LIKE-FOR-LIKE, deliberately: the possession form captures excluded business/farm income as GROSS, so the
+numerator is taken gross too (Schedule C receipts + Schedule F gross). Mixing a gross denominator with a
+net numerator is the same distortion that made the §6654(i)(2) farmer gate over-permissive - there it was
+over-generous, here it would understate the allowed deduction. The fraction is computed BEFORE the
+adjustments are summed so Schedule 1 line 26 and AGI both carry the allowed figure.
+
+THE IRA ITEM WAS ALREADY CORRECT, and is now verified rather than believed. Pub. 570: "Do not take
+excluded income into account when figuring your deductible IRA contribution." The IRA-deduction MAGI
+add-backs deliberately exclude possession exclusions (they are SS-worksheet line 5 add-backs only, and
+Pub. 590-A lists Form 2555 foreign-source but not possession exclusions) - the reasoning was already
+written out in the code and is correct.
+
+STILL OPEN, all needing either a new field or data a U.S. return does not carry: per-Schedule-A-line
+proration (printed form shows full amounts against a prorated total; interacts with the SALT cap and Form
+8396); itemized deductions definitely related to ONE income type (needs a per-item designation); tips /
+overtime (needs a territory-source split we do not capture); Form 1116 reduction (needs the territory-tax
+income base and two "deductible expenses based on that income" terms). Also noticed while reading Pub. 570:
+the qualified passenger vehicle loan interest deduction is prorated by the GENERAL fraction - not yet
+checked against our Schedule 1-A implementation.
+
+TerritorySelfEmploymentDeductionTest 5 tests. Suite 2,261 green.

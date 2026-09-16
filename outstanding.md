@@ -4858,14 +4858,17 @@ untouched, being definitely related to business income. Both are pinned by tests
   three ways — those specific to excluded income (not deductible), those specific to U.S.-taxable income
   (fully allowable), and the rest (prorated). We prorate everything, which is right for the third and
   wrong for the first two. Distinguishing them needs a per-item designation field → sign-off.
-- **§1402 SE-tax deduction.** Prorated by its own fraction (SE income subject to U.S. tax / total SE income
-  incl. excluded), not the general one. The possession form already captures
-  `businessGrossIncomeExcluded`, so the raw material exists.
+- ~~**§1402 SE-tax deduction.**~~ ✅ **FIXED 2026-09-16.** `territorySelfEmploymentFraction` prorates
+  Schedule 1 line 15 by its OWN fraction (gross SE subject to U.S. tax / total gross SE incl. excluded),
+  computed before the adjustments are summed so line 26 and AGI both carry the allowed figure. Full
+  exclusion denies it outright, per Pub. 570's first sentence. `TerritorySelfEmploymentDeductionTest`.
 - **Tips / overtime deductions.** Not prorated — source-restricted: claimable "only with respect to income
   that is included in your U.S. gross income". Needs a territory-source split on tips/overtime we do not
   capture.
-- **IRA deduction.** "Do not take excluded income into account when figuring your deductible IRA
-  contribution." Believed already satisfied (excluded income never enters AGI) but unverified.
+- ~~**IRA deduction.**~~ ✅ **VERIFIED CORRECT 2026-09-16.** Possession exclusions are deliberately absent
+  from the Pub. 590-A IRA-deduction MAGI add-backs (they are SS-worksheet line 5 add-backs only; Pub. 590-A
+  lists Form 2555 foreign-source and not possession exclusions). The reasoning was already written out in
+  the code and is right — now confirmed rather than believed.
 - **Form 1116 reduction.** Advisory only today
   (`TERRITORY_EXCLUSION_FOREIGN_TAX_CREDIT_REDUCTION_REQUIRED`). The formula needs the territory-tax income
   base and two "deductible expenses based on that income" terms that a U.S. return does not carry.

@@ -23699,3 +23699,36 @@ makes the zero on line 24 evidence rather than coincidence - a zero read in isol
 whether the credit was disqualified or was simply never reached. [[feedback_eic_child_three_seeding_surfaces]]
 
 Sc00351SqaScenarioTest 6 tests including that control. Suite 2,310 green.
+
+
+## 2026-09-16 - sc_00353: all 20 reproduce; the 8863 rows are the only thing that could catch a wrong credit
+
+No defect. The comment is correct and every graded value reproduces. The two rows the SQA tester marked
+FAIL - Form 1040 line 29 and Form 8863 line 8 - are the blank-versus-zero display convention their own
+notes describe: we leave both blank rather than printing a literal zero, H&R Block recorded 0, and all
+three readings agree on the substance.
+
+The student is 20, a full-time student, earned $19,000 against half of $42,000 support = $21,000, has a
+living parent and is not filing jointly - all four legs of the Form 8863 line-7 bar. So the refundable
+40% (0.40 x 2,500 = 1,000) is denied, the whole $2,500 shifts to the nonrefundable Part II and is limited
+to the $328 of tax. The other $2,172 is lost; the nonrefundable AOTC does not carry forward.
+
+★ THE TAX IS 328 AND NOT 325, WHICH IS A REAL CHECK. $3,250 of taxable income sits in the Tax Table's
+3,250-3,300 row, taxing the $3,275 midpoint at 10% = 327.50 -> 328. The rate schedule would give a flat
+10% x 3,250 = 325. A return quietly using the schedule below $100,000 is wrong by three dollars here and
+still looks entirely plausible.
+
+★ THE FORM 8863 ROWS ARE WHAT MAKE THIS SCENARIO DISCRIMINATING, and I learned that the hard way. My
+first probe omitted the Part III lines 23-26 eligibility answers. They FAIL CLOSED, so the student was
+not AOTC-eligible and the engine routed the expenses to the LIFETIME LEARNING CREDIT instead: 20% x 4,000
+= 800, capped at the same $328 of tax. EVERY FORM 1040 VALUE WAS THEN IDENTICAL - same tax, same credit,
+same refund - while the credit actually claimed was a different one. All thirteen Form 1040 rows matched
+for the wrong reason, and only the empty 8863 internals gave it away.
+
+That fallback is correct behaviour, not a defect (a student who fails the AOTC tests may still take the
+LLC), but it is a clean illustration of why a scenario grades the sub-form and not just the bottom line.
+Both branches are now pinned, as is the counterfactual the scenario itself names: lift the line-7 bar and
+line 8 becomes 1,000, line 9 drops to 1,500 and the refund rises to 2,900 - "the $1,000 the kiddie bar
+removes", exactly as the document says. [[feedback_verify_entry_not_outcome]]
+
+Sc00353SqaScenarioTest 6 tests including both controls. Suite 2,316 green.

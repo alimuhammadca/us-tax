@@ -23398,3 +23398,33 @@ it would double-count against the guided deductions-form path, which computes th
 FMV / insurance - that interaction needs deciding first.
 
 Suite 2,279 green.
+
+
+## 2026-09-16 - Form 4684 Section A line 18 routed to Schedule A; the dedicated form wins
+
+Line 18 is the amount the form itself carries to Schedule A, already reduced by the $100-per-event floor
+(line 11), the §165(h)(5)(B) casualty-gain netting (line 14 / Worksheet 1-1) and the 10%-of-AGI floor
+(line 17). It was persisted on the statement and read by NOTHING, so a filer who entered a real Form 4684
+got no casualty deduction at all unless they ALSO filled the guided casualty inputs on the deductions
+form - duplicating work they had already done on the form.
+
+THE INTERACTION THAT HELD THIS UP, now settled. Both paths compute the SAME deduction, so routing line 18
+"as well" would have doubled it for anyone who filled in both. The fix is PRECEDENCE, not addition: the
+dedicated form wins, the same precedence the dedicated Form 4952 already takes over the simple
+investment-interest fields on the deductions form. The form carries per-property detail, the casualty-gain
+offset and the $500 qualified-disaster rules that the guided inputs cannot express; the guided path
+remains the route for a filer with no Form 4684 entry.
+
+When both are populated AND disagree, SCHEDULE_A_CASUALTY_FORM4684_SUPERSEDES_GUIDED_ENTRY names both
+figures rather than silently preferring one - advisory, because the return is correct either way and the
+form is the better evidence.
+
+MFS attribution mirrors the Section B helper: Schedule A is return-level, so on a joint return every entry
+counts and only an MFS leg filters to its own filer by identifyingNumber.
+
+Form4684SectionALine18RoutingTest 4 tests, including the one that would have caught the naive
+implementation: with both paths populated the result is the FORM's figure and is strictly less than their
+sum. The guided-only control computes guidedOnly.add(...), so a seeding that failed to land would NPE
+rather than pass quietly.
+
+Suite 2,283 green.

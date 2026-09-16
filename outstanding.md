@@ -4679,10 +4679,12 @@ applied when they compute line 14 (Worksheet 1-1). It remains genuinely open onl
 casualty gain on a 4684 statement together with non-disaster losses entered through the guided Schedule A
 inputs, which never meet.
 
-**A second item surfaced:** `partaLine18SubtractLine17FromLine16` is persisted and read by nothing, so the
-Section A itemized deduction from a filed Form 4684 never reaches Schedule A at all. Not fixed, because it
-would double-count against the guided deductions-form path that computes the same floors from basis / FMV /
-insurance — that interaction needs deciding first.
+**A second item surfaced — ✅ FIXED 2026-09-16.** `partaLine18SubtractLine17FromLine16` was persisted and
+read by nothing, so the Section A deduction from a filed Form 4684 never reached Schedule A. The
+double-count question is settled by PRECEDENCE rather than addition: a filed Form 4684 supersedes the
+guided deductions-form inputs (the same precedence the dedicated Form 4952 takes), with
+`SCHEDULE_A_CASUALTY_FORM4684_SUPERSEDES_GUIDED_ENTRY` naming both figures when they disagree.
+`Form4684SectionALine18RoutingTest`.
 
 **Why the mixed-path offset was not fixed in the same pass:** the two sides sit in different pipelines. The gain is routed
 inside the capital-gains computation, which takes only statement-entry lists and has no access to the

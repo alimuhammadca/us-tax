@@ -23732,3 +23732,40 @@ line 8 becomes 1,000, line 9 drops to 1,500 and the refund rises to 2,900 - "the
 removes", exactly as the document says. [[feedback_verify_entry_not_outcome]]
 
 Sc00353SqaScenarioTest 6 tests including both controls. Suite 2,316 green.
+
+
+## 2026-09-16 - sc_00354: ordering all reproduces, and the tester caught an EIC the document omitted
+
+No defect. All 27 credit-ordering values reproduce exactly, and the SQA tester's bottom-line finding is
+right as well: the document omitted that this filer is EIC-eligible. us-tax-be produces the same $2,462
+they recorded, for a refund of $5,162 rather than the document's $2,700.
+
+THE TWO TREES ARE NOT IN CONFLICT. H&R Block's $2,700 is not a disagreement about eligibility - it is a
+run in which the EIC was never claimed, exactly what our own engine does without the EIC form seeded.
+Read alone, either tree would have been misleading. [[feedback_two_divergent_actuals_trees]]
+
+The omission touches ONLY the bottom line. The EIC is refundable, so it enters neither Schedule 3 nor the
+Schedule 8812 Credit Limit Worksheet, and line 24's EIC offset belongs to the three-or-more-children
+Part II-B path that one child never reaches. Every ordering row is identical either way.
+
+★ THE ORDERING SIGNATURE IS A TRIPLE, NOT A SINGLE VALUE. Tax $1,088. FTC $150 leaves $938; education
+$500 leaves $438; the saver's credit is tentatively $1,000 but is limited to that remaining $438, and the
+$562 difference is PERMANENTLY LOST (§25B has no carryforward). Schedule 8812's Credit Limit Worksheet
+then sees $1,088 of tax less $1,088 of Schedule 3 credits = $0, so the nonrefundable CTC is nil and the
+whole $2,200 spills into the refundable ACTC, capped at $1,700. Had the CTC been applied BEFORE the
+saver's credit the result would read nonrefundable CTC $1,088, saver's $0 and ACTC $1,112 for a refund of
+$2,112. All three values move together, which is why the test asserts them together - any one alone would
+not establish the order.
+
+BOTH HEADLINE FIGURES ARE TABLE LOOKUPS RATHER THAN FORMULAS, and each is off the formula by a few
+dollars: tax $1,088 is the Tax Table's 10,850-10,900 row at its $10,875 midpoint, and EIC $2,462 is the
+35,000-35,050 row at its $35,025 midpoint - the phase-out formula at exactly $35,000 gives $2,466.
+
+A SEEDING NOTE WORTH KEEPING: my first probe silently lost BOTH the dividends and the IRA deduction - the
+1099-DIV gate fields are hasUploadedAtLeastOne1099DivStatement / confirmAllReceived1099DivUploaded (not
+the ...DividendStatement... names the interest form uses), and the IRA deduction is iraDeductionLine20 on
+income-adjustments-taxpayer, not traditionalIraContributionAmount (which drives the Form 5329 excess
+excise instead). The return still computed cleanly with AGI $35,000, tax $1,138 and saver's $488 - every
+line plausible, every line wrong. [[feedback_grep_mapper_for_seed_field_names]]
+
+Sc00354SqaScenarioTest 5 tests. Suite 2,321 green.

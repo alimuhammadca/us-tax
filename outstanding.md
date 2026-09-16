@@ -4778,7 +4778,12 @@ appears — over-deduction. The §465 machinery already exists (`atRiskSuspended
 carryforward bridge); what is missing is an at-risk amount on the K-1 intake, which is a form-field
 addition and so wants sign-off.
 
-## §170(f)(11)(C) qualified-appraisal gate is absent from Form 8283 (raised 2026-09-09)
+## ~~§170(f)(11)(C) qualified-appraisal gate is absent from Form 8283~~ ✅ FIXED 2026-09-15 (V257)
+
+**Closed.** `hasQualifiedAppraisal` added to the Form 8283 donation intake; `CHARITABLE_QUALIFIED_APPRAISAL_REQUIRED` blocks (overrideable) on a Section B row without one. Closing it also exposed that the gate would have been unreachable for filers who claim the aggregate `charitableNonCashContributions` and never open Form 8283, so `FORM_8283_DETAIL_REQUIRED` (§170(f)(11)(B), over $500) was added alongside. See history.md 2026-09-15 and rules.md.
+
+<details><summary>original entry</summary>
+
 
 A noncash charitable gift over $5,000 is deductible **only** with a qualified appraisal (§170(f)(11)(C));
 without one the deduction is disallowed. We do not apply that gate — a 9,000 gift with no appraisal
@@ -4797,6 +4802,8 @@ Closing it needs one new intake field (`hasQualifiedAppraisal`, gated on `fairMa
 `!isPubliclyTradedSecurity`) plus a blocking flag, which is a form-field addition and so wants sign-off.
 The sibling defect from the same scenario — the §170(f)(12) vehicle cap failing open with no Form 1098-C —
 needed no new field and was **fixed the same day** (`CHARITABLE_VEHICLE_1098C_REQUIRED`).
+
+</details>
 
 ## §931/§933 territory-exclusion gaps (raised 2026-09-10)
 

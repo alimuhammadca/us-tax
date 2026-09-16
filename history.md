@@ -23007,3 +23007,34 @@ tester caught two independently), and its aside that a naive tax on 25,050 "woul
 exact rate schedule where the Tax Table's 50-dollar bands apply (2,771). Nothing graded depends on it.
 
 Sc00347SqaScenarioTest 8 tests. Suite 2,242, all green.
+
+
+## 2026-09-15 - §170(f)(11) charitable substantiation: two gates that were never there
+
+Standing instruction confirmed: a defect in us-tax-be or us-tax-ui gets FIXED, not raised. Adding or
+deleting a form field still wants sign-off; correcting a wrong value, line or order does not. Two items
+that had been parked on "wants sign-off" are now closed.
+
+(1) §170(f)(11)(C) QUALIFIED APPRAISAL. A noncash gift over $5,000 (other than a publicly traded security)
+is deductible ONLY with a qualified appraisal. We applied no gate: 9,000 with no appraisal deducted in
+full, no block, no warning. OVERSTATEMENT. Not merely unenforced but unexpressible - the intake carried
+isPubliclyTradedSecurity, which is the EXEMPTION from this very rule, while the rule itself was never
+asked. V257 adds has_qualified_appraisal to pf_form_8283_donation and the gate raises
+CHARITABLE_QUALIFIED_APPRAISAL_REQUIRED. Blocking but OVERRIDEABLE, exactly like its §170(f)(12) vehicle
+sibling: the appraisal is the filer's own paperwork and may exist unrecorded, so an override is the filer
+asserting they hold one. The deduction is NOT zeroed - zeroing would punish the filer who overrides
+precisely because they do hold one. The fix is that the return can no longer pass in silence.
+
+(2) AND THE FIRST GATE WOULD HAVE BEEN DECORATIVE WITHOUT THIS ONE. My own unit test passed while proving
+nothing, because it seeded the surface the gate reads. Sc00300SqaScenarioTest then failed with flags=[]
+and exposed why: the deduction reaching Schedule A is a single AGGREGATE (charitableNonCashContributions
+on the deductions form), while the per-item detail that decides whether an appraisal is required lives
+only in the separate form-8283 intake. A filer who enters 9,000 there and never opens Form 8283 was
+invisible to the gate. So §170(f)(11)(B) is now enforced too - over $500 of noncash gifts with no Form
+8283 detail raises FORM_8283_DETAIL_REQUIRED - which is the more fundamental failure, since without the
+detail the appraisal rule cannot even be evaluated. "Verify the entry, not the outcome", earned again.
+
+CharitableQualifiedAppraisalGateTest 5 tests (fires, explicit-no fires, confirming clears, the $5,000
+threshold is real, the publicly-traded-security exemption survives at any value). Sc00300's
+defect-recording test rewritten to the design actually shipped. Suite 2,247 green; dev boot applied V257
+with health 200.

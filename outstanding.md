@@ -5253,7 +5253,7 @@ them") — the ≤ $3,000 path is fixed by the same change rather than separatel
 were re-derived; suite back to its 8 pre-existing failures.
 
 
-## ⚠️ Unpersisted carryforwards — sweep result (2026-09-16)
+## ~~⚠️ Unpersisted carryforwards — sweep result~~ ✅ BOTH FIXED 2026-09-16 (V261)
 
 Three "computed and thrown away" defects turned up in one day (§280A rental depreciation, K-1 boxes 2/3,
 Form 4684 line 18), so the codebase was swept for the same shape rather than continuing item by item.

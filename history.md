@@ -23428,3 +23428,32 @@ sum. The guided-only control computes guidedOnly.add(...), so a seeding that fai
 rather than pass quietly.
 
 Suite 2,283 green.
+
+
+## 2026-09-16 - The two bridges the sweep found (V261): §469 regular passive loss, §163(d) interest
+
+Both were computed, set on an output model, and discarded. Neither had a column, a mapper reference or an
+importer.
+
+1. §469 REGULAR SUSPENDED RENTAL PASSIVE LOSS. Its AMT SHADOW TWIN (add_inc_amt_passive_loss_carryforward)
+   has had all three since V200 - so the shadow track survived the year and the track it shadows did not,
+   and the two could drift apart across years with nothing on the return to explain the divergence.
+2. §163(d)(2) DISALLOWED INVESTMENT INTEREST (Form 4952 line 7), which the statute carries forward
+   INDEFINITELY.
+
+USER ENTRY WINS in both, which is the half worth testing. Each figure already had a manual path
+(priorYearSuspendedPassiveLoss per property; priorYearInvestmentInterestCarryover on the deductions form),
+so a filer who re-typed last year's number was always fine and the bridge is for the one who forgets.
+Applying the import ON TOP of a typed figure would DOUBLE the carryforward - the obvious bug in this shape
+- so the rental test pins that typed-and-bridged equals typed-alone.
+
+AN EARLIER DRAFT OF THE TEST CLASS WOULD HAVE LIED. The investment-interest helper took a `bridged`
+parameter and ignored it - both branches called prepare() identically - so it looked like bridge coverage
+while testing nothing. The §163(d) bridge reads a PERSISTED prior-year Schedule A through scheduleAMapper
+and cannot be injected from a plain unit test, the same limitation every other bridge has. The helper now
+says so and covers the manual path it actually exercises, which is the half the import yields to.
+
+CarryforwardBridgesV261Test 3 tests. Suite 2,286 green; dev boot applied V261 with health 200.
+
+That takes the cross-year bridges from eleven to fourteen in one day (V260 §280A depreciation, V261 §469
+regular passive loss and §163(d) investment interest).

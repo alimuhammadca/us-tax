@@ -23669,3 +23669,33 @@ Two further LABEL points the tester caught, both harmless: the 3,635 prints on l
 Sc00349SqaScenarioTest 7 tests, including a below-threshold CONTROL (9,000 of tax = 30%) that stays in
 the passive basket, which is what proves the kickout assertion measures Reg. §1.904-4(c) rather than a
 hardcoded category. Suite 2,304 green.
+
+
+## 2026-09-16 - sc_00351: all 29 reproduce; the finding is a document labelling error
+
+No defect. The tester's comment is correct and the scenario's Part II-B row labels are each one too high:
+the 2025 Schedule 8812 numbers them 21-26, not 22-27. Real line 21 is the withheld social security and
+Medicare tax, 22 the Schedule 1 line 15 / Schedule 2 lines 5, 6 and 13 amounts, 23 adds them, 24 is EIC
+plus excess social security, 25 subtracts 24 from 23, 26 takes the larger of line 20 or line 25 - and the
+ACTC itself is line 27, in Part II-C. Our output model already carries the real numbering
+(getLine21WithheldPayrollTaxes ... getLine26AlternativeActcBase), which is why our values line up with
+the SQA tester's readings rather than with the document's labels. The HRB tree reconciled by MEANING
+rather than by line number and so recorded 29 passes; both trees are consistent once the offset is
+applied.
+
+The arithmetic: 3 children x $2,200 = $6,600, capped for refundability at 3 x $1,700 = $5,100 (line 17).
+Method 1 is 15% x ($4,500 - $2,500) = $300; method 2 is the withheld payroll tax, $279 + $65 = $344. The
+larger is $344, comfortably under the ceiling. Employee FICA is 7.65% against the formula's 15%, so
+Part II-B only overtakes below about $5,100 of earned income - the narrow band it exists for.
+
+★ THE SCENARIO'S "EIC DISQUALIFIED" PREMISE IS LOAD-BEARING, AND I ALMOST TOOK IT ON TRUST. Line 24
+SUBTRACTS the EIC from the payroll taxes, so an allowed EIC wipes method 2 out entirely. My first probe
+reported line 24 = 0 and every graded value matching - and it was 0 FOR THE WRONG REASON: the EIC had
+never been computed at all, because the EIC needs THREE seeding surfaces (household dependents, its OWN
+eicQualifyingChildren list, and the claimsEIC gate) and I had supplied one. The control that settles it:
+drop the interest from $12,000 to $1,000, under the $11,950 §32(i) ceiling, and us-tax-be produces an EIC
+of $2,036, line 25 floors at zero, line 26 falls back to method 1 and the ACTC becomes $300. THAT is what
+makes the zero on line 24 evidence rather than coincidence - a zero read in isolation looks identical
+whether the credit was disqualified or was simply never reached. [[feedback_eic_child_three_seeding_surfaces]]
+
+Sc00351SqaScenarioTest 6 tests including that control. Suite 2,310 green.

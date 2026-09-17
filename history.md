@@ -23844,3 +23844,39 @@ If we ever want a middle ground, an advisory on "box 1 with no Social Security o
 shape it would take; it is not built, and building it would fire on statutory employees too.
 
 Sc00356SqaScenarioTest 7 tests. Suite 2,336 green.
+
+
+## 2026-09-17 - sc_00360: the §108 insolvency computation is right; Form 982 does not exist
+
+The comment is correct and every graded value reproduces. Insolvency is liabilities $90,000 less asset
+FMV $65,000 = $25,000 (§108(d)(3)); the exclusion caps THERE rather than at the full cancellation
+(§108(a)(3)), so of the $40,000 discharged $25,000 is excluded and $15,000 is taxable on Schedule 1 line
+8c. The taxpayer was only $25,000 underwater and the forgiveness beyond that made her solvent.
+
+★ THE FOUR ROWS THE SQA TESTER MARKED N/A ARE VALUES WE ACTUALLY HOLD. Their note reads "software has no
+insolvency worksheet"; ours takes `codTotalLiabilitiesBeforeDischarge` and `codFmvAssetsBeforeDischarge`
+on the intake form and derives the rest. Pub. 4681's worksheet is RETAINED rather than filed, so a
+package may legitimately skip it - but deriving it removes the chance of a filer mis-subtracting and
+entering a wrong exclusion, which is the whole failure mode this scenario is built around.
+
+Three controls, because the headline $25,000 alone is consistent with several wrong rules: a solvent
+taxpayer excludes nothing (the subtraction floors at zero rather than going negative); insolvency of
+$85,000 against a $40,000 discharge excludes $40,000 and no more (§108 excludes COD income and there is
+only $40,000 of it); and without the election the whole $40,000 is taxable under §61(a)(11), so the
+exclusion is opt-in rather than automatic.
+
+★ ONE REAL GAP, REPORTED RATHER THAN FIXED: FORM 982 IS NOT PRODUCED ANYWHERE. No output model, no
+mapper, no semantic PDF asset, no UI form, and no entry in outstanding.md - the string "982" does not
+appear in main/ at all. The $25,000 is computed correctly and netted out of line 8c, but Form 982 is a
+FILED attachment, not a retained worksheet: its instructions say to file it with the return to report the
+exclusion. So the return claims the exclusion without the form that substantiates it, and where the
+discharge is FULLY excluded (the second control above) it leaves NO TRACE on the filed return at all -
+no Schedule 1, no Form 982, nothing. By the project's own attachment rule (forms not submitted with the
+1040 are out of scope, and Form 982 IS submitted) this is in scope. Building it is a new form end-to-end
+and needs sign-off. [[feedback_irs_attachment_scope]]
+
+A SEEDING NOTE: the form id is `other-incomeS-taxpayer`, PLURAL. The singular supplies nothing silently -
+the COD vanishes, Schedule 1 is never produced, and the return computes cleanly on wages alone with a
+perfectly plausible tax. That cost one probe cycle.
+
+Sc00360SqaScenarioTest 6 tests. Suite 2,342 green.

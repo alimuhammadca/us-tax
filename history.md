@@ -23928,3 +23928,48 @@ and five of the fourteen existing bridges already hold exactly the attributes §
 exist and are written null so the row never has to change shape.
 
 Sc00360SqaScenarioTest 9 tests (3 new). Suite 2,345 green. UI builds.
+
+
+## 2026-09-17 - Form 982 Phase 2: the §108(b) attribute reduction
+
+Excluding cancelled debt is a DEFERRAL, not forgiveness. §108(b) makes the taxpayer give up attributes
+equal to what was excluded, and until now the app excluded the income and left every carryforward
+untouched - so a filer insolvent enough to have debt forgiven kept an NOL, a capital-loss carryover and
+an FTC carryover the statute says they had already spent.
+
+★ I HAD THE 33 1/3 CENTS RULE BACKWARDS, BY A FACTOR OF NINE, and wrote it that way into the plan, into
+lines/982.md and into a message to the user. The Line 7 instruction is explicit: "you must reduce that
+carryover by 33 1/3 cents FOR EACH DOLLAR EXCLUDED from gross income." So $30,000 of exclusion reduces a
+credit by $10,000 - one dollar of credit absorbs three dollars of exclusion. I had written that $30,000
+of exclusion consumes $90,000 of credit, which is the inverse. Corrected in the spec with the error named
+rather than quietly overwritten, and `applySection108Reduction` carries the direction in its javadoc
+because it is the single easiest thing here to invert.
+
+THE ORDER (§108(b)(2)), each step consuming the exclusion until it is spent: line 6 NOL (dollar for
+dollar), line 7 general business credit (33 1/3c), line 8 minimum tax credit (SKIPPED - no MTC
+carryforward is persisted anywhere in this app, so there is nothing to reduce and inventing storage would
+be worse), line 9 net capital loss short-then-long (dollar for dollar), line 10b principal-residence
+basis for QPRI, line 12 passive activity carryovers (dollar for dollar), line 13 foreign tax credit
+(33 1/3c). Anything the attributes cannot absorb is reported as a §1017 basis reduction we cannot compute
+- named, not invented, the same treatment the §931/§933 territory FTC reduction gets.
+
+★ THE AMT PASSIVE TWIN IS REDUCED BY THE SAME EXCLUSION, NOT A SECOND BITE OF IT. The regular and AMT
+suspended losses are two measurements of ONE activity; letting the reduction hit each independently would
+have pulled them apart, which is precisely the drift the V261 bridge work existed to stop.
+
+★ AND THE TEST THAT ACTUALLY MATTERS IS THE TWO-YEAR ONE. §108(b)(4)(A) makes the reductions AFTER the
+year's tax, so nothing on the discharge-year return moves - what shrinks is the carryforward travelling
+OUT. A unit test can only show an in-memory model holding a reduced figure; reducing a carryforward that
+is then persisted UNREDUCED would pass every unit test and be worth nothing. That is the exact failure
+the V260/V261 sweep found. `the §108(b) NOL reduction survives into the next year` seeds a $200,000 NOL
+and a $20,000 excluded discharge in 2024, and asserts 2025 imports $104,600 rather than the pre-reduction
+$124,600.
+
+A SEEDING NOTE that cost a cycle in both the unit test and the e2e: an NOL only leaves a carryforward when
+it EXCEEDS the §172 80% limit. A $50,000 NOL against this income is absorbed in-year and leaves nothing to
+reduce; the e2e additionally needed its W-2, because with no income at all the whole $200,000 carries and
+the figures stop matching. The reduction was working the entire time - the seeds simply had nothing for
+it to bite on.
+
+Section108AttributeReductionTest 6 tests; form982-cod-exclusion-preview.spec.ts now 4 (incl. the two-year
+proof). Suite 2,351 green. The NOL, FTC and capital-loss bridges still green alongside it.

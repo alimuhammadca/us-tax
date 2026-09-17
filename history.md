@@ -23973,3 +23973,43 @@ it to bite on.
 
 Section108AttributeReductionTest 6 tests; form982-cod-exclusion-preview.spec.ts now 4 (incl. the two-year
 proof). Suite 2,351 green. The NOL, FTC and capital-loss bridges still green alongside it.
+
+
+## 2026-09-17 - Form 982 completed: the rendering defect, the missing exclusions, the basis reductions
+
+Three gaps closed after an honest audit found the form was NOT completely implemented.
+
+★ (1) THE RENDERING DEFECT I HAD JUST SHIPPED. Part II was computed, set on the model and persisted - and
+never rendered, because the semantic-name map was built inside buildForm982, which runs BEFORE the
+attribute reduction. The header (name, SSN) was missing for the same reason. That is the "computed, set,
+then not surfaced" shape I had been hunting all week, introduced by my own hand a day earlier. The map is
+now built by populateForm982Fields() from the FINISHED model, after the reduction, so there is one place
+that maps model state to semantic names and it cannot be outrun by a later computation.
+
+★ (2) THE THREE EXCLUSIONS THAT HAD NO INTAKE (V263). A filer in BANKRUPTCY, with QUALIFIED FARM debt or
+with QUALIFIED REAL PROPERTY BUSINESS debt could not say so: no box, no path. Twelve fields added to
+`other-incomes-taxpayer` (and the spouse form), including the §108(b)(5) basis-first election, the
+§1221(a)(1) election, and the property-basis figures §1017 needs but this app does not otherwise track -
+it holds depreciation ASSETS, not an aggregate basis by class. Collecting it beats guessing it.
+
+§108(a)(2) IS A STRICT PRECEDENCE, NOT A MENU, and the cascade is now implemented in full: title 11 →
+QPRI → insolvency → farm → QRPBI. A title 11 discharge DISPLACES the others entirely - with both boxes
+ticked and insolvency of $25,000, the exclusion is the full $40,000 and line 1b is NOT checked, because
+§108(a)(2)(A) says insolvency "shall not apply" rather than sitting underneath.
+
+★ (3) THE BASIS REDUCTIONS, including the one that reorders the walk. §108(b)(5) is not just another line:
+without the election the NOL is reduced first and basis last; WITH it, depreciable-property basis absorbs
+the exclusion AHEAD of the NOL, which is the entire point of making it (an NOL is worth more to most
+filers than depreciation). The test pins the contrast rather than the line: default leaves the NOL at
+104,600 and basis untouched; elected leaves the NOL at 124,600 intact and spends 20,000 of basis.
+
+Line 3 is TRI-STATE on purpose. The form prints a Yes/No PAIR, so "unanswered" must leave BOTH boxes
+blank - a printed "No" is an answer the filer never gave.
+
+A UI NOTE worth keeping: the label strings are single-quoted TypeScript literals, and "your spouse's"
+terminates the string. Escaping an apostrophe through a generator that writes TS from Python is two
+layers of quoting and it bit twice; possessive-free phrasing is simply better.
+
+Form982ExclusionOrderingTest 7 tests; the Form 982 e2e now 5 (adding the V263 round-trip, which proves
+entity + mapper read + mapper WRITE-BACK all exist - a missed write-back looks exactly like a field the
+user never filled in). Suite 2,377 green. V263 applied; 18 COD intake columns live.

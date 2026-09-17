@@ -23769,3 +23769,47 @@ excise instead). The return still computed cleanly with AGI $35,000, tax $1,138 
 line plausible, every line wrong. [[feedback_grep_mapper_for_seed_field_names]]
 
 Sc00354SqaScenarioTest 5 tests. Suite 2,321 green.
+
+
+## 2026-09-16 - sc_00355: the two Actuals trees disagree, and our engine reproduces BOTH
+
+No defect. The comment is correct and us-tax-be already honours the nonfarm optional election: all 27
+graded values reproduce, with SE net earnings of $7,240 rather than the regular method's $6,280 and SE
+tax of $1,108 rather than $961. The single SQA FAIL is the blank-versus-zero convention on the skipped
+line 2.
+
+★ THE INTERESTING PART IS THE DISAGREEMENT BETWEEN THE TREES, AND HOW IT RESOLVES. The SQA tester
+recorded $1,108 - the election honoured. The H&R Block automation recorded $961 with Part II line 17 at
+zero. Our engine produces $961 / $6,280 / $481 EXACTLY when the election is simply not made, so the
+automation's run differs by a MISSING ELECTION rather than by a different reading of §1402(l). Being able
+to reproduce both readings is what identified the cause; either tree alone would have been misleading -
+the SQA one looks like a pass, the HRB one like a failure of ours.
+[[feedback_two_divergent_actuals_trees]]
+
+Mechanics confirmed against the form rather than assumed. Schedule SE prints "Skip line 2 if you use the
+nonfarm optional method in Part II", carries the $7,240 maximum PREPRINTED on line 14, and states both
+eligibility ceilings in the Part II heading: net nonfarm profits under $7,840 AND under 72.189% of gross
+nonfarm income. $6,800 clears both, and the elected figure is min(2/3 x $12,000 = $8,000, $7,240) =
+$7,240. Note it is NOT multiplied by 92.35% again - the optional amount enters at line 4b as net earnings
+directly, which is exactly why it REPLACES the regular figure instead of adding to it.
+
+THE ELECTION IS DELIBERATELY TAX-INCREASING: $1,108 against $961, $147 more, bought for a fourth quarter
+of coverage. An engine that silently "optimised" to the lower number would be wrong, so the test asserts
+the DIRECTION of the difference and not just its value.
+
+All three gates were exercised and all three refuse the election and fall back to the regular method
+rather than producing an invalid SE base: the five-use lifetime cap and the 2-of-3 prior-year gate (both
+SE_NONFARM_OPTIONAL_METHOD_GATE_FAILED_TAXPAYER), and the income ceilings, which carry their own separate
+advisory.
+
+A SEEDING NOTE: my first probe put the $5,200 of expenses in a catch-all "otherExpenses" key on the
+business, which is not one of SCHEDULE_C_EXPENSE_KEYS and is silently ignored. Net profit became the full
+$12,000, which is over the $7,840 ceiling - so the engine correctly REFUSED the election and produced a
+perfectly valid regular-method return, for a reason that had nothing to do with what was being tested.
+The advisory flag is what gave it away. [[feedback_grep_mapper_for_seed_field_names]]
+
+NOT MODELLED, stated rather than implied: ScheduleSE carries net earnings, the tax and the half-deduction
+but not the individual Part II lines (4a/4b/4c, 14-17) the scenario grades. All are determined by what we
+do carry, so this is a rendering gap on the filed page, not a computational one.
+
+Sc00355SqaScenarioTest 8 tests. Suite 2,329 green.

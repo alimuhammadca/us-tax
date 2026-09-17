@@ -23813,3 +23813,34 @@ but not the individual Part II lines (4a/4b/4c, 14-17) the scenario grades. All 
 do carry, so this is a rendering gap on the filed page, not a computational one.
 
 Sc00355SqaScenarioTest 8 tests. Suite 2,329 green.
+
+
+## 2026-09-16 - sc_00356: church-employee income, and two "FAIL" rows that are our own convention
+
+No defect. All 20 graded values reproduce on the first run: $28,000 of church-employee income x 92.35% =
+$25,858 of net earnings, SE tax $3,956, half-deduction $1,978, and the same $28,000 still ordinary wages
+on Form 1040 line 1a so it carries income tax as well.
+
+★ THE TWO ROWS THE SQA TESTER MARKED FAIL ARE NOT FAILURES, AND THE CONVENTION THEY RECORDED IS OURS.
+Lines 10 and 11 are each rounded to WHOLE DOLLARS before being added - 3,206 + 750 = 3,956 - which is
+exactly what the tester's software displayed, against an Expected column holding the unrounded 3,206.39
+and 749.88. Both reach 3,956. Whole dollars is the defensible reading: every money element in the
+Schedule SE e-file schema is an integer, and the same reasoning was settled in sc_00210 when carrying
+full precision left the printed form unable to reproduce its own line 11. H&R Block displays the cents
+and the totals never diverge.
+
+The $108.28 floor is the ONLY floor on this track - the ordinary $400 net-earnings minimum does not apply
+- and the figure exists because $108.28 x 0.9235 is about $100. Both sides are now pinned: $100 produces
+no Schedule SE at all, while $109 produces $101 of net earnings and $16 of tax ($13 + $3, each line
+rounded before adding). A one-sided floor test would have passed against an engine that simply never
+computed the track.
+
+★ ONE DESIGN CHOICE RECORDED SO IT IS NOT LATER MISTAKEN FOR A DEFECT: church-employee income must be
+DECLARED on the SE-options form. A W-2 carrying box 1 with boxes 3-6 blank produces no SE tax on its own,
+and raises no advisory either. That is defensible rather than an oversight - blank FICA boxes also belong
+to statutory employees and to certain territory W-2s, so inferring church-employee status from the shape
+alone would be wrong more often than right, and H&R Block asks the same question rather than inferring.
+If we ever want a middle ground, an advisory on "box 1 with no Social Security or Medicare wages" is the
+shape it would take; it is not built, and building it would fire on statutory employees too.
+
+Sc00356SqaScenarioTest 7 tests. Suite 2,336 green.

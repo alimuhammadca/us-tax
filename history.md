@@ -23880,3 +23880,51 @@ the COD vanishes, Schedule 1 is never produced, and the return computes cleanly 
 perfectly plausible tax. That cost one probe cycle.
 
 Sc00360SqaScenarioTest 6 tests. Suite 2,342 green.
+
+
+## 2026-09-17 - Form 982 built (V262): the filed form the §108 exclusion never had
+
+sc_00360 found that the §108 exclusion computed correctly and was netted out of Schedule 1 line 8c while
+NO FORM 982 existed anywhere - no output model, no mapper, no PDF asset, no UI form; the string "982" did
+not appear in main/ at all. Form 982 is a FILED ATTACHMENT, not a retained worksheet: its instructions say
+to "File Form 982 with your federal income tax return for a year a discharge of indebtedness is excluded
+from your income." The return claimed the exclusion with nothing substantiating it.
+
+Phase 1 (Part I) is now built end to end, in the order the user asked for: semantic assets FIRST, then the
+compute and persistence, then the HTML that mirrors the PDF.
+
+SEMANTIC ASSETS. `scripts/generate-semantic-982.js` maps all 27 AcroForm controls to IRS-line names
+(`line1b_discharge_to_extent_insolvent`, `line2_total_discharged_indebtedness_excluded_from_gross_income`,
+...), writing `pdfs/f982_semantic_labels.pdf` + `pdfs/f982_field_map_semantic.csv` and publishing both to
+`us-tax-ui/public/irs/`. It FAILS LOUDLY on an unmapped field rather than falling back to a mechanical
+name - a quietly-renamed control would land values in the wrong box on a filed page.
+
+LAYOUT. `scripts/generate-f982-elements.py` is a departure from the earlier *_elements.json generators,
+which all converted a `pdf_elements_v2.json` produced by an external standalone renderer that is not in
+this repo. It extracts the layout DIRECTLY from the IRS PDF with PyMuPDF - 438 text spans with font and
+colour, 79 rules, 3 filled rects - and takes the field boxes from the semantic CSV. PyMuPDF reports a
+top-left origin while the CSV and the preview component use bottom-left, so every y is flipped. Verified
+by cross-check rather than assumed: the title sits at y=762, the footer at y=32.6, and the line-2 label
+lands at y=564.6 beside its field at y=563.97.
+
+★ THE ONE REAL TRAP, AND I WALKED INTO IT AFTER WRITING IT DOWN. `computeOtherIncomes` returns NULL when
+`hasAnySchedule1Input` is false, and a FULLY excluded discharge nets line 8c to zero - so Schedule 1
+correctly disappears and the freshly-built Form 982 went with it. That is the same "computed, set on a
+model, then dropped" shape that silently broke three carryforward bridges the day before, and I had
+listed it as hazard #1 in the plan. The gate now returns a Form-982-only OtherIncomeComputation, leaving
+every other component null so the Schedule 1 null/zero contract is untouched. The fully-excluded case is
+exactly when the form matters most: it is then the ONLY evidence on the return that the debt was forgiven.
+
+BUILT FROM ONE SOURCE. Form 982 is constructed inside `computeOtherIncomes` from the SAME
+`CodExclusionBreakdown` that drives line 8c - `computeCodSection108Exclusion` now delegates to it - so the
+filed form and the return cannot disagree about how much was excluded. The gate is the EXCLUDED AMOUNT,
+not line 8c: an election that excludes nothing (a solvent filer who ticked the insolvency box) produces
+no form, because a Form 982 claiming an exclusion of zero is worse than none.
+
+PART II IS SPECIFIED, NOT BUILT. `lines/982.md` §5 carries the §108(b) ordering, the 33 1/3 cents-per-dollar
+rate on the three CREDIT attributes, and the architectural point that makes it tractable: §108(b)(4)(A)
+makes the reductions AFTER the year's tax, so they reduce the carryforwards travelling OUT to next year -
+and five of the fourteen existing bridges already hold exactly the attributes §108(b) names. The columns
+exist and are written null so the row never has to change shape.
+
+Sc00360SqaScenarioTest 9 tests (3 new). Suite 2,345 green. UI builds.

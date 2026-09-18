@@ -200,9 +200,16 @@ Line 16 = `regular_tax + Form8814.tax + Form4972.tax + section962_tax + ECR + Fo
 
 ### Intake-Only Forms (Compute Deferred — see outstanding.md)
 
-| Form | Multiplicity | Purpose |
-|---|---|---|
-| Form 4952 | One per return (MFJ combined) | Investment interest expense; AMT requires second computational copy |
+*(None. Form 4952 left this table on 2026-09-17 — see below.)*
+
+**Form 4952 is fully computed (formerly listed above — corrected 2026-09-17, sc_00368):** Parts I-III,
+one per return (MFJ combined). Line 4a is GROSS investment income and **includes** qualified dividends
+(line 4b takes them back out); line 4h = 4c + 4f + 4g; line 8 = min(line 3, line 6) → Schedule A, with
+line 7 carrying forward. The **§163(d)(4)(B) election** on line 4g is computed and, critically, the
+elected amount is **removed from preferential income** in the line-16 worksheets so it is not
+double-benefited — and an amount on line 4g **forces the Schedule D Tax Worksheet**, per the Form 4952
+instructions. Still deferred: the **second AMT computational copy** (`requiresAmtRecomputation` is
+captured and persisted but no AMT recompute consumes it).
 
 **Now fully computed (formerly listed here — corrected 2026-07-12):** Form 8863
 (education credits — AOTC → line 29 refundable, LLC → Sched 3 line 3, MAGI phaseout,

@@ -24211,3 +24211,44 @@ back is whole, 6 is conservation-only, 15 still carries, 16 has aged out. That l
 `ageCharityVintages` directly, since reaching year 16 through the compute would need sixteen seeded years.
 
 Sc00364SqaScenarioTest 6 tests. Suite 2,399 green.
+
+
+## 2026-09-17 - sc_00368 (investment interest, section 163(d)(4)(B) election): both comments correct
+
+ALL 25 GRADED ROWS REPRODUCE against the SQA tester's column. Nothing to fix in the engine; the value was
+in adjudicating two line-label comments and one more stale "deferred" claim.
+
+★ ROWS 24 AND 26 - THE TESTER IS RIGHT ON BOTH, AND IT IS THE DOCUMENT THAT MISLABELS. Form 4952 line 4a
+is GROSS income from property held for investment and INCLUDES qualified dividends - which is exactly why
+line 4b exists to take them back out. So real 4a = 10,000 interest + 20,000 dividends = 30,000, and the
+document's "4a = 10,000" is really line 4c (4a minus 4b). Likewise its "line 4 = 40,000" is line 4h
+(= 4c + 4f + 4g). Resolved against the IRS AcroForm field map, not the printed label - the same method
+that settled the Schedule 1 line 25/26 mislabel in sc_00363 and the Schedule A line 12 one in sc_00364.
+Three scenarios in a row where the document, not the software, was wrong about which line it meant.
+
+★ THE TWO ACTUALS TREES DIVERGE COMPLETELY HERE, AND NEITHER IS WRONG. The SQA tester recorded every row
+passing. The us-tax-hrb automation recorded row 25 as "NOT AVAILABLE IN GUIDED MODE - HRB never offers
+the IRC 163(d)(4)(B) election", with every downstream row diverging as a labelled CONSEQUENCE: no
+election → NII stays 10,000 → deduction 10,000 → the 15,750 standard deduction beats it → tax 25,517.
+Two faithful measurements of two different paths. WE IMPLEMENT THE ELECTION, so we reproduce the SQA
+column - and the no-election control reproduces the HRB column exactly, 15,750 and 149,250 included.
+That control is also the one that matters: an engine granting the larger deduction WITHOUT stripping the
+preferential rate would pass all 25 graded rows while double-benefiting the same dollars.
+
+★ AND THE DOCUMENT NAMES THE WRONG WORKSHEET. It says "Tax (QDCG Worksheet after election)", but the Form
+4952 instructions require the SCHEDULE D TAX WORKSHEET whenever line 4g has an amount, and the engine
+routes it that way. The two agree on 22,397 here only because there is no 28%-rate or unrecaptured
+section 1250 gain to separate them - the document's total is right by luck of this fact pattern.
+
+★ CLAUDE.md WAS STALE TOO, and this one was in the project instructions rather than a progress note:
+Form 4952 sat in "Intake-Only Forms (Compute Deferred)" as that table's only entry. Parts I-III are
+fully computed, election included. Corrected in place, keeping the file's own "formerly listed here"
+convention. Only the second AMT computational copy is genuinely still deferred -
+requiresAmtRecomputation is captured and persisted, but nothing consumes it.
+
+Sc00368SqaScenarioTest 5 tests. Suite 2,404 green.
+
+Seeding note worth keeping: interest, dividends and capital gains all arrive through STATEMENTS
+(intEntries / divEntries with recipientTIN) plus the personal form's upload flags - never through manual
+amount fields on the personal form. My first attempt used invented manual-field names and lost all
+45,000 of investment income while wages, withholding and the refund all still looked plausible.

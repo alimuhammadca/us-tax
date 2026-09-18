@@ -24083,3 +24083,50 @@ is "principal-mortgage principal forgiven in LOAN MODIFICATION", so the couple k
 what the scenario says is not steering the engine - the blank and foreclosed variants are separate tests.
 
 Sc00361SqaScenarioTest 6 -> 8. Suite 2,387 green. UI build clean.
+
+
+## 2026-09-17 - sc_00363 (professional gambler): both comments correct, and 165(d) is unguarded on Sch C
+
+BOTH OF THE TESTER'S COMMENTS ARE CORRECT, and both are about the scenario document, not any software.
+All 27 graded rows reproduce in us-tax-be.
+
+ROW 22 - the doc mislabels the line. "Total adjustments -> Form 1040 line 10" is Schedule 1 line 26
+(`line26_adjustments_to_income_to_form1040_line10`), not line 25. Line 25 is
+`line25_total_other_adjustments`, the 24a-24z write-ins only, and this filer has none - so blank is the
+right answer there. Resolved against the IRS AcroForm field map rather than the printed label, the same
+way the 2025 Schedule 2 renumbering was.
+
+★ ROW 30 - THE DOC CONVICTS ITSELF. Taxable income is 136,523 (186,404 - 15,750 - 34,131), not the
+doc's 136,522, and the proof is inside the doc: its own tax note takes 24% of 33,173, and 33,173 is
+136,523 - 103,350. Its stated tax of 25,613 is unreachable from 136,522, which yields 25,612. Reaching
+136,522 at all would need SE tax 27,193 and a half-deduction of 13,597, contradicting its own rows 16,
+17, 21 and 26. Our engine independently produces 136,523.
+
+★ AND I HAD WAVED THAT $1 AWAY ONCE ALREADY. `_repro_progress.md` records "taxable 136,522 vs 136,523 =
+$1 half-SE rounding, aligned" - an explanation I never derived, for a discrepancy that had a real cause.
+Naming a plausible mechanism is not the same as checking one. The tester did the arithmetic I skipped.
+
+★ THE CONTROL FOUND A GAP THE 27 GRADED ROWS CANNOT SEE. Section 165(d) allows wagering losses only to
+the extent of gains, and the sentence TCJA added for years beginning after 2017 and before 2026 extends
+that to "any deduction otherwise allowable under this chapter incurred in carrying on any wagering
+transaction" - the sentence that overruled Mayo v. Commissioner, and the reason a professional gambler's
+travel and tournament fees are capped alongside the bets. The worst a wagering Schedule C can show is
+ZERO. (Pub. L. 119-21 adds a 90% haircut, but only from TY2026; the scenario doc says so too.)
+
+This filer is profitable - 320,000 of costs against 520,000 of winnings - so the cap never binds and all
+27 rows pass whether or not it exists. Give the same filer a losing year and we report a -110,000
+business loss that flows straight into AGI.
+
+IT IS NOT MERELY A COMPUTATION BUG: nothing marks a Schedule C as a WAGERING business. No field on
+`business-income-taxpayer`, none in `BusinessIncomeMapper`, none on `PfBusinessActivity`. The engine
+cannot apply a rule whose trigger it was never told, so this needs an intake field and sign-off rather
+than a guess. The CASUAL gambler path is already guarded (Schedule A line 16 capped at the line 8b
+winnings, with SCHEDULE_A_GAMBLING_LOSSES_EXCEED_WINNINGS); only the professional path is open.
+
+Sc00363SqaScenarioTest 4 tests, one of them a CHARACTERIZATION test asserting the -110,000 we produce
+today with the correct answer (0) named in its message - so the suite stays honest and the day the cap
+lands, that test fails and forces the update. Suite 2,391 green.
+
+Housekeeping: the SQA copy of sc_00363.xlsx had freeze_panes=A19, pinning twelve DATA rows; every
+sibling scenario uses A7 and the HRB copy already did. Normalised, and the wrap above the freeze line
+stripped as usual.

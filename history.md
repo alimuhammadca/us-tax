@@ -24013,3 +24013,44 @@ layers of quoting and it bit twice; possessive-free phrasing is simply better.
 Form982ExclusionOrderingTest 7 tests; the Form 982 e2e now 5 (adding the V263 round-trip, which proves
 entity + mapper read + mapper WRITE-BACK all exist - a missed write-back looks exactly like a field the
 user never filled in). Suite 2,377 green. V263 applied; 18 COD intake columns live.
+
+
+## 2026-09-17 - sc_00361 (QPRI): the comment is right, and the scenario was passing for the wrong reason
+
+THE TESTER'S COMMENT IS CORRECT. Row 13 ("adjusted basis after discharge = 220,000") was recorded N/A
+with the note that the software prints only the 60,000 reduction and the filer must subtract for
+themselves. Right twice over: Form 982 has NO line for the post-discharge basis - line 10b reports the
+REDUCTION - and the resulting basis is a carryover attribute tracked outside the return, surfacing years
+later when the home is sold. The two Actuals trees differ on that row ONLY because the us-tax-hrb
+automation filled it arithmetically; `_repro_progress.md` says so itself ("Basis rows = arithmetic
+consequence"), so the 220,000 there is a derivation, not a measurement.
+
+★ ALL 20 GRADED ROWS REPRODUCED - AND THE ENGINE WAS STILL WRONG. Line 10b was being fed whatever the
+§108(b)(2) attribute cascade LEFT OVER, rather than "that part of line 2 that is attributable to the
+exclusion of qualified principal residence indebtedness". This filer has no NOL, no credits and no
+capital loss, so nothing upstream could consume the pool and the right answer fell out of a wrong rule.
+Add a 200,000 NOL and the old code reduced the NOL by 60,000 and left line 10b blank - a filer losing a
+carryforward the statute never put at risk. A graded scenario cannot see this; only a control can.
+
+THREE DEFECTS, ONE ROOT CAUSE - the cascade was fed line 2 instead of the portion the statute assigns it.
+§108(b)(1) applies the reduction to "the amount excluded under subparagraph (A), (B), or (C)" - title 11,
+insolvency, farm - and NOTHING else.
+
+  1. QPRI (a)(1)(E) entered the cascade. §108(h)(1) sends it to line 10b alone. FIXED: line 10b is now
+     min(QPRI part of line 2, home basis) on its own track.
+  2. QRPBI (a)(1)(D) entered the cascade. §108(c)(1) sends it to line 4 alone, and the line 1d
+     instruction adds that any excess "is included in income" rather than spilling sideways. FIXED.
+  3. The farm basis step (11a-c) ran AHEAD of the NOL. Line 1c: "...in the order listed on lines 6
+     through 9. Any REMAINING amount... in the order listed on lines 11a through 13." FIXED - 11a-c now
+     sit after line 9, which is also where the general Part II order puts "basis of property".
+
+Also gated the §108(b)(5) election to lines 1a-1c, per the Part II instruction ("if you check any of the
+boxes on lines 1a through 1c").
+
+★ ONE GAP LEFT, AND IT NEEDS A FIELD. Line 10b applies only "if you continue to own the residence after
+discharge" - we have no intake for that and always reduce, so a filer foreclosed on in the same year gets
+a line 10b they should leave blank. That is a field addition, so it waits for sign-off.
+
+Sc00361SqaScenarioTest 6 tests (the graded return, the row-13 claim, and four controls: the NOL, the cap
+at basis, the BLANK-basis variant, and election-off). Form982ExclusionOrderingTest 7 -> 9. Suite 2,385
+green.

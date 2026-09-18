@@ -24130,3 +24130,46 @@ lands, that test fails and forces the update. Suite 2,391 green.
 Housekeeping: the SQA copy of sc_00363.xlsx had freeze_panes=A19, pinning twelve DATA rows; every
 sibling scenario uses A7 and the HRB copy already did. Normalised, and the wrap above the freeze line
 stripped as usual.
+
+
+## 2026-09-17 - V265: IRC 165(d) on the professional-gambler Schedule C path
+
+Built on sign-off, on the INTAKE form (`business-income-taxpayer` / `-spouse`, in PERSONAL_FORMS) -- not
+the W-2G statement and not the Schedule C preview, neither of which changes.
+
+★ PER BUSINESS, NOT PER RETURN. `isWageringBusiness` sits on the activity object beside
+`operatedForProfit` and `allInvestmentAtRisk`, because a filer can run a poker business AND a consulting
+business and section 165(d) caps only the wagering one. A form-level flag would have capped both.
+
+THE RULE. Wagering losses are allowed only to the extent of the gains, and by the sentence TCJA added for
+years beginning after 2017 and before 2026, "losses from wagering transactions" includes "any deduction
+otherwise allowable under this chapter incurred in carrying on any wagering transaction" -- the sentence
+that overruled Mayo v. Commissioner. So travel, tournament fees, depreciation and home office are capped
+alongside the bets, and the cap is applied to the activity's TOTAL deductions rather than the bets alone.
+Excess is simply lost: section 165(d) grants no carryforward, and the advisory says so.
+
+★ THE TAX YEAR IS A SWITCH, NOT A CONSTANT. Pub. L. 119-21 section 70114 (July 4, 2025) rewrote
+165(d)(1) so that from TY2026 the deduction "shall be equal to 90 percent of the amount of such losses"
+AND "shall be allowed only to the extent of the gains". BOTH limbs apply, so from 2026 a PROFITABLE
+gambler is haircut too -- the graded sc_00363 filer would net 232,000 instead of 200,000. Hardcoding 100%
+would have been silently wrong the moment a 2026 return ran.
+
+★ AND THE CAP MANUFACTURES EXACT ZEROS, WHICH THE SCHEDULE 1 GATE WAS DROPPING. A capped wagering
+business lands on EXACTLY $0, and `hasAnySchedule1Input` discards the whole additional-income block when
+every line is zero -- so a gambler with $150,000 of gross receipts produced no Schedule 1 at all and
+Schedule C line 31 had nowhere to go. The gate already had three clauses of this shape (home-office
+carryforward, section 280A depreciation, at-risk suspended), each added because something real was being
+dropped; this is a fourth. Unlike those there is no carryforward at stake -- what is at stake is the
+reporting. Same gate, same lesson as Form 982 two days ago.
+
+TESTING SPLIT, AND WHY. The year reaches compute through X-Tax-Year and CurrentContext, and a plain-JUnit
+test CANNOT set that: with a context present every prior-year importer becomes reachable and
+importedPriorYearQbiLossCarryforward goes straight to Panache, which has no implementation outside
+Quarkus. So the unit test pins TY2025 end-to-end plus the rate function by reflection, and the new e2e
+(`professional-gambler-section165d.spec.ts`, 3 tests) proves the 90% arithmetic against a running engine
+with a real header -- and the field's mapper write-back with it.
+
+Sc00363SqaScenarioTest 4 -> 6. Suite 2,393 green. UI build clean.
+
+Small UI note: I first wrote the hint with class="field-hint", which does not exist anywhere in the app.
+That component uses a bare <small>. An invented class name compiles perfectly and renders unstyled.

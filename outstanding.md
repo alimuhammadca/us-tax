@@ -5285,28 +5285,3 @@ loses the deduction. That is the same gap the eleven existing bridges exist to c
 as the §280A bridge added earlier today (V260). Fixing each is the established recipe: one column on
 `out_schedule_1` / the Schedule A output, both mapper directions, an `importedPriorYear…` mirroring
 `importedPriorYearRentalAtRisk`, and consumption with user-entry winning.
-
-
-## §165(d) wagering cap on the professional-gambler Schedule C path (2026-09-17, sc_00363)
-
-**Needs a field, so awaiting sign-off.** §165(d) allows wagering losses only to the extent of gains, and
-for TY2025 that reaches the *expenses* of carrying on the wagering business as well as the bets (the TCJA
-sentence that overruled *Mayo v. Commissioner*, in force for years beginning after 2017 and before 2026).
-A professional gambler therefore cannot show a net Schedule C loss — the floor is zero.
-
-We enforce this on the **casual** path (Schedule A line 16 capped at the line 8b winnings, with
-`SCHEDULE_A_GAMBLING_LOSSES_EXCEED_WINNINGS`) and not at all on the **professional** path. A losing year
-produces a net business loss that flows into AGI.
-
-**The blocker is intake, not arithmetic.** Nothing marks a Schedule C as a wagering business — no field on
-`business-income-taxpayer`, none in `BusinessIncomeMapper`, none on `PfBusinessActivity`. The engine
-cannot apply a rule whose trigger it was never told.
-
-**Recipe when approved:** one boolean on the business object (`isWageringBusiness`, alongside
-`materiallyParticipated` / `operatedForProfit`), the column + both mapper directions, and a floor at zero
-on that activity's net profit with a flag naming the disallowed amount. `Sc00363SqaScenarioTest`
-`#theWageringCapIsNotYetAppliedOnScheduleC_documentedGap` is the characterization test that will fail the
-moment it lands, which is the intended tripwire.
-
-**Note for TY2026:** Pub. L. 119-21 changes the rule to 90% of losses (still capped at gains), so
-whatever is built here needs a tax-year switch rather than a hardcoded 100%.

@@ -24173,3 +24173,41 @@ Sc00363SqaScenarioTest 4 -> 6. Suite 2,393 green. UI build clean.
 
 Small UI note: I first wrote the hint with class="field-hint", which does not exist anywhere in the app.
 That component uses a bare <small>. An invented class name compiles perfectly and renders unstyled.
+
+
+## 2026-09-17 - sc_00364 (conservation easement): one comment right, one wrong, and a stale gap note
+
+ALL 18 GRADED ROWS REPRODUCE. Nothing to fix in the engine - the value of this one was in adjudicating
+two comments that point opposite ways, and in retiring a "gap" that had already been built.
+
+★ ROW 20 - BOTH TREES ARE RIGHT AND THE DOCUMENT IS WRONG. The doc expects Schedule A line 12 to show the
+GROSS 150,000; both trees measured 100,000. The doc cannot be right by its own arithmetic: the 2025
+Schedule A line 14 is literally `line14_add_lines_11_through_13` in the IRS field map - a pure sum, with
+no "apply the ceiling" step anywhere on the form. With 150,000 on line 12 and nothing on line 13, line 14
+would be 150,000, yet the doc's own next row says 100,000. The AGI ceiling is applied in the Pub. 526
+worksheet BEFORE Schedule A, and lines 11-13 carry the DEDUCTIBLE amounts. The us-tax-hrb note names it
+precisely: a scenario authoring error, not a product defect. That is the SECOND doc in two scenarios to
+convict itself this way (sc_00363's taxable-income line was the first).
+
+★ ROW 25 - THE TREES DISAGREE, AND HERE THE SQA COMMENT IS THE WRONG ONE. It records the 50% ceiling as
+"not printed as its own computed line anywhere". The us-tax-hrb tree measured it DIRECTLY on the
+Charitable Donations Worksheet Part IV line 20 ("Your 50% limit. Line 12 * 0.5" = 100,000), and its note
+records the row being upgraded FROM arithmetic TO a direct reading. An absence claim loses to a
+measurement that cites its line. The benign explanation is that the worksheet is RETAINED rather than
+filed, so it is not in the printed return the SQA tester was reading.
+
+★ AND THE "GENUINE GAP" NOTE IS STALE. `_repro_progress.md` lists sc_00364 among four GENUINE DOCUMENTED
+GAPS needing new features. Both halves were already built: the 50% ceiling sits in the charitable
+ordering (the `fiftyPool` remainder IS the section 170(b)(1)(E) ceiling, being 50% of AGI less every
+category already allowed), and `ageCharityVintages` keeps a 15-year cutoff for the conservation slice
+separate from the ordinary 5-year one. Verified against the compute, not the note - the third time a
+stale deferral note has cost time this month.
+
+WHAT THE GRADED ROWS COULD NOT SEE, now pinned: the 30%-vs-50% CONTRAST (the same 150,000 gift entered as
+ordinary appreciated capital-gain property is capped at 60,000, not 100,000 - which is the only thing
+that proves the 50% ceiling is being chosen rather than some rule that coincidentally yields 100,000);
+that a gift UNDER the ceiling is deducted in full; and the 15-year window at BOTH boundaries - 5 years
+back is whole, 6 is conservation-only, 15 still carries, 16 has aged out. That last is driven through
+`ageCharityVintages` directly, since reaching year 16 through the compute would need sixteen seeded years.
+
+Sc00364SqaScenarioTest 6 tests. Suite 2,399 green.

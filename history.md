@@ -24252,3 +24252,33 @@ Seeding note worth keeping: interest, dividends and capital gains all arrive thr
 (intEntries / divEntries with recipientTIN) plus the personal form's upload flags - never through manual
 amount fields on the personal form. My first attempt used invented manual-field names and lost all
 45,000 of investment income while wages, withholding and the refund all still looked plausible.
+
+
+## 2026-09-18 - Full e2e regression: 1,590 passed, 3 transient failures, no fixes needed
+
+1,605 tests, --workers=1, 3.5 hours. **1,590 passed / 3 failed / 1 flaky / 11 skipped.**
+
+ALL THREE FAILURES WERE NETWORK-LEVEL, NOT VALUE MISMATCHES, and all three pass on a targeted re-run:
+
+  * line13b-additional-deductions.spec.ts:841 (senior 6% phaseout) - `expect(response.ok()).toBeTruthy()`
+    returned false on the SAVE call, i.e. an HTTP error, not a computed figure.
+  * line4972-lump-sum-distribution.spec.ts:293 (QDRO alternate payee) - `TypeError: Failed to fetch`.
+  * professional-gambler-section165d.spec.ts:95 (the TY2026 90% share) - `TypeError: Failed to fetch`.
+
+Re-run clean: line13b 25/25, line4972 10/10, professional-gambler 3/3. No code changed.
+
+They were at tests #420, #865 and #1337 - spread right across the run, so NOT one outage window. With
+`retries` unset in playwright.config.ts (Playwright defaults to 0), each was a single attempt, so a
+momentary blip becomes a red run with nothing to distinguish it from a real defect.
+
+★ TWO WRONG INFERENCES I MADE WHILE DIAGNOSING, BOTH CAUGHT BEFORE THEY REACHED A FIX. First, I read a
+`netstat | head -3` whose output was filled by 8080's TIME_WAIT rows and concluded the UI dev server on
+4200 was dead; it had been up the whole time, and trying to restart it is what proved so ("Port 4200 is
+already in use"). Second, I noticed the Postgres container ID differed from one I had recorded earlier
+and inferred a mid-run restart - but I had recorded that ID BEFORE the V265 restart, so the new container
+was simply that restart's, not evidence of anything during the run. A truncated listing and a
+misremembered baseline are both cheap to check and expensive to act on.
+
+For contrast, the previous run (0916) also had exactly 3 failures - but different tests (Form 1116
+standard-deduction apportionment and two Form 2555 housing-cap cases). Those were stale expectations
+that predated deliberate engine fixes, swept in 447ba6e4, and all three passed today.

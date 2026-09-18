@@ -24054,3 +24054,32 @@ a line 10b they should leave blank. That is a field addition, so it waits for si
 Sc00361SqaScenarioTest 6 tests (the graded return, the row-13 claim, and four controls: the NOL, the cap
 at basis, the BLANK-basis variant, and election-off). Form982ExclusionOrderingTest 7 -> 9. Suite 2,385
 green.
+
+
+## 2026-09-17 - V264: Form 982 line 10b gets the ownership precondition it was missing
+
+Added on sign-off, on the INTAKE form (`other-incomes-taxpayer` and its spouse twin) - not the 1099-C
+statement and not the Form 982 preview, neither of which changes. Line 10b already exists on the IRS
+form; the new question only decides whether we POPULATE it.
+
+THE INSTRUCTION IS CONDITIONAL AND WE WERE IGNORING THE CONDITION: "If box 1e is checked AND YOU CONTINUE
+TO OWN THE RESIDENCE AFTER DISCHARGE, enter the smaller of..." The line 2 instruction repeats it - the
+reduction is "required only if you continue to own the residence after the discharge". A filer foreclosed
+on in the same year as the discharge was getting a line 10b they should have left blank, and an
+understated basis carried forward for years.
+
+★ TRI-STATE, AND UNANSWERED IS NOT "NO". Defaulting either way writes a wrong number onto a filed form
+and then hides: reduce-by-default understates a foreclosed filer's basis, skip-by-default overstates a
+retaining filer's. Neither error surfaces until the home is finally sold, which is exactly the kind of
+delayed, invisible wrongness a blocking flag exists for. So an unanswered question yields a blank line
+10b plus FORM_982_QPRI_RESIDENCE_RETENTION_UNANSWERED (blocking, but NOT in NonOverrideableFlags.CODES -
+this is missing information, not a return the app knows to be wrong, so §17 absolutism does not apply).
+
+Losing the home does NOT make the forgiven debt taxable - line 2 is untouched in all three states. Only
+the basis reduction is gated.
+
+The sc_00361 test now states the retention fact, because the scenario document states it: the discharge
+is "principal-mortgage principal forgiven in LOAN MODIFICATION", so the couple kept the house. Encoding
+what the scenario says is not steering the engine - the blank and foreclosed variants are separate tests.
+
+Sc00361SqaScenarioTest 6 -> 8. Suite 2,387 green. UI build clean.

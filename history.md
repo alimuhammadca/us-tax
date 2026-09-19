@@ -24370,3 +24370,39 @@ in a row where a counterfactual was quoted rather than run.
 
 Sc00370SqaScenarioTest 5 tests. Suite 2,413 green. UI build clean. Also normalised the SQA copy's
 freeze_panes A16 -> A7.
+
+
+## 2026-09-19 - sc_00371 (NIIT allocable deductions): both comments correct; the 9 dollars is the doc's rounding
+
+★ THE FIRST OF THESE NIIT SCENARIOS WHERE EXPECTED AND ACTUAL DIFFER IN VALUE, NOT JUST LABELLING - and
+the difference is the DOCUMENT's rounding, not a software defect.
+
+ROW 29 - THE ALLOCATION. The doc states its own method: "investment income share ~ 100,000/340,000 ~ 29%,
+applied to 28,000 state income tax ~ 8,000". Run that method exactly and it gives 28,000 x
+(100,000/340,000) = 8,235.29; even at a flat 29% it gives 8,120. NOTHING in the doc's own arithmetic
+produces 8,000 - it is a round number substituted for the result. Both trees independently measured
+8,235, the unrounded form of the doc's own ratable method. Reg. 1.1411-4(f)(3)(iii) permits "any
+reasonable method", so 8,000 is not illegal; it is just not what the doc computed. The entire 9 dollars
+of NIIT difference (2,812 vs 2,803) traces to those 235 dollars of allocation.
+
+ROW 31 - THE LINE NUMBER IS OFF BY ONE, the SIXTH scenario running. The doc's "10 - Total deductions &
+modifications = 26,000" is line 11. The form reads 9d "Add lines 9a, 9b, and 9c", 10 "Additional
+modifications" (BLANK for this filer), 11 "Total deductions and modifications. Add lines 9d and 10", and
+12 subtracts line 11 from line 8.
+
+★ WHERE WE STAND ON THE ALLOCATION: line 9a is AUTO-COMPUTED from Form 4952 line 8 - the same figure
+allowed on Schedule A, derived rather than asked for twice. Line 9b is a TAXPAYER ENTRY, because the reg
+leaves the allocation method to the filer and picking one for them would be substituting our judgement
+for a choice that is theirs. So the engine reproduces EITHER column depending on the input; the test pins
+both deliberately, with an assertion that the whole gap is exactly 9 dollars.
+
+★ AND THIS RETIRES THE "SEEDING-LIMITED / UNRESOLVED" NOTE for sc_00371 in `_repro_progress.md`, which
+said it was unknown whether the line-9 allocable deductions are computed at all. They are. THE MISSING
+SEED WAS FORM 4952 LINE 4a: without gross investment income, line 4h is 0, so line 8 = min(line 3, 0) = 0
+and the 18,000 never reaches Schedule A - which is exactly why that attempt saw taxable income of 288,000
+instead of 270,000. A cap that needs its own input to be non-zero looks like a broken feature when the
+input is missing.
+
+Sc00371SqaScenarioTest 5 tests, incl. a control showing the NIIT would run on GROSS investment income
+(3,800) without Part II - worth 997 here. Suite 2,418 green. Also normalised the SQA copy's freeze_panes
+A25 -> A7 (it pinned eighteen DATA rows).

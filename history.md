@@ -24326,3 +24326,47 @@ consistent with an engine that never puts passthrough income into NII. Flipping
 
 Sc00369SqaScenarioTest 4 tests. Suite 2,408 green. Also normalised the SQA copy's freeze_panes A18 -> A7
 (it pinned eleven DATA rows); every sibling scenario and the us-tax-hrb copy use A7.
+
+
+## 2026-09-19 - sc_00370 (NIIT, section 1411(c)(4)): the comment is right, and TWO real defects behind it
+
+All 27 graded rows reproduce - and they reproduced BEFORE the fixes too, which is the point of this one.
+
+★ ROW 27 - THE SQA COMMENT IS CORRECT, THE FIFTH SCENARIO RUNNING WHERE THE DOCUMENT MISLABELS A LINE.
+The doc puts the -170,000 on "line 5b". The printed Form 8960 has 5b = "Net gain or loss from disposition
+of property that is NOT SUBJECT TO net investment income tax" (a section 121 residence exclusion, section
+1202 stock) and 5c = "Adjustment from disposition of PARTNERSHIP INTEREST OR S CORPORATION STOCK" - named
+for this adjustment exactly. So 5b is blank and the -170,000 belongs on 5c.
+
+THE TWO TREES ONLY APPEAR TO DISAGREE. us-tax-hrb recorded -170,000 where SQA recorded "blank", but its
+own note says the figure went into HRB's field named "Partnerships and S corporation sale adjustment" -
+which IS line 5c. Both measured the same thing; only the SQA note says which line it landed on.
+
+★ DEFECT 1 - THE ADJUSTMENT NEVER RENDERED. Our line 5c output field was guarded by `hasPositiveAmount`,
+and a section 1411(c)(4) adjustment is NEGATIVE by construction. So the -170,000 reached line 5d and the
+tax, while line 5c printed BLANK: a Form 8960 showing 200,000 on 5a, nothing on 5b or 5c and 30,000 on 5d
+does not foot, and the exclusion being claimed is invisible to the IRS. All 27 graded rows passed
+throughout. Same shape as the Form 982 Part II bug two days ago - computed, set, and then not surfaced -
+except here the cause was a sign assumption rather than ordering. Fixed to `hasNonZeroAmount` for EVERY
+signed adjustment line: 5b, 5c, 6, 7 and 10.
+
+★ DEFECT 2 - A SIGN INVERSION ON LINE 5b, FOUND WHILE VERIFYING THE FIRST. Line 5d was computed as
+5a MINUS 5b PLUS 5c. The form says "5d Combine lines 5a through 5c", and the line 5b instruction says
+"Enter the amount of gains (AS A NEGATIVE NUMBER) and losses (as a positive number) included on line 5a
+that are excluded from NII." So a filer entering the negative the instructions ask for had it SUBTRACTED:
+a -50,000 section 121 residence exclusion ADDED 50,000 to NII, overstating the NIIT on exactly the
+dollars the exclusion exists to remove. Now 5a + 5b + 5c, and the UI labels state the sign convention
+(they previously carried the IRS wording with no sign hint at all, so a filer had no way to know).
+
+BEHAVIOUR CHANGE WORTH NAMING: anyone who had entered line 5b as a POSITIVE magnitude - guessing the
+opposite convention - gets a different answer now. The field is an override for a deferred line, the UI
+gave no guidance either way, and the IRS convention is unambiguous, so matching the form is right. But it
+is a change in the meaning of stored data, not just a bug fix.
+
+★ AND THE DOC'S CONTRA-CASE NOTE IS WRONG AGAIN, exactly as in sc_00369: it says taxing the whole gain
+would give 3.8% x 205,000 = 7,790, but section 1411(a)(1) takes the SMALLER of NII and the MAGI excess,
+and 125,000 < 205,000, so the real figure is 4,750. Our control asserts 4,750 and passes. Two scenarios
+in a row where a counterfactual was quoted rather than run.
+
+Sc00370SqaScenarioTest 5 tests. Suite 2,413 green. UI build clean. Also normalised the SQA copy's
+freeze_panes A16 -> A7.

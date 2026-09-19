@@ -24554,3 +24554,38 @@ the third scenario running for that last one. Box A is confirmed the right Part 
 waiver ... of your ENTIRE penalty ... you aren't required to figure your penalty"; box B is partial.
 
 Sc00376SqaScenarioTest 3 tests. Suite 2,435 green. Both .md files and the line-5a Expected corrected.
+
+
+## 2026-09-19 - sc_00377 (OBBBA tips phaseout): the comment is right, and the doc states the rule BACKWARDS
+
+ROW 10 - THE SIGN COMMENT IS CORRECT. Schedule 1-A Part II line 12 carries the phaseout as a POSITIVE
+2,000 and line 13 reads "Qualified tips deduction. SUBTRACT LINE 12 FROM LINE 7". The doc's -2,000 is the
+same quantity signed the other way, which is not how the form prints it. Expected corrected.
+
+★ AND BEHIND THAT ROW SITS A REAL RULE ERROR THE SCENARIO'S OWN NUMBERS CANNOT EXPOSE. The doc says the
+cap falls "$100 for every $1,000 (OR FRACTION)" and its computation note writes the ceiling explicitly as
+CEIL((170,000-150,000)/1,000). Schedule 1-A line 11 says the opposite: "Divide line 10 by $1,000. If the
+resulting number isn't a whole number, DECREASE the result to the next LOWER whole number. (For example,
+decrease 1.5 to 1, and decrease 0.05 to 0.)" That is a FLOOR. At this scenario's MAGI the excess is
+exactly 20 buckets, so the doc's 23,000 is right BY LUCK of a round number; at 170,999 a floor gives
+23,000 and a ceiling 22,900. Our engine floors, and the control now pins it at both 170,999 and 171,000.
+
+★ AND THE MISTAKE IS AN EASY ONE, BECAUSE THE SAME FORM USES BOTH DIRECTIONS. Parts II and III (tips,
+overtime) FLOOR the bucket count; Part IV (car loan interest) CEILINGS it, at $200 per $1,000 over
+$100,000. "The Schedule 1-A phaseout rounds down" is not a blanket rule, and a reference that generalises
+one Part to the others is wrong half the time. Our engine already keeps them apart in two adjacent
+helpers - computeTipsOvertimePhaseout uses RoundingMode.FLOOR, computeCarLoanPhaseout uses CEILING - and
+the contrast is now asserted directly so neither can drift into the other.
+
+Also pinned: the tips deduction STACKS ON the standard deduction (line 14 = 15,750 + 23,000) and NEVER
+removes the tip income from AGI - line 11 stays 170,000, which is also the MAGI driving its own phaseout.
+
+★ SEEDING COST FOUR ATTEMPTS, and the shape is worth recording: Schedule 1-A Part II needs FOUR gates and
+missing any one yields NO SCHEDULE 1-A AT ALL, silently - hadAdditionalDeductions (the parent opt-in),
+confirmAllRelevantStatementsUploaded (the statement gate), and taxpayerReceivedQualifiedTips /
+taxpayerTippedOccupationConfirmed, BOTH of which are PREFIXED (the unprefixed spellings are ignored). I
+guessed the unprefixed names first and got a clean return with a zero deduction and no flag. Parts II-IV
+are opt-in because the filer must tell us something; Part V (the senior deduction) is an ENTITLEMENT and
+needs none of this, which is why sc_00373/374 computed it with no additional-deductions form at all.
+
+Sc00377SqaScenarioTest 4 tests. Suite 2,439 green. Both .md files and the row-10 Expected corrected.

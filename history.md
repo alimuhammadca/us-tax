@@ -24518,3 +24518,39 @@ line-renumbering errors that have now hit seven scenarios in this run.
 Sc00375SqaScenarioTest 5 tests, incl. the threshold control: at a prior AGI of exactly 150,000 the harbor
 stays at 100% (38,000), the 40,450 of withholding clears it and NO penalty arises; one dollar over and
 the bar jumps to 41,800. Suite 2,432 green.
+
+
+## 2026-09-19 - sc_00376 (section 6654(e)(3)(B) waiver, retired after 62): the trees disagree, both honest
+
+★ THE TWO ACTUALS TREES DISAGREE ON THE CORE ASSERTION AND NEITHER IS WRONG. The SQA tester's software
+checked Form 2210 Part II box A and reported a penalty of 0, noting "amount waived 165". The us-tax-hrb
+run reported 165 and recorded "NOT ENTERABLE -- HRB acknowledges the waiver and then offers no way to
+request it": it asks the retired-after-62 question and then provides no box to claim the relief. BOTH
+COMPUTED THE SAME 165 PENALTY; only one package can waive it. That is a product gap, not a disagreement
+about the rule - and it is the clearest example yet of why "HRB differs" is not the same as "HRB is
+wrong" or "we are wrong".
+
+★ WE IMPLEMENT THE WAIVER, AND AS A USER ELECTION. Section 6654(e)(3)(B) opens "No addition to tax shall
+be imposed ... if the Secretary DETERMINES", so the relief is REQUESTED on box A with an attached
+statement and granted by the IRS. Auto-waiving on a date of birth would claim relief the filer never
+asked for, on facts software cannot know (reasonable cause, not willful neglect). Ours keys off
+`waiveFullPenalty` on the prior-year form and sets computationMethod=WAIVED, so a zero penalty records
+WHY it is zero rather than being indistinguishable from "no penalty arose".
+
+CONTROLLED, because the graded rows cannot tell a waiver from an absence: drop the election and the same
+return yields a real 163 penalty on the 3,500 underpayment, and Form 1040 line 37 becomes 4,898 instead
+of 4,735. The TAX is 7,735 either way - a waiver forgives the CHARGE, never the liability. We compute
+163 where both packages computed 165, a 2-dollar day-count spread on a 3,500 underpayment (sc_00375's
+1,350 underpayment gave 63 in all three, so the convention difference only shows at this size).
+
+★ AND A TRAP WORTH NAMING: AGE 62 EARNS THE WAIVER, NOT A DEDUCTION. The filer is 63 at year end, so
+there is NO age-65 standard-deduction addition and NO OBBBA enhanced senior deduction - both need 65.
+After sc_00373/374, where the 6,000 senior deduction was the finding, the reflex to grant it here would
+be wrong. The test asserts both are zero.
+
+Structural comments repeat sc_00375's and are equally correct: no line 8a (90% of current-year tax is
+line 5), no line 8b (the prior-year maximum is line 8), and line 5a blank for a fully taxable pension -
+the third scenario running for that last one. Box A is confirmed the right Part II box: "You request a
+waiver ... of your ENTIRE penalty ... you aren't required to figure your penalty"; box B is partial.
+
+Sc00376SqaScenarioTest 3 tests. Suite 2,435 green. Both .md files and the line-5a Expected corrected.

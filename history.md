@@ -24282,3 +24282,47 @@ misremembered baseline are both cheap to check and expensive to act on.
 For contrast, the previous run (0916) also had exactly 3 failures - but different tests (Form 1116
 standard-deduction apportionment and two Form 2555 housing-cap cases). Those were stale expectations
 that predated deliberate engine fixes, swept in 447ba6e4, and all three passed today.
+
+
+## 2026-09-19 - sc_00369 (NIIT, material participation): the comment is right; the doc mislabels again
+
+ALL 28 GRADED ROWS REPRODUCE. Nothing to fix in the engine; the value was adjudicating a row where the
+two Actuals trees disagree, and catching a wrong figure in the document's own contra-case note.
+
+★ ROW 29 - THE SQA COMMENT IS CORRECT, AND IT IS THE FOURTH SCENARIO RUNNING WHERE THE DOCUMENT, NOT THE
+SOFTWARE, IS WRONG ABOUT WHICH LINE IT MEANS. The printed Form 8960 reads:
+
+  4a  Rental real estate, royalties, partnerships, S corporations, trusts, trades or businesses, etc.
+  4b  Adjustment for net income or loss derived in the ordinary course of a NON-SECTION 1411 trade or
+      business
+  4c  Combine lines 4a and 4b
+
+So 4a carries the GROSS Schedule 1 line 5 figure (60,000), 4b backs it out (-60,000), and 4c nets to 0 -
+which is the number the doc labelled "4a". We produce all three. Verified against both the printed form
+text and `pdfs/f8960_field_map_semantic.csv`, whose own field name `linec_combine_lines_4a_and_4b_4c`
+settles it.
+
+★ THE TWO TREES DISAGREE ON THAT ROW ALONE (SQA 60,000, us-tax-hrb 0) AND THE SHAPE IS INSTRUCTIVE: the
+us-tax-hrb value coincides with the DOC's expectation, which is exactly what a row graded against a
+mislabelled reference looks like. Its own `_repro_progress.md` verdict - "app correctly excludes
+non-passive K-1 from NII", niit=950 - is untouched, because every other row agrees. What differs is which
+line was read, not what the software computed.
+
+★ AND 4a=0 vs 4a=60,000 IS NOT COSMETIC, even though both give NII 25,000 and NIIT 950 so every graded
+row passes either way. Form 8960 lines 4a-4c are a RECONCILIATION: a filer showing 0 on line 4a has never
+shown the IRS the 60,000 of Schedule E income arriving and being removed. Collapsing 4a/4b into a net 4c
+hides the very adjustment being claimed.
+
+★ THE DOC'S OWN CONTRA-CASE NOTE IS WRONG, AND THE CONTROL CAUGHT IT. It says that had the business
+income been included, "NII would be 85,000 and NIIT 3.8% x 85,000 = 3,230". But section 1411(a)(1) taxes
+the SMALLER of NII and the MAGI excess, and the excess here is 75,000 < 85,000 - so the correct figure is
+3.8% x 75,000 = 2,850. Our control asserts 2,850 and passes. The doc is right that inclusion overstates
+the tax; it is wrong about by how much, and wrong in a way that only shows up if you actually run the
+counterfactual instead of quoting it.
+
+That control is also what proves the exclusion is doing work at all: every graded figure is equally
+consistent with an engine that never puts passthrough income into NII. Flipping
+`materiallyParticipatedInActivity` to false moves the same 60,000 into the NII base.
+
+Sc00369SqaScenarioTest 4 tests. Suite 2,408 green. Also normalised the SQA copy's freeze_panes A18 -> A7
+(it pinned eleven DATA rows); every sibling scenario and the us-tax-hrb copy use A7.

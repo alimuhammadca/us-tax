@@ -24445,3 +24445,37 @@ Sc00373SqaScenarioTest 4 tests, incl. the control that proves the add-back does 
 interest and provisional income falls to 30,000, inside the 25,000-34,000 band, so only the 50% tier
 applies and taxable benefits are 2,500 rather than 20,400 - the 30,000 of never-taxed interest is worth
 17,900 of taxable benefits. Suite 2,422 green.
+
+
+## 2026-09-19 - sc_00374 (RRB Tier 1 vs Tier 2): three comments, splitting exactly as sc_00373 did
+
+ROWS 8-23 - THE WORKSHEET-RENUMBERING COMMENT IS WRONG AGAIN, and in the same way: notes describing a
+worksheet whose line 1 is "half of benefits", line 8 is "modified AGI", and whose total benefits sit on a
+"line B" (sc_00373 said "line C"). That is the tester's own software display, not the Social Security
+Benefits Worksheet the return uses. The us-tax-hrb tree recorded all sixteen rows matching the doc, and
+so do we.
+
+ROW 26 - THE 5a COMMENT IS RIGHT AND WE ALREADY COMPLY. With no box 3 employee-contribution cost the
+Tier 2 annuity is fully taxable, so "enter the total on line 5b; DON'T MAKE AN ENTRY ON LINE 5a" applies.
+
+ROWS 33-37 - THE SENIOR-DEDUCTION COMMENT IS RIGHT AND BOTH TREES AGREE. Taxable income 11,150, tax
+1,118, refund 882 against the doc's 17,150 / 1,823 / 177.
+
+★ AND IT IS THE SECOND SCENARIO RUNNING, SO I CHECKED HOW FAR IT GOES. Scanning every SQA scenario whose
+filer is 65 or older: sc_00337 handles the senior deduction correctly (it computes the phase-out and says
+line 13b = 0); sc_00380 and sc_00381 are dedicated to it. The omission is confined to sc_00373 and
+sc_00374 - which is the interesting part: those are precisely the two LOW-MAGI RETIREE scenarios, where
+the filer is far below the 75,000 phase-out start and the deduction is worth its full 6,000. The
+generator gets it right when it phases out to nothing and misses it when it actually bites.
+
+★ THE SCENARIO'S OWN MECHANIC, PINNED SEPARATELY. Tier 2 enters the §86 worksheet at line 3 as OTHER
+INCOME - raising provisional income - while never itself being a §86 benefit. The control proves it:
+remove the 24,000 annuity and provisional income falls from 38,000 to 14,000, below the 25,000 base, so
+NONE of the 22,000 Tier 1 benefit is taxable. The annuity drags 7,900 of Tier 1 into income without ever
+being taxed as Tier 1. Every graded figure is otherwise consistent with an engine that lands on 7,900 by
+some other route.
+
+Note also that this scenario exercises the OTHER branch of the §86 worksheet from sc_00373: there the 85%
+ceiling bound (line 17), here the tiered build-up binds (line 16 = 7,900 against a ceiling of 18,700).
+
+Sc00374SqaScenarioTest 5 tests. Suite 2,427 green.

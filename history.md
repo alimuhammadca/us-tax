@@ -24406,3 +24406,42 @@ input is missing.
 Sc00371SqaScenarioTest 5 tests, incl. a control showing the NIIT would run on GROSS investment income
 (3,800) without Part II - worth 997 here. Suite 2,418 green. Also normalised the SQA copy's freeze_panes
 A25 -> A7 (it pinned eighteen DATA rows).
+
+
+## 2026-09-19 - sc_00373 (muni interest -> 85% SS tier): three comments, and they SPLIT
+
+★ THE FIRST SCENARIO IN THIS RUN WHERE A TESTER COMMENT IS WRONG. Six scenarios of "the document
+mislabels a line" had made that the expected answer; here one of three comments does not survive
+checking, and the habit of assuming it would was the thing to resist.
+
+ROWS 8-23 - THE WORKSHEET-RENUMBERING COMMENT IS WRONG; THE DOC IS RIGHT. That tester recorded all
+sixteen worksheet rows as shifted, with notes describing a worksheet whose line 1 is "half of benefits",
+line 2 is "modified income", line 8 is "modified AGI", and whose total benefits sit on a "line C". The
+Form 1040 (TY2025) instructions, page 32, read: 1 total benefits / 2 multiply line 1 by 50% / 3 combine
+lines 1z, 2b, 3b, 4b, 5b, 7a and 8 / 4 the line 2a exempt interest / 5 combine 2, 3 and 4 / 6 the
+Schedule 1 adjustments / 7 subtract 6 from 5 / 8 the 25,000 base - which is exactly the document's
+numbering. The us-tax-hrb tree recorded every one of those rows matching. The SQA tester was reading
+their own software's worksheet display, not the one the return uses.
+
+ROW 26 - THE 5a COMMENT IS RIGHT, AND WE ALREADY COMPLY. "Fully Taxable Pensions and Annuities": "If your
+pension or annuity is fully taxable, enter the total pension or annuity payments (from Form(s) 1099-R,
+box 1) on line 5b; DON'T MAKE AN ENTRY ON LINE 5a." Box 1 equals box 2a here, so 5a stays blank. Both the
+doc's expected 18,000 and the us-tax-hrb 18,000 are harmless, but neither follows the instruction. I had
+written the assertion the other way round and the engine corrected me - a useful reminder that a null is
+sometimes the right answer rather than a missing one.
+
+★ ROWS 33-38 - THE SENIOR-DEDUCTION COMMENT IS RIGHT, BOTH TREES AGREE, AND THE DOC IS WRONG. It omits
+the OBBBA ENHANCED SENIOR DEDUCTION: 6,000 for a filer 65 or older, Schedule 1-A -> Form 1040 line 13b,
+new for 2025. MAGI of 38,400 is far below the 75,000 phase-out start, so the whole 6,000 survives - line
+14 = 17,750 + 6,000 = 23,750, taxable income 14,650, tax 1,523, refund 977. We compute it, so we match
+both trees against the doc's 20,650 / 2,243 / 257.
+
+★ AND IT IS SEPARATE FROM THE AGE-65 STANDARD-DEDUCTION ADD-ON. The 2,000 add-on is already inside the
+17,750 on line 12; the 6,000 senior deduction is a different provision on line 13b. Both apply to the
+same filer, and treating them as one is the easy error - the test asserts 17,750, 6,000 and 23,750
+separately so the two cannot be conflated later.
+
+Sc00373SqaScenarioTest 4 tests, incl. the control that proves the add-back does the work: drop the muni
+interest and provisional income falls to 30,000, inside the 25,000-34,000 band, so only the 50% tier
+applies and taxable benefits are 2,500 rather than 20,400 - the 30,000 of never-taxed interest is worth
+17,900 of taxable benefits. Suite 2,422 green.

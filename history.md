@@ -24479,3 +24479,42 @@ Note also that this scenario exercises the OTHER branch of the §86 worksheet fr
 ceiling bound (line 17), here the tiered build-up binds (line 16 = 7,900 against a ceiling of 18,700).
 
 Sc00374SqaScenarioTest 5 tests. Suite 2,427 green.
+
+
+## 2026-09-19 - sc_00375 (Form 2210, the 110% safe harbor): all three comments correct; doc corrected
+
+★ ALL THREE OF THE SQA STRUCTURAL COMMENTS ARE CORRECT - the document invented Form 2210 line numbers.
+Printed Part I: 4 current-year tax / 5 multiply line 4 by 90% / 6 withholding taxes / 8 "Maximum required
+annual payment based on prior year's tax" / 9 required annual payment, smaller of 5 or 8. So the doc's
+"8a" is LINE 5 and its "8b" is LINE 8; its lines 6 and 9 were right. The penalty is LINE 19 ("Include
+this amount on Form 1040 ... line 38"), not "line 27" - line 27 belongs to Schedule AI, which Part III
+references only when box C applies.
+
+★ THE TWO TREES DIVERGE ON SEEDING, AND THE DOCUMENT IS WHAT IS AT FAULT. The SQA tester noted "W-2 Box
+5/6 not entered (scenario lists Boxes 1-2 only)" and got no Additional Medicare Tax. They seeded exactly
+what was written. Form 8959 computes from MEDICARE wages, and the scenario's input table gives only
+boxes 1 and 2 - "box 5 = box 1" appears solely in a parenthesis on the OUTPUT side. An input table that
+cannot produce its own expected output is a scenario defect, not a tester error. Added boxes 5 and 6 to
+the doc.
+
+★ THE PENALTY: THREE-WAY AGREEMENT ON 63, AGAINST THE DOC'S GUESS. The doc marked its own figure
+approximate - "~$71 (illustrative; exact figure depends on published quarterly rates)". Hand-derived at
+the 7% 2025 underpayment rate: the 1,350 underpayment splits into four 337.50 installments accruing
+365/304/212/90 days to 4/15/2026 = 23.63 + 19.68 + 13.72 + 5.82 = 62.85 -> 63. us-tax-be computes 63.
+H&R Block computes 63. The doc's ~71 is simply wrong, and it is now 63.
+
+★ AND THE DOC WAS INTERNALLY INCONSISTENT ON LINE 37 - the same self-contradiction shape as sc_00363's
+taxable income and sc_00364's Schedule A. It showed 12,023 on line 37 AND ~71 on line 38, but the line 38
+instruction reads "Add the penalty to any tax due and enter the total on line 37." Line 37 must carry
+both: 12,023 + 63 = 12,086, which is what we produce. The 12,023 that the doc and the H&R Block summary
+screen both show is the subtotal BEFORE the penalty - correct as a subtotal, wrong as line 37.
+
+WHAT THE ENGINE GOT RIGHT WITHOUT HELP: the 110% switch keys off prior-year AGI (MFS threshold 75,000),
+and the Form 2210 output model names its figures SEMANTICALLY - ninetyPctCurrentYear, priorYearSafeHarbor,
+requiredAnnualPayment - rather than by line number, which is precisely why the document's renumbering
+never propagated into our output. Worth keeping as a pattern: semantic output names are immune to the
+line-renumbering errors that have now hit seven scenarios in this run.
+
+Sc00375SqaScenarioTest 5 tests, incl. the threshold control: at a prior AGI of exactly 150,000 the harbor
+stays at 100% (38,000), the 40,450 of withholding clears it and NO penalty arises; one dollar over and
+the bar jumps to 41,800. Suite 2,432 green.

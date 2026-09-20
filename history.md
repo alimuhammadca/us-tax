@@ -24630,3 +24630,49 @@ reporter must be added, append rather than replace.
 For contrast the previous run (0918) also ended with 3 transient failures - different tests, same
 character. Two consecutive regressions with a handful of scattered non-deterministic failures and zero
 real defects.
+
+
+## 2026-09-20 - Full regression 1,590 passed / 0 failed / 4 flaky - and ONE REAL BUG found in the LOG
+
+The run itself was clean: 1,605 tests, --workers=1, 3.5h, **1,590 passed / 0 FAILED / 4 flaky / 11
+skipped**, exit 0. The four flaky ones (3 QBI carryforward bridges + Schedule A sc_00127) all passed on
+their own retry. First-attempt errors, from the JSON reporter: "compute 2025 status 409", "2024 form8995
+present -> null", "compute 2024 status 500", and ECONNREFUSED to :4200 - clustered in one window, with
+the Vite dev server logging its own "http proxy error ... ECONNREFUSED" to the backend at 1:25:47pm. A
+momentary stack hiccup, not a defect.
+
+★ THE DEFECT WAS NOT IN A FAILING TEST. It was in the backend log, which 1,590 green tests never made me
+look at: **123 HTTP 500s in one run, every one of them from /api/tax-return/optimize/joint-vs-separate**,
+all the same java.lang.IllegalStateException - "No spouse identification on file". A green suite is not
+the same as a clean run, and the log is where the difference shows.
+
+THE BUG: TaxReturnV2LifecycleService.enableMfs threw IllegalStateException for a PRECONDITION ON USER
+INPUT. No mapper claims that type, so it surfaced as 500 "Internal Server Error" with an error id. It is
+neither internal nor an error - a household with no spouse on file cannot be split into an MFS pair, and
+the message already tells the filer exactly what to do. Now jakarta.ws.rs.BadRequestException -> 400 via
+the existing mapper. The "no head person" throw immediately above KEEPS its IllegalStateException on
+purpose: AppUserBootstrap guarantees that row, so its absence is a genuinely broken invariant. Telling
+those two apart is the whole change.
+
+WHY 123 IN ONE RUN: the UI calls the optimizer after EVERY compute and its own comment admits it expects
+failure - "only meaningful when a spouse exists; the backend throws otherwise. Swallow so single-filer /
+HOH / QSS households don't see a spurious error." Every unmarried compute minted a 500 that the frontend
+swallowed. Nobody ever saw it; it only ever showed up in the log.
+
+★ AND THE REAL COST WAS DIAGNOSTIC. These buried the genuine 500s. On 2026-09-19 I went hunting for
+compute 500s behind two flaky tests and had to sift past 123 of these to find nothing - I recorded the
+two as "not fully explained". An endpoint that cries 500 over a routine input state destroys the signal
+value of every other 500 in the log. That is the case for fixing noise even when no test is red.
+
+VERIFIED BY MEASUREMENT, NOT INFERENCE (the 2026-09-19 lesson applied): ran a UI-driven single-filer spec
+before and after, counting the log. New optimizer 500s: **0**. New "no spouse identification" messages:
+**1** - the same precondition, still detected, now a 400. Unit suite 2,420 green.
+
+NOT DONE, DELIBERATELY: the UI still makes the pointless round-trip. Guarding it needs a spouse /
+filing-status signal TaxReturnService does not have (isMfsEnabled is CIRCULAR - the optimizer is what
+creates those rows), so it would mean new plumbing through the central compute path to save one request.
+The backend fix makes the exchange semantically correct; the round-trip is an inefficiency, not a bug.
+
+Also of note: this was the first run on a FRESH Postgres container (Docker Desktop was down at session
+start; 1,534 changesets replayed from empty). Zero hard failures on a clean DB, against 4 failed + 3
+flaky on the accumulated one - weak evidence that the 0919 failures were environmental, as concluded.

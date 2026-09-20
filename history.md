@@ -24589,3 +24589,44 @@ are opt-in because the filer must tell us something; Part V (the senior deductio
 needs none of this, which is why sc_00373/374 computed it with no additional-deductions form at all.
 
 Sc00377SqaScenarioTest 4 tests. Suite 2,439 green. Both .md files and the row-10 Expected corrected.
+
+
+## 2026-09-19 - Full e2e regression: 1,587 passed, 4 failed + 3 flaky, ALL SEVEN TRANSIENT
+
+1,605 tests, --workers=1, 3.6 hours. **1,587 passed / 4 failed / 3 flaky / 11 skipped.** Every one of the
+seven passes on a targeted re-run with NO code change, so nothing was fixed.
+
+READ THE FAILURE TYPE, NOT THE TEST NAME - the seven spanned seven unrelated subsystems (charitable
+carryover, tip income x2, ACTC/Schedule 8812, section 25D energy, MFS alt-fuel, SE nonfarm-optional),
+which is itself the signal: a real regression clusters, flakiness scatters. The errors were
+ETIMEDOUT to ::1:4200, "failed to create dependent", an auth fetch returning false, "Unexpected end of
+JSON input", "Failed to fetch" - and TWO HTTP 500s.
+
+★ THE TWO 500s ARE THE PART I CANNOT FULLY EXPLAIN, and I am not going to pretend otherwise. The MFS
+alt-fuel spec returned `computeLeg expected 200, got 500` and failed its OWN RETRY, then passed in
+isolation; the tip-income save-vs-compute spec expected 409 and got 500. The backend never restarted
+(PID 32620, up 49h) and the only Quarkus hot reload was at 18:59, an hour BEFORE the run - so neither my
+`mvnw test` runs during the regression nor a dev-mode reload disturbed it. A 500 under full-suite load
+that will not reproduce in isolation points at state or resource contention across a 3.6-hour
+single-worker run, but that is a hypothesis, not a finding. If it recurs, capture it with the JSON
+reporter left intact.
+
+★ AND I DESTROYED MY OWN EVIDENCE: passing `--reporter=list` on the CLI OVERRIDES the config's
+`[['list'], ['json', ...]]`, so `test-results-report.json` was never written for this run. That reporter
+exists FOR THIS EXACT PURPOSE - its config comment records a 2026-09-13 failure whose message survived
+only in terminal scrollback and could never be investigated. Do not pass --reporter on the CLI; if a
+reporter must be added, append rather than replace.
+
+★ TWO CORRECTIONS TO WHAT I SAID EARLIER IN THE SESSION:
+  1. "retries is unset so Playwright defaults to 0" is right globally but WRONG as a blanket claim -
+     `mfs-spouse-alt-fuel-credit` and `medicaid-waiver` opt in with
+     `test.describe.configure({ retries: 1 })`. rules.md corrected.
+  2. My mid-run hypothesis that GAP-G7 failed on the non-overrideable FORM_2210_PRIOR_YEAR_TAX_UNANSWERED
+     blocker was WRONG. I reproduced the compute in-process and it returned the correct 1,800 / 300, then
+     built a plausible story around a real blocking flag. The actual error was `connect ETIMEDOUT
+     ::1:4200`. The in-process check was worth doing - it PROVED the engine correct - but the flag story
+     was invention on top of it, and acting on it would have "fixed" a phantom.
+
+For contrast the previous run (0918) also ended with 3 transient failures - different tests, same
+character. Two consecutive regressions with a handful of scattered non-deterministic failures and zero
+real defects.

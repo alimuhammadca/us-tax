@@ -1,45 +1,40 @@
 
 
 
-## 2026-09-21 - V266: Schedule 1-A Part V printed into the WRONG BOXES from line 35 down
+## 2026-09-21 - sc_00383 (qualifying-child tiebreaker): the comment is right; the doc mixed tax YEARS
 
-FIVE BOXES WERE WRONG on every senior's Schedule 1-A. For sc_00380's 67-year-old with $150,000 of MAGI
-the form printed **6,000 in box 35** (the form requires 1,500), a bare **"1" in box 36a**, the deduction
-in the **SPOUSE's box 36b**, line 38's total in **box 37**, and left **box 38 blank**.
+ROW 18 IS CORRECT, and it catches an error of a kind this scenario's own arithmetic can never expose.
+The doc computes the EIC with a phaseout beginning at **$22,720 - the 2024 figure** - while using the
+**2025** maximum credit of $4,328. Mixing the years yields 1,563 where 2025 yields 1,663.
 
-★ NO TAX IMPACT, WHICH IS WHY NOTHING CAUGHT IT. Line 37 and Form 1040 line 13b were always computed
-from the correct per-person figure. Only the persisted intermediate and what the form PRINTS were wrong -
-so 1,590 green e2e tests, 2,428 green unit tests and a fully-correct refund all sailed past it. A suite
-that asserts VALUES cannot see a form that puts the right value in the wrong box.
+★ THE DOC IS INTERNALLY CONSISTENT WITH ITS OWN WRONG NUMBER, which is why nothing flagged it: it even
+derives a matching completed-phaseout point ("~$49,804" = 22,720 + 4,328/0.1598). A self-consistent
+document is not a correct one, and cross-checking the derived figure would not have helped - only the
+primary source does.
 
-TWO INDEPENDENT CAUSES, and each alone would have been enough:
+THE 2025 FORM 1040 INSTRUCTIONS SETTLE EVERY ELEMENT:
+    pp.46, 48    phaseout begins $23,350 ($30,470 MFJ) for 1+ qualifying children
+    pp.40/42/47  completed at    $50,434 ($57,554 MFJ) for 1 qualifying child
+    p.52 table   23,300-23,350 -> 4,328 (still the maximum); 23,350-23,400 -> 4,324
+    p.55 table   40,000-40,050 -> 1,663   <- this scenario's EXACT bracket, no interpolation
+Neither 22,720 nor "~49,804" appears anywhere in the 2025 instructions. The 2024 pair was 22,720 /
+49,084; the 2025 pair is 23,350 / 50,434.
 
-  1. THE VALUE. Line 35 is "Subtract line 34 from $6,000" - the per-person amount AFTER the 6%
-     reduction. We persisted the UNREDUCED 6,000, while the correct figure sat in a local
-     (perPersonAfterPhaseout) and was thrown away. V266 renames the column WITH the value rather than
-     quietly repointing it: leaving it called "base" while changing its contents would rebuild the same
-     trap for the next reader.
+OUR ENGINE WAS ALREADY RIGHT (23,350 / 4,328 / 0.1598), so us-tax-be, the printed IRS table and the
+commercial software all agree at 1,663 and only the document was wrong. Rows 20/21 follow arithmetically
+(1,000 + 1,663 + 562 = 3,225). Both trees now 14/14.
 
-  2. THE MAP. `scripts/schedule-mappings/f1040s1a.json` is HAND-CURATED and was shifted by one from
-     f2_20 onward, inventing a `line36_qualifying_senior_count` field the form does not have. I checked
-     all 54 fields geometrically against the AcroForm rects before touching anything: Parts I-IV are
-     correct, only these four were wrong. 36a/36b are AMOUNTS - each eligible person enters the FULL
-     line 35 figure, because the phaseout applies per person rather than being split - and line 37 adds
-     them.
+★ WHICH NUMBER IS AUTHORITATIVE MATTERS HERE. The EIC is **read from a table** in $50 brackets, not
+computed from a formula. The formula at the bracket midpoint (4,328 - 0.1598 x (40,025 - 23,350) =
+1,663.33) agrees with the printed 1,663, but the TABLE governs - so the control pins the table's own
+bracket boundaries (4,328 at 23,300, 4,324 at 23,350) rather than the formula's output. A 22,720
+threshold would have started the decline $630 earlier, which is exactly where the doc's 1,563 came from.
 
-★ THE SQA COMMENT IS WHAT FOUND IT. sc_00380 row 8 said "the $6,000 base appears only in the text of
-line 35, not as a printed value", and graded it N/A. Validating that claim meant asking where OUR $6,000
-goes - and the answer was "into box 35". A model that stores a number the form never prints has nowhere
-legitimate to render it, and that is precisely how it reached the wrong box. The tester was answering a
-grading row; the row was unanswerable for a real reason, and the reason was our bug.
+★ AND THE TIEBREAKER IS NOT A CLOSE CALL, though the scenario is built to look like one. §152(c)(4)(C)
+is not an AGI contest that the grandmother's $60,000 wins: when a parent CAN claim the child and does,
+the non-parent is barred OUTRIGHT. The AGI comparison only opens if NO parent claims the child, and then
+the non-parent needs an AGI above the highest parental AGI. Her higher AGI is a decoy, and nothing about
+her enters the return - she is not a dependent, not a modelled household member, not a competing claimant
+the engine weighs. The credits are the mother's by right.
 
-VERIFIED BY MEASUREMENT, NOT INFERENCE: drove the scenario through the real REST API after a FULL
-RESTART (a column RENAME needs one - hot reload will not apply it) → line35=1500, line37=1500,
-line38=1500, taxpayerSeniorEligible=true, spouseSeniorEligible=false, so 36a takes 1,500 and 36b stays
-blank. ★ An existing MFJ unit test that pinned the old 6,000 now pins **4,200** with line 37 UNCHANGED
-at **8,400** - the cleanest possible proof that the tax never moved.
-
-SCOPE: us-tax-be (compute + entity + model + mapper + V266 + curated map), us-tax/pdfs (regenerated CSV
-+ semantic PDF), us-tax-ui (elements.json + published map + component), us-tax-return-forms (assets
-only - it renders Part TOTALS, so the re-key alone lands its two writes in boxes 37 and 38). Announced
-and signed off before changing a verified preview, per the visual-change protocol.
+Sc00383SqaScenarioTest 3 tests. Suite 2,431 green.

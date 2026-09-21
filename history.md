@@ -1,40 +1,45 @@
 
 
 
-## 2026-09-21 - sc_00383 (qualifying-child tiebreaker): the comment is right; the doc mixed tax YEARS
+## 2026-09-21 - sc_00384: the comment is right, and it exposed a REAL EIC ROUNDING BUG
 
-ROW 18 IS CORRECT, and it catches an error of a kind this scenario's own arithmetic can never expose.
-The doc computes the EIC with a phaseout beginning at **$22,720 - the 2024 figure** - while using the
-**2025** maximum credit of $4,328. Mixing the years yields 1,563 where 2025 yields 1,663.
+ROW 18 IS CORRECT - the doc used the 2024 phaseout start of $22,720 with the 2025 maximum credit, the
+SAME mix of tax years as sc_00383 one scenario earlier. Printed 2025 EIC table (Form 1040 instructions
+p.55): "42,000 42,050 | 0 **1,344** 3,219 4,113". Rows 19/20 follow: 3,344 and 2,109. Both trees 25/25.
 
-★ THE DOC IS INTERNALLY CONSISTENT WITH ITS OWN WRONG NUMBER, which is why nothing flagged it: it even
-derives a matching completed-phaseout point ("~$49,804" = 22,720 + 4,328/0.1598). A self-consistent
-document is not a correct one, and cross-checking the derived figure would not have helped - only the
-primary source does.
+★ AND VALIDATING IT EXPOSED A REAL ENGINE BUG THAT NO SCENARIO HAD CAUGHT. `eicTableLookup` FLOORED the
+credit where the IRS table ROUNDS. Measured against every $50 bracket of the printed 2025 table, one
+qualifying child, single/HOH:
 
-THE 2025 FORM 1040 INSTRUCTIONS SETTLE EVERY ELEMENT:
-    pp.46, 48    phaseout begins $23,350 ($30,470 MFJ) for 1+ qualifying children
-    pp.40/42/47  completed at    $50,434 ($57,554 MFJ) for 1 qualifying child
-    p.52 table   23,300-23,350 -> 4,328 (still the maximum); 23,350-23,400 -> 4,324
-    p.55 table   40,000-40,050 -> 1,663   <- this scenario's EXACT bracket, no interpolation
-Neither 22,720 nor "~49,804" appears anywhere in the 2025 instructions. The 2024 pair was 22,720 /
-49,084; the 2025 pair is 23,350 / 50,434.
+    FLOOR    disagrees with the printed table in 250 of 541 phaseout brackets, and in ALL 15 phase-in
+    HALF_UP  disagrees in ZERO
 
-OUR ENGINE WAS ALREADY RIGHT (23,350 / 4,328 / 0.1598), so us-tax-be, the printed IRS table and the
-commercial software all agree at 1,663 and only the document was wrong. Rows 20/21 follow arithmetically
-(1,000 + 1,663 + 562 = 3,225). Both trees now 14/14.
+The phaseout rate ends in 8, so at the bracket midpoint the exact value carries a .5 fraction about half
+the time and truncation discards it. ★ THE DIRECTION MATTERS: the EIC is REFUNDABLE, so flooring
+UNDERSTATED refunds - the error always ran against the filer, on roughly half of all EIC returns.
 
-★ WHICH NUMBER IS AUTHORITATIVE MATTERS HERE. The EIC is **read from a table** in $50 brackets, not
-computed from a formula. The formula at the bracket midpoint (4,328 - 0.1598 x (40,025 - 23,350) =
-1,663.33) agrees with the printed 1,663, but the TABLE governs - so the control pins the table's own
-bracket boundaries (4,328 at 23,300, 4,324 at 23,350) rather than the formula's output. A 22,720
-threshold would have started the decline $630 earlier, which is exactly where the doc's 1,563 came from.
+★ sc_00383 PASSED ONLY BY LUCK, one scenario earlier. Its 1,663.335 floors and rounds to the same 1,663;
+this scenario's 1,343.735 is what separated them. One agreeing data point is not a verified rounding
+rule - which is exactly why this fix was measured across 541 brackets rather than the one that failed.
 
-★ AND THE TIEBREAKER IS NOT A CLOSE CALL, though the scenario is built to look like one. §152(c)(4)(C)
-is not an AGI contest that the grandmother's $60,000 wins: when a parent CAN claim the child and does,
-the non-parent is barred OUTRIGHT. The AGI comparison only opens if NO parent claims the child, and then
-the non-parent needs an AGI above the highest parental AGI. Her higher AGI is a decoy, and nothing about
-her enters the return - she is not a dependent, not a modelled household member, not a competing claimant
-the engine weighs. The credits are the mother's by right.
+★ SIX PINNED TESTS WERE CARRYING THE WRONG VALUE - two unit, four e2e - each pinned to our own floored
+output rather than to the table. One spelled the bug out in its own comment: "floor(4025 x 0.0765) =
+$307". Every one was RE-DERIVED from the printed table before being changed (308, 308, 308, 389, 4,089,
+4,089), never bumped to match the new engine. An expected value that came from the engine is not an
+oracle, and six of them agreeing with each other proved nothing.
 
-Sc00383SqaScenarioTest 3 tests. Suite 2,431 green.
+ALSO VERIFIED RATHER THAN ASSUMED: the doc's 21% dependent-care rate is CORRECT. After two consecutive
+scenarios whose docs carried rounding errors it looked like a third, but Form 2441's printed table opens
+with **$0-15,000 -> .35**, which shifts every band relative to the "35% less 1% per $2,000 over $15,000"
+description: 39,000-41,000 -> .22, 41,000-43,000 -> .21, 43,000+ -> .20. AGI 42,000 lands in the .21
+band, so 21% x $3,000 = $630 stands. Pattern-matching the previous two findings would have produced a
+false one here.
+
+★ AND THE §152(e) SPLIT NEEDS NO FORM 8332 MACHINERY. Form 2441's qualifying-person list and the EIC's
+qualifying-child list are each held SEPARATELY from the household dependent list, so "released on Form
+8332" is expressed by not claiming the dependency while still listing the child on those two forms. The
+four benefits - dependency/CTC to the father, HOH + EIC + dependent-care to the mother - divide
+themselves out of the existing data model. The custodial test asserts she has NO dependent at all and
+still holds three of the four.
+
+Sc00384SqaScenarioTest 4 tests (both legs). Suite 2,435 green; 38 line27a e2e green.

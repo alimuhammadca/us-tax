@@ -24676,3 +24676,44 @@ The backend fix makes the exchange semantically correct; the round-trip is an in
 Also of note: this was the first run on a FRESH Postgres container (Docker Desktop was down at session
 start; 1,534 changesets replayed from empty). Zero hard failures on a clean DB, against 4 failed + 3
 flaky on the accumulated one - weak evidence that the 0919 failures were environmental, as concluded.
+
+
+## 2026-09-21 - sc_00378 (OBBBA overtime phaseout): the comment is right, and the doc repeats sc_00377's error
+
+ROW 10 - THE SIGN COMMENT IS CORRECT, and it is the SAME point this tester raised on sc_00377, correct
+there too. Schedule 1-A line 20 reads "Multiply line 19 by $100" and line 21 "Qualified overtime
+compensation deduction. SUBTRACT LINE 20 FROM LINE 15" - so the reduction is printed POSITIVE 1,500 and
+the doc's -1,500 signs it the other way. Every line number in the tester's notes (14c, 15, 20, 21)
+matches the printed form exactly; this tester reads the form well and has now been right twice running
+on the same convention.
+
+★ AND THE DOC REPEATS THE CEILING ERROR, in a Part where it is equally invisible. Its key assertion
+writes CEIL((165,000-150,000)/1,000). Line 19 says the opposite - "decrease the result to the next LOWER
+whole number." 15,000/1,000 = 15 exactly, so the doc's 11,000 is right BY LUCK of a round MAGI for the
+SECOND scenario running. That is the pattern worth naming: these scenarios are written with round
+numbers, and a round number is exactly the input that cannot distinguish a floor from a ceiling. Two
+documents now carry the same wrong rule and both produced right answers.
+
+★ THE PRINTED FORM SETTLES IT, AND THE THREE PARTS DO NOT AGREE:
+    line 11 (Part II,  tips)     "decrease the result to the next LOWER whole number"   -> FLOOR
+    line 19 (Part III, overtime) "decrease the result to the next LOWER whole number"   -> FLOOR
+    line 28 (Part IV,  car loan) "increase the result to the next HIGHER whole number"  -> CEILING
+The generated semantic field map encodes the same split in its own names -
+`line19_overtime_phaseout_whole_thousands` against
+`line28_car_loan_interest_phaseout_whole_thousands_ROUND_UP`. A control seeds a $500 car-loan excess -
+HALF a bucket - and pins line 28 at 1 where line 19 would floor it to 0.
+
+★ ONE ASYMMETRY THAT IS CORRECT, AND I CHECKED BEFORE CALLING IT A GAP. Tips require BOTH
+`taxpayerReceivedQualifiedTips` AND `taxpayerTippedOccupationConfirmed`; overtime requires only
+`taxpayerReceivedQualifiedOvertime`. That is right, not a missing gate: §224 keys the tips deduction to
+an occupation that customarily and regularly receives tips, so the occupation is a SEPARATE fact, while
+§225 keys overtime to whether the pay is FLSA §7 mandated premium - which the amount itself expresses.
+Paired checkboxes on one form are not automatically symmetrical, and the reflex to "fix" the asymmetry
+would have added a field nobody needs.
+
+Also pinned: line 18's short-circuit ("If zero or less, enter the amount from line 15 on line 21"), and
+that the deduction STACKS ON the standard deduction (line 14 = 15,750 + 11,000) while never removing the
+premium from AGI - line 11 stays 165,000, which is also the MAGI phasing its own deduction down.
+
+Sc00378SqaScenarioTest 4 tests. Suite 2,424 green. Both .md files and the row-10 Expected corrected;
+SQA tree 20/20, HRB 19/20 on row 10 only (it recorded the doc's old sign with no screen citation).

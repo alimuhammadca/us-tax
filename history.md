@@ -1,49 +1,48 @@
 
 
 
-## 2026-09-21 - sc_00387 (PTC ↔ SEHI circular): four line-number comments right, and the DOC beats the software
+## 2026-09-21 - sc_00388 (IRA ↔ SS circular): the comments SPLIT, and resisting the reflex was the work
 
-★ FOUR LINE-NUMBER COMMENTS, AGAINST THREE DIFFERENT FORMS, ALL CORRECT:
-    Schedule 1  doc "line 25 = total adjustments"  → 25 is "Total OTHER adjustments (24a-24z)" = 0;
-                                                     26 is "these are your adjustments to income"
-    Schedule 3  doc "line 13 = net PTC"            → 9 is "Net premium tax credit"; 13 is a HEADER;
-                                                     15 is what feeds Form 1040 line 31
-    Form 8995   doc "line 1 = total QBI"           → 1 is the PER-BUSINESS table (1i-1v);
-                                                     2 is "Total qualified business income"
-    Form 8995   doc "line 13 = 20% income limit"   → 13 is "Subtract line 12 from line 11";
-                                                     14 is "Income limitation. Multiply line 13 by 20%"
-A fifth follows and the tester did not need to state it: line 15 takes the smaller of line 10 and line
-14, not of line 5 and line 13. Values unchanged throughout - only labels.
+EVERY DOLLAR VALUE MATCHES in both trees and in us-tax-be - 26,124 / 7,560 / 65,564 / 5,876 / 1,124 /
+440 / 32,550 / 79,550. Every recorded "failure" is a line-number claim, and they are NOT all of a kind.
 
-★ AND ON THE SUBSTANTIVE ROW THE DOCUMENT IS RIGHT AND THE COMMERCIAL SOFTWARE IS ONE ITERATION SHORT.
-It reported SEHI 6,555 / MAGI 77,133; the comment called the gap "iterative rounding", which would make
-it a wash. It is not:
+ROW 27 IS A REAL DOC ERROR: Schedule 1 line 25 is "Total OTHER adjustments (24a-24z)" and really is 0
+here; the total belongs on LINE 26. Identical to sc_00387's mislabel one scenario earlier. Corrected.
 
-    exact        S = 0.085 × (83,688 − S) → 1.085 S = 7,113.48 → S = 6,556.20
-    iterating    converges to 6,556 / 77,132 whether you ROUND or TRUNCATE at each step
-                 (both simulated across every iteration, not argued from one)
-    consistency  at 77,132: 0.085 × 77,132 = 6,556.22 → PTC 2,444 → SEHI 6,556  ✓ closes
-                 at 77,133: 0.085 × 77,133 = 6,556.31 → PTC 2,444 → SEHI 6,556  ✗ 6,555 does not
+★ BUT ROWS 39-43 ARE CORRECT ABOUT H&R BLOCK AND MUST NOT CHANGE THE DOCUMENT. They shift the Social
+Security worksheet numbering by one (7→8, 15→16, 16→17, 17→18, 18→19) - and the tester labelled them
+"(H&R numbering)", which is precisely what they are. The IRS Social Security Benefits Worksheet (Form
+1040 instructions, p.32):
+     7  Subtract line 6 from line 5                          → 59,440  provisional income
+    14  Enter the smaller of line 2 or line 13               →  4,500
+    15  Multiply line 11 by 85% (0.85)                       → 21,624
+    16  Add lines 14 and 15                                  → 26,124
+    17  Multiply line 1 by 85% (0.85)                        → 34,000
+    18  Taxable social security benefits, smaller of 16 or 17 → 26,124 → Form 1040 line 6b
+The document uses IRS numbering and is right on every one.
 
-★ THE CLEANEST TELL NEEDS NO ALGEBRA AT ALL: the enrolled plan IS the SLCSP, so the deduction and the
-credit must together exhaust the premium EXACTLY. 6,556 + 2,444 = 9,000; the software's 6,555 strands a
-dollar belonging to neither. That invariant is what the fixed-point test asserts, and it is a far better
-oracle than matching a total - it identifies an unconverged iterate on sight.
+★ THIS IS THE SINGLE HARDEST JUDGEMENT IN THE RUN SO FAR, and it is the sc_00373/374 trap repeating.
+FIVE consecutive scenarios (383-387) each contained a genuine line-number error, four of them in
+sc_00387 alone. Arriving at a sixth set of renumbering comments, the reflex is to apply them. The tester
+had even flagged the qualifier themselves. Reading the printed worksheet took one command and changed
+the answer completely: a commercial package's own layout is not a correction to the federal form.
 
-us-tax-be lands on 6,556 / 2,444 and reproduces all 13 Form 1040 rows plus the 8962 and 8995 rows.
+★ THE us-tax-hrb TREE CAUGHT THE TWO-PASS METHOD IN THE ACT. It recorded H&R Block DISPLAYING Social
+Security of 32,550 on a pre-adjustment screen before the return settled on 26,124. Two different
+taxable-SS figures inside one run is the signature of Pub. 590-A Appendix B - the strongest evidence in
+either tree that the circular is solved rather than approximated. Our controls reproduce both states:
+the same return with NO IRA contribution yields taxable SS 32,550 and AGI 79,550 exactly, which is the
+pass-1 state that fixes the §219(g) phase-out at (89,000 − 79,550)/10,000 × 8,000 = 7,560.
 
-The us-tax-hrb tree is ENTIRELY BLOCKED on this scenario by a harness limit (the 1095-A dollar amounts
-never reach the return), so it records no H&R Block behaviour and its rows are not evidence either way.
-Only the sqa tree had data here.
+Also pinned: AGE 60 MATTERS TWICE AND ONLY ONE APPLIES. It raises the IRA limit to 8,000 (7,000 + the
+age-50 catch-up), which is the base the 94.5% phase-out is applied to; it gives NO additional standard
+deduction, which needs 65. Line 12 is the flat 15,750. Conflating them would add 2,000 and move every
+figure below it.
 
-★ ONE INTERNAL NOTE, DELIBERATELY NOT FIXED: our model names the FPL getter
-`getLine5FederalPovertyLine` and the percentage `getLine6HouseholdIncomeAsPctOfFpl`, but the printed
-Form 8962 puts the FPL on **line 4** and the percentage on **line 5**, and RESERVES line 6 for future
-use. Each name is one line too high. I checked whether this was a V266 repeat - it is not: the semantic
-field map is correct (`line4_federal_poverty_line_amount`,
-`line5_household_income_as_percent_of_poverty_line`) and BOTH UI components bridge the misnamed getters
-to the right fields explicitly, so the rendered form is correct. A naming hazard, not a live defect;
-reported rather than renamed, since a rename touches the entity, model, mapper, a DB column and two UI
-components for no change in output.
+SEEDING: the IRA deduction lives on the INCOME-ADJUSTMENTS form as `iraDeductionLine20` - what the filer
+CLAIMS - and the engine applies §219(g) to that claim using the pass-1 MAGI and reduces it.
+Active-participant status comes from `isCoveredByWorkplaceRetirementPlanTaxpayer` OR W-2 box 13. Seeding
+a separate "ira-contributions" form does nothing: taxable SS comes back as the pass-1 32,550 and the
+deduction never appears.
 
-Sc00387SqaScenarioTest 4 tests. Suite 2,447 green.
+Sc00388SqaScenarioTest 4 tests. Suite 2,451 green.

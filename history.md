@@ -1,45 +1,48 @@
 
 
 
-## 2026-09-21 - sc_00384: the comment is right, and it exposed a REAL EIC ROUNDING BUG
+## 2026-09-21 - sc_00385 (Form 8621 PFIC §1291): comments correct, and NOTHING needed correcting
 
-ROW 18 IS CORRECT - the doc used the 2024 phaseout start of $22,720 with the 2025 maximum credit, the
-SAME mix of tax years as sc_00383 one scenario earlier. Printed 2025 EIC table (Form 1040 instructions
-p.55): "42,000 42,050 | 0 **1,344** 3,219 4,113". Rows 19/20 follow: 3,344 and 2,109. Both trees 25/25.
+★ THE FIRST SCENARIO IN THIS RUN WHERE THE DOCUMENT NEEDED NO CHANGE AT ALL. Five consecutive scenarios
+(377, 378, 380, 383, 384) each carried a doc error; this one does not, and saying so plainly matters as
+much as finding the others. No Expected value moved.
 
-★ AND VALIDATING IT EXPOSED A REAL ENGINE BUG THAT NO SCENARIO HAD CAUGHT. `eicTableLookup` FLOORED the
-credit where the IRS table ROUNDS. Measured against every $50 bracket of the printed 2025 table, one
-qualifying child, single/HOH:
+The comments here are a DIFFERENT KIND: almost every one reports an ABSENT FEATURE in the commercial
+software rather than a disagreement about the rule. Both trees independently found that **H&R Block 2025
+does not ship Form 8621 at all** - the us-tax-hrb tree checked the product on disk and recorded it
+missing from formAvail.xml's 165 forms, with zero hits for 8621/PFIC/1291 in its search topics. A row
+that cannot be entered is not a computation we disagree about, and "N/A" is the right entry for it.
 
-    FLOOR    disagrees with the printed table in 250 of 541 phaseout brackets, and in ALL 15 phase-in
-    HALF_UP  disagrees in ZERO
+★ THE ONE PRECISELY CHECKABLE ROUTING CLAIM IS ROW 14, AND IT IS RIGHT. Printed 2025 Schedule 2:
+    17o  …
+      p  Any interest from Form 8621, line 16f, relating to distributions from, and …
+      q  Any interest from Form 8621, line 24
+So the §1291(c) interest belongs on **17p** exactly as recorded. ★ Note 17**q** is a DIFFERENT charge -
+Form 8621 line 24, the §1294 deferred-tax election - which is why they are separate lines. Reaching for
+"the 8621 interest line" as though there were one would have picked the wrong one.
 
-The phaseout rate ends in 8, so at the bracket midpoint the exact value carries a .5 fraction about half
-the time and truncation discards it. ★ THE DIRECTION MATTERS: the EIC is REFUNDABLE, so flooring
-UNDERSTATED refunds - the error always ran against the filer, on roughly half of all EIC returns.
+ALL 13 FORM 1040 ROWS REPRODUCE, with three controls that isolate the REGIME rather than just matching
+totals:
+  * the 30,000 prior-year allocation NEVER enters AGI - switch the deferred tax off and AGI is identical
+    at 160,000. That separation is the whole of §1291(a)(1)(C).
+  * line 16 moves by exactly 37% × 30,000 = 11,100 between those two runs
+  * the interest is an OTHER TAX - removing it leaves line 16 UNCHANGED at 38,567 and moves only line 24
+    and the balance due (10,343 → 8,567)
 
-★ sc_00383 PASSED ONLY BY LUCK, one scenario earlier. Its 1,663.335 floors and rounds to the same 1,663;
-this scenario's 1,343.735 is what separated them. One agreeing data point is not a verified rounding
-rule - which is exactly why this fix was measured across 541 brackets rather than the one that failed.
+WHERE THE TREES DIVERGE IT IS SEEDING, NOT SUBSTANCE. The SQA run never entered the 10,000 current-year
+slice, so its lines 8/9/11/15/16 all shifted (5 of 12 comparable rows); us-tax-hrb entered that slice as
+1099-MISC box 3 and matched 11 of 12. The hrb reading exercises the scenario, and its implied regular
+tax of 27,467 on the resulting 144,250 confirms the doc's figure independently of us.
 
-★ SIX PINNED TESTS WERE CARRYING THE WRONG VALUE - two unit, four e2e - each pinned to our own floored
-output rather than to the table. One spelled the bug out in its own comment: "floor(4025 x 0.0765) =
-$307". Every one was RE-DERIVED from the printed table before being changed (308, 308, 308, 389, 4,089,
-4,089), never bumped to match the new engine. An expected value that came from the engine is not an
-oracle, and six of them agreeing with each other proved nothing.
+SCOPE, STATED PLAINLY: the line spec's contract is `Form1040.line16 += Form8621.PartV.line16e`, so Part
+V's allocation arithmetic is the filer's own Form 8621 work, prepared once per PFIC. Our engine goes one
+step beyond pure intake - given the prior-year allocation it applies the flat 37% itself, accurate for
+any holding period inside the 2018+ top-rate era - while the §6621 interest stays user-entered because
+it is daily-compounded at rates that change quarterly. The doc agrees: it labels its own 1,776
+"illustrative" and says the exact figure will differ.
 
-ALSO VERIFIED RATHER THAN ASSUMED: the doc's 21% dependent-care rate is CORRECT. After two consecutive
-scenarios whose docs carried rounding errors it looked like a third, but Form 2441's printed table opens
-with **$0-15,000 -> .35**, which shifts every band relative to the "35% less 1% per $2,000 over $15,000"
-description: 39,000-41,000 -> .22, 41,000-43,000 -> .21, 43,000+ -> .20. AGI 42,000 lands in the .21
-band, so 21% x $3,000 = $630 stands. Pattern-matching the previous two findings would have produced a
-false one here.
+★ SEEDING GATE: the entire §1291 branch sits behind a parent flag, `hasForm8621PficTax`. Without it the
+allocation is read by nothing and line 16 returns the plain regular tax with NO flag to say why - the
+same shape as the other line-16 box-3 write-ins (962, ECR, 8978, 965INC). Cost one run to find.
 
-★ AND THE §152(e) SPLIT NEEDS NO FORM 8332 MACHINERY. Form 2441's qualifying-person list and the EIC's
-qualifying-child list are each held SEPARATELY from the household dependent list, so "released on Form
-8332" is expressed by not claiming the dependency while still listing the child on those two forms. The
-four benefits - dependency/CTC to the father, HOH + EIC + dependent-care to the mother - divide
-themselves out of the existing data model. The custodial test asserts she has NO dependent at all and
-still holds three of the four.
-
-Sc00384SqaScenarioTest 4 tests (both legs). Suite 2,435 green; 38 line27a e2e green.
+Sc00385SqaScenarioTest 4 tests. Suite 2,439 green.

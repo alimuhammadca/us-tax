@@ -1,33 +1,40 @@
 
 
 
-## 2026-09-22 - Full regression after the 1098-e rename: 1,592 passed / 1 failed / 1 flaky
+## 2026-09-23 - Full regression: 1,589 passed / 0 failed / 5 flaky - and the FLAKE CLASS finally has a cause
 
-1,605 tests, --workers=1, 3.3h. **1,592 passed / 1 failed / 1 flaky / 11 skipped.** Run specifically to
-exercise the `1099-e` -> `1098-e` statement-id rename, which touched statement routing, the shell's form
-dispatch and both income-adjustments components.
+1,605 tests, --workers=1, 3.4h. **1,589 passed / 0 FAILED / 5 flaky / 11 skipped.** No code had changed
+since the previous run, so the run itself was expected to be uneventful. The five flaky tests were not.
 
-★ THE RENAME CAME THROUGH CLEAN, and that is what this run was for. 27+ statement-picker /
-income-adjustments specs passed, and NEITHER failure references `1098-e` or `1099-e` (checked, not
-assumed). The failure mode that would have mattered - a missed call site yielding a silently EMPTY
-statement list rather than a loud error - did not appear.
+ALL FIVE FIRST-ATTEMPT ERRORS WERE NETWORK-LEVEL, never an assertion about a tax figure:
+    §469 bridge          page.evaluate: TypeError: Failed to fetch
+    Form 5405 bridge     page.evaluate: TypeError: Failed to fetch
+    Low IRA flow         Test timeout of 120000ms exceeded
+    pub974 B2            connect ETIMEDOUT ::1:4200
+    Form 8959 Part II    connect ETIMEDOUT ::1:4200
+Every one passed on retry. All five also ran 2-10x their normal duration (24.5s, 24.5s, 2.0m, 27.9s,
+26.5s against 5-11s baselines), which is what pointed away from logic and toward the transport.
 
-THE TWO FAILURES, from the JSON reporter:
-  line16-tax:412 (1291TAX)  `apiRequestContext.put: connect ETIMEDOUT ::1:4200` - a network timeout to
-        the UI proxy on a PUT of address-taxpayer. Marked flaky (passed on its retry) and passes on
-        re-run. Transient.
-  line1h:135 (PSO)          attempt 0: Save button `Expected: enabled / Received: disabled`
-                            attempt 1: `Unable to create 1099-r statement entry via API`
-        TWO DIFFERENT ERROR MODES across the two attempts, which is itself the evidence: a deterministic
-        defect does not change its symptom. Neither is an assertion about a tax figure.
+★ AND THE `::1` IN THOSE ERRORS WAS THE CLUE. The two dev servers sit on OPPOSITE SINGLE STACKS:
+    backend        127.0.0.1:8080   IPv4 ONLY
+    UI dev server  [::1]:4200       IPv6 ONLY
+and `proxy.conf.json` targeted `http://localhost:8080`, which resolves **IPv6 first**. So every proxied
+/api call attempted ::1:8080, found nothing listening, and fell back to IPv4.
 
-★ AND I COULD NOT REPRODUCE THE PSO ONE TO DIAGNOSIS, so I did not patch it. In isolation: 4 of 4 clean
-at ~10.5s with --retries=0, plus 2 more clean and 1 flaky in an earlier batch - roughly 1-in-4 under
-load, 0-in-6 alone. The flakiness only manifests under full-suite contention. Contrast the autofill hang
-last run, where the call log named the cause precisely and a real fix followed; here there is nothing to
-read. Recorded as an open flake rather than papered over with a speculative wait.
+MEASURED, NOT INFERRED:
+    connect over 10 calls    localhost:8080    2.126s   (~213ms each)
+                             127.0.0.1:8080    0.048s   (~4.8ms each)
+a **~45x** difference, entirely the doomed IPv6 attempt. And the previous UI dev log carried **451**
+'http proxy error' / 445 ECONNREFUSED entries; the fresh log after the fix carries **zero**. Fixed by
+pointing both proxy targets at 127.0.0.1 (requires a dev-server restart - proxy config is read at
+startup).
 
-The PSO compute path has not changed this session - the most recent commit touching it long predates
-today - so nothing in the 1098-e work or the EIC rounding fix is implicated.
+★ HONEST LIMIT: this is not proved to eliminate the flakes. The fresh log is minutes old under light
+traffic, and only another full regression will show whether the retry-level failures stop. What IS proved
+is the mechanism and that the wasted connect is gone. Recorded that way rather than as a victory.
 
-Run time 3.3h, the fastest of the four full regressions this week (4.5h, 3.4h, 3.3h).
+★ WHY IT TOOK FOUR RUNS TO SEE. The same class had appeared every time - 0919 (ETIMEDOUT ::1:4200 on
+GAP-G7), 0921 (Unexpected end of JSON input), 0922b (ETIMEDOUT ::1:4200), and here - and each time I
+correctly classified it as "transient network" and moved on, because each time the retry passed and there
+was a real defect elsewhere to fix. Classifying a failure correctly is not the same as explaining it. The
+address was printed in the error text every single time.

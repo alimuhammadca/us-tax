@@ -1,43 +1,33 @@
 
 
 
-## 2026-09-21 - Full e2e regression: 1,590 passed / 4 failed, THREE real fixes and one transient
+## 2026-09-22 - Full regression after the 1098-e rename: 1,592 passed / 1 failed / 1 flaky
 
-1,605 tests, --workers=1, 4.5 hours. **1,590 passed / 4 failed / 11 skipped.** Unlike the previous two
-runs, most of these were REAL.
+1,605 tests, --workers=1, 3.3h. **1,592 passed / 1 failed / 1 flaky / 11 skipped.** Run specifically to
+exercise the `1099-e` -> `1098-e` statement-id rename, which touched statement routing, the shell's form
+dispatch and both income-adjustments components.
 
-★ TWO MISSED EIC PINS FROM THE ROUNDING FIX, both confirmed against the printed 2025 EIC table, and both
-showing the engine returning EXACTLY the value derived from it:
-    line1i-combat-pay   expected /\$307\.00/, received "$308.00"
-    se-interaction:54   expected 336, received 337
-The combat-pay spec needed FOUR edits: two assertions, the derived delta ($649 − $307 = $342 → $341), and
-two stale comments (one still said $306, older than the 307 it sat beside).
+★ THE RENAME CAME THROUGH CLEAN, and that is what this run was for. 27+ statement-picker /
+income-adjustments specs passed, and NEITHER failure references `1098-e` or `1099-e` (checked, not
+assumed). The failure mode that would have mattered - a missed call site yielding a silently EMPTY
+statement list rather than a loud error - did not appear.
 
-★ WHY THEY ESCAPED THE FIRST SWEEP IS THE LESSON. After the sc_00384 fix I grepped for
-`earnedIncomeCredit` model assertions and corrected six pins. That sweep could not see the RENDERED UI
-TEXT pins (`toHaveText(/\$307\.00/)`) or the DERIVED DELTA — both are EIC values that never mention the
-field name. A value-based change needs sweeping by VALUE as well as by field. Swept both forms now, and
-separately verified the one remaining pin in an unrun spec (`toBe(1811)`, 3 children) is genuinely
-unaffected — exact 1811.25, where floor and round agree — rather than pre-emptively "fixing" it.
+THE TWO FAILURES, from the JSON reporter:
+  line16-tax:412 (1291TAX)  `apiRequestContext.put: connect ETIMEDOUT ::1:4200` - a network timeout to
+        the UI proxy on a PUT of address-taxpayer. Marked flaky (passed on its retry) and passes on
+        re-run. Transient.
+  line1h:135 (PSO)          attempt 0: Save button `Expected: enabled / Received: disabled`
+                            attempt 1: `Unable to create 1099-r statement entry via API`
+        TWO DIFFERENT ERROR MODES across the two attempts, which is itself the evidence: a deterministic
+        defect does not change its symptom. Neither is an assertion about a tax figure.
 
-★ AND THE AUTOFILL HANG WAS NOT A RACE, which is where I was heading before reading the call log.
-`statement-recipient-ssn-autofill` had been timing out at the full 180s about half the time, and the
-obvious story was the known post-person-tab-switch race. The `check()` call log says otherwise: the click
-SUCCEEDS, navigations finish, and THEN it hangs. Cause: the checkbox is fully controlled —
-`<input [checked]="isSelected(form.id)" (change)="toggle(...)">` inside a `<label class="selection-card">`
-— and `toggle()` navigates to the statement form. Playwright's `check()` clicks and then VERIFIES the box
-reads checked, so it retried forever against a node the navigation had already re-rendered. It passed
-only when the timing happened to favour it, which is why it read as a flake for months rather than a
-wrong interaction.
+★ AND I COULD NOT REPRODUCE THE PSO ONE TO DIAGNOSIS, so I did not patch it. In isolation: 4 of 4 clean
+at ~10.5s with --retries=0, plus 2 more clean and 1 flaky in an earlier batch - roughly 1-in-4 under
+load, 0-in-6 alone. The flakiness only manifests under full-suite contention. Contrast the autofill hang
+last run, where the call log named the cause precisely and a real fix followed; here there is nothing to
+read. Recorded as an open flake rather than papered over with a speculative wait.
 
-Clicking the CARD instead (the real user path — the label forwards the click) took it from ~50% hard-fail
-with 3-minute hangs to **9 of 10 runs clean on first attempt**. The card is also now waited for
-explicitly, so a future failure lands named in 20s instead of as a bare "Test timeout exceeded" with
-nothing to go on. ★ RESIDUAL, STATED PLAINLY: 1 of those 10 still needed its retry. The dominant cause is
-fixed; that remainder is not diagnosed.
+The PSO compute path has not changed this session - the most recent commit touching it long predates
+today - so nothing in the 1098-e work or the EIC rounding fix is implicated.
 
-THE FOURTH, `line13a-qbi` "SyntaxError: Unexpected end of JSON input", was an empty response body — the
-Vite dev server logged `ECONNREFUSED` to the backend inside the run window. Passes on re-run, no change.
-
-Also worth recording: this run took 4.5h against the previous 3.5h, and `medicaid-waiver` alone is now
-9.2m. Nothing was done about that.
+Run time 3.3h, the fastest of the four full regressions this week (4.5h, 3.4h, 3.3h).

@@ -1,55 +1,66 @@
-## 2026-10-01 - Form 1099-DA box-1: reading order CANNOT resolve it, so the cells are read by geometry
+## 2026-10-02 - Form 5498 captured 4 fields of thirty-odd, and ONE ratio could not fix it
 
-Reported as three separate OCR bugs on `1099-da.pdf`: box 1f and 1g transposed, box 1b dropped, box 1h
-never populated. One defect. Azure's key-value pass bleeds a printed row's two amounts into the
-RIGHT-hand box's value and leaves the left one holding a bare `"$"`:
+Reported as "the OCR service was not able to capture most of the form". It captured four values
+on the PNG, five on the PDF, and one of the four was wrong: box 1 held `1545-0747`, the OMB
+number.
 
-    pdf:  1f => "$"   1g => "10001 $ 135"   1h => "$"   1i => "65 $ 89"
-    png:  1f => -     1g => "$ 135 10001"   1h => "$"   1i => "65 $ 89"
+★ THE CONFIGURED LABEL MAP WAS NEVER GOING TO WORK. Its eight keys were invented names rather
+than anything Azure returns (`IRAContributions`, `FMVOfAccount`), and matching is camelCase-token
+CONTAINMENT against the key-value label, so `IRAContributions` needed only "ira" and
+"contributions" somewhere in it:
 
-★ THE TWO RENDERS DISAGREE ON THE ORDER. 1f's 10001 is **first** in the PDF's string and **second** in
-the PNG's. The existing repair split that string and dealt the numbers out by position - `nums.get(0)`
-to 1g, the last to 1f - which is right on the PNG and transposed on the PDF. It was never a bug in the
-splitting; **no ordering rule can work at all**, because the order follows OCR reading order and that is
-not a property of the form. The content lines are no better: the PDF emits a run of labels and then a run
-of values, the PNG interleaves them, and neither layout has a stable "value after label" relationship.
+    "1 IRA contributions (other OMB No."              => 1545-0747   <- matched; the OMB number
+    "than amounts in boxes 2-4, 8-10, 13a, and 14a)"  => 4001        <- the real value
 
-    pdf:  1f Proceeds / 1g Cost or other basis / 1 London Street / 21 / $ 10001 / $ 135
-    png:  if Proceeds / 1 London Street / 21 / $ / 1g Cost or other basis / $ / 135 ... / 10001
+Azure had CHOPPED box 1's label across two key-value pairs, so the value sits under a key that is
+the tail of the label text. Relabelling cannot reach that. And the key-value pass is unusable on
+this form anyway: it bleeds each cell's amount into its right-hand neighbour (box 3's 4003 arrives
+under "4 Recharacterized contributions", box 8's under box 9, likewise 13a, 14a and 15a) and drops
+box 10 entirely.
 
-I had proposed pairing N consecutive labels with the N values that follow. That would have fixed the PDF
-and **broken the PNG**, where 10001 is emitted three lines further down, after "Cambridge". Checking the
-second render before building is what caught it.
+So the boxes and the address block are now read from the PRINTED LAYOUT - the mechanism yesterday's
+1099-DA box-1 fix introduced, generalised to what this form needs: rows of three cells
+(13a/13b/13c, state/country/ZIP); rows far taller than their labels, so a cell's bottom edge is the
+NEXT row's labels rather than a multiple of the label height; a two-column page, so a row carries
+an explicit right edge measured from the right column's leftmost label, or the address block runs
+to the page margin and claims the boxes beside it; and labels printed twice, once per party,
+selected by position DOWN THE PAGE and never by OCR reading order, which the two renders disagree
+about. Box 7's checkboxes are read by EXACT key-value label, because "Roth IRA" as a substring hits
+"3 Roth IRA conversion amount" first and consumes its only slot.
 
-★ GEOMETRY IS STABLE WHERE ORDER IS NOT. Normalised against page width the cells land in the same place
-on both renders - one measured in inches on an 8.5-wide page, the other in pixels on an 852-wide one:
+★ THE MISTAKE WORTH KEEPING: ONE THRESHOLD, TWO LAYOUTS. The labels wrap - "6 Life insurance cost
+included / **in box 1**" made box 6 report `1`, and "15a FMV of certain specified / **assets**"
+made box 15a report `"assets 4014"` - so a cell has to start below its label's wrapped block, not
+below its label's first line. I measured the spacing on both renders: a wrapped line follows its
+label by at most 0.27 label-heights, while the nearest a value ever comes is 0.40. A 0.33 threshold
+sits cleanly between them.
 
-    label 1f  x0  0.488 (pdf) / 0.479 (png)        10001  x0  0.608 / 0.607
-    label 1g  x0  0.652 / 0.658                    135    x0  0.787 / 0.797
+And applying it form-wide BROKE THE PNG, dropping the entire trustee block - name, street, city,
+state - plus the participant's name and state/country/ZIP. In the left-hand address block the cells
+are short and the value is written TIGHTER under its label (0.21) than a wrapped line is. The
+measurement was sound; the generalisation was not. I had derived it from the numbered boxes and
+assumed it described the form. Absorption is now applied per table rather than form-wide (the
+address labels are single-line, so the question does not arise there), with a second guard that a
+line which is itself a plain value - an amount, a year, a date, a short code - is never absorbed,
+whatever the spacing. That keeps `PC`, `2024` and `04/15/2027` safe where the gap runs near the
+threshold.
 
-So the printed layout itself resolves it, and the rule is just a statement of that layout: **a value
-belongs to the rightmost label in its row whose left edge is at or left of the value's left edge.** No
-tolerance constant - an amount is right-aligned in its cell, so its left edge always lands inside its own
-cell and clear of the next cell's label. Box 1b is the same defect with one cell: Azure returns an empty
-key-value for it although the word sits plainly under the label.
+★ AND A TEST THAT AGREED WITH ME FOR THE WRONG REASON. The first mutation check - inverting the
+per-cell top - turned only 1 of 11 cases red. The box 6 cases should have failed and did not: I had
+modelled the wrapped line as a single glyph reading "in box 1", while production builds glyphs from
+WORDS, so the bare `1` that was the actual defect never appeared in the fixture. Rebuilt from the
+measured word boxes; the same mutation now turns 3 red, and removing the column right edge turns 1.
 
-GUARD: a row is overwritten only when geometry reads BOTH its cells - a complete, self-consistent row.
-Anything else fills blanks only, so a render this does not recognise keeps whatever the old repair gave.
+MEASURED, NOT ASSUMED. 4-5 fields -> **45**, and the PNG and PDF outputs are now byte-identical.
+Every value matches the fixture: boxes 1-6 = 4001-4006, 8/9/10 = 4007/4008/4009, 12a 04/15/2027,
+12b 4010, 13a/b/c 4011/2024/PC, 14a/b 4012/RP, 15a/b 4014/SA, all four account-type checkboxes,
+CORRECTED, box 11, both address blocks, ACCT-4013, tax year 2026. 1099-DA re-verified
+byte-identical on both renders after the shared helpers were generalised; 1099-A unchanged. Unit
+suite 2,652 / 0 failures.
 
-★ 1b NEEDED A RIGHT EDGE, AND THE PAGE EDGE IS NOT IT. 1b has no right-hand box, and the first cut read
-the cell out to the page edge and produced `"KOKO For State Tax"`: the "Copy 1 / For State Tax Department"
-stub sits at x 7.19 of 8.5 in the same horizontal band. Fixed by reading the cell from the value outward -
-start at the word under the label, keep taking words while the gap stays within a label-height. Word
-spacing inside a name is hundredths of an inch; the jump to the next column is 2.76 inch. Not close.
-
-VERIFIED, NOT ASSUMED. Full field-set diff of the live extraction, before vs after, on both renders:
-the PDF shows exactly the three reported fixes and nothing else (46 -> 48 fields); **the PNG diff is
-empty** - 58 fields, byte-identical. All of 1a-1i now match the fixture on both: 1b=KOKO, 1f=10001,
-1g=135, 1h=65, 1i=89. Unit suite 2,625 / 0 failures.
-
-The decision logic was extracted out of the Azure SDK types into `attributeRowCells` /
-`readCellUnderLabel` over a plain `Glyph` record, so it can be pinned directly:
-`GenericFieldMapper1099DaCellGeometryTest`, 17 cases, every coordinate MEASURED from the real fixtures -
-including one that asserts the PDF and PNG agree *given opposite word orders*, and one that asserts the
-amounts from the row below are not pulled up. Mutation-checked: inverting the single comparison that does
-the work turns 8 of the 17 red, so they are not passing vacuously.
+Also today, before this: 1099-DA box 1f/1g transposed, 1b dropped and 1h never populated turned out
+to be one defect - the two renders of a fixture disagree on OCR reading order, so the split-and-deal
+repair was correct on the PNG and transposed on the PDF, and the label-pairing scheme I had proposed
+would have fixed the PDF and broken the PNG. And 1099-A wrote the lender name twice because the
+combined name/address composer had been written out once per form, so the guard added for the
+1099-B payer box reached none of 1099-A, 1099-C or 1099-CAP.

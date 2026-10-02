@@ -1,66 +1,63 @@
-## 2026-10-02 - Form 5498 captured 4 fields of thirty-odd, and ONE ratio could not fix it
+## 2026-10-02 - Form 1097-BTC: rejected outright, then three things Form 5498 never had to face
 
-Reported as "the OCR service was not able to capture most of the form". It captured four values
-on the PNG, five on the PDF, and one of the four was wrong: box 1 held `1545-0747`, the OMB
-number.
+Reported as "this form is not supported" on upload. `1097-btc` had no entry in
+`field-mappings.json` at all, so `fieldMapper.supports()` was false and the extract endpoint
+400'd every upload. The statement catalog, the UI component and both fixtures were already in
+place — only the extraction config was missing.
 
-★ THE CONFIGURED LABEL MAP WAS NEVER GOING TO WORK. Its eight keys were invented names rather
-than anything Azure returns (`IRAContributions`, `FMVOfAccount`), and matching is camelCase-token
-CONTAINMENT against the key-value label, so `IRAContributions` needed only "ira" and
-"contributions" somewhere in it:
+Adding the entry alone would have bought little. Azure's key-value pass scrambles this form the
+way it scrambles Form 5498, and differently on each render. On the PDF every box is shifted one
+place:
 
-    "1 IRA contributions (other OMB No."              => 1545-0747   <- matched; the OMB number
-    "than amounts in boxes 2-4, 8-10, 13a, and 14a)"  => 4001        <- the real value
+    "2a Code"                => 5001      <- box 1's value
+    "2b Unique identifier"   => 5002      <- box 2a's value
+    "RECIPIENT'S name"       => 887996655 <- the recipient's TIN
 
-Azure had CHOPPED box 1's label across two key-value pairs, so the value sits under a key that is
-the tail of the label text. Relabelling cannot reach that. And the key-value pass is unusable on
-this form anyway: it bleeds each cell's amount into its right-hand neighbour (box 3's 4003 arrives
-under "4 Recharacterized contributions", box 8's under box 9, likewise 13a, 14a and 15a) and drops
-box 10 entirely.
+and box 1 gets no pair of its own at all. So it is read from the printed layout, and yesterday's
+5498 reader becomes a `CellLayout` that both forms supply — 5498's tables, wrap flags and
+checkbox list carried across unchanged and re-verified byte-identical afterwards.
 
-So the boxes and the address block are now read from the PRINTED LAYOUT - the mechanism yesterday's
-1099-DA box-1 fix introduced, generalised to what this form needs: rows of three cells
-(13a/13b/13c, state/country/ZIP); rows far taller than their labels, so a cell's bottom edge is the
-NEXT row's labels rather than a multiple of the label height; a two-column page, so a row carries
-an explicit right edge measured from the right column's leftmost label, or the address block runs
-to the page margin and claims the boxes beside it; and labels printed twice, once per party,
-selected by position DOWN THE PAGE and never by OCR reading order, which the two renders disagree
-about. Box 7's checkboxes are read by EXACT key-value label, because "Roth IRA" as a substring hits
-"3 Roth IRA conversion amount" first and consumes its only slot.
+★ THREE THINGS THIS FORM NEEDED THAT 5498 DID NOT, each found only by running both renders.
 
-★ THE MISTAKE WORTH KEEPING: ONE THRESHOLD, TWO LAYOUTS. The labels wrap - "6 Life insurance cost
-included / **in box 1**" made box 6 report `1`, and "15a FMV of certain specified / **assets**"
-made box 15a report `"assets 4014"` - so a cell has to start below its label's wrapped block, not
-below its label's first line. I measured the spacing on both renders: a wrapped line follows its
-label by at most 0.27 label-heights, while the nearest a value ever comes is 0.40. A 0.33 threshold
-sits cleanly between them.
+**A lone `$` is a value, not label text.** Each monthly box prints its currency symbol between
+the label and the figure, and it lands inside the gap that marks a wrapped label line. Absorbed,
+it took the figure below it out of the cell — **seven of the twelve monthly boxes vanished, and
+which seven differed by render**, because the gaps sit within thousandths of the threshold.
 
-And applying it form-wide BROKE THE PNG, dropping the entire trustee block - name, street, city,
-state - plus the participant's name and state/country/ZIP. In the left-hand address block the cells
-are short and the value is written TIGHTER under its label (0.21) than a wrapped line is. The
-measurement was sound; the generalisation was not. I had derived it from the numbered boxes and
-assumed it described the form. Absorption is now applied per table rather than form-wide (the
-address labels are single-line, so the question does not arise there), with a second guard that a
-line which is itself a plain value - an amount, a year, a date, a short code - is never absorbed,
-whatever the spacing. That keeps `PC`, `2024` and `04/15/2027` safe where the gap runs near the
-threshold.
+**A wrapped line is bounded by overlap with its own label, not by the cell.** The Copy B
+instruction column runs down the right of the form, level with the boxes, and its first line
+falls 0.02in below box 5f's label against a 0.03in wrapped-line gap. Spacing alone cannot tell
+it from a continuation, and absorbing it pushed four more cells' tops below their own values. A
+wrapped line always begins UNDER its own label, which excludes the instruction column by
+construction — and also survives the sub-pixel difference between a label's x0 and its
+continuation's, which was why the issuer block's second label line was reading as part of the
+address.
 
-★ AND A TEST THAT AGREED WITH ME FOR THE WRONG REASON. The first mutation check - inverting the
-per-cell top - turned only 1 of 11 cases red. The box 6 cases should have failed and did not: I had
-modelled the wrapped line as a single glyph reading "in box 1", while production builds glyphs from
-WORDS, so the bare `1` that was the actual defect never appeared in the fixture. Rebuilt from the
-measured word boxes; the same mutation now turns 3 red, and removing the column right edge turns 1.
+**A multi-line text cell is assembled line by line.** Sorting the whole cell left to right
+interleaves them, and the issuer block came out as
 
-MEASURED, NOT ASSUMED. 4-5 fields -> **45**, and the PNG and PDF outputs are now byte-identical.
-Every value matches the fixture: boxes 1-6 = 4001-4006, 8/9/10 = 4007/4008/4009, 12a 04/15/2027,
-12b 4010, 13a/b/c 4011/2024/PC, 14a/b 4012/RP, 15a/b 4014/SA, all four account-type checkboxes,
-CORRECTED, box 11, both address blocks, ACCT-4013, tax year 2026. 1099-DA re-verified
-byte-identical on both renders after the shared helpers were generalised; 1099-A unchanged. Unit
-suite 2,652 / 0 failures.
+    province, Meridian Hartford, country, Municipal CT 06103 ZIP or Finance foreign postal
+    Authority, code, and 40 telephone Statehouse no. Sq,
 
-Also today, before this: 1099-DA box 1f/1g transposed, 1b dropped and 1h never populated turned out
-to be one defect - the two renders of a fixture disagree on OCR reading order, so the split-and-deal
-repair was correct on the PNG and transposed on the PDF, and the label-pairing scheme I had proposed
-would have fixed the PDF and broken the PNG. And 1099-A wrote the lender name twice because the
-combined name/address composer had been written out once per form, so the guard added for the
-1099-B payer box reached none of 1099-A, 1099-C or 1099-CAP.
+★ AND THE MUTATION CHECK CAUGHT ME AGAIN, IN THE SAME PLACE AS YESTERDAY. Two of four mutations
+turned tests red and two did not. The first miss was structural — `labelBlockBottom` took an
+Azure SDK page, so the tests could not reach it at all and were asserting around it; pulled out
+onto plain line boxes, as `attributeRowCells` had been. The second was a fixture choice: I had
+written the instruction-column case with a line 0.14in below the label, which the spacing guard
+rejects on its own, so the bound I was trying to pin was never exercised. Using the line that
+was ACTUALLY absorbed, 0.02in below, the mutation fails as it should. Yesterday's lesson was that
+a test can agree with you for the wrong reason; today it was that the fixture has to be the case
+that broke, not one that merely resembles it.
+
+MEASURED, NOT ASSUMED. 27 fields, PNG and PDF byte-identical, every value matching: box 1 = 5001,
+2a = 5002, 2b = UID-5003, 3 = CREB, 5a-5l = 5004-5015, 6 = "Sample comment 5016", both issuer
+checkboxes, CORRECTED, the issuer and recipient blocks, tax year 2026. Every extracted key is one
+the component's `model` declares, so the HTML replica renders it through `(extractionApplied)`.
+Geometry writes now go through `coerceValue`, so a field named `*Amount` holds a number like
+every other path produces. Re-verified live: 5498 still 45/45 and unchanged, 1099-DA identical to
+its baseline, 1099-A and 1099-C unchanged. Unit suite 2,661 / 0 failures.
+
+Yesterday, for the record: Form 5498 went from 4-5 fields to 45 on the same mechanism, after one
+spacing threshold measured on its numbered boxes turned out not to describe its address block and
+dropped the entire trustee section on the PNG. Before that, 1099-DA's transposed 1f/1g and 1099-A's
+duplicated lender name.

@@ -1,60 +1,59 @@
-## 2026-10-03 - Schedule K-1 (1065), the answer key used first, and a gap I wrongly called external
+## 2026-10-03 - Schedule K-1 (1120-S): the third of three, and what eight forms of this taught
 
-Same defect as the 1041 and the same day: `schedule-k1-1065` has a config entry, so uploads
-returned 200, but its field map was empty and nothing was ever recognised.
+Last of the K-1s, same defect as the other two: a config entry with an empty field map, so
+`schedule-k1-1120s` uploads returned 200 and populated nothing.
 
-★ THE ANSWER KEY WENT FIRST THIS TIME, AND IT EARNED ITS PLACE. Yesterday's entry ended by saying
-the fixture's AcroForm plus the component's slot map is a complete answer key and should be the
-first move on the remaining two K-1s. Doing that on the 1065 produced all 111 field names and 104
-values before a line of layout was written, and then caught, on the first run, the same class of
-mistake that on the 1041 I only found after being corrected: Part III's right sub-column is
-irregular — some printed rows carry a code the component models, some only a container slot, and
-some print an amount with no code at all — and skipping those one-token rows shifted every row
-below them into the wrong box. On the 1041 that shift reached the user. Here it never left the
-loop.
+It took about an hour against the 1041's day, because the method had settled. Build the answer key
+first - the fixture's AcroForm fields are authored with rectangles, the component carries a slot
+-> semantic map, and together they name every field and give its value - then write the layout
+against it and check field by field. 114 slots, every one resolved: the cleanest key of the three.
+The form shares the 1065's frame and column positions exactly, so most of it was a table.
 
-Two mechanisms the form needed:
+**114 of 114 on the PNG, 113 on the PDF.** The single miss is not the mapper's: the PDF render
+OCRs box 10 row 5's 715 as 71 - the same artifact as the 1065's 375 read as 37, and both PNGs read
+them correctly.
 
-**A list whose rows name their field.** The 1041's boxes 11-14 take a fixed 3 / 3 / 5 / 8 of their
-column, so counts were enough. The 1065's boxes 14-21 are not regular, so a list now names the
-field for every row in order, with a null where that row's code is not modelled, and a lone token's
-side of the row is decided by its position.
+★ THREE REFINEMENTS, ALL SHARED, ALL FROM THE RENDERS DISAGREEING.
 
-**A row whose values sit beside the label.** Part II is a grid — Profit, Loss and Capital each
-carry a Beginning and an Ending figure to their right, and items C, H2, I1, L and N put their value
-beside the label too. Every row the reader had handled until now put its value underneath. Item N
-also forced a label index that counts from the BOTTOM of the page: "Beginning" and "Ending" are
-printed four times down that column and item N's are simply the last of each.
+**A side row skips only what its anchor MATCHED, not its whole line.** Skipping the line is right
+for "What type of entity is this shareholder?", whose trailing word is label text, and wrong for
+"TIN 556-77-8811", where the line swallows the value - and which of the two you get differs by
+render. The boundary comes from how far through the line's text the match ends.
 
-★ AND THEN I CALLED A SOLVABLE GAP SOMEONE ELSE'S. Five checkboxes came back unread — Final K-1,
-item I2, item K3, box 16, box 22 — and I reported them as "not mine to fix", on the grounds that
-Azure's key-value pass does not return them. The user's reply was that the checkboxes were the
-problem. They were right, and the evidence was one API field away: `pages[].selectionMarks` had
-all eighteen marks, with positions and states, the whole time. The key-value pass reports only
-some of a form's checkboxes and the choice is the model's, not the form's — and the ones it drops
-are exactly those printed at the END of a long label, where no text follows the box for it to pair
-with.
+**A cell's text is trimmed of non-alphanumerics at its edges.** The rule printed between the code
+and amount columns arrived glued to a figure, as "|460".
 
-So a checkbox is now matched to the mark NEAREST its own label, on that label's row, whichever
-side it sits. Where two share a row ("General partner" beside "Limited partner", "Yes" beside
-"No") nearest-to-the-label separates them, because each label begins just after its own box. The
-key-value pass stays as a fallback for a box whose reported label is not what the form prints —
-Form 5498's box 7 answers to "IRA", "SEP" and "SIMPLE" against a line beginning "7 IRA".
+**The tax-year fields are named by the form.** This one splits the beginning date into two fields
+where the 1041 and 1065 use three.
 
-The lesson is not about checkboxes. "The tool does not return it" was a statement about ONE output
-of the tool, and I let it stand for the tool. Worth a second look before any gap gets labelled
-external.
+Also: an unanchored "TIN" matched "Aus-tin, TX" first, the search being case-insensitive. Word
+boundaries, rather than re-anchoring to a line start the renders disagree about.
 
-MEASURED, NOT ASSUMED. 104 of 104 on the PNG and 103 on the PDF, checked field by field against the
-fixture's AcroForm through the component's slot map. The single remaining miss is not the mapper's:
-the PDF render OCRs box 11's 375 as 37, and the PNG reads it correctly. Re-verified live: K-1 1041
-still 74/74 and byte-identical, and 1099-SB, 1099-LS, 1097-BTC, 5498, 1099-DA, 1099-A and 1099-C
-all unchanged. Unit suite 2,675 / 0 failures.
+★ WHAT THE EIGHT FORMS ACTUALLY TAUGHT. Every one of them failed the same way at root: I inferred
+a rule from the forms in front of me and it was really a coincidence of them.
 
-Still open on this form: nothing. Still open on the family: the 1120-S K-1, which has the same slot
-map and should now go quickly — the selection-mark reader is shared, so its checkboxes come free.
+    the wrapped-label gap      a threshold, then per column, then per row, then deleted outright
+                               once a row could simply NAME its own last label line
+    reading order              stable within a render, never between two of them
+    column extents             derivable from labels, until a form printed its box numbers to the
+                               left of the labels they belong to
+    "the tool cannot do it"    true of ONE output of the tool; selectionMarks had every checkbox
 
-Earlier this week on the same machinery: Schedule K-1 (1041), Form 1099-SB (which retired the
-wrapped-label spacing rule for each row naming its own last label line), Forms 1099-LS and 1097-BTC
-(both rejected outright for want of a config entry), Form 5498 (4-5 fields to 45), and Form
-1099-DA's transposed 1f/1g with Form 1099-A's duplicated lender name.
+The correction each time was not a better inference but a different KIND of fact - something the
+printed form or the fixture states outright, rather than something measured off it. The answer key
+is the same move: the PDF already knows which box each value belongs to, so stop deducing it.
+
+★ AND THE HABIT THAT KEPT FAILING. Four times the mutation check agreed with me for the wrong
+reason, and three of those were one mistake: the fixture resembled the case instead of being it -
+a label modelled as one glyph where the page gives words, a line chosen 0.14in below its label
+where the real one sits 0.02in below, two-decimal coordinates where the rule turns on the third.
+The fourth proved nothing at all: `while (false)` does not compile, and I read the build error as
+a pass. A mutation that turns nothing red is not evidence; it is a question about the fixture.
+
+MEASURED, NOT ASSUMED. Re-verified live across everything sharing this machinery: K-1 1065 still
+104/104, K-1 1041 74/74 byte-identical, and 1099-SB, 1099-LS, 1097-BTC, 5498, 1099-DA, 1099-A and
+1099-C unchanged. Unit suite 2,675 / 0 failures.
+
+The three K-1s are done. Still open in the statements sweep: the `w-2.pdf` box-12 amounts and box
+14b, `employeeSuffix` on `w-2-as.pdf` and `w-2.pdf`, `1099-g.png`'s duplicated phone fragment, and
+mapping an Azure 429 to 503 rather than a bare 500.

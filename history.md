@@ -1,3 +1,52 @@
+## 2026-10-04 - Form 5498-ESA, the second of the eight, and a test that credited the wrong rule
+
+Same cause as its sibling: no `5498-esa` key in field-mappings.json, so every upload extracted
+nothing. **0 fields -> 22, identical on both renders, every one matching the fixture's AcroForm**,
+first pass. Six of the eight are left: 5498-qa, 1098, 1098-c, 1098-q, 3922, 1042-s.
+
+The frame is 5498-SA's and most of it carried straight across - two numbered boxes instead of
+six, no telephone (so neither the SideRow nor the null-field boundary row that form needed), and
+the year printed level with box 2 rather than box 1. The left region is again bounded by where
+the box labels begin rather than by a page fraction, which mattered again: this pair is cropped
+differently too, the PDF a full page and the PNG tight to the form.
+
+Its own wrinkle is the trustee block, which splits its four address labels across two printed
+lines while all four values sit on one line below both:
+
+    City/town                                    ZIP/foreign code      y 1.1888
+                        State/province  Country                        y 1.1840 / 1.1888
+    Eugene                 OR           US            97401            y 1.3464
+
+The second label line falls inside the row's band and is kept out by the cell tops.
+
+★ A SECOND FORM CONFIRMS YESTERDAY'S SLACK. The half-label-height overhang rule was written
+for 5498-SA. This form needs it independently - "US" starts 0.0286in left of "Country", "Oregon"
+0.0191in left of "State/province", "USA" 0.0143in left of "Country" - so it is a property of how
+these forms print their boxes, not of the one fixture it was derived from. That is the first time
+in this sweep a rule has been confirmed by a form other than the one that forced it.
+
+★ AND A TEST OF MINE CREDITED A RULE IT DID NOT EXERCISE. My first draft of the test javadoc
+said the two label lines worked because cell tops are measured PER CELL. I mutated the tops to a
+single shared one for the whole row: all eight tests still passed. The claim was not established
+by anything I had written, and the real reason is simpler - both label lines sit above the tops,
+per-cell or not. (Forms 1097-BTC and 5498 do need per-cell tops. This one does not.)
+
+The mutation was run to check the tests, and it caught the PROSE instead. Same shape as the
+compose-consolidation note two entries ago: an explanation written in good faith, carried as
+fact, describing a mechanism that is not the one doing the work. A comment is not checkable, so
+the only way it stays true is if something fails when it stops being true - which is exactly
+what mutating a rule tests. Worth doing for the explanation and not just the assertion.
+
+MEASURED, NOT ASSUMED. The other twelve cell-reading forms re-verified byte-identical on both
+renders. Unit suite 2,713 / 0 (8 new); mutating the overhang slack to zero fails 6 of the 8.
+
+Open, in priority order: **the six remaining forms with no config entry** (5498-qa next, the last
+close sibling; 1098-q still needs a scope call); the audit of the configs that DO exist for
+invented field names; unify the three name/address compose copies; the four render differences
+from 2026-10-03; the 1099-SA phone grouping; W-2 box-12 amounts and box 14b; `employeeSuffix` on
+`w-2-as.pdf` and `w-2.pdf`; `1099-g.png`'s duplicated phone fragment; and mapping an Azure 429
+to 503 rather than a bare 500.
+
 ## 2026-10-04 - Form 5498-SA had no config entry, and SEVEN more still do not
 
 Every upload of this form extracted nothing, because `5498-sa` was simply absent from

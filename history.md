@@ -1,3 +1,70 @@
+## 2026-10-04 - Form 5498-SA had no config entry, and SEVEN more still do not
+
+Every upload of this form extracted nothing, because `5498-sa` was simply absent from
+field-mappings.json. This time I checked the whole catalog instead of the one form reported:
+**eight** of the 56 catalog forms have no entry at all.
+
+    5498-sa                       fixed here
+    5498-esa, 5498-qa             close siblings of it
+    1098, 1098-c, 3922, 1042-s    separate layouts
+    1098-q                        no entry, and recorded OUT OF SCOPE as a return attachment -
+                                  but it is still listed in the statement catalog, so whether an
+                                  upload of it should extract is a decision, not an oversight
+
+The answer key came first: the fixture PDF's own AcroForm (`topmostSubform[0].CopyB[0]`) carries
+all 29 values, so the target was known before a single line of layout was written. That is the
+third form where building the key first turned a day into an hour.
+
+Boxes 1-6 on the right, trustee and participant blocks on the left. Box 6 is a checkbox strip
+and bounds boxes 4 and 5 above it; the calendar year is printed in the OMB block beside box 1,
+as on Form 1097-BTC. **0 fields -> 29, identical on both renders, every one matching the key.**
+
+★ NO ABSOLUTE X FRACTION SURVIVES THIS FORM. The PNG fixture is cropped tight around the form
+while the PDF is a full 8.5x11 page, so the same content sits about half an inch apart in page
+coordinates:
+
+    TRUSTEE'S name   PDF x0 0.7449in    PNG x0 0.2147in (scaled to the same width)
+
+Every earlier form happened to render both ways from the same crop, so page fractions worked and
+I had been using them freely - RRB-1099's header SideRow still does. Here the left region states
+no right edge at all and is bounded by where the BOX LABELS begin, which readCellLayout derives
+from the labels themselves. Nothing in this layout is a page measurement.
+
+★ A CELL VALUE MAY START LEFT OF ITS OWN LABEL. The rule was "a value belongs to the rightmost
+label whose left edge is at or left of the value's left edge". The printed boxes inset their
+contents slightly, so:
+
+    trustee     WA   starts 0.019in LEFT of "State/province"
+    participant ID   starts 0.029in LEFT of "State/province"
+
+and both rows shifted one cell left - `trusteeCity="Spokane WA"`, `trusteeStateProvince="US"`,
+the country landing under the state and the ZIP under the country. A complete, plausible address
+block, wrong in every cell but the first.
+
+Each label now allows half its own height of overhang. Half a label height is what readSideRows
+already allows VERTICALLY, so the constant is not new, and it is far inside the 0.50in gap
+between the cells it applies to. Being a fraction of the LABEL rather than of the page, it holds
+on both renders - which is the whole reason it works here.
+
+MEASURED, NOT ASSUMED - AND THIS ONE WAS A SHARED RULE. The slack changes cell attribution on
+every form that reads by position, so I measured all eleven of them with the slack at zero and
+then at a half: Form 2439, the three K-1s, 1099-SB, 1099-LS, 1097-BTC, 5498, RRB-1099, RRB-1099-R
+and SSA-1099 are byte-identical either way, on both renders. 5498-SA is the only form it moves,
+and it moves it from wrong to right. Unit suite 2,705 / 0 (9 new); 7 of the 9 fail with the slack
+removed and the 2 that do not are the pure config-shape assertions.
+
+Also worth keeping: the telephone is printed BESIDE its label rather than under it, so it is a
+SideRow - but it ALSO needs a null-field cell row, because readRows bounds a row at the next
+CELL row only. Without it the trustee address row ran on over the telephone line and took it in
+("Spokane Telephone number:", "WA +1 509"). A row that stores nothing can still be load-bearing.
+
+Open, in priority order: **the seven remaining forms with no config entry** (5498-esa and 5498-qa
+first, as siblings of this one; 1098-q needs a scope decision); then the audit of the configs
+that DO exist for invented field names; unify the three name/address compose copies; the four
+render differences from 2026-10-03; the 1099-SA phone grouping; W-2 box-12 amounts and box 14b;
+`employeeSuffix` on `w-2-as.pdf` and `w-2.pdf`; `1099-g.png`'s duplicated phone fragment; and
+mapping an Azure 429 to 503 rather than a bare 500.
+
 ## 2026-10-04 - Form 1099-SA printed the trustee name twice, and "one copy" was three
 
 Reported as the TRUSTEE'S/PAYER'S name repeating its first name. The extraction was right; the

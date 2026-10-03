@@ -1,63 +1,59 @@
-## 2026-10-02 - Form 1097-BTC: rejected outright, then three things Form 5498 never had to face
+## 2026-10-02 - Form 1099-LS, and a flag that has now been wrong at two different scopes
 
-Reported as "this form is not supported" on upload. `1097-btc` had no entry in
-`field-mappings.json` at all, so `fieldMapper.supports()` was false and the extract endpoint
-400'd every upload. The statement catalog, the UI component and both fixtures were already in
-place — only the extraction config was missing.
+Reported as "this form is not supported" on upload. `1099-ls` had no entry in
+`field-mappings.json`, so `fieldMapper.supports()` was false and the extract endpoint 400'd.
+The catalog, the UI component and both fixtures were already in place — the third form this
+week where only the extraction config was missing.
 
-Adding the entry alone would have bought little. Azure's key-value pass scrambles this form the
-way it scrambles Form 5498, and differently on each render. On the PDF every box is shifted one
-place:
+Its key-value pass is as unusable as Form 5498's and Form 1097-BTC's, so it joins them on the
+`CellLayout` reader. Two mechanisms it needed that neither of those did:
 
-    "2a Code"                => 5001      <- box 1's value
-    "2b Unique identifier"   => 5002      <- box 2a's value
-    "RECIPIENT'S name"       => 887996655 <- the recipient's TIN
+**The box column takes a right edge.** The Copy B instruction column runs level with the
+"Issuer's name" row, so reading that row to the page edge appended "For Payment" to the issuer's
+name. Declared per layout (0.81 of the page width, measured on both renders) and left at the page
+edge for the two forms already verified without it.
 
-and box 1 gets no pair of its own at all. So it is read from the printed layout, and yesterday's
-5498 reader becomes a `CellLayout` that both forms supply — 5498's tables, wrap flags and
-checkbox list carried across unchanged and re-verified byte-identical afterwards.
+**The last row of a column ends at the form's printed footer.** The acquirer-contact cell spans
+four printed rows, and its value lies past any bound derived from the row pitch or the label
+height, so "Concord, NH 03301" fell outside the band. Every form in this family prints
+`www.irs.gov/Form<name>` directly beneath its grid, which is where the cells actually stop — a
+measurement that does not have to be guessed.
 
-★ THREE THINGS THIS FORM NEEDED THAT 5498 DID NOT, each found only by running both renders.
+★ AND THE LARGER CORRECTION: THE SAME FLAG HAS NOW BEEN WRONG AT TWO SCOPES. Yesterday Form 5498
+showed that the spacing separating a wrapped label line from a cell's value is not a property of
+the FORM, and the flag moved onto the column. Form 1099-LS shows it is not a property of the
+COLUMN either. Its acquirer/recipient block has a two-line label at the top and tight single-line
+labels below it, values 0.25–0.33 label-heights down — inside the band a wrapped line occupies:
 
-**A lone `$` is a value, not label text.** Each monthly box prints its currency symbol between
-the label and the figure, and it lands inside the gap that marks a wrapped label line. Absorbed,
-it took the figure below it out of the cell — **seven of the twelve monthly boxes vanished, and
-which seven differed by render**, because the gaps sit within thousandths of the threshold.
+    absorption ON   "12 Birchwood Ct" and "Manchester, NH 03104" read as part of their own
+                    labels, and lost
+    absorption OFF  the acquirer's address loses its second label line INTO the value
 
-**A wrapped line is bounded by overlap with its own label, not by the cell.** The Copy B
-instruction column runs down the right of the form, level with the boxes, and its first line
-falls 0.02in below box 5f's label against a 0.03in wrapped-line gap. Spacing alone cannot tell
-it from a continuation, and absorbing it pushed four more cells' tops below their own values. A
-wrapped line always begins UNDER its own label, which excludes the instruction column by
-construction — and also survives the sub-pixel difference between a label's x0 and its
-continuation's, which was why the issuer block's second label line was reading as part of the
-address.
+The same split sits in the box column: "Issuer's name" does not wrap, and on the PNG its value is
+0.29 label-heights below it — absorbed, and the issuer's name went missing on that render alone.
+So the flag is now on the ROW, which is where the fact lives: whether a label wraps is visible on
+the printed form. Nine rows across the three forms declare it; the rest start their cells below
+the label line, as they did before any of this existed.
 
-**A multi-line text cell is assembled line by line.** Sorting the whole cell left to right
-interleaves them, and the issuer block came out as
+★ THE MUTATION CHECK MISSED AGAIN, AND FOR A THIRD DISTINCT REASON. Yesterday it was a helper the
+tests could not reach, then a fixture that resembled the bug instead of being it. This time all
+three new mechanisms survived mutation because the cases pinned the PRIMITIVES — handing
+`attributeRowCells` a band, a right edge and a set of cell tops — while **choosing** those three
+is `readRows`' job, and that is where the new logic lives. Testing around the decision is not
+testing it. `readRows` was already plain data; opened up and pinned, removing the footer bound or
+forcing the wrap flag on now turns a case red. One line still is not unit-covered: the
+`w * layout.mainRightEdge()` in `readCellLayout`, which needs an Azure SDK page fixture, so it
+rests on the live check instead. Recorded rather than papered over.
 
-    province, Meridian Hartford, country, Municipal CT 06103 ZIP or Finance foreign postal
-    Authority, code, and 40 telephone Statehouse no. Sq,
+A fourth measurement lesson, smaller: the first version of the street-address case asserted
+against two-decimal coordinates and passed whatever the code did. The real gap is 0.0382in against
+a 0.0394in threshold — 3% apart — so the fixtures are now measured to four decimals.
 
-★ AND THE MUTATION CHECK CAUGHT ME AGAIN, IN THE SAME PLACE AS YESTERDAY. Two of four mutations
-turned tests red and two did not. The first miss was structural — `labelBlockBottom` took an
-Azure SDK page, so the tests could not reach it at all and were asserting around it; pulled out
-onto plain line boxes, as `attributeRowCells` had been. The second was a fixture choice: I had
-written the instruction-column case with a line 0.14in below the label, which the spacing guard
-rejects on its own, so the bound I was trying to pin was never exercised. Using the line that
-was ACTUALLY absorbed, 0.02in below, the mutation fails as it should. Yesterday's lesson was that
-a test can agree with you for the wrong reason; today it was that the fixture has to be the case
-that broke, not one that merely resembles it.
+MEASURED, NOT ASSUMED. 13 fields, PNG and PDF identical, every field on the form correct: box 1 =
+6001, box 2 = 03/12/2026, the acquirer block, both TINs, recipient name/street/city, issuer name,
+contact, POL-6002, CORRECTED, tax year 2026. Re-verified live: Form 5498 still 45/45, Form
+1097-BTC 27/27, Form 1099-DA all byte-identical to their baselines. Unit suite 2,671 / 0 failures.
 
-MEASURED, NOT ASSUMED. 27 fields, PNG and PDF byte-identical, every value matching: box 1 = 5001,
-2a = 5002, 2b = UID-5003, 3 = CREB, 5a-5l = 5004-5015, 6 = "Sample comment 5016", both issuer
-checkboxes, CORRECTED, the issuer and recipient blocks, tax year 2026. Every extracted key is one
-the component's `model` declares, so the HTML replica renders it through `(extractionApplied)`.
-Geometry writes now go through `coerceValue`, so a field named `*Amount` holds a number like
-every other path produces. Re-verified live: 5498 still 45/45 and unchanged, 1099-DA identical to
-its baseline, 1099-A and 1099-C unchanged. Unit suite 2,661 / 0 failures.
-
-Yesterday, for the record: Form 5498 went from 4-5 fields to 45 on the same mechanism, after one
-spacing threshold measured on its numbered boxes turned out not to describe its address block and
-dropped the entire trustee section on the PNG. Before that, 1099-DA's transposed 1f/1g and 1099-A's
-duplicated lender name.
+Earlier this week, on the same machinery: Form 1097-BTC (also unsupported, 27 fields, needed the
+lone-"$" guard and the label-overlap bound), Form 5498 (4–5 fields to 45), Form 1099-DA's
+transposed 1f/1g and Form 1099-A's duplicated lender name.

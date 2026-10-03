@@ -1,3 +1,44 @@
+## 2026-10-03 - RRB-1099-R box 10 was blank, and the OCR was not at fault
+
+Reported as "OCR fails to read box 10 for rrb-1099-r". It does not: the extraction returns
+`medicarePremiumsTotalAmount` = 1764.60 on both renders, and has since this morning's fix. The
+value was lost on the way to the screen.
+
+`form-rrb-1099-r.component.ts` contains TWO replicas of the form. The visible one labels box 10
+"Medicare Premium Total" and binds `pdfRaw['box10']`. The other - hidden behind `*ngIf="false"`,
+an older revision of the form - labels box 10 "Rate of Tax" and puts the Medicare total in box 12.
+`syncFormToPdf` wrote `r['box12']` and `syncPdfToForm` read it back, so the one key the screen
+actually renders was never written by anything. Both are written now, and the read-back prefers
+whichever the visible replica filled, so re-enabling the retired layout still works.
+
+★ A SECOND SILENT-DROP SHAPE, AND THE SWEEP THAT ALMOST MISSED IT. The first shape was a
+config naming fields Azure does not produce (four forms). This one is a rendered binding that no
+sync writes: the extraction is right, the model is right, and the box is empty. Nothing fails.
+
+I wrote a detector for it - pdfRaw keys the template renders that the component never writes -
+and the first three versions each reported "clean" across every component:
+
+    v1  guessed the hidden replica's extent by indentation, and swallowed the visible one
+    v2  tracked tag depth properly, but ended the template at the first "syncFormToPdf",
+        which the template itself calls as an event handler on line 44 - so it read 44 lines
+    v3  scanned the body for quoted strings; an apostrophe mis-pairs the quotes, and `r` was
+        rebound by the loop above it, so the body window started in the wrong place
+
+Each "clean" was a green light from a detector looking at almost nothing. What caught all three
+was running it against the PRE-FIX file as a control, where the answer was known: it must report
+box10 and nothing else. It now does.
+
+Result across the statement components: box 10 here was the only instance where the model already
+held the value. The other 41 hits are a different thing - 1099-MISC boxes 13a/13b/14 and the
+split payer address have no model field at all (adding one needs sign-off), the W-2G signature
+boxes are out of scope by the self-filing rule, and the W-2 box-12 code/amount pairs were already
+on the open list.
+
+Open, in priority order: **audit the remaining tax-model and key-value configs for invented field
+names**; the four render differences from the previous entry; W-2 box-12 amounts and box 14b;
+`employeeSuffix` on `w-2-as.pdf` and `w-2.pdf`; `1099-g.png`'s duplicated phone fragment; and
+mapping an Azure 429 to 503 rather than a bare 500.
+
 ## 2026-10-03 - Form RRB-1099-R, and a claim of mine that was not true
 
 Twelfth form in the statements sweep, and the FOURTH with invented key names in its config:

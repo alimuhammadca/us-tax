@@ -1,59 +1,49 @@
-## 2026-10-02 - Form 1099-LS, and a flag that has now been wrong at two different scopes
+## 2026-10-02 - Form 1099-SB, and the measurement that had to be deleted rather than retuned
 
-Reported as "this form is not supported" on upload. `1099-ls` had no entry in
-`field-mappings.json`, so `fieldMapper.supports()` was false and the extract endpoint 400'd.
-The catalog, the UI component and both fixtures were already in place — the third form this
-week where only the extraction config was missing.
+Reported as "same error" — `1099-sb` had no entry in `field-mappings.json`, so
+`fieldMapper.supports()` was false and the extract endpoint 400'd. The fourth form this week
+where only the extraction config was missing.
 
-Its key-value pass is as unusable as Form 5498's and Form 1097-BTC's, so it joins them on the
-`CellLayout` reader. Two mechanisms it needed that neither of those did:
+It prints the same frame as Form 1099-LS without the issuer-name box, so it joined the
+`CellLayout` reader and came out at 12 of 12 on both renders. But getting there meant deleting
+the rule that had been carrying all of this.
 
-**The box column takes a right edge.** The Copy B instruction column runs level with the
-"Issuer's name" row, so reading that row to the page edge appended "For Payment" to the issuer's
-name. Declared per layout (0.81 of the page width, measured on both renders) and left at the page
-edge for the two forms already verified without it.
+★ A THRESHOLD THAT WAS WRONG AT THREE SCOPES, AND THEN AT NONE. Where a printed label ends was
+decided by spacing: a line within 0.33 label-heights was part of the label, anything further
+down a value. Form 5498 showed that is not a property of the FORM. Form 1099-LS showed it is not
+a property of the COLUMN. Form 1099-SB shows it cannot be a threshold at all:
 
-**The last row of a column ends at the form's printed footer.** The acquirer-contact cell spans
-four printed rows, and its value lies past any bound derived from the row pitch or the label
-height, so "Concord, NH 03301" fell outside the band. Every form in this family prints
-`www.irs.gov/Form<name>` directly beneath its grid, which is where the cells actually stop — a
-measurement that does not have to be guessed.
+    label   "ISSUER'S name, street address, ... country,"
+    label   "ZIP or foreign postal code, and telephone no."    -0.04 label-heights
+    value   "Granite State Life Insurance Co, ... Concord,"     0.32 label-heights
 
-★ AND THE LARGER CORRECTION: THE SAME FLAG HAS NOW BEEN WRONG AT TWO SCOPES. Yesterday Form 5498
-showed that the spacing separating a wrapped label line from a cell's value is not a property of
-the FORM, and the flag moved onto the column. Form 1099-LS shows it is not a property of the
-COLUMN either. Its acquirer/recipient block has a two-line label at the top and tight single-line
-labels below it, values 0.25–0.33 label-heights down — inside the band a wrapped line occupies:
+against a 0.27 continuation on Form 5498 box 4 — a 2% margin either side. On this form NEITHER
+setting of the per-row flag is right: with it on, the issuer's address is swallowed into its own
+label; with it off, the label's second line is read as part of the address. Azure's paragraph
+grouping offered no way out either — it puts the label and the value in ONE paragraph, and merges
+two separate cells into another.
 
-    absorption ON   "12 Birchwood Ct" and "Manchester, NH 03104" read as part of their own
-                    labels, and lost
-    absorption OFF  the acquirer's address loses its second label line INTO the value
+So the measurement is gone. A row now NAMES the last line of each of its labels — `labelEnds`,
+a regex read off the printed form rather than inferred from it. Nine rows across four forms say
+so; every other label ends at its own line. That took the threshold, the overlap tolerance AND
+the lone-"$" guard with it: the guard existed only to stop a currency symbol between a label and
+its figure being mistaken for label text, which was a symptom of the rule rather than a rule of
+its own. Three test cases retired with the mechanism they pinned.
 
-The same split sits in the box column: "Issuer's name" does not wrap, and on the PNG its value is
-0.29 label-heights below it — absorbed, and the issuer's name went missing on that render alone.
-So the flag is now on the ROW, which is where the fact lives: whether a label wraps is visible on
-the printed form. Nine rows across the three forms declare it; the rest start their cells below
-the label line, as they did before any of this existed.
+★ THE SHAPE OF THE WEEK'S MISTAKES, NOW VISIBLE. Each form tightened the same guess rather than
+replacing it: form-wide, then per column, then per row, then named outright. The first three all
+LOOKED principled — each was measured on real fixtures, on both renders — and each was really a
+coincidence of the forms in front of me. What finally worked is not a better measurement but a
+different kind of fact: the printed form already says where its labels end, and reading that
+costs one regex. Worth remembering when a constant starts needing a scope.
 
-★ THE MUTATION CHECK MISSED AGAIN, AND FOR A THIRD DISTINCT REASON. Yesterday it was a helper the
-tests could not reach, then a fixture that resembled the bug instead of being it. This time all
-three new mechanisms survived mutation because the cases pinned the PRIMITIVES — handing
-`attributeRowCells` a band, a right edge and a set of cell tops — while **choosing** those three
-is `readRows`' job, and that is where the new logic lives. Testing around the decision is not
-testing it. `readRows` was already plain data; opened up and pinned, removing the footer bound or
-forcing the wrap flag on now turns a case red. One line still is not unit-covered: the
-`w * layout.mainRightEdge()` in `readCellLayout`, which needs an Azure SDK page fixture, so it
-rests on the live check instead. Recorded rather than papered over.
+MEASURED, NOT ASSUMED. 12 fields, PNG and PDF identical, every field on the form: boxes 1 and 2 =
+7001 / 7002, issuer block, both TINs, seller name/street/city, POL-6002, the issuer-contact cell,
+CORRECTED and tax year 2026. Re-verified live on everything sharing the machinery: 1099-LS 13/13,
+1097-BTC 27/27, 5498 45/45, and 1099-DA, 1099-A and 1099-C byte-identical to their baselines.
+Mutation-checked: ignoring `labelEnds` turns 5 cases red, dropping its horizontal scope 1. Unit
+suite 2,668 / 0 failures.
 
-A fourth measurement lesson, smaller: the first version of the street-address case asserted
-against two-decimal coordinates and passed whatever the code did. The real gap is 0.0382in against
-a 0.0394in threshold — 3% apart — so the fixtures are now measured to four decimals.
-
-MEASURED, NOT ASSUMED. 13 fields, PNG and PDF identical, every field on the form correct: box 1 =
-6001, box 2 = 03/12/2026, the acquirer block, both TINs, recipient name/street/city, issuer name,
-contact, POL-6002, CORRECTED, tax year 2026. Re-verified live: Form 5498 still 45/45, Form
-1097-BTC 27/27, Form 1099-DA all byte-identical to their baselines. Unit suite 2,671 / 0 failures.
-
-Earlier this week, on the same machinery: Form 1097-BTC (also unsupported, 27 fields, needed the
-lone-"$" guard and the label-overlap bound), Form 5498 (4–5 fields to 45), Form 1099-DA's
-transposed 1f/1g and Form 1099-A's duplicated lender name.
+Earlier this week on the same machinery: Form 1099-LS (unsupported; box-column right edge,
+footer-bounded last row), Form 1097-BTC (unsupported; 27 fields), Form 5498 (4-5 fields to 45),
+Form 1099-DA's transposed 1f/1g and Form 1099-A's duplicated lender name.

@@ -1,3 +1,56 @@
+## 2026-10-04 - Form 1099-SA printed the trustee name twice, and "one copy" was three
+
+Reported as the TRUSTEE'S/PAYER'S name repeating its first name. The extraction was right; the
+composition was not. Azure split the party box MID-NAME on the PDF render:
+
+    Payer.Name        "Alex Manning,"
+    Payer.Address     "Alex\n4 Oxford Street, London, ON, Canada, 12345, +1"
+    Payer.PhoneNumber "416 234 1234"
+
+The address's first line IS the name's first word, and the existing guard only fires when the
+address repeats the WHOLE name - so the composed box printed the name and then "Alex" again
+underneath. The PNG render of the same fixture splits the box cleanly, which is why it showed on
+one render only. (It also splits the PHONE differently on each render; that part was already
+being repaired.)
+
+`dropNameFragmentLine` drops a first line whose TOKENS are a leading prefix of the name's tokens.
+The negative cases are the design, not the padding:
+
+    "Oxford Trust" vs "Oxford Street 4\nLondon, ON"  kept - "oxford street 4" is not
+                                                        a prefix of the name, only a shared word
+    "Alex Manning" vs "A\n4 Oxford Street"           kept - a bare initial matches far too easily
+    a single-line address                               never touched, so this cannot empty one
+    the WHOLE name as the first line                    left to nameAlreadyInAddress
+
+★ AND THE CONSOLIDATION I DOCUMENTED NEVER HAPPENED. `composeNameAddress` carries a note
+saying these twelve lines "had been written out once per form" and were reduced to "one copy, so
+the next form to need this cannot inherit the bug again." That was true of 1099-A, 1099-C and
+1099-CAP. It missed `postProcessParties` - which serves 1099-DIV/G/INT/MISC/NEC/OID/PTR/Q/QA/R/SA
+plus 1099-K, 1099-S and 1099-LTC under their own party prefixes - and `postProcess1099B`. Three
+copies, each with its own call to the same guard, and the form that broke went through the copy
+the note did not cover.
+
+A comment claiming a refactor is not the refactor. The guard went into all three rather than the
+one this form takes, because the other two are one fixture away from the same report. Unifying
+them is now an open item: `postProcessParties` also does `reassembleSplitPhone` and a
+trailing-comma strip that `composeNameAddress` does not, so merging them changes behaviour for
+1099-A/C/CAP and needs its own before/after.
+
+MEASURED, NOT ASSUMED. Baselined all 18 affected forms x both renders on the committed code, then
+re-measured with the fix: exactly ONE difference, the stray line on 1099-SA's PDF. Unit suite
+2,696 / 0 (13 new) - and with the guard neutralised the six positive tests fail while the seven
+negative ones correctly do not, which is what makes them worth having.
+
+Not changed, and not reported: 1099-SA's phone grouping still differs between renders (PNG
+"+1 416 234 1234", PDF Azure's normalised "+14162341234"). The digits are right on both. Fixing
+it touches phone handling on every form, so it waits for its own baseline.
+
+Open, in priority order: **audit the remaining tax-model and key-value configs for invented field
+names**; unify the three name/address compose copies; the four render differences from 2026-10-03;
+the 1099-SA phone grouping; W-2 box-12 amounts and box 14b; `employeeSuffix` on `w-2-as.pdf` and
+`w-2.pdf`; `1099-g.png`'s duplicated phone fragment; and mapping an Azure 429 to 503 rather than
+a bare 500.
+
 ## 2026-10-03 - RRB-1099-R box 10 was blank, and the OCR was not at fault
 
 Reported as "OCR fails to read box 10 for rrb-1099-r". It does not: the extraction returns

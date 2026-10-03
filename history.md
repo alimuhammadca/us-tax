@@ -1,49 +1,71 @@
-## 2026-10-02 - Form 1099-SB, and the measurement that had to be deleted rather than retuned
+## 2026-10-03 - Schedule K-1 (Form 1041), and blaming the data model for my own mis-read
 
-Reported as "same error" — `1099-sb` had no entry in `field-mappings.json`, so
-`fieldMapper.supports()` was false and the extract endpoint 400'd. The fourth form this week
-where only the extraction config was missing.
+Reported as "the OCR process does not extract values". A different failure from the four forms
+before it: `schedule-k1-1041` HAS a config entry, so `supports()` is true and the upload returns
+200 — its field map was simply empty, so nothing was ever recognised and the form stayed blank.
+Worth separating, because "not supported" and "extracts nothing" have different causes and only
+the first was a missing config key.
 
-It prints the same frame as Form 1099-LS without the issuer-name box, so it joined the
-`CellLayout` reader and came out at 12 of 12 on both renders. But getting there meant deleting
-the rule that had been carrying all of this.
+Reading it by position took two new mechanisms:
 
-★ A THRESHOLD THAT WAS WRONG AT THREE SCOPES, AND THEN AT NONE. Where a printed label ends was
-decided by spacing: a line within 0.33 label-heights was part of the label, anything further
-down a value. Form 5498 showed that is not a property of the FORM. Form 1099-LS showed it is not
-a property of the COLUMN. Form 1099-SB shows it cannot be a threshold at all:
+**Columns that state their own extent.** The reader had derived the divide between two columns
+from the box column's leftmost label. This form has THREE columns — Parts I and II, then Part III
+split into boxes 1-10 and boxes 11-14 — and prints its box NUMBERS and box 9's codes to the LEFT
+of the labels they belong to, so no divide can come from the labels at all: the fiduciary's
+address ran on into the "7 8 9" beside it. Columns now give their extent outright. Columns that
+need say nothing keep deriving it, so the four existing forms were untouched.
 
-    label   "ISSUER'S name, street address, ... country,"
-    label   "ZIP or foreign postal code, and telephone no."    -0.04 label-heights
-    value   "Granite State Life Insurance Co, ... Concord,"     0.32 label-heights
+**A row that is a list.** Boxes 9 and 11-14 print a column of code/amount pairs under one label,
+with no label per row. Each printed line gives its first token as the code and its last as the
+amount, which needs no measurement.
 
-against a 0.27 continuation on Form 5498 box 4 — a 2% margin either side. On this form NEITHER
-setting of the per-row flag is right: with it on, the issuer's address is swallowed into its own
-label; with it off, the label's second line is read as part of the address. Azure's paragraph
-grouping offered no way out either — it puts the label and the value in ONE paragraph, and merges
-two separate cells into another.
+Also moved the PDF AcroForm reader to the END of `mapToAppModel`. It is a last resort gated on
+nothing else having produced a value, but it ran BEFORE the form-specific passes, so a form read
+by geometry — whose configured map is deliberately empty — came back full of raw AcroForm names
+(`f1_13[0]`) sitting beside the real values.
 
-So the measurement is gone. A row now NAMES the last line of each of its labels — `labelEnds`,
-a regex read off the printed form rather than inferred from it. Nine rows across four forms say
-so; every other label ends at its own line. That took the threshold, the overlap tolerance AND
-the lone-"$" guard with it: the guard existed only to stop a currency symbol between a label and
-its figure being mistaken for label text, which was a symptom of the rule rather than a rule of
-its own. Three test cases retired with the mechanism they pinned.
+★ AND THEN I GOT BOXES 11-14 WRONG, AND BLAMED THE FORM FOR IT. I bounded each box by its own
+printed label. That gave box 11 five rows and box 12 five against three modelled slots each, and
+I reported it as the form printing more rows than the component holds — and asked whether to add
+fields to the user's statement form. The user's reply was two sentences: there are no missing
+slots; the OCR failed to read boxes 11-14.
 
-★ THE SHAPE OF THE WEEK'S MISTAKES, NOW VISIBLE. Each form tightened the same guess rather than
-replacing it: form-wide, then per column, then per row, then named outright. The first three all
-LOOKED principled — each was measured on real fixtures, on both renders — and each was really a
-coincidence of the forms in front of me. What finally worked is not a better measurement but a
-different kind of fact: the printed form already says where its labels end, and reading that
-costs one regex. Worth remembering when a constant starts needing a scope.
+They were right. Boxes 11-14 share ONE sub-column and their rows run straight down it:
 
-MEASURED, NOT ASSUMED. 12 fields, PNG and PDF identical, every field on the form: boxes 1 and 2 =
-7001 / 7002, issuer block, both TINs, seller name/street/city, POL-6002, the issuer-contact cell,
-CORRECTED and tax year 2026. Re-verified live on everything sharing the machinery: 1099-LS 13/13,
-1097-BTC 27/27, 5498 45/45, and 1099-DA, 1099-A and 1099-C byte-identical to their baselines.
-Mutation-checked: ignoring `labelEnds` turns 5 cases red, dropping its horizontal scope 1. Unit
-suite 2,668 / 0 failures.
+    f1_30..35   box 11   (860,820) (870,885) (400,880)
+    f1_36..41   box 12   (775,740) (715,165) (455,640)
+    f1_42..51   box 13   (965,415) (130,555) (435,295) (875,685) (365,830)
+    f1_52..67   box 14   (345,615) (595,900) (480,280) (755,795) ... (990,445)
 
-Earlier this week on the same machinery: Form 1099-LS (unsupported; box-column right edge,
-footer-bounded last row), Form 1097-BTC (unsupported; 27 fields), Form 5498 (4-5 fields to 45),
-Form 1099-DA's transposed 1f/1g and Form 1099-A's duplicated lender name.
+Nineteen rows dealt out **3 / 3 / 5 / 8** — exactly the slots declared. The labels "12 Alternative
+minimum tax adjustment", "13 Credits and credit recapture" and "14 Other information" are printed
+where they FIT in the column, not beside their box's first row. Bounding by them put 775/740 and
+715/165 into box 11, 435/295 and 875/685 into box 12, and lost 455/640 and 365/830 entirely.
+
+★ THE ORACLE WAS SITTING IN THE FIXTURE THE WHOLE TIME. The PDF carries an AcroForm whose fields
+are authored WITH RECTANGLES, and the component carries a slot→semantic map. Together they name
+every field and give its correct value — a complete answer key, readable in one script, which I
+only reached for after being contradicted. Every previous form this week was verified against a
+rendered image and a both-renders diff, and those agree with a wrong grouping as readily as a
+right one: all nineteen values were present and plausible, just four of them in the wrong box.
+Checked against the key afterwards: 74 of 74 correct. That key is the right first move for the
+1065 and 1120-S K-1s, not the last.
+
+★ AND THE SMALLER LESSON, FOR THE THIRD TIME THIS WEEK. The mutation check again agreed with me
+for the wrong reason: removing the rule that tells a label from a value row failed to turn
+anything red, because my fixture modelled the label as a single glyph where the page gives words.
+A single-token line never reaches the rule. (A fourth attempt proved nothing at all — `while
+(false)` does not compile in Java, so the "mutation" was a build error I read as a pass.)
+
+MEASURED, NOT ASSUMED. 74 fields, PNG and PDF identical, all 74 matching the fixture's own
+AcroForm through the component's slot map: the header checkboxes and both tax-year dates, Parts I
+and II in full, Part III boxes 1-10, and the code/amount runs for box 9 and boxes 11-14. Two
+apparent mismatches were the oracle, not the extraction — per-widget `/V` for the Final/Amended
+K-1 and Domestic/Foreign beneficiary pairs, where the printed form shows both of each checked.
+Re-verified live: 1099-SB, 1099-LS, 1097-BTC, 5498, 1099-DA, 1099-A and 1099-C byte-identical to
+their baselines. Unit suite 2,675 / 0 failures.
+
+Earlier this week on the same machinery: Form 1099-SB (which retired the wrapped-label spacing
+rule in favour of each row naming its own last label line), Forms 1099-LS and 1097-BTC (both
+rejected outright for want of a config entry), Form 5498 (4-5 fields to 45), and Form 1099-DA's
+transposed 1f/1g with Form 1099-A's duplicated lender name.

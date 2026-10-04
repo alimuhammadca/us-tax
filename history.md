@@ -1,3 +1,58 @@
+## 2026-10-04 - Form 1095-C Part III: one grid reader for two forms, and a failed grep filed as a fact
+
+**3 -> 237 values** on the PDF (236 on the PNG). **234/234** against the fixture's AcroForm: all
+13 rows x 5 text fields, all 169 checkboxes, plus void, corrected and selfInsuredCoverage.
+
+★ I HAD THIS PAGE WRONG IN MY OWN NOTES, AND COMMITTED THE ERROR. The previous entry records
+that Part III "needs rows discovered by clustering the marks" because "its rows are UNNUMBERED".
+**They are numbered 18 to 30.** Each number is simply its OWN line glyph, where Form 1095-B
+merges it with the name ("23 Marianne"). My grep required the number and the name on one line,
+found nothing, and I wrote the absence down as a property of the form - in the commit message, in
+`history.md`, in `context.md` and in the plan for the next piece of work. **A search that finds
+nothing is a fact about the search.** Same family as "an absent artifact is not a zero", and this
+time the inference travelled into four documents and would have bought a mechanism nobody needed.
+
+So no new mechanism was built. The 1095-B grid reader now takes its first row number, its row
+count and its target list as parameters, and both forms call it:
+
+    1095-B Part IV    rows 23.. (and 29.. on the continuation sheet)   coveredIndividuals
+    1095-C Part III   rows 18-30                                      partIIICoveredIndividuals
+
+The thirteen column headers and the thirteen field names are identical on both forms, and the
+existing regexes already matched both spellings - 1095-B prints `Jun`/`Jul`/`Sep`, 1095-C prints
+`June`/`July`/`Sept`. Second instance is what justified parameterising it; the first would have
+been speculation.
+
+★ AND A METHOD NOTE THAT COST A WRONG DIAGNOSIS. Row 24's middle initial "X" is in the PDF's
+word list and not the PNG's. I probed with `dump_marks.mjs`/`words.mjs`, saw the glyph present on
+the PNG, and concluded my reader must be dropping it. Those tools run **prebuilt-document**; this
+form's extraction runs **prebuilt-tax.us.1095C**, and the two models return different OCR for the
+same page. Instrumenting the real reader settled it in one run - the bound and the band are
+identical on both renders (`textRight` = the grid's left edge, 13 marks attributed) and the glyph
+is simply absent from the model's words. **Probe the model the extraction actually runs.**
+
+The other render difference is a plain OCR one: a surname reads "Chandrasekar" on the PDF and
+"Chandrasekal" on the PNG. Both differences are upstream of any mapping.
+
+A better oracle than 1095-B's, incidentally: this fixture leaves three of its boxes UNticked, so
+the all-true weakness that hid two real bugs there does not apply here.
+
+MEASURED, NOT ASSUMED. The refactor is behaviour-preserving - `1095-c`, `1095-b` and `1095-b-p3`
+all re-extract byte-identical on both renders. Unit suite **2,843 / 0** (2 new, pinning 1095-C's
+row range and that the self-insured box at the top of the page belongs to no row).
+
+**The 1095 family is complete:** 1095-A 3->103, 1095-B 0->133 (+220 continuation sheet), 1095-C
+0->86 (+237 Part III).
+
+Open, in priority order: **the 1095-A address fix** - it reads Azure's SEMANTIC address
+components and is correct only because its fixture is sane, the one piece of this family left
+undone; **the remaining 24 named-model configs**, since three of three audited were wrong; a sweep
+for UI-bound statement fields with no backend column; the dot-leader gap in `attributeRowCells`'
+text mode; unify the three name/address compose copies; the four render differences from
+2026-10-03; the 1099-SA phone grouping; W-2 box-12 amounts and box 14b; `employeeSuffix` on
+`w-2-as.pdf` and `w-2.pdf`; `1099-g.png`'s duplicated phone fragment; and mapping an Azure 429 to
+503 rather than a bare 500.
+
 ## 2026-10-04 - Form 1095-C: five invented keys out of five, and transcribe-don't-correct
 
 **0 -> 86 values, 86/86** against the fixture's AcroForm (71 filled fields), byte-identical on

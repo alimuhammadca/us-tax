@@ -1,3 +1,75 @@
+## 2026-10-04 - Form 1098-Q, and a mutation that edited the wrong form
+
+**0 fields -> 30, identical on both renders, every one matching the fixture's AcroForm.** Four of
+the eight catalog forms with no config entry remain: 1098, 1098-c, 3922, 1042-s.
+
+STATEMENT CAPTURE ONLY, AND THE SCOPE NOTE STANDS. Form 1098-Q is an issuer-filed information
+return with no line on Form 1040 - that is still true and nothing here changes it. But it sits in
+the statement catalog, so an upload of it should record what the participant received. I had
+flagged this as needing a decision rather than a layout; the upload was the decision. Worth
+separating the two questions in future: "does this form produce a return line" and "should an
+upload of it extract" have different answers, and the out-of-scope note only ever answered the
+first. Same shape as an out-of-scope blocker outliving its own feature (see the §962 note of
+2026-09), one category up: there the flag outlived the compute, here the scope note was read
+as answering a question it never addressed.
+
+★ EACH MONTHLY CELL HOLDS TWO NUMBERS. Boxes 5a-5l print a premium AND the day of the month it
+was paid, side by side in one cell:
+
+    5a January     $        9304   05        premium x 4.8135, day x 5.2289
+    5b February    $        9306   08        premium x 6.2126, day x 6.6233
+
+The component models only the premium, so the day is left unread and no field was added. What
+makes that safe is position rather than luck: the premium is printed to the LEFT of the day, and
+"first amount in the cell wins" reads left to right along the line. A test reverses the two
+glyphs to show the day would win if the form printed it first - the layout depends on the form's
+order, and says so.
+
+★ TWO RENDER-SPECIFIC DETAILS, AND A DISAGREEMENT IS WORSE THAN A BLANK. Both were confirmed
+load-bearing by mutating them against the live extraction, and each one removed makes the PNG
+DISAGREE with the PDF rather than simply blank a field - which is the worse failure, because each
+render then looks complete on its own.
+
+    box 5l         the PNG reads its label as "51 December". Anchored on "5l" alone the row does
+                   not resolve there and December is lost on that render only. Form 1097-BTC's
+                   box 5l already carried this alternation for the same reason - the comment now
+                   credits it instead of presenting it as new.
+    ISSUER'S TIN   has NO label of its own: both renders merge the issuer box's first label line
+                   with it into one OCR line. So it comes from the key-value pass - and on the
+                   PNG that pair reads "998877665 Hartford," because the issuer city bleeds in
+                   from the box to its left, so only the leading identifier is kept.
+
+Box 2's checkbox entry names the second line of its label, where the mark is printed. Mutation
+shows that is NOT what sets the field - Azure also reports it as a ":selected:" pair, as on
+Form 5498-QA - and the comment says so rather than claiming otherwise. Fourth time this week.
+
+★ THE MUTATION EDITED THE WRONG FORM, AND REPORTED "NO CHANGE".
+
+My first run of the box-5l mutation replaced Form 1097-BTC's identical row, because the search
+string
+
+    new CellRow(new String[] { "^5k November", "^5[l1] December" },
+
+appears TWICE in the file and the patch asserted only that it was present, not that it was
+unique. The run came back "no change" on both renders, and the conclusion that followed - that
+the alternation does nothing - was the exact opposite of the truth. I caught it only because the
+result contradicted the line text I had measured ten minutes earlier.
+
+The lesson is narrow and mechanical: every patch and mutation script in this sweep asserts
+`X in s`. That is the wrong assertion. It must be `s.count(X) == 1`, or the edit must be anchored
+on something unique to the form - the surrounding field names work. A mutation that silently
+edits a different form does not fail; it produces a clean, plausible "no change" and invites
+precisely the wrong conclusion. Which is the same failure mode as every other entry in this file.
+
+MEASURED, NOT ASSUMED. The fourteen other cell-reading forms re-verified byte-identical on both
+renders. Unit suite 2,735 / 0 (11 new).
+
+Open, in priority order: **the four remaining forms with no config entry** (1098, 1098-c, 3922,
+1042-s); the audit of the configs that DO exist for invented field names; unify the three
+name/address compose copies; the four render differences from 2026-10-03; the 1099-SA phone
+grouping; W-2 box-12 amounts and box 14b; `employeeSuffix` on `w-2-as.pdf` and `w-2.pdf`;
+`1099-g.png`'s duplicated phone fragment; and mapping an Azure 429 to 503 rather than a bare 500.
+
 ## 2026-10-04 - Form 5498-QA, and the third prose correction in three days
 
 Third and last of the 5498 siblings with no field-mappings entry. **0 fields -> 28, identical on

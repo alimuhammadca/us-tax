@@ -1,3 +1,73 @@
+## 2026-10-04 - Form 3921 merged two boxes into one money field, and why that was invisible
+
+Fifth form in this sweep with invented config key names, and the worst-behaved of them. Box 4
+arrived holding BOTH boxes:
+
+    exercisePricePerShareAmount     (absent)
+    fairMarketValuePerShareAmount   "9401\n$ 9402"     PNG
+    fairMarketValuePerShareAmount   "9401\n$\n9402"      PDF
+
+Box 3 gone, both numbers in one field, and the two renders disagreeing on the spacing inside it -
+so each looked complete on its own while saying something different. Six fields of fifteen came
+through. **6 -> 16, identical on both renders, every one of the 14 AcroForm values accounted for**
+(the employee name splits into first/last, box 6 into name and TIN).
+
+The config entry is now just the corrected flag. The layout overwrites the bad values anyway -
+readRows uses put, not putIfAbsent - but leaving seven key names that match the wrong pairs is a
+trap for whoever reads the entry next and believes it.
+
+★ THE COPY B STUB IS PROSE, AND THAT IS THE WHOLE DIFFICULTY. On every form so far the
+instruction column was filtered out for nothing by numericOnly, because the boxes beside it hold
+amounts. Here boxes 1 and 2 hold DATES. Each names the stub label beside it as a second,
+null-field cell - "OMB No" for box 1, "(Rev. April" for box 2 - so the stub lands in a cell that
+stores nothing. Box 6 is the only row on the form that states a right edge, because it is free
+text with nothing to its right to anchor on, and 0.81 of the width falls in a real gap on both
+renders (PDF 6.7045 -> 7.0292in, PNG 1304 -> 1368px).
+
+Box 6 prints ONE box for the corporation's "name, address, and TIN" while the component models
+four fields. Only the TIN is delimited by the form itself, in its own printed text, so that much
+is split off and the rest left whole. Street and city/state/zip are NOT guessed out of the
+remainder: the form gives no delimiter for them, and a wrong split is worse than an unsplit
+value. Same reasoning as leaving a field alone rather than inventing its parts.
+
+★ AND THE REASON A WRONG VALUE WAS VISIBLE AT ALL: coerceValue RETURNED THE TEXT.
+
+    if (isAmountAppKey(appKey)) {
+        try { return Double.parseDouble(cleaned); }
+        catch (NumberFormatException ignored) { /* fall through to string return */ }
+    }
+    return trimmed;
+
+An *Amount key is a declaration that the field is a number. Falling through to the raw string
+looks harmless and is not: PayloadCoercion.decimal drops a non-numeric string at save time, so
+the value can NEVER persist - but it is returned in the extract response, and the screen renders
+it into a money input. That is the entire mechanism by which a config error became two boxes of
+text displayed in box 4. The value was unsavable and unexplainable, and shown anyway.
+
+It is now declined and logged. A parenthesised figure is also read as the negative these forms
+print it as - which the numericOnly cell path already did and this one did not, so the two paths
+disagreed about what "(500)" means. Measured across 30 forms x both renders: byte-identical
+everywhere, so the change only touches the case that was producing garbage. An empty box is
+honest where that was not.
+
+MEASURED, NOT ASSUMED. All fifteen other cell-reading forms re-verified byte-identical. Unit
+suite 2,753 / 0 (14 new).
+
+ON THE REPORT ITSELF. The last two uploads came in with the same wording - "the ocr process does
+not correctly extract the values now the application shows the values correctly". On Form 1098-Q
+everything measured clean, including a re-derivation of the month-to-day pairing from the
+AcroForm RECTANGLES rather than from field-name order, which is what my first check had used and
+would have made it circular. So I asked rather than guess. Here the same sentence was a real
+defect. Default: treat it as a bug report and measure - that is what found this one.
+
+Open, in priority order: **the three remaining forms with no config entry** (1098, 1098-c,
+3922 - note 3921 HAD an entry, which is why it failed differently); **audit the configs that DO
+exist for invented field names** - five instances now, every one found by an upload; a sweep for
+UI-bound statement fields with no backend column; unify the three name/address compose copies;
+the four render differences from 2026-10-03; the 1099-SA phone grouping; W-2 box-12 amounts and
+box 14b; `employeeSuffix` on `w-2-as.pdf` and `w-2.pdf`; `1099-g.png`'s duplicated phone
+fragment; and mapping an Azure 429 to 503 rather than a bare 500.
+
 ## 2026-10-04 - Form 1098-Q boxes 5a-5l: I checked the wrong half of the form for the field
 
 Reported as the dd sub-boxes of boxes 5a-5l showing nothing. Yesterday I wrote that "the

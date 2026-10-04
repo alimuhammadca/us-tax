@@ -1,3 +1,63 @@
+## 2026-10-04 - Form 3922, and three bounds a form can need that a label cannot give
+
+Form 3921's ESPP sibling, no field-mappings entry, so every upload extracted nothing. **0 -> 17
+fields, identical on both renders, every one matching the fixture's AcroForm.** Three of the
+original eight remain: 1042-s, 1098, 1098-c.
+
+Easier than 3921 in one way - the component models the employee name as ONE field, so no split.
+Three things are its own:
+
+★ BOXES 3 AND 4 PRINT THE SAME LABEL TEXT. Both read "Fair market value per share". They are
+told apart only by their box number and by their second lines:
+
+    3 Fair market value per share     4 Fair market value per share
+      on grant date                     on exercise date
+
+and those second lines are also what bound their cells, so the one fact distinguishes them twice.
+A test asserts each regex matches its own label and NOT the other, because a form where two
+labels differ by a single character is where an anchored-prefix scheme is most likely to be
+quietly wrong.
+
+★ BOX 7 NEEDED TWO BOUNDS, AND THE SECOND ONE I GOT WRONG FIRST. It is a DATE, so it reads as
+text, and the prose Copy B stub beside it cannot be filtered by numericOnly the way an amount
+box filters it for free. So it states a right edge - 0.75 of the width, inside a real gap on
+both renders (PDF 5.7876 -> 6.9624in, PNG 1115 -> 1366px).
+
+That was not enough. A column with ONE row has no next row, so its band runs to the footer, and
+box 8's own two label lines sit inside this column's edges. The first run returned
+
+    09/15/2026 8 Exercise price per share determined as if the option exercised on the date
+    shown in box 1
+
+Box 8 is now named below it with a null field - the same "a row that stores nothing can still be
+load-bearing" move as Form 5498-SA's telephone and Form 5498-QA's box 5. Third time; it is a
+pattern now rather than a trick.
+
+★ THE PNG READS A VERTICAL RULE AS A "|". The corporation's label comes back as
+"|CORPORATION'S name, street address, ..." on the PNG and without the pipe on the PDF, so that
+one regex is deliberately NOT anchored. Anchored it would miss on the PNG only - a render
+DISAGREEMENT, which is the failure that looks like success on either render taken alone. This is
+the same hazard as Form 1098-Q, where both renders merged "ISSUER'S TIN" into the label line; the
+difference is that there it happened on BOTH renders and here on one.
+
+MEASURED, NOT ASSUMED. The sixteen other cell-reading forms re-verified byte-identical. Unit
+suite 2,766 / 0 (13 new).
+
+AND A PREDICTION OF MINE THAT WAS WRONG. I wrote a test asserting that without its right edge
+box 7 would pick up only "Service." - reasoning that "the Internal Revenue" sat above the cell
+top. It does not: its centre is 2.4707 against a cell top of 2.4635, a hundredth of an inch
+INSIDE the band, so both stub lines bleed in. The test now carries the measured value and a note
+that I had expected otherwise. A hundredth of an inch is exactly the margin at which reasoning
+from a glance at the numbers stops working, which is the same lesson as the row-pitch cap and
+the cell-overhang slack.
+
+Open, in priority order: **the three remaining forms with no config entry** (1042-s, 1098,
+1098-c); **audit the configs that DO exist for invented field names** - five instances, every one
+found by an upload; a sweep for UI-bound statement fields with no backend column; unify the three
+name/address compose copies; the four render differences from 2026-10-03; the 1099-SA phone
+grouping; W-2 box-12 amounts and box 14b; `employeeSuffix` on `w-2-as.pdf` and `w-2.pdf`;
+`1099-g.png`'s duplicated phone fragment; and mapping an Azure 429 to 503 rather than a bare 500.
+
 ## 2026-10-04 - Form 3921 box 6: the TIN was right and unlabelled, which made it wrong on screen
 
 Reported: the TIN in box 6 should say it is a TIN, as the uploaded statement does. It should.

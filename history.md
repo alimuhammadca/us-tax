@@ -1,3 +1,71 @@
+## 2026-10-04 - Form 1095-A: the first "invented field names" case, and a lesson over-applied
+
+**3 -> 103 values.** PNG **103/103** against the fixture's own AcroForm (81 filled fields); PDF
+**102/103**, the one miss being Azure's OCR dropping the house number on that render - its raw
+address `content` lacks the "14", so it is upstream of any mapping.
+
+This form **HAD** a `field-mappings.json` entry, which is exactly why the missing-entry sweep that
+finished an hour earlier never caught it. The entry asked for ten of the ninety-three values
+`prebuilt-tax.us.1095A` returns, and named **seven of those ten wrong**:
+
+    PolicyNumber                 ->  MarketplaceAssignedPolicyNumber
+    RecipientSSN / SpouseSSN     ->  Recipient.SSN / Spouse.SSN
+    Recipient{First,Last}Name    ->  Recipient.Name   (one field, needs splitting)
+    Spouse{First,Last}Name       ->  Spouse.Name
+
+It never asked for the policy issuer, either address, either date of birth, the void/corrected
+marks, the tax year, the five covered individuals, or **any of Part III** - although the backend
+already had `se_1095_a_covered_individual` and `se_1095_a_coverage_monthly` and the screen already
+had every input. Nothing needed adding to a statement form; the data had nowhere to go only
+because nothing asked for it. **This is the first confirmed instance of the class named as the top
+open item**, and it was found the same way all five earlier ones were: by an upload, not an audit.
+
+★ I GOT PART III WRONG FIRST, BY OVER-APPLYING YESTERDAY'S LESSON. Thirteen printed rows come
+back as thirteen on the PDF and **FOURTEEN** on the PNG, where Azure loses the "July" label and
+from that row on pairs each remaining label with the NEXT row's amounts:
+
+    row 6    Month null        400 / 590 / 345     <- July's amounts, unlabelled
+    row 7    Month "July"      730 / 785 / 205     <- August's amounts
+    row 12   Month "December"  925 / 720 / 175     <- the ANNUAL TOTALS
+    row 13   Month "Annual Totals"  (no amounts)
+
+I keyed on the label, straight off the Form 1042-S finding that content beats order. That shifted
+six months and lost the annual totals entirely. **Part III's month names are PRE-PRINTED on the
+blank form**, so a row's identity is its row number in that table and the label is an echo of it.
+A table row number is not the reading order of glyphs on a page: one is the grid the model
+extracted, the other a render artifact. The 1042-S lesson is about the second and says nothing
+about the first, and I applied it anyway.
+
+The fixture's AcroForm is what settled it rather than my reasoning - `f1_59..61` is July
+(400/590/345) and `f1_77..79` the totals (925/720/175) - so this is not a one-fixture guess in the
+other direction. The rule now: drop rows carrying no amounts at all (the PNG's fourteenth, which
+has a label and nothing else); if thirteen remain, key by **row number** with the label as a
+cross-check that WARNS on disagreement; if the count is anything else the shape is wrong, the
+positions carry no authority, and the label takes over. Both renders then give the same answer,
+and a dropped row or a missing label is still reported.
+
+★ AND A JAVADOC THAT HAD BEEN UNTRUE SINCE IT WAS WRITTEN. `extractValue`'s own comment
+advertised configs like `"Filer.Address.StreetAddress"`, but its recursion only stepped through
+OBJECT fields - an ADDRESS stopped it, and such a path returned null. **No config used one, so
+nothing was broken; the claim was simply untrue.** It is true now, and reading Azure's parsed
+`valueAddress` components is better than splitting the field's `content` on its newlines, because
+that text is ordered by where the boxes sit. Third instance of a comment describing work the code
+did not do.
+
+MEASURED, NOT ASSUMED. All 23 other named-model forms x both renders byte-identical before and
+after the `extractValue` change (the new branch runs only after the OBJECT recursion has already
+failed, so it can turn a null into a value and never change one - measured anyway). Unit suite
+**2,827 / 0** (9 new), pinning the measured fourteen-row PNG shape, the shifted answer
+label-keying would have produced, and the misshapen-table fallback.
+
+Open, in priority order: **sweep the remaining 26 named-model configs against what their models
+actually return** - 1095-A was the first of this class to be confirmed and there is no reason to
+think it is the only one; a sweep for UI-bound statement fields with no backend column; the
+dot-leader gap in `attributeRowCells`' text mode; unify the three name/address compose copies; the
+four render differences from 2026-10-03; the 1099-SA phone grouping; W-2 box-12 amounts and box
+14b; `employeeSuffix` on `w-2-as.pdf` and `w-2.pdf`; `1099-g.png`'s duplicated phone fragment; and
+mapping an Azure 429 to 503 rather than a bare 500.
+
 ## 2026-10-04 - Form 1042-S: the last form with no config entry, and order is not a form property
 
 No field-mappings entry. **0 -> 73 fields, byte-identical on both renders, every one matching the

@@ -1,3 +1,58 @@
+## 2026-10-04 - Form 5498-QA, and the third prose correction in three days
+
+Third and last of the 5498 siblings with no field-mappings entry. **0 fields -> 28, identical on
+both renders, every one matching the fixture's AcroForm**, first pass. Five of the eight are
+left: 1098, 1098-c, 1098-q, 3922, 1042-s - and those are real layouts rather than siblings.
+
+The left region is Form 5498-ESA's exactly, ISSUER for TRUSTEE, carried across unchanged. The
+right is eight boxes rather than two, two to a row from box 3 down; box 5 is a checkbox whose
+label runs to four lines and box 7 holds a code rather than an amount.
+
+★ TWO OF MY OWN COMMENTS WERE WRONG, AND MUTATION CAUGHT BOTH.
+
+The checkbox entry names box 5's LAST label line, because its mark is printed 0.33in below the
+first - more than the single line height readSelectionMarks allows:
+
+    the mark's vertical centre        2.2315in
+    "5 If checked, account" centre    1.9050in   (height 0.1051)   0.3266in away
+    "on this form" centre             2.2416in   (height 0.1003)   0.0100in away
+
+I wrote that without the third element the box reads as unchecked. It does not. Azure ALSO
+reports box 5 as a ":selected:" key-value pair keyed "5 If checked...", and readCheckboxes
+matches that on the label prefix - a second, independent source I had forgotten was there.
+Dropping the third element left all 28 fields unchanged on both renders.
+
+The second: box 5's four-line label extent does not change the output either, because its cell
+carries a null field and anything read into a null-field cell is discarded.
+
+Both entries stay. They describe the form correctly, they make the GEOMETRIC path right rather
+than accidentally absent, and the selection marks are the more dependable of the two sources.
+But they are redundancy, not rescue, and the comments and the test javadoc now say so.
+
+★ THREE DAYS, THREE PROSE CORRECTIONS, ALL FROM THE SAME MOVE.
+
+    10-04  composeNameAddress said these twelve lines were reduced to "one copy"    there were 3
+    10-04  a test javadoc credited PER-CELL cell tops for a two-line label block    collapsing
+                                                                                   them changed
+                                                                                   nothing
+    10-04  a comment said a checkbox entry was what set the field                   a kv pair was
+
+Each was written in good faith, each read as fact afterwards, and each named a mechanism that was
+not the one doing the work. The move that caught all three is the same: mutate the rule, then
+read the result against the EXPLANATION and not just the assertions. A test that still passes is
+telling you something about your comment. I now do this deliberately rather than as a by-product
+of checking the tests.
+
+MEASURED, NOT ASSUMED. The thirteen other cell-reading forms re-verified byte-identical on both
+renders. Unit suite 2,724 / 0 (11 new).
+
+Open, in priority order: **the five remaining forms with no config entry** (1098 and 1098-c next;
+1098-q still needs a scope call, since it is recorded out of scope for the return yet sits in the
+statement catalog); the audit of the configs that DO exist for invented field names; unify the
+three name/address compose copies; the four render differences from 2026-10-03; the 1099-SA phone
+grouping; W-2 box-12 amounts and box 14b; `employeeSuffix` on `w-2-as.pdf` and `w-2.pdf`;
+`1099-g.png`'s duplicated phone fragment; and mapping an Azure 429 to 503 rather than a bare 500.
+
 ## 2026-10-04 - Form 5498-ESA, the second of the eight, and a test that credited the wrong rule
 
 Same cause as its sibling: no `5498-esa` key in field-mappings.json, so every upload extracted

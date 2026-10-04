@@ -1,3 +1,65 @@
+## 2026-10-04 - Form 1098-C: two shapes in one form, and the stub has two left edges
+
+No field-mappings entry. **0 -> 26 fields, identical on both renders, every one matching the
+fixture's AcroForm**, first pass. Seventh of the original eight; only **1042-s** is left.
+
+The top half is the usual three columns - donee and donor on the left, boxes 1-4c in the middle,
+a Copy B stub on the right. From box 5a DOWN the form goes FULL WIDTH: boxes 5a to 7 run from
+x 0.73 across to 6.5, under the same stub. Two divides again, both from labels, so two
+readCellLayout passes - box 1's label bounds the upper-left rows, the stub bounds every box row.
+The upper boxes and the full-width rows share ONE column, because each row takes its own left
+edge from its own label; nothing extra was needed to put them together.
+
+★ THE DIVIDE HAD TO COME FROM THE RIGHT PARAGRAPH. The stub has two, and they do not start at
+the same x:
+
+    "Attachment Sequence No. 155A"   begins 6.6949in / 810px
+    boxes 4c and 6b, values begin    6.6138in, 6.6185in / 796px
+    "Unless box 5a or"               begins 6.9862in / 848px
+
+A divide taken from the UPPER paragraph falls LEFT of two box values and would cut them off. The
+lower one clears both, on both renders. The upper stub is handled instead by box 1's null OMB
+cell - the same move as every other form in this sweep, which is why it was already there.
+
+"The stub's left edge" is not one number. I had been treating a prose column as a single x, and
+it is a column of paragraphs that are each indented differently. Picking the one that clears the
+content is a measurement, not a choice.
+
+★ FIVE ROWS EXIST ONLY TO BOUND THE ROW ABOVE. Boxes 4a, 5a, 5b, 6a and 7 are all checkboxes,
+and readRows ends a row at the next CELL row only - a checkbox read from a selection mark is
+invisible to that bound. Box 5a is declared in BOTH passes for this reason: in pass 1 it stops
+the donor's address row from running to the footer and swallowing the full-width text of boxes
+5c and 6c, which start at the same x. Fourth form to need a null-field row, and the first to
+need the same one twice.
+
+Two more things specific to this form:
+
+  - SEVEN checkbox groups, including a Yes/No pair on box 6a where the component models only the
+    "Yes" side. Anchored on that label, with nearest-mark-to-the-label keeping the two apart -
+    which matters here, because this fixture has BOTH marked. The printed form does not allow
+    that; the fixture generator filled every checkbox. Anchoring on "Yes" answers the question
+    the field actually asks either way.
+  - Boxes 2b/2c/2d need the half-label-height overhang slack: "Honda" starts 0.0144in left of
+    "2c Make" and "Accord" 0.0143in left of "2d Model". Without it the make and model shift one
+    cell left and the model is lost. Third form to need that rule, after 5498-SA and 5498-ESA.
+
+Also noted while reading the glyphs: attributeRowCells skips "" and "$" and anything starting
+":" in text mode, but NOT a bare ".". This form prints long dot leaders (". . . . . .") on boxes
+6a, 6c and 7. They do not reach a stored field here - every one of those rows is a checkbox with
+a null field, or the dots sit above the cell top - but a text box with dot leaders in its band
+would collect them.
+
+MEASURED, NOT ASSUMED. The eighteen other cell-reading forms re-verified byte-identical on both
+renders. Unit suite 2,799 / 0 (15 new).
+
+Open, in priority order: **1042-s, the last form with no config entry**; **audit the configs that
+DO exist for invented field names** - five instances, every one found by an upload; a sweep for
+UI-bound statement fields with no backend column; the dot-leader gap in attributeRowCells' text
+mode; unify the three name/address compose copies; the four render differences from 2026-10-03;
+the 1099-SA phone grouping; W-2 box-12 amounts and box 14b; `employeeSuffix` on `w-2-as.pdf` and
+`w-2.pdf`; `1099-g.png`'s duplicated phone fragment; and mapping an Azure 429 to 503 rather than
+a bare 500.
+
 ## 2026-10-04 - Form 1098 needs TWO label-derived divides, so it is read twice
 
 No field-mappings entry. **0 -> 21 fields, identical on both renders, every one matching the

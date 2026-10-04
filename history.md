@@ -1,3 +1,76 @@
+## 2026-10-04 - Form 1095-B: a config entry present but EMPTY, and the first checkbox GRID
+
+**0 -> 133 values** on the main page, **133/133** against the fixture's AcroForm (134 filled
+fields; line 1's three name boxes collapse into two model fields), byte-identical on both
+renders. The **continuation sheet** reads too: **220 values**, also identical on both renders.
+
+★ A THIRD FAILURE MODE FOR A CONFIG ENTRY. After "missing" (the eight-form sweep) and "names
+invented keys" (1095-A), this one was **present but EMPTY**: `prebuilt-document` with
+`"fields": {}` and no geometric reader either. So `mapped` stayed empty, the documented
+last-resort AcroForm fallback fired, and the response was **301 raw widget names** (`c1_01[0]`)
+that match no model field - which is exactly the blank form reported. Eleven other entries are
+also empty, but those are cell-reading forms that read by geometry and need no key-value map;
+`1095-b` was the only one with neither. There is no `prebuilt-tax.us.1095B` model (404), so
+`prebuilt-document` was the right choice all along - its key-value pass gives clean labels for
+all of lines 1-22, which is now configured.
+
+★ PART IV NEEDED A CAPABILITY THAT DID NOT EXIST: A CHECKBOX GRID. Each covered individual has
+thirteen boxes - "all 12 months" then Jan to Dec - and `readSelectionMarks` pairs a mark with ONE
+named label, so it cannot say which ROW a mark is in. `attributeMarkGrid` places each mark by
+nearest row (the printed row numbers) and nearest column (the printed month headers), both taken
+from the form's own marks and neither from a page fraction. Azure returns all 78 marks on both
+renders.
+
+Each row's TEXT is bounded on the right by **that row's leftmost mark** - exact, free because the
+marks are already in hand, and it keeps out the "X" glyphs the checkboxes also produce as words.
+Name, TIN and date of birth are then separated by the **shape each box requires** (a TIN, a date,
+and whatever is left is the name) rather than by x thresholds or by arrival order. Two name
+shapes, deliberately different: Part I's first-name input is labelled "First name and middle
+initial" so `splitName` is right there, while Part IV has its own M.I. box and takes a three-way
+split on the one rule a middle initial obeys - it is one letter.
+
+★ AND THE PRINTED ROW NUMBER IS THE LIST INDEX. Part IV numbers rows from 23 and the
+continuation sheet carries on from 29, so `printed - 23` is the row's place in the list and ONE
+reader handles both pages without being told which it is looking at: 23-28 fill rows 0-5, 29-40
+fill rows 6-17. The screen already pads and slices that list at eighteen - the main page's six
+plus the continuation sheet's twelve. Page 3 also repeats the responsible individual across its
+top with NO line numbers, which is what tells the two pages apart, so that header is read only
+there and never competes with page 1.
+
+★ TWO DEFECTS THE FIXTURE COULD NOT HAVE REVEALED. Every one of its 78 boxes is ticked, so
+133/133 says nothing about either:
+
+  - an **UNSELECTED** mark must read false, not be dropped - the two look identical on this
+    fixture and differ completely on a real statement with a mid-year lapse;
+  - with one month header lost to OCR, nearest-column silently filed that month's mark under its
+    **NEIGHBOUR**. August took two marks and reported coverage the form does not claim. A column
+    guard symmetric with the row guard now discards it and warns.
+
+Both are unit-tested synthetically on the measured geometry. A fixture where every box is ticked
+is a weak oracle for checkboxes, and a perfect score against it is not evidence - same shape as
+the 1098-C Yes/No pair, but this time the weakness hid a real bug.
+
+Also: **lines 8 and 9 print side by side and the key-value pass merges them**, returning
+`"9 Reserved" => "289 B"` with the two in the opposite order to their labels. They are told apart
+geometrically instead - line 8's letter is left of line 9's label, line 9's value is below it -
+with the half-label-height overhang slack line 9's value needs on the PDF. And one more
+page-fraction trap caught in passing: `attributeRowCells` falls back to
+`labels.get(0).x0() - pageWidth * 0.02` for its left edge, so passing a page width of ZERO
+silently removes the slack - which dropped the first name on the PDF render of page 3. The caller
+now passes a label-derived left edge instead.
+
+MEASURED, NOT ASSUMED. **Purely additive**: zero lines removed from `GenericFieldMapper`, so no
+other form's behaviour could change - which is a proof rather than a sweep. Unit suite
+**2,835 / 0** (8 new).
+
+Open, in priority order: **sweep the remaining named-model configs against what their models
+actually return** - `1095-c` is next and has the same smell as 1095-A, five configured fields
+against a structured model; a sweep for UI-bound statement fields with no backend column; the
+dot-leader gap in `attributeRowCells`' text mode; unify the three name/address compose copies;
+the four render differences from 2026-10-03; the 1099-SA phone grouping; W-2 box-12 amounts and
+box 14b; `employeeSuffix` on `w-2-as.pdf` and `w-2.pdf`; `1099-g.png`'s duplicated phone
+fragment; and mapping an Azure 429 to 503 rather than a bare 500.
+
 ## 2026-10-04 - Form 1095-A: the first "invented field names" case, and a lesson over-applied
 
 **3 -> 103 values.** PNG **103/103** against the fixture's own AcroForm (81 filled fields); PDF

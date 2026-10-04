@@ -1,3 +1,72 @@
+## 2026-10-04 - Form 1095-C: five invented keys out of five, and transcribe-don't-correct
+
+**0 -> 86 values, 86/86** against the fixture's AcroForm (71 filled fields), byte-identical on
+both renders.
+
+**Every one of the five configured keys was wrong** - `EmployerEIN` for `Employer.EIN`,
+`EmployeeSSN` for `Employee.SSN`, `EmployeeNameAddress` for `Employer.Name`,
+`EmployeeFirstName`/`LastName` for `Employee.FirstName`/`LastName` - so nothing matched and
+nothing was extracted. Second confirmed case of the invented-key class after 1095-A, and worse:
+**5 of 5** rather than 7 of 10. Predicted from the config alone before the upload, which is the
+first time this class has been called in advance rather than found by a user.
+
+Thirteen Part I scalars now come from `prebuilt-tax.us.1095C`, which reads them well. Two things
+do NOT, and both are read from the page instead.
+
+★ 1. THE ADDRESS BLOCKS - EXTRACTION TRANSCRIBES A FORM, IT DOES NOT CORRECT IT. Azure parses
+an Address SEMANTICALLY. On this fixture it reports city "Milwaukee" and state "MI", while the
+form's own boxes hold:
+
+    line 11  City or town           "US 53704"
+    line 12  State or province      "Milwaukee"
+    line 13  Country and ZIP        "MI"
+
+The fixture scrambles them deliberately, and the screen's fields are named for those BOXES - so
+`employerCity` must hold what is printed in the City box, not what a parser thinks a city is.
+Azure also mangled `streetAddress` into `"400 Industrial Pkwy\nUS"`. Read by geometry, all nine
+address values are box-faithful.
+
+**Reported, not quietly changed:** Form 1095-A reads its address from those same semantic
+components and is correct only because ITS fixture is sane. The same latent mismapping is there.
+Changing a verified form unasked is not mine to do, so it is written down instead.
+
+★ 2. PART II, WHERE THE MODEL MERGES TWO BOXES. It folds the "All 12 Months" column into
+January for two of its four lines - `Section4980H...January` comes back as `"22910\n12770"` with
+`All12Months` null, two values in one field, and `ZIPCode` the same. Read by geometry there is no
+merge and all 52 figures are right. Part II is printed as FOUR rows of THIRTEEN columns and
+stored as THIRTEEN period rows of four values, so reading it is also a transpose.
+
+★ AND THE LOAD-BEARING DECISION WAS WHERE A COLUMN BEGINS. The values are right-aligned in
+their columns while the headers are centred, so a value can start well left of its own header:
+
+    January's 71340 begins 0.096in left of "Jan" on the PDF, and 14px left of it on the PNG
+    - both MORE than the half-label-height overhang slack
+
+Taking a header's left edge as the cell edge therefore files January's figure under "All 12
+Months" (`cells[0] == "232 71340"`), which a test now pins as the defect. The cells are bounded
+at the **midpoints between adjacent header centres**, which leaves about a quarter of an inch
+either side and, being header-derived, holds on both renders. The midpoints are passed as
+zero-height synthetic labels, so `attributeRowCells` needed no change - a shared rule reused
+rather than widened.
+
+MEASURED, NOT ASSUMED. **Purely additive**: zero lines removed from `GenericFieldMapper`. Unit
+suite **2,841 / 0** (6 new), including the misfiled-January defect and the midpoint margin on
+both renders.
+
+**Still open on this form:** `1095-c-p3` carries **235 filled fields** of Part III covered
+individuals and extracts 3. It is the same grid as 1095-B Part IV at the same x positions, but
+its rows are **UNNUMBERED** - so it needs rows discovered by clustering the marks by y rather
+than from printed row numbers. Not built; stopping there rather than sprawling further in one
+commit.
+
+Open, in priority order: **1095-C Part III** (above) and the **1095-A address** fix, best done
+together; **the remaining 24 named-model configs**, since three of three audited so far were
+wrong (`1095-a` 7 of 10 keys, `1095-b` empty, `1095-c` 5 of 5); a sweep for UI-bound statement
+fields with no backend column; the dot-leader gap in `attributeRowCells`' text mode; unify the
+three name/address compose copies; the four render differences from 2026-10-03; the 1099-SA phone
+grouping; W-2 box-12 amounts and box 14b; `employeeSuffix` on `w-2-as.pdf` and `w-2.pdf`;
+`1099-g.png`'s duplicated phone fragment; and mapping an Azure 429 to 503 rather than a bare 500.
+
 ## 2026-10-04 - Form 1095-B: a config entry present but EMPTY, and the first checkbox GRID
 
 **0 -> 133 values** on the main page, **133/133** against the fixture's AcroForm (134 filled

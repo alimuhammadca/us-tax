@@ -1,3 +1,91 @@
+## 2026-10-04 - A field named for a BOX must hold that box: 1095-A's address, 1095-B/C's names
+
+Two instances of one fault, found by asking the plain question "is this field named for a box?"
+and then checking whether we read that box.
+
+★ 1. FORM 1095-A READ AZURE'S INTERPRETED ADDRESS. Lines 12 to 15 are four numbered boxes -
+street, city, state, country-and-ZIP - and the screen's fields are named for them. Azure instead
+returns ONE address per party and decides for itself which part is the city, and we were writing
+its judgement into box-named fields. It agreed on this fixture, because the address is an
+ordinary one, which is why the semantic read scored 103/103 and this stood all session.
+
+Two symptoms had been visible the whole time and I had put both down to OCR noise:
+
+    Azure's streetAddress dropped the house number on the PDF and kept it on the PNG,
+    so the SAME document gave two different answers - and neither matched the box,
+    which holds "14 Sycamore Ridge Rd".
+
+Reading the four boxes fixes both: the renders are now BYTE-IDENTICAL where they differed, and
+both score **103/103**. So the PDF had really been 102/103, and my earlier "103/103,
+byte-identical on both renders" was wrong on its second half.
+
+**Audited the other 55 forms**: 1095-A was the only one mapping Azure's parsed address
+components into box-named fields. Mapping a whole address into a single whole-address field,
+which several forms do, is a different thing and is fine.
+
+★ 2. AND THE AUDIT FOUND A SECOND INSTANCE - THE NAMES. Forms 1095-B and 1095-C print the
+name in THREE boxes under one caption, and we read the caption's whole line and split it on the
+assumption that the surname is its last word.
+
+I first declined to fix it, because the gap between those boxes measured only about twice the
+gap between words and the comparable rules in this file have four to eight times' clearance. The
+user chose to measure rather than accept the estimate, and **the estimate was wrong**: on
+fixtures built with multi-word names in every box,
+
+    within a box     0.039in = 0.20 of a text height
+    between boxes    0.195in = 1.02 of a text height   (1095-C, the tighter form)
+                     1.320in = 6.92 of a text height   (1095-B)
+
+which is over twice clear either side of a 0.45 threshold. My 2x came from single-word fixtures
+whose gaps happen to be tighter. **An estimate was about to cost a real fix.**
+
+What the old rule actually did, on `first="Mary Jo" middle="K" last="Van Der Berg"`:
+
+    1095-B   responsibleFirstName = "Mary Jo K Van Der"   LastName = "Berg"
+    1095-C   employeeFirstName    = "Mary Jo B Van Der"   LastName = "Berg"
+             employeeMiddleInitial = MISSING entirely
+
+★ A FIXTURE WHERE EVERY BOX HOLDS ONE WORD CANNOT TEST A MULTI-WORD BOX. That is the general
+lesson, and it is the sibling of the all-ticked-checkbox weakness found earlier today: both forms
+scored full marks against their AcroForm while the rule was broken, because the shipped data
+never exercised it. Building the fixture that stresses the assumption took ten minutes with
+PyMuPDF - set the three widgets, regenerate the appearance streams - and turned the question from
+a judgement call into a measurement.
+
+Two corrections while building it, both my own:
+
+  - My first reader bounded the row by a MULTIPLE OF LABEL HEIGHT with no right edge and swept in
+    the next row's captions and the column beside it: `"Mary 4 Street Jo address (including
+    apartment no.) K"`. It is bounded by its NEIGHBOURING CAPTIONS now, as every other reader
+    here already was.
+  - The left slack needed a FULL label height, not the usual half. These captions are indented
+    further than their own boxes, so 1095-B's first name starts 0.067in left of its caption
+    against a half-height of 0.060 - and a half silently dropped "Mary".
+
+And two of my own TESTS were wrong rather than the code: I had dropped "Der" from the middle of
+"Van Der Berg", leaving a 0.30in hole that genuinely IS a box boundary. The reader split there
+correctly - the test data could not have existed on paper. **Physically impossible test data
+reads exactly like a bug.**
+
+MEASURED, NOT ASSUMED. 1095-A **103/103**, 1095-B **133/133**, 1095-C **85/85** against their
+AcroForms; every count across the family unchanged (133 / 220 / 85 / 235 / 320 merged); all four
+multi-word fixtures read their boxes exactly. Unit suite **2,864 / 0** (9 new, one of which pins
+the gap margin itself so it cannot quietly erode).
+
+**The 1095 family is now complete and audited.** Open, in priority order: **the remaining 24
+named-model configs**, where 3 of 3 audited were wrong on their keys and one also misread
+checkboxes; **deskewing input before sending it to Azure** - the perturbation test showed the
+production readers misattribute ten values on a 3-degree-rotated 1042-S, which is the failure a
+user cannot see; **Azure's per-field confidence is still discarded**, and it flagged the 1095-C
+checkboxes at 0.364 before we accepted them as fact; **no arithmetic self-checks**, though these
+forms print their own totals; **no form-YEAR check**, so a redesigned form is read with this
+year's geometry; a page-by-page audit of the other multi-page forms; a sweep for UI-bound
+statement fields with no backend column; the dot-leader gap in `attributeRowCells`' text mode;
+unify the three name/address compose copies; the four render differences from 2026-10-03; the
+1099-SA phone grouping; W-2 box-12 amounts and box 14b; `employeeSuffix` on `w-2-as.pdf` and
+`w-2.pdf`; `1099-g.png`'s duplicated phone fragment; and mapping an Azure 429 to 503 rather than
+a bare 500.
+
 ## 2026-10-04 - Part III took Part II's columns on a merged page, and 1095-C left its tax model
 
 The user merged the two 1095-C fixtures into one image, `1095-c-merged.png`, and reported

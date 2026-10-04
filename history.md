@@ -1,3 +1,66 @@
+## 2026-10-04 - A wrong-form upload was silently misattributed, not refused
+
+A report of "1095-p3-c.png does not extract" turned out not to be a code defect at all. The
+backend log settled it in one query:
+
+    AUDIT formId=1095-c  fileSize=175412  contentType=image/png
+
+`1095-b-p3.png` is 175412 bytes; `1095-c-p3.png` is 187330. **Form 1095-B's continuation sheet
+had been uploaded into the Form 1095-C statement.** Reading the audit line beat three rounds of
+guessing about the UI, and is the first thing to do with any "it does not work" report.
+
+★ BUT IT DID NOT FAIL - IT PRODUCED 36 PLAUSIBLE VALUES IN THE WRONG ROWS. 1095-B numbers its
+continuation rows 29-40 and 1095-C's Part III reads 18-30, so rows 29 and 30 overlapped and
+landed in 1095-C's Part III rows 11 and 12 - exactly 2 rows x 18 fields. Nothing in the response
+said anything was wrong. **Misattributed data that looks right is worse than a refusal**, and the
+only reason it surfaced is that a human noticed the screen looked empty rather than wrong.
+
+Every IRS statement prints its own form number and `StatementFormCatalog` already held it for all
+56 forms, so `mapToAppModel` now refuses with a 400 naming what the document actually says:
+
+    "This document says "Form 1095-B" but was uploaded as Form 1095-C.
+     Choose the matching statement form, or check the file."
+
+Deliberately conservative: it refuses ONLY when the expected code is **absent** AND another
+catalogued code is **present**. A title OCR missed, or a page that merely cross-references another
+form, leaves the upload alone - the residual false positive needs both at once.
+
+★ AND THE TESTS FOUND TWO BUGS IN MY FIRST MATCHER. The matching is the whole difficulty:
+
+  - **SEVENTEEN catalogue codes are prefixes of others** - "Form 1098" of "Form 1098-C",
+    "Form W-2" of "Form W-2G"/"W-2AS"/"W-2GU"/"W-2VI", "Form 1099-S" of "Form 1099-SA"/"1099-SB",
+    "Form 5498" of "Form 5498-ESA"/"-QA"/"-SA", "Form RRB-1099" of "Form RRB-1099-R". A trailing
+    `\b` matches every one of them, because the boundary between "8" and "-" IS a word boundary.
+    The lookarounds must exclude a neighbouring HYPHEN as well as a word character.
+  - **My lookaround class was over-escaped.** I wrote it so the Java string came out as
+    `[\\w-]`, which is the class {backslash, w, hyphen} - not word characters. So W-2GU read as
+    W-2 and 1099-SA as 1099-S. The live sweep of 45 forms had passed WITH this bug, because the
+    expected code was always found first and the function returned before the faulty branch ran.
+    A green sweep over real fixtures said nothing about it; seven unit tests on the pure function
+    found it immediately.
+  - `printsFormCode`'s javadoc said whitespace was collapsed "on both sides" while only the CODE
+    was, so a title printed with two spaces went unmatched. **Third instance this week of a
+    comment describing work the code did not do** (after `composeNameAddress`'s "one copy" and
+    `extractValue`'s advertised address drill-down). It is collapsed inside the function now,
+    where the claim can hold however it is reached.
+
+Three codes contain brackets ("Schedule K-1 (Form 1041)"), so the code is quoted rather than
+spliced into a pattern.
+
+MEASURED, NOT ASSUMED. All **45** forms with fixtures still return 200 with their full field
+counts, including every prefix-collision pair checked explicitly (1098/1098-C, 1099-S/1099-SA,
+W-2/W-2G, 5498/5498-SA). Unit suite **2,850 / 0** (7 new, one of which checks all 56 codes
+PAIRWISE: a page printing one must never be read as printing another).
+
+Open, in priority order: **the 1095-A address fix** - it reads Azure's SEMANTIC address
+components and is correct only because its fixture is sane, the last piece of the 1095 family;
+**the remaining 24 named-model configs**, since three of three audited were wrong; a sweep for
+UI-bound statement fields with no backend column; the dot-leader gap in `attributeRowCells`' text
+mode; unify the three name/address compose copies; the four render differences from 2026-10-03;
+the 1099-SA phone grouping; W-2 box-12 amounts and box 14b; `employeeSuffix` on `w-2-as.pdf` and
+`w-2.pdf`; `1099-g.png`'s duplicated phone fragment; and mapping an Azure 429 to 503 rather than
+a bare 500.
+
 ## 2026-10-04 - Form 1095-C Part III: one grid reader for two forms, and a failed grep filed as a fact
 
 **3 -> 237 values** on the PDF (236 on the PNG). **234/234** against the fixture's AcroForm: all

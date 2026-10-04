@@ -1,3 +1,86 @@
+## 2026-10-04 - Form 1042-S: the last form with no config entry, and order is not a form property
+
+No field-mappings entry. **0 -> 73 fields, byte-identical on both renders, every one matching the
+fixture's AcroForm.** The AcroForm holds 74 fields; two pairs are the tax-rate combs that collapse
+into one value each, and box 9 has no field at all, so 73 is the whole form. Eighth of the original
+eight. **Every one of the 56 catalogue forms now has a config entry** - that backlog is closed.
+
+The biggest form in the catalogue and the only one where most boxes print their value ON the
+label's own line rather than under it. Sixteen side rows and twenty-three cell rows, one
+readCellLayout pass, the divide taken from box 13l at x 4.3455 / 510px.
+
+★ READING THE STRIP AND SPLITTING IT ON THE FORM'S OWN TEXT IS AN ORDER RULE, AND ORDER IS A
+PROPERTY OF THE RENDER. Boxes 3a/4a and 3b/4b each share ONE printed line, so a box's value is
+what sits between its own label and its neighbour's. I first read the whole strip and split it on
+the "4a" the form prints between the two boxes. Measured from the running extraction:
+
+    PDF   "10 4a Exemption code 64"   -> splits to 10 / 64
+    PNG   "10 64 4a Exemption code"   -> splits to 1064 / nothing
+
+`SideRow` gained `boundedRight()`: a right-hand bound taken from a neighbouring LABEL, which is
+the counterpart to the left bound `readSideRows` already derived from the anchor's own extent. A
+label's position is a property of the form. Second instance of this lesson after the 2026-10-03
+OCR-reading-order finding, and the first where the two renders disagree WITHIN a single row.
+
+★ AND I NEARLY RECORDED THE WRONG REASON FOR IT. My first attempt to pin the divergence in a
+test fed the five measured word glyphs to `orderForReading` and got the SAME order from both
+renders - so my explanation was false as written. Line grouping runs across the whole page, so the
+order these glyphs come back in depends on their neighbours elsewhere on the row and cannot be
+reproduced from the row alone. I logged the two real strings out of the live extraction before
+writing either the code comment or the test. A failing test that contradicts the story is the
+story being wrong, not the test.
+
+★ TEN OF EIGHTEEN MUTATIONS MADE NO DIFFERENCE, AND SEVEN GOT DELETED. Every null-field row and
+null cell in the layout was broken one at a time against the live extraction:
+
+  - **Seven null rows DELETED.** Boxes 5, 6, 7a, 7b, 7c, 7d and 8 each had a null row declared to
+    bound box 2's band from below. Every left-column amount on this form is printed RIGHT-ALIGNED
+    near x 4.0, past box 2's cell and inside the null third cell that box 2 needed anyway - so the
+    third cell already did their work. Not "inert on this fixture": inert because of where the form
+    prints its amounts. Removed rather than kept and described.
+  - **Three kept as insurance, with the mutation result written beside each.** 15l's alternation,
+    and box 3a's and the amendment number's right bounds, change nothing today - each is masked by
+    `numericOnly`'s first-match-wins, which is itself an order rule. Kept, and labelled as
+    insurance rather than structure so nobody later mistakes them for load-bearing.
+  - **Eight proved load-bearing**, with the exact failure recorded: box 2 without its third cell
+    reads box 3a's 10 as the gross income; box 12a without its null cell reads
+    "59-0067812 12c Ch. 4 status code 775"; box 14b reads "15" (the pro-rata checkbox's own glyph)
+    instead of 960.
+
+★ WHICH GLYPHS OCR CORRUPTS IS ALSO PER-RENDER. "12l" comes back as "121" on the PNG and
+survives on the PDF; "15l" survives on BOTH; "13l" and "13o" are corrupted on both. Nothing
+predicts which, so every l/o box letter is now an alternation. Without 12l's the state and country
+ran together and the ZIP was lost; without 13l's the GIIN took the FTIN's value.
+
+Three more things specific to this form:
+
+  - **Two values are printed to the LEFT of the label that names them** - the unique form
+    identifier and the amendment number - which no anchor on that label can reach. Each is
+    anchored on the block printed left of IT ("Internal Revenue Service", "AMENDED") and bounded
+    by its own label. `amendmentNumber` had never been extracted at all.
+  - **Four comb fields** (one printed box per character) OCR as separate glyphs on both renders:
+    the identifier, both tax rates and the date of birth. Read as text, spacing dropped. A rate's
+    point goes between its two printed cells - the form prints two 2-character combs, the PDF
+    carries them as two AcroForm fields and the screen splits the model value on "." - and
+    anything other than four digits is kept as read and logged rather than split on a guess.
+  - **Box 9's brackets are blank-form furniture.** The "(" sits at x 0.7976 and the value and its
+    ")" at x 2.5500, an inch and three quarters apart with printed label text between them. 180,
+    not -180. The box also has no AcroForm field in the fixture, so it exists only as drawn text.
+
+MEASURED, NOT ASSUMED. Eighteen forms x both renders byte-identical before and after the
+`readSideRows` change (the new branch is guarded on a null check, and all four call sites are in
+this one layout). Unit suite 2,818 / 0 (19 new). Also caught here: `JSON_OUT` is a PATH, not a
+flag - `JSON_OUT=1` wrote to a file called "1" and my first "byte-identical" diff compared two
+EMPTY sets. Same shape as the 2026-10-03 listing-diff error, caught this time before publishing.
+
+Open, in priority order: **audit the configs that DO exist for invented field names** - five
+instances, every one found by an upload rather than by looking, and now the top item with the
+missing-entry backlog closed; a sweep for UI-bound statement fields with no backend column; the
+dot-leader gap in `attributeRowCells`' text mode; unify the three name/address compose copies; the
+four render differences from 2026-10-03; the 1099-SA phone grouping; W-2 box-12 amounts and box
+14b; `employeeSuffix` on `w-2-as.pdf` and `w-2.pdf`; `1099-g.png`'s duplicated phone fragment; and
+mapping an Azure 429 to 503 rather than a bare 500.
+
 ## 2026-10-04 - Form 1098-C: two shapes in one form, and the stub has two left edges
 
 No field-mappings entry. **0 -> 26 fields, identical on both renders, every one matching the

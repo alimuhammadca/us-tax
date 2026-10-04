@@ -1,3 +1,64 @@
+## 2026-10-04 - Form 1098-Q boxes 5a-5l: I checked the wrong half of the form for the field
+
+Reported as the dd sub-boxes of boxes 5a-5l showing nothing. Yesterday I wrote that "the
+component models only the premium, so the day is left unread" and that "no field was added".
+The first half of that was false.
+
+★ THE FIELD EXISTED; I LOOKED ONLY AT THE BACKEND. The screen has had all twelve day inputs
+since the form was built:
+
+    form-1098-q.component.ts   renders box5a_day .. box5l_day
+    the component model        carries januaryDay .. decemberDay
+    syncFormToPdf / syncPdfToForm   move them in BOTH directions
+
+I grepped `Form1098QMapper.java`, found no day fields, and concluded the FORM did not model
+them. The mapper is one of four layers, and it was the only one I looked at. "The model has no
+field for it" is a claim about a specific file, and I stated it as a claim about the form.
+
+So nothing was added to a statement form here - the boxes are printed by the IRS, rendered by the
+UI and already named by the UI model. What was missing was the three BACKEND layers that drop
+them: V267 adds twelve columns to se_form_1098_q, the entity and mapper carry them, the cell
+reader takes them. **30 fields -> 42, identical on both renders, every day matching the AcroForm.**
+
+★ AND IT WAS NOT ONLY AN EXTRACTION BUG. A day TYPED by a user was accepted by the form,
+posted to the API and silently discarded - gone on reload. That had nothing to do with OCR and
+has been true since the form shipped. The upload is what surfaced it. A UI-bound field with no
+backend column is the same silent-drop shape as the rest of this file, from the other end: the
+screen accepts the value, nothing errors, the value is gone.
+
+varchar(2) and PayloadCoercion.string, not a number. The fixture's days include 05, 08, 03 and
+07, and the UI input is type="text" maxlength="2" - a numeric type would silently drop the
+leading zero on a third of them.
+
+★ A CELL CAN NOW HOLD TWO NUMBERS, where a row asks for it. CellRow gains an optional
+secondFields and attributeRowCells an overload that collects the second number per cell; passing
+null is what every other form does. The premium comes first because it is printed to the LEFT of
+the day and the reader takes values in printed order - a test reverses the two glyphs to show the
+day would win if the form printed it first, so this rests on the form's order and not on a
+tie-break. All fourteen other cell-reading forms re-verified byte-identical, which is what makes
+the change additive rather than merely intended to be. Unit suite 2,739 / 0.
+
+TWO SELF-INFLICTED DETOURS, both worth the note:
+
+    the migration said se_1098_q      taken from the entity CLASS name Se1098Q rather than its
+                                      @Table annotation, which says se_form_1098_q. Liquibase
+                                      failed the whole startup - the GOOD case, because a wrong
+                                      table name cannot fail quietly. Read @Table, not the class.
+    TaskStop left the JVM running     stopping run-dev.ps1 by its task id killed the PowerShell
+                                      wrapper and orphaned the Quarkus JVM, which kept port 8080
+                                      and its Dev Services container. The next start failed on a
+                                      bound port; both had to be cleared by hand. A dev server
+                                      that "failed to start" still serves its error page on 8080,
+                                      so the port being busy is not evidence the app is up.
+
+Open, in priority order: **the four remaining forms with no config entry** (1098, 1098-c, 3922,
+1042-s); the audit of the configs that DO exist for invented field names; **a sweep for the shape
+this entry found - UI-bound statement fields with no backend column**, which the pdfRaw detector
+does not catch because the UI side is complete; unify the three name/address compose copies; the
+four render differences from 2026-10-03; the 1099-SA phone grouping; W-2 box-12 amounts and box
+14b; `employeeSuffix` on `w-2-as.pdf` and `w-2.pdf`; `1099-g.png`'s duplicated phone fragment;
+and mapping an Azure 429 to 503 rather than a bare 500.
+
 ## 2026-10-04 - Form 1098-Q, and a mutation that edited the wrong form
 
 **0 fields -> 30, identical on both renders, every one matching the fixture's AcroForm.** Four of

@@ -60,8 +60,10 @@ AcroForm RECTANGLES rather than from field-name order, which is what my first ch
 would have made it circular. So I asked rather than guess. Here the same sentence was a real
 defect. Default: treat it as a bug report and measure - that is what found this one.
 
-Open, in priority order: **the three remaining forms with no config entry** (1098, 1098-c,
-3922 - note 3921 HAD an entry, which is why it failed differently); **audit the configs that DO
+Open, in priority order: **the four remaining forms with no config entry** (3922, 1042-s,
+1098, 1098-c - note 3921 HAD an entry, which is why it failed differently rather than
+extracting nothing; I briefly wrote "three" here by conflating the two facts, and the
+detector says four); **audit the configs that DO
 exist for invented field names** - five instances now, every one found by an upload; a sweep for
 UI-bound statement fields with no backend column; unify the three name/address compose copies;
 the four render differences from 2026-10-03; the 1099-SA phone grouping; W-2 box-12 amounts and

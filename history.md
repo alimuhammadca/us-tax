@@ -1,3 +1,70 @@
+## 2026-10-04 - Form 1098 needs TWO label-derived divides, so it is read twice
+
+No field-mappings entry. **0 -> 21 fields, identical on both renders, every one matching the
+fixture's AcroForm**, first pass. Two of the original eight remain: 1042-s and 1098-c.
+
+The hardest form in this sweep to BOUND. Three columns of content - the lender/borrower block
+and boxes 9-10 on the LEFT, boxes 1-8 in the middle, a Copy B prose stub down the right - and
+box 11 printed INSIDE that prose column, at the bottom of it.
+
+★ NEITHER DIVIDE CAN BE A PAGE FRACTION. The window between the rightmost box value and the
+leftmost prose line does not overlap between the two renders:
+
+    PDF   values end 6.8764in   prose starts 6.9051in   ->  (0.8090, 0.8124]
+    PNG   values end 1134px     prose starts 1152px     ->  (0.8265, 0.8397]
+
+That is the 2026-10-04 page-fraction lesson in its sharpest form: not a tight margin, an EMPTY
+intersection. No single number exists.
+
+readCellLayout already derives a divide from labels - column 0's leftmost, less 2% of the width -
+but exactly ONE per layout, and this form needs two (left|box and box|prose). So it is read in
+TWO PASSES, each putting the content that should bound the other in its column 0 with a null
+field, so that column stores nothing and exists only to place the divide. Box 11 states a right
+edge of its own to opt OUT of the prose divide rather than be cut by it; its left edge still
+comes from its own label.
+
+Calling readCellLayout twice for one form is new. It is also the natural reading of what that
+function does: one pass is one divide, so a form with two column boundaries is two passes.
+
+★ AND A GUESS OF MINE THAT THE MUTATION CORRECTED - THE FOURTH THIS WEEK.
+
+I wrote that the prose divide was needed because the stub is full of NUMERALS - "boxes 1 through
+9 and 11", "the refund of interest (box 4)", "boxes 1 and 6" - so numericOnly could not filter
+it, and the "9" of "through 9 and 11 is" would win box 2's amount cell because its line sits
+higher.
+
+It does not. Removing the divide leaves EVERY AMOUNT UNCHANGED on both renders, because each box
+value is printed to the LEFT of the prose on the same OCR line, and "first number in the cell"
+reads left to right along a line before moving down. I reasoned about vertical order and the
+rule is horizontal within a line.
+
+What the divide actually protects is the three TEXT boxes - boxes 3 and 11 are dates, box 8 is a
+free description - where there is no "first number" rule to fall back on and a cell concatenates
+every word in its band:
+
+    box 3   "The information in boxes 1 05/01/2020 through 9 and 11 is"
+    box 8   five prose lines, plus box 11's own label AND value, around the real answer
+
+The comment and the test javadoc now say that. The amount case is kept as a test rather than
+deleted, labelled as the thing I got wrong, because "the prose cannot reach an amount cell" is
+worth knowing and worth having pinned.
+
+MEASURED, NOT ASSUMED. The seventeen other cell-reading forms re-verified byte-identical on both
+renders. Unit suite 2,784 / 0 (18 new).
+
+FOUR PROSE CORRECTIONS IN A WEEK, all from the same move - mutate the rule, then read the result
+against the EXPLANATION rather than only the assertions. It has now caught: a "one copy" claim
+that was three copies; per-cell cell tops that were not load-bearing; a checkbox entry that was
+not what set its field; and this. The pattern is stable enough that mutating is no longer a check
+on the tests but a check on what I believe about the code.
+
+Open, in priority order: **the two remaining forms with no config entry** (1042-s, 1098-c);
+**audit the configs that DO exist for invented field names** - five instances, every one found by
+an upload; a sweep for UI-bound statement fields with no backend column; unify the three
+name/address compose copies; the four render differences from 2026-10-03; the 1099-SA phone
+grouping; W-2 box-12 amounts and box 14b; `employeeSuffix` on `w-2-as.pdf` and `w-2.pdf`;
+`1099-g.png`'s duplicated phone fragment; and mapping an Azure 429 to 503 rather than a bare 500.
+
 ## 2026-10-04 - Form 3922, and three bounds a form can need that a label cannot give
 
 Form 3921's ESPP sibling, no field-mappings entry, so every upload extracted nothing. **0 -> 17

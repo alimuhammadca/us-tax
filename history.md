@@ -1,3 +1,61 @@
+## 2026-10-04 - A checkbox absent from the page read as false, so page 3 cleared page 1
+
+A report that `1095-c-p3.png` "does not extract all values". The audit line showed the upload
+succeeded - 236 fields, all 13 Part III rows - so the report was about what is NOT on that page:
+**page 3 of Form 1095-C carries only Part III and the self-insured box.** Unlike Form 1095-B's
+page 3, which repeats the responsible individual across its top and which we do read, 1095-C's
+repeats nothing. Parts I and II staying empty is correct; that data is on page 1, uploaded
+separately. The one genuinely missing value is row 24's middle initial "X", absent from the tax
+model's PNG words and present in its PDF words.
+
+★ BUT CHECKING THAT FOUND A DESTRUCTIVE BUG. Page 3 reported `void: false` and
+`corrected: false` for boxes **that are not printed on page 3 at all** - they are on page 1. So
+uploading page 3 into a statement that already held page 1 CLEARED them, and the reverse cleared
+the self-insured flag. Same shape as the wrong-form misattribution above: plausible, destructive,
+and nothing in the response said so.
+
+Azure distinguishes the two cases exactly, which is what makes this decidable rather than a
+judgement call:
+
+    content ":selected:"   + a bounding region    on the page, ticked
+    content ":unselected:" + a bounding region    on the page, empty     -> false
+    no content, no region                         NOT on this page       -> null
+
+That is the canonical null/zero semantic this codebase already holds to - null means the concept
+does not apply, false means it applies and is unchecked - and a box the page does not print is
+the former. Measured on both pages:
+
+    page 1   void=true corrected=true   selfInsuredCoverage now ABSENT (was false)   86 -> 85
+    page 3   selfInsuredCoverage=true   void/corrected now ABSENT (were false)      237 -> 235
+
+★ CORRECTION TO THE 1095-C ENTRY BELOW, WHICH CLAIMED "86/86 AGAINST THE ACROFORM". The 86th
+value was `selfInsuredCoverage: false`, and that box is not on page 1. **The right figure is
+85/85.** The AcroForm always agreed - an unchecked box has no `/V` and so never appeared in the
+key - and I wrote that expectation by hand to match what the code produced. A hand-written
+expectation is my own prior work, not an oracle; the same trap as sc_00329, in a new place.
+
+MEASURED, NOT ASSUMED. `extractSimpleValue` is shared by every named-model form, so all **45**
+forms with fixtures were extracted before and after: **exactly ONE field changed** across all of
+them, the 1095-C value above. The discriminator is split out as `isUnlocatedCheckbox` so it is
+tested with plain arguments rather than a stubbed SDK field - five tests, including that
+`":unselected:"` WITH a region must still read false, which is the case this must not break.
+Unit suite **2,855 / 0** (5 new).
+
+★ THE GENERAL RULE THIS LEAVES: **a form uploaded page by page must have each page report only
+what that page carries.** Anything a page reports about a field it does not print will overwrite
+a sibling page's reading of it. Worth checking on every multi-page statement - 1095-B/C both have
+a page 3, and the W-2 family and Schedule K-1s are candidates.
+
+Open, in priority order: **the 1095-A address fix** - it reads Azure's SEMANTIC address
+components and is correct only because its fixture is sane, the last piece of the 1095 family;
+**the remaining 24 named-model configs**, since three of three audited were wrong; **a page-by-page
+audit of the other multi-page forms** for the overwrite shape above; a sweep for UI-bound
+statement fields with no backend column; the dot-leader gap in `attributeRowCells`' text mode;
+unify the three name/address compose copies; the four render differences from 2026-10-03; the
+1099-SA phone grouping; W-2 box-12 amounts and box 14b; `employeeSuffix` on `w-2-as.pdf` and
+`w-2.pdf`; `1099-g.png`'s duplicated phone fragment; and mapping an Azure 429 to 503 rather than
+a bare 500.
+
 ## 2026-10-04 - A wrong-form upload was silently misattributed, not refused
 
 A report of "1095-p3-c.png does not extract" turned out not to be a code defect at all. The
@@ -118,8 +176,10 @@ text mode; unify the three name/address compose copies; the four render differen
 
 ## 2026-10-04 - Form 1095-C: five invented keys out of five, and transcribe-don't-correct
 
-**0 -> 86 values, 86/86** against the fixture's AcroForm (71 filled fields), byte-identical on
-both renders.
+**0 -> 85 values, 85/85** against the fixture's AcroForm (71 filled fields), byte-identical on
+both renders. *(Corrected 2026-10-04 later the same day: this entry first claimed 86/86. The
+86th value was `selfInsuredCoverage: false`, and that box is printed on page 3, not page 1 - a
+box absent from the page must read null. See the entry at the top of this file.)*
 
 **Every one of the five configured keys was wrong** - `EmployerEIN` for `Employer.EIN`,
 `EmployeeSSN` for `Employee.SSN`, `EmployeeNameAddress` for `Employer.Name`,

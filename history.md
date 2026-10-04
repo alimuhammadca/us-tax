@@ -1,3 +1,43 @@
+## 2026-10-04 - Form 3921 box 6: the TIN was right and unlabelled, which made it wrong on screen
+
+Reported: the TIN in box 6 should say it is a TIN, as the uploaded statement does. It should.
+The form prints
+
+    Bright Star Holdings LLC, 3 Depot St, Austin, TX
+    78702, TIN 335577991
+
+and the replica joined box 6's four model fields with newlines, so the screen showed
+"335577991" on a line of its own among the address lines, with nothing saying what it was. It
+now reads "TIN 335577991". The model keeps the bare identifier - that is what the field is for -
+and the read-back strips the label again.
+
+★ THE SAME FACT CUTS BOTH WAYS. Yesterday I declined to split street and city out of box 6,
+because the form gives no delimiter for them and a wrong split is worse than an unsplit value.
+But it DOES delimit the TIN, in its own printed text, which is exactly why extracting the TIN
+separately was defensible. The same fact then says the TIN must be DISPLAYED labelled: a value
+is only self-explanatory on screen if the thing that made it separable is still visible. I took
+half the consequence of that and left the other half.
+
+★ AND THE LABEL FIXED A ROUND-TRIP BUG IN THE SAME FOUR LINES. The write drops empty fields
+with filter(Boolean) while the read-back was POSITIONAL:
+
+    write   [name, TIN, street, csz].filter(Boolean).join("\n")
+    read    name = line 0;  TIN = line 1;  street = line 2;  csz = line 3
+
+So every line after a blank one shifted. With no corporation name the TIN was read back AS the
+name - and no name is the NORMAL case here, because extraction leaves street and city/state/zip
+unsplit on purpose. A labelled line can be found instead of counted to, so the TIN is now
+located by its own label and the remaining lines fill name/street/zip in order. The test
+requires "TIN" followed by an identifier, so a corporation actually named "TIN Holdings" is not
+mistaken for it.
+
+Two writers disagreeing about a shared encoding - one dropping empties, the other counting
+positions - is the same class of defect as the compose copies and the two numeric paths that
+disagreed about "(500)". Neither side is wrong on its own; they were never read together.
+
+The form view is unaffected - it has four separately labelled inputs for box 6 and already said
+"Corporation TIN (Box 6)". The backend is unchanged. Build green.
+
 ## 2026-10-04 - Form 3921 merged two boxes into one money field, and why that was invisible
 
 Fifth form in this sweep with invented config key names, and the worst-behaved of them. Box 4

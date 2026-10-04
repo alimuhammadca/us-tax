@@ -1,3 +1,77 @@
+## 2026-10-04 - Part III took Part II's columns on a merged page, and 1095-C left its tax model
+
+The user merged the two 1095-C fixtures into one image, `1095-c-merged.png`, and reported
+checkboxes ticked in the image but unticked on screen. Two separate causes, one ours and one not.
+
+★ 1. TAKING THE FIRST MATCH ON A PAGE IS ONLY SAFE WHEN THE LABEL OCCURS ONCE. Form 1095-C
+prints month column headers in **Part II as well as Part III**:
+
+    Part II  headers   y~307   "All 12 Months" x133   "Jan" x238
+    Part III headers   y~725   "all 12 months" x557   "Jan" x640
+
+`findLabelIn(..., 0)` returns Part II's, so Part III's grid columns were placed about 400px from
+its own marks. **62 of the 169 Part III checkboxes were lost** (246 -> 320 fields, 107 -> 169
+checkboxes). Every fixture so far carried only one Part per page, which is why this never showed:
+a merged page is how the whole form arrives when it is scanned in one go.
+
+The column guard added the same day is why this LOST data instead of filing 62 marks under the
+wrong months - it discarded what it could not place. It failed safe, and the failure was still
+silent. The grid is now scoped to below its own section heading (`^Part III` for 1095-C,
+`^Part IV` for 1095-B), which also protects the row search: `^18\b` would otherwise match a
+Part II cell whose value happens to be 18. Every page carries its heading, both continuation
+sheets included, and a page without one falls back to the whole page with a log.
+
+★ 2. AND FOUR MORE WERE THE TAX MODEL, NOT US. `prebuilt-tax.us.1095C` reported four ticked
+boxes as `unselected` at **confidence 0.364** (row 6 Sep/Oct/Nov, row 9 Nov) while
+`prebuilt-document` read the same four as selected. Measured by probing the model the extraction
+actually runs - `dump_marks.mjs` uses prebuilt-document and showed all of them selected, which is
+exactly the trap recorded two entries down.
+
+Three options were put to the user rather than chosen for them: accept the four; two analyses per
+upload; or move the form to `prebuilt-document` and measure the scalars off the page. **They chose
+the third**, so Form 1095-C is no longer on a named tax model:
+
+    key-value pass   employee name (one box, split three ways), SSN, employer name, EIN
+    side rows        employee's age on January 1, plan start month, calendar year
+    selection marks  VOID, CORRECTED, self-insured coverage
+    already geometric  both address blocks, Part II's 4x13 grid, Part III's grid
+
+The calendar year is read from beside "CORRECTED" because that is where the form prints it - the
+key-value pass pairs them the same way, returning `"CORRECTED" => "2025"`, which is the giveaway
+that the year is on that row rather than in a box of its own.
+
+    1095-c           85/85 against the AcroForm, renders identical
+    1095-c-p3      234/234 + selfInsuredCoverage; now 235 on BOTH renders, where the tax
+                   model's PNG words had lost row 24's middle initial
+    1095-c-merged  320 fields = EXACTLY the union of the two pages - no extras, nothing
+                   missing, no differing values; the four checkboxes read true
+
+That union check is the one worth keeping: a merged page producing precisely page 1 plus page 3,
+field for field, is a stronger statement than either page's own score.
+
+Two bonuses beyond the four: the middle initial above, and the key-value pass turns out to read
+the address boxes BOX-FAITHFULLY too (`"11 City or town" => "US 53704"`), which corroborates the
+geometric reader written for that reason rather than replacing it - geometry still wins those
+fields, so there is one writer per field instead of two agreeing by luck.
+
+★ A SECOND REASON TO DISTRUST THE NAMED MODELS, INDEPENDENT OF THE INVENTED KEYS. Until now
+the case against them was that our configs named their fields wrongly. This is the model itself
+being worse than the generic one on the same page. When auditing the remaining **24**, compare
+both models' MARKS as well as their field names.
+
+MEASURED, NOT ASSUMED. Both changes are 1095-C-scoped bar the shared grid scoping, and all four
+single-page fixtures re-extract to their established counts (85 / 235 / 133 / 220). Unit suite
+**2,855 / 0**.
+
+Open, in priority order: **the 1095-A address fix** - it reads Azure's SEMANTIC address
+components and is correct only because its fixture is sane, the last piece of the 1095 family;
+**the remaining 24 named-model configs**, now on two counts; **a page-by-page audit of the other
+multi-page forms** for the overwrite shape; a sweep for UI-bound statement fields with no backend
+column; the dot-leader gap in `attributeRowCells`' text mode; unify the three name/address compose
+copies; the four render differences from 2026-10-03; the 1099-SA phone grouping; W-2 box-12
+amounts and box 14b; `employeeSuffix` on `w-2-as.pdf` and `w-2.pdf`; `1099-g.png`'s duplicated
+phone fragment; and mapping an Azure 429 to 503 rather than a bare 500.
+
 ## 2026-10-04 - A checkbox absent from the page read as false, so page 3 cleared page 1
 
 A report that `1095-c-p3.png` "does not extract all values". The audit line showed the upload

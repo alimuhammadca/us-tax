@@ -1,0 +1,646 @@
+[
+ {
+  "fixture": "1042-s",
+  "formId": "1042-s",
+  "pdfCount": 73,
+  "pngCount": 73,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": []
+ },
+ {
+  "fixture": "1095-a",
+  "formId": "1095-a",
+  "pdfCount": 101,
+  "pngCount": 101,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": []
+ },
+ {
+  "fixture": "1095-b",
+  "formId": "1095-b",
+  "pdfCount": 133,
+  "pngCount": 133,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": []
+ },
+ {
+  "fixture": "1095-b-p3",
+  "formId": "1095-b",
+  "pdfCount": 220,
+  "pngCount": 220,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": []
+ },
+ {
+  "fixture": "1095-c",
+  "formId": "1095-c",
+  "pdfCount": 85,
+  "pngCount": 85,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": []
+ },
+ {
+  "fixture": "1095-c-merged",
+  "formId": "1095-c",
+  "pdfCount": 320,
+  "pngCount": 320,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": []
+ },
+ {
+  "fixture": "1095-c-p3",
+  "formId": "1095-c",
+  "pdfCount": 235,
+  "pngCount": 235,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": [
+   {
+    "key": "partIIICoveredIndividuals.2.coveredLastName",
+    "pdf": "Chandrasekar",
+    "png": "Chandrasekal"
+   }
+  ]
+ },
+ {
+  "fixture": "1097-btc",
+  "formId": "1097-btc",
+  "pdfCount": 27,
+  "pngCount": 27,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": []
+ },
+ {
+  "fixture": "1098",
+  "formId": "1098",
+  "pdfCount": 21,
+  "pngCount": 21,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": []
+ },
+ {
+  "fixture": "1098-c",
+  "formId": "1098-c",
+  "pdfCount": 26,
+  "pngCount": 26,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": []
+ },
+ {
+  "fixture": "1098-e",
+  "formId": "1098-e",
+  "pdfCount": 25,
+  "pngCount": 25,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": []
+ },
+ {
+  "fixture": "1098-q",
+  "formId": "1098-q",
+  "pdfCount": 42,
+  "pngCount": 42,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": []
+ },
+ {
+  "fixture": "1098-t",
+  "formId": "1098-t",
+  "pdfCount": 30,
+  "pngCount": 30,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": [
+   {
+    "key": "filerNameAddress",
+    "pdf": "9 Rest Street\n12\nUtopia\nON\nUS\n12345",
+    "png": "9 Rest Street\n12"
+   }
+  ]
+ },
+ {
+  "fixture": "1099-a",
+  "formId": "1099-a",
+  "pdfCount": 14,
+  "pngCount": 14,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": [
+   {
+    "key": "lenderNameAddress",
+    "pdf": "Alex Martin, 1 oxford street, London, ON, Canada, M1K2K9",
+    "png": "Alex Martin,\n1 oxford street, London, ON, Canada, M1K2K9"
+   }
+  ]
+ },
+ {
+  "fixture": "1099-b",
+  "formId": "1099-b",
+  "pdfCount": 42,
+  "pngCount": 42,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": [
+   {
+    "key": "payerNameAddress",
+    "pdf": "Mike Tyson, 1 oxford street, London, ON, Canada, M1J2K9",
+    "png": "Mike Tyson,\n1 oxford street, London, ON, Canada, M1J2K9"
+   }
+  ]
+ },
+ {
+  "fixture": "1099-c",
+  "formId": "1099-c",
+  "pdfCount": 19,
+  "pngCount": 19,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": []
+ },
+ {
+  "fixture": "1099-cap",
+  "formId": "1099-cap",
+  "pdfCount": 17,
+  "pngCount": 17,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": []
+ },
+ {
+  "fixture": "1099-da",
+  "formId": "1099-da",
+  "pdfCount": 58,
+  "pngCount": 58,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": []
+ },
+ {
+  "fixture": "1099-div",
+  "formId": "1099-div",
+  "pdfCount": 38,
+  "pngCount": 38,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": [
+   {
+    "key": "payerNameAddress",
+    "pdf": "Alex Manning,\n4 Oxford Street, London, ON, Canada, 12345\n+14162341234",
+    "png": "Alex Manning,\n4 Oxford Street, London, ON, Canada, 12345, +1 416 234 1234"
+   }
+  ]
+ },
+ {
+  "fixture": "1099-g",
+  "formId": "1099-g",
+  "pdfCount": 28,
+  "pngCount": 28,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": [
+   {
+    "key": "payerNameAddress",
+    "pdf": "Alex Manning,\n4 Oxford Street, London, ON, Canada, 12345\n+14162341234",
+    "png": "Alex Manning,\n4 Oxford Street, London, ON, Canada, 12345, +1 416\n+1 416 234 1234"
+   }
+  ]
+ },
+ {
+  "fixture": "1099-int",
+  "formId": "1099-int",
+  "pdfCount": 35,
+  "pngCount": 35,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": [
+   {
+    "key": "payerNameAddress",
+    "pdf": "Alex Manning, 4 Oxford Street, London, ON, Canada, 12345\n+14162341234",
+    "png": "Alex Manning,\n4 Oxford Street, London, ON, Canada, 12345\n+1 416 234 1234"
+   }
+  ]
+ },
+ {
+  "fixture": "1099-k",
+  "formId": "1099-k",
+  "pdfCount": 40,
+  "pngCount": 40,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": []
+ },
+ {
+  "fixture": "1099-ls",
+  "formId": "1099-ls",
+  "pdfCount": 13,
+  "pngCount": 13,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": []
+ },
+ {
+  "fixture": "1099-ltc",
+  "formId": "1099-ltc",
+  "pdfCount": 26,
+  "pngCount": 26,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": []
+ },
+ {
+  "fixture": "1099-misc",
+  "formId": "1099-misc",
+  "pdfCount": 32,
+  "pngCount": 32,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": []
+ },
+ {
+  "fixture": "1099-nec",
+  "formId": "1099-nec",
+  "pdfCount": 23,
+  "pngCount": 23,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": []
+ },
+ {
+  "fixture": "1099-oid",
+  "formId": "1099-oid",
+  "pdfCount": 30,
+  "pngCount": 30,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": [
+   {
+    "key": "payerNameAddress",
+    "pdf": "Alex Manning, 4 Oxford Street, London, ON, Canada, 12345\n+14162341234",
+    "png": "Alex Manning,\n4 Oxford Street, London, ON, Canada, 12345\n+1 416 234 1234"
+   }
+  ]
+ },
+ {
+  "fixture": "1099-ptr",
+  "formId": "1099-ptr",
+  "pdfCount": 25,
+  "pngCount": 25,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": []
+ },
+ {
+  "fixture": "1099-q",
+  "formId": "1099-q",
+  "pdfCount": 20,
+  "pngCount": 21,
+  "pdfOnly": [],
+  "pngOnly": [
+   "basisAmount"
+  ],
+  "differ": []
+ },
+ {
+  "fixture": "1099-qa",
+  "formId": "1099-qa",
+  "pdfCount": 18,
+  "pngCount": 18,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": [
+   {
+    "key": "accountNumber",
+    "pdf": "ACT-101",
+    "png": "ACCT-101"
+   }
+  ]
+ },
+ {
+  "fixture": "1099-r",
+  "formId": "1099-r",
+  "pdfCount": 42,
+  "pngCount": 42,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": [
+   {
+    "key": "accountNumber",
+    "pdf": "ACT-101",
+    "png": "ACCT-101"
+   }
+  ]
+ },
+ {
+  "fixture": "1099-s",
+  "formId": "1099-s",
+  "pdfCount": 34,
+  "pngCount": 36,
+  "pdfOnly": [],
+  "pngOnly": [
+   "digitalAssetGrossProceedsAmount",
+   "transferorAptNumber"
+  ],
+  "differ": [
+   {
+    "key": "accountNumber",
+    "pdf": "7 If checked, transferor is a foreign person (nonresident alien, foreign partnership, foreign estate, or foreign trust) :selected: . . . . . . . . . . . .",
+    "png": "ACCT-101"
+   },
+   {
+    "key": "digitalAssetCode",
+    "pdf": "8b Name of digital asset received, or to be received, as consideration",
+    "png": "76876"
+   },
+   {
+    "key": "digitalAssetDate",
+    "pdf": "105",
+    "png": "4/5/2015"
+   },
+   {
+    "key": "digitalAssetName",
+    "pdf": "76876",
+    "png": "Crypto"
+   },
+   {
+    "key": "digitalAssetUnits",
+    "pdf": "8d Date digital asset received, or to be received, as consideration",
+    "png": "105"
+   },
+   {
+    "key": "filerNameAddress",
+    "pdf": "Alex Manning\n14\n4 Oxford Street\n+14165551234",
+    "png": "Alex Manning\n4 Oxford Street\n14\n+14165551234"
+   },
+   {
+    "key": "filerRoomSuite",
+    "pdf": "4 Oxford Street",
+    "png": "14"
+   },
+   {
+    "key": "filerStreetAddress",
+    "pdf": "14",
+    "png": "4 Oxford Street"
+   },
+   {
+    "key": "grossProceedsAmount",
+    "pdf": 5490,
+    "png": 100001
+   },
+   {
+    "key": "transferorCityStateCountryZip",
+    "pdf": "Cambridge, QC, CN, M1H7B6",
+    "png": "Cambridge, QC, CN"
+   }
+  ]
+ },
+ {
+  "fixture": "1099-sa",
+  "formId": "1099-sa",
+  "pdfCount": 19,
+  "pngCount": 19,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": [
+   {
+    "key": "payerNameAddress",
+    "pdf": "Alex Manning,\n4 Oxford Street, London, ON, Canada, 12345\n+14162341234",
+    "png": "Alex Manning,\n4 Oxford Street, London, ON, Canada, 12345\n+1 416 234 1234"
+   }
+  ]
+ },
+ {
+  "fixture": "1099-sb",
+  "formId": "1099-sb",
+  "pdfCount": 12,
+  "pngCount": 12,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": []
+ },
+ {
+  "fixture": "2439",
+  "formId": "2439",
+  "pdfCount": 16,
+  "pngCount": 16,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": []
+ },
+ {
+  "fixture": "3921",
+  "formId": "3921",
+  "pdfCount": 16,
+  "pngCount": 16,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": []
+ },
+ {
+  "fixture": "3922",
+  "formId": "3922",
+  "pdfCount": 17,
+  "pngCount": 17,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": []
+ },
+ {
+  "fixture": "5498",
+  "formId": "5498",
+  "pdfCount": 45,
+  "pngCount": 45,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": []
+ },
+ {
+  "fixture": "5498-esa",
+  "formId": "5498-esa",
+  "pdfCount": 22,
+  "pngCount": 22,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": []
+ },
+ {
+  "fixture": "5498-qa",
+  "formId": "5498-qa",
+  "pdfCount": 28,
+  "pngCount": 28,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": []
+ },
+ {
+  "fixture": "5498-sa",
+  "formId": "5498-sa",
+  "pdfCount": 29,
+  "pngCount": 29,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": []
+ },
+ {
+  "fixture": "rrb-1099",
+  "formId": "rrb-1099",
+  "pdfCount": 14,
+  "pngCount": 14,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": []
+ },
+ {
+  "fixture": "rrb-1099-r",
+  "formId": "rrb-1099-r",
+  "pdfCount": 13,
+  "pngCount": 13,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": []
+ },
+ {
+  "fixture": "schedule-k1-1041",
+  "formId": "schedule-k1-1041",
+  "pdfCount": 74,
+  "pngCount": 74,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": []
+ },
+ {
+  "fixture": "schedule-k1-1065",
+  "formId": "schedule-k1-1065",
+  "pdfCount": 105,
+  "pngCount": 105,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": [
+   {
+    "key": "part3Line11Amount",
+    "pdf": 37,
+    "png": 375
+   }
+  ]
+ },
+ {
+  "fixture": "schedule-k1-1120s",
+  "formId": "schedule-k1-1120s",
+  "pdfCount": 114,
+  "pngCount": 114,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": [
+   {
+    "key": "part3Line10Row5Amount",
+    "pdf": 71,
+    "png": 715
+   }
+  ]
+ },
+ {
+  "fixture": "ssa-1099",
+  "formId": "ssa-1099",
+  "pdfCount": 13,
+  "pngCount": 13,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": []
+ },
+ {
+  "fixture": "w-2",
+  "formId": "w-2",
+  "pdfCount": 31,
+  "pngCount": 46,
+  "pdfOnly": [],
+  "pngOnly": [
+   "allocatedTipsAmount",
+   "box12Entries.0.box12Amount",
+   "box12Entries.1.box12Amount",
+   "box12Entries.2.box12Amount",
+   "box12Entries.3.box12Amount",
+   "box14Other.1.label",
+   "box14Other.2.label",
+   "dependentCareBenefitsAmount",
+   "employeeSuffix",
+   "employerEIN",
+   "federalIncomeTaxWithheldAmount",
+   "medicareTaxWithheldAmount",
+   "socialSecurityTaxWithheldAmount",
+   "stateLocalInfo.0.state",
+   "stateLocalInfo.1.state"
+  ],
+  "differ": [
+   {
+    "key": "employeeAddress",
+    "pdf": "ockland Cres, Whitby, ON",
+    "png": "8 Rockland Cres, Whitby, ON"
+   },
+   {
+    "key": "employeeFirstName",
+    "pdf": "Muhammad",
+    "png": "Ali"
+   },
+   {
+    "key": "employerNameAddress",
+    "pdf": "Company, Europe",
+    "png": "Allied Company, Europe"
+   }
+  ]
+ },
+ {
+  "fixture": "w-2as",
+  "formId": "w-2-as",
+  "pdfCount": 31,
+  "pngCount": 32,
+  "pdfOnly": [],
+  "pngOnly": [
+   "employeeSuffix"
+  ],
+  "differ": [
+   {
+    "key": "employerNameAddress",
+    "pdf": "South Pacific Traders,\n9 Harbor Loop, Pago Pago, AS 96799",
+    "png": "South Pacific Traders, 9\n9 Harbor Loop, Pago Pago, AS 96799"
+   }
+  ]
+ },
+ {
+  "fixture": "w-2g",
+  "formId": "w-2g",
+  "pdfCount": 38,
+  "pngCount": 38,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": []
+ },
+ {
+  "fixture": "w-2gu",
+  "formId": "w-2-gu",
+  "pdfCount": 30,
+  "pngCount": 29,
+  "pdfOnly": [
+   "controlNumber"
+  ],
+  "pngOnly": [],
+  "differ": []
+ },
+ {
+  "fixture": "w-2vi",
+  "formId": "w-2-vi",
+  "pdfCount": 32,
+  "pngCount": 32,
+  "pdfOnly": [],
+  "pngOnly": [],
+  "differ": []
+ }
+]

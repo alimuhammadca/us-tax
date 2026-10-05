@@ -5285,3 +5285,76 @@ loses the deduction. That is the same gap the eleven existing bridges exist to c
 as the §280A bridge added earlier today (V260). Fixing each is the established recipe: one column on
 `out_schedule_1` / the Schedule A output, both mapper directions, an `importedPriorYear…` mirroring
 `importedPriorYearRentalAtRisk`, and consumption with user-entry winning.
+
+---
+
+## Statement render differences - PARKED 2026-10-05 (feature on hold)
+
+Work on statement upload and recognition is paused. This is where it stopped, so the
+measurement is not lost: a VALUE-LEVEL diff of every fixture's PDF render against its PNG
+render, both driven through the real `POST /api/statements/{formId}/extract`.
+
+**34 of 52 fixtures are byte-identical across renders. 18 differ.**
+
+Why value-level and not a field count: on Form 1099-DA both renders reported 58 fields
+while three held bled values. A matching key set is not a matching extraction. Each field
+is compared JSON-escaped on one line, so a newline inside a value cannot split a record
+and fake agreement.
+
+### The three worth looking at first
+
+1. **`w-2` - 31 fields on the PDF against 46 on the PNG.** The most consequential form in
+   the system and the worst disagreement in the set. The PDF render is missing
+   `employerEIN`, `federalIncomeTaxWithheldAmount`, `socialSecurityTaxWithheldAmount`,
+   `medicareTaxWithheldAmount`, `allocatedTipsAmount`, `dependentCareBenefitsAmount`,
+   all four box-12 amounts, two box-14 labels, `employeeSuffix` and both state codes. It
+   also reads `employeeFirstName` as "Muhammad" where the PNG reads "Ali", and truncates
+   two addresses at the FRONT ("ockland Cres" for "8 Rockland Cres", "Company, Europe"
+   for "Allied Company, Europe").
+2. **`1099-s` - 10 value differences plus 2 missing, and they are SHIFTED.**
+   `filerStreetAddress` holds "14" while `filerRoomSuite` holds "4 Oxford Street"; four
+   `digitalAsset*` fields hold captions or each other's values; `grossProceedsAmount` is
+   5490 against 100001. A shift like this is the shape that produced a wrong return line
+   elsewhere, so it is not cosmetic.
+3. **`schedule-k1-1065` and `schedule-k1-1120s` - a TRUNCATED DIGIT each**: 37 against 375,
+   71 against 715. One render is reading a wrong amount on a K-1, which flows to a return.
+
+### Every differing fixture
+
+| fixture | pdf | png | what differs |
+|---|---|---|---|
+| `1095-c-p3` | 235 | 235 | `partIIICoveredIndividuals.2.coveredLastName` [differs] |
+| `1098-t` | 30 | 30 | `filerNameAddress` [PDF has PNG's value + more] |
+| `1099-a` | 14 | 14 | `lenderNameAddress` [PNG bled] |
+| `1099-b` | 42 | 42 | `payerNameAddress` [PNG bled] |
+| `1099-div` | 38 | 38 | `payerNameAddress` [differs] |
+| `1099-g` | 28 | 28 | `payerNameAddress` [differs] |
+| `1099-int` | 35 | 35 | `payerNameAddress` [differs] |
+| `1099-oid` | 30 | 30 | `payerNameAddress` [differs] |
+| `1099-q` | 20 | 21 | 1 PNG-only (basisAmount) |
+| `1099-qa` | 18 | 18 | `accountNumber` [differs] |
+| `1099-r` | 42 | 42 | `accountNumber` [differs] |
+| `1099-s` | 34 | 36 | 2 PNG-only (digitalAssetGrossProceedsAmount, transferorAptNumber); `accountNumber` [differs]; `digitalAssetCode` [differs]; `digitalAssetDate` [differs]; `digitalAssetName` [differs]; +6 more value diffs |
+| `1099-sa` | 19 | 19 | `payerNameAddress` [whitespace only] |
+| `schedule-k1-1065` | 105 | 105 | `part3Line11Amount` [PNG has PDF's value + more] |
+| `schedule-k1-1120s` | 114 | 114 | `part3Line10Row5Amount` [PNG has PDF's value + more] |
+| `w-2` | 31 | 46 | 15 PNG-only (allocatedTipsAmount, box12Entries.0.box12Amount, box12Entries.1.box12Amount, ...); `employeeAddress` [PNG has PDF's value + more]; `employeeFirstName` [differs]; `employerNameAddress` [PNG has PDF's value + more] |
+| `w-2as` | 31 | 32 | 1 PNG-only (employeeSuffix); `employerNameAddress` [differs] |
+| `w-2gu` | 30 | 29 | 1 PDF-only (controlNumber) |
+
+### Notes for whoever picks this up
+
+- Several differences are name/address COMPOSITION rather than recall - the same phone
+  joined differently into `payerNameAddress` on 1099-DIV/-G/-INT/-OID/-SA. Those probably
+  resolve together, and relate to the three un-unified compose copies already on the list.
+- A few are single-character OCR differences with no structural cause
+  (`Chandrasekar`/`Chandrasekal`, `ACT-101`/`ACCT-101`) - worth confirming against each
+  fixture's own AcroForm before treating either side as correct.
+- The six faults already fixed on `1099-da` and `w-2g` each had a DIFFERENT cause
+  (order-dependence, a stop-word guard firing on its own anchor, a merged caption, a
+  one-slot config fan-out, an unpaired selection mark, a mis-assigned value region), so
+  do not assume one root cause for the 18. See `rules.md` and the 2026-10-04/05 entries
+  in `history.md`.
+- Reproduce with `renderdiff.mjs` + `renderreport.py` (recorded in the memory note); they
+  need `firebase-admin` installed into an isolated `package.json`, or npm walks up and
+  silently no-ops.

@@ -1,3 +1,84 @@
+## 2026-10-04 - The two render gaps were ORDER-dependence, and one was a misattribution
+
+Diagnosing the two gaps I had reported with the meaning audit changed what they were.
+**"The PDF render loses values" was wrong on both counts:** both renders contain every printed
+value, and on Form 1099-DA the PDF did not merely lose four of them - it put a state
+IDENTIFICATION NUMBER into a tax-withheld box.
+
+### ★ What was actually happening
+
+Azure emits the two renders of one fixture in different orders:
+
+    PNG   "14 State name" / "NY" / "TX" / ... / "15 State identification no. 767676" / "989898"
+    PDF   "14 State name" / "15 State identification no." / "16 State tax withheld"
+          / "NY" / "767676" / "$" / "102" / "TX" / "989898" / "$ 103"
+
+`recoverStateRowByLabel` walks the lines after each caption. On the PDF the lines after box 14's
+caption are the next two CAPTIONS, so it hit its own `"15 state"` stop-word and collected
+nothing. Boxes 14 and 15 came back empty - **and box 16's walk then collected the lines after ITS
+caption**, writing `767676` into `copyOther_box16_state_tax_withheld_2` as though it were an
+amount, with both real amounts crammed into row 1 as `"102\n103"`. Box 12a lost all three of its
+printed units the same way, its next line being box 12b's caption - though 12b's own date read
+correctly, so that one was a pure loss.
+
+**A reader's own stop-word guard is what silently zeroed it.** The guard is right - it stops the
+walk running into the next box - and on one render it fires immediately and the reader reports
+success having read nothing.
+
+### The fix was already named in the file
+
+`recover1099DaCellsByGeometry` exists for exactly this, and its own comment says it runs last
+"for why order cannot work" - the state rows and box 12a had simply never been added to it. The
+state section is now read as a 3-column x 2-row grid and box 12a as a 1-column x 3-row stack.
+Rows are found by **clustering value glyphs on centre-y** rather than assuming where they sit,
+so nothing depends on the render's scale: measured, one row's values share a centre to within
+0.01in (1px) while consecutive rows sit ~1.5 caption heights apart.
+
+### Form W-2G had TWO causes, neither of them a render fault
+
+  - **The winner's ZIP**: Azure MERGES that caption with the one beside it on BOTH renders
+    (`"ZIP or foreign postal code withheld"`), and the value region it pairs with the mangled
+    label caught only `"$"` on the PDF and `"98765 $"` on the PNG. Now read from its own cell.
+  - **The winner's CITY**: `"CityOrTown"` had **ONE** fan-out slot where its four sibling address
+    captions all have two, so the second occurrence was read and **discarded**. The PDF had
+    `"Scarborough"` available the whole time. **Found only by diffing the two renders field by
+    field** - no audit of a single render would ever show it.
+
+Measured against each fixture's own AcroForm, both renders now agree:
+
+    1099-da   48 -> 55 fields (PNG 58); all 9 state and 12a values correct on BOTH renders
+    w-2g      36 -> 38 fields (PNG 38); RENDER-IDENTICAL, gap fully closed
+
+**Still open on 1099-DA**: three CHECKBOXES - box 2 basis-reported-to-IRS, box 5
+loss-not-allowed, box 9 noncovered-security - are ticked on the form and the PDF render produces
+no selection-mark key-value pair for any of them. A different mechanism from cell geometry; left
+for a selection-mark pass.
+
+### ★ Mutation-testing the TEST disproved the test's own comment
+
+9 new tests assert BOTH renders in their own units - inches at 8.5 wide and pixels at 852 - so
+render-independence is tested rather than hoped for. Then I mutated the code against them, which
+is the rule I had written into this file hours earlier. Merging the row threshold reddens 5. A
+left slack of 2% reddened **nothing** - and the test carried a comment claiming that *any* left
+slack would swallow box 11c's amount. **That claim was false**: the real margin is 0.410in (3.9
+caption heights) and the 2% used elsewhere is 0.170in. It takes a 5% slack to break it, which
+then reddens 2 with exactly the right diagnosis (`"first 150"`, `"6575.0 350"`). The comment now
+states the measurement. **A mutation that fails to redden anything is telling you something -
+usually that your explanation is wrong, not that your code is safe.**
+
+Unit suite **2,884 / 0**. Reload trigger **v96**. Commit `28359ef3`.
+
+Open, in priority order: **the three 1099-DA checkboxes** above; **deskewing input before
+sending it to Azure** - the production readers misattribute ten values on a 3-degree-rotated
+1042-S; **Azure's per-field confidence is still discarded**; a page-by-page audit of the other
+multi-page forms; **and now: diff BOTH renders of every fixture field by field** - it found a
+config fault no single-render check could; **no arithmetic self-checks**; **no form-YEAR check**;
+the 41 unconsumed schema fields; a sweep for UI-bound statement fields with no backend column;
+the dot-leader gap in `attributeRowCells`' text mode; unify the three name/address compose
+copies; the 1099-SA phone grouping; W-2 box-12 amounts and box 14b; `employeeSuffix` on
+`w-2-as.pdf` and `w-2.pdf`; `1099-g.png`'s duplicated phone fragment; and mapping an Azure 429
+to 503 rather than a bare 500.
+
 ## 2026-10-04 - The MEANING audit: is each live key on the field it actually means?
 
 The name audit earlier today proved every configured key exists in its model's schema. It

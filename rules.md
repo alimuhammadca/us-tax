@@ -94,3 +94,36 @@ the concept went**, and check the AcroForm widgets and tooltips, not just the pa
 independent signals settled this where the text alone was ambiguous. Same family as
 *"reserved for future use" can mean RELOCATED, not repealed*, now observed across forms rather
 than across lines of one form. **And it is the concrete cost of having no form-YEAR check.**
+
+**★ A render difference is usually an ORDER difference, and an order-dependent reader turns it
+into loss AND misattribution.** I reported that "1099-da.pdf loses the whole state section".
+Both renders contain every printed value; Azure just emits them in different orders - the PNG
+interleaves caption and values, the PDF groups all three captions then all six values. A line
+walk that takes "the lines after the caption" therefore read the next two CAPTIONS, hit its own
+`"15 state"` stop-word and reported success having read nothing - while the NEXT box's walk
+collected those six values and wrote a state IDENTIFICATION NUMBER into a tax-withheld field.
+**The reader's own stop-word guard is what silently zeroed it**, and the guard is correct; it is
+the order-dependence around it that is not. So: never conclude "this render has worse recall"
+before diffing the OCR CONTENT of both - and when a reader collects N values after an anchor,
+ask what it does when the anchor is immediately followed by its own stop-word. Extends
+*OCR reading order is not a property of the form*, which warned of a SWAP; this is the same
+cause producing a silent shift into the wrong box.
+
+**★ Diff BOTH renders of a fixture FIELD BY FIELD - it finds faults no single render can
+show.** Form W-2G prints "City or town" twice, and its config had ONE fan-out slot where the
+four sibling address captions all have two, so the winner's city was read and DISCARDED.
+Scarborough was sitting in the PDF's key-value pairs the whole time. Nothing about either render
+alone looks wrong - only `comm -13` over the two field sets shows it, and the same diff then
+drove every remaining gap to a named cause (a merged caption, three unreported selection marks)
+instead of a vague "the PDF is worse". A field-set diff of both renders belongs in the routine
+check for every fixture.
+
+**★ A mutation that reddens NOTHING is telling you your explanation is wrong, not that your
+code is safe.** Having just written the rule about mutation-testing an audit, I mutated the new
+geometric readers against their own tests. One mutation - giving the column the 2% left slack
+used elsewhere - reddened nothing, and the test carried a comment asserting that *any* left slack
+would swallow the neighbouring column's amount. **The comment was false**: the margin is 0.410in
+(3.9 caption heights) against a 2% slack of 0.170in, and it takes 5% to break it. The code was
+fine; the stated REASON for it was not. Treat a no-op mutation as a finding about the
+justification, re-measure, and write the measurement into the comment - a fourth prose claim in
+this file corrected by checking it.

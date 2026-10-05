@@ -127,3 +127,27 @@ would swallow the neighbouring column's amount. **The comment was false**: the m
 fine; the stated REASON for it was not. Treat a no-op mutation as a finding about the
 justification, re-measure, and write the measurement into the comment - a fourth prose claim in
 this file corrected by checking it.
+
+**★ A matching KEY SET is not a matching extraction - diff the VALUES.** Having closed every
+missing field on Form 1099-DA, both renders reported 58 fields and I nearly called it done. The
+value-level diff found three filer-block fields where the PDF is wrong -
+`filer_country = "+1 545
+1234
+US"`, `filer_zip = "KOKO
+12345"` (box 1b's asset name bled into
+the ZIP) - none of which a count or a key list can show. **Count agreement is the weakest form of
+agreement**: it says the same slots were filled, not that they hold the same thing, and it is the
+form of agreement a bled or merged value preserves. Sibling of *don't diff a human-readable
+listing*, where the opposite error cost me a false "byte-identical" claim - both say the same
+thing, that the comparison must be over the DATA.
+
+**★ Ask where the box is printed relative to its caption before pairing them.** Form 1099-DA's
+boxes 2, 5 and 9 have captions that WRAP over two to four lines with the checkbox UNDERNEATH,
+while `readSelectionMarks` pairs a mark with a label on the same ROW - so three ticked boxes read
+empty even though Azure reported all 16 of the form's marks on both renders, matching the
+AcroForm one for one, including the one unselected. **The data was never missing; only the
+pairing was.** When a checkbox comes back empty, dump the marks and the captions with their
+geometry and look at the layout before assuming poor recall - and validate the pairing rule
+against the fixture's AcroForm BEFORE writing the reader, which here turned a design question
+into a table lookup. Note too what made it safe: box 6 prints three marks on box 5's own rows,
+so the caption's horizontal span, not nearest-below, is what keeps them apart.

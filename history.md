@@ -1,3 +1,54 @@
+## 2026-10-04 - A checkbox printed BELOW its caption, and a key-set diff that hid three values
+
+The last three fields where the two renders of `1099-da` disagreed: boxes **2**, **5** and **9**
+are ticked on the form and the PDF render reported none of them.
+
+**Nothing was missing from the data.** Azure reports all **16** of this form's selection marks on
+BOTH renders, with position and state, matching the fixture's own AcroForm widgets **one for
+one** - including the single unselected mark. What it never does is PAIR these three with their
+captions, so the key-value pass had nothing to match: on the PDF none of the three produced a
+pair, on the PNG only box 9 did.
+
+`readSelectionMarks` pairs a mark with a label on the SAME ROW, which is where most checkboxes
+sit. These three are printed differently - the caption WRAPS and the box sits underneath it:
+
+    "2 Check if basis reported" / "to IRS"                          caption cy 3.74, box cy 4.16
+    "5 Check if loss is not" / "allowed based on" / "amount in 1f"          cy 4.82, box cy 5.24
+    "9 Check if digital" / "asset is a" / "noncovered" / "security"         cy 5.41, box cy 5.99
+
+So: the nearest mark BELOW the caption's first line whose left edge falls within the caption's
+horizontal span. **The span guard is load-bearing** - box 6 prints three marks on the same two
+rows as box 5's, at x 1.99 and 2.99 against box 5's 1.51, so nearest-below alone is ambiguous.
+The rule was validated against the AcroForm for all three boxes on both renders **before** any
+code was written.
+
+### ★ A MATCHING KEY SET IS NOT A MATCHING EXTRACTION
+
+With the checkboxes in, the two renders' field sets became identical - 58 and 58 - and I almost
+stopped there. Diffing at VALUE level instead found **three** 1099-DA filer-block fields where
+the PDF is simply wrong:
+
+    copyOther_filer_country                      "+1 545
+1234
+US"   vs  "US"
+    copyOther_filer_telephone_number             "12
+555"            vs  "+1 545 555 1234"
+    copyOther_filer_zip_or_foreign_postal_code   "KOKO
+12345"        vs  "12345"
+
+The phone bleeds into the country, and box 1b's digital-asset name (`"KOKO"`) into the ZIP.
+**NOT FIXED** - reported rather than quietly left. This is the third time this session that a
+count-level agreement concealed a value-level fault, and the second time on this very form.
+
+**Both renders of both forms now agree on every field**: `1099-da` 48 -> **58** (PNG 58, key sets
+identical, three values above excepted); `w-2g` 36 -> **38** (PNG 38, **byte-identical, values
+included**).
+
+8 new tests, both renders in their own units, including **the case the fixture cannot provide**:
+every box in it is ticked, so a reader that ignored the mark's state entirely would score full
+marks. Mutation-tested - removing the span guard reddens 3, the depth limit 2, the same-row
+exclusion 4. Unit suite **2,892 / 0**. Reload trigger **v97**. Commit `5b1a7eb1`.
+
 ## 2026-10-04 - The two render gaps were ORDER-dependence, and one was a misattribution
 
 Diagnosing the two gaps I had reported with the meaning audit changed what they were.

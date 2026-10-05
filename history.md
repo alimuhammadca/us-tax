@@ -1,3 +1,107 @@
+## 2026-10-04 - Audited the 26 named-model configs: one printed box was holding two facts
+
+Audited every config that uses an Azure NAMED tax model (`prebuilt-tax.us.*`) against the
+schema the model actually returns. A named model returns its whole schema with nulls for what
+it did not find, so the key set from one fixture IS the schema, and a configured key absent
+from it can never match.
+
+**Scope correction first: there are 26 such entries, not the 24 I had written.** 23 have a
+fixture; the other three are the territory W-2s (`w-2-as`, `w-2-gu`, `w-2-vi`), which share
+`prebuilt-tax.us.w2` and so were audited against the same dumped schema. 525 target fields,
+818 configured keys.
+
+### The raw number was 325 and it was almost all noise
+
+325 of 818 configured keys do not exist in any schema. That reads like a catastrophe and is
+not one: the configs deliberately list several Azure spellings per target - `Payer.TIN` AND
+`Payer.IdNumber` both map to `payerTIN`, and one of the two is always the real name. Three
+more things also had to be modelled before the number meant anything:
+
+  - `Transactions[]` is FLATTENED into the top level by `postProcessTransactionsArray` with
+    `putIfAbsent`, so a dead top-level `descriptionOfProperty` is covered by a live
+    `Transactions[].Box1a`. That alone accounted for most of 1099-B's, -DIV's and -INT's.
+  - `concatFields` consumes keys too - my first pass did not parse it and so reported the W-2's
+    `Employer.Name` as unmapped when `Employer.Name+Employer.Address` uses it.
+  - a target can be written by Java outright, through a selection group, a geometric reader or
+    a composed address.
+
+Asking the only question that matters - **is this target filled by any path at all?** - took it
+from 325 keys to **18 targets**, and verifying those by hand to **2 real findings**.
+
+### ★ FINDING 1: "State/Payer's state no." is ONE box holding TWO facts
+
+The IRS prints a single box captioned "State/Payer's state no." - **box 17** on Form 1099-MISC,
+**box 6** on 1099-NEC, **box 15** on 1099-R - read from each form's own text in
+`docs/IRS-Forms/`. Azure carries one field per printed box, so both facts arrive in one string,
+and we stored the whole thing as `payerStateId`. The screens' state input - 1099-NEC captions it
+"State (Box 6)" - **could never be filled.**
+
+    Azure box 17   "$ NY\n76565"        the form prints NY and 76565 in SEPARATE widgets
+    we stored      payerStateId = all of it,  state = never
+
+**Forms 1099-INT, -DIV, -G and -K are NOT affected** and their configs differ for a real reason:
+the IRS gives the state its own box on those four. I nearly read the difference as a
+copy-and-paste shift in three configs; it is the forms that differ, not the configs.
+
+**A SECOND fault surfaced only once the first was fixed.** With the state finally split out, the
+neighbouring figure was visible: `stateTaxWithheldAmount = 76565` - the state's own ID reported
+as tax withheld, because Azure had assigned that same bundled string to the number-typed "State
+tax withheld" box as well. A withholding equal to the payer's state number is not a real
+amount, and a wrong figure is worse than a blank one the filer completes, so it is dropped with
+a warning. **Fixing one fault is what made the next one legible.**
+
+### ★ FINDING 2: an OCR regex was masking a one-character spelling error
+
+The 1099-INT config asked for `Payer.RTN`. The model returns `Payer.Rtn`. The key never matched,
+and the comment on `recover1099IntPayerRtnFromOcr` asserted that the model "doesn't expose
+Payer's RTN as a structured field" - **it does**, `"786543"` at confidence 0.799 on the very
+fixture in the repo. A raw-text regex keyed on the printed caption had been written to cover a
+gap that was a capital T and N. No data was being lost, so nothing looked wrong; the weaker
+route was simply the only route. **A fallback that works hides the defect it is covering.**
+
+### What the audit cleared, which is most of it
+
+  - **W-2 box 14** - the `Other[]` array config cannot match, because Azure returns `Other` as a
+    SCALAR (`"Humpty dumpty"` on the fixture). Not a defect: `OcrContentFallback` already
+    handles it and says so in its own comment - "not an array, despite the field-mappings
+    entry". The config entry is stale, not broken. All four W-2 variants share it.
+  - **13 selection-group targets** on 1099-B, -K, -LTC and -SA - written by
+    `applySelectionGroupFlags` from live `_*Raw` keys, through a loop variable no literal scan
+    can see. Verified by reading each call site.
+  - **`IsVoid` on 1099-DIV/-G/-INT** - genuinely absent from those schemas, and
+    `recoverVoidFromOcr` covers it. That comment is accurate.
+  - **41 schema fields Azure returns that nothing consumes** - 1099-G has 10
+    (`PaidFamilyLeavePayments`, `Repayment`, `InterestOnRefund`, `LocalTaxWithheld`, ...),
+    1099-S has 7, plus 1099-Q's `DistributionCode`/`FairMarketValue`, 1099-R's `StateEIN`,
+    1099-LTC's `Box3Amount`, 1099-C's `DischargedDebt`. Listed, not actioned: unconsumed is not
+    the same as needed, several have no box on our screens, and a statement field cannot be
+    added without sign-off.
+
+### What this audit CANNOT see
+
+It compares a key NAME against the schema. It cannot tell that a live key is mapped to the
+WRONG target - which is exactly the 1095-A address fault from earlier today, where every name
+was real and the meaning was wrong. A name audit and a meaning audit are different jobs.
+
+Live-verified through `POST /api/statements/{form}/extract` on all four fixtures: 1099-MISC now
+gives state NY/SC with IDs 76565/97787 and no phantom withholdings; 1099-NEC and 1099-R are
+unchanged, their fixtures printing no state and none being invented; 1099-INT reads `payerRTN`
+786543 from the structured field. Unit suite **2,875 / 0** (11 new, one of which pins that a
+bare "75657" never yields a state of "75").
+
+Open, in priority order: **deskewing input before sending it to Azure** - the perturbation test
+showed the production readers misattribute ten values on a 3-degree-rotated 1042-S, the failure
+a user cannot see; **Azure's per-field confidence is still discarded**, and it is now doubly
+wanted, having flagged the 1095-C checkboxes at 0.364 and the RTN at 0.799; **a MEANING audit of
+the named-model configs**, which is the half this one could not do; **no arithmetic self-checks**
+though these forms print their own totals; **no form-YEAR check**; the 41 unconsumed schema
+fields; a page-by-page audit of the other multi-page forms; a sweep for UI-bound statement
+fields with no backend column; the dot-leader gap in `attributeRowCells`' text mode; unify the
+three name/address compose copies; the four render differences from 2026-10-03; the 1099-SA
+phone grouping; W-2 box-12 amounts (Azure returns the codes and no amounts) and box 14b;
+`employeeSuffix` on `w-2-as.pdf` and `w-2.pdf`; `1099-g.png`'s duplicated phone fragment; and
+mapping an Azure 429 to 503 rather than a bare 500.
+
 ## 2026-10-04 - A field named for a BOX must hold that box: 1095-A's address, 1095-B/C's names
 
 Two instances of one fault, found by asking the plain question "is this field named for a box?"

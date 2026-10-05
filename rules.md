@@ -29,3 +29,36 @@
 **★ A fixture whose every box holds ONE word cannot test a multi-word box — build the fixture that stresses the assumption.** Forms 1095-B and 1095-C print their name in three boxes; we read one combined value and split it on the assumption that the surname is its last word. Both forms scored full marks against their AcroForm (133/133, 85/85) while the rule was broken, because every shipped box holds a single word. Set the widgets to `"Mary Jo" / "K" / "Van Der Berg"` and it returns **first="Mary Jo K Van Der", last="Berg"**, with the middle initial lost entirely. Ten minutes with PyMuPDF — set the three widgets, call `w.update()` to regenerate the appearance streams — turns a judgement call into a measurement. Sibling of the all-ticked-checkbox rule above: ask what the shipped data never exercises.
 
 **★ Measure a margin before declining to act on it — my estimate was out by 2x and nearly cost the fix.** I read the gap between those name boxes off the single-word fixtures, got ~2x the word spacing, judged that too tight against the 4–8x of comparable rules, and recommended leaving it. Measured properly on multi-word names it is **5x on the tighter form and 34x on the other**. The estimate was pessimistic because single-word boxes happen to sit closer together. When a margin is the reason for not doing something, that margin is the thing to measure. Corollary from the same exercise: **physically impossible test data reads exactly like a bug** — I dropped a word from the middle of "Van Der Berg", leaving a 0.30in hole that genuinely IS a box boundary, and spent a cycle suspecting the code.
+
+**★ One printed box can hold TWO facts, and a config that stores it as one field loses the
+other silently.** The IRS prints a single box captioned "State/Payer's state no." - box 17 on
+Form 1099-MISC, box 6 on 1099-NEC, box 15 on 1099-R. Azure carries one field per printed box, so
+both facts arrive in one string (`"$ NY\n76565"`), and we stored all of it as `payerStateId`,
+leaving the screens' state input - 1099-NEC captions it "State (Box 6)" - permanently blank.
+Forms 1099-INT, -DIV, -G and -K give the state its OWN box, and their configs differ for that
+reason; I nearly read the difference as a copy-and-paste shift in three configs. **When one
+config disagrees with its siblings, check the FORMS before 'fixing' the odd one out.** Corollary:
+**fixing one fault is what makes the next one legible** - with the state finally split out, the
+neighbour was visible as `stateTaxWithheldAmount = 76565`, the state's own ID reported as tax
+withheld, because Azure had assigned the same bundled string to the number-typed box beside it.
+
+**★ A fallback that works hides the defect it is covering.** The 1099-INT config asked for
+`Payer.RTN`; the model returns `Payer.Rtn`. The key never matched, so someone wrote an OCR regex
+on the printed caption and a comment asserting the model "doesn't expose Payer's RTN as a
+structured field" - it does, `"786543"` at confidence 0.799 on the fixture already in the repo.
+No data was lost, so nothing looked wrong; the weaker route was simply the only route. **Treat a
+hand-written recovery path as a claim about the upstream that needs checking**, and when a
+comment explains WHY a workaround exists, verify the why - this is the third prose claim in this
+file that was false. Same family as *a comment claiming a refactor is not the refactor*.
+
+**★ Count the keys, then ask whether anything FILLS the field - the raw count is noise.** The
+named-model audit opened at 325 of 818 configured keys absent from the schemas, which reads like
+a catastrophe and was not one: the configs deliberately list several Azure spellings per target
+(`Payer.TIN` AND `Payer.IdNumber`), arrays are flattened into the top level with `putIfAbsent`,
+`concatFields` consumes keys too, and targets get written by Java through loop variables no
+literal grep can see. Asking the one question that matters - *is this target filled by any path
+at all?* - took 325 keys to 18 targets to **2 real findings**. **Model every path that can fill
+the field before reporting a gap**, and state the metric you are actually measuring: three of my
+own passes each inflated the number, the third because it did not parse `concatFields`.
+Corollary: this kind of audit compares a key NAME against a schema and **cannot** see a live key
+mapped to the WRONG target - a name audit and a meaning audit are different jobs.

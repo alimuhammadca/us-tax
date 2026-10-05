@@ -62,3 +62,35 @@ the field before reporting a gap**, and state the metric you are actually measur
 own passes each inflated the number, the third because it did not parse `concatFields`.
 Corollary: this kind of audit compares a key NAME against a schema and **cannot** see a live key
 mapped to the WRONG target - a name audit and a meaning audit are different jobs.
+
+**★ Mutation-test an AUDIT before believing a clean result from it.** The box-number meaning
+check came back with 219 pairs and zero real mismatches, which is either good news or a check
+with no power, and nothing in the output distinguishes the two. Injecting three deliberate box
+swaps (1099-INT 1<->2, 1099-MISC 1<->2, 1099-DIV 1a<->3) caught all **six** sides and took the
+flag count 13 -> 19; then the config went back byte-identical. **A negative result is only worth
+something once the positive control has fired** - the same discipline as mutating a rule to see
+the explanation change, applied to the measuring instrument rather than the code. Corollary: when
+an audit's own regex produces the flags, expect most of them to be ITS faults, not the code's -
+5 of 6 type flags here were `^qualified` and `Income$` matching legitimate amounts, and 10 of 13
+box flags were scratch keys. Triage before reporting.
+
+**★ A number and a checkbox can be offered for the SAME printed box - take the one the box
+actually is.** Form 1099-LTC box 4 is a checkbox ("4 Qualified contract"), and Azure returns
+both `Box4` (a boolean selection mark) and `Box4Amount` (a number) for it. The config mapped the
+NUMBER onto the UI's boolean, and because the generic field pass runs before the form's
+post-process, that number would have beaten the `putIfAbsent` filling the flag from the selection
+mark. It never did, because `Box4Amount` reads empty at confidence 0.953 - **a populated ZERO
+would have unchecked a box the form has ticked.** Compare the model's field TYPE against what the
+target's name claims, and when a post-process holds the authoritative value, let it `put` rather
+than `putIfAbsent` - deferring to whatever ran first is only safe if you know what that was.
+
+**★ "Reserved" on this year's form can mean the concept MOVED TO ANOTHER FORM.** Form
+1099-MISC box 14 carries a number and no caption on Rev. 4-2025 - no fillable widget either,
+while every other money box has one, and "golden parachute" appears nowhere in the document. The
+concept relocated to **Form 1099-NEC box 3**. Our config still maps 1099-MISC `Box14` to it,
+which is harmless (empty at confidence 0.428 on a 2025 form, and CORRECT on a pre-2025 upload
+someone may still file) - so it stays. **Before calling a cross-form mapping stale, find where
+the concept went**, and check the AcroForm widgets and tooltips, not just the page text: three
+independent signals settled this where the text alone was ambiguous. Same family as
+*"reserved for future use" can mean RELOCATED, not repealed*, now observed across forms rather
+than across lines of one form. **And it is the concrete cost of having no form-YEAR check.**

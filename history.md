@@ -1,3 +1,99 @@
+## 2026-10-04 - The MEANING audit: is each live key on the field it actually means?
+
+The name audit earlier today proved every configured key exists in its model's schema. It
+**cannot** see a live key mapped to the WRONG target - both names are real and only the value is
+wrong, which is how the 1095-A address fault survived a 103/103 score. This is that second half.
+Five checks, cheapest first; one real defect, and the rest clean with evidence.
+
+### 1. Internal consistency - no external truth needed
+
+The configs list several Azure spellings per target on purpose, which is also a free check: if
+two spellings for the same printed box point at different targets, one is wrong. **0 targets fed
+by conflicting box numbers; 0 keys mapped to two targets in one scope.** It did surface 13
+**list-valued** mappings (one key fanning out to several targets) on `w-2g` and `1099-da`, which
+became check 5.
+
+### 2. Box number vs the form's own printed caption
+
+**219 box->target pairs** checked against captions read out of `docs/IRS-Forms/*.pdf`. **0 real
+mismatches.** Of 13 flagged, 10 were `_box*Raw` scratch keys for selection groups (correct by
+design) and 3 were caption line-wrapping (1099-OID box 8 really is "Original issue discount on
+U.S. Treasury obligations").
+
+**★ I mutation-tested the audit before trusting the clean result.** A check that passes
+everything may simply have no power. Injecting three box swaps - 1099-INT 1<->2, 1099-MISC
+1<->2, 1099-DIV 1a<->3 - caught all **six** sides (13 -> 19 flags), then the config was restored
+byte-identical. The negative result is worth something because the positive control fired.
+
+Eight box keys whose caption the regex missed were each verified by hand against the IRS text.
+Seven correct. The eighth is a genuine curiosity:
+
+**Form 1099-MISC box 14 is RESERVED on Rev. 4-2025.** Three independent confirmations: the cell
+holds the number and no caption (`13 FATCA filing requirement | 14 | 15 Nonqualified deferred
+compensation`), it has **no fillable widget** while every other money box does, and the phrase
+"golden parachute" appears nowhere in the document. The concept **RELOCATED to Form 1099-NEC
+box 3** ("3 Excess golden parachute payments"), which our NEC config maps correctly. Our stale
+`Box14 -> excessGoldenParachutePaymentsAmount` on 1099-MISC returns empty at confidence 0.428 on
+a 2025 form and would be RIGHT on a pre-2025 one, so it is benign back-compat and was left
+alone. Sibling of the Schedule 8812 line 15 lesson: **reserved can mean relocated.**
+
+### 3. Party roles - which side of the form is this?
+
+Most 1099s print PAYER/RECIPIENT, but seven print role-specific pairs: LENDER/BORROWER (1099-A,
+1098-E), CREDITOR/DEBTOR (1099-C), CORPORATION/SHAREHOLDER (1099-CAP), FILER/TRANSFEROR
+(1099-S), FILER/PAYEE (1099-K), PAYER/POLICYHOLDER/INSURED (1099-LTC), MARKETPLACE/RECIPIENT
+(1095-A). Mapping `Lender.Name` to `borrowerName` would be invisible to a name audit. Every live
+party mapping across the 23 forms keeps its printed side - **0 crossings** - and the
+role-specific forms keep the printed role in the target name rather than normalising to
+payer/recipient, which is the better choice.
+
+### ★ 4. THE ONE REAL DEFECT: an amount field mapped onto a checkbox
+
+Comparing Azure's field TYPE against what the target name claims flagged 6; five were my own
+regex matching `^qualified` and `Income$` on legitimate amounts. The sixth is real:
+
+**Form 1099-LTC box 4 is a CHECKBOX** ("4 Qualified contract"), and Azure returns BOTH `Box4`
+(boolean selection mark) and `Box4Amount` (a number) for a box that holds no amount. The config
+mapped `Box4Amount` onto `qualifiedContract`, the UI's boolean - and because the generic field
+pass runs BEFORE `postProcess1099Ltc`, that number would have beaten the `putIfAbsent` that
+fills the flag from the selection mark.
+
+Nothing had ever gone wrong: `Box4Amount` reads EMPTY at confidence 0.953 while `Box4` carries
+`":selected:"` at 0.944. **A populated ZERO would have unchecked a box the form has ticked.**
+Mapping removed; the selection mark now overwrites rather than deferring. Commit `60922f3e`.
+
+### 5. Ordinal fan-out, and a render gap it exposed
+
+Those 13 list-valued mappings assign the **Nth occurrence in document order** to the Nth target -
+`StreetAddress` -> `[payerStreetAddress, winnerAddress]` on Form W-2G. That is the exact pattern
+**OCR reading order is not a property of the form** warns about: a reordered render would SWAP
+two real values silently. Tested on both renders of both forms, and the fixtures are well built
+for it (1099-da puts "4 Oxford Street, London ON" on the filer and "1 London Street, Cambridge
+SC" on the recipient, so a swap would be unmistakable). **No swaps - both renders assign
+identically and correctly.** A structural fragility, not a current defect.
+
+It did expose **render recall gaps, with the printed values confirmed in each AcroForm**:
+
+    w-2g      PDF loses winnerZipCode 98765            (PNG finds it)   36 vs 38 fields
+    1099-da   PDF loses the WHOLE state section        (PNG finds it)   48 vs 58 fields
+              NY / TX / 767676 / 989898
+
+1099-da was already on the known render-difference list; **w-2g is new**.
+
+**Both halves of the config audit are now done**: names (2 findings) and meanings (1 finding).
+Unit suite **2,875 / 0**. Open, in priority order: **deskewing input before sending it to
+Azure** - the production readers misattribute ten values on a 3-degree-rotated 1042-S, the
+failure a user cannot see; **Azure's per-field confidence is still discarded**, and this audit
+leaned on it repeatedly (0.953 empty, 0.944 selected, 0.428 absent) to tell dormant from live;
+**the two PDF-render recall gaps above**; **no arithmetic self-checks** though these forms print
+their own totals; **no form-YEAR check**, which is what made 1099-MISC box 14 take an hour to
+settle; the 41 unconsumed schema fields; a page-by-page audit of the other multi-page forms; a
+sweep for UI-bound statement fields with no backend column; the dot-leader gap in
+`attributeRowCells`' text mode; unify the three name/address compose copies; the 1099-SA phone
+grouping; W-2 box-12 amounts (Azure returns codes and no amounts) and box 14b; `employeeSuffix`
+on `w-2-as.pdf` and `w-2.pdf`; `1099-g.png`'s duplicated phone fragment; and mapping an Azure
+429 to 503 rather than a bare 500.
+
 ## 2026-10-04 - Audited the 26 named-model configs: one printed box was holding two facts
 
 Audited every config that uses an Azure NAMED tax model (`prebuilt-tax.us.*`) against the

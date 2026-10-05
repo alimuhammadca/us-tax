@@ -151,3 +151,13 @@ geometry and look at the layout before assuming poor recall - and validate the p
 against the fixture's AcroForm BEFORE writing the reader, which here turned a design question
 into a table lookup. Note too what made it safe: box 6 prints three marks on box 5's own rows,
 so the caption's horizontal span, not nearest-below, is what keeps them apart.
+
+**★ When one party's block is wrong and the OTHER party's identical block is right, the labels
+are fine - it is the value REGION.** Form 1099-DA's FILER telephone, country and ZIP came back as
+`"12 555"`, `"+1 545 1234 US"` and `"KOKO 12345"` on the PDF, while the RECIPIENT's three boxes -
+same captions, same config fan-out, same page - were correct on both renders. That asymmetry is
+the diagnosis: nothing about label matching or config can explain it, so the fault is which words
+Azure paired with the label. Read the cell from its own geometry instead, and note what the
+region got wrong that geometry gets right: box 1b's "KOKO" is both to the RIGHT of the ZIP
+caption and ABOVE its value band, so a two-sided cell test excludes it twice over. **Look for the
+working twin before theorising** - it localises the fault in one observation.

@@ -1,3 +1,62 @@
+## 2026-10-05 - The filer block: Azure's value REGIONS were wrong, not its labels
+
+The three values left over from yesterday's render work, and the diagnosis turned on one
+observation: **the RECIPIENT's identical three boxes are correct on both renders.** Same labels,
+same config fan-out, different outcome - so this was never a label-matching problem.
+
+On the PDF render Azure's value REGIONS for the filer block are scrambled:
+
+    Telephone number   "12 555"            the "12" is the Room or suite no., not the phone
+    Country            "+1 545 1234 US"    half the phone, then the country
+    ZIP                "KOKO 12345"        KOKO is box 1b's digital asset name
+
+Each of these is a single-line box whose value is printed **directly beneath its caption**, so
+`readCellUnderLabel` settles all three - it seeds on the word under the label and stops at a gap
+wider than a label height. The measured margins are comfortable:
+
+    widest gap inside the phone   0.040in = 0.35 label heights
+    "US" -> "12345"               0.640in = 5.57 label heights
+
+KOKO is excluded **twice over** - it is right of the caption AND above its value band - which is
+precisely what Azure's region was not. `findLabel` already orders its hits down the PAGE rather
+than by OCR order, with a comment saying why, so `nth=0` is reliably the filer's copy. These
+OVERWRITE rather than fill blanks, because a value read from its own printed cell beats a region
+Azure mis-assigned - and on the PNG, where the pass is already right, geometry returns the same
+three values, so that render cannot regress.
+
+### ★ Both renders of both forms are now BYTE-IDENTICAL, values included
+
+    1099-da   58 fields = 58     (was 48 vs 58, with a misattribution and three bled values)
+    w-2g      38 fields = 38     (was 36 vs 38)
+
+Every filer and recipient value matches the fixture's own AcroForm. And the comparison itself is
+sound this time: the listing is JSON-escaped, **one field per line**, which is the mitigation the
+*don't diff a human-readable listing* rule demands - a newline inside a value cannot split a
+record and fake agreement, which is how I once published a false "14 byte-identical".
+
+Five render-difference items came out of this three-day sequence and **all five are closed**: the
+1099-DA state grid (which was a misattribution, not a loss), box 12a, the W-2G winner ZIP and
+city, the three 1099-DA checkboxes, and now the filer block. Each had a DIFFERENT cause -
+order-dependence, a stop-word guard firing on its own anchor, a merged caption, a one-slot config
+fan-out, an unpaired selection mark, a mis-assigned value region - which is the real lesson:
+**"the PDF render is worse" was never one bug, and never a recall problem.**
+
+5 new tests in the form's existing cell-geometry class, both renders in their own units, plus the
+gap margins. Mutation-tested: widening the cell-end gap tenfold reddens 2, and extending the
+value band ABOVE the label - which makes KOKO eligible, exactly what Azure did - reddens 2. Unit
+suite **2,897 / 0**. Reload trigger **v98**. Commit `4c8eb5e3`.
+
+Open, in priority order: **deskewing input before sending it to Azure** - the production readers
+misattribute ten values on a 3-degree-rotated 1042-S, the failure a user cannot see; **Azure's
+per-field confidence is still discarded**; **a value-level render diff for every other fixture**,
+now that the technique has found six faults on two forms; **no arithmetic self-checks** though
+these forms print their own totals; **no form-YEAR check**; the 41 unconsumed schema fields; a
+page-by-page audit of the other multi-page forms; a sweep for UI-bound statement fields with no
+backend column; the dot-leader gap in `attributeRowCells`' text mode; unify the three
+name/address compose copies; the 1099-SA phone grouping; W-2 box-12 amounts and box 14b;
+`employeeSuffix` on `w-2-as.pdf` and `w-2.pdf`; `1099-g.png`'s duplicated phone fragment; and
+mapping an Azure 429 to 503 rather than a bare 500.
+
 ## 2026-10-04 - A checkbox printed BELOW its caption, and a key-set diff that hid three values
 
 The last three fields where the two renders of `1099-da` disagreed: boxes **2**, **5** and **9**

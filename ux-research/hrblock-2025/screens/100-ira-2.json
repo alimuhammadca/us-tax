@@ -1,0 +1,118 @@
+{
+ "n": 100,
+ "slug": "ira-2",
+ "capturedAt": "2026-10-08T18:39:05.092Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "FIRA"
+ ],
+ "topicLinks": [
+  {
+   "text": "What if I contributed to a Roth 401(k) or 403(b)?",
+   "href": "tc:TOPICHELP=FIRA,vRoth401k",
+   "faq": true
+  },
+  {
+   "text": "What about a tax refund that's directly deposited into my IRA?",
+   "href": "tc:TOPICHELP=FIRA,vDirectDeposit",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Who's contributing to a traditional or Roth IRA for 2025?",
+ "headings": [],
+ "text": "Who's contributing to a traditional or Roth IRA for 2025? Jordan only Casey only Both Neither",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_WhoContributed",
+   "id": "",
+   "label": "Jordan only",
+   "value": "93.33218",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_WhoContributed",
+   "id": "",
+   "label": "Casey only",
+   "value": "93.33219",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_WhoContributed",
+   "id": "",
+   "label": "Both",
+   "value": "93.33220",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_WhoContributed",
+   "id": "",
+   "label": "Neither",
+   "value": "93.33221",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

@@ -1,0 +1,139 @@
+{
+ "n": 194,
+ "slug": "il-4",
+ "capturedAt": "2026-10-08T19:17:54.286Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [],
+ "topicLinks": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "County",
+ "headings": [],
+ "text": "County Enter the county you and Casey lived in on Dec. 31, 2025. If you were a part-year resident of Illinois, enter the county you last lived in while a resident County you and Casey lived in Adams Alexander Bond Boone Brown Bureau Calhoun Carroll Cass Champaign Christian Clark Clay Clinton Coles Cook Crawford Cumberland Dekalb Dewitt Douglas DuPage Edgar Edwards Effingham Fayette Ford Franklin Fulton Gallatin Greene Grundy Hamilton Hancock Hardin Henderson Henry Iroquois Jackson Jasper Jefferson Jersey Jo Daviess Johnson Kane Kankakee Kendall Knox Lake Lasalle Lawrence Lee Livingston Logan Macon Macoupin Madison Marion Marshall Mason Massac McDonough McHenry Mclean Menard Mercer Monroe Montgomery Morgan Moultrie Ogle Peoria Perry Piatt Pike Pope Pulaski Putnam Randolph Richland Rock Island Saline Sangamon Schuyler Scott Shelby St. Clair Stark Stephenson Tazewell Union Vermilion Wabash Warren Washington Wayne White Whiteside Will Williamson Winnebago Woodford",
+ "inputs": [
+  {
+   "tag": "select",
+   "type": "select-one",
+   "name": "78.217966",
+   "id": "",
+   "label": "County you and Casey lived in",
+   "value": "",
+   "options": [
+    "",
+    "Adams",
+    "Alexander",
+    "Bond",
+    "Boone",
+    "Brown",
+    "Bureau",
+    "Calhoun",
+    "Carroll",
+    "Cass",
+    "Champaign",
+    "Christian",
+    "Clark",
+    "Clay",
+    "Clinton",
+    "Coles",
+    "Cook",
+    "Crawford",
+    "Cumberland",
+    "Dekalb",
+    "Dewitt",
+    "Douglas",
+    "DuPage",
+    "Edgar",
+    "Edwards",
+    "Effingham",
+    "Fayette",
+    "Ford",
+    "Franklin",
+    "Fulton",
+    "Gallatin",
+    "Greene",
+    "Grundy",
+    "Hamilton",
+    "Hancock",
+    "Hardin",
+    "Henderson",
+    "Henry",
+    "Iroquois",
+    "Jackson",
+    "Jasper",
+    "Jefferson",
+    "Jersey",
+    "Jo Daviess",
+    "Johnson",
+    "Kane",
+    "Kankakee",
+    "Kendall",
+    "Knox",
+    "Lake",
+    "Lasalle",
+    "Lawrence",
+    "Lee",
+    "Livingston",
+    "Logan",
+    "Macon",
+    "Macoupin",
+    "Madison",
+    "Marion",
+    "Marshall"
+   ]
+  }
+ ],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

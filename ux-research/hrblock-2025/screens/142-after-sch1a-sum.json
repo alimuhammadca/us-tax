@@ -1,0 +1,499 @@
+{
+ "n": 142,
+ "slug": "after-sch1a-sum",
+ "capturedAt": "2026-10-08T18:54:43.584Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed",
+  "expanded 1"
+ ],
+ "dialogs": [],
+ "topics": [
+  "DedSumm"
+ ],
+ "topicLinks": [
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=DedSumm,hLearn_More_DeductionSummary",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=DedSumm,hMortgageInt",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=DedSumm,hExplThisStateLocalTax",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=DedSumm,hCharCash",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=DedSumm,hCharNoncash",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=DedSumm,hCharCarryover",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=DedSumm,hMedicalExpenses",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=DedSumm,hLearnMore_InvIntExp",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=DedSumm,hLearnMore_F4684",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=DedSumm,hExplThisMiscDedNonTwo",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=DedSumm,hQBIDeduction",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=DedSumm,hAdditionalDeductions",
+   "faq": false
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Here are your deductions.",
+ "headings": [],
+ "text": "Here are your deductions. Due to our calculations, they might be different from what you entered earlier. LEARN MORE Mortgage interest $ 11,200 EXPLAIN AMOUNT State and local taxes 11,581 EXPLAIN AMOUNT Charitable donations Cash or money 1,500 EXPLAIN AMOUNT Noncash or item 0 EXPLAIN AMOUNT Carryover from 2024 0 EXPLAIN AMOUNT Medical and dental expenses 0 EXPLAIN AMOUNT Investment interest expense 0 EXPLAIN AMOUNT Casualty and theft loss 0 EXPLAIN AMOUNT Miscellaneous deductions 0 EXPLAIN AMOUNT Qualified Business Income Deduction 0 EXPLAIN AMOUNT Additional Deductions 0 EXPLAIN AMOUNT",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=DedSumm,hLearn_More_DeductionSummary",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=DedSumm,hMortgageInt",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554500",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=DedSumm,hExplThisStateLocalTax",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=DedSumm,hCharCash",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554619",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=DedSumm,hCharNoncash",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33690716",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=DedSumm,hCharCarryover",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554621",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=DedSumm,hMedicalExpenses",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554504",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=DedSumm,hLearnMore_InvIntExp",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554505",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=DedSumm,hLearnMore_F4684",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554506",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=DedSumm,hExplThisMiscDedNonTwo",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554513",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=DedSumm,hQBIDeduction",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33764704",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=DedSumm,hAdditionalDeductions",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33815693",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554500",
+   "title": "Go To Topic",
+   "name": "go_to_0"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554619",
+   "title": "Go To Topic",
+   "name": "go_to_1"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33690716",
+   "title": "Go To Topic",
+   "name": "go_to_2"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554621",
+   "title": "Go To Topic",
+   "name": "go_to_3"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554504",
+   "title": "Go To Topic",
+   "name": "go_to_4"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554505",
+   "title": "Go To Topic",
+   "name": "go_to_5"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554506",
+   "title": "Go To Topic",
+   "name": "go_to_6"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554513",
+   "title": "Go To Topic",
+   "name": "go_to_7"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33764704",
+   "title": "Go To Topic",
+   "name": "go_to_8"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33815693",
+   "title": "Go To Topic",
+   "name": "go_to_9"
+  },
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=DedSumm,hLearn_More_DeductionSummary",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=DedSumm,hMortgageInt",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=DedSumm,hExplThisStateLocalTax",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=DedSumm,hCharCash",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=DedSumm,hCharNoncash",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=DedSumm,hCharCarryover",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=DedSumm,hMedicalExpenses",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=DedSumm,hLearnMore_InvIntExp",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=DedSumm,hLearnMore_F4684",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=DedSumm,hExplThisMiscDedNonTwo",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=DedSumm,hQBIDeduction",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=DedSumm,hAdditionalDeductions",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

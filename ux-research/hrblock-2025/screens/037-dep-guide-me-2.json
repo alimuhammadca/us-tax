@@ -1,0 +1,94 @@
+{
+ "n": 37,
+ "slug": "dep-guide-me-2",
+ "capturedAt": "2026-10-08T18:14:58.441Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "What's Riley's citizenship status?",
+ "headings": [],
+ "text": "What's Riley's citizenship status? U.S citizen or resident alien Resident of Canada or Mexico None of the above",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_Citizen",
+   "id": "",
+   "label": "U.S citizen or resident alien",
+   "value": "113.11281",
+   "checked": true
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_Citizen",
+   "id": "",
+   "label": "Resident of Canada or Mexico",
+   "value": "113.11282",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_Citizen",
+   "id": "",
+   "label": "None of the above",
+   "value": "113.11280",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

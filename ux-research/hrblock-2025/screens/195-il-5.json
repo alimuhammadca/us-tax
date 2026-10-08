@@ -1,0 +1,78 @@
+{
+ "n": 195,
+ "slug": "il-5",
+ "capturedAt": "2026-10-08T19:18:09.426Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [],
+ "topicLinks": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Email Address",
+ "headings": [],
+ "text": "Email Address Illinois requests your email address. Your email address",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "search",
+   "name": "78.233939",
+   "id": "",
+   "label": "Your email address",
+   "value": "",
+   "maxlength": "40"
+  }
+ ],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

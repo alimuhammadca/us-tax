@@ -1,0 +1,32 @@
+--- LEFT PANEL (meter + FAQs)
+2025
+My taxes for
+Premium
+FEDERAL REFUND
+$1,351
+LATEST CHANGE
+A Increase ofS66
+STATE REFUND
+$0
+Help Center
+FAQs
+View Details
+How can I create a list of items to
+add up and go into a field?
+What if I have gambling losses
+and haven't entered any gambling
+winnings?
+--- TABS
+WELCOME
+PERSONAL INFORMATION
+FEDERAL
+INCOME
+ADJUSTMENTS
+STATE
+DEDUCTIONS
+FILE
+CREDITS
+TAXES
+MISC
+PLAN
+FINISH

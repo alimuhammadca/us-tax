@@ -1,0 +1,127 @@
+{
+ "n": 41,
+ "slug": "after-dependents",
+ "capturedAt": "2026-10-08T18:16:33.823Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Children's Tax Advantage Account (Trump Account)",
+ "headings": [],
+ "text": "Children's Tax Advantage Account (Trump Account) Here are your dependents who may be eligible for a Children's Tax Advantage Account (Trump Account). All dependents start off with \"No\" in the Eligible column. You'll have to Edit them to learn if they are eligible. Click Edit to learn about and indicate your dependent's eligibility and to opt in to elect an account for that dependent. Click Add Beneficiary to confirm a non-dependent child's eligibility and to opt in to elect an account for that child. Learn more Click Delete to opt out a dependent you've already opted in, or to remove a non-dependent child. Click Finished to: Complete your election for all children marked Yes in the Opted In column, or Skip this topic if none have opted in. Name Eligible Opted In 1st (Riley Sample) No No Edit Delete",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Children's Tax Advantage Account (Trump Account)",
+   "img": "",
+   "href": "tc:TOPICHELP=TrumpActs,hWhatIsTrumpAccount",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Learn more",
+   "img": "",
+   "href": "tc:TOPICHELP=TrumpActs,hNonDependents",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contentbtn",
+   "text": "",
+   "img": "Add Beneficiary",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "childof199820664",
+   "id": "",
+   "cls": "multinstanceanchor",
+   "text": "Edit",
+   "img": "",
+   "href": "TC:EDIT/1",
+   "onclick": ""
+  },
+  {
+   "name": "childof199822248",
+   "id": "",
+   "cls": "multinstanceanchor",
+   "text": "Delete",
+   "img": "",
+   "href": "TC:DELETE/1",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "58",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "FINISH",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "Add_Beneficiary_up.gif",
+   "alt": "",
+   "title": "Add Beneficiary",
+   "name": "Add_Beneficiary"
+  },
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "finished_ht.gif",
+   "alt": "FINISH",
+   "title": "",
+   "name": "finished"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Learn more",
+   "img": "",
+   "href": "tc:TOPICHELP=TrumpActs,hNonDependents",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

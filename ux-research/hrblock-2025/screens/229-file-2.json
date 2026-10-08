@@ -1,0 +1,82 @@
+{
+ "n": 229,
+ "slug": "file-2",
+ "capturedAt": "2026-10-08T19:30:42.327Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [],
+ "topicLinks": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Your Audit Risk Results",
+ "headings": [
+  "Our Free In-person Audit Support has you covered."
+ ],
+ "text": "Your Audit Risk Results Good news — your return looks risk-free! Our Free In-person Audit Support has you covered. There's no guarantee you won't be audited, but we guarantee you're covered. When you successfully file with H&R Block, you get Free In-person Audit Support. IRS correspondence management — We'll help with communication initiated by the IRS or your state tax office. Audit preparation — We'll provide details on how to prepare for an audit and what to expect. Audit representation — An H&R Block enrolled agent will attend the audit with you and manage the entire audit experience. All of this included when you file with H&R Block. Never Settle for Less.SM",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "auditRiskGreen.gif",
+   "alt": "",
+   "title": "",
+   "name": ""
+  },
+  {
+   "src": "worryfree2.gif",
+   "alt": "",
+   "title": "",
+   "name": ""
+  },
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

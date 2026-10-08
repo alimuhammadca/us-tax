@@ -1,0 +1,34 @@
+--- LEFT PANEL (meter + FAQs)
+2025
+My taxes for
+Premium
+FEDERAL REFUND
+$1,951
+LATEST CHANGE
+A Increase of $600
+STATE REFUND
+$363
+Help Center
+FAQs
+View Details
+Can I e-file my state return if I file
+a federal return on paper?
+What's involved in e-filing?
+Can I e-file both my federal and
+state returns?
+What if I change my mind about
+e-filing?
+Will my privacy be protected?
+How do you protect the security of
+my tax information?
+--- TABS
+WELCOME
+FILE YOUR RETURN
+FEDERAL
+ELECTRONIC FILING
+STATE
+FILING ON PAPER
+FILE
+FINISHED
+PLAN
+WRAPPING UP

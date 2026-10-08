@@ -1,0 +1,105 @@
+{
+ "n": 78,
+ "slug": "1099b-add-sale",
+ "capturedAt": "2026-10-08T18:30:25.905Z",
+ "actionsBefore": [
+  [
+   "clickText",
+   "Add Sale"
+  ]
+ ],
+ "actionResults": [
+  "clickText Add Sale"
+ ],
+ "dialogs": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Enter your sales as a group.",
+ "headings": [],
+ "text": "Enter your sales as a group. To save time, you can group your sales when these apply: Your broker reported the basis to the IRS on Form 1099-B. You don't have any adjustments, like wash-sale losses or a basis correction. (Since they don't have such adjustments, group sales go directly to Schedule D and do not appear on Form 8949.) They're all one of these: Short-term (held one year or less) Long-term (held more than one year) Do you want to enter a group of sales? LEARN MORE Yes No",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_SimpleGroup",
+   "id": "",
+   "label": "Yes",
+   "value": "135.147272",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_SimpleGroup",
+   "id": "",
+   "label": "No",
+   "value": "135.147284",
+   "checked": true
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=KG_1099B,hGroupStockSales",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_up.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=KG_1099B,hGroupStockSales",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

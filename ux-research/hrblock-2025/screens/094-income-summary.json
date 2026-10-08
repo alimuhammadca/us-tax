@@ -1,0 +1,646 @@
+{
+ "n": 94,
+ "slug": "income-summary",
+ "capturedAt": "2026-10-08T18:36:40.134Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed",
+  "expanded 1"
+ ],
+ "dialogs": [],
+ "topics": [
+  "IncSumm"
+ ],
+ "topicLinks": [
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=IncSumm,hLearnMoreAmtEnteredTI",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=IncSumm,hExplainThis_W2",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=IncSumm,hExplainThis_StateRefund",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=IncSumm,hExplainThis_Unemployment",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=IncSumm,hExplainThis_Interest",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=IncSumm,hExplainThis_Dividends",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=IncSumm,hKGAmounts",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=IncSumm,hExplainThis_BusinessIncome",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=IncSumm,hExplainThis_SchedE",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=IncSumm,hExplainThis_4797",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=IncSumm,hExplainThis_Farm",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=IncSumm,hExplainThis_IRADistribs",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=IncSumm,hExplainThis_PensionIncome",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=IncSumm,hExplainThis_SocSecIncome",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=IncSumm,hExplainThis_AlimonyReceived",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=IncSumm,hExplainThis_OtherIncome",
+   "faq": false
+  },
+  {
+   "text": "Why are the total wages shown here different from the amount I entered?",
+   "href": "tc:TOPICHELP=IncSumm,vDiffWages",
+   "faq": true
+  },
+  {
+   "text": "What if I have excessive business losses?",
+   "href": "tc:TOPICHELP=IncSumm,vExcessiveBusinessLosses",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Here's your taxable income.",
+ "headings": [],
+ "text": "Here's your taxable income. Due to our calculations, this amount might be different from the total income you entered earlier. LEARN MORE Wages $ 137,000 EXPLAIN AMOUNT State and local tax refunds 0 EXPLAIN AMOUNT Unemployment compensation 0 EXPLAIN AMOUNT Interest 1,850 EXPLAIN AMOUNT Dividends 2,400 EXPLAIN AMOUNT Sale of stocks, bonds, and assets 4,100 EXPLAIN AMOUNT Business income or loss 0 EXPLAIN AMOUNT Rentals, partnerships, and S corporations 0 EXPLAIN AMOUNT Other gains or losses 0 EXPLAIN AMOUNT Farm 0 EXPLAIN AMOUNT IRA distributions 0 EXPLAIN AMOUNT Other retirement income and withdrawals 0 EXPLAIN AMOUNT Social Security income 0 EXPLAIN AMOUNT Alimony received 0 EXPLAIN AMOUNT Other income 0 EXPLAIN AMOUNT",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=IncSumm,hLearnMoreAmtEnteredTI",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=IncSumm,hExplainThis_W2",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554441",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=IncSumm,hExplainThis_StateRefund",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33587015",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=IncSumm,hExplainThis_Unemployment",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33587016",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=IncSumm,hExplainThis_Interest",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554443",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=IncSumm,hExplainThis_Dividends",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554444",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=IncSumm,hKGAmounts",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=IncSumm,hExplainThis_BusinessIncome",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554447",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=IncSumm,hExplainThis_SchedE",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=IncSumm,hExplainThis_4797",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554456",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=IncSumm,hExplainThis_Farm",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554457",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=IncSumm,hExplainThis_IRADistribs",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554465",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=IncSumm,hExplainThis_PensionIncome",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554464",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=IncSumm,hExplainThis_SocSecIncome",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554466",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=IncSumm,hExplainThis_AlimonyReceived",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554477",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=IncSumm,hExplainThis_OtherIncome",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33573840",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": "3"
+  }
+ ],
+ "imgs": [
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554441",
+   "title": "Go To Topic",
+   "name": "go_to_0"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33587015",
+   "title": "Go To Topic",
+   "name": "go_to_1"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33587016",
+   "title": "Go To Topic",
+   "name": "go_to_2"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554443",
+   "title": "Go To Topic",
+   "name": "go_to_3"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554444",
+   "title": "Go To Topic",
+   "name": "go_to_4"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554447",
+   "title": "Go To Topic",
+   "name": "go_to_5"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554456",
+   "title": "Go To Topic",
+   "name": "go_to_6"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554457",
+   "title": "Go To Topic",
+   "name": "go_to_7"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554465",
+   "title": "Go To Topic",
+   "name": "go_to_8"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554464",
+   "title": "Go To Topic",
+   "name": "go_to_9"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554466",
+   "title": "Go To Topic",
+   "name": "go_to_10"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554477",
+   "title": "Go To Topic",
+   "name": "go_to_11"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33573840",
+   "title": "Go To Topic",
+   "name": "go_to_12"
+  },
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_up.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=IncSumm,hLearnMoreAmtEnteredTI",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=IncSumm,hExplainThis_W2",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=IncSumm,hExplainThis_StateRefund",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=IncSumm,hExplainThis_Unemployment",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=IncSumm,hExplainThis_Interest",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=IncSumm,hExplainThis_Dividends",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=IncSumm,hKGAmounts",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=IncSumm,hExplainThis_BusinessIncome",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=IncSumm,hExplainThis_SchedE",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=IncSumm,hExplainThis_4797",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=IncSumm,hExplainThis_Farm",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=IncSumm,hExplainThis_IRADistribs",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=IncSumm,hExplainThis_PensionIncome",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=IncSumm,hExplainThis_SocSecIncome",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=IncSumm,hExplainThis_AlimonyReceived",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=IncSumm,hExplainThis_OtherIncome",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

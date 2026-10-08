@@ -1,0 +1,68 @@
+{
+ "n": 139,
+ "slug": "after-itemelec",
+ "capturedAt": "2026-10-08T18:53:44.342Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [],
+ "topicLinks": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Bunching Your Deductions Advice",
+ "headings": [],
+ "text": "Bunching Your Deductions Advice This year, your itemized deductions are less than your standard deduction. In future years, you can bunch your deductions to have more expenses you can itemize. Here are some ways you can bunch your deductions: Make charitable donations every two or three years so your total deduction is higher in those years. Pay state and local taxes the same years you make your charitable donations. So, you might pay your taxes in December some years and in January other years. However, be aware that current tax law limits the state and local taxes you can deduct in any one year. To learn more about limitations for deducting state and local taxes, see the Taxes You Paid section of the Instructions for Schedule A Itemized Deductions. Pay for expensive and deductible medical and dental procedures in the same year.",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/smartstep.css"
+ ],
+ "errors": []
+}

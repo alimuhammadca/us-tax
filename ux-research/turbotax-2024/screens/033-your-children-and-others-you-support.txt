@@ -1,0 +1,102 @@
+﻿TITLE: TurboTax Deluxe 2024
+[Menu] '' #Menu_1
+  [MenuItem] 'File' #fileMenuItem
+    [Text] '_File'
+  [MenuItem] 'Edit' #editMenuItem
+    [Text] '_Edit'
+  [MenuItem] 'View' #viewMenuItem
+    [Text] '_View'
+  [MenuItem] 'Tools' #toolsMenuItem
+    [Text] '_Tools'
+  [MenuItem] 'Online' #onlineMenuItem
+    [Text] 'O_nline'
+  [MenuItem] 'Help' #helpMenuItem
+    [Text] '_Help'
+  [Hyperlink] '  Help Center'
+    [Image] '' #helpImage
+  [Hyperlink] '  Print Center'
+    [Image] '' #printImage
+  [Hyperlink] '  Show Topic List'
+    [Image] '' #topicImage
+[Custom] '' #mainTabBarUC
+  [Image] '' #productBanner
+  [Custom] '' #refundMonitorView
+    [Custom] '' #FederalRefundGauge
+      [Text] 'Federal Refund' #bannerText
+      [Text] '$' #_DollarSign
+      [Text] '0' #_AmountText
+    [Custom] '' #StateRefundGauge
+      [Text] 'Illinois' #bannerText
+      [Text] 'See Amount'
+        [Hyperlink] 'See Amount'
+  [Button] '' #toggleViewButton
+    [Image] '' #_ImgOff
+  [Button] '' #flagsButton
+    [Image] '' #flagsImage
+  [Button] '' #notificationsButton
+    [Image] '' #notificationImage
+[Custom] '' #interviewUC
+  [Custom] '' #mainTabBar
+    [List] '' #mainTab
+      [ListItem] 'Personal Info' #Personal Info
+        [Text] 'PERSONAL INFO'
+      [ListItem] 'Federal Taxes' #Federal Taxes
+        [Text] 'FEDERAL TAXES'
+      [ListItem] 'State Taxes' #State Taxes
+        [Text] 'STATE TAXES'
+      [ListItem] 'Review' #Review
+        [Text] 'REVIEW'
+      [ListItem] 'File' #File
+        [Text] 'FILE'
+    [List] '' #subTab
+      [ListItem] 'You & Your Family' #You & Your Family
+        [RadioButton] '' #You & Your Family
+  [ToolBar] '' #mainFindTools
+    [Custom] '' #searchUC
+        [Hyperlink] ' '
+    [Button] '' #OverflowButton (disabled)
+  [Pane] '' #scrollViewer
+    [Text] 'Your Children and Others You Support' #titleTextBlock
+    [Text] 'If you have another dependent, you can add them now, or you can edit or delete any of the info you entered.'
+      [DataGrid] '' #myItemsList
+          [HeaderItem] 'First Name'
+            [Text] 'First Name'
+          [HeaderItem] 'Date of Birth'
+            [Text] 'Date of Birth'
+          [HeaderItem] 'Relationship'
+            [Text] 'Relationship'
+          [HeaderItem] 'Status'
+            [Text] 'Status'
+        [DataItem] 'DependentList'
+            [Text] 'Riley' #textValue
+            [Text] '05/05/2016' #textValue
+            [Text] 'Son' #textValue
+            [Text] 'Dependent' #textValue
+            [Button] 'Edit' #EditButton_0
+              [Text] 'Edit'
+            [Button] 'Delete' #DeleteButton_0
+              [Text] 'Delete'
+        [DataItem] 'DependentList'
+            [Text] '' #textValue
+            [Text] '' #textValue
+            [Text] '' #textValue
+            [Text] '' #textValue
+      [Button] 'Add Another Dependent' #AddButton
+        [Text] 'Add Another Dependent'
+    [Button] 'Done'
+      [Text] 'Done'
+    [Button] 'Back'
+      [Text] 'Back'
+    [Custom] '' #sideBar
+  [Text] '80%'
+  [Text] 'Help Others'
+    [Hyperlink] 'Help Others' #helpothers
+  [Image] '' #new
+  [Text] ' '
+    [Hyperlink] ' ' #upgradeTurboTaxHyperlink
+      [Image] '' #upgradeTurboTaxImage
+      [Text] 'Upgrade TurboTax' #upgradeTurboTaxText
+  [Button] 'No Form' (disabled)
+    [Text] 'No Form' (disabled)
+  [Custom] '' #SizeablePanel
+    [Thumb] '' #PART_Thumb

@@ -1,0 +1,37 @@
+--- LEFT PANEL (meter + FAQs)
+2025
+My taxes for
+Premium
+FEDERAL REFUND
+$845
+LATEST CHANGE
+v Decrease of $525
+STATE REFUND
+$0
+Help Center
+FAQs
+View Details
+HoWs my gain or loss calculated?
+What's a covered sale?
+Where do I enter digital asset
+(Cryptocurrency, convertible
+virtual currency and non-fungible
+tokens) sales?
+How do I attach more than one
+PDF statement for code M
+transactions from multiple
+accounts?
+--- TABS
+WELCOME
+PERSONAL INFORMATION
+FEDERAL
+INCOME
+ADJUSTMENTS
+STATE
+DEDUCTIONS
+FILE
+CREDITS
+TAXES
+MISC
+PLAN
+FINISH

@@ -1,0 +1,74 @@
+{
+ "n": 228,
+ "slug": "file-1",
+ "capturedAt": "2026-10-08T19:30:22.816Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [],
+ "topicLinks": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Your Maximum Refund — Guaranteed!",
+ "headings": [],
+ "text": "Your Maximum Refund — Guaranteed! Great news! You're covered by our Maximum Refund Guarantee. Maximized deductions and credits Applied 2025 tax changes Completed Accuracy ReviewTM If you find another tax software preparation method that gives you a bigger refund, we'll refund your fees.* Next, we'll help you understand your audit risk. *If you find another tax software preparation method that results in a larger refund (or smaller liability) than that calculated by the H&R Block program, we will refund the fees you paid us to use our tax software program to prepare that return. To qualify, the larger refund or smaller tax liability must not be due to differences in data supplied by you or positions taken on your return that are contrary to law.",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "piggybank.gif",
+   "alt": "",
+   "title": "",
+   "name": ""
+  },
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

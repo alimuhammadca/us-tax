@@ -1,0 +1,119 @@
+{
+ "n": 137,
+ "slug": "after-other-ded",
+ "capturedAt": "2026-10-08T18:53:05.466Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "ItemElec"
+ ],
+ "topicLinks": [
+  {
+   "text": "Why itemize?",
+   "href": "tc:TOPICHELP=ItemElec,hWhyItemize",
+   "faq": false
+  },
+  {
+   "text": "How was my standard deduction calculated?",
+   "href": "tc:TOPICHELP=ItemElec,vHowStdDed",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "You get a deduction!",
+ "headings": [],
+ "text": "You get a deduction! Good news! You can claim a standard deduction of $31,500 or an itemized deduction of $24,281. Why itemize? Which deduction do you want to claim? Standard deduction (recommended) Itemized deductions",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_Deduction",
+   "id": "",
+   "label": "Standard deduction (recommended)",
+   "value": "2.20549",
+   "checked": true
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_Deduction",
+   "id": "",
+   "label": "Itemized deductions",
+   "value": "2.20550",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "Why itemize?",
+   "img": "",
+   "href": "tc:TOPICHELP=ItemElec,hWhyItemize",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "Why itemize?",
+   "img": "",
+   "href": "tc:TOPICHELP=ItemElec,hWhyItemize",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

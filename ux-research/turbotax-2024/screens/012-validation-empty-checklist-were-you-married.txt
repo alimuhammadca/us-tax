@@ -1,0 +1,91 @@
+﻿TITLE: TurboTax Deluxe 2024
+[Menu] '' #Menu_1
+  [MenuItem] 'File' #fileMenuItem
+    [Text] '_File'
+  [MenuItem] 'Edit' #editMenuItem
+    [Text] '_Edit'
+  [MenuItem] 'View' #viewMenuItem
+    [Text] '_View'
+  [MenuItem] 'Tools' #toolsMenuItem
+    [Text] '_Tools'
+  [MenuItem] 'Online' #onlineMenuItem
+    [Text] 'O_nline'
+  [MenuItem] 'Help' #helpMenuItem
+    [Text] '_Help'
+  [Hyperlink] '  Help Center'
+    [Image] '' #helpImage
+  [Hyperlink] '  Print Center'
+    [Image] '' #printImage
+  [Hyperlink] '  Show Topic List'
+    [Image] '' #topicImage
+[Custom] '' #mainTabBarUC
+  [Image] '' #productBanner
+  [Custom] '' #refundMonitorView
+    [Custom] '' #FederalRefundGauge
+      [Text] 'Federal Refund' #bannerText
+      [Text] '$' #_DollarSign
+      [Text] '0' #_AmountText
+    [Custom] '' #StateRefundGauge
+      [Text] 'Illinois' #bannerText
+      [Text] 'See Amount'
+        [Hyperlink] 'See Amount'
+  [Button] '' #toggleViewButton
+    [Image] '' #_ImgOff
+  [Button] '' #flagsButton
+    [Image] '' #flagsImage
+  [Button] '' #notificationsButton
+    [Image] '' #notificationImage
+[Custom] '' #interviewUC
+  [Custom] '' #mainTabBar
+    [List] '' #mainTab
+      [ListItem] 'Personal Info' #Personal Info
+        [Text] 'PERSONAL INFO'
+      [ListItem] 'Federal Taxes' #Federal Taxes
+        [Text] 'FEDERAL TAXES'
+      [ListItem] 'State Taxes' #State Taxes
+        [Text] 'STATE TAXES'
+      [ListItem] 'Review' #Review
+        [Text] 'REVIEW'
+      [ListItem] 'File' #File
+        [Text] 'FILE'
+    [List] '' #subTab
+      [ListItem] 'You & Your Family' #You & Your Family
+        [RadioButton] '' #You & Your Family
+  [ToolBar] '' #mainFindTools
+    [Custom] '' #searchUC
+        [Hyperlink] ' '
+    [Button] '' #OverflowButton (disabled)
+  [Pane] '' #scrollViewer
+    [Text] 'Were You Married?' #titleTextBlock
+    [Text] 'Make a selection below and we'll recommend a filing status later on.
+
+On December 31, 2024, you were: Learn More'
+      [Hyperlink] 'filing status'
+      [Hyperlink] 'Learn More'
+    [RadioButton] 'Single' #rdb_2
+      [Text] 'Single'
+    [RadioButton] 'Married' #rdb_3
+      [Text] 'Married'
+    [RadioButton] 'Divorced' #rdb_4
+      [Text] 'Divorced'
+    [RadioButton] 'Legally separated' #rdb_5
+      [Text] 'Legally separated'
+    [RadioButton] 'Widowed' #rdb_6
+      [Text] 'Widowed'
+    [Button] 'Continue'
+      [Text] 'Continue'
+    [Button] 'Back'
+      [Text] 'Back'
+    [Custom] '' #sideBar
+  [Text] '80%'
+  [Text] 'Help Others'
+    [Hyperlink] 'Help Others' #helpothers
+  [Image] '' #new
+  [Text] ' '
+    [Hyperlink] ' ' #upgradeTurboTaxHyperlink
+      [Image] '' #upgradeTurboTaxImage
+      [Text] 'Upgrade TurboTax' #upgradeTurboTaxText
+  [Button] 'No Form' (disabled)
+    [Text] 'No Form' (disabled)
+  [Custom] '' #SizeablePanel
+    [Thumb] '' #PART_Thumb

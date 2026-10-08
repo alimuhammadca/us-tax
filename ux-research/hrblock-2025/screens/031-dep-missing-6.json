@@ -1,0 +1,126 @@
+{
+ "n": 31,
+ "slug": "dep-missing-6",
+ "capturedAt": "2026-10-08T18:13:09.392Z",
+ "actionsBefore": [
+  [
+   "select",
+   "113.53252",
+   "This person lived with me all year or"
+  ],
+  [
+   "fill",
+   "113.1145",
+   "12"
+  ],
+  [
+   "check",
+   "113.258703"
+  ],
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "select ok 113.53252 This person lived with me all year or",
+  "fill 113.1145=12",
+  "check ok 113.258703",
+  "next changed"
+ ],
+ "dialogs": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "How are you related to Riley?",
+ "headings": [],
+ "text": "How are you related to Riley? We'll use this to see if Riley qualifies as your dependent. Relationship No Entry Son Daughter Stepchild Grandchild Great Grandchild Adopted son Adopted daughter Fosterchild Parent Grandparent Great Grandparent Brother Sister Half brother Half sister Stepbrother Stepsister Stepparent Stepfather Stepmother Uncle Aunt Niece Nephew Son-in-law Daughter-in-law Father-in-law Mother-in-law Brother-in-law Sister-in-law Other",
+ "inputs": [
+  {
+   "tag": "select",
+   "type": "select-one",
+   "name": "113.1108",
+   "id": "select1",
+   "label": "Relationship",
+   "value": "No Entry",
+   "options": [
+    "No Entry",
+    "Son",
+    "Daughter",
+    "Stepchild",
+    "Grandchild",
+    "Great Grandchild",
+    "Adopted son",
+    "Adopted daughter",
+    "Fosterchild",
+    "Parent",
+    "Grandparent",
+    "Great Grandparent",
+    "Brother",
+    "Sister",
+    "Half brother",
+    "Half sister",
+    "Stepbrother",
+    "Stepsister",
+    "Stepparent",
+    "Stepfather",
+    "Stepmother",
+    "Uncle",
+    "Aunt",
+    "Niece",
+    "Nephew",
+    "Son-in-law",
+    "Daughter-in-law",
+    "Father-in-law",
+    "Mother-in-law",
+    "Brother-in-law",
+    "Sister-in-law",
+    "Other"
+   ]
+  }
+ ],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

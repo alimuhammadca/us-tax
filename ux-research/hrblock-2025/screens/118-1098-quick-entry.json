@@ -1,0 +1,106 @@
+{
+ "n": 118,
+ "slug": "1098-quick-entry",
+ "capturedAt": "2026-10-08T18:44:56.395Z",
+ "actionsBefore": [
+  [
+   "pwclick",
+   "[name=\"32781\"] img, [name=\"32781\"]"
+  ]
+ ],
+ "actionResults": [
+  "pwclick [name=\"32781\"] img, [name=\"32781\"] true"
+ ],
+ "dialogs": [],
+ "topics": [
+  "F1098KB"
+ ],
+ "topicLinks": [
+  {
+   "text": "What if I didn't receive a Form 1098?",
+   "href": "tc:TOPICHELP=F1098KB,vForm1098",
+   "faq": true
+  },
+  {
+   "text": "What if the interest was reported on another person's Form 1098 or statement?",
+   "href": "tc:TOPICHELP=F1098KB,vOtherSSN",
+   "faq": true
+  },
+  {
+   "text": "What if the seller financed my purchase?",
+   "href": "tc:TOPICHELP=F1098KB,vSellerFinancedBuy",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Did you receive a Form 1098?",
+ "headings": [],
+ "text": "Did you receive a Form 1098? If you received a mortgage interest statement with Form 1098 information on it, answer Yes. Yes No",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_On1098",
+   "id": "",
+   "label": "Yes",
+   "value": "130.196",
+   "checked": true
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_On1098",
+   "id": "",
+   "label": "No",
+   "value": "130.197",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

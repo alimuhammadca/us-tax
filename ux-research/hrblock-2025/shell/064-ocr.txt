@@ -1,0 +1,36 @@
+--- LEFT PANEL (meter + FAQs)
+2025
+My taxes for
+Premium
+FEDERAL REFUND
+$2,262
+LATEST CHANGE
+v Decrease of $2,992
+STATE REFUND
+$0
+Help Center
+FAQs
+View Details
+If I didn't receive a Form 1099-INT
+or Form 1099-01D, what should I
+How do I handle a consolidated
+statement?
+If I have interest income from an
+account outside of the United
+States, what should I do?
+How do I enter tax-exempt
+interest?
+--- TABS
+WELCOME
+PERSONAL INFORMATION
+FEDERAL
+INCOME
+ADJUSTMENTS
+STATE
+DEDUCTIONS
+FILE
+CREDITS
+TAXES
+MISC
+PLAN
+FINISH

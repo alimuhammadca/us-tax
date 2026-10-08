@@ -1,0 +1,434 @@
+{
+ "n": 66,
+ "slug": "int-filled",
+ "capturedAt": "2026-10-08T18:26:24.219Z",
+ "actionsBefore": [
+  [
+   "radio",
+   "rb_WhoOwned",
+   "166.4"
+  ],
+  [
+   "fill",
+   "166.9",
+   "First Bank"
+  ],
+  [
+   "fill",
+   "166.10",
+   "1850"
+  ]
+ ],
+ "actionResults": [
+  "radio ok 166.4",
+  "fill 166.9=First Bank",
+  "fill 166.10=1,850",
+  "expanded 1"
+ ],
+ "dialogs": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Tell us about this Form 1099-INT.",
+ "headings": [],
+ "text": "Tell us about this Form 1099-INT. Whose 1099-INT is this? Jordan Casey Both Bank or brokerage name Account number Box 1 Interest income Box 2 Early withdrawal penalty Box 3 Interest on U.S. Savings Bonds and Treasury obligations Box 3 includes Series EE or I Savings Bond interest Box 4 Federal income tax withheld Box 5 Investment expenses Box 6 Foreign tax paid Box 7 Foreign country / U.S. territory Box 8 Tax-exempt interest Box 9 Specified private activity bond interest Box 10 Market discount LEARN MORE Box 11 Bond premium LEARN MORE Box 12 Bond premium on Treasury obligations LEARN MORE Box 13 Bond premium on tax-exempt bond Box 14 Tax-exempt and tax credit bond CUSIP no. Box 15 State Box 16 State identification no. Box 17 State tax withheld Interest item requires an adjustment (uncommon) LEARN MORE The FATCA filing requirement box is checked on my 1099-INT. LEARN MORE",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_WhoOwned",
+   "id": "",
+   "label": "Jordan",
+   "value": "166.2",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_WhoOwned",
+   "id": "",
+   "label": "Casey",
+   "value": "166.3",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_WhoOwned",
+   "id": "",
+   "label": "Both",
+   "value": "166.4",
+   "checked": true
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "166.9",
+   "id": "",
+   "label": "Bank or brokerage name",
+   "value": "First Bank",
+   "maxlength": "60"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "166.98",
+   "id": "",
+   "label": "Account number",
+   "value": "",
+   "maxlength": "22"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "166.10",
+   "id": "",
+   "label": "Interest income",
+   "value": "1,850",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "search",
+   "name": "166.11",
+   "id": "",
+   "label": "Early withdrawal penalty",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "166.12",
+   "id": "",
+   "label": "Interest on U.S. Savings Bonds and Treasury obligations",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "166.27824",
+   "id": "",
+   "label": "",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "166.13",
+   "id": "",
+   "label": "Federal income tax withheld",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "166.50",
+   "id": "",
+   "label": "Investment expenses",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "166.14",
+   "id": "",
+   "label": "Foreign tax paid",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "166.15",
+   "id": "",
+   "label": "Foreign country / U.S. territory",
+   "value": "",
+   "maxlength": "20"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "166.48",
+   "id": "",
+   "label": "Tax-exempt interest",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "166.49",
+   "id": "",
+   "label": "Specified private activity bond interest",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "166.151530",
+   "id": "",
+   "label": "Market discount LEARN MORE",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "166.151531",
+   "id": "",
+   "label": "Bond premium LEARN MORE",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "166.188769",
+   "id": "",
+   "label": "Bond premium on Treasury obligations LEARN MORE",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "166.167058",
+   "id": "",
+   "label": "Bond premium on tax-exempt bond",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "166.72452",
+   "id": "",
+   "label": "Tax-exempt and tax credit bond CUSIP no.",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "166.133633",
+   "id": "",
+   "label": "State",
+   "value": "",
+   "maxlength": "2"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "166.144125",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "2"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "166.133634",
+   "id": "",
+   "label": "State identification no.",
+   "value": "",
+   "maxlength": "16"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "166.144126",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "16"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "166.133635",
+   "id": "",
+   "label": "State tax withheld",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "166.144127",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "166.20664",
+   "id": "",
+   "label": "Interest item requires an adjustment (uncommon) LEARN MORE",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "166.167057",
+   "id": "",
+   "label": "The FATCA filing requirement box is checked on my 1099-INT. LEARN MORE",
+   "value": "",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Bank or brokerage name",
+   "img": "",
+   "href": "tc:TOPICHELP=IntInc,hPayer",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=IntInc,hMarketDiscount_INT",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=IntInc,hBondPremium_INT",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=IntInc,hBondPremiumTreas_INT",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=IntInc,hLearnMore",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=IntInc,hFATCA",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_up.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=IntInc,hMarketDiscount_INT",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=IntInc,hBondPremium_INT",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=IntInc,hBondPremiumTreas_INT",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=IntInc,hLearnMore",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=IntInc,hFATCA",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

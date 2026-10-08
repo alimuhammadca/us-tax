@@ -1,0 +1,12 @@
+﻿title: UX-Research-Sample - H&R Block Software 2025  size: 888x700
+[Window/Accuracy Review 2025] Accuracy Review 2025
+ [Pane/Afx:00400000:b:00010003:00000006:00000000] ErrorCheckNavView
+  [Pane/Button] tfrmbtn
+  [Pane/Button] thschbtn
+  [Pane/Afx:00400000:b:00010003:00000006:00000000] Viewport
+  [Pane/Button] helpbtn_sm
+  [Pane/Button] tclswbtn
+  [Pane/Button] ecshwlst
+  [Pane/Button] Continue
+  [Pane/Afx:00400000:b:00010003:00000006:00000000] Viewport
+  [Pane/Afx:00400000:b:00010003:00000006:00000000] Viewport

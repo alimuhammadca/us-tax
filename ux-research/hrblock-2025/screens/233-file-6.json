@@ -1,0 +1,106 @@
+{
+ "n": 233,
+ "slug": "file-6",
+ "capturedAt": "2026-10-08T19:32:04.463Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "FT_PrintSt",
+  "FT_PrintFed"
+ ],
+ "topicLinks": [
+  {
+   "text": "Print",
+   "href": "TC:EDIT",
+   "faq": false
+  },
+  {
+   "text": "Print",
+   "href": "TC:EDIT/1",
+   "faq": false
+  },
+  {
+   "text": "Why isn't my state listed?",
+   "href": "tc:TOPICHELP=FT_PrintSt,vWhyStateNotListed",
+   "faq": true
+  },
+  {
+   "text": "What should I do if I have printing problems?",
+   "href": "tc:TOPICHELP=FT_PrintFed,vPrintingProblems",
+   "faq": true
+  },
+  {
+   "text": "Should I also print out a copy for my records?",
+   "href": "tc:TOPICHELP=FT_PrintFed,vPrintCopy",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Print Your State Return(s)",
+ "headings": [],
+ "text": "Print Your State Return(s) Return Name Illinois Print",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "childof264380944",
+   "id": "",
+   "cls": "multinstanceanchor",
+   "text": "Print",
+   "img": "",
+   "href": "TC:EDIT/1",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "13",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "FINISHED",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "finished_up.gif",
+   "alt": "FINISHED",
+   "title": "",
+   "name": "finished"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

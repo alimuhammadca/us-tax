@@ -1,0 +1,38 @@
+--- LEFT PANEL (meter + FAQs)
+2025
+My taxes for
+Premium
+FEDERAL REFUND
+$1,951
+LATEST CHANGE
+A Increase of $600
+STATE REFUND
+$0
+Help Center
+FAQs
+View Details
+What if I made a payment when I
+asked for a filing extension?
+What about amounts that were
+withheld on my W-2 or Form 1099?
+What if I lived or had a business in
+a federally declared disaster area?
+What if I have an overpayment
+that I'm applying from an
+amended return?
+How can I use my online IRS
+account?
+--- TABS
+WELCOME
+PERSONAL INFORMATION
+FEDERAL
+INCOME
+ADJUSTMENTS
+STATE
+DEDUCTIONS
+FILE
+CREDITS
+TAXES
+MISC
+PLAN
+FINISH

@@ -1,0 +1,31 @@
+--- LEFT PANEL (meter + FAQs)
+2025
+My taxes for
+Premium
+FEDERAL REFUND
+$1 ,855
+LATEST CHANGE
+v Decrease of $407
+STATE REFUND
+$0
+Help Center
+FAQs
+View Details
+What if I have a capital loss?
+What is the IRS tax table?
+How can I review the calculations
+with the lower tax rates?
+--- TABS
+WELCOME
+PERSONAL INFORMATION
+FEDERAL
+INCOME
+ADJUSTMENTS
+STATE
+DEDUCTIONS
+FILE
+CREDITS
+TAXES
+MISC
+PLAN
+FINISH

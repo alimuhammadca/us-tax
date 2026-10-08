@@ -1,0 +1,133 @@
+{
+ "n": 171,
+ "slug": "taxes-8",
+ "capturedAt": "2026-10-08T19:04:25.291Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "TaxPmts"
+ ],
+ "topicLinks": [
+  {
+   "text": "What if I made a payment when I asked for a filing extension?",
+   "href": "tc:TOPICHELP=TaxPmts,vPmtW4868",
+   "faq": true
+  },
+  {
+   "text": "What about amounts that were withheld on my W-2 or Form 1099?",
+   "href": "tc:TOPICHELP=TaxPmts,vWithheld",
+   "faq": true
+  },
+  {
+   "text": "What if I lived or had a business in a federally declared disaster area?",
+   "href": "tc:TOPICHELP=TaxPmts,vDisasterRelief",
+   "faq": true
+  },
+  {
+   "text": "What if I have an overpayment that I'm applying from an amended return?",
+   "href": "tc:TOPICHELP=TaxPmts,vAmendedReturn",
+   "faq": true
+  },
+  {
+   "text": "How can I use my online IRS account?",
+   "href": "tc:TOPICHELP=TaxPmts,vIRSaccount",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Federal Tax Payments",
+ "headings": [],
+ "text": "Federal Tax Payments Choose all of the federal tax payments you or Casey paid for 2025. 2024 refund applied to 2025 estimated tax Estimated tax payments for 2025 Taxes withheld on a 1099-PATR from a cooperative Amount paid with a 2025 extension",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.33743",
+   "id": "",
+   "label": "2024 refund applied to 2025 estimated tax",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.33744",
+   "id": "",
+   "label": "Estimated tax payments for 2025",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.33745",
+   "id": "",
+   "label": "Taxes withheld on a 1099-PATR from a cooperative",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.33746",
+   "id": "",
+   "label": "Amount paid with a 2025 extension",
+   "value": "",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

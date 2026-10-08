@@ -1,0 +1,257 @@
+{
+ "n": 74,
+ "slug": "income-gateway-3",
+ "capturedAt": "2026-10-08T18:29:07.678Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Now, let's work on your investment income.",
+ "headings": [],
+ "text": "Now, let's work on your investment income. Choose all that apply to you or Casey for 2025. Sale of stocks, bonds, mutual funds, and other securities LEARN MORE Sale of digital assets from broker transactions (1099-DA) LEARN MORE Sale of digital assets (other) Cryptocurrency, convertible virtual currency and non-fungible tokens LEARN MORE Employer stock transactions RSUs, ESPPs, RSAs and options LEARN MORE Estate or trust income or loss Income and expenses reported on Schedule K-1 LEARN MORE Undistributed capital gains from a mutual fund or REIT Reported on Form 2439 LEARN MORE Section 1256 contract or straddle Contract or option investments LEARN MORE",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.195611",
+   "id": "",
+   "label": "Sale of stocks, bonds, mutual funds, and other securities LEARN MORE",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.259177",
+   "id": "",
+   "label": "Sale of digital assets from broker transactions (1099-DA) LEARN MORE",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.238367",
+   "id": "",
+   "label": "Sale of digital assets (other) Cryptocurrency, convertible virtual currency and non-fungible tokens LEARN MORE",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.1025",
+   "id": "",
+   "label": "Employer stock transactions RSUs, ESPPs, RSAs and options LEARN MORE",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.509",
+   "id": "",
+   "label": "Estate or trust income or loss Income and expenses reported on Schedule K-1 LEARN MORE",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.262",
+   "id": "",
+   "label": "Undistributed capital gains from a mutual fund or REIT Reported on Form 2439 LEARN MORE",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.580",
+   "id": "",
+   "label": "Section 1256 contract or straddle Contract or option investments LEARN MORE",
+   "value": "",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=InvGateway,hKGIncomeFrom1099",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=InvGateway,hSaleDigiAssets1099da",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=InvGateway,hSaleOfCrypto",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=InvGateway,hLearnMore_EmpStkOptns",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=InvGateway,hEstates",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=InvGateway,hLearnMore_F2439",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=InvGateway,hSec1256",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=InvGateway,hKGIncomeFrom1099",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=InvGateway,hSaleDigiAssets1099da",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=InvGateway,hSaleOfCrypto",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=InvGateway,hLearnMore_EmpStkOptns",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=InvGateway,hEstates",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=InvGateway,hLearnMore_F2439",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=InvGateway,hSec1256",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

@@ -1,0 +1,105 @@
+{
+ "n": 121,
+ "slug": "1098-after",
+ "capturedAt": "2026-10-08T18:45:52.187Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "F1098KB"
+ ],
+ "topicLinks": [
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=F1098KB,vAvgMortgageBalance",
+   "faq": false
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Tell us about your mortgage average balance.",
+ "headings": [],
+ "text": "Tell us about your mortgage average balance. Your deductible mortgage interest might be limited depending on how much you owe and when you borrowed it. You may benefit by telling us your average mortgage balance for this 1098 in the space below if you have: one Form 1098 Box 2 greater than $750,000 ($375,000 Married Filing Separate) or two or more Forms 1098 with Box 2 amounts that total greater than $750,000 ($375,000 MFS) LEARN MORE If this doesn't apply to your 1098, enter your Form 1098 Box 2 Outstanding mortgage principal of $0. Average balance of this mortgage",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "search",
+   "name": "130.250556",
+   "id": "",
+   "label": "Average balance of this mortgage",
+   "value": "",
+   "maxlength": "10"
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=F1098KB,vAvgMortgageBalance",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=F1098KB,vAvgMortgageBalance",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

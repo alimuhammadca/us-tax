@@ -1,0 +1,172 @@
+{
+ "n": 8,
+ "slug": "next",
+ "capturedAt": "2026-10-08T18:02:55.842Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "What's your filing status?",
+ "headings": [],
+ "text": "What's your filing status? Single Married filing jointly Married filing separately Head of household Qualifying surviving spouse",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_FilingStatus",
+   "id": "",
+   "label": "Single",
+   "value": "92.492",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_FilingStatus",
+   "id": "",
+   "label": "Married filing jointly",
+   "value": "92.493",
+   "checked": true
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_FilingStatus",
+   "id": "",
+   "label": "Married filing separately",
+   "value": "92.494",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_FilingStatus",
+   "id": "",
+   "label": "Head of household",
+   "value": "92.495",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_FilingStatus",
+   "id": "",
+   "label": "Qualifying surviving spouse",
+   "value": "92.496",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Single",
+   "img": "",
+   "href": "tc:TOPICHELP=NameFS,hSingle",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Married filing jointly",
+   "img": "",
+   "href": "tc:TOPICHELP=NameFS,hMFJ",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Married filing separately",
+   "img": "",
+   "href": "tc:TOPICHELP=NameFS,hMFS",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Head of household",
+   "img": "",
+   "href": "tc:TOPICHELP=NameFS,hHOH",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Qualifying surviving spouse",
+   "img": "",
+   "href": "tc:TOPICHELP=NameFS,hQW",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contentbtn",
+   "text": "",
+   "img": "Guide Me",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  },
+  {
+   "src": "guide_me_up.gif",
+   "alt": "",
+   "title": "Guide Me",
+   "name": "guide_me"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

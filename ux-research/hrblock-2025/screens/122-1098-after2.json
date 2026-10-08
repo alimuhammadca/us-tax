@@ -1,0 +1,206 @@
+{
+ "n": 122,
+ "slug": "1098-after2",
+ "capturedAt": "2026-10-08T18:46:11.907Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "F1098KB"
+ ],
+ "topicLinks": [
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=F1098KB,hOtherInterest",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=F1098KB,hAddPointsThisYr",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=F1098KB,hAddPointsPriorYr",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=F1098KB,hMortgageInsurancePremiums",
+   "faq": false
+  },
+  {
+   "text": "Can I deduct mortgage insurance premium (PMI) on my federal return?",
+   "href": "tc:TOPICHELP=F1098KB,vPMI",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Choose any that apply.",
+ "headings": [],
+ "text": "Choose any that apply. Paid additional interest on this loan in 2025 LEARN MORE Paid additional points on this loan in 2025 LEARN MORE Paid points in a prior year that are spread out over the life of this loan (amortizing) LEARN MORE Paid or accrued mortgage insurance premiums during 2025 in connection with this loan LEARN MORE",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "130.43607",
+   "id": "",
+   "label": "Paid additional interest on this loan in 2025 LEARN MORE",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "130.43608",
+   "id": "",
+   "label": "Paid additional points on this loan in 2025 LEARN MORE",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "130.43609",
+   "id": "",
+   "label": "Paid points in a prior year that are spread out over the life of this loan (amortizing) LEARN MORE",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "130.45352",
+   "id": "",
+   "label": "Paid or accrued mortgage insurance premiums during 2025 in connection with this loan LEARN MORE",
+   "value": "",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=F1098KB,hOtherInterest",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=F1098KB,hAddPointsThisYr",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=F1098KB,hAddPointsPriorYr",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=F1098KB,hMortgageInsurancePremiums",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=F1098KB,hOtherInterest",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=F1098KB,hAddPointsThisYr",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=F1098KB,hAddPointsPriorYr",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=F1098KB,hMortgageInsurancePremiums",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

@@ -1,0 +1,82 @@
+{
+ "n": 27,
+ "slug": "dep-name-entered",
+ "capturedAt": "2026-10-08T18:11:52.524Z",
+ "actionsBefore": [
+  [
+   "fill",
+   "113.1103",
+   "Riley"
+  ],
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "fill 113.1103=Riley",
+  "next changed"
+ ],
+ "dialogs": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "What's your dependent's last name?",
+ "headings": [],
+ "text": "What's your dependent's last name? Last name",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "search",
+   "name": "113.1105",
+   "id": "",
+   "label": "Last name",
+   "value": "",
+   "maxlength": "15"
+  }
+ ],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/liveaudit.css"
+ ],
+ "errors": []
+}

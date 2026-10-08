@@ -1,0 +1,36 @@
+--- LEFT PANEL (meter + FAQs)
+2025
+My taxes for
+Premium
+FEDERAL REFUND
+STATE REFUND
+$0
+Help Center
+FAQs
+If the W-2 box numbers are
+different, what should I do?
+What if I'm a minister but my
+church has withheld Social
+Security and Medicare Tax?
+If my W-2 is incorrect, should I ask
+for a corrected form?
+How do I report a Medicaid waiver
+payment?
+What should I do if my employer
+gave me two W-2s?
+Questions Frequently Asked of
+TAY Proc
+--- TABS
+WELCOME
+PERSONAL INFORMATION
+FEDERAL
+INCOME
+ADJUSTMENTS
+STATE
+DEDUCTIONS
+FILE
+CREDITS
+TAXES
+MISC
+PLAN
+FINISH

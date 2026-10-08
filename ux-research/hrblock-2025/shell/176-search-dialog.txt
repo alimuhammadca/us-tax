@@ -1,0 +1,4 @@
+﻿title: UX-Research-Sample - H&R Block Software 2025  size: 600x600
+[Window/#32770] Search
+ [Pane/Button] tclswbtn
+ [Pane/Button] wgothrebtn

@@ -1,0 +1,76 @@
+{
+ "n": 216,
+ "slug": "il-cont-2",
+ "capturedAt": "2026-10-08T19:25:06.735Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "ilcrsum"
+ ],
+ "topicLinks": [
+  {
+   "text": "How were these credits calculated?",
+   "href": "tc:TOPICHELP=ilcrsum,vHowCrCalc",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Let's Check Your Illinois Credits",
+ "headings": [],
+ "text": "Let's Check Your Illinois Credits These amounts might be different from what you entered due to our calculations. Other State Tax credit $ 0 Property Tax credit 240 K-12 Education Expense credit 0 Volunteer Emergency Worker credit 0 Earned Income Credit 0 Schedule 1299-C credit 0 Pass-Through Entity Credits 0 Child Tax Credit 0 Click Take Me To to return to any of these topics.",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

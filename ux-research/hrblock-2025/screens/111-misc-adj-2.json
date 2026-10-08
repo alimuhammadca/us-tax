@@ -1,0 +1,283 @@
+{
+ "n": 111,
+ "slug": "misc-adj-2",
+ "capturedAt": "2026-10-08T18:42:34.094Z",
+ "actionsBefore": [
+  [
+   "fill",
+   "57.326",
+   "300"
+  ],
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "fill 57.326=300",
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "MiscAdj"
+ ],
+ "topicLinks": [
+  {
+   "text": "Jury duty pay given to employer",
+   "href": "tc:TOPICHELP=MiscAdj,hJuryDuty",
+   "faq": false
+  },
+  {
+   "text": "Sub-pay repayments under 1974 Trade Act",
+   "href": "tc:TOPICHELP=MiscAdj,hSubpay",
+   "faq": false
+  },
+  {
+   "text": "Expenses for personal property rental",
+   "href": "tc:TOPICHELP=MiscAdj,hPersPtyRentalExp",
+   "faq": false
+  },
+  {
+   "text": "Attorney fees related to certain discrimination claims",
+   "href": "tc:TOPICHELP=MiscAdj,hUDC",
+   "faq": false
+  },
+  {
+   "text": "Attorney fees related to certain whistleblower awards from the IRS",
+   "href": "tc:TOPICHELP=MiscAdj,hWhistleBlower",
+   "faq": false
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Miscellaneous Adjustments",
+ "headings": [],
+ "text": "Miscellaneous Adjustments Enter any of these final adjustments that you or Casey have for 2025. Jury duty pay given to employer Reforestation amortization and expenses Contributions by certain chaplains to 403(b) plans Sub-pay repayments under 1974 Trade Act Expenses for personal property rental Attorney fees related to certain discrimination claims Attorney fees related to certain whistleblower awards from the IRS Other Adjustments: These would be uncommon.",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "search",
+   "name": "1.442",
+   "id": "",
+   "label": "Jury duty pay given to employer",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "1.443",
+   "id": "",
+   "label": "Reforestation amortization and expenses",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "1.231911",
+   "id": "",
+   "label": "Contributions by certain chaplains to 403(b) plans",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "1.444",
+   "id": "",
+   "label": "Sub-pay repayments under 1974 Trade Act",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "1.446",
+   "id": "",
+   "label": "Expenses for personal property rental",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "1.231912",
+   "id": "",
+   "label": "Attorney fees related to certain discrimination claims",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "1.231913",
+   "id": "",
+   "label": "Attorney fees related to certain whistleblower awards from the IRS",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "57.249276",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "35"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "57.249277",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "57.238545",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "35"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "57.238546",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "57.238547",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "35"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "57.238548",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "57.238549",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "35"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "57.238550",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "10"
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Jury duty pay given to employer",
+   "img": "",
+   "href": "tc:TOPICHELP=MiscAdj,hJuryDuty",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Sub-pay repayments under 1974 Trade Act",
+   "img": "",
+   "href": "tc:TOPICHELP=MiscAdj,hSubpay",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Expenses for personal property rental",
+   "img": "",
+   "href": "tc:TOPICHELP=MiscAdj,hPersPtyRentalExp",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Attorney fees related to certain discrimination claims",
+   "img": "",
+   "href": "tc:TOPICHELP=MiscAdj,hUDC",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Attorney fees related to certain whistleblower awards from the IRS",
+   "img": "",
+   "href": "tc:TOPICHELP=MiscAdj,hWhistleBlower",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

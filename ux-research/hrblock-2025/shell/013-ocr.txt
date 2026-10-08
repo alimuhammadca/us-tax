@@ -1,0 +1,36 @@
+--- LEFT PANEL (meter + FAQs)
+2025
+My taxes for
+Premium
+FEDERAL REFUND
+STATE REFUND
+$0
+Help Center
+FAQs
+What should I do if I changed my
+name last year?
+What should I do if I don't have a
+Social Security number (SSN)?
+What should I enter for my
+occupation?
+How do I enter a post office box
+address?
+How dol enter a military or
+diplomatic address?
+What if we are treating my
+nonresident alien or dual-status
+Align I for
+--- TABS
+WELCOME
+PERSONAL INFORMATION
+FEDERAL
+INCOME
+ADJUSTMENTS
+STATE
+DEDUCTIONS
+FILE
+CREDITS
+TAXES
+MISC
+PLAN
+FINISH

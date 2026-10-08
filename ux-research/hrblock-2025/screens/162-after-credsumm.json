@@ -1,0 +1,68 @@
+{
+ "n": 162,
+ "slug": "after-credsumm",
+ "capturedAt": "2026-10-08T19:01:26.250Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [],
+ "topicLinks": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Now, we'll ask about health insurance coverage.",
+ "headings": [],
+ "text": "Now, we'll ask about health insurance coverage. We'll find out when you were covered and if you had insurance through your employer, HealthCare.gov, or another insurance provider. Then, we'll look at expenses and other items that can be subject to additional taxes or penalties. Examples include: Household employee wages you paid Excess contributions to or accumulations in a retirement plan or other regulated savings account Your 2024 return, if you underpaid your taxes for 2025 To make sure you get credit for paying your taxes, we'll also ask about your: Federal estimated tax payments for 2025 Amount paid with a 2025 extension",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/COBScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/cobedition.css"
+ ],
+ "errors": []
+}

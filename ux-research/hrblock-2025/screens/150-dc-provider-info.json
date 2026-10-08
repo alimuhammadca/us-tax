@@ -1,0 +1,305 @@
+{
+ "n": 150,
+ "slug": "dc-provider-info",
+ "capturedAt": "2026-10-08T18:57:24.313Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed",
+  "expanded 1"
+ ],
+ "dialogs": [],
+ "topics": [
+  "FW10KB"
+ ],
+ "topicLinks": [
+  {
+   "text": "What if I was on maternity leave?",
+   "href": "tc:TOPICHELP=FW10KB,vMaternityLeave",
+   "faq": true
+  },
+  {
+   "text": "What if I worked part-time but paid for full-time care?",
+   "href": "tc:TOPICHELP=FW10KB,vWorkedPartTime",
+   "faq": true
+  },
+  {
+   "text": "What if I had a temporary absence from work?",
+   "href": "tc:TOPICHELP=FW10KB,vtemporaryAbsences",
+   "faq": true
+  },
+  {
+   "text": "What if my care provider refuses to give me a tax identification number?",
+   "href": "tc:TOPICHELP=FW10KB,vCantGetTaxID",
+   "faq": true
+  },
+  {
+   "text": "H&R Block Answers: Work benefits for childcare",
+   "href": "tc:TOPICHELP=FW10KB,vProGuidance_F2441ProviderInfo",
+   "faq": true
+  },
+  {
+   "text": "What if my care provider doesn't have a tax identification number?",
+   "href": "tc:TOPICHELP=FW10KB,vWhatIfHasNoTaxID",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Tell us about your care provider.",
+ "headings": [],
+ "text": "Tell us about your care provider. Provider's name Tax ID (NN-NNNNNNN) My provider refused to give me their EIN. My provider has moved or closed, and I can't get their EIN. This care provider was my household employee. This is a foreign address Street City State ZIP Country Choose Afghanistan Akrotiri Albania Algeria Andorra Angola Anguilla Antarctica AntiguaBarbuda Argentina Armenia Aruba AshmoreCartier Australia Austria Azerbaijan Bahamas Bahrain Baker Island Bangladesh Barbados Belarus Belgium Belize Benin Bermuda Bhutan Bolivia Bosnia-Herzeg Botswana Bouvet Island Brazil British Ind OT British Vir Is Brunei Bulgaria Burkina Faso Burma Burundi Cambodia Cameroon Canada Cape Verde Cayman Islands Central Af Rep Chad Chile China Christmas Is Clipperton Is Cocos(Keeling) Colombia Comoros Congo (Brazz) Congo (Kinsh) Cook Islands Coral Sea Is Costa Rica Cote D'Ivoire Croatia Cuba Curacao Cyprus Czech Republic Denmark Dhekelia Djibouti Dominica Dominican Rep East Timor Ecuador Egypt El Salvador Equator Guinea Eritrea Estonia Ethiopia Falkland Is Faroe Islands Fiji Finland Fr Polynesia Fr Southrn Lds France Gabon The Gambia Georgia Germany Ghana Gibraltar Greece Greenland Grenada Guatemala Guernsey Guinea Guinea-Bissau Guyana Haiti Heard/McDonald Holy See Honduras Hong Kong Howland Island Hungary Iceland India Indonesia Iran Iraq Ireland Isle of Man Israel Italy Jamaica Jan Mayen Japan Jarvis Island Jersey Johnston Atoll Jordan Kazakhstan Kenya Kingman Reef Kiribati Kosovo Kuwait Kyrgyzstan Laos Latvia Lebanon Lesotho Liberia Libya Liechtenstein Lithuania Luxembourg Macau Macedonia Madagascar Malawi Malaysia Maldives Mali Malta Marshall Is Mauritania Mauritius Mexico Micronesia-FSM Midway Islands Moldova Monaco Mongolia Montenegro Montserrat Morocco Mozambique Namibia Nauru Navassa Island Nepal Netherlands New Caledonia New Zealand Nicaragua Niger Nigeria Niue Norfolk Island North Korea Norway Oman Pakistan Palau Palmyra Atoll Panama PapuaNewGuinea Paracel Is Paraguay Peru Philippines Pitcairn Is Poland Portugal Qatar Romania Russia Rwanda S Geo/S Sndwch Saint Martin Samoa San Marino SaoTomePrncipe Saudi Arabia Senegal Serbia Seychelles Sierra Leone Singapore Sint Maarten Slovakia Slovenia Solomon Is Somalia South Africa South Korea South Sudan Spain Spratly Is Sri Lanka St Barthelemy St Helena St Kitts/Nevis St Lucia Is St Pierre/Miq St Vnct/Grndns Sudan Suriname Svalbard Swaziland Sweden Switzerland Syria Taiwan Tajikistan Tanzania Thailand Togo Tokelau Tonga TrinidadTobago Tunisia Turkey Turkmenistan Turks & Caicos Tuvalu UAE Uganda Ukraine United Kingdom Uruguay Uzbekistan Vanuatu Venezuela Vietnam Wake Island Wallis/Futuna Western Sahara Yemen (Aden) Zambia Zimbabwe Other Country Province Postal code Expenses paid to provider in 2025 Include in the expense amount above any payments made in 2024 and 2026 for care given in 2025.",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "search",
+   "name": "124.79575",
+   "id": "",
+   "label": "Provider's name",
+   "value": "",
+   "maxlength": "37"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "124.79576",
+   "id": "",
+   "label": "Tax ID",
+   "value": "",
+   "maxlength": "11"
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "124.32536",
+   "id": "",
+   "label": "My provider refused to give me their EIN.",
+   "value": "on",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "124.158064",
+   "id": "",
+   "label": "My provider has moved or closed, and I can't get their EIN.",
+   "value": "on",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "124.236056",
+   "id": "",
+   "label": "This care provider was my household employee.",
+   "value": "on",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "124.150497",
+   "id": "",
+   "label": "This is a foreign address",
+   "value": "on",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "124.11",
+   "id": "",
+   "label": "Street",
+   "value": "",
+   "maxlength": "37"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "124.32537",
+   "id": "",
+   "label": "City",
+   "value": "",
+   "maxlength": "21"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "124.32538",
+   "id": "",
+   "label": "State",
+   "value": "",
+   "maxlength": "2"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "124.32539",
+   "id": "",
+   "label": "ZIP",
+   "value": "",
+   "maxlength": "5"
+  },
+  {
+   "tag": "select",
+   "type": "select-one",
+   "name": "124.150498",
+   "id": "select1",
+   "label": "Country",
+   "value": "Choose",
+   "options": [
+    "Choose",
+    "Afghanistan",
+    "Akrotiri",
+    "Albania",
+    "Algeria",
+    "Andorra",
+    "Angola",
+    "Anguilla",
+    "Antarctica",
+    "AntiguaBarbuda",
+    "Argentina",
+    "Armenia",
+    "Aruba",
+    "AshmoreCartier",
+    "Australia",
+    "Austria",
+    "Azerbaijan",
+    "Bahamas",
+    "Bahrain",
+    "Baker Island",
+    "Bangladesh",
+    "Barbados",
+    "Belarus",
+    "Belgium",
+    "Belize",
+    "Benin",
+    "Bermuda",
+    "Bhutan",
+    "Bolivia",
+    "Bosnia-Herzeg",
+    "Botswana",
+    "Bouvet Island",
+    "Brazil",
+    "British Ind OT",
+    "British Vir Is",
+    "Brunei",
+    "Bulgaria",
+    "Burkina Faso",
+    "Burma",
+    "Burundi",
+    "Cambodia",
+    "Cameroon",
+    "Canada",
+    "Cape Verde",
+    "Cayman Islands",
+    "Central Af Rep",
+    "Chad",
+    "Chile",
+    "China",
+    "Christmas Is",
+    "Clipperton Is",
+    "Cocos(Keeling)",
+    "Colombia",
+    "Comoros",
+    "Congo (Brazz)",
+    "Congo (Kinsh)",
+    "Cook Islands",
+    "Coral Sea Is",
+    "Costa Rica",
+    "Cote D'Ivoire"
+   ]
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "124.150499",
+   "id": "",
+   "label": "Province",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "124.150500",
+   "id": "",
+   "label": "Postal code",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "124.32426",
+   "id": "",
+   "label": "Expenses paid to provider in 2025",
+   "value": "",
+   "maxlength": "10"
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "contentbtn",
+   "text": "",
+   "img": "Guide Me",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "guide_me_up.gif",
+   "alt": "",
+   "title": "Guide Me",
+   "name": "guide_me"
+  },
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

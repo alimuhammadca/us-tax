@@ -1,0 +1,32 @@
+--- LEFT PANEL (meter + FAQs)
+2025
+My taxes for
+Premium
+FEDERAL REFUND
+$845
+LATEST CHANGE
+v Decrease of $525
+STATE REFUND
+$0
+Help Center
+FAQs
+View Details
+How do I know if I have capital
+loss carryover?
+What if my spouse and I once filed
+a joint return and are filing
+separate returns for 2025?
+--- TABS
+WELCOME
+PERSONAL INFORMATION
+FEDERAL
+INCOME
+ADJUSTMENTS
+STATE
+DEDUCTIONS
+FILE
+CREDITS
+TAXES
+MISC
+PLAN
+FINISH

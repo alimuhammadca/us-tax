@@ -1,0 +1,36 @@
+--- LEFT PANEL (meter + FAQs)
+2025
+My taxes for
+Premium
+FEDERAL REFUND
+STATE REFUND
+$0
+Help Center
+FAQs
+What happens if we designate $3
+to the Presidential Election
+Campaign Fund?
+What should I do if I'm supporting
+my spouse?
+How do I know if my spouse can
+be claimed as a dependent on
+someone else's return?
+How do I file a return for someone
+who died?
+What happens if I receive a refund
+check in both my name and my
+deceased spouse's name?
+--- TABS
+WELCOME
+PERSONAL INFORMATION
+FEDERAL
+INCOME
+ADJUSTMENTS
+STATE
+DEDUCTIONS
+FILE
+CREDITS
+TAXES
+MISC
+PLAN
+FINISH

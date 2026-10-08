@@ -1,0 +1,120 @@
+{
+ "n": 127,
+ "slug": "after-retax",
+ "capturedAt": "2026-10-08T18:47:46.808Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "Chtbl"
+ ],
+ "topicLinks": [
+  {
+   "text": "qualified",
+   "href": "tc:TOPICHELP=Chtbl,hQualifiedOrg",
+   "faq": false
+  },
+  {
+   "text": "What about donations from earlier years that I couldn't deduct?",
+   "href": "tc:TOPICHELP=Chtbl,vPriorYrContribs",
+   "faq": true
+  },
+  {
+   "text": "Can I deduct donations to an individual?",
+   "href": "tc:TOPICHELP=Chtbl,vContribsToIndiv",
+   "faq": true
+  },
+  {
+   "text": "What about donations \"for the use of\" a qualified organization?",
+   "href": "tc:TOPICHELP=Chtbl,vContribsForUseOf",
+   "faq": true
+  },
+  {
+   "text": "What about amounts that I transfer tax-free to a charity from an IRA after I'm 70-1/2?",
+   "href": "tc:TOPICHELP=Chtbl,vQualCharDistribs",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Charitable Donations",
+ "headings": [],
+ "text": "Charitable Donations Did you or Casey make any donations to qualified organizations in 2025?",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "qualified",
+   "img": "",
+   "href": "tc:TOPICHELP=Chtbl,hQualifiedOrg",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "60",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "No",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "59",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Yes",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "no_up.gif",
+   "alt": "No",
+   "title": "",
+   "name": "no"
+  },
+  {
+   "src": "Yes_ht.gif",
+   "alt": "Yes",
+   "title": "",
+   "name": "Yes"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

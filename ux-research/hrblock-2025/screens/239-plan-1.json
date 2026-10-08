@@ -1,0 +1,110 @@
+{
+ "n": 239,
+ "slug": "plan-1",
+ "capturedAt": "2026-10-08T19:34:01.754Z",
+ "actionsBefore": [
+  [
+   "check",
+   "92.1018"
+  ],
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "check ok 92.1018",
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "TaxPlan2"
+ ],
+ "topicLinks": [
+  {
+   "text": "How do I know if I need to pay estimated taxes?",
+   "href": "tc:TOPICHELP=TaxPlan2,vNeedEstimates",
+   "faq": true
+  },
+  {
+   "text": "What if I need to adjust the withholding on my W-4?",
+   "href": "tc:TOPICHELP=TaxPlan2,vNeedW4",
+   "faq": true
+  },
+  {
+   "text": "When is my estimated tax payment for the first quarter of 2026 due?",
+   "href": "tc:TOPICHELP=TaxPlan2,vWhenEstDue",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Tax Planning",
+ "headings": [],
+ "text": "Tax Planning Choose the planning tools you'd like to use. 2026 Estimated Taxes (1040-ES) or Wage Withholding (W-4). Complete your 2026 estimated taxes and vouchers or a new W-4 to adjust your 2026 wage withholding. If you want to avoid underpaying your taxes but aren't sure which form you need, we can help you find out. H&R Block Advantage. View and print a personalized tax planning report based on your current return.",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.654",
+   "id": "",
+   "label": "2026 Estimated Taxes (1040-ES) or Wage Withholding (W-4). Complete your 2026 estimated taxes and vouchers or a new W-4 to adjust your 2026 wage withholding. If ",
+   "value": "on",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.1170",
+   "id": "",
+   "label": "H&R Block Advantage. View and print a personalized tax planning report based on your current return.",
+   "value": "on",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/COBScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/cobedition.css"
+ ],
+ "errors": []
+}

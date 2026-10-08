@@ -1,0 +1,221 @@
+{
+ "n": 73,
+ "slug": "after-dividends",
+ "capturedAt": "2026-10-08T18:28:47.071Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Choose any business activities that apply.",
+ "headings": [],
+ "text": "Choose any business activities that apply. This includes activities you or Casey had in 2025. A business you own, self-employment, or contracting Income and expenses for your own business or Form 1099-NEC contracting income LEARN MORE Real estate you rent to others (1099-K or 1099-MISC for rent payments) Income and expenses from renting real estate; sometimes reported on Form 1099-K or Form 1099-MISC LEARN MORE Partnership or S corporation (K-1 from a partnership or S corporation) Income, deductions, losses, and credits; often reported on Schedule K-1 LEARN MORE Farm business or rental Income and expenses LEARN MORE Royalties (1099-MISC for royalties if not self-employment) Income from copyrights, patents, oil, gas, and minerals; often reported on Form 1099-MISC LEARN MORE What if I received a Form 1099-K with more than one type of income or income for more than one business? If you have a 1099-K which reports more than one type of income or income for more than one business, you'll need to split up and report the income in different locations. LEARN MORE",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.505",
+   "id": "",
+   "label": "A business you own, self-employment, or contracting Income and expenses for your own business or Form 1099-NEC contracting income LEARN MORE",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.750",
+   "id": "",
+   "label": "Real estate you rent to others (1099-K or 1099-MISC for rent payments) Income and expenses from renting real estate; sometimes reported on Form 1099-K or Form 1",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.508",
+   "id": "",
+   "label": "Partnership or S corporation (K-1 from a partnership or S corporation) Income, deductions, losses, and credits; often reported on Schedule K-1 LEARN MORE",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.556",
+   "id": "",
+   "label": "Farm business or rental Income and expenses LEARN MORE",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.510",
+   "id": "",
+   "label": "Royalties (1099-MISC for royalties if not self-employment) Income from copyrights, patents, oil, gas, and minerals; often reported on Form 1099-MISC LEARN MORE",
+   "value": "",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=BusGateway,hLearnMore_Business",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=BusGateway,hRentals",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=BusGateway,hPartnerships",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=BusGateway,hLearnMore_Farm",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=BusGateway,hRoyalties",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=BusGateway,h1099KMoreThanOneInc",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=BusGateway,hLearnMore_Business",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=BusGateway,hRentals",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=BusGateway,hPartnerships",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=BusGateway,hLearnMore_Farm",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=BusGateway,hRoyalties",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=BusGateway,h1099KMoreThanOneInc",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

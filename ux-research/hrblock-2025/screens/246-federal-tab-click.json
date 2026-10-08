@@ -1,0 +1,70 @@
+{
+ "n": 246,
+ "slug": "federal-tab-click",
+ "capturedAt": "2026-10-08T19:39:06.393Z",
+ "actionsBefore": [],
+ "actionResults": [],
+ "dialogs": [],
+ "topics": [
+  "InfoRev"
+ ],
+ "topicLinks": [
+  {
+   "text": "Are you including all of the various deductions included in this summary, such as the senior deduction and QBID?",
+   "href": "tc:TOPICHELP=InfoRev,vInclAllDed",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Tax Summary",
+ "headings": [],
+ "text": "Tax Summary Congratulations, Jordan, you've completed our Federal Interview. Review your personal tax summary below. For details click Take Me To and visit the Interview summaries. Next, we'll complete your state return or file your federal return. Federal Return Income Adjustments Adjusted gross income Deductions Taxable income Tax payments and credits Actual tax due Refund applied to next year 2025 $145,350 - $2,300 $143,050 - $31,500 $111,550 $13,100 - $11,149 - $0 Refund $1,951",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

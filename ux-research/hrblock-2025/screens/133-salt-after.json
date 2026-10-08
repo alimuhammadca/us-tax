@@ -1,0 +1,266 @@
+{
+ "n": 133,
+ "slug": "salt-after",
+ "capturedAt": "2026-10-08T18:49:45.392Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "MiscDed2"
+ ],
+ "topicLinks": [
+  {
+   "text": "Tax preparation expenses",
+   "href": "tc:TOPICHELP=MiscDed2,hTaxPrepExps",
+   "faq": false
+  },
+  {
+   "text": "Safe-deposit fees",
+   "href": "tc:TOPICHELP=MiscDed2,hSafeDepFees",
+   "faq": false
+  },
+  {
+   "text": "Legal expenses",
+   "href": "tc:TOPICHELP=MiscDed2,hLegalExpenses",
+   "faq": false
+  },
+  {
+   "text": "Investment expenses",
+   "href": "tc:TOPICHELP=MiscDed2,hInvestmentExpenses",
+   "faq": false
+  },
+  {
+   "text": "Hobby expenses",
+   "href": "tc:TOPICHELP=MiscDed2,hHobbyExpenses",
+   "faq": false
+  },
+  {
+   "text": "Certain losses",
+   "href": "tc:TOPICHELP=MiscDed2,hLosses",
+   "faq": false
+  },
+  {
+   "text": "Certain other expenses",
+   "href": "tc:TOPICHELP=MiscDed2,hOtherDeductionsSubject",
+   "faq": false
+  },
+  {
+   "text": "Credit/debit card tax payment convenience fee",
+   "href": "tc:TOPICHELP=MiscDed2,hConvenienceFee",
+   "faq": false
+  },
+  {
+   "text": "Can I enter the cost of this program?",
+   "href": "tc:TOPICHELP=MiscDed2,vTaxcutCost",
+   "faq": true
+  },
+  {
+   "text": "How can I create a list of items to add up and go into a field?",
+   "href": "tc:TOPICHELP=MiscDed2,vItemizedList",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Additional Deductions",
+ "headings": [],
+ "text": "Additional Deductions Tell us about any of these expenses that you or Casey had in 2025. You might be able to claim a state deduction for expenses you can't deduct on your federal return. Tax preparation expenses Safe-deposit fees Legal expenses Investment expenses Hobby expenses Certain losses Certain other expenses Credit/debit card tax payment convenience fee",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "search",
+   "name": "2.49",
+   "id": "",
+   "label": "Tax preparation expenses",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "2.225",
+   "id": "",
+   "label": "Safe-deposit fees",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "2.50",
+   "id": "",
+   "label": "Legal expenses",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "2.51",
+   "id": "",
+   "label": "Investment expenses",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "2.52",
+   "id": "",
+   "label": "Hobby expenses",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "2.54",
+   "id": "",
+   "label": "Certain losses",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "2.58",
+   "id": "",
+   "label": "Certain other expenses",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "2.69614",
+   "id": "",
+   "label": "Credit/debit card tax payment convenience fee",
+   "value": "",
+   "maxlength": "10"
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Tax preparation expenses",
+   "img": "",
+   "href": "tc:TOPICHELP=MiscDed2,hTaxPrepExps",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Safe-deposit fees",
+   "img": "",
+   "href": "tc:TOPICHELP=MiscDed2,hSafeDepFees",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Legal expenses",
+   "img": "",
+   "href": "tc:TOPICHELP=MiscDed2,hLegalExpenses",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Investment expenses",
+   "img": "",
+   "href": "tc:TOPICHELP=MiscDed2,hInvestmentExpenses",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Hobby expenses",
+   "img": "",
+   "href": "tc:TOPICHELP=MiscDed2,hHobbyExpenses",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Certain losses",
+   "img": "",
+   "href": "tc:TOPICHELP=MiscDed2,hLosses",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Certain other expenses",
+   "img": "",
+   "href": "tc:TOPICHELP=MiscDed2,hOtherDeductionsSubject",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Credit/debit card tax payment convenience fee",
+   "img": "",
+   "href": "tc:TOPICHELP=MiscDed2,hConvenienceFee",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_up.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

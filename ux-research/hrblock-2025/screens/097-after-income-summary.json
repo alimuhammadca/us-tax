@@ -1,0 +1,76 @@
+{
+ "n": 97,
+ "slug": "after-income-summary",
+ "capturedAt": "2026-10-08T18:37:44.363Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "Adjust"
+ ],
+ "topicLinks": [
+  {
+   "text": "What if I am still paying property storage fees for a move abroad I made in a prior year?",
+   "href": "tc:TOPICHELP=Adjust,vPYStorageExp",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Let's get started on your adjustments to income.",
+ "headings": [],
+ "text": "Let's get started on your adjustments to income. We'll look for any expenses that can reduce your taxable income and give you a bigger refund. Some common adjustments include: Student loan interest payments K–12 teachers' classroom and professional development expenses Alimony payments IRA, SEP-IRA, SIMPLE IRA, and Keogh contributions Health insurance premiums, if you're self-employed High deductible health plans contributions and distributions, like health savings accounts (HSAs) -- Don't confuse this with your health care coverage. We'll get to that later in the Taxes section",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/COBScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/cobedition.css"
+ ],
+ "errors": []
+}

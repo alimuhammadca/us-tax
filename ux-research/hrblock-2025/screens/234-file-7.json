@@ -1,0 +1,608 @@
+{
+ "n": 234,
+ "slug": "file-7",
+ "capturedAt": "2026-10-08T19:32:24.002Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed",
+  "expanded 1"
+ ],
+ "dialogs": [],
+ "topics": [
+  "FT_Finish",
+  "FT_Check"
+ ],
+ "topicLinks": [
+  {
+   "text": "How do you protect the security of information I send from this program?",
+   "href": "tc:TOPICHELP=FT_Finish,vSecurityInfo",
+   "faq": true
+  },
+  {
+   "text": "How do I start a new return?",
+   "href": "tc:TOPICHELP=FT_Check,vHowToStartNewReturn",
+   "faq": true
+  },
+  {
+   "text": "How can I get my 2026 H&R Block tax software?",
+   "href": "tc:TOPICHELP=FT_Finish,vHowGetNextYearSoftware",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Give Us Your Feedback",
+ "headings": [],
+ "text": "Give Us Your Feedback 1. Based on this experience, how likely are you to use H&R Block again in the future? Not at all likely - 1 2 3 4 5 - Extremely likely 2. What's the main reason for the score you gave us? (2000 Max Characters) 3. How likely are you to recommend H&R Block to a friend or family member? Not at all likely - 0 1 2 3 4 5 6 7 8 9 10 - Extremely likely 4. I am confident my taxes are accurate. Disagree - 1 2 3 4 5 - Agree 5. H&R Block made it easy for me to get my taxes done. Disagree - 1 2 3 4 5 - Agree 6. I believe the price was fair for the quality of experience I received. Disagree - 1 2 3 4 5 - Agree 7. My tax prep experience made me feel like H&R Block cared about me. Disagree - 1 2 3 4 5 - Agree 8. I trust H&R Block to help me make progress towards my financial goals. Disagree - 1 2 3 4 5 - Agree 9. How likely would you be to use H&R Block's online tax prep product instead of the downloaded software? Not at all likely - 1 2 3 4 5 - Extremely likely 10. We might want to ask you some follow-up questions. To give us permission to contact you, please enter your contact information. First name Last name Phone Email address Street City State ZIP H&R Block's privacy policy",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_NextYrRating",
+   "id": "",
+   "label": "",
+   "value": "199.220781",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_NextYrRating",
+   "id": "",
+   "label": "",
+   "value": "199.220782",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_NextYrRating",
+   "id": "",
+   "label": "",
+   "value": "199.220783",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_NextYrRating",
+   "id": "",
+   "label": "",
+   "value": "199.220784",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_NextYrRating",
+   "id": "",
+   "label": "",
+   "value": "199.220785",
+   "checked": false
+  },
+  {
+   "tag": "textarea",
+   "type": "textarea",
+   "name": "199.38097",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "2000"
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_RecRating",
+   "id": "",
+   "label": "",
+   "value": "199.38085",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_RecRating",
+   "id": "",
+   "label": "",
+   "value": "199.38086",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_RecRating",
+   "id": "",
+   "label": "",
+   "value": "199.38087",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_RecRating",
+   "id": "",
+   "label": "",
+   "value": "199.38088",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_RecRating",
+   "id": "",
+   "label": "",
+   "value": "199.38089",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_RecRating",
+   "id": "",
+   "label": "",
+   "value": "199.38090",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_RecRating",
+   "id": "",
+   "label": "",
+   "value": "199.38091",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_RecRating",
+   "id": "",
+   "label": "",
+   "value": "199.38092",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_RecRating",
+   "id": "",
+   "label": "",
+   "value": "199.38093",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_RecRating",
+   "id": "",
+   "label": "",
+   "value": "199.38094",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_RecRating",
+   "id": "",
+   "label": "",
+   "value": "199.38095",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_FindDedRating",
+   "id": "",
+   "label": "",
+   "value": "199.220792",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_FindDedRating",
+   "id": "",
+   "label": "",
+   "value": "199.220793",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_FindDedRating",
+   "id": "",
+   "label": "",
+   "value": "199.220794",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_FindDedRating",
+   "id": "",
+   "label": "",
+   "value": "199.220795",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_FindDedRating",
+   "id": "",
+   "label": "",
+   "value": "199.220796",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_MadeEasyRating",
+   "id": "",
+   "label": "",
+   "value": "199.220798",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_MadeEasyRating",
+   "id": "",
+   "label": "",
+   "value": "199.220799",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_MadeEasyRating",
+   "id": "",
+   "label": "",
+   "value": "199.220800",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_MadeEasyRating",
+   "id": "",
+   "label": "",
+   "value": "199.220801",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_MadeEasyRating",
+   "id": "",
+   "label": "",
+   "value": "199.220802",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_PriceFairRating",
+   "id": "",
+   "label": "",
+   "value": "199.220804",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_PriceFairRating",
+   "id": "",
+   "label": "",
+   "value": "199.220805",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_PriceFairRating",
+   "id": "",
+   "label": "",
+   "value": "199.220806",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_PriceFairRating",
+   "id": "",
+   "label": "",
+   "value": "199.220807",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_PriceFairRating",
+   "id": "",
+   "label": "",
+   "value": "199.220808",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_BlockCaresRating",
+   "id": "",
+   "label": "",
+   "value": "199.220810",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_BlockCaresRating",
+   "id": "",
+   "label": "",
+   "value": "199.220811",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_BlockCaresRating",
+   "id": "",
+   "label": "",
+   "value": "199.220812",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_BlockCaresRating",
+   "id": "",
+   "label": "",
+   "value": "199.220813",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_BlockCaresRating",
+   "id": "",
+   "label": "",
+   "value": "199.220814",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_FinGoalsRating",
+   "id": "",
+   "label": "",
+   "value": "199.261441",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_FinGoalsRating",
+   "id": "",
+   "label": "",
+   "value": "199.261442",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_FinGoalsRating",
+   "id": "",
+   "label": "",
+   "value": "199.261443",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_FinGoalsRating",
+   "id": "",
+   "label": "",
+   "value": "199.261444",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_FinGoalsRating",
+   "id": "",
+   "label": "",
+   "value": "199.261445",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_OnlineRating",
+   "id": "",
+   "label": "",
+   "value": "199.231762",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_OnlineRating",
+   "id": "",
+   "label": "",
+   "value": "199.231763",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_OnlineRating",
+   "id": "",
+   "label": "",
+   "value": "199.231764",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_OnlineRating",
+   "id": "",
+   "label": "",
+   "value": "199.231765",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_OnlineRating",
+   "id": "",
+   "label": "",
+   "value": "199.231766",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "199.38098",
+   "id": "",
+   "label": "First name",
+   "value": "",
+   "maxlength": "12"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "199.38099",
+   "id": "",
+   "label": "First name",
+   "value": "",
+   "maxlength": "20"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "199.38101",
+   "id": "",
+   "label": "Phone",
+   "value": "",
+   "maxlength": "12"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "199.38100",
+   "id": "",
+   "label": "Email address",
+   "value": "",
+   "maxlength": "40"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "199.38102",
+   "id": "",
+   "label": "Street",
+   "value": "",
+   "maxlength": "35"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "199.38103",
+   "id": "",
+   "label": "City",
+   "value": "",
+   "maxlength": "22"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "199.38104",
+   "id": "",
+   "label": "City",
+   "value": "",
+   "maxlength": "2"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "199.38105",
+   "id": "",
+   "label": "City",
+   "value": "",
+   "maxlength": "10"
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "H&R Block's privacy policy",
+   "img": "",
+   "href": "http://www.hrblock.com/software/2025/privacy",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "4",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Skip",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "39",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Send",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "skip_up.gif",
+   "alt": "Skip",
+   "title": "",
+   "name": "skip"
+  },
+  {
+   "src": "Send2_up.gif",
+   "alt": "Send",
+   "title": "",
+   "name": "Send2"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

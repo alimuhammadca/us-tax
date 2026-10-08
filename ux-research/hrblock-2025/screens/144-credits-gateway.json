@@ -1,0 +1,148 @@
+{
+ "n": 144,
+ "slug": "credits-gateway",
+ "capturedAt": "2026-10-08T18:55:26.384Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "Credits"
+ ],
+ "topicLinks": [
+  {
+   "text": "WHAT QUALIFIES?",
+   "href": "tc:TOPICHELP=Credits,hLearnMore_ChildCareCredit_Gateway",
+   "faq": false
+  },
+  {
+   "text": "WHAT QUALIFIES?",
+   "href": "tc:TOPICHELP=Credits,hTuition",
+   "faq": false
+  },
+  {
+   "text": "What if my ex-spouse or another relative paid the tuition?",
+   "href": "tc:TOPICHELP=Credits,vSomeoneElsePaid",
+   "faq": true
+  },
+  {
+   "text": "Can I claim any credit for a course I'm taking in 2026?",
+   "href": "tc:TOPICHELP=Credits,vThisYearCourse",
+   "faq": true
+  },
+  {
+   "text": "What if I'm receiving a Pell Grant?",
+   "href": "tc:TOPICHELP=Credits,vPellGrant",
+   "faq": true
+  },
+  {
+   "text": "What if I'm married filing a separate return?",
+   "href": "tc:TOPICHELP=Credits,vMFS",
+   "faq": true
+  },
+  {
+   "text": "What if I'm claiming a credit for repayment of amounts included in income in an earlier year?",
+   "href": "tc:TOPICHELP=Credits,vRepaymentCredit",
+   "faq": true
+  },
+  {
+   "text": "What if I made a voluntary after-tax contribution to a retirement plan?",
+   "href": "tc:TOPICHELP=Credits,vVoluntaryContribsForSaversCredit",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Check any credits that apply.",
+ "headings": [],
+ "text": "Check any credits that apply. If you're not sure, check the box and we'll work on it together. Child and dependent care expenses For your child or disabled spouse while you worked or looked for work WHAT QUALIFIES? Tuition for college or other higher education (Form 1098-T) WHAT QUALIFIES? For you, your spouse, or a dependent",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.1062",
+   "id": "",
+   "label": "Child and dependent care expenses For your child or disabled spouse while you worked or looked for work WHAT QUALIFIES?",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.1068",
+   "id": "",
+   "label": "Tuition for college or other higher education (Form 1098-T) WHAT QUALIFIES? For you, your spouse, or a dependent",
+   "value": "",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "WHAT QUALIFIES?",
+   "img": "",
+   "href": "tc:TOPICHELP=Credits,hLearnMore_ChildCareCredit_Gateway",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "WHAT QUALIFIES?",
+   "img": "",
+   "href": "tc:TOPICHELP=Credits,hTuition",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

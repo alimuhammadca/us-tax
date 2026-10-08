@@ -1,0 +1,37 @@
+--- LEFT PANEL (meter + FAQs)
+2025
+My taxes for
+Premium
+FEDERAL REFUND
+$1,351
+LATEST CHANGE
+A Increase ofS66
+STATE REFUND
+$0
+Help Center
+FAQs
+View Details
+What if my mortgage company
+paid my propeny taxes?
+If I volunteered for a charity, is my
+time a donation?
+What if my spouse and I paid
+expenses jointly and are filing
+separate returns?
+What if I paid foreign income tax?
+What if I paid state or local income
+taxes?
+--- TABS
+WELCOME
+PERSONAL INFORMATION
+FEDERAL
+INCOME
+ADJUSTMENTS
+STATE
+DEDUCTIONS
+FILE
+CREDITS
+TAXES
+MISC
+PLAN
+FINISH

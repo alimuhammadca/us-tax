@@ -1,0 +1,208 @@
+{
+ "n": 128,
+ "slug": "charity-yes",
+ "capturedAt": "2026-10-08T18:48:07.377Z",
+ "actionsBefore": [
+  [
+   "pwclick",
+   "[name=\"59\"] img, [name=\"59\"]"
+  ]
+ ],
+ "actionResults": [
+  "pwclick [name=\"59\"] img, [name=\"59\"] true"
+ ],
+ "dialogs": [],
+ "topics": [
+  "Chtbl"
+ ],
+ "topicLinks": [
+  {
+   "text": "WHAT QUALIFIES?",
+   "href": "tc:TOPICHELP=Chtbl,hCashDonationXpl",
+   "faq": false
+  },
+  {
+   "text": "WHAT QUALIFIES?",
+   "href": "tc:TOPICHELP=Chtbl,hDeProXpl",
+   "faq": false
+  },
+  {
+   "text": "WHAT QUALIFIES?",
+   "href": "tc:TOPICHELP=Chtbl,hNonCashXpl",
+   "faq": false
+  },
+  {
+   "text": "WHAT QUALIFIES?",
+   "href": "tc:TOPICHELP=Chtbl,hOutOfPocketXpl",
+   "faq": false
+  },
+  {
+   "text": "WHAT QUALIFIES?",
+   "href": "tc:TOPICHELP=Chtbl,hCarryoverXpl",
+   "faq": false
+  },
+  {
+   "text": "What about stocks, bonds, and other property?",
+   "href": "tc:TOPICHELP=Chtbl,vIntangibles",
+   "faq": true
+  },
+  {
+   "text": "What about time that I donate to a charity?",
+   "href": "tc:TOPICHELP=Chtbl,vDonatedTime",
+   "faq": true
+  },
+  {
+   "text": "What if I sold property to a charity at a bargain price?",
+   "href": "tc:TOPICHELP=Chtbl,vBargainSale",
+   "faq": true
+  },
+  {
+   "text": "What if I paid expenses for an exchange student?",
+   "href": "tc:TOPICHELP=Chtbl,vExchangeStudent",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Tell Us About Your Donations in 2025",
+ "headings": [],
+ "text": "Tell Us About Your Donations in 2025 Check any that apply. Donated money Cash, check, credit card, or payroll deduction to a charitable organization WHAT QUALIFIES? Donated used clothing and household goods Use DeductionPro™ to value items WHAT QUALIFIES? Donated other property Vehicles, art, collectibles, securities WHAT QUALIFIES? Volunteer expenses Out-of-pocket expenses and mileage WHAT QUALIFIES? Donation carryover Donations you couldn't deduct in a prior year due to your income WHAT QUALIFIES?",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.1100",
+   "id": "",
+   "label": "Donated money Cash, check, credit card, or payroll deduction to a charitable organization WHAT QUALIFIES?",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.1101",
+   "id": "",
+   "label": "Donated used clothing and household goods Use DeductionPro™ to value items WHAT QUALIFIES?",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.136287",
+   "id": "",
+   "label": "Donated other property Vehicles, art, collectibles, securities WHAT QUALIFIES?",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.1102",
+   "id": "",
+   "label": "Volunteer expenses Out-of-pocket expenses and mileage WHAT QUALIFIES?",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.1103",
+   "id": "",
+   "label": "Donation carryover Donations you couldn't deduct in a prior year due to your income WHAT QUALIFIES?",
+   "value": "",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "WHAT QUALIFIES?",
+   "img": "",
+   "href": "tc:TOPICHELP=Chtbl,hCashDonationXpl",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "WHAT QUALIFIES?",
+   "img": "",
+   "href": "tc:TOPICHELP=Chtbl,hDeProXpl",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "WHAT QUALIFIES?",
+   "img": "",
+   "href": "tc:TOPICHELP=Chtbl,hNonCashXpl",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "WHAT QUALIFIES?",
+   "img": "",
+   "href": "tc:TOPICHELP=Chtbl,hOutOfPocketXpl",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "WHAT QUALIFIES?",
+   "img": "",
+   "href": "tc:TOPICHELP=Chtbl,hCarryoverXpl",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

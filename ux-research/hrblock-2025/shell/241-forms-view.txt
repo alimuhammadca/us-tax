@@ -1,0 +1,39 @@
+﻿title: UX-Research-Sample - H&R Block Software 2025  size: 1552x832
+[Window/H&R Block 2025] UX-Research-Sample - HR Block Software 2025
+ [Window/Forms Central 2025] Forms Central 2025 - UX-Research-Sample
+  [Pane/Afx:00400000:b:00010003:00000006:00000000] FormsCentralNavView
+   [Pane/Button] trecbtn
+   [Pane/Button] topnbtn
+   [Pane/Button] tdelbtn
+   [Pane/Button] trcalbtn
+   [Pane/Button] thidebtn
+   [Pane/Button] tprntbtn
+   [Pane/Button] tcalcbtn
+   [Pane/Button] thschbtn
+   [Pane/Afx:00400000:b:00010003:00000006:00000000] Viewport
+   [Pane/Button] helpbtn_sm
+   [Pane/Button] tclswbtn
+   [Pane/Button] tbusfull
+   [Pane/Button] tbilfull
+ [Pane/Afx:00400000:b:00010003:00000006:00000000] NavigationView
+  [Pane/Button] tmtmtbtn
+  [Pane/Button] tmfmsbtn
+  [Pane/Button] tmnewbtn
+  [Pane/Button] tmsavbtn
+  [Pane/Button] tmprnbtn
+  [Pane/Button] tmchkbtn
+  [Pane/Button] tmatabtn
+  [Pane/Button] navwel
+  [Pane/Button] navfed
+  [Pane/Button] navstate
+  [Pane/Button] navfile
+  [Pane/Button] navplan
+  [Pane/Button] pnintro
+  [Pane/Button] pntaxplan
+  [Pane/Button] pnretireplan
+  [Pane/Button] pncomplete
+  [Pane/Button] viewdtlsbtn
+  [Pane/Button] helpbtnbsc
+  [Pane/Button] sendfedbkbtn
+  [Pane/Afx:00400000:b:00010003:00000006:00000000] WebView2EmbeddedBrowser
+   [Pane/Chrome_WidgetWin_0] (webview - skipped)

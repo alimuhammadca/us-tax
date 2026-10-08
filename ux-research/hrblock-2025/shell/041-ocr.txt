@@ -1,0 +1,37 @@
+--- LEFT PANEL (meter + FAQs)
+2025
+My taxes for
+Premium
+FEDERAL REFUND
+STATE REFUND
+$0
+Help Center
+FAQs
+What is a Children's Tax
+Advantage Account (Trump
+Account)?
+Am I required to apply for a
+Children's Tax Advantage Account
+(Trump Account)?
+Does applying for a Children's Tax
+Advantage Account (Trump
+Account) impact my 2025 tax
+return?
+Does the delete button remove a
+dependent from my tax return?
+What kinds of contributions can be
+made to this account?
+--- TABS
+WELCOME
+PERSONAL INFORMATION
+FEDERAL
+INCOME
+ADJUSTMENTS
+STATE
+DEDUCTIONS
+FILE
+CREDITS
+TAXES
+MISC
+PLAN
+FINISH

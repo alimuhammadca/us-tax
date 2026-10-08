@@ -1,0 +1,183 @@
+{
+ "n": 87,
+ "slug": "income-gw-6",
+ "capturedAt": "2026-10-08T18:34:16.928Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed",
+  "expanded 1"
+ ],
+ "dialogs": [],
+ "topics": [
+  "KG_Other",
+  "F1099KC"
+ ],
+ "topicLinks": [
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=KG_Other,hVacationHome",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=KG_Other,hVirtualCurrency",
+   "faq": false
+  },
+  {
+   "text": "Edit",
+   "href": "TC:EDIT",
+   "faq": false
+  },
+  {
+   "text": "Delete",
+   "href": "TC:DELETE",
+   "faq": false
+  },
+  {
+   "text": "Edit",
+   "href": "TC:EDIT/1",
+   "faq": false
+  },
+  {
+   "text": "Delete",
+   "href": "TC:DELETE/1",
+   "faq": false
+  },
+  {
+   "text": "What if I received a 1099-K for the sale of non-business (personal use) property?",
+   "href": "tc:TOPICHELP=KG_Other,v1099KSaleOfNonBizPropAlt",
+   "faq": true
+  },
+  {
+   "text": "What if my financial and bookkeeping reports already include my 1099-K (or 1099-MISC or 1099-NEC) income?",
+   "href": "tc:TOPICHELP=F1099KC,v1099KFinRpts",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Tell us about your sale of collectibles and other capital assets.",
+ "headings": [],
+ "text": "Tell us about your sale of collectibles and other capital assets. These include: Collectibles Vacation home LEARN MORE Stocks and bonds not reported on a 1099-B (enter 1099-Bs in the 1099-B topic) Other non-depreciable property owned for non-business (personal use) or investment purposes This does not include: Sale of your main home Sale of intellectual property you created Digital Assets not reported on a 1099-B LEARN MORE To get started, click Add Sale. Description Sale Date Gain/Loss 1st 0 Edit Delete",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=KG_Other,hVacationHome",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=KG_Other,hVirtualCurrency",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contentbtn",
+   "text": "",
+   "img": "Add Sale",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "childof232996880",
+   "id": "",
+   "cls": "multinstanceanchor",
+   "text": "Edit",
+   "img": "",
+   "href": "TC:EDIT/1",
+   "onclick": ""
+  },
+  {
+   "name": "childof233002784",
+   "id": "",
+   "cls": "multinstanceanchor",
+   "text": "Delete",
+   "img": "",
+   "href": "TC:DELETE/1",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "58",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "Add_Sale_up.gif",
+   "alt": "",
+   "title": "Add Sale",
+   "name": "Add_Sale"
+  },
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "finished_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "finished"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=KG_Other,hVacationHome",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=KG_Other,hVirtualCurrency",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

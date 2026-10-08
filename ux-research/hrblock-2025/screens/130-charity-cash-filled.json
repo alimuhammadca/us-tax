@@ -1,0 +1,560 @@
+{
+ "n": 130,
+ "slug": "charity-cash-filled",
+ "capturedAt": "2026-10-08T18:48:47.351Z",
+ "actionsBefore": [
+  [
+   "fill",
+   "152.10",
+   "Red Cross"
+  ],
+  [
+   "fill",
+   "152.12",
+   "1500"
+  ]
+ ],
+ "actionResults": [
+  "fill 152.10=Red Cross",
+  "fill 152.12=1,500",
+  "expanded 1"
+ ],
+ "dialogs": [],
+ "topics": [
+  "CharCash"
+ ],
+ "topicLinks": [
+  {
+   "text": "Private Foundation or Donor Advised Fund",
+   "href": "tc:TOPICHELP=CharCash,hDonorFund",
+   "faq": false
+  },
+  {
+   "text": "What about out-of-pocket expenses?",
+   "href": "tc:TOPICHELP=CharCash,vOutOfPocket",
+   "faq": true
+  },
+  {
+   "text": "What are qualified organizations?",
+   "href": "tc:TOPICHELP=CharCash,vQualOrg",
+   "faq": true
+  },
+  {
+   "text": "What if I received a benefit from the charity?",
+   "href": "tc:TOPICHELP=CharCash,vBenefitFromCharity",
+   "faq": true
+  },
+  {
+   "text": "Are membership fees deductible?",
+   "href": "tc:TOPICHELP=CharCash,vMembershipFees",
+   "faq": true
+  },
+  {
+   "text": "What records do I need to keep?",
+   "href": "tc:TOPICHELP=CharCash,vRecordsForCash",
+   "faq": true
+  },
+  {
+   "text": "What documentation is the charity required to give to me?",
+   "href": "tc:TOPICHELP=CharCash,vDocFromCharity",
+   "faq": true
+  },
+  {
+   "text": "What about donations reported to me on a Schedule K-1 from a partnership or S corporation?",
+   "href": "tc:TOPICHELP=CharCash,vK1Contribs",
+   "faq": true
+  },
+  {
+   "text": "What about amounts that I transfer tax-free to a charity from an IRA after I'm 70-1/2?",
+   "href": "tc:TOPICHELP=CharCash,vQualCharDistribs",
+   "faq": true
+  },
+  {
+   "text": "I donated to a Section 170(c) organization and got a state income tax credit. Can I still deduct this charitable contribution?",
+   "href": "tc:TOPICHELP=CharCash,vSALTContrib",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Tell us about your cash donations",
+ "headings": [],
+ "text": "Tell us about your cash donations Include charitable donations paid by: Cash Check Credit card Payroll deduction Charitable Organization Donation Amount Private Foundation or Donor Advised Fund",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "152.10",
+   "id": "",
+   "label": "",
+   "value": "Red Cross",
+   "maxlength": "40"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "152.12",
+   "id": "",
+   "label": "",
+   "value": "1,500",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "152.228608",
+   "id": "",
+   "label": "",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "152.13",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "40"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "152.15",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "152.228609",
+   "id": "",
+   "label": "",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "152.16",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "40"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "152.18",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "152.228610",
+   "id": "",
+   "label": "",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "152.19",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "40"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "152.21",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "152.228611",
+   "id": "",
+   "label": "",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "152.22",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "40"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "152.24",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "152.228612",
+   "id": "",
+   "label": "",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "152.25",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "40"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "152.27",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "152.228613",
+   "id": "",
+   "label": "",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "152.28",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "40"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "152.30",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "152.228614",
+   "id": "",
+   "label": "",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "152.31",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "40"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "152.33",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "152.228615",
+   "id": "",
+   "label": "",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "152.34",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "40"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "152.36",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "152.228616",
+   "id": "",
+   "label": "",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "152.37",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "40"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "152.39",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "152.228617",
+   "id": "",
+   "label": "",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "152.40",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "40"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "152.42",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "152.228618",
+   "id": "",
+   "label": "",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "152.43",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "40"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "152.45",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "152.228619",
+   "id": "",
+   "label": "",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "152.46",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "40"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "152.48",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "152.228620",
+   "id": "",
+   "label": "",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "152.49",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "40"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "152.51",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "152.228621",
+   "id": "",
+   "label": "",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "152.52",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "40"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "152.54",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "152.228622",
+   "id": "",
+   "label": "",
+   "value": "",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Private Foundation or Donor Advised Fund",
+   "img": "",
+   "href": "tc:TOPICHELP=CharCash,hDonorFund",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "44680",
+   "id": "",
+   "cls": "navbtncenter",
+   "text": "",
+   "img": "More Money Donations",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "more_money_donations_up.gif",
+   "alt": "More Money Donations",
+   "title": "",
+   "name": "more_money_donations"
+  },
+  {
+   "src": "next_up.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

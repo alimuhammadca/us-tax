@@ -1,0 +1,197 @@
+{
+ "n": 163,
+ "slug": "taxes-2",
+ "capturedAt": "2026-10-08T19:01:46.328Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "ACAIntro"
+ ],
+ "topicLinks": [
+  {
+   "text": "household",
+   "href": "tc:TOPICHELP=ACAIntro,hHousehold",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=ACAIntro,hMinimumEssentialCoverage",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=ACAIntro,hBirthDeathAdoption",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=ACAIntro,hHousehold",
+   "faq": false
+  },
+  {
+   "text": "Do I still need insurance?",
+   "href": "tc:TOPICHELP=ACAIntro,hStillNeedInsurance",
+   "faq": false
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Your Health Insurance",
+ "headings": [],
+ "text": "Your Health Insurance Let's find out if everyone in your household had ACA-qualified health insurance in 2025. (This is called minimum essential coverage.) LEARN MORE You're considered covered for 2025 if you had minimum essential coverage for at least one day of each month in 2025. Special rules apply if someone was adopted, born, or died in 2025. LEARN MORE Who had qualifying health insurance in 2025? LEARN MORE Everyone in my household had health insurance for all of 2025. None of us had insurance at any time in 2025. Neither applies – my household was partially covered in 2025. Do I still need insurance?",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_CoverageAllYr",
+   "id": "",
+   "label": "Everyone in my household had health insurance for all of 2025.",
+   "value": "92.171092",
+   "checked": true
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_CoverageAllYr",
+   "id": "",
+   "label": "None of us had insurance at any time in 2025.",
+   "value": "92.171094",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_CoverageAllYr",
+   "id": "",
+   "label": "Neither applies – my household was partially covered in 2025.",
+   "value": "92.171093",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "household",
+   "img": "",
+   "href": "tc:TOPICHELP=ACAIntro,hHousehold",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=ACAIntro,hMinimumEssentialCoverage",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=ACAIntro,hBirthDeathAdoption",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=ACAIntro,hHousehold",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Do I still need insurance?",
+   "img": "",
+   "href": "tc:TOPICHELP=ACAIntro,hStillNeedInsurance",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=ACAIntro,hMinimumEssentialCoverage",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=ACAIntro,hBirthDeathAdoption",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=ACAIntro,hHousehold",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

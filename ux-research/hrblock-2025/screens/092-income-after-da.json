@@ -1,0 +1,148 @@
+{
+ "n": 92,
+ "slug": "income-after-da",
+ "capturedAt": "2026-10-08T18:36:00.252Z",
+ "actionsBefore": [
+  [
+   "radio",
+   "rb_VirtualCurrency",
+   "1.217950"
+  ],
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "radio ok 1.217950",
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "ForAcct"
+ ],
+ "topicLinks": [
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=ForAcct,hForFinAcct",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=ForAcct,hForFinAssets",
+   "faq": false
+  },
+  {
+   "text": "Should I count my child's foreign financial accounts or assets?",
+   "href": "tc:TOPICHELP=ForAcct,vChildForeignAcct",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Foreign Accounts and Financial Assets",
+ "headings": [],
+ "text": "Foreign Accounts and Financial Assets You must report certain foreign investments. Otherwise, you face significant penalties. Special rules apply if you had either of these: Financial interest in or signature authority over a financial account located in a foreign country LEARN MORE Ownership or authority over foreign financial assets LEARN MORE Did you have either of these in 2025? Yes No",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_ForeignAcctTrust",
+   "id": "",
+   "label": "Yes",
+   "value": "3.52019",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_ForeignAcctTrust",
+   "id": "",
+   "label": "No",
+   "value": "3.52020",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=ForAcct,hForFinAcct",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=ForAcct,hForFinAssets",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=ForAcct,hForFinAcct",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=ForAcct,hForFinAssets",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

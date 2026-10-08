@@ -1,0 +1,91 @@
+﻿TITLE: TurboTax Deluxe 2024
+[Menu] '' #Menu_1
+  [MenuItem] 'File' #fileMenuItem
+    [Text] '_File'
+  [MenuItem] 'Edit' #editMenuItem
+    [Text] '_Edit'
+  [MenuItem] 'View' #viewMenuItem
+    [Text] '_View'
+  [MenuItem] 'Tools' #toolsMenuItem
+    [Text] '_Tools'
+  [MenuItem] 'Online' #onlineMenuItem
+    [Text] 'O_nline'
+  [MenuItem] 'Help' #helpMenuItem
+    [Text] '_Help'
+  [Hyperlink] '  Help Center'
+    [Image] '' #helpImage
+  [Hyperlink] '  Print Center'
+    [Image] '' #printImage
+  [Hyperlink] '  Show Topic List'
+    [Image] '' #topicImage
+[Custom] '' #mainTabBarUC
+  [Image] '' #productBanner
+  [Custom] '' #refundMonitorView
+    [Custom] '' #FederalRefundGauge
+      [Text] 'Federal Refund' #bannerText
+      [Text] '$' #_DollarSign
+      [Text] '0' #_AmountText
+    [Custom] '' #StateRefundGauge
+      [Text] 'Illinois' #bannerText
+      [Text] 'See Amount'
+        [Hyperlink] 'See Amount'
+  [Button] '' #toggleViewButton
+    [Image] '' #_ImgOff
+  [Button] '' #flagsButton
+    [Image] '' #flagsImage
+  [Button] '' #notificationsButton
+    [Image] '' #notificationImage
+[Custom] '' #interviewUC
+  [Custom] '' #mainTabBar
+    [List] '' #mainTab
+      [ListItem] 'Personal Info' #Personal Info
+        [Text] 'PERSONAL INFO'
+      [ListItem] 'Federal Taxes' #Federal Taxes
+        [Text] 'FEDERAL TAXES'
+      [ListItem] 'State Taxes' #State Taxes
+        [Text] 'STATE TAXES'
+      [ListItem] 'Review' #Review
+        [Text] 'REVIEW'
+      [ListItem] 'File' #File
+        [Text] 'FILE'
+    [List] '' #subTab
+      [ListItem] 'You & Your Family' #You & Your Family
+        [RadioButton] '' #You & Your Family
+  [ToolBar] '' #mainFindTools
+    [Custom] '' #searchUC
+        [Hyperlink] ' '
+    [Button] '' #OverflowButton (disabled)
+  [Pane] '' #scrollViewer
+    [Text] 'Do Any of These Apply to Jordan?' #titleTextBlock
+    [CheckBox] 'Was legally blind as of December 31, 2024. Learn More' #rdb_1
+      [Text] 'Was legally blind as of December 31, 2024. Learn More'
+        [Hyperlink] 'Learn More'
+    [CheckBox] 'Would like to change the language used by the IRS to send me written communications. Learn More' #rdb_2
+      [Text] 'Would like to change the language used by the IRS to send me written communications. Learn More'
+        [Hyperlink] 'Learn More'
+    [CheckBox] 'Passed away before filing this return.' #rdb_8
+      [Text] 'Passed away before filing this return.'
+    [CheckBox] 'Jordan is a nonresident alien or dual-status alien spouse.' #rdb_14
+      [Text] 'Jordan is a nonresident alien or dual-status alien spouse.'
+    [CheckBox] 'Jordan is currently incarcerated. Learn More' #rdb_27
+      [Text] 'Jordan is currently incarcerated. Learn More'
+        [Hyperlink] 'Learn More'
+    [CheckBox] 'None of the above' #rdb_32
+      [Text] 'None of the above'
+    [Button] 'Continue'
+      [Text] 'Continue'
+    [Button] 'Back'
+      [Text] 'Back'
+    [Custom] '' #sideBar
+  [Text] '80%'
+  [Text] 'Help Others'
+    [Hyperlink] 'Help Others' #helpothers
+  [Image] '' #new
+  [Text] ' '
+    [Hyperlink] ' ' #upgradeTurboTaxHyperlink
+      [Image] '' #upgradeTurboTaxImage
+      [Text] 'Upgrade TurboTax' #upgradeTurboTaxText
+  [Button] 'Show Relevant Form'
+    [Text] 'Show Relevant Form'
+  [Custom] '' #SizeablePanel
+    [Thumb] '' #PART_Thumb

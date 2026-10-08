@@ -1,0 +1,128 @@
+{
+ "n": 160,
+ "slug": "ctc-3",
+ "capturedAt": "2026-10-08T19:00:47.741Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "ChTxCr"
+ ],
+ "topicLinks": [
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=ChTxCr,hSummaryCTC",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=ChTxCr,hSummaryACTC",
+   "faq": false
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "You're getting a credit!",
+ "headings": [],
+ "text": "You're getting a credit! Child Tax Credit and Other Dependent Credit $2,200 EXPLAIN AMOUNT Additional Child Tax Credit $ EXPLAIN AMOUNT I don't want to claim the Additional Child Tax Credit.",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "160.237840",
+   "id": "",
+   "label": "Child Tax Credit and Other Dependent Credit $2,200 EXPLAIN AMOUNT Additional Child Tax Credit $ EXPLAIN AMOUNT I don't want to claim the Additional Child Tax Cr",
+   "value": "",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=ChTxCr,hSummaryCTC",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=ChTxCr,hSummaryACTC",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=ChTxCr,hSummaryCTC",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=ChTxCr,hSummaryACTC",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

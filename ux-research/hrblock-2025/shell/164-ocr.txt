@@ -1,0 +1,36 @@
+--- LEFT PANEL (meter + FAQs)
+2025
+My taxes for
+Premium
+FEDERAL REFUND
+$1,951
+LATEST CHANGE
+A Increase of $600
+STATE REFUND
+$0
+Help Center
+FAQs
+View Details
+Do I need my Form 1095-B or
+1095-C?
+What if I received a Form 1095-A
+for other insurance or the void
+checkbox is selected on my
+1095-A?
+If someone else can claim me or
+my spouse as a dependent, how
+should I answer?
+--- TABS
+WELCOME
+PERSONAL INFORMATION
+FEDERAL
+INCOME
+ADJUSTMENTS
+STATE
+DEDUCTIONS
+FILE
+CREDITS
+TAXES
+MISC
+PLAN
+FINISH

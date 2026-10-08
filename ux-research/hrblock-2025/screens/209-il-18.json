@@ -1,0 +1,118 @@
+{
+ "n": 209,
+ "slug": "il-18",
+ "capturedAt": "2026-10-08T19:22:22.615Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "iledexp"
+ ],
+ "topicLinks": [
+  {
+   "text": "School expenses",
+   "href": "tc:TOPICHELP=iledexp,hSchoolExpenses",
+   "faq": false
+  },
+  {
+   "text": "If I home-schooled my child, what should I do?",
+   "href": "tc:TOPICHELP=iledexp,vWhatifchildhomeschooled",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Tell Us About the School and Your Expenses",
+ "headings": [],
+ "text": "Tell Us About the School and Your Expenses School's name Illinois school city School expenses paid during 2025",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "50402.50534",
+   "id": "",
+   "label": "School's name",
+   "value": "",
+   "maxlength": "17"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "50402.50535",
+   "id": "",
+   "label": "Illinois school city",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "50402.50536",
+   "id": "",
+   "label": "School expenses paid during 2025",
+   "value": "",
+   "maxlength": "10"
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "School expenses",
+   "img": "",
+   "href": "tc:TOPICHELP=iledexp,hSchoolExpenses",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

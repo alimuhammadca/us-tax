@@ -1,0 +1,123 @@
+{
+ "n": 67,
+ "slug": "int-after",
+ "capturedAt": "2026-10-08T18:26:39.431Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Let's work on your interest income.",
+ "headings": [],
+ "text": "Let's work on your interest income. Tell us about interest income from any of these sources: A bank account (Form 1099-INT) Bonds or U.S. Treasury obligations (Form 1099-OID or Form 1099-INT) A person or other source Most interest is reported to you on Form 1099-INT or Form 1099-OID. Payer Name Interest 1st (First Bank) 1,850 Edit Delete",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "interest",
+   "img": "",
+   "href": "tc:TOPICHELP=IntInc,hInterest",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contentbtn",
+   "text": "",
+   "img": "Enter Manually",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "wizardbtn",
+   "text": "",
+   "img": "Import 1099-INT",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "childof224959032",
+   "id": "",
+   "cls": "multinstanceanchor",
+   "text": "Edit",
+   "img": "",
+   "href": "TC:EDIT/1",
+   "onclick": ""
+  },
+  {
+   "name": "childof225008424",
+   "id": "",
+   "cls": "multinstanceanchor",
+   "text": "Delete",
+   "img": "",
+   "href": "TC:DELETE/1",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "58",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "FINISHED",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "Enter_Manually_up.gif",
+   "alt": "",
+   "title": "Enter Manually",
+   "name": "Enter_Manually"
+  },
+  {
+   "src": "import_1099_int_up.gif",
+   "alt": "",
+   "title": "Import 1099-INT",
+   "name": "import_1099_int"
+  },
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "finished_up.gif",
+   "alt": "FINISHED",
+   "title": "",
+   "name": "finished"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

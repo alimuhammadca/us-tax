@@ -1,0 +1,111 @@
+{
+ "n": 213,
+ "slug": "il-k12-phantom-deleted",
+ "capturedAt": "2026-10-08T19:24:10.511Z",
+ "actionsBefore": [
+  [
+   "pwclick",
+   "[name=childof277604480] img, [name=childof277604480]"
+  ]
+ ],
+ "actionResults": [
+  "pwclick [name=childof277604480] img, [name=childof277604480] true"
+ ],
+ "dialogs": [],
+ "topics": [
+  "iledexp"
+ ],
+ "topicLinks": [
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=iledexp,hEdCreditRules",
+   "faq": false
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Claim Qualified K–12 Education Expenses",
+ "headings": [],
+ "text": "Claim Qualified K–12 Education Expenses You might be able to claim this education credit. LEARN MORE",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=iledexp,hEdCreditRules",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "59",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Yes",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "60",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "No",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "Yes_up.gif",
+   "alt": "Yes",
+   "title": "",
+   "name": "Yes"
+  },
+  {
+   "src": "no_up.gif",
+   "alt": "No",
+   "title": "",
+   "name": "no"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=iledexp,hEdCreditRules",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

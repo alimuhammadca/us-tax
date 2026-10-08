@@ -1,0 +1,123 @@
+{
+ "n": 64,
+ "slug": "int-enter-manually",
+ "capturedAt": "2026-10-08T18:25:45.095Z",
+ "actionsBefore": [
+  [
+   "clickText",
+   "Enter Manually"
+  ]
+ ],
+ "actionResults": [
+  "clickText Enter Manually"
+ ],
+ "dialogs": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "What kind of interest is this?",
+ "headings": [],
+ "text": "What kind of interest is this? Interest reported on a Form 1099-INT (most common) Income reported on a Form 1099-OID Seller-financed mortgage interest received from someone who bought your home LEARN MORE Other interest",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_WhatKind",
+   "id": "",
+   "label": "Interest reported on a Form 1099-INT (most common)",
+   "value": "166.37",
+   "checked": true
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_WhatKind",
+   "id": "",
+   "label": "Income reported on a Form 1099-OID",
+   "value": "166.38",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_WhatKind",
+   "id": "",
+   "label": "Seller-financed mortgage interest received from someone who bought your home LEARN MORE",
+   "value": "166.77",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_WhatKind",
+   "id": "",
+   "label": "Other interest",
+   "value": "166.39",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=IntInc,hSellerInt",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_up.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=IntInc,hSellerInt",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

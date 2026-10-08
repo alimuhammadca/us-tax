@@ -1,0 +1,145 @@
+{
+ "n": 231,
+ "slug": "file-4",
+ "capturedAt": "2026-10-08T19:31:22.349Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "FT_Efile"
+ ],
+ "topicLinks": [
+  {
+   "text": "",
+   "href": "tc:TOPICHELP=FT_Efile,vEfileDecedent",
+   "faq": false
+  },
+  {
+   "text": "Can I e-file my state return if I file a federal return on paper?",
+   "href": "tc:TOPICHELP=FT_Efile,vEFileStateIfFedPaper",
+   "faq": true
+  },
+  {
+   "text": "What's involved in e-filing?",
+   "href": "tc:TOPICHELP=FT_Efile,vWhatsEFiling",
+   "faq": true
+  },
+  {
+   "text": "Can I e-file both my federal and state returns?",
+   "href": "tc:TOPICHELP=FT_Efile,vEFileFedState",
+   "faq": true
+  },
+  {
+   "text": "What if I change my mind about e-filing?",
+   "href": "tc:TOPICHELP=FT_Efile,vEFileChangeMind",
+   "faq": true
+  },
+  {
+   "text": "Will my privacy be protected?",
+   "href": "tc:TOPICHELP=FT_Efile,vEFilePrivacy",
+   "faq": true
+  },
+  {
+   "text": "How do you protect the security of my tax information?",
+   "href": "tc:TOPICHELP=FT_Efile,vProtectSecurity",
+   "faq": true
+  },
+  {
+   "text": "When is the earliest I can e-file?",
+   "href": "tc:TOPICHELP=FT_Efile,vWhenCanEFile",
+   "faq": true
+  },
+  {
+   "text": "What is Free In-person Audit Support?",
+   "href": "tc:TOPICHELP=FT_Efile,vWhatsAuditSupport",
+   "faq": true
+  },
+  {
+   "text": "What's the filing deadline this year?",
+   "href": "tc:TOPICHELP=FT_Efile,vFilingDeadline",
+   "faq": true
+  },
+  {
+   "text": "Can a person who hasn't reached age 16 by December 31, 2025 e-file?",
+   "href": "tc:TOPICHELP=FT_Efile,vCanUnder16Efile",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Your Filing Options",
+ "headings": [],
+ "text": "Your Filing Options You can e-file up to 5 federal returns for free with your 10-character activation code, or you can print as many returns as you like and mail them to the IRS. How do you want to file your federal return? E-file Print and mail We'll ask about your state return later.",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_dTaxProgType",
+   "id": "",
+   "label": "E-file",
+   "value": "92.519",
+   "checked": true
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_dTaxProgType",
+   "id": "",
+   "label": "Print and mail",
+   "value": "92.561",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

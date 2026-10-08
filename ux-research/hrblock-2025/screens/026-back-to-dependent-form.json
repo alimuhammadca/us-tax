@@ -1,0 +1,76 @@
+{
+ "n": 26,
+ "slug": "back-to-dependent-form",
+ "capturedAt": "2026-10-08T18:11:33.893Z",
+ "actionsBefore": [
+  [
+   "back"
+  ]
+ ],
+ "actionResults": [
+  "back changed"
+ ],
+ "dialogs": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "What's your dependent's first name?",
+ "headings": [],
+ "text": "What's your dependent's first name? First name",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "search",
+   "name": "113.1103",
+   "id": "",
+   "label": "First name",
+   "value": "",
+   "maxlength": "11"
+  }
+ ],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_ht.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_up.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/liveaudit.css"
+ ],
+ "errors": []
+}

@@ -1,0 +1,221 @@
+{
+ "n": 85,
+ "slug": "after-klco",
+ "capturedAt": "2026-10-08T18:33:36.699Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "RetGateway"
+ ],
+ "topicLinks": [
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=RetGateway,hRetirementPlans",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=RetGateway,hAnnuities",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=RetGateway,hLearnMore_SSIncome",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=RetGateway,hDisasterDistributions",
+   "faq": false
+  },
+  {
+   "text": "What if I don't have the form listed?",
+   "href": "tc:TOPICHELP=RetGateway,vMissingForm",
+   "faq": true
+  },
+  {
+   "text": "Do I need to report the amount by which my IRA or 401(k) grew in 2025?",
+   "href": "tc:TOPICHELP=RetGateway,vPreWithdrEarnings",
+   "faq": true
+  },
+  {
+   "text": "What if I didn't receive the amount of money reported on my 1099-R?",
+   "href": "tc:TOPICHELP=RetGateway,vDidNotReceive",
+   "faq": true
+  },
+  {
+   "text": "Where do I enter a myRA distribution?",
+   "href": "tc:TOPICHELP=RetGateway,vmyRADistributions",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Choose any that apply.",
+ "headings": [],
+ "text": "Choose any that apply. Retirement plan income, withdrawal, or rollover Often reported on Forms 1099-R, CSA 1099-R, CSF 1099-R, or RRB-1099-R LEARN MORE Annuity, disability plan, or life insurance contract proceeds Payments or withdrawals; often reported on Forms 1099-R, CSA 1099-R, CSF 1099-R, or RRB-1099-R LEARN MORE Social Security income Benefits reported on Forms SSA-1099 or RRB-1099 LEARN MORE Qualified 2023, 2024 and 2025 disaster distributions Deferred income from or repaid a qualified 2023, 2024 or 2025 disaster distribution LEARN MORE",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.506",
+   "id": "",
+   "label": "Retirement plan income, withdrawal, or rollover Often reported on Forms 1099-R, CSA 1099-R, CSF 1099-R, or RRB-1099-R LEARN MORE",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.19387",
+   "id": "",
+   "label": "Annuity, disability plan, or life insurance contract proceeds Payments or withdrawals; often reported on Forms 1099-R, CSA 1099-R, CSF 1099-R, or RRB-1099-R LEA",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.147",
+   "id": "",
+   "label": "Social Security income Benefits reported on Forms SSA-1099 or RRB-1099 LEARN MORE",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.210834",
+   "id": "",
+   "label": "Qualified 2023, 2024 and 2025 disaster distributions Deferred income from or repaid a qualified 2023, 2024 or 2025 disaster distribution LEARN MORE",
+   "value": "",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=RetGateway,hRetirementPlans",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=RetGateway,hAnnuities",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=RetGateway,hLearnMore_SSIncome",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=RetGateway,hDisasterDistributions",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=RetGateway,hRetirementPlans",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=RetGateway,hAnnuities",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=RetGateway,hLearnMore_SSIncome",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=RetGateway,hDisasterDistributions",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

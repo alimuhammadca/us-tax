@@ -1,0 +1,37 @@
+--- LEFT PANEL (meter + FAQs)
+2025
+My taxes for
+Premium
+FEDERAL REFUND
+$1 ,855
+LATEST CHANGE
+v Decrease of $407
+STATE REFUND
+$0
+Help Center
+FAQs
+View Details
+Do I need to report reinvested
+dividends?
+What if there's a liquidation
+distribution in box 9 or IO?
+How do I know if my dividends
+came from U.S. Treasury
+obligations?
+Do I need to include amounts
+from a Form 1099 if it has less
+than 50 cents on it?
+--- TABS
+WELCOME
+PERSONAL INFORMATION
+FEDERAL
+INCOME
+ADJUSTMENTS
+STATE
+DEDUCTIONS
+FILE
+CREDITS
+TAXES
+MISC
+PLAN
+FINISH

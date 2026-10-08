@@ -1,0 +1,469 @@
+{
+ "n": 13,
+ "slug": "after-fs-guide",
+ "capturedAt": "2026-10-08T18:04:46.900Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Tell us about you and your spouse.",
+ "headings": [
+  "Primary taxpayer",
+  "Spouse",
+  "Home address",
+  "Additional Contact Information"
+ ],
+ "text": "Tell us about you and your spouse. List the names in the same order as they were on last year's return. (Ex: If you put yourself as the spouse last year, enter yourself as the spouse again this year.) Primary taxpayer First name MI Last name Jr., III No Entry Jr. Sr. II III IV V VI Occupation Date of birth (MM/DD/YYYY) SSN What if my SSN or ITIN wasn't issued on or before the return due date (including extensions)? Spouse First name MI Last name Jr., III No Entry Jr. Sr. II III IV V VI Occupation Date of birth (MM/DD/YYYY) SSN Nonresident alien or dual-status alien spouse is treated as a US Resident for the entire tax year. What if my spouse's SSN or ITIN wasn't issued on or before the return due date (including extensions)? Home address Your main home (and spouse's if filing a joint return) was in the U.S. for over half of 2025. LEARN MORE We have a foreign address. LEARN MORE Street Apt. City State ZIP Daytime phone LEARN MORE Additional Contact Information We have a foreign mobile number. LEARN MORE Mobile number (XXX-XXX-XXXX) LEARN MORE Email address LEARN MORE",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "search",
+   "name": "92.1",
+   "id": "",
+   "label": "First name",
+   "value": "",
+   "maxlength": "12"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "92.477",
+   "id": "",
+   "label": "MI",
+   "value": "",
+   "maxlength": "1"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "92.3",
+   "id": "",
+   "label": "Last name",
+   "value": "",
+   "maxlength": "20"
+  },
+  {
+   "tag": "select",
+   "type": "select-one",
+   "name": "92.5",
+   "id": "select3",
+   "label": "Jr., III",
+   "value": "No Entry",
+   "options": [
+    "No Entry",
+    "Jr.",
+    "Sr.",
+    "II",
+    "III",
+    "IV",
+    "V",
+    "VI"
+   ]
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "92.13",
+   "id": "",
+   "label": "Occupation",
+   "value": "",
+   "maxlength": "30"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "92.9",
+   "id": "",
+   "label": "Date of birth",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "92.7",
+   "id": "",
+   "label": "SSN",
+   "value": "",
+   "maxlength": "11"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "92.2",
+   "id": "",
+   "label": "First name",
+   "value": "",
+   "maxlength": "12"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "92.478",
+   "id": "",
+   "label": "MI",
+   "value": "",
+   "maxlength": "1"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "92.4",
+   "id": "",
+   "label": "Last name",
+   "value": "",
+   "maxlength": "20"
+  },
+  {
+   "tag": "select",
+   "type": "select-one",
+   "name": "92.6",
+   "id": "select3",
+   "label": "Jr., III",
+   "value": "No Entry",
+   "options": [
+    "No Entry",
+    "Jr.",
+    "Sr.",
+    "II",
+    "III",
+    "IV",
+    "V",
+    "VI"
+   ]
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "92.14",
+   "id": "",
+   "label": "Occupation",
+   "value": "",
+   "maxlength": "30"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "92.10",
+   "id": "",
+   "label": "Date of birth",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "92.8",
+   "id": "",
+   "label": "SSN",
+   "value": "",
+   "maxlength": "11"
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.256579",
+   "id": "",
+   "label": "Nonresident alien or dual-status alien spouse is treated as a US Resident for the entire tax year.",
+   "value": " ",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.260948",
+   "id": "",
+   "label": "Your main home (and spouse's if filing a joint return) was in the U.S. for over half of 2025. LEARN MORE",
+   "value": " ",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.545",
+   "id": "",
+   "label": "We have a foreign address. LEARN MORE",
+   "value": " ",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "92.20",
+   "id": "",
+   "label": "Street",
+   "value": "",
+   "maxlength": "35"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "92.21",
+   "id": "",
+   "label": "Apt.",
+   "value": "",
+   "maxlength": "5"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "92.22",
+   "id": "",
+   "label": "City",
+   "value": "",
+   "maxlength": "22"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "92.23",
+   "id": "",
+   "label": "State",
+   "value": "",
+   "maxlength": "2"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "92.24",
+   "id": "",
+   "label": "ZIP",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "92.671",
+   "id": "",
+   "label": "Daytime phone",
+   "value": "",
+   "maxlength": "12"
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.199276",
+   "id": "",
+   "label": "We have a foreign mobile number. LEARN MORE",
+   "value": " ",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "92.185998",
+   "id": "",
+   "label": "Mobile number",
+   "value": "",
+   "maxlength": "12"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "92.843",
+   "id": "",
+   "label": "Email address",
+   "value": "",
+   "maxlength": "40"
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "What if my SSN or ITIN wasn't issued on or before the return due date (including extensions)?",
+   "img": "",
+   "href": "tc:TOPICHELP=NameFS,hLearnMore_SSNAfterDueDate",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "What if my spouse's SSN or ITIN wasn't issued on or before the return due date (including extensions)?",
+   "img": "",
+   "href": "tc:TOPICHELP=NameFS,hLearnMore_SSNAfterDueDate",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=NameFS,hMainHome_LearnMore",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=NameFS,hForeignAddress_LearnMore",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=NameFS,hMFJPhoneNumber",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=NameFS,hForeignCellPhone_LearnMore",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=NameFS,hWhyCell",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=NameFS,hWhyEmail",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_up.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "What if my SSN or ITIN wasn't issued on or before the return due date (including extensions)?",
+   "img": "",
+   "href": "tc:TOPICHELP=NameFS,hLearnMore_SSNAfterDueDate",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "What if my spouse's SSN or ITIN wasn't issued on or before the return due date (including extensions)?",
+   "img": "",
+   "href": "tc:TOPICHELP=NameFS,hLearnMore_SSNAfterDueDate",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=NameFS,hMainHome_LearnMore",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=NameFS,hForeignAddress_LearnMore",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=NameFS,hMFJPhoneNumber",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=NameFS,hForeignCellPhone_LearnMore",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=NameFS,hWhyCell",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=NameFS,hWhyEmail",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

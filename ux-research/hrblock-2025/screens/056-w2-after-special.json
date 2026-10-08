@@ -1,0 +1,144 @@
+{
+ "n": 56,
+ "slug": "w2-after-special",
+ "capturedAt": "2026-10-08T18:22:59.727Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Tell us about W-2s you or Casey received.",
+ "headings": [],
+ "text": "Tell us about W-2s you or Casey received. You can import a W-2 directly from your employer, by uploading a PDF, taking a pic, or entering it manually. Employer Name Employee Wages (Box 1) 1st (Acme Testing LLC) Jordan 85,000 Edit Delete",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "wizardbtn",
+   "text": "",
+   "img": "Import from Employer",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "wizardbtn",
+   "text": "",
+   "img": "Upload a PDF",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "wizardbtn",
+   "text": "",
+   "img": "Take a pic with phone",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contentbtn",
+   "text": "",
+   "img": "Enter Manually",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "childof201592816",
+   "id": "",
+   "cls": "multinstanceanchor",
+   "text": "Edit",
+   "img": "",
+   "href": "TC:EDIT/1",
+   "onclick": ""
+  },
+  {
+   "name": "childof204650344",
+   "id": "",
+   "cls": "multinstanceanchor",
+   "text": "Delete",
+   "img": "",
+   "href": "TC:DELETE/1",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "58",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "FINISHED",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "import_from_employer_up.gif",
+   "alt": "",
+   "title": "Import from Employer",
+   "name": "import_from_employer"
+  },
+  {
+   "src": "upload_a_pdf_up.gif",
+   "alt": "",
+   "title": "Upload a PDF",
+   "name": "upload_a_pdf"
+  },
+  {
+   "src": "Take_a_pic_with_phone_up.gif",
+   "alt": "",
+   "title": "Take a pic with phone",
+   "name": "Take_a_pic_with_phone"
+  },
+  {
+   "src": "Enter_Manually_up.gif",
+   "alt": "",
+   "title": "Enter Manually",
+   "name": "Enter_Manually"
+  },
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "finished_ht.gif",
+   "alt": "FINISHED",
+   "title": "",
+   "name": "finished"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

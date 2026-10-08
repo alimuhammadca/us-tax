@@ -1,0 +1,197 @@
+{
+ "n": 136,
+ "slug": "after-additional-ded",
+ "capturedAt": "2026-10-08T18:51:56.326Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "MiscDed"
+ ],
+ "topicLinks": [
+  {
+   "text": "Estate tax paid on income in respect of a decedent",
+   "href": "tc:TOPICHELP=MiscDed,hIRDNotFromK1",
+   "faq": false
+  },
+  {
+   "text": "Giving back property",
+   "href": "tc:TOPICHELP=MiscDed,hGivingBackProp",
+   "faq": false
+  },
+  {
+   "text": "Unrecovered pension investment",
+   "href": "tc:TOPICHELP=MiscDed,hCessationOfAnnuity",
+   "faq": false
+  },
+  {
+   "text": "Bond premiums",
+   "href": "tc:TOPICHELP=MiscDed,hBondPremium",
+   "faq": false
+  },
+  {
+   "text": "Losses on certain debt instruments",
+   "href": "tc:TOPICHELP=MiscDed,hDebtInstrumentLoss",
+   "faq": false
+  },
+  {
+   "text": "How can I create a list of items to add up and go into a field?",
+   "href": "tc:TOPICHELP=MiscDed,vItemizedList",
+   "faq": true
+  },
+  {
+   "text": "What if I have gambling losses and haven't entered any gambling winnings?",
+   "href": "tc:TOPICHELP=MiscDed,vLossesWithoutWinnings",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Other Deductions",
+ "headings": [],
+ "text": "Other Deductions Tell us about any of these other expenses that you or Casey had in 2025. You can claim these deductions even if they're less than 2% of your adjusted gross income (AGI). Estate tax paid on income in respect of a decedent Giving back property Unrecovered pension investment Bond premiums Losses on certain debt instruments",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "search",
+   "name": "2.143309",
+   "id": "",
+   "label": "Estate tax paid on income in respect of a decedent",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "2.69",
+   "id": "",
+   "label": "Giving back property",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "2.70",
+   "id": "",
+   "label": "Unrecovered pension investment",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "2.72",
+   "id": "",
+   "label": "Bond premiums",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "2.156511",
+   "id": "",
+   "label": "Losses on certain debt instruments",
+   "value": "",
+   "maxlength": "10"
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Estate tax paid on income in respect of a decedent",
+   "img": "",
+   "href": "tc:TOPICHELP=MiscDed,hIRDNotFromK1",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Giving back property",
+   "img": "",
+   "href": "tc:TOPICHELP=MiscDed,hGivingBackProp",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Unrecovered pension investment",
+   "img": "",
+   "href": "tc:TOPICHELP=MiscDed,hCessationOfAnnuity",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Bond premiums",
+   "img": "",
+   "href": "tc:TOPICHELP=MiscDed,hBondPremium",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Losses on certain debt instruments",
+   "img": "",
+   "href": "tc:TOPICHELP=MiscDed,hDebtInstrumentLoss",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

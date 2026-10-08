@@ -1,0 +1,87 @@
+{
+ "n": 147,
+ "slug": "dc-3",
+ "capturedAt": "2026-10-08T18:56:26.433Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [],
+ "topicLinks": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Did you pay care expenses for any nondependents?",
+ "headings": [],
+ "text": "Did you pay care expenses for any nondependents? Yes No Examples of Non-Dependents who qualify: Your disabled spouse who lived with you more than half of 2025. Your disabled elderly parent who lived with you more than half of 2025 but has too much income to be claimed as a dependent. Any disabled person who lived with you more than half of 2025 and whom you could claim as a dependent except: They had too much gross income to be claimed as a dependent. They filed a joint return, or You (or your spouse if filing jointly) could be claimed as a dependent on another taxpayer's 2025 tax return. If you need more detailed instructions, you can refer to the IRS instructions for Form 2441.",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_AnyNonDeps",
+   "id": "",
+   "label": "Yes",
+   "value": "95.31889",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_AnyNonDeps",
+   "id": "",
+   "label": "No",
+   "value": "95.31890",
+   "checked": true
+  }
+ ],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

@@ -1,0 +1,97 @@
+{
+ "n": 177,
+ "slug": "review-start",
+ "capturedAt": "2026-10-08T19:08:18.642Z",
+ "actionsBefore": [
+  [
+   "next",
+   30000
+  ]
+ ],
+ "actionResults": [
+  "next NOCHANGE"
+ ],
+ "dialogs": [],
+ "topics": [
+  "End"
+ ],
+ "topicLinks": [
+  {
+   "text": "How do I go back and look at an Interview topic again?",
+   "href": "tc:TOPICHELP=End,vHowToRevisit",
+   "faq": true
+  },
+  {
+   "text": "Where do I enter...?",
+   "href": "tc:TOPICHELP=End,vWhereDoIEnter",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Check For Additional Documents",
+ "headings": [],
+ "text": "Check For Additional Documents Great news — your federal return is almost complete! Before we finish up, let's make sure you've entered all your forms, receipts, and other tax documents. Commonly missed tax forms: Form 1098-T: Tuition Expenses Form 5498 SA: Health Savings Accounts (HSA) Form 1099-G: State Refunds Form 1099-INT: Interest Income Form 1099-R: Retirement Income If you're missing anything, click on Take Me To and then on Search to find the interview topic or form you need. Otherwise, click Next, and we'll check your return to make sure it's complete and accurate.",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "contentbtn",
+   "text": "",
+   "img": "Search",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "Search_up.gif",
+   "alt": "",
+   "title": "Search",
+   "name": "Search"
+  },
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_up.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

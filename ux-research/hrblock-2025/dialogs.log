@@ -1,0 +1,5 @@
+2026-10-08T14:07:00 TITLE=Save Your Return | TEXT=It is a good idea to save your return from time to time. After you initially save your return, The program will automatically save it every 10 minutes.  You can change your Autosave setting from the File menu.  Do you want to save your return now?  | BUTTONS=&Yes,&No | CLICKED=No
+2026-10-08T14:08:53 TITLE=AutoSave As | TEXT=&Name: / C:\...\OneDrive\Documents\HRBlock\ / Please enter the file name for the return.  To change the directory, click on the Browse button. / Directory: | BUTTONS=OK,Cancel,&Browse... | NO-MATCH (left open)
+2026-10-08T14:10:59 TITLE=AutoSave As | TEXT=&Name: / C:\...\OneDrive\Documents\HRBlock\ / Please enter the file name for the return.  To change the directory, click on the Browse button. / Directory: | BUTTONS=OK,Cancel,&Browse... | CLICKED=OK
+2026-10-08T14:21:49 TITLE=H&R Block | TEXT=Please select either YES or NO. | BUTTONS=OK | CLICKED=OK
+2026-10-08T15:07:10 TITLE=Search | TEXT= | BUTTONS=tclswbtn,wgothrebtn | NO-MATCH (left open)

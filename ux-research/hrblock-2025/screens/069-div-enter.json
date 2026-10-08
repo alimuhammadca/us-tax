@@ -1,0 +1,511 @@
+{
+ "n": 69,
+ "slug": "div-enter",
+ "capturedAt": "2026-10-08T18:27:17.551Z",
+ "actionsBefore": [
+  [
+   "clickText",
+   "Enter Manually"
+  ]
+ ],
+ "actionResults": [
+  "clickText Enter Manually",
+  "expanded 1"
+ ],
+ "dialogs": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Enter your dividend or distribution information.",
+ "headings": [],
+ "text": "Enter your dividend or distribution information. Whose dividend or distribution is this? Jordan Casey Both Payer's name Account number 1a Ordinary dividends 1b Qualified dividends 2a Capital gain distributions 2b 1250 gain 2c 1202 gain 2d Collectibles (28%) gain 2e Section 897 ordinary income 2f Section 897 capital gain 3 Nondividend distributions 4 Federal income tax withheld 5 Section 199A dividends 6 Investment expenses 7 Foreign tax paid 8 Country 9 Cash liquidation distributions 10 Noncash liquidation distributions 11 The FATCA filing requirement box is checked on my 1099-DIV. LEARN MORE 12 Exempt interest dividends 13 Spec'd private activity bond int divs 14 State 15 State ID number 16 State tax withheld From U.S. Treasury obligations LEARN MORE Requires an adjustment (uncommon) LEARN MORE Dividend Look-Up (for help determining your dividends)",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_WhoOwned",
+   "id": "",
+   "label": "Jordan",
+   "value": "164.2",
+   "checked": true
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_WhoOwned",
+   "id": "",
+   "label": "Casey",
+   "value": "164.3",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_WhoOwned",
+   "id": "",
+   "label": "Both",
+   "value": "164.4",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "164.5",
+   "id": "",
+   "label": "Payer's name",
+   "value": "",
+   "maxlength": "60"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "164.60",
+   "id": "",
+   "label": "Account number",
+   "value": "",
+   "maxlength": "22"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "164.6",
+   "id": "",
+   "label": "Ordinary dividends",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "164.61",
+   "id": "",
+   "label": "Qualified dividends",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "164.7",
+   "id": "",
+   "label": "Capital gain distributions",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "164.9",
+   "id": "",
+   "label": "1250 gain",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "164.10",
+   "id": "",
+   "label": "1202 gain",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "164.8",
+   "id": "",
+   "label": "Collectibles (28%) gain",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "164.226926",
+   "id": "",
+   "label": "Section 897 ordinary income",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "164.226927",
+   "id": "",
+   "label": "Section 897 capital gain",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "164.11",
+   "id": "",
+   "label": "Nondividend distributions",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "164.12",
+   "id": "",
+   "label": "Federal income tax withheld",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "164.204690",
+   "id": "",
+   "label": "Section 199A dividends",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "164.13",
+   "id": "",
+   "label": "Investment expenses",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "164.14",
+   "id": "",
+   "label": "Foreign tax paid",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "164.15",
+   "id": "",
+   "label": "Country",
+   "value": "",
+   "maxlength": "18"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "164.16",
+   "id": "",
+   "label": "Cash liquidation distributions",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "164.17",
+   "id": "",
+   "label": "Noncash liquidation distributions",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "164.167152",
+   "id": "",
+   "label": "The FATCA filing requirement box is checked on my 1099-DIV. LEARN MORE",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "164.41",
+   "id": "",
+   "label": "Exempt interest dividends",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "164.42",
+   "id": "",
+   "label": "Spec'd private activity bond int divs",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "164.133765",
+   "id": "",
+   "label": "State",
+   "value": "",
+   "maxlength": "2"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "164.144115",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "2"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "164.133766",
+   "id": "",
+   "label": "State ID number",
+   "value": "",
+   "maxlength": "16"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "164.144116",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "16"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "164.133767",
+   "id": "",
+   "label": "State tax withheld",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "164.144117",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "164.20661",
+   "id": "",
+   "label": "From U.S. Treasury obligations LEARN MORE",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "164.20662",
+   "id": "",
+   "label": "Requires an adjustment (uncommon) LEARN MORE",
+   "value": "",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Payer's name",
+   "img": "",
+   "href": "tc:TOPICHELP=Div,hPayer",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Qualified dividends",
+   "img": "",
+   "href": "tc:TOPICHELP=Div,hQualDiv",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "1250 gain",
+   "img": "",
+   "href": "tc:TOPICHELP=Div,hKG25Rate",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "1202 gain",
+   "img": "",
+   "href": "tc:TOPICHELP=Div,hSec1202Exclusion",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Collectibles (28%) gain",
+   "img": "",
+   "href": "tc:TOPICHELP=Div,hKG28Rate",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Section 897 ordinary income",
+   "img": "",
+   "href": "tc:TOPICHELP=Div,hSec897OrdInc",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Section 897 capital gain",
+   "img": "",
+   "href": "tc:TOPICHELP=Div,hSec897CapGain",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Section 199A dividends",
+   "img": "",
+   "href": "tc:TOPICHELP=Div,hSec199ADivs",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Investment expenses",
+   "img": "",
+   "href": "tc:TOPICHELP=Div,hCarryInvestExpenses",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Foreign tax paid",
+   "img": "",
+   "href": "tc:TOPICHELP=Div,hForeignTaxes",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=Div,hFATCA",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=Div,hDivTreas",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=Div,hLearnMoreAdjust",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Dividend Look-Up",
+   "img": "",
+   "href": "http://www.hrblock.com/software/2025/networthdividend",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_up.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=Div,hFATCA",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=Div,hDivTreas",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=Div,hLearnMoreAdjust",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

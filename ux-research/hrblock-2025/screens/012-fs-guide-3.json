@@ -1,0 +1,85 @@
+{
+ "n": 12,
+ "slug": "fs-guide-3",
+ "capturedAt": "2026-10-08T18:04:11.712Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "We recommend you file jointly with your spouse.",
+ "headings": [],
+ "text": "We recommend you file jointly with your spouse. This is most common and lets you get the most deductions and credits. You could choose to file separately if: You keep separate finances. One of you has a large amount of medical expenses, and you don't live in a community property state. Which filing status do you want to use? Married filing jointly Married filing separately",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_Joint",
+   "id": "",
+   "label": "Married filing jointly",
+   "value": "92.884",
+   "checked": true
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_Joint",
+   "id": "",
+   "label": "Married filing separately",
+   "value": "92.885",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

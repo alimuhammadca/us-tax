@@ -1,0 +1,157 @@
+{
+ "n": 174,
+ "slug": "misc-2",
+ "capturedAt": "2026-10-08T19:05:23.393Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "DriversLicense"
+ ],
+ "topicLinks": [
+  {
+   "text": "What should I do if I have a license or ID but don't want to provide it?",
+   "href": "tc:TOPICHELP=DriversLicense,vNotProvided",
+   "faq": true
+  },
+  {
+   "text": "What should I choose if I have a foreign driver's license or ID?",
+   "href": "tc:TOPICHELP=DriversLicense,vForeignID",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Driver's License or State-Issued ID",
+ "headings": [
+  "Jordan",
+  "Casey"
+ ],
+ "text": "Driver's License or State-Issued ID To combat stolen-identity tax refund fraud, the IRS and some states are requesting additional information this filing season, including state identification information. Omitting any of this information may cause delays in processing the tax return or may cause your return to be rejected. Jordan Which type of ID do you have? Driver's license Other state-issued ID I don't have a driver's license or state-issued ID. I don't want to provide my license or ID. Casey Which type of ID does Casey have? Driver's license Other state-issued ID Casey doesn't have a driver's license or state-issued ID. Casey doesn't want to provide their license or ID.",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_IDTypeTP",
+   "id": "",
+   "label": "Driver's license",
+   "value": "92.195137",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_IDTypeTP",
+   "id": "",
+   "label": "Other state-issued ID",
+   "value": "92.195138",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_IDTypeTP",
+   "id": "",
+   "label": "I don't have a driver's license or state-issued ID.",
+   "value": "92.195615",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_IDTypeTP",
+   "id": "",
+   "label": "I don't want to provide my license or ID.",
+   "value": "92.199001",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_IDTypeSP",
+   "id": "",
+   "label": "Driver's license",
+   "value": "92.195139",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_IDTypeSP",
+   "id": "",
+   "label": "Other state-issued ID",
+   "value": "92.195140",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_IDTypeSP",
+   "id": "",
+   "label": "Casey doesn't have a driver's license or state-issued ID.",
+   "value": "92.195616",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_IDTypeSP",
+   "id": "",
+   "label": "Casey doesn't want to provide their license or ID.",
+   "value": "92.199002",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

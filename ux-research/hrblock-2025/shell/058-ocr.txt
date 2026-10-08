@@ -1,0 +1,38 @@
+--- LEFT PANEL (meter + FAQs)
+2025
+My taxes for
+Premium
+FEDERAL REFUND
+$5,254
+LATEST CHANGE
+A Increase of $5,254
+STATE REFUND
+$0
+Help Center
+FAQs
+View Details
+If the W-2 box numbers are
+different, what should I do?
+What if I'm a minister but my
+church has withheld Social
+Security and Medicare Tax?
+If my W-2 is incorrect, should I ask
+for a corrected form?
+How do I report a Medicaid waiver
+payment?
+What should I do if my employer
+gave me two W-2s?
+--- TABS
+WELCOME
+PERSONAL INFORMATION
+FEDERAL
+INCOME
+ADJUSTMENTS
+STATE
+DEDUCTIONS
+FILE
+CREDITS
+TAXES
+MISC
+PLAN
+FINISH

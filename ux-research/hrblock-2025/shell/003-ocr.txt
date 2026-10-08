@@ -1,0 +1,24 @@
+--- LEFT PANEL (meter + FAQs)
+2025
+My taxes for
+Premium
+FEDERAL REFUND
+STATE REFUND
+$0
+Help Center
+FAQs
+Should I import last year's tax
+return or upload my return from a
+PDF file?
+How do I import last year's return?
+How do I file an extension?
+How do I contact H&R Block?
+--- TABS
+WELCOME
+GETTING STARTED
+FEDERAL
+EXTENSION
+STATE
+FILE
+PLAN
+IMPORT

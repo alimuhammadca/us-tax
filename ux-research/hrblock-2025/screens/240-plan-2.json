@@ -1,0 +1,62 @@
+{
+ "n": 240,
+ "slug": "plan-2",
+ "capturedAt": "2026-10-08T19:34:17.438Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [],
+ "topicLinks": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Completed Planning Topics",
+ "headings": [],
+ "text": "Completed Planning Topics Now you've done some planning so that you'll be a step ahead in the coming years! Keep in mind though, you may not be able to anticipate everything that will affect your tax situation in the coming year. You may make more money than you expected, or have more expenses. If your situation does change during the year, we suggest that you return to these planning topics. Revisiting these topics by September 2026 will still give you time to plan - and if necessary, make changes - before the end of the 2026 tax year. And remember for tax tips year round, go to www.hrblock.com. See you next year!",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "www.hrblock.com",
+   "img": "",
+   "href": "http://www.hrblock.com",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

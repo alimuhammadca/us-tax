@@ -1,0 +1,147 @@
+{
+ "n": 164,
+ "slug": "taxes-3",
+ "capturedAt": "2026-10-08T19:02:05.490Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "ACAIntro"
+ ],
+ "topicLinks": [
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=ACAIntro,hMarketplaceInsurance",
+   "faq": false
+  },
+  {
+   "text": "Do I need my Form 1095-B or 1095-C?",
+   "href": "tc:TOPICHELP=ACAIntro,vForm1095bOrForm1095c",
+   "faq": true
+  },
+  {
+   "text": "What if I received a Form 1095-A for other insurance or the void checkbox is selected on my 1095-A?",
+   "href": "tc:TOPICHELP=ACAIntro,vVoidForm1095A",
+   "faq": true
+  },
+  {
+   "text": "If someone else can claim me or my spouse as a dependent, how should I answer?",
+   "href": "tc:TOPICHELP=ACAIntro,vCanBeClaimedAsDependent",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Type of Health Insurance",
+ "headings": [],
+ "text": "Type of Health Insurance What kind of insurance did your household have in 2025? Check all that apply. Health insurance through an employer, including COBRA and retirement coverage (Form 1095-B or 1095-C) Medicaid, Medicare, CHIP, TRICARE, or another government program (Form 1095-B) A plan purchased through HealthCare.gov or a state marketplace (Form 1095-A) LEARN MORE Other insurance (including plans purchased directly from an insurance company, as well as student, catastrophic, and VA insurance)",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.162917",
+   "id": "",
+   "label": "Health insurance through an employer, including COBRA and retirement coverage (Form 1095-B or 1095-C)",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.162918",
+   "id": "",
+   "label": "Medicaid, Medicare, CHIP, TRICARE, or another government program (Form 1095-B)",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.156095",
+   "id": "",
+   "label": "A plan purchased through HealthCare.gov or a state marketplace (Form 1095-A) LEARN MORE",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.162919",
+   "id": "",
+   "label": "Other insurance (including plans purchased directly from an insurance company, as well as student, catastrophic, and VA insurance)",
+   "value": "",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=ACAIntro,hMarketplaceInsurance",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=ACAIntro,hMarketplaceInsurance",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

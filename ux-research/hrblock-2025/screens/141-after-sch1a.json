@@ -1,0 +1,187 @@
+{
+ "n": 141,
+ "slug": "after-sch1a",
+ "capturedAt": "2026-10-08T18:54:24.611Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "AdditionaDed"
+ ],
+ "topicLinks": [
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=AdditionaDed,hAddlDedSummary",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=AdditionaDed,hDedNoTaxOnTips",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=AdditionaDed,hDedNoTaxOnOT",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=AdditionaDed,hDedCarLoanInt",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=AdditionaDed,hDedEnhancedSenior",
+   "faq": false
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Here are your additional deductions for Schedule 1-A",
+ "headings": [],
+ "text": "Here are your additional deductions for Schedule 1-A Due to our calculations, your deductions may be different from what you saw earlier. LEARN MORE Deductible No Tax on Tips $ EXPLAIN AMOUNT Deductible No Tax on Overtime $ EXPLAIN AMOUNT Deductible Car Loan Interest $ EXPLAIN AMOUNT Enhanced Senior deduction $0 EXPLAIN AMOUNT Total deduction $0",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=AdditionaDed,hAddlDedSummary",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=AdditionaDed,hDedNoTaxOnTips",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=AdditionaDed,hDedNoTaxOnOT",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=AdditionaDed,hDedCarLoanInt",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=AdditionaDed,hDedEnhancedSenior",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=AdditionaDed,hAddlDedSummary",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=AdditionaDed,hDedNoTaxOnTips",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=AdditionaDed,hDedNoTaxOnOT",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=AdditionaDed,hDedCarLoanInt",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=AdditionaDed,hDedEnhancedSenior",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

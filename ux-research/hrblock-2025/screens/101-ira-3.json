@@ -1,0 +1,148 @@
+{
+ "n": 101,
+ "slug": "ira-3",
+ "capturedAt": "2026-10-08T18:39:24.085Z",
+ "actionsBefore": [
+  [
+   "radio",
+   "rb_WhoContributed",
+   "93.33219"
+  ],
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "radio ok 93.33219",
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "FIRA"
+ ],
+ "topicLinks": [
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=FIRA,hTradIRADef",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=FIRA,hRothIRADef",
+   "faq": false
+  },
+  {
+   "text": "What is the difference between a Traditional and a Roth IRA?",
+   "href": "tc:TOPICHELP=FIRA,vMoreAboutRoths",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Which IRAs is Casey contributing to for 2025?",
+ "headings": [],
+ "text": "Which IRAs is Casey contributing to for 2025? Traditional IRA LEARN MORE Roth IRA LEARN MORE",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "93.555",
+   "id": "",
+   "label": "Traditional IRA LEARN MORE",
+   "value": "on",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "93.556",
+   "id": "",
+   "label": "Roth IRA LEARN MORE",
+   "value": "on",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=FIRA,hTradIRADef",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=FIRA,hRothIRADef",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=FIRA,hTradIRADef",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=FIRA,hRothIRADef",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

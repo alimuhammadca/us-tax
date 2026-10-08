@@ -1,0 +1,125 @@
+{
+ "n": 169,
+ "slug": "amt-show-adjustments",
+ "capturedAt": "2026-10-08T19:03:54.424Z",
+ "actionsBefore": [
+  [
+   "clickText",
+   "Show AMT adjustments"
+  ],
+  [
+   "wait",
+   1500
+  ]
+ ],
+ "actionResults": [
+  "clickText Show AMT adjustments",
+  "wait"
+ ],
+ "dialogs": [],
+ "topics": [
+  "F6251KB"
+ ],
+ "topicLinks": [
+  {
+   "text": "Show AMT adjustments",
+   "href": "tc:TOPICHELP=F6251KB,hAMTAdjList",
+   "faq": false
+  },
+  {
+   "text": "What's the alternative minimum tax (AMT)?",
+   "href": "tc:TOPICHELP=F6251KB,vWhatIsAMT",
+   "faq": true
+  },
+  {
+   "text": "What if I exercised an incentive stock option before 2025?",
+   "href": "tc:TOPICHELP=F6251KB,vExerciseOption",
+   "faq": true
+  },
+  {
+   "text": "What if I exercised an incentive stock option in 2025?",
+   "href": "tc:TOPICHELP=F6251KB,vExerciseOptionThisYear",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Alternative Minimum Tax",
+ "headings": [],
+ "text": "Alternative Minimum Tax Do you need to make any Alternative Minimum Tax (AMT) adjustments for 2025? Show AMT adjustments So far, your AMT is $0. You could still owe AMT if an adjustment applies to you. Most adjustments are uncommon. Yes No",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_DoAMT",
+   "id": "",
+   "label": "Yes",
+   "value": "41.27754",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_DoAMT",
+   "id": "",
+   "label": "No",
+   "value": "41.27755",
+   "checked": true
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Show AMT adjustments",
+   "img": "",
+   "href": "tc:TOPICHELP=F6251KB,hAMTAdjList",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_up.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

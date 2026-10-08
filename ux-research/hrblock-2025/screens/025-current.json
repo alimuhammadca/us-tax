@@ -1,0 +1,88 @@
+{
+ "n": 25,
+ "slug": "current",
+ "capturedAt": "2026-10-08T18:11:11.632Z",
+ "actionsBefore": [],
+ "actionResults": [],
+ "dialogs": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Dependent doesn't qualify as your dependent.",
+ "headings": [],
+ "text": "Dependent doesn't qualify as your dependent. However, you might be able to claim other credits if qualifies for them. We'll cover those credits later, and keep 's information on file so you won't have to enter it again. Before we continue, review 's information and make any necessary changes. First name Last name SSN",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "search",
+   "name": "113.1103",
+   "id": "",
+   "label": "First name",
+   "value": "",
+   "maxlength": "11"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "113.1105",
+   "id": "",
+   "label": "Last name",
+   "value": "",
+   "maxlength": "15"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "113.1106",
+   "id": "",
+   "label": "SSN",
+   "value": "",
+   "maxlength": "11"
+  }
+ ],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_up.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

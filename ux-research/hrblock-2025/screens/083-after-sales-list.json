@@ -1,0 +1,155 @@
+{
+ "n": 83,
+ "slug": "after-sales-list",
+ "capturedAt": "2026-10-08T18:32:59.442Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "F1099B",
+  "IntInc"
+ ],
+ "topicLinks": [
+  {
+   "text": "Edit",
+   "href": "TC:EDIT",
+   "faq": false
+  },
+  {
+   "text": "Delete",
+   "href": "TC:DELETE",
+   "faq": false
+  },
+  {
+   "text": "Edit",
+   "href": "TC:EDIT/1",
+   "faq": false
+  },
+  {
+   "text": "Delete",
+   "href": "TC:DELETE/1",
+   "faq": false
+  },
+  {
+   "text": "Where do I enter sales without a 1099-B?",
+   "href": "tc:TOPICHELP=F1099B,vNoForm1099B",
+   "faq": true
+  },
+  {
+   "text": "Do I enter my child's 1099-B sales here?",
+   "href": "tc:TOPICHELP=F1099B,vchilds1099b",
+   "faq": true
+  },
+  {
+   "text": "What can I do if the import from my financial institution failed?",
+   "href": "tc:TOPICHELP=IntInc,vWhatCanDoIfImportFromFIFailed",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Tell us about your 1099-Bs.",
+ "headings": [],
+ "text": "Tell us about your 1099-Bs. To add another 1099-B, click Add 1099-B or Import 1099-B. 1099-B description Total sales proceeds 1st (Brokerage XYZ) 7,500 Edit Delete",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "contentbtn",
+   "text": "",
+   "img": "Enter Manually",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "wizardbtn",
+   "text": "",
+   "img": "Import 1099-B",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "childof230698472",
+   "id": "",
+   "cls": "multinstanceanchor",
+   "text": "Edit",
+   "img": "",
+   "href": "TC:EDIT/1",
+   "onclick": ""
+  },
+  {
+   "name": "childof230702576",
+   "id": "",
+   "cls": "multinstanceanchor",
+   "text": "Delete",
+   "img": "",
+   "href": "TC:DELETE/1",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "58",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "Add_1099_B_up.gif",
+   "alt": "",
+   "title": "Enter Manually",
+   "name": "Add_1099_B"
+  },
+  {
+   "src": "import_1099_b_up.gif",
+   "alt": "",
+   "title": "Import 1099-B",
+   "name": "import_1099_b"
+  },
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "finished_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "finished"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

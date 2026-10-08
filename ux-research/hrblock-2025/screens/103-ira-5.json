@@ -1,0 +1,115 @@
+{
+ "n": 103,
+ "slug": "ira-5",
+ "capturedAt": "2026-10-08T18:40:03.355Z",
+ "actionsBefore": [
+  [
+   "fill",
+   "93.369",
+   "2000"
+  ],
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "fill 93.369=2,000",
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "FIRA"
+ ],
+ "topicLinks": [
+  {
+   "text": "recharacterize",
+   "href": "tc:TOPICHELP=FIRA,hRecharacterization",
+   "faq": false
+  },
+  {
+   "text": "What if the recharacterization took place after December 31, 2025?",
+   "href": "tc:TOPICHELP=FIRA,vRecharAfterYrEnd",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Tell us about Casey's recharacterization.",
+ "headings": [],
+ "text": "Tell us about Casey's recharacterization. Did Casey recharacterize any of the amounts that he or she originally contributed to traditional IRAs for 2025, so that they would be treated as Roth IRA contributions instead? Yes No",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_SpouseTradToRoth",
+   "id": "",
+   "label": "Yes",
+   "value": "93.631",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_SpouseTradToRoth",
+   "id": "",
+   "label": "No",
+   "value": "93.632",
+   "checked": true
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "recharacterize",
+   "img": "",
+   "href": "tc:TOPICHELP=FIRA,hRecharacterization",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

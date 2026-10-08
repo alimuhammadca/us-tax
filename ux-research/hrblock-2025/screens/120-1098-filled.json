@@ -1,0 +1,281 @@
+{
+ "n": 120,
+ "slug": "1098-filled",
+ "capturedAt": "2026-10-08T18:45:37.691Z",
+ "actionsBefore": [
+  [
+   "fill",
+   "130.14",
+   "Home Lender"
+  ],
+  [
+   "fill",
+   "130.144",
+   "11200"
+  ],
+  [
+   "fill",
+   "130.18057",
+   "4800"
+  ]
+ ],
+ "actionResults": [
+  "fill 130.14=Home Lender",
+  "fill 130.144=11,200",
+  "fill 130.18057=4,800"
+ ],
+ "dialogs": [],
+ "topics": [
+  "F1098KB"
+ ],
+ "topicLinks": [
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=F1098KB,vSameMortgage",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=F1098KB,vRETax",
+   "faq": false
+  },
+  {
+   "text": "What if I owe more than $750,000?",
+   "href": "tc:TOPICHELP=F1098KB,vExcessInterest750",
+   "faq": true
+  },
+  {
+   "text": "What if my mortgage was transferred to a new lender in 2025?",
+   "href": "tc:TOPICHELP=F1098KB,vNewLender",
+   "faq": true
+  },
+  {
+   "text": "What if my Form 1098 includes prepaid interest?",
+   "href": "tc:TOPICHELP=F1098KB,vPrepaidInterest",
+   "faq": true
+  },
+  {
+   "text": "What if someone else is sharing the mortgage with me?",
+   "href": "tc:TOPICHELP=F1098KB,vOtherPeople_Taxes",
+   "faq": true
+  },
+  {
+   "text": "What if the seller paid the points?",
+   "href": "tc:TOPICHELP=F1098KB,vSellerPaidPoints",
+   "faq": true
+  },
+  {
+   "text": "What if I paid real estate tax that's not reported on my mortgage statement?",
+   "href": "tc:TOPICHELP=F1098KB,vOtherRETax",
+   "faq": true
+  },
+  {
+   "text": "Are all my real estate taxes deductible?",
+   "href": "tc:TOPICHELP=F1098KB,vNondeductibleRETax",
+   "faq": true
+  },
+  {
+   "text": "Can I deduct mortgage insurance premium (PMI) on my federal return?",
+   "href": "tc:TOPICHELP=F1098KB,vPMI",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Enter your Form 1098 information.",
+ "headings": [],
+ "text": "Enter your Form 1098 information. Whose Form 1098 is this? Jordan Casey Both Lender's name Box 1 Mortgage interest Box 2 Outstanding mortgage principal LEARN MORE Box 3 Mortgage origination date (MM/DD/YYYY) Box 4 Refund of overpaid interest Box 5 Mortgage insurance premiums Box 6 Points paid on purchase of principal residence Real estate taxes paid LEARN MORE I used part or all of this loan for a reason other than buying, building, or improving my home. That's all we need from your 1098 — you don't have to enter any of the other boxes.",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_WhoOwned",
+   "id": "",
+   "label": "Jordan",
+   "value": "130.9",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_WhoOwned",
+   "id": "",
+   "label": "Casey",
+   "value": "130.10",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_WhoOwned",
+   "id": "",
+   "label": "Both",
+   "value": "130.11",
+   "checked": true
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "130.14",
+   "id": "",
+   "label": "Lender's name",
+   "value": "Home Lender",
+   "maxlength": "34"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "130.144",
+   "id": "",
+   "label": "Mortgage interest",
+   "value": "11,200",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "130.237782",
+   "id": "",
+   "label": "Outstanding mortgage principal",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "130.242350",
+   "id": "",
+   "label": "Mortgage origination date",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "130.146",
+   "id": "",
+   "label": "Refund of overpaid interest",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "130.42567",
+   "id": "",
+   "label": "Mortgage insurance premiums",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "130.145",
+   "id": "",
+   "label": "Points paid on purchase of principal residence",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "130.18057",
+   "id": "",
+   "label": "Real estate taxes paid",
+   "value": "4,800",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "130.210276",
+   "id": "",
+   "label": "I used part or all of this loan for a reason other than buying, building, or improving my home.",
+   "value": "",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=F1098KB,vSameMortgage",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=F1098KB,vRETax",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_up.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=F1098KB,vSameMortgage",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=F1098KB,vRETax",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

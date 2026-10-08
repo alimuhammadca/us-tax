@@ -1,0 +1,116 @@
+{
+ "n": 70,
+ "slug": "div-invalid-1b-gt-1a",
+ "capturedAt": "2026-10-08T18:27:40.583Z",
+ "actionsBefore": [
+  [
+   "radio",
+   "rb_WhoOwned",
+   "164.4"
+  ],
+  [
+   "fill",
+   "164.5",
+   "Big Fund"
+  ],
+  [
+   "fill",
+   "164.6",
+   "2400"
+  ],
+  [
+   "fill",
+   "164.61",
+   "3000"
+  ],
+  [
+   "fill",
+   "164.7",
+   "600"
+  ],
+  [
+   "next",
+   6000
+  ]
+ ],
+ "actionResults": [
+  "radio ok 164.4",
+  "fill 164.5=Big Fund",
+  "fill 164.6=2,400",
+  "fill 164.61=3,000",
+  "fill 164.7=600",
+  "next changed"
+ ],
+ "dialogs": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Confirm or update your dividend amounts.",
+ "headings": [],
+ "text": "Confirm or update your dividend amounts. Your entries show your qualified dividends are more than your total ordinary dividend distribution. The IRS taxes your qualified dividends at a lower rate. They should always be less than your total distribution. Box 1a Total ordinary dividends Box 1b Qualified dividends",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "search",
+   "name": "164.6",
+   "id": "",
+   "label": "Box 1a Total ordinary dividends",
+   "value": "2,400",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "164.61",
+   "id": "",
+   "label": "Box 1b Qualified dividends",
+   "value": "3,000",
+   "maxlength": "10"
+  }
+ ],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_up.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/liveaudit.css"
+ ],
+ "errors": []
+}

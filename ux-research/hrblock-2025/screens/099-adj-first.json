@@ -1,0 +1,120 @@
+{
+ "n": 99,
+ "slug": "adj-first",
+ "capturedAt": "2026-10-08T18:38:46.191Z",
+ "actionsBefore": [
+  [
+   "check",
+   "92.193"
+  ],
+  [
+   "check",
+   "92.1056"
+  ],
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "check ok 92.193",
+  "check ok 92.1056",
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "FIRA"
+ ],
+ "topicLinks": [
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=FIRA,hSaversCreditLimits",
+   "faq": false
+  },
+  {
+   "text": "Am I eligible to make a contribution?",
+   "href": "tc:TOPICHELP=FIRA,vEligibleToContribute",
+   "faq": true
+  },
+  {
+   "text": "Will my IRA contribution be deductible?",
+   "href": "tc:TOPICHELP=FIRA,vContributionDeductible",
+   "faq": true
+  },
+  {
+   "text": "Where do I enter Form 5498?",
+   "href": "tc:TOPICHELP=FIRA,vWhereEnterF5498",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "If you contribute to an IRA, you can lower your taxes.",
+ "headings": [],
+ "text": "If you contribute to an IRA, you can lower your taxes. A great way to lower this year's taxes is to contribute to a traditional IRA or Roth retirement account. You have until April 15, 2026 to contribute for 2025. Amount you can contribute: If you're under age 50, you can contribute up to $7,000. If you're 50 or older, you can contribute up to $8,000. IRA contributions can lower your taxes if: You make a deductible traditional IRA contribution. Ex: If you're in the 22% tax bracket and contribute $1,000 to a traditional IRA, your taxes will be cut by up to $220, even if you don't itemize. You're low income, making you eligible for the Saver's Credit. The tax benefits of this are even greater. Your $2,000 contribution to a Roth or traditional IRA will lower your tax bill by up to $1,000. LEARN MORE",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=FIRA,hSaversCreditLimits",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=FIRA,hSaversCreditLimits",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

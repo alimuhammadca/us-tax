@@ -1,0 +1,31 @@
+--- LEFT PANEL (meter + FAQs)
+2025
+My taxes for
+Premium
+FEDERAL REFUND
+STATE REFUND
+$0
+Help Center
+FAQs
+What's my marital status if I was
+separated?
+What's my filing status if I was in a
+common-law marriage?
+What if my spouse was a
+nonresident alien?
+What's my marital status if I'm in a
+same-sex marriage?
+--- TABS
+WELCOME
+PERSONAL INFORMATION
+FEDERAL
+INCOME
+ADJUSTMENTS
+STATE
+DEDUCTIONS
+FILE
+CREDITS
+TAXES
+MISC
+PLAN
+FINISH

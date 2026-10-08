@@ -1,0 +1,100 @@
+{
+ "n": 84,
+ "slug": "after-1099b",
+ "capturedAt": "2026-10-08T18:33:18.249Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "KLCO"
+ ],
+ "topicLinks": [
+  {
+   "text": "How do I know if I have capital loss carryover?",
+   "href": "tc:TOPICHELP=KLCO,vKnowingAboutKLCO",
+   "faq": true
+  },
+  {
+   "text": "What if my spouse and I once filed a joint return and are filing separate returns for 2025?",
+   "href": "tc:TOPICHELP=KLCO,vMFSFiler",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Do you have a capital loss carryover?",
+ "headings": [],
+ "text": "Do you have a capital loss carryover? If you sold stock, bonds, mutual funds, or other property owned for investment purposes in a prior year, and the loss exceeded the amount you were able to deduct on your return, you may have a loss carryover you can deduct this year. This is a deduction many taxpayers overlook. Yes No",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_KLCarryover",
+   "id": "",
+   "label": "Yes",
+   "value": "92.1118",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_KLCarryover",
+   "id": "",
+   "label": "No",
+   "value": "92.1119",
+   "checked": true
+  }
+ ],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Expert.css"
+ ],
+ "errors": []
+}

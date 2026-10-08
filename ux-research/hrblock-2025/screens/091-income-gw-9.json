@@ -1,0 +1,95 @@
+{
+ "n": 91,
+ "slug": "income-gw-9",
+ "capturedAt": "2026-10-08T18:35:41.477Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "OtherIncGateway"
+ ],
+ "topicLinks": [
+  {
+   "text": "What counts as a digital asset transaction?",
+   "href": "tc:TOPICHELP=OtherIncGateway,vVirtualCurrency",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Tell us if you had any Digital Asset transactions",
+ "headings": [],
+ "text": "Tell us if you had any Digital Asset transactions The IRS needs to know if you had any digital asset transactions in 2025. Digital assets are digital representations of value. For example, digital assets include any of these: Non-fungible tokens (NFTs) such as digital artwork, digital collectibles, etc. Virtual currencies, including cryptocurrencies (such as Bitcoin, Ethereum, etc.) and stablecoins (such as Tether, Binance, etc.). At any time in 2025, did you either: Receive (as a reward, award, or payment for property or services); or, Sell, exchange, or otherwise dispose of a digital asset (or a financial interest in a digital asset) Yes No",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_VirtualCurrency",
+   "id": "",
+   "label": "Yes",
+   "value": "1.217949",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_VirtualCurrency",
+   "id": "",
+   "label": "No",
+   "value": "1.217950",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

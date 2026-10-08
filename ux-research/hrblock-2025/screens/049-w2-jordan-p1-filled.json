@@ -1,0 +1,344 @@
+{
+ "n": 49,
+ "slug": "w2-jordan-p1-filled",
+ "capturedAt": "2026-10-08T18:19:29.847Z",
+ "actionsBefore": [
+  [
+   "fill",
+   "52.7",
+   "12-3456789"
+  ],
+  [
+   "fill",
+   "52.4",
+   "Acme Testing LLC"
+  ],
+  [
+   "fill",
+   "52.5",
+   "200 Industry Dr"
+  ],
+  [
+   "fill",
+   "52.114",
+   "Springfield"
+  ],
+  [
+   "fill",
+   "52.115",
+   "IL"
+  ],
+  [
+   "fill",
+   "52.116",
+   "62702"
+  ]
+ ],
+ "actionResults": [
+  "fill 52.7=12-3456789",
+  "fill 52.4=Acme Testing LLC",
+  "fill 52.5=200 Industry Dr",
+  "fill 52.114=Springfield",
+  "fill 52.115=IL",
+  "fill 52.116=62702"
+ ],
+ "dialogs": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Tell us about your W-2.",
+ "headings": [
+  "Address",
+  "Employer Information (Double-check entries to prevent e-file rejection)"
+ ],
+ "text": "Tell us about your W-2. Whose W-2 is this? Jordan Sample Casey Sample Name doesn't match W-2 LEARN MORE Address 100 Main St Springfield IL 62701 Address doesn't match W-2 LEARN MORE Employer Information (Double-check entries to prevent e-file rejection) Employer identification number (EIN) (Box b) (NN-NNNNNNN) Employer name (Box c) Employer name (cont'd) This is a foreign address. Street SPECIAL SITUATIONS City State ZIP Country Choose Afghanistan Akrotiri Albania Algeria Andorra Angola Anguilla Antarctica AntiguaBarbuda Argentina Armenia Aruba AshmoreCartier Australia Austria Azerbaijan Bahamas Bahrain Baker Island Bangladesh Barbados Belarus Belgium Belize Benin Bermuda Bhutan Bolivia Bosnia-Herzeg Botswana Bouvet Island Brazil British Ind OT British Vir Is Brunei Bulgaria Burkina Faso Burma Burundi Cambodia Cameroon Canada Cape Verde Cayman Islands Central Af Rep Chad Chile China Christmas Is Clipperton Is Cocos(Keeling) Colombia Comoros Congo (Brazz) Congo (Kinsh) Cook Islands Coral Sea Is Costa Rica Cote D'Ivoire Croatia Cuba Curacao Cyprus Czech Republic Denmark Dhekelia Djibouti Dominica Dominican Rep East Timor Ecuador Egypt El Salvador Equator Guinea Eritrea Estonia Ethiopia Falkland Is Faroe Islands Fiji Finland Fr Polynesia Fr Southrn Lds France Gabon The Gambia Georgia Germany Ghana Gibraltar Greece Greenland Grenada Guatemala Guernsey Guinea Guinea-Bissau Guyana Haiti Heard/McDonald Holy See Honduras Hong Kong Howland Island Hungary Iceland India Indonesia Iran Iraq Ireland Isle of Man Israel Italy Jamaica Jan Mayen Japan Jarvis Island Jersey Johnston Atoll Jordan Kazakhstan Kenya Kingman Reef Kiribati Kosovo Kuwait Kyrgyzstan Laos Latvia Lebanon Lesotho Liberia Libya Liechtenstein Lithuania Luxembourg Macau Macedonia Madagascar Malawi Malaysia Maldives Mali Malta Marshall Is Mauritania Mauritius Mexico Micronesia-FSM Midway Islands Moldova Monaco Mongolia Montenegro Montserrat Morocco Mozambique Namibia Nauru Navassa Island Nepal Netherlands New Caledonia New Zealand Nicaragua Niger Nigeria Niue Norfolk Island North Korea Norway Oman Pakistan Palau Palmyra Atoll Panama PapuaNewGuinea Paracel Is Paraguay Peru Philippines Pitcairn Is Poland Portugal Qatar Romania Russia Rwanda S Geo/S Sndwch Saint Martin Samoa San Marino SaoTomePrncipe Saudi Arabia Senegal Serbia Seychelles Sierra Leone Singapore Sint Maarten Slovakia Slovenia Solomon Is Somalia South Africa South Korea South Sudan Spain Spratly Is Sri Lanka St Barthelemy St Helena St Kitts/Nevis St Lucia Is St Pierre/Miq St Vnct/Grndns Sudan Suriname Svalbard Swaziland Sweden Switzerland Syria Taiwan Tajikistan Tanzania Thailand Togo Tokelau Tonga TrinidadTobago Tunisia Turkey Turkmenistan Turks & Caicos Tuvalu UAE Uganda Ukraine United Kingdom Uruguay Uzbekistan Vanuatu Venezuela Vietnam Wake Island Wallis/Futuna Western Sahara Yemen (Aden) Zambia Zimbabwe Other Country Province Postal Code",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_WhoW2",
+   "id": "",
+   "label": "Jordan Sample",
+   "value": "52.1",
+   "checked": true
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_WhoW2",
+   "id": "",
+   "label": "Casey Sample",
+   "value": "52.2",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "52.143",
+   "id": "",
+   "label": "Name doesn't match W-2 LEARN MORE",
+   "value": "on",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "52.94",
+   "id": "",
+   "label": "Address doesn't match W-2 LEARN MORE",
+   "value": "on",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "52.7",
+   "id": "",
+   "label": "Employer identification number (EIN)",
+   "value": "12-3456789",
+   "maxlength": "11"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "52.4",
+   "id": "",
+   "label": "Employer name",
+   "value": "Acme Testing LLC",
+   "maxlength": "31"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "52.146",
+   "id": "",
+   "label": "Employer name (cont'd)",
+   "value": "",
+   "maxlength": "31"
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "52.154",
+   "id": "",
+   "label": "This is a foreign address.",
+   "value": "on",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "52.5",
+   "id": "",
+   "label": "Street",
+   "value": "200 Industry Dr",
+   "maxlength": "31"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "52.114",
+   "id": "",
+   "label": "City",
+   "value": "Springfield",
+   "maxlength": "31"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "52.115",
+   "id": "",
+   "label": "State",
+   "value": "IL",
+   "maxlength": "2"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "52.116",
+   "id": "",
+   "label": "State",
+   "value": "62702",
+   "maxlength": "10"
+  },
+  {
+   "tag": "select",
+   "type": "select-one",
+   "name": "52.150666",
+   "id": "select1",
+   "label": "Country",
+   "value": "Choose",
+   "options": [
+    "Choose",
+    "Afghanistan",
+    "Akrotiri",
+    "Albania",
+    "Algeria",
+    "Andorra",
+    "Angola",
+    "Anguilla",
+    "Antarctica",
+    "AntiguaBarbuda",
+    "Argentina",
+    "Armenia",
+    "Aruba",
+    "AshmoreCartier",
+    "Australia",
+    "Austria",
+    "Azerbaijan",
+    "Bahamas",
+    "Bahrain",
+    "Baker Island",
+    "Bangladesh",
+    "Barbados",
+    "Belarus",
+    "Belgium",
+    "Belize",
+    "Benin",
+    "Bermuda",
+    "Bhutan",
+    "Bolivia",
+    "Bosnia-Herzeg",
+    "Botswana",
+    "Bouvet Island",
+    "Brazil",
+    "British Ind OT",
+    "British Vir Is",
+    "Brunei",
+    "Bulgaria",
+    "Burkina Faso",
+    "Burma",
+    "Burundi",
+    "Cambodia",
+    "Cameroon",
+    "Canada",
+    "Cape Verde",
+    "Cayman Islands",
+    "Central Af Rep",
+    "Chad",
+    "Chile",
+    "China",
+    "Christmas Is",
+    "Clipperton Is",
+    "Cocos(Keeling)",
+    "Colombia",
+    "Comoros",
+    "Congo (Brazz)",
+    "Congo (Kinsh)",
+    "Cook Islands",
+    "Coral Sea Is",
+    "Costa Rica",
+    "Cote D'Ivoire"
+   ]
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "52.150667",
+   "id": "",
+   "label": "Province",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "52.150668",
+   "id": "",
+   "label": "Province",
+   "value": "",
+   "maxlength": "10"
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=W2KB,hNameAndAddressMustMatch",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=W2KB,hAddressMustMatch",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "SPECIAL SITUATIONS",
+   "img": "",
+   "href": "tc:TOPICHELP=W2KB,hSpecialSituations",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_kf.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=W2KB,hNameAndAddressMustMatch",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=W2KB,hAddressMustMatch",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

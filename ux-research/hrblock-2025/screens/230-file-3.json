@@ -1,0 +1,147 @@
+{
+ "n": 230,
+ "slug": "file-3",
+ "capturedAt": "2026-10-08T19:31:03.424Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "FT_Efile",
+  "FT_Trans",
+  "FT_Intro"
+ ],
+ "topicLinks": [
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=FT_Efile,hAuditSupport",
+   "faq": false
+  },
+  {
+   "text": "Where do I find my activation code?",
+   "href": "tc:TOPICHELP=FT_Trans,vWhereIsKeyCode",
+   "faq": true
+  },
+  {
+   "text": "What's involved in e-filing?",
+   "href": "tc:TOPICHELP=FT_Efile,vWhatsEFiling",
+   "faq": true
+  },
+  {
+   "text": "Can I e-file both my federal and state returns?",
+   "href": "tc:TOPICHELP=FT_Efile,vEFileFedState",
+   "faq": true
+  },
+  {
+   "text": "What are the benefits of e-filing an extension?",
+   "href": "tc:TOPICHELP=FT_Intro,vBenefitsEfileExt",
+   "faq": true
+  },
+  {
+   "text": "Will my privacy be protected?",
+   "href": "tc:TOPICHELP=FT_Efile,vEFilePrivacy",
+   "faq": true
+  },
+  {
+   "text": "How do you protect the security of my tax information?",
+   "href": "tc:TOPICHELP=FT_Efile,vProtectSecurity",
+   "faq": true
+  },
+  {
+   "text": "When is the earliest I can e-file?",
+   "href": "tc:TOPICHELP=FT_Efile,vWhenCanEFile",
+   "faq": true
+  },
+  {
+   "text": "What is Free In-person Audit Support?",
+   "href": "tc:TOPICHELP=FT_Efile,vWhatsAuditSupport",
+   "faq": true
+  },
+  {
+   "text": "What's the filing deadline this year?",
+   "href": "tc:TOPICHELP=FT_Efile,vFilingDeadline",
+   "faq": true
+  },
+  {
+   "text": "H&R Block Answers: Keep your W-2s ...",
+   "href": "tc:TOPICHELP=FT_Intro,vProGuidance_W2s",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Filing Your Returns",
+ "headings": [],
+ "text": "Filing Your Returns Now, we'll go over your filing options. We'll help you print your complete return(s) before you file. You can also print or view your forms anytime using the buttons at the top of the program. However, your return might not be complete until you've gone through this File section. Don't forget you get 5 free federal e-files with your activation code. You can print and mail as many returns as you want. You're covered with H&R Block Free In-person Audit Support whether you e-file or print and mail your return. LEARN MORE",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=FT_Efile,hAuditSupport",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=FT_Efile,hAuditSupport",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

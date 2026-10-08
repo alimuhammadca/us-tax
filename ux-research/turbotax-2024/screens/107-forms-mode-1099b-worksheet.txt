@@ -1,0 +1,366 @@
+﻿TITLE: TurboTax Deluxe 2024
+[Menu] '' #Menu_1
+  [MenuItem] 'File' #fileMenuItem
+    [Text] '_File'
+  [MenuItem] 'Edit' #editMenuItem
+    [Text] '_Edit'
+  [MenuItem] 'View' #viewMenuItem
+    [Text] '_View'
+  [MenuItem] 'Forms' #formsMenuItem
+    [Text] 'F_orms'
+  [MenuItem] 'Tools' #toolsMenuItem
+    [Text] '_Tools'
+  [MenuItem] 'Online' #onlineMenuItem
+    [Text] 'O_nline'
+  [MenuItem] 'Help' #helpMenuItem
+    [Text] '_Help'
+  [Hyperlink] '  Help Center'
+    [Image] '' #helpImage
+  [Hyperlink] '  Print Center'
+    [Image] '' #printImage
+  [Hyperlink] '  Show Topic List'
+    [Image] '' #topicImage
+[Custom] '' #mainTabBarUC
+  [Image] '' #productBanner
+  [Custom] '' #refundMonitorView
+    [Custom] '' #FederalRefundGauge
+      [Text] 'Federal Tax Due' #bannerText
+      [Text] '$' #_DollarSign
+      [Text] '62' #_AmountText
+    [Custom] '' #StateRefundGauge
+      [Text] 'Illinois' #bannerText
+      [Text] 'See Amount'
+        [Hyperlink] 'See Amount'
+  [Button] '' #toggleViewButton
+    [Image] '' #_ImgOn
+  [Button] '' #notificationsButton
+    [Image] '' #notificationImage
+  [Button] '' #addViewFormButton
+    [Image] '' #_ImgOff
+  [Button] '' #formErrorsButton
+    [Image] '' #_ImgOff
+  [Text] 'Forms in My Return'
+  [Tree] '' #treeView
+    [TreeItem] 'Intuit.Ctg.Wte.Service.Forms.Forms.ViewModel.FormList'
+      [Button] '' #Expander
+      [Text] 'Form 1040:  Individual'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Image] '' #ErrorIndicator
+        [Text] '1040/1040SR Wks (Not Done)'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] 'Form 1040'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] 'Info Wks'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] 'Personal Wks (Casey)'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] '    Student Info Wk'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Image] '' #ErrorIndicator
+        [Text] 'Personal Wks (Jordan) (Not Done)'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] '    Student Info Wk'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] 'Dependent Wks (Riley)'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] 'Form W-2 (Acme Testing LLC)'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] 'Form W-2 (Springfield School District)'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] 'Earned Inc Wks'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] 'Tax Payments'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] 'Qual Div/Cap Gn'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Image] '' #ErrorIndicator
+        [Text] 'Schedule B (Not Done)'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Image] '' #ErrorIndicator
+        [Text] '    Form 1099-DIV (Big Fund) (Not Done)'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] '    Form 1099-INT (First Bank)'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] 'Schedule D'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] 'Form 1099-B Wks (Big Broker)'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] '    Cap Asset Sales (1)'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] 'Form 8949 (Copy 1)'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] 'Schedule 8812'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] 'Form 1040-V'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] 'W2/W2G Summary'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] 'Carryover Wks'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] 'Tax History'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] 'Tax Summary'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] 'Filing Inst (Page 1 of 1)'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] 'Return Summary (Page 1 of 1)'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] 'U. S. Averages'
+[Thumb] '' #mainGridSplitter
+      [Text] 'Form 1099-B Worksheet'
+      [Text] '2024'
+        [Text] 'G Keep for your records' #staticBlock
+      [Text] 'Name(s) Shown on Return'
+      [Text] 'Social Security No.'
+        [Edit] '' #NAME[0] =Jordan & Casey Sample
+        [Edit] '' #SSN[0] =000-00-0000
+        [Text] 'QuickZoom to another copy of Form 1099-B Worksheet' #staticBlock
+        [Text] '. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'For sale of a primary residence eligible for gain exclusion, use the Home Sale Worksheet.' #staticBlock
+        [Text] '. . . . '
+        [Text] 'G'
+        [Text] 'QuickZoom to Form 1099-K reporting sale(s) of investment assets' #staticBlock
+        [Text] '. . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+      [Text] 'Form 1099-K reconciliation'
+      [Text] 'If checked, a copy of Form 1099-K with the payer and payment amount shown below has been'
+      [Text] 'linked to this worksheet. Total sales proceeds reported on the Capital Asset Sales Worksheet(s)'
+      [Text] 'must match the amount shown below.'
+      [Text] 'Payment(s) amount from linked Form 1099-K. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+      [Text] 'G'
+      [Button] 'QuickZoom' #QuickZoom
+        [Text] 'QuickZoom'
+      [Button] 'QuickZoom' #QuickZoom
+        [Text] 'QuickZoom'
+      [Button] 'QuickZoom' #QuickZoom
+        [Text] 'QuickZoom'
+      [CheckBox] '' #F99KLNKD[0] (disabled)
+        [Edit] '' #F99KAMT[0]
+      [Text] 'Name of reporting financial institution. . . '
+      [Text] 'G'
+      [Text] 'Acct Number. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+      [Text] 'G'
+      [Text] 'Reporter's Tax ID. . . . . . . . . . '
+      [Text] 'G'
+      [Text] 'Owner of account. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+      [Text] 'G'
+      [Text] 'Transactions were not reported to IRS. . . . . . . . . . . . . . . . . . . . . . . '
+      [Text] 'G'
+      [Text] 'Form 8949 Reporting Exception Transactions'
+      [Text] 'Any transactions that are eligible to be reported directly on Schedule D, '
+      [Text] 'bypassing Form 8949, may be summarized here.'
+      [Text] 'Proceeds'
+      [Text] 'Cost Basis'
+      [Text] 'Box A transactions to report directly on Sch D, Line 1a (short term)'
+      [Text] 'Box D transactions to report directly on Sch D, Line 8a (long term). '
+        [Text] '(Do not duplicate any transactions summarized above when making entries in the table below.)' #staticBlock
+        [Edit] '' #FI[0] =Big Broker
+        [Edit] '' #ACCTNUM[0]
+        [Edit] '' #FEIN[0]
+      [ComboBox] '' #TOWN[0]
+      [CheckBox] '' #NOTON99B[0]
+        [Edit] '' #L1ASPRCE[0]
+        [Edit] '' #L1ACOST[0]
+        [Edit] '' #L8ASPRCE[0]
+        [Edit] '' #L8ACOST[0]
+      [Text] 'Use the Capital Asset Sales Worksheet to enter individual sales. . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+      [Text] 'G'
+      [Button] 'QuickZoom' #QuickZoom
+        [Text] 'QuickZoom'
+      [Text] 'Brokerage Statement (Form 1099-B or substitute) Summary Table'
+      [Text] 'Gains and losses by "8949 Box" (i.e. the Box to be checked on Form 8949) to assist in'
+      [Text] 'reconciling the transactions in the Quick Entry Table with a brokerage statement.'
+      [Text] '8949 Box'
+      [Text] 'Proceeds'
+      [Text] 'Cost Basis'
+      [Text] 'Gain/(Loss)'
+      [Text] 'Adjustment Amt'
+      [Text] 'Adj Gain/(Loss)'
+      [Text] 'Code(s)'
+      [Text] 'Totals'
+      [Text] 'Form 8949 and Schedule D Totals'
+      [Text] 'Totals gains/losses as they will appear on Form 8949 and Schedule D.'
+      [Text] 'Note that these totals may differ from your statement to comply with IRS rounding instructions. (See help)'
+      [Text] 'Location on tax return'
+      [Text] 'Proceeds'
+      [Text] 'Cost Basis'
+      [Text] 'Adjustment Amt'
+      [Text] 'Code(s)'
+      [Text] 'Adj Gain/(Loss)'
+      [Text] 'Total Federal Backup Withholding. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+      [Text] 'State ID'
+      [Text] 'State Backup Witholding. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+      [Text] 'Total State Backup Withholding. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+      [Text] 'Total Collectible Gain. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+      [Text] 'Qualified Small Business (QSB) gain (Sec 1202)'
+      [Text] 'Total Gain'
+      [Text] 'Excluded Gain'
+      [Text] 'Net Gain'
+      [Text] 'Maximum 50% exclusion gain. . . . . . . . . . . . . . . . . . . . . . '
+      [Text] 'G'
+      [Text] 'Maximum 60% exclusion gain. . . . . . . . . . . . . . . . . . . . . . '
+      [Text] 'G'
+      [Text] 'Maximum 75% exclusion gain. . . . . . . . . . . . . . . . . . . . . . '
+      [Text] 'G'
+      [Text] 'Maximum 100% exclusion gain. . . . . . . . . . . . . . . . . . . . . '
+      [Text] 'G'
+      [Text] 'PDF Attachment'
+      [Text] 'Taxpayer must mail in a statement with more details?. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+      [Text] 'Yes'
+      [Text] 'No'
+      [Text] 'If yes, you'll need to submit a copy of your 1099-B to the IRS to provide documentation for some of the '
+      [Text] 'transactions on your sales summary.'
+        [Edit] '' #GPROC[0] =7,500.00
+        [Edit] '' #TOTBASIS[0] =4,000.00
+        [Edit] '' #TOTGORL[0] =3,500.00
+        [Edit] '' #TOTADJ[0]
+        [Edit] '' #NETGL[0] =3,500.00
+        [Edit] '' #TOTFWH[0]
+        [Edit] '' #STWITH[0]
+        [Edit] '' #TOTCOLLG[0]
+        [Edit] '' #S12025TO[0]
+        [Edit] '' #S12025EX[0]
+        [Edit] '' #S12025NE[0]
+        [Edit] '' #S12026TO[0]
+        [Edit] '' #S12026EX[0]
+        [Edit] '' #S12026NE[0]
+        [Edit] '' #S12027TO[0]
+        [Edit] '' #S12027EX[0]
+        [Edit] '' #S12027NE[0]
+        [Edit] '' #S12021TO[0]
+        [Edit] '' #S12021EX[0]
+        [Edit] '' #S12021NE[0]
+      [CheckBox] '' #ATTSTMTY[0] (disabled)
+      [CheckBox] '' #ATTSTMTN[0] (disabled)
+        [Edit] '' #NEEDINFO[0]
+      [CheckBox] '' #MSTMT[0] (disabled)
+        [Edit] '' #CRDTCODE[0]
+        [Edit] '' #PDFNAM[0]
+      [CheckBox] '' #PDFAT[0] (disabled)
+        [Edit] '' #NAMEPDF[0]
+        [Edit] '' #FILENAM[0]
+        [Edit] '' #ENKEY[0]
+        [Edit] '' #VERSN[0]
+        [Edit] '' #RETLOC[1] =Sch D, Line 1a
+        [Edit] '' #RETLOC[2] =Form 8949, Box A
+        [Edit] '' #RETLOC[3] =Form 8949, Box B
+        [Edit] '' #RETLOC[4] =Form 8949, Box C
+        [Edit] '' #RETLOC[5] =Sch D, Line 8a
+        [Edit] '' #RETLOC[6] =Form 8949, Box D
+        [Edit] '' #RETLOC[7] =Form 8949, Box E
+        [Edit] '' #RETLOC[8] =Form 8949, Box F
+        [Edit] '' #PROCEEDS[1]
+        [Edit] '' #PROCEEDS[2]
+        [Edit] '' #PROCEEDS[3]
+        [Edit] '' #PROCEEDS[4]
+        [Edit] '' #PROCEEDS[5]
+        [Edit] '' #PROCEEDS[6] =7,500.00
+        [Edit] '' #PROCEEDS[7]
+        [Edit] '' #PROCEEDS[8]
+        [Edit] '' #BASIS[1]
+        [Edit] '' #BASIS[2]
+        [Edit] '' #BASIS[3]
+        [Edit] '' #BASIS[4]
+        [Edit] '' #BASIS[5]
+        [Edit] '' #BASIS[6] =4,000.00
+        [Edit] '' #BASIS[7]
+        [Edit] '' #BASIS[8]
+        [Edit] '' #ADAMOUNT[1]
+        [Edit] '' #ADAMOUNT[2]
+        [Edit] '' #ADAMOUNT[3]
+        [Edit] '' #ADAMOUNT[4]
+        [Edit] '' #ADAMOUNT[5]
+        [Edit] '' #ADAMOUNT[6]
+        [Edit] '' #ADAMOUNT[7]
+        [Edit] '' #ADAMOUNT[8]
+        [Edit] '' #ADCODES[1]
+        [Edit] '' #ADCODES[2]
+        [Edit] '' #ADCODES[3]
+        [Edit] '' #ADCODES[4]
+        [Edit] '' #ADCODES[5]
+        [Edit] '' #ADCODES[6]
+        [Edit] '' #ADCODES[7]
+        [Edit] '' #ADCODES[8]
+        [Edit] '' #NETGAIN[1]
+        [Edit] '' #NETGAIN[2]
+        [Edit] '' #NETGAIN[3]
+        [Edit] '' #NETGAIN[4]
+        [Edit] '' #NETGAIN[5]
+        [Edit] '' #NETGAIN[6] =3,500.00
+        [Edit] '' #NETGAIN[7]
+        [Edit] '' #NETGAIN[8]
+        [Edit] '' #CATDESC[1]
+        [Edit] '' #CATDESC[2]
+        [Edit] '' #CATDESC[3]
+        [Edit] '' #CATDESC[4] =Box D
+        [Edit] '' #CATDESC[5]
+        [Edit] '' #CATDESC[6]
+        [Edit] '' #GSELLP[1]
+        [Edit] '' #GSELLP[2]
+        [Edit] '' #GSELLP[3]
+        [Edit] '' #GSELLP[4] =7,500.00
+        [Edit] '' #GSELLP[5]
+        [Edit] '' #GSELLP[6]
+        [Edit] '' #TBASIS[1]
+        [Edit] '' #TBASIS[2]
+        [Edit] '' #TBASIS[3]
+        [Edit] '' #TBASIS[4] =4,000.00
+        [Edit] '' #TBASIS[5]
+        [Edit] '' #TBASIS[6]
+        [Edit] '' #TGORL[1]
+        [Edit] '' #TGORL[2]
+        [Edit] '' #TGORL[3]
+        [Edit] '' #TGORL[4] =3,500.00
+        [Edit] '' #TGORL[5]
+        [Edit] '' #TGORL[6]
+        [Edit] '' #TADJ[1]
+        [Edit] '' #TADJ[2]
+        [Edit] '' #TADJ[3]
+        [Edit] '' #TADJ[4]
+        [Edit] '' #TADJ[5]
+        [Edit] '' #TADJ[6]
+        [Edit] '' #CATGAIN[1]
+        [Edit] '' #CATGAIN[2]
+        [Edit] '' #CATGAIN[3]
+        [Edit] '' #CATGAIN[4] =3,500.00
+        [Edit] '' #CATGAIN[5]
+        [Edit] '' #CATGAIN[6]
+        [Edit] '' #TADJCODE[1]
+        [Edit] '' #TADJCODE[2]
+        [Edit] '' #TADJCODE[3]
+        [Edit] '' #TADJCODE[4]
+        [Edit] '' #TADJCODE[5]
+        [Edit] '' #TADJCODE[6]
+        [Edit] '' #CATDESC2[1]
+        [Edit] '' #CATDESC2[2]
+        [Edit] '' #CATDESC2[3]
+        [Edit] '' #CATDESC2[4] =Long term sales with cost basis reported to the IRS
+        [Edit] '' #CATDESC2[5]
+        [Edit] '' #CATDESC2[6]
+        [List] '' #myListBox
+          [ListItem] 'System.Windows.Controls.Canvas'
+              [Edit] '' #STID[1]
+              [Edit] '' #STWHLD[1]
+      [ScrollBar] '' #VerticalScrollBar
+        [Button] '' #PART_LineUpButton (disabled)
+        [Button] '' #PageUp (disabled)
+        [Button] '' #PageDown (disabled)
+        [Button] '' #PART_LineDownButton (disabled)
+    [Button] 'Print' #myPrintButton
+      [Text] 'Print'
+    [Button] 'Delete Form' #myDeleteFormButton
+      [Text] 'Delete Form'
+    [Button] 'Close Form' #myCloseFormButton
+      [Text] 'Close Form'
+    [Text] 'Help Others'
+      [Hyperlink] 'Help Others'
+    [Image] '' #new
+    [Text] ' '
+      [Hyperlink] ' ' #upgradeTurboTaxHyperlink
+        [Image] '' #upgradeTurboTaxImage
+        [Text] 'Upgrade TurboTax' #upgradeTurboTaxText
+    [Text] '100%'
+    [Text] '' #textBlock
+  [Button] '' #RepeatUpButton
+  [Button] '' #RepeatDownButton

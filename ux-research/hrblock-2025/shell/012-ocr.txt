@@ -1,0 +1,32 @@
+--- LEFT PANEL (meter + FAQs)
+2025
+My taxes for
+Premium
+FEDERAL REFUND
+STATE REFUND
+$0
+Help Center
+FAQs
+How should I file if one of us is a
+nonresident or dual-status alien?
+Should my spouse and I file jointly
+or separately?
+When should my spouse and I file
+separate returns?
+What filing status should I use if I
+don't have contact with my
+spouse?
+--- TABS
+WELCOME
+PERSONAL INFORMATION
+FEDERAL
+INCOME
+ADJUSTMENTS
+STATE
+DEDUCTIONS
+FILE
+CREDITS
+TAXES
+MISC
+PLAN
+FINISH

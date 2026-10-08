@@ -1,0 +1,119 @@
+{
+ "n": 38,
+ "slug": "dep-guide-me-3",
+ "capturedAt": "2026-10-08T18:15:15.849Z",
+ "actionsBefore": [
+  [
+   "radio",
+   "rb_Citizen",
+   "113.11281"
+  ],
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "radio ok 113.11281",
+  "next changed"
+ ],
+ "dialogs": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Check all that applied to Riley.",
+ "headings": [],
+ "text": "Check all that applied to Riley. You and Casey are both Riley's parent. Check this box if Riley is your adopted child. Riley provided more than half of their own support in 2025. LEARN MORE Riley will file jointly with another person.",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "113.22915",
+   "id": "",
+   "label": "You and Casey are both Riley's parent.",
+   "value": "on",
+   "checked": true
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "113.18020",
+   "id": "",
+   "label": "Riley provided more than half of their own support in 2025. LEARN MORE",
+   "value": "on",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "113.1141",
+   "id": "",
+   "label": "Riley will file jointly with another person.",
+   "value": "on",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=Dpndt,hLearnMore_Support",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=Dpndt,hLearnMore_Support",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

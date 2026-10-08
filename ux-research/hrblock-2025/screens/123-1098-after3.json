@@ -1,0 +1,86 @@
+{
+ "n": 123,
+ "slug": "1098-after3",
+ "capturedAt": "2026-10-08T18:46:29.973Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "F1098KB"
+ ],
+ "topicLinks": [
+  {
+   "text": "Why are the points shown here less than the points I entered?",
+   "href": "tc:TOPICHELP=F1098KB,vPointsLessThanShown",
+   "faq": true
+  },
+  {
+   "text": "Do these results include amounts for my home office or rental?",
+   "href": "tc:TOPICHELP=F1098KB,vAllocatedAmounts",
+   "faq": true
+  },
+  {
+   "text": "Why is the interest not limited when my mortgage is over $750,000?",
+   "href": "tc:TOPICHELP=F1098KB,vLimitLessThan750000",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Your mortgage interest deduction is $11,200.",
+ "headings": [],
+ "text": "Your mortgage interest deduction is $11,200. Mortgage interest $11,200 Points deductible in 2025 $0 Total $11,200",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

@@ -1,0 +1,29 @@
+--- LEFT PANEL (meter + FAQs)
+2025
+My taxes for
+Premium
+FEDERAL REFUND
+$1,951
+LATEST CHANGE
+A Increase of $600
+STATE REFUND
+$0
+Help Center
+FAQs
+View Details
+What's a recapture tax?
+What is an excess benefits tax?
+--- TABS
+WELCOME
+PERSONAL INFORMATION
+FEDERAL
+INCOME
+ADJUSTMENTS
+STATE
+DEDUCTIONS
+FILE
+CREDITS
+TAXES
+MISC
+PLAN
+FINISH

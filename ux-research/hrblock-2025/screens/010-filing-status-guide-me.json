@@ -1,0 +1,118 @@
+{
+ "n": 10,
+ "slug": "filing-status-guide-me",
+ "capturedAt": "2026-10-08T18:03:36.345Z",
+ "actionsBefore": [
+  [
+   "click",
+   "a.contentbtn img"
+  ],
+  [
+   "wait",
+   1500
+  ]
+ ],
+ "actionResults": [
+  "click a.contentbtn img true",
+  "wait"
+ ],
+ "dialogs": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "What was your marital status at the end of 2025?",
+ "headings": [],
+ "text": "What was your marital status at the end of 2025? What was your marital status at the end of 2025? Single Married Registered domestic partnership or civil union Divorced Widowed",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_MaritalStatus",
+   "id": "",
+   "label": "Single",
+   "value": "92.687",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_MaritalStatus",
+   "id": "",
+   "label": "Married",
+   "value": "92.93",
+   "checked": true
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_MaritalStatus",
+   "id": "",
+   "label": "Registered domestic partnership or civil union",
+   "value": "92.53249",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_MaritalStatus",
+   "id": "",
+   "label": "Divorced",
+   "value": "92.689",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_MaritalStatus",
+   "id": "",
+   "label": "Widowed",
+   "value": "92.688",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_up.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

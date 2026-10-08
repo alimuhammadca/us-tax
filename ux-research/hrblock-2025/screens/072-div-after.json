@@ -1,0 +1,114 @@
+{
+ "n": 72,
+ "slug": "div-after",
+ "capturedAt": "2026-10-08T18:28:28.948Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Tell us about your dividends and distributions.",
+ "headings": [],
+ "text": "Tell us about your dividends and distributions. You might have received a Form 1099-DIV or in a letter or statement reporting these: Dividends Money market fund distributions Mutual fund distributions Real estate investment trust (REIT) distributions Payer Amount 1st (Big Fund) 3,000 Edit Delete",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "contentbtn",
+   "text": "",
+   "img": "Enter Manually",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "wizardbtn",
+   "text": "",
+   "img": "Import 1099-DIV",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "childof228085968",
+   "id": "",
+   "cls": "multinstanceanchor",
+   "text": "Edit",
+   "img": "",
+   "href": "TC:EDIT/1",
+   "onclick": ""
+  },
+  {
+   "name": "childof228091008",
+   "id": "",
+   "cls": "multinstanceanchor",
+   "text": "Delete",
+   "img": "",
+   "href": "TC:DELETE/1",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "58",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "FINISHED",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "Enter_Manually_up.gif",
+   "alt": "",
+   "title": "Enter Manually",
+   "name": "Enter_Manually"
+  },
+  {
+   "src": "import_1099_div_up.gif",
+   "alt": "",
+   "title": "Import 1099-DIV",
+   "name": "import_1099_div"
+  },
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "finished_ht.gif",
+   "alt": "FINISHED",
+   "title": "",
+   "name": "finished"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

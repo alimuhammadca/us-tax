@@ -1,0 +1,118 @@
+{
+ "n": 197,
+ "slug": "il-6",
+ "capturedAt": "2026-10-08T19:18:57.304Z",
+ "actionsBefore": [
+  [
+   "next"
+  ],
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed",
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "ilinfo"
+ ],
+ "topicLinks": [
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=ilinfo,hHealthInsuranceBenefits",
+   "faq": false
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Health Insurance Benefits",
+ "headings": [],
+ "text": "Health Insurance Benefits If you and Casey would like the Illinois Department of Revenue to share your income information with other Illinois state agencies to determine your eligibility for health insurance benefits, select Yes. LEARN MORE Yes No Note: If you checked this box on your prior year Form IL-1040, you do not need to check it again. The same information as what was provided previously will be sent again.",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_group",
+   "id": "",
+   "label": "Yes",
+   "value": "79.238797",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_group",
+   "id": "",
+   "label": "No",
+   "value": "79.238880",
+   "checked": true
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=ilinfo,hHealthInsuranceBenefits",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=ilinfo,hHealthInsuranceBenefits",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

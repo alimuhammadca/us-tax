@@ -1,0 +1,29 @@
+--- LEFT PANEL (meter + FAQs)
+2025
+My taxes for
+Premium
+FEDERAL REFUND
+$1,951
+LATEST CHANGE
+A Increase of $600
+STATE REFUND
+$363
+Help Center
+FAQs
+View Details
+What's the Illinois use tax?
+When do I have to pay use tax?
+Do I have to file any special forms?
+--- TABS
+IL:
+WELCOME
+WELCOME
+FEDERAL
+CREDITS
+TAXES
+STATE
+MISC
+FILE
+PLAN
+INCOME
+FINISH

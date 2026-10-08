@@ -1,0 +1,192 @@
+{
+ "n": 113,
+ "slug": "after-adj-summary",
+ "capturedAt": "2026-10-08T18:43:11.965Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "Dedux"
+ ],
+ "topicLinks": [
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=Dedux,hStateImpactTCJA",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=Dedux,hDedTips",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=Dedux,hDedOT",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=Dedux,hDedCarLoanInt",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=Dedux,hDedSenior",
+   "faq": false
+  },
+  {
+   "text": "H&R Block Answers: Keeping records of deductions ...",
+   "href": "tc:TOPICHELP=Dedux,vProGuidance_Records",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Next, we'll help you with your deductions.",
+ "headings": [],
+ "text": "Next, we'll help you with your deductions. Most people can take the standard deduction. The standard deduction is usually $15,750 or more — $31,500 on a joint return. The state and local tax deduction is limited to $20,000 for married filing separately and $40,000 for all other filing statuses. This is the total amount you can deduct for: State and local income or sales taxes Real estate taxes Personal property taxes Job expenses aren't deductible. Medical expenses must be more than 7.5% of your income to be deductible. Go ahead and tell us about your deductions here and we'll tell you whether itemizing or claiming the standard deduction is better for you. We'll also use your info for your state return(s), since you might be able to claim state deductions. LEARN MORE Starting in 2025, there are NEW additional deductions that you may qualify for without having to itemize on Schedule A: No Tax on Tips LEARN MORE No Tax on Overtime LEARN MORE No Tax on Car Loan Interest LEARN MORE Enhanced Deduction for Seniors LEARN MORE",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=Dedux,hStateImpactTCJA",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=Dedux,hDedTips",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=Dedux,hDedOT",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=Dedux,hDedCarLoanInt",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=Dedux,hDedSenior",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=Dedux,hStateImpactTCJA",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=Dedux,hDedTips",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=Dedux,hDedOT",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=Dedux,hDedCarLoanInt",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=Dedux,hDedSenior",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/COBScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/cobedition.css"
+ ],
+ "errors": []
+}

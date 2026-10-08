@@ -1,0 +1,72 @@
+{
+ "n": 71,
+ "slug": "div-fixed-next",
+ "capturedAt": "2026-10-08T18:28:09.895Z",
+ "actionsBefore": [
+  [
+   "fill",
+   "164.61",
+   "1900"
+  ],
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "fill 164.61=1,900",
+  "next changed"
+ ],
+ "dialogs": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Here's what you should know about investment income.",
+ "headings": [],
+ "text": "Here's what you should know about investment income. When you complete your return, you might find the federal tax we calculate is less than the amount from the IRS tax table. The amount we calculate is correct. We apply the correct, lower tax rate allowed for certain investment income, including: Qualified dividends Capital gain distributions Long-term capital gains",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/smartalert.css"
+ ],
+ "errors": []
+}

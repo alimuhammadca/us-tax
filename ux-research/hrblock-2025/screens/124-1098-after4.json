@@ -1,0 +1,241 @@
+{
+ "n": 124,
+ "slug": "1098-after4",
+ "capturedAt": "2026-10-08T18:46:48.985Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "F1098KB"
+ ],
+ "topicLinks": [
+  {
+   "text": "main",
+   "href": "tc:TOPICHELP=F1098KB,hMainHome",
+   "faq": false
+  },
+  {
+   "text": "second home,",
+   "href": "tc:TOPICHELP=F1098KB,hSecondHome",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=F1098KB,hMtgIntForHomeOffice",
+   "faq": false
+  },
+  {
+   "text": "Edit",
+   "href": "TC:EDIT",
+   "faq": false
+  },
+  {
+   "text": "Delete",
+   "href": "TC:DELETE",
+   "faq": false
+  },
+  {
+   "text": "Edit",
+   "href": "TC:EDIT/1",
+   "faq": false
+  },
+  {
+   "text": "Delete",
+   "href": "TC:DELETE/1",
+   "faq": false
+  },
+  {
+   "text": "What interest can I claim for my co-op apartment?",
+   "href": "tc:TOPICHELP=F1098KB,vCoopInt",
+   "faq": true
+  },
+  {
+   "text": "Can I claim closing costs?",
+   "href": "tc:TOPICHELP=F1098KB,vClosingCosts",
+   "faq": true
+  },
+  {
+   "text": "Can I claim interest if my parents financed the loan?",
+   "href": "tc:TOPICHELP=F1098KB,vParentLoanTopic",
+   "faq": true
+  },
+  {
+   "text": "Where do I enter interest and points paid on business property?",
+   "href": "tc:TOPICHELP=F1098KB,vBusinessProp",
+   "faq": true
+  },
+  {
+   "text": "What special steps should I follow if my Form 1098 shows real estate taxes and I have a home office or a rental?",
+   "href": "tc:TOPICHELP=F1098KB,vRETaxes_HomeOffRent",
+   "faq": true
+  },
+  {
+   "text": "If I received more than 1 Form 1098, how do I enter them?",
+   "href": "tc:TOPICHELP=F1098KB,vMultiple1098s",
+   "faq": true
+  },
+  {
+   "text": "If I paid mortgage interest for more than 2 homes, what should I do?",
+   "href": "tc:TOPICHELP=F1098KB,vMoreThanTwoHomes",
+   "faq": true
+  },
+  {
+   "text": "If my fiance and I bought a home together, who should claim the interest?",
+   "href": "tc:TOPICHELP=F1098KB,vProGuidance_SharedMortgage",
+   "faq": true
+  },
+  {
+   "text": "Can I claim homeowner-assistance program interest reported on Form 1098-MA?",
+   "href": "tc:TOPICHELP=F1098KB,vHomeownerAssistance",
+   "faq": true
+  },
+  {
+   "text": "What if I prepaid interest?",
+   "href": "tc:TOPICHELP=F1098KB,vPrepaidInterest_GeneralRule",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Let's start on your home mortgage interest.",
+ "headings": [],
+ "text": "Let's start on your home mortgage interest. Tell us about your home mortgage interest or points for your main home, a second home, a home equity line of credit, or a refinance. These amounts might be shown on Form 1098: Mortgage Interest Statement, or on other documents you have. Are you deducting mortgage interest as a business expense for an office in your home? Don't enter your home mortgage interest twice. LEARN MORE Lender Interest Paid 1st (Home Lender) 11,200 Edit Delete",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "main",
+   "img": "",
+   "href": "tc:TOPICHELP=F1098KB,hMainHome",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "second home,",
+   "img": "",
+   "href": "tc:TOPICHELP=F1098KB,hSecondHome",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=F1098KB,hMtgIntForHomeOffice",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "wizardbtn",
+   "text": "",
+   "img": "Upload a PDF",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contentbtn",
+   "text": "",
+   "img": "Enter Manually",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "childof244102584",
+   "id": "",
+   "cls": "multinstanceanchor",
+   "text": "Edit",
+   "img": "",
+   "href": "TC:EDIT/1",
+   "onclick": ""
+  },
+  {
+   "name": "childof244106400",
+   "id": "",
+   "cls": "multinstanceanchor",
+   "text": "Delete",
+   "img": "",
+   "href": "TC:DELETE/1",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "58",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "FINISHED",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "upload_a_pdf_up.gif",
+   "alt": "",
+   "title": "Upload a PDF",
+   "name": "upload_a_pdf"
+  },
+  {
+   "src": "Enter_Manually_up.gif",
+   "alt": "",
+   "title": "Enter Manually",
+   "name": "Enter_Manually"
+  },
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "finished_ht.gif",
+   "alt": "FINISHED",
+   "title": "",
+   "name": "finished"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=F1098KB,hMtgIntForHomeOffice",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

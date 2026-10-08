@@ -1,0 +1,126 @@
+{
+ "n": 235,
+ "slug": "file-8",
+ "capturedAt": "2026-10-08T19:32:42.889Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "FT_Finish",
+  "FT_PrintFed",
+  "FT_Check"
+ ],
+ "topicLinks": [
+  {
+   "text": "Print",
+   "href": "TC:EDIT",
+   "faq": false
+  },
+  {
+   "text": "Print",
+   "href": "TC:EDIT/1",
+   "faq": false
+  },
+  {
+   "text": "Print",
+   "href": "TC:EDIT/2",
+   "faq": false
+  },
+  {
+   "text": "Why should I print a paper copy of my return?",
+   "href": "tc:TOPICHELP=FT_Finish,vWhyPrintRec",
+   "faq": true
+  },
+  {
+   "text": "What should I do if I have printing problems?",
+   "href": "tc:TOPICHELP=FT_PrintFed,vPrintingProblems",
+   "faq": true
+  },
+  {
+   "text": "What can I do if I'm using a Mac and the printed forms are too big or too small?",
+   "href": "tc:TOPICHELP=FT_PrintFed,vMacPrintScalingIssues",
+   "faq": true
+  },
+  {
+   "text": "How do I amend my return?",
+   "href": "tc:TOPICHELP=FT_Check,vHowToAMendReturn",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Print Copies of Returns For Your Records",
+ "headings": [],
+ "text": "Print Copies of Returns For Your Records We recommend that you make copies of your returns for your records and store them in a safe place. We'll print them 1 at a time. You can print the entire return and its supporting materials or just individual forms. You can also print each return as a PDF to save it electronically. Return Name Federal Print Illinois Print",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "childof280548304",
+   "id": "",
+   "cls": "multinstanceanchor",
+   "text": "Print",
+   "img": "",
+   "href": "TC:EDIT/1",
+   "onclick": ""
+  },
+  {
+   "name": "childof280548592",
+   "id": "",
+   "cls": "multinstanceanchor",
+   "text": "Print",
+   "img": "",
+   "href": "TC:EDIT/2",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "13",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_up.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

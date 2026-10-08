@@ -1,0 +1,197 @@
+{
+ "n": 222,
+ "slug": "il-cont-8",
+ "capturedAt": "2026-10-08T19:26:52.206Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "ilmisc"
+ ],
+ "topicLinks": [
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=ilmisc,hCharitableFunds",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=ilmisc,hEstimatedTaxes",
+   "faq": false
+  },
+  {
+   "text": "Illinois Where's My Refund",
+   "href": "tc:TOPICHELP=ilmisc,hWheresMyRefund",
+   "faq": false
+  },
+  {
+   "text": "If I don't know if a topic applies to me, what should I do?",
+   "href": "tc:TOPICHELP=ilmisc,vTopicApplies",
+   "faq": true
+  },
+  {
+   "text": "If none of these topics apply to me, what should I do?",
+   "href": "tc:TOPICHELP=ilmisc,vNoTopicApplies",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Illinois Wrap-Up",
+ "headings": [],
+ "text": "Illinois Wrap-Up Your Illinois refund $363 Check any that apply. If you're not sure, check the box and we'll work on it together. Apply refund to 2026 Illinois tax (if filing 2026 estimated taxes) Contribute to Illinois charitable funds LEARN MORE File an Illinois extension Amended Illinois return (to correct a previously filed return) Create estimated payment vouchers for next year's Illinois taxes LEARN MORE Allow another person to discuss this return with the Illinois Department of Revenue Illinois Where's My Refund",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "78.30",
+   "id": "",
+   "label": "Apply refund to 2026 Illinois tax (if filing 2026 estimated taxes)",
+   "value": "ON",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "78.42800",
+   "id": "",
+   "label": "Contribute to Illinois charitable funds LEARN MORE",
+   "value": "ON",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "78.42802",
+   "id": "",
+   "label": "File an Illinois extension",
+   "value": "ON",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "78.42803",
+   "id": "",
+   "label": "Amended Illinois return (to correct a previously filed return)",
+   "value": "ON",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "78.42801",
+   "id": "",
+   "label": "Create estimated payment vouchers for next year's Illinois taxes LEARN MORE",
+   "value": "ON",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "79.131571",
+   "id": "",
+   "label": "Allow another person to discuss this return with the Illinois Department of Revenue",
+   "value": "ON",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=ilmisc,hCharitableFunds",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=ilmisc,hEstimatedTaxes",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Illinois Where's My Refund",
+   "img": "",
+   "href": "tc:TOPICHELP=ilmisc,hWheresMyRefund",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=ilmisc,hCharitableFunds",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=ilmisc,hEstimatedTaxes",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

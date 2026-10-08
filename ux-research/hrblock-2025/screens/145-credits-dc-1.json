@@ -1,0 +1,366 @@
+{
+ "n": 145,
+ "slug": "credits-dc-1",
+ "capturedAt": "2026-10-08T18:55:46.804Z",
+ "actionsBefore": [
+  [
+   "check",
+   "92.1062"
+  ],
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "check ok 92.1062",
+  "next changed",
+  "expanded 1"
+ ],
+ "dialogs": [],
+ "topics": [
+  "Credits"
+ ],
+ "topicLinks": [
+  {
+   "text": "WHAT QUALIFIES?",
+   "href": "tc:TOPICHELP=Credits,hAdoption",
+   "faq": false
+  },
+  {
+   "text": "WHAT QUALIFIES?",
+   "href": "tc:TOPICHELP=Credits,hLearnMore_F5695",
+   "faq": false
+  },
+  {
+   "text": "WHAT QUALIFIES?",
+   "href": "tc:TOPICHELP=Credits,hLearnMore_F5695_Insulation_Doors_Windows",
+   "faq": false
+  },
+  {
+   "text": "WHAT QUALIFIES?",
+   "href": "tc:TOPICHELP=Credits,hLearnMore_F8936",
+   "faq": false
+  },
+  {
+   "text": "WHAT QUALIFIES?",
+   "href": "tc:TOPICHELP=Credits,hLearnMore_PrevOwnCleanVCrdt",
+   "faq": false
+  },
+  {
+   "text": "WHAT QUALIFIES?",
+   "href": "tc:TOPICHELP=Credits,hLearnMore_QualComCleanVCrdt",
+   "faq": false
+  },
+  {
+   "text": "Highlights to clean vehicle credits for 2025",
+   "href": "tc:TOPICHELP=Credits,hF8936_ChangeHighlights",
+   "faq": false
+  },
+  {
+   "text": "WHAT QUALIFIES?",
+   "href": "tc:TOPICHELP=Credits,hLearnMore_FTC",
+   "faq": false
+  },
+  {
+   "text": "WHAT QUALIFIES?",
+   "href": "tc:TOPICHELP=Credits,hLearnMore_MCC",
+   "faq": false
+  },
+  {
+   "text": "WHAT QUALIFIES?",
+   "href": "tc:TOPICHELP=Credits,hLearnMore_PriorYrAMT",
+   "faq": false
+  },
+  {
+   "text": "WHAT QUALIFIES?",
+   "href": "tc:TOPICHELP=Credits,hLearnMore_F8859",
+   "faq": false
+  },
+  {
+   "text": "WHAT QUALIFIES?",
+   "href": "tc:TOPICHELP=Credits,hLearnMore_MiscBusCrdts",
+   "faq": false
+  },
+  {
+   "text": "ABLE Account",
+   "href": "tc:TOPICHELP=Credits,hABLESaversCredit",
+   "faq": false
+  },
+  {
+   "text": "What if the adoption was finalized in 2025?",
+   "href": "tc:TOPICHELP=Credits,vAdoptionFinalized",
+   "faq": true
+  },
+  {
+   "text": "How do I know if I paid AMT in 2024?",
+   "href": "tc:TOPICHELP=Credits,vHowKnowAMT",
+   "faq": true
+  },
+  {
+   "text": "How do I know if I have a prior-year alternative minimum tax credit carryforward?",
+   "href": "tc:TOPICHELP=Credits,vHowKnowCarryForward",
+   "faq": true
+  },
+  {
+   "text": "What if I already entered my mortgage interest deduction?",
+   "href": "tc:TOPICHELP=Credits,vMortMCC",
+   "faq": true
+  },
+  {
+   "text": "Where is Form 8911?",
+   "href": "tc:TOPICHELP=Credits,vAbout8911",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Let's look at miscellaneous credits.",
+ "headings": [],
+ "text": "Let's look at miscellaneous credits. Check any that apply -- even if you don't have a form or statement. If you're not sure, check the box and we'll work on it together. Adoption expenses or 2024 adoption credit carryforward For a finalized or pending adoption WHAT QUALIFIES? Residential Energy Credits Residential Clean Energy Credit WHAT QUALIFIES? Energy Efficient Home Improvement Credit WHAT QUALIFIES? Clean vehicle credits New Clean Vehicle Credit WHAT QUALIFIES? Previously Owned Clean Vehicle Credit WHAT QUALIFIES? Qualified Commercial Clean Vehicle Credit WHAT QUALIFIES? Highlights to clean vehicle credits for 2025 Foreign taxes paid Income taxes paid to a foreign country WHAT QUALIFIES? Mortgage credit certificate (uncommon) Certificate issued by state or local government WHAT QUALIFIES? Prior-year alternative minimum tax credit 2024 Alternative Minimum Tax (AMT) payment or credit carryforward, or disallowance of electric vehicle credit WHAT QUALIFIES? First-time home buyer in Washington, D.C. Carryover to 2025 WHAT QUALIFIES? Miscellaneous business and investment credits Includes low-income housing and investment credits WHAT QUALIFIES? Contributions to an ABLE Account by a designated beneficiary (Saver's Credit)",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.1064",
+   "id": "",
+   "label": "Adoption expenses or 2024 adoption credit carryforward For a finalized or pending adoption WHAT QUALIFIES?",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.35483",
+   "id": "",
+   "label": "Residential Energy Credits Residential Clean Energy Credit WHAT QUALIFIES? Energy Efficient Home Improvement Credit WHAT QUALIFIES?",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.151541",
+   "id": "",
+   "label": "Clean vehicle credits New Clean Vehicle Credit WHAT QUALIFIES? Previously Owned Clean Vehicle Credit WHAT QUALIFIES? Qualified Commercial Clean Vehicle Credit W",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.271",
+   "id": "",
+   "label": "Foreign taxes paid Income taxes paid to a foreign country WHAT QUALIFIES?",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.266",
+   "id": "",
+   "label": "Mortgage credit certificate (uncommon) Certificate issued by state or local government WHAT QUALIFIES?",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.265",
+   "id": "",
+   "label": "Prior-year alternative minimum tax credit 2024 Alternative Minimum Tax (AMT) payment or credit carryforward, or disallowance of electric vehicle credit WHAT QUA",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.629",
+   "id": "",
+   "label": "First-time home buyer in Washington, D.C. Carryover to 2025 WHAT QUALIFIES?",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.20713",
+   "id": "",
+   "label": "Miscellaneous business and investment credits Includes low-income housing and investment credits WHAT QUALIFIES?",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.241037",
+   "id": "",
+   "label": "Contributions to an ABLE Account by a designated beneficiary (Saver's Credit)",
+   "value": "",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "WHAT QUALIFIES?",
+   "img": "",
+   "href": "tc:TOPICHELP=Credits,hAdoption",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "WHAT QUALIFIES?",
+   "img": "",
+   "href": "tc:TOPICHELP=Credits,hLearnMore_F5695",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "WHAT QUALIFIES?",
+   "img": "",
+   "href": "tc:TOPICHELP=Credits,hLearnMore_F5695_Insulation_Doors_Windows",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "WHAT QUALIFIES?",
+   "img": "",
+   "href": "tc:TOPICHELP=Credits,hLearnMore_F8936",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "WHAT QUALIFIES?",
+   "img": "",
+   "href": "tc:TOPICHELP=Credits,hLearnMore_PrevOwnCleanVCrdt",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "WHAT QUALIFIES?",
+   "img": "",
+   "href": "tc:TOPICHELP=Credits,hLearnMore_QualComCleanVCrdt",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "Highlights to clean vehicle credits for 2025",
+   "img": "",
+   "href": "tc:TOPICHELP=Credits,hF8936_ChangeHighlights",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "WHAT QUALIFIES?",
+   "img": "",
+   "href": "tc:TOPICHELP=Credits,hLearnMore_FTC",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "WHAT QUALIFIES?",
+   "img": "",
+   "href": "tc:TOPICHELP=Credits,hLearnMore_MCC",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "WHAT QUALIFIES?",
+   "img": "",
+   "href": "tc:TOPICHELP=Credits,hLearnMore_PriorYrAMT",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "WHAT QUALIFIES?",
+   "img": "",
+   "href": "tc:TOPICHELP=Credits,hLearnMore_F8859",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "WHAT QUALIFIES?",
+   "img": "",
+   "href": "tc:TOPICHELP=Credits,hLearnMore_MiscBusCrdts",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "ABLE Account",
+   "img": "",
+   "href": "tc:TOPICHELP=Credits,hABLESaversCredit",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

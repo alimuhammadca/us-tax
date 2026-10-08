@@ -1,0 +1,105 @@
+{
+ "n": 158,
+ "slug": "after-dc",
+ "capturedAt": "2026-10-08T19:00:09.035Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "ChTxCr"
+ ],
+ "topicLinks": [
+  {
+   "text": "bona fide resident of Puerto Rico",
+   "href": "tc:TOPICHELP=ChTxCr,hBonaFidePR",
+   "faq": false
+  },
+  {
+   "text": "What is the Child Tax Credit and the Other Dependent Credit?",
+   "href": "tc:TOPICHELP=ChTxCr,vWhatIsCTCandODC",
+   "faq": true
+  },
+  {
+   "text": "What is the Additional Child Tax Credit?",
+   "href": "tc:TOPICHELP=ChTxCr,vWhatIsAdditionalCTC",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Child Tax Credit and Credit for Other Dependents",
+ "headings": [],
+ "text": "Child Tax Credit and Credit for Other Dependents We need to know if you were a bona fide resident of Puerto Rico for 2025. You or Casey was a bona fide resident of Puerto Rico for 2025",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "178.236689",
+   "id": "",
+   "label": "You or Casey was a bona fide resident of Puerto Rico for 2025",
+   "value": "",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "bona fide resident of Puerto Rico",
+   "img": "",
+   "href": "tc:TOPICHELP=ChTxCr,hBonaFidePR",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

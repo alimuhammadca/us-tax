@@ -1,0 +1,484 @@
+{
+ "n": 167,
+ "slug": "taxes-6",
+ "capturedAt": "2026-10-08T19:03:05.110Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed",
+  "expanded 1"
+ ],
+ "dialogs": [],
+ "topics": [
+  "MiscTax"
+ ],
+ "topicLinks": [
+  {
+   "text": "Section 72(m)(5) excess benefits tax",
+   "href": "tc:TOPICHELP=MiscTax,hExcessBenefitsTax",
+   "faq": false
+  },
+  {
+   "text": "Excise tax stock compensation from an expatriate corp",
+   "href": "tc:TOPICHELP=MiscTax,hInsiderCompTax",
+   "faq": false
+  },
+  {
+   "text": "Education credit recapture",
+   "href": "tc:TOPICHELP=MiscTax,hEducationRecap",
+   "faq": false
+  },
+  {
+   "text": "Tax on income from nonqualified deferred comp plan",
+   "href": "tc:TOPICHELP=MiscTax,hNonQualDefComp",
+   "faq": false
+  },
+  {
+   "text": "Interest on tax due on certain installment income",
+   "href": "tc:TOPICHELP=MiscTax,hTimeshare",
+   "faq": false
+  },
+  {
+   "text": "Interest on deferred tax on gain from certain installment sales",
+   "href": "tc:TOPICHELP=MiscTax,hDeferredTaxOnInstallGain",
+   "faq": false
+  },
+  {
+   "text": "Additional tax on recapture of donation of fractional interest",
+   "href": "tc:TOPICHELP=MiscTax,hFractionalInterestRecapture",
+   "faq": false
+  },
+  {
+   "text": "Additional tax on certain compensation under s. 457A",
+   "href": "tc:TOPICHELP=MiscTax,hSec457ATax",
+   "faq": false
+  },
+  {
+   "text": "Recapture amount on distributions from designated Roth accounts allocable to in-plan Roth rollovers",
+   "href": "tc:TOPICHELP=MiscTax,hRecapDesigRothAcct",
+   "faq": false
+  },
+  {
+   "text": "Recapture amount on distributions from designated Roth accounts allocable to in-plan Roth rollovers",
+   "href": "tc:TOPICHELP=MiscTax,hRecapDesigRothAcct",
+   "faq": false
+  },
+  {
+   "text": "What's a recapture tax?",
+   "href": "tc:TOPICHELP=MiscTax,vCreditRecapTaxes",
+   "faq": true
+  },
+  {
+   "text": "What is an excess benefits tax?",
+   "href": "tc:TOPICHELP=MiscTax,vExBeneTax",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Miscellaneous Taxes and Penalties",
+ "headings": [],
+ "text": "Miscellaneous Taxes and Penalties Enter any of these taxes and penalties that apply. These amounts are uncommon and won't apply to most people. Section 72(m)(5) excess benefits tax Tax on trust accumulation distributions (Form 4970) Excise tax stock compensation from an expatriate corp Education credit recapture Credit for federal tax paid on fuels (Form 4136) Recapture of alternative fuel vehicle refueling property credit (see Form 8911) Any EPE from Form 4255, line 2a, column(c) (see Form 4255) Recapture of any non-EPE credit from Form 8933/Form 4255, line 2a, column(k) (see Form 4255) Any amount from Form 4255, column(o) that was not reported on line 1f (see Form 4255) Any section 6418(g)(2) amounts excessive credit transfer amount reported on Form 4255, column(m) Any section 6418(g)(3) amounts attributable to recapture from Form 4255, column(m) Recapture of low-income housing credit (see Form 8611) Recapture of new markets credit (see Form 8874) Recapture of employer child care facilities credit (see Form 8882) Credit amount from Form 4255, column(j), lines 1b and 1j; and the Form 3468, Part II and VII amounts that get reported on Form 4255, line 1z (see Form 4255) Non-EPE recapture from Form 4255, line 1d, column(j) (see Form 4255) Recapture of federal mortgage subsidy (Form 8828) Tax on income from nonqualified deferred comp plan Interest on tax due on certain installment income Interest on deferred tax on gain from certain installment sales Additional tax on recapture of donation of fractional interest Look-back interest under s. 167(g) or 460(b) (Form 8697 or 8866) Interest from Form 8621, line 16f, relating to distributions from and dispositions of stock in a section 1291 fund Additional tax on certain compensation under s. 457A Interest amount from Form 8621, line 24 Recapture amount on distributions from designated Roth accounts allocable to in-plan Roth rollovers - Self Recapture amount on distributions from designated Roth accounts allocable to in-plan Roth rollovers - Spouse Uncollected Social Security and Medicare tax on wages (attach Form 8919) Section 965 net tax liability installment from Form 965-A",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "search",
+   "name": "1.231972",
+   "id": "",
+   "label": "Section 72(m)(5) excess benefits tax",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "1.231974",
+   "id": "",
+   "label": "Tax on trust accumulation distributions (Form 4970)",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "1.231975",
+   "id": "",
+   "label": "Excise tax stock compensation from an expatriate corp",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "57.271",
+   "id": "",
+   "label": "Education credit recapture",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "57.51755",
+   "id": "",
+   "label": "Credit for federal tax paid on fuels (Form 4136)",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "57.47289",
+   "id": "",
+   "label": "Recapture of alternative fuel vehicle refueling property credit (see Form 8911)",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "57.256581",
+   "id": "",
+   "label": "Any EPE from Form 4255, line 2a, column(c) (see Form 4255)",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "57.256583",
+   "id": "",
+   "label": "Recapture of any non-EPE credit from Form 8933/Form 4255, line 2a, column(k) (see Form 4255)",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "57.256585",
+   "id": "",
+   "label": "Any amount from Form 4255, column(o) that was not reported on line 1f (see Form 4255)",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "57.256816",
+   "id": "",
+   "label": "Any section 6418(g)(2) amounts excessive credit transfer amount reported on Form 4255, column(m)",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "57.256818",
+   "id": "",
+   "label": "Any section 6418(g)(3) amounts attributable to recapture from Form 4255, column(m)",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "1.231961",
+   "id": "",
+   "label": "Recapture of low-income housing credit (see Form 8611)",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "57.323",
+   "id": "",
+   "label": "Recapture of new markets credit (see Form 8874)",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "57.339",
+   "id": "",
+   "label": "Recapture of employer child care facilities credit (see Form 8882)",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "57.256588",
+   "id": "",
+   "label": "Credit amount from Form 4255, column(j), lines 1b and 1j; and the Form 3468, Part II and VII amounts that get reported on Form 4255, line 1z (see Form 4255)",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "57.256590",
+   "id": "",
+   "label": "Non-EPE recapture from Form 4255, line 1d, column(j) (see Form 4255)",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "1.231964",
+   "id": "",
+   "label": "Recapture of federal mortgage subsidy (Form 8828)",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "1.231970",
+   "id": "",
+   "label": "Tax on income from nonqualified deferred comp plan",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "1.231959",
+   "id": "",
+   "label": "Interest on tax due on certain installment income",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "1.231960",
+   "id": "",
+   "label": "Interest on deferred tax on gain from certain installment sales",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "1.231969",
+   "id": "",
+   "label": "Additional tax on recapture of donation of fractional interest",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "1.231976",
+   "id": "",
+   "label": "Look-back interest under s. 167(g) or 460(b) (Form 8697 or 8866)",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "1.231978",
+   "id": "",
+   "label": "Interest from Form 8621, line 16f, relating to distributions from and dispositions of stock in a section 1291 fund",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "1.231971",
+   "id": "",
+   "label": "Additional tax on certain compensation under s. 457A",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "1.231979",
+   "id": "",
+   "label": "Interest amount from Form 8621, line 24",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "57.133392",
+   "id": "",
+   "label": "Recapture amount on distributions from designated Roth accounts allocable to in-plan Roth rollovers - Self",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "57.133393",
+   "id": "",
+   "label": "Recapture amount on distributions from designated Roth accounts allocable to in-plan Roth rollovers - Spouse",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "1.231955",
+   "id": "",
+   "label": "Uncollected Social Security and Medicare tax on wages (attach Form 8919)",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "1.204660",
+   "id": "",
+   "label": "Section 965 net tax liability installment from Form 965-A",
+   "value": "",
+   "maxlength": "10"
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Section 72(m)(5) excess benefits tax",
+   "img": "",
+   "href": "tc:TOPICHELP=MiscTax,hExcessBenefitsTax",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Excise tax stock compensation from an expatriate corp",
+   "img": "",
+   "href": "tc:TOPICHELP=MiscTax,hInsiderCompTax",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Education credit recapture",
+   "img": "",
+   "href": "tc:TOPICHELP=MiscTax,hEducationRecap",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Tax on income from nonqualified deferred comp plan",
+   "img": "",
+   "href": "tc:TOPICHELP=MiscTax,hNonQualDefComp",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Interest on tax due on certain installment income",
+   "img": "",
+   "href": "tc:TOPICHELP=MiscTax,hTimeshare",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Interest on deferred tax on gain from certain installment sales",
+   "img": "",
+   "href": "tc:TOPICHELP=MiscTax,hDeferredTaxOnInstallGain",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Additional tax on recapture of donation of fractional interest",
+   "img": "",
+   "href": "tc:TOPICHELP=MiscTax,hFractionalInterestRecapture",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Additional tax on certain compensation under s. 457A",
+   "img": "",
+   "href": "tc:TOPICHELP=MiscTax,hSec457ATax",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Recapture amount on distributions from designated Roth accounts allocable to in-plan Roth rollovers",
+   "img": "",
+   "href": "tc:TOPICHELP=MiscTax,hRecapDesigRothAcct",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Recapture amount on distributions from designated Roth accounts allocable to in-plan Roth rollovers",
+   "img": "",
+   "href": "tc:TOPICHELP=MiscTax,hRecapDesigRothAcct",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

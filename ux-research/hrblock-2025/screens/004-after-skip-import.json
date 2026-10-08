@@ -1,0 +1,86 @@
+{
+ "n": 4,
+ "slug": "after-skip-import",
+ "capturedAt": "2026-10-08T18:00:14.698Z",
+ "actionsBefore": [
+  [
+   "click",
+   "[name=\"4\"] img, [name=\"4\"]"
+  ]
+ ],
+ "actionResults": [
+  "click [name=\"4\"] img, [name=\"4\"] true"
+ ],
+ "dialogs": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Import Data from Financial Software",
+ "headings": [],
+ "text": "Import Data from Financial Software If you use financial software, such as Quicken® or another program that supports Tax Exchange Format (TXF), you can save time by importing your financial data into the tax software. Do you want to import data from financial software? Yes No",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_Import",
+   "id": "",
+   "label": "Yes",
+   "value": "92.1033",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_Import",
+   "id": "",
+   "label": "No",
+   "value": "92.1227",
+   "checked": true
+  }
+ ],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_up.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

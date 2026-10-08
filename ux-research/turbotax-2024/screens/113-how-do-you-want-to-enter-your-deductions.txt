@@ -1,0 +1,766 @@
+﻿TITLE: TurboTax Deluxe 2024
+[Menu] '' #Menu_1
+  [MenuItem] 'File' #fileMenuItem
+    [Text] '_File'
+  [MenuItem] 'Edit' #editMenuItem
+    [Text] '_Edit'
+  [MenuItem] 'View' #viewMenuItem
+    [Text] '_View'
+  [MenuItem] 'Tools' #toolsMenuItem
+    [Text] '_Tools'
+  [MenuItem] 'Online' #onlineMenuItem
+    [Text] 'O_nline'
+  [MenuItem] 'Help' #helpMenuItem
+    [Text] '_Help'
+  [Hyperlink] '  Help Center'
+    [Image] '' #helpImage
+  [Hyperlink] '  Print Center'
+    [Image] '' #printImage
+  [Hyperlink] '  Show Topic List'
+    [Image] '' #topicImage
+[Custom] '' #mainTabBarUC
+  [Image] '' #productBanner
+  [Custom] '' #refundMonitorView
+    [Custom] '' #FederalRefundGauge
+      [Text] 'Federal Tax Due' #bannerText
+      [Text] '$' #_DollarSign
+      [Text] '62' #_AmountText
+    [Custom] '' #StateRefundGauge
+      [Text] 'Illinois' #bannerText
+      [Text] 'See Amount'
+        [Hyperlink] 'See Amount'
+  [Button] '' #toggleViewButton
+    [Image] '' #_ImgOff
+  [Button] '' #flagsButton
+    [Image] '' #flagsImage
+  [Button] '' #notificationsButton
+    [Image] '' #notificationImage
+[Custom] '' #interviewUC
+  [Custom] '' #mainTabBar
+    [List] '' #mainTab
+      [ListItem] 'Personal Info' #Personal Info
+        [Text] 'PERSONAL INFO'
+      [ListItem] 'Federal Taxes' #Federal Taxes
+        [Text] 'FEDERAL TAXES'
+      [ListItem] 'State Taxes' #State Taxes
+        [Text] 'STATE TAXES'
+      [ListItem] 'Review' #Review
+        [Text] 'REVIEW'
+      [ListItem] 'File' #File
+        [Text] 'FILE'
+    [List] '' #subTab
+      [ListItem] 'Wages & Income' #Wages & Income
+        [RadioButton] '' #Wages & Income
+      [ListItem] 'Deductions & Credits' #Deductions & Credits
+        [RadioButton] '' #Deductions & Credits
+      [ListItem] 'Other Tax Situations' #Other Tax Situations
+        [RadioButton] '' #Other Tax Situations
+      [ListItem] 'Federal Review' #Federal Review
+        [RadioButton] '' #Federal Review
+      [ListItem] 'Smart Check' #Smart Check
+        [RadioButton] '' #Smart Check
+  [ToolBar] '' #mainFindTools
+    [Custom] '' #searchUC
+        [Hyperlink] ' '
+    [Button] '' #OverflowButton (disabled)
+  [Pane] '' #scrollViewer
+    [Text] 'How do you want to enter your deductions and credits?'
+    [Text] 'Guide me'
+    [Text] 'I'll explore on my own'
+    [Image] '' #intgfx_bullet_blk_3
+    [Text] 'Walks you through all deductions and credits, one at a time'
+    [Image] '' #intgfx_bullet_blk_4
+    [Text] 'Best if you want us to take you through all situations'
+    [Image] '' #intgfx_bullet_blk_6
+    [Text] 'Choose specific deductions and credits you want to work on'
+    [Image] '' #intgfx_bullet_blk_7
+    [Text] 'Best if you know which situations apply to you'
+    [Button] 'Walk me through everything' #Button_8
+      [Text] 'Walk me through everything'
+    [Button] 'I'll choose what I work on' #Button_9
+      [Text] 'I'll choose what I work on'
+    [Button] 'Back'
+      [Text] 'Back'
+    [Custom] '' #sideBar
+  [Text] '80%'
+  [Text] 'Help Others'
+    [Hyperlink] 'Help Others' #helpothers
+  [Image] '' #new
+  [Text] ' '
+    [Hyperlink] ' ' #upgradeTurboTaxHyperlink
+      [Image] '' #upgradeTurboTaxImage
+      [Text] 'Upgrade TurboTax' #upgradeTurboTaxText
+  [Button] 'No Form' (disabled)
+    [Text] 'No Form' (disabled)
+  [Custom] '' #SizeablePanel
+    [Thumb] '' #PART_Thumb
+    [Custom] '' #OptionalForm
+        [Text] 'Federal Information Worksheet'
+        [Text] '2024'
+          [Text] 'G Keep for your records' #staticBlock
+          [Text] 'Part I ' Personal Information' #staticBlock
+          [Text] 'Information in Part I is completely calculated from entries on Personal Information Worksheets.' #staticBlock
+          [Text] 'QuickZoom to enter taxpayer and spouse information on the applicable Personal Worksheet' #staticBlock
+          [Text] '. . . . '
+          [Text] 'G'
+        [Button] 'QuickZoom' #QuickZoom
+          [Text] 'QuickZoom'
+        [Text] 'Taxpayer:'
+        [Text] 'Spouse:'
+        [Text] 'First name. . . . . . . . . . . . . '
+        [Text] 'First name. . . . . . . . . . . . . '
+        [Text] 'Middle initial. . . . . . . . . . . '
+        [Text] 'Suffix. . . . . . . . . . . '
+        [Text] 'Middle initial. . . . . . . . . . . '
+        [Text] 'Suffix. . . . . . . . . . . '
+        [Text] 'Last name. . . . . . . . . . . . . '
+        [Text] 'Last name. . . . . . . . . . . . . '
+        [Text] 'Social security no.. . . . . '
+        [Text] 'Social security no.. . . . . '
+        [Text] 'Occupation. . . . . . . . . . . . . '
+        [Text] 'Occupation. . . . . . . . . . . . . '
+        [Text] 'Date of birth. . . . . . . . . . . '
+        [Text] '(mm/dd/yyyy)'
+        [Text] 'Date of birth. . . . . . . . . . . '
+        [Text] '(mm/dd/yyyy)'
+        [Text] 'Age as of 1-1-2025. . . . '
+        [Text] 'Age as of 1-1-2025. . . . '
+        [Text] 'Daytime phone. . . . . . . . '
+        [Text] 'Ext'
+        [Text] 'Daytime phone. . . . . . . . '
+        [Text] 'Ext'
+        [Text] 'Legally blind. . . . . . . . . . . '
+        [Text] 'Legally blind. . . . . . . . . . . '
+        [Text] 'Date of death. . . . . . . . . . '
+        [Text] 'Date of death. . . . . . . . . . '
+        [Text] 'Dependent of Someone Else:'
+        [Text] 'Dependent of Someone Else:'
+          [Text] 'Can taxpayer be claimed as dependent of another' #staticBlock
+          [Text] 'Can spouse be claimed as dependent of another' #staticBlock
+        [Text] 'person (such as parent)?. . . '
+        [Text] 'Yes'
+        [Text] 'No'
+        [Text] 'person (such as parent)?. . . '
+        [Text] 'Yes'
+        [Text] 'No'
+          [Text] 'If yes, was taxpayer claimed as dependent on that' #staticBlock
+          [Text] 'If yes, was spouse claimed as dependent on that' #staticBlock
+        [Text] 'person's return?. . . . . . . . . . . . . '
+        [Text] 'Yes'
+        [Text] 'No'
+        [Text] 'person's return?. . . . . . . . . . . . . '
+        [Text] 'Yes'
+        [Text] 'No'
+        [Text] 'Credit for the Elderly or Disabled (Schedule R):'
+        [Text] 'Credit for the Elderly or Disabled (Schedule R):'
+        [Text] 'Is the taxpayer retired on total '
+        [Text] 'Is the spouse retired on total '
+          [Text] 'and permanent disability?' #staticBlock
+          [Text] '. . . '
+        [Text] 'Yes'
+        [Text] 'No'
+          [Text] 'and permanent disability?' #staticBlock
+          [Text] '. . . '
+        [Text] 'Yes'
+        [Text] 'No'
+        [Text] 'Presidential Election Campaign Fund:'
+        [Text] 'Presidential Election Campaign Fund:'
+        [Text] 'Does the taxpayer want $3 to go to the Presidential'
+        [Text] 'Does the spouse want $3 to go to the Presidential'
+        [Text] 'Election Campaign Fund?. . . '
+        [Text] 'Yes'
+        [Text] 'No'
+        [Text] 'Election Campaign Fund?. . . '
+        [Text] 'Yes'
+        [Text] 'No'
+          [Text] 'Part II ' Address and Federal Filing Status (enter information in this section)' #staticBlock
+        [Text] 'US Address:'
+        [Text] 'Address. . . . . . . . . . . . . '
+        [Text] 'Apt no.. . . '
+        [Text] 'City. . . . . . . . . . . . . . . . . . '
+        [Text] 'State. . . . . . . . '
+        [Text] 'ZIP code. . . . . . '
+        [Text] 'Foreign Address:'
+        [Text] 'Check this box to use foreign address. . . . . . '
+        [Text] 'G'
+        [Text] 'Address. . . . . . . . . . . . . '
+        [Text] 'Apt no.. . . . '
+        [Text] 'City. . . . . . . . . . . . . . . . . . '
+        [Text] 'Foreign code. . . . . . . '
+        [Text] 'Foreign country. . . . . . '
+        [Text] 'Foreign province/county'
+        [Text] 'Foreign postal code'
+        [Text] 'APO/FPO/DPO address, check if appropriate. . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'APO'
+        [Text] 'FPO'
+        [Text] 'DPO'
+        [Text] 'Home phone. . . . . . . . '
+        [Text] 'Check to print phone number on Form 1040. . . . . '
+        [Text] 'Home'
+        [Text] 'Taxpayer daytime'
+        [Text] 'Spouse daytime'
+        [Text] 'Print Form 1040-SR instead of Form 1040. . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'Yes'
+        [Text] 'No'
+          [Edit] '' #TFN[0] =Jordan
+          [Edit] '' #SFN[0] =Casey
+          [Edit] '' #TMI[0]
+          [Edit] '' #TSF[0]
+          [Edit] '' #SMI[0]
+          [Edit] '' #SSF[0]
+          [Edit] '' #TLN[0] =Sample
+          [Edit] '' #SLN[0] =Sample
+          [Edit] '' #TSSN[0] =000-00-0000
+          [Edit] '' #SSSN[0] =400-12-3457
+          [Edit] '' #TOCC[0] =Software Tester
+          [Edit] '' #SOCC[0] =Teacher
+          [Edit] '' #TDOB[0] =03/14/1985
+          [Edit] '' #SDOB[0] =07/22/1987
+          [Edit] '' #TPAGE[0] =39
+          [Edit] '' #SPAGE[0] =37
+          [Edit] '' #TPHO[0]
+          [Edit] '' #TPPE[0]
+          [Edit] '' #SPHO[0]
+          [Edit] '' #SPPE[0]
+        [CheckBox] '' #BLXT[0] (disabled)
+        [CheckBox] '' #BLXS[0] (disabled)
+          [Edit] '' #TDOD[0]
+          [Edit] '' #SDOD[0]
+        [CheckBox] '' #DXT[0] (disabled)
+        [CheckBox] '' #DXTN[0] (disabled)
+        [CheckBox] '' #DXS[0] (disabled)
+        [CheckBox] '' #DXSN[0] (disabled)
+        [CheckBox] '' #DEPTY[0] (disabled)
+        [CheckBox] '' #DEPTN[0] (disabled)
+        [CheckBox] '' #DEPSY[0] (disabled)
+        [CheckBox] '' #DEPSN[0] (disabled)
+        [CheckBox] '' #DSTY[0]
+        [CheckBox] '' #DSTN[0]
+        [CheckBox] '' #DSSY[0]
+        [CheckBox] '' #DSSN[0]
+        [CheckBox] '' #PECY[0] (disabled)
+        [CheckBox] '' #PECN[0] (disabled)
+        [CheckBox] '' #SECY[0] (disabled)
+        [CheckBox] '' #SECN[0] (disabled)
+          [Edit] '' #USADDR[0] =100 Main St
+          [Edit] '' #USAPT[0]
+          [Edit] '' #USCITY[0] =Springfield
+          [Edit] '' #ST[0] =IL
+          [Edit] '' #ZIP[0] =62701
+        [CheckBox] '' #USEFCADD[0]
+          [Edit] '' #FCADDR[0]
+          [Edit] '' #FCAPT[0]
+          [Edit] '' #FCCITY[0]
+        [ComboBox] '' #FCCODE[0]
+          [Edit] '' #COUNTRY[0]
+          [Edit] '' #FPC[0]
+          [Edit] '' #FZIP[0]
+        [CheckBox] '' #APOX[0]
+        [CheckBox] '' #FPOX[0]
+        [CheckBox] '' #DPOX[0]
+          [Edit] '' #HPHO[0]
+        [CheckBox] '' #DTPHO3[0]
+        [CheckBox] '' #DTPHO1[0]
+        [CheckBox] '' #DTPHO2[0]
+        [CheckBox] '' #SRY[0]
+        [CheckBox] '' #SRN[0]
+        [Text] 'TurboTax for the Web Filing Status Smart Worksheet'
+        [Text] 'Check this box to override the filing status selected thru Interview. . '
+        [Text] 'Marital Status. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'Filing Status Selected. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [CheckBox] '' #OVERFS[0]
+        [ComboBox] '' #MARITAL[0]
+        [ComboBox] '' #TTOFS[0]
+        [Text] 'Federal filing status:'
+        [Text] '1'
+        [Text] 'Single'
+        [Text] '2'
+        [Text] 'Married filing jointly'
+        [Text] '3'
+        [Text] 'Married filing separately'
+          [Text] 'Check this box if you did not live with your spouse at any time during the year' #staticBlock
+          [Text] '. . . . . . . . . . . . '
+          [Text] 'G'
+        [Text] 'Check this box if you are eligible to claim your spouse's exemption/blind/over age 65 (see Help). . . . . . . '
+        [Text] 'G'
+        [Text] '4'
+        [Text] 'Head of household'
+          [Text] 'If the 'qualifying person' is your child but not your dependent:' #staticBlock
+        [Text] 'Child's First name'
+        [Text] 'MI'
+        [Text] 'Last Name'
+        [Text] 'Suff'
+        [Text] 'Child's social security number. . . '
+        [Text] '5'
+        [Text] 'Qualifying surviving spouse'
+        [Text] 'Check the appropriate box for the year your spouse died. . . . . . . . . . . . '
+        [Text] '2022'
+        [Text] ' . . . '
+        [Text] 'G'
+        [Text] '2023'
+        [Text] ' . '
+        [Text] 'G'
+        [Text] 'Are you a dependent with a qualifying child. . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'Yes'
+        [Text] ' . . . '
+        [Text] 'G'
+        [Text] 'No'
+        [Text] ' . '
+        [Text] 'G'
+        [Text] 'Enter qualifying person's name:'
+        [Text] 'Child's First name'
+        [Text] 'MI'
+        [Text] 'Last Name'
+        [Text] 'Suff'
+        [Text] 'Child's social security number. . . '
+        [Text] 'Check if treating a nonresident or dual-status alien spouse as a U.S. resident for the entire tax'
+        [Text] 'year, enter name here:'
+        [Text] 'Check if this is the first year'
+          [Text] 'Part III ' Dependent/Earned Income Credit/Child and Dependent Care Credit Information' #staticBlock
+        [Text] 'Information in Part III is completely calculated from entries on Dependent/Nondependent Info Worksheets.'
+        [CheckBox] '' #FS1[0]
+        [CheckBox] '' #FS2[0]
+        [CheckBox] '' #FS3[0]
+        [CheckBox] '' #NOTX[0]
+        [CheckBox] '' #SPEX[0] (disabled)
+        [CheckBox] '' #FS4[0]
+          [Edit] '' #CNAM[0]
+          [Edit] '' #CMI[0]
+          [Edit] '' #CLNAM[0]
+          [Edit] '' #CSUFF[0]
+          [Edit] '' #CSSN[0]
+        [CheckBox] '' #FS5[0]
+        [CheckBox] '' #YX1[0]
+        [CheckBox] '' #YX2[0]
+        [CheckBox] '' #QWYES[0]
+        [CheckBox] '' #QWNO[0]
+          [Edit] '' #QWNAM[0]
+          [Edit] '' #QWMI[0]
+          [Edit] '' #QWLNAM[0]
+          [Edit] '' #QWSUFF[0]
+          [Edit] '' #QWSSN[0]
+        [CheckBox] '' #NRASPIND[0]
+          [Edit] '' #NRASPNM[0]
+        [CheckBox] '' #FIRSTYRELECT[0]
+        [Button] 'QuickZoom' #QuickZoom
+          [Text] 'QuickZoom'
+          [Text] 'QuickZoom to enter Part III information on the Dependent Information Worksheet' #staticBlock
+          [Text] '. . . . . . . . . . . . . . . . '
+          [Text] 'G'
+        [Button] 'QuickZoom' #QuickZoom
+          [Text] 'QuickZoom'
+        [Text] 'Date of birth'
+        [Text] 'Date of death'
+        [Text] 'Not'
+        [Text] '(mm/dd/yyyy)'
+        [Text] '(mm/dd/yyyy)'
+        [Text] 'qual'
+        [Text] 'credit'
+        [Text] 'Qualified'
+        [Text] 'other'
+        [Text] 'Not'
+        [Text] 'child/dep'
+        [Text] 'Lived'
+        [Text] 'dep'
+        [Text] 'C'
+        [Text] 'qual'
+        [Text] 'care exps'
+        [Text] 'with'
+        [Text] 'Educ'
+        [Text] '*'
+        [Text] 'Social security'
+        [Text] 'o'
+        [Text] 'for'
+        [Text] 'incurred'
+        [Text] 'E'
+        [Text] 'taxpyr'
+        [Text] 'Tuitn'
+        [Text] 'D'
+        [Text] 'First name'
+        [Text] 'MI'
+        [Text] 'number'
+        [Text] 'd'
+        [Text] 'child'
+        [Text] 'and paid'
+        [Text] 'I'
+        [Text] 'in'
+        [Text] 'and'
+        [Text] 'e'
+        [Text] 'Last name'
+        [Text] 'Suff'
+        [Text] 'Relationship'
+        [Text] 'Age'
+        [Text] 'e'
+        [Text] 'tax cr'
+        [Text] '2024'
+        [Text] 'C'
+        [Text] 'U.S.'
+        [Text] 'Fees'
+        [Text] 'p'
+        [Text] '* "Yes" - qualifies as dependent, "No" - does not qualify as dependent'
+          [List] '' #myListBox
+            [ListItem] 'System.Windows.Controls.Canvas'
+                [Edit] '' #L6C1A[1] =Riley
+                [Edit] '' #L6C1B[1]
+                [Edit] '' #L6C3[1] =400-12-3458
+                [Edit] '' #CHDOB[1] =05/05/2016
+                [Edit] '' #CHDOD[1]
+              [CheckBox] '' #A48[1] (disabled)
+              [CheckBox] '' #COTHDEPX[1] (disabled)
+                [Edit] '' #L6C1C[1] =Sample
+                [Edit] '' #L6C1D[1]
+                [Edit] '' #L6C4[1] =Son
+                [Edit] '' #DEPAGE[1] =8
+                [Edit] '' #CD[1] =L
+              [CheckBox] '' #TCR[1] (disabled)
+              [CheckBox] '' #TCRX[1] (disabled)
+                [Edit] '' #CCEXP[1]
+                [Edit] '' #EIC[1] =E
+                [Edit] '' #L6C5[1] =12
+              [CheckBox] '' #A703[1] (disabled)
+              [CheckBox] '' #EDUX[1] (disabled)
+                [Edit] '' #NDEP[1] =Yes
+            [ListItem] 'System.Windows.Controls.Canvas'
+                [Edit] '' #L6C1A[2]
+                [Edit] '' #L6C1B[2]
+                [Edit] '' #L6C3[2]
+                [Edit] '' #CHDOB[2]
+                [Edit] '' #CHDOD[2]
+              [CheckBox] '' #A48[2] (disabled)
+              [CheckBox] '' #COTHDEPX[2] (disabled)
+                [Edit] '' #L6C1C[2]
+                [Edit] '' #L6C1D[2]
+                [Edit] '' #L6C4[2]
+                [Edit] '' #DEPAGE[2]
+                [Edit] '' #CD[2]
+              [CheckBox] '' #TCR[2] (disabled)
+              [CheckBox] '' #TCRX[2] (disabled)
+                [Edit] '' #CCEXP[2]
+                [Edit] '' #EIC[2]
+                [Edit] '' #L6C5[2]
+              [CheckBox] '' #A703[2] (disabled)
+              [CheckBox] '' #EDUX[2] (disabled)
+                [Edit] '' #NDEP[2]
+          [Text] 'If you are eligible for the child tax credit or the earned income credit QuickZoom here' #staticBlock
+          [Text] 'to review and/or enter amounts not considered earned income (see Help)' #staticBlock
+          [Text] '. . . . . . . . . . . . . . . . . . . . . '
+          [Text] 'G'
+        [Button] 'QuickZoom' #QuickZoom
+          [Text] 'QuickZoom'
+          [Text] 'Page 2 ' #staticBlock
+          [Text] 'Part IV ' Earned Income Credit Information (you must answer these questions to calculate EIC)' #staticBlock
+        [Text] 'Is the taxpayer or spouse a qualifying child for EIC for another person?. . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Yes'
+        [Text] 'No'
+        [Text] 'Was the taxpayer's (and spouse's if married filing jointly) home in the United States'
+        [Text] 'for more than half of 2024?. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Yes'
+        [Text] 'No'
+        [Text] 'If the SSN of the taxpayer, or spouse if married filing jointly, was obtained to'
+        [Text] 'get a federally funded benefit, such as Medicaid, and the Social Security card'
+          [Text] 'contains the legend Not Valid for Employment, check this box (see Help)' #staticBlock
+          [Text] '. . . . . . . . . '
+          [Text] 'G'
+          [Text] 'Check if you are filing head of household and your spouse is a nonresident alien' #staticBlock
+          [Text] 'and you lived with your spouse during the last six months of 2024' #staticBlock
+          [Text] '. . . . . . . . . . . . . . . . . '
+          [Text] 'G'
+        [Text] 'Check if you were notified by the IRS that EIC cannot be claimed in 2024 or'
+        [Text] 'if you are ineligible to claim the EIC in 2024 for any other reason. . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+          [Text] 'Part V ' Direct Deposit or Direct Debit Information (not applicable for Form 9465)' #staticBlock
+          [Text] 'Do you want to elect direct deposit of any federal tax refund?' #staticBlock
+          [Text] '. . . . . . . . . . . . . . . . . . . . . '
+          [Text] 'G'
+        [Text] 'Yes'
+        [Text] 'No'
+          [Text] 'Do you want to elect direct debit of federal balance due (Electronic filing only)?' #staticBlock
+          [Text] '. . . '
+          [Text] 'G'
+        [Text] 'Yes'
+        [Text] 'No'
+        [Text] 'If you selected either of the options above, fill out the information below:'
+        [Text] 'Name of Financial Institution (optional). . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Check the appropriate box. . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Checking'
+        [Text] 'Savings'
+        [Text] 'Routing number. . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Account number. . . . . . . . . . . . '
+        [Text] 'G'
+          [Edit] '' #NAM2[0] =Jordan & Casey Sample
+          [Edit] '' #SSN2[0] =000-00-0000
+        [CheckBox] '' #AY[0]
+        [CheckBox] '' #AN[0]
+        [CheckBox] '' #BY[0]
+        [CheckBox] '' #BN[0]
+        [CheckBox] '' #DY[0]
+        [CheckBox] '' #CY[0]
+        [CheckBox] '' #NOEICX[0]
+        [CheckBox] '' #DDY[0]
+        [CheckBox] '' #DDN[0]
+        [CheckBox] '' #EFWYES[0]
+        [CheckBox] '' #EFWNO[0]
+          [Edit] '' #BANKNAME[0]
+        [CheckBox] '' #TACK[0]
+        [CheckBox] '' #TASV[0]
+          [Edit] '' #RTN[0]
+          [Edit] '' #DAN[0]
+          [Text] 'QuickZoom to Form 8888 to enter additional accounts' #staticBlock
+          [Text] '. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+          [Text] 'G'
+          [Text] 'QuickZoom to Form 9465 to enter information for the Installment Agreement Request' #staticBlock
+          [Text] '. . . . . . . . . '
+          [Text] 'G'
+        [Button] 'QuickZoom' #QuickZoom
+          [Text] 'QuickZoom'
+        [Button] 'QuickZoom' #QuickZoom
+          [Text] 'QuickZoom'
+        [Text] 'Enter the following information only if you are requesting direct debit of balance due:'
+        [Text] 'Enter the payment date to withdraw from the account above. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Balance-due amount from this return. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Amended Returns:'
+          [Text] 'Do you want to elect direct debit of federal amended balance due (e-File only)?' #staticBlock
+          [Text] '. . '
+          [Text] 'G'
+        [Text] 'Yes'
+        [Text] 'No'
+        [Text] 'Enter the payment date to withdraw from the account above. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+          [Text] 'Balance-due amount from this amended return' #staticBlock
+          [Text] '. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+          [Text] 'G'
+          [Text] 'Part VI ' Additional Information for Your Federal Return' #staticBlock
+        [Text] 'Standard Deduction/Itemized Deductions:'
+        [Text] 'Check this box if you are itemizing for state tax or other purposes even though your itemized'
+        [Text] 'deductions are less than your standard deduction. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Check this box if you are married filing separately and your spouse itemized deductions . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Check this box to take the standard deduction even if less than itemized deductions. . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Real Estate Professionals:'
+        [Text] 'Do you or your spouse qualify for the special passive activity rules for'
+        [Text] 'taxpayers in real property business? (see Help). . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Yes'
+        [Text] 'No'
+        [Text] 'Credit for Qualified Retirement Savings Contributions (Form 8880):'
+        [Text] 'Is the taxpayer a full-time student?. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Yes'
+        [Text] 'No'
+        [Text] 'Is the spouse a full-time student?. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Yes'
+        [Text] 'No'
+        [Text] 'American Opportunity and Lifetime Learning Credit  (Form 8863)'
+        [Text] 'For 2024, were you (or your spouse if married) a nonresident alien for any part '
+        [Text] 'of the year, and did not elect to be treated as a resident alien?. . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Yes'
+        [Text] 'No'
+        [Text] 'Foreign Tax Credit (Form 1116):'
+        [Text] 'Check this box to file Form 1116 even if you're not required to file Form 1116. . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Resident country. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Excludable Income  from Am. Samoa, Guam, Commonwealth of the N.  Mariana Islands, or Puerto Rico:'
+        [Text] 'Excludable income of bona fide residents of American Samoa, Guam, or the'
+        [Text] 'Commonwealth of the Northern Mariana Islands. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'Excludable income from Puerto Rico. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'Dual Status Alien Return:'
+        [Text] 'Check this box if you are a dual-status alien. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Check this box to print 'DUAL-STATUS STATEMENT' on Form 1040. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Third Party Designee:'
+          [Text] 'Caution: Review transferred information for accuracy.' #staticBlock
+        [Text] 'Do you want to allow another person to discuss this return with the IRS?. . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Yes'
+        [Text] 'No'
+        [Text] 'If Yes, complete the following: '
+        [Text] 'Third party designee name. . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Third party designee phone number. . . . . . '
+        [Text] 'G'
+        [Text] 'Personal Identification number (enter any 5 numbers). . . . . '
+        [Text] 'G'
+        [Text] 'Disaster Tax Relief:'
+        [Text] 'Check if you took a disaster distribution in a prior year. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+          [Edit] '' #DEBITDT[0]
+          [Edit] '' #BDA[0]
+        [CheckBox] '' #EFWAYES[0]
+        [CheckBox] '' #EFWANO[0]
+          [Edit] '' #AMDSDT[0]
+          [Edit] '' #AMDBDA[0]
+        [CheckBox] '' #IEX[0]
+        [CheckBox] '' #SIX[0]
+        [CheckBox] '' #STDX[0]
+        [CheckBox] '' #RPB[0]
+        [CheckBox] '' #RPN[0]
+        [CheckBox] '' #TPSTUDY[0]
+        [CheckBox] '' #TPSTUDN[0]
+        [CheckBox] '' #SPSTUDY[0]
+        [CheckBox] '' #SPSTUDN[0]
+        [CheckBox] '' #NRALIENY[0]
+        [CheckBox] '' #NRALIENN[0]
+        [CheckBox] '' #FTCX[0]
+          [Edit] '' #RESI[0] =USA
+          [Edit] '' #SAMOA[0]
+          [Edit] '' #PR[0]
+        [CheckBox] '' #PDR[0]
+        [CheckBox] '' #PDS[0]
+        [CheckBox] '' #PPDY[0]
+        [CheckBox] '' #PPDN[0]
+          [Edit] '' #DESNAM[0]
+          [Edit] '' #DESPH[0]
+          [Edit] '' #DESPIN[0]
+        [CheckBox] '' #VCHURRI[0] (disabled)
+          [Text] 'Page 3 ' #staticBlock
+          [Text] 'Part VI ' Additional Information for Your Federal Return ' Continued' #staticBlock
+        [Text] 'Personal Representative for deceased taxpayers:'
+        [Text] 'Name of personal representative required for E-filed'
+        [Text] 'returns when Form 1310 is not filed or it is not the'
+        [Text] 'surviving spouse. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+          [Text] 'Part VII ' State Filing Information' #staticBlock
+          [Edit] '' #NAM3[0] =Jordan & Casey Sample
+          [Edit] '' #SSN3[0] =000-00-0000
+          [Edit] '' #PERSREP[0]
+          [Text] 'QuickZoom to enter taxpayer and spouse state of residence on the applicable Personal' #staticBlock
+        [Text] 'Information Worksheet. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Button] 'QuickZoom' #QuickZoom
+          [Text] 'QuickZoom'
+        [Text] 'Identity Protection PIN:'
+        [Text] 'If the IRS sent the taxpayer an Identity Protection PIN, enter it here. . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'If the IRS sent the spouse an Identity Protection PIN, enter it here. . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Taxpayer:'
+        [Text] 'Enter the taxpayer's state of residence as of December 31, 2024. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Check the appropriate box:'
+        [Text] 'Taxpayer is a resident of the state above for the entire year. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Taxpayer is a resident of the state above for only part of year. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Date the taxpayer established residence in state above. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'In which state (or foreign country) did the taxpayer reside before this change?. . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Spouse:'
+        [Text] 'Enter the spouse's state of residence as of December 31, 2024. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Check the appropriate box:'
+        [Text] 'Spouse is a resident of the state above for the entire year. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Spouse is a resident of the state above for only part of year. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Date the spouse established residence in state above. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'In which state (or foreign country) did the spouse reside before this change?. . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Nonresident states:'
+        [Text] 'Nonresident State(s)'
+        [Text] 'Taxpayer/Spouse/Joint'
+        [Text] 'Check this box if you are in a Registered Domestic Partnership or a civil union. . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'If you checked the box on the line above, also check the appropriate box below:'
+        [Text] 'Check if this is your individual federal return you are filing with the IRS. . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Check if this is the joint return created to file joint state tax return (see Help). . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+          [Edit] '' #IDTHEFT[0]
+          [Edit] '' #SIDTHEFT[0]
+          [Edit] '' #RSTA[0] =IL
+        [CheckBox] '' #RESF[0] (disabled)
+        [CheckBox] '' #RESP[0] (disabled)
+          [Edit] '' #RESDATE[0]
+          [Edit] '' #WHERE[0]
+          [Edit] '' #SRSTA[0] =IL
+        [CheckBox] '' #SRESF[0] (disabled)
+        [CheckBox] '' #SRESP[0] (disabled)
+          [Edit] '' #SRESDATE[0]
+          [Edit] '' #SWHERE[0]
+        [CheckBox] '' #RDP[0]
+        [CheckBox] '' #FEDRTN[0]
+        [CheckBox] '' #JTSTRTN[0]
+          [List] '' #myListBox
+            [ListItem] 'System.Windows.Controls.Canvas'
+              [ComboBox] '' #NONRESST[1]
+              [ComboBox] '' #TPFLAG[1]
+          [Text] 'QuickZoom to Form 1040' #staticBlock
+          [Text] '. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+          [Text] 'G'
+        [Button] 'QuickZoom' #QuickZoom
+          [Text] 'QuickZoom'
+          [Text] 'Page 4' #staticBlock
+        [Text] 'Use the PIN that you signed last year's tax return with.'
+        [Text] 'Taxpayer's Prior year PIN. . . . '
+        [Text] 'Spouse's Prior year PIN. . . . . . '
+        [Text] 'These signature PINs are chosen by the taxpayer and spouse and used for e-filing your tax return'
+        [Text] 'Taxpayer's PIN used to sign the return. . . . . . . . '
+        [Text] 'Spouse's PIN used to sign the return. . . . . . . . . . '
+        [Text] 'Taxpayer:'
+        [Text] 'Drivers license or state ID number'
+        [Text] 'Issued by what state'
+        [Text] 'License or ID'
+        [Text] 'license. . . . . '
+        [Text] 'G'
+        [Text] 'ID. . . . . '
+        [Text] 'G'
+        [Text] 'neither. . . . . '
+        [Text] 'G'
+        [Text] 'decline. . . . '
+        [Text] 'G'
+        [Text] 'Spouse'
+        [Text] 'Drivers license or state ID number'
+        [Text] 'Issued by what state'
+        [Text] 'License or ID'
+        [Text] 'license. . . . . '
+        [Text] 'G'
+        [Text] 'ID. . . . . '
+        [Text] 'G'
+        [Text] 'neither. . . . . '
+        [Text] 'G'
+        [Text] 'decline. . . . '
+        [Text] 'G'
+          [Edit] '' #NAM4[0] =Jordan & Casey Sample
+          [Edit] '' #SSN4[0] =000-00-0000
+          [Edit] '' #PTPYPIN[0]
+          [Edit] '' #STPYPIN[0]
+          [Edit] '' #PTPIN[0]
+          [Edit] '' #STPIN[0]
+          [Edit] '' #TPDLNBR[0]
+          [Edit] '' #TPDLST[0]
+        [CheckBox] '' #TPDLL[0]
+        [CheckBox] '' #TPDLID[0]
+        [CheckBox] '' #TPDLNO[0]
+        [CheckBox] '' #TDLIDDCL[0]
+          [Edit] '' #TDOCIDDE[0]
+          [Edit] '' #TPDOCID[0]
+          [Edit] '' #SPDLNBR[0]
+          [Edit] '' #SPDLST[0]
+        [CheckBox] '' #SPDLL[0]
+        [CheckBox] '' #SPDLID[0]
+        [CheckBox] '' #SPDLNO[0]
+        [CheckBox] '' #SDLIDDCL[0]
+          [Edit] '' #SDOCIDDE[0]
+          [Edit] '' #SPDOCID[0]
+        [ScrollBar] '' #VerticalScrollBar
+          [Button] '' #PART_LineUpButton (disabled)
+          [Button] '' #PageUp (disabled)
+          [Button] '' #PageDown (disabled)
+          [Button] '' #PART_LineDownButton (disabled)
+        [ScrollBar] '' #HorizontalScrollBar
+          [Button] '' #PART_LineLeftButton (disabled)
+          [Button] '' #PART_LineRightButton (disabled)

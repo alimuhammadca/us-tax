@@ -1,0 +1,114 @@
+{
+ "n": 76,
+ "slug": "1099b-enter",
+ "capturedAt": "2026-10-08T18:29:46.389Z",
+ "actionsBefore": [
+  [
+   "clickText",
+   "Enter Manually"
+  ]
+ ],
+ "actionResults": [
+  "clickText Enter Manually"
+ ],
+ "dialogs": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Tell us about this 1099-B.",
+ "headings": [],
+ "text": "Tell us about this 1099-B. The description can be the name of your financial institution, or any other description to help you tell your accounts apart. Description The FATCA filing requirements box is checked on my 1099-B. LEARN MORE Account number (required if FATCA applies)",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "search",
+   "name": "195607.195629",
+   "id": "",
+   "label": "Description",
+   "value": "",
+   "maxlength": "32"
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "195607.195630",
+   "id": "",
+   "label": "The FATCA filing requirements box is checked on my 1099-B. LEARN MORE",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "195607.195631",
+   "id": "",
+   "label": "Account number",
+   "value": "",
+   "maxlength": "29"
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=F1099B,hFATCA",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_up.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=F1099B,hFATCA",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

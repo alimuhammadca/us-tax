@@ -1,0 +1,114 @@
+{
+ "n": 190,
+ "slug": "state-prepare",
+ "capturedAt": "2026-10-08T19:16:40.535Z",
+ "actionsBefore": [
+  [
+   "pwclick",
+   "[name=childof269978200] img, [name=childof269978200]",
+   30000
+  ],
+  [
+   "wait",
+   4000
+  ]
+ ],
+ "actionResults": [
+  "pwclick [name=childof269978200] img, [name=childof269978200] true",
+  "wait"
+ ],
+ "dialogs": [],
+ "topics": [
+  "ilgs",
+  "sharedtextfed"
+ ],
+ "topicLinks": [
+  {
+   "text": "Learn about Illinois tax breaks you might be eligible for",
+   "href": "tc:TOPICHELP=ilgs,hStateAdvisor",
+   "faq": false
+  },
+  {
+   "text": "What if I haven't completed my federal return?",
+   "href": "tc:TOPICHELP=sharedtextfed,vWhatIfIHaventCompletedMyFederalReturn",
+   "faq": true
+  },
+  {
+   "text": "What if I need to file more than one state return?",
+   "href": "tc:TOPICHELP=sharedtextfed,vWhatIfINeedToFileMoreTheOneStateReturn",
+   "faq": true
+  },
+  {
+   "text": "Will the program transfer information from my federal return?",
+   "href": "tc:TOPICHELP=sharedtextfed,vTransferInfoFromFederal",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Let's start your Illinois return!",
+ "headings": [],
+ "text": "Let's start your Illinois return! To save you time, we've imported everything we already know from your federal return. Learn about Illinois tax breaks you might be eligible for.",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Learn about Illinois tax breaks you might be eligible for",
+   "img": "",
+   "href": "tc:TOPICHELP=ilgs,hStateAdvisor",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "cobil.gif",
+   "alt": "",
+   "title": "",
+   "name": ""
+  },
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_up.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

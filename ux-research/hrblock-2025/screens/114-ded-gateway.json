@@ -1,0 +1,320 @@
+{
+ "n": 114,
+ "slug": "ded-gateway",
+ "capturedAt": "2026-10-08T18:43:34.270Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "Dedux",
+  "Med"
+ ],
+ "topicLinks": [
+  {
+   "text": "WHAT QUALIFIES?",
+   "href": "tc:TOPICHELP=Dedux,hMortgageInterest",
+   "faq": false
+  },
+  {
+   "text": "WHAT QUALIFIES?",
+   "href": "tc:TOPICHELP=Dedux,hRealEstateTax",
+   "faq": false
+  },
+  {
+   "text": "WHAT QUALIFIES?",
+   "href": "tc:TOPICHELP=Dedux,hPersonalPropTax",
+   "faq": false
+  },
+  {
+   "text": "WHAT QUALIFIES?",
+   "href": "tc:TOPICHELP=Dedux,hCharitableDonations",
+   "faq": false
+  },
+  {
+   "text": "WHAT QUALIFIES?",
+   "href": "tc:TOPICHELP=Dedux,hMedicalAndDental",
+   "faq": false
+  },
+  {
+   "text": "WHAT QUALIFIES?",
+   "href": "tc:TOPICHELP=Dedux,hLearnMore_F4952",
+   "faq": false
+  },
+  {
+   "text": "WHAT QUALIFIES?",
+   "href": "tc:TOPICHELP=Dedux,hLearnMore_Casualty",
+   "faq": false
+  },
+  {
+   "text": "WHAT QUALIFIES?",
+   "href": "tc:TOPICHELP=Dedux,hInvestmentProp",
+   "faq": false
+  },
+  {
+   "text": "WHAT QUALIFIES?",
+   "href": "tc:TOPICHELP=Dedux,hSalesTax",
+   "faq": false
+  },
+  {
+   "text": "What if my mortgage company paid my property taxes?",
+   "href": "tc:TOPICHELP=Dedux,vPropTax",
+   "faq": true
+  },
+  {
+   "text": "If I volunteered for a charity, is my time a donation?",
+   "href": "tc:TOPICHELP=Dedux,vChariVol",
+   "faq": true
+  },
+  {
+   "text": "What if my spouse and I paid expenses jointly and are filing separate returns?",
+   "href": "tc:TOPICHELP=Dedux,vSeparateReturns",
+   "faq": true
+  },
+  {
+   "text": "What if I paid foreign income tax?",
+   "href": "tc:TOPICHELP=Dedux,vForeignTax",
+   "faq": true
+  },
+  {
+   "text": "What if I paid state or local income taxes?",
+   "href": "tc:TOPICHELP=Dedux,vPaidStateIncTax",
+   "faq": true
+  },
+  {
+   "text": "What if I paid state or local sales tax?",
+   "href": "tc:TOPICHELP=Dedux,vPaidStateSalesTax",
+   "faq": true
+  },
+  {
+   "text": "What medical expenses are deductible?",
+   "href": "tc:TOPICHELP=Med,vDeductibleMedExpenses",
+   "faq": true
+  },
+  {
+   "text": "Sales Tax",
+   "href": "tc:TOPICHELP=Dedux,vSalesTax",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Choose any deductions you had in 2025.",
+ "headings": [],
+ "text": "Choose any deductions you had in 2025. Any deductions you can claim will minimize the amount you owe and increase your refund. I paid mortgage interest and / or points on a home mortgage or home equity loan (Form 1098). WHAT QUALIFIES? I paid real estate tax on property I own. WHAT QUALIFIES? I paid personal property tax on a vehicle, boat, motorcycle, or other property that wasn't real estate. WHAT QUALIFIES? I had charitable donations and volunteer expenses. WHAT QUALIFIES? I had unreimbursed medical or dental expenses that were more than 7.5% of my income. WHAT QUALIFIES? I paid interest on a loan used to buy an investment through a margin account with a brokerage firm. WHAT QUALIFIES? I had a casualty or theft loss. WHAT QUALIFIES? I have vehicle or depreciable property used in an investment activity. WHAT QUALIFIES? I paid more state and local sales taxes than state and local income taxes (or I want to find out if I did). WHAT QUALIFIES?",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.199",
+   "id": "",
+   "label": "I paid mortgage interest and / or points on a home mortgage or home equity loan (Form 1098). WHAT QUALIFIES?",
+   "value": "on",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.20708",
+   "id": "",
+   "label": "I paid real estate tax on property I own. WHAT QUALIFIES?",
+   "value": "on",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.27738",
+   "id": "",
+   "label": "I paid personal property tax on a vehicle, boat, motorcycle, or other property that wasn't real estate. WHAT QUALIFIES?",
+   "value": "on",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.200",
+   "id": "",
+   "label": "I had charitable donations and volunteer expenses. WHAT QUALIFIES?",
+   "value": "on",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.203",
+   "id": "",
+   "label": "I had unreimbursed medical or dental expenses that were more than 7.5% of my income. WHAT QUALIFIES?",
+   "value": "on",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.20714",
+   "id": "",
+   "label": "I paid interest on a loan used to buy an investment through a margin account with a brokerage firm. WHAT QUALIFIES?",
+   "value": "on",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.20711",
+   "id": "",
+   "label": "I had a casualty or theft loss. WHAT QUALIFIES?",
+   "value": "on",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.20710",
+   "id": "",
+   "label": "I have vehicle or depreciable property used in an investment activity. WHAT QUALIFIES?",
+   "value": "on",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.185995",
+   "id": "",
+   "label": "I paid more state and local sales taxes than state and local income taxes (or I want to find out if I did). WHAT QUALIFIES?",
+   "value": "on",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "WHAT QUALIFIES?",
+   "img": "",
+   "href": "tc:TOPICHELP=Dedux,hMortgageInterest",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "WHAT QUALIFIES?",
+   "img": "",
+   "href": "tc:TOPICHELP=Dedux,hRealEstateTax",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "WHAT QUALIFIES?",
+   "img": "",
+   "href": "tc:TOPICHELP=Dedux,hPersonalPropTax",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "WHAT QUALIFIES?",
+   "img": "",
+   "href": "tc:TOPICHELP=Dedux,hCharitableDonations",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "WHAT QUALIFIES?",
+   "img": "",
+   "href": "tc:TOPICHELP=Dedux,hMedicalAndDental",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "WHAT QUALIFIES?",
+   "img": "",
+   "href": "tc:TOPICHELP=Dedux,hLearnMore_F4952",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "WHAT QUALIFIES?",
+   "img": "",
+   "href": "tc:TOPICHELP=Dedux,hLearnMore_Casualty",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "WHAT QUALIFIES?",
+   "img": "",
+   "href": "tc:TOPICHELP=Dedux,hInvestmentProp",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "WHAT QUALIFIES?",
+   "img": "",
+   "href": "tc:TOPICHELP=Dedux,hSalesTax",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

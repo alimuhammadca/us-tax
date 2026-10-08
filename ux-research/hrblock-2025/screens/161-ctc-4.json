@@ -1,0 +1,742 @@
+{
+ "n": 161,
+ "slug": "ctc-4",
+ "capturedAt": "2026-10-08T19:01:07.116Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed",
+  "expanded 1"
+ ],
+ "dialogs": [],
+ "topics": [
+  "CredSumm"
+ ],
+ "topicLinks": [
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=CredSumm,hLearn_more_CreditsSummary",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=CredSumm,hExplain_This_Child_Dep_Care",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=CredSumm,hAdoption_ExplainThis",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=CredSumm,hEdCredit_ExplainThis",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=CredSumm,hExplain_EIC",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=CredSumm,hExplain_ElderlyDisabled",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=CredSumm,hExplain_This_Child_Tax_Credit",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=CredSumm,hExplain_AdditionalChild",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=CredSumm,hExplain_ForeignTaxCr",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=CredSumm,hExcessSocialSecurity",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=CredSumm,hExplain_MortgageIntCr",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=CredSumm,hExplain_This_Minimum_Tax_Credit",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=CredSumm,hExplain_DCHomebuyerCr",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=CredSumm,hExplain_Savers",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=CredSumm,hExplain_OtherBusiness",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=CredSumm,hExplain_ResidentialEnergy",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=CredSumm,hExplain_EnergyHomeimprove",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=CredSumm,hExplain_PlugInElectricVeh",
+   "faq": false
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Here are your credits.",
+ "headings": [],
+ "text": "Here are your credits. Due to our calculations, they might be different from what you entered earlier. LEARN MORE Child and dependent care credit 600 EXPLAIN AMOUNT Adoption credit 0 EXPLAIN AMOUNT American Opportunity and Lifetime Learning credits 0 EXPLAIN AMOUNT Earned Income Credit (EIC) 0 EXPLAIN AMOUNT Elderly or disabled credit 0 EXPLAIN AMOUNT Child Tax credit and Other Dependent Tax credit 2,200 EXPLAIN AMOUNT Additional child tax credit 0 EXPLAIN AMOUNT Foreign tax credit 0 EXPLAIN AMOUNT Excess Social Security credit 0 EXPLAIN AMOUNT Mortgage interest credit (uncommon) 0 EXPLAIN AMOUNT Prior Year Alternative Minimum Tax (AMT) 0 EXPLAIN AMOUNT D.C. first-time home buyer credit 0 EXPLAIN AMOUNT Saver's credit 0 EXPLAIN AMOUNT Other business credits 0 EXPLAIN AMOUNT Residential Clean Energy Credit 0 EXPLAIN AMOUNT Energy Efficient Home Improvement Credit 0 EXPLAIN AMOUNT Clean Vehicle Credit 0 EXPLAIN AMOUNT",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=CredSumm,hLearn_more_CreditsSummary",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=CredSumm,hExplain_This_Child_Dep_Care",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554518",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=CredSumm,hAdoption_ExplainThis",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554519",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=CredSumm,hEdCredit_ExplainThis",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554622",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=CredSumm,hExplain_EIC",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554521",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=CredSumm,hExplain_ElderlyDisabled",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554523",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=CredSumm,hExplain_This_Child_Tax_Credit",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554524",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=CredSumm,hExplain_AdditionalChild",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554524",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=CredSumm,hExplain_ForeignTaxCr",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554525",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=CredSumm,hExcessSocialSecurity",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554526",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=CredSumm,hExplain_MortgageIntCr",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554527",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=CredSumm,hExplain_This_Minimum_Tax_Credit",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554528",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=CredSumm,hExplain_DCHomebuyerCr",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554530",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=CredSumm,hExplain_Savers",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554531",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=CredSumm,hExplain_OtherBusiness",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554534",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=CredSumm,hExplain_ResidentialEnergy",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33589134",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=CredSumm,hExplain_EnergyHomeimprove",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33589134",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=CredSumm,hExplain_PlugInElectricVeh",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33705972",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554518",
+   "title": "Go To Topic",
+   "name": "go_to_0"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554519",
+   "title": "Go To Topic",
+   "name": "go_to_1"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554622",
+   "title": "Go To Topic",
+   "name": "go_to_2"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554521",
+   "title": "Go To Topic",
+   "name": "go_to_3"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554523",
+   "title": "Go To Topic",
+   "name": "go_to_4"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554524",
+   "title": "Go To Topic",
+   "name": "go_to_5"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554524",
+   "title": "Go To Topic",
+   "name": "go_to_6"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554525",
+   "title": "Go To Topic",
+   "name": "go_to_7"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554526",
+   "title": "Go To Topic",
+   "name": "go_to_8"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554527",
+   "title": "Go To Topic",
+   "name": "go_to_9"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554528",
+   "title": "Go To Topic",
+   "name": "go_to_10"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554530",
+   "title": "Go To Topic",
+   "name": "go_to_11"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554531",
+   "title": "Go To Topic",
+   "name": "go_to_12"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554534",
+   "title": "Go To Topic",
+   "name": "go_to_13"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33589134",
+   "title": "Go To Topic",
+   "name": "go_to_14"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33589134",
+   "title": "Go To Topic",
+   "name": "go_to_15"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33705972",
+   "title": "Go To Topic",
+   "name": "go_to_16"
+  },
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=CredSumm,hLearn_more_CreditsSummary",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=CredSumm,hExplain_This_Child_Dep_Care",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=CredSumm,hAdoption_ExplainThis",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=CredSumm,hEdCredit_ExplainThis",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=CredSumm,hExplain_EIC",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=CredSumm,hExplain_ElderlyDisabled",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=CredSumm,hExplain_This_Child_Tax_Credit",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=CredSumm,hExplain_AdditionalChild",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=CredSumm,hExplain_ForeignTaxCr",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=CredSumm,hExcessSocialSecurity",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=CredSumm,hExplain_MortgageIntCr",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=CredSumm,hExplain_This_Minimum_Tax_Credit",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=CredSumm,hExplain_DCHomebuyerCr",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=CredSumm,hExplain_Savers",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=CredSumm,hExplain_OtherBusiness",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=CredSumm,hExplain_ResidentialEnergy",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=CredSumm,hExplain_EnergyHomeimprove",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=CredSumm,hExplain_PlugInElectricVeh",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

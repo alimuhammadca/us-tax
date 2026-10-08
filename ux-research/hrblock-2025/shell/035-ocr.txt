@@ -1,0 +1,34 @@
+--- LEFT PANEL (meter + FAQs)
+2025
+My taxes for
+Premium
+FEDERAL REFUND
+STATE REFUND
+$0
+Help Center
+FAQs
+If my child doesn't have a middle
+name, what do I enter?
+Does my child need an SSN?
+If my child can't get an SSN, what
+form do I use?
+How do I get an ITIN?
+If more than one relationship
+applies, which do I enter?
+Can I claim a cousin I supported?
+What should I enter if my child
+was adopted, or my foster child
+--- TABS
+WELCOME
+PERSONAL INFORMATION
+FEDERAL
+INCOME
+ADJUSTMENTS
+STATE
+DEDUCTIONS
+FILE
+CREDITS
+TAXES
+MISC
+PLAN
+FINISH

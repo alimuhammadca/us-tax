@@ -1,0 +1,103 @@
+{
+ "n": 42,
+ "slug": "after-trump",
+ "capturedAt": "2026-10-08T18:16:53.345Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Now, let's work on your 2025 income.",
+ "headings": [],
+ "text": "Now, let's work on your 2025 income. Did you receive tips and overtime? We've got you covered! LEARN MORE We'll ask you about: Wages from your job including tips and overtime Investment income Retirement accounts and Social Security Business or partnership income Rental property Unemployment income Sale of a home or other property Other income You'll usually get forms from each source showing your income in January. You'll need them to complete this section. You might be able to import directly from your payroll provider or financial institutions. Or, you can enter your forms yourself. View income documents View income-producing activities",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=Inc,hTipsAndOvertime",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "View income documents",
+   "img": "",
+   "href": "tc:TOPICHELP=Inc,hListForms",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "View income-producing activities",
+   "img": "",
+   "href": "tc:TOPICHELP=Inc,hListActivities",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=Inc,hTipsAndOvertime",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/COBScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/cobedition.css"
+ ],
+ "errors": []
+}

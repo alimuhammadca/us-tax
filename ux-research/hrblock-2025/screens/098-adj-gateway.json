@@ -1,0 +1,296 @@
+{
+ "n": 98,
+ "slug": "adj-gateway",
+ "capturedAt": "2026-10-08T18:38:02.806Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "Adjust"
+ ],
+ "topicLinks": [
+  {
+   "text": "WHAT QUALIFIES?",
+   "href": "tc:TOPICHELP=Adjust,hIRAContribs",
+   "faq": false
+  },
+  {
+   "text": "WHAT QUALIFIES?",
+   "href": "tc:TOPICHELP=Adjust,hLearnMore_EdExpense",
+   "faq": false
+  },
+  {
+   "text": "WHAT QUALIFIES?",
+   "href": "tc:TOPICHELP=Adjust,hLearnMore_StudentLoanInt",
+   "faq": false
+  },
+  {
+   "text": "WHAT QUALIFIES?",
+   "href": "tc:TOPICHELP=Adjust,hLearnMore_Moving",
+   "faq": false
+  },
+  {
+   "text": "WHAT QUALIFIES?",
+   "href": "tc:TOPICHELP=Adjust,hAlimonyPaid",
+   "faq": false
+  },
+  {
+   "text": "WHAT QUALIFIES?",
+   "href": "tc:TOPICHELP=Adjust,hLearnMore_MSA",
+   "faq": false
+  },
+  {
+   "text": "WHAT QUALIFIES?",
+   "href": "tc:TOPICHELP=Adjust,hLearnMore_HSA",
+   "faq": false
+  },
+  {
+   "text": "WHAT QUALIFIES?",
+   "href": "tc:TOPICHELP=Adjust,hJobExpenses",
+   "faq": false
+  },
+  {
+   "text": "What if I don't have the form listed?",
+   "href": "tc:TOPICHELP=Adjust,vMissingForm",
+   "faq": true
+  },
+  {
+   "text": "Do I need to itemize to take these adjustments?",
+   "href": "tc:TOPICHELP=Adjust,vDontNeedToItemize",
+   "faq": true
+  },
+  {
+   "text": "What about deemed IRAs?",
+   "href": "tc:TOPICHELP=Adjust,vDeemedIRA",
+   "faq": true
+  },
+  {
+   "text": "What if I used my Archer MSA withdrawal for medical expenses?",
+   "href": "tc:TOPICHELP=Adjust,vMSA",
+   "faq": true
+  },
+  {
+   "text": "What if I made my Archer MSA contribution before April 15, 2026?",
+   "href": "tc:TOPICHELP=Adjust,vNxtYr",
+   "faq": true
+  },
+  {
+   "text": "What about a tax refund that's directly deposited into my IRA?",
+   "href": "tc:TOPICHELP=Adjust,vIRADirectDeposit",
+   "faq": true
+  },
+  {
+   "text": "Where do I enter a myRA contribution?",
+   "href": "tc:TOPICHELP=Adjust,vmyRAContributions",
+   "faq": true
+  },
+  {
+   "text": "What if I want to deduct tuition expenses?",
+   "href": "tc:TOPICHELP=Adjust,vTuition",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Choose any adjustments that applied in 2025.",
+ "headings": [],
+ "text": "Choose any adjustments that applied in 2025. Any adjustments you can claim will increase your refund and reduce the amount you owe. I made traditional or Roth IRA contributions by April 15, 2026. WHAT QUALIFIES? I'm a K–12 classroom teacher, aide, principal, or educator and paid for classroom supplies or professional development courses. WHAT QUALIFIES? I paid student loan interest. WHAT QUALIFIES? I have job-related moving expenses. WHAT QUALIFIES? I paid alimony to a former spouse. WHAT QUALIFIES? I made Archer MSA or Medicare Advantage transactions, payments from long-term care insurance, or received accelerated death benefits (Forms 1099-SA or 1099-LTC). WHAT QUALIFIES? I have health savings account (HSA) transactions (Forms 1099-SA or 5498-SA). WHAT QUALIFIES? I had out-of-pocket job-related or job-hunting expenses. WHAT QUALIFIES?",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.193",
+   "id": "",
+   "label": "I made traditional or Roth IRA contributions by April 15, 2026. WHAT QUALIFIES?",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.1056",
+   "id": "",
+   "label": "I'm a K–12 classroom teacher, aide, principal, or educator and paid for classroom supplies or professional development courses. WHAT QUALIFIES?",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.635",
+   "id": "",
+   "label": "I paid student loan interest. WHAT QUALIFIES?",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.207",
+   "id": "",
+   "label": "I have job-related moving expenses. WHAT QUALIFIES?",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.201",
+   "id": "",
+   "label": "I paid alimony to a former spouse. WHAT QUALIFIES?",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.577",
+   "id": "",
+   "label": "I made Archer MSA or Medicare Advantage transactions, payments from long-term care insurance, or received accelerated death benefits (Forms 1099-SA or 1099-LTC)",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.10474",
+   "id": "",
+   "label": "I have health savings account (HSA) transactions (Forms 1099-SA or 5498-SA). WHAT QUALIFIES?",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.1038",
+   "id": "",
+   "label": "I had out-of-pocket job-related or job-hunting expenses. WHAT QUALIFIES?",
+   "value": "on",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "WHAT QUALIFIES?",
+   "img": "",
+   "href": "tc:TOPICHELP=Adjust,hIRAContribs",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "WHAT QUALIFIES?",
+   "img": "",
+   "href": "tc:TOPICHELP=Adjust,hLearnMore_EdExpense",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "WHAT QUALIFIES?",
+   "img": "",
+   "href": "tc:TOPICHELP=Adjust,hLearnMore_StudentLoanInt",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "WHAT QUALIFIES?",
+   "img": "",
+   "href": "tc:TOPICHELP=Adjust,hLearnMore_Moving",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "WHAT QUALIFIES?",
+   "img": "",
+   "href": "tc:TOPICHELP=Adjust,hAlimonyPaid",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "WHAT QUALIFIES?",
+   "img": "",
+   "href": "tc:TOPICHELP=Adjust,hLearnMore_MSA",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "WHAT QUALIFIES?",
+   "img": "",
+   "href": "tc:TOPICHELP=Adjust,hLearnMore_HSA",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "WHAT QUALIFIES?",
+   "img": "",
+   "href": "tc:TOPICHELP=Adjust,hJobExpenses",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

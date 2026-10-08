@@ -1,0 +1,33 @@
+--- LEFT PANEL (meter + FAQs)
+2025
+My taxes for
+Premium
+FEDERAL REFUND
+$1,951
+LATEST CHANGE
+A Increase of $600
+STATE REFUND
+$0
+Help Center
+FAQs
+View Details
+What's the alternative minimum
+tax (AMT)?
+What if I exercised an incentive
+stock option before 2025?
+What if I exercised an incentive
+stock option in 2025?
+--- TABS
+WELCOME
+PERSONAL INFORMATION
+FEDERAL
+INCOME
+ADJUSTMENTS
+STATE
+DEDUCTIONS
+FILE
+CREDITS
+TAXES
+MISC
+PLAN
+FINISH

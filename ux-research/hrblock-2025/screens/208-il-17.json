@@ -1,0 +1,132 @@
+{
+ "n": 208,
+ "slug": "il-17",
+ "capturedAt": "2026-10-08T19:22:07.223Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [],
+ "topicLinks": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Tell Us About This Student",
+ "headings": [],
+ "text": "Tell Us About This Student First name Last name SSN Grade (K–12) What type of school did this student attend? Public Private Home school",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "search",
+   "name": "50402.50530",
+   "id": "",
+   "label": "First name",
+   "value": "",
+   "maxlength": "15"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "50402.50531",
+   "id": "",
+   "label": "Last name",
+   "value": "",
+   "maxlength": "20"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "50402.50532",
+   "id": "",
+   "label": "SSN",
+   "value": "",
+   "maxlength": "11"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "50402.50533",
+   "id": "",
+   "label": "Grade (K–12)",
+   "value": "",
+   "maxlength": "2"
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_SchoolType",
+   "id": "",
+   "label": "Public",
+   "value": "50402.199824",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_SchoolType",
+   "id": "",
+   "label": "Private",
+   "value": "50402.199825",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_SchoolType",
+   "id": "",
+   "label": "Home school",
+   "value": "50402.199826",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

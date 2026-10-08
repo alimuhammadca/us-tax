@@ -1,0 +1,84 @@
+{
+ "n": 117,
+ "slug": "1098-enter",
+ "capturedAt": "2026-10-08T18:44:34.441Z",
+ "actionsBefore": [
+  [
+   "clickText",
+   "Enter Manually"
+  ]
+ ],
+ "actionResults": [
+  "clickText Enter Manually"
+ ],
+ "dialogs": [],
+ "topics": [],
+ "topicLinks": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Our Home Mortgage Assistant can help!",
+ "headings": [],
+ "text": "Our Home Mortgage Assistant can help! We'll ask about your home-mortgage interest later in the Home Mortgage Assistant or Quick Entry sections. We recommend you use the Home Mortgage Assistant if: You have one of these: New mortgage Refinanced mortgage Home-equity loan or line of credit You have questions about how to enter your home mortgage. You want more detailed information about your mortgage interest.",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "contentbtn",
+   "text": "",
+   "img": "Home Mortgage Assistant",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "32781",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Quick Entry",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "home_mortgage_assistant_up.gif",
+   "alt": "",
+   "title": "Home Mortgage Assistant",
+   "name": "home_mortgage_assistant"
+  },
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "quick_entry_up.gif",
+   "alt": "Quick Entry",
+   "title": "",
+   "name": "quick_entry"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/platformfeature.css"
+ ],
+ "errors": []
+}

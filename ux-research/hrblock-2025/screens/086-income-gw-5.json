@@ -1,0 +1,269 @@
+{
+ "n": 86,
+ "slug": "income-gw-5",
+ "capturedAt": "2026-10-08T18:33:55.438Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "SalesGateway",
+  "F982KB"
+ ],
+ "topicLinks": [
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=SalesGateway,hLearnMore_HomeSale",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=SalesGateway,hLearnMore_Exchange",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=SalesGateway,hLearnMore_Installment",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=SalesGateway,hLearnMore_BusinessSale",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=SalesGateway,hRealEstateCollectiblesEtc",
+   "faq": false
+  },
+  {
+   "text": "What if my property was condemned or repossessed?",
+   "href": "tc:TOPICHELP=SalesGateway,vCondemned",
+   "faq": true
+  },
+  {
+   "text": "What if the bank foreclosed on my home?",
+   "href": "tc:TOPICHELP=SalesGateway,vBankForeclosure",
+   "faq": true
+  },
+  {
+   "text": "What if I sold my home but didn't get a Form 1099-S?",
+   "href": "tc:TOPICHELP=SalesGateway,vNo1099S",
+   "faq": true
+  },
+  {
+   "text": "What if I sold my car?",
+   "href": "tc:TOPICHELP=SalesGateway,vAutoSale",
+   "faq": true
+  },
+  {
+   "text": "What about sales of rental property?",
+   "href": "tc:TOPICHELP=SalesGateway,vRentalSales",
+   "faq": true
+  },
+  {
+   "text": "How do I handle a foreclosure or debt cancellation?",
+   "href": "tc:TOPICHELP=F982KB,vCOVIDCancelDebt",
+   "faq": true
+  },
+  {
+   "text": "What if I received a 1099-K for the sale of non-business (personal use) property?",
+   "href": "tc:TOPICHELP=SalesGateway,v1099KSaleOfNonBizProp",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Now, let's work on your property sales and exchanges.",
+ "headings": [],
+ "text": "Now, let's work on your property sales and exchanges. Choose all that apply to you or Casey for 2025. Sale of your main home Sold in 2025 LEARN MORE Like-kind exchange of business or investment property Section 1031 exchange of property LEARN MORE Installment payments from a property sale Sale proceeds LEARN MORE Sale of business, farm, or rental property Including a drop in business use to 50% or less LEARN MORE Sale of other real estate, collectibles, non-business (personal use) property, and other investment property Enter 1099-B stock sales in Investments LEARN MORE",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.133",
+   "id": "",
+   "label": "Sale of your main home Sold in 2025 LEARN MORE",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.515",
+   "id": "",
+   "label": "Like-kind exchange of business or investment property Section 1031 exchange of property LEARN MORE",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.518",
+   "id": "",
+   "label": "Installment payments from a property sale Sale proceeds LEARN MORE",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.516",
+   "id": "",
+   "label": "Sale of business, farm, or rental property Including a drop in business use to 50% or less LEARN MORE",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.195612",
+   "id": "",
+   "label": "Sale of other real estate, collectibles, non-business (personal use) property, and other investment property Enter 1099-B stock sales in Investments LEARN MORE",
+   "value": "",
+   "checked": true
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=SalesGateway,hLearnMore_HomeSale",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=SalesGateway,hLearnMore_Exchange",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=SalesGateway,hLearnMore_Installment",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=SalesGateway,hLearnMore_BusinessSale",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=SalesGateway,hRealEstateCollectiblesEtc",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=SalesGateway,hLearnMore_HomeSale",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=SalesGateway,hLearnMore_Exchange",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=SalesGateway,hLearnMore_Installment",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=SalesGateway,hLearnMore_BusinessSale",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=SalesGateway,hRealEstateCollectiblesEtc",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

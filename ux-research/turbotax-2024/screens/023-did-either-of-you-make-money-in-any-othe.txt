@@ -1,0 +1,100 @@
+﻿TITLE: TurboTax Deluxe 2024
+[Menu] '' #Menu_1
+  [MenuItem] 'File' #fileMenuItem
+    [Text] '_File'
+  [MenuItem] 'Edit' #editMenuItem
+    [Text] '_Edit'
+  [MenuItem] 'View' #viewMenuItem
+    [Text] '_View'
+  [MenuItem] 'Tools' #toolsMenuItem
+    [Text] '_Tools'
+  [MenuItem] 'Online' #onlineMenuItem
+    [Text] 'O_nline'
+  [MenuItem] 'Help' #helpMenuItem
+    [Text] '_Help'
+  [Hyperlink] '  Help Center'
+    [Image] '' #helpImage
+  [Hyperlink] '  Print Center'
+    [Image] '' #printImage
+  [Hyperlink] '  Show Topic List'
+    [Image] '' #topicImage
+[Custom] '' #mainTabBarUC
+  [Image] '' #productBanner
+  [Custom] '' #refundMonitorView
+    [Custom] '' #FederalRefundGauge
+      [Text] 'Federal Refund' #bannerText
+      [Text] '$' #_DollarSign
+      [Text] '0' #_AmountText
+    [Custom] '' #StateRefundGauge
+      [Text] 'Illinois' #bannerText
+      [Text] 'See Amount'
+        [Hyperlink] 'See Amount'
+  [Button] '' #toggleViewButton
+    [Image] '' #_ImgOff
+  [Button] '' #flagsButton
+    [Image] '' #flagsImage
+  [Button] '' #notificationsButton
+    [Image] '' #notificationImage
+[Custom] '' #interviewUC
+  [Custom] '' #mainTabBar
+    [List] '' #mainTab
+      [ListItem] 'Personal Info' #Personal Info
+        [Text] 'PERSONAL INFO'
+      [ListItem] 'Federal Taxes' #Federal Taxes
+        [Text] 'FEDERAL TAXES'
+      [ListItem] 'State Taxes' #State Taxes
+        [Text] 'STATE TAXES'
+      [ListItem] 'Review' #Review
+        [Text] 'REVIEW'
+      [ListItem] 'File' #File
+        [Text] 'FILE'
+    [List] '' #subTab
+      [ListItem] 'You & Your Family' #You & Your Family
+        [RadioButton] '' #You & Your Family
+  [ToolBar] '' #mainFindTools
+    [Custom] '' #searchUC
+        [Hyperlink] ' '
+    [Button] '' #OverflowButton (disabled)
+  [Pane] '' #scrollViewer
+    [Text] 'Did Either of You Make Money in Any Other States?' #titleTextBlock
+    [Text] 'Select the states other than Illinois where Jordan or Casey received income in 2024. Learn More
+
+You don't need to enter Iowa, Kentucky, Michigan or Wisconsin below if you only earned W-2 income from an employer. They have an agreement with Illinois not to charge you income tax. What if my employer withheld tax in one of these states?
+
+If you received income in any other states, you may need to file a state return for that state. Don't worry, TurboTax will figure it all out for you down the road when we help you file your state taxes.'
+      [Hyperlink] 'Learn More'
+      [Hyperlink] 'What if my employer withheld tax in one of these states?'
+    [Text] 'Also, select Yes if you made income from any of the below:'
+    [Image] '' #intgfx_bullet_blk_4
+    [Text] 'Living in one state and working in another'
+    [Image] '' #intgfx_bullet_blk_5
+    [Text] 'Owning or inheriting rental property, even if it was at a loss'
+    [Image] '' #intgfx_bullet_blk_6
+    [Text] 'Owning or inheriting a business'
+    [Image] '' #intgfx_bullet_blk_7
+    [Text] 'Owning or inheriting a farm'
+    [Image] '' #intgfx_bullet_blk_8
+    [Text] 'The sale of a home'
+    [Image] '' #intgfx_bullet_blk_9
+    [Text] 'Gambling winnings'
+    [RadioButton] 'Yes, we made money in states other than Illinois.' #rdb_11
+      [Text] 'Yes, we made money in states other than Illinois.'
+    [RadioButton] 'No, we didn't make money in any other states.' #rdb_12
+      [Text] 'No, we didn't make money in any other states.'
+    [Button] 'Continue'
+      [Text] 'Continue'
+    [Button] 'Back'
+      [Text] 'Back'
+    [Custom] '' #sideBar
+  [Text] '80%'
+  [Text] 'Help Others'
+    [Hyperlink] 'Help Others' #helpothers
+  [Image] '' #new
+  [Text] ' '
+    [Hyperlink] ' ' #upgradeTurboTaxHyperlink
+      [Image] '' #upgradeTurboTaxImage
+      [Text] 'Upgrade TurboTax' #upgradeTurboTaxText
+  [Button] 'Show Relevant Form'
+    [Text] 'Show Relevant Form'
+  [Custom] '' #SizeablePanel
+    [Thumb] '' #PART_Thumb

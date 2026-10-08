@@ -1,0 +1,82 @@
+{
+ "n": 28,
+ "slug": "dep-missing-3",
+ "capturedAt": "2026-10-08T18:12:11.790Z",
+ "actionsBefore": [
+  [
+   "fill",
+   "113.1105",
+   "Sample"
+  ],
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "fill 113.1105=Sample",
+  "next changed"
+ ],
+ "dialogs": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "When was Riley born?",
+ "headings": [],
+ "text": "When was Riley born? Date of birth We'll use this date to see if Riley qualifies as your dependent, and search for additional benefits.",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "search",
+   "name": "113.1107",
+   "id": "",
+   "label": "Date of birth",
+   "value": "",
+   "maxlength": "10"
+  }
+ ],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/liveaudit.css"
+ ],
+ "errors": []
+}

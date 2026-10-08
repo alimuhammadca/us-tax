@@ -1,0 +1,454 @@
+{
+ "n": 89,
+ "slug": "income-gw-7",
+ "capturedAt": "2026-10-08T18:35:03.694Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "OtherIncGateway",
+  "OtherInc"
+ ],
+ "topicLinks": [
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=OtherIncGateway,hLearnMore_1099K",
+   "faq": false
+  },
+  {
+   "text": "What do I need to know about my Form 1099-K?",
+   "href": "tc:TOPICHELP=OtherIncGateway,h1099KNeedToKnowOthInc",
+   "faq": false
+  },
+  {
+   "text": "What if I received a Form 1099-K with more than one type of income or income for more than one business?",
+   "href": "tc:TOPICHELP=OtherIncGateway,h1099KMoreThanOneOthInc",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=OtherIncGateway,hLearnMore_1099NEC",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=OtherIncGateway,hLearnMore_1099MISC",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=OtherIncGateway,hLearnMore_JuryDutyIncome",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=OtherIncGateway,hLearnMore_RefundPYDeductions",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=OtherIncGateway,hLearnMore_AKPermFund",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=OtherIncGateway,hGamblingInc",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=OtherIncGateway,hAlimonyReceived",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=OtherIncGateway,hLearnMore_COD",
+   "faq": false
+  },
+  {
+   "text": "Do I need to report money or property I inherited in 2025?",
+   "href": "tc:TOPICHELP=OtherIncGateway,vInheritedMoney",
+   "faq": true
+  },
+  {
+   "text": "Do I pay tax on a gift?",
+   "href": "tc:TOPICHELP=OtherIncGateway,vGift",
+   "faq": true
+  },
+  {
+   "text": "Do I need to report child support as income?",
+   "href": "tc:TOPICHELP=OtherIncGateway,vChildSupport",
+   "faq": true
+  },
+  {
+   "text": "Do I need to report jury duty pay I turned over to my employer?",
+   "href": "tc:TOPICHELP=OtherIncGateway,vGiveJuryBack",
+   "faq": true
+  },
+  {
+   "text": "Where do I report income not on this list?",
+   "href": "tc:TOPICHELP=OtherIncGateway,vItemNotOnList",
+   "faq": true
+  },
+  {
+   "text": "Do I need to report pay-for-performance success payments?",
+   "href": "tc:TOPICHELP=OtherInc,vPayForPerformanceSuccessPayments",
+   "faq": true
+  },
+  {
+   "text": "Where should I report cash-for-keys income?",
+   "href": "tc:TOPICHELP=OtherIncGateway,vCashForKeys",
+   "faq": true
+  },
+  {
+   "text": "Where do I enter mortgage assistance payments from Form 1098-MA?",
+   "href": "tc:TOPICHELP=OtherIncGateway,vMortgageHelp",
+   "faq": true
+  },
+  {
+   "text": "Do I need to include frequent flier miles as income?",
+   "href": "tc:TOPICHELP=OtherIncGateway,vFrequentFlier",
+   "faq": true
+  },
+  {
+   "text": "What special rules apply to airline payments?",
+   "href": "tc:TOPICHELP=OtherIncGateway,vAirlinePayments",
+   "faq": true
+  },
+  {
+   "text": "H&R Block Answers: Reporting an inheritance ...",
+   "href": "tc:TOPICHELP=OtherIncGateway,vProGuidance_Inheritance",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Tell us about any other income received in 2025.",
+ "headings": [],
+ "text": "Tell us about any other income received in 2025. Form 1099-K for non-taxable income, hobby income, or certain other taxable income, or if you received an incorrect 1099-K Income from Form 1099-K that you haven't entered in other topics LEARN MORE What do I need to know about my Form 1099-K? What if I received a Form 1099-K with more than one type of income or income for more than one business? Form 1099-NEC not yet entered Income from Form 1099-NEC that you haven't entered in other topics LEARN MORE Form 1099-MISC not yet entered Income from Form 1099-MISC that you haven't entered in other topics LEARN MORE Jury duty pay Pay received even if you gave it to your employer LEARN MORE Refund of items you deducted in a prior year Refunded this year and not yet entered LEARN MORE Alaska Permanent Fund Dividends Mineral rights income LEARN MORE Gambling income Reported on a W-2G LEARN MORE Alimony received Payments from a spouse or former spouse LEARN MORE Cancellation of debt Reported on Form 1099-C LEARN MORE",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.237888",
+   "id": "",
+   "label": "Form 1099-K for non-taxable income, hobby income, or certain other taxable income, or if you received an incorrect 1099-K Income from Form 1099-K that you haven",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.224154",
+   "id": "",
+   "label": "Form 1099-NEC not yet entered Income from Form 1099-NEC that you haven't entered in other topics LEARN MORE",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.507",
+   "id": "",
+   "label": "Form 1099-MISC not yet entered Income from Form 1099-MISC that you haven't entered in other topics LEARN MORE",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.19388",
+   "id": "",
+   "label": "Jury duty pay Pay received even if you gave it to your employer LEARN MORE",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.19393",
+   "id": "",
+   "label": "Refund of items you deducted in a prior year Refunded this year and not yet entered LEARN MORE",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.1097",
+   "id": "",
+   "label": "Alaska Permanent Fund Dividends Mineral rights income LEARN MORE",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.152",
+   "id": "",
+   "label": "Gambling income Reported on a W-2G LEARN MORE",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.151",
+   "id": "",
+   "label": "Alimony received Payments from a spouse or former spouse LEARN MORE",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.52442",
+   "id": "",
+   "label": "Cancellation of debt Reported on Form 1099-C LEARN MORE",
+   "value": "",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherIncGateway,hLearnMore_1099K",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "What do I need to know about my Form 1099-K?",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherIncGateway,h1099KNeedToKnowOthInc",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "What if I received a Form 1099-K with more than one type of income or income for more than one business?",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherIncGateway,h1099KMoreThanOneOthInc",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherIncGateway,hLearnMore_1099NEC",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherIncGateway,hLearnMore_1099MISC",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherIncGateway,hLearnMore_JuryDutyIncome",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherIncGateway,hLearnMore_RefundPYDeductions",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherIncGateway,hLearnMore_AKPermFund",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherIncGateway,hGamblingInc",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherIncGateway,hAlimonyReceived",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherIncGateway,hLearnMore_COD",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherIncGateway,hLearnMore_1099K",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "What if I received a Form 1099-K with more than one type of income or income for more than one business?",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherIncGateway,h1099KMoreThanOneOthInc",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherIncGateway,hLearnMore_1099NEC",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherIncGateway,hLearnMore_1099MISC",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherIncGateway,hLearnMore_JuryDutyIncome",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherIncGateway,hLearnMore_RefundPYDeductions",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherIncGateway,hLearnMore_AKPermFund",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherIncGateway,hGamblingInc",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherIncGateway,hAlimonyReceived",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherIncGateway,hLearnMore_COD",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

@@ -1,0 +1,6 @@
+﻿title: Untitled - H&R Block Software 2025  size: 881x400
+ [Pane/Afx:00400000:b:00010003:00000006:00000000] HelpCentralNavView
+  [Pane/Button] mprtbtn_wht
+  [Pane/Afx:00400000:b:00010003:00000006:00000000] WebView2EmbeddedBrowser
+   [Pane/Chrome_WidgetWin_0] (webview - skipped)
+  [Pane/Afx:00400000:b:00010003:00000006:00000000] Viewport

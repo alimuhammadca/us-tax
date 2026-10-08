@@ -1,0 +1,5 @@
+﻿title: Untitled - H&R Block Software 2025  size: 1552x832
+[Window/H&R Block 2025] Untitled - HR Block Software 2025
+ [Pane/Afx:00400000:b:00010003:00000006:00000000] NavigationView
+  [Pane/Afx:00400000:b:00010003:00000006:00000000] WebView2EmbeddedBrowser
+   [Pane/Chrome_WidgetWin_0] (webview - skipped)

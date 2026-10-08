@@ -1,0 +1,136 @@
+{
+ "n": 102,
+ "slug": "ira-4",
+ "capturedAt": "2026-10-08T18:39:43.175Z",
+ "actionsBefore": [
+  [
+   "check",
+   "93.555"
+  ],
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "check ok 93.555",
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "FIRA"
+ ],
+ "topicLinks": [
+  {
+   "text": "What if Casey made a traditional IRA contribution that Casey later decided to treat as a Roth IRA contribution?",
+   "href": "tc:TOPICHELP=FIRA,vRecharacterizeAsRoth_Spouse",
+   "faq": true
+  },
+  {
+   "text": "Where do I enter information about rollovers?",
+   "href": "tc:TOPICHELP=FIRA,vRollovers",
+   "faq": true
+  },
+  {
+   "text": "What if Casey contributed to a SEP or SIMPLE plan?",
+   "href": "tc:TOPICHELP=FIRA,vSEPOrSIMPLE",
+   "faq": true
+  },
+  {
+   "text": "What if I converted to a Roth IRA, Roth SEP IRA or Roth SIMPLE IRA?",
+   "href": "tc:TOPICHELP=FIRA,vConversions",
+   "faq": true
+  },
+  {
+   "text": "What about contributions between January 1 and April 15, 2026, that are for 2026?",
+   "href": "tc:TOPICHELP=FIRA,vNextYrContrib",
+   "faq": true
+  },
+  {
+   "text": "What if I repay a reservist or disaster distribution?",
+   "href": "tc:TOPICHELP=FIRA,vRepayHurricaneOrReservist",
+   "faq": true
+  },
+  {
+   "text": "What if I received settlement income in connection with the Exxon Valdez litigation?",
+   "href": "tc:TOPICHELP=FIRA,vExxonValdez",
+   "faq": true
+  },
+  {
+   "text": "What if I received a military death gratuity or servicemembers' group life insurance payment?",
+   "href": "tc:TOPICHELP=FIRA,vMilitaryDeathGratuities",
+   "faq": true
+  },
+  {
+   "text": "What if I received an airline payment as a result of an airline carrier bankruptcy?",
+   "href": "tc:TOPICHELP=FIRA,vAirlinePayments",
+   "faq": true
+  },
+  {
+   "text": "What special rules apply to airline payments?",
+   "href": "tc:TOPICHELP=FIRA,vAirlinePayments_FAAModernization",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Enter Casey's traditional IRA contributions.",
+ "headings": [],
+ "text": "Enter Casey's traditional IRA contributions. Don't include in these contributions any amount Casey rolled over from another traditional IRA or other retirement plan. Casey's traditional IRA contributions",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "search",
+   "name": "93.369",
+   "id": "",
+   "label": "Casey's traditional IRA contributions",
+   "value": "",
+   "maxlength": "10"
+  }
+ ],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

@@ -1,0 +1,344 @@
+﻿TITLE: TurboTax Deluxe 2024
+  [ToolTip] 'Schedule B -- Form 1099-DIV (Big Fund)'
+    [Text] 'Schedule B -- Form 1099-DIV (Big Fund)'
+[Menu] '' #Menu_1
+  [MenuItem] 'File' #fileMenuItem
+    [Text] '_File'
+  [MenuItem] 'Edit' #editMenuItem
+    [Text] '_Edit'
+  [MenuItem] 'View' #viewMenuItem
+    [Text] '_View'
+  [MenuItem] 'Forms' #formsMenuItem
+    [Text] 'F_orms'
+  [MenuItem] 'Tools' #toolsMenuItem
+    [Text] '_Tools'
+  [MenuItem] 'Online' #onlineMenuItem
+    [Text] 'O_nline'
+  [MenuItem] 'Help' #helpMenuItem
+    [Text] '_Help'
+  [Hyperlink] '  Help Center'
+    [Image] '' #helpImage
+  [Hyperlink] '  Print Center'
+    [Image] '' #printImage
+  [Hyperlink] '  Show Topic List'
+    [Image] '' #topicImage
+[Custom] '' #mainTabBarUC
+  [Image] '' #productBanner
+  [Custom] '' #refundMonitorView
+    [Custom] '' #FederalRefundGauge
+      [Text] 'Federal Tax Due' #bannerText
+      [Text] '$' #_DollarSign
+      [Text] '62' #_AmountText
+    [Custom] '' #StateRefundGauge
+      [Text] 'Illinois' #bannerText
+      [Text] 'See Amount'
+        [Hyperlink] 'See Amount'
+  [Button] '' #toggleViewButton
+    [Image] '' #_ImgOn
+  [Button] '' #notificationsButton
+    [Image] '' #notificationImage
+  [Button] '' #addViewFormButton
+    [Image] '' #_ImgOff
+  [Button] '' #formErrorsButton
+    [Image] '' #_ImgOff
+  [Text] 'Forms in My Return'
+  [Tree] '' #treeView
+    [TreeItem] 'Intuit.Ctg.Wte.Service.Forms.Forms.ViewModel.FormList'
+      [Button] '' #Expander
+      [Text] 'Form 1040:  Individual'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Image] '' #ErrorIndicator
+        [Text] '1040/1040SR Wks (Not Done)'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] 'Form 1040'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] 'Info Wks'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] 'Personal Wks (Casey)'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] '    Student Info Wk'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Image] '' #ErrorIndicator
+        [Text] 'Personal Wks (Jordan) (Not Done)'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] '    Student Info Wk'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] 'Dependent Wks (Riley)'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] 'Form W-2 (Acme Testing LLC)'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] 'Form W-2 (Springfield School District)'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] 'Earned Inc Wks'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] 'Tax Payments'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] 'Qual Div/Cap Gn'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Image] '' #ErrorIndicator
+        [Text] 'Schedule B (Not Done)'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Image] '' #ErrorIndicator
+        [Text] '    Form 1099-DIV (Big Fund) (Not Done)'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] '    Form 1099-INT (First Bank)'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] 'Schedule D'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] 'Form 1099-B Wks (Big Broker)'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] '    Cap Asset Sales (1)'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] 'Form 8949 (Copy 1)'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] 'Schedule 8812'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] 'Form 1040-V'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] 'W2/W2G Summary'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] 'Carryover Wks'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] 'Tax History'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] 'Tax Summary'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] 'Filing Inst (Page 1 of 1)'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] 'Return Summary (Page 1 of 1)'
+      [TreeItem] 'Intuit.Ctg.Wte.Service.TaxDataModel.ContainerCopy'
+        [Text] 'U. S. Averages'
+[Thumb] '' #mainGridSplitter
+      [Text] 'Form 1099-DIV Worksheet'
+      [Text] '2024'
+        [Text] 'G Keep for your records' #staticBlock
+      [Text] 'Name(s) Shown on Return'
+      [Text] 'Social Security Number'
+        [Edit] '' #NAME[0] =Jordan Sample
+        [Edit] '' #SSN[0] =000-00-0000
+        [Text] 'QuickZoom to another copy of Form 1099-DIV Worksheet' #staticBlock
+        [Text] '. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+      [Button] 'QuickZoom' #QuickZoom
+        [Text] 'QuickZoom'
+      [Text] 'Ownership:'
+      [Text] 'Check if Taxpayer. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+      [Text] '(defaults to taxpayer)'
+      [Text] 'Check if Spouse. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+      [Text] 'Check if Joint . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+      [Text] 'Payer's name. . . . . . . . '
+      [Text] 'Box 1a'
+      [Text] 'Total ordinary dividends. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+      [Text] 'U.S. government interest, if any, included in box 1a. . . . . . . . '
+      [Text] 'Box 1b'
+      [Text] 'Qualified dividends. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+      [Text] 'Adjusted qualified dividends. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+      [Text] 'Box 2a'
+      [Text] 'Total capital gain distributions. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+      [Text] 'Box 2b'
+      [Text] 'Unrecaptured Section 1250 gain. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+      [Text] 'Box 2c'
+      [Text] 'Section 1202 gain eligible for 50% exclusion on QSB stock (See tax help). . . . . . . '
+      [Text] '   Section 1202 gain eligible for 60% exclusion. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+      [Text] '   Section 1202 gain eligible for 75% exclusion . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+      [Text] '   Section 1202 gain eligible for 100% exclusion. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+      [Text] 'Box 2d'
+      [Text] 'Collectibles (28%) gain. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+      [Text] 'Box 2e'
+      [Text] 'Section 897 ordinary dividends. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+      [Text] 'Box 2f'
+      [Text] 'Section 897 capital gain. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+      [Text] 'Box 3'
+      [Text] 'Nondividend distributions. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+      [Text] 'Box 4'
+      [Text] 'Federal income tax withheld. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+      [Text] 'Box 5'
+      [Text] 'Section 199A dividends. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+      [Text] 'Adjusted 199A dividends. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+      [Text] 'Box 6'
+      [Text] 'Investment expenses. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+      [Text] 'Box 7'
+      [Text] 'Foreign tax paid (All income is considered passive. See Help). . . . . . . . . . . . . . . . . . . . '
+      [Text] 'a'
+      [Text] 'Check to deduct foreign taxes on Schedule A. . . . . '
+      [Text] '           OR'
+      [Text] 'b'
+        [Text] 'DoubleClick to link to a copy of Form 1116' #staticBlock
+        [Text] '. . . . . . . '
+      [Text] 'c'
+      [Text] 'For Form 1116, select which column. . . . . . . . . '
+      [Text] 'A'
+      [Text] 'B'
+      [Text] 'C'
+      [Text] 'd'
+      [Text] 'Total foreign source income. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+      [Text] 'Box 8'
+      [Text] 'Foreign country or U.S. territory. . . . . . . . . . . . '
+      [Text] '(Imported name:'
+      [Text] ')'
+      [Text] 'Check this box if foreign tax is from a mutual fund or a regulated'
+      [Text] 'investment company. See Tax Help for additional information.. . . . . . . . . . . . . . . . . . . . '
+      [Text] 'Box 9'
+      [Text] 'Cash liquidation distributions. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+      [Text] 'Box 10'
+      [Text] 'Noncash (fair market value) liquidation distributions. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+      [Text] 'Box 11'
+      [Text] 'FATCA filing requirement. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+      [Text] 'Box 12'
+      [Text] 'Exempt-interest dividends. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+      [Text] 'Tax-exempt Interest Dividends State Allocation'
+        [Text] 'For each row, enter state ID in column (a) and enter percent in column (b) or ' #staticBlock
+      [Text] 'amount in column (c).'
+      [Text] '(a)'
+      [Text] '(b)'
+      [Text] '(c)'
+      [Text] 'State'
+      [Text] 'Percent of'
+      [Text] 'Amount of'
+      [Text] 'or'
+      [Text] 'total interest'
+      [Text] 'interest'
+      [Text] 'Territory'
+      [Text] 'dividends'
+      [Text] 'dividends'
+      [Text] 'ID'
+      [Text] 'for state'
+      [Text] 'for state'
+      [Text] 'Enter resident state ID . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+      [Text] 'G'
+      [Text] 'Enter each nonresident state on a separate row. . . . . '
+      [Text] 'G'
+      [Text] 'or'
+      [Text] 'Enter XX for all nonresident states (that aren't filed)'
+      [Text] 'i.e. you own a fund with no resident state dividends.'
+      [Text] 'Total. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+      [Text] 'G'
+      [Text] 'State where the dividends were earned. Postal code (such as "CA" or "NY"). . . . . '
+      [Text] 'Box 13'
+      [Text] 'a'
+      [Text] 'Specified private activity bond amount included in box 12 above. . . . . . . . . . . . . . . '
+      [Text] 'OR'
+      [Text] 'b'
+      [Text] 'Percent of private activity bond amount included in. . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+      [Text] '%'
+      [Text] 'Box 14'
+      [Text] 'Box 15'
+      [Text] 'Box 16'
+      [Text] 'State'
+      [Text] 'State identification no.'
+      [Text] 'State tax withheld'
+      [Text] 'I confirm that the state withholding identification number(s) are accurate. . . . . . . . . . . . . . . . . . . . . '
+      [Text] 'Adjustments to Dividends or ESOP Distribution'
+      [Text] 'Check the box that identifies the type of adjustment being made or if ESOP distribution:'
+      [Text] 'N'
+      [Text] 'Nominee distribution'
+      [Text] 'H'
+      [Text] 'Other adjustment'
+      [Text] 'D'
+      [Text] 'ESOP distribution'
+      [Text] 'Enter nominee or other adjustment amount (enter as positive). . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+      [Text] 'Additional Payer and Recipient Information '
+      [Text] 'Payer's TIN. . . . . . . . . . . . . . . . . . . . '
+      [Text] 'Recipient's  address and ZIP code'
+      [Text] 'Payer's address and ZIP code'
+      [Text] 'Transfer address from Federal Information Wks. '
+      [Text] 'Street'
+      [Text] 'Street'
+      [Text] 'City'
+      [Text] 'City'
+      [Text] 'State'
+      [Text] 'ZIP Code'
+      [Text] 'State'
+      [Text] 'ZIP Code'
+      [Text] 'Foreign Country'
+      [Text] 'Foreign Country'
+      [CheckBox] '' #OWNTX[0]
+      [CheckBox] '' #OWNS[0]
+      [CheckBox] '' #OWNJ[0]
+        [Edit] '' #PNA1[0] =Big Fund
+        [Edit] '' #L1B[0] =2,400.00
+        [Edit] '' #DIVU[0]
+        [Edit] '' #QDIV[0] =3,000.00
+        [Edit] '' #ADJQDIV[0]
+        [Edit] '' #L1C[0] =600.00
+        [Edit] '' #L2C[0]
+        [Edit] '' #L2D[0]
+        [Edit] '' #S12026[0]
+        [Edit] '' #S120275[0]
+        [Edit] '' #S1202100[0]
+        [Edit] '' #L1CTX[0]
+        [Edit] '' #S897ORD[0]
+        [Edit] '' #S897CAP[0]
+        [Edit] '' #L1D[0]
+        [Edit] '' #L2[0]
+        [Edit] '' #S199A[0]
+        [Edit] '' #ADJS199A[0]
+        [Edit] '' #L1E[0]
+        [Edit] '' #TAX[0]
+      [CheckBox] '' #SCHA[0]
+        [Edit] '' #COPY[0]
+      [CheckBox] '' #A[0]
+      [CheckBox] '' #B[0]
+      [CheckBox] '' #C[0]
+        [Edit] '' #INC[0]
+        [Edit] '' #RAWCTRY[0]
+      [ComboBox] '' #CTRY[0]
+      [CheckBox] '' #RIC[0]
+        [Edit] '' #L5[0]
+        [Edit] '' #L6[0]
+      [CheckBox] '' #FATCA[0]
+        [Edit] '' #EX2[0]
+        [Edit] '' #TOTAL[0]
+        [Edit] '' #ST3[0]
+        [Edit] '' #EX4[0]
+        [Edit] '' #PERC[0]
+        [Edit] '' #ST2[0]
+        [Edit] '' #STATEID[0]
+        [Edit] '' #STWH[0]
+        [Edit] '' #STAT2[0]
+        [Edit] '' #STATEID2[0]
+        [Edit] '' #STWH2[0]
+      [CheckBox] '' #WHVERIFY[0]
+      [CheckBox] '' #TBXN[0]
+      [CheckBox] '' #TBXH[0]
+      [CheckBox] '' #TBXD[0]
+        [Edit] '' #ADJ[0]
+        [Edit] '' #FEIN[0] =36-7654321
+      [CheckBox] '' #XFERRCPX[0]
+        [Edit] '' #PSTREET[0]
+        [Edit] '' #RSTREET[0]
+        [Edit] '' #PCITY[0]
+        [Edit] '' #RCITY[0]
+        [Edit] '' #PST[0]
+        [Edit] '' #PZIP[0]
+        [Edit] '' #RST[0]
+        [Edit] '' #RZIP[0]
+      [ComboBox] '' #PCOUNTRY[0]
+      [ComboBox] '' #RCOUNTRY[0]
+        [List] '' #myListBox
+          [ListItem] 'System.Windows.Controls.Canvas'
+              [Edit] '' #EX3[1]
+              [Edit] '' #RPCT[1]
+              [Edit] '' #EXDIVINT[1]
+      [ScrollBar] '' #VerticalScrollBar
+        [Button] '' #PART_LineUpButton (disabled)
+        [Button] '' #PageUp (disabled)
+        [Button] '' #PageDown (disabled)
+        [Button] '' #PART_LineDownButton (disabled)
+    [Button] 'Print' #myPrintButton
+      [Text] 'Print'
+    [Button] 'Delete Form' #myDeleteFormButton
+      [Text] 'Delete Form'
+    [Button] 'Close Form' #myCloseFormButton
+      [Text] 'Close Form'
+    [Text] 'Help Others'
+      [Hyperlink] 'Help Others'
+    [Image] '' #new
+    [Text] ' '
+      [Hyperlink] ' ' #upgradeTurboTaxHyperlink
+        [Image] '' #upgradeTurboTaxImage
+        [Text] 'Upgrade TurboTax' #upgradeTurboTaxText
+    [Text] '100%'
+    [Text] '' #textBlock
+  [Button] '' #RepeatUpButton
+  [Button] '' #RepeatDownButton

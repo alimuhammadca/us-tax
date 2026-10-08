@@ -1,0 +1,140 @@
+{
+ "n": 126,
+ "slug": "after-hmi",
+ "capturedAt": "2026-10-08T18:47:27.333Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "PropertyTax"
+ ],
+ "topicLinks": [
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=PropertyTax,vRETax",
+   "faq": false
+  },
+  {
+   "text": "What if I bought my home in 2025 and repaid the seller for taxes paid before the closing?",
+   "href": "tc:TOPICHELP=PropertyTax,vRepaidSeller",
+   "faq": true
+  },
+  {
+   "text": "What if I sold my home in 2025 and the buyer repaid me for taxes I paid before the closing?",
+   "href": "tc:TOPICHELP=PropertyTax,vRepaidByBuyer",
+   "faq": true
+  },
+  {
+   "text": "What if I own a co-op apartment?",
+   "href": "tc:TOPICHELP=PropertyTax,vCoop",
+   "faq": true
+  },
+  {
+   "text": "What about real estate tax that I entered for my business?",
+   "href": "tc:TOPICHELP=PropertyTax,vRETaxFromBusiness",
+   "faq": true
+  },
+  {
+   "text": "What about real estate tax that I entered for my rental?",
+   "href": "tc:TOPICHELP=PropertyTax,vRETaxFromRental",
+   "faq": true
+  },
+  {
+   "text": "Are all my real estate taxes deductible?",
+   "href": "tc:TOPICHELP=PropertyTax,vNondeductibleRETax",
+   "faq": true
+  },
+  {
+   "text": "How much can I claim if a homeowner assistance program helped with the payments?",
+   "href": "tc:TOPICHELP=PropertyTax,vHomeownerAssistance",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Tell us about your unreported real estate taxes.",
+ "headings": [],
+ "text": "Tell us about your unreported real estate taxes. Don't include any real estate taxes that were paid with your mortgage or already included with your business, farm, or rental property. LEARN MORE Real estate tax (reported on Form 1098) 4,800 Other real estate tax (not reported on Form 1098)",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "search",
+   "name": "2.15",
+   "id": "",
+   "label": "Other real estate tax (not reported on Form 1098)",
+   "value": "",
+   "maxlength": "10"
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=PropertyTax,vRETax",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_up.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=PropertyTax,vRETax",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

@@ -1,0 +1,123 @@
+{
+ "n": 107,
+ "slug": "educator-2",
+ "capturedAt": "2026-10-08T18:41:15.849Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "Educator"
+ ],
+ "topicLinks": [
+  {
+   "text": "qualified expenses",
+   "href": "tc:TOPICHELP=Educator,hQualExpenses",
+   "faq": false
+  },
+  {
+   "text": "eligible educator",
+   "href": "tc:TOPICHELP=Educator,hEligibleEducator",
+   "faq": false
+  },
+  {
+   "text": "What about expenses over the limit?",
+   "href": "tc:TOPICHELP=Educator,vExcessAmounts",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Let's work on your educator expenses.",
+ "headings": [],
+ "text": "Let's work on your educator expenses. Tell us about qualified expenses you paid in 2025 as an eligible educator. If both of you were eligible educators, you can each deduct up to $300. Jordan's out-of-pocket educator expenses Casey's out-of-pocket educator expenses",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "search",
+   "name": "57.325",
+   "id": "",
+   "label": "Jordan's out-of-pocket educator expenses",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "57.326",
+   "id": "",
+   "label": "Casey's out-of-pocket educator expenses",
+   "value": "",
+   "maxlength": "10"
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "qualified expenses",
+   "img": "",
+   "href": "tc:TOPICHELP=Educator,hQualExpenses",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "eligible educator",
+   "img": "",
+   "href": "tc:TOPICHELP=Educator,hEligibleEducator",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

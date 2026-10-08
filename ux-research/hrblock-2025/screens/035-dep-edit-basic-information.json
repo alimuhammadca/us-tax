@@ -1,0 +1,282 @@
+{
+ "n": 35,
+ "slug": "dep-edit-basic-information",
+ "capturedAt": "2026-10-08T18:14:22.840Z",
+ "actionsBefore": [
+  [
+   "pwclick",
+   "[name=childof196470792] img, [name=childof196470792]"
+  ]
+ ],
+ "actionResults": [
+  "pwclick [name=childof196470792] img, [name=childof196470792] true"
+ ],
+ "dialogs": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Tell us about your dependent.",
+ "headings": [],
+ "text": "Tell us about your dependent. If your personal situation changed in 2025, we recommend you use our Guide Me to help you determine if you can claim your dependent. First name MI Last name Date of birth (MM/DD/YYYY) SSN What if my dependent's SSN, ITIN, or ATIN wasn't issued on or before the return due date (including extensions)? Relationship No Entry Son Daughter Stepchild Grandchild Great Grandchild Adopted son Adopted daughter Fosterchild Parent Grandparent Great Grandparent Brother Sister Half brother Half sister Stepbrother Stepsister Stepparent Stepfather Stepmother Uncle Aunt Niece Nephew Son-in-law Daughter-in-law Father-in-law Mother-in-law Brother-in-law Sister-in-law Other Living situation No Entry Child lived with you Child lived with other parent more than with you Other Time lived with you No Entry This person lived with me all year or was born this year This person lived with me all year when not away at college This person lived with me more than 6 but less than 12 months This person lived with me less than 6 months This person did not live with me Months person lived with you This should match your Time Lived with you selection. Please double-check the following items and check the box if the statement is true. If something isn't true, just uncheck the box to remove it. This dependent lived with you in the USA more than half the year. You can't check this box if your time and months this child lived with you is less than 6 months. This dependent is a U.S. citizen or resident alien. LEARN MORE This dependent has an SSN that's valid for employment. (This is common.)",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "search",
+   "name": "113.1103",
+   "id": "",
+   "label": "First name",
+   "value": "Riley",
+   "maxlength": "11"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "113.1104",
+   "id": "",
+   "label": "MI",
+   "value": "",
+   "maxlength": "1"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "113.1105",
+   "id": "",
+   "label": "Last name",
+   "value": "Sample",
+   "maxlength": "15"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "113.1107",
+   "id": "",
+   "label": "Date of birth",
+   "value": "05/05/2016",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "113.1106",
+   "id": "",
+   "label": "SSN",
+   "value": "400-12-3458",
+   "maxlength": "11"
+  },
+  {
+   "tag": "select",
+   "type": "select-one",
+   "name": "113.1108",
+   "id": "select1",
+   "label": "Relationship",
+   "value": "Son",
+   "options": [
+    "No Entry",
+    "Son",
+    "Daughter",
+    "Stepchild",
+    "Grandchild",
+    "Great Grandchild",
+    "Adopted son",
+    "Adopted daughter",
+    "Fosterchild",
+    "Parent",
+    "Grandparent",
+    "Great Grandparent",
+    "Brother",
+    "Sister",
+    "Half brother",
+    "Half sister",
+    "Stepbrother",
+    "Stepsister",
+    "Stepparent",
+    "Stepfather",
+    "Stepmother",
+    "Uncle",
+    "Aunt",
+    "Niece",
+    "Nephew",
+    "Son-in-law",
+    "Daughter-in-law",
+    "Father-in-law",
+    "Mother-in-law",
+    "Brother-in-law",
+    "Sister-in-law",
+    "Other"
+   ]
+  },
+  {
+   "tag": "select",
+   "type": "select-one",
+   "name": "113.1109",
+   "id": "select2",
+   "label": "Living situation",
+   "value": "Child lived with you",
+   "options": [
+    "No Entry",
+    "Child lived with you",
+    "Child lived with other parent more than with you",
+    "Other"
+   ]
+  },
+  {
+   "tag": "select",
+   "type": "select-one",
+   "name": "113.53252",
+   "id": "select3",
+   "label": "Time lived with you",
+   "value": "This person lived with me all year or was born this year",
+   "options": [
+    "No Entry",
+    "This person lived with me all year or was born this year",
+    "This person lived with me all year when not away at college",
+    "This person lived with me more than 6 but less than 12 months",
+    "This person lived with me less than 6 months",
+    "This person did not live with me"
+   ]
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "113.1145",
+   "id": "",
+   "label": "Months person lived with you",
+   "value": "12",
+   "maxlength": "2"
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "113.258703",
+   "id": "",
+   "label": "This dependent lived with you in the USA more than half the year. You can't check this box if your time and months this child lived with you is less than 6 mont",
+   "value": "on",
+   "checked": true
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "113.1124",
+   "id": "",
+   "label": "This dependent is a U.S. citizen or resident alien. LEARN MORE",
+   "value": "on",
+   "checked": true
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "113.210273",
+   "id": "",
+   "label": "This dependent has an SSN that's valid for employment. (This is common.)",
+   "value": "on",
+   "checked": true
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "What if my dependent's SSN, ITIN, or ATIN wasn't issued on or before the return due date (including extensions)?",
+   "img": "",
+   "href": "tc:TOPICHELP=Dpndt,hTaxIDNotIssued",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Months person lived with you",
+   "img": "",
+   "href": "tc:TOPICHELP=Dpndt,hMonthslivedwith",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=Dpndt,hLearnMore_CitizenRes",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contentbtn",
+   "text": "",
+   "img": "Guide Me",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "guide_me_up.gif",
+   "alt": "",
+   "title": "Guide Me",
+   "name": "guide_me"
+  },
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_up.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "What if my dependent's SSN, ITIN, or ATIN wasn't issued on or before the return due date (including extensions)?",
+   "img": "",
+   "href": "tc:TOPICHELP=Dpndt,hTaxIDNotIssued",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=Dpndt,hLearnMore_CitizenRes",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

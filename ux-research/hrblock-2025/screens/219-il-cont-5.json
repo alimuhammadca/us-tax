@@ -1,0 +1,156 @@
+{
+ "n": 219,
+ "slug": "il-cont-5",
+ "capturedAt": "2026-10-08T19:26:04.722Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "UseTax"
+ ],
+ "topicLinks": [
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=UseTax,hUseTaxTable",
+   "faq": false
+  },
+  {
+   "text": "What's the Illinois use tax?",
+   "href": "tc:TOPICHELP=UseTax,vWhatIsIllinoisUseTax",
+   "faq": true
+  },
+  {
+   "text": "When do I have to pay use tax?",
+   "href": "tc:TOPICHELP=UseTax,vWhatAreSomeExamplesOfUseTax",
+   "faq": true
+  },
+  {
+   "text": "Do I have to file any special forms?",
+   "href": "tc:TOPICHELP=UseTax,vDoIhavetofileanyspecialforms",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Use Tax",
+ "headings": [],
+ "text": "Use Tax Tell us about your out-of-state purchases and we'll figure your use tax for you. General merchandise Food, non-prescription drugs, and medical appliances Sales tax paid to another state on these items Use tax on purchases 0 If you're unsure about your purchases, you can pay a fixed amount of the use tax based upon your Illinois adjusted gross income. LEARN MORE Use my Illinois AGI to determine my use tax.",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "search",
+   "name": "79.74123",
+   "id": "",
+   "label": "General merchandise",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "79.74125",
+   "id": "",
+   "label": "Food, non-prescription drugs, and medical appliances",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "79.74128",
+   "id": "",
+   "label": "Sales tax paid to another state on these items",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "79.81599",
+   "id": "",
+   "label": "",
+   "value": "on",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "79.81834",
+   "id": "",
+   "label": "Use my Illinois AGI to determine my use tax.",
+   "value": "",
+   "maxlength": "10"
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=UseTax,hUseTaxTable",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=UseTax,hUseTaxTable",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

@@ -1,0 +1,417 @@
+{
+ "n": 90,
+ "slug": "income-gw-8",
+ "capturedAt": "2026-10-08T18:35:22.195Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "OtherIncGateway",
+  "OtherInc"
+ ],
+ "topicLinks": [
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=OtherIncGateway,hTaxableEdDistribs",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=OtherIncGateway,hLearnMore_WageTypeIncome",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=OtherIncGateway,hLearnMore_UnreportedTips",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=OtherIncGateway,hTerritories",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=OtherIncGateway,hReturnedIRAContribs",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=OtherIncGateway,hScholarships",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=OtherIncGateway,hFECOMP",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=OtherIncGateway,hForeignInc",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=OtherIncGateway,hKidTaxLearnMore",
+   "faq": false
+  },
+  {
+   "text": "Do I need to report money or property I inherited in 2025?",
+   "href": "tc:TOPICHELP=OtherIncGateway,vInheritedMoney",
+   "faq": true
+  },
+  {
+   "text": "Do I pay tax on a gift?",
+   "href": "tc:TOPICHELP=OtherIncGateway,vGift",
+   "faq": true
+  },
+  {
+   "text": "Do I need to report child support as income?",
+   "href": "tc:TOPICHELP=OtherIncGateway,vChildSupport",
+   "faq": true
+  },
+  {
+   "text": "Do I need to report jury duty pay I turned over to my employer?",
+   "href": "tc:TOPICHELP=OtherIncGateway,vGiveJuryBack",
+   "faq": true
+  },
+  {
+   "text": "Where do I report income not on this list?",
+   "href": "tc:TOPICHELP=OtherIncGateway,vItemNotOnList",
+   "faq": true
+  },
+  {
+   "text": "Do I need to report pay-for-performance success payments?",
+   "href": "tc:TOPICHELP=OtherInc,vPayForPerformanceSuccessPayments",
+   "faq": true
+  },
+  {
+   "text": "Where should I report cash-for-keys income?",
+   "href": "tc:TOPICHELP=OtherIncGateway,vCashForKeys",
+   "faq": true
+  },
+  {
+   "text": "Where do I enter mortgage assistance payments from Form 1098-MA?",
+   "href": "tc:TOPICHELP=OtherIncGateway,vMortgageHelp",
+   "faq": true
+  },
+  {
+   "text": "Do I need to include frequent flier miles as income?",
+   "href": "tc:TOPICHELP=OtherIncGateway,vFrequentFlier",
+   "faq": true
+  },
+  {
+   "text": "What special rules apply to airline payments?",
+   "href": "tc:TOPICHELP=OtherIncGateway,vAirlinePayments",
+   "faq": true
+  },
+  {
+   "text": "H&R Block Answers: Reporting an inheritance ...",
+   "href": "tc:TOPICHELP=OtherIncGateway,vProGuidance_Inheritance",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Tell us about more additional income received in 2025.",
+ "headings": [],
+ "text": "Tell us about more additional income received in 2025. Taxable Coverdell ESA, Section 529 plan, or ABLE account distributions Money received in excess of eligible expenses; reported on Form 1099-Q, Form 1099-QA, and your records LEARN MORE Other earned income not already entered Earned income not reported on a W-2 or Form 1099-R LEARN MORE Unreported tips not already entered Tips not included on your W-2 LEARN MORE Income excluded from American territories American Samoa, Puerto Rico, Northern Mariana Islands, or Guam LEARN MORE 2025 IRA contributions returned to you in 2026 Traditional or Roth IRAs LEARN MORE Scholarship income Taxable scholarship, fellowship, or grant; often reported on Form 1098-T LEARN MORE Wages paid by a foreign employer Not on a W-2 LEARN MORE Foreign earned income exclusion Income earned living and working in a foreign country LEARN MORE Child's investment income Investment income exceeding $1,350 to be reported on parents' return LEARN MORE",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.19389",
+   "id": "",
+   "label": "Taxable Coverdell ESA, Section 529 plan, or ABLE account distributions Money received in excess of eligible expenses; reported on Form 1099-Q, Form 1099-QA, and",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.19390",
+   "id": "",
+   "label": "Other earned income not already entered Earned income not reported on a W-2 or Form 1099-R LEARN MORE",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.277",
+   "id": "",
+   "label": "Unreported tips not already entered Tips not included on your W-2 LEARN MORE",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.19391",
+   "id": "",
+   "label": "Income excluded from American territories American Samoa, Puerto Rico, Northern Mariana Islands, or Guam LEARN MORE",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.19392",
+   "id": "",
+   "label": "2025 IRA contributions returned to you in 2026 Traditional or Roth IRAs LEARN MORE",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.517",
+   "id": "",
+   "label": "Scholarship income Taxable scholarship, fellowship, or grant; often reported on Form 1098-T LEARN MORE",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.187258",
+   "id": "",
+   "label": "Wages paid by a foreign employer Not on a W-2 LEARN MORE",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.522",
+   "id": "",
+   "label": "Foreign earned income exclusion Income earned living and working in a foreign country LEARN MORE",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.34244",
+   "id": "",
+   "label": "Child's investment income Investment income exceeding $1,350 to be reported on parents' return LEARN MORE",
+   "value": "",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherIncGateway,hTaxableEdDistribs",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherIncGateway,hLearnMore_WageTypeIncome",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherIncGateway,hLearnMore_UnreportedTips",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherIncGateway,hTerritories",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherIncGateway,hReturnedIRAContribs",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherIncGateway,hScholarships",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherIncGateway,hFECOMP",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherIncGateway,hForeignInc",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherIncGateway,hKidTaxLearnMore",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherIncGateway,hTaxableEdDistribs",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherIncGateway,hLearnMore_WageTypeIncome",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherIncGateway,hLearnMore_UnreportedTips",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherIncGateway,hTerritories",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherIncGateway,hReturnedIRAContribs",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherIncGateway,hScholarships",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherIncGateway,hFECOMP",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherIncGateway,hForeignInc",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherIncGateway,hKidTaxLearnMore",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

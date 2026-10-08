@@ -1,0 +1,183 @@
+{
+ "n": 23,
+ "slug": "next",
+ "capturedAt": "2026-10-08T18:08:17.986Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Let's personalize your H&R Block experience.",
+ "headings": [
+  "Transparency is important to us, so make sure you scroll all the way through the agreement before you give us your approval."
+ ],
+ "text": "Let's personalize your H&R Block experience. Transparency is important to us, so make sure you scroll all the way through the agreement before you give us your approval. Taxpayer first name Taxpayer last name [ Jordan ] [ Sample ] Spouse first name Spouse last name [ Casey ] [ Sample ] Date (MM/DD/YYYY) Personalized Services By agreeing, you authorize H&R Block* to disclose to H&R Block Personalized Services, LLC your tax return information for the current year and, if you return to H&R Block, your 2026 and 2027 tax return information (excluding all Social Security numbers) and info regarding how long you have been an H&R Block customer so that H&R Block Personalized Services can develop, offer, and provide products and services tailored to or that may interest you, including: Personalized advice based on your tax situation Offer products or services customized to you Updates regarding tax law changes Develop new or improved products and services H&R Block Personalized Services may use service providers and business partners to accomplish these tasks. You understand that if you do not consent you may not see valuable advertisements, products, or services. For more information, please visit http://www.hrbpersonalizedservices.com/. Federal law requires this consent form be provided to you. Unless authorized by law, we cannot disclose your tax return information to third parties for purposes other than the preparation and filing of your tax return without your consent. If you consent to the disclosure of your tax return information, Federal law may not protect your tax return information from further use or distribution. You are not required to complete this form to engage in tax return preparation services. If we obtain your signature on this form by conditioning our tax return preparation services on your consent, your consent will not be valid. If you agree to the disclosure of your tax return information, your consent is valid for the amount of time that you specify. If you do not specify the duration of your consent, your consent is valid for one year from the date of signature. *HRB Digital LLC and its affiliates We consent to the disclosure of my information to H&R Block Personalized Services, LLC. Quicker Product Support Offshore Support: By agreeing, you authorize H&R Block* to disclose all your 2025 tax return info to our call centers located outside the United States. Your info will be disclosed only when needed to help with your return. The company that your info may be disclosed to is H&R Block (India) Private Limited. Federal law requires this consent form be provided to you. Unless authorized by law, we cannot disclose your tax return information to third parties for purposes other than the preparation and filing of your tax return without your consent. If you consent to the disclosure of your tax return information, Federal law may not protect your tax return information from further use or distribution. You are not required to complete this form. Because our ability to disclose your tax return information to another tax return preparer affects the tax return preparation service(s) that we provide to you and its (their) cost, we may decline to provide you with tax return preparation services or change the terms (including the cost) of the tax return preparation services that we provide to you if you do not sign this form. If you agree to the disclosure of your tax return information, your consent is valid for the amount of time that you specify. If you do not specify the duration of your consent, your consent is valid for one year from the date of signature. This consent to disclose may result in your tax return information being disclosed to a tax return preparer located outside the United States, including your personally identifiable information such as your Social Security number (\"SSN\"). Both the tax return preparer in the United States that will disclose your SSN and the tax return preparer located outside the United States that will receive your SSN maintain an adequate data protection safeguard (as required by the regulations under 26 U.S.C. section 7216) to protect privacy and prevent unauthorized access of tax return information. If you consent to the disclosure of your tax return information, federal agencies may not be able to enforce United States laws that protect the privacy of your tax return information against a tax return preparer outside of the United States to whom the information is disclosed. As you direct, you may be able to limit the scope of your consent to disclose your tax return information. *HRB Digital LLC and its affiliates We consent to the disclosure of my information to H&R Block's offshore support provider H&R Block (India) Private Limited. If you believe your tax return information has been disclosed or used improperly in a manner unauthorized by law or without your permission, you may contact the Treasury Inspector General for Tax Administration (TIGTA) by telephone at 1-800-366-4484, or by email at complaints@tigta.treas.gov.",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "search",
+   "name": "92.219378",
+   "id": "",
+   "label": "Taxpayer first name",
+   "value": "",
+   "maxlength": "20"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "92.219379",
+   "id": "",
+   "label": "Taxpayer last name",
+   "value": "",
+   "maxlength": "20"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "92.219380",
+   "id": "",
+   "label": "Spouse first name",
+   "value": "",
+   "maxlength": "20"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "92.219381",
+   "id": "",
+   "label": "Spouse last name",
+   "value": "",
+   "maxlength": "20"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "92.219382",
+   "id": "",
+   "label": "Date",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.246904",
+   "id": "",
+   "label": "We consent to the disclosure of my information to H&R Block Personalized Services, LLC.",
+   "value": "on",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.246905",
+   "id": "",
+   "label": "We consent to the disclosure of my information to H&R Block's offshore support provider H&R Block (India) Private Limited.",
+   "value": "on",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "http://www.hrbpersonalizedservices.com/",
+   "img": "",
+   "href": "http://www.hrbpersonalizedservices.com/",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "38",
+   "id": "",
+   "cls": "navbtncenter",
+   "text": "",
+   "img": "Print",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "53761",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "No Thanks",
+   "href": "javascript: void(0)",
+   "onclick": "4"
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": "4"
+  }
+ ],
+ "imgs": [
+  {
+   "src": "consent.gif",
+   "alt": "",
+   "title": "",
+   "name": ""
+  },
+  {
+   "src": "offshore.gif",
+   "alt": "",
+   "title": "",
+   "name": ""
+  },
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "print_up.gif",
+   "alt": "Print",
+   "title": "",
+   "name": "print"
+  },
+  {
+   "src": "no_thanks_up.gif",
+   "alt": "No Thanks",
+   "title": "",
+   "name": "no_thanks"
+  },
+  {
+   "src": "next_up.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

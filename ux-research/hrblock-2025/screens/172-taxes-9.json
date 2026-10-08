@@ -1,0 +1,605 @@
+{
+ "n": 172,
+ "slug": "taxes-9",
+ "capturedAt": "2026-10-08T19:04:44.453Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed",
+  "expanded 1"
+ ],
+ "dialogs": [],
+ "topics": [
+  "TaxSumm"
+ ],
+ "topicLinks": [
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=TaxSumm,hExplainThis_SETax",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=TaxSumm,hExplainThis_Nanny",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=TaxSumm,hExplainThis_UnreportedTips",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=TaxSumm,hExplain_This_Retirement_Tax",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=TaxSumm,hExplainThis_MiscTaxes",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=TaxSumm,hExplainThis_KiddieTax",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=TaxSumm,hExplainThis_AMT",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=TaxSumm,hPremiumTaxCredit",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=TaxSumm,hPremiumTaxCreditRepayment",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=TaxSumm,hExplainThis_AddlMedTax",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=TaxSumm,hNetInvIncTax",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=TaxSumm,hRePymtNewAndPrevOwnedVehCrdt",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=TaxSumm,hExplain_This_Additional_Tax_Payments",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=TaxSumm,hExplainThis_Underpayment",
+   "faq": false
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Here are your taxes, penalties, and payments.",
+ "headings": [],
+ "text": "Here are your taxes, penalties, and payments. Due to our calculations, they might be different from what you entered earlier. Self-employment tax 0 EXPLAIN AMOUNT Nanny tax 0 EXPLAIN AMOUNT Tax on unreported tips 0 EXPLAIN AMOUNT Retirement plan tax 0 EXPLAIN AMOUNT Miscellaneous taxes and deferrals 0 EXPLAIN AMOUNT Kiddie tax 0 EXPLAIN AMOUNT Alternative Minimum Tax (AMT) 0 EXPLAIN AMOUNT Premium tax credit 0 EXPLAIN AMOUNT Premium tax credit repayment 0 EXPLAIN AMOUNT Additional Medicare tax 0 EXPLAIN AMOUNT Net investment income tax 0 EXPLAIN AMOUNT Repayment of advance clean vehicle credits 0 EXPLAIN AMOUNT Additional tax payments 0 EXPLAIN AMOUNT Underpayment penalty 0 EXPLAIN AMOUNT",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=TaxSumm,hExplainThis_SETax",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554537",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=TaxSumm,hExplainThis_Nanny",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554538",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=TaxSumm,hExplainThis_UnreportedTips",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554539",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=TaxSumm,hExplain_This_Retirement_Tax",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554646",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=TaxSumm,hExplainThis_MiscTaxes",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554541",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=TaxSumm,hExplainThis_KiddieTax",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554544",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=TaxSumm,hExplainThis_AMT",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554543",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=TaxSumm,hPremiumTaxCredit",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33715106",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=TaxSumm,hPremiumTaxCreditRepayment",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33715106",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=TaxSumm,hExplainThis_AddlMedTax",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33701686",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=TaxSumm,hNetInvIncTax",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33701687",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=TaxSumm,hRePymtNewAndPrevOwnedVehCrdt",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33705972",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=TaxSumm,hExplain_This_Additional_Tax_Payments",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554545",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=TaxSumm,hExplainThis_Underpayment",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554546",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554537",
+   "title": "Go To Topic",
+   "name": "go_to_0"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554538",
+   "title": "Go To Topic",
+   "name": "go_to_1"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554539",
+   "title": "Go To Topic",
+   "name": "go_to_2"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554646",
+   "title": "Go To Topic",
+   "name": "go_to_3"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554541",
+   "title": "Go To Topic",
+   "name": "go_to_4"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554544",
+   "title": "Go To Topic",
+   "name": "go_to_5"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554543",
+   "title": "Go To Topic",
+   "name": "go_to_6"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33715106",
+   "title": "Go To Topic",
+   "name": "go_to_7"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33715106",
+   "title": "Go To Topic",
+   "name": "go_to_8"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33701686",
+   "title": "Go To Topic",
+   "name": "go_to_9"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33701687",
+   "title": "Go To Topic",
+   "name": "go_to_10"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33705972",
+   "title": "Go To Topic",
+   "name": "go_to_11"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554545",
+   "title": "Go To Topic",
+   "name": "go_to_12"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554546",
+   "title": "Go To Topic",
+   "name": "go_to_13"
+  },
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=TaxSumm,hExplainThis_SETax",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=TaxSumm,hExplainThis_Nanny",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=TaxSumm,hExplainThis_UnreportedTips",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=TaxSumm,hExplain_This_Retirement_Tax",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=TaxSumm,hExplainThis_MiscTaxes",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=TaxSumm,hExplainThis_KiddieTax",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=TaxSumm,hExplainThis_AMT",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=TaxSumm,hPremiumTaxCredit",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=TaxSumm,hPremiumTaxCreditRepayment",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=TaxSumm,hExplainThis_AddlMedTax",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=TaxSumm,hNetInvIncTax",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=TaxSumm,hRePymtNewAndPrevOwnedVehCrdt",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=TaxSumm,hExplain_This_Additional_Tax_Payments",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=TaxSumm,hExplainThis_Underpayment",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

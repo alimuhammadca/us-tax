@@ -1,0 +1,519 @@
+{
+ "n": 112,
+ "slug": "adj-summary",
+ "capturedAt": "2026-10-08T18:42:52.942Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed",
+  "expanded 1"
+ ],
+ "dialogs": [],
+ "topics": [
+  "AdjSumm"
+ ],
+ "topicLinks": [
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=AdjSumm,hSEHealth_ExplainThis",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=AdjSumm,hSETaxDeduc_ExplainThis",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=AdjSumm,hKeoghSEP_ExplainThis",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=AdjSumm,hIRAContrib_ExplainThis",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=AdjSumm,hEducatorExps_ExplainThis",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=AdjSumm,hStudentLoadDed_ExplainThis",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=AdjSumm,hMovingExps_ExplainThis",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=AdjSumm,hAlimonyPaid_ExplainThis",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=AdjSumm,hEarlyWithdrawal_ExplainThis",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=AdjSumm,hHealthSavingsDed_ExplainThis",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=AdjSumm,hJobExpenses",
+   "faq": false
+  },
+  {
+   "text": "EXPLAIN AMOUNT",
+   "href": "tc:TOPICHELP=AdjSumm,hOtherAdjs_ExplainThis",
+   "faq": false
+  },
+  {
+   "text": "What if I want to deduct tuition expenses?",
+   "href": "tc:TOPICHELP=AdjSumm,vTuition",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Here are your adjustments.",
+ "headings": [],
+ "text": "Here are your adjustments. Due to our calculations, they might be different from what you entered earlier. Self-employed health insurance $ 0 EXPLAIN AMOUNT Self-employment tax 0 EXPLAIN AMOUNT Keogh, SEP, SIMPLE contributions 0 EXPLAIN AMOUNT IRA deduction 2,000 EXPLAIN AMOUNT Educator expenses 300 EXPLAIN AMOUNT Student loan interest 0 EXPLAIN AMOUNT Moving expenses 0 EXPLAIN AMOUNT Alimony paid 0 EXPLAIN AMOUNT Early withdrawal penalty 0 EXPLAIN AMOUNT Health savings account (HSA) deduction 0 EXPLAIN AMOUNT Job expenses 0 EXPLAIN AMOUNT Other adjustments 0 EXPLAIN AMOUNT",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=AdjSumm,hSEHealth_ExplainThis",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554488",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=AdjSumm,hSETaxDeduc_ExplainThis",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=AdjSumm,hKeoghSEP_ExplainThis",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554489",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=AdjSumm,hIRAContrib_ExplainThis",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554490",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=AdjSumm,hEducatorExps_ExplainThis",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554491",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=AdjSumm,hStudentLoadDed_ExplainThis",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554492",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=AdjSumm,hMovingExps_ExplainThis",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554494",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=AdjSumm,hAlimonyPaid_ExplainThis",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554495",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=AdjSumm,hEarlyWithdrawal_ExplainThis",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554443",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=AdjSumm,hHealthSavingsDed_ExplainThis",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33565487",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=AdjSumm,hJobExpenses",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554507",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=AdjSumm,hOtherAdjs_ExplainThis",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "gototopicbtn",
+   "text": "",
+   "img": "#TC:GOTOTOPIC_33554497",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554488",
+   "title": "Go To Topic",
+   "name": "go_to_0"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554489",
+   "title": "Go To Topic",
+   "name": "go_to_1"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554490",
+   "title": "Go To Topic",
+   "name": "go_to_2"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554491",
+   "title": "Go To Topic",
+   "name": "go_to_3"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554492",
+   "title": "Go To Topic",
+   "name": "go_to_4"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554494",
+   "title": "Go To Topic",
+   "name": "go_to_5"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554495",
+   "title": "Go To Topic",
+   "name": "go_to_6"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554443",
+   "title": "Go To Topic",
+   "name": "go_to_7"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33565487",
+   "title": "Go To Topic",
+   "name": "go_to_8"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554507",
+   "title": "Go To Topic",
+   "name": "go_to_9"
+  },
+  {
+   "src": "go_to_up.gif",
+   "alt": "#TC:GOTOTOPIC_33554497",
+   "title": "Go To Topic",
+   "name": "go_to_10"
+  },
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=AdjSumm,hSEHealth_ExplainThis",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=AdjSumm,hSETaxDeduc_ExplainThis",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=AdjSumm,hKeoghSEP_ExplainThis",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=AdjSumm,hIRAContrib_ExplainThis",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=AdjSumm,hEducatorExps_ExplainThis",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=AdjSumm,hStudentLoadDed_ExplainThis",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=AdjSumm,hMovingExps_ExplainThis",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=AdjSumm,hAlimonyPaid_ExplainThis",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=AdjSumm,hEarlyWithdrawal_ExplainThis",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=AdjSumm,hHealthSavingsDed_ExplainThis",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=AdjSumm,hJobExpenses",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "EXPLAIN AMOUNT",
+   "img": "",
+   "href": "tc:TOPICHELP=AdjSumm,hOtherAdjs_ExplainThis",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

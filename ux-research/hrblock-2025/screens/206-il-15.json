@@ -1,0 +1,120 @@
+{
+ "n": 206,
+ "slug": "il-15",
+ "capturedAt": "2026-10-08T19:21:36.160Z",
+ "actionsBefore": [
+  [
+   "pwclick",
+   "[name='60'] img"
+  ]
+ ],
+ "actionResults": [
+  "pwclick [name='60'] img true"
+ ],
+ "dialogs": [],
+ "topics": [
+  "ilproptx"
+ ],
+ "topicLinks": [
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=ilproptx,hHome",
+   "faq": false
+  },
+  {
+   "text": "If I owned a mobile home, what should I do?",
+   "href": "tc:TOPICHELP=ilproptx,vWhatifIownedamobilehome",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Taxes Paid on Your Principal Illinois Residence",
+ "headings": [],
+ "text": "Taxes Paid on Your Principal Illinois Residence Did you own and pay property tax on your principal Illinois residence in 2025? Your principal residence must have been in Illinois during 2024. LEARN MORE Yes No",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_PropTax",
+   "id": "",
+   "label": "Yes",
+   "value": "78.138",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_PropTax",
+   "id": "",
+   "label": "No",
+   "value": "78.139",
+   "checked": true
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=ilproptx,hHome",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=ilproptx,hHome",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

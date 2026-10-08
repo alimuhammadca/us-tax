@@ -1,0 +1,96 @@
+{
+ "n": 221,
+ "slug": "il-cont-7",
+ "capturedAt": "2026-10-08T19:26:36.255Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed",
+  "expanded 1"
+ ],
+ "dialogs": [],
+ "topics": [
+  "SharedTextSt"
+ ],
+ "topicLinks": [
+  {
+   "text": "LEARN MORE",
+   "href": "TC:TOPICHELP=SharedTextSt,hWhereDoIEnterMyStateEstimatedPaymentsHypertext",
+   "faq": false
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Let's Check Your Illinois Taxes, Payments, and Penalties",
+ "headings": [],
+ "text": "Let's Check Your Illinois Taxes, Payments, and Penalties These amounts might be different from what you entered due to our calculations. Income Tax $ 6,658 Schedule 4255 recapture 0 Household employment tax 0 Use tax 0 Compassionate Use of Medical Cannabis 0 Amount paid with extension 0 Estimated tax payments LEARN MORE 0 Illinois income tax withheld 6,781 Estimated payments from Forms IL-1040-ES and IL-505-I 0 Pass-through withholding payments 0 Underpayment of estimated tax 0 Click Take Me To to return to any of these topics.",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "TC:TOPICHELP=SharedTextSt,hWhereDoIEnterMyStateEstimatedPaymentsHypertext",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "TC:TOPICHELP=SharedTextSt,hWhereDoIEnterMyStateEstimatedPaymentsHypertext",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

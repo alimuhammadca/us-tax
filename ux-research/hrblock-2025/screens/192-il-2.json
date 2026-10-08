@@ -1,0 +1,160 @@
+{
+ "n": 192,
+ "slug": "il-2",
+ "capturedAt": "2026-10-08T19:17:20.741Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "ilinfo"
+ ],
+ "topicLinks": [
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=ilinfo,hSpecialFilingStatusSituations",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=ilinfo,hResidencyForMilitary",
+   "faq": false
+  },
+  {
+   "text": "Who must file an Illinois tax return?",
+   "href": "tc:TOPICHELP=ilinfo,vFileIllinoisReturn",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "What's Your Illinois Residency Status?",
+ "headings": [],
+ "text": "What's Your Illinois Residency Status? Resident: Lived in Illinois for all of 2025 Part-year resident: Moved into or out of Illinois during 2025 Nonresident: Worked in Illinois or received Illinois income without living there LEARN MORE Special rules apply for members of the military. LEARN MORE First Year Illinois Filers If this is the first year you are filing a Form IL-1040, your refund will be issued as a paper check. Check if you are a first year filer in Illinois",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_Residency",
+   "id": "",
+   "label": "Resident: Lived in Illinois for all of 2025",
+   "value": "78.50",
+   "checked": true
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_Residency",
+   "id": "",
+   "label": "Part-year resident: Moved into or out of Illinois during 2025",
+   "value": "78.52",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_Residency",
+   "id": "",
+   "label": "Nonresident: Worked in Illinois or received Illinois income without living there",
+   "value": "78.51",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "78.162686",
+   "id": "",
+   "label": "Check if you are a first year filer in Illinois",
+   "value": "on",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=ilinfo,hSpecialFilingStatusSituations",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=ilinfo,hResidencyForMilitary",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=ilinfo,hSpecialFilingStatusSituations",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=ilinfo,hResidencyForMilitary",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

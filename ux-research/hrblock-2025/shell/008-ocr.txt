@@ -1,0 +1,33 @@
+--- LEFT PANEL (meter + FAQs)
+2025
+My taxes for
+Premium
+FEDERAL REFUND
+STATE REFUND
+$0
+Help Center
+FAQs
+Joint Return or Separate Return?
+What if I'm separated?
+What if I just got divorced?
+What if I'm filing for someone who
+died?
+What's my filing status if I'm in a
+same-sex marriage?
+What filing status should I use if I
+was in a civil union or registered
+domestic partnership?
+--- TABS
+WELCOME
+PERSONAL INFORMATION
+FEDERAL
+INCOME
+ADJUSTMENTS
+STATE
+DEDUCTIONS
+FILE
+CREDITS
+TAXES
+MISC
+PLAN
+FINISH

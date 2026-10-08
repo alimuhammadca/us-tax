@@ -1,0 +1,31 @@
+--- LEFT PANEL (meter + FAQs)
+2025
+My taxes for
+Premium
+FEDERAL REFUND
+$845
+LATEST CHANGE
+v Decrease of $525
+STATE REFUND
+$0
+Help Center
+FAQs
+View Details
+Is there a Roth IRA deduction?
+What if I'm a federal judge?
+What if I'm a reservist or
+volunteer firefighter?
+--- TABS
+WELCOME
+PERSONAL INFORMATION
+FEDERAL
+INCOME
+ADJUSTMENTS
+STATE
+DEDUCTIONS
+FILE
+CREDITS
+TAXES
+MISC
+PLAN
+FINISH

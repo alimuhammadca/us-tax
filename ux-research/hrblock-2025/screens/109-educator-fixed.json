@@ -1,0 +1,92 @@
+{
+ "n": 109,
+ "slug": "educator-fixed",
+ "capturedAt": "2026-10-08T18:41:58.036Z",
+ "actionsBefore": [
+  [
+   "back"
+  ],
+  [
+   "fill",
+   "57.326",
+   "300"
+  ]
+ ],
+ "actionResults": [
+  "back changed",
+  "fill 57.326 MISSING"
+ ],
+ "dialogs": [],
+ "topics": [
+  "Educator"
+ ],
+ "topicLinks": [
+  {
+   "text": "What if I'm taking the standard deduction?",
+   "href": "tc:TOPICHELP=Educator,vTakingStdDed",
+   "faq": true
+  },
+  {
+   "text": "Do I need to have receipts for my expenses?",
+   "href": "tc:TOPICHELP=Educator,vNeedReceipts",
+   "faq": true
+  },
+  {
+   "text": "What if my spouse and I are both teachers?",
+   "href": "tc:TOPICHELP=Educator,vBothTeachers",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Now, let's work on your educator expenses.",
+ "headings": [],
+ "text": "Now, let's work on your educator expenses. You can tell us about classroom and professional development expenses you or Casey paid for grades K–12 in 2025 while you were one of these: Teacher Instructor Counselor Principal Aide You can deduct up to $300 of your expenses. Personal protective equipment (PPE), disinfectant and other supplies used to prevent the spread of coronavirus also qualify for this deduction.",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_kf.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_up.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

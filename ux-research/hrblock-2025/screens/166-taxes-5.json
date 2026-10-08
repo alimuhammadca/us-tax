@@ -1,0 +1,179 @@
+{
+ "n": 166,
+ "slug": "taxes-5",
+ "capturedAt": "2026-10-08T19:02:44.855Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "SelectTaxes"
+ ],
+ "topicLinks": [
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=SelectTaxes,hLearnMore_SchH",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=SelectTaxes,hExcessContrib",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=SelectTaxes,hMinAmt",
+   "faq": false
+  },
+  {
+   "text": "How do I know if excess contributions have been made?",
+   "href": "tc:TOPICHELP=SelectTaxes,vExcessContrib",
+   "faq": true
+  },
+  {
+   "text": "How do I know if I have excess accumulations in a qualified retirement account?",
+   "href": "tc:TOPICHELP=SelectTaxes,vExcessAccum",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Tell us about any additional taxes and penalties.",
+ "headings": [],
+ "text": "Tell us about any additional taxes and penalties. Wages paid to a household employee, such as a housekeeper or babysitter, in 2025 (\"Nanny tax\") LEARN MORE Excess contributions to an IRA, Coverdell ESA, Archer MSA, HSA, or ABLE account in previous years or in 2025 LEARN MORE Excess accumulations (not enough withdrawn) from a retirement plan, Section 457 plan, or IRA in 2025 NOTE: If you have a 1099-R in your return, you can't uncheck this box. Please proceed through the interview and answer the questions. LEARN MORE",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.1066",
+   "id": "",
+   "label": "Wages paid to a household employee, such as a housekeeper or babysitter, in 2025 (\"Nanny tax\") LEARN MORE",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.1177",
+   "id": "",
+   "label": "Excess contributions to an IRA, Coverdell ESA, Archer MSA, HSA, or ABLE account in previous years or in 2025 LEARN MORE",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.1178",
+   "id": "",
+   "label": "Excess accumulations (not enough withdrawn) from a retirement plan, Section 457 plan, or IRA in 2025 NOTE: If you have a 1099-R in your return, you can't unchec",
+   "value": "",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=SelectTaxes,hLearnMore_SchH",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=SelectTaxes,hExcessContrib",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=SelectTaxes,hMinAmt",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=SelectTaxes,hLearnMore_SchH",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=SelectTaxes,hExcessContrib",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=SelectTaxes,hMinAmt",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

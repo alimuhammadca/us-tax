@@ -1,0 +1,16 @@
+﻿title: UX-Research-Sample - H&R Block Software 2025  size: 1032x600
+[Window/Forms Central 2025] Forms Central 2025 - UX-Research-Sample
+ [Pane/Afx:00400000:b:00010003:00000006:00000000] FormsCentralNavView
+  [Pane/Button] trecbtn
+  [Pane/Button] topnbtn
+  [Pane/Button] tdelbtn
+  [Pane/Button] trcalbtn
+  [Pane/Button] thidebtn
+  [Pane/Button] tprntbtn
+  [Pane/Button] tcalcbtn
+  [Pane/Button] thschbtn
+  [Pane/Afx:00400000:b:00010003:00000006:00000000] Viewport
+  [Pane/Button] helpbtn_sm
+  [Pane/Button] tclswbtn
+  [Pane/Button] tbusfull
+  [Pane/Button] tbilfull

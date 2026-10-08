@@ -1,0 +1,467 @@
+{
+ "n": 93,
+ "slug": "income-after-foreign",
+ "capturedAt": "2026-10-08T18:36:19.944Z",
+ "actionsBefore": [
+  [
+   "radio",
+   "rb_ForeignAcctTrust",
+   "3.52020"
+  ],
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "radio ok 3.52020",
+  "next changed",
+  "expanded 1"
+ ],
+ "dialogs": [],
+ "topics": [
+  "OtherInc"
+ ],
+ "topicLinks": [
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=OtherInc,hNOL",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=OtherInc,hOlympic",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=OtherInc,hMedWaiverPmt",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=OtherInc,hOtherInc",
+   "faq": false
+  },
+  {
+   "text": "What if I inherited money or property in 2025?",
+   "href": "tc:TOPICHELP=OtherInc,vInheritedMoney",
+   "faq": true
+  },
+  {
+   "text": "What if I received money or property as a gift?",
+   "href": "tc:TOPICHELP=OtherInc,vGift",
+   "faq": true
+  },
+  {
+   "text": "What if I received child support?",
+   "href": "tc:TOPICHELP=OtherInc,vChildSupport",
+   "faq": true
+  },
+  {
+   "text": "What if I had a not-for-profit rental of residential property?",
+   "href": "tc:TOPICHELP=OtherInc,vResidentialRental",
+   "faq": true
+  },
+  {
+   "text": "Do I need to report pay-for-performance success payments?",
+   "href": "tc:TOPICHELP=OtherInc,vPayForPerformanceSuccessPayments",
+   "faq": true
+  },
+  {
+   "text": "What about certain payments I received to help me pay my mortgage loan?",
+   "href": "tc:TOPICHELP=OtherInc,vMortgageHelp",
+   "faq": true
+  },
+  {
+   "text": "What if I received benefits due to the death of a public safety officer?",
+   "href": "tc:TOPICHELP=OtherInc,vPublicSafetyOfficer",
+   "faq": true
+  },
+  {
+   "text": "What if I have a 1099-K reporting income I haven't already entered?",
+   "href": "tc:TOPICHELP=OtherInc,v1099KNotYetEntered",
+   "faq": true
+  },
+  {
+   "text": "What if I received relief payments made to certain civilians affected by the release of petroleum from the Red Hill Bulk Fuel Storage Facility?",
+   "href": "tc:TOPICHELP=OtherInc,vRedHillRelief",
+   "faq": true
+  },
+  {
+   "text": "What if I received foreign pension income?",
+   "href": "tc:TOPICHELP=OtherInc,vForeignPension",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Final Income Items",
+ "headings": [
+  "Other Income LEARN MORE"
+ ],
+ "text": "Final Income Items Enter any of these final income items you or Casey received in 2025. NOL carryover not on a K-1 LEARN MORE (Enter as negative) Gambling income not on a W-2G or K-1 Nonprofessional fiduciary fees Not-for-profit rental of residential property Digital assets received as ordinary income not reported elsewhere. Activity not engaged in for profit (including hobby income) not reported on Forms 1099-K or 1099-NEC Recapture of clean fuel deduction For-profit rental of personal property not reported on Form 1099-MISC 2025 Corrective distribution loss (Enter as negative) Taxable part of disaster relief payments Value of Olympic/Paralympic medals and USOC prize money not reported on Form 1099-MISC LEARN MORE Other prizes and awards not reported on Form 1099-MISC Stock options not entered elsewhere Section 951(a)inclusion amount (Form 1040, Schedule 1, Line 8n) Section 951A(a)inclusion amount (Form 1040, Schedule 1, Line 8o) Section 461(l) excess business loss adjustment (Form 1040, Schedule 1, Line 8p) Income earned while an inmate in a penal institution not reported in a W-2 Medicaid Waiver Payments LEARN MORE: Jordan Casey Medicaid waiver payments not on a W-2 or 1099-MISC To Form 1040, line 1d Note : We limit the amount you can exclude to payments received. You can enter a lessor amount if appropriate. (Enter as negative) (Enter as negative) Excludable Medicaid waiver payments not on a W-2 or 1099-MISC To Form 1040, Schedule 1, line 8s Other Income LEARN MORE Description Amount",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "search",
+   "name": "1.243745",
+   "id": "",
+   "label": "NOL carryover not on a K-1 LEARN MORE",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "1.243743",
+   "id": "",
+   "label": "Gambling income not on a W-2G or K-1",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "57.91",
+   "id": "",
+   "label": "Nonprofessional fiduciary fees",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "1.243727",
+   "id": "",
+   "label": "Not-for-profit rental of residential property",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "1.252507",
+   "id": "",
+   "label": "Digital assets received as ordinary income not reported elsewhere.",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "1.243728",
+   "id": "",
+   "label": "Activity not engaged in for profit (including hobby income) not reported on Forms 1099-K or 1099-NEC",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "57.95",
+   "id": "",
+   "label": "Recapture of clean fuel deduction",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "1.243718",
+   "id": "",
+   "label": "For-profit rental of personal property not reported on Form 1099-MISC",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "57.96",
+   "id": "",
+   "label": "2025 Corrective distribution loss",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "57.132802",
+   "id": "",
+   "label": "Taxable part of disaster relief payments",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "1.243723",
+   "id": "",
+   "label": "Value of Olympic/Paralympic medals and USOC prize money not reported on Form 1099-MISC LEARN MORE",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "1.243721",
+   "id": "",
+   "label": "Other prizes and awards not reported on Form 1099-MISC",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "1.231901",
+   "id": "",
+   "label": "Stock options not entered elsewhere",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "1.231904",
+   "id": "",
+   "label": "Section 951(a)inclusion amount (Form 1040, Schedule 1, Line 8n)",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "1.231905",
+   "id": "",
+   "label": "Section 951A(a)inclusion amount (Form 1040, Schedule 1, Line 8o)",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "1.231906",
+   "id": "",
+   "label": "Section 461(l) excess business loss adjustment (Form 1040, Schedule 1, Line 8p)",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "1.243679",
+   "id": "",
+   "label": "Income earned while an inmate in a penal institution not reported in a W-2",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "181.220465",
+   "id": "",
+   "label": "Medicaid waiver payments not on a W-2 or 1099-MISC",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "181.220466",
+   "id": "",
+   "label": "Medicaid waiver payments not on a W-2 or 1099-MISC",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "1.243735",
+   "id": "",
+   "label": "Excludable Medicaid waiver payments not on a W-2 or 1099-MISC",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "1.243736",
+   "id": "",
+   "label": "Excludable Medicaid waiver payments not on a W-2 or 1099-MISC",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "57.153",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "35"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "57.154",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "57.155",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "35"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "57.156",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "57.157",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "35"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "57.158",
+   "id": "",
+   "label": "",
+   "value": "",
+   "maxlength": "10"
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherInc,hNOL",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherInc,hOlympic",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherInc,hMedWaiverPmt",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherInc,hOtherInc",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_up.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherInc,hNOL",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherInc,hOlympic",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherInc,hMedWaiverPmt",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=OtherInc,hOtherInc",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

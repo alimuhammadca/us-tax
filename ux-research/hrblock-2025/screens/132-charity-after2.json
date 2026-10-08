@@ -1,0 +1,260 @@
+{
+ "n": 132,
+ "slug": "charity-after2",
+ "capturedAt": "2026-10-08T18:49:25.878Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "Taxes"
+ ],
+ "topicLinks": [
+  {
+   "text": "WHAT QUALIFIES?",
+   "href": "tc:TOPICHELP=Taxes,hPaymentsWithStateReturn",
+   "faq": false
+  },
+  {
+   "text": "WHAT QUALIFIES?",
+   "href": "tc:TOPICHELP=Taxes,hRefundApplied",
+   "faq": false
+  },
+  {
+   "text": "WHAT QUALIFIES?",
+   "href": "tc:TOPICHELP=Taxes,hEstimated",
+   "faq": false
+  },
+  {
+   "text": "WHAT QUALIFIES?",
+   "href": "tc:TOPICHELP=Taxes,hOther",
+   "faq": false
+  },
+  {
+   "text": "WHAT QUALIFIES?",
+   "href": "tc:TOPICHELP=Taxes,hLearnLocal",
+   "faq": false
+  },
+  {
+   "text": "WHAT QUALIFIES?",
+   "href": "tc:TOPICHELP=Taxes,hLearnOccup",
+   "faq": false
+  },
+  {
+   "text": "What if I made a 2025 estimated tax payment in 2026?",
+   "href": "tc:TOPICHELP=Taxes,vPaidEstInJanuary",
+   "faq": true
+  },
+  {
+   "text": "Is it common to pay a local income tax?",
+   "href": "tc:TOPICHELP=Taxes,vLocalTaxCommon",
+   "faq": true
+  },
+  {
+   "text": "What if I had state or local income tax withheld from my paychecks?",
+   "href": "tc:TOPICHELP=Taxes,vStateTaxWithheld",
+   "faq": true
+  },
+  {
+   "text": "What if I paid a per capita tax?",
+   "href": "tc:TOPICHELP=Taxes,vPerCapita",
+   "faq": true
+  },
+  {
+   "text": "What if I made other state income tax payments in 2025?",
+   "href": "tc:TOPICHELP=Taxes,vOtherPmts",
+   "faq": true
+  },
+  {
+   "text": "Do I need to enter New Jersey Family Leave Insurance (FLI) in this topic?",
+   "href": "tc:TOPICHELP=Taxes,vFLI",
+   "faq": true
+  },
+  {
+   "text": "Do I need to enter New York Paid Family Leave contributions in this topic?",
+   "href": "tc:TOPICHELP=Taxes,vStateNY_PFL",
+   "faq": true
+  },
+  {
+   "text": "Do I need to enter Oregon Statewide Transit Tax in this topic?",
+   "href": "tc:TOPICHELP=Taxes,vStateOR_STT",
+   "faq": true
+  },
+  {
+   "text": "H&R Block Answers: Sales tax on new cars ...",
+   "href": "tc:TOPICHELP=Taxes,vProGuidance_NewVehicleTax",
+   "faq": true
+  },
+  {
+   "text": "I donated to a Section 170(c) organization and got a credit in return. Can I still deduct this charitable contribution?",
+   "href": "tc:TOPICHELP=Taxes,vSALTContrib",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "State and Local Income Taxes",
+ "headings": [],
+ "text": "State and Local Income Taxes State and local income taxes we already know about: $6,781 Now, tell us about any additional income taxes you and Casey paid. State Income Taxes Payment made in 2025 with your 2024 return or extension (common) WHAT QUALIFIES? 2024 state refund applied to your 2025 estimated taxes WHAT QUALIFIES? Estimated state taxes paid in 2025 or for 2025 WHAT QUALIFIES? Other state income taxes paid in 2025 WHAT QUALIFIES? Local Income Taxes Local income taxes paid in 2025 WHAT QUALIFIES? Local occupational taxes paid for working in a locality WHAT QUALIFIES?",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.20754",
+   "id": "",
+   "label": "Payment made in 2025 with your 2024 return or extension (common) WHAT QUALIFIES?",
+   "value": "on",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.20753",
+   "id": "",
+   "label": "2024 state refund applied to your 2025 estimated taxes WHAT QUALIFIES?",
+   "value": "on",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.20752",
+   "id": "",
+   "label": "Estimated state taxes paid in 2025 or for 2025 WHAT QUALIFIES?",
+   "value": "on",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.185996",
+   "id": "",
+   "label": "Other state income taxes paid in 2025 WHAT QUALIFIES?",
+   "value": "on",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.20755",
+   "id": "",
+   "label": "Local income taxes paid in 2025 WHAT QUALIFIES?",
+   "value": "on",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.27739",
+   "id": "",
+   "label": "Local occupational taxes paid for working in a locality WHAT QUALIFIES?",
+   "value": "on",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "WHAT QUALIFIES?",
+   "img": "",
+   "href": "tc:TOPICHELP=Taxes,hPaymentsWithStateReturn",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "WHAT QUALIFIES?",
+   "img": "",
+   "href": "tc:TOPICHELP=Taxes,hRefundApplied",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "WHAT QUALIFIES?",
+   "img": "",
+   "href": "tc:TOPICHELP=Taxes,hEstimated",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "WHAT QUALIFIES?",
+   "img": "",
+   "href": "tc:TOPICHELP=Taxes,hOther",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "WHAT QUALIFIES?",
+   "img": "",
+   "href": "tc:TOPICHELP=Taxes,hLearnLocal",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "WHAT QUALIFIES?",
+   "img": "",
+   "href": "tc:TOPICHELP=Taxes,hLearnOccup",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_up.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

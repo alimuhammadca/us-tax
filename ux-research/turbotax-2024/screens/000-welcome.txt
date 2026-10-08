@@ -1,0 +1,32 @@
+﻿TITLE: TurboTax Deluxe 2024
+[Menu] '' #Menu_1
+  [MenuItem] 'File' #fileMenuItem
+    [Text] '_File'
+  [MenuItem] 'Online' #onlineMenuItem
+    [Text] 'O_nline'
+  [MenuItem] 'Help' #helpMenuItem
+    [Text] '_Help'
+  [Hyperlink] '  Help Center'
+    [Image] '' #helpImage
+[Custom] '' #mainTabBarUC
+  [Image] '' #productBanner
+[Custom] '' #UserControl
+    [Pane] '' #scrollViewer
+      [Custom] '' #UserControl_1
+        [Custom] '' #local:NewUserPanel_1
+          [Text] 'Hi, Welcome to TurboTax!' #TextBlock_1
+          [Text] 'We know you work hard for your money. That's why we're here for you to help you get back every dollar you deserve. Let's get started.' #TextBlock_2
+          [Button] 'Begin' #start_newreturn
+            [Text] 'Begin'
+          [Button] 'Continue From TurboTax Online' #start_newreturn_fromtto
+            [Text] 'Continue From TurboTax Online'
+        [Custom] '' #local:OtherOptionsPanel_1
+          [Text] 'Need to Amend a Filed Return?'
+          [Text] 'Re-file a return that has already been accepted by the IRS.'
+          [Text] 'File an extension if you can't finish your return by April 15, 2025'
+          [Text] 'Want More Time To File This Year?'
+          [Button] 'Amend a Filed Return'
+            [Text] 'Amend a Filed Return'
+          [Button] 'File an Extension'
+            [Text] 'File an Extension'
+      [Custom] '' #sideBar

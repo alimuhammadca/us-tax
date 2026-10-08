@@ -1,0 +1,233 @@
+{
+ "n": 17,
+ "slug": "state-residency",
+ "capturedAt": "2026-10-08T18:06:21.517Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Tell us which state returns you need to file for 2025.",
+ "headings": [],
+ "text": "Tell us which state returns you need to file for 2025. State Jordan's Residency LEARN MORE Casey's Residency LEARN MORE Choose Full-year resident Part-year resident Nonresident Choose Full-year resident Part-year resident Nonresident Choose Full-year resident Part-year resident Nonresident Choose Full-year resident Part-year resident Nonresident Choose Full-year resident Part-year resident Nonresident Choose Full-year resident Part-year resident Nonresident If you're in the military, special rules apply. LEARN MORE",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "search",
+   "name": "92.675",
+   "id": "",
+   "label": "Choose Full-year resident Part-year resident Nonresident Choose Full-year resident Part-year resident Nonresident",
+   "value": "",
+   "maxlength": "2"
+  },
+  {
+   "tag": "select",
+   "type": "select-one",
+   "name": "92.43844",
+   "id": "select1",
+   "label": "Choose Full-year resident Part-year resident Nonresident Choose Full-year resident Part-year resident Nonresident",
+   "value": "Choose",
+   "options": [
+    "Choose",
+    "Full-year resident",
+    "Part-year resident",
+    "Nonresident"
+   ]
+  },
+  {
+   "tag": "select",
+   "type": "select-one",
+   "name": "92.43845",
+   "id": "select1",
+   "label": "Choose Full-year resident Part-year resident Nonresident",
+   "value": "Choose",
+   "options": [
+    "Choose",
+    "Full-year resident",
+    "Part-year resident",
+    "Nonresident"
+   ]
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "92.679",
+   "id": "",
+   "label": "Choose Full-year resident Part-year resident Nonresident Choose Full-year resident Part-year resident Nonresident",
+   "value": "",
+   "maxlength": "2"
+  },
+  {
+   "tag": "select",
+   "type": "select-one",
+   "name": "92.43846",
+   "id": "select2",
+   "label": "Choose Full-year resident Part-year resident Nonresident Choose Full-year resident Part-year resident Nonresident",
+   "value": "Choose",
+   "options": [
+    "Choose",
+    "Full-year resident",
+    "Part-year resident",
+    "Nonresident"
+   ]
+  },
+  {
+   "tag": "select",
+   "type": "select-one",
+   "name": "92.43847",
+   "id": "select2",
+   "label": "Choose Full-year resident Part-year resident Nonresident",
+   "value": "Choose",
+   "options": [
+    "Choose",
+    "Full-year resident",
+    "Part-year resident",
+    "Nonresident"
+   ]
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "92.683",
+   "id": "",
+   "label": "Choose Full-year resident Part-year resident Nonresident Choose Full-year resident Part-year resident Nonresident",
+   "value": "",
+   "maxlength": "2"
+  },
+  {
+   "tag": "select",
+   "type": "select-one",
+   "name": "92.43848",
+   "id": "select3",
+   "label": "Choose Full-year resident Part-year resident Nonresident Choose Full-year resident Part-year resident Nonresident",
+   "value": "Choose",
+   "options": [
+    "Choose",
+    "Full-year resident",
+    "Part-year resident",
+    "Nonresident"
+   ]
+  },
+  {
+   "tag": "select",
+   "type": "select-one",
+   "name": "92.43849",
+   "id": "select3",
+   "label": "Choose Full-year resident Part-year resident Nonresident",
+   "value": "Choose",
+   "options": [
+    "Choose",
+    "Full-year resident",
+    "Part-year resident",
+    "Nonresident"
+   ]
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=NameFS,hStateResidency",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=NameFS,hStateResidency",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=NameFS,hMilitaryResidency",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_up.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=NameFS,hStateResidency",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=NameFS,hStateResidency",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=NameFS,hMilitaryResidency",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

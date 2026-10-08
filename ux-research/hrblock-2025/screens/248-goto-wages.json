@@ -1,0 +1,243 @@
+{
+ "n": 248,
+ "slug": "goto-wages",
+ "capturedAt": "2026-10-08T19:40:02.808Z",
+ "actionsBefore": [
+  [
+   "click",
+   "a[href*=\"GOTO:33554441\"]"
+  ],
+  [
+   "wait",
+   2000
+  ]
+ ],
+ "actionResults": [
+  "click a[href*=\"GOTO:33554441\"] true",
+  "wait"
+ ],
+ "dialogs": [],
+ "topics": [
+  "W2KB"
+ ],
+ "topicLinks": [
+  {
+   "text": "Edit",
+   "href": "TC:EDIT",
+   "faq": false
+  },
+  {
+   "text": "Delete",
+   "href": "TC:DELETE",
+   "faq": false
+  },
+  {
+   "text": "Edit",
+   "href": "TC:EDIT/1",
+   "faq": false
+  },
+  {
+   "text": "Delete",
+   "href": "TC:DELETE/1",
+   "faq": false
+  },
+  {
+   "text": "Edit",
+   "href": "TC:EDIT/2",
+   "faq": false
+  },
+  {
+   "text": "Delete",
+   "href": "TC:DELETE/2",
+   "faq": false
+  },
+  {
+   "text": "How do I take a pic of my W-2?",
+   "href": "tc:TOPICHELP=W2KB,vHowTakePicOfW2",
+   "faq": true
+  },
+  {
+   "text": "If I didn't receive a W-2 from an employer, can I file without it?",
+   "href": "tc:TOPICHELP=W2KB,vNoW2",
+   "faq": true
+  },
+  {
+   "text": "If I'm a statutory employee and didn't receive a W-2, should I ask my employer for one?",
+   "href": "tc:TOPICHELP=W2KB,vNoW2StatEmployee",
+   "faq": true
+  },
+  {
+   "text": "Should I include my child's W-2 here?",
+   "href": "tc:TOPICHELP=W2KB,vChildW2",
+   "faq": true
+  },
+  {
+   "text": "If I received combat pay from the armed forces in 2025, what should I do?",
+   "href": "tc:TOPICHELP=W2KB,vCombatPay",
+   "faq": true
+  },
+  {
+   "text": "If I received a W-2c, what should I do?",
+   "href": "tc:TOPICHELP=W2KB,vCorrectedForm",
+   "faq": true
+  },
+  {
+   "text": "How do I report my wages if I'm a registered domestic partner in California, Nevada, or Washington?",
+   "href": "tc:TOPICHELP=W2KB,vRDP",
+   "faq": true
+  },
+  {
+   "text": "Should I import from my provider or upload a PDF version of my W2?",
+   "href": "tc:TOPICHELP=W2KB,vImportOrUploadPDFW2",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Tell us about W-2s you or Casey received.",
+ "headings": [],
+ "text": "Tell us about W-2s you or Casey received. You can import a W-2 directly from your employer, by uploading a PDF, taking a pic, or entering it manually. Employer Name Employee Wages (Box 1) 1st (Acme Testing LLC) Jordan 85,000 Edit Delete 2nd (Springfield School District) Casey 52,000 Edit Delete",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "wizardbtn",
+   "text": "",
+   "img": "Import from Employer",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "wizardbtn",
+   "text": "",
+   "img": "Upload a PDF",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "wizardbtn",
+   "text": "",
+   "img": "Take a pic with phone",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contentbtn",
+   "text": "",
+   "img": "Enter Manually",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "childof285300864",
+   "id": "",
+   "cls": "multinstanceanchor",
+   "text": "Edit",
+   "img": "",
+   "href": "TC:EDIT/1",
+   "onclick": ""
+  },
+  {
+   "name": "childof285303456",
+   "id": "",
+   "cls": "multinstanceanchor",
+   "text": "Delete",
+   "img": "",
+   "href": "TC:DELETE/1",
+   "onclick": ""
+  },
+  {
+   "name": "childof285307272",
+   "id": "",
+   "cls": "multinstanceanchor",
+   "text": "Edit",
+   "img": "",
+   "href": "TC:EDIT/2",
+   "onclick": ""
+  },
+  {
+   "name": "childof285314112",
+   "id": "",
+   "cls": "multinstanceanchor",
+   "text": "Delete",
+   "img": "",
+   "href": "TC:DELETE/2",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "58",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "FINISHED",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "import_from_employer_up.gif",
+   "alt": "",
+   "title": "Import from Employer",
+   "name": "import_from_employer"
+  },
+  {
+   "src": "upload_a_pdf_up.gif",
+   "alt": "",
+   "title": "Upload a PDF",
+   "name": "upload_a_pdf"
+  },
+  {
+   "src": "Take_a_pic_with_phone_up.gif",
+   "alt": "",
+   "title": "Take a pic with phone",
+   "name": "Take_a_pic_with_phone"
+  },
+  {
+   "src": "Enter_Manually_up.gif",
+   "alt": "",
+   "title": "Enter Manually",
+   "name": "Enter_Manually"
+  },
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "finished_up.gif",
+   "alt": "FINISHED",
+   "title": "",
+   "name": "finished"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

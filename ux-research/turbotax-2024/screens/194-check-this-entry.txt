@@ -1,0 +1,2427 @@
+﻿TITLE: TurboTax Deluxe 2024
+[Menu] '' #Menu_1
+  [MenuItem] 'File' #fileMenuItem
+    [Text] '_File'
+  [MenuItem] 'Edit' #editMenuItem
+    [Text] '_Edit'
+  [MenuItem] 'View' #viewMenuItem
+    [Text] '_View'
+  [MenuItem] 'Tools' #toolsMenuItem
+    [Text] '_Tools'
+  [MenuItem] 'Online' #onlineMenuItem
+    [Text] 'O_nline'
+  [MenuItem] 'Help' #helpMenuItem
+    [Text] '_Help'
+  [Hyperlink] '  Help Center'
+    [Image] '' #helpImage
+  [Hyperlink] '  Print Center'
+    [Image] '' #printImage
+  [Hyperlink] '  Show Topic List'
+    [Image] '' #topicImage
+[Custom] '' #mainTabBarUC
+  [Image] '' #productBanner
+  [Custom] '' #refundMonitorView
+    [Custom] '' #FederalRefundGauge
+      [Text] 'Federal Refund' #bannerText
+      [Text] '$' #_DollarSign
+      [Text] '1,044' #_AmountText
+    [Custom] '' #StateRefundGauge
+      [Text] 'Illinois' #bannerText
+      [Text] 'See Amount'
+        [Hyperlink] 'See Amount'
+  [Button] '' #toggleViewButton
+    [Image] '' #_ImgOff
+  [Button] '' #flagsButton
+    [Image] '' #flagsImage
+  [Button] '' #notificationsButton
+    [Image] '' #notificationImage
+[Custom] '' #interviewUC
+  [Custom] '' #mainTabBar
+    [List] '' #mainTab
+      [ListItem] 'Personal Info' #Personal Info
+        [Text] 'PERSONAL INFO'
+      [ListItem] 'Federal Taxes' #Federal Taxes
+        [Text] 'FEDERAL TAXES'
+      [ListItem] 'State Taxes' #State Taxes
+        [Text] 'STATE TAXES'
+      [ListItem] 'Review' #Review
+        [Text] 'REVIEW'
+      [ListItem] 'File' #File
+        [Text] 'FILE'
+    [List] '' #subTab
+      [ListItem] 'Wages & Income' #Wages & Income
+        [RadioButton] '' #Wages & Income
+      [ListItem] 'Deductions & Credits' #Deductions & Credits
+        [RadioButton] '' #Deductions & Credits
+      [ListItem] 'Other Tax Situations' #Other Tax Situations
+        [RadioButton] '' #Other Tax Situations
+      [ListItem] 'Federal Review' #Federal Review
+        [RadioButton] '' #Federal Review
+      [ListItem] 'Smart Check' #Smart Check
+        [RadioButton] '' #Smart Check
+  [ToolBar] '' #mainFindTools
+    [Custom] '' #searchUC
+        [Hyperlink] ' '
+    [Button] '' #OverflowButton (disabled)
+  [Pane] '' #scrollViewer
+    [Text] 'Check This Entry' #titleTextBlock
+    [Text] '1040/1040SR Wks: Virtual currency check boxes must be entered.'
+    [RadioButton] 'No entry' #rdb_0
+      [Text] 'No entry'
+    [RadioButton] 'Virtual Currency Yes Chbx' #rdb_0
+      [Text] 'Virtual Currency Yes Chbx'
+    [RadioButton] 'Virtual Currency No Chbx' #rdb_0
+      [Text] 'Virtual Currency No Chbx'
+        [Text] 'FORM 1040 or  FORM 1040-SR WORKSHEET'
+        [Text] '2024'
+          [Text] 'NOTE: Form 1040, 1040-SR and Schedules 1 - 3 are fully calculated.' #staticBlock
+        [Text] 'Use this worksheet to enter all data which will flow to the Form 1040 or Form 1040SR and Schedules 1- 3.'
+        [Text] 'Use these QuickZooms to jump to the entry sections for Schedules 1- 3 on this Worksheet:'
+        [Text] 'Form 1040 or Form 1040SR Worksheet Navigation QuickZooms'
+          [Text] 'QuickZoom to Schedule 1 ' Additional Income and Adjustments to Income' #staticBlock
+          [Text] '. . . . . . . . . . . . . . . . . . . . . . '
+          [Text] 'G'
+          [Text] 'QuickZoom to Schedule 2 ' Additional Taxes' #staticBlock
+          [Text] '. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+          [Text] 'G'
+          [Text] 'QuickZoom to Schedule 3 ' Additional Credits and Payments' #staticBlock
+          [Text] '. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+          [Text] 'G'
+          [Text] 'Form 1040 or Form 1040-SR ' Personal Info, Filing Status, Dependent Info' #staticBlock
+        [Text] 'For the year January 1 - December 31, 2024, or other tax year'
+        [Text] 'beginning '
+        [Text] ','
+        [Text] ' 2024, ending '
+        [Text] ', 20'
+        [Text] '.'
+        [Text] 'Your First Name'
+        [Text] 'MI'
+        [Text] 'Last Name'
+        [Text] 'Your Social Security No.'
+        [Text] 'If Joint Return, Spouse's First Name'
+        [Text] 'MI'
+        [Text] 'Last Name'
+        [Text] 'Spouse's Social Security No.'
+        [Text] 'Home Address (No. and Street). If You Have a P.O. Box, See instructions.'
+        [Text] 'Apt.  No.'
+        [Text] 'City, Town or Post Office. If you have a foreign address, also complete below.'
+        [Text] 'State'
+        [Text] 'ZIP Code'
+        [Text] 'Foreign country name'
+        [Text] 'Foreign province/state/county'
+        [Text] 'Foreign postal code'
+          [Text] 'QuickZoom to explanation statement for overseas extension' #staticBlock
+          [Text] '. . . . . . . . . . . . . . . . . . . . . . . . . . . '
+          [Text] 'G'
+        [Text] 'Presidential Election Campaign'
+        [Text] 'Check here if you, or your spouse if filing jointly, want $3 to go to this fund. '
+        [Text] 'Checking a box will not change your tax or refund. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'You'
+        [Text] 'Spouse'
+        [Text] 'Digital '
+        [Text] 'At any time during 2024, did you: (a) receive (as a reward, award, or payment for property '
+        [Text] 'Assets'
+        [Text] 'or services); or (b) sell, exchange, or otherwise dispose of a digital asset (or a financial '
+        [Text] 'interest in a digital asset)?. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'Yes'
+        [Text] 'No'
+          [Text] 'Filing Status   Check only one box.' #staticBlock
+        [Text] 'All entries for filing status and dependents should be made on the Federal Information Worksheet.'
+        [Text] 'Single'
+        [Text] 'Married filing jointly (even if only one had income)'
+        [Text] 'Married filing separately. Enter spouse's SSN above and full name here.'
+        [Text] 'Head of household (with qualifying person). (See instructions) If the qualifying person is a child'
+        [Text] 'but not your dependent, enter the child's name here.'
+        [Text] 'Qualifying surviving spouse (QSS)'
+        [Text] 'If treating a nonresident alien or dual-status alien spouse as a U.S. resident for the entire'
+        [Text] 'tax year, check the box and enter their name:'
+        [Text] 'Dependents'
+        [Text] 'If more than four dependents, see instructions and check here. . . . . . . . . . . . . . . . . . . . . '
+          [Text] '(1)  First name' #staticBlock
+        [Text] 'Last name'
+          [Text] '(2) Social' #staticBlock
+        [Text] '(3)'
+          [Text] '(4) Check the box if ' #staticBlock
+        [Text] 'security'
+        [Text] 'Relationship'
+        [Text] 'qualifies for'
+        [Text] 'number'
+        [Text] 'to you'
+        [Text] 'Credit for'
+        [Text] 'Child'
+        [Text] 'other'
+        [Text] 'tax credit'
+        [Text] 'dependents'
+          [Text] 'QuickZoom to the Federal Information Worksheet' #staticBlock
+          [Text] '. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+          [Text] 'G'
+          [Text] 'QuickZoom to the Dependent and Nondependent Information Worksheet' #staticBlock
+          [Text] '. . . . . . . . . . . . . . . . . . '
+          [Text] 'G'
+          [Edit] '' #FUPGRADE[0]
+        [Button] 'QuickZoom' #QuickZoom
+          [Text] 'QuickZoom'
+        [Button] 'QuickZoom' #QuickZoom
+          [Text] 'QuickZoom'
+        [Button] 'QuickZoom' #QuickZoom
+          [Text] 'QuickZoom'
+          [Edit] '' #FY[0]
+          [Edit] '' #FYE[0]
+          [Edit] '' #FYEYR[0]
+          [Edit] '' #INJUR[0]
+          [Edit] '' #DECE[0]
+          [Edit] '' #EPTDRTXT[0]
+          [Edit] '' #NAME[0] =Jordan
+          [Edit] '' #MI[0]
+          [Edit] '' #LNAM[0] =Sample
+          [Edit] '' #INMATEID[0]
+          [Edit] '' #SSN[0] =000-00-0000
+          [Edit] '' #SNAM[0] =Casey
+          [Edit] '' #SMI[0]
+          [Edit] '' #SLNM[0] =Sample
+          [Edit] '' #SINMATEID[0]
+          [Edit] '' #SSSN[0] =400-12-3457
+          [Edit] '' #ADDR[0] =100 Main St
+          [Edit] '' #APT[0]
+          [Edit] '' #CITY[0] =Springfield
+          [Edit] '' #ST[0] =IL
+          [Edit] '' #ZIP[0] =62701
+          [Edit] '' #FCNAME[0]
+          [Edit] '' #FPC[0]
+          [Edit] '' #FZIP[0]
+        [Button] 'Explain' #QuickZoom
+          [Text] 'Explain'
+          [Edit] '' #L1W[0]
+        [CheckBox] '' #PECY[0] (disabled)
+        [CheckBox] '' #SECY[0] (disabled)
+        [CheckBox] '' #VIRCURYS[0]
+        [CheckBox] '' #VIRCURNO[0]
+        [CheckBox] '' #FS1[0] (disabled)
+        [CheckBox] '' #FS2[0] (disabled)
+        [CheckBox] '' #FS3[0] (disabled)
+          [Edit] '' #SPNM[0]
+        [CheckBox] '' #FS4[0] (disabled)
+          [Edit] '' #CNAM[0]
+        [CheckBox] '' #FS5[0] (disabled)
+        [CheckBox] '' #NRASPIND[0] (disabled)
+          [Edit] '' #NRASPNM[0]
+        [CheckBox] '' #DEPSX[0] (disabled)
+          [Edit] '' #N6STMT[0]
+        [Button] 'QuickZoom' #QuickZoom
+          [Text] 'QuickZoom'
+        [Button] 'QuickZoom' #QuickZoom
+          [Text] 'QuickZoom'
+          [List] '' #myListBox
+            [ListItem] 'System.Windows.Controls.Canvas'
+                [Edit] '' #L6FIRST[1] =Riley
+                [Edit] '' #L6LAST[1] =Sample
+                [Edit] '' #L6C3[1] =400-12-3458
+                [Edit] '' #L6C4[1] =Son
+              [CheckBox] '' #A444[1] (disabled)
+              [CheckBox] '' #L6C5[1] (disabled)
+              [CheckBox] '' #BX24[1] (disabled)
+              [CheckBox] '' #CODBX[1] (disabled)
+            [ListItem] 'System.Windows.Controls.Canvas'
+                [Edit] '' #L6FIRST[2]
+                [Edit] '' #L6LAST[2]
+                [Edit] '' #L6C3[2]
+                [Edit] '' #L6C4[2]
+              [CheckBox] '' #A444[2] (disabled)
+              [CheckBox] '' #L6C5[2] (disabled)
+              [CheckBox] '' #BX24[2] (disabled)
+              [CheckBox] '' #CODBX[2] (disabled)
+        [Text] 'Page 2'
+        [Text] 'Standard Deduction'
+        [Text] 'Someone can claim you as a dependent'
+        [Text] 'Someone can claim your spouse as a dependent'
+        [Text] 'a'
+        [Text] 'Check if:'
+          [Text] 'You were born before January 2, 1960' #staticBlock
+        [Text] 'Blind'
+          [Text] 'Spouse was born before January 2, 1960' #staticBlock
+        [Text] 'Blind'
+        [Text] 'Total boxes checked. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'a'
+        [Text] 'b'
+        [Text] 'If your spouse itemizes on a separate return or you were a'
+        [Text] 'dual-status alien, check here. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'b'
+          [Text] 'QuickZoom to required PPP loan forgiveness statement to report tax-exempt income' #staticBlock
+          [Text] '. . . '
+          [Text] 'G'
+        [Text] 'Form 1040 or Form 1040-SR'
+        [Text] '1'
+        [Text] 'a'
+        [Text] 'Total amount from Form(s) W-2, box 1. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '1a'
+        [Text] 'b'
+        [Text] 'Household employee wages not reported on Form(s) W-2. . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '1b'
+        [Text] 'c'
+        [Text] 'Tip income not reported on line 1a. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '1c'
+        [Text] 'd'
+        [Text] 'Medicaid waiver payments not reported on Form(s) W-2. . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '1d'
+        [Text] 'e'
+        [Text] 'Taxable dependent care benefits from Form 2441, line 26. . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '1e'
+        [Text] 'f'
+        [Text] 'Employer-provided adoption benefits from Form 8839, line 29. . . . . . . . . . . . . . . . . . . '
+        [Text] '1f'
+        [Text] 'g'
+        [Text] 'Wages from Form 8919, line 6. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '1g'
+        [Text] 'h'
+        [Text] 'Other earned income. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '1h'
+        [Text] 'i'
+        [Text] 'Nontaxable combat pay election. . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '1i'
+        [Text] 'z'
+        [Text] 'Add lines 1a through 1h. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '1z'
+        [Text] '2'
+        [Text] 'a'
+        [Text] 'Tax-exempt interest. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '2a'
+        [Text] 'b'
+        [Text] 'Taxable interest. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '2b'
+        [Text] '3'
+        [Text] 'a'
+        [Text] 'Qualified dividends. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '3a'
+        [Text] 'b'
+        [Text] 'Ordinary dividends. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '3b'
+        [Text] '4'
+        [Text] 'a'
+        [Text] 'IRA distributions. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '4a'
+        [Text] 'b'
+        [Text] 'Taxable amount. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '4b'
+        [Text] '5'
+        [Text] 'a'
+        [Text] 'Pensions and annuities. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '5a'
+        [Text] 'b'
+        [Text] 'Taxable amount. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '5b'
+        [Text] '6'
+        [Text] 'a'
+        [Text] 'Social security benefits. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '6a'
+        [Text] 'b'
+        [Text] 'Taxable amount. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '6b'
+        [Text] 'c'
+        [Text] 'If you elect to use the lump-sum election method, check here. . . . . . . . . . . . . . . '
+        [Text] '7'
+        [Text] 'Capital gain or (loss). Attach Schedule D if required.'
+        [Text] 'If not required, check here. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '7'
+          [Text] 'QuickZoom to Schedule 1 ' Additional Income and Adjustments to Income' #staticBlock
+          [Text] '. . . . . . . '
+          [Text] 'G'
+        [Text] '8'
+        [Text] 'Additional income from Schedule 1, line 10. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '8'
+        [Text] '9'
+          [Text] 'Add lines 1z, 2b, 3b, 4b, 5b, 6b, 7, and 8. This is your total income' #staticBlock
+          [Text] '. . . . . . . . . . . . '
+        [Text] '9'
+        [Text] '10'
+        [Text] 'Adjustments to income from Schedule 1, line 26. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '10'
+        [Text] '11'
+          [Text] 'Subtract line 10 from line 9. This is your adjusted gross income.' #staticBlock
+          [Text] '. . . . . . . . . . . . . . '
+        [Text] '11'
+        [Text] 'AGI including excludable Puerto Rico Income. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '12'
+          [Text] 'Standard deduction or itemized deductions (from Schedule A)' #staticBlock
+        [Text] '12'
+          [Text] 'Standard Deduction for '' #staticBlock
+        [Text] '@'
+          [Text] 'People who checked blind or over 65 or who can be claimed' #staticBlock
+        [Text] 'as a dependent, see instructions.'
+        [Text] '@'
+        [Text] 'All others:'
+        [Text] '?'
+        [Text] 'Single or Married filing separately: $14,600'
+        [Text] '?'
+        [Text] 'Married filing jointly or Qualifying surviving spouse, $29,200'
+        [Text] '?'
+        [Text] 'Head of household: $21,900'
+        [Text] '?'
+          [Text] 'If you checked any box under Standard Deduction, see instructions.' #staticBlock
+          [Text] 'QuickZoom to the Standard Deduction Worksheet' #staticBlock
+          [Text] '. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+          [Text] 'G'
+        [Text] 'Subtract itemized or standard deduction from adjusted gross income amount'
+          [Edit] '' #NAM2[0] =Jordan & Casey Sample
+          [Edit] '' #SSN2[0] =000-00-0000
+        [CheckBox] '' #DXT[0] (disabled)
+        [CheckBox] '' #DXS[0] (disabled)
+        [CheckBox] '' #L35A1[0] (disabled)
+        [CheckBox] '' #L35A2[0] (disabled)
+        [CheckBox] '' #L35A3[0] (disabled)
+        [CheckBox] '' #L35A4[0] (disabled)
+          [Edit] '' #N35A[0]
+        [CheckBox] '' #L35BB[0] (disabled)
+        [Button] 'QuickZoom' #QuickZoom
+          [Text] 'QuickZoom'
+          [Edit] '' #W2WAGES[0] =137,000.
+          [Edit] '' #HOUSEHLD[0]
+          [Edit] '' #TIPINCME[0]
+          [Edit] '' #MEDICAID[0]
+          [Edit] '' #DEPENDEN[0]
+          [Edit] '' #ADOPTION[0]
+          [Edit] '' #WGES8919[0]
+          [Edit] '' #L7W[0]
+          [Edit] '' #OTHEREI[0] =0.
+          [Edit] '' #NTCOMBAT[0]
+          [Edit] '' #L7[0] =137,000.
+          [Edit] '' #L8B[0]
+          [Edit] '' #L8A[0] =1,850.
+          [Edit] '' #F8814T2[0]
+          [Edit] '' #QUALDIVS[0] =3,000.
+          [Edit] '' #F8814T1[0]
+          [Edit] '' #L9[0] =2,400.
+          [Edit] '' #L15A1[0]
+          [Edit] '' #L15A[0]
+          [Edit] '' #HFD[0]
+          [Edit] '' #QCD[0]
+        [Button] 'Explain' #QuickZoom
+          [Text] 'Explain'
+          [Edit] '' #L15BW[0]
+          [Edit] '' #L15B[0]
+          [Edit] '' #L16A[0]
+          [Edit] '' #PSO[0]
+          [Edit] '' #L16BW[0]
+          [Edit] '' #L16B[0]
+          [Edit] '' #L20LSE[0]
+          [Edit] '' #L20W[0]
+          [Edit] '' #L20AMOD[0]
+          [Edit] '' #L20B[0]
+        [CheckBox] '' #LUMPSUMX[0] (disabled)
+          [Edit] '' #CGDSTMT[0]
+          [Edit] '' #F8814TXT[0]
+        [CheckBox] '' #L13X[0] (disabled)
+          [Edit] '' #L13[0] =4,100.
+        [Button] 'QuickZoom' #QuickZoom
+          [Text] 'QuickZoom'
+          [Edit] '' #OTHERINC[0]
+          [Edit] '' #L6[0] =145,350.
+          [Edit] '' #ADJINC[0] =2,300.
+          [Edit] '' #L33[0] =143,050.
+          [Edit] '' #EPRI[0]
+          [Edit] '' #EPRIAMT[0]
+          [Edit] '' #L34[0] =143,050.
+          [Edit] '' #L36[0] =29,200.
+        [Button] 'QuickZoom' #QuickZoom
+          [Text] 'QuickZoom'
+          [Edit] '' #L37[0] =113,850.
+        [Text] 'Page 3'
+        [Text] '13'
+        [Text] 'Qualified business income deduction from Form 8995 or Form 8995-A. . . . . . . . . . '
+        [Text] '13'
+        [Text] '14'
+        [Text] 'Add lines 12 and 13. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '14'
+        [Text] '15'
+          [Text] 'Subtract line 14 from line 11. If zero or less, enter -0-. This is your taxable ' #staticBlock
+        [Text] 'income. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '15'
+          [Edit] '' #NAM3[0] =Jordan & Casey Sample
+          [Edit] '' #SSN3[0] =000-00-0000
+          [Edit] '' #QBID[0]
+          [Edit] '' #SUM[0] =29,200.
+          [Edit] '' #SQTXT[0]
+          [Edit] '' #L39[0] =113,850.
+        [Text] 'Tax Smart Worksheet'
+        [Text] 'A'
+        [Text] 'Tax. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'Check if from:'
+        [Text] '1'
+        [Text] 'Tax table. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '2'
+        [Text] 'Tax Computation Worksheet (see instructions). . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '3'
+        [Text] 'Schedule D Tax Worksheet. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '4'
+        [Text] 'Qualified Dividends and Capital Gain Tax Worksheet. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '5'
+        [Text] 'Schedule J. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '6'
+        [Text] 'Form 8615. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '7'
+        [Text] 'Foreign Earned Income Tax Worksheet. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'B'
+        [Text] 'Additional tax from Form 8814. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'C'
+        [Text] 'Additional tax from Form 4972. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'D'
+        [Text] 'Tax from additional Form(s) 4972. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'E'
+        [Text] 'Recapture tax from Form 8863. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'F'
+        [Text] 'IRC Section 197(f)(9)(B)(ii) election for an additional tax. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Additional tax from Form 8621. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'H'
+          [Text] 'Tax. Add lines A through G. Enter the result here and include in tax below' #staticBlock
+          [Text] '. . . . . . . . . . . '
+        [Text] 'I'
+        [Text] 'Form 8621 tax deferal from line 9c (to line 24). . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+          [Edit] '' #L40A[0] =14,656.
+        [CheckBox] '' #L40AA[0] (disabled)
+        [CheckBox] '' #L40AB[0] (disabled)
+        [CheckBox] '' #L40AC[0] (disabled)
+        [CheckBox] '' #L40AC2[0] (disabled)
+        [CheckBox] '' #L40AD1[0] (disabled)
+        [CheckBox] '' #L40AD[0] (disabled)
+        [CheckBox] '' #FEITC[0] (disabled)
+          [Edit] '' #L40B[0]
+          [Edit] '' #L40C[0]
+          [Edit] '' #MO4972[0]
+          [Edit] '' #L40D1[0]
+          [Edit] '' #SEC197TX[0]
+          [Edit] '' #S1291TAX[0]
+          [Edit] '' #L40D[0] =14,656.
+          [Edit] '' #F8621DEF[0]
+        [Text] '16'
+          [Text] 'Tax. Check if any from Forms(s):' #staticBlock
+        [Text] '1'
+        [Text] '8814'
+        [Text] '2'
+        [Text] '4972'
+        [Text] '3'
+        [Text] ' '
+        [Text] '16'
+        [Text] '17'
+        [Text] 'Amount from Schedule 2, line 3. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '17'
+        [Text] '18'
+          [Text] 'Add lines 16 and 17' #staticBlock
+          [Text] '. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '18'
+          [Text] 'QuickZoom to Schedule 2 ' Additional Tax section ' #staticBlock
+          [Text] '. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+          [Text] 'G'
+        [Text] '19'
+        [Text] 'Child tax credit or credit for other dependents from Schedule 8812. . . . . . . . . . . . . . '
+        [Text] '19'
+        [Text] '20'
+        [Text] 'Amount from Schedule 3, line 8. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '20'
+        [Text] '21'
+        [Text] 'Add lines 19 and 20. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '21'
+        [Text] '22'
+        [Text] 'Subtract line 21 from line 18. If zero or less, enter -0-. . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '22'
+        [Text] '23'
+        [Text] 'Other taxes, including SE tax, from Schedule 2, line 21. . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '23'
+        [Text] '24'
+          [Text] 'Add lines 22 and 23. This is your total tax' #staticBlock
+          [Text] '. . . . . . . . . . . . . . . . . '
+        [Text] ' . . . . . . '
+        [Text] '24'
+          [Text] 'QuickZoom to Schedule 3 ' Additional Credits and Payments' #staticBlock
+          [Text] '. . . . . . . . . . . . . . . . . . . . . '
+          [Text] 'G'
+        [Text] '25'
+        [Text] 'Federal income tax withheld from:'
+        [Text] 'a'
+        [Text] 'Form(s) W-2. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '25'
+        [Text] 'a'
+        [Text] 'b'
+        [Text] 'Form(s) 1099. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '25'
+        [Text] 'b'
+        [Text] 'c'
+        [Text] 'Other forms. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '25'
+        [Text] 'c'
+        [Text] 'd'
+        [Text] 'Add lines 25a through 25c. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '25d'
+        [Text] '26'
+        [Text] '2024 estimated tax payments and'
+        [Text] 'amount applied from 2023 return. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '26'
+        [Text] '27'
+        [Text] 'Earned income'
+        [Text] 'credit (EIC). . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '27'
+        [Text] '28'
+        [Text] 'Additional child tax credit from Schedule 8812. . . . . . . . '
+        [Text] '28'
+        [Text] '29'
+        [Text] 'American opportunity credit from Form 8863, line 8. . '
+        [Text] '29'
+        [Text] '30'
+        [Text] 'Reserved for future use. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '30'
+        [Text] '31'
+        [Text] 'Amount from Schedule 3, line 15. . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '31'
+        [Text] '32'
+        [Text] 'Add lines 27, 28, 29 and 31.'
+          [Text] 'These are your total other payments and refundable credits' #staticBlock
+          [Text] '. . . . . . . . . . . . . . . . . . . '
+        [Text] '32'
+        [Text] '33'
+        [Text] 'Add Lines 25d, 26, and 32.'
+          [Text] 'These are your total payments' #staticBlock
+          [Text] '. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '33'
+          [Text] 'QuickZoom to Schedule EIC Worksheet, pg. 2 if credit is not calculated' #staticBlock
+          [Text] '. . . . . . . . . . . '
+          [Text] 'G'
+          [Text] 'QuickZoom to "due diligence checklist" substitute for Form 8867' #staticBlock
+          [Text] '. . . . . . . . . . . . . . . . . . . '
+          [Text] 'G'
+          [Text] 'QuickZoom to Schedule 3 ' Additional Credits and Payments ' #staticBlock
+          [Text] '. . . . . . . . . . . . . . . . . . . . '
+          [Text] 'G'
+        [CheckBox] '' #L40BA[0] (disabled)
+        [CheckBox] '' #L40BB[0] (disabled)
+        [CheckBox] '' #BX962[0] (disabled)
+          [Edit] '' #L40T[0]
+          [Edit] '' #L40W[0]
+          [Edit] '' #S197TXT[0]
+          [Edit] '' #S197AMT[0]
+          [Edit] '' #S1291TXT[0]
+          [Edit] '' #S1291AMT[0]
+          [Edit] '' #F8885T[0]
+          [Edit] '' #F8885A[0]
+          [Edit] '' #L40[0] =14,656.
+          [Edit] '' #ADDLTAX[0]
+          [Edit] '' #L42[0] =14,656.
+        [Button] 'QuickZoom' #QuickZoom
+          [Text] 'QuickZoom'
+          [Edit] '' #L47[0] =2,000.
+          [Edit] '' #TOTNOREF[0] =600.
+          [Edit] '' #L12B[0] =2,600.
+          [Edit] '' #SUBTRACT[0] =12,056.
+          [Edit] '' #SCH4[0] =0.
+          [Edit] '' #F8621DFT[0]
+          [Edit] '' #F8621DFA[0]
+          [Edit] '' #TOTTAX[0] =12,056.
+        [Button] 'QuickZoom' #QuickZoom
+          [Text] 'QuickZoom'
+          [Edit] '' #FW2AMT[0] =13,100.
+          [Edit] '' #F1099AMT[0]
+          [Edit] '' #FOTHAMT[0]
+          [Edit] '' #L58[0] =13,100.
+        [Button] 'Explain' #QuickZoom
+          [Text] 'Explain'
+          [Edit] '' #L59S[0]
+          [Edit] '' #L59WA[0]
+          [Edit] '' #L59W[0]
+          [Edit] '' #L59[0]
+          [Edit] '' #L60W[0]
+          [Edit] '' #L60C[0]
+          [Edit] '' #L60[0]
+          [Edit] '' #L62[0]
+          [Edit] '' #AOC[0]
+          [Edit] '' #SCHED5[0]
+          [Edit] '' #LINE17[0]
+          [Edit] '' #TOTPAY[0] =13,100.
+        [Button] 'QuickZoom' #QuickZoom
+          [Text] 'QuickZoom'
+        [Button] 'QuickZoom' #QuickZoom
+          [Text] 'QuickZoom'
+        [Button] 'QuickZoom' #QuickZoom
+          [Text] 'QuickZoom'
+        [Text] 'Page  4'
+        [Text] 'Refund:'
+        [Text] '34'
+          [Text] 'If total Payments is more than total tax, subtract total tax from payments' #staticBlock
+          [Text] 'This is the amount you overpaid' #staticBlock
+          [Text] '. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '34'
+        [Text] '35'
+        [Text] 'a'
+          [Text] 'Amount of overpayment you want refunded to you.' #staticBlock
+        [Text] 'If Form 8888 is attached, check here. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '35'
+        [Text] 'Direct deposit?'
+        [Text] 'b'
+        [Text] 'Routing number. . . . . . . . . . . '
+        [Text] 'c'
+        [Text] 'Type:'
+        [Text] 'Checking'
+        [Text] 'Savings'
+        [Text] 'd'
+        [Text] 'Account number. . . . . . . . . . '
+        [Text] '36'
+        [Text] 'Amount of overpayment on line 34 you want'
+        [Text] 'applied to your 2025 estimated tax. . . . . . . . . . . . . . . . . . . '
+        [Text] '36'
+        [Text] 'Amount You Owe:'
+        [Text] '37'
+          [Text] 'Subtract line 33 from line 24. This is the amount you owe' #staticBlock
+          [Text] '. . . . . . . . . . . . . . . . . . . . '
+        [Text] '37'
+        [Text] '38'
+        [Text] 'Estimated tax penalty. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '38'
+          [Text] 'QuickZoom to Late Penalties and Interest Worksheet' #staticBlock
+          [Text] '. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+          [Text] 'G'
+          [Text] 'Schedule 1 ' Additional Income and Adjustments to Income' #staticBlock
+        [Text] 'Part I  '
+        [Text] 'Additional Income'
+        [Text] 'For 2024, enter the amount reported to you on Form(s) 1099-K that was included in error or for personal'
+        [Text] 'items sold at a loss. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+          [Text] 'Note: The remaining amounts reported to you on Form(s) 1099-K should be reported elsewhere on your' #staticBlock
+        [Text] 'return depending on the nature of the transaction. See www.irs.gov/1099k.'
+        [Text] '1'
+        [Text] 'Taxable refunds, credits, or offsets of state and local income taxes. . . . . . . . . . . . . . . '
+        [Text] '1'
+          [Edit] '' #NAM4[0] =Jordan & Casey Sample
+          [Edit] '' #SSN4[0] =000-00-0000
+          [Edit] '' #L66[0] =1,044.
+        [CheckBox] '' #F8888[0] (disabled)
+          [Edit] '' #L67A[0] =1,044.
+          [Edit] '' #ROUTNO[0] =XXXXXXXXX
+        [CheckBox] '' #ACCC[0] (disabled)
+        [CheckBox] '' #ACCS[0] (disabled)
+          [Edit] '' #ACCNO[0] =XXXXXXXXXXXXXXXXX
+          [Edit] '' #L68[0]
+          [Edit] '' #L69[0]
+          [Edit] '' #L70[0]
+          [Edit] '' #LTFILET[0]
+          [Edit] '' #LTFILEW[0]
+          [Edit] '' #LTPAYT[0]
+          [Edit] '' #LTPAYW[0]
+          [Edit] '' #INTT[0]
+          [Edit] '' #INTW[0]
+          [Edit] '' #TOTALT[0]
+          [Edit] '' #TOTALW[0]
+          [Edit] '' #KERRLOSS[0]
+          [Edit] '' #L10[0]
+        [Text] 'Alimony Received Smart Worksheet'
+        [Text] 'Taxpayer'
+        [Text] 'Spouse'
+        [Text] 'Date of divorce/sep'
+        [Text] '*'
+        [Text] 'A'
+        [Text] 'B'
+          [Text] '* Check the box if the pre-2019 decree was modified after 2018 to treat the payments as nontaxable' #staticBlock
+          [List] '' #myListBox
+            [ListItem] 'System.Windows.Controls.Canvas'
+                [Edit] '' #ALIMITP[1]
+                [Edit] '' #ALIMISP[1]
+                [Edit] '' #ALIMDATE[1]
+              [CheckBox] '' #MODINC[1] (disabled)
+              [CheckBox] '' #MODIX[1]
+        [Text] '2'
+        [Text] 'a'
+        [Text] 'Alimony received. . . . . . . . '
+        [Text] 'Taxpayer'
+        [Text] 'Spouse'
+        [Text] '2'
+        [Text] 'a'
+        [Text] 'b'
+        [Text] 'Date of original divorce or separation agreement. . . . . . . . . . . . . . . . '
+        [Text] '3'
+        [Text] 'Business income or (loss). Attach Schedule C. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '3'
+        [Text] '4'
+        [Text] 'Other gains or (losses). Attach Form 4797. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '4'
+        [Text] '5'
+        [Text] 'Rental real estate, royalties, partnerships, S corporations, trusts, etc.'
+        [Text] 'Attach Schedule E. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '5'
+        [Text] '6'
+        [Text] 'Farm income or (loss). Attach Schedule F. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '6'
+        [Text] '7'
+        [Text] 'Unemployment compensation. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '7'
+        [Text] '8'
+        [Text] 'Other income:'
+        [Text] 'a'
+        [Text] 'Net operating loss. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '8'
+        [Text] 'a'
+        [Text] 'b'
+        [Text] 'Gambling income. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '8'
+        [Text] 'b'
+        [Text] 'c'
+        [Text] 'Cancellation of debt. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '8'
+        [Text] 'c'
+        [Text] 'd'
+        [Text] 'Foreign earned income exclusion from Form 2555. . . . . . '
+        [Text] '8'
+        [Text] 'd'
+        [Text] 'e'
+        [Text] 'Income from Form 8853. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '8'
+        [Text] 'e'
+        [Text] 'f'
+        [Text] 'Income from Form 8889. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '8'
+        [Text] 'f'
+        [Text] 'g'
+        [Text] 'Alaska Permanent Fund dividends. . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '8'
+        [Text] 'g'
+        [Text] 'h'
+        [Text] 'Jury duty pay. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '8'
+        [Text] 'h'
+        [Text] 'i'
+        [Text] 'Prizes and awards. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '8'
+        [Text] 'i'
+        [Text] 'j'
+        [Text] 'Activity not engaged in for profit income. . . . . . . . . . . . . . . . . '
+        [Text] '8'
+        [Text] 'j'
+        [Text] 'k'
+        [Text] 'Stock options. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '8'
+        [Text] 'k'
+        [Text] 'l'
+        [Text] 'Income from the rental of personal property if you'
+        [Text] 'engaged in the rental for profit but were not in the'
+        [Text] 'business of renting such property. . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '8'
+        [Text] 'l'
+        [Text] 'm'
+        [Text] 'Olympic and Paralympic medals and USOC'
+        [Text] 'prize money. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '8'
+        [Text] 'm'
+        [Text] 'n'
+        [Text] 'Section 951(a) inclusion. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '8'
+        [Text] 'n'
+        [Text] 'o'
+        [Text] 'Section 951A(a) inclusion. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '8'
+        [Text] 'o'
+        [Text] 'p'
+        [Text] 'Section 461(l) excess business loss adjustment. . . . . . . . . '
+        [Text] '8'
+        [Text] 'p'
+        [Text] 'q'
+        [Text] 'Taxable distributions from an ABLE account. . . . . . . . . . . . . '
+        [Text] '8'
+        [Text] 'q'
+        [Text] 'r'
+        [Text] 'Scholarship and fellowship grants not reported on '
+        [Text] 'Form W-2. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '8'
+        [Text] 'r'
+        [Text] 's'
+        [Text] 'Nontaxable amount of Medicaid waiver payments '
+        [Text] 'included on Form 1040, line 1a or 1d. . . . . . . . . . . . . . . . . . . . . '
+        [Text] '8'
+        [Text] 's'
+        [Text] 't'
+        [Text] 'Pension or annuity from a nonqualifed deferred '
+        [Text] 'compensation plan or a nongovernmental section 457 '
+        [Text] 'plan. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '8'
+        [Text] 't'
+        [Text] 'u'
+        [Text] 'Wages earned while incarcerated. . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '8'
+        [Text] 'u'
+        [Text] 'v'
+        [Text] 'Digital assets received as ordinary income not reported'
+        [Text] 'elsewhere. See instructions. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '8'
+        [Text] 'v'
+        [Text] 'z'
+        [Text] 'Other income. List type and amount:'
+        [Text] '8'
+        [Text] 'z'
+        [Text] '9'
+        [Text] 'Total other income. Add lines 8a through 8z. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '9'
+        [Text] '10'
+        [Text] 'Combine lines 1 through 7 and 9.'
+        [Text] 'Enter here and on Form 1040, 1040-SR, or 1040-NR, line 8. . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '10'
+          [Text] 'Total  Income. Combine Form 1040 lines 1- 7 and' #staticBlock
+        [Text] 'Schedule 1, line 10, enter on Form 1040, line 9. . . . . . . . . . . . . . . . . '
+          [Text] 'Quickzoom to 1040 Worksheet, line 9 ' Total Income' #staticBlock
+          [Text] '. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+          [Text] 'G'
+          [Edit] '' #L11T[0]
+          [Edit] '' #L11S[0]
+          [Edit] '' #L11[0]
+          [Edit] '' #RECVDATE[0]
+          [Edit] '' #L12[0]
+          [Edit] '' #L14W[0]
+          [Edit] '' #L14[0]
+          [Edit] '' #L17[0]
+          [Edit] '' #L18[0]
+          [Edit] '' #L19T1[0]
+          [Edit] '' #L19T2[0]
+          [Edit] '' #L19[0]
+          [Edit] '' #ANETLOSS[0]
+          [Edit] '' #AGAMBINC[0]
+          [Edit] '' #ADEBTEND[0]
+          [Edit] '' #AFEICEX[0]
+          [Edit] '' #ARCHERMS[0]
+          [Edit] '' #AHSADSTR[0]
+          [Edit] '' #AAKPERM[0]
+          [Edit] '' #AJURYPAY[0]
+          [Edit] '' #APRIZES[0]
+          [Edit] '' #ANOTPROF[0]
+          [Edit] '' #ASTOCK[0]
+          [Edit] '' #ARENTINC[0]
+          [Edit] '' #AMEDALS[0]
+          [Edit] '' #A951A[0]
+          [Edit] '' #A951AA[0]
+          [Edit] '' #A461I[0]
+          [Edit] '' #AABLE[0]
+          [Edit] '' #SCHOLARS[0]
+          [Edit] '' #NONTAXAB[0]
+          [Edit] '' #PENSIONA[0]
+          [Edit] '' #WAGESEAR[0]
+          [Edit] '' #DIGASSET[0]
+          [Edit] '' #AADDLTOT[0]
+          [Edit] '' #L21[0]
+          [Edit] '' #TADDINC[0]
+          [Edit] '' #L22[0] =145,350.
+        [Button] 'QuickZoom' #QuickZoom
+          [Text] 'QuickZoom'
+          [List] '' #myListBox
+            [ListItem] 'System.Windows.Controls.Canvas'
+                [Edit] '' #L21DESC[1]
+                [Edit] '' #L21AMT[1]
+        [Text] 'Page  5'
+        [Text] 'Part II  '
+        [Text] 'Adjustments to Income'
+        [Text] '11'
+        [Text] 'Educator expenses. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '11'
+          [Edit] '' #NAM5[0] =Jordan & Casey Sample
+          [Edit] '' #SSN5[0] =000-00-0000
+          [Edit] '' #EDUEXP[0] =300.
+        [Text] 'Certain Business Expenses Smart Worksheet'
+        [Text] 'A'
+        [Text] 'Armed Forces Reservists related travel more than 100 miles from home. . . . . . . . . . . . . . . . '
+        [Text] 'B'
+        [Text] 'Qualified performing artist. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'C'
+        [Text] 'Fee-basis state or local government official. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+          [Edit] '' #AFRT[0]
+          [Edit] '' #L32B[0]
+          [Edit] '' #L32G[0]
+        [Text] '12'
+        [Text] 'Certain business expenses of reservists, performing artists, and fee-basis'
+        [Text] 'government officials. Attach Form 2106. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '12'
+        [Text] '13'
+        [Text] 'Health savings account deduction. Attach Form 8889. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '13'
+        [Text] '14'
+        [Text] 'Moving expenses for members of the Armed Forces.'
+        [Text] 'Attach Form 3903. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '14'
+        [Text] '15'
+        [Text] 'Deductible part of self-employment tax. Attach Schedule SE'
+        [Text] '15'
+        [Text] '16'
+        [Text] 'Self-employed SEP, SIMPLE, and qualified plans. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '16'
+          [Edit] '' #BUSEXP[0]
+          [Edit] '' #HSA[0]
+          [Edit] '' #L26T[0]
+          [Edit] '' #L26[0]
+          [Edit] '' #L27[0]
+          [Edit] '' #L29W[0]
+          [Edit] '' #L29[0]
+        [Text] 'Self-Employed Health Insurance Premium Tax Credit Reduction Smart Worksheet'
+        [Text] 'A'
+        [Text] 'Premium Tax Credit amount. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'B'
+        [Text] 'Re-enter amount from box A here to reduce self-employed health insurance'
+        [Text] 'deduction by the amount of your premium tax credit. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+          [Edit] '' #PTCAMTCP[0]
+          [Edit] '' #PTCREENT[0]
+        [Text] '17'
+        [Text] 'Self-employed health insurance deduction. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '17'
+        [Text] '18'
+        [Text] 'Penalty on early withdrawal of savings. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '18'
+          [Edit] '' #L28[0]
+          [Edit] '' #L30[0]
+        [Text] 'Alimony Paid Smart Worksheet'
+        [Text] 'Recipient's name'
+        [Text] 'Recipient's SSN'
+        [Text] 'Date of divorce/sep'
+        [Text] '*'
+        [Text] 'Alimony paid'
+        [Text] 'A'
+        [Text] 'B'
+          [Text] '*Check the box if the pre-2019 decree was modified after 2018 to treat the payments as nondeductible' #staticBlock
+          [List] '' #myListBox
+            [ListItem] 'System.Windows.Controls.Canvas'
+                [Edit] '' #ALNAME[1]
+                [Edit] '' #MRSSN[1]
+                [Edit] '' #PDDATE[1]
+              [CheckBox] '' #MODPAID[1] (disabled)
+              [CheckBox] '' #MODPX[1]
+                [Edit] '' #L31AMT[1]
+        [Text] '19'
+        [Text] 'a'
+        [Text] 'Alimony paid. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '19'
+        [Text] 'a'
+        [Text] 'b'
+        [Text] 'Recipient's SSN. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'c'
+        [Text] 'Date of original divorce or separation agreement. . . . . . . . . . . . . . . . '
+        [Text] '20'
+        [Text] 'IRA deduction. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '20'
+        [Text] '21'
+        [Text] 'Student loan interest deduction. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '21'
+        [Text] '22'
+        [Text] 'Reserved for future use. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '22'
+        [Text] '23'
+        [Text] 'Archer MSA deduction. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '23'
+          [Edit] '' #L31W[0]
+          [Edit] '' #L31[0]
+          [Edit] '' #RSSN[0]
+          [Edit] '' #PAIDDATE[0]
+          [Edit] '' #D[0]
+          [Edit] '' #L23[0] =2,000.
+          [Edit] '' #L24[0]
+          [Edit] '' #L25[0]
+        [Text] 'Other Adjustments to Income Smart Worksheet'
+        [Text] 'A'
+        [Text] 'Foreign housing deduction. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+          [Text] 'QuickZoom to Form 2555 for taxpayer' #staticBlock
+          [Text] '. . . . . '
+          [Text] 'G'
+        [Text] 'and/or for spouse. . . . . . . . . '
+        [Text] 'G'
+        [Text] 'B'
+        [Text] 'Jury duty pay given to employer. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'C'
+        [Text] 'Reforestation amortization and expenses. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'D'
+        [Text] 'Repayment of sub-pay under the Trade Act of 1974. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'E'
+        [Text] 'Expenses from the rental of personal property . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'F'
+        [Text] 'Contributions to section 501(c)(18)(D) pension plans. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] ' *. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '* No entry should be made here. For DPAD, use this QuickZoom. . . . . . . . . . . '
+        [Text] 'H'
+        [Text] 'Olympic and Paralympic prize money . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'I'
+        [Text] 'Section 67(e) deduction from final trust/estate K-1. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'J'
+        [Text] 'Contributions by certain chaplains to section 403(b) plans. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'K'
+        [Text] 'Attorney fees and court costs for actions involving unlawful discrimination. . . . . . . . . . . . . . '
+        [Text] 'L'
+        [Text] 'Attorney fees and court costs in connection with an award from the IRS. . . . . . . . . . . . . . . . '
+          [Edit] '' #L32A[0]
+        [Button] 'QuickZoom' #QuickZoom
+          [Text] 'QuickZoom'
+        [Button] 'QuickZoom' #QuickZoom
+          [Text] 'QuickZoom'
+          [Edit] '' #L32C[0]
+          [Edit] '' #L32D[0]
+          [Edit] '' #L32E[0]
+          [Edit] '' #L32F[0]
+          [Edit] '' #L32H[0]
+          [Edit] '' #L32IW[0]
+          [Edit] '' #L32I[0]
+        [Button] 'QuickZoom' #QuickZoom
+          [Text] 'QuickZoom'
+          [Edit] '' #OLYMPIC[0]
+          [Edit] '' #K167EDED[0]
+          [Edit] '' #CHAPLAIN[0]
+          [Edit] '' #ATTDIS[0]
+          [Edit] '' #ATTIRS[0]
+        [Text] '24'
+        [Text] 'Other adjustments:'
+        [Text] 'a'
+        [Text] 'Jury duty pay. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '24'
+        [Text] 'a'
+        [Text] 'b'
+        [Text] 'Deductible expenses related to income reported on'
+        [Text] 'line 8l from the rental of personal property engaged'
+        [Text] 'in for profit. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '24'
+        [Text] 'b'
+        [Text] 'c'
+        [Text] 'Nontaxable amount of the value of Olympic and'
+        [Text] 'Paralympic medals and USOC prize money reported'
+        [Text] 'on line 8m. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '24'
+        [Text] 'c'
+        [Text] 'd'
+        [Text] 'Reforestation amortization and expenses. . . . . . . . . . . . . . . . '
+        [Text] '24'
+        [Text] 'd'
+        [Text] 'e'
+        [Text] 'Repayment of supplemental unemployment'
+        [Text] 'benefits under the Trade Act of 1974. . . . . . . . . . . . . . . . . . . . . '
+        [Text] '24'
+        [Text] 'e'
+        [Text] 'f'
+        [Text] 'Contributions to section 501(c)(18)(D) pension plans. . . . '
+        [Text] '24'
+        [Text] 'f'
+        [Text] 'g'
+        [Text] 'Contributions by certain chaplains to section'
+        [Text] '403(b) plans. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '24'
+        [Text] 'g'
+        [Text] 'h'
+        [Text] 'Attorney fees and court costs for actions involving'
+        [Text] 'certain unlawful discrimination claims. . . . . . . . . . . . . . . . . . . . '
+        [Text] '24'
+        [Text] 'h'
+        [Text] 'i'
+        [Text] 'Attorney fees and court costs you paid in connection'
+        [Text] 'with an award from the IRS for information you'
+        [Text] 'provided that helped the IRS detect tax law violations. . . '
+        [Text] '24'
+        [Text] 'i'
+        [Text] 'j'
+        [Text] 'Housing deduction from Form 2555. . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '24'
+        [Text] 'j'
+        [Text] 'k'
+        [Text] 'Excess deductions of section 67(e) expenses from'
+        [Text] 'Schedule K-1 (Form 1041). . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '24'
+        [Text] 'k'
+        [Text] 'z'
+        [Text] 'Other adjustments. List type and amount:'
+        [Text] '24'
+        [Text] 'z'
+        [Text] '25'
+        [Text] 'Total other adjustments. Add lines 24a through 24z. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '25'
+        [Text] '26'
+        [Text] 'Add lines 11 through 23 and 25'
+          [Text] 'These are your adjustments to income. Enter here and on Form 1040 or' #staticBlock
+        [Text] '1040-SR, line 10, or Form 1040-NR, line 10. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '26'
+          [Text] 'Schedule 2 ' Additional Taxes' #staticBlock
+        [Text] 'Part I  '
+        [Text] 'Tax'
+        [Text] '1'
+          [Text] 'Additions to tax: (1a-1z)' #staticBlock
+          [Text] '. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '1z'
+        [Text] '2'
+        [Text] 'Alternative minimum tax.'
+        [Text] '2'
+        [Text] '3'
+        [Text] 'Add lines 1z and 2.'
+        [Text] 'Enter here and include on Form 1040, 1040-SR, or 1040-NR, line 17. . . . . . . . . . . . . '
+        [Text] '3'
+          [Edit] '' #ADJURY[0]
+          [Edit] '' #ADRENTAL[0]
+          [Edit] '' #ADPRIZES[0]
+          [Edit] '' #ADFOREST[0]
+          [Edit] '' #ADUNEMPL[0]
+          [Edit] '' #ADPENSN[0]
+          [Edit] '' #ADCHAPLN[0]
+          [Edit] '' #ADCOURTS[0]
+          [Edit] '' #ADIRSDOL[0]
+          [Edit] '' #ADHOUSE[0]
+          [Edit] '' #AD67E[0]
+          [Edit] '' #ADSUBTOT[0]
+          [Edit] '' #L32W[0]
+          [Edit] '' #L32[0] =2,300.
+        [Button] 'QuickZoom' #QuickZoom
+          [Text] 'QuickZoom'
+          [Edit] '' #S2TOTADDIT[0]
+          [Edit] '' #DISPL41[0]
+          [Edit] '' #SCH2L47[0]
+          [List] '' #myListBox
+            [ListItem] 'System.Windows.Controls.Canvas'
+                [Edit] '' #ADADJT[1]
+                [Edit] '' #ADADJAMT[1]
+        [Text] 'Page  6'
+        [Text] 'Part II  '
+        [Text] 'Other Taxes'
+        [Text] '4'
+        [Text] 'Self-employment tax.'
+        [Text] 'Attach Schedule SE. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '4'
+        [Text] '5'
+        [Text] 'Social security and Medicare tax'
+        [Text] 'on unreported tip income.'
+        [Text] 'Attach Form 4137. . . . . . . . . . . . . . . . . '
+        [Text] '5'
+        [Text] '6'
+        [Text] 'Uncollected social security and Medicare tax on'
+        [Text] 'wages. Attach Form 8919. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '6'
+        [Text] '7'
+        [Text] 'Total additional social security and Medicare tax. Add lines 5 and 6. . . . . . . . . . . . . . '
+        [Text] '7'
+        [Text] '8'
+        [Text] 'Additional tax on IRAs or other tax-favored accounts. Attach Form 5329 if '
+        [Text] 'required. If not required, check here. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '8'
+        [Text] '9'
+        [Text] 'Household employment taxes from Schedule H. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '9'
+          [Text] 'QuickZoom to Schedule H for taxpayer' #staticBlock
+          [Text] '. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+          [Text] 'G'
+        [Text] ' Schedule H for spouse. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] '10'
+        [Text] 'Repayment of first-time homebuyer credit. Attach Form 5405 if required. . . . . . . . . '
+        [Text] '10'
+        [Text] '11'
+        [Text] 'Additional Medicare Tax. Attach Form 8959. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '11'
+        [Text] '12'
+        [Text] 'Net investment income tax. Attach Form 8960. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '12'
+          [Edit] '' #NAM6[0] =Jordan & Casey Sample
+          [Edit] '' #SSN6[0] =000-00-0000
+          [Edit] '' #L52T[0]
+          [Edit] '' #L52W[0]
+          [Edit] '' #L52[0]
+        [Button] 'Explain' #QuickZoom
+          [Text] 'Explain'
+          [Edit] '' #L53W[0]
+          [Edit] '' #FICA4137[0]
+          [Edit] '' #FICA8919[0]
+          [Edit] '' #L53[0]
+        [CheckBox] '' #NTREQCKX[0] (disabled)
+          [Edit] '' #L54[0]
+          [Edit] '' #L56[0]
+        [Button] 'QuickZoom' #QuickZoom
+          [Text] 'QuickZoom'
+        [Button] 'QuickZoom' #QuickZoom
+          [Text] 'QuickZoom'
+          [Edit] '' #FTHCR[0]
+          [Edit] '' #L57I[0]
+          [Edit] '' #L57J[0]
+        [Text] 'Additional SS/MEdicare or RRTA Taxes Smart Worksheet'
+        [Text] 'A'
+        [Text] 'Uncollected employee social security and Medicare or RRTA tax on tips. . . . . . . . . . . . . . . . '
+        [Text] 'B'
+        [Text] 'Uncollected employee social security and Medicare or RRTA tax on'
+        [Text] 'group term insurance. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+          [Edit] '' #L57B[0]
+          [Edit] '' #L57C[0]
+        [Text] '13'
+        [Text] 'Uncollected social security and Medicare or RRTA tax on tips or group-term'
+        [Text] 'life insurance from W-2, box 12. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '13'
+        [Text] '14'
+        [Text] 'Interest on tax due on installment income from the sale of certain'
+        [Text] 'residential lots and timeshares. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '14'
+        [Text] '15'
+        [Text] 'Interest on the deferred tax on gain from certain installment sales with a'
+        [Text] 'sales price over $150,000. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '15'
+        [Text] '16'
+        [Text] 'Recapture of low-income housing credit. Attach Form 8611. . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '16'
+        [Text] '17'
+        [Text] 'Other additional taxes:'
+          [Edit] '' #OUNSSMRR[0]
+          [Edit] '' #OSALEINT[0]
+          [Edit] '' #OGAININT[0]
+          [Edit] '' #OHOSCRED[0]
+        [Text] 'Recapture of Other Credits Smart Worksheet'
+        [Text] 'A'
+        [Text] 'Recapture of New Markets Credit (Form 8874). . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'B'
+        [Text] 'Recapture of Employer-Provided Childcare Facilities Credit (Form 8882). . . . . . . . . . . . . . . . . '
+        [Text] 'C'
+        [Text] 'Recapture of Investment Credits of Form 3468 on Form 4255. . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'D'
+        [Text] 'Recapture of Non-EPE from Form 3468, Part IV on Form 4255. . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'E'
+        [Text] 'Recapture of Alternative Fuel Vehicle Refueling Property Credit (Form 8911) *. . . . . . . . . . '
+        [Text] '* Note: Line E recapture goes on Schedule 2, line 1y - other additions to tax. '
+          [Edit] '' #NMCR[0]
+          [Edit] '' #ECCFR[0]
+          [Edit] '' #RECAP3468[0]
+          [Edit] '' #NEPE3468[0]
+          [Edit] '' #ARPCR[0]
+        [Text] 'a'
+        [Text] 'Recapture of other credits. List type, form number,'
+        [Text] 'and amount:'
+        [Text] '17'
+        [Text] 'a'
+        [Text] 'b'
+        [Text] 'Recapture of federal mortgage subsidy, if you sold '
+        [Text] 'your home see instructions. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '17'
+        [Text] 'b'
+        [Text] 'c'
+        [Text] 'Additional tax on HSA distributions. Attach Form 8889. . '
+        [Text] '17'
+        [Text] 'c'
+        [Text] 'd'
+        [Text] 'Additional tax on an HSA because you didn't remain'
+        [Text] 'an eligible individual. Attach Form 8889. . . . . . . . . . . . . . . . . . '
+        [Text] '17'
+        [Text] 'd'
+        [Text] 'e'
+        [Text] 'Additional tax on Archer MSA distributions. '
+        [Text] 'Attach Form 8853. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '17'
+        [Text] 'e'
+        [Text] 'f'
+        [Text] 'Additional tax on Medicare Advantage MSA'
+        [Text] 'distributions. Attach Form 8853. . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '17'
+        [Text] 'f'
+        [Text] 'g'
+        [Text] 'Recapture of a charitable contribution deduction'
+        [Text] 'related to a fractional interest in tangible'
+        [Text] 'personal property. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '17'
+        [Text] 'g'
+        [Text] 'h'
+        [Text] 'Income you received from a nonqualified deferred'
+        [Text] 'compensation plan that fails to meet the requirements'
+        [Text] 'of section 409A. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '17'
+        [Text] 'h'
+        [Text] 'i'
+        [Text] 'Compensation you received from a nonqualified'
+        [Text] 'deferred compensation plan described in'
+        [Text] 'section 457A. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '17'
+        [Text] 'i'
+        [Text] 'j'
+        [Text] 'Section 72(m)(5) excess benefits tax. . . . . . . . . . . . . . . . . . . . . '
+        [Text] '17'
+        [Text] 'j'
+        [Text] 'k'
+        [Text] 'Golden parachute payments. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '17'
+        [Text] 'k'
+        [Text] 'l'
+        [Text] 'Tax on accumulation distribution of trusts. . . . . . . . . . . . . . . . '
+        [Text] '17'
+        [Text] 'l'
+        [Text] 'm'
+        [Text] 'Excise tax on insider stock compensation from an'
+        [Text] 'expatriated corporation. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '17'
+        [Text] 'm'
+        [Text] 'n'
+        [Text] 'Look-back interest under section 167(g) or 460(b)'
+        [Text] 'from Form 8697 or 8866. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '17'
+        [Text] 'n'
+        [Text] 'o'
+        [Text] 'Tax on non-effectively connected income for any'
+        [Text] 'part of the year you were a nonresident alien from'
+        [Text] 'Form 1040-NR. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '17'
+        [Text] 'o'
+        [Text] 'p'
+        [Text] 'Any interest from Form 8621, line 16f, relating to'
+        [Text] 'distributions from, and dispositions of, stock of'
+        [Text] 'a section 1291 fund. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '17'
+        [Text] 'p'
+        [Text] 'q'
+        [Text] 'Any interest from Form 8621, line 24. . . . . . . . . . . . . . . . . . . . . '
+        [Text] '17'
+        [Text] 'q'
+          [Edit] '' #ORECAPAT[0]
+          [Edit] '' #OSUBSIDY[0]
+          [Edit] '' #HSATAX[0]
+          [Edit] '' #F8889[0]
+          [Edit] '' #L57G[0]
+          [Edit] '' #L57G2[0]
+          [Edit] '' #FITPP[0]
+          [Edit] '' #OINC409A[0]
+          [Edit] '' #OCMP457A[0]
+          [Edit] '' #L57A[0]
+          [Edit] '' #L57D[0]
+          [Edit] '' #L57E[0]
+          [Edit] '' #OEXCISE[0]
+          [Edit] '' #OLOOKBCK[0]
+          [Edit] '' #ONRTAX[0]
+          [Edit] '' #S1291INT[0]
+          [Edit] '' #S1294INT[0]
+          [List] '' #myListBox
+            [ListItem] 'System.Windows.Controls.Canvas'
+                [Edit] '' #ORECAPT[1]
+                [Edit] '' #ORECAPF[1]
+                [Edit] '' #ORECAPA[1]
+        [Text] 'Line 17z - Other Taxes Smart Worksheet'
+        [Text] 'A'
+        [Text] 'Section 1294 deferred tax from Form 8621. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'B'
+        [Text] 'Prevailing wage and apprenticeship penalties from Form 4255, line 1c, column (p). . . . . '
+        [Text] 'C'
+        [Text] 'Prevailing wage and apprenticeship penalties from Form 4255, line 2a, column (p). . . . . '
+        [Text] 'D'
+        [Text] 'Prevailing wage and apprenticeship penalties from Form 4255, other lines column (p). . '
+        [Text] 'Other taxes. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'Type. . . . '
+        [Text] 'G'
+        [Text] 'Amount. . . . '
+        [Text] 'G'
+          [Edit] '' #S1294DT[0]
+          [Edit] '' #PWA7210[0]
+          [Edit] '' #PWA8933[0]
+          [Edit] '' #NPWA[0]
+          [Edit] '' #L57HT[0]
+          [Edit] '' #L57H[0]
+        [Text] 'z'
+        [Text] 'Any other taxes. List type and amount:'
+        [Text] '17'
+        [Text] 'z'
+        [Text] '18'
+        [Text] 'Total additional taxes. Add lines 17a through 17z. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '18'
+        [Text] '19'
+        [Text] 'Recapture of net EPE from Form 4255, line 1d, column (I). . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '19'
+        [Text] '20'
+        [Text] 'Section 965 net tax liability installment from'
+        [Text] 'Form 965-A. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '20'
+        [Text] '21'
+        [Text] 'Add lines 4, 7 through 16, 18 and 19'
+          [Text] 'These are your total other taxes.' #staticBlock
+        [Text] 'Enter here and on Form 1040 or 1040-SR, line 23, or Form 1040-NR, line 23b. . . '
+        [Text] '21'
+          [Text] 'Total tax (add line 21 and Schedule 3, line 8b)' #staticBlock
+          [Edit] '' #OTHTXTOT[0]
+          [Edit] '' #L57W[0]
+          [Edit] '' #EPEF4255[0]
+          [Edit] '' #L965A[0]
+          [Edit] '' #EXP[0]
+          [Edit] '' #EXPAMT[0]
+          [Edit] '' #TOTHTX[0] =0.
+          [Edit] '' #L57[0] =12,056.
+          [List] '' #myListBox
+            [ListItem] 'System.Windows.Controls.Canvas'
+                [Edit] '' #L57CODE[1]
+                [Edit] '' #L57AMT[1]
+        [Text] 'Page  7'
+          [Text] 'Schedule 3 ' Additional Credits and Payments' #staticBlock
+        [Text] 'Part I  '
+        [Text] 'Nonrefundable Credits'
+        [Text] '1'
+        [Text] 'Foreign tax credit. Attach Form 1116 if required. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '1'
+        [Text] '2'
+        [Text] 'Credit for child and dependent care expenses from Form 2441, line 11.'
+        [Text] 'Attach Form 2441. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '2'
+        [Text] '3'
+        [Text] 'Education credits from Form 8863, line 19. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '3'
+        [Text] '4'
+        [Text] 'Retirement savings contributions credit. Attach Form 8880 . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '4'
+        [Text] '5'
+        [Text] 'a'
+        [Text] 'Residential clean energy credit from Form 5695, line 15. . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '5'
+        [Text] 'a'
+        [Text] 'b'
+        [Text] 'Energy efficient home improvement credit from Form 5695, line 32. . . . . . . . . . . . . . . '
+        [Text] '5'
+        [Text] 'b'
+        [Text] '6'
+        [Text] 'Other nonrefundable credits:'
+        [Text] 'a'
+        [Text] 'General business credit. Attach Form 3800. . . . . . . . . . . . . . '
+        [Text] '6'
+        [Text] 'a'
+        [Text] 'b'
+        [Text] 'Credit for prior year minimum tax. Attach Form 8801. . . '
+        [Text] '6'
+        [Text] 'b'
+        [Text] 'c'
+        [Text] 'Adoption credit. Attach Form 8839. . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '6'
+        [Text] 'c'
+        [Text] 'd'
+        [Text] 'Credit for the elderly or disabled. Attach Schedule R. . . . '
+        [Text] '6'
+        [Text] 'd'
+        [Text] 'e'
+        [Text] 'Reserved for future use. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '6'
+        [Text] 'e'
+        [Text] 'f'
+        [Text] 'Clean vehicle credit. Attach Form 8936. . . . . . . . . . . . . . . . . . . '
+        [Text] '6'
+        [Text] 'f'
+        [Text] 'g'
+        [Text] 'Mortgage interest credit. Attach Form 8396. . . . . . . . . . . . . . '
+        [Text] '6'
+        [Text] 'g'
+        [Text] 'h'
+        [Text] 'District of Columbia first-time homebuyer credit.'
+        [Text] 'Attach Form 8859. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '6'
+        [Text] 'h'
+        [Text] 'i'
+        [Text] 'Qualified electric vehicle credit. Attach Form 8834. . . . . . '
+        [Text] '6'
+        [Text] 'i'
+        [Text] 'j'
+        [Text] 'Alternative fuel vehicle refueling property credit. '
+        [Text] 'Attach Form 8911. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '6'
+        [Text] 'j'
+        [Text] 'k'
+        [Text] 'Credit to holders of tax credit bonds. Attach Form 8912'
+        [Text] '6'
+        [Text] 'k'
+        [Text] 'l'
+        [Text] 'Amount on Form 8978, line 14. . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '6'
+        [Text] 'l'
+        [Text] 'm'
+        [Text] 'Credit for previously owned clean vehicles. Attach '
+        [Text] 'Form 8936. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '6'
+        [Text] 'm'
+        [Text] 'z'
+        [Text] 'Other nonrefundable credits. List type and amount:'
+        [Text] '6'
+        [Text] 'z'
+        [Text] '7'
+        [Text] 'Total other nonrefundable credits. Add lines 6a through 6z. . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '7'
+        [Text] '8'
+        [Text] 'Add lines 1 through 5 and 7.'
+        [Text] 'Enter here and on Form 1040, 1040-SR, or 1040-NR, line 20. . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '8'
+        [Text] 'a'
+        [Text] 'Add line 8 plus child tax/other dep. credit on line 19 above. . . . . '
+        [Text] 'b'
+        [Text] 'Subtract total credits on line 8a from tax on line 18 above. . . . . . '
+          [Text] 'Quickzoom to 1040 Worksheet, line 24 ' Total Tax' #staticBlock
+          [Text] '. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+          [Text] 'G'
+        [Text] 'Part II  '
+        [Text] 'Other Payments and Refundable Credits'
+        [Text] '9'
+        [Text] 'Net premium tax credit. Attach Form 8962. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '9'
+        [Text] '10'
+        [Text] 'Amount paid with request for extension to file. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '10'
+          [Edit] '' #L43[0]
+          [Edit] '' #L44[0] =600.
+          [Edit] '' #L46[0]
+          [Edit] '' #RSCCRED[0]
+          [Edit] '' #RESENRGY[0]
+          [Edit] '' #ENERHIMP[0]
+          [Edit] '' #L49B[0]
+          [Edit] '' #L49F[0]
+          [Edit] '' #L48[0]
+          [Edit] '' #L45[0]
+          [Edit] '' #F8910CR[0]
+          [Edit] '' #F8936CR[0]
+          [Edit] '' #L49D[0]
+          [Edit] '' #L49I[0]
+          [Edit] '' #L49H1[0]
+          [Edit] '' #F8911CR[0]
+          [Edit] '' #NTAXBOND[0]
+          [Edit] '' #N8978[0]
+          [Edit] '' #PREVVEH[0]
+          [Edit] '' #NRCTOTAL[0]
+          [Edit] '' #L49[0]
+          [Edit] '' #TOTNONRF[0] =600.
+          [Edit] '' #L50[0] =2,600.
+          [Edit] '' #L51[0] =12,056.
+        [Button] 'QuickZoom' #QuickZoom
+          [Text] 'QuickZoom'
+          [Edit] '' #PREMTXCR[0]
+          [Edit] '' #L63[0]
+          [List] '' #myListBox
+            [ListItem] 'System.Windows.Controls.Canvas'
+                [Edit] '' #OTNRCDES[1]
+                [Edit] '' #OTNRCAMT[1]
+        [Text] 'Excess Social Security and Tier I RRTA Tax Withheld Smart Worksheet'
+        [Text] 'The calculated amount for Excess social security and tier 1 RRTA tax withheld could include'
+        [Text] 'a portion that needs to be removed. When a taxpayer has multiple W-2's, each with the same'
+        [Text] 'EIN, excess withholding can only be claimed if the Employer's Name's in box c of the W-2's'
+        [Text] 'reflect separate business entities. This could occur when a parent company has multiple'
+        [Text] 'subsidiaries, or when a temp agency issues W-2's for distinctly different jobs. If you have'
+        [Text] 'multiple W-2's with the same EIN, for the same taxpayer, and for the same job, reduce the'
+        [Text] 'amount calculated on Line A below by the excess withholdings from only those W-2's.'
+        [Text] 'A'
+        [Text] 'Total Excess Social Security or Tier I RRTA tax withheld claimed as a credit. . . '
+          [Edit] '' #AGENTFOR[0] =0.
+        [Text] '11'
+        [Text] 'Excess social security and tier 1 RRTA tax withheld. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '11'
+        [Text] '12'
+        [Text] 'Credit for federal tax on fuels. Attach Form 4136. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '12'
+          [Edit] '' #L61[0]
+          [Edit] '' #F4136AMT[0]
+        [Text] 'Other Credits and Payments Smart Worksheet'
+        [Text] 'A'
+        [Text] 'Taxes paid on undistributed capital gains (Form 2439) from Schedule K-1. . . . . . . . . . . . . . '
+        [Text] 'B'
+        [Text] 'Taxes from other Form(s) 2439. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'C'
+        [Text] 'Credit for U.S. tax paid to the Virgin Islands (Form 8689). . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'D'
+        [Text] 'Claim of Right, IRC 1341 credit for repayments of prior year income. . . . . . . . . . . . . . . . . . . . '
+        [Text] 'E'
+        [Text] 'Net section 965 inclusion. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'F'
+        [Text] 'Credit under sec-tion 960(c) with respect to an excess limitation account. . . . . . . . . . . . . . . '
+          [Edit] '' #K1AMT[0]
+          [Edit] '' #F2439AMT[0]
+          [Edit] '' #F8689AMT[0]
+          [Edit] '' #OTHPMNT[0]
+          [Edit] '' #S965[0]
+          [Edit] '' #S960C[0]
+        [Text] '13'
+        [Text] 'Other payments or refundable credits:'
+        [Text] 'a'
+        [Text] 'Form 2439. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '13'
+        [Text] 'a'
+        [Text] 'b'
+        [Text] 'Credit for repayment of amounts included in'
+        [Text] 'income from earlier years. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '13'
+        [Text] 'b'
+        [Text] 'c'
+        [Text] 'Elective payment election amount from Form 3800, '
+        [Text] 'Part III, line 6, column (i). . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] '13'
+        [Text] 'c'
+        [Text] 'd'
+        [Text] 'Deferred amount of net 965 tax liability. . . . . . . . . . . . . . . . . . '
+        [Text] '13'
+        [Text] 'd'
+        [Text] 'z'
+        [Text] 'Other payments or refundable credits. List type and'
+        [Text] 'amount. . . . '
+        [Text] '13'
+        [Text] 'z'
+        [Text] '14'
+        [Text] 'Total other payments or refundable credits. Add lines 13a through 13z. . . . . . . . . . . '
+        [Text] '14'
+        [Text] '15'
+          [Text] 'Total Payments: Part II, lines 9 through 12 and 14,' #staticBlock
+          [Text] 'Withholding (Form 1040, line 25d),' #staticBlock
+          [Text] 'Estimated Tax Payments  (Form 1040, line 26) and Form 1040, lines 27-30' #staticBlock
+          [Text] '. . . . . '
+        [Text] '15'
+          [Text] 'Other Payments and Refundable Credits (Form 1040, line 32)' #staticBlock
+          [Text] '. '
+          [Text] 'G'
+          [Edit] '' #L64W[0]
+          [Edit] '' #F2439VAL[0]
+          [Edit] '' #RREPAYMT[0]
+          [Edit] '' #ELPAYAMT[0]
+          [Edit] '' #RSECT965[0]
+          [Edit] '' #OTHAMT[0]
+          [Edit] '' #L64[0]
+          [Edit] '' #L65[0] =13,100.
+          [Edit] '' #REFCRED[0]
+          [List] '' #myListBox
+            [ListItem] 'System.Windows.Controls.Canvas'
+                [Edit] '' #L64A1[1]
+                [Edit] '' #L64B1[1]
+        [Text] 'Page  8'
+        [Text] 'Third Party Designee'
+        [Text] 'Do you want to allow another person to discuss this return'
+        [Text] 'with the IRS (see instructions)?. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+          [Text] 'Yes. Complete the following.' #staticBlock
+        [Text] 'No'
+        [Text] 'Designee's Name. . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'Phone Number. . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'Personal Identification Number (PIN). . . . . '
+        [Text] 'Signature and Paid Preparer'
+        [Text] 'Sign Here'
+        [Text] 'Joint return? See instructions.'
+        [Text] 'Keep a copy of this return for your records.'
+        [Text] 'Under penalties of perjury, I declare that I have examined this return and accompanying schedules and'
+        [Text] 'statements, and to the best of my knowledge and belief, they are true, correct, and accurately list all'
+        [Text] 'amounts and sources of income I received during the year. Declaration of preparer (other than taxpayer)'
+        [Text] 'is based on all information of which preparer has any knowledge.'
+        [Text] 'If the IRS sent you'
+        [Text] 'an Identity Protection'
+        [Text] 'Your Signature'
+        [Text] 'Date'
+        [Text] 'Your Occupation'
+        [Text] 'PIN, enter it here '
+          [Text] 'Spouse's Signature. If joint, both must sign.' #staticBlock
+        [Text] 'Date'
+        [Text] 'Spouse's Occupation'
+        [Text] 'Daytime Phone No.'
+        [Text] 'Email Address'
+        [Text] 'Paid Preparer's Use Only'
+        [Text] 'Print/Type Preparer's name'
+        [Text] 'Preparer's  PTIN'
+        [Text] 'Check if:'
+        [Text] 'Preparer's Signature'
+        [Text] 'Date'
+        [Text] 'Self-employed'
+        [Text] 'Firm's Adress (or yours if self-employed) '
+        [Text] 'Firm's EIN.'
+        [Text] 'Phone No.'
+        [Text] 'State'
+        [Text] 'ZIP Code'
+        [Text] 'Filing Address Information'
+        [Text] 'Send Form 1040 to: '
+        [CheckBox] '' #PPDY[0] (disabled)
+        [CheckBox] '' #PPDN[0] (disabled)
+          [Edit] '' #DESNAM[0]
+          [Edit] '' #DESPH[0]
+          [Edit] '' #DESPIN[0]
+          [Edit] '' #PSH[0]
+          [Edit] '' #OCC[0] =Software Tester
+          [Edit] '' #IDTHEFT[0]
+          [Edit] '' #SURSP[0]
+          [Edit] '' #SOCC[0] =Teacher
+          [Edit] '' #SPTHEFT[0]
+          [Edit] '' #DTPHO[0]
+          [Edit] '' #TEMAIL[0]
+          [Edit] '' #XNP[0]
+          [Edit] '' #PNAME[0]
+          [Edit] '' #PSSN[0]
+        [CheckBox] '' #PSEX[0] (disabled)
+          [Edit] '' #PREPSIGN[0]
+          [Edit] '' #PDAT[0]
+          [Edit] '' #PNAM[0] =  Self-Prepared
+          [Edit] '' #PEIN[0]
+          [Edit] '' #PPHO[0]
+          [Edit] '' #PADD[0]
+          [Edit] '' #PCIT[0]
+          [Edit] '' #PSTA[0]
+          [Edit] '' #PZIP[0]
+          [Edit] '' #FADDR1[0] =Department of the Treasury
+          [Edit] '' #FADDR2[0] =Internal Revenue Service
+          [Edit] '' #FADDR3[0] =Kansas City, MO 64999-0002
+          [Edit] '' #FADDR4[0]
+          [Edit] '' #FADDR5[0]
+          [Edit] '' #FADDR6[0]
+          [Edit] '' #PYEIAC[0]
+          [Edit] '' #PYEIACA[0]
+        [ScrollBar] '' #VerticalScrollBar
+          [Button] '' #PART_LineUpButton (disabled)
+          [Button] '' #PageUp (disabled)
+          [Button] '' #PageDown (disabled)
+          [Button] '' #PART_LineDownButton (disabled)
+    [Button] 'Continue'
+      [Text] 'Continue'
+    [Custom] '' #sideBar
+  [Text] '80%'
+  [Text] 'Help Others'
+    [Hyperlink] 'Help Others' #helpothers
+  [Image] '' #new
+  [Text] ' '
+    [Hyperlink] ' ' #upgradeTurboTaxHyperlink
+      [Image] '' #upgradeTurboTaxImage
+      [Text] 'Upgrade TurboTax' #upgradeTurboTaxText
+  [Custom] '' #SizeablePanel
+    [Thumb] '' #PART_Thumb
+    [Custom] '' #OptionalForm
+        [Text] 'Federal Information Worksheet'
+        [Text] '2024'
+          [Text] 'G Keep for your records' #staticBlock
+          [Text] 'Part I ' Personal Information' #staticBlock
+          [Text] 'Information in Part I is completely calculated from entries on Personal Information Worksheets.' #staticBlock
+          [Text] 'QuickZoom to enter taxpayer and spouse information on the applicable Personal Worksheet' #staticBlock
+          [Text] '. . . . '
+          [Text] 'G'
+        [Button] 'QuickZoom' #QuickZoom
+          [Text] 'QuickZoom'
+        [Text] 'Taxpayer:'
+        [Text] 'Spouse:'
+        [Text] 'First name. . . . . . . . . . . . . '
+        [Text] 'First name. . . . . . . . . . . . . '
+        [Text] 'Middle initial. . . . . . . . . . . '
+        [Text] 'Suffix. . . . . . . . . . . '
+        [Text] 'Middle initial. . . . . . . . . . . '
+        [Text] 'Suffix. . . . . . . . . . . '
+        [Text] 'Last name. . . . . . . . . . . . . '
+        [Text] 'Last name. . . . . . . . . . . . . '
+        [Text] 'Social security no.. . . . . '
+        [Text] 'Social security no.. . . . . '
+        [Text] 'Occupation. . . . . . . . . . . . . '
+        [Text] 'Occupation. . . . . . . . . . . . . '
+        [Text] 'Date of birth. . . . . . . . . . . '
+        [Text] '(mm/dd/yyyy)'
+        [Text] 'Date of birth. . . . . . . . . . . '
+        [Text] '(mm/dd/yyyy)'
+        [Text] 'Age as of 1-1-2025. . . . '
+        [Text] 'Age as of 1-1-2025. . . . '
+        [Text] 'Daytime phone. . . . . . . . '
+        [Text] 'Ext'
+        [Text] 'Daytime phone. . . . . . . . '
+        [Text] 'Ext'
+        [Text] 'Legally blind. . . . . . . . . . . '
+        [Text] 'Legally blind. . . . . . . . . . . '
+        [Text] 'Date of death. . . . . . . . . . '
+        [Text] 'Date of death. . . . . . . . . . '
+        [Text] 'Dependent of Someone Else:'
+        [Text] 'Dependent of Someone Else:'
+          [Text] 'Can taxpayer be claimed as dependent of another' #staticBlock
+          [Text] 'Can spouse be claimed as dependent of another' #staticBlock
+        [Text] 'person (such as parent)?. . . '
+        [Text] 'Yes'
+        [Text] 'No'
+        [Text] 'person (such as parent)?. . . '
+        [Text] 'Yes'
+        [Text] 'No'
+          [Text] 'If yes, was taxpayer claimed as dependent on that' #staticBlock
+          [Text] 'If yes, was spouse claimed as dependent on that' #staticBlock
+        [Text] 'person's return?. . . . . . . . . . . . . '
+        [Text] 'Yes'
+        [Text] 'No'
+        [Text] 'person's return?. . . . . . . . . . . . . '
+        [Text] 'Yes'
+        [Text] 'No'
+        [Text] 'Credit for the Elderly or Disabled (Schedule R):'
+        [Text] 'Credit for the Elderly or Disabled (Schedule R):'
+        [Text] 'Is the taxpayer retired on total '
+        [Text] 'Is the spouse retired on total '
+          [Text] 'and permanent disability?' #staticBlock
+          [Text] '. . . '
+        [Text] 'Yes'
+        [Text] 'No'
+          [Text] 'and permanent disability?' #staticBlock
+          [Text] '. . . '
+        [Text] 'Yes'
+        [Text] 'No'
+        [Text] 'Presidential Election Campaign Fund:'
+        [Text] 'Presidential Election Campaign Fund:'
+        [Text] 'Does the taxpayer want $3 to go to the Presidential'
+        [Text] 'Does the spouse want $3 to go to the Presidential'
+        [Text] 'Election Campaign Fund?. . . '
+        [Text] 'Yes'
+        [Text] 'No'
+        [Text] 'Election Campaign Fund?. . . '
+        [Text] 'Yes'
+        [Text] 'No'
+          [Text] 'Part II ' Address and Federal Filing Status (enter information in this section)' #staticBlock
+        [Text] 'US Address:'
+        [Text] 'Address. . . . . . . . . . . . . '
+        [Text] 'Apt no.. . . '
+        [Text] 'City. . . . . . . . . . . . . . . . . . '
+        [Text] 'State. . . . . . . . '
+        [Text] 'ZIP code. . . . . . '
+        [Text] 'Foreign Address:'
+        [Text] 'Check this box to use foreign address. . . . . . '
+        [Text] 'G'
+        [Text] 'Address. . . . . . . . . . . . . '
+        [Text] 'Apt no.. . . . '
+        [Text] 'City. . . . . . . . . . . . . . . . . . '
+        [Text] 'Foreign code. . . . . . . '
+        [Text] 'Foreign country. . . . . . '
+        [Text] 'Foreign province/county'
+        [Text] 'Foreign postal code'
+        [Text] 'APO/FPO/DPO address, check if appropriate. . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'APO'
+        [Text] 'FPO'
+        [Text] 'DPO'
+        [Text] 'Home phone. . . . . . . . '
+        [Text] 'Check to print phone number on Form 1040. . . . . '
+        [Text] 'Home'
+        [Text] 'Taxpayer daytime'
+        [Text] 'Spouse daytime'
+        [Text] 'Print Form 1040-SR instead of Form 1040. . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'Yes'
+        [Text] 'No'
+          [Edit] '' #TFN[0] =Jordan
+          [Edit] '' #SFN[0] =Casey
+          [Edit] '' #TMI[0]
+          [Edit] '' #TSF[0]
+          [Edit] '' #SMI[0]
+          [Edit] '' #SSF[0]
+          [Edit] '' #TLN[0] =Sample
+          [Edit] '' #SLN[0] =Sample
+          [Edit] '' #TSSN[0] =000-00-0000
+          [Edit] '' #SSSN[0] =400-12-3457
+          [Edit] '' #TOCC[0] =Software Tester
+          [Edit] '' #SOCC[0] =Teacher
+          [Edit] '' #TDOB[0] =03/14/1985
+          [Edit] '' #SDOB[0] =07/22/1987
+          [Edit] '' #TPAGE[0] =39
+          [Edit] '' #SPAGE[0] =37
+          [Edit] '' #TPHO[0]
+          [Edit] '' #TPPE[0]
+          [Edit] '' #SPHO[0]
+          [Edit] '' #SPPE[0]
+        [CheckBox] '' #BLXT[0] (disabled)
+        [CheckBox] '' #BLXS[0] (disabled)
+          [Edit] '' #TDOD[0]
+          [Edit] '' #SDOD[0]
+        [CheckBox] '' #DXT[0] (disabled)
+        [CheckBox] '' #DXTN[0] (disabled)
+        [CheckBox] '' #DXS[0] (disabled)
+        [CheckBox] '' #DXSN[0] (disabled)
+        [CheckBox] '' #DEPTY[0] (disabled)
+        [CheckBox] '' #DEPTN[0] (disabled)
+        [CheckBox] '' #DEPSY[0] (disabled)
+        [CheckBox] '' #DEPSN[0] (disabled)
+        [CheckBox] '' #DSTY[0]
+        [CheckBox] '' #DSTN[0]
+        [CheckBox] '' #DSSY[0]
+        [CheckBox] '' #DSSN[0]
+        [CheckBox] '' #PECY[0] (disabled)
+        [CheckBox] '' #PECN[0] (disabled)
+        [CheckBox] '' #SECY[0] (disabled)
+        [CheckBox] '' #SECN[0] (disabled)
+          [Edit] '' #USADDR[0] =100 Main St
+          [Edit] '' #USAPT[0]
+          [Edit] '' #USCITY[0] =Springfield
+          [Edit] '' #ST[0] =IL
+          [Edit] '' #ZIP[0] =62701
+        [CheckBox] '' #USEFCADD[0]
+          [Edit] '' #FCADDR[0]
+          [Edit] '' #FCAPT[0]
+          [Edit] '' #FCCITY[0]
+        [ComboBox] '' #FCCODE[0]
+          [Edit] '' #COUNTRY[0]
+          [Edit] '' #FPC[0]
+          [Edit] '' #FZIP[0]
+        [CheckBox] '' #APOX[0]
+        [CheckBox] '' #FPOX[0]
+        [CheckBox] '' #DPOX[0]
+          [Edit] '' #HPHO[0]
+        [CheckBox] '' #DTPHO3[0]
+        [CheckBox] '' #DTPHO1[0]
+        [CheckBox] '' #DTPHO2[0]
+        [CheckBox] '' #SRY[0]
+        [CheckBox] '' #SRN[0]
+        [Text] 'TurboTax for the Web Filing Status Smart Worksheet'
+        [Text] 'Check this box to override the filing status selected thru Interview. . '
+        [Text] 'Marital Status. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'Filing Status Selected. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [CheckBox] '' #OVERFS[0]
+        [ComboBox] '' #MARITAL[0]
+        [ComboBox] '' #TTOFS[0]
+        [Text] 'Federal filing status:'
+        [Text] '1'
+        [Text] 'Single'
+        [Text] '2'
+        [Text] 'Married filing jointly'
+        [Text] '3'
+        [Text] 'Married filing separately'
+          [Text] 'Check this box if you did not live with your spouse at any time during the year' #staticBlock
+          [Text] '. . . . . . . . . . . . '
+          [Text] 'G'
+        [Text] 'Check this box if you are eligible to claim your spouse's exemption/blind/over age 65 (see Help). . . . . . . '
+        [Text] 'G'
+        [Text] '4'
+        [Text] 'Head of household'
+          [Text] 'If the 'qualifying person' is your child but not your dependent:' #staticBlock
+        [Text] 'Child's First name'
+        [Text] 'MI'
+        [Text] 'Last Name'
+        [Text] 'Suff'
+        [Text] 'Child's social security number. . . '
+        [Text] '5'
+        [Text] 'Qualifying surviving spouse'
+        [Text] 'Check the appropriate box for the year your spouse died. . . . . . . . . . . . '
+        [Text] '2022'
+        [Text] ' . . . '
+        [Text] 'G'
+        [Text] '2023'
+        [Text] ' . '
+        [Text] 'G'
+        [Text] 'Are you a dependent with a qualifying child. . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'Yes'
+        [Text] ' . . . '
+        [Text] 'G'
+        [Text] 'No'
+        [Text] ' . '
+        [Text] 'G'
+        [Text] 'Enter qualifying person's name:'
+        [Text] 'Child's First name'
+        [Text] 'MI'
+        [Text] 'Last Name'
+        [Text] 'Suff'
+        [Text] 'Child's social security number. . . '
+        [Text] 'Check if treating a nonresident or dual-status alien spouse as a U.S. resident for the entire tax'
+        [Text] 'year, enter name here:'
+        [Text] 'Check if this is the first year'
+          [Text] 'Part III ' Dependent/Earned Income Credit/Child and Dependent Care Credit Information' #staticBlock
+        [Text] 'Information in Part III is completely calculated from entries on Dependent/Nondependent Info Worksheets.'
+        [CheckBox] '' #FS1[0]
+        [CheckBox] '' #FS2[0]
+        [CheckBox] '' #FS3[0]
+        [CheckBox] '' #NOTX[0]
+        [CheckBox] '' #SPEX[0] (disabled)
+        [CheckBox] '' #FS4[0]
+          [Edit] '' #CNAM[0]
+          [Edit] '' #CMI[0]
+          [Edit] '' #CLNAM[0]
+          [Edit] '' #CSUFF[0]
+          [Edit] '' #CSSN[0]
+        [CheckBox] '' #FS5[0]
+        [CheckBox] '' #YX1[0]
+        [CheckBox] '' #YX2[0]
+        [CheckBox] '' #QWYES[0]
+        [CheckBox] '' #QWNO[0]
+          [Edit] '' #QWNAM[0]
+          [Edit] '' #QWMI[0]
+          [Edit] '' #QWLNAM[0]
+          [Edit] '' #QWSUFF[0]
+          [Edit] '' #QWSSN[0]
+        [CheckBox] '' #NRASPIND[0]
+          [Edit] '' #NRASPNM[0]
+        [CheckBox] '' #FIRSTYRELECT[0]
+        [Button] 'QuickZoom' #QuickZoom
+          [Text] 'QuickZoom'
+          [Text] 'QuickZoom to enter Part III information on the Dependent Information Worksheet' #staticBlock
+          [Text] '. . . . . . . . . . . . . . . . '
+          [Text] 'G'
+        [Button] 'QuickZoom' #QuickZoom
+          [Text] 'QuickZoom'
+        [Text] 'Date of birth'
+        [Text] 'Date of death'
+        [Text] 'Not'
+        [Text] '(mm/dd/yyyy)'
+        [Text] '(mm/dd/yyyy)'
+        [Text] 'qual'
+        [Text] 'credit'
+        [Text] 'Qualified'
+        [Text] 'other'
+        [Text] 'Not'
+        [Text] 'child/dep'
+        [Text] 'Lived'
+        [Text] 'dep'
+        [Text] 'C'
+        [Text] 'qual'
+        [Text] 'care exps'
+        [Text] 'with'
+        [Text] 'Educ'
+        [Text] '*'
+        [Text] 'Social security'
+        [Text] 'o'
+        [Text] 'for'
+        [Text] 'incurred'
+        [Text] 'E'
+        [Text] 'taxpyr'
+        [Text] 'Tuitn'
+        [Text] 'D'
+        [Text] 'First name'
+        [Text] 'MI'
+        [Text] 'number'
+        [Text] 'd'
+        [Text] 'child'
+        [Text] 'and paid'
+        [Text] 'I'
+        [Text] 'in'
+        [Text] 'and'
+        [Text] 'e'
+        [Text] 'Last name'
+        [Text] 'Suff'
+        [Text] 'Relationship'
+        [Text] 'Age'
+        [Text] 'e'
+        [Text] 'tax cr'
+        [Text] '2024'
+        [Text] 'C'
+        [Text] 'U.S.'
+        [Text] 'Fees'
+        [Text] 'p'
+        [Text] '* "Yes" - qualifies as dependent, "No" - does not qualify as dependent'
+          [List] '' #myListBox
+            [ListItem] 'System.Windows.Controls.Canvas'
+                [Edit] '' #L6C1A[1] =Riley
+                [Edit] '' #L6C1B[1]
+                [Edit] '' #L6C3[1] =400-12-3458
+                [Edit] '' #CHDOB[1] =05/05/2016
+                [Edit] '' #CHDOD[1]
+              [CheckBox] '' #A48[1] (disabled)
+              [CheckBox] '' #COTHDEPX[1] (disabled)
+                [Edit] '' #L6C1C[1] =Sample
+                [Edit] '' #L6C1D[1]
+                [Edit] '' #L6C4[1] =Son
+                [Edit] '' #DEPAGE[1] =8
+                [Edit] '' #CD[1] =L
+              [CheckBox] '' #TCR[1] (disabled)
+              [CheckBox] '' #TCRX[1] (disabled)
+                [Edit] '' #CCEXP[1] =4,000.
+                [Edit] '' #EIC[1] =E
+                [Edit] '' #L6C5[1] =12
+              [CheckBox] '' #A703[1] (disabled)
+              [CheckBox] '' #EDUX[1] (disabled)
+                [Edit] '' #NDEP[1] =Yes
+            [ListItem] 'System.Windows.Controls.Canvas'
+                [Edit] '' #L6C1A[2]
+                [Edit] '' #L6C1B[2]
+                [Edit] '' #L6C3[2]
+                [Edit] '' #CHDOB[2]
+                [Edit] '' #CHDOD[2]
+              [CheckBox] '' #A48[2] (disabled)
+              [CheckBox] '' #COTHDEPX[2] (disabled)
+                [Edit] '' #L6C1C[2]
+                [Edit] '' #L6C1D[2]
+                [Edit] '' #L6C4[2]
+                [Edit] '' #DEPAGE[2]
+                [Edit] '' #CD[2]
+              [CheckBox] '' #TCR[2] (disabled)
+              [CheckBox] '' #TCRX[2] (disabled)
+                [Edit] '' #CCEXP[2]
+                [Edit] '' #EIC[2]
+                [Edit] '' #L6C5[2]
+              [CheckBox] '' #A703[2] (disabled)
+              [CheckBox] '' #EDUX[2] (disabled)
+                [Edit] '' #NDEP[2]
+          [Text] 'If you are eligible for the child tax credit or the earned income credit QuickZoom here' #staticBlock
+          [Text] 'to review and/or enter amounts not considered earned income (see Help)' #staticBlock
+          [Text] '. . . . . . . . . . . . . . . . . . . . . '
+          [Text] 'G'
+        [Button] 'QuickZoom' #QuickZoom
+          [Text] 'QuickZoom'
+          [Text] 'Page 2 ' #staticBlock
+          [Text] 'Part IV ' Earned Income Credit Information (you must answer these questions to calculate EIC)' #staticBlock
+        [Text] 'Is the taxpayer or spouse a qualifying child for EIC for another person?. . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Yes'
+        [Text] 'No'
+        [Text] 'Was the taxpayer's (and spouse's if married filing jointly) home in the United States'
+        [Text] 'for more than half of 2024?. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Yes'
+        [Text] 'No'
+        [Text] 'If the SSN of the taxpayer, or spouse if married filing jointly, was obtained to'
+        [Text] 'get a federally funded benefit, such as Medicaid, and the Social Security card'
+          [Text] 'contains the legend Not Valid for Employment, check this box (see Help)' #staticBlock
+          [Text] '. . . . . . . . . '
+          [Text] 'G'
+          [Text] 'Check if you are filing head of household and your spouse is a nonresident alien' #staticBlock
+          [Text] 'and you lived with your spouse during the last six months of 2024' #staticBlock
+          [Text] '. . . . . . . . . . . . . . . . . '
+          [Text] 'G'
+        [Text] 'Check if you were notified by the IRS that EIC cannot be claimed in 2024 or'
+        [Text] 'if you are ineligible to claim the EIC in 2024 for any other reason. . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+          [Text] 'Part V ' Direct Deposit or Direct Debit Information (not applicable for Form 9465)' #staticBlock
+          [Text] 'Do you want to elect direct deposit of any federal tax refund?' #staticBlock
+          [Text] '. . . . . . . . . . . . . . . . . . . . . '
+          [Text] 'G'
+        [Text] 'Yes'
+        [Text] 'No'
+          [Text] 'Do you want to elect direct debit of federal balance due (Electronic filing only)?' #staticBlock
+          [Text] '. . . '
+          [Text] 'G'
+        [Text] 'Yes'
+        [Text] 'No'
+        [Text] 'If you selected either of the options above, fill out the information below:'
+        [Text] 'Name of Financial Institution (optional). . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Check the appropriate box. . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Checking'
+        [Text] 'Savings'
+        [Text] 'Routing number. . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Account number. . . . . . . . . . . . '
+        [Text] 'G'
+          [Edit] '' #NAM2[0] =Jordan & Casey Sample
+          [Edit] '' #SSN2[0] =000-00-0000
+        [CheckBox] '' #AY[0]
+        [CheckBox] '' #AN[0]
+        [CheckBox] '' #BY[0]
+        [CheckBox] '' #BN[0]
+        [CheckBox] '' #DY[0]
+        [CheckBox] '' #CY[0]
+        [CheckBox] '' #NOEICX[0]
+        [CheckBox] '' #DDY[0]
+        [CheckBox] '' #DDN[0]
+        [CheckBox] '' #EFWYES[0]
+        [CheckBox] '' #EFWNO[0]
+          [Edit] '' #BANKNAME[0]
+        [CheckBox] '' #TACK[0]
+        [CheckBox] '' #TASV[0]
+          [Edit] '' #RTN[0]
+          [Edit] '' #DAN[0]
+          [Text] 'QuickZoom to Form 8888 to enter additional accounts' #staticBlock
+          [Text] '. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+          [Text] 'G'
+          [Text] 'QuickZoom to Form 9465 to enter information for the Installment Agreement Request' #staticBlock
+          [Text] '. . . . . . . . . '
+          [Text] 'G'
+        [Button] 'QuickZoom' #QuickZoom
+          [Text] 'QuickZoom'
+        [Button] 'QuickZoom' #QuickZoom
+          [Text] 'QuickZoom'
+        [Text] 'Enter the following information only if you are requesting direct debit of balance due:'
+        [Text] 'Enter the payment date to withdraw from the account above. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Balance-due amount from this return. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Amended Returns:'
+          [Text] 'Do you want to elect direct debit of federal amended balance due (e-File only)?' #staticBlock
+          [Text] '. . '
+          [Text] 'G'
+        [Text] 'Yes'
+        [Text] 'No'
+        [Text] 'Enter the payment date to withdraw from the account above. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+          [Text] 'Balance-due amount from this amended return' #staticBlock
+          [Text] '. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+          [Text] 'G'
+          [Text] 'Part VI ' Additional Information for Your Federal Return' #staticBlock
+        [Text] 'Standard Deduction/Itemized Deductions:'
+        [Text] 'Check this box if you are itemizing for state tax or other purposes even though your itemized'
+        [Text] 'deductions are less than your standard deduction. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Check this box if you are married filing separately and your spouse itemized deductions . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Check this box to take the standard deduction even if less than itemized deductions. . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Real Estate Professionals:'
+        [Text] 'Do you or your spouse qualify for the special passive activity rules for'
+        [Text] 'taxpayers in real property business? (see Help). . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Yes'
+        [Text] 'No'
+        [Text] 'Credit for Qualified Retirement Savings Contributions (Form 8880):'
+        [Text] 'Is the taxpayer a full-time student?. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Yes'
+        [Text] 'No'
+        [Text] 'Is the spouse a full-time student?. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Yes'
+        [Text] 'No'
+        [Text] 'American Opportunity and Lifetime Learning Credit  (Form 8863)'
+        [Text] 'For 2024, were you (or your spouse if married) a nonresident alien for any part '
+        [Text] 'of the year, and did not elect to be treated as a resident alien?. . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Yes'
+        [Text] 'No'
+        [Text] 'Foreign Tax Credit (Form 1116):'
+        [Text] 'Check this box to file Form 1116 even if you're not required to file Form 1116. . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Resident country. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Excludable Income  from Am. Samoa, Guam, Commonwealth of the N.  Mariana Islands, or Puerto Rico:'
+        [Text] 'Excludable income of bona fide residents of American Samoa, Guam, or the'
+        [Text] 'Commonwealth of the Northern Mariana Islands. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'Excludable income from Puerto Rico. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'Dual Status Alien Return:'
+        [Text] 'Check this box if you are a dual-status alien. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Check this box to print 'DUAL-STATUS STATEMENT' on Form 1040. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Third Party Designee:'
+          [Text] 'Caution: Review transferred information for accuracy.' #staticBlock
+        [Text] 'Do you want to allow another person to discuss this return with the IRS?. . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Yes'
+        [Text] 'No'
+        [Text] 'If Yes, complete the following: '
+        [Text] 'Third party designee name. . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Third party designee phone number. . . . . . '
+        [Text] 'G'
+        [Text] 'Personal Identification number (enter any 5 numbers). . . . . '
+        [Text] 'G'
+        [Text] 'Disaster Tax Relief:'
+        [Text] 'Check if you took a disaster distribution in a prior year. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+          [Edit] '' #DEBITDT[0]
+          [Edit] '' #BDA[0]
+        [CheckBox] '' #EFWAYES[0]
+        [CheckBox] '' #EFWANO[0]
+          [Edit] '' #AMDSDT[0]
+          [Edit] '' #AMDBDA[0]
+        [CheckBox] '' #IEX[0]
+        [CheckBox] '' #SIX[0]
+        [CheckBox] '' #STDX[0]
+        [CheckBox] '' #RPB[0]
+        [CheckBox] '' #RPN[0]
+        [CheckBox] '' #TPSTUDY[0]
+        [CheckBox] '' #TPSTUDN[0]
+        [CheckBox] '' #SPSTUDY[0]
+        [CheckBox] '' #SPSTUDN[0]
+        [CheckBox] '' #NRALIENY[0]
+        [CheckBox] '' #NRALIENN[0]
+        [CheckBox] '' #FTCX[0]
+          [Edit] '' #RESI[0] =USA
+          [Edit] '' #SAMOA[0]
+          [Edit] '' #PR[0]
+        [CheckBox] '' #PDR[0]
+        [CheckBox] '' #PDS[0]
+        [CheckBox] '' #PPDY[0]
+        [CheckBox] '' #PPDN[0]
+          [Edit] '' #DESNAM[0]
+          [Edit] '' #DESPH[0]
+          [Edit] '' #DESPIN[0]
+        [CheckBox] '' #VCHURRI[0] (disabled)
+          [Text] 'Page 3 ' #staticBlock
+          [Text] 'Part VI ' Additional Information for Your Federal Return ' Continued' #staticBlock
+        [Text] 'Personal Representative for deceased taxpayers:'
+        [Text] 'Name of personal representative required for E-filed'
+        [Text] 'returns when Form 1310 is not filed or it is not the'
+        [Text] 'surviving spouse. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+          [Text] 'Part VII ' State Filing Information' #staticBlock
+          [Edit] '' #NAM3[0] =Jordan & Casey Sample
+          [Edit] '' #SSN3[0] =000-00-0000
+          [Edit] '' #PERSREP[0]
+          [Text] 'QuickZoom to enter taxpayer and spouse state of residence on the applicable Personal' #staticBlock
+        [Text] 'Information Worksheet. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Button] 'QuickZoom' #QuickZoom
+          [Text] 'QuickZoom'
+        [Text] 'Identity Protection PIN:'
+        [Text] 'If the IRS sent the taxpayer an Identity Protection PIN, enter it here. . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'If the IRS sent the spouse an Identity Protection PIN, enter it here. . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Taxpayer:'
+        [Text] 'Enter the taxpayer's state of residence as of December 31, 2024. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Check the appropriate box:'
+        [Text] 'Taxpayer is a resident of the state above for the entire year. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Taxpayer is a resident of the state above for only part of year. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Date the taxpayer established residence in state above. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'In which state (or foreign country) did the taxpayer reside before this change?. . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Spouse:'
+        [Text] 'Enter the spouse's state of residence as of December 31, 2024. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Check the appropriate box:'
+        [Text] 'Spouse is a resident of the state above for the entire year. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Spouse is a resident of the state above for only part of year. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Date the spouse established residence in state above. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'In which state (or foreign country) did the spouse reside before this change?. . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Nonresident states:'
+        [Text] 'Nonresident State(s)'
+        [Text] 'Taxpayer/Spouse/Joint'
+        [Text] 'Check this box if you are in a Registered Domestic Partnership or a civil union. . . . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'If you checked the box on the line above, also check the appropriate box below:'
+        [Text] 'Check if this is your individual federal return you are filing with the IRS. . . . . . . . . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+        [Text] 'Check if this is the joint return created to file joint state tax return (see Help). . . . . . . . . . . . . . . . . . '
+        [Text] 'G'
+          [Edit] '' #IDTHEFT[0]
+          [Edit] '' #SIDTHEFT[0]
+          [Edit] '' #RSTA[0] =IL
+        [CheckBox] '' #RESF[0] (disabled)
+        [CheckBox] '' #RESP[0] (disabled)
+          [Edit] '' #RESDATE[0]
+          [Edit] '' #WHERE[0]
+          [Edit] '' #SRSTA[0] =IL
+        [CheckBox] '' #SRESF[0] (disabled)
+        [CheckBox] '' #SRESP[0] (disabled)
+          [Edit] '' #SRESDATE[0]
+          [Edit] '' #SWHERE[0]
+        [CheckBox] '' #RDP[0]
+        [CheckBox] '' #FEDRTN[0]
+        [CheckBox] '' #JTSTRTN[0]
+          [List] '' #myListBox
+            [ListItem] 'System.Windows.Controls.Canvas'
+              [ComboBox] '' #NONRESST[1]
+              [ComboBox] '' #TPFLAG[1]
+          [Text] 'QuickZoom to Form 1040' #staticBlock
+          [Text] '. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . '
+          [Text] 'G'
+        [Button] 'QuickZoom' #QuickZoom
+          [Text] 'QuickZoom'
+          [Text] 'Page 4' #staticBlock
+        [Text] 'Use the PIN that you signed last year's tax return with.'
+        [Text] 'Taxpayer's Prior year PIN. . . . '
+        [Text] 'Spouse's Prior year PIN. . . . . . '
+        [Text] 'These signature PINs are chosen by the taxpayer and spouse and used for e-filing your tax return'
+        [Text] 'Taxpayer's PIN used to sign the return. . . . . . . . '
+        [Text] 'Spouse's PIN used to sign the return. . . . . . . . . . '
+        [Text] 'Taxpayer:'
+        [Text] 'Drivers license or state ID number'
+        [Text] 'Issued by what state'
+        [Text] 'License or ID'
+        [Text] 'license. . . . . '
+        [Text] 'G'
+        [Text] 'ID. . . . . '
+        [Text] 'G'
+        [Text] 'neither. . . . . '
+        [Text] 'G'
+        [Text] 'decline. . . . '
+        [Text] 'G'
+        [Text] 'Spouse'
+        [Text] 'Drivers license or state ID number'
+        [Text] 'Issued by what state'
+        [Text] 'License or ID'
+        [Text] 'license. . . . . '
+        [Text] 'G'
+        [Text] 'ID. . . . . '
+        [Text] 'G'
+        [Text] 'neither. . . . . '
+        [Text] 'G'
+        [Text] 'decline. . . . '
+        [Text] 'G'
+          [Edit] '' #NAM4[0] =Jordan & Casey Sample
+          [Edit] '' #SSN4[0] =000-00-0000
+          [Edit] '' #PTPYPIN[0]
+          [Edit] '' #STPYPIN[0]
+          [Edit] '' #PTPIN[0]
+          [Edit] '' #STPIN[0]
+          [Edit] '' #TPDLNBR[0]
+          [Edit] '' #TPDLST[0]
+        [CheckBox] '' #TPDLL[0]
+        [CheckBox] '' #TPDLID[0]
+        [CheckBox] '' #TPDLNO[0]
+        [CheckBox] '' #TDLIDDCL[0]
+          [Edit] '' #TDOCIDDE[0]
+          [Edit] '' #TPDOCID[0]
+          [Edit] '' #SPDLNBR[0]
+          [Edit] '' #SPDLST[0]
+        [CheckBox] '' #SPDLL[0]
+        [CheckBox] '' #SPDLID[0]
+        [CheckBox] '' #SPDLNO[0]
+        [CheckBox] '' #SDLIDDCL[0]
+          [Edit] '' #SDOCIDDE[0]
+          [Edit] '' #SPDOCID[0]
+        [ScrollBar] '' #VerticalScrollBar
+          [Button] '' #PART_LineUpButton (disabled)
+          [Button] '' #PageUp (disabled)
+          [Button] '' #PageDown (disabled)
+          [Button] '' #PART_LineDownButton (disabled)
+        [ScrollBar] '' #HorizontalScrollBar
+          [Button] '' #PART_LineLeftButton (disabled)
+          [Button] '' #PART_LineRightButton (disabled)

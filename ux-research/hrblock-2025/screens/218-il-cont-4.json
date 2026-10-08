@@ -1,0 +1,78 @@
+{
+ "n": 218,
+ "slug": "il-cont-4",
+ "capturedAt": "2026-10-08T19:25:37.696Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [],
+ "topicLinks": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Household Employee Tax",
+ "headings": [],
+ "text": "Household Employee Tax Write the amount of Illinois Income Tax you withheld from a household employee. You may no longer use Form UI-WIT to report Illinois Income Tax withheld from your household employee. See Publication 121 for details on how to figure the amount to withhold and report. Do not report household employee withholding here if you have already reported or paid this amount using Form IL-941, Illinois Withholding Income Tax Return, or Form IL-501, Payment Coupon. Household employment tax",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "search",
+   "name": "79.131064",
+   "id": "",
+   "label": "Household employment tax",
+   "value": "",
+   "maxlength": "10"
+  }
+ ],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

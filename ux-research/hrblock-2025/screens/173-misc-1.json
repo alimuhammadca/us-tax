@@ -1,0 +1,301 @@
+{
+ "n": 173,
+ "slug": "misc-1",
+ "capturedAt": "2026-10-08T19:05:03.766Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "WrapUp",
+  "F1040X"
+ ],
+ "topicLinks": [
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=WrapUp,hLearnMore_InjSpouse",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=F1040X,hLearnMore_AmendedReturn",
+   "faq": false
+  },
+  {
+   "text": "What's this?",
+   "href": "tc:TOPICHELP=WrapUp,hOUOCode",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=WrapUp,hLearnMore_LanguagePreference",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=WrapUp,hLearnMore_AltMediaPreference",
+   "faq": false
+  },
+  {
+   "text": "What if I'm not sure whether an item applies?",
+   "href": "tc:TOPICHELP=WrapUp,vNotSure",
+   "faq": true
+  },
+  {
+   "text": "Why would I designate a third-party to discuss my return with the IRS?",
+   "href": "tc:TOPICHELP=WrapUp,vTPDesignee",
+   "faq": true
+  },
+  {
+   "text": "Will the IRS always grant an extension of time to file?",
+   "href": "tc:TOPICHELP=WrapUp,vExtensionAllowed",
+   "faq": true
+  },
+  {
+   "text": "Why would I file an amended return?",
+   "href": "tc:TOPICHELP=WrapUp,vWhyAmend",
+   "faq": true
+  },
+  {
+   "text": "What if I have tax due to a section 962 election?",
+   "href": "tc:TOPICHELP=WrapUp,vSec962Election",
+   "faq": true
+  },
+  {
+   "text": "What if I have tax due relating to a section 1291 fund?",
+   "href": "tc:TOPICHELP=WrapUp,vForm8621",
+   "faq": true
+  },
+  {
+   "text": "How do I file a return as a conservator, guardian, or other fiduciary?",
+   "href": "tc:TOPICHELP=WrapUp,vFiduciaryReturn",
+   "faq": true
+  },
+  {
+   "text": "What is an Identity Protection PIN (IP PIN) and how do I get one?",
+   "href": "tc:TOPICHELP=WrapUp,vIPPin",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Tell us if any of these special situations apply.",
+ "headings": [],
+ "text": "Tell us if any of these special situations apply. I want to apply all or part of refund of $1,951 to 2026 estimated tax. I want to file an injured spouse claim to receive refund. LEARN MORE I want to designate someone other than you or Casey to discuss this return with the IRS. I want to file an extension. I want to amend a previously filed return. LEARN MORE I received an Identity Protection PIN (IP PIN) from the IRS for someone on my return. What's this? I want to request a change in language preference. LEARN MORE I want to request IRS communications in an alternative media. LEARN MORE",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.20746",
+   "id": "",
+   "label": "I want to apply all or part of refund of $1,951 to 2026 estimated tax.",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.20747",
+   "id": "",
+   "label": "I want to file an injured spouse claim to receive refund. LEARN MORE",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.20748",
+   "id": "",
+   "label": "I want to designate someone other than you or Casey to discuss this return with the IRS.",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.20749",
+   "id": "",
+   "label": "I want to file an extension.",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.20750",
+   "id": "",
+   "label": "I want to amend a previously filed return. LEARN MORE",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.73583",
+   "id": "",
+   "label": "I received an Identity Protection PIN (IP PIN) from the IRS for someone on my return. What's this?",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.229454",
+   "id": "",
+   "label": "I want to request a change in language preference. LEARN MORE",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.236249",
+   "id": "",
+   "label": "I want to request IRS communications in an alternative media. LEARN MORE",
+   "value": "",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=WrapUp,hLearnMore_InjSpouse",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=F1040X,hLearnMore_AmendedReturn",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "What's this?",
+   "img": "",
+   "href": "tc:TOPICHELP=WrapUp,hOUOCode",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=WrapUp,hLearnMore_LanguagePreference",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=WrapUp,hLearnMore_AltMediaPreference",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=WrapUp,hLearnMore_InjSpouse",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=F1040X,hLearnMore_AmendedReturn",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "What's this?",
+   "img": "",
+   "href": "tc:TOPICHELP=WrapUp,hOUOCode",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=WrapUp,hLearnMore_LanguagePreference",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=WrapUp,hLearnMore_AltMediaPreference",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

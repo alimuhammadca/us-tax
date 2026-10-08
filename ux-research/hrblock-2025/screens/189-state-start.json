@@ -1,0 +1,144 @@
+{
+ "n": 189,
+ "slug": "state-start",
+ "capturedAt": "2026-10-08T19:16:08.172Z",
+ "actionsBefore": [],
+ "actionResults": [],
+ "dialogs": [],
+ "topics": [
+  "StateLauncher",
+  "sharedtext"
+ ],
+ "topicLinks": [
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=StateLauncher,hReinstallStatesLearnMore",
+   "faq": false
+  },
+  {
+   "text": "Prepare State",
+   "href": "TC:EDIT",
+   "faq": false
+  },
+  {
+   "text": "Prepare State",
+   "href": "TC:EDIT/1",
+   "faq": false
+  },
+  {
+   "text": "What if I haven't completed my federal return?",
+   "href": "tc:TOPICHELP=sharedtext,vWhatIfIHaventCompletedMyFederalReturn",
+   "faq": true
+  },
+  {
+   "text": "If I'm filing two state returns, which should I complete first?",
+   "href": "tc:TOPICHELP=StateLauncher,vTwoStateReturns",
+   "faq": true
+  },
+  {
+   "text": "What if I purchased a state program but don't see it in the list?",
+   "href": "tc:TOPICHELP=StateLauncher,vPurchasedNotInList",
+   "faq": true
+  },
+  {
+   "text": "What if I purchased a state program but don't know how to access it?",
+   "href": "tc:TOPICHELP=StateLauncher,vPurchasedCantAccess",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Your State Returns",
+ "headings": [],
+ "text": "Your State Returns The state programs you've installed are listed below. To work on a state return, click Prepare State. To install another state program, click Buy State. When you've finished your state return(s), click Finished. I need to reinstall a state I already installed. LEARN MORE State Name Illinois Prepare State",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=StateLauncher,hReinstallStatesLearnMore",
+   "onclick": ""
+  },
+  {
+   "name": "childof269978200",
+   "id": "",
+   "cls": "multinstanceanchor",
+   "text": "Prepare State",
+   "img": "",
+   "href": "TC:EDIT/1",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "131",
+   "id": "",
+   "cls": "navbtncenter",
+   "text": "",
+   "img": "Buy State",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "58",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Finished",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "buy_state_up.gif",
+   "alt": "Buy State",
+   "title": "",
+   "name": "buy_state"
+  },
+  {
+   "src": "finished_ht.gif",
+   "alt": "Finished",
+   "title": "",
+   "name": "finished"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=StateLauncher,hReinstallStatesLearnMore",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

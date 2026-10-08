@@ -1,0 +1,66 @@
+{
+ "n": 44,
+ "slug": "income-next",
+ "capturedAt": "2026-10-08T18:17:35.584Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Your earnings from freelancing and short-term rentals.",
+ "headings": [],
+ "text": "Your earnings from freelancing and short-term rentals. Having freelance earnings has become common in large part because of the growth of digital platforms such as Uber, DoorDash, VRBO, and Airbnb, to name only a few. If you performed services, like giving rides to customers or making deliveries of prepared food or other goods, you'll receive Form 1099-NEC or one of the other 1099 forms reporting non-employee compensation or other income. The IRS considers you an independent contractor, and your earnings are considered business income. The downside of this is that you'll need to pay self-employment tax on your net profit, but the upside of being a business is that you can deduct business expenses against your gross income to reduce the amount of income subject to tax. To report your income and deductible business expenses continue through the interview and enter your business when you reach \"Your Own Business (Schedule C)\". To navigate there directly: Click the TAKE ME TO button. Select \"Your Own Business (Schedule C)\" Click the \"GO TO\" button. Add your business and we'll help you claim your income and allow you to also add your deductible business expenses to lower your taxable income. If you rented out your home or a part of your home through a digital platform you'll likely receive Form 1099-MISC or 1099-K reporting rental income. To report your income and deductible rental expenses continue through the interview and enter your short-term rental when you reach \"Rentals and Royalties\". To navigate there directly: Click the TAKE ME TO button. Select \"Rentals and Royalties\" Click the \"GO TO\" button. Add your rental activity and go through the interview. You'll be prompted for your income and expenses.",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/COBScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/cobedition.css"
+ ],
+ "errors": []
+}

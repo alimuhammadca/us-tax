@@ -1,0 +1,134 @@
+{
+ "n": 155,
+ "slug": "dc-after-confirm",
+ "capturedAt": "2026-10-08T18:59:11.425Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "FW10KB"
+ ],
+ "topicLinks": [
+  {
+   "text": "Edit",
+   "href": "TC:EDIT",
+   "faq": false
+  },
+  {
+   "text": "Delete",
+   "href": "TC:DELETE",
+   "faq": false
+  },
+  {
+   "text": "Edit",
+   "href": "TC:EDIT/1",
+   "faq": false
+  },
+  {
+   "text": "Delete",
+   "href": "TC:DELETE/1",
+   "faq": false
+  },
+  {
+   "text": "If a child turned 13 during the year, is the child a qualifying person?",
+   "href": "tc:TOPICHELP=FW10KB,vDepTurnedThirteen",
+   "faq": true
+  },
+  {
+   "text": "How do I add my care providers?",
+   "href": "tc:TOPICHELP=FW10KB,vMaxNumProviders",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Tell us about your child and dependent care providers.",
+ "headings": [],
+ "text": "Tell us about your child and dependent care providers. This screen doesn't include employers who provided care to your dependents. Provider Name Amount Paid 1st (Little Sprouts Daycare) 4,000 Edit Delete",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "contentbtn",
+   "text": "",
+   "img": "Add Provider",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "childof256728104",
+   "id": "",
+   "cls": "multinstanceanchor",
+   "text": "Edit",
+   "img": "",
+   "href": "TC:EDIT/1",
+   "onclick": ""
+  },
+  {
+   "name": "childof256730984",
+   "id": "",
+   "cls": "multinstanceanchor",
+   "text": "Delete",
+   "img": "",
+   "href": "TC:DELETE/1",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "58",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "FINISHED",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "Add_Provider_up.gif",
+   "alt": "",
+   "title": "Add Provider",
+   "name": "Add_Provider"
+  },
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "finished_ht.gif",
+   "alt": "FINISHED",
+   "title": "",
+   "name": "finished"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

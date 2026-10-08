@@ -1,0 +1,81 @@
+{
+ "n": 203,
+ "slug": "il-12",
+ "capturedAt": "2026-10-08T19:20:40.009Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "ilincsum"
+ ],
+ "topicLinks": [
+  {
+   "text": "",
+   "href": "tc:TOPICHELP=ilincsum,hAGI",
+   "faq": false
+  },
+  {
+   "text": "If I need to correct an amount on my federal return, what should I do?",
+   "href": "tc:TOPICHELP=ilincsum,vCorrectFed",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Let's Check Your Illinois Income",
+ "headings": [],
+ "text": "Let's Check Your Illinois Income This is the taxable amount of your income. The taxable amount might be different from what you entered due to our calculations. Federal adjusted gross income $ 143,050 Illinois additions 0 Illinois subtractions 0 Illinois base income 143,050 Click Take Me To to return to any of these topics.",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

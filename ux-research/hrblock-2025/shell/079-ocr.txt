@@ -1,0 +1,37 @@
+--- LEFT PANEL (meter + FAQs)
+2025
+My taxes for
+Premium
+FEDERAL REFUND
+$1,370
+LATEST CHANGE
+v Decrease of $485
+STATE REFUND
+$0
+Help Center
+FAQs
+View Details
+What if I acquired the propeny on
+more than one date?
+What if I sold employer stock
+acquired through an ESPP,
+employee stock option, or grant?
+What if I sold shares of the same
+stock, but at different times?
+What if I inherited the property?
+What if the propery was a gift?
+How can I save time if I have a lot
+--- TABS
+WELCOME
+PERSONAL INFORMATION
+FEDERAL
+INCOME
+ADJUSTMENTS
+STATE
+DEDUCTIONS
+FILE
+CREDITS
+TAXES
+MISC
+PLAN
+FINISH

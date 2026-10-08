@@ -1,0 +1,23 @@
+﻿title: Untitled - H&R Block Software 2025  size: 1552x832
+[Window/H&R Block 2025] Untitled - HR Block Software 2025
+ [Pane/Afx:00400000:b:00010003:00000006:00000000] NavigationView
+  [Pane/Button] tmtmtbtn
+  [Pane/Button] tmfmsbtn
+  [Pane/Button] tmnewbtn
+  [Pane/Button] tmsavbtn
+  [Pane/Button] tmprnbtn
+  [Pane/Button] tmchkbtn
+  [Pane/Button] tmatabtn
+  [Pane/Button] navwel
+  [Pane/Button] navfed
+  [Pane/Button] navstate
+  [Pane/Button] navfile
+  [Pane/Button] navplan
+  [Pane/Button] pngetstarted
+  [Pane/Button] pnimp
+  [Pane/Button] pnextnsn
+  [Pane/Afx:00400000:b:00010003:00000006:00000000] Viewport
+  [Pane/Button] helpbtnbsc
+  [Pane/Button] sendfedbkbtn
+  [Pane/Afx:00400000:b:00010003:00000006:00000000] WebView2EmbeddedBrowser
+   [Pane/Chrome_WidgetWin_0] (webview - skipped)

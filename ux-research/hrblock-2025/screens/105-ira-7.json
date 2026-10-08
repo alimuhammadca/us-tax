@@ -1,0 +1,100 @@
+{
+ "n": 105,
+ "slug": "ira-7",
+ "capturedAt": "2026-10-08T18:40:36.685Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "FIRA"
+ ],
+ "topicLinks": [
+  {
+   "text": "Traditional IRA deduction",
+   "href": "tc:TOPICHELP=FIRA,hTradIRADeduction",
+   "faq": false
+  },
+  {
+   "text": "Is there a Roth IRA deduction?",
+   "href": "tc:TOPICHELP=FIRA,vIsRothDeductible",
+   "faq": true
+  },
+  {
+   "text": "What if I'm a federal judge?",
+   "href": "tc:TOPICHELP=FIRA,vFederalJudge",
+   "faq": true
+  },
+  {
+   "text": "What if I'm a reservist or volunteer firefighter?",
+   "href": "tc:TOPICHELP=FIRA,vReservist",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Here are your IRA contribution results.",
+ "headings": [],
+ "text": "Here are your IRA contribution results. Jordan Casey Traditional IRA contributions 0 2,000 Traditional IRA deduction 0 2,000 Roth IRA contributions 0 0",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Traditional IRA deduction",
+   "img": "",
+   "href": "tc:TOPICHELP=FIRA,hTradIRADeduction",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

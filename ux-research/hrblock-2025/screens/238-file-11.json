@@ -1,0 +1,120 @@
+{
+ "n": 238,
+ "slug": "file-11",
+ "capturedAt": "2026-10-08T19:33:40.618Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "TaxPlan"
+ ],
+ "topicLinks": [
+  {
+   "text": "Where do I complete my estimated taxes?",
+   "href": "tc:TOPICHELP=TaxPlan,vWhereEstTax",
+   "faq": true
+  },
+  {
+   "text": "What if I need to adjust the withholding on my W-4?",
+   "href": "tc:TOPICHELP=TaxPlan,vNeedW4",
+   "faq": true
+  },
+  {
+   "text": "When is my estimated tax payment for the first quarter of 2026 due?",
+   "href": "tc:TOPICHELP=TaxPlan,vWhenEstDue",
+   "faq": true
+  },
+  {
+   "text": "What if I don't submit a W-4 to my employer?",
+   "href": "tc:TOPICHELP=TaxPlan,vNewW4",
+   "faq": true
+  },
+  {
+   "text": "When do I need to submit a new W-4 to my employer?",
+   "href": "tc:TOPICHELP=TaxPlan,vWhenW4",
+   "faq": true
+  },
+  {
+   "text": "How can I use my online IRS account?",
+   "href": "tc:TOPICHELP=TaxPlan,vIRSaccount",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Planning—Brought to You by H&R Block",
+ "headings": [],
+ "text": "Planning—Brought to You by H&R Block Now we'll help you plan for your 2026 taxes. What would you like to do? Check all that apply. Estimated Taxes (1040-ES), Wage Withholding (W-4), and Other 2026 Tax Planning. Complete your estimated taxes and payment vouchers, fill in a W-4 to get your wage withholding just right, and get your H&R Block Advantage personalized tax planning report. Retirement Planning. Optimize your retirement plan, and find out if an IRA is right for you.",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.1018",
+   "id": "",
+   "label": "Estimated Taxes (1040-ES), Wage Withholding (W-4), and Other 2026 Tax Planning. Complete your estimated taxes and payment vouchers, fill in a W-4 to get your wa",
+   "value": "on",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "92.1019",
+   "id": "",
+   "label": "Retirement Planning. Optimize your retirement plan, and find out if an IRA is right for you.",
+   "value": "on",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/COBScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/cobedition.css"
+ ],
+ "errors": []
+}

@@ -1,0 +1,87 @@
+{
+ "n": 77,
+ "slug": "1099b-next",
+ "capturedAt": "2026-10-08T18:30:05.354Z",
+ "actionsBefore": [
+  [
+   "fill",
+   "195607.195629",
+   "Brokerage XYZ"
+  ],
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "fill 195607.195629=Brokerage XYZ",
+  "next changed"
+ ],
+ "dialogs": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Tell us about the sales on this Form 1099-B.",
+ "headings": [],
+ "text": "Tell us about the sales on this Form 1099-B. Click Add Sale to tell us about another sale reported on this 1099-B. Click Edit to review a sale. Description Sale Date Gain/Loss",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "contentbtn",
+   "text": "",
+   "img": "Add Sale",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "215415",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "58",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "Add_Sale_up.gif",
+   "alt": "",
+   "title": "Add Sale",
+   "name": "Add_Sale"
+  },
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "finished_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "finished"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

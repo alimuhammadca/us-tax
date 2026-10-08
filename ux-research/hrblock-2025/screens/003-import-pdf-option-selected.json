@@ -1,0 +1,102 @@
+{
+ "n": 3,
+ "slug": "import-pdf-option-selected",
+ "capturedAt": "2026-10-08T17:59:57.267Z",
+ "actionsBefore": [
+  [
+   "radio",
+   "rb_LastYearsTaxes",
+   "92.196195"
+  ]
+ ],
+ "actionResults": [
+  "radio ok 92.196195"
+ ],
+ "dialogs": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "How do you want to import your taxes from last year?",
+ "headings": [],
+ "text": "How do you want to import your taxes from last year? I used H&R Block software or Turbo Tax software and have my data file. (recommended) Giving us your data file is the fastest, most accurate way to import your info. If you used H&R Block software, search for a file ending with the extension .T24 If you used TurboTax, the file we need ends in .tax2024 I have a PDF copy of my 2024 return.",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_LastYearsTaxes",
+   "id": "",
+   "label": "I used H&R Block software or Turbo Tax software and have my data file. (recommended)",
+   "value": "92.196194",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_LastYearsTaxes",
+   "id": "",
+   "label": "I have a PDF copy of my 2024 return.",
+   "value": "92.196195",
+   "checked": true
+  }
+ ],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "4",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Skip",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "skip_up.gif",
+   "alt": "Skip",
+   "title": "",
+   "name": "skip"
+  },
+  {
+   "src": "next_up.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/COBScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/cobedition.css"
+ ],
+ "errors": []
+}

@@ -1,0 +1,31 @@
+--- LEFT PANEL (meter + FAQs)
+2025
+My taxes for
+Premium
+FEDERAL REFUND
+STATE REFUND
+$0
+Help Center
+FAQs
+Why does it matter if this person
+will file a joint return?
+If this person filed a joint return to
+get a refund of tax withheld or
+paid, can I claim the person as a
+dependent?
+What's considered support
+provided by this person?
+--- TABS
+WELCOME
+PERSONAL INFORMATION
+FEDERAL
+INCOME
+ADJUSTMENTS
+STATE
+DEDUCTIONS
+FILE
+CREDITS
+TAXES
+MISC
+PLAN
+FINISH

@@ -1,0 +1,172 @@
+{
+ "n": 1,
+ "slug": "start",
+ "capturedAt": "2026-10-08T17:58:33.053Z",
+ "actionsBefore": [],
+ "actionResults": [],
+ "dialogs": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "My 2025 Taxes",
+ "headings": [
+  "Important Update Information",
+  "Your Saved 2025 Returns (Looking for a prior-year return?)"
+ ],
+ "text": "My 2025 Taxes Import last year's data to save time! Next expected update: None Planned See the Update Center for more information. Get more time to file. LEARN MORE Track your refund status after you've filed. How does the One Big Beautiful Bill Act impact me? Important Update Information Program last updated: Not Updated Next expected update: None Planned AI Tax Assist is now available! You can get expert answers 24/7. It's tax prep made smarter! Look for it in the top right corner of the program when you start your return. All federal forms are final. Click Update to check if there's a program update available. Make sure you're connected to the Internet to get the latest program info. We make regular updates to our program to ensure the accuracy of your return and to make sure you get your maximum refund -- guaranteed. To learn more about updates and form release dates, visit the Update Center. Your Saved 2025 Returns (Looking for a prior-year return?) File Modified Last Known Status sc_00200.T25 08/31/2026 10:30 AM Federal Not Filed Open return",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "contentbtn",
+   "text": "",
+   "img": "Start a Return",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contentbtn",
+   "text": "",
+   "img": "Update",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Update Center",
+   "img": "",
+   "href": "http://www.hrblock.com/software/2025/updates",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contentbtn",
+   "text": "",
+   "img": "File an Extension",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=Home,hExtension_LearnMore",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contentbtn",
+   "text": "",
+   "img": "Where's My Refund",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "How does the One Big Beautiful Bill Act impact me?",
+   "img": "",
+   "href": "https://www.hrblock.com/tax-reform-and-law-changes/",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Update Center",
+   "img": "",
+   "href": "http://www.hrblock.com/updates",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Looking for a prior-year return?",
+   "img": "",
+   "href": "tc:TOPICHELP=Home,hLookingForPriorYearReturn",
+   "onclick": ""
+  },
+  {
+   "name": "childof154502096",
+   "id": "",
+   "cls": "multinstanceanchor",
+   "text": "Open return",
+   "img": "",
+   "href": "tc:TOPICHELP=Home,TC:OPENRETURN/sc_00200.T25",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contentbtn",
+   "text": "",
+   "img": "Browse",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "start_a_return_up.gif",
+   "alt": "",
+   "title": "Start a Return",
+   "name": "start_a_return"
+  },
+  {
+   "src": "update_2_up.gif",
+   "alt": "",
+   "title": "Update",
+   "name": "update_2"
+  },
+  {
+   "src": "file_an_extension_up.gif",
+   "alt": "",
+   "title": "File an Extension",
+   "name": "file_an_extension"
+  },
+  {
+   "src": "wheres_my_refund_up.gif",
+   "alt": "",
+   "title": "Where's My Refund",
+   "name": "wheres_my_refund"
+  },
+  {
+   "src": "browse_up.gif",
+   "alt": "",
+   "title": "Browse",
+   "name": "browse"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=Home,hExtension_LearnMore",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicWelcomeScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/welcome.css"
+ ],
+ "errors": []
+}

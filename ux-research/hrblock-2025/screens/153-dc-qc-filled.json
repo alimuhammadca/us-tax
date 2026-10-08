@@ -1,0 +1,158 @@
+{
+ "n": 153,
+ "slug": "dc-qc-filled",
+ "capturedAt": "2026-10-08T18:58:36.089Z",
+ "actionsBefore": [
+  [
+   "check",
+   "124.32540"
+  ],
+  [
+   "fill",
+   "124.242443",
+   "4000"
+  ]
+ ],
+ "actionResults": [
+  "check ok 124.32540",
+  "fill 124.242443=4,000"
+ ],
+ "dialogs": [],
+ "topics": [
+  "FW10KB"
+ ],
+ "topicLinks": [
+  {
+   "text": "qualifying person",
+   "href": "tc:TOPICHELP=FW10KB,hqualifyingPerson",
+   "faq": false
+  },
+  {
+   "text": "Disabled",
+   "href": "tc:TOPICHELP=FW10KB,hDisabled",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=FW10KB,hCustodialParent",
+   "faq": false
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Little Sprouts Daycare cared for:",
+ "headings": [],
+ "text": "Little Sprouts Daycare cared for: You paid Little Sprouts Daycare $4,000 If this was to care for Riley Sample enter the amount you paid Little Sprouts Daycare. If Riley Sample reached age 13 during the year, only include payments made for care provided before his/her 13th birthday. Your credit is in part based on all of your qualifying persons, regardless of whether you paid care expenses for that person. Check the box in the QC column if the person listed is your qualifying person even if you paid nothing for that person's care. If Riley Sample is over 12 and Disabled, check the disabled box and enter the full amount of payments made to Little Sprouts Daycare. QC Disabled Person Cared For Amount Paid Riley Sample $ Don't check the box in the QC column or enter expenses if you're this child's noncustodial parent. LEARN MORE If you paid Little Sprouts Daycare to care for any non-dependents we'll ask about them next.",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "124.32540",
+   "id": "",
+   "label": "",
+   "value": "on",
+   "checked": true
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "124.32541",
+   "id": "",
+   "label": "Riley Sample",
+   "value": "on",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "124.242443",
+   "id": "",
+   "label": "Riley Sample",
+   "value": "4,000",
+   "maxlength": "10"
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "qualifying person",
+   "img": "",
+   "href": "tc:TOPICHELP=FW10KB,hqualifyingPerson",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Disabled",
+   "img": "",
+   "href": "tc:TOPICHELP=FW10KB,hDisabled",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=FW10KB,hCustodialParent",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_kf.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=FW10KB,hCustodialParent",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

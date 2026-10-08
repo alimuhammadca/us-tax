@@ -1,0 +1,91 @@
+{
+ "n": 54,
+ "slug": "w2-after-overtime",
+ "capturedAt": "2026-10-08T18:22:21.490Z",
+ "actionsBefore": [
+  [
+   "radio",
+   "rb_Overtime",
+   "52.261180"
+  ],
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "radio ok 52.261180",
+  "next changed"
+ ],
+ "dialogs": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Tell us if you have tips reported in Box 14 of your 2025 W-2?",
+ "headings": [],
+ "text": "Tell us if you have tips reported in Box 14 of your 2025 W-2? Yes No Note: If you are married filing separately, select No. You don't qualify for this deduction.",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_Tips",
+   "id": "",
+   "label": "Yes",
+   "value": "52.261578",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_Tips",
+   "id": "",
+   "label": "No",
+   "value": "52.261579",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

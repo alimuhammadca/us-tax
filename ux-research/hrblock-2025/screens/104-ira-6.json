@@ -1,0 +1,95 @@
+{
+ "n": 104,
+ "slug": "ira-6",
+ "capturedAt": "2026-10-08T18:40:21.850Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "FIRA"
+ ],
+ "topicLinks": [
+  {
+   "text": "Can I deduct an excess contribution in a later year?",
+   "href": "tc:TOPICHELP=FIRA,vPriorYearExcess",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Tell us if you have a prior year excess contribution to deduct",
+ "headings": [],
+ "text": "Tell us if you have a prior year excess contribution to deduct Does Casey have a prior year traditional IRA excess contribution amount that you did not withdraw that you want to apply to your current year deductible amount? Yes (This is uncommon.) No",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_SpouseTradPYExcessCont",
+   "id": "",
+   "label": "Yes (This is uncommon.)",
+   "value": "93.243756",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_SpouseTradPYExcessCont",
+   "id": "",
+   "label": "No",
+   "value": "93.243757",
+   "checked": true
+  }
+ ],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

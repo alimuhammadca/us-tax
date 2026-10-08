@@ -1,0 +1,32 @@
+--- LEFT PANEL (meter + FAQs)
+2025
+My taxes for
+Premium
+FEDERAL REFUND
+$1,370
+LATEST CHANGE
+v Decrease of $485
+STATE REFUND
+$0
+Help Center
+FAQs
+View Details
+Where do I enter sales without a
+1099-8?
+Do I enter my child's 1099-B sales
+What can I do if the import from
+my financial institution failed?
+--- TABS
+WELCOME
+PERSONAL INFORMATION
+FEDERAL
+INCOME
+ADJUSTMENTS
+STATE
+DEDUCTIONS
+FILE
+CREDITS
+TAXES
+MISC
+PLAN
+FINISH

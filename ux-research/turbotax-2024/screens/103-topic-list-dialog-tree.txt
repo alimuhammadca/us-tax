@@ -1,0 +1,128 @@
+﻿1. Personal Info
+  Start Your Return
+    You & Your Family
+2. Federal Taxes
+  Prepare Your Federal Tax Return
+    Wages & Income
+      Wages & Income
+        Your Income
+          Wage and Salary Income
+          Wage and Salary Income (Form W-2)
+          Download / Import Your Tax Info
+          Unemployment and Paid Family Leave (Form 1099-G)
+          Interest and Dividend Income
+            Interest Income
+            Interest Income (Form 1099-INT) - Add, Edit, Delete
+            Dividend Income (Form 1099-DIV)
+              Dividend Income - Add, Edit, Delete
+                Form 1099-DIV (Big Fund)
+                Check Interest and Dividend Copies
+                Check Interest and Dividend Copies
+            Other Investment Income
+          Stock, Mutual Fund, and Other Investment Sales
+          Retirement Distributions
+            Pension, Annuities, IRAs (Form 1099-R)
+            Social Security Benefits
+            Canadian Registered Retirement Plans
+          Rental Income (Schedule E)
+          Other Income
+            Tax Refunds and Other Government Payments
+              State and Local Tax Refunds
+              Government Payments (Form 1099-G)
+            1099-NEC
+            1099-MISC
+            1099-K
+          Business Income and Expenses
+            Business Income (Schedule C)
+            Schedules K-1 / Schedule Q
+            Farm (Schedule F)
+            Business Taxes
+            Less Common Business Situations
+          Less Common Income
+    Deductions & Credits
+      Deductions & Credits
+        Getting Started With Your Deductions & Credits
+        Your Deductions and Credits
+          Your Home
+            Mortgage Interest
+            Property Taxes
+            Residential Energy Credits
+            Less Common Home Credits
+              Mortgage Interest Credit
+              Homebuyer Credit
+              DC Credit Carryover
+          You and Your Family
+            Child / Dependent Care Credit
+            Earned Income Credit
+            Less Common Family Credits
+              Adoption Expenses
+              Child and Other Dependents Tax Credit
+          Charitable Contributions
+          Cars and Personal Property
+            Car Registration Fees
+            Personal Property Taxes
+            Energy-Efficient Cars
+            Recharging Stations for Energy-Efficient Cars
+          Education
+            Coverdell ESA (Form 1099-Q)
+            Education Scholarships and Expenses
+              Education Expenses / Credits
+              Education Assistance
+                Scholarships and Other Education Assistance
+            Student Loan Interest
+          Covid related credits
+            Employer credit for qualified leave to employees
+              Employer credit for qualified leave to employees
+          Medical
+            Archer MSAs / Health Savings Accounts (Form 1099-SA)
+            Medical Expenses
+          Estimates and Other Taxes Paid
+            Federal, State and Local Estimates and Income Taxes Paid
+            Sales Tax Deduction
+            Foreign Tax Credit
+            Credit for Alternative Minimum Tax Paid in a Prior Year
+          Retirement and Investments
+          Job Expenses
+          Other Deductions / Credits
+            Tax Preparation Expenses
+            Less Common Deductions and Credits
+              Moving Expenses
+              Casualties and Thefts
+                Casualty and Theft Events - Add, Edit, or Delete
+                Property - Add, Edit, or Delete
+              Elderly / Disabled Credit
+              Alimony or Spousal Support Paid
+              Nonbusiness Bad Debt Deduction
+              Legal Fees
+              Health Coverage Tax Credit
+              Miscellaneous Expenses
+              Other Tax Credits
+        Standard Deduction vs. Itemized Deductions
+        Qualified Business Income Deduction Summary
+        Deductions and Credits Summary
+    Other Tax Situations
+    Federal Review
+      Allocating your self-employed health insurance deduction
+      Charitable Cash Donation
+      Your Bottom Line
+      For Navigation from the IRA Calculator
+      Check for incomplete 1099-NEC forms
+      Complete Check
+  Smart Check
+    Smart Check
+3. State Taxes
+  Welcome to TurboTax State
+    TurboTax State Download
+4. Review
+  Review Your Return
+    Analysis
+      Smart Check
+    Audit Protection
+    Summary
+5. File
+  Filing Your Returns
+    File a Return
+      Returns to File Electronically
+    Print/Save for Your Records
+    Final Steps
+    Check E-file Status

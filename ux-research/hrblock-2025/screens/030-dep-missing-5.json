@@ -1,0 +1,116 @@
+{
+ "n": 30,
+ "slug": "dep-missing-5",
+ "capturedAt": "2026-10-08T18:12:49.670Z",
+ "actionsBefore": [
+  [
+   "fill",
+   "113.1106",
+   "400-12-3458"
+  ],
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "fill 113.1106=400-12-3458",
+  "next changed"
+ ],
+ "dialogs": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Time and months lived with should match.",
+ "headings": [],
+ "text": "Time and months lived with should match. Make changes below so the time and months your dependent lived with you match. If this amounts to more than half the year in the USA make sure that box is checked. Time lived with you No Entry This person lived with me all year or was born this year This person lived with me all year when not away at college This person lived with me more than 6 but less than 12 months This person lived with me less than 6 months This person did not live with me Months person lived with you This should match your Time Lived with you selection. This dependent lived with you in the USA more than half the year. You can't check this box if your time and months this child lived with you is less than 6 months.",
+ "inputs": [
+  {
+   "tag": "select",
+   "type": "select-one",
+   "name": "113.53252",
+   "id": "select3",
+   "label": "Time lived with you",
+   "value": "No Entry",
+   "options": [
+    "No Entry",
+    "This person lived with me all year or was born this year",
+    "This person lived with me all year when not away at college",
+    "This person lived with me more than 6 but less than 12 months",
+    "This person lived with me less than 6 months",
+    "This person did not live with me"
+   ]
+  },
+  {
+   "tag": "input",
+   "type": "search",
+   "name": "113.1145",
+   "id": "",
+   "label": "Months person lived with you",
+   "value": "",
+   "maxlength": "2"
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "113.258703",
+   "id": "",
+   "label": "This dependent lived with you in the USA more than half the year. You can't check this box if your time and months this child lived with you is less than 6 mont",
+   "value": "on",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Months person lived with you",
+   "img": "",
+   "href": "tc:TOPICHELP=Dpndt,hMonthslivedwith",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/liveaudit.css"
+ ],
+ "errors": []
+}

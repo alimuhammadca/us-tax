@@ -1,0 +1,36 @@
+--- LEFT PANEL (meter + FAQs)
+2025
+My taxes for
+Premium
+FEDERAL REFUND
+$2,262
+LATEST CHANGE
+v Decrease of $2,992
+STATE REFUND
+$0
+Help Center
+FAQs
+View Details
+Should I enter U.S. Savings Bond
+interest that's excludable
+because I paid higher education
+expenses?
+If I received interest and dividends
+in a broker's account, what should
+Do I need to include amounts
+from a Form 1099 if it has less
+than 50 cents on it?
+--- TABS
+WELCOME
+PERSONAL INFORMATION
+FEDERAL
+INCOME
+ADJUSTMENTS
+STATE
+DEDUCTIONS
+FILE
+CREDITS
+TAXES
+MISC
+PLAN
+FINISH

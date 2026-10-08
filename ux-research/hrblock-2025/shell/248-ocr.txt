@@ -1,0 +1,36 @@
+--- LEFT PANEL (meter + FAQs)
+2025
+My taxes for
+Premium
+FEDERAL REFUND
+$1,951
+LATEST CHANGE
+A Increase of $600
+STATE REFUND
+$363
+Help Center
+FAQs
+View Details
+How do I take a pic of my W-2?
+If I didn't receive a W-2 from an
+employer, can I file without it?
+If I'm a statutory employee and
+didn't receive a W-2, should I ask
+my employer for one?
+Should I include my child's W-2
+If I received combat pay from the
+armed forces in 2025, what should
+--- TABS
+WELCOME
+PERSONAL INFORMATION
+FEDERAL
+INCOME
+ADJUSTMENTS
+STATE
+DEDUCTIONS
+FILE
+CREDITS
+TAXES
+MISC
+PLAN
+FINISH

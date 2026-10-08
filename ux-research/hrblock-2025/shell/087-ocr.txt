@@ -1,0 +1,34 @@
+--- LEFT PANEL (meter + FAQs)
+2025
+My taxes for
+Premium
+FEDERAL REFUND
+$845
+LATEST CHANGE
+v Decrease of $525
+STATE REFUND
+$0
+Help Center
+FAQs
+View Details
+What if I received a 1099-K for the
+sale of non-business (personal
+use) proper-V
+What if my financial and
+bookkeeping reports already
+include my 1099-K (or 1099-MISC
+or 1099-NEC) income?
+--- TABS
+WELCOME
+PERSONAL INFORMATION
+FEDERAL
+INCOME
+ADJUSTMENTS
+STATE
+DEDUCTIONS
+FILE
+CREDITS
+TAXES
+MISC
+PLAN
+FINISH

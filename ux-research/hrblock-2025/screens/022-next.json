@@ -1,0 +1,92 @@
+{
+ "n": 22,
+ "slug": "next",
+ "capturedAt": "2026-10-08T18:07:59.371Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Help us personalize your H&R Block experience",
+ "headings": [
+  "If you agree to share your tax return details, after you file, we can provide many benefits, such as:"
+ ],
+ "text": "Help us personalize your H&R Block experience If you agree to share your tax return details, after you file, we can provide many benefits, such as: Providing personalized advice based on your tax situation Offering products or services customized to you Delivering updates regarding tax law changes Developing new and improved products and services",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "green_chat.gif",
+   "alt": "",
+   "title": "",
+   "name": ""
+  },
+  {
+   "src": "green_form.gif",
+   "alt": "",
+   "title": "",
+   "name": ""
+  },
+  {
+   "src": "green_envelope.gif",
+   "alt": "",
+   "title": "",
+   "name": ""
+  },
+  {
+   "src": "green_bell.gif",
+   "alt": "",
+   "title": "",
+   "name": ""
+  },
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

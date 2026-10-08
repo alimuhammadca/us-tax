@@ -1,0 +1,297 @@
+{
+ "n": 200,
+ "slug": "il-9",
+ "capturedAt": "2026-10-08T19:19:47.067Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "iladd"
+ ],
+ "topicLinks": [
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=iladd,hAddBackfromaLloydsPlanofOperation",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=iladd,hCollegeSavingsPool",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=iladd,hIllinoisSpecialDepreciationAddition",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=iladd,hBusinessExpenseRecapture",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=iladd,hRecapture529",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=iladd,hRecaptureCollSavPlanDed",
+   "faq": false
+  },
+  {
+   "text": "LEARN MORE",
+   "href": "tc:TOPICHELP=iladd,hOtherAdditions",
+   "faq": false
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Additions to Income",
+ "headings": [],
+ "text": "Additions to Income Check any that apply — even if you don't have a form or statement. If you're not sure, check the box and we'll work on it together. Lloyds plan of operations loss LEARN MORE Earnings distributed from Section 529 college savings LEARN MORE Special depreciation addition LEARN MORE Business expense recapture (nonresidents only) LEARN MORE Recapture of deductions for contributions to Illinois college savings plans and ABLE plans transferred to an out-of-state plan. LEARN MORE Recapture of deductions for contributions to college savings plans and ABLE plans withdrawn for nonqualified expenses or refunded. LEARN MORE Other income (uncommon) LEARN MORE",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "12790.12701",
+   "id": "",
+   "label": "Lloyds plan of operations loss LEARN MORE",
+   "value": "ON",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "12790.12700",
+   "id": "",
+   "label": "Earnings distributed from Section 529 college savings LEARN MORE",
+   "value": "ON",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "12790.12702",
+   "id": "",
+   "label": "Special depreciation addition LEARN MORE",
+   "value": "ON",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "12790.12697",
+   "id": "",
+   "label": "Business expense recapture (nonresidents only) LEARN MORE",
+   "value": "ON",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "12790.47339",
+   "id": "",
+   "label": "Recapture of deductions for contributions to Illinois college savings plans and ABLE plans transferred to an out-of-state plan. LEARN MORE",
+   "value": "ON",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "12790.71830",
+   "id": "",
+   "label": "Recapture of deductions for contributions to college savings plans and ABLE plans withdrawn for nonqualified expenses or refunded. LEARN MORE",
+   "value": "ON",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "12790.12703",
+   "id": "",
+   "label": "Other income (uncommon) LEARN MORE",
+   "value": "ON",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=iladd,hAddBackfromaLloydsPlanofOperation",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=iladd,hCollegeSavingsPool",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=iladd,hIllinoisSpecialDepreciationAddition",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=iladd,hBusinessExpenseRecapture",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=iladd,hRecapture529",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=iladd,hRecaptureCollSavPlanDed",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=iladd,hOtherAdditions",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=iladd,hAddBackfromaLloydsPlanofOperation",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=iladd,hCollegeSavingsPool",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=iladd,hIllinoisSpecialDepreciationAddition",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=iladd,hBusinessExpenseRecapture",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=iladd,hRecapture529",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=iladd,hRecaptureCollSavPlanDed",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=iladd,hOtherAdditions",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

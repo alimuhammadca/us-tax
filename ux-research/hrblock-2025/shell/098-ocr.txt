@@ -1,0 +1,37 @@
+--- LEFT PANEL (meter + FAQs)
+2025
+My taxes for
+Premium
+FEDERAL REFUND
+$845
+LATEST CHANGE
+v Decrease of $525
+STATE REFUND
+$0
+Help Center
+FAQs
+View Details
+What if I don't have the form
+listed?
+Do I need to itemize to take these
+adjustments?
+What about deemed IRAs?
+What if I used my Archer MSA
+withdrawal for medical expenses?
+What if I made my Archer MSA
+contribution before April 15, 2026?
+What about a tax refund that's
+--- TABS
+WELCOME
+PERSONAL INFORMATION
+FEDERAL
+INCOME
+ADJUSTMENTS
+STATE
+DEDUCTIONS
+FILE
+CREDITS
+TAXES
+MISC
+PLAN
+FINISH

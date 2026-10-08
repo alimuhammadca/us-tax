@@ -1,0 +1,427 @@
+{
+ "n": 81,
+ "slug": "1099b-sale-filled",
+ "capturedAt": "2026-10-08T18:31:28.796Z",
+ "actionsBefore": [
+  [
+   "fill",
+   "135.38",
+   "06/15/2025"
+  ],
+  [
+   "fill",
+   "135.39",
+   "7500"
+  ],
+  [
+   "fill",
+   "135.40",
+   "4000"
+  ],
+  [
+   "radio",
+   "rb_KGType",
+   "135.79685"
+  ],
+  [
+   "check",
+   "135.79682"
+  ]
+ ],
+ "actionResults": [
+  "fill 135.38=06/15/2025",
+  "fill 135.39=7,500",
+  "fill 135.40=4,000",
+  "radio ok 135.79685",
+  "check ok 135.79682",
+  "expanded 1"
+ ],
+ "dialogs": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Now, tell us about this sale.",
+ "headings": [],
+ "text": "Now, tell us about this sale. Do you have questions about how to enter your sale? If so, use the Capital Gains Assistant. 1a Description LEARN MORE (Ex: 200 ABC Co.) 1b Date acquired (MM/DD/YYYY) 1c Date sold or disposed (MM/DD/YYYY) 1d Proceeds 1e Cost or other basis 1f Accrued market discount 1g Wash sale loss disallowed (enter as positive #) Special type, if any No special type B - Form 1099-B received, basis incorrect E - Sale expense or option premium adjustment GO - Expired option you granted X - Expired option you bought M - Multiple transactions reported on single row N - Nominee Q - Excludable gain on sale of qualified small business stock Z - Worthless stock L - Other disallowed loss O - Other adjustment (Uncommon) Other adjustment, if any 2 Type of gain or loss Short-term Long-term Ordinary Box 2 is incorrect. 3 Proceeds are the sale of collectibles. Proceeds are from a qualified opportunity fund (QOF). Our program doesn't support reporting QOF Proceeds. 4 Federal income tax withheld 12 The basis was reported to the IRS. If Box 1e is incorrect, enter the correct basis amount here. 16 I have state income tax in Box 16. Need Help? If you're missing any records, these tools might help. (Make sure you're connected to the internet – each link will open in a new browser window.) Cost Basis Look-Up Tool Gift Basis Look-Up Tool Inheritance Basis Look-Up Tool Sale Amount Look-Up Tool",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "135.36",
+   "id": "",
+   "label": "Description LEARN MORE",
+   "value": "50 sh XYZ",
+   "maxlength": "28"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "135.37",
+   "id": "",
+   "label": "Date acquired",
+   "value": "02/01/2020",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "135.38",
+   "id": "",
+   "label": "Date sold or disposed",
+   "value": "06/15/2025",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "135.39",
+   "id": "",
+   "label": "Proceeds",
+   "value": "7,500",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "135.40",
+   "id": "",
+   "label": "Cost or other basis",
+   "value": "4,000",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "135.188545",
+   "id": "",
+   "label": "Accrued market discount",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "135.188546",
+   "id": "",
+   "label": "Wash sale loss disallowed",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "select",
+   "type": "select-one",
+   "name": "135.645",
+   "id": "select1",
+   "label": "Special type, if any",
+   "value": "No special type",
+   "options": [
+    "No special type",
+    "B - Form 1099-B received, basis incorrect",
+    "E - Sale expense or option premium adjustment",
+    "GO - Expired option you granted",
+    "X - Expired option you bought",
+    "M - Multiple transactions reported on single row",
+    "N - Nominee",
+    "Q - Excludable gain on sale of qualified small business stock",
+    "Z - Worthless stock",
+    "L - Other disallowed loss",
+    "O - Other adjustment"
+   ]
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "135.79686",
+   "id": "",
+   "label": "Other adjustment, if any",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_KGType",
+   "id": "",
+   "label": "Short-term",
+   "value": "135.79684",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_KGType",
+   "id": "",
+   "label": "Long-term",
+   "value": "135.79685",
+   "checked": true
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "135.188544",
+   "id": "",
+   "label": "Ordinary",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "135.80477",
+   "id": "",
+   "label": "Box 2 is incorrect.",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "135.188547",
+   "id": "",
+   "label": "Proceeds are the sale of collectibles.",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "135.215572",
+   "id": "",
+   "label": "Our program doesn't support reporting QOF Proceeds.",
+   "value": "",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "135.163201",
+   "id": "",
+   "label": "Federal income tax withheld",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "135.79682",
+   "id": "",
+   "label": "The basis was reported to the IRS.",
+   "value": "",
+   "checked": true
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "135.81213",
+   "id": "",
+   "label": "If Box 1e is incorrect, enter the correct basis amount here.",
+   "value": "",
+   "maxlength": "10"
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "135.163189",
+   "id": "",
+   "label": "I have state income tax in Box 16.",
+   "value": "",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "contentbtn",
+   "text": "",
+   "img": "Capital Gains Assistant",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=KG_1099B,hCrypto",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Date acquired",
+   "img": "",
+   "href": "tc:TOPICHELP=KG_1099B,hDateAcquiredDef",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Proceeds",
+   "img": "",
+   "href": "tc:TOPICHELP=KG_1099B,hTotalSalesPrice",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Cost or other basis",
+   "img": "",
+   "href": "tc:TOPICHELP=KG_1099B,hBasis",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Accrued market discount",
+   "img": "",
+   "href": "tc:TOPICHELP=KG_1099B,hMarketDiscount_NonAssistant",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Wash sale loss disallowed",
+   "img": "",
+   "href": "tc:TOPICHELP=KG_1099B,hWashSale_1099B",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Special type",
+   "img": "",
+   "href": "tc:TOPICHELP=KG_1099B,hSpecialType",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Other adjustment",
+   "img": "",
+   "href": "tc:TOPICHELP=KG_1099B,hAdjustmentAmount",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "collectibles",
+   "img": "",
+   "href": "tc:TOPICHELP=KG_1099B,hCollectible",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "QOF Proceeds",
+   "img": "",
+   "href": "tc:TOPICHELP=KG_1099B,vUnsupportedCodes",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Cost Basis Look-Up Tool",
+   "img": "",
+   "href": "http://www.hrblock.com/software/2025/premium/networthcostbasis",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Gift Basis Look-Up Tool",
+   "img": "",
+   "href": "http://www.hrblock.com/software/2025/networthgift",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Inheritance Basis Look-Up Tool",
+   "img": "",
+   "href": "http://www.hrblock.com/software/2025/networthinheritance",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Sale Amount Look-Up Tool",
+   "img": "",
+   "href": "http://www.hrblock.com/software/2025/networthsaleamount",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "capital_gains_assistant_up.gif",
+   "alt": "",
+   "title": "Capital Gains Assistant",
+   "name": "capital_gains_assistant"
+  },
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_up.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "learnmore",
+   "text": "LEARN MORE",
+   "img": "",
+   "href": "tc:TOPICHELP=KG_1099B,hCrypto",
+   "onclick": ""
+  }
+ ],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

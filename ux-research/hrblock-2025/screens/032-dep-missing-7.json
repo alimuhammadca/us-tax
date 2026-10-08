@@ -1,0 +1,87 @@
+{
+ "n": 32,
+ "slug": "dep-missing-7",
+ "capturedAt": "2026-10-08T18:13:27.813Z",
+ "actionsBefore": [
+  [
+   "select",
+   "113.1108",
+   "Son"
+  ],
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "select ok 113.1108 Son",
+  "next changed"
+ ],
+ "dialogs": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Did Riley live with you in 2025?",
+ "headings": [],
+ "text": "Did Riley live with you in 2025? We'll use this to see if Riley qualifies as your dependent. Living situation No Entry Child lived with you Child lived with other parent more than with you Other",
+ "inputs": [
+  {
+   "tag": "select",
+   "type": "select-one",
+   "name": "113.1109",
+   "id": "select1",
+   "label": "Living situation",
+   "value": "No Entry",
+   "options": [
+    "No Entry",
+    "Child lived with you",
+    "Child lived with other parent more than with you",
+    "Other"
+   ]
+  }
+ ],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

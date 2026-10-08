@@ -1,0 +1,107 @@
+{
+ "n": 232,
+ "slug": "file-5",
+ "capturedAt": "2026-10-08T19:31:44.556Z",
+ "actionsBefore": [
+  [
+   "radio",
+   "rb_dTaxProgType",
+   "92.561"
+  ],
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "radio ok 92.561",
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "FT_PrintFed"
+ ],
+ "topicLinks": [
+  {
+   "text": "What should I do if I have printing problems?",
+   "href": "tc:TOPICHELP=FT_PrintFed,vPrintingProblems",
+   "faq": true
+  },
+  {
+   "text": "Should I also print out a copy for my records?",
+   "href": "tc:TOPICHELP=FT_PrintFed,vPrintCopy",
+   "faq": true
+  },
+  {
+   "text": "Why does the form I printed say \"DRAFT FORM\" on it?",
+   "href": "tc:TOPICHELP=FT_PrintFed,vDraftForms",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Print Your Federal Return",
+ "headings": [],
+ "text": "Print Your Federal Return We'll take you through the steps to print your federal return. To print your state return(s), click Skip.",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "4",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Skip",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "skip_up.gif",
+   "alt": "Skip",
+   "title": "",
+   "name": "skip"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

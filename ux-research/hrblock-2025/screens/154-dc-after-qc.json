@@ -1,0 +1,131 @@
+{
+ "n": 154,
+ "slug": "dc-after-qc",
+ "capturedAt": "2026-10-08T18:58:50.975Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "FW10KB"
+ ],
+ "topicLinks": [
+  {
+   "text": "What if the dashes are in the wrong place in the tax ID?",
+   "href": "tc:TOPICHELP=FW10KB,vWhatIfDashesWrong",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Confirm your care provider's information.",
+ "headings": [],
+ "text": "Confirm your care provider's information. Provider's name Tax ID (NN-NNNNNNN or NNN-NN-NNNN) My provider refused to give me their EIN. My provider has moved or closed, and I can't get their EIN. This care provider was my household employee. Total paid to Little Sprouts Daycare in 2025 $ Total qualifying expenses paid to Little Sprouts Daycare $4,000 The qualified expenses paid to Little Sprouts Daycare in most cases will equal the total paid to Little Sprouts Daycare. They could differ, for example, if one of your dependents reached age 13 during the year. Expenses paid for that dependent after his/her 13th birthday are not qualified expenses. If these amounts are different but you think they should be the same, click Show Form and Whole Form and change the amounts paid for each dependent until the amounts above match.",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "search",
+   "name": "124.79575",
+   "id": "",
+   "label": "Provider's name",
+   "value": "Little Sprouts Daycare",
+   "maxlength": "37"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "124.79576",
+   "id": "",
+   "label": "Tax ID",
+   "value": "11-2223333",
+   "maxlength": "11"
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "124.32536",
+   "id": "",
+   "label": "My provider refused to give me their EIN.",
+   "value": "on",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "124.158064",
+   "id": "",
+   "label": "My provider has moved or closed, and I can't get their EIN.",
+   "value": "on",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "checkbox",
+   "name": "124.236056",
+   "id": "",
+   "label": "This care provider was my household employee.",
+   "value": "on",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "name": "124.32426",
+   "id": "",
+   "label": "Total paid to Little Sprouts Daycare in 2025",
+   "value": "4,000",
+   "maxlength": "10"
+  }
+ ],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

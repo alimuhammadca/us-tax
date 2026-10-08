@@ -1,0 +1,104 @@
+﻿TITLE: TurboTax Deluxe 2024
+[Menu] '' #Menu_1
+  [MenuItem] 'File' #fileMenuItem
+    [Text] '_File'
+  [MenuItem] 'Edit' #editMenuItem
+    [Text] '_Edit'
+  [MenuItem] 'View' #viewMenuItem
+    [Text] '_View'
+  [MenuItem] 'Tools' #toolsMenuItem
+    [Text] '_Tools'
+  [MenuItem] 'Online' #onlineMenuItem
+    [Text] 'O_nline'
+  [MenuItem] 'Help' #helpMenuItem
+    [Text] '_Help'
+  [Hyperlink] '  Help Center'
+    [Image] '' #helpImage
+  [Hyperlink] '  Print Center'
+    [Image] '' #printImage
+  [Hyperlink] '  Show Topic List'
+    [Image] '' #topicImage
+[Custom] '' #mainTabBarUC
+  [Image] '' #productBanner
+  [Custom] '' #refundMonitorView
+    [Custom] '' #FederalRefundGauge
+      [Text] 'Federal Refund' #bannerText
+      [Text] '$' #_DollarSign
+      [Text] '0' #_AmountText
+    [Custom] '' #StateRefundGauge
+      [Text] 'Illinois' #bannerText
+      [Text] 'See Amount'
+        [Hyperlink] 'See Amount'
+  [Button] '' #toggleViewButton
+    [Image] '' #_ImgOff
+  [Button] '' #flagsButton
+    [Image] '' #flagsImage
+  [Button] '' #notificationsButton
+    [Image] '' #notificationImage
+[Custom] '' #interviewUC
+  [Custom] '' #mainTabBar
+    [List] '' #mainTab
+      [ListItem] 'Personal Info' #Personal Info
+        [Text] 'PERSONAL INFO'
+      [ListItem] 'Federal Taxes' #Federal Taxes
+        [Text] 'FEDERAL TAXES'
+      [ListItem] 'State Taxes' #State Taxes
+        [Text] 'STATE TAXES'
+      [ListItem] 'Review' #Review
+        [Text] 'REVIEW'
+      [ListItem] 'File' #File
+        [Text] 'FILE'
+    [List] '' #subTab
+      [ListItem] 'You & Your Family' #You & Your Family
+        [RadioButton] '' #You & Your Family
+  [ToolBar] '' #mainFindTools
+    [Custom] '' #searchUC
+        [Hyperlink] ' '
+    [Button] '' #OverflowButton (disabled)
+  [Pane] '' #scrollViewer
+    [Text] 'Tell Us About Your Child' #titleTextBlock
+    [Text] 'First Name'
+    [Edit] '' #FWDEPINF_1__FIRSTNAM
+    [Text] 'Middle Initial'
+    [Edit] '' #FWDEPINF_1__INITIAL
+    [Text] 'Last Name'
+    [Edit] '' #FWDEPINF_1__LASTNAM
+    [Text] 'Jr., Sr., etc.'
+    [Edit] '' #FWDEPINF_1__SUFFIX
+    [Text] 'Birth Date
+(mm/dd/yyyy)'
+    [Edit] '' #FWDEPINF_1__DOB
+    [Text] 'Citizenship Status
+Learn More'
+      [Hyperlink] 'Learn More'
+    [ComboBox] '' #ComboBox_8
+    [Text] 'This child is my'
+    [RadioButton] 'Son' #rdb_10
+      [Text] 'Son'
+    [RadioButton] 'Daughter' #rdb_11
+      [Text] 'Daughter'
+    [Text] 'This child is'
+    [RadioButton] 'Adopted (If the adoption was final before 2024, select None of the above)' #rdb_12
+      [Text] 'Adopted (If the adoption was final before 2024, select None of the above)'
+    [RadioButton] 'A foster child' #rdb_13
+      [Text] 'A foster child'
+    [RadioButton] 'None of the above' #rdb_14
+      [Text] 'None of the above'
+    [Text] 'If you support more than one person, we'll ask about them one at a time.'
+    [Button] 'Continue'
+      [Text] 'Continue'
+    [Button] 'Back'
+      [Text] 'Back'
+    [Custom] '' #sideBar
+  [Text] '80%'
+  [Text] 'Help Others'
+    [Hyperlink] 'Help Others' #helpothers
+  [Image] '' #new
+  [Text] ' '
+    [Hyperlink] ' ' #upgradeTurboTaxHyperlink
+      [Image] '' #upgradeTurboTaxImage
+      [Text] 'Upgrade TurboTax' #upgradeTurboTaxText
+  [Button] 'No Form' (disabled)
+    [Text] 'No Form' (disabled)
+  [Custom] '' #SizeablePanel
+    [Thumb] '' #PART_Thumb

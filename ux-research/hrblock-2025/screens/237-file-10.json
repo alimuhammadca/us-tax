@@ -1,0 +1,122 @@
+{
+ "n": 237,
+ "slug": "file-10",
+ "capturedAt": "2026-10-08T19:33:20.621Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "FT_Check",
+  "FT_Finish"
+ ],
+ "topicLinks": [
+  {
+   "text": "How do I start a new return?",
+   "href": "tc:TOPICHELP=FT_Check,vHowToStartNewReturn",
+   "faq": true
+  },
+  {
+   "text": "How do I amend my return?",
+   "href": "tc:TOPICHELP=FT_Check,vHowToAMendReturn",
+   "faq": true
+  },
+  {
+   "text": "How can I get my 2026 H&R Block tax software?",
+   "href": "tc:TOPICHELP=FT_Finish,vHowGetNextYearSoftware",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Congratulations! Your 2025 Taxes Are Done",
+ "headings": [
+  "Thanks for choosing H&R Block!"
+ ],
+ "text": "Congratulations! Your 2025 Taxes Are Done Thanks for choosing H&R Block! We appreciate your business and look forward to helping you file again next year. Share your opinion Write a review and tell us what you think! Join the conversation Tell your Facebook friends and X followers about H&R Block.",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "childof280576672",
+   "id": "",
+   "cls": "",
+   "text": "Write a review",
+   "img": "",
+   "href": "http://www.hrblock.com/review/index.html?id=36&p=TCS&y=2025",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "Facebook",
+   "img": "",
+   "href": "https://www.facebook.com/hrblock/",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contenthelp",
+   "text": "X",
+   "img": "",
+   "href": "https://x.com/HRBlock",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "ReviewStars.gif",
+   "alt": "",
+   "title": "",
+   "name": ""
+  },
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

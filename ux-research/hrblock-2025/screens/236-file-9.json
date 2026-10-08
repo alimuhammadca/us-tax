@@ -1,0 +1,109 @@
+{
+ "n": 236,
+ "slug": "file-9",
+ "capturedAt": "2026-10-08T19:33:01.753Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [
+  "FT_Backup"
+ ],
+ "topicLinks": [
+  {
+   "text": "What's the best place to save a backup so I can find it again?",
+   "href": "tc:TOPICHELP=FT_Backup,vBestPlaceBackup",
+   "faq": true
+  }
+ ],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Save Copies of Returns for Your Records",
+ "headings": [
+  "Save a Back-up Copy of Your Tax File",
+  "Save Your Returns as a PDF"
+ ],
+ "text": "Save Copies of Returns for Your Records We recommend that you make copies of your returns for your records and store them in a safe place. You can save a file to a removable media device, like a flash drive. Save a Back-up Copy of Your Tax File Save a back-up tax file that you can use to import your information next year. This back-up will save your federal and any state returns to 1 file. Insert your removable media device, like a flash drive before you start. Save Your Returns as a PDF Save a copy of all of your returns as a PDF. That way, you can view or print your return later without opening this program.",
+ "inputs": [],
+ "buttons": [
+  {
+   "name": "",
+   "id": "",
+   "cls": "contentbtn",
+   "text": "",
+   "img": "Backup File",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "",
+   "id": "",
+   "cls": "contentbtn",
+   "text": "",
+   "img": "Save as PDF",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "backup_file_up.gif",
+   "alt": "",
+   "title": "Backup File",
+   "name": "backup_file"
+  },
+  {
+   "src": "save_as_pdf_up.gif",
+   "alt": "",
+   "title": "Save as PDF",
+   "name": "save_as_pdf"
+  },
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

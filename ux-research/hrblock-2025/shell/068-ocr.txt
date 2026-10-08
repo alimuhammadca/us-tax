@@ -1,0 +1,39 @@
+--- LEFT PANEL (meter + FAQs)
+2025
+My taxes for
+Premium
+FEDERAL REFUND
+$1 ,855
+LATEST CHANGE
+v Decrease of $407
+STATE REFUND
+$0
+Help Center
+FAQs
+View Details
+What if I received a tax statement
+with 1099-DIV information on it?
+Do I need to report dividends that
+I earn in my 401(k) plan, pension
+plan, or IRA?
+Do I need to report dividends paid
+in the form of stock rather than
+cash?
+Why do I need to report
+exempt-interest dividends?
+Should I enter dividends on my life
+insurance DOIicv here?
+--- TABS
+WELCOME
+PERSONAL INFORMATION
+FEDERAL
+INCOME
+ADJUSTMENTS
+STATE
+DEDUCTIONS
+FILE
+CREDITS
+TAXES
+MISC
+PLAN
+FINISH

@@ -1,0 +1,123 @@
+{
+ "n": 193,
+ "slug": "il-3",
+ "capturedAt": "2026-10-08T19:17:39.404Z",
+ "actionsBefore": [
+  [
+   "next"
+  ]
+ ],
+ "actionResults": [
+  "next changed"
+ ],
+ "dialogs": [],
+ "topics": [],
+ "topicLinks": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Which Best Describes Your Situation?",
+ "headings": [],
+ "text": "Which Best Describes Your Situation? Jordan Filed an Illinois 1040 return within the last 3 years Hasn't filed an Illinois 1040 return within the last 3 years and does have a valid Illinois driver's license or Illinois state ID Hasn't filed an Illinois 1040 return within the last 3 years and doesn't have a valid Illinois driver's license or Illinois state ID Casey Filed an Illinois 1040 return within the last 3 years Hasn't filed an Illinois 1040 return within the last 3 years and does have a valid Illinois driver's license or Illinois state ID Hasn't filed an Illinois 1040 return within the last 3 years and doesn't have a valid Illinois driver's license or Illinois state ID We'll use this information to see if you can file electronically.",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_FirstFiler",
+   "id": "",
+   "label": "Filed an Illinois 1040 return within the last 3 years",
+   "value": "78.48711",
+   "checked": true
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_FirstFiler",
+   "id": "",
+   "label": "Hasn't filed an Illinois 1040 return within the last 3 years and does have a valid Illinois driver's license or Illinois state ID",
+   "value": "78.48712",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_FirstFiler",
+   "id": "",
+   "label": "Hasn't filed an Illinois 1040 return within the last 3 years and doesn't have a valid Illinois driver's license or Illinois state ID",
+   "value": "78.48713",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_SPFirstFiler",
+   "id": "",
+   "label": "Filed an Illinois 1040 return within the last 3 years",
+   "value": "78.48714",
+   "checked": true
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_SPFirstFiler",
+   "id": "",
+   "label": "Hasn't filed an Illinois 1040 return within the last 3 years and does have a valid Illinois driver's license or Illinois state ID",
+   "value": "78.48715",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_SPFirstFiler",
+   "id": "",
+   "label": "Hasn't filed an Illinois 1040 return within the last 3 years and doesn't have a valid Illinois driver's license or Illinois state ID",
+   "value": "78.48716",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_ht.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

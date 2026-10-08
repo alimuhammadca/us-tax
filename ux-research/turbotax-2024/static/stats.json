@@ -1,0 +1,756 @@
+{
+ "screen_instances": 11844,
+ "distinct_screen_ids": 5478,
+ "distinct_screen_contents": 5846,
+ "debug_screens_excluded": 25,
+ "instances_by_program": {
+  "INTERVIEW": 10265,
+  "REVIEW": 422,
+  "EFINTERVIEW": 280,
+  "WRAPUP": 186,
+  "EFPOSTACK": 171,
+  "FINALREVIEW": 163,
+  "AUDIT": 155,
+  "PLANNER": 104,
+  "PROREVIEW": 98
+ },
+ "modules_with_screens": 2975,
+ "topic_tree_nodes": 4031,
+ "topic_tree_nodes_titled": 3092,
+ "screens_without_decoded_title": [
+  197,
+  3.6
+ ],
+ "screens_without_body_text": [
+  269,
+  4.9
+ ],
+ "distinct_titles": 3926,
+ "title_patterns_over_distinct_titles": {
+  "Did you ...": [
+   126,
+   3.2
+  ],
+  "Do you ... / Does ...": [
+   69,
+   1.8
+  ],
+  "Are you / Is / Were / Was ...": [
+   80,
+   2.0
+  ],
+  "Enter ...": [
+   295,
+   7.5
+  ],
+  "Tell us ...": [
+   150,
+   3.8
+  ],
+  "Let's ...": [
+   204,
+   5.2
+  ],
+  "Do any of these apply ...": [
+   5,
+   0.1
+  ],
+  "Which / What / How / Where / When ...": [
+   168,
+   4.3
+  ],
+  "Your ... / About your ... (noun heading)": [
+   145,
+   3.7
+  ],
+  "Here's ... / Here are ...": [
+   21,
+   0.5
+  ],
+  "We ... (We'll, We've, We noticed) ": [
+   59,
+   1.5
+  ],
+  "Review / Check / Confirm / Double-check ...": [
+   116,
+   3.0
+  ],
+  "Select / Choose / Pick ...": [
+   42,
+   1.1
+  ],
+  "Good news / Great news / Congratulations": [
+   26,
+   0.7
+  ],
+  "ends with '?' (any question)": [
+   630,
+   16.0
+  ],
+  "contains a personalization token": [
+   229,
+   5.8
+  ],
+  "Title Case (>=60% of words capitalised)": [
+   2948,
+   75.1
+  ]
+ },
+ "top_title_openings": [
+  [
+   "Tell Us",
+   104
+  ],
+  [
+   "Did you",
+   75
+  ],
+  [
+   "Did You",
+   51
+  ],
+  [
+   "Tell us",
+   46
+  ],
+  [
+   "Do you",
+   39
+  ],
+  [
+   "Let's Check",
+   37
+  ],
+  [
+   "Enter Your",
+   35
+  ],
+  [
+   "Let's get",
+   34
+  ],
+  [
+   "Did {X}",
+   27
+  ],
+  [
+   "Do You",
+   23
+  ],
+  [
+   "Enter the",
+   23
+  ],
+  [
+   "We need",
+   20
+  ],
+  [
+   "Enter Box",
+   19
+  ],
+  [
+   "How to",
+   18
+  ],
+  [
+   "Any Other",
+   17
+  ],
+  [
+   "Let's Review",
+   17
+  ],
+  [
+   "About Your",
+   16
+  ],
+  [
+   "Let Us",
+   16
+  ],
+  [
+   "Prior Year",
+   16
+  ],
+  [
+   "Let's see",
+   14
+  ],
+  [
+   "How much",
+   13
+  ],
+  [
+   "{X} -",
+   13
+  ],
+  [
+   "Summary of",
+   12
+  ],
+  [
+   "Let's See",
+   10
+  ],
+  [
+   "Section 179",
+   10
+  ],
+  [
+   "This year,",
+   10
+  ],
+  [
+   "Confirm Your",
+   9
+  ],
+  [
+   "Good News!",
+   9
+  ],
+  [
+   "Is This",
+   9
+  ],
+  [
+   "Is this",
+   9
+  ],
+  [
+   "Looks like",
+   9
+  ],
+  [
+   "Review Your",
+   9
+  ],
+  [
+   "Select the",
+   9
+  ],
+  [
+   "Community Property",
+   8
+  ],
+  [
+   "Do any",
+   8
+  ],
+  [
+   "Enter Any",
+   8
+  ],
+  [
+   "Enter Other",
+   8
+  ],
+  [
+   "Report Your",
+   8
+  ],
+  [
+   "We Need",
+   8
+  ],
+  [
+   "Were You",
+   8
+  ]
+ ],
+ "screen_features": {
+  "has 'Learn More' link": [
+   978,
+   17.9
+  ],
+  "has any in-text help link": [
+   2113,
+   38.6
+  ],
+  "has radio/checkbox options": [
+   1313,
+   24.0
+  ],
+  "has buttons (Yes/No/Done ...)": [
+   1327,
+   24.2
+  ],
+  "Yes/No buttons": [
+   670,
+   12.2
+  ],
+  "sentence-style Yes/No options ('Yes, I ...')": [
+   428,
+   7.8
+  ],
+  "has input fields": [
+   1902,
+   34.7
+  ],
+  "add/edit/delete summary table": [
+   104,
+   1.9
+  ],
+  "has image": [
+   1056,
+   19.3
+  ],
+  "has drop-down": [
+   179,
+   3.3
+  ],
+  "personalization token anywhere": [
+   3654,
+   66.7
+  ],
+  "token looks like a name/entity (person, payer, business, asset)": [
+   1255,
+   22.9
+  ],
+  "token looks like a year": [
+   69,
+   1.3
+  ],
+  "runtime value placeholder {value}": [
+   2553,
+   46.6
+  ]
+ },
+ "lexicon": {
+  "'uncommon' / 'less common'": {
+   "screens": 64,
+   "pct": 1.2,
+   "examples": [
+    "My form has info in more than just box 1 (this is uncommon).",
+    "Do any of these uncommon situations apply to this W-2?",
+    "Yes, I need to make AMT-related adjustments including the sale or exercise of incentive stock options (ISOs) or these other [uncommon situations](n625140)",
+    "This is an uncommon credit, but you may be able to claim it if you've paid AMT in the past and had [timing items](n6251timing). The most common are:"
+   ]
+  },
+  "'Good news' / 'Great news'": {
+   "screens": 83,
+   "pct": 1.5,
+   "examples": [
+    "Good News! {VMYLISTOFFFASTATESDIALOG}",
+    "Good News! Your State E-file is Free After Rebate",
+    "You make too much to take your full rental loss this year.\nThis is OK. The good news is when you sell, trade or otherwise dispose of the rental you'll be able to take all those losses you weren't able",
+    "Good news, you get more credit for your insurance premiums!"
+   ]
+  },
+  "'We've chosen' / 'we chose' / 'we picked'": {
+   "screens": 12,
+   "pct": 0.2,
+   "examples": [
+    "These credits and/or deductions save you the most money. Keep in mind, students can only claim one credit or deduction per year even though they may qualify for more. We also calculated other options,",
+    "This result saves you the most money. Keep in mind, students can only claim one credit or deduction per year even though they may qualify for more. We also calculated other options, but {TAXBREAKSUMRY",
+    "We've Chosen a Filing Status for You",
+    "The standard mileage rate method gives you a deduction of {STDRESULT} whileyour actual vehicle expenses give you a deduction of {ACTUALRESULT}. That's why we've chosen the standard mileage rate. \nWoul"
+   ]
+  },
+  "'recommend(ed)'": {
+   "screens": 118,
+   "pct": 2.2,
+   "examples": [
+    "(We recommend using the same value as your original return to make it easier for next year.)",
+    "(We recommend not changing this to make it easier for next year.)",
+    "We recommend using the same value as your original return to make it easier for next year.",
+    "Direct deposit to my bank account (Recommended for a faster refund)- Fastest, easiest way to get your refund- It's free!"
+   ]
+  },
+  "'Don't worry'": {
+   "screens": 46,
+   "pct": 0.8,
+   "examples": [
+    "First, the IRS requires a simple and secure identity verification. Don't worry this is a quick and easy process.",
+    "It turns out we couldn't get your W-2 from your employer's payroll provider, but don't worry. We'll help you enter your info manually.",
+    "You owe {value} in federal taxes, which you chose to pay by direct debit. You have selected to have the funds deducted from your account on {value}. Don't worry if you don't see the funds being deduct",
+    "You said {value}'s Social Security number and last name on this return does not match what the IRS has in its records. This could mean that the IRS has incorrect information, but don't worry about tha"
+   ]
+  },
+  "'We noticed' / 'Looks like'": {
+   "screens": 163,
+   "pct": 3.0,
+   "examples": [
+    "We noticed that you no longer owe money to the IRS. We will now remove the information you previously entered for installment payments for paying the IRS. If you're not done entering your income then ",
+    "We Noticed You Didn't Enter an Email Address",
+    "We noticed that your Social Security Number is missing.To get the Card, you must provide your Social Security Number.",
+    "We noticed that your cell phone number is incorrect or missing.To get the text messages on your cell phone, please either add or correct your cell phone number."
+   ]
+  },
+  "'Let's' anywhere": {
+   "screens": 394,
+   "pct": 7.2,
+   "examples": [
+    "Let's Get Ready to File Your Return",
+    "Note: You may be required by law to file this return with the IRS.\nJust select Continue and let's finish up.",
+    "You're Signed Up...Now Let's File to Get Your Refund",
+    "Now let's get your return filed so your refund can be added to your new card."
+   ]
+  },
+  "'we'll' (system does work for you)": {
+   "screens": 657,
+   "pct": 12.0,
+   "examples": [
+    "Even though you didn't file a return last year, the IRS will still need some information to confirm you're really you (it's a good safety measure). We'll take care of this requirement by entering a \"0",
+    "Even though {value} didn't file a return last year, the IRS will still need some information to confirm their identity (it's a good safety measure). We'll take care of this requirement by entering a \"",
+    "When you print your return, we'll include instructions about where to mail your check.",
+    "We'll prepare an IRS payment voucher for you, which you'll mail with your check. We'll print the voucher right after you e-file."
+   ]
+  },
+  "'Most people' / 'most taxpayers'": {
+   "screens": 23,
+   "pct": 0.4,
+   "examples": [
+    "Most people e-file federal and state returns together. [Learn More](nefile100FNF)",
+    "For most people, that's soon after the year they turn {value}. But if you keep working, for example, you might not be required to take money out yet.",
+    "Here are the miscellaneous deductions that are not subject to the 2% limitation that you entered on your {value} tax return. Most people should not enter anything here since we ask you for all of the ",
+    "We see {WHOYOU} contributed {TOTALCONT} to retirement plan(s).\nThe maximum most people {OVERUNDER} can contribute to all salary deferral retirement plans for {value} is {MAX401}.\nRead [IRS Publication"
+   ]
+  },
+  "'Do any of these apply'": {
+   "screens": 3,
+   "pct": 0.1,
+   "examples": [
+    "Do any of these apply to",
+    "Do Any of These Apply to Your Spouse?",
+    "Do any of these apply to the series EE or I bonds you cashed?"
+   ]
+  },
+  "'None of these apply' / 'None of the above'": {
+   "screens": 124,
+   "pct": 2.3,
+   "examples": [
+    "None of the above",
+    "None of these apply",
+    "If \"None of the above\" is selected, all other boxes should be left blank.",
+    "None of the above."
+   ]
+  },
+  "'Select ... to continue' / 'Continue'": {
+   "screens": 272,
+   "pct": 5.0,
+   "examples": [
+    "Select Continue, and you can choose the credit card payment option.",
+    "We noticed that you no longer owe money to the IRS. We will now remove the information you previously entered for installment payments for paying the IRS. If you're not done entering your income then ",
+    "You had previously entered information for installment payments to the IRS. We've noticed that you have selected another payment option. Select Back and choose Installment Payment if you wish to conti",
+    "Select Continue and we'll take you to choosing how to make your tax payment."
+   ]
+  },
+  "'double-check' / 'Let's check'": {
+   "screens": 110,
+   "pct": 2.0,
+   "examples": [
+    "Think you've already filed? Select Continue and we'll double-check if you have or not.",
+    "Your return includes an earned income credit (EIC).\nThis is one of the most common credits people take, so there's no need to be concerned about claiming it. You simply need to be aware that while man",
+    "You've claimed education expenses on your return.\nThis is one of the most common credits people take, so there's no need to be concerned about claiming it. You simply need to be aware that while many ",
+    "You have a dependent on your return who is not your qualifying child.\nYou can still claim this dependent on your return. Just double-check that this person meets the requirements for a qualifying rela"
+   ]
+  },
+  "'upgrade' / edition upsell": {
+   "screens": 8,
+   "pct": 0.1,
+   "examples": [
+    "FONLINE.HDELUXE - Deluxe - is on",
+    "FONLINE.HPREMIER - Premier - is on",
+    "ESPPs are treated as investment sales. TurboTax Premier helps with employee stock plans. You'll have to gather all the information we need to figure out what goes on your return. Much of this info is ",
+    "Certification upgrade fees"
+   ]
+  },
+  "'expert' / 'Live' assistance": {
+   "screens": 9,
+   "pct": 0.2,
+   "examples": [
+    "I'll enter actual expenses with the Office Expense Expert (recommended) [Learn More](n882951)",
+    "Still have a question? Talk with a tax expert for free.",
+    "This free offer is only available from the following link:[Ask a Tax Expert for Free](http://turbotax.intuit.com/support/in-product/ate-free-test/?tmScr=cookie&msid=tto_refexp_ate_d).",
+    "Now, let's use the Rental Property Expert tools to calculate depreciation and maximize your rental expense deduction."
+   ]
+  },
+  "'(optional)' / 'if applicable'": {
+   "screens": 40,
+   "pct": 0.7,
+   "examples": [
+    "I authorize the U.S. Treasury and its designated Financial Agent to initiate an ACH electronic funds withdrawal (direct debit) entry to the financial institution account indicated in the tax preparati",
+    "Your dependent, {value}, Social Security number or the last name does not match what the IRS has in their records. The information entered on the return must be exactly how it appears on the qualifyin",
+    "The Social Security number or the last name does not match what the IRS has in their records.The information entered on the return must be exactly how it appears on the child's Social Security card, i",
+    "Please review the information below. The information entered on the return must be exactly how it appears on the child's Social Security card, including middle initial and suffix (if applicable)."
+   ]
+  },
+  "'Why do we ask' / 'Why we ask'": {
+   "screens": 1,
+   "pct": 0.0,
+   "examples": [
+    "Did {WHOGOTSS} receive social security benefits? [Why We Ask](CRPpayments)"
+   ]
+  },
+  "'TurboTip' / 'Tip:'": {
+   "screens": 7,
+   "pct": 0.1,
+   "examples": [
+    "Tip: Sell Incentive Stock Options",
+    "Tip: Split Payment of Large Medical Bills",
+    "Tip: Have Employer Pay Business Expenses",
+    "Tip: Group Your Deductible Expenses"
+   ]
+  },
+  "'You're all set' / 'Nice work' / 'Done'": {
+   "screens": 31,
+   "pct": 0.6,
+   "examples": [
+    "Here are official forms you will be filing with the government. Instructions and {HADDRESS} will print with your {HRTN}. Just mail them, and you're done!",
+    "You've Done a Great Job So Far!",
+    "To use the installment method for this disposition, you must enter the installment information directly on Form 6252, Installment Sale Income.\nWhen you're done with this topic, you can enter the insta",
+    "No, I'm all done. Let's move on!"
+   ]
+  },
+  "'savings' / 'saved' / 'maximize'": {
+   "screens": 187,
+   "pct": 3.4,
+   "examples": [
+    "Savings",
+    "Savings Account: {value}",
+    "Savings account",
+    "Box 3 - Savings bonds and treasury int"
+   ]
+  }
+ },
+ "outcome_style_titles": {
+  "count": 96,
+  "pct_of_distinct_titles": 2.4,
+  "examples": [
+   "Congrats, you get a tax break",
+   "Good News! Part of Your Canceled Debt is Excluded from Tax",
+   "Good News! We Found You These Education-Related Savings",
+   "Good News! We Just Reduced Your Tax Bill",
+   "Good News! You Qualified for {X}",
+   "Good News! Your Canceled Debt is Excluded from Tax",
+   "Good News! Your Refunds Are Not Taxable",
+   "Good News! Your Refunds are Not Taxable",
+   "Good News! Your State E-file is Free After Rebate",
+   "Good News! Your {X} refund is not taxable",
+   "Good News: You Don't Owe Extra Tax on This Money",
+   "Good News: Your Tax Bill Just Got Lower",
+   "Good news!",
+   "Good news! You may qualify for additional deductions for the following 1099-MISCs:",
+   "Good news, there is no requirement for repayment of insurance premiums in 2020",
+   "Good news, you get more credit for your insurance premiums!",
+   "Good news, your credit for your insurance premiums was the right amount",
+   "Great news! We've got your 1098-T",
+   "Great news! You get a tax break",
+   "Great news! You saved more money.",
+   "Great news! You've got a total vehicle deduction of ${X}",
+   "Great news, we got your 1099-R info!",
+   "Here's How We'll Work on Your Charitable Donations",
+   "Here's How to Start a New Return.",
+   "Here's What You've Entered as Foreign Wages So Far",
+   "Here's Your Education Summary",
+   "Here's how a traditional IRA could get you a tax break",
+   "Here's how a traditional IRA could get you a tax break next year",
+   "Here's what to do with your Form 1099-K",
+   "Here's what we have for your 1095-As",
+   "Here's what we have so far",
+   "Here's what you paid in student loan interest",
+   "Here's what you spent on care providers",
+   "Here's your Investment Credit Property Recapture info",
+   "Here's your W-2 info",
+   "We've Chosen Itemized Deductions for You",
+   "We've Chosen a Deduction for You",
+   "We've Chosen a Filing Status for You",
+   "You Can No Longer E-file These Returns",
+   "You Can Request a Waiver"
+  ]
+ },
+ "body_words_per_screen_variant": {
+  "median": 42,
+  "p90": 120,
+  "max": 3131
+ },
+ "control_kind_counts": {
+  "8 spacer": 34481,
+  "3 text": 33854,
+  "13 input field": 7672,
+  "7 image": 4365,
+  "9 button": 2880,
+  "28 radio option": 2819,
+  "14 checkbox": 1467,
+  "16 drop-down": 647,
+  "17 radio group": 623,
+  "32 rule": 562,
+  "37 sub-screen include": 551,
+  "20 add/edit/delete table": 151,
+  "26 embedded web widget": 97,
+  "11 ?": 62,
+  "15 ?": 55,
+  "10 ?": 51,
+  "1 container": 38,
+  "25 action button": 27,
+  "31 ?": 9,
+  "35 container (#)": 8,
+  "22 ?": 7,
+  "18 ?": 5,
+  "19 ?": 2,
+  "29 container (alt)": 1
+ },
+ "top_personalization_tokens": [
+  [
+   "{value}",
+   2732
+  ],
+  [
+   "{TITLENAME}",
+   141
+  ],
+  [
+   "{BUSNAME}",
+   121
+  ],
+  [
+   "{THEPAYER}",
+   120
+  ],
+  [
+   "{NAMEOFASSET}",
+   119
+  ],
+  [
+   "{ASSETDESC}",
+   94
+  ],
+  [
+   "{POSSFIRSTNAME}",
+   71
+  ],
+  [
+   "{THISBIZ}",
+   64
+  ],
+  [
+   "{HSDATE}",
+   61
+  ],
+  [
+   "{THETITLENM}",
+   61
+  ],
+  [
+   "{WHOSE}",
+   50
+  ],
+  [
+   "{TITLEGRAPHICVAR}",
+   45
+  ],
+  [
+   "{WHOOWNS}",
+   45
+  ],
+  [
+   "{FORMNAME}",
+   45
+  ],
+  [
+   "{WHO}",
+   43
+  ],
+  [
+   "{WHOOWNSP}",
+   41
+  ],
+  [
+   "{THETITLE}",
+   39
+  ],
+  [
+   "{NAMA}",
+   38
+  ],
+  [
+   "{PAYERNAME}",
+   38
+  ],
+  [
+   "{PNAME}",
+   36
+  ],
+  [
+   "{MESSAGE}",
+   28
+  ],
+  [
+   "{DESC}",
+   27
+  ],
+  [
+   "{FORMDSC}",
+   27
+  ],
+  [
+   "{YOUORNAME}",
+   26
+  ],
+  [
+   "{TYPEOFINCOME}",
+   26
+  ],
+  [
+   "{BUTTONIWE}",
+   22
+  ],
+  [
+   "{STUDENTNAMEYOU}",
+   20
+  ],
+  [
+   "{NAMETHATSTATE}",
+   20
+  ],
+  [
+   "{INSERT}",
+   19
+  ],
+  [
+   "{ASSETORVEHICLE}",
+   18
+  ],
+  [
+   "{NAMEOF1099G}",
+   16
+  ],
+  [
+   "{WHOOWNSC}",
+   16
+  ],
+  [
+   "{WHICHYR}",
+   16
+  ],
+  [
+   "{THESP}",
+   15
+  ],
+  [
+   "{TITLE1}",
+   15
+  ],
+  [
+   "{WHICHONE}",
+   15
+  ],
+  [
+   "{CYTMORTEH}",
+   14
+  ],
+  [
+   "{MOST}",
+   14
+  ],
+  [
+   "{ENTNAME}",
+   14
+  ],
+  [
+   "{THEKID}",
+   14
+  ]
+ ]
+}

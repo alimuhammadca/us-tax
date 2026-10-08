@@ -1,0 +1,22 @@
+{
+ "n": 135,
+ "slug": "report-refund-reveal",
+ "type": "Report window",
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpreportscreen.htm",
+ "title": "",
+ "text": "H&R Block Refund Reveal℠ Wondering how we calculated your refund of $1,351? It's easy! Let's find out. First, we calculated your federal taxes. Based on your income and your deductions, you owe $13,949 in federal taxes this year. Don't worry - this doesn't include any credits you can claim or taxes you've already paid. (We'll get to those next.) Jordan & Casey's income from Acme Testing LLC & Springfield School District Interest income from First Bank Dividend income from Big Fund Capital gains or losses Your standard deduction IRA deduction Educator expense deduction Learn more about how your income and deductions affect your taxes. Next, we added in every credit you've qualified for. This lowered your federal taxes by $2,200. Child tax credits for Riley Learn more about how credits affect your taxes. Then, we included the taxes you already paid (or had withheld). This lowered your federal taxes by $13,100. Taxes paid from Jordan & Casey's employment at Acme Testing LLC & Springfield School District Learn more about how any taxes you've already paid affect your return. Finally, we totaled everything up. $13,949 $2,200 $13,100 Your Income and Deductions Your Credits Taxes you've already paid Your federal refund: $1,351 Your maximum refund - guaranteed.",
+ "links": [
+  {
+   "t": "Learn more",
+   "h": "tc:TOPICHELP=Reports,hLearnMoreIncAndDed"
+  },
+  {
+   "t": "Learn more",
+   "h": "tc:TOPICHELP=Reports,hLearnMoreCredits"
+  },
+  {
+   "t": "Learn more",
+   "h": "tc:TOPICHELP=Reports,hLearnMoreTaxes"
+  }
+ ]
+}

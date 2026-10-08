@@ -1,0 +1,28 @@
+--- LEFT PANEL (meter + FAQs)
+2025
+My taxes for
+Premium
+FEDERAL REFUND
+$1,951
+LATEST CHANGE
+A Increase of $600
+STATE REFUND
+$363
+Help Center
+FAQs
+View Details
+What if I haven't completed my
+federal return?
+If I'm filing two state returns,
+which should I complete first?
+What if I purchased a state
+program but don't see it in the list?
+What if I purchased a state
+program but don't know how to
+access it?
+--- TABS
+WELCOME
+FEDERAL
+STATE
+FILE
+PLAN

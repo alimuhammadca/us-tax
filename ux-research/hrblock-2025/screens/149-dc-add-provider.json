@@ -1,0 +1,97 @@
+{
+ "n": 149,
+ "slug": "dc-add-provider",
+ "capturedAt": "2026-10-08T18:57:05.353Z",
+ "actionsBefore": [
+  [
+   "pwclick",
+   "img[name=Add_Provider], [name=Add_Provider]"
+  ]
+ ],
+ "actionResults": [
+  "pwclick img[name=Add_Provider], [name=Add_Provider] true"
+ ],
+ "dialogs": [],
+ "topics": [],
+ "topicLinks": [],
+ "url": "file:///C:/ProgramData/TaxCut/2025/tmpscreen.htm",
+ "title": "Describe your care provider.",
+ "headings": [],
+ "text": "Describe your care provider. My care provider is a business. My care provider is a person. Care was provided outside the U.S. by a business or person without a U.S. tax ID.",
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_TypeProvider",
+   "id": "",
+   "label": "My care provider is a business.",
+   "value": "124.79571",
+   "checked": true
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_TypeProvider",
+   "id": "",
+   "label": "My care provider is a person.",
+   "value": "124.79572",
+   "checked": false
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "name": "rb_TypeProvider",
+   "id": "",
+   "label": "Care was provided outside the U.S. by a business or person without a U.S. tax ID.",
+   "value": "124.151381",
+   "checked": false
+  }
+ ],
+ "buttons": [
+  {
+   "name": "2",
+   "id": "",
+   "cls": "navbtnleft",
+   "text": "",
+   "img": "Back",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  },
+  {
+   "name": "1",
+   "id": "",
+   "cls": "navbtnright",
+   "text": "",
+   "img": "Next",
+   "href": "javascript: void(0)",
+   "onclick": ""
+  }
+ ],
+ "imgs": [
+  {
+   "src": "back_up.gif",
+   "alt": "Back",
+   "title": "",
+   "name": "back"
+  },
+  {
+   "src": "next_up.gif",
+   "alt": "Next",
+   "title": "",
+   "name": "next"
+  }
+ ],
+ "help": [],
+ "leftIcon": [],
+ "metas": {
+  "screenName": "",
+  "bodyClass": ""
+ },
+ "css": [
+  "Templates/BasicScreenLayoutIE.css",
+  "Global/global.css",
+  "Edition/Premium.css",
+  "ScreenType/Generic.css"
+ ],
+ "errors": []
+}

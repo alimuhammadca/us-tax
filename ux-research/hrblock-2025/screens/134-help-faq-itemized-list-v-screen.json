@@ -1,0 +1,9 @@
+{
+ "n": 134,
+ "slug": "help-faq-itemized-list-v-screen",
+ "type": "Help pop-up",
+ "url": "file:///C:/ProgramData/TaxCut/2025/help/ovhl/vhl.htm",
+ "title": "",
+ "text": "How can I create a list of items to add up and go into a field? To create an itemized list of items that will add up to go into a field: Go to the Edit menu and select Add Itemized List. A new blank itemized list appears with a title that uses the form and line number to which it belongs. Type the description of the first item in your list. Press the Tab key to move to the next column. Enter the amount for the first item. Press the Tab key to move to the second item, and so on. When you're done entering items, click OK to close the itemized list. The sum of all the items you entered will carry to the appropriate field.",
+ "links": []
+}

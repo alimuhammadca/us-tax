@@ -1,0 +1,9 @@
+# Bulk TurboTax copy extracted from fdiin.1pe (copyrighted text) — regenerate with static/*.py
+turbotax-2024/static/screens.csv
+turbotax-2024/static/screens.jsonl
+turbotax-2024/static/screen_instances.jsonl
+turbotax-2024/static/help-topics.csv
+turbotax-2024/static/topic-tree.json
+# Saved sample returns
+*.tax2024
+*.T25

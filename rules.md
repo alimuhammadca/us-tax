@@ -1,3 +1,14 @@
+**★ A pre-fill from an uploaded document fills BLANKS only, and says what it did.** Personal > Last year
+1040 writes into forms the user owns, so it never overwrites a value already entered; re-applying is
+therefore idempotent and safe, and the summary lists both what it filled and what it kept. Pre-fill only
+facts the source document actually states for THIS year's return: date of birth is not on a 1040,
+IP PINs are reissued yearly, digital-asset and campaign answers are about this year, and CTC/ODC
+eligibility changes with age - leave those to the user rather than carrying last year's answer forward.
+
+**★ Azure's `prebuilt-tax.us.1040` folds the unit into `valueAddress.streetAddress`** ("100 MAIN ST Apt. 4")
+although the form prints a separate Apt. box - build the street from `houseNumber` + `road`. And on photos
+the filing-status checkbox is often unread: a spouse on the "If joint return" name line implies MFJ.
+
 
 
 

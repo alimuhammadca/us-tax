@@ -1,3 +1,39 @@
+## 2026-10-12 - Personal > Last year 1040: upload last year's return, pre-fill the Personal forms
+
+A new first item in the Personal sidebar section, above Identification. The user uploads last
+year's Form 1040 as a PDF or an image (PNG/JPG, a phone photo works); the backend sends it to Azure
+Document Intelligence's **`prebuilt-tax.us.1040`** model, stores the file and the normalized
+extraction, and fills the Personal forms on a **fill-blanks-only** basis - a value the user already
+entered is never overwritten, so "Fill in blanks again" is always safe. The page shows the uploaded
+document beside a "Filled in for you" summary (per form, with Review links) and last year's key
+amounts. Skipping records the choice and sends the user on to Identification.
+
+Pre-filled: taxpayer + spouse identification (names, middle initial, SSN, occupation), address with
+phone/email from the signature block, spouse address "same as yours", filing status, third-party
+designee, and dependents (added when not already listed, matched by SSN then name). **Not**
+pre-filled, deliberately: date of birth (not printed on a 1040), IP PIN (reissued yearly), MFS (it
+splits the household into two returns in the UI), digital assets / presidential campaign (they are
+about this year), and a dependent's CTC/ODC eligibility (it changes with age).
+
+Backend: V268 `pf_prior_year_1040` (one row per uid+year; file in BYTEA, extraction + prefill summary
+as JSON text); `PriorYear1040Parser` (pure, unit-tested), `PriorYear1040Prefill`,
+`PriorYear1040Resource` at `/api/prior-year-1040` (GET state, POST upload/apply/skip, GET file,
+DELETE). The Azure REST client moved out of `DocumentExtractionResource` into a shared
+`AzureDocumentAnalyzer`; statement extraction re-verified (W-2: 200, 22 fields). Identifiers leave
+the server masked in the state payload; the raw Azure response is not logged for this endpoint.
+
+Two things the real Azure output taught (both now unit-tested on the real shape):
+- **`valueAddress.streetAddress` includes the unit** ("100 MAIN ST Apt. 4") even though the 1040 has a
+  separate Apt. box - the street is built from `houseNumber` + `road`, and "Apt."/"Unit"/"#" is stripped
+  from the apartment value.
+- **The filing-status checkbox is often unread on a photo**, but the spouse line is printed "If joint
+  return, spouse's first name...", so a spouse there means MFJ.
+
+Tests: 7 unit (`PriorYear1040ParserTest`), backend suite 2904/2904; e2e `prior-year-1040.spec.ts`
+3/3 against live Azure (PDF, PNG, skip) incl. the fill-blanks-only re-apply and no duplicate dependent.
+Fixtures: a filled 2024 IRS Form 1040 for the fictional Sample household (`e2e/tests/fixtures/prior-1040`).
+
+
 ## 2026-10-05 - The filer block: Azure's value REGIONS were wrong, not its labels
 
 The three values left over from yesterday's render work, and the diagnosis turned on one

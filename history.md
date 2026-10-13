@@ -1,3 +1,18 @@
+## 2026-10-12T21:15:00-04:00 - Deployed: start page, Last year 1040 fixes, clean-user-data skill
+
+- **Start page** (UI `ce502c9`): the first session opens Personal > Last year 1040; later sessions reopen the page
+  (and person tab) the user was last on, remembered per Firebase uid in browser storage. With nothing remembered, a
+  user who has already uploaded or skipped last year's 1040 (e.g. a returning user on a new device) starts at
+  Identification. e2e `start-page.spec.ts` 3/3; related specs (person tabs, header dialogs, DOB, Last year 1040) 16/16.
+- **Backend `eb7989b`** (Container App, 100% traffic, readiness 200): designee PIN masked as a PIN in the pre-fill
+  summary; a spouse SSN alone no longer implies MFJ (MFS returns fill the spouse SSN box too).
+- **`/clean-user-data` skill** (`us-tax-be/.claude/skills/clean-user-data`): deletes one user's data except the
+  account, catalog-driven, dry run by default; used to empty the e2e test account in the local database.
+- Test files: 2024 Form 1040 PDF/PNG for HOH (Rivera), MFS (Chen) and MFJ (Sample) in `test_statements/prior-1040`,
+  flattened because the IRS form's XFA layer made filled copies look blank in Adobe Reader / Edge.
+
+Azure Postgres stopped again afterwards.
+
 ## 2026-10-12T20:20:00-04:00 - Deployed: Last year 1040 + a CORS fix that had broken prod since July
 
 Deployed to production (Azure, via the GitHub Actions pipelines on push to main):

@@ -1,3 +1,24 @@
+## 2026-10-13T17:45:00-04:00 - Your checklist: links from messages, statement picks on the server, one list of required fields, done mark
+
+- **Messages link to the form that fixes them.** `us-tax-ui/src/app/data/flag-form-links.ts` maps every flag code the
+  compute can raise (232, from every `new TaxReturnFlag` site in TaxReturnComputeService; 215 to a form, 17 with no
+  single form, + 61 prefix entries for `…_TAXPAYER/_SPOUSE` codes) to its sidebar form. A message shows "In: <form>"
+  and a Fix (must-fix) / Review (note) button; a form of the other person opens on their tab
+  (`FormNavigationService.openForPerson`, handled in the shell). A statement not chosen yet goes to Select statements.
+- **Select statements is kept on the server per user and tax year** (V272 `pf_statement_selection`,
+  `GET/PUT /api/statement-selection`, registered in `UserDataBulkDelete`). It was browser-only (localStorage
+  `statementFormsSelection`); an existing browser copy is moved up once on sign-in, then removed. Loaded at sign-in
+  (before the start page is restored) and after a year switch. e2e helpers now set it through the API.
+- **One list of required fields.** The ten Personal forms (identification, address, filing status, digital assets,
+  presidential campaign, third party designee; taxpayer and spouse) build their "Saved. Some required fields are not
+  completed yet: …" message from `utils/personal-requirements.ts`, the same rules the checklist uses
+  (`missingInForm`, `savedStatusFor`). A form's own extra checks (e.g. SSN format) still warn.
+- **Done mark.** When every row is done, every statement entered, every scenario form started and nothing must be
+  fixed, the checklist says "Everything on your checklist is done" and step 4 in the step bar gets its check
+  (`ChecklistStatusService`, per year and tab, as of the last check this session).
+- e2e `get-started.spec.ts` +2 tests (server-kept picks incl. migration, other browser and per year; the done mark) and
+  the spouse message's Fix link; `start-page.spec.ts` debounce race fixed (waits for page and year together).
+
 ## 2026-10-13T15:00:00-04:00 - Get started > Your checklist (steps 2 and 3 of the guided start)
 
 - Step 4 of Get started (Family Head and Spouse): **Your checklist**, built from the steps before it:

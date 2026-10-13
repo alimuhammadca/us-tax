@@ -172,3 +172,9 @@ Azure paired with the label. Read the cell from its own geometry instead, and no
 region got wrong that geometry gets right: box 1b's "KOKO" is both to the RIGHT of the ZIP
 caption and ABOVE its value band, so a two-sided cell test excludes it twice over. **Look for the
 working twin before theorising** - it localises the fault in one observation.
+
+**Personal forms: one list of required fields (2026-10-13).** Which fields a Personal form requires lives in
+`us-tax-ui/src/app/utils/personal-requirements.ts` only. Both the form's save message ("Saved. Some required fields
+are not completed yet: …") and Get started > Your checklist read it, so they cannot disagree. When a form gains or
+drops a required field, change that file (and the template's `required` highlighting) together. A new compute flag
+gets a Fix link only once it is added to `us-tax-ui/src/app/data/flag-form-links.ts`.

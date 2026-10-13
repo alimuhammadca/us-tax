@@ -1,3 +1,13 @@
+## 2026-10-12T23:59:00-04:00 - Remember the last tax year; deploys manual; no Postgres start/stop
+
+- The last page record (`user_ui_state`) now also keeps the tax year (V270 `last_tax_year`); a new session reopens
+  that year (applied before any data loads) and then the page. e2e start-page.spec 5/5.
+- Deploy-on-push disabled in us-tax-be, us-tax-ui and us-tax-admin-ui: deploys are manual (workflow_dispatch).
+  Not yet deployed: V269/V270 server-side last page + year are deployed up to V269; V270 + this UI change await a
+  manual deploy.
+- Owner's rule: Claude no longer starts or stops Azure Postgres on push, deploy, testing or cleanup;
+  `/clean-user-data -Target prod` now refuses when the server is stopped instead of starting it.
+
 ## 2026-10-12T23:00:00-04:00 - Deployed: stacked 1040 images read as separate pages
 
 A single image holding both pages of a 1040 (e.g. `rivera-1040-2024-merged.png`, 1275x3300) was read by Azure

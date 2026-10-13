@@ -1,3 +1,16 @@
+## 2026-10-13T14:00:00-04:00 - Sidebar "Get started" section (step 1 of the guided start)
+
+- New first sidebar section **Get started**: 1 Last year 1040 (moved from Personal) → 2 Select tax scenarios →
+  3 Select statements (moved from Statements; label now plural). Family Head gets all three; Spouse gets 2 and 3;
+  a dependent tab has no Get started and keeps its statement picker under Statements.
+- Numbered steps at the top of each Get started page (`get-started-steps`); a step shows a check once it has
+  something in it: 1040 uploaded or skipped, a scenario ticked, statements chosen (the default W-2 alone doesn't
+  count). Prev/Next walks the steps and continues into Personal (Next from Select statements → Identification).
+- Adding a statement (picker or scenario) opens the collapsed Statements section so the new entry is visible.
+- e2e: new `get-started.spec.ts` (2); updated personal-form-actions, prior-year-1040, statement picker page object,
+  tab-as-person-scope smoke, tax-scenarios. Not deployed.
+- Next (step 2 of the plan): a "Your checklist" page built from scenarios + statements.
+
 ## 2026-10-13T13:00:00-04:00 - Statements > Select tax scenarios (catalog from J.K. Lasser 2025)
 
 - New first item under Statements: "Select tax scenarios". It has 107 life and tax situations in 12 categories

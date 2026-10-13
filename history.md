@@ -1,3 +1,22 @@
+## 2026-10-13T15:00:00-04:00 - Get started > Your checklist (steps 2 and 3 of the guided start)
+
+- Step 4 of Get started (Family Head and Spouse): **Your checklist**, built from the steps before it:
+  - **Your information**: each Personal form Done / Incomplete ("Still needed: …") / Not started, from its saved
+    data. Rules in `us-tax-ui/src/app/utils/personal-requirements.ts` mirror each form's own "complete" check
+    (identification, address, filing status, digital assets, presidential campaign, third party designee); e2e pins
+    the checklist against the form's save warning.
+  - **Statements to enter**: each statement in this tab's Statements section, "N entered" / Not started. An empty
+    entry (created when a statement form is opened) and entries for another person's SSN don't count.
+  - **Forms to fill in**: the forms the ticked scenarios point to, with the scenarios that need each; input forms
+    Started / Not started, previews (tax-return-*) "View".
+  - **Messages from your return**: the flags the next compute would raise (`GET /api/tax-return/flags`), must-fix first.
+- Backend: `GET /api/statements/entry-summaries?formIds=` (per entry hasData + recipientTin;
+  `StatementDataService.hasEnteredData`, unit `StatementEntrySummaryTest`) and `GET /api/personal/forms?formIds=`
+  (several personal forms in one request; non-personal ids skipped). No migration.
+- Opening a form from a link (checklist, scenario) now expands its sidebar section.
+- e2e `get-started.spec.ts` 4/4, `tax-scenarios.spec.ts` 4/4; sidebar/smoke sweep 126/127 before the last fix
+  (spouse Prev test race, fixed and green). Not deployed.
+
 ## 2026-10-13T14:00:00-04:00 - Sidebar "Get started" section (step 1 of the guided start)
 
 - New first sidebar section **Get started**: 1 Last year 1040 (moved from Personal) → 2 Select tax scenarios →

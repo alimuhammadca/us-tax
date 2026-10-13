@@ -1,3 +1,12 @@
+## 2026-10-13T18:40:00-04:00 - Deployed (manual workflow_dispatch): Get started + Your checklist
+
+Owner asked: start Azure Postgres, deploy, stop it. `pg-ustax-9u14g` started (Stopped -> Ready). Backend run
+38476695676 -> Container App revision `ca-ustax-be--0000560` (image `f5497c8`, V271 + V272 applied, readiness 200,
+`/api/statement-selection` 401 unauthenticated). Frontend run 38477596489 -> www.taxbeans.com (bundle `main-P6R7CNVC.js`
+contains the checklist and statement-selection code). Includes: tax scenarios, the Get started section, Your
+checklist (with Fix links, done mark), statement picks on the server, one list of required fields. Postgres stopped
+afterwards (state Stopped), so the live site cannot load data until it is started again.
+
 ## 2026-10-13T17:45:00-04:00 - Your checklist: links from messages, statement picks on the server, one list of required fields, done mark
 
 - **Messages link to the form that fixes them.** `us-tax-ui/src/app/data/flag-form-links.ts` maps every flag code the

@@ -1,3 +1,14 @@
+## 2026-10-12T23:00:00-04:00 - Deployed: stacked 1040 images read as separate pages
+
+A single image holding both pages of a 1040 (e.g. `rivera-1040-2024-merged.png`, 1275x3300) was read by Azure
+`prebuilt-tax.us.1040` as ONE page, so only page 2 was used (occupation, phone/email, designee) and page 1 (names,
+SSNs, address, filing status, dependents) was lost - the form said it had filled the Personal forms, but the main
+fields stayed empty. `StackedPageSplitter` now splits a tall image by the letter aspect ratio (11/8.5) into a
+multi-page PDF before analysis (stored file unchanged), and the form warns plainly when page 1 could not be read.
+Backend `17c24ba`, UI `9ea213c`. Unit `StackedPageSplitterTest`; e2e stacked-PNG case (4/4); on production the
+merged image filled page-1 dependents and the page-2 designee with no warning. Note: a 110-dpi render lost the SSN
+digits; ~150 dpi works. Azure Postgres stopped again afterwards.
+
 ## 2026-10-12T22:20:00-04:00 - Deployed: last page kept on the server
 
 The start page's "last page" moved from browser storage to the server so it follows the user across devices:

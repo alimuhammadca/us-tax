@@ -2,6 +2,10 @@
 
 Official IRS 2024 Form 1040 (irs.gov/pub/irs-prior/f1040--2024.pdf) filled in with **fictional** data.
 
+The PDFs are **flattened** (no form fields, no XFA layer, check marks drawn as lines), so they look the same in
+every viewer. The blank IRS form carries an XFA layer that Adobe Reader / Edge show instead of filled fields,
+which is why an unflattened copy looks empty. Rebuild with `python make_1040.py <blank f1040--2024.pdf>`.
+
 | File | Use |
 |---|---|
 | `rivera-1040-2024.pdf` | Both pages — the full test. Head of household, two dependents |

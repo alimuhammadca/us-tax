@@ -1,3 +1,23 @@
+## 2026-10-12T20:20:00-04:00 - Deployed: Last year 1040 + a CORS fix that had broken prod since July
+
+Deployed to production (Azure, via the GitHub Actions pipelines on push to main):
+- Backend Container App `ca-ustax-be`: revision on image `ustax-be:5db7380` serving 100% (Liquibase V268 applied;
+  readiness 200). Frontend Static Web App: bundle with the new Personal > Last year 1040 form.
+- Production smoke test (shared e2e test account, fictional data) at https://www.taxbeans.com: upload of the sample
+  2024 1040 -> 200, Azure read it, pre-fill applied (identification, spouse, address, filing status, dependent),
+  key amounts shown (AGI $143,050, refund $967); the upload was then removed.
+
+**★ Found while testing: production could not load or save ANY personal data.** Every cross-origin call from
+www.taxbeans.com failed its CORS preflight with "Request header field x-tax-year is not allowed". The multi-year
+year selector (2026-07-27) added the `X-Tax-Year` header to every personal/statement call, but `CorsFilter` -
+the real CORS policy; the `quarkus.http.cors.*` properties are NOT read ("Unrecognized configuration key") -
+still allowed only `Authorization,Content-Type`. Local dev never saw it because it goes through the same-origin
+dev proxy, and no e2e runs against prod. Fixed in `CorsFilter` (+ `PATCH`, which the admin dashboard needs and
+which was likewise only in the ignored properties). Lesson: a header added to every request needs a cross-origin
+check, and the dev proxy hides CORS entirely.
+
+Azure Postgres `pg-ustax-9u14g` stopped again afterwards (prod is on-demand; local testing uses the Docker DB).
+
 ## 2026-10-12 - Personal > Last year 1040: upload last year's return, pre-fill the Personal forms
 
 A new first item in the Personal sidebar section, above Identification. The user uploads last

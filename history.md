@@ -1,3 +1,16 @@
+## 2026-10-13T13:00:00-04:00 - Statements > Select tax scenarios (catalog from J.K. Lasser 2025)
+
+- New first item under Statements: "Select tax scenarios". It has 107 life and tax situations in 12 categories
+  (category chips with selected/total counts, plus search), derived from *J.K. Lasser's Your Income Tax 2025*
+  (research: `ux-research/tax-scenarios-from-lasser.md`; catalog: `us-tax-ui/src/app/data/tax-scenarios.ts`).
+- Ticking a scenario pre-selects its statements in Select statements and lists, under "Your scenarios", links to
+  its statements and to the forms to fill in (spouse tab links the -spouse twin). Nothing is hidden; unticking keeps
+  the statements (they may already hold entries). Not offered on dependent tabs.
+- Saved on the server per user and tax year: V271 `pf_tax_scenarios` (uid, tax_year unique), `GET/PUT
+  /api/tax-scenarios`; registered in `UserDataBulkDelete`. Unit `TaxScenariosResourceTest`; e2e
+  `tax-scenarios.spec.ts` 4/4 (incl. a load-vs-tick race, mutation-checked).
+- Not deployed (deploys are manual).
+
 ## 2026-10-13T12:20:00-04:00 - Deployed (manual workflow_dispatch): Personal form actions bar + remembered tax year
 
 Backend run 38426484142 -> Container App revision `ca-ustax-be--0000559` (image `efaa19b`, V270 applied, readiness

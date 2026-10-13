@@ -1,3 +1,15 @@
+## 2026-10-12T22:20:00-04:00 - Deployed: last page kept on the server
+
+The start page's "last page" moved from browser storage to the server so it follows the user across devices:
+`/api/ui/last-page` (GET/PUT/DELETE) on a new per-user table `user_ui_state` (V269, one row per user, not per tax
+year; cleared by the user-data reset so a reset account starts at Last year 1040). The UI saves debounced (600 ms)
+without the loading overlay and drops the old browser copy. Backend `3bee83a` + UI `e327056`.
+
+Verified: unit `UiStateResourceTest`; e2e `start-page.spec.ts` 4/4 locally (incl. a second browser context opening
+on the remembered page); on production a second, separate browser signed in and opened on the page saved by the first.
+Note: two local start-page runs failed while the Angular dev server was hot-reloading files I had just edited; not
+reproducible in 5 subsequent runs (9/9 each). Azure Postgres stopped again afterwards.
+
 ## 2026-10-12T21:15:00-04:00 - Deployed: start page, Last year 1040 fixes, clean-user-data skill
 
 - **Start page** (UI `ce502c9`): the first session opens Personal > Last year 1040; later sessions reopen the page

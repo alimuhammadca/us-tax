@@ -10,6 +10,7 @@ which is why an unflattened copy looks empty. Rebuild with `python make_1040.py 
 |---|---|
 | `rivera-1040-2024.pdf` | Both pages — the full test. Head of household, two dependents |
 | `rivera-1040-2024-page-1.png` | Photo/scan case: page 1 only (identity, address, filing status, dependents) |
+| `rivera-1040-2024-merged.png` | Both pages stacked in one image — read as two pages |
 | `rivera-1040-2024-page-2.png` | Page 2 only (occupation, phone, email, designee, bank) — shows a partial read |
 | `chen-1040-2024.pdf` | Married filing separately — spouse named on the filing-status line, no dependents |
 | `chen-1040-2024-page-1.png` | Page 1 of the MFS return as an image |
@@ -17,8 +18,9 @@ which is why an unflattened copy looks empty. Rebuild with `python make_1040.py 
 | `sample-1040-2024.pdf` | The e2e household (MFJ, one child) — same as `e2e/tests/fixtures/prior-1040` |
 | `sample-1040-2024-page-1.png` | Page 1 of the same, as an image |
 
-An image upload covers **one page**; for both pages use the PDF. (Stacking two pages into one tall PNG
-does not work — Azure reads it as a single page and only picks up part of it.)
+An image may hold one page, or several pages stacked into one tall image (`rivera-1040-2024-merged.png`):
+the app splits a stacked image into letter-size pages before sending it to Azure, which otherwise reads an
+image as a single page and loses page 1. Use at least ~150 dpi — smaller renders can lose the SSN digits.
 
 ## Expected result — `rivera-1040-2024.pdf` (verified 2026-10-12 against the local backend)
 

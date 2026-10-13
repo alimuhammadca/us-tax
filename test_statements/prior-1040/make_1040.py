@@ -14,6 +14,7 @@ import fitz  # PyMuPDF
 # Checkbox keys: (field name, test on the widget rect) — the 2024 form reuses names across boxes.
 HOH = ('c1_3', lambda r: r.x0 > 300 and abs(r.y0 - 199) < 3)
 MFJ = ('c1_3', lambda r: r.x0 < 200 and abs(r.y0 - 211) < 3)
+MFS = ('c1_3', lambda r: r.x0 < 200 and abs(r.y0 - 224) < 3)
 DIGITAL_NO = ('c1_5', lambda r: r.x0 > 530)
 CTC_ROW1 = ('c1_14', lambda r: True)
 CTC_ROW2 = ('c1_16', lambda r: True)
@@ -39,6 +40,23 @@ HOUSEHOLDS = {
             'f2_33': 'REGISTERED NURSE', 'f2_37': '614-555-0142', 'f2_38': 'morgan.rivera@example.com',
         },
         'checks': [HOH, DIGITAL_NO, CTC_ROW1, CTC_ROW2, SAVINGS, DESIGNEE_YES],
+    },
+    # Married filing separately: the spouse's NAME goes on the filing-status line (f1_18) and their SSN in the
+    # spouse SSN box; the "If joint return, spouse's first name" line stays empty. No dependents.
+    'chen': {
+        'text': {
+            'f1_04': 'TAYLOR J', 'f1_05': 'CHEN', 'f1_06': '433221234',
+            'f1_09': '433226789',
+            'f1_10': '88 LAKEVIEW AVE', 'f1_12': 'MADISON', 'f1_13': 'WI', 'f1_14': '53703',
+            'f1_18': 'ALEX CHEN',
+            'f1_32': '72,000', 'f1_41': '72,000', 'f1_54': '72,000', 'f1_56': '72,000',
+            'f1_57': '14,600', 'f1_59': '14,600', 'f1_60': '57,400',
+            'f2_02': '7,681', 'f2_08': '7,681', 'f2_10': '7,681',
+            'f2_11': '8,200', 'f2_14': '8,200', 'f2_22': '8,200', 'f2_23': '519', 'f2_24': '519',
+            'f2_25': '075000022', 'f2_26': '55501234',
+            'f2_33': 'ACCOUNTANT', 'f2_37': '608-555-0177', 'f2_38': 'taylor.chen@example.com',
+        },
+        'checks': [MFS, DIGITAL_NO, CHECKING, DESIGNEE_NO],
     },
     # Married filing jointly, one child, checking account, no designee (the e2e household).
     'sample': {

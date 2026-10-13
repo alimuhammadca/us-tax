@@ -1,3 +1,12 @@
+## 2026-10-13T12:20:00-04:00 - Deployed (manual workflow_dispatch): Personal form actions bar + remembered tax year
+
+Backend run 38426484142 -> Container App revision `ca-ustax-be--0000559` (image `efaa19b`, V270 applied, readiness
+200). Frontend run 38427632666 -> www.taxbeans.com. Includes: shared Prev / Save / Next bar on every Personal form,
+save-with-missing-fields warning, Next follows the sidebar, "Presidential election campaign", remembered tax year,
+stacked 1040 images, 1040 fixes. Production smoke: the bar renders on Identification; `/api/ui/last-page` returns
+taxYear 2025; no 5xx. Deploys were triggered through the GitHub REST API (gh is not installed). Azure Postgres was
+started by the owner and left running.
+
 ## 2026-10-12T23:59:00-04:00 - Remember the last tax year; deploys manual; no Postgres start/stop
 
 - The last page record (`user_ui_state`) now also keeps the tax year (V270 `last_tax_year`); a new session reopens

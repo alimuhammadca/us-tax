@@ -1,3 +1,12 @@
+## 2026-10-14T10:30:00-04:00 - The 3 flaky tests from the 2026-10-13 full regression
+- `k1-1065-ui-roundtrip`: the EIN typed first was blank on save while the TIN and box 1 typed after it were kept. The K-1 GETs
+  its active entry after "#1" appears and on arrival copies it onto every box (entryLoaded -> syncFormToPdf), wiping what was
+  typed meanwhile. Users are shielded by the "Loading data..." overlay; Playwright's fill() is not. The three K-1 round-trip
+  specs (1041/1065/1120-S) now wait for that GET before typing. 6/6 green.
+- `line1z-total-wages:382` (empty compute response body) and `line4abc-ira-income:111` (500 from GET /api/statement-selection):
+  the backend logged neither a 500 nor a slow request during the run, so both came from the UI dev server's proxy, like the
+  8814 ETIMEDOUTs. Each passed 3/3 on repeat; no change.
+
 ## 2026-10-14T03:40:00-04:00 - Full e2e regression (1609 passed) and fixes for its failures
 Full regression on 2026-10-13: 1609 passed, 7 failed, 3 flaky, 11 skipped (4.4h). Re-run individually:
 - Five passed: four Form 8814 tests (ETIMEDOUT to the dev UI on :4200 mid-run) and car-loan refinancing ("Failed to fetch" while seeding).

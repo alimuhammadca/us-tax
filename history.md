@@ -1,3 +1,15 @@
+## 2026-10-14T03:40:00-04:00 - Full e2e regression (1609 passed) and fixes for its failures
+Full regression on 2026-10-13: 1609 passed, 7 failed, 3 flaky, 11 skipped (4.4h). Re-run individually:
+- Five passed: four Form 8814 tests (ETIMEDOUT to the dev UI on :4200 mid-run) and car-loan refinancing ("Failed to fetch" while seeding).
+- `line1e-dependent-care.spec.ts:413` failed every time. Since the start page reopens the last page (2026-10-12) a reload keeps the
+  person tab, so after the Spouse step the test stayed on the Spouse tab, whose Tax Return section has no Form 2441. The spec's
+  `setFilingStatus` helper now switches back to the taxpayer tab after its reload.
+- `tax-scenarios.spec.ts:86` (dependent tab): app race. The shell restores the last page only after three startup loads; a tab the
+  user clicked meanwhile was overridden. `restoreStartPage` now leaves alone a tab or page opened while it was loading (us-tax-ui shell).
+- `get-started.spec.ts:164` flaked once with no Spouse tab after reload (Fix then did nothing); the test now checks the spouse seed
+  succeeded and waits for the Spouse tab.
+Affected specs re-run green: line1e-dependent-care, tax-scenarios, start-page, get-started (38 passed).
+
 ## 2026-10-13T20:40:00-04:00 - Your checklist: Fix links for messages about a dependent or a statement
 
 Of the 17 checklist messages that had no button, 14 now link. A flag can now say where it is fixed:

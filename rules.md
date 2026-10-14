@@ -177,4 +177,4 @@ working twin before theorising** - it localises the fault in one observation.
 `us-tax-ui/src/app/utils/personal-requirements.ts` only. Both the form's save message ("Saved. Some required fields
 are not completed yet: …") and Get started > Your checklist read it, so they cannot disagree. When a form gains or
 drops a required field, change that file (and the template's `required` highlighting) together. A new compute flag
-gets a Fix link only once it is added to `us-tax-ui/src/app/data/flag-form-links.ts`.
+gets a Fix link only once it is added to `us-tax-ui/src/app/data/flag-form-links.ts`. A flag about one dependent must also carry `withDependentId(dep.id())` (and one about a particular statement `withFormId(...)`), or the checklist cannot tell which tab to open.

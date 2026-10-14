@@ -1,3 +1,23 @@
+## 2026-10-13T20:40:00-04:00 - Your checklist: Fix links for messages about a dependent or a statement
+
+Of the 17 checklist messages that had no button, 14 now link. A flag can now say where it is fixed:
+`TaxReturnFlag` gained two optional fields (sent only when set), `dependentId` and `formId`.
+- **About one dependent** (the dependent id is set where the compute knows the child): `DEPENDENT_FAILS_GROSS_INCOME_TEST`,
+  `SCHEDULE_8812_CTC_DEMOTED_TO_ODC`, `SCHEDULE_8812_CTC_CHILD_SSN_UNVERIFIED` and `FORM8814_CHILD_NOT_QUALIFYING` open
+  the dependent's profile on their tab; `FORM8814_CHILD_FILED_JOINT_RETURN`, `..._WITHHOLDING_OR_ESTIMATED_PAYMENTS`,
+  `..._GROSS_INCOME_TOO_HIGH`, `FORM8814_SUPPRESSED_CHILD_FILES_OWN_RETURN` and `FORM8814_MFS_ELECTION_REVIEW` (first
+  child) open Child's int. & dividends there. Shown as "In: <name> › <form>"; the shell switches tab
+  (`FormNavigationService.openForDependent`). Without an id (a hand entry matching no dependent) there is no button.
+- **About a statement:** `STATEMENT_DOES_NOT_BELONG_TO_FAMILY` carries the statement's form id. Such a statement is listed
+  on no tab (its SSN matches no one), so the button opens it directly when it is chosen.
+- **Other links:** `SCHEDULE_8812_ITIN_ACTC_BLOCKED` -> Family Head Identification; the §461(l) carryforward notice ->
+  Form 172; the Social Security excess-repayment notice -> SSA-1099; the Form 2555 FTC-reduction notice -> Foreign tax
+  credit.
+- **Still no button (3):** `LINE7B_INTERNAL_INCONSISTENCY` (internal error), `DEPENDENT_OWN_RETURN_EIC_AND_SELF_CLAIM_DISALLOWED`
+  (raised only on a dependent's own return), `SCHEDULE_H_FUTA_CREDIT_REDUCTION_NOT_APPLIED` (no sidebar form has that input).
+- e2e `get-started.spec.ts` +1 test (a dependent message opens their tab, a misattributed W-2 opens the W-2); unit
+  assertions on the Form 8814 flags' dependent id.
+
 ## 2026-10-13T18:40:00-04:00 - Deployed (manual workflow_dispatch): Get started + Your checklist
 
 Owner asked: start Azure Postgres, deploy, stop it. `pg-ustax-9u14g` started (Stopped -> Ready). Backend run

@@ -1,3 +1,16 @@
+**★ The MFS SALT cap phase-down is figured on the full $40,000 and halved AFTERWARDS (round-2 QA, sc_00104,
+2026-10-15).** 2025 Schedule A State and Local Tax Deduction Worksheet: line 1 $40,000; line 5 $500,000 ($250,000
+MFS); line 7 = 30% of line 11b over line 5; line 9 = the larger of (line 1 - line 7) or $10,000; line 10 = the smaller
+of line 9 (HALF of line 9 if MFS) or line 5d. So an MFS cap falls 15 cents per dollar over $250,000 to a $5,000 floor
+at $350,000 - never 30% off the already-halved $20,000 (MAGI 300,000: 12,500, not 5,000). `saltLimitForStatusAndMagi`
+follows the worksheet (fix e9264a55). Non-MFS unchanged. Related, all pinned by Hrb2025Sc00101-00103: one $40,000 cap
+per JOINT return; "more than $500,000" means line 11b (after Schedule 1 adjustments), so exactly 500,000 is not
+reduced; the reduction cuts the cap, never the taxes (line 10 still takes the smaller of the cap and 5d).
+**Open (no fields added):** the app has one mortgage-points entry (in full OR amortized) - it cannot hold a cash-out
+refinance's improvement share plus the spread rest, or a paid-off loan's leftover points (released in full unless the
+same lender refinances - Pub. 936); the filer types the year's figure. The optional sales-tax table amount and the real-estate-tax day split are likewise typed
+results, not computed from the tables / dates.
+
 **★ An employer contribution to an Archer MSA leaves no deduction for the filer's own (round-2 QA, sc_00091,
 2026-10-15).** IRC §220(b)(5); 2025 Instructions for Form 8853: "If an employer made contributions to your Archer MSA,
 you aren't entitled to a deduction" - Part I (1): complete lines 1-2, skip 3-4, enter -0- on line 5. Any line 1

@@ -1,3 +1,28 @@
+## 2026-10-15T23:30:00-04:00 - Round-2 QA scenarios sc_00101-00110 (SALT cap, sales tax, real estate tax, mortgage interest, points) + one engine fix
+- c:/us-tax-hrb2025: sc_00101-00110 written (md + xlsx, 143 checks), round 1's run kept as Run A where it was right,
+  plus runs on the rule: SALT 500 over the cap and one 40,000 cap on a joint return (Form 8959 joint 250,000 threshold
+  -> 0 tax while the employer's 450 is credited) (101); sales-tax table + Houston local ratio + car - H&R Block's
+  round-1 3,385 was a local-rate entry failure, md now says to read the screen caption (combined 8.25 vs local 2.00);
+  tax-exempt interest lifts the table income to exactly 100,000 (next row); receipts replace the table (102); phase-
+  down: MAGI exactly 500,000 after an IRA deduction is not reduced, and a reduced cap above the taxes paid (103); MFS
+  phase-down figured on 40,000 then halved - 12,500 at 300,000, 5,000 at 350,000 with no standard deduction (104);
+  vehicle fee value part decides itemizing, a flat fee deducts nothing (105); sc_00106 - ROUND 1 WAS SLIGHTLY WRONG:
+  real estate tax splits by DAYS (181/365 = 4,959, not 5,000; same refund so H&R Block's 13/13 hid it), the buyer of
+  the old home paid the bill, and the new home's buyer deducts only her 184 days of a 12,000 bill she paid (106);
+  mortgage loan closed 12/16/2017 gets 750,000, not 1,000,000 (107; round 1's H&R Block Run B 6,253 = W-2 without
+  box 6, 6,433 with it); home equity interest none / all (addition) / 60% traced (108); seller-paid points deducted
+  by the buyer, second-home points spread (109); refinance points: improvement share in full, a paid-off loan's
+  leftover points released - but not with the same lender (110). Boxes 5/6 given on every W-2 over 200,000.
+- us-tax-be FIX e9264a55: the MFS SALT cap phase-down cut the halved 20,000 by the full 30% (MAGI 300,000 -> 5,000);
+  the 2025 Schedule A worksheet reduces 40,000 and halves line 9 afterwards (12,500). Mutation-checked (sc_00104 Run B
+  fails without it). No existing unit or e2e test pinned an MFS phase-down value (none corrected).
+- us-tax-be e6fe1c09: Hrb2025Sc00101-00110Test pin all 31 runs - green; TaxReturnComputeServiceTest, Sc*SqaScenarioTest
+  and Hrb2025*Test green (3,161).
+- Open (owner, no fields added): one mortgage-points entry (in full OR amortized) cannot hold a cash-out refinance's
+  improvement share + spread rest or a paid-off loan's leftover points (sc_00110 B-D seed the year's figure); no
+  optional sales-tax table, real-estate-tax day split or mortgage date (tier only) - typed results. Engine prorates the
+  mortgage limit with an exact ratio; Pub. 936 Table 1 line 14 rounds to three places (sc_00107 uses exact ratios).
+
 ## 2026-10-15T20:00:00-04:00 - Round-2 QA scenarios sc_00091-00100 (Archer MSA, standard vs itemized, medical, SALT) + one engine fix
 - c:/us-tax-hrb2025: sc_00091-00100 written (md + xlsx, 160 checks), round 1's run kept as Run A where it was right,
   plus runs on the rule: Archer MSA limit pro-rated by eligible months, and 0 once the employer contributes (91);

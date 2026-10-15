@@ -1,3 +1,32 @@
+## 2026-10-16T06:00:00-04:00 - Round-2 QA scenarios sc_00111-00120 (investment interest, charitable ceilings and valuation, casualty/disaster losses, section 1033, IRWE, investment theft, claim of right) + two engine fixes
+- c:/us-tax-hrb2025: sc_00111-00120 written (md + xlsx, 196 checks), round 1's run kept as Run A where it was right,
+  plus runs on the rule: Form 4952 2024 carryover on line 2 and qualified dividends - out by line 4b, in by the line 4g
+  election that then loses the 15% rate on the Schedule D Tax Worksheet (111); the 60% ceiling on AGI after an IRA
+  deduction and a 2024 carryover fitted in after the year's gifts (112); appreciated property - only the 50% room left
+  after cash (Pub. 526 Worksheet 2 line 28), and stock held exactly one year is short-term -> basis (113; H&R Block's
+  round-1 B failure kept); a car sold for 450 deducts 500, a car the charity keeps (1098-C box 5a) deducts FMV (114);
+  casualty - round 1 never stated the declaration date, which since the 2024/2025 relief acts picks the regime (H&R
+  Block's classification defaults to qualified: 19,500 vs 11,900) - now pinned: declared 10/20/2025 -> $100 + 10%,
+  07/18/2025 -> qualified $500 on Schedule A line 16, and a loss under 10% of AGI (115); the increased standard
+  deduction vs itemizing either way, and the same storm outside the window (116); section 1033 - round 1's "full
+  deferral" was a main home whose gain section 121 excludes anyway (and its stated 250,000 replacement basis was wrong:
+  400,000); the test moved to condemned land: partial, reinvested under basis (the whole 150,000 gain, not the 200,000
+  unspent, + NIIT 1,140), full (117); IRWE not other job costs, net of reimbursement, lost to the standard deduction
+  (118); investment theft less a 5,000 recovery prospect, and a romance scam (no profit motive, i4684 / CCA 202511015)
+  not deductible (119); section 1341 needs the prior-year tax - deduction when it saves more, credit (Schedule 3 13b)
+  when the 2024 rate was 24%, and exactly 3,000 repaid gives nothing (120). Every W-2 states boxes 3-6.
+- us-tax-be FIX 72398e81: donated vehicle sold for $500 or less capped at 500 (was the sale price), and a 1098-C with
+  box 5a/5b no longer blocked as "no 1098-C" (FMV allowed). Mutation-checked (sc_00114 E gave 450, F blocked). No
+  existing unit or e2e test pinned either case (Sc00300SqaScenarioTest's gate tests unchanged and green).
+- us-tax-be FIX a1c02edb: hasAnyManualCapitalDetails now counts the section 1033 conversion inputs, so a conversion-only
+  return is not blocked by CAPITAL_STATEMENT_UPLOAD_REQUIRED. Mutation-checked (sc_00117 B-D blocked without it). e2e
+  schedule-a-itemized.spec.ts's section 1033 test passes overrideFlags:true, unaffected (not run).
+- us-tax-be 0e865b76: Hrb2025Sc00111-00120Test pin all 41 runs - green; TaxReturnComputeServiceTest, Sc*SqaScenarioTest
+  and Hrb2025*Test green (2,258 in a clean report directory; the 3,179 in 72398e81's message counted stale reports).
+- Commit-message slip: sc_00112's hrb2025 commit says 24 checks; the xlsx has 22 (not amended).
+- Open (owner, no fields added): qualified-disaster net loss, Form 4684 Section B line 38b, the charitable bucket
+  (FMV vs basis) and the section 1341 method are typed figures, not computed from dates / facts (see rules.md).
+
 ## 2026-10-15T23:30:00-04:00 - Round-2 QA scenarios sc_00101-00110 (SALT cap, sales tax, real estate tax, mortgage interest, points) + one engine fix
 - c:/us-tax-hrb2025: sc_00101-00110 written (md + xlsx, 143 checks), round 1's run kept as Run A where it was right,
   plus runs on the rule: SALT 500 over the cap and one 40,000 cap on a joint return (Form 8959 joint 250,000 threshold

@@ -1,3 +1,18 @@
+**★ A donated car's §170(f)(12) cap is $500 when the charity sells it for $500 or less, and box 5a/5b means no cap
+(round-2 QA, sc_00114, 2026-10-15).** Pub. 526 (2025) Cars, Boats, and Airplanes: sold for more than $500 -> the smaller
+of gross proceeds or FMV; "Deduction $500 or less. If the qualified organization sells the vehicle for $500 or less and
+Exceptions 1 and 2 don't apply, you can deduct the smaller of $500, or the vehicle's FMV"; Exception 1 (significant
+intervening use / material improvement, 1098-C box 5a) and Exception 2 (needy individual, box 5b) -> FMV. buildScheduleA
+caps the vehicle at max(box 4c, 500) when sold (fix 72398e81; was the 450 sale price), and a 1098-C with box 5a/5b sets no
+cap; the sc_00300 CHARITABLE_VEHICLE_1098C_REQUIRED block now fires only when NO 1098-C is on file (it fired on a box-5a
+1098-C, which has no box 4c). **A §1033 involuntary conversion is manual capital detail** (fix a1c02edb): a return
+whose only capital item is a condemnation award / insurance proceeds (no 1099-B exists) no longer hits the blocking
+CAPITAL_STATEMENT_UPLOAD_REQUIRED. **Open (no fields added):** the casualty guided inputs apply only the $100 + 10%
+regime - a qualified disaster's net loss ($500, no 10%, Form 4684 window: declared 01/01/2020-09/02/2025, incident
+ended by 08/03/2025) is typed; Form 4684 Section B line 38b is typed (no "profit motive" / "prospect of recovery"
+inputs); the 30%/50% charitable buckets are the filer's choice (no holding-period check from Form 8283 dates); the §1341
+deduction-vs-credit comparison is not computed (the filer enters the winning method; both are blocked).
+
 **★ The MFS SALT cap phase-down is figured on the full $40,000 and halved AFTERWARDS (round-2 QA, sc_00104,
 2026-10-15).** 2025 Schedule A State and Local Tax Deduction Worksheet: line 1 $40,000; line 5 $500,000 ($250,000
 MFS); line 7 = 30% of line 11b over line 5; line 9 = the larger of (line 1 - line 7) or $10,000; line 10 = the smaller

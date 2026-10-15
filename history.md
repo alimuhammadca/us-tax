@@ -1,3 +1,26 @@
+## 2026-10-15T03:30:00-04:00 - Round-2 QA scenarios sc_00061-00070 (Roth conversion, QCD, rentals, royalties, QBI, passive) + four engine fixes
+- c:/us-tax-hrb2025: sc_00061-00070 written (md + xlsx), round 1's run kept as Run A where it was right, plus runs on
+  the rule: conversion taxable with no 10% while a code-1 cash part pays it, and 6,000 of basis via Form 8606 (61); QCD
+  $108,000 cap and the 70-1/2 gate (62 - H&R Block skipped the cap in round 1's sc_00264); 27.5-year depreciation with
+  the mid-month first year and a roof capitalized as an improvement (63); $25,000 allowance over the cap and without
+  active participation (64); vacation home at 30 / 14 / 15 personal days with annual expenses split by days (65);
+  royalty depletion base excludes a lease bonus, and the 100%-of-property-income limit (66); converted home, lesser of
+  adjusted basis or FMV either way, April conversion (67); rental to a daughter below / at / split fair rent (68 -
+  ROUND 1'S EXPECTED WAS WRONG: it netted the rent to 0; 280A(e) gives a 0/365 rental share, so the 9,600 is income);
+  rental QBI with the income limitation binding and net capital gain taken back out (69 - H&R Block needs the
+  forms-mode safe-harbor checkbox); allowance gone at 150,000, 500 at 149,000, MAGI without the IRA deduction (70).
+  Depreciation bases chosen so the IRS percentage table and the 1/27.5 formula agree.
+- us-tax-be FIX 3d68b702: QCD excluded at any age; now gated on 70-1/2 (+ advisory, UI link 54716f3). Three
+  TaxReturnComputeServiceTest fixtures and eight e2e tests in line4abc-ira-income.spec.ts seeded QCDs for owners born
+  1960-1992; DOBs moved to 1950 (e2e NOT run).
+- us-tax-be FIX 7927b4de: Form 8582 printed a non-active rental on line 1; now line 2 (print only).
+- us-tax-be FIX cf1012a7: automatic 15% royalty depletion capped at the property's income before depletion.
+- us-tax-be FIX 832a624a: below-market rental with no fair-rental days - rent is income, no rental deductions
+  (was netted to 0). TaxReturnComputeServiceTest's below-market case pinned 0; corrected to the rent.
+- us-tax-be 162fec8a: Hrb2025Sc00061-00070Test pin all 30 runs - green; each fix mutation-checked; full unit suite green.
+- Open (owner): the rental form takes rental-share expenses (no day split by rentalDays/personalUseDays) and has no
+  lease-bonus field; both pin tests enter the filer's own figures.
+
 ## 2026-10-14T23:55:00-04:00 - Round-2 QA scenarios sc_00051-00060 (IRAs) + three engine fixes
 - c:/us-tax-hrb2025: sc_00051-00060 written (md + xlsx), round 1's verified run kept as Run A, plus runs on the rule:
   QDRO exception 06 applies to the plan payout but NOT to the same money from an IRA, and the alternate payee's partial

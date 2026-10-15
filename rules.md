@@ -1,3 +1,15 @@
+**★ Four more IRS limits the engine now applies (round-2 QA, sc_00062/64/66/68, 2026-10-15).**
+(1) **QCD age gate (§408(d)(8)(B)(ii)):** a QCD must be made on or after the owner reaches 70½ (70th birthday + 6
+months). The payment date is not captured, so the QCD entries are dropped (and QCD_OWNER_UNDER_AGE_70_HALF_* raised)
+only when the owner cannot have reached 70½ at any time in the tax year. (2) **Form 8582 line placement:** a rental
+WITHOUT active participation prints on line 2 ("All other passive activities"), not line 1 - line 1 sends a loss to
+the Part II allowance by the form's own flow. (3) **Automatic 15% royalty depletion** is capped at the property's
+income before depletion (§613(a), 100% for oil and gas); a typed depletion figure is trusted. (4) **§280A(e) before
+§280A(c)(5):** rental expenses are first limited to the fair-rental-days share; a below-market rental with no
+fair-rental days has a share of 0 - the whole rent is income, nothing is deductible and nothing carries. Capping the
+full expenses at the rent (net 0) skips that step and understates income by the whole rent.
+**Open:** the rental intake takes the RENTAL share of each expense (no day split), and has no lease-bonus field.
+
 **★ Three IRS limits the engine now applies itself (round-2 QA, sc_00044/00055/00060, 2026-10-14).**
 (1) **Simplified Method:** the monthly exclusion is the ORIGINAL cost (worksheet line 2) ÷ the table number; a
 prior-year tax-free recovery only CAPS the year's exclusion at the cost not yet recovered (lines 6-8) - it never

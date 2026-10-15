@@ -1,5 +1,5 @@
 ## 2026-10-16T12:00:00-04:00 - Round-2 QA scenarios sc_00121-00130 (IRD estate tax, bond premium, suspended misc, reimbursements, Tax Table vs worksheet, Form 2555, collectibles, AMT) - no engine compute change
-- c:/us-tax-hrb2025: sc_00121-00130 written (md + xlsx, 155 checks), round 1's run kept as Run A (all ten were right),
+- c:/us-tax-hrb2025: sc_00121-00130 written (md + xlsx, 153 checks), round 1's run kept as Run A (all ten were right),
   plus runs on the rule: section 691(c) as the recipient's share (IRA 200,000 caused all 40,000 of estate tax: 40,000
   withdrawn -> 8,000, 25,000 -> 5,000) and lost to the standard deduction (121); bond premium excess capped at the bond's
   prior interest - bought this year -> 0, carried forward - and premium equal to interest (122); suspended misc costs

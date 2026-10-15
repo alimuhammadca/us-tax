@@ -1,3 +1,16 @@
+**★ The no-child EIC age test: 25 is reached on the DAY BEFORE the 25th birthday, 65 ON the 65th (round-2 QA, sc_00135,
+2026-10-16).** Pub. 596 (2025) Rule 11: "You meet the age test if you were born after December 31, 1960, and before January 2,
+2001" (also 2025 i1040 EIC Step 4 question 2). `meetsChildlessEicAgeTest` uses the age on the day after the year end for the
+25 test and the age on 12/31 for the under-65 test (fix c0e8205a; the engine used 12/31 for both, so a 01/01/2001 birthday lost
+the 649 credit). Related, pinned by Hrb2025Sc00131-00140 (no engine change): Form 8615 line 10 is the parents' ACTUAL line 16 -
+the Tax Table amount below 100,000 (99,000 MFJ -> 11,614, not the formula's 11,608) - while line 9 at 100,000+ uses the
+worksheet; line 18 is the LARGER of 16 and 17; Form 8814 line 9 (qualified share = line 6 x 2b/4) goes to 1040 lines 3a/3b at
+QDCG rates; the CTC phase-out excess rounds UP to the next 1,000 (440,001 -> 2,050); Form 2441's 6,000 limit is reduced by
+excluded box 10 benefits (Part III line 29) and the care credit is taken BEFORE the CTC; §25D carries forward, §25C and the
+§30D personal part do not; §30D uses the LESSER of 2025 and 2024 MAGI and "acquired" = binding contract + a payment.
+**Open (no fields added):** the app has no Form 8615 age-18/student "earned income more than half of support" input (the filer
+answers the kiddie question) and no §25D utility-subsidy input (cost is typed net of a nontaxable rebate).
+
 **★ Amortizable bond premium over a bond's interest is deductible only up to the bond's EARLIER interest (round-2 QA,
 sc_00122, 2026-10-15).** Reg. §1.171-2(a)(4)(i); Pub. 550 (2025) How To Report Amortization: the excess of the premium
 over the period's qualified stated interest goes to Schedule A line 16, "limited to the amount by which your total

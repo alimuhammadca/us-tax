@@ -1,3 +1,29 @@
+## 2026-10-16T18:00:00-04:00 - Round-2 QA scenarios sc_00131-00140 (kiddie tax, Form 8814, EIC, CTC phase-out, dependent care, energy credits, clean vehicle) + one engine fix
+- c:/us-tax-hrb2025: sc_00131-00140 written (md + xlsx, 143 checks), round 1's run kept as Run A, plus runs on the rule:
+  Form 8615 - H&R Block's guided parent-taxable-income box refuses 100,000+, so round 1's 24% parent (A) gets a Forms-mode
+  route and B-E are guided: 22% parent at 99,000 (line 9 worksheet - line 10 TAX TABLE 11,614 = 1,600, not 1,606), a parent
+  straddling 96,950, interest 2,700 (no 8615) vs 2,750 (131); round 1's "exact" 99,000 substitution typed the parents' tax as
+  11,608 (formula) - line 10 is their Tax Table tax, so line 11 is 720 not 726; parent in the 10% bracket -> line 17 wins (558);
+  January 1, 2008 birthday = 18 with earned income over half support -> no 8615 (132); Form 8814 - ROUND 1'S REFUND WAS WRONG:
+  it omitted the 10-year-old's 2,200 CTC (H&R Block applied it, refund 8,061); qualified dividends -> 8814 line 9 on 3a/3b at
+  15%; the 10% branch at 2,000 (133); two-child EIC phase-out / phase-in and the 1,700-per-child ACTC cap (134); childless EIC
+  born 01/02/2001 (no) vs 01/01/2001 (yes) vs 12/31/1960 (no) and the AGI lookup (135); CTC "or fraction" at 440,001, exactly
+  400,000, fully phased out - ROUND 1'S W-2 BOX 6 WAS NOT REAL: the employer withholds 0.9% over 200,000, so 360 lands on line
+  25c and A's refund is 11,204, not 10,844 (136); Form 2441 box 10 cutting the 6,000 limit and 21% at AGI 43,000 before the CTC
+  (137); §25D tax limit + carryforward and batteries at 13.5 vs 2.9 kWh (138); §25C 1,200 aggregate, doors, the 3,200 maximum,
+  no carryforward (139); §30D 2024 MAGI look-back, contract+deposit 09/29 vs 10/01, tax limit (140). New 2025 IRS text in
+  _tools/irs_text (i8615, f8615, i8814, f8814, p596, Schedule EIC, i1040s8, f1040s8, i2441, f2441, p503, i5695, f5695, f8936,
+  i8936).
+- us-tax-be FIX c0e8205a: the childless EIC age test used the age on 12/31, so a filer born 01/01/2001 (treated as 25 under
+  Pub. 596 Rule 11) lost the 649 credit; 25 now uses the day after the year end, 65 is unchanged. Mutation-checked (sc_00135
+  Run C 0 without it). No existing unit or e2e test pinned a January 1 birthday (none corrected).
+- us-tax-be 5e56ad9f: Hrb2025Sc00131-00140Test pin all 40 runs (the commit message says 42 - slip, not amended) - green;
+  TaxReturnComputeServiceTest, Sc*SqaScenarioTest and Hrb2025*Test 2,327 green in a clean report directory.
+- Commit-message slip: sc_00132's hrb2025 commit says 20 checks; the xlsx has 18 (not amended).
+- Open (owner, no fields added): no Form 8615 "earned income more than half of support" input for an 18-year-old / student
+  (the filer answers the kiddie question); no §25D utility-subsidy input (cost typed net). Sc00136SqaScenarioTest's Javadoc
+  repeats round 1's "below the withholding trigger" claim (its seeds are consistent; comment left).
+
 ## 2026-10-16T12:00:00-04:00 - Round-2 QA scenarios sc_00121-00130 (IRD estate tax, bond premium, suspended misc, reimbursements, Tax Table vs worksheet, Form 2555, collectibles, AMT) - no engine compute change
 - c:/us-tax-hrb2025: sc_00121-00130 written (md + xlsx, 153 checks), round 1's run kept as Run A (all ten were right),
   plus runs on the rule: section 691(c) as the recipient's share (IRA 200,000 caused all 40,000 of estate tax: 40,000

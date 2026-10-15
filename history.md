@@ -1,3 +1,33 @@
+## 2026-10-16T15:00:00-04:00 - Round-2 QA scenarios sc_00221-00230 (QBI income limit, SSTB phase-in, wage/UBIA limit, Schedule F farm optional method, hobby COGS, qualified joint venture, two Schedules C on Form 8995, Form 2210, MFS bars, education bars) + two engine fixes
+- c:/us-tax-hrb2025: sc_00221-00230 written (md + xlsx, 158 checks, 33 runs). Round 1's ten were far from their rules: QBI
+  always income-limited (221), an SSTB test that a non-SSTB with no wages also "passes" (222), a wage limit above the phase-in
+  with no property (223), a farm on the regular method (224), a hobby with no costs that count (225), a QJV and two businesses
+  that H&R Block entered as ONE Schedule C (226, 227), a 2210 with a zero prior year (228), and two zero-only conformance sweeps
+  (229, 230). New runs: the crossover of 20% of QBI and 20% of TI (15,750 of wages) (221); SSTB applicable percentage 50% at TI
+  222,300 and full 20% at exactly 197,300, with 30,000 of business wages so only the SSTB rule can cut (222); Part III phase-in
+  12,435 and 25% wages + 2.5% UBIA 12,500 (223); farm optional method 2/3 of gross 6,000 and the 7,240 cap with net < 7,840, and
+  the EIC it earns (224); hobby gross income = receipts - COGS (3,200) and the same activity for profit -> (1,000) Schedule C (225);
+  per-spouse wage base (176,100 W-2 -> 1,071 + 5,652) and per-spouse 400 floor (800 -> nothing) (226); Form 8995 netting a 16,000
+  loss (2,602) and a negative total (0, (10,000) carried) (227); 2210 line 9 = 6,000 not 90% (279), on-time quarters (0), one
+  January payment (176 although 991 is owed) (228); ODC allowed on MFS (round 1 omitted it), section 32(d)(2) EIC 3,581, HOH for a
+  separated spouse who pays the home (229); 4 prior AOTC years / less than half-time -> LLC 800, no 1098-T -> 0, eligible control
+  2,500 (230). Round-1 errors fixed: 229 missing ODC (refund 1,165 not 665/765); moved out of community-property states 226 (Santa
+  Fe NM -> Colorado Springs CO) and 229 (San Jose CA -> Portland OR); 230's dependent / nonresident / late-TIN variants kept as
+  documented rules, not graded (impossible on the facts or not enterable). 227 A/B keep round 1's per-line half SE 3,533 (cents
+  3,532). New IRS text: _tools/irs_text/f8995a.txt.
+- us-tax-be: two fixes, each mutation-checked (fix stashed -> pin fails -> restored): 609d0c8d EIC earned income now uses the
+  farm/nonfarm optional-method net earnings (Schedule SE line 4b, EIC Worksheet B line 1b) instead of the actual net profit
+  (sc_00224 B/C: 40 -> 423, 339 -> 511); 4826d51b Form 2210 applies a later estimated payment to the earliest unpaid installment
+  first, ending its penalty days on that due date (2210 instructions, penalty worksheet line 1b / Example 3; sc_00228 D: 253 ->
+  176). Pin tests Hrb2025Sc00221-00230Test (33, commit 8c06388d). TaxReturnComputeServiceTest, Sc*SqaScenarioTest and
+  Hrb2025*Test: 2,638 green from a freshly deleted surefire-reports directory. e2e: grepped e2e/tests for optional-method and
+  Form 2210 pins - none asserts an EIC under an optional method, and the 2210 specs either pay by withholding (spread evenly,
+  unchanged) or assert a penalty > 0 for a Q4-only payment (still > 0) - no spec edited.
+- Slip: sc_00223's commit says 19 checks; the xlsx has 17 (not amended).
+- Open (owner): outstanding.md A35 (no estimated-payment date input), A36 (section 199A W-2 wages read from Schedule C line 26;
+  UBIA only via depreciation-asset rows), B12 (notary profit in EIC earned income under the nonfarm optional method), B13 (2210
+  per-slice rounding).
+
 ## 2026-10-16T09:00:00-04:00 - Round-2 QA: sc_00201-00203 reworked (credit out of graded rows) + sc_00211-00220 (SE cap / room / floor across businesses and W-2s, statutory employee, Form 7206, SEP, simplified home office, standard mileage, section 179, meals) + two engine fixes
 - c:/us-tax-hrb2025, rework: sc_00201 (Form 8834), sc_00202 (Form 8911) and sc_00203 (Form 8912) graded credit rows H&R
   Block cannot enter and expected them to FAIL (PLAYBOOK 3.3). Routes re-checked: formAvail.xml (165 forms) has none of the

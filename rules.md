@@ -1,3 +1,21 @@
+**★ An optional-method SE base is EIC earned income; a later estimated payment pays the EARLIEST unpaid installment first
+(round-2 QA, sc_00224 / sc_00228, 2026-10-16).** (1) EIC Worksheet B line 1a is Schedule SE line 3, which skips the farm lines under
+the farm optional method and line 2 under the nonfarm optional method; line 1b adds Schedule SE line 4b. So the elected optional
+amount REPLACES the net profit in EIC earned income - fix 609d0c8d (sc_00224: gross farm income 9,000, net 1,000, optional 6,000 ->
+EIC 423, not 40; net 5,000, optional 7,240 -> 511, not 339). The farm method needs gross farm income <= 10,860 OR net farm profit
+< 7,840 (alternatives) and has no year limit. (2) 2025 Instructions for Form 2210, penalty worksheet line 1b: "Your payments are
+applied in the order made first to any underpayment balance in an earlier column until that underpayment is fully paid"
+(Example 3) - fix 4826d51b: a later payment pays off earlier underpayments, whose penalty days end on that payment's due date
+(sc_00228 D: one 15,700 payment on 01/15/2026 against 1,500 a quarter -> 176, not 253). Line 7's 1,000 test subtracts WITHHOLDING
+only (line 6 "Don't include estimated tax payments"), so 991 left to pay can still carry a penalty. Also pinned by
+Hrb2025Sc00221-00230 (no other engine change): below the threshold QBI = the smaller of 20% x (net profit - 1/2 SE) and 20% x TI before
+QBI (equal at 15,750 of wages for an 80,000 profit); an SSTB keeps the APPLICABLE PERCENTAGE of its QBI and wages inside 197,300-
+247,300 and nothing above; a non-SSTB above the threshold is capped at the greater of 50% of W-2 wages or 25% + 2.5% of UBIA, phased
+in over the range (Part III); hobby income on line 8j is receipts less cost of goods sold, other hobby costs nothing; a QJV gives each
+spouse a Schedule SE with their own wage base and 400 floor; Form 8995 nets QBI across businesses, a negative total -> 0 and a
+carryforward; MFS bars SLI and education credits outright, the EIC unless 32(d)(2), never the ODC; a separated spouse who pays the
+home is head of household; 4 prior AOTC years or less than half-time leave the lifetime learning credit, no 1098-T leaves nothing.
+
 **★ Each Schedule 3 credit has its OWN limit - not "the tax" (round-2 QA, sc_00201-00210, 2026-10-16; no engine change).** Form
 8834 line 6 and Form 8911 line 9 = net regular tax MINUS the tentative minimum tax (Form 6251 line 9) - a 12,000 qualified-EV release
 against tax 17,867 / TMT 8,294 is cut to 9,573 and the rest is LOST (8834 instructions, line 7); Form 8912 line 11 = regular tax PLUS

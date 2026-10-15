@@ -1,5 +1,5 @@
 ## 2026-10-17T00:00:00-04:00 - Round-2 QA scenarios sc_00141-00150 (MCC, PTC, backup withholding, rollover, unemployment, Form 2210, Additional Medicare, NIIT, Schedule B) + two engine fixes
-- c:/us-tax-hrb2025: sc_00141-00150 written (md + xlsx, 140 checks), round 1's run kept as Run A (all ten were right), plus runs
+- c:/us-tax-hrb2025: sc_00141-00150 written (md + xlsx, 139 checks), round 1's run kept as Run A (all ten were right), plus runs
   on the rule: MCC 2,500 capped at 2,000 with no carryforward, exactly 20% uncapped, the tax limit with a 525 carryforward, and
   the Schedule A cut (141; Alicia moved to Colorado to avoid H&R Block's Texas sales-tax add-on); PTC - round 1's H&R Block run
   never entered the 1095-A dollars (driver gap; Part III route + Forms-mode fallback given), plus excess APTC capped at 975 and the

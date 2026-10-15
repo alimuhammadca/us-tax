@@ -1,3 +1,21 @@
+## 2026-10-14T23:30:00-04:00 - Round-2 QA scenarios sc_00041-00050 (retirement income)
+- c:/us-tax-hrb2025: sc_00041-00050 written (md + xlsx), round 1's verified run kept as Run A where it was right, plus
+  runs on the rule: s.1041 divorce transfer with a 4-month holding period that only tacking makes long-term, and a LOSS
+  property where s.1015(e) keeps the gift rule out (41); s.1035 exchange (code 6) vs surrender + re-buy (42); fully
+  taxable pension with 5a blank, box 2a blank/2b + no cost, and a code-3 disability pension before minimum retirement
+  age on line 1h (43); Simplified Method Table 1 vs Table 2 at the 120/121 combined-age edge (44); s.72(t) full / none /
+  partial medical exception 05 at 7.5% of AGI (45); direct rollover vs 60-day rollover with the 20% withheld made up or
+  not (46); Form 4972 with the Schedule R credit H&R Block found, and DOB 01/01/1936 vs 01/02/1936 (47); designated
+  Roth box 11 2020 qualified vs 2021 nonqualified (48); 2025 Form 5329 Part IX 52a/52b - 25% / 10% corrected in the
+  window / RC waiver, which resolves round 1's 25%-vs-10% H&R Block disagreement (49); PSO exclusion = smaller of
+  premiums or 3,000, and the PSO gate (50).
+- Round-1 corrections carried in: line 5a blank for fully taxable pensions (43, 45, 49) and for Form 4972 Part III (47);
+  code-6 line 5a not graded ("need not be reported", 42); Form 2210 ambiguity removed by withholding changes (41, 45).
+- us-tax-be: Hrb2025Sc00041-00050Test pin every run except sc_00049 Run C (no waiver input) - all green, no engine change.
+- Observed, not fixed: the Simplified Method (per-person and per-stream) divides the REMAINING cost by the expected
+  payments when a prior-year recovery is entered; the worksheet divides the ORIGINAL cost (line 4) and caps at the
+  remaining cost (lines 7-8). First-year annuities (all of sc_00044) are unaffected.
+
 ## 2026-10-14T18:00:00-04:00 - Round-2 QA scenarios sc_00031-00040 (capital gains and losses) + INHERITED 1099-B fix
 - c:/us-tax-hrb2025: sc_00031-00040 written (md + xlsx), each keeping round 1's verified run as Run A and adding runs
   that test the rule the title names: ST gain stacking under LT in the 0% band (31), the $3,000 limit on/under the line

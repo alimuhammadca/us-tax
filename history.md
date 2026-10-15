@@ -1,3 +1,25 @@
+## 2026-10-15T20:00:00-04:00 - Round-2 QA scenarios sc_00091-00100 (Archer MSA, standard vs itemized, medical, SALT) + one engine fix
+- c:/us-tax-hrb2025: sc_00091-00100 written (md + xlsx, 162 checks), round 1's run kept as Run A where it was right,
+  plus runs on the rule: Archer MSA limit pro-rated by eligible months, and 0 once the employer contributes (91);
+  itemized 15,800 / 15,700 either side of 15,750 and the Schedule A line 18 election (92); born 01/01/1961 is 65 at
+  year end, 01/02/1961 is not, and the married 1,600 box (93); MFS spouse-itemizes zero survives age 65, no senior
+  deduction on MFS, plus the control run - round 1's Texas SALT ambiguity (H&R Block 3,809) removed (94); dependent
+  floor 1,350 and cap 15,750 (95); no overall itemized limit at 300k / 480k / 700k (no 2026 2/37 cut), W-2 boxes 5/6
+  explicit so Form 8959 shows (96); medical exactly on the 7.5% floor and a floor on AGI after an IRA deduction (97);
+  reimbursements: under the floor, a non-deducted 2024 bill's cheque, an excess from an employer-paid plan on 8z (98);
+  sc_00099 - ROUND 1'S CONCLUSION WAS WRONG: filing separately to clear the medical floor costs the couple 2,599
+  (12,745 vs 10,146 jointly), since the spouse must then itemize; all three returns graded (99); SALT line 5a built
+  from withholding + prior-year balance (no interest) + 2025-paid estimates, and a total exactly on 40,000 (100).
+- us-tax-be FIX a1b0cc88: Form 8853 line 5 ignored line 1 - an employer Archer MSA contribution now zeroes the filer's
+  deduction (i8853 Part I (1); IRC 220(b)(5)). Mutation-checked (sc_00091 Run C deducted 950 without it).
+  TaxReturnComputeServiceTest form8853_sectionsA_B_C_workedExample seeded employer 500 + own 1,000 and pinned a 1,000
+  deduction; corrected to 0. e2e line8853-msa-ltc.spec.ts has no employer contribution (unchanged, not run).
+- us-tax-be 18dad1d0: Hrb2025Sc00091-00100Test pin all 33 runs - green; TaxReturnComputeServiceTest, Sc*SqaScenarioTest
+  and Hrb2025*Test green.
+- Open (owner, no fields added): Form 8853 line 1 is not auto-read from W-2 box 12 code R; no Form 5329 Part VI
+  (Archer excess) computation; the Schedule A form has no medical-reimbursement input (net is typed) and no line-5a
+  breakdown (withholding / prior-year balance / estimates).
+
 ## 2026-10-15T14:00:00-04:00 - Round-2 QA scenarios sc_00081-00090 (other income and above-the-line adjustments) - no engine change
 - c:/us-tax-hrb2025: sc_00081-00090 written (md + xlsx, 172 checks), round 1's run kept as Run A where it was right,
   plus runs on the rule: section 104 damages - interest on a tax-free award and non-physical emotional distress less the

@@ -1,3 +1,10 @@
+**★ An employer contribution to an Archer MSA leaves no deduction for the filer's own (round-2 QA, sc_00091,
+2026-10-15).** IRC §220(b)(5); 2025 Instructions for Form 8853: "If an employer made contributions to your Archer MSA,
+you aren't entitled to a deduction" - Part I (1): complete lines 1-2, skip 3-4, enter -0- on line 5. Any line 1
+amount now forces Form 8853 line 5 (Schedule 1 line 23) to 0; the filer's line-2 money is then an excess contribution
+(Form 5329 Part VI, not computed - the app has no year-end MSA value). The line-3 limitation stays month-by-month
+(eligible on the 1st) / 12. **Open:** line 1 is not auto-read from W-2 box 12 code R (HSA line 9 is, from code W).
+
 **★ A real estate professional's rental is nonpassive only if she materially participates in IT (round-2 QA,
 sc_00075, 2026-10-15).** §469(c)(7)(A) only switches off §469(c)(2)'s per-se-passive rule; the rental is then tested
 under §469(c)(1) (Pub. 925: "rental real estate activities in which you materially participated aren't passive").

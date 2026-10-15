@@ -1,5 +1,5 @@
 ## 2026-10-15T20:00:00-04:00 - Round-2 QA scenarios sc_00091-00100 (Archer MSA, standard vs itemized, medical, SALT) + one engine fix
-- c:/us-tax-hrb2025: sc_00091-00100 written (md + xlsx, 162 checks), round 1's run kept as Run A where it was right,
+- c:/us-tax-hrb2025: sc_00091-00100 written (md + xlsx, 160 checks), round 1's run kept as Run A where it was right,
   plus runs on the rule: Archer MSA limit pro-rated by eligible months, and 0 once the employer contributes (91);
   itemized 15,800 / 15,700 either side of 15,750 and the Schedule A line 18 election (92); born 01/01/1961 is 65 at
   year end, 01/02/1961 is not, and the married 1,600 box (93); MFS spouse-itemizes zero survives age 65, no senior

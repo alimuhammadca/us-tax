@@ -2,7 +2,7 @@
 
 ## ★ Round-2 QA scenarios (us-tax-hrb2025) — shortcomings and required improvements — opened 2026-10-15
 
-Collected from the round-2 scenario batches sc_00041–00200 (and kept up to date as later batches report).
+Collected from the round-2 scenario batches sc_00041–00210 (and kept up to date as later batches report).
 Engine bugs those batches found were **fixed** (see history.md); what is listed here is what is still open.
 Items marked **[fields]** need the owner's sign-off because they add or change form fields.
 
@@ -40,6 +40,7 @@ Items marked **[fields]** need the owner's sign-off because they add or change f
 | A28 | MFS **"lived apart all year"** (SS form) now also gates the §469(i)(5) 12,500 rental allowance (fix e1a06bef) — a rental-loss filer with no benefits must still find that question on the Social Security form | Extends A25 | sc_00185 |
 | A29 | The pension form has **no per-annuity (stream) inputs** — one cost / age / payment count per person. The engine has the per-stream Simplified Method (`annuityStreams[]`, API only; un-blocked by fix 5d7921b8) | Two partially taxable pensions can only be figured as an aggregate approximation from the UI (flagged) | sc_00193 |
 | A30 | A **line-1h disability pension** (below minimum retirement age) is not carried into **EIC earned income** — the EIC form's *"Other earned income not on a W‑2 … long-term disability pay"* must be typed (double-count risk if it is auto-derived and also typed) | EIC 0 unless the user re-enters the pension | sc_00200 |
+| A31 | Form 8853 line 24 (**reimbursements** for the same LTC services) is a typed field — a reimbursement-basis Form 1099‑LTC on file (box 3 *Reimbursed amount*) is correctly kept off line 17 but is not offered as the line‑24 figure | User must re-type it; omitted → per‑diem limitation too high, taxable excess too low | sc_00206 |
 
 ### B. Engine behaviour to decide
 
@@ -52,6 +53,8 @@ Items marked **[fields]** need the owner's sign-off because they add or change f
 | B5 | §469(i)(5) allowance with **no** all-year answer now defaults to $0 (conservative, as line 6d); previously the last-6-months answer gave 12,500. Keep the default, or add an advisory flag when an MFS rental loss meets an unanswered all-year question? | sc_00185 |
 | B6 | Form 2210 now counts excess social security (Sch 3 line 11) as withholding (fix 2521fa22); the **actual-dates** option (box D) for withholding is not modelled for it either way | sc_00197 |
 | B7 | Round-1 `Sc00200SqaScenarioTest` still pins the round-1 routing (code-3 pension on **5b**, no EIC, refund 199) because its inputs never answer the minimum-retirement-age question; keep as an engine-shape test or align it with sc_00200 (line 1h, EIC 197, refund 396)? | sc_00200 |
+| B8 | Schedule SE rounds line 4a to whole dollars **before** the line‑4c *"less than $400"* test, so a 433 profit (399.88) becomes 400 and is taxed (62); a cents‑carrying return owes nothing. Both are legal under *"if you round, round all amounts"* (H&R Block also rounds per line — round‑1 sc_00210). Keep, or test the floor on the unrounded figure (filer‑favourable)? Round 2 avoided 433 (432 / 440 used) | sc_00207 |
+| B9 | Form 8912 computes line 12 but no **carryforward to next year** (§54A(c)(2)); sc_00203 C leaves 1,133 unused that is shown only in a note. Add a line‑4‑minus‑line‑12 carryforward output (and a prior-year import into line 3, as for the other bridges)? | sc_00203 |
 
 ### C. H&R Block routes the tester must confirm (scenario md gives a fallback)
 
@@ -61,6 +64,7 @@ Items marked **[fields]** need the owner's sign-off because they add or change f
 - sc_00171–00180 best guesses: alimony-received boxes `1.81` (pre-2019) / `1.219277` (post-2018) with the intro's Next-not-Skip (sc_00171, from sc_00235's solved route); Saver's-credit prior-distributions question (sc_00172 D); 2025 MAGI field on the vehicle MAGI screen (sc_00174); joint estimated-payment screen on MFS (sc_00177 C); **Forms mode Form 1040 line 6d** (sc_00179) and the Schedule 1 line 20 "lived apart the entire year" checkbox inside H&R Block's 1040 (sc_00180 C); spouse-covered-by-a-plan question on MFS (sc_00180 B).
 - sc_00161–00170 best guesses: accrued-interest adjustment screen (sc_00163 B); HSA month-by-month and last-month-rule screens (sc_00165); Form 8332 / lived-apart answers on MFS (sc_00167); HOH for a married person living apart (sc_00169 B); interest without a 1099 (sc_00170).
 - sc_00191–00200 best guesses: 1099‑DIV **box 5** (Section 199A dividends) on the F1099DIVForm screen and the QBI topic's *Qualified REIT Dividends…* screen (sc_00198); Simplified Method chain per 1099‑R incl. *recovered in earlier years* `84.241` (sc_00193); Form 2210 prior-year screen (sc_00195, 00197); Schedule R **Part I box 2 checked by hand in forms mode** (sc_00200 — round 1's driver could not click it); a W‑2 whose box 4 exceeds 10,918.20 may be refused at entry (sc_00194 C).
+- sc_00201–00210 best guesses: D.C. homebuyer topic `92.629` → `rb_CreditCarry` / `149.46120` and whether a result screen shows the **2026 carryforward** (sc_00204 C/D); Form 8818 typed by hand from *Report Bonds Redeemed* → **Whole Form** (sc_00205 — round 1 used `hrbforms`); Form 8853 **line 24** cell in forms mode (sc_00206 C); an **NOL carryover** display for 2026 (sc_00208 C); the 1099‑NEC attached inside the Schedule C (sc_00209); *Did you have inventory in 2025* / *Returns and allowances* screens and the EIC interview for a self‑employed filer (sc_00210).
 - Returned excess IRA contribution: item `92.19392` vs a 2026 1099-R code P (sc_00057).
 - K-1 box 14 / box 20 screens have no mapped field ids (sc_00084); Form 4952 carryover and election screens (sc_00111); §1033 has no postponement screen — gain entered as a land sale (sc_00117); combined vs local sales-tax rate (sc_00102); home-equity percentage (sc_00108); FEMA classification picked by declaration date (sc_00115/116).
 
@@ -76,11 +80,13 @@ Items marked **[fields]** need the owner's sign-off because they add or change f
 - H&R Block grants head of household from the status radio alone (run log) — sc_00190 C may let HOH be chosen with no qualifying person; the md tells the tester to grade it as Single.
 - Schedule R box 2 (under 65, disabled): round 1 found the guided topic has no questions and Part I never checked — sc_00200 A/B expect credit 75 / 36; if box 2 cannot be set they FAIL. Round 1 also showed no EIC on the line-1h disability pension (refund 124) — expected 197.
 - Part II-B of Schedule 8812 (3+ children) and Form 8582 aggregation across three rentals are untested in H&R Block (sc_00191 C/D, sc_00192 B–D).
+- **H&R Block 2025 has no Form 8834, 8911 or 8912** (`formAvail.xml`; the Schedule 3 lines 6i/6j/6k cells are computed with nothing feeding them): sc_00201, 00202, 00203 grade the base return and expect the credit rows to FAIL (sc_00202 C's credit 0 passes for the wrong reason). sc_00203's gross‑up is entered as 1099‑INT interest and grades.
+- Round 1's H&R Block run of sc_00210 showed no EIC (owed 1,695) — the EIC questions were not answered; round 2 expects 607.
 - MFS rental special allowance: if H&R Block never asks *at any time / all year*, sc_00185 B–D show whichever it assumes (expected FAILs in one of C or B/D).
 
 ### E. Housekeeping
 
-- Several scenario commit messages state a wrong check count (sc_00033, 00052, 00072, 00075, 00093, 00112, 00132, 00142, 00156, 00162, 00173, 00184, 00193); the spreadsheets are right and history.md records each slip.
+- Several scenario commit messages state a wrong check count (sc_00033, 00052, 00072, 00075, 00093, 00112, 00132, 00142, 00156, 00162, 00173, 00184, 00193, 00202); the spreadsheets are right and history.md records each slip.
 - `us-tax-be/context.md` has not been updated by the round-2 batches.
 
 ---

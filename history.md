@@ -1,3 +1,26 @@
+## 2026-10-16T02:00:00-04:00 - Round-2 QA scenarios sc_00201-00210 (Form 8834, 8911, 8912, 8859, 8815, 8853 Section C, Schedule C / SE, Schedule C loss and NOL, 1099-NEC with a W-2, 1099-K with inventory) - no engine change
+- c:/us-tax-hrb2025: sc_00201-00210 written (md + xlsx, 131 checks, 33 runs). Round 1's ten each tested one point far from the
+  form's limit. Corrections: sc_00210's SE tax was 1,696 (Schedule SE rounds lines 10 and 11 separately: 1,374 + 321 = 1,695, as
+  H&R Block showed) and it never claimed the EIC (607 -> owes 1,088, not 1,696). New runs: Form 8834 limited by tax - TMT (9,573
+  exactly, 12,000 cut to 9,573, rest lost) (201); Form 8911 home charger 30%, the 1,000 per-property cap (3,500 -> 1,000) and the
+  main-home gate (Schedule A line 17) (202); Form 8912 grossed up as interest and limited by tax + AMT with NO TMT floor (23,000
+  under, 25,000 -> 23,867, 1,133 carried) (203); Form 8859 Tax Liability Limit Worksheet - 2,675 exactly the tax, 3,000 leaves
+  325, a lifetime learning credit comes first (1,675 / 1,325) (204); Form 8815 line 7 ratio (0.600), MAGI 107,000 halves it,
+  114,500 stops it (MAGI before the exclusion) (205); Form 8853 line 23 LARGER of 420 x days or costs, line 24 reimbursements,
+  exactly 420 a day tax-free (206); Schedule SE 176,100 cap + Additional Medicare at a 220,000 profit, the 400 floor (432 vs 440)
+  (207); a 35,000 loss wipes out TI but is no NOL, a 60,000 loss leaves a 10,000 NOL (Form 172 adds the standard deduction back)
+  (208); W-2 box 3 shrinks the 12.4% part (150,100 -> 4,295; 176,100 -> 1,071 + Form 8959 117; box 1 must not be used) (209);
+  ending inventory not deducted, returns and allowances, EIC on SE earned income (210). H&R Block has no Form 8834/8911/8912
+  (formAvail.xml, computed-only 1040 cells): 201-203 grade the base return, credit rows are expected FAILs. sc_00206 folder renamed
+  shorter (Windows path limit). New IRS text in _tools/irs_text: f8834, f8911, f8911sa, f8912, f8859, f8853, f3800, f1099k, f8995,
+  f172, i1040ss.
+- us-tax-be: Hrb2025Sc00201-00210Test pin 33 tests - the engine agreed with every IRS-derived figure (no fix). One decision
+  recorded: Schedule SE rounds line 4a before the $400 test, so a 433 profit (399.88 -> 400) is taxed 62 - legal under round-all,
+  outstanding.md B8; Form 8912 has no carryforward output (B9). TaxReturnComputeServiceTest, Sc*SqaScenarioTest and Hrb2025*Test
+  2,576 green in a clean report directory. No e2e spec changed (no value changed).
+- Commit-message slip: sc_00202's hrb2025 commit says 11 checks; the xlsx has 10 (not amended).
+- Open (owner): Form 8853 line 24 is typed even when a reimbursement 1099-LTC is on file (A31); B8; B9.
+
 ## 2026-10-15T23:00:00-04:00 - Round-2 QA scenarios sc_00191-00200 (four-children CTC / Part II-B, three rentals, three pensions, three employers, QDCG + NIIT, SS + QDCG, excess SS + Additional Medicare, itemized + QBI + gain, tips + overtime, Schedule R) + two engine fixes
 - c:/us-tax-hrb2025: sc_00191-00200 written (md + xlsx, 103 checks, 36 runs). Round 1's ten were "multiplicity" and "interaction"
   returns whose arithmetic was mostly right but which never reached the rule that makes the count or the combination matter.

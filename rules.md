@@ -1,3 +1,16 @@
+**★ Each Schedule 3 credit has its OWN limit - not "the tax" (round-2 QA, sc_00201-00210, 2026-10-16; no engine change).** Form
+8834 line 6 and Form 8911 line 9 = net regular tax MINUS the tentative minimum tax (Form 6251 line 9) - a 12,000 qualified-EV release
+against tax 17,867 / TMT 8,294 is cut to 9,573 and the rest is LOST (8834 instructions, line 7); Form 8912 line 11 = regular tax PLUS
+AMT minus earlier credits - no TMT floor - and the credit is also line-2b interest (§54A(f)); Form 8859 line 2 = Form 1040 line 18
+less the worksheet's earlier credits (education, CTC, care, saver's ...), the rest carries indefinitely. Form 8911 personal part:
+30% of cost, 1,000 per property, main home only (Schedule A line 17). Form 8815: line 7 = expenses / proceeds when smaller; MAGI
+(line 9) is figured BEFORE the exclusion; 114,500 single or more stops. Form 8853 line 23 is the LARGER of 420 x days and the costs,
+less line-24 reimbursements. Schedule SE: line 9 = 176,100 - W-2 box 3 (never box 1); lines 10 and 11 are rounded separately
+(12,000 profit -> 1,374 + 321 = 1,695, not 1,696); the line-4c 400 floor is tested after line 4a is rounded (433 -> 400 -> taxed,
+outstanding.md B8). Form 172: a Schedule C loss is an NOL only where AGI itself goes below zero (the standard deduction is added
+back). A 1099-K is gross: returns go on Schedule C line 2 and unsold goods stay in ending inventory (Part III line 41). A low
+Schedule C profit earns the EIC (earned income = net profit - half SE tax).
+
 **★ Excess social security is WITHHOLDING for the estimated-tax penalty; a per-annuity-stream Simplified Method must not be blocked
 (round-2 QA, sc_00197 / sc_00193, 2026-10-15).** (1) 2025 Instructions for Form 2210, line 6: "Include the taxes withheld shown on
 ... Form 1040 ... line 25d ... Also, Schedule 3 (Form 1040), line 11"; Part III: withheld tax "and excess social security or tier 1

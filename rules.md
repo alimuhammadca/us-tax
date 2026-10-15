@@ -1,3 +1,13 @@
+**★ Three IRS limits the engine now applies itself (round-2 QA, sc_00044/00055/00060, 2026-10-14).**
+(1) **Simplified Method:** the monthly exclusion is the ORIGINAL cost (worksheet line 2) ÷ the table number; a
+prior-year tax-free recovery only CAPS the year's exclusion at the cost not yet recovered (lines 6-8) - it never
+shrinks the monthly amount (both the per-person and the per-stream path). (2) **Spousal IRA:** on a joint return
+the 6% §4973 excess-contribution test uses the couple's combined compensation less the OTHER spouse's traditional +
+Roth contributions (§219(c)) - the same rule the line-20 deduction cap already used; per-person compensation charged
+a non-earning spouse 420 on a valid 7,000 spousal IRA. (3) **Form 5329 exception 09** (first home) stops at $10,000
+whatever amount is entered (§72(t)(8)(B)); 08 (higher education) has no cap. When a field could hold either the raw
+fact or the post-limit figure, apply the statutory limit in compute rather than trusting the entry.
+
 **★ A pre-fill from an uploaded document fills BLANKS only, and says what it did.** Personal > Last year
 1040 writes into forms the user owns, so it never overwrites a value already entered; re-applying is
 therefore idempotent and safe, and the summary lists both what it filled and what it kept. Pre-fill only

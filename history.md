@@ -1,3 +1,24 @@
+## 2026-10-14T23:55:00-04:00 - Round-2 QA scenarios sc_00051-00060 (IRAs) + three engine fixes
+- c:/us-tax-hrb2025: sc_00051-00060 written (md + xlsx), round 1's verified run kept as Run A, plus runs on the rule:
+  QDRO exception 06 applies to the plan payout but NOT to the same money from an IRA, and the alternate payee's partial
+  rollover (51); not-covered deduction stays 7,000 at wages 120,000, and 8,000 at 50 on 12/31 (52); Pub. 590-A
+  Worksheet 1-2 round-UP to $10 (84,321 -> 3,280) and the $200 floor (88,800) (53); no deduction AT 89,000 (no $200
+  floor) and Form 8606 basis 7,000 + 14,000 -> 21,000 (54); spousal IRA with the covered husband on 126k-146k and the
+  non-covered wife on 236k-246k (55; round 1's original Expected missed the 400 Saver's credit H&R Block found); Saver's
+  credit at AGI 47,501 (0.2) and capped at the tax (56); 6% excise on the pay limit and the due-date correction with
+  earnings on 4b (57); line 4a blank + the 59-1/2 PAYMENT date inside one year (58); Form 8606 pro-rata over ALL IRAs,
+  an emptied IRA (0.800) and the 1.000 cap (59 - round 1 was blocked in H&R Block guided mode, which never asks the
+  basis amount; round 2 routes lines 2/6 through forms mode); first-home exception capped at 10,000 vs uncapped
+  education exception (60).
+- us-tax-be FIX 474c329b: the Simplified Method (per-person and per-stream) divided the REMAINING cost by the table
+  number after a prior-year recovery; the worksheet divides the ORIGINAL cost and caps at the cost not yet recovered
+  (26,000 / 2,400 recovered: 1,200, was 1,089). Hrb2025Sc00044Test runs D/E/F; TaxReturnComputeServiceTest's
+  prior-recovery case and e2e line5abc GAP A6.5c (not run) corrected to the worksheet figures.
+- us-tax-be FIX 96b6dea3: the §4973 6% excise used each spouse's own compensation, so a valid spousal IRA was charged
+  420; now §219(c) combined compensation on a joint return (sc_00055).
+- us-tax-be FIX 246c0666: Form 5329 exception 09 (first home) capped at $10,000 on the IRA path (sc_00060).
+- us-tax-be 68c3c58f: Hrb2025Sc00051-00060Test pin every run - all green; each fix mutation-checked.
+
 ## 2026-10-14T23:30:00-04:00 - Round-2 QA scenarios sc_00041-00050 (retirement income)
 - c:/us-tax-hrb2025: sc_00041-00050 written (md + xlsx), round 1's verified run kept as Run A where it was right, plus
   runs on the rule: s.1041 divorce transfer with a 4-month holding period that only tacking makes long-term, and a LOSS

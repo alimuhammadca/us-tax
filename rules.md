@@ -379,3 +379,19 @@ gets a Fix link only once it is added to `us-tax-ui/src/app/data/flag-form-links
 category, the box 2 short/long flags, a date acquired of "INHERITED" (long-term, IRC 1223(9)), then the dates (more than
 one year = long-term). A sale whose term cannot be derived is dropped from Schedule D, so any new text value allowed in
 column (b) ("VARIOUS" etc.) needs a rule here too.
+
+**Self-employed LTC premiums are age-limited per person (2026-10-15, sc_00215).** `seLongTermCarePremiums` on the
+se-deductions form counts toward Schedule 1 line 17 (Form 7206 line 2) only up to the §213(d)(10) band for the owner's
+age at year end — `ReferenceData.ltcPremiumAgeLimit` (2025: 480 / 900 / 1,800 / 4,810 / 6,020). The Pub. 974 PTC second
+pass must use the same eligible amount (`SeDeductionsResult.eligibleLtc`), never the raw field. Reuse the helper when the
+Schedule A medical LTC gap (outstanding.md) is closed.
+
+**Form 4562 line 12 is the ALLOWED §179, not the elected one (2026-10-15, sc_00219).** `computeScheduleC` applies the
+§179(b) aggregate limit (dollar cap, phase-out, business income incl. wages) and records {requested, allowed} in the
+`SECTION_179_LIMIT` ThreadLocal (reset at the start of every computeScheduleC). `buildForm4562List` must read it: line 12 =
+this form's proportional share of the allowed amount, line 13 = the rest. Any new path that builds Form 4562 has to do
+the same, or the form disagrees with Schedule C line 13.
+
+**Round-2 SE scenarios: pick amounts where Schedule SE rounding conventions agree.** Rounding every line (our engine,
+H&R Block) and carrying cents can differ by 1 on line 12 / 13 (e.g. 4a 184,700 → 27,192 vs 27,193). New runs use amounts
+where both give the same SE tax and half; a kept round-1 run grades the per-line figure H&R Block printed.

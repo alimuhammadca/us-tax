@@ -2,7 +2,7 @@
 
 ## ★ Round-2 QA scenarios (us-tax-hrb2025) — shortcomings and required improvements — opened 2026-10-15
 
-Collected from the round-2 scenario batches sc_00041–00210 (and kept up to date as later batches report).
+Collected from the round-2 scenario batches sc_00041–00220 (and kept up to date as later batches report).
 Engine bugs those batches found were **fixed** (see history.md); what is listed here is what is still open.
 Items marked **[fields]** need the owner's sign-off because they add or change form fields.
 
@@ -41,6 +41,9 @@ Items marked **[fields]** need the owner's sign-off because they add or change f
 | A29 | The pension form has **no per-annuity (stream) inputs** — one cost / age / payment count per person. The engine has the per-stream Simplified Method (`annuityStreams[]`, API only; un-blocked by fix 5d7921b8) | Two partially taxable pensions can only be figured as an aggregate approximation from the UI (flagged) | sc_00193 |
 | A30 | A **line-1h disability pension** (below minimum retirement age) is not carried into **EIC earned income** — the EIC form's *"Other earned income not on a W‑2 … long-term disability pay"* must be typed (double-count risk if it is auto-derived and also typed) | EIC 0 unless the user re-enters the pension | sc_00200 |
 | A31 | Form 8853 line 24 (**reimbursements** for the same LTC services) is a typed field — a reimbursement-basis Form 1099‑LTC on file (box 3 *Reimbursed amount*) is correctly kept off line 17 but is not offered as the line‑24 figure | User must re-type it; omitted → per‑diem limitation too high, taxable excess too low | sc_00206 |
+| A32 | Schedule C **meals** has one field (50%) — no **DOT hours-of-service 80%** category (H&R Block has `7.244`; our Form 2106 path has `form2106SubjectToDotHoursOfService`) | An owner-operator trucker's meals are under-deducted (50% instead of 80%) | sc_00220 |
+| A33 | Self-employed **LTC premiums** (`seLongTermCarePremiums`) are one amount per owner; Form 7206 line 2 caps them **per covered person** by that person's age. Fix a05c9fd3 caps them at the **owner's** age band | Premiums paid for a spouse/dependent of a different age band are capped at the owner's limit (under- or over-states) | sc_00215 |
+| A34 | Schedule C **vehicle** has no car-loan-interest input — the business share (business miles ÷ total) must be pre-computed into *other interest* (line 16b); H&R Block takes the full interest and applies the mileage % | User computes the percentage | sc_00218 |
 
 ### B. Engine behaviour to decide
 
@@ -55,6 +58,8 @@ Items marked **[fields]** need the owner's sign-off because they add or change f
 | B7 | Round-1 `Sc00200SqaScenarioTest` still pins the round-1 routing (code-3 pension on **5b**, no EIC, refund 199) because its inputs never answer the minimum-retirement-age question; keep as an engine-shape test or align it with sc_00200 (line 1h, EIC 197, refund 396)? | sc_00200 |
 | B8 | Schedule SE rounds line 4a to whole dollars **before** the line‑4c *"less than $400"* test, so a 433 profit (399.88) becomes 400 and is taxed (62); a cents‑carrying return owes nothing. Both are legal under *"if you round, round all amounts"* (H&R Block also rounds per line — round‑1 sc_00210). Keep, or test the floor on the unrounded figure (filer‑favourable)? Round 2 avoided 433 (432 / 440 used) | sc_00207 |
 | B9 | Form 8912 computes line 12 but no **carryforward to next year** (§54A(c)(2)); sc_00203 C leaves 1,133 unused that is shown only in a note. Add a line‑4‑minus‑line‑12 carryforward output (and a prior-year import into line 3, as for the other bridges)? | sc_00203 |
+| B10 | §179 **carryover** (Form 4562 line 13) is now printed (fix f45b21dd) but not persisted or imported as next year's line 10 — the `SCHEDULE_C_SECTION_179_LIMITED` advisory is the only trace. Build it as a 12th carryforward bridge? | sc_00219 |
+| B11 | Schedule SE line 12 rounding: the engine rounds every line (H&R Block too); sc_00211 A (27,192 vs 27,193 with cents), sc_00219 A (4,238 / 4,239) and sc_00220 A (5,935 / 5,934) keep round 1's amounts and grade the per-line figure H&R Block printed in round 1 — new runs avoid amounts where the conventions split | sc_00211, 00219, 00220 |
 
 ### C. H&R Block routes the tester must confirm (scenario md gives a fallback)
 
@@ -65,6 +70,7 @@ Items marked **[fields]** need the owner's sign-off because they add or change f
 - sc_00161–00170 best guesses: accrued-interest adjustment screen (sc_00163 B); HSA month-by-month and last-month-rule screens (sc_00165); Form 8332 / lived-apart answers on MFS (sc_00167); HOH for a married person living apart (sc_00169 B); interest without a 1099 (sc_00170).
 - sc_00191–00200 best guesses: 1099‑DIV **box 5** (Section 199A dividends) on the F1099DIVForm screen and the QBI topic's *Qualified REIT Dividends…* screen (sc_00198); Simplified Method chain per 1099‑R incl. *recovered in earlier years* `84.241` (sc_00193); Form 2210 prior-year screen (sc_00195, 00197); Schedule R **Part I box 2 checked by hand in forms mode** (sc_00200 — round 1's driver could not click it); a W‑2 whose box 4 exceeds 10,918.20 may be refused at entry (sc_00194 C).
 - sc_00201–00210 best guesses: D.C. homebuyer topic `92.629` → `rb_CreditCarry` / `149.46120` and whether a result screen shows the **2026 carryforward** (sc_00204 C/D); Form 8818 typed by hand from *Report Bonds Redeemed* → **Whole Form** (sc_00205 — round 1 used `hrbforms`); Form 8853 **line 24** cell in forms mode (sc_00206 C); an **NOL carryover** display for 2026 (sc_00208 C); the 1099‑NEC attached inside the Schedule C (sc_00209); *Did you have inventory in 2025* / *Returns and allowances* screens and the EIC interview for a self‑employed filer (sc_00210).
+- sc_00211–00220 best guesses: a **second Schedule C** by clicking `Add_Business` again (sc_00211 B/C, 00213 B/C, 00214 B/C — mapped, never driven natively; the loss screen *FinalItems…WithLoss*); the statutory W‑2's Schedule C **copy number** `52.127` when another Schedule C exists (sc_00214); **Form 7206 in forms mode** for LTC premiums and whether its line 2 caps by age (sc_00215 C); the **SEP** path `182.13` → `182.87` → `182.130` → `182.52` (round 1 used the profit-sharing field `182.35`) and whether line 16 is capped at the 70,000 limit (sc_00216 B/C); **simplified home office** `103.147265` + its own percentage field `103.150742` (sc_00217 — never driven); the **vehicle** section `Add_Vehicle` / `126.12`–`126.16` / tolls `126.31` / interest `126.22` (sc_00218 — never driven); **§179** `31.267` / `31.136` and whether the error check applies the business income limit incl. wages (sc_00219 B/C); **overnight travel** `7.276` and the entertainment box `7.208155` (sc_00220 B/C).
 - Returned excess IRA contribution: item `92.19392` vs a 2026 1099-R code P (sc_00057).
 - K-1 box 14 / box 20 screens have no mapped field ids (sc_00084); Form 4952 carryover and election screens (sc_00111); §1033 has no postponement screen — gain entered as a land sale (sc_00117); combined vs local sales-tax rate (sc_00102); home-equity percentage (sc_00108); FEMA classification picked by declaration date (sc_00115/116).
 
@@ -80,7 +86,8 @@ Items marked **[fields]** need the owner's sign-off because they add or change f
 - H&R Block grants head of household from the status radio alone (run log) — sc_00190 C may let HOH be chosen with no qualifying person; the md tells the tester to grade it as Single.
 - Schedule R box 2 (under 65, disabled): round 1 found the guided topic has no questions and Part I never checked — sc_00200 A/B expect credit 75 / 36; if box 2 cannot be set they FAIL. Round 1 also showed no EIC on the line-1h disability pension (refund 124) — expected 197.
 - Part II-B of Schedule 8812 (3+ children) and Form 8582 aggregation across three rentals are untested in H&R Block (sc_00191 C/D, sc_00192 B–D).
-- **H&R Block 2025 has no Form 8834, 8911 or 8912** (`formAvail.xml`; the Schedule 3 lines 6i/6j/6k cells are computed with nothing feeding them): sc_00201, 00202, 00203 grade the base return and expect the credit rows to FAIL (sc_00202 C's credit 0 passes for the wrong reason). sc_00203's gross‑up is entered as 1099‑INT interest and grades.
+- **H&R Block 2025 has no Form 8834, 8911 or 8912** (`formAvail.xml`; the Schedule 3 lines 6i/6j/6k cells are computed with nothing feeding them; `92.143` → Form 3800 is line 6a; line 6z `OtherCr` is computed). ~~sc_00201–00203 expected the credit rows to FAIL~~ — **RESOLVED 2026-10-15**: reworked so the credit is documented in the md and kept out of the graded rows (fill-only-if-displayed, blank expected); the graded rows are the base return, entry checks of the credit-less return, and for sc_00203 the 1099‑INT gross-up.
+- sc_00211–00220 possible H&R Block findings: no screen mentions the SEP **70,000** limit (sc_00216 C); the meals screen offers **entertainment at 50%** (`7.208155`) though §274(a) allows nothing (sc_00220 C); the §179 business income limit is applied only at the error check (sc_00219 B); Form 7206 line 2 may take the LTC premiums uncapped (sc_00215 C).
 - Round 1's H&R Block run of sc_00210 showed no EIC (owed 1,695) — the EIC questions were not answered; round 2 expects 607.
 - MFS rental special allowance: if H&R Block never asks *at any time / all year*, sc_00185 B–D show whichever it assumes (expected FAILs in one of C or B/D).
 
@@ -88,13 +95,15 @@ Items marked **[fields]** need the owner's sign-off because they add or change f
 
 - Several scenario commit messages state a wrong check count (sc_00033, 00052, 00072, 00075, 00093, 00112, 00132, 00142, 00156, 00162, 00173, 00184, 00193, 00202); the spreadsheets are right and history.md records each slip.
 - `us-tax-be/context.md` has not been updated by the round-2 batches.
+- sc_00213's commit message says 18 checks; the spreadsheet has **15**. sc_00214–00217 had wrong J.K. Lasser section numbers in the first commit, corrected in d960e8d.
+- ~~sc_00201–00203 graded credit rows H&R Block cannot enter (expected FAILs)~~ — **RESOLVED 2026-10-15** (reworked, see D).
 
 ---
 
 
 ## ★ GAP — §213(d)(10) long-term-care premium cap is NOT enforced (found 2026-08-29, sc_00098)
 
-**Status: OPEN. Real, reproducible, silently OVERSTATES the medical deduction.**
+**Status: OPEN for Schedule A. Real, reproducible, silently OVERSTATES the medical deduction.** (The self‑employed side — Form 7206 line 2 / Schedule 1 line 17 — now enforces the age bands: fix a05c9fd3, 2026‑10‑15, sc_00215; `ReferenceData.ltcPremiumAgeLimit` can be reused here.)
 
 Schedule A takes medical as a single lump sum — `medicalDentalExpensesPaid` — and applies only the
 7.5%-of-AGI floor (`TaxReturnComputeService` ~line 12099). **No per-item statutory limit is applied**,

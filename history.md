@@ -1,3 +1,36 @@
+## 2026-10-16T09:00:00-04:00 - Round-2 QA: sc_00201-00203 reworked (credit out of graded rows) + sc_00211-00220 (SE cap / room / floor across businesses and W-2s, statutory employee, Form 7206, SEP, simplified home office, standard mileage, section 179, meals) + two engine fixes
+- c:/us-tax-hrb2025, rework: sc_00201 (Form 8834), sc_00202 (Form 8911) and sc_00203 (Form 8912) graded credit rows H&R
+  Block cannot enter and expected them to FAIL (PLAYBOOK 3.3). Routes re-checked: formAvail.xml (165 forms) has none of the
+  three; SearchTopics.cxml has no 8834/8912/1097 hit; 92.143 ends at Form 3800 (Schedule 3 line 6a); Schedule 3 line 6z
+  (OtherCr, id 363) carries the computed attribute (132) like 6i/6j/6k. Now: base return + entry checks of the credit-less
+  return graded, the credit row fill-only-if-displayed with a blank expected; 203 grades the 1099-INT gross-up per run and
+  adds a 2024 tax (18,000) so the credit-less return owes no 2210 penalty. Checks 12 / 13 / 33 (were 12 / 10 / 15). IRS
+  credit figures kept in md sections 4/6, marked not graded. Pin tests unchanged (no value changed).
+- c:/us-tax-hrb2025, new: sc_00211-00220 (md + xlsx, 147 checks, 30 runs). Round 1's ten were single-business Schedule C
+  returns far from every limit, and four of them (217-219, and 216's SEP) were entered in H&R Block as a plain expense or on
+  the wrong screen, so the rule was never exercised there. New runs: the 176,100 cap on the COMBINED earnings of two
+  Schedules C, incl. a loss (211); line 8a = box 3 of every W-2 (two employers; 160,000 leaves 16,100 + Form 8959 56) (212);
+  the 400 floor on combined businesses (430 + 304 owes 104; 1,000 - 600 owes nothing) (213); a statutory Schedule C stays off
+  Schedule SE even beside a real business, and its loss doesn't reduce SE tax (214); Form 7206 cap (profit 8,000 -> 7,435) and
+  the LTC age band (1,500 -> 900 at 45) (215); SEP 20% (15,000 -> 11,152) and the 70,000 limit (76,350 at a 398,000 profit)
+  (216); simplified home office 300 sq ft cap and the tentative-profit limit with no carryover (217); standard mileage +
+  tolls + business share of loan interest (218); section 179 business income limit (70,000 -> 60,000, 10,000 carried) and
+  wages counting toward it (219); travel 100% and entertainment 0 beside 50% meals (220). Native H&R Block routes spelled out
+  (Add_Business twice, 52.127, 182.13/182.87/182.52, 103.147265 + 103.150742, Add_Vehicle 126.x, 31.267/31.136, 7.276,
+  7.208155). New IRS text in _tools/irs_text: i1040sc, i1040sse, i4562, i7206, i8829, i8995a, p560, p587, p334. Kept round-1
+  runs whose Schedule SE splits on rounding (211 A, 219 A, 220 A) grade H&R Block's per-line figure; new runs avoid splits.
+- us-tax-be: two fixes, each mutation-checked (fix stashed -> pin fails -> restored): a05c9fd3 self-employed LTC premiums
+  were added to Schedule 1 line 17 uncapped although labelled "age-limited" (sc_00215 C: 9,500 -> 8,900); f45b21dd Form 4562
+  line 12 printed the elected section 179 (70,000) while Schedule C deducted the allowed 60,000 - now line 12 = allowed share,
+  line 13 = carryover (sc_00219 B; presentation only). Pin tests Hrb2025Sc00211-00220Test (29). TaxReturnComputeServiceTest,
+  Sc*SqaScenarioTest and Hrb2025*Test: 2,605 green from a freshly deleted surefire-reports directory. No e2e spec pins a
+  changed value (grep: se-deductions-save-load.spec.ts only round-trips the LTC field; schedule-c/-f-depreciation.spec.ts
+  assert the limit flag and net profit, unchanged) - none edited.
+- Slips: sc_00213's commit says 18 checks (xlsx 15); sc_00214-00217 first commits carried wrong J.K. Lasser section numbers,
+  fixed in d960e8d. Not amended.
+- Open (owner): outstanding.md A32 (Schedule C meals has no DOT 80% option), A33 (SE LTC capped at the owner's age, not per
+  covered person), A34 (no vehicle loan-interest input), B10 (section 179 carryover bridge), B11 (SE rounding convention).
+
 ## 2026-10-16T02:00:00-04:00 - Round-2 QA scenarios sc_00201-00210 (Form 8834, 8911, 8912, 8859, 8815, 8853 Section C, Schedule C / SE, Schedule C loss and NOL, 1099-NEC with a W-2, 1099-K with inventory) - no engine change
 - c:/us-tax-hrb2025: sc_00201-00210 written (md + xlsx, 131 checks, 33 runs). Round 1's ten each tested one point far from the
   form's limit. Corrections: sc_00210's SE tax was 1,696 (Schedule SE rounds lines 10 and 11 separately: 1,374 + 321 = 1,695, as

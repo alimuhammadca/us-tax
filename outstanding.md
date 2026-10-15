@@ -33,7 +33,6 @@ Items marked **[fields]** need the owner's sign-off because they add or change f
 | A21 | Unemployment: no input for a repayment of benefits received in an **earlier** year (the entry now means same-year, netted on line 7) | Earlier-year repayments ≤ $3,000 nondeductible, > $3,000 via claim-of-right inputs | sc_00145 |
 | A22 | Form 5329 exception **01 (age 55)** accepted as entered — birth year not checked | Ineligible exception passes | sc_00144 |
 | A23 | No **medical-mileage** input (2025: 21¢/mile) | User adds mileage into the medical total | sc_00158 |
-| A24 | Form 8814/8615 etc.: Simplified-Method **joint-and-survivor beneficiary age** — confirm the app's input matches H&R Block's | — | sc_00044 |
 
 ### B. Engine behaviour to decide
 

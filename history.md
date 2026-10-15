@@ -1,5 +1,5 @@
 ## 2026-10-15T09:00:00-04:00 - Round-2 QA scenarios sc_00071-00080 (passive losses, at-risk, RE professional, other income) + one engine fix
-- c:/us-tax-hrb2025: sc_00071-00080 written (md + xlsx, 157 checks), round 1's run kept as Run A where it was right,
+- c:/us-tax-hrb2025: sc_00071-00080 written (md + xlsx, 152 checks), round 1's run kept as Run A where it was right,
   plus runs on the rule: allowance phase-out mid-range, on the smaller-of crossover and 500 past it (71); §469(g)
   release on a sale to an unrelated buyer vs not sold vs sold to a brother - Curtis now does NOT actively participate,
   since at MAGI 90,000 the $25,000 allowance alone frees the same 22,000 (72); passive loss against K-1 passive income,

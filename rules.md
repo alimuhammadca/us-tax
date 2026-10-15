@@ -1,3 +1,28 @@
+**★ An unemployment repayment entry is the SAME-YEAR repayment, netted on Schedule 1 line 7 - never line 24e (round-2 QA,
+sc_00145, 2026-10-15).** 2025 i1040 line 7: "If you received an overpayment of unemployment compensation in 2025 and you repaid
+any of it in 2025, subtract the amount you repaid ... check the box on line 7 and enter the amount you repaid". Line 24e is ONLY
+the Trade Act of 1974 supplemental-benefit repayment; the Pub. 525 sentence sc_00322 (65d28bc2) used to move the entry there
+("Deduct the repayment in the later year as an adjustment ... line 24e") is in Pub. 525's SUPPLEMENTAL unemployment benefits
+paragraph. Ordinary (1099-G) benefits repaid in a LATER year: $3,000 or less not deductible; over $3,000 -> claim of right
+(Schedule A line 16 or Schedule 3 line 13b, the existing section 1341 inputs). Fix eb116838 restored the line 7 netting; the
+over-3,000 advisory now says a prior-year repayment does not belong in the entry; UI help text reworded (us-tax-ui abacdbd +
+9128079). **Open (owner, no field added):** there is no separate "repaid benefits received in an EARLIER year" input.
+
+**★ Form 8396 line 3 comes off Schedule A home mortgage interest BEFORE the standard-vs-itemized choice (round-2 QA, sc_00141,
+2026-10-15).** Form 8396 line 3: "You must reduce your deduction for home mortgage interest on Schedule A (Form 1040) by the
+amount on line 3." Line 3 depends only on interest and the certificate rate (the 2,000 cap applies only when the rate is MORE
+than 20%), so buildScheduleA now subtracts it (fix 63b7840d). Reducing it afterwards let an unreduced total win the itemize
+choice (12,000 x 20% + 5,000 SALT: 17,000 chosen, then cut to 14,600 < 15,750) and left an itemizer's line 15 / 16 on the
+unreduced figure. Related, pinned by Hrb2025Sc00141-00150 (no other engine change): Form 8962 line 5 truncates (60,239 / 15,060
+-> 399) and is 400 at exactly 4 x FPL, where Table 5 leaves line 28 blank (no repayment limit); 1099-INT/DIV/B box 4 all go to
+line 25b (1099-B backup withholding is 24% of proceeds and refunded in full); age-55 separation exception 01 is decided by the
+YEAR the filer reaches 55; Form 2210 line 7 stops only when LESS than 1,000, and 110% applies only when 2024 AGI is MORE than
+150,000 (rate periods all 7% in the 2025 i2210); Form 8959 tests the total of all W-2 box 5 against 200,000 / 250,000 joint /
+125,000 MFS while employers withhold per employee over 200,000; NIIT is on MAGI (tax-exempt interest excluded, alimony
+included) and qualified dividends are NII; Schedule B is required for a nominee subtraction at any amount, and the 1,500 tests
+on interest and on dividends are separate. **Open:** the engine takes Form 5329 exception 01 as entered (it does not check the
+birth year).
+
 **★ The no-child EIC age test: 25 is reached on the DAY BEFORE the 25th birthday, 65 ON the 65th (round-2 QA, sc_00135,
 2026-10-16).** Pub. 596 (2025) Rule 11: "You meet the age test if you were born after December 31, 1960, and before January 2,
 2001" (also 2025 i1040 EIC Step 4 question 2). `meetsChildlessEicAgeTest` uses the age on the day after the year end for the

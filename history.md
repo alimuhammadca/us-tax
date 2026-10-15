@@ -1,3 +1,33 @@
+## 2026-10-17T00:00:00-04:00 - Round-2 QA scenarios sc_00141-00150 (MCC, PTC, backup withholding, rollover, unemployment, Form 2210, Additional Medicare, NIIT, Schedule B) + two engine fixes
+- c:/us-tax-hrb2025: sc_00141-00150 written (md + xlsx, 140 checks), round 1's run kept as Run A (all ten were right), plus runs
+  on the rule: MCC 2,500 capped at 2,000 with no carryforward, exactly 20% uncapped, the tax limit with a 525 carryforward, and
+  the Schedule A cut (141; Alicia moved to Colorado to avoid H&R Block's Texas sales-tax add-on); PTC - round 1's H&R Block run
+  never entered the 1095-A dollars (driver gap; Part III route + Forms-mode fallback given), plus excess APTC capped at 975 and the
+  400% line: 60,240 (line 5 = 400, no limit, repay 3,716) vs 60,239 (399, limit 1,625) (142); backup withholding on a 1099-DIV and
+  24% of 1099-B PROCEEDS on a 500 gain, all line 25b (143); the unreplaced 20,000 of a 60-day rollover and exception 01 for a
+  12/31/1970 vs 01/02/1971 birthday (144); W-4V withholding plus a same-year repayment netted on line 7 and a prior-year 2,000
+  repayment that is not deductible (145); Form 2210 at owe 855 vs exactly 1,000 (penalty 10) and 2024 AGI 150,000 vs 150,001
+  (penalty 140) - tester told to choose "calculate myself" (H&R Block defaults to IRS-calculates) (146); Form 8959 with two
+  employers neither withholding (360, nothing on 25c), box 5 not box 1, and the 125,000 MFS threshold (147); NIIT on MAGI not
+  taxable income, tax-exempt interest in neither, alimony raising MAGI until NII binds (148); MFJ 210,000/90,000 with 90 withheld,
+  joint wages under 250,000 with NIIT 3,420, qualified dividends still NII (149); Schedule B with interest and dividends each
+  1,500 (no), a 300 nominee share (yes), tax-exempt interest (no) (150). New IRS text in _tools/irs_text: f8396, i8962, f8962,
+  f1095a, f2210, i2210 (2025, downloaded - all four rate periods 7%), f8959, f8960, f1040sb, i1040sb (downloaded), f1040s2/s3.
+- us-tax-be FIX 63b7840d: Form 8396 line 3 now reduces Schedule A interest inside buildScheduleA, before the standard-vs-itemized
+  choice and the tax (sc_00141 C chose itemized 17,000 then cut it to 14,600; E's tax stayed on the unreduced deduction).
+  Mutation-checked. No existing unit or e2e test pinned an itemizing MCC filer's line 15 (none corrected).
+- us-tax-be FIX eb116838: the unemployment repayment entry is netted on Schedule 1 line 7 again (2025 i1040 line 7); sc_00322's
+  line-24e routing (65d28bc2) misread Pub. 525 - its line-24e sentence is about Trade Act supplemental benefits. Mutation-checked
+  (sc_00145 B). Tests that pinned the line-24e reading CORRECTED: TaxReturnComputeServiceTest (line 7 6,500; Schedule 1 aggregate
+  250 / 630), Sc00322SqaScenarioTest Run C (rewritten, 9 -> 8 tests); e2e line8-other-incomes.spec.ts (365) and
+  schedule1-pdf-render.spec.ts (4,600) corrected, NOT run. us-tax-ui abacdbd rewords the help text; it broke the build (an
+  unescaped apostrophe) and 9128079 fixed it (tsc clean).
+- us-tax-be 04c1e5fa: Hrb2025Sc00141-00150Test pin 37 tests over 38 runs - green; TaxReturnComputeServiceTest, Sc*SqaScenarioTest
+  and Hrb2025*Test 2,363 green in a clean report directory.
+- Commit-message slip: sc_00142's hrb2025 commit says 20 checks; the xlsx has 17 (not amended).
+- Open (owner, no fields added): no input for a repayment of unemployment benefits received in an EARLIER year; the engine takes
+  Form 5329 exception 01 as entered (no birth-year check).
+
 ## 2026-10-16T18:00:00-04:00 - Round-2 QA scenarios sc_00131-00140 (kiddie tax, Form 8814, EIC, CTC phase-out, dependent care, energy credits, clean vehicle) + one engine fix
 - c:/us-tax-hrb2025: sc_00131-00140 written (md + xlsx, 143 checks), round 1's run kept as Run A, plus runs on the rule:
   Form 8615 - H&R Block's guided parent-taxable-income box refuses 100,000+, so round 1's 24% parent (A) gets a Forms-mode

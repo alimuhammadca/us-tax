@@ -142,6 +142,7 @@ Items marked **[fields]** need the owner's sign-off because they add or change f
 - sc_00274's commit message (6bdbce2) says 15 checks; the spreadsheet has **13** — recorded at once in an empty correction commit (dbae606). sc_00271 and sc_00272 first cited a from‑memory §55(d)(3) quotation and an unverified Taxpayer Relief Act section number — replaced in e0b47d1 / 96dd742.
 - `C:/us-tax-hrb/_repro_progress.md` (no remote, not edited) still says *"HRB Schedule D Tax Worksheet UNDER-APPLIES the 25% unrecaptured-§1250 slice"* (sc_00329) and *"BUG #2 FOUND+FIXED (3f78f48)"* — both superseded: the engine change was reverted 2026‑09‑11 and H&R Block's 26,867 is the IRS figure (see D).
 - `Hrb2025Sc00250Test` seeded the 1099-R taxable amount under a non-canonical key (`taxableAmount`; the mapper's is `taxableAmountAmount`) — harmless there (box 1 = box 2a, and a blank 2a is treated as fully taxable), corrected in f727b2ef. Other older pin tests may carry the same key: grep before relying on a box-2a-less-than-box-1 seed.
+- Downloaded IRS instruction PDFs left **untracked** in `docs/IRS-Forms/_dl_i1040sr` (Schedule R) and `docs/IRS-Forms/_dl_i172` (Form 172) by the sc_00271–00280 batch — their text is committed in `us-tax-hrb2025/_tools/irs_text`; decide whether to commit the PDFs under `docs/IRS-Forms/` or delete the folders.
 - ~~sc_00201–00203 graded credit rows H&R Block cannot enter (expected FAILs)~~ — **RESOLVED 2026-10-15** (reworked, see D).
 
 ---

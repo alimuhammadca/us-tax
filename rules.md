@@ -1,3 +1,20 @@
+**★ General Rule percentage to 3 places; SECURE 2.0 exceptions stop at their dollar limits; elected Medicaid waiver pay is EIC earned
+income (round-2 QA, sc_00241-00250, 2026-10-15).** (1) Pub. 939 (Rev. 12-2025) Step 3: the exclusion percentage = investment / expected
+return ROUNDED TO THREE DECIMAL PLACES, applied to the first regular payment x payments received this year; Table V is entered at the age
+at the birthday NEAREST the annuity starting date (60,000 / (12,000 x 19.2) = .260 -> 3,120 tax-free, not 3,125) - fix 4890f474, both
+General Rule paths. (2) Form 5329 line 2 exception 23 (emergency personal expense) is at most 1,000 a year and exception 22 (domestic
+abuse victim) at most 10,300 for 2025 (Pub. 590-B; the account-value limbs need a balance we do not hold) - fix 688b7825, IRA and plan
+paths, like exception 09's 10,000; exception 19 (birth/adoption) is 5,000 PER birth or adoption, so it is not capped without a count
+(outstanding A42). (3) EIC Worksheet A line 1 is Form 1040 line 1z, which includes line 1d (Medicaid waiver pay not on a W-2, incl.
+qualified payments the filer elects to include) - fix 3c4c4f08 (sc_00249 B: EIC 4,328 not 1,709); Schedule 8812 already used 1z. Also
+pinned by Hrb2025Sc00241-00250 (no other engine change): MFS without Form 8962 box A -> line 24 = 0 and the whole advance is excess,
+limited by Table 5's "any other filing status" column (265% -> 1,950, not the single 975; 401 -> no limit); with box A (spousal abandonment)
+the credit is figured normally; an ITIN child gives the 500 ODC (nonrefundable) and the parent a SELF-ONLY EIC (Pub. 596 Rule 2), never the
+CTC/ACTC; student loan interest is barred to a claimed dependent (the engine bars "can be claimed" - statute "allowable"; the 1040
+instructions say "aren't claimed", outstanding B16); attorney fees on 24h/24i stop at the income from the claim (fees = income -> all
+deductible); 1099-OID box 11 is line 2a, never netted against box 1, and enters the Social Security worksheet; SS benefits are the NET box 5
+and a spouse's negative box 5 offsets on a joint return; W-2 box 12 A/B/M/N are Schedule 2 line 13 tax, not withholding.
+
 **★ A 1099-S real-estate sale is capital detail on its own; after an EIC disallowance the REASON and the DETERMINATION YEAR decide
 (round-2 QA, sc_00231-00240, 2026-10-17).** (1) The capital statement gate (`CAPITAL_STATEMENT_UPLOAD_REQUIRED`) counted neither the
 1099-S nor its `property1099SDispositions` rows, so a return whose only capital item was a land / second-home / over-the-cap home sale

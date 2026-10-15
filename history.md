@@ -1,3 +1,30 @@
+## 2026-10-15T15:40:00-04:00 - Round-2 QA scenarios sc_00241-00250 (MFS premium tax credit, ITIN child, dependent student loan interest, attorney-fee ceilings, tax-exempt OID, General Rule annuity, net SS benefits, SECURE 2.0 early-distribution exceptions, Medicaid waiver election, W-2 box 12 uncollected FICA) + three engine fixes
+- c:/us-tax-hrb2025: sc_00241-00250 written (md + xlsx, 141 checks, 31 graded runs + 3 documented). Reshaped (round 1 duplicated an
+  earlier round-2 scenario or could not be entered): 247 (lump-sum election = sc_00237 C/D; H&R Block does not compute it) -> net
+  SSA-1099 box 5 after a 4,000 repayment and a spouse's negative box 5 on a joint return (13,175 not 15,300); 248 (education / medical =
+  sc_00060 / sc_00045) -> the SECURE 2.0 exception limits 19 / 23 / 22 (1,500 / 1,900 / 970); 249 (W-2 waiver pay, which H&R Block cannot
+  exclude; plain exclusion = sc_00236 D) -> the earned-income election with a child (EIC 1,709 -> 4,328, ACTC 375 -> 1,700) and not making
+  it on the plateau; 250 (Form 8919, not in H&R Block; = sc_00236 A) -> W-2 box 12 A/B (306) and M/N (153) on Schedule 2 line 13, with
+  round 1's 8919 runs documented. New runs elsewhere: MFS PTC at 265% (the other-status cap 1,950, not 975) and with box A (715 / net
+  200) (241); the ITIN child's self-only EIC at 15,000 and an SSN control (242); a 24-year-old nobody can claim (243); fees exactly equal
+  to the settlement (244); tax-exempt OID moving taxable SS (4,200 / 6,200 / 4,000) (245); Table V at the nearest birthday (66 -> 19.2),
+  3-place rounding and a part year (246). Round-1 errors fixed: 241 "HRB skips the 1095-A" was a driver bug (it clicked Finish, name 58);
+  241 line 5 is 401 above 400% (my first pin said 431 - the engine was right); 246's facts said age 62 but 65 at the annuity start and used
+  the under-65 deduction (refund 445 -> 1,405); 248's medical run stated an AGI its inputs could not produce; 247 moved from Idaho
+  (community property) to Montana. Not graded: 243 B (claimable, not claimed - statute vs instructions), 250 Form 8919 codes A/H.
+  New IRS text: _tools/irs_text/p939.txt (Pub. 939 Rev. 12-2025, fetched from irs.gov).
+- us-tax-be: three fixes, each mutation-checked (fix stashed -> pin fails -> restored): 4890f474 General Rule exclusion percentage rounded
+  to three places (Pub. 939 Step 3; sc_00246 B 8,875 -> 8,880); 688b7825 Form 5329 line 2 stops at 1,000 (exception 23) and 10,300
+  (exception 22) on the IRA and plan paths (sc_00248 C/D: line 8 0 -> 1,900 / 970); 3c4c4f08 EIC earned income includes Form 1040 line
+  1d (sc_00249 B: 1,709 -> 4,328). Pin tests Hrb2025Sc00241-00250Test (34, commit c82a67c9). TaxReturnComputeServiceTest,
+  Sc*SqaScenarioTest and Hrb2025*Test: 2,715 green (386 classes) from a freshly deleted surefire-reports directory. e2e: grepped
+  e2e/tests - no spec seeds General Rule inputs or exception codes 22/23, and the Medicaid waiver specs never claim the EIC; no spec
+  edited.
+- Slip: sc_00242's commit (a81eac6) says 21 checks; the spreadsheet has 17 - corrected in an empty commit 3f15ba8.
+- Open (owner): outstanding.md A41 (General Rule prior recovery / Table V / starting date), A42 (exception 19 count, 22/23 account-value
+  limbs), B16 (section 221(c) "allowable" vs "aren't claimed"), B17 (EIC earned income from W-2s, not line 1z - 1c/1e/1g unverified),
+  B18 (one Medicaid waiver election for EIC and ACTC).
+
 ## 2026-10-17T12:00:00-04:00 - Round-2 QA scenarios sc_00231-00240 (Form 8862, Form 8814, dependent care qualifying person, IRA excess, alimony, wage character, Simplified Method + SS lump sum, car loan interest, installment sale, section 1341 / 962) + one engine fix
 - c:/us-tax-hrb2025: sc_00231-00240 written (md + xlsx, 113 checks, 37 graded runs + 3 documented). Round 1's ten were mostly
   "conformance" zero-checks or sat far from their rules: 231 graded "EIC without Form 8862" (not an input any product offers);

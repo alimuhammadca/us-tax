@@ -1,3 +1,19 @@
+**★ Carryovers keep their limits and come back in order; two engine fixes (round-2 QA, sc_00271-00280, 2026-10-16).** (1) A prior-year
+charitable carryover is Schedule A input however it arrives (legacy single field, per-category fields, bridge import) - fix b976ed48; it keeps
+its category: a 30% capital-gain-property carryover is limited to the smaller of 30% of AGI or 50% of AGI minus this year's 60%-limit cash
+(Pub. 526 step 4, Carryovers Example 2), current-year gifts first. (2) A loss suspended by the at-risk rules is a deduction of the activity in
+the next year (465(a)(2)); the activity's own income absorbs it before any at-risk loss arises, so the release headroom of an at-risk-tracked
+rental/4835 activity is amount at risk + net (fix 087c7405); what is left of the income then releases the 469 prior-year unallowed loss. A
+blank amount at risk still gives no headroom (outstanding B22). Also pinned (no other engine change): MFS AMTI over 900,350 adds 25% of the
+excess, at most 68,500 (6251 line 4); a building placed in service before 1999 uses 40-year SL for the AMT (a 1990s building whose 27.5-year
+schedule ended gives a NEGATIVE line 2m), none after 1998, and a passive rental's adjustment goes on 2m, not 2l; 1245 recapture = smaller of
+gain or depreciation, 1250 straight-line gain is unrecaptured (Sch D line 19) and the Schedule D Tax Worksheet taxes it at ordinary rates up to
+the 24% bracket (line 21 = larger of line 18 or line 20) - 25% is a ceiling; the Schedule R limit starts from Form 1040 line 18, which includes
+the Form 4972 tax; a post-2017 NOL deduction is limited to 80% of taxable income without the NOL/199A/250 deductions, and Form 6251 adds it
+back (2e) and takes the ATNOLD (2f, 90% of AMTI); a 448(c) small business is exempt from 163(j) (no Form 8990, interest in full); the QBI loss
+and REIT/PTP loss carryforwards net only against their own component (Form 8995 lines 4 and 8, floored at 0, leftovers on 16/17); 461(l)
+limits only the business loss ABOVE 313,000 (single, 2025) - a loss of exactly 313,000 is allowed in full.
+
 **★ Round-2 QA sc_00261-00270 rules pinned (2026-10-15; no engine change).** Form 8863: AOTC and LLC share the 80,000-90,000 (single)
 phase-out, line 6/17 = (90,000 - MAGI) / 10,000 to at least three places, nothing at 90,000; the AOTC's refundable 40% (line 8) is taken from
 the PHASED-OUT credit. §24(d)(5): a return with Form 2555 gets no ACTC (line 19 still applies; the FEITW taxes the rest at the stacked rate).

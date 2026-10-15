@@ -1,3 +1,34 @@
+## 2026-10-16T01:30:00-04:00 - Round-2 QA scenarios sc_00271-00280 (MFS AMT add-back, pre-1999 rental building on line 2m, Form 4797 recapture and the 1250 slice, Schedule R limit with Form 4972, 80% NOL limit, 163(j) small-business exemption, charitable carryover character, separate QBI/REIT carryforwards, at-risk then passive carryovers, 461(l) threshold)
+- c:/us-tax-hrb2025: sc_00271-00280 written (md + xlsx, 113 checks, 28 graded runs + 3 documented). Reshaped (round 1 duplicated an earlier
+  round-2 scenario, rested on a form H&R Block lacks, or could not discriminate): 271 (single phase-out = sc_00130; round 1's MFS row expected
+  45,704 at AMTI 900,000, 350 below the trigger) -> the MFS line-4 add-back at 900,350 / 1,000,350 / 1,200,350 (0 / 25,000 / capped 68,500);
+  272 (line 2m on a rental with no AMT) -> a pre-1999 building's 40-year AMT depreciation with PAB interest so the AMT applies (+3,750 for
+  12/1998, -8,250 for 1995 after its regular schedule ended, 0 for 2005); 274 (Form 4972 + 750 credit = sc_00047) -> the Schedule R limit
+  (Credit Limit Worksheet starts from 1040 line 18, which includes the 4972 tax): 5,820 / 770 / 550 -> credit 750 / 750 / 550; 276 (no Form
+  8990 in H&R Block; a sole proprietor is exempt anyway) -> the 163(j)(3) small-business exemption, 22,000 and 60,600 of interest in full,
+  Form 8990 runs documented; 277 (cash carryover = sc_00112 D) -> a 30% capital-gain carryover (30,000 of 40,000; 20,000 behind 30,000 of
+  cash); 279 (two gates on a K-1, no at-risk entry in H&R Block, 3 of 5 rows non-discriminating) -> a rental's at-risk carryover absorbed by
+  its own income before the passive carryover is released (line 5 0 / 0 / 5,000); 280 (no Form 461 in H&R Block) -> losses up to the 2025
+  threshold (200,000 and exactly 313,000) in full, the excess documented. Kept and extended: 273 (round 1's two sales + the gain above the
+  depreciation; the unrecaptured 1250 slice taxed at 22% via Schedule D Tax Worksheet line 21, tax 20,155 not 22,075); 275 (100,000 kept, plus
+  50,000 and exactly 64,000; ATNOLD keeps the AMT at 0); 278 (round 1's Year 2 corrected to 16,467 / 3,293, plus a carryforward larger than
+  each component: deduction 600 and 3,293). Round-1 notes corrected: 274's H&R Block "4972 tax 5,120" was most likely 5,870 - 750 (credit);
+  the run log's "HRB under-applies the 25% 1250 slice" (sc_00329, 26,867) is the correct worksheet result. New IRS text in _tools/irs_text:
+  i1040sr (Schedule R instructions), i172 (Form 172 instructions), f4797, f461.
+- us-tax-be: fix b976ed48 - a by-category charitable carryover (priorYearCharitableCarryoverCash/CapGain/...) or a bridge-imported one with
+  no other itemized input discarded Schedule A (and the carryover): the "nothing entered" gate checked only the legacy single field; now
+  priorCharityTotalForDisplay too (sc_00277 A/B: 15,750 standard deduction instead of 20,000 / 30,000). Fix 087c7405 - a rental's (and a
+  Form 4835 farm rental's) prior-year 465 carryover in an INCOME year was released only up to the amount at risk; the activity's own income
+  absorbs it first (465(a)(2); Form 6198 line 5), so the headroom is amountAtRisk + net (sc_00279: line 5 5,000 / 15,000 / 20,000 instead
+  of 0 / 0 / 5,000). Both mutation-checked (fix stashed -> pin tests fail -> restored). Pin tests Hrb2025Sc00271-00280Test (29, commit
+  1e0783a6). TaxReturnComputeServiceTest, Sc*SqaScenarioTest and Hrb2025*Test: 2,808 green (416 classes) from a freshly deleted
+  surefire-reports directory. e2e: grepped e2e/tests for both fixes - charitable specs use the legacy field or include current gifts, the
+  rental/4835 at-risk specs are loss years; no value changes, no spec edited.
+- Slips: sc_00274's commit (6bdbce2) says 15 checks; the spreadsheet has 13 - corrected in an empty commit dbae606. sc_00271 / 00272 authority
+  lines first quoted IRC 55(d)(3) from memory and an unverified TRA'97 section - replaced (e0b47d1, 96dd742).
+- Open (owner): outstanding.md A49 (rental 465 carryover is one form-level amount), B22 (blank amount at risk = fully at risk, but the
+  carryover is never released), B23 (AMT 150% DB applied to post-2015 bonus-eligible personal property, contrary to the 6251 line 2l text).
+
 ## 2026-10-15T23:30:00-04:00 - Round-2 QA scenarios sc_00261-00270 (education credit phase-out, Form 2555 vs the ACTC, income with no information return, shared HSA family limit, seller-financed mortgage, EIC investment-income limit, Roth MAGI add-back, one Form 8814 per child, the 60-63 catch-up edges, a dependent's scholarship) - no engine change
 - c:/us-tax-hrb2025: sc_00261-00270 written (md + xlsx, 112 checks, 34 graded runs). Reshaped (round 1 graded our app's own gates, or
   duplicated an earlier round-2 scenario): 261 (8863 MFS / 8862 / TIN gates = sc_00168/229/230 or unbuildable in H&R Block) -> the Form 8863

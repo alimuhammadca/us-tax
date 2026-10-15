@@ -1,5 +1,71 @@
 # Outstanding Items
 
+## ★ Round-2 QA scenarios (us-tax-hrb2025) — shortcomings and required improvements — opened 2026-10-15
+
+Collected from the round-2 scenario batches sc_00041–00160 (and kept up to date as later batches report).
+Engine bugs those batches found were **fixed** (see history.md); what is listed here is what is still open.
+Items marked **[fields]** need the owner's sign-off because they add or change form fields.
+
+### A. Missing inputs / form fields in our app **[fields]**
+
+| # | Gap | Effect today | Scenario |
+|---|---|---|---|
+| A1 | Rental expenses are entered as the **rental share**; no annual totals + rental/personal day split (Pub. 527) | User must pre-split; H&R Block splits from annual totals | sc_00065, 00068 |
+| A2 | No **lease-bonus** field for oil & gas royalties | Automatic 15% depletion would wrongly include a bonus | sc_00066 |
+| A3 | No **QCD distribution date** | 70½ check only catches an owner under 70½ all year | sc_00062 |
+| A4 | Rental per-property **material-participation** control offers only "Yes" | The "No" the real-estate-professional fix relies on can only be sent via API | sc_00075 |
+| A5 | Same control lets a **non-professional** make a long-term rental nonpassive | §469(c)(2) does not allow it (except e.g. average stay ≤ 7 days) | sc_00075 |
+| A6 | No **related-buyer** question on a rental disposition | "Sold" frees suspended losses even to a related buyer (§469(g)(1)(B)) | sc_00072 |
+| A7 | No input for a **moving reimbursement exceeding costs** (Form 3903 excess → line 1h) | Excess cannot be reported | sc_00088 |
+| A8 | Schedule 1 line 12 has no **category** (reservist / performing artist / fee-basis official) and no eligibility gates (100-mile test, $16,000 AGI test) | Ineligible amounts deducted silently | sc_00090 |
+| A9 | Form 8853 line 1 not read from **W-2 box 12 code R** (HSA already reads code W) | User must re-type employer MSA contributions | sc_00091 |
+| A10 | No **Form 5329 Part VI** (Archer MSA excess contribution 6%) | Not computed | sc_00091 |
+| A11 | Schedule A: no **medical-reimbursement** input (net typed) and no **line 5a breakdown** (withholding / prior-year balance / estimates) | User types totals | sc_00098, 00100 |
+| A12 | **Mortgage points**: one entry only (full or amortized) — cannot hold a cash-out refi split or a paid-off loan's leftover points | User types the year's total | sc_00110 |
+| A13 | No optional **sales-tax table**, no **real-estate-tax day split**, no **mortgage date** (only a before/after-cutoff tier) | User types results | sc_00102, 00106, 00107 |
+| A14 | **Qualified-disaster** net loss, Form 4684 line 38b (profit motive / recovery prospect), charitable **30%/50% bucket** (no holding-period check from Form 8283 dates) are typed, not computed | Errors in those choices pass silently | sc_00113, 00115, 00119 |
+| A15 | **§1341** claim of right: the deduction and credit methods are not compared (entering both is blocked) | User must pick the cheaper one | sc_00120 |
+| A16 | No field for an ineligible **impairment-related** item to be refused | Correct result, but refusal untestable | sc_00118 |
+| A17 | **Bond premium**: no input for the bond's prior interest inclusions / prior premium deductions, no carryforward | Over-deducts excess premium on a bond bought this year | sc_00122 |
+| A18 | **§691(c)** estate tax on IRD typed (no estate-tax-return inputs) | User computes the share | sc_00121 |
+| A19 | Form 8615: no input for "earned income more than half of support" (age 18 / student 19–23) | Answered by the kiddie-tax question instead | sc_00132 |
+| A20 | Solar credit: no **utility-subsidy** input | Cost must be typed net of rebates | sc_00138 |
+| A21 | Unemployment: no input for a repayment of benefits received in an **earlier** year (the entry now means same-year, netted on line 7) | Earlier-year repayments ≤ $3,000 nondeductible, > $3,000 via claim-of-right inputs | sc_00145 |
+| A22 | Form 5329 exception **01 (age 55)** accepted as entered — birth year not checked | Ineligible exception passes | sc_00144 |
+| A23 | No **medical-mileage** input (2025: 21¢/mile) | User adds mileage into the medical total | sc_00158 |
+| A24 | Form 8814/8615 etc.: Simplified-Method **joint-and-survivor beneficiary age** — confirm the app's input matches H&R Block's | — | sc_00044 |
+
+### B. Engine behaviour to decide
+
+| # | Question | Scenario |
+|---|---|---|
+| B1 | Mortgage-limit proration uses an exact ratio; Pub. 936 Table 1 (optional) rounds to 3 places. Match Table 1? | sc_00107 |
+| B2 | §280A depreciation carryover figures are not pinned by any test (fill-if-shown rows only) | sc_00068 |
+| B3 | Archer MSA waiver of a missed RMD (Form 5329 Part IX waiver) has no input — user enters the shortfall after the waiver | sc_00049 |
+
+### C. H&R Block routes the tester must confirm (scenario md gives a fallback)
+
+- Joint-and-survivor beneficiary-age input (sc_00044); medical-exception amount screen (sc_00045); minimum-retirement-age question for code 3 (sc_00043); which Form 5329 Part IX field pair is which (sc_00049, `40.254525/6` vs `40.38/39`).
+- **Forms mode (`hrbforms.exe`)** routes untried by automation: Form 8606 lines 2 and 6 (sc_00059, 00061); rental §199A safe-harbor checkbox (sc_00069); Form 2555 (sc_00126); Form 6251 line 2i (sc_00130); Form 8615 line 6 for a parent's taxable income ≥ 100,000 — guided mode refuses it (sc_00131, 00132); Form 8962 Part III fallback (sc_00142).
+- Returned excess IRA contribution: item `92.19392` vs a 2026 1099-R code P (sc_00057).
+- K-1 box 14 / box 20 screens have no mapped field ids (sc_00084); Form 4952 carryover and election screens (sc_00111); §1033 has no postponement screen — gain entered as a land sale (sc_00117); combined vs local sales-tax rate (sc_00102); home-equity percentage (sc_00108); FEMA classification picked by declaration date (sc_00115/116).
+
+### D. Known H&R Block findings to expect (not our bugs)
+
+- Form 4972: H&R Block prints line 5a although Part III is used (sc_00047).
+- QCD $108,000 cap not applied by H&R Block (sc_00062, as round-1 sc_00264).
+- Below-fair-rent rental to a relative: H&R Block allowed a 5,400 loss in round 1 (sc_00068 Run A).
+- Charitable: H&R Block deducted market value where basis applies (sc_00113 B, sc_00114 B/D).
+- sc_00058: graded 4a blank; if H&R Block prints 25,000 that row fails.
+
+### E. Housekeeping
+
+- Several scenario commit messages state a wrong check count (sc_00033, 00052, 00072, 00075, 00093, 00112, 00132, 00142, 00156); the spreadsheets are right and history.md records each slip.
+- `us-tax-be/context.md` has not been updated by the round-2 batches.
+
+---
+
+
 ## ★ GAP — §213(d)(10) long-term-care premium cap is NOT enforced (found 2026-08-29, sc_00098)
 
 **Status: OPEN. Real, reproducible, silently OVERSTATES the medical deduction.**

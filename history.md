@@ -1,3 +1,20 @@
+## 2026-10-15T14:00:00-04:00 - Round-2 QA scenarios sc_00081-00090 (other income and above-the-line adjustments) - no engine change
+- c:/us-tax-hrb2025: sc_00081-00090 written (md + xlsx, 172 checks), round 1's run kept as Run A where it was right,
+  plus runs on the rule: section 104 damages - interest on a tax-free award and non-physical emotional distress less the
+  medical part (81); section 101(d) life-insurance installments, annual and 10-of-100 monthly, and the insured changed
+  from a late spouse (contradicted Single) to a mother (82); jury pay vs the part turned over: all / none / part (83);
+  K-1 1065 - ROUND 1 WAS WRONG: a materially participating partner owes SE tax (box 14A) and gets QBI net of half SE
+  (owe 3,335, not 1,815); limited partner and a loss with QBI carryforward added (84); staking FMV becomes basis on a
+  2025 1099-DA with no basis, short vs long term from receipt (85); educator 300 per ELIGIBLE educator, not the joint
+  600, and reimbursements (86); student loan cap before phase-out at 0.200 / 0.900 of the 2025 85k-100k range (87);
+  Form 3903 net of W-2 code P, the 217(k) civilian gate, and an excess on line 1h (88); alimony decree on 12/31/2018
+  vs 01/02/2019 and a child-contingent part (89); Form 2106 reservist meals 50% and the 100-mile test, performing artist
+  at AGI 16,100 > 16,000, and the no-child EIC round 1 omitted (90 - ROUND 1 WRONG TWICE, H&R Block was right).
+- us-tax-be 386e67ba: Hrb2025Sc00081-00090Test pin 32 runs - all green, no engine change. Not pinned: sc_00088 Run D.
+- Open (owner, no fields added): the app has no input for a Form 3903 excess reimbursement (line 1h, sc_00088 D) and
+  no Schedule 1 line 12 category / reservist-distance / performing-artist AGI test - it trusts the amount typed
+  (sc_00090 B, D). H&R Block computes SE tax only from K-1 box 14A and QBI only from box 20Z (sc_00084).
+
 ## 2026-10-15T09:00:00-04:00 - Round-2 QA scenarios sc_00071-00080 (passive losses, at-risk, RE professional, other income) + one engine fix
 - c:/us-tax-hrb2025: sc_00071-00080 written (md + xlsx, 152 checks), round 1's run kept as Run A where it was right,
   plus runs on the rule: allowance phase-out mid-range, on the smaller-of crossover and 500 past it (71); §469(g)

@@ -1,3 +1,30 @@
+## 2026-10-16T05:30:00-04:00 - Round-2 QA scenarios sc_00281-00290 (Form 8829 limit/carryover and lines 16/17, foreign tax carryover, capital loss carryover with negative taxable income, minimum tax credit, Schedule H thresholds, clergy housing limit, CRP on Schedule SE, Form 4835 vs Schedule F, Form 8814 and the parent's EIC, equal-earner MFS win)
+- c:/us-tax-hrb2025: sc_00281-00290 written (md + xlsx, 123 checks, 36 graded runs/returns). Kept and extended: 281 (round 1's Year 1 as A;
+  the carryover limited again (B 10,000/3,000 carried), used up (C line 31 6,000) and a standard-deduction filer's mortgage interest/taxes on
+  lines 16/17 (D line 31 0, not (300))); 282 (abstract limits replaced by real income - limit 2,501 with the standard deduction apportioned on
+  1116 line 3a; carryover 1,500 + tax 1,000 / 1,500 / 3,000 -> 2,500 / 2,501 / 2,501); 284 (abstract figures replaced; Form 8801 line 24
+  binds - 5,000 / 8,973 / 5,973 with a 3,000 solar credit shrinking line 22); 285 (round 1's 10,000 as A; exactly 2,800 -> 445, 2,700 -> FUTA
+  16, a 16-year-old student babysitter -> FUTA 18); 286 (W-2 minister; the 107 smallest-of limit -> line 1h 0 / 5,000 / 2,000, SE 9,608
+  throughout); 288 (Form 4835 through forms mode vs Schedule F with SE 2,826; an unsold crop share is no income -> (8,000) allowed). Reshaped
+  (duplicated an earlier round-2 scenario or was not gradable): 283 (carryover character = sc_00039/00161) -> the carryover worksheet's
+  negative line 1 (7,000 / 7,000 / 8,500 / 10,000; H&R Block's own worksheet caption says "not less than 0"); 287 (farm optional = sc_00224) ->
+  the CRP exclusion and its "at the time you received" test (SE 2,826 / 3,956 / 3,956); 289 (structural mutual exclusion; child had wages) ->
+  Form 8814's line-8z amount as the parent's EIC investment income (EIC 2,782 own return / 0 at 12,300 / 1,360 at 11,900; child's own return
+  tax 1,099); 290 (optimizer H&R Block lacks; MFS-loses case = sc_00099) -> equal earners where separate returns WIN by 536 (medical 25,000)
+  and lose by 469 (15,000). New IRS text in _tools/irs_text: f8829, i1116 + f1116, i8801 + f8801, 2025 f1040sh + i1040sh, p517, f4835 (2025
+  texts downloaded from irs.gov where the repo had none or an older year).
+- us-tax-be: fix 9f4d39d8 - Form 8829 lines 10/11 -> 16/17 for a standard-deduction filer (2025 Form 8829 instructions; Lasser 40.15):
+  prepare() re-runs once with HOME_OFFICE_STANDARD_DEDUCTION when the first pass took the standard deduction and an office has line 10/11
+  amounts (sc_00281 D: line 31 (300) -> 0). e2e spec se-home-office-280a-tiers.spec.ts asserted the old behaviour (-1000) for a filer with no
+  Schedule A - changed to 0 (not run). Fix 98f9bd0c - the Form 8814 line 12 amount (Schedule 1 line 8z) counts toward the parent's EIC
+  investment-income limit (Pub. 596 Worksheet 1 line 4) (sc_00289 B: EIC 1,296 -> 0); no e2e spec asserts an EIC with Form 8814. Both
+  mutation-checked (fix stashed -> pin test fails -> restored). Pin tests Hrb2025Sc00281-00290Test (35, commit aaf86866); not pinned: sc_00286
+  B/C income side (no line-1h excess-allowance input) and sc_00287 C (no social-security start date) - outstanding A50/A51.
+  TaxReturnComputeServiceTest, Sc*SqaScenarioTest and Hrb2025*Test: 2,843 green (426 classes) from a freshly deleted surefire-reports directory.
+- Slips: sc_00282's commit (b1871bb) says 14 checks; the spreadsheet has 11 - corrected in an empty commit 48ee797.
+- Open (owner): outstanding.md A50 (clergy housing limit / line-1h excess allowance), A51 (CRP timing), A52 (Schedule H per-employee tests),
+  A53 (home-office personal share on Schedule A - audit), B24 (8829 re-run decides "standard" from the first pass), B25 (ThreadLocal note).
+
 ## 2026-10-16T01:30:00-04:00 - Round-2 QA scenarios sc_00271-00280 (MFS AMT add-back, pre-1999 rental building on line 2m, Form 4797 recapture and the 1250 slice, Schedule R limit with Form 4972, 80% NOL limit, 163(j) small-business exemption, charitable carryover character, separate QBI/REIT carryforwards, at-risk then passive carryovers, 461(l) threshold)
 - c:/us-tax-hrb2025: sc_00271-00280 written (md + xlsx, 113 checks, 28 graded runs + 3 documented). Reshaped (round 1 duplicated an earlier
   round-2 scenario, rested on a form H&R Block lacks, or could not discriminate): 271 (single phase-out = sc_00130; round 1's MFS row expected

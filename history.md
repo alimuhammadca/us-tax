@@ -1,3 +1,33 @@
+## 2026-10-15T23:00:00-04:00 - Round-2 QA scenarios sc_00191-00200 (four-children CTC / Part II-B, three rentals, three pensions, three employers, QDCG + NIIT, SS + QDCG, excess SS + Additional Medicare, itemized + QBI + gain, tips + overtime, Schedule R) + two engine fixes
+- c:/us-tax-hrb2025: sc_00191-00200 written (md + xlsx, 103 checks, 36 runs). Round 1's ten were "multiplicity" and "interaction"
+  returns whose arithmetic was mostly right but which never reached the rule that makes the count or the combination matter.
+  Corrections: sc_00198's QBI came from a long-term rental H&R Block cannot make QBI (13a 0, 5 FAILs) - now 30,000 of 1099-DIV box 5
+  REIT dividends (same AGI); sc_00200 put a pre-minimum-retirement-age disability pension on 5b (i1040: line 1h - the H&R Block
+  tester said so) and missed the EIC it earns (refund 396, not 199). Moved out of community-property states: TX (191, 194), AZ (198).
+  New runs: 4 children - tax-limited split 4,146 + ACTC 4,654, and Schedule 8812 Part II-B (payroll tax 306 beats 15% 225; 16b
+  exactly 5,100 still qualifies; 2 children 225) (191); three rentals as one passive pool - net -10,000 = the 10,000 allowance,
+  -12,000 carries 2,000, MAGI 160,000 still offsets 8,000 (line 10) (192); two partially taxable pensions figured SEPARATELY (1,200 +
+  600, not pooled 1,915) and age 60 vs 61 on the annuity starting date (193); excess SS when one employer stops at the base (3,720),
+  its own over-collection not creditable, two W-2s with one EIN = one employer (1,860 not 2,102) (194); TI exactly 533,400 all 15%,
+  10,000 over at 20%, a short-term gain pays ordinary rates but the same NIIT (195); a 5,000 gain at 0% still costs 510 through
+  taxable benefits (196); excess SS counts as withholding for Form 2210, one employer withholds the 0.9% (25c 270), a 401(k) lowers
+  box 1 only (197); QBI limit 20% x (TI before QBI - gain): exactly 6,000, then 5,000, and the gain drops into the 0% band (198);
+  Schedule 1-A takes 1,500 off EACH of tips and overtime at MAGI 165,000 (18,000 not 19,500) and floors each part at 0 (199);
+  Schedule R 75, 36 when the tax limits it, 0 with nontaxable SSDI on line 13a (200). New IRS text in _tools/irs_text: f2210f,
+  f1040sr.
+- us-tax-be FIX 5d7921b8: a pension form carrying annuityStreams[] (per-annuity Simplified Method) was 409'd by the aggregate-path
+  flags PENSION_SIMPLIFIED_METHOD_INPUTS_MISSING (non-overrideable) and PENSION_BASIS_RECOVERY_PER_ANNUITY_LIMITATION; both now skip
+  when streams are present. Mutation-checked (Hrb2025Sc00193Test B-D fail without it).
+- us-tax-be FIX 2521fa22: Form 2210 line 6 / Form 2210-F line 12 include Schedule 3 line 11 (excess SS) with the withholding
+  (i2210 line 6 "Also, Schedule 3 ... line 11"); sc_00197 A had been charged a 102 penalty. Mutation-checked (Hrb2025Sc00197Test A
+  owes 2,663 without it). No e2e spec pins a penalty on a return with excess SS (grep of e2e/tests: line20-nonrefundable-credits and
+  line31-other-payments have excess SS but no penalty assertion; form2210 specs have one W-2) - no e2e spec changed.
+- us-tax-be 5cf568e2: Hrb2025Sc00191, 00192, 00194-00196, 00198-00200Test pin 29 tests (sc_00193's 4 and sc_00197's 3 came with the
+  fixes) - green; TaxReturnComputeServiceTest, Sc*SqaScenarioTest and Hrb2025*Test 2,542 green in a clean report directory.
+- Commit-message slip: sc_00193's hrb2025 commit says 11 checks; the xlsx has 10 (not amended).
+- Open (owner): no per-annuity pension inputs in the UI (A29); line-1h disability pay not carried into EIC earned income (A30);
+  Sc00200SqaScenarioTest still pins round 1's 5b routing (B7). H&R Block: Schedule R box 2 must be checked by hand in forms mode.
+
 ## 2026-10-15T18:00:00-04:00 - Round-2 QA scenarios sc_00181-00190 (MFS EIC prongs, MFS care credit, MFS pension / interest / rental / gain / IRA, filing status on a death, joint vs separate, HOH qualifying person) + one engine fix
 - c:/us-tax-hrb2025: sc_00181-00190 written (md + xlsx, 111 checks, 32 runs). Round 1's ten were mostly right but sat on no
   boundary - five were "spouse's X on her MFS leg" returns that H&R Block files as plain single-income returns, and two lived in

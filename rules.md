@@ -1,3 +1,23 @@
+**★ Excess social security is WITHHOLDING for the estimated-tax penalty; a per-annuity-stream Simplified Method must not be blocked
+(round-2 QA, sc_00197 / sc_00193, 2026-10-15).** (1) 2025 Instructions for Form 2210, line 6: "Include the taxes withheld shown on
+... Form 1040 ... line 25d ... Also, Schedule 3 (Form 1040), line 11"; Part III: withheld tax "and excess social security or tier 1
+RRTA" is deemed paid one-fourth on each due date; Form 2210-F line 12 says the same. computeForm2210 / computeForm2210F used line 25d
+only, so a two-employer filer (48,000 withheld + 5,202 excess SS vs a 50,187 required payment) was charged a 102 penalty - fix
+2521fa22 adds Schedule 3 line 11 (withholdingForForm2210) to the de-minimis stop, the annual safe harbor and the per-quarter
+withholding. Never treat Schedule 3 line 11 as a refundable credit on Form 2210 line 3 (it is a payment). (2) When
+pension-annuity-income carries annuityStreams[] the Simplified Method already runs PER ANNUITY (i1040 lines 5a/5b: "figure the
+taxable part of each separately"), but the aggregate-path flags PENSION_SIMPLIFIED_METHOD_INPUTS_MISSING (non-overrideable) and
+PENSION_BASIS_RECOVERY_PER_ANNUITY_LIMITATION still fired and 409'd the return - fix 5d7921b8 skips both when streams are present.
+Related, pinned by Hrb2025Sc00191-00200 (no other engine change): with 3+ qualifying children Schedule 8812 Part II-B (payroll tax
+withheld less EIC) applies when line 16b is 5,100 OR MORE; several rentals are one passive pool (Form 8582 line 10 income absorbs a
+loss even with no allowance); excess SS counts each EMPLOYER (EIN, not W-2) at most 10,918.20 and one employer's over-collection is
+not creditable; the 15%/20% line is TI 533,400 single and a short-term gain is still NII; a gain in provisional income makes 85
+cents of benefits taxable per dollar while benefits phase in; the QBI limit is 20% of (TI before QBI - net capital gain);
+Schedule 1-A takes the $100-per-$1,000 reduction from EACH of the tips and overtime parts, each floored at 0; a disability
+pension before minimum retirement age is line 1h and EIC earned income, and nontaxable SSDI is Schedule R line 13a. **Open (owner,
+no fields added):** the app's pension form has no per-annuity (stream) inputs; line-1h disability pay is not carried into EIC
+earned income automatically (the EIC form's "other earned income" must be typed).
+
 **★ The MFS rental special allowance needs living apart ALL year - the last-6-months answer is not enough (round-2 QA, sc_00185,
 2026-10-15).** IRC §469(i)(5)(B) ("unless the taxpayer lives apart from his spouse at all times during the taxable year"); 2025
 Instructions for Form 8582, Part II caution ("If your filing status is married filing separately and you lived with your spouse at

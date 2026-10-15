@@ -2,7 +2,7 @@
 
 ## ★ Round-2 QA scenarios (us-tax-hrb2025) — shortcomings and required improvements — opened 2026-10-15
 
-Collected from the round-2 scenario batches sc_00041–00170 (and kept up to date as later batches report).
+Collected from the round-2 scenario batches sc_00041–00180 (and kept up to date as later batches report).
 Engine bugs those batches found were **fixed** (see history.md); what is listed here is what is still open.
 Items marked **[fields]** need the owner's sign-off because they add or change form fields.
 
@@ -34,6 +34,7 @@ Items marked **[fields]** need the owner's sign-off because they add or change f
 | A22 | Form 5329 exception **01 (age 55)** accepted as entered — birth year not checked | Ineligible exception passes | sc_00144 |
 | A23 | No **medical-mileage** input (2025: 21¢/mile) | User adds mileage into the medical total | sc_00158 |
 | A24 | Interest with **no statement at all**: the overrideable `INTEREST_STATEMENT_UPLOAD_REQUIRED` gate still asks for a 1099 | Product gating choice — allow "no statement received"? | sc_00170 |
+| A25 | MFS **"lived with your spouse at any time"** is asked only on the Social Security form, yet it also drives the traditional-IRA and Roth phase-out ranges | An MFS filer with an IRA/Roth and no benefits has no place to answer; absent the answer the engine uses the single (lived-apart) ranges | sc_00180 (also round-1 note) |
 
 ### B. Engine behaviour to decide
 
@@ -42,11 +43,13 @@ Items marked **[fields]** need the owner's sign-off because they add or change f
 | B1 | Mortgage-limit proration uses an exact ratio; Pub. 936 Table 1 (optional) rounds to 3 places. Match Table 1? | sc_00107 |
 | B2 | §280A depreciation carryover figures are not pinned by any test (fill-if-shown rows only) | sc_00068 |
 | B3 | Archer MSA waiver of a missed RMD (Form 5329 Part IX waiver) has no input — user enters the shortfall after the waiver | sc_00049 |
+| B4 | Saver's credit "born after January 1, 2008" is a yes/no answer, not derived from the date of birth (a filer born 01/02/2008 who answers No gets the credit) | sc_00173 |
 
 ### C. H&R Block routes the tester must confirm (scenario md gives a fallback)
 
 - Joint-and-survivor beneficiary-age input (sc_00044); medical-exception amount screen (sc_00045); minimum-retirement-age question for code 3 (sc_00043); which Form 5329 Part IX field pair is which (sc_00049, `40.254525/6` vs `40.38/39`).
 - **Forms mode (`hrbforms.exe`)** routes untried by automation: Form 8606 lines 2 and 6 (sc_00059, 00061); rental §199A safe-harbor checkbox (sc_00069); Form 2555 (sc_00126); Form 6251 line 2i (sc_00130); Form 8615 line 6 for a parent's taxable income ≥ 100,000 — guided mode refuses it (sc_00131, 00132); Form 8962 Part III fallback (sc_00142).
+- sc_00171–00180 best guesses: alimony-received boxes `1.81` (pre-2019) / `1.219277` (post-2018) with the intro's Next-not-Skip (sc_00171, from sc_00235's solved route); Saver's-credit prior-distributions question (sc_00172 D); 2025 MAGI field on the vehicle MAGI screen (sc_00174); joint estimated-payment screen on MFS (sc_00177 C); **Forms mode Form 1040 line 6d** (sc_00179) and the Schedule 1 line 20 "lived apart the entire year" checkbox inside H&R Block's 1040 (sc_00180 C); spouse-covered-by-a-plan question on MFS (sc_00180 B).
 - sc_00161–00170 best guesses: accrued-interest adjustment screen (sc_00163 B); HSA month-by-month and last-month-rule screens (sc_00165); Form 8332 / lived-apart answers on MFS (sc_00167); HOH for a married person living apart (sc_00169 B); interest without a 1099 (sc_00170).
 - Returned excess IRA contribution: item `92.19392` vs a 2026 1099-R code P (sc_00057).
 - K-1 box 14 / box 20 screens have no mapped field ids (sc_00084); Form 4952 carryover and election screens (sc_00111); §1033 has no postponement screen — gain entered as a land sale (sc_00117); combined vs local sales-tax rate (sc_00102); home-equity percentage (sc_00108); FEMA classification picked by declaration date (sc_00115/116).
@@ -58,10 +61,12 @@ Items marked **[fields]** need the owner's sign-off because they add or change f
 - Below-fair-rent rental to a relative: H&R Block allowed a 5,400 loss in round 1 (sc_00068 Run A).
 - Charitable: H&R Block deducted market value where basis applies (sc_00113 B, sc_00114 B/D).
 - sc_00058: graded 4a blank; if H&R Block prints 25,000 that row fails.
+- §30D MSRP cap: H&R Block never asks the MSRP — sc_00175 Runs A and C (60,000 and 55,001 sedans) are expected to show 7,500 (round-1 finding).
+- MFS Social Security lived apart all year: guided mode cannot express it (sc_00179 A/B show 10,200 without the Forms-mode line 6d).
 
 ### E. Housekeeping
 
-- Several scenario commit messages state a wrong check count (sc_00033, 00052, 00072, 00075, 00093, 00112, 00132, 00142, 00156, 00162); the spreadsheets are right and history.md records each slip.
+- Several scenario commit messages state a wrong check count (sc_00033, 00052, 00072, 00075, 00093, 00112, 00132, 00142, 00156, 00162, 00173); the spreadsheets are right and history.md records each slip.
 - `us-tax-be/context.md` has not been updated by the round-2 batches.
 
 ---

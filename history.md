@@ -1,3 +1,28 @@
+## 2026-10-19T00:00:00-04:00 - Round-2 QA scenarios sc_00171-00180 (IRA compensation, Saver's credit student / dependent / age, clean vehicle MAGI and MSRP, Roth phase-out, MFS attribution, MFS Social Security, MFS IRA range) + one engine fix
+- c:/us-tax-hrb2025: sc_00171-00180 written (md + xlsx, 117 checks, 37 runs). All ten round-1 runs kept as Run A; sc_00171's
+  round-1 refund was wrong (it omitted the 200 Saver's credit - H&R Block's tester caught it: 545 not 345) and sc_00180 lived in
+  Arizona (community property; moved to Colorado). New runs: what COUNTS as IRA compensation - pre-2019 alimony yes (B 7,000, no
+  excise; C 5,500 + 90), post-2018 no (D) (171); the Saver's student test is any part of 5 calendar months (Jan-Apr 30 eligible,
+  to May 9 not), the tax limit (1,000 -> 628) and a 2024 Roth distribution on line 4 (250) (172); a dependent vs not (400 at the
+  20% step), born 01/02/2008 no / 01/01/2008 yes (173); §30D MAGI exactly 150,000 yes, 150,001 no, an IRA deduction bringing
+  152,000 of wages to 150,000 (2024 MAGI 155,000 so 2025 decides) (174); MSRP 55,000 yes, 55,001 no, an SUV at 60,000 under its
+  80,000 cap - A and C are expected H&R Block FAILs (it never asks the MSRP, round-1 finding) (175); Roth phase-out 165,000 ->
+  420, 164,999 -> 200 floor -> 408, 157,500 -> 210 (176); MFS attribution on shared items - a joint 1099-INT half out as a nominee
+  distribution (Schedule B) and joint estimates divided as agreed (i1040 line 26) (177); MFS together: 85% of combined income
+  when smaller (17,000 not 25,500) and one month together counts (178); MFS apart all year via H&R Block FORMS-MODE line 6d (round
+  1's guided mode cannot - 5 FAILs measured the interview), the 34,000 tier (6,200), two days together lose it (179); MFS IRA
+  range when only the spouse is covered, apart all year = single (+ Saver's 200), 700 inside the range (180).
+- us-tax-be FIX 6d7a55ec: taxable alimony (pre-2019 instrument) is IRA compensation in the line-20 cap check and the Form 5329
+  Part III limit (Pub. 590-A). Mutation-checked: Hrb2025Sc00171Test B and C fail without it (B flagged + 180, C flagged + 180
+  instead of 90 - the fix's commit message says "C 210", a slip). No unit or e2e test pinned alimony together with an IRA
+  (grep of e2e/tests: none) - no e2e spec changed.
+- us-tax-be 4aeff3b5: Hrb2025Sc00172-00180Test pin 33 tests (sc_00171's 4 came with the fix) - green; TaxReturnComputeServiceTest,
+  Sc*SqaScenarioTest and Hrb2025*Test 2,471 green in a clean report directory.
+- Commit-message slips: sc_00173's hrb2025 commit says 12 checks; the xlsx has 11 (not amended). sc_00171 needed a follow-up
+  (6f2f0d5) correcting its wrong-answer signatures (alimony ignored = 180 in B and C); expected values unchanged.
+- Open (owner): the MFS "lived with spouse" fact feeds the IRA and Roth phase-outs but is asked only on the Social Security form;
+  the Saver's born-after-January-1-2008 answer is asked, not derived from the date of birth.
+
 ## 2026-10-18T00:00:00-04:00 - Round-2 QA scenarios sc_00161-00170 (capital loss feeders, student loan MAGI, Schedule B feeders, tips phase-out, HSA months, Form 8814 ceiling, MFS EIC / education / itemizing, interest without a 1099) - no engine change
 - c:/us-tax-hrb2025: sc_00161-00170 written (md + xlsx, 135 checks). The five "boundary" rounds (161-165) were right and are
   kept as Run A, but each duplicated a round-2 run, so the new runs test what FEEDS the boundary: a net -3,000 reached by a 1,000

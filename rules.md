@@ -1,3 +1,20 @@
+**★ Taxable alimony under a pre-2019 instrument is IRA COMPENSATION (round-2 QA, sc_00171, 2026-10-15).** IRC §219(f)(1);
+Pub. 590-A (2025) "Alimony and separate maintenance. For IRA purposes, compensation includes any taxable alimony ... only with
+respect to divorce or separation instruments executed on or before December 31, 2018"; interest is NOT compensation.
+computeIraCompensation read W-2 box 1 (+ combat pay) only, so a 7,000 contribution covered by 4,000 of wages + 3,000 of 2016-decree
+alimony was flagged IRA_DEDUCTION_EXCEEDS_COMPENSATION and charged a 180 excise - fix 6d7a55ec adds Schedule 1 line 2a alimony
+(dropped when the agreement date is after 12/31/2018; kept when the date is blank, as line 2a keeps it) to BOTH the line-20 cap
+check and the Form 5329 Part III limit. Related, pinned by Hrb2025Sc00172-00180 (no other engine change): the Saver's credit
+student test is any part of 5 calendar months and the credit is limited to tax (line 11); a 2024 Roth distribution is Form 8880
+line 4; born 01/01/2008 is eligible, 01/02/2008 is not (this app ASKS the question, it does not derive it from the DOB); §30D MAGI
+and MSRP both use "exceeds" (150,000 / 55,000 qualify; an SUV's cap is 80,000) and MAGI is AGI after an IRA deduction; the Roth
+limit is 0 at MAGI 165,000 ("or more"), 200 at 164,999 (Worksheet 2-2 floor), 3,500 at 157,500; MFS joint-account interest goes
+out as a nominee distribution (Schedule B required) and joint estimates are split as the spouses agree (i1040 line 26); MFS
+Social Security lived together = 85% of the SMALLER of line 7 and benefits, lived apart ALL year = single figures + line 6d; the
+MFS IRA range 0-10,000 applies when only the spouse is covered, and not after a year apart. **Open (owner, no fields added):**
+the MFS "lived with your spouse" fact is read only from the Social Security form (an IRA-only or Roth-only MFS filer has nowhere
+else to answer it).
+
 **★ Form 8615 line 1 is the child's unearned income AFTER the early-withdrawal penalty (round-2 QA, sc_00151, 2026-10-17).**
 2025 Instructions for Form 8615, Line 1: with no earned income, line 1 is the child's AGI (line 11b); the Child's Unearned
 Income Worksheet line 2 is "earned income ... plus the amount of any penalty on early withdrawal of savings from the child's

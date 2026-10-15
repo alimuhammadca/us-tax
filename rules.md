@@ -1,3 +1,14 @@
+**★ Amortizable bond premium over a bond's interest is deductible only up to the bond's EARLIER interest (round-2 QA,
+sc_00122, 2026-10-15).** Reg. §1.171-2(a)(4)(i); Pub. 550 (2025) How To Report Amortization: the excess of the premium
+over the period's qualified stated interest goes to Schedule A line 16, "limited to the amount by which your total
+interest inclusions on the bond in prior accrual periods is more than your total bond premium deductions on the bond in
+prior periods"; the rest carries forward (and is deducted when the bond is disposed of). **Open (no field added - owner
+sign-off needed):** the app has no input for a bond's prior interest inclusions / prior premium deductions / carryforward,
+so it carries EVERY 1099-INT box 11 (and manual) excess to line 16 - right when the bond has history (sc_00122 A, pinned),
+wrong for a bond bought this year (C: cap 0; not pinned). BOND_PREMIUM_EXCEEDS_INTEREST now states the cap (a552ad63).
+Related advisory wording (a552ad63): the §691(c) deduction is the recipient's SHARE of the estate tax caused by the IRD
+(Pub. 559: IRD included this year / total IRD x (estate tax with - without the IRD)); the app still takes it as typed.
+
 **★ A donated car's §170(f)(12) cap is $500 when the charity sells it for $500 or less, and box 5a/5b means no cap
 (round-2 QA, sc_00114, 2026-10-15).** Pub. 526 (2025) Cars, Boats, and Airplanes: sold for more than $500 -> the smaller
 of gross proceeds or FMV; "Deduction $500 or less. If the qualified organization sells the vehicle for $500 or less and

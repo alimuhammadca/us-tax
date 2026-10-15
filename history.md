@@ -1,3 +1,26 @@
+## 2026-10-16T12:00:00-04:00 - Round-2 QA scenarios sc_00121-00130 (IRD estate tax, bond premium, suspended misc, reimbursements, Tax Table vs worksheet, Form 2555, collectibles, AMT) - no engine compute change
+- c:/us-tax-hrb2025: sc_00121-00130 written (md + xlsx, 155 checks), round 1's run kept as Run A (all ten were right),
+  plus runs on the rule: section 691(c) as the recipient's share (IRA 200,000 caused all 40,000 of estate tax: 40,000
+  withdrawn -> 8,000, 25,000 -> 5,000) and lost to the standard deduction (121); bond premium excess capped at the bond's
+  prior interest - bought this year -> 0, carried forward - and premium equal to interest (122); suspended misc costs
+  ENTERED this time (round 1's tester never entered them), the standard deduction they would have beaten, hobby income
+  gross on 8j (123); box 12 code L not income, only the per-diem/mileage excess in box 1 (124); Tax Table at 99,999
+  (16,909) vs worksheet at 100,000 / 100,049 (125); Form 2555 via H&R Block FORMS MODE (guided mode has no 2555
+  questions - round 1 taxed all 80,000), the 130,000 cap and a 146-day bona fide residence limit (0.400 exactly, so line
+  39 rounding cannot matter) (126); collectibles at 28% above 197,300 + NIIT, and beside a 15% stock gain (127); PAB
+  preference is box 9 not box 8, and 1099-DIV box 13 (128); TMT 3 dollars under / 127 over the regular tax (129); ISO
+  hold vs same-year sale (wages + 8949 code B, no AMT) and the exemption phase-out (130). AMT is Schedule 2 LINE 2 on the
+  2025 form (round 1 said line 1). New IRS text in _tools/irs_text: p559, p463, p54, i2555, i6251, f6251.
+- us-tax-be a552ad63: Hrb2025Sc00121-00130Test pin 29 runs - green; TaxReturnComputeServiceTest, Sc*SqaScenarioTest and
+  Hrb2025*Test 2,287 green in a clean report directory. Advisory TEXT only (no compute change): the 691(c) advisory says
+  "your share" (Pub. 559); BOND_PREMIUM_EXCEEDS_INTEREST states the Reg. 1.171-2(a)(4) prior-inclusions cap. No existing
+  unit or e2e test changed.
+- Not pinned: sc_00122 Run C - the engine deducts a this-year bond's 500 excess (expected 0); no field for the bond's
+  prior inclusions (owner sign-off needed; see rules.md).
+- H&R Block limits written into the mds: Form 2555 and ISO exercise-and-hold are Forms-mode only (sc_00130 gives the
+  guided 41.255 "Enter Basis Adjustments" fallback, which lands on 6251 line 2k); collectibles need a placeholder 1099-B
+  to open the collectibles screen (135.188547).
+
 ## 2026-10-16T06:00:00-04:00 - Round-2 QA scenarios sc_00111-00120 (investment interest, charitable ceilings and valuation, casualty/disaster losses, section 1033, IRWE, investment theft, claim of right) + two engine fixes
 - c:/us-tax-hrb2025: sc_00111-00120 written (md + xlsx, 194 checks), round 1's run kept as Run A where it was right,
   plus runs on the rule: Form 4952 2024 carryover on line 2 and qualified dividends - out by line 4b, in by the line 4g

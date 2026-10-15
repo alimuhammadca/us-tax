@@ -1,3 +1,23 @@
+**★ A 1099-S real-estate sale is capital detail on its own; after an EIC disallowance the REASON and the DETERMINATION YEAR decide
+(round-2 QA, sc_00231-00240, 2026-10-17).** (1) The capital statement gate (`CAPITAL_STATEMENT_UPLOAD_REQUIRED`) counted neither the
+1099-S nor its `property1099SDispositions` rows, so a return whose only capital item was a land / second-home / over-the-cap home sale
+was blocked - fix (this batch): disposition rows count as manual capital detail, like the section 1033 conversion (sc_00239 D: land
+elected out of the installment method -> 40,000 LTCG, owe 3,855). (2) Pub. 596 ch. 5: a math or clerical error never needs Form
+8862; any other disallowance does, unless claiming WITHOUT a qualifying child after a child-only disallowance (Exception 1) or Form
+8862 was filed since and allowed; reckless disregard bars the EIC for the year of the IRS determination and the next (determined
+2024 -> none for 2025), fraud for 10 years from it (determined 2015 -> 2025 is the first year back, with Form 8862). Our EIC form
+asks only "previously denied" (outstanding A37). Also pinned by Hrb2025Sc00231-00240 (no other engine change): Form 8814 needs
+gross income LESS than 13,500 and line 15's 135 reaches line 16 even when line 6 is 0 (2,700); a dependent incapable of self-care
+must live with the filer MORE than half the year for Form 2441 (6 months no, 7 yes), and the care credit comes off the tax before
+the CTC/ODC (Credit Limit Worksheet A -> ACTC); the IRA limit is 8,000 if 50 by 12/31 (born 12/31/1975 yes, 01/02/1976 no) and
+traditional + Roth share it (the overage is a Roth excess); a pre-2019 alimony decree modified later stays taxable unless the
+modification expressly adopts TCJA section 11051 (line 2b = the ORIGINAL date); inmate pay is Schedule 1 line 8u and not EIC
+earned income; qualified Medicaid waiver pay is excluded and out of EIC earned income unless elected; the Simplified Method recovers
+cost / table number x MONTHS paid this year; the Pub. 915 lump-sum election refigures the earlier-year part with THAT year's income;
+the car-loan deduction loses 200 per 1,000 OR PART over 100,000 (100,001 -> 3,800); Form 6252 gross profit is after selling
+expenses and the contract price excludes debt the buyer assumes up to basis; the section 1341 credit is the earlier year's tax
+decrease from its Tax Table. Open: section 962 deemed-paid credit without the section 78 gross-up (A40).
+
 **★ An optional-method SE base is EIC earned income; a later estimated payment pays the EARLIEST unpaid installment first
 (round-2 QA, sc_00224 / sc_00228, 2026-10-16).** (1) EIC Worksheet B line 1a is Schedule SE line 3, which skips the farm lines under
 the farm optional method and line 2 under the nonfarm optional method; line 1b adds Schedule SE line 4b. So the elected optional

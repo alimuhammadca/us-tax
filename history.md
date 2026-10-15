@@ -1,3 +1,28 @@
+## 2026-10-17T12:00:00-04:00 - Round-2 QA scenarios sc_00231-00240 (Form 8862, Form 8814, dependent care qualifying person, IRA excess, alimony, wage character, Simplified Method + SS lump sum, car loan interest, installment sale, section 1341 / 962) + one engine fix
+- c:/us-tax-hrb2025: sc_00231-00240 written (md + xlsx, 113 checks, 37 graded runs + 3 documented). Round 1's ten were mostly
+  "conformance" zero-checks or sat far from their rules: 231 graded "EIC without Form 8862" (not an input any product offers);
+  232's withholding run and 236's Form 8919 / W-2 waiver runs and 240's section 962 run cannot be entered in H&R Block; 234 and 238
+  repeat round-2 sc_00171 / sc_00176 / sc_00152; 237's SSI and lump-sum runs had no figure. New runs: Form 8862 by REASON and
+  DETERMINATION YEAR (math error -> no 8862; reckless 2024 -> no EIC; fraud 2015 -> ban over) (231); 8814 at the 2,700 base (135 only)
+  (232); a dependent mother at 6 vs 7 months, with the ACTC that appears when the care credit uses the tax first (233); IRA catch-up by
+  birth date 12/31/1975 vs 01/02/1976, a timely corrective withdrawal, and traditional + Roth sharing one limit (234); a pre-2019
+  decree modified in 2022 - taxed unless the modification adopts the TCJA (235); inmate pay moving EIC 614 -> 461, Medicaid waiver pay
+  with no information return (236); Simplified Method on 9 months, Pub. 915 lump-sum election with 2024 AGI 23,000 / 30,000 (237); car
+  loan phase-out at 100,000 / 100,001 / 115,500 and a 12/30/2024 loan (238); Form 6252 with a commission and an assumed mortgage, and the
+  election out (239); section 1341 credit from the 2024 Tax Table at 6,000 and 3,050 (240). Round-1 errors fixed: 232 missing CTC; 233
+  line 6f -> Schedule 3 line 2 (already noted); 240's 1,320 now derived, not given. Not graded (H&R Block cannot): 236 A Form 8919, 240
+  section 962, 232 child withholding. New IRS text: _tools/irs_text/f8862.txt, p915.txt, f6252.txt (p915 and f6252 fetched from irs.gov).
+- us-tax-be: fix 285c05a8 - CAPITAL_STATEMENT_UPLOAD_REQUIRED blocked a return whose only capital item was a 1099-S real-estate sale
+  (the gate counted neither the 1099-S nor property1099SDispositions); disposition rows now count as capital detail. Mutation-checked
+  (fix stashed -> Hrb2025Sc00239Test D fails -> restored). No value changes. Pin tests Hrb2025Sc00231-00240Test (43, commit 1d5652dc).
+  TaxReturnComputeServiceTest, Sc*SqaScenarioTest and Hrb2025*Test: 2,681 green from a freshly deleted surefire-reports directory.
+  e2e: grepped e2e/tests - the only spec touching the gate (section121-home-sale-exclusion.spec.ts) computes with overrideFlags and
+  asserts values only; no spec edited.
+- Not fixed (needs a field decision): section 962 deemed-paid credit is subtracted without the section 78 gross-up (Reg. 1.962-1(b)(1)(i)
+  (A)(3)); the single input cannot separate subpart F taxes from GILTI taxes (80% credit) - outstanding.md A40.
+- Open (owner): outstanding.md A37 (EIC disallowance reason / ban year / Exception 1), A38 (modified pre-2019 alimony decree), A39
+  (IRA withdrawn-by-due-date), A40 (section 962 / section 78), B14 (Form 6252 lines 10-24 not derived), B15 (section 1341 credit typed).
+
 ## 2026-10-16T15:00:00-04:00 - Round-2 QA scenarios sc_00221-00230 (QBI income limit, SSTB phase-in, wage/UBIA limit, Schedule F farm optional method, hobby COGS, qualified joint venture, two Schedules C on Form 8995, Form 2210, MFS bars, education bars) + two engine fixes
 - c:/us-tax-hrb2025: sc_00221-00230 written (md + xlsx, 158 checks, 33 runs). Round 1's ten were far from their rules: QBI
   always income-limited (221), an SSTB test that a non-SSTB with no wages also "passes" (222), a wage limit above the phase-in

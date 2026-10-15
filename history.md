@@ -1,3 +1,24 @@
+## 2026-10-15T09:00:00-04:00 - Round-2 QA scenarios sc_00071-00080 (passive losses, at-risk, RE professional, other income) + one engine fix
+- c:/us-tax-hrb2025: sc_00071-00080 written (md + xlsx, 157 checks), round 1's run kept as Run A where it was right,
+  plus runs on the rule: allowance phase-out mid-range, on the smaller-of crossover and 500 past it (71); §469(g)
+  release on a sale to an unrelated buyer vs not sold vs sold to a brother - Curtis now does NOT actively participate,
+  since at MAGI 90,000 the $25,000 allowance alone frees the same 22,000 (72); passive loss against K-1 passive income,
+  with active participation, and with income larger than the loss - the rental entered as a rental, not a second K-1
+  (73); §465 at-risk moved from a K-1 (no H&R Block guided entry, round-1 FAIL) to Schedule C line 32 / Form 6198,
+  nonrecourse vs recourse (74); real estate professional - round 1's facts did not qualify (a W-2 employee's hours count
+  only for a 5% owner), plus not-a-professional and no-material-participation runs (75); state refund worksheet:
+  all / none / 400 over the standard deduction / 0 above the SALT cap, with every 2024 figure given (76); gambling
+  losses capped at winnings and lost without itemizing (77); prize at FMV with and without a 1099 - round 1's "charity
+  raffle" was gambling per Pub. 525, story changed to a radio contest, 2024 tax stated so Form 2210 is defined (78);
+  COD insolvency capped at 9,000 of 15,000 (79); gift/inheritance excluded but interest on it and an inherited IRA
+  (code 4, no 10%) taxed (80).
+- us-tax-be FIX 97b29cd2: real-estate-professional status made every one of the owner's rentals nonpassive; an
+  explicit No on the property's material participation now keeps it passive (§469(c)(7)/(c)(1)). Mutation-checked
+  (sc_00075 Run C -40,000 without it). No existing test or e2e seed answers No; full unit suite green (3066).
+- us-tax-be e92c832c: Hrb2025Sc00071-00080Test pin 28 runs - green. Not pinned: sc_00072 Run C (no related-buyer input).
+- Open (owner): the rental form's material-participation control is Yes-only (Run C's No unreachable from the UI) and,
+  when ticked by a non-professional, makes a long-term rental nonpassive; no §469(g)(1)(B) related-buyer question.
+
 ## 2026-10-15T03:30:00-04:00 - Round-2 QA scenarios sc_00061-00070 (Roth conversion, QCD, rentals, royalties, QBI, passive) + four engine fixes
 - c:/us-tax-hrb2025: sc_00061-00070 written (md + xlsx), round 1's run kept as Run A where it was right, plus runs on
   the rule: conversion taxable with no 10% while a code-1 cash part pays it, and 6,000 of basis via Form 8606 (61); QCD

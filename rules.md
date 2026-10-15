@@ -1,3 +1,11 @@
+**★ A real estate professional's rental is nonpassive only if she materially participates in IT (round-2 QA,
+sc_00075, 2026-10-15).** §469(c)(7)(A) only switches off §469(c)(2)'s per-se-passive rule; the rental is then tested
+under §469(c)(1) (Pub. 925: "rental real estate activities in which you materially participated aren't passive").
+The engine treats an explicit "No" on the property's `materialParticipation` as passive (with the active-participation
+allowance); unanswered keeps the old professional-means-nonpassive behaviour. **Open:** the UI control is Yes-only, so
+"No" cannot be sent from the form; the same control makes a NON-professional's rental nonpassive when ticked, which
+§469(c)(2) forbids for long-term rentals; and the rental form has no related-buyer question for §469(g)(1)(B).
+
 **★ Four more IRS limits the engine now applies (round-2 QA, sc_00062/64/66/68, 2026-10-15).**
 (1) **QCD age gate (§408(d)(8)(B)(ii)):** a QCD must be made on or after the owner reaches 70½ (70th birthday + 6
 months). The payment date is not captured, so the QCD entries are dropped (and QCD_OWNER_UNDER_AGE_70_HALF_* raised)

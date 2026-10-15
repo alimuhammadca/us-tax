@@ -1,3 +1,26 @@
+## 2026-10-15T19:30:00-04:00 - Round-2 QA scenarios sc_00251-00260 (Trade Act SUB-pay repayment, Form 1098 box 4/5, private-foundation cash ceiling, $100 per casualty, two-employer deferral limit, Form 4137 tips, allocated tips, Medicaid waiver home rule, NUA, SS worksheet adjustments) + one engine fix
+- c:/us-tax-hrb2025: sc_00251-00260 written (md + xlsx, 139 checks, 30 graded runs). Nine of ten reshaped: 251 (1341 on repaid unemployment
+  = sc_00015/120/145/240) -> SUB pay repaid for TRA on Schedule 1 line 24e at any amount vs 3,000 of repaid state unemployment (nothing), TRA
+  on line 7; 252 (home-equity tracing = sc_00108) -> Form 1098 box 4 refund of 2024 interest as a line 8z recovery (900 / 350 by the 2024
+  itemized excess) and box 5 premiums not deductible; 253 (cash + stock ordering = sc_00113 C) -> cash to a private non-operating foundation,
+  30% and the 50% room (30,000 / 20,000); 255-260 (round 1 = our app's §17 "blocker variants", expected BLOCKED, nothing for H&R Block to
+  compute) -> excess deferrals across two 401(k)s at 45 / 52 / 61 (9,500 / 2,000 / 0, line 1h); Form 4137 unreported cash tips with
+  under-$20 months (383 / 379) and noncash tips (line 1c only); allocated tips with and without records on an MFS return (230 / 92 / 0);
+  Medicaid waiver pay only for care in the provider's own home (18,000 excluded / taxed / 12,000-6,000 split); 1099-R box 6 NUA (5b 60,000;
+  sale 40,000 LT + 6,000 ST / 34,000 LT); the SS worksheet taking the IRA deduction (6b 15,300 -> 12,150) but not student loan interest.
+  254 kept round 1 as Run A (now dated after 09/02/2025 so neither disaster is a "qualified" one - round 1 never said) and added one storm
+  hitting house + car (one $100, 26,900) and a 60 casualty that floors at 0. New IRS text: _tools/irs_text/f4137.txt.
+- us-tax-be: fix 70dd8573 - Form 1098 box 4 was stored but never read; it is now a Schedule 1 line 8z recovery limited by the tax benefit
+  rule (prior-year itemized excess), not netted against line 8a. Mutation-checked (fix stashed -> Hrb2025Sc00252Test B/C fail -> restored).
+  Pin tests Hrb2025Sc00251-00260Test (30, commit f727b2ef; also corrects Hrb2025Sc00250Test's 1099-R key taxableAmount ->
+  taxableAmountAmount, result unchanged). TaxReturnComputeServiceTest, Sc*SqaScenarioTest and Hrb2025*Test: 2,745 green (396 classes) from a
+  freshly deleted surefire-reports directory. e2e: grepped e2e/tests - no spec seeds a 1098 box 4 for a compute (statement-mapper-roundtrip
+  sends box 5 only and asserts the round-trip); no spec edited.
+- Slip: sc_00253's commit (78353e7) says 16 checks; the spreadsheet has 13 - corrected in an empty commit 3697d71.
+- Open (owner): outstanding.md A43 (1098 box 4: prior-year interest deducted / pro-rata split), A44 (one item per casualty event in the guided
+  inputs), A45 (one Medicaid waiver home answer for several care recipients), A46 (NUA sale character typed by the filer), B19 (are allocated
+  tips qualified tips?), B20 (box 4 recovery when prior-year itemizing is unanswered).
+
 ## 2026-10-15T15:40:00-04:00 - Round-2 QA scenarios sc_00241-00250 (MFS premium tax credit, ITIN child, dependent student loan interest, attorney-fee ceilings, tax-exempt OID, General Rule annuity, net SS benefits, SECURE 2.0 early-distribution exceptions, Medicaid waiver election, W-2 box 12 uncollected FICA) + three engine fixes
 - c:/us-tax-hrb2025: sc_00241-00250 written (md + xlsx, 141 checks, 31 graded runs + 3 documented). Reshaped (round 1 duplicated an
   earlier round-2 scenario or could not be entered): 247 (lump-sum election = sc_00237 C/D; H&R Block does not compute it) -> net

@@ -1,3 +1,20 @@
+**★ Form 1098 box 4 is a line 8z recovery, never a cut to line 8a (round-2 QA, sc_00251-00260, 2026-10-15).** A refund of mortgage interest
+overpaid in an EARLIER year (Form 1098 box 4) is not subtracted from this year's interest (Schedule A instructions line 8a; Pub. 525 "Mortgage
+interest refund"); it is other income on Schedule 1 line 8z up to the tax benefit it gave - the lesser of the refund and the amount by which the
+earlier year's itemized deductions exceeded its standard deduction (Pub. 525 Standard deduction limit, Example 32; Lasser 12.6), zero if the filer
+did not itemize - fix 70dd8573 (the box was stored and never read). Gating mirrors the state-refund worksheet: prior-year itemizing unanswered ->
+the full refund; the itemized excess is shared with a taxable line-1 state refund (state refund first; Pub. 525's pro-rata split of the included
+total between line 1 and 8z is not modelled - same total). Box 5 (mortgage insurance premiums) stays ignored: the deduction expired after 2021
+(line 8d "Reserved"). Also pinned by Hrb2025Sc00251-00260 (no other engine change): a Trade Act SUB-pay repayment is Schedule 1 line 24e at ANY
+amount (no $3,000 floor - Lasser 3.5), while a 3,000 repayment of an earlier year's state unemployment gives nothing; cash to a private
+non-operating foundation is limited to the smaller of 30% of AGI and 50% of AGI minus gifts to 50% limit organizations; Form 4684 takes $100 per
+CASUALTY (items of one casualty share it; line 12 floors at 0) then one 10%-of-AGI floor; the 402(g) deferral limit is per person across all W-2s
+(23,500; 31,000 from 50; 34,750 at 60-63) and the excess is line 1h; Form 4137 line 5 removes under-$20 months from the FICA base (still line 1c
+income), noncash tips are line 1c only (not 4137, not qualified tips), Schedule 1-A line 4c is the larger of W-2 box 7 and Form 4137 col. (c);
+allocated tips (box 8) are line 1c + Form 4137 unless records prove less; Medicaid waiver pay is excludable only for care in the provider's own
+home (Notice 2014-7); 1099-R box 6 NUA is not in line 5b and its gain on sale is long-term up to the NUA (Notice 98-24); the Social Security
+worksheet line 6 takes Schedule 1 lines 11-20, 23, 25 - the IRA deduction, NOT student loan interest (§86(b)(2)).
+
 **★ General Rule percentage to 3 places; SECURE 2.0 exceptions stop at their dollar limits; elected Medicaid waiver pay is EIC earned
 income (round-2 QA, sc_00241-00250, 2026-10-15).** (1) Pub. 939 (Rev. 12-2025) Step 3: the exclusion percentage = investment / expected
 return ROUNDED TO THREE DECIMAL PLACES, applied to the first regular payment x payments received this year; Table V is entered at the age

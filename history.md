@@ -1,3 +1,9 @@
+## 2026-10-15 - Removed the unemployment-repayment §1341 advisory (owner's decision)
+The repayment entry means 2025 benefits repaid in 2025 (netted on Schedule 1 line 7, sc_00145); §1341 concerns
+earlier-year income only, so the over-$3,000 advisory was misleading. Flags OTHER_INCOME_UNEMPLOYMENT_LARGE_REPAYMENT_
+SECTION_1341_MAY_BE_BETTER_{TAXPAYER,SPOUSE} removed from us-tax-be, their checklist links from us-tax-ui; unit and e2e
+tests assert no such flag. Also: line8-other-incomes.spec.ts had 4 stale pins of the line-24e behaviour (c377ab1b).
+
 ## 2026-10-17T00:00:00-04:00 - Round-2 QA scenarios sc_00141-00150 (MCC, PTC, backup withholding, rollover, unemployment, Form 2210, Additional Medicare, NIIT, Schedule B) + two engine fixes
 - c:/us-tax-hrb2025: sc_00141-00150 written (md + xlsx, 139 checks), round 1's run kept as Run A (all ten were right), plus runs
   on the rule: MCC 2,500 capped at 2,000 with no carryforward, exactly 20% uncapped, the tax limit with a 525 carryforward, and

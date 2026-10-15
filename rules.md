@@ -178,3 +178,8 @@ working twin before theorising** - it localises the fault in one observation.
 are not completed yet: …") and Get started > Your checklist read it, so they cannot disagree. When a form gains or
 drops a required field, change that file (and the template's `required` highlighting) together. A new compute flag
 gets a Fix link only once it is added to `us-tax-ui/src/app/data/flag-form-links.ts`. A flag about one dependent must also carry `withDependentId(dep.id())` (and one about a particular statement `withFormId(...)`), or the checklist cannot tell which tab to open.
+
+**1099-B term with no box 2 (2026-10-14).** `derive1099BBox` takes the term from, in order: an explicit Form 8949
+category, the box 2 short/long flags, a date acquired of "INHERITED" (long-term, IRC 1223(9)), then the dates (more than
+one year = long-term). A sale whose term cannot be derived is dropped from Schedule D, so any new text value allowed in
+column (b) ("VARIOUS" etc.) needs a rule here too.

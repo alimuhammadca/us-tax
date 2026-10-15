@@ -1,3 +1,16 @@
+## 2026-10-14T18:00:00-04:00 - Round-2 QA scenarios sc_00031-00040 (capital gains and losses) + INHERITED 1099-B fix
+- c:/us-tax-hrb2025: sc_00031-00040 written (md + xlsx), each keeping round 1's verified run as Run A and adding runs
+  that test the rule the title names: ST gain stacking under LT in the 0% band (31), the $3,000 limit on/under the line
+  (32), netting in three directions incl. QDCG line 3 = smaller of Sch D 15/16 (33), partial wash sale (34), inherited
+  step-up and long-term by law (35), gift dual basis (36), section 1244 via Form 4797 36.646 + the $50,000 ceiling (37 -
+  round 1 was blocked), worthless stock deemed sold 12/31 deciding the term (38), carryover character (39), MFS $1,500
+  limit on/under the line (40). Expected values from the 2025 Tax Table / QDCG worksheet / Schedule D instructions.
+- us-tax-be: Hrb2025Sc00031-00040Test pin every run (all green).
+- FIX (found designing sc_00035): derive1099BBox dropped a 1099-B whose date acquired was "INHERITED" (as the Form 8949
+  instructions direct) when box 2 was blank - the text does not parse as a date, no term was derived, and the sale
+  vanished from Schedule D. "INHERITED" now means long-term (IRC 1223(9)). Mutation-checked: the sc_00035 test fails
+  without the fix (Schedule D line 15 = 0).
+
 ## 2026-10-14T10:30:00-04:00 - The 3 flaky tests from the 2026-10-13 full regression
 - `k1-1065-ui-roundtrip`: the EIN typed first was blank on save while the TIN and box 1 typed after it were kept. The K-1 GETs
   its active entry after "#1" appears and on arrival copies it onto every box (entryLoaded -> syncFormToPdf), wiping what was

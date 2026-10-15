@@ -1,3 +1,26 @@
+## 2026-10-17T12:00:00-04:00 - Round-2 QA scenarios sc_00151-00160 (kiddie unearned income, age 65 / senior deduction, CTC for a QSS, IRA deduction, excess social security, mortgage limit, medical floor, Form 8959 Part II, NIIT) + one engine fix
+- c:/us-tax-hrb2025: sc_00151-00160 written (md + xlsx, 141 checks); every round-1 run was right and is kept as Run A
+  (all ten scored full marks in H&R Block, all ten sat exactly on a boundary, and several duplicated round-2 runs), so the new
+  runs test what feeds the boundary: kiddie 2,700 - interest 2,750 less a 50 early-withdrawal penalty (line 1 = AGI 2,700, no
+  8615), wages are earned income (std 3,450), interest 1,500 + dividends 1,300 together (8615 line 11 = 22) (151); born
+  01/01/1961 vs 01/02/1961 with the Schedule 1-A Part V 6% cut at MAGI 100,000 (4,500) and none on a separate return (MFS box
+  1,600) (152); a qualifying surviving spouse's CTC threshold is 200,000 (210,000 -> 3,900) and Form 8959's is 200,000 (153); IRA
+  MAGI adds back student loan interest (80,000 -> 6,300) and at 50 the 8,000 limit and 80% (154); the $200 floor at 88,999 (200),
+  none at exactly 89,000, never above a 100 contribution (155); excess social security 620 and figured per spouse on a joint
+  return (156); Pub. 936 Table 1 pools a second home's loan against one 750,000 (0.750) and 375,000 MFS (157); medical exactly on
+  the floor, 400 miles at 21 cents (84), one dollar over (158); Form 8959 Part II - wages exactly 200,000 leave a 0 threshold for a
+  10,000 Schedule C (83), 195,000 leave 5,000 (38) (159); NIIT with a 5,000 short-term loss: -3,000 brings MAGI back to exactly
+  200,000, then cuts NII to 1,000 where NII binds (38) (160; Vivian moved to Florida so no state tax is allocable on 8960 line
+  9b). New IRS text in _tools/irs_text: f1040s1a (2025 Schedule 1-A), i8960 (2025, downloaded).
+- us-tax-be FIX f6904003: deriveChildUnearnedIncome now subtracts the Schedule 1 line 18 early-withdrawal penalty (Form 8615
+  Child's Unearned Income Worksheet line 2; i8615 Example 2). sc_00151 B (2,750 interest, 50 penalty) got Form 8615 and tax 142
+  instead of 136. Mutation-checked (the pin test failed with 142 before the fix). No unit or e2e test pinned a kiddie return with
+  a penalty (none corrected; no e2e spec changed).
+- us-tax-be 14632292: Hrb2025Sc00151-00160Test pin all 35 runs - green; TaxReturnComputeServiceTest, Sc*SqaScenarioTest and
+  Hrb2025*Test 2,398 green in a clean report directory.
+- Commit-message slip: sc_00156's hrb2025 commit says 12 checks; the xlsx has 13 (noted in follow-up 91a2635, not amended).
+- Open (owner, no fields added): no medical-mileage input (sc_00158 B types 6,084).
+
 ## 2026-10-15 - Removed the unemployment-repayment §1341 advisory (owner's decision)
 The repayment entry means 2025 benefits repaid in 2025 (netted on Schedule 1 line 7, sc_00145); §1341 concerns
 earlier-year income only, so the over-$3,000 advisory was misleading. Flags OTHER_INCOME_UNEMPLOYMENT_LARGE_REPAYMENT_

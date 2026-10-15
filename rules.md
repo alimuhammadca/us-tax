@@ -1,3 +1,18 @@
+**★ Form 8615 line 1 is the child's unearned income AFTER the early-withdrawal penalty (round-2 QA, sc_00151, 2026-10-17).**
+2025 Instructions for Form 8615, Line 1: with no earned income, line 1 is the child's AGI (line 11b); the Child's Unearned
+Income Worksheet line 2 is "earned income ... plus the amount of any penalty on early withdrawal of savings from the child's
+Schedule 1 (Form 1040), line 18" (Example 2: 16,000 - 100 = 15,900). deriveChildUnearnedIncome subtracted wages only, so 2,750 of
+interest with a 50 penalty (2,700, not MORE than 2,700) got Form 8615 and tax 142 instead of 136 - fix f6904003 subtracts the
+Schedule 1 line 18 penalty. Related, pinned by Hrb2025Sc00151-00160 (no other engine change): interest and dividends are ADDED
+for the 2,700 test; the Schedule 1-A Part V senior deduction is cut by 6% of MAGI over 75,000 and is NOT allowed on a separate
+return (the MFS age box is still 1,600); Schedule 8812 line 9 and Form 8959 use 200,000 for a qualifying surviving spouse (the
+joint 400,000 / 250,000 are for MFJ only; Form 8960 uses 250,000 for QSS); IRA MAGI (Pub. 590-A Worksheet 1-1) adds back the
+student loan interest deduction, 50+ uses 8,000 and 80%, the $200 floor never applies at or above the top of the range and never
+exceeds the contribution; excess social security is figured per spouse; Pub. 936 Table 1 pools the main and second home against
+one 750,000 (375,000 MFS); Form 8959 Part II reduces the 200,000 by Medicare wages; Form 8960 line 5a is Form 1040 line 7a (the
+loss after the 3,000 limit). **Open (owner, no fields added):** no medical-mileage input (the 21-cent miles are typed into the
+medical total).
+
 **★ An unemployment repayment entry is the SAME-YEAR repayment, netted on Schedule 1 line 7 - never line 24e (round-2 QA,
 sc_00145, 2026-10-15).** 2025 i1040 line 7: "If you received an overpayment of unemployment compensation in 2025 and you repaid
 any of it in 2025, subtract the amount you repaid ... check the box on line 7 and enter the amount you repaid". Line 24e is ONLY

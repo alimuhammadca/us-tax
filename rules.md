@@ -1,3 +1,15 @@
+**★ Round-2 QA sc_00261-00270 rules pinned (2026-10-15; no engine change).** Form 8863: AOTC and LLC share the 80,000-90,000 (single)
+phase-out, line 6/17 = (90,000 - MAGI) / 10,000 to at least three places, nothing at 90,000; the AOTC's refundable 40% (line 8) is taken from
+the PHASED-OUT credit. §24(d)(5): a return with Form 2555 gets no ACTC (line 19 still applies; the FEITW taxes the rest at the stacked rate).
+Income needs no information return: no-1099-DIV dividends keep their qualified status, a canceled debt under $600 is line 8c, a sale with no
+1099-B is Form 8949 box C/F. HSA: one family limit (8,550) for spouses, divided as they agree on each line 6; the 1,000 catch-up only raises
+the owner's own limit - a catch-up put in the other spouse's HSA is excess (6%). Seller-financed interest received needs Schedule B at any
+amount; interest paid to an individual seller is Schedule A line 8b (we hold one 8a amount - outstanding A48). EIC: investment income
+"11,950 or less" (exactly 11,950 allowed) and it includes tax-exempt interest (Pub. 596 Worksheet 1 line 2). Roth: Worksheet 2-1 adds the
+traditional IRA deduction back to AGI; Worksheet 2-2 line 11 caps the reduced limit at 7,000 minus other IRA contributions. Form 8814: one form
+per child - the 2,700 base and the 1,350 / 10% tax apply per child. 402(g): the 11,250 catch-up is for ages 60-63 AT YEAR END (a 12/31
+birthday at 60 is in, at 64 out). Dependent standard deduction: a taxable scholarship (Schedule 1 line 8r) is earned income.
+
 **★ Form 1098 box 4 is a line 8z recovery, never a cut to line 8a (round-2 QA, sc_00251-00260, 2026-10-15).** A refund of mortgage interest
 overpaid in an EARLIER year (Form 1098 box 4) is not subtracted from this year's interest (Schedule A instructions line 8a; Pub. 525 "Mortgage
 interest refund"); it is other income on Schedule 1 line 8z up to the tax benefit it gave - the lesser of the refund and the amount by which the

@@ -1,3 +1,27 @@
+## 2026-10-15T23:30:00-04:00 - Round-2 QA scenarios sc_00261-00270 (education credit phase-out, Form 2555 vs the ACTC, income with no information return, shared HSA family limit, seller-financed mortgage, EIC investment-income limit, Roth MAGI add-back, one Form 8814 per child, the 60-63 catch-up edges, a dependent's scholarship) - no engine change
+- c:/us-tax-hrb2025: sc_00261-00270 written (md + xlsx, 112 checks, 34 graded runs). Reshaped (round 1 graded our app's own gates, or
+  duplicated an earlier round-2 scenario): 261 (8863 MFS / 8862 / TIN gates = sc_00168/229/230 or unbuildable in H&R Block) -> the Form 8863
+  MAGI phase-out 80,000-90,000 with the 40% refundable share taken after it and the LLC halved (refund 4,945 / 2,595 / 245 / 1,745); 262 (our
+  ACTC states) -> §24(d)(5): no ACTC for a Form 2555 filer, H&R Block's 2555 now reachable in forms mode (ACTC 1,700 / 0 / 0, line 19 330);
+  263 (upload-gate sweep, NOT APPLICABLE in H&R Block) -> income with no information return: no-1099-DIV dividends (qualified), a 580 debt
+  canceled under the 1099-C line, a private stock sale on 8949 box F; 264 (advisory sweep = sc_00062/86/194/214/236) -> one 8,550 HSA family
+  limit for spouses, divided by agreement, the catch-up only in the owner's own HSA (excise 60 in B and C); 265 (seven blockers graded
+  elsewhere) -> the seller-financed mortgage on both sides (Schedule B at any amount; Schedule A line 8b with no 1098); 268 (single-child
+  8814 boundaries = sc_00232) -> one Form 8814 per child (5,000 + 2,000 -> 2,300 / 200; 3,500 x 2 -> 1,600 / 270; pooled 5,003). Kept and
+  extended: 266 (rental 12,000 / 11,000 kept; exactly 11,950 allowed, 3,589; tax-exempt interest counts, EIC 0 not 4,328); 267 (round 1's
+  7,000 + 7,000 broke the combined limit regardless of MAGI - kept as the H&R Block tree's corrected 3,500 + 3,500, plus 160,000 where the
+  add-back moves the limit to 2,340 and a nondeductible control); 269 (59 / 64 kept, moved to December 31 birthdays; 60 on 12/31 and 63);
+  270 (900 / scholarship 3,000 kept, with interest so the deduction moves the tax; wages + scholarship 4,350). Round-1 note corrected:
+  265's "seller-financed topic has no fields" was the driver stopping at the intro (IntInc has SFMInfo / SFMAddlInfo behind it).
+- us-tax-be: pin tests Hrb2025Sc00261-00270Test (34, commit 4b559c36) - the engine agreed with every IRS-derived value; no fix.
+  Hrb2025Sc00263/00265 pin that the overrideable DIVIDEND_ / INTEREST_STATEMENT_UPLOAD_REQUIRED gates still fire for no-form dividends and
+  seller-financed interest. TaxReturnComputeServiceTest, Sc*SqaScenarioTest and Hrb2025*Test: 2,779 green (406 classes) from a freshly
+  deleted surefire-reports directory. e2e: no value changed, no spec edited.
+- Slips: sc_00265's commit (dde4981) says 10 checks; the spreadsheet has 9 - corrected in an empty commit 2acf984. The docs commit 4b9721d
+  says "history, rules"; it carried outstanding.md only - this entry and the rules.md entry follow in the next commit.
+- Open (owner): outstanding.md A47 (no-1099-DIV dividends still gated), A48 (no Schedule A line 8a/8b split or seller identity; seller-financed
+  interest still gated), B21 (should the upload gates exempt amounts that never have a form?).
+
 ## 2026-10-15T19:30:00-04:00 - Round-2 QA scenarios sc_00251-00260 (Trade Act SUB-pay repayment, Form 1098 box 4/5, private-foundation cash ceiling, $100 per casualty, two-employer deferral limit, Form 4137 tips, allocated tips, Medicaid waiver home rule, NUA, SS worksheet adjustments) + one engine fix
 - c:/us-tax-hrb2025: sc_00251-00260 written (md + xlsx, 139 checks, 30 graded runs). Nine of ten reshaped: 251 (1341 on repaid unemployment
   = sc_00015/120/145/240) -> SUB pay repaid for TRA on Schedule 1 line 24e at any amount vs 3,000 of repaid state unemployment (nothing), TRA

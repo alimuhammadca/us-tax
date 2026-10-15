@@ -2,7 +2,7 @@
 
 ## ★ Round-2 QA scenarios (us-tax-hrb2025) — shortcomings and required improvements — opened 2026-10-15
 
-Collected from the round-2 scenario batches sc_00041–00180 (and kept up to date as later batches report).
+Collected from the round-2 scenario batches sc_00041–00190 (and kept up to date as later batches report).
 Engine bugs those batches found were **fixed** (see history.md); what is listed here is what is still open.
 Items marked **[fields]** need the owner's sign-off because they add or change form fields.
 
@@ -35,6 +35,9 @@ Items marked **[fields]** need the owner's sign-off because they add or change f
 | A23 | No **medical-mileage** input (2025: 21¢/mile) | User adds mileage into the medical total | sc_00158 |
 | A24 | Interest with **no statement at all**: the overrideable `INTEREST_STATEMENT_UPLOAD_REQUIRED` gate still asks for a 1099 | Product gating choice — allow "no statement received"? | sc_00170 |
 | A25 | MFS **"lived with your spouse at any time"** is asked only on the Social Security form, yet it also drives the traditional-IRA and Roth phase-out ranges | An MFS filer with an IRA/Roth and no benefits has no place to answer; absent the answer the engine uses the single (lived-apart) ranges | sc_00180 (also round-1 note) |
+| A26 | No **spouse date-of-death** input — the filer must know that a spouse who died during 2025 still allows MFJ, and one who died in 2024 (no child) does not | Status is a user choice; no check | sc_00188 |
+| A27 | No **community-property** allocation (Form 8958 / Pub. 555) for MFS returns in AZ, CA, ID, LA, NV, NM, TX, WA, WI | Community wages/interest are not split between the separate returns (round-1 sc_00184/00185 lived in NM/AZ; round 2 moved them) | sc_00184, 00185 |
+| A28 | MFS **"lived apart all year"** (SS form) now also gates the §469(i)(5) 12,500 rental allowance (fix e1a06bef) — a rental-loss filer with no benefits must still find that question on the Social Security form | Extends A25 | sc_00185 |
 
 ### B. Engine behaviour to decide
 
@@ -44,11 +47,13 @@ Items marked **[fields]** need the owner's sign-off because they add or change f
 | B2 | §280A depreciation carryover figures are not pinned by any test (fill-if-shown rows only) | sc_00068 |
 | B3 | Archer MSA waiver of a missed RMD (Form 5329 Part IX waiver) has no input — user enters the shortfall after the waiver | sc_00049 |
 | B4 | Saver's credit "born after January 1, 2008" is a yes/no answer, not derived from the date of birth (a filer born 01/02/2008 who answers No gets the credit) | sc_00173 |
+| B5 | §469(i)(5) allowance with **no** all-year answer now defaults to $0 (conservative, as line 6d); previously the last-6-months answer gave 12,500. Keep the default, or add an advisory flag when an MFS rental loss meets an unanswered all-year question? | sc_00185 |
 
 ### C. H&R Block routes the tester must confirm (scenario md gives a fallback)
 
 - Joint-and-survivor beneficiary-age input (sc_00044); medical-exception amount screen (sc_00045); minimum-retirement-age question for code 3 (sc_00043); which Form 5329 Part IX field pair is which (sc_00049, `40.254525/6` vs `40.38/39`).
 - **Forms mode (`hrbforms.exe`)** routes untried by automation: Form 8606 lines 2 and 6 (sc_00059, 00061); rental §199A safe-harbor checkbox (sc_00069); Form 2555 (sc_00126); Form 6251 line 2i (sc_00130); Form 8615 line 6 for a parent's taxable income ≥ 100,000 — guided mode refuses it (sc_00131, 00132); Form 8962 Part III fallback (sc_00142).
+- sc_00181–00190 best guesses: the MFS EIC screen's second statement `100.237019` = the written-separation-agreement prong (sc_00181 C); HOH offered once *lived apart* + *paid the home* are Yes (sc_00182 C); Form 8815 interview accepting a QTP contribution as the qualified expense (sc_00184 C); an MFS rental *lived with spouse at any time / all year* question for the special allowance (sc_00185 B–D); the 2210 *calculate myself* choice and the 2024-AGI entry (sc_00187, as sc_00146); spouse date of death on an MFJ return (sc_00188 B); a Form 8332 release that keeps the custodial parent HOH (sc_00190 A).
 - sc_00171–00180 best guesses: alimony-received boxes `1.81` (pre-2019) / `1.219277` (post-2018) with the intro's Next-not-Skip (sc_00171, from sc_00235's solved route); Saver's-credit prior-distributions question (sc_00172 D); 2025 MAGI field on the vehicle MAGI screen (sc_00174); joint estimated-payment screen on MFS (sc_00177 C); **Forms mode Form 1040 line 6d** (sc_00179) and the Schedule 1 line 20 "lived apart the entire year" checkbox inside H&R Block's 1040 (sc_00180 C); spouse-covered-by-a-plan question on MFS (sc_00180 B).
 - sc_00161–00170 best guesses: accrued-interest adjustment screen (sc_00163 B); HSA month-by-month and last-month-rule screens (sc_00165); Form 8332 / lived-apart answers on MFS (sc_00167); HOH for a married person living apart (sc_00169 B); interest without a 1099 (sc_00170).
 - Returned excess IRA contribution: item `92.19392` vs a 2026 1099-R code P (sc_00057).
@@ -63,10 +68,12 @@ Items marked **[fields]** need the owner's sign-off because they add or change f
 - sc_00058: graded 4a blank; if H&R Block prints 25,000 that row fails.
 - §30D MSRP cap: H&R Block never asks the MSRP — sc_00175 Runs A and C (60,000 and 55,001 sedans) are expected to show 7,500 (round-1 finding).
 - MFS Social Security lived apart all year: guided mode cannot express it (sc_00179 A/B show 10,200 without the Forms-mode line 6d).
+- H&R Block grants head of household from the status radio alone (run log) — sc_00190 C may let HOH be chosen with no qualifying person; the md tells the tester to grade it as Single.
+- MFS rental special allowance: if H&R Block never asks *at any time / all year*, sc_00185 B–D show whichever it assumes (expected FAILs in one of C or B/D).
 
 ### E. Housekeeping
 
-- Several scenario commit messages state a wrong check count (sc_00033, 00052, 00072, 00075, 00093, 00112, 00132, 00142, 00156, 00162, 00173); the spreadsheets are right and history.md records each slip.
+- Several scenario commit messages state a wrong check count (sc_00033, 00052, 00072, 00075, 00093, 00112, 00132, 00142, 00156, 00162, 00173, 00184); the spreadsheets are right and history.md records each slip.
 - `us-tax-be/context.md` has not been updated by the round-2 batches.
 
 ---

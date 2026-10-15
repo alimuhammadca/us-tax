@@ -1,3 +1,30 @@
+## 2026-10-15T18:00:00-04:00 - Round-2 QA scenarios sc_00181-00190 (MFS EIC prongs, MFS care credit, MFS pension / interest / rental / gain / IRA, filing status on a death, joint vs separate, HOH qualifying person) + one engine fix
+- c:/us-tax-hrb2025: sc_00181-00190 written (md + xlsx, 111 checks, 32 runs). Round 1's ten were mostly right but sat on no
+  boundary - five were "spouse's X on her MFS leg" returns that H&R Block files as plain single-income returns, and two lived in
+  community-property states (NM, AZ) without applying it (moved to UT, OR). Corrections: sc_00181's round-1 refund (4,500) omitted
+  the CTC 428 + ACTC 1,700 for her dependent son (H&R Block's 6,628 adopted); sc_00190's "HOH with the CTC omitted" was only legal
+  for a child released on Form 8332 (now stated). New runs: the EIC separated-spouse rule's two prongs - moved out 06/30 yes, 07/02
+  no, a written separation agreement yes (181); the care credit's MFS exception also needs over half the home's cost - apart but
+  parents pay -> 0; she pays -> HOH + 1,200 (182); a pension in NIIT MAGI but not NII, MFS threshold 125,000: MAGI 130,000 -> 114,
+  exactly 125,000 -> 0, and Ronald's own return graded (183); Form 8815 barred on MFS, 1,000 excluded on the joint return (a QTP
+  contribution as the expense) (184); MFS rental loss: no allowance together, 12,500 cap apart all year, last 6 months not enough
+  (185); MFS QDCG line 13 300,000: TI exactly 300,000 all 15%, 310,000 -> 10,000 at 20%, NIIT over 125,000 (186); MFS Form 2210
+  110% line: 2024 AGI 75,000 no penalty, 75,001 -> 47 (187); a spouse who died 03/10/2025 allows MFJ, one who died in 2024 with no
+  child leaves you single (188); a second earner on the joint worksheet (15,898) vs the same couple on two MFS returns (19,342)
+  (189); HOH qualifying person - released child yes, 5-month child no, dependent parent in her own home yes + ODC (190). New IRS
+  text in _tools/irs_text: f8815.
+- us-tax-be FIX e1a06bef: the §469(i)(5) MFS rental special allowance ($12,500 / $50,000) now needs the ENTIRE-year "lived apart"
+  fact (Social Security form, as line 6d and the MFS IRA range) instead of the filing-status last-6-months / legally-separated
+  answer; no answer -> $0. sc_00185 D (moved out 05/15) had its 10,000 loss allowed. Mutation-checked (Hrb2025Sc00185Test D fails
+  without it). No unit or e2e test pinned an MFS rental loss through the filing-status flag (the §469(i)(5) unit test passes explicit
+  caps to computeRentalScheduleE; mfs-spouse-rental-income.spec.ts has rental income, not a loss) - no e2e spec changed.
+- us-tax-be 6e16b4fc: Hrb2025Sc00181-00184, 00186-00190Test pin 31 tests (sc_00185's 4 came with the fix) - green;
+  TaxReturnComputeServiceTest, Sc*SqaScenarioTest and Hrb2025*Test 2,506 green in a clean report directory.
+- Commit-message slip: sc_00184's hrb2025 commit says 11 checks; the xlsx has 10 (not amended).
+- Open (owner): no spouse date-of-death input (sc_00188); no community-property / Form 8958 split for MFS (sc_00184, 00185); the
+  all-year "lived apart" fact is asked only on the Social Security form yet now also gates the MFS rental allowance (outstanding.md
+  A25-A28, B5).
+
 ## 2026-10-19T00:00:00-04:00 - Round-2 QA scenarios sc_00171-00180 (IRA compensation, Saver's credit student / dependent / age, clean vehicle MAGI and MSRP, Roth phase-out, MFS attribution, MFS Social Security, MFS IRA range) + one engine fix
 - c:/us-tax-hrb2025: sc_00171-00180 written (md + xlsx, 117 checks, 37 runs). All ten round-1 runs kept as Run A; sc_00171's
   round-1 refund was wrong (it omitted the 200 Saver's credit - H&R Block's tester caught it: 545 not 345) and sc_00180 lived in

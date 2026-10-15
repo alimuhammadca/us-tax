@@ -1,3 +1,20 @@
+**★ The MFS rental special allowance needs living apart ALL year - the last-6-months answer is not enough (round-2 QA, sc_00185,
+2026-10-15).** IRC §469(i)(5)(B) ("unless the taxpayer lives apart from his spouse at all times during the taxable year"); 2025
+Instructions for Form 8582, Part II caution ("If your filing status is married filing separately and you lived with your spouse at
+any time during the year, you are not eligible for the special allowances") and line 8 ($12,500 "if ... you and your spouse lived
+apart at all times during the year"). The engine keyed the $12,500 / $50,000 MFS allowance on the filing-status answer
+mfsOrHohLivedApartOrLegallySeparated, which is the LAST-6-MONTHS / legally-separated test (EIC, HOH, 1040 page-1 box), so an MFS
+filer whose spouse moved out on 05/15 deducted a 10,000 rental loss. Fix e1a06bef reads the ENTIRE-year residence fact on the
+Social Security form (livedApartFromSpouseEntireTaxYear - the same answer line 6d and the MFS IRA phase-out read); no answer -> $0.
+Do not reuse the 6-month flag for any "at all times during the year" rule. Related, pinned by Hrb2025Sc00181-00190 (no other
+engine change): the EIC separated-spouse rule has two prongs (apart July 1 - December 31, or a written separation agreement + not
+in the same household at year end); the MFS care-credit exception (§21(e)(4)) also needs over half the home's cost, and those facts
+make the filer HOH; a pension is in NIIT MAGI but not NII, MFS threshold 125,000 (MAGI exactly 125,000 -> 0); MFS cannot take the
+Form 8815 exclusion (a QTP contribution is a qualified expense on a joint return); the MFS QDCG 20% line is 300,000; the MFS
+Form 2210 110% line is 2024 AGI MORE than 75,000; a spouse who died during 2025 allows MFJ, one who died in 2024 with no child
+leaves you single; a custodial parent who released the child on Form 8332 is still HOH, a dependent parent need not live with you.
+**Open (owner, no fields added):** no spouse date-of-death input; no community-property (Form 8958) split for MFS.
+
 **★ Taxable alimony under a pre-2019 instrument is IRA COMPENSATION (round-2 QA, sc_00171, 2026-10-15).** IRC §219(f)(1);
 Pub. 590-A (2025) "Alimony and separate maintenance. For IRA purposes, compensation includes any taxable alimony ... only with
 respect to divorce or separation instruments executed on or before December 31, 2018"; interest is NOT compensation.

@@ -1,3 +1,27 @@
+## 2026-10-18T00:00:00-04:00 - Round-2 QA scenarios sc_00161-00170 (capital loss feeders, student loan MAGI, Schedule B feeders, tips phase-out, HSA months, Form 8814 ceiling, MFS EIC / education / itemizing, interest without a 1099) - no engine change
+- c:/us-tax-hrb2025: sc_00161-00170 written (md + xlsx, 135 checks). The five "boundary" rounds (161-165) were right and are
+  kept as Run A, but each duplicated a round-2 run, so the new runs test what FEEDS the boundary: a net -3,000 reached by a 1,000
+  carryover and by a 500 box 2a distribution netted before the limit, and the distribution using up the limit (-2,500) (161);
+  the SLI worksheet line 3 - an HSA (MAGI 97,000 -> 500) and an IRA deduction (98,500 -> 250) come off before the fraction
+  (162); Schedule B required by 200 of accrued interest at a net 1,500, a box 2 penalty that is not netted (Sch 1 line 18) and
+  box 3 Treasury interest (163); Schedule 1-A line 11 ROUNDS DOWN (opposite of the CTC): 150,999 keeps 25,000, 151,000 -> 24,900,
+  160,500 -> 24,000 (164); HSA family limit by month - 8 months 5,700, the 6% excise on a 2,850 excess (171), the December 1
+  last-month rule (165). The five "blocked" rounds (166-170) graded OUR 409s/flags, which H&R Block cannot show (166 was never
+  even entered - NOT TESTED); round 2 grades the return: Form 8814 at 13,500 refused / 13,499 allowed / tax-exempt interest not
+  gross income (166); MFS EIC barred living together, allowed after living apart the last 6 months, Single column at 30,000
+  (3,261 not 4,328) (167); MFS education credit 0 and marital status on December 31 - divorce final 12/31 -> Single LLC 800,
+  final 01/02/2026 -> MFS 0 (168); spouse itemizes -> MFS std 0 (itemize 2,000), but considered unmarried (spouse out since
+  04/30) -> HOH 23,625; out 08/15 -> still MFS (169; Russell moved to New Hampshire so no sales-tax add-on); interest with no
+  1099 - a private loan, 9 dollars from a credit union tipping 1,509 over the Schedule B line, and no statement at all (170).
+  New IRS text in _tools/irs_text: i8863 (2025).
+- us-tax-be 6783bcb2: Hrb2025Sc00161-00170Test pin 36 tests over 35 runs - green, no engine change needed;
+  TaxReturnComputeServiceTest, Sc*SqaScenarioTest and Hrb2025*Test 2,434 green in a clean report directory. No e2e spec changed.
+- Commit-message slip: sc_00162's hrb2025 commit says 16 checks; the xlsx has 13 (not amended). sc_00169 needed a wording
+  follow-up (12b003b: the family rents, so no mortgage/property tax).
+- Open (owner): with interest that has NO statement at all (sc_00170 D) the overrideable INTEREST_STATEMENT_UPLOAD_REQUIRED
+  gate still fires and tells the filer to upload a 1099 - its trigger/wording may want to allow "no statement received" when
+  the interest is entered as not-on-statements. Not changed (product gating, not an IRS computation).
+
 ## 2026-10-17T12:00:00-04:00 - Round-2 QA scenarios sc_00151-00160 (kiddie unearned income, age 65 / senior deduction, CTC for a QSS, IRA deduction, excess social security, mortgage limit, medical floor, Form 8959 Part II, NIIT) + one engine fix
 - c:/us-tax-hrb2025: sc_00151-00160 written (md + xlsx, 141 checks); every round-1 run was right and is kept as Run A
   (all ten scored full marks in H&R Block, all ten sat exactly on a boundary, and several duplicated round-2 runs), so the new

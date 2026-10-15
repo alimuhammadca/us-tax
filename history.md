@@ -1,5 +1,5 @@
 ## 2026-10-16T06:00:00-04:00 - Round-2 QA scenarios sc_00111-00120 (investment interest, charitable ceilings and valuation, casualty/disaster losses, section 1033, IRWE, investment theft, claim of right) + two engine fixes
-- c:/us-tax-hrb2025: sc_00111-00120 written (md + xlsx, 196 checks), round 1's run kept as Run A where it was right,
+- c:/us-tax-hrb2025: sc_00111-00120 written (md + xlsx, 194 checks), round 1's run kept as Run A where it was right,
   plus runs on the rule: Form 4952 2024 carryover on line 2 and qualified dividends - out by line 4b, in by the line 4g
   election that then loses the 15% rate on the Schedule D Tax Worksheet (111); the 60% ceiling on AGI after an IRA
   deduction and a 2024 carryover fitted in after the year's gifts (112); appreciated property - only the 50% room left

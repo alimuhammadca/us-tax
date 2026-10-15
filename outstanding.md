@@ -2,7 +2,7 @@
 
 ## ★ Round-2 QA scenarios (us-tax-hrb2025) — shortcomings and required improvements — opened 2026-10-15
 
-Collected from the round-2 scenario batches sc_00041–00160 (and kept up to date as later batches report).
+Collected from the round-2 scenario batches sc_00041–00170 (and kept up to date as later batches report).
 Engine bugs those batches found were **fixed** (see history.md); what is listed here is what is still open.
 Items marked **[fields]** need the owner's sign-off because they add or change form fields.
 
@@ -33,6 +33,7 @@ Items marked **[fields]** need the owner's sign-off because they add or change f
 | A21 | Unemployment: no input for a repayment of benefits received in an **earlier** year (the entry now means same-year, netted on line 7) | Earlier-year repayments ≤ $3,000 nondeductible, > $3,000 via claim-of-right inputs | sc_00145 |
 | A22 | Form 5329 exception **01 (age 55)** accepted as entered — birth year not checked | Ineligible exception passes | sc_00144 |
 | A23 | No **medical-mileage** input (2025: 21¢/mile) | User adds mileage into the medical total | sc_00158 |
+| A24 | Interest with **no statement at all**: the overrideable `INTEREST_STATEMENT_UPLOAD_REQUIRED` gate still asks for a 1099 | Product gating choice — allow "no statement received"? | sc_00170 |
 
 ### B. Engine behaviour to decide
 
@@ -46,6 +47,7 @@ Items marked **[fields]** need the owner's sign-off because they add or change f
 
 - Joint-and-survivor beneficiary-age input (sc_00044); medical-exception amount screen (sc_00045); minimum-retirement-age question for code 3 (sc_00043); which Form 5329 Part IX field pair is which (sc_00049, `40.254525/6` vs `40.38/39`).
 - **Forms mode (`hrbforms.exe`)** routes untried by automation: Form 8606 lines 2 and 6 (sc_00059, 00061); rental §199A safe-harbor checkbox (sc_00069); Form 2555 (sc_00126); Form 6251 line 2i (sc_00130); Form 8615 line 6 for a parent's taxable income ≥ 100,000 — guided mode refuses it (sc_00131, 00132); Form 8962 Part III fallback (sc_00142).
+- sc_00161–00170 best guesses: accrued-interest adjustment screen (sc_00163 B); HSA month-by-month and last-month-rule screens (sc_00165); Form 8332 / lived-apart answers on MFS (sc_00167); HOH for a married person living apart (sc_00169 B); interest without a 1099 (sc_00170).
 - Returned excess IRA contribution: item `92.19392` vs a 2026 1099-R code P (sc_00057).
 - K-1 box 14 / box 20 screens have no mapped field ids (sc_00084); Form 4952 carryover and election screens (sc_00111); §1033 has no postponement screen — gain entered as a land sale (sc_00117); combined vs local sales-tax rate (sc_00102); home-equity percentage (sc_00108); FEMA classification picked by declaration date (sc_00115/116).
 
@@ -59,7 +61,7 @@ Items marked **[fields]** need the owner's sign-off because they add or change f
 
 ### E. Housekeeping
 
-- Several scenario commit messages state a wrong check count (sc_00033, 00052, 00072, 00075, 00093, 00112, 00132, 00142, 00156); the spreadsheets are right and history.md records each slip.
+- Several scenario commit messages state a wrong check count (sc_00033, 00052, 00072, 00075, 00093, 00112, 00132, 00142, 00156, 00162); the spreadsheets are right and history.md records each slip.
 - `us-tax-be/context.md` has not been updated by the round-2 batches.
 
 ---

@@ -1,3 +1,31 @@
+## 2026-10-16T18:00:00-04:00 - Round-2 QA scenarios sc_00361-00370 (the QPRI ordering rule, a section 7872 gift loan, a professional gambler and section 165(d), the conservation-easement ceiling, a bargain sale to charity, pre-2017 mortgage debt, a medical home improvement, Form 4952 and the gain's character, the NIIT on an S corporation owner, the NIIT on a partnership-interest sale)
+- c:/us-tax-hrb2025: sc_00361-00370 written (md + xlsx, 124 checks, 30 runs), all reshaped. 361 (round 1's loan was all purchase money and
+  its H&R Block run typed the taxable 0 -> H&R Block's own QPRI screens and the section 108(h)(4) ordering rule: 40,000 cash-out canceled
+  first, 20,000 excluded, owe 8,398; 60,000 cash-out, none, owe 12,798); 362 (round 1 used an "illustrative" 4% AFR -> the Rev. Rul.
+  2025-13 blended rate 4.22%, 8,440, owe 2,093; the section 7872(d)(1) cap at 100,000: NII 1,000 treated as zero, owe 67; capped at
+  2,500, owe 667); 363 (round 1's gambler won -> the 165(d) cap: wagers over winnings and, for 2018-2025, expenses with them, Schedule C 0,
+  refund 50,000; H&R Block does not cap - its FAQ says trim by hand; A's expenses 20,500 so Schedule SE rounds one way; round 1's 136,522
+  was 136,523); 364 (the QCC 50% ceiling vs the same land outright at 30%, 60,000, refund 3,553; QCC after 40,000 of cash, 60,000, refund
+  13,086; two 75,000 items for H&R Block's six-figure refusal); 365 (bargain sale at the basis still gains 24,000 and hits 30%, 52,200,
+  refund 9,964; short-term gift part at basis 16,000, owe 3,647); 366 (round 1 omitted Form 8959 - refund 8,426 -> 7,976, H&R Block's
+  figure; Washington -> Oregon; sc_00107 already covers 750,000 vs 1,000,000 -> 1,250,000 prorated 0.800, refund 7,256; old + new debt
+  share one 750,000 limit, refund 5,096); 367 (Pub. 502 Worksheet A: value added equal to cost leaves nothing and the standard
+  deduction wins, refund 3,102; accessibility work in full, refund 7,172); 368 (the election is sc_00111 -> a short-term gain is line 4f
+  investment income without election, refund 3,353; then elect 15,000 of dividends, refund 5,603; round 1's H&R Block "no election"
+  was a missed checklist item; Boston -> Nashua NH); 369 (round 1's contrast 3,230 skipped the smaller-of -> passive owner 2,850; K-1
+  box 4 interest is NII for an active owner, 1,140); 370 (round 1's contrast 7,790 and line 5b -> passive partner 4,750 on line 5c's
+  absence; all-business deemed sale, 190, refund 743). New text in _tools/irs_text: usc7872.txt, rr2025_13.txt, usc165d.txt (with the 2025
+  wording), i1120ssk.txt (PDFs not kept). Correction: the sc_00366 commit (9e11433) says 14 checks - its spreadsheet has 11 (noted in
+  the sc_00367 commit 5c7571c).
+- us-tax-be: one engine fix, mutation-checked: 239c53a8 (Schedule K-1 portfolio interest - 1065 box 5, 1120-S box 4, 1041 box 1 -
+  reaches Schedule B / line 2b and so Form 8960 line 1; it was stored and never read). Pin tests Hrb2025Sc00361-00370Test (30 tests,
+  7e114077); no run left unpinned. No unit-test pin changed. Gate (TaxReturnComputeServiceTest 1,170, Sc*SqaScenarioTest 650,
+  Hrb2025*Test 1,266) from a freshly deleted surefire-reports directory: 3,086 green. No e2e spec changed (none pins K-1 interest in a
+  computed return; statement-mapper-roundtrip.spec.ts only round-trips the 1041 box 1 field).
+- Open (owner): outstanding.md A75-A80 (QPRI ordering-rule inputs, section 7872, bargain sale, Pub. 502 Worksheet A, two mortgage
+  vintages, Form 8960 line 5c unchecked against participation), B45-B47 (Form 4952 line 4e defaulting to 4d; K-1 dividends, royalties and
+  portfolio gains still unrouted; Table 1 rounding).
+
 ## 2026-10-16T13:00:00-04:00 - Round-2 QA scenarios sc_00351-00360 (Schedule 8812 Part II-B line 22, the residential clean energy credit after section 25C and with a 2024 carryforward, the refundable AOTC bar, credit ordering and the 1,700 ACTC cap, Schedule SE optional methods and the EIC, church employee income, section 179 recapture, section 280F listed-property recapture, the state refund worksheet, insolvency and attribute reduction)
 - c:/us-tax-hrb2025: sc_00351-00360 written (md + xlsx, 116 checks, 30 runs - sc_00355 A not graded). Reshaped: 351 (Part II-B on W-2 boxes
   4+6 is sc_00191 -> line 22: 252 + the 92 Form 4137 tax = 344 beats 300, refund 252; a 3,000 Schedule C's 212 half-SE, ACTC 212, owe 212);

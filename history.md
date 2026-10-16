@@ -1,3 +1,12 @@
+## 2026-10-16T16:20:00-04:00 - Seven SE-era personal forms now show saved data (outstanding.md E0, owner-approved)
+- us-tax-ui: form-business-income, form-depreciation-asset, form-farm-income, form-farm-rental, form-home-office-actual,
+  form-se-deductions, form-se-tax-options set their model in an async ngOnInit in the zoneless app without
+  ChangeDetectorRef.markForCheck(), so a reopened form looked empty although the data was saved and computed (the same
+  defect fixed in the rental form with A4). Each now marks for check after load and after save. `npm run build` green.
+- New e2e personal-forms-show-saved-data.spec.ts: one case per form - save through the API, reload, open the form, read
+  the saved number out of its input. 7 passed; with the fix stashed all 7 failed. rental-material-participation-no-ui
+  re-run, passed. No compute change, so no test scenario values move.
+
 ## 2026-10-16T16:10:00-04:00 - Rental material participation: Yes and No (outstanding.md A4, owner-approved); the rental form now shows saved data
 - us-tax-ui form-rental-income: the per-property "Materially participate (activity is nonpassive)" single radio became
   the question "Did you materially participate in this rental (e.g. more than 500 hours in 2025)?" with Yes / No, plus a

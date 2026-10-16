@@ -226,9 +226,9 @@ Items marked **[fields]** need the owner's sign-off because they add or change f
 - Round 1's H&R Block run of sc_00210 showed no EIC (owed 1,695) — the EIC questions were not answered; round 2 expects 607.
 - MFS rental special allowance: if H&R Block never asks *at any time / all year*, sc_00185 B–D show whichever it assumes (expected FAILs in one of C or B/D).
 
-### E0. Found while fixing A4 (2026-10-16) - needs the owner's go-ahead
+### E0. Found while fixing A4 (2026-10-16)
 
-- **Seven more personal forms load saved data without re-rendering** (same defect the rental form had): `form-business-income`, `form-depreciation-asset`, `form-farm-income`, `form-farm-rental`, `form-home-office-actual`, `form-se-deductions`, `form-se-tax-options` - each sets its model in an `async ngOnInit` with no `ChangeDetectorRef.markForCheck()` in a zoneless app, so a returning filer may see the form blank (and dev mode throws NG0100) even though the data is saved and computed. Fix = the same two-line change per form, plus a reload-and-see e2e. Not done without sign-off (outside A4).
+- ~~**Seven more personal forms load saved data without re-rendering**~~ **DONE 2026-10-16 (owner-approved).** `form-business-income`, `form-depreciation-asset`, `form-farm-income`, `form-farm-rental`, `form-home-office-actual`, `form-se-deductions`, `form-se-tax-options` now call `ChangeDetectorRef.markForCheck()` after loading and after saving, like the rental form. e2e `personal-forms-show-saved-data.spec.ts` (7 cases: save via API, reopen, read the saved number back) - 7 passed with the fix, 7 failed with it stashed.
 
 ### E. Housekeeping
 

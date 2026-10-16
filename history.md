@@ -1,3 +1,25 @@
+## 2026-10-16T13:45:00-04:00 - Rental expenses entered as whole-year totals, split by days (outstanding.md A1, owner-approved field)
+- New per-property field on the Rental income form: "How did you enter the expenses above?" - Rental share only (default,
+  the old meaning) / Whole-year totals - split them for me. Shown once personal-use days > 0. Column
+  `pf_rental_property.expenses_entered_as` (V273), entity + RentalIncomeMapper.
+- Compute `applyRentalAnnualTotalsSplit` (TaxReturnComputeService, run in prepare() before any reader of the rental or
+  deductions forms): Pub. 527 (2025) ch. 5 "Dividing Expenses" / Worksheet 5-1 line F - each shared expense line, typed
+  depreciation and the AMT personal-property figures become rental days / (rental + personal days) of the total;
+  advertising, commissions and management fees stay wholly rental (Worksheet 5-1 instructions, line 2d). Personal real
+  estate taxes -> Schedule A line 5b; personal mortgage interest -> line 8a only for a qualified residence (used as a
+  home, or rented under 15 days; section 163(h)(4)(A)(iii)), added to the filer's own interest so the Pub. 936 limit
+  applies to the total. Under 15 rental days (section 280A(g)) every interest and tax dollar is personal. MFS: the
+  spouse's form stays on the spouse's leg. Informational flag RENTAL_EXPENSES_SPLIT_BY_DAYS.
+- UI: the radio and a hint on the rental form; the Deductions form's mortgage-interest and real-estate-tax "Where to find
+  this" notes now say to leave such a home's figures out there. `npm run build` green.
+- Tests: new RentalAnnualTotalsSplitTest (5 runs; mutation-checked - disabling the split reddens 4, splitting
+  advertising reddens 1); whole-year-totals variants added to Hrb2025Sc00065Test, Sc00068Test, Sc00327Test (each
+  reproduces the pre-split return). Unit suite (TaxReturnComputeServiceTest + Sc*SqaScenarioTest + Hrb2025*Test + the new class) 3,155 green. New e2e rental-annual-totals-split.spec.ts (2 passed);
+  rental-199a-safe-harbor + mfs-spouse-rental-income re-run, 3 passed.
+- c:/us-tax-hrb2025: sc_00065 / 00068 / 00327 md notes updated (expected values unchanged, no xlsx rebuilt);
+  OPEN_QUESTIONS.txt A1 answered, B57-B58 added. outstanding.md: A1 done; B57 (Worksheet 5-1 line 4b/4c for a
+  standard-deduction filer) and B58 (operating-expense carryover not tracked) recorded.
+
 ## 2026-10-16T06:20:00-04:00 - Round-2 QA scenarios sc_00381-00390 (the Schedule 1-A stack beside Schedule A and before QBI, a multiple support agreement and HOH, the parent-grandparent tiebreaker, the custodial parent after Form 8332 and credit ordering, a section 1291 fund, a BBA push-out, SEHI beside a Marketplace plan, Pub. 590-A Appendix B, the charitable ceiling before QBI, notary fees on Schedule SE and the EIC) - the last batch of the owner's range sc_00041-00390
 - c:/us-tax-hrb2025: sc_00381-00390 written (md + xlsx, 91 checks, 30 runs), reshaped except 388/389 (extended). 381 (each deduction is graded elsewhere ->
   beside itemized 22,000, refund 6,734; before the QBI limit, 1,050 not 1,600); 382 (MSA parent + her rent -> still Single 633; over half her support ->

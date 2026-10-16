@@ -517,3 +517,10 @@ the same, or the form disagrees with Schedule C line 13.
 **Round-2 SE scenarios: pick amounts where Schedule SE rounding conventions agree.** Rounding every line (our engine,
 H&R Block) and carrying cents can differ by 1 on line 12 / 13 (e.g. 4a 184,700 → 27,192 vs 27,193). New runs use amounts
 where both give the same SE tax and half; a kept round-1 run grades the per-line figure H&R Block printed.
+
+**Rental expenses entered as whole-year totals are split ONCE, up front (2026-10-16, outstanding.md A1).**
+`applyRentalAnnualTotalsSplit` rewrites the rental-income forms' property lists to the rental share and adds the
+personal real estate taxes / qualifying mortgage interest to `standard-deductions-taxpayer` before `prepare()` captures
+either form. Every later reader therefore sees rental-share figures - never split again downstream, and never read
+`expensesEnteredAs` anywhere else. A new rental expense field must be added to `RENTAL_SPLIT_FIELDS` unless it is a
+direct rental expense (Worksheet 5-1 line 2d), or a whole-year total will be deducted in full.

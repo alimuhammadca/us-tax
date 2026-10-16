@@ -1,3 +1,23 @@
+## 2026-10-16T23:00:00-04:00 - Round-2 QA scenarios sc_00371-00380 (Form 8960 Part II, the NIIT MAGI add-back, net tax-exempt interest in the Social Security worksheet, railroad retirement and the Simplified Method, the 110% safe harbor and catch-up payments, a retiree's penalty and waiver, tips, overtime, car-loan interest and the senior deduction on joint returns)
+- c:/us-tax-hrb2025: sc_00371-00380 written (md + xlsx, 100 checks, 30 runs - sc_00376 A's penalty and owe not graded), all reshaped. 371 (round 1
+  typed 8,000 for its own ratable method -> 8,235, NIIT 2,803; round 1 left out W-2 box 6's 0.9% -> line 25c 360, refund 3,063; Texas sales tax
+  allocates nothing, 3,116; standard deduction, no line 9a, 3,420); 372 (round 1's H&R Block run never excluded the salary -> Form 2555 forms mode
+  with line 42 / AGI as entry checks; the housing exclusion is not added back, MAGI 300,000, 3,800 not 4,150; MAGI exactly 200,000, none); 373
+  (sc_00245/00196 already cover tax-exempt interest and the cap -> box 13 premium nets line 2a, 6b 18,100; provisional exactly 34,000, 4,500);
+  374 (round 1 only stipulated box 3 away -> box 3 42,000 + Simplified Method 2,400, 5b 21,600, 6b 5,860; age at start 60 -> 310, 5b 22,200);
+  375 (sc_00146/00187 cover the 110% line -> December withholding counts evenly, penalty 0; a January estimate still costs 40); 376 (round 1
+  graded a waiver H&R Block cannot request -> box A documented; retired at 61, 163; 90% of 2025 binding, 184); 377 (box 7 capped at the wage
+  base -> Forms 4070 total, 21,000; one 25,000 joint cap, 25,000); 378 (double time -> FLSA half 7,500, 6,000; one joint cap, 20,000); 379
+  (one 10,000 limit for a joint return, 10,000; used truck, 0); 380 (joint MAGI exactly 150,000, 12,000; line 35 once per spouse, 6,000). New
+  IRS text: _tools/irs_text/p575.txt (2025 Pub. 575; PDF not kept).
+- us-tax-be: one engine fix, mutation-checked: 51779d92 (RRB-1099-R box 4 stays fully taxable when box 3 is typed and no Simplified Method /
+  General Rule worksheet is run - it was dropped entirely, sc_00374 B line 5b 4,000 instead of 24,000). Pin tests Hrb2025Sc00371-00380Test
+  (31 tests incl. the 374 no-worksheet control; 374 in 51779d92, the rest in 54b25db4); no run left unpinned. No unit-test pin changed. e2e
+  changed, not run: line5abc-pension-withdrawals.spec.ts GAP A4.3 (taxable 800 -> 1,800, line 5a 1,800 -> blank). Gate
+  (TaxReturnComputeServiceTest 1,170, Sc*SqaScenarioTest 650, Hrb2025*Test 1,297) from a freshly deleted surefire-reports directory: 3,117 green.
+- Open (owner): outstanding.md A81-A83 (Forms 4070 tips total, overtime pay-stub inputs, RRB box 3 not read into the Simplified Method), B48-B51
+  (Form 8960 line 9b ungated, the Simplified Method on the whole gross, a used vehicle blocking, Doha missing from the Notice 2025-16 list).
+
 ## 2026-10-16T18:00:00-04:00 - Round-2 QA scenarios sc_00361-00370 (the QPRI ordering rule, a section 7872 gift loan, a professional gambler and section 165(d), the conservation-easement ceiling, a bargain sale to charity, pre-2017 mortgage debt, a medical home improvement, Form 4952 and the gain's character, the NIIT on an S corporation owner, the NIIT on a partnership-interest sale)
 - c:/us-tax-hrb2025: sc_00361-00370 written (md + xlsx, 124 checks, 30 runs), all reshaped. 361 (round 1's loan was all purchase money and
   its H&R Block run typed the taxable 0 -> H&R Block's own QPRI screens and the section 108(h)(4) ordering rule: 40,000 cash-out canceled

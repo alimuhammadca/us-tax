@@ -2,7 +2,7 @@
 
 ## ★ Round-2 QA scenarios (us-tax-hrb2025) — shortcomings and required improvements — opened 2026-10-15
 
-Collected from the round-2 scenario batches sc_00041–00390 (and kept up to date as later batches report). The open items from sc_00001–00040, built before this section existed, were added on 2026-10-16 as B55–B56 and in E.
+Collected from the round-2 scenario batches sc_00041–00391 (and kept up to date as later batches report). The open items from sc_00001–00040, built before this section existed, were added on 2026-10-16 as B55–B56 and in E.
 Engine bugs those batches found were **fixed** (see history.md); what is listed here is what is still open.
 Items marked **[fields]** need the owner's sign-off because they add or change form fields.
 
@@ -14,7 +14,7 @@ Items marked **[fields]** need the owner's sign-off because they add or change f
 | A2 | ~~No **lease-bonus** field for oil & gas royalties~~ **DONE 2026-10-16 (owner-approved field).** Royalty property field *"Of that, lease bonuses and advance royalties"* (`leaseBonusAndAdvanceRoyalties`, V274). Schedule E line 4 keeps the full royalties; the automatic 15% and its §613(a) 100% limit are figured on royalties − bonus (§613A(d)(5)); a bonus above the royalties is the blocking flag `ROYALTY_LEASE_BONUS_EXCEEDS_ROYALTIES`. Pins in `Hrb2025Sc00066Test` (B2 + 3); e2e `royalty-lease-bonus-depletion.spec.ts`. Left open: B59. | — | sc_00066 |
 | A3 | No **QCD distribution date** | 70½ check only catches an owner under 70½ all year | sc_00062 |
 | A4 | ~~Rental per-property **material-participation** control offers only "Yes"~~ **DONE 2026-10-16 (owner-approved).** Now the question *"Did you materially participate in this rental?"* with Yes / No (same `materialParticipation` field; no backend change). While verifying it in the browser, the rental form turned out never to show SAVED data: it loads in an `async ngOnInit` without telling the zoneless app to re-render (dev mode threw NG0100) - fixed with `ChangeDetectorRef.markForCheck()` after load and save. e2e `rental-material-participation-no-ui.spec.ts`. | — | sc_00075 |
-| A5 | Same control lets a **non-professional** make a long-term rental nonpassive | §469(c)(2) does not allow it (except e.g. average stay ≤ 7 days) | sc_00075 |
+| A5 | ~~Same control lets a **non-professional** make a long-term rental nonpassive~~ **DONE 2026-10-16 (owner-approved field).** New per-property *"What kind of rental is this?"* (`rentalActivityType`, V276): long-term (default) or one of Pub. 925's five "isn't a rental activity" exceptions. Long-term: only a real estate professional's material participation counts (§469(c)(2)); a non-professional's Yes stays passive with an explanatory note. Exception: material participation decides; passive → "other passive" (Form 8582 line 2), **no** $25,000 allowance (§469(i); Lasser §11.2); a sold exception property releases its own losses (§469(g)). `RentalActivityTypeTest`; new H&R Block scenario **sc_00391**; e2e in `rental-material-participation-no-ui.spec.ts`. | — | sc_00075, 00391 |
 | A6 | No **related-buyer** question on a rental disposition | "Sold" frees suspended losses even to a related buyer (§469(g)(1)(B)) | sc_00072 |
 | A7 | No input for a **moving reimbursement exceeding costs** (Form 3903 excess → line 1h) | Excess cannot be reported | sc_00088 |
 | A8 | Schedule 1 line 12 has no **category** (reservist / performing artist / fee-basis official) and no eligibility gates (100-mile test, $16,000 AGI test) | Ineligible amounts deducted silently | sc_00090 |

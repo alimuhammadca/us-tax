@@ -1,3 +1,22 @@
+## 2026-10-16T17:10:00-04:00 - Rental passive rules: a non-professional's material participation no longer makes a long-term rental nonpassive; the 7-day (and other Pub. 925) exceptions (outstanding.md A5, owner-approved field); new scenario sc_00391
+- V276 `pf_rental_property.rental_activity_type` (LONG_TERM default / AVG_7_DAYS_OR_LESS / AVG_30_DAYS_SERVICES /
+  EXTRAORDINARY_SERVICES / OTHER_EXCEPTION); entity + RentalIncomeMapper. UI: "What kind of rental is this?" radio above
+  the material-participation question; its hint reworded.
+- Engine (computeRentalScheduleE): long-term rental real estate is nonpassive only for a real estate professional who
+  did not answer No (IRC 469(c)(2), (c)(7); Pub. 925). Before, ANY Yes made a rental nonpassive - a non-professional's
+  long-term rental loss was deducted in full. Now it stays passive with the note
+  RENTAL_MATERIAL_PARTICIPATION_DOES_NOT_MAKE_NONPASSIVE. An exception property (not a rental activity) is nonpassive only
+  with material participation; passive, it joins "other passive" (Form 8582 line 2) with NO $25,000 allowance (469(i);
+  Lasser 2025 section 11.2); on a full sale it releases its own current + prior losses (469(g)). Royalties unchanged.
+- Tests: new RentalActivityTypeTest (6 cases; mutation-checked: old any-Yes rule -> 1 red, exception loss in the
+  allowance pool -> 3 red, no sale release -> 1 red). Hrb2025Sc00075Test Run B now seeds her true answer (Yes) -> still
+  10,000 allowed. Unit suite 3,177 + sc_00391's 3 = 3,180 green. e2e: rental-material-participation-no-ui.spec.ts gains a
+  rental-type case (UI: long-term + Yes -> -10,000; 7 days + Yes -> -40,000), 2 passed; 10 rental-related specs re-run,
+  37 passed.
+- c:/us-tax-hrb2025: new sc_00391 (cabin, loss 20,000, W-2 120,000: A monthly guests -> -15,000 refund 5,445; B 5-day
+  guests + 600 hours -> -20,000 refund 6,545; C 5-day guests, 80 hours -> 0, refund 2,133; 18 checks; H&R Block's
+  rb_SevenDays / rb_MatParticSevenDay screens) + Hrb2025Sc00391Test. sc_00075 md note; OPEN_QUESTIONS A5 answered.
+
 ## 2026-10-16T16:20:00-04:00 - Seven SE-era personal forms now show saved data (outstanding.md E0, owner-approved)
 - us-tax-ui: form-business-income, form-depreciation-asset, form-farm-income, form-farm-rental, form-home-office-actual,
   form-se-deductions, form-se-tax-options set their model in an async ngOnInit in the zoneless app without

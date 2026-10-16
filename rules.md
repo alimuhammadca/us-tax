@@ -524,3 +524,9 @@ personal real estate taxes / qualifying mortgage interest to `standard-deduction
 either form. Every later reader therefore sees rental-share figures - never split again downstream, and never read
 `expensesEnteredAs` anywhere else. A new rental expense field must be added to `RENTAL_SPLIT_FIELDS` unless it is a
 direct rental expense (Worksheet 5-1 line 2d), or a whole-year total will be deducted in full.
+
+**Rental material participation is not a universal "nonpassive" switch (2026-10-16, outstanding.md A5).** For a
+long-term rental (`rentalActivityType` blank / LONG_TERM) only a real estate professional's participation can make it
+nonpassive (469(c)(2)). Only the Pub. 925 exception types make a non-professional's Yes count - and those properties,
+when passive, never get the $25,000 allowance (they go to the "other passive" pool). Any new path that classifies a
+rental as nonpassive must follow the same three-way rule (royalty / exception / long-term).

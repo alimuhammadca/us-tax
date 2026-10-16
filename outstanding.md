@@ -2,7 +2,7 @@
 
 ## ★ Round-2 QA scenarios (us-tax-hrb2025) — shortcomings and required improvements — opened 2026-10-15
 
-Collected from the round-2 scenario batches sc_00041–00390 (and kept up to date as later batches report).
+Collected from the round-2 scenario batches sc_00041–00390 (and kept up to date as later batches report). The open items from sc_00001–00040, built before this section existed, were added on 2026-10-16 as B55–B56 and in E.
 Engine bugs those batches found were **fixed** (see history.md); what is listed here is what is still open.
 Items marked **[fields]** need the owner's sign-off because they add or change form fields.
 
@@ -156,6 +156,8 @@ Items marked **[fields]** need the owner's sign-off because they add or change f
 | B52 | **Form 8621 1291TAX** applies 37% to the user's **total** prior‑year allocation (`SECTION1291_HIGHEST_RATE`) — right only when every prior PFIC year is 2018–2025; the instructions' table needs 39.6% for 2013–2017, 35% for 2003–2012, etc., year by year | Under‑states 1291TAX for a holding period reaching back before 2018 | sc_00385 |
 | B53 | **Negative Form 8978 line 14**: `applyForm8978NegativeToSchedule3` puts the whole \|line 14\| on Schedule 3 line 6l — the Negative Form 8978 Adjustment Worksheet caps 6l at Form 1040 line 18 and sends the excess to **Schedule 2 line 17z** as a negative amount, limited to the chapter 1 taxes in Schedule 2 Part II. Not implemented | 6l over‑stated whenever \|line 14\| > line 18; a chapter 1 Part II tax (e.g. the §72(t) 10%) is not offset (sc_00386 C is under line 18, so unaffected) | sc_00386 |
 | B54 | **SEHI ↔ PTC coordination is gated on `marketplacePlan`, whose UI label reads *"These premiums were for a Marketplace plan with advance premium tax credit"*** — Pub. 974 (Worksheet W line 18) applies the Iterative / Simplified methods when no APTC was paid too. A filer with a Marketplace plan and no APTC who answers the label literally gets SEHI 9,000 **and** PTC 2,652 (sum 11,652 > the 9,000 premium) with no flag (sc_00387 A inputs). Fix: reword the label (*"…a Marketplace plan (Form 1095‑A)"*) and/or gate on a 1095‑A for the same person with a PTC claimed | Double benefit for no‑APTC Marketplace enrollees | sc_00387 |
+| B55 | **Schedule 8812 lines 1 and 2a–2d are blank in the UI preview:** the output model starts at line 3 (MAGI) and the preview deliberately renders only line 3, so the printed line 1 (AGI) is empty on the filed form. No value is wrong — line 3 equals line 1 when there is no Form 2555 / 4563 / Puerto Rico exclusion. Wire lines 1 and 2a–2d from the Form 1040 AGI and the exclusions? A visual change to a verified preview, so it needs the owner's sign-off | sc_00004 (raised 2026-09-27) |
+| B56 | **Form 8839 line 17 (credit limit):** round 1's md gave 13,698 (tax 15,898 − the 2,200 CTC on Form 1040 line 19); the engine gives 15,398 because its Credit Limit Worksheet subtracts Schedule 8812 Credit Limit Worksheet B's figure, not line 19 — the two worksheets are mutually dependent. Not settled which reading the 2025 instructions intend; sc_00019 records line 17 ungraded (line 18 is 10,000 either way) | sc_00019 (raised 2026-09-27) |
 
 ### C. H&R Block routes the tester must confirm (scenario md gives a fallback)
 
@@ -222,6 +224,9 @@ Items marked **[fields]** need the owner's sign-off because they add or change f
 - MFS rental special allowance: if H&R Block never asks *at any time / all year*, sc_00185 B–D show whichever it assumes (expected FAILs in one of C or B/D).
 
 ### E. Housekeeping
+
+- **Suite-shape questions from sc_00001 (2026-09-26), never answered:** (1) should round-2 scenarios reuse round 1's fact patterns (cross-round comparison) or use fresh ones — the build has reused them where they test the rule and redesigned where they cannot; (2) should scenarios for forms H&R Block does not ship (Forms 8621, 8978, 8986) be dropped rather than run as "N/A" — they were kept, with those forms' rows not graded (sc_00385, sc_00386).
+- **GitHub collaborator invite for `us-tax-hrb2025` (asked 2026-09-27):** the login `HassamEhtesham14` returns 404, so no invite was sent; needs the correct login or an email address.
 
 - Several scenario commit messages state a wrong check count (sc_00033, 00052, 00072, 00075, 00093, 00112, 00132, 00142, 00156, 00162, 00173, 00184, 00193, 00202); the spreadsheets are right and history.md records each slip.
 - `us-tax-be/context.md` has not been updated by the round-2 batches.

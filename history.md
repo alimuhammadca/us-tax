@@ -1,3 +1,27 @@
+## 2026-10-16T00:20:00-04:00 - Round-2 QA scenarios sc_00321-00330 (1099-PATR on Schedule F, Social Security repaid more than received, PTC year-of-marriage Part V, mid-quarter convention, decedent's final return, Schedule C line 36, section 280A(g), excess deferrals Roth and corrective, unrecaptured 1250 under and over 197,300, 1250 and 28% slices together)
+- c:/us-tax-hrb2025: sc_00321-00330 written (md + xlsx, 108 checks, 28 graded runs - sc_00323 B fill-if-forms-mode). Reshaped: 321 (two bare rows
+  -> a Schedule F return: line 3b 5,000 / 3,800 with 1,200 personal propane and fuel on 3a only / 11,000 with per-unit retains; box 4 on 25b);
+  322 (three of our own hard blocks -> a single filer's negative box 5: 6b 0, a 2,500 net repayment not deductible, 5,000 -> the section 1341
+  credit 838 beats the deduction (credit not graded - H&R Block has no route)); 323 (our advisory + a capped fixture -> Pub. 974's own worked
+  example: repay 2,942 standard vs 1,402 with Part V); 326 (round 1's impossible inventory and our advisory -> Schedule C line 36 net of personal
+  withdrawals and returns: COGS 28,000 / 26,500 / 24,500); 328 (duplicated sc_00255 -> the Roth excess not on line 1h, and a code P / code 8
+  corrective distribution: only 95 on line 1h). Kept and extended: 324 (80% Q4 -> 5,500; exactly 40% half-year 10,000; 42% -> 11,200, more than
+  half-year); 325 (round 1 as A; 65 at death on the day before the birthday: B 17,750 + 6,000, C one day younger 15,750); 327 (12 / 14 days
+  excluded, 15 days reported 8,655); 329 (round 1's 28,055 was wrong - H&R Block's 26,867 is the IRS figure; + straddle 54,199 and all at 25%
+  61,423); 330 (round 1's 26,460 wrong - 24,655; + the 1250 slice filling the 24% band below the 28% collectibles 57,599, both capped 69,823).
+  New IRS text in _tools/irs_text (PDFs deleted): f1099ptr (Rev. 4-2025), i1040sf, p225, p974.
+- us-tax-be: four engine fixes, each mutation-checked: f61246ac (a net SS repayment of 3,000 or less no longer added to Schedule A line 16;
+  advisory wording), afba1fb5 (mid-quarter convention applied when more than 40% of the year's basis is placed in Q4 - 5/7-year 200% DB),
+  7d9a7342 (section 280A(g): a home rented under 15 days left off Schedule E), 6d88bb69 (non-IRA 1099-R codes 8/P kept off lines 5a/5b). Pin
+  tests Hrb2025Sc00321-00330Test (28 tests, 81cb5130); sc_00325 C not pinned (no date-of-death input). No unit-test pin changed. Gate
+  (TaxReturnComputeServiceTest, Sc*SqaScenarioTest, Hrb2025*Test) from a freshly deleted surefire-reports directory: 2,966 green; full unit
+  suite 3,910 green. e2e changed (not run): line6abcd-social-security-benefits.spec.ts (advisory message now cites Pub. 915, not Pub. 17 /
+  Form 1040-X).
+- Slips: sc_00329's commit (4f1854d) says 11 checks; the spreadsheet has 10 - corrected in an empty commit 8186254. Fix commit 7d9a7342 quotes
+  sc_00327 C as 7,935; the scenario was then simplified to 8,655.
+- Open (owner): outstanding.md A62-A65 (1099-PATR into Schedule F; SS repayment prior-year inputs; taxpayer date of death; Schedule C line 36
+  inputs) and B34-B36 (SS method 1 vs 2; mid-quarter for other classes / SL; 280A(g) interest and taxes to Schedule A).
+
 ## 2026-10-15T23:05:00-04:00 - Round-2 QA scenarios sc_00311-00320 (Form 4868 and Schedule 3 line 10, section 121(c) reduced exclusion, 529 with the AOTC and a scholarship, foreclosure recourse vs nonrecourse, QOF 180-day window, seller-financed note in a later year, ABLE saver's credit, Form 1099-CAP no loss, life policy sale split, QLAC and the RMD)
 - c:/us-tax-hrb2025: sc_00311-00320 written (md + xlsx, 143 checks, 33 graded runs). All ten reshaped: 311 (round 1 graded abstract Form 4868
   lines H&R Block cannot accept -> a real return whose line 24 is the estimate: line 5 excludes the payment, line 6 floors at 0, the payment is

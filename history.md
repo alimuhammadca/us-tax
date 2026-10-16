@@ -1,3 +1,33 @@
+## 2026-10-16T09:30:00-04:00 - Round-2 QA scenarios sc_00291-00300 (like-kind boot, section 1256 60/40, general business credit and the TMT, HSA excess excise, Form 2210 Schedule AI, OBBBA bonus cutover, Form 4137 wage base, Form 8379 allocation, Form 8611 recapture, Form 8283 appraisal line)
+- c:/us-tax-hrb2025: sc_00291-00300 written (md + xlsx, 119 checks, 34 graded runs). Kept and extended: 291 (round 1's boot 20,000 as A;
+  boot 70,000 capped at the 50,000 gain, net debt relief 15,000 as the boot, a realized loss not recognized; investment land -> Schedule D;
+  tax 7,460 / 11,960 / 6,710 / 5,075); 292 (round 1's 10,000 gain as A, tax 6,440 not 6,855; a 10,000 loss split and limited to 3,000; the
+  split made before netting a 4,000 short-term stock loss, 5,360; Form 6781 in forms mode); 293 (round 1 typed the 38(c) limit as an
+  input - replaced by real returns: limit = tax 5,975 below the AMT exemption, 9,573 where the TMT 8,294 binds with no AMT owed, credit used in
+  full at exactly 88,100; Form 3800 forms mode); 294 (A 60; B the year-end cap 30 via the Excess Contributions topic round 1 never opened;
+  C withdrawn 0; D a 2024 excess absorbed and deducted - line 13 4,000; E taxed 60 again); 295 (round 1 abstract, safe harbour met -> real
+  underpayment: penalty 335 regular, 124 with Schedule AI, 251 when the gain falls on Aug 29 in period (c), 335 for an even earner); 296
+  (Jan 20 vs Jan 19 instead of Feb 15 vs Jan 10, plus a Jan 15 contract placed in service Feb 15 - still 40%; cost 90,000 so Schedule SE gives
+  6,104 under either rounding); 298 (Part III by its rules: half the 31,500 basic standard deduction each - the Rev. 11-2024 instructions print
+  30,000 - and student-loan interest to the borrower); 299 (H&R Block has no Form 8611: the form is worked by hand and documented, the graded
+  rows are Schedule 2 line 16 and the totals; flow-through 12,800, year 11 .333 -> 17,750, year 12 .267 -> 15,835). Reshaped (duplicated an
+  earlier round-2 scenario): 297 (low-income run = sc_00256) -> the Form 4137 wage base counted across two W-2s (217 / 87 / 459); 300 (car
+  cap = sc_00114) -> the appraisal line "more than 5,000 per item or group of similar items" (5,000 painting deducted; two paintings 5,500 to
+  two museums 0; painting + dining set 5,500; listed stock 9,000). New IRS text in _tools/irs_text: i8824/f8824, f6781, i3800, 2025 f3800
+  (replacing the 2024 text), i8889, f4562, i8379/f8379, f8611, i8283/f8283.
+- us-tax-be: fix 0e471afe - a prior-year excess HSA contribution absorbed by this year's unused room is deducted on Form 8889 line 13 (2025
+  Instructions for Form 5329, line 43), and line 46 subtracts line 44 (sc_00294 D: deduction 3,000 -> 4,000, refund 2,285 -> 2,405);
+  mutation-checked (fix stashed -> Hrb2025Sc00294Test D fails -> restored). No e2e spec pins a prior-year HSA excess - none changed. Fix
+  c85ea385 - computeForm8379 reads the tax year null-safely (robustness; no value changes) so sc_00298 can be pinned. Pin tests
+  Hrb2025Sc00291-00300Test (32, commit 2f99df46); not pinned: sc_00296 C (no acquisition-date field) and sc_00300 B (no property category) -
+  outstanding A55/A56. TaxReturnComputeServiceTest, Sc*SqaScenarioTest and Hrb2025*Test: 2,875 green (436 classes) from a freshly deleted
+  surefire-reports directory.
+- Slips: sc_00297's commit (8e27a05) says 11 checks; the spreadsheet has 10 - corrected in an empty commit 6014433. sc_00291 first quoted
+  IRC 1031(b) from memory - replaced in b16472c.
+- Open (owner): outstanding.md A54 (HSA excess withdrawn by the due date), A55 (asset acquisition date / 40% election), A56 (Form 8283
+  property category for similar items), B26 (derive Forms 8824/6781), B27 (pre-fill Form 8379 column (b)), B28 (Form 8611 line-4 lookup),
+  B29 (HSA line 44 path unpinned).
+
 ## 2026-10-16T05:30:00-04:00 - Round-2 QA scenarios sc_00281-00290 (Form 8829 limit/carryover and lines 16/17, foreign tax carryover, capital loss carryover with negative taxable income, minimum tax credit, Schedule H thresholds, clergy housing limit, CRP on Schedule SE, Form 4835 vs Schedule F, Form 8814 and the parent's EIC, equal-earner MFS win)
 - c:/us-tax-hrb2025: sc_00281-00290 written (md + xlsx, 123 checks, 36 graded runs/returns). Kept and extended: 281 (round 1's Year 1 as A;
   the carryover limited again (B 10,000/3,000 carried), used up (C line 31 6,000) and a standard-deduction filer's mortgage interest/taxes on

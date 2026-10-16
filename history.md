@@ -1,3 +1,26 @@
+## 2026-10-16T02:15:00-04:00 - Round-2 QA scenarios sc_00341-00350 (inherited IRA and the spouse who treats it as own, SEPP exception, Roth ordering and conversion recapture, one IRA rollover a year, Form 1116 foreign qualified dividends, the no-Form-1116 election at 300, Form 2555 housing exclusion, FEIE with Form 1116, the high-tax kickout, ACTC earned income)
+- c:/us-tax-hrb2025: sc_00341-00350 written (md + xlsx, 97 checks, 30 runs). Reshaped: 341 (duplicated round-2 sc_00080 C -> code 4 kept
+  as A; the surviving spouse who treated the IRA as his own owes the 10%, 4,000; kept as an inherited IRA, none); 345 (duplicated sc_00282 ->
+  foreign qualified dividends and the Form 1116 adjustment exception: 19,900 credit 2,813; 20,000 x 0.4054, credit 1,016; QDCG line 5 over
+  197,300, credit 1,418); 350 (duplicated sc_00134 -> what is ACTC earned income: Schedule C profit less half SE tax 2,134; a business loss
+  1,725). Kept and extended: 342 (SEPP only for the series: another IRA's 6,000 owes 600; an employer plan before separation owes 3,000);
+  343 (Roth ordering: 2022 conversion recapture 1,500; a 2020 conversion is outside "2021 through 2025", 500; a draw inside the basis owes
+  800 with nothing taxable; H&R Block's Form 8606 topic has the Roth basis / Recapture screens round 1 never reached); 344 (one IRA
+  rollover per 1-year period from RECEIPT: 04/15/2025 taxed + 10% refund 1,133 - H&R Block expected to FAIL, it ignores its own question;
+  05/15/2025 valid 17,645; a 401(k) rollover unlimited 27,645); 346 (exactly 300 still unlimited 300 against a 276 limit; 301 -> 276);
+  347 (housing over the Notice 2025-16 Abu Dhabi limit 49,687 -> 28,887; FEIE limited to salary less housing; moved from Muscat to Abu
+  Dhabi); 348 (the line-12 reduction 26,000; the limit binding after it, 21,576; no exclusion 45,623); 349 (carryover 7,322, not round 1's
+  7,323; the high-tax kickout beside untaxed passive interest 5,150 vs 9,000 at 30%). New IRS text in _tools/irs_text: Notice 2025-16
+  (n2025_16.txt, n2025_16_raw.txt; PDF not kept).
+- us-tax-be: two engine fixes, each mutation-checked: a5b15d42 (code-J Roth earnings, Form 8606 line 25c, now carry the 10% on Form 5329
+  line 1), 8ae3da1e (the Form 1116 high-tax kickout reads the per-type tax columns q-t, as line 8 does). Pin tests Hrb2025Sc00341-00350Test
+  (30 tests, 78177f71); not pinned: sc_00343 A/C 10% (no conversion-year input), sc_00345 B/C credit (no foreign-QD adjustment). No
+  unit-test pin changed. Gate (TaxReturnComputeServiceTest 1,170, Sc*SqaScenarioTest 650, Hrb2025*Test 1,206) from a freshly deleted
+  surefire-reports directory: 3,026 green. No e2e spec changed (none pins a code-J 10% or a kickout with the per-type columns).
+- Open (owner): outstanding.md A69-A72 (Roth conversion year/taxable part; per-1099-R 10% exceptions and separation from service; rollover
+  dates; foreign-employer wages without the exclusion), B39-B41 (Form 1116 foreign-QD adjustment; Notice 2025-16 locality list; the
+  high-tax test's expense allocation).
+
 ## 2026-10-16T09:30:00-04:00 - Round-2 QA scenarios sc_00331-00340 (QSBS 75% vs 100%, installment sale of section 1245 property, section 1259 constructive sale, AMT exemption phase-out ends, Form 6251 Part III bands, ISO later-year sale, AMT foreign tax credit, ATNOLD, backdoor Roth pro rata, NUA and the 10%)
 - c:/us-tax-hrb2025: sc_00331-00340 written (md + xlsx, 108 checks, 30 runs - sc_00338 A graded on the regular tax only). Reshaped: 340
   (duplicated round-2 sc_00259 -> the 10% early-distribution tax only on box 2a in an NUA lump sum (2,000, not 10,000) and a non-lump-sum NUA

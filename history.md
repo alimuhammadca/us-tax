@@ -1,3 +1,16 @@
+## 2026-10-16T16:10:00-04:00 - Rental material participation: Yes and No (outstanding.md A4, owner-approved); the rental form now shows saved data
+- us-tax-ui form-rental-income: the per-property "Materially participate (activity is nonpassive)" single radio became
+  the question "Did you materially participate in this rental (e.g. more than 500 hours in 2025)?" with Yes / No, plus a
+  hint (No keeps a real estate professional's rental passive). Same materialParticipation field; the engine already
+  honoured an explicit false (sc_00075 fix 97b29cd2).
+- Defect found while verifying it in the browser: the rental form never displayed saved data. It sets its model in an
+  async ngOnInit in a zoneless app without ChangeDetectorRef.markForCheck() (dev mode threw NG0100); proven pre-existing by
+  re-running with the pre-A1 component. Fixed (markForCheck after load and after save). Seven other SE-era personal forms
+  share the pattern - recorded in outstanding.md E0 for the owner.
+- New e2e rental-material-participation-no-ui.spec.ts: seeds a rental, opens the form, answers No -> stored false, then
+  Yes -> stored true (1 passed). `npm run build` green.
+- c:/us-tax-hrb2025: sc_00075 md note; OPEN_QUESTIONS A4 answered. us-tax-be: Hrb2025Sc00075Test comment.
+
 ## 2026-10-16T15:00:00-04:00 - Royalty cost depletion and the bonus add-back (outstanding.md B59, owner-approved fields)
 - Sources downloaded and kept in c:/us-tax-hrb2025/_tools/irs_text (commit 8a00f5c): Pub. 535 (2022, the last edition with
   the depletion chapter) and Treas. Reg. 1.611-2, 1.612-3, 1.613-2, 1.613A-3 (eCFR).

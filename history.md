@@ -1,3 +1,25 @@
+## 2026-10-16T06:20:00-04:00 - Round-2 QA scenarios sc_00381-00390 (the Schedule 1-A stack beside Schedule A and before QBI, a multiple support agreement and HOH, the parent-grandparent tiebreaker, the custodial parent after Form 8332 and credit ordering, a section 1291 fund, a BBA push-out, SEHI beside a Marketplace plan, Pub. 590-A Appendix B, the charitable ceiling before QBI, notary fees on Schedule SE and the EIC) - the last batch of the owner's range sc_00041-00390
+- c:/us-tax-hrb2025: sc_00381-00390 written (md + xlsx, 91 checks, 30 runs), reshaped except 388/389 (extended). 381 (each deduction is graded elsewhere ->
+  beside itemized 22,000, refund 6,734; before the QBI limit, 1,050 not 1,600); 382 (MSA parent + her rent -> still Single 633; over half her support ->
+  HOH 4,122); 383 (round 1 graded only the parent's return -> the grandmother's: higher AGI claims, 3,125; equal AGI cannot, 925); 384 (noncustodial leg
+  = sc_00010 -> no release, CTC after the 630 dependent-care credit, 1,235 + ACTC 965, 4,309; no daycare 3,679); 385 (round 1 split 10,000 a year ->
+  by days 9,993 / 1291TAX 11,103, not graded - no Form 8621 in H&R Block; first-year rule, owe 4,667; exactly 125%, nonexcess, 2,533); 386 (no Form
+  8986 date -> furnished 01/05/2026, nothing in 2025, 2,333; negative line 14 on 6l, line 16 22,667; A not graded); 387 (round 1 graded one of two
+  legal Pub. 974 answers -> A's SEHI/PTC not graded; PTC zero at 123,700, SEHI 9,000, owe 28,271; employer plan from 06/30, 3,750, owe 29,927); 388
+  (B: Appendix B gives 1,880 where a self-consistent deduction gives 5,880, refund 252; not covered, 8,000, 2,738); 389 (gift under the ceiling 3,881;
+  a SEP moves the base and QBI, 71,642 / 1,552, 2,183); 390 (round 1 missed a 289 EIC - refund 457 not 168; its whole-dollar point is a convention,
+  not graded; 4,000 of notary fees: SE 1,766, EIC 266, refund 1,000; all notary: no SE, no EIC, 2,439). New text in _tools/irs_text: i8621.txt,
+  i8978.txt (PDFs deleted), f8621.txt, f8978.txt, i1040gi_2023.txt. Correction: the sc_00386 md first said Lasser has no BBA section - ¶12.13 is
+  one (da524ce; its commit 8749fa0 named no figure that changed).
+- us-tax-be: one engine fix, mutation-checked: fa03a3b4 (notary profit taken out of EIC earned income as well as the SE base - EIC Worksheet B; an
+  all-notary 16,500 had EIC 197). Pin tests Hrb2025Sc00381-00390Test (30 tests, ed4af841); no run left unpinned (382 B and 383 C pin the user's
+  choice - the engine has no MSA / tiebreaker inputs; 387 B/C pin with the Marketplace flag off). No unit-test pin changed; no e2e spec changed (the
+  notary spec se-clergy-notary-optional.spec.ts asserts SE tax only). Gate (TaxReturnComputeServiceTest 1,170, Sc*SqaScenarioTest 650,
+  Hrb2025*Test 1,327) from a freshly deleted surefire-reports directory: 3,147 green.
+- Open (owner): outstanding.md A84-A87 (multiple support agreement, tiebreaker inputs, Form 8621 Part V, SEHI months of employer-plan
+  eligibility), B52-B54 (1291TAX at a flat 37%, the negative Form 8978 worksheets, the SEHI/PTC coordination gated on a flag labelled "with advance
+  premium tax credit" - a no-APTC filer answering literally gets SEHI 9,000 and PTC 2,652).
+
 ## 2026-10-16T23:00:00-04:00 - Round-2 QA scenarios sc_00371-00380 (Form 8960 Part II, the NIIT MAGI add-back, net tax-exempt interest in the Social Security worksheet, railroad retirement and the Simplified Method, the 110% safe harbor and catch-up payments, a retiree's penalty and waiver, tips, overtime, car-loan interest and the senior deduction on joint returns)
 - c:/us-tax-hrb2025: sc_00371-00380 written (md + xlsx, 100 checks, 30 runs - sc_00376 A's penalty and owe not graded), all reshaped. 371 (round 1
   typed 8,000 for its own ratable method -> 8,235, NIIT 2,803; round 1 left out W-2 box 6's 0.9% -> line 25c 360, refund 3,063; Texas sales tax

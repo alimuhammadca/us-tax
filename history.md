@@ -1,3 +1,29 @@
+## 2026-10-15T23:05:00-04:00 - Round-2 QA scenarios sc_00311-00320 (Form 4868 and Schedule 3 line 10, section 121(c) reduced exclusion, 529 with the AOTC and a scholarship, foreclosure recourse vs nonrecourse, QOF 180-day window, seller-financed note in a later year, ABLE saver's credit, Form 1099-CAP no loss, life policy sale split, QLAC and the RMD)
+- c:/us-tax-hrb2025: sc_00311-00320 written (md + xlsx, 143 checks, 33 graded runs). All ten reshaped: 311 (round 1 graded abstract Form 4868
+  lines H&R Block cannot accept -> a real return whose line 24 is the estimate: line 5 excludes the payment, line 6 floors at 0, the payment is
+  Schedule 3 line 10 once: owe 0 / refund 1,305 / owe 1,169 at the 90% mark / refund 805); 312 (full 250,000/500,000 limits far from any edge and
+  our own 1099-S blocker -> section 121(c) 365/730 x 250,000 = 125,000: 100,000 all excluded, 160,000 leaves 35,000 short-term (bought 09/01/2024,
+  sold 09/01/2025), no reason = no exclusion + NIIT 1,140); 313 (the ratio alone -> AQEE less the AOTC expenses and a scholarship: taxable 250 /
+  1,750 / 1,500, Form 5329 Part II 0 / 75 / 0; ratio worked by hand - H&R Block asks the taxable amount); 314 (H&R Block has no 1099-A -> Pub. 4681
+  Table 1-1 by hand, entered as a sale at the amount realized + 1099-C: nonrecourse gain 50,000; recourse 20,000 + COD 30,000; still liable no COD;
+  basis 190,000 loss (3,000) beside COD); 315 (our Form 8997 gate rows -> the 180-day window and the gain cap: day 180 defers the short-term 30,000,
+  day 181 only long-term, 120,000 invested defers 100,000; H&R Block has no QOF - election and code Z not graded, carried by a code-O row); 316
+  (duplicated sc_00265 + our SSN blocker -> a seller-financed note two years on: Form 6252 later year 6,000, payoff 60,000, note sold for 85,000
+  over basis 38,400 = 46,600 long-term); 317 (round 1's 750 / 75 kept as C -> the beneficiary's own ABLE contribution earns the saver's credit, cut
+  by every ABLE distribution: 200 / 50 / 0; round 1 found H&R Block charges no 10% on the ABLE path); 318 (round 1's 50,000 gain kept as A -> the
+  1099-CAP loss is never entered: basis 150,000 nothing, two lots only the 35,000 gain lot); 319 (all blank in round 1 -> the Lasser 12.20 split by
+  hand: 10,000 ordinary + 25,000 capital; 6,000 all ordinary; term policy 5,000 capital; term loss not deductible); 320 (issuer-side QLAC facts ->
+  the QLAC left out of the RMD base: 492,000 / 24.6 = 20,000 met; failed QLAC 738,000 / 24.6 = 30,000, Part IX 25% = 2,500; over-withdrawal no
+  excise). New IRS text in _tools/irs_text (PDFs deleted): p523, p537, p970, p4681, p907, i1099ac, i1099cap, i1099ls, i1099s, f1099a/cap/ls/q/qa/s/sb,
+  f1098q, i1098q, f4868.
+- us-tax-be: no engine change. Pin tests Hrb2025Sc00311-00320Test (33 tests, commit 975d702d); sc_00313 B pinned only to line 22 (no field marks
+  a line-8z amount as QTP for Form 5329 Part II - outstanding A58). TaxReturnComputeServiceTest, Sc*SqaScenarioTest and Hrb2025*Test: 2,938 green
+  from a freshly deleted surefire-reports directory. No e2e spec changed.
+- Slips: sc_00314's commit (9f1dc50) says 20 checks; the spreadsheet has 16 - corrected in an empty commit 9d087e0. sc_00311/00312 first cited
+  IRC 6081(a) and quoted 121(c) from memory - replaced in 2c4ac1e.
+- Open (owner): outstanding.md A58-A61 (1099-Q / QTP Part II field; section 121(c) inputs; 1099-A / 1099-CAP / 1099-LS derivation; RMD
+  computation) and B32-B33 (QOF 180-day / gain-cap check; 1099-QA into Form 8880 line 4).
+
 ## 2026-10-16T13:00:00-04:00 - Round-2 QA scenarios sc_00301-00310 (American Samoa section 931, Form 8828, Form 2210-F, REIT dividends as NII and QBI, NOL and QBI, SALT phase-down and the AMT, kiddie tax with qualified dividends, taxable SS and the senior deduction, Form 8938, Form 8888)
 - c:/us-tax-hrb2025: sc_00301-00310 written (md + xlsx, 114 checks, 31 graded runs). Kept and extended: 302 (H&R Block has no Form 8828 - worked by
   hand, write-in 1.231964 graded; round 1 as A 10,000, half the gain 5,000, income percentage 45% 4,500, line-17 stop 0); 303 (round 1's stated tax

@@ -1,3 +1,20 @@
+## 2026-10-16T19:00:00-04:00 - Form 5329 Part VI: the 6% additional tax on excess Archer MSA contributions (outstanding.md A10, owner-approved fields)
+- IRC 4973(d); 2025 Instructions for Form 5329 Part VI (lines 34-41) and Form 8853 ("Excess Contributions You Make",
+  "Excess Employer Contributions", "Deducting an Excess Contribution in a Later Year"). The excess was never measured.
+- V280 pf_form_8853: archer_excess_withdrawn_by_due_date, archer_msa_year_end_value, archer_prior_year_excess_contributions
+  (entity + Form8853Mapper + the Archer MSA form, Section A).
+- Engine: applyArcherMsaExcessContributions (per person, end of computeForm8853) fills Form 8853's new form5329Line34..41;
+  line 41 (6% of the smaller of line 40 and the year-end value, whole dollars) -> Form5329.additionalTaxOnExcessArcherMsaContributions
+  (taxpayer + spouse, not the spouse on MFS) -> Schedule 2 line 8. A prior excess absorbed by unused room is added to 8853
+  line 5 unless an employer contributed. Informational FORM_8853_EXCESS_ARCHER_MSA_CONTRIBUTION_<PERSON>.
+- Tests: Hrb2025Sc00091Test 9 (B/C now seed the scenario's withdrawal; new: B left in 49 -> refund 1,714, C left in 57 ->
+  1,568, prior excess absorbed -> line 5 1,700, year-end value 300 -> 18; the 4 new cases red with the call removed).
+  Full unit suite 4,137 green. e2e archer-msa-excess-contributions-ui.spec.ts (typed on the form: 57 -> 18 -> 0). The 12 specs that check
+  Form 5329, Schedule 2 line 8 or the HSA form re-run: 87 passed, 1 skipped.
+- Not built: Part VI on the Form 5329 preview / out_form_5329 (Parts II, VII, IX are not there either), the 2024 line 40
+  auto-import, excess employer contributions as income.
+- c:/us-tax-hrb2025: sc_00091 md (values unchanged; our-app-only left-in amounts); OPEN_QUESTIONS A10 answered.
+
 ## 2026-10-16T18:10:00-04:00 - Form 8853 line 1 is read from W-2 box 12 code R (outstanding.md A9)
 - 2025 Instructions for Form 8853, Employer Contributions: "These contributions should be shown in box 12 of Form W-2
   with code R"; any employer contribution means no deduction (§220(b)(5); line 5 = 0). The engine read line 1 only from

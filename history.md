@@ -1,3 +1,14 @@
+## 2026-10-16T18:10:00-04:00 - Form 8853 line 1 is read from W-2 box 12 code R (outstanding.md A9)
+- 2025 Instructions for Form 8853, Employer Contributions: "These contributions should be shown in box 12 of Form W-2
+  with code R"; any employer contribution means no deduction (§220(b)(5); line 5 = 0). The engine read line 1 only from
+  the MSA form, so a filer who left it blank deducted their own contributions in a year none are deductible.
+- computeForm8853: blank employerContributionsLine1 -> the person's W-2 box 12 code R (sumW2Box12ByCodes, SSN-matched),
+  mirroring Form 8889 line 9 / code W; a typed value wins. MSA form: hint under line 1. No new field.
+- Tests: Hrb2025Sc00091Test C2 (code R alone -> line 1 1,000, line 23 0, refund 1,625; red on the old engine, which
+  deducted 950) and C3 (typed 600 wins). Full unit suite 4,133 green. e2e line8853-msa-ltc.spec.ts gains a code R case
+  with a control.
+- c:/us-tax-hrb2025: sc_00091 md note (values unchanged); OPEN_QUESTIONS A9 answered.
+
 ## 2026-10-16T17:30:00-04:00 - The QCD's date decides the age-70½ test for an owner who turns 70½ during 2025 (outstanding.md A3, owner-approved field)
 - IRC 408(d)(8)(B)(ii): a QCD is a distribution "made on or after the date that the individual ... has attained age
   70½" (Pub. 590-B: "You must be at least age 70½ when the distribution is made"). Without a date the engine could only

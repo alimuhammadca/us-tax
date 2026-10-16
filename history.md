@@ -1,3 +1,28 @@
+## 2026-10-16T13:00:00-04:00 - Round-2 QA scenarios sc_00301-00310 (American Samoa section 931, Form 8828, Form 2210-F, REIT dividends as NII and QBI, NOL and QBI, SALT phase-down and the AMT, kiddie tax with qualified dividends, taxable SS and the senior deduction, Form 8938, Form 8888)
+- c:/us-tax-hrb2025: sc_00301-00310 written (md + xlsx, 114 checks, 31 graded runs). Kept and extended: 302 (H&R Block has no Form 8828 - worked by
+  hand, write-in 1.231964 graded; round 1 as A 10,000, half the gain 5,000, income percentage 45% 4,500, line-17 stop 0); 303 (round 1's stated tax
+  replaced by a Schedule F return - SE 7,065, QBI 6,143, total tax 9,776; one payment dated 01/15/2026 in the 4th row: 6,521 no penalty, 999.59 short
+  17, the 2024 tax of 5,000 enough); 306 (a 500,000 ISO spread makes the AMT bind so Form 6251 line 2a moves line 17: SALT 10,000 / 25,000 / 40,000 at
+  MAGI 600,000 / 550,000 / exactly 500,000, AMT 128,571 / 137,321 / 146,071); 309 (the any-time prong added: 60,000 required, 50,000/75,000 not,
+  40,000/80,000 required; Schedule B Part III graded, Form 8938 rows fill-only-if-displayed). Reshaped: 301 (round 1 entered the Samoa income twice
+  and never asked for taxable income -> Pub. 570 standard-deduction proration 3,029 / U.S.-government wages 15,144 / senior deduction phased with the
+  excluded income but not prorated 8,659 + 5,580); 304 (REIT dividends as both NII and QBI: NIIT 2,280 at excess = NII, 1,520 when the MAGI excess binds,
+  AMT 30,607 after QBI); 305 (each round-1 carryforward has its own round-2 scenario -> NOL 80% base without the QBI deduction 67,400, QBI limit after the
+  NOL 6,850 / 3,370; C expected H&R Block finding); 307 (28% leg not enterable at H&R Block's parent-income limit -> Line 5 Worksheet #1 and the parents'
+  0%/15% band: 438 / 438 at 96,700 / 978); 308 (round 1 said 67 but computed as under 65 - tax 0, not 660; sc_00196 duplicates SS + QDCG -> taxable SS
+  in the senior-deduction MAGI: 611 at exactly 75,000, 2,261 with 5,400); 310 (round 1 graded our own mismatch advisory -> Form 8888 line 5 = line 35a
+  after 500 applied to 2026; three accounts incl. a Roth IRA). New IRS text in _tools/irs_text: p570, f4563, f8828, i8828, f8938, i8938 (downloaded,
+  PDF deleted), f8888.
+- us-tax-be: fix d455da7c - Form 8615 line 5 carries only the child's qualified dividends / net capital gain left after the 2,700 is charged against
+  them pro rata (2025 Line 5 Worksheet #1), not all of them (sc_00307: line 9 10,002 -> 10,164; tax 412 -> 438); mutation-checked (fix stashed ->
+  Hrb2025Sc00307Test 3/3 fail -> restored). Two TaxReturnComputeServiceTest pins that encoded the old allocation updated with hand-derived values
+  (line 13 3,432 -> 3,529, tax 5,231 -> 5,196; 3,512 -> 3,652, 5,311 -> 5,319). No e2e spec pins an affected value - none changed. Pin tests
+  Hrb2025Sc00301-00310Test (29 tests, commit dbe5e63b); not pinned: sc_00309 B (Form 8938 intake has no year-end value - outstanding A57).
+  TaxReturnComputeServiceTest, Sc*SqaScenarioTest and Hrb2025*Test: 2,905 green from a freshly deleted surefire-reports directory.
+- Slips: sc_00302's commit (eb50c3c) says 15 checks; the spreadsheet has 12 - corrected in an empty commit f7ac16f. sc_00303-00305 first cited
+  statute subsections from memory - replaced in 56fb3a0.
+- Open (owner): outstanding.md A57 (Form 8938 year-end value), B30 (Form 8615 Line 5 Worksheets #2/#3), B31 (derive Form 8828 line 15).
+
 ## 2026-10-16T09:30:00-04:00 - Round-2 QA scenarios sc_00291-00300 (like-kind boot, section 1256 60/40, general business credit and the TMT, HSA excess excise, Form 2210 Schedule AI, OBBBA bonus cutover, Form 4137 wage base, Form 8379 allocation, Form 8611 recapture, Form 8283 appraisal line)
 - c:/us-tax-hrb2025: sc_00291-00300 written (md + xlsx, 119 checks, 34 graded runs). Kept and extended: 291 (round 1's boot 20,000 as A;
   boot 70,000 capped at the 50,000 gain, net debt relief 15,000 as the boot, a realized loss not recognized; investment land -> Schedule D;

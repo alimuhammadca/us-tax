@@ -1,3 +1,24 @@
+## 2026-10-16T15:00:00-04:00 - Royalty cost depletion and the bonus add-back (outstanding.md B59, owner-approved fields)
+- Sources downloaded and kept in c:/us-tax-hrb2025/_tools/irs_text (commit 8a00f5c): Pub. 535 (2022, the last edition with
+  the depletion chapter) and Treas. Reg. 1.611-2, 1.612-3, 1.613-2, 1.613A-3 (eCFR).
+- V275: seven pf_rental_property columns - advance_royalties (part of the A2 amount; the rest is bonus),
+  mineral_adjusted_basis, royalties_expected_over_lease, units_paid_for_in_year, units_remaining_end_of_year,
+  lease_ended_without_production, prior_depletion_to_restore. Entity + RentalIncomeMapper. The owner chose the extra
+  advance-royalty field because Reg. 1.612-3 depletes a bonus (basis x bonus / (bonus + royalties expected)) and an
+  advance royalty (per unit) differently.
+- Compute (royalty branch, depletion left blank): cost = bonus part + units part (basis left after the bonus /
+  (units remaining + units sold) x units sold); the larger of cost and the capped 15% is deducted (Pub. 535: "use the
+  method that gives you the larger deduction"). A lease ended before production returns the earlier depletion as income
+  on Schedule E line 4 (Reg. 1.612-3(a)(2)/(b)(2)), outside the percentage base. Flags ROYALTY_DEPLETION_METHOD
+  (informational: both figures + year-end basis) and ROYALTY_ADVANCE_ROYALTIES_EXCEED_BONUS_FIELD (blocking).
+- UI: the advance-royalty field under the A2 field; a "Cost depletion" block (shown while Depletion is blank) and the
+  lease-ended checkbox + amount. `npm run build` green.
+- Tests: new RoyaltyCostDepletionTest (8 cases incl. the regulation's own 21,000 / 10,000 / 20,000 -> 7,000 example);
+  mutation-checked (percentage always -> 4 red; units on the pre-bonus basis -> 1 red; add-back dropped -> 1 red). Unit
+  suite 3,167 green. e2e royalty-lease-bonus-depletion.spec.ts + a cost-depletion round-trip case, and
+  rental-annual-totals-split: 5 passed.
+- c:/us-tax-hrb2025: sc_00066 md note (values unchanged, no xlsx rebuilt); OPEN_QUESTIONS B59 answered.
+
 ## 2026-10-16T14:10:00-04:00 - Royalty lease bonus / advance royalties kept out of percentage depletion (outstanding.md A2, owner-approved field)
 - New royalty-property field on the Rental income form: "Of that, lease bonuses and advance royalties (amounts paid
   whether or not anything is produced)". Column `pf_rental_property.lease_bonus_and_advance_royalties` (V274), entity +

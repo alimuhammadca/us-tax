@@ -1,3 +1,20 @@
+## 2026-10-16T18:20:00-04:00 - A rental sold to a related buyer no longer frees its suspended passive losses (outstanding.md A6, owner-approved field)
+- Source: IRC 469 text saved to c:/us-tax-hrb2025/_tools/irs_text/irc_469.txt (law.cornell.edu). 469(g)(1)(B): "If the
+  taxpayer and the person acquiring the interest bear a relationship to each other described in section 267(b) or section
+  707(b)(1), then subparagraph (A) shall not apply to any loss of the taxpayer until the taxable year in which such
+  interest is acquired ... by another person who does not bear such a relationship". Pub. 925 (2025) and Lasser 2025
+  section 11.13 say the same.
+- V277 `pf_rental_property.sold_to_related_party`; entity + RentalIncomeMapper. UI: "Was the buyer related to you?"
+  (No / Yes, with a hint listing related persons) under "Sold / fully disposed".
+- Engine: isQualifyingDisposition(p) = sold AND not to a related buyer; used by the rental-pool release (anyDisposed) and
+  the A5 exception-property release. Informational note RENTAL_SOLD_TO_RELATED_PARTY_LOSSES_STAY_SUSPENDED.
+- Tests: Hrb2025Sc00072Test Run C (sold to his brother -> 0 allowed, 22,000 carried, refund 1,745) - previously
+  unpinnable; RentalActivityTypeTest G (short-term property sold to a related buyer -> 45,000 carried). Mutation check:
+  ignoring the answer reddens both. Unit suite 3,182 green. e2e rental-material-participation-no-ui.spec.ts gains a
+  related-buyer UI case (related -> AGI 90,000; unrelated -> -22,000, AGI 68,000): 3 passed. UI build green.
+- c:/us-tax-hrb2025: sc_00072 md note (values unchanged); OPEN_QUESTIONS A6 answered. Checked every rental-sale scenario:
+  only sc_00072 involves a passive-loss release (sc_00239 is an installment sale of land - unrelated).
+
 ## 2026-10-16T17:10:00-04:00 - Rental passive rules: a non-professional's material participation no longer makes a long-term rental nonpassive; the 7-day (and other Pub. 925) exceptions (outstanding.md A5, owner-approved field); new scenario sc_00391
 - V276 `pf_rental_property.rental_activity_type` (LONG_TERM default / AVG_7_DAYS_OR_LESS / AVG_30_DAYS_SERVICES /
   EXTRAORDINARY_SERVICES / OTHER_EXCEPTION); entity + RentalIncomeMapper. UI: "What kind of rental is this?" radio above

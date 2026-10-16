@@ -1,3 +1,17 @@
+## 2026-10-16T14:10:00-04:00 - Royalty lease bonus / advance royalties kept out of percentage depletion (outstanding.md A2, owner-approved field)
+- New royalty-property field on the Rental income form: "Of that, lease bonuses and advance royalties (amounts paid
+  whether or not anything is produced)". Column `pf_rental_property.lease_bonus_and_advance_royalties` (V274), entity +
+  RentalIncomeMapper. Depletion label reworded ("... of production royalties").
+- Compute (royalty branch of the Schedule E loop): line 4 keeps the full royalties; the automatic 15% and the section
+  613(a) 100%-of-property-income limit use royalties - bonus (IRC 613A(d)(5); J.K. Lasser 2025 section 10.15). A typed
+  depletion still wins. Bonus > royalties -> blocking flag ROYALTY_LEASE_BONUS_EXCEEDS_ROYALTIES.
+- Tests: Hrb2025Sc00066Test + Run B2 (bonus field -> 3,000, owe 275), a bonus-only property (no depletion, refund
+  3,445), the bonus kept out of the 100% limit (1,500, refund 3,245) and the flag. Mutation-checked (15% of all
+  royalties -> B2 red; limit on all royalties -> the limit test red). Unit suite 3,159 green. New e2e
+  royalty-lease-bonus-depletion.spec.ts 2 passed; rental-annual-totals-split + rental-199a-safe-harbor re-run, passed.
+- c:/us-tax-hrb2025: sc_00066 md note updated (values unchanged, no xlsx rebuilt); OPEN_QUESTIONS A2 answered, B59
+  added. outstanding.md: A2 done; B59 (cost depletion of a bonus, recapture when the lease ends unproduced).
+
 ## 2026-10-16T13:45:00-04:00 - Rental expenses entered as whole-year totals, split by days (outstanding.md A1, owner-approved field)
 - New per-property field on the Rental income form: "How did you enter the expenses above?" - Rental share only (default,
   the old meaning) / Whole-year totals - split them for me. Shown once personal-use days > 0. Column

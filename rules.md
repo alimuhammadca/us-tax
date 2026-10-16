@@ -530,3 +530,8 @@ long-term rental (`rentalActivityType` blank / LONG_TERM) only a real estate pro
 nonpassive (469(c)(2)). Only the Pub. 925 exception types make a non-professional's Yes count - and those properties,
 when passive, never get the $25,000 allowance (they go to the "other passive" pool). Any new path that classifies a
 rental as nonpassive must follow the same three-way rule (royalty / exception / long-term).
+
+**A §465 carryover belongs to one activity (2026-10-16, outstanding.md A49).** A prior-year at-risk loss is released
+only against the room of the activity that produced it (§465(a)(2)) - never pooled across properties. Any new
+carryover input for an at-risk activity goes on the activity, not on the parent form; a total that cannot be matched
+to an activity is carried forward with a note, not released against whichever activity has room.

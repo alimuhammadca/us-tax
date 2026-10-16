@@ -1,3 +1,22 @@
+## 2026-10-16T16:30:00-04:00 - The rental at-risk (§465) carryover is entered and released per property (outstanding.md A49 + B22, owner-approved field)
+- IRC 465(a)(2): a loss disallowed by the at-risk rules "shall be treated as a deduction allocable to such activity in the
+  first succeeding taxable year". The carryover was one form-level amount released against the room of every property
+  together - a carryover from a property at its limit was deducted against another property's room, and a property with
+  a blank (fully at risk) amount released nothing (B22).
+- V278 `pf_rental_property.prior_year_at_risk_carryforward` (entity + RentalIncomeMapper); the migration moves a
+  one-property form's form-level amount onto the property. UI: "Prior-year at-risk loss carried over (Form 6198)" on each
+  property; the form-level input removed (its value still round-trips for the several-property case).
+- Engine (computeRentalScheduleE): per property, released = min(carryover, room), room = atRisk + net (>= 0), blank
+  atRisk = all; the released amount reduces the property's net, so it follows the property through §469. The form-level
+  amount / last year's imported total goes to the only §465 activity (a property, or a lone Form 4835 farm rental via
+  the old headroom path), else it is carried forward with the informational RENTAL_AT_RISK_CARRYOVER_NOT_ASSIGNED_TO_A_PROPERTY.
+  A per-property entry wins over it.
+- Tests: new RentalAtRiskPerPropertyTest (5; all 5 red on the old engine). Hrb2025Sc00279Test uses the per-property field
+  (values unchanged); Sc00279SqaScenarioTest keeps the form-level path (one property). Full unit suite 4,127 green.
+  e2e: new rental-at-risk-per-property-ui.spec.ts (typed on the form: on house A -> (9,000), carried 10,000; on house B
+  -> (19,000), 0); rental-at-risk-carryforward-bridge.spec.ts gains a two-rental import case; all 23 rental-form specs re-run: 59 passed, 1 skipped.
+- c:/us-tax-hrb2025: sc_00279 md note (values unchanged); OPEN_QUESTIONS A49 and B22 answered.
+
 ## 2026-10-16T18:20:00-04:00 - A rental sold to a related buyer no longer frees its suspended passive losses (outstanding.md A6, owner-approved field)
 - Source: IRC 469 text saved to c:/us-tax-hrb2025/_tools/irs_text/irc_469.txt (law.cornell.edu). 469(g)(1)(B): "If the
   taxpayer and the person acquiring the interest bear a relationship to each other described in section 267(b) or section

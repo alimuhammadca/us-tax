@@ -1,3 +1,26 @@
+## 2026-10-16T13:00:00-04:00 - Round-2 QA scenarios sc_00351-00360 (Schedule 8812 Part II-B line 22, the residential clean energy credit after section 25C and with a 2024 carryforward, the refundable AOTC bar, credit ordering and the 1,700 ACTC cap, Schedule SE optional methods and the EIC, church employee income, section 179 recapture, section 280F listed-property recapture, the state refund worksheet, insolvency and attribute reduction)
+- c:/us-tax-hrb2025: sc_00351-00360 written (md + xlsx, 116 checks, 30 runs - sc_00355 A not graded). Reshaped: 351 (Part II-B on W-2 boxes
+  4+6 is sc_00191 -> line 22: 252 + the 92 Form 4137 tax = 344 beats 300, refund 252; a 3,000 Schedule C's 212 half-SE, ACTC 212, owe 212);
+  352 (the carryforward TO 2026 is sc_00138 -> the 2024 carryforward on line 12: 9,000 used, refund 11,286; 9,000 + 9,000 new, 15,714 used,
+  2,286 to 2026; H&R Block's 25D-before-25C finding kept on 5a/5b); 355 (H&R Block has no nonfarm optional election -> A hand-worked and not
+  graded; regular method owe 477; the farm optional method beside a Schedule C, owe 1,414); 357 (round 1's camera rig is listed property ->
+  non-listed workstation, Table A-1 through the recapture year: 40% 4,032, 51% none, 50% 3,840); 359 (the SALT cap is sc_00076 -> line 2 on all
+  of 5d: property tax makes a 2,000 refund untaxed; line 6 blind add-on: 450); 360 (the insolvency cap is sc_00079 -> attributes cut after the
+  2025 tax: a 6,000 carryover still deducts 3,000, owe 347, Form 982 line 9 3,000; 40,000 -> 25,000 cut, 12,000 to 2026). Kept and extended:
+  353 (AOTC bar: age 24 and a joint return both get 1,000 refundable, refund 2,900); 354 (round 1 omitted a 2,462 EIC - refund 2,700 -> 5,162;
+  the 1,700 cap takes 500, 62, then nothing as credits come off); 356 (church income beside a 420 / 450 Schedule C: SE 3,956 / 4,020); 358
+  (round 1 omitted the drop year's ADS 2,700; 52% keeps MACRS 1,797; 0% is round 1's own 38,049). New IRS text: _tools/irs_text/
+  f1040sse_2025.txt (the existing fschse.txt is the 2024 form; PDF not kept).
+- us-tax-be: two engine fixes, each mutation-checked: ba8faade (Schedule 8812 line 22 reads Schedule 2 lines 5, 6, 13 - it read 6, 13 and 11,
+  dropping Form 4137 and double-counting Additional Medicare Tax), 880103b4 (QBI no longer charges a Schedule C with the church-employee
+  share of the half-SE deduction). Pin tests Hrb2025Sc00351-00360Test (30 tests, bea4a2bf); no run left unpinned. No unit-test pin changed.
+  Gate (TaxReturnComputeServiceTest 1,170, Sc*SqaScenarioTest 650, Hrb2025*Test 1,236) from a freshly deleted surefire-reports directory:
+  3,056 green. No e2e spec changed (none pins Part II-B line 22 or a church + Schedule C QBI; line28-actc-schedule8812.spec.ts has only a
+  mislabelled comment, recorded in outstanding E).
+- Open (owner): outstanding.md A73-A74 (Form 4797 Part IV line 34 typed, not derived; Form 982 line 10a never computed), B42-B44 (refund
+  worksheet blank 2024 standard deduction read as 0; SE retirement/health ceilings still net church half-SE; AOTC bar not cross-checked
+  against the DOB).
+
 ## 2026-10-16T02:15:00-04:00 - Round-2 QA scenarios sc_00341-00350 (inherited IRA and the spouse who treats it as own, SEPP exception, Roth ordering and conversion recapture, one IRA rollover a year, Form 1116 foreign qualified dividends, the no-Form-1116 election at 300, Form 2555 housing exclusion, FEIE with Form 1116, the high-tax kickout, ACTC earned income)
 - c:/us-tax-hrb2025: sc_00341-00350 written (md + xlsx, 97 checks, 30 runs). Reshaped: 341 (duplicated round-2 sc_00080 C -> code 4 kept
   as A; the surviving spouse who treated the IRA as his own owes the 10%, 4,000; kept as an inherited IRA, none); 345 (duplicated sc_00282 ->

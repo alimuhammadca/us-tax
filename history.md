@@ -1,3 +1,16 @@
+## 2026-10-16T17:30:00-04:00 - The QCD's date decides the age-70½ test for an owner who turns 70½ during 2025 (outstanding.md A3, owner-approved field)
+- IRC 408(d)(8)(B)(ii): a QCD is a distribution "made on or after the date that the individual ... has attained age
+  70½" (Pub. 590-B: "You must be at least age 70½ when the distribution is made"). Without a date the engine could only
+  reject an owner under 70½ all year; one turning 70½ mid-year was always accepted.
+- V279 `pf_ira_income.qcd_distribution_date` (entity + IraIncomeMapper). UI (taxpayer + spouse IRA forms): "Date of the
+  transfer to charity", shown when the owner's 70½ date falls in 2025 or the DOB is unknown, with the 70½ date in a hint.
+- Engine (withoutQcdIfUnder70Half): 70½ inside 2025 -> a date before it drops the QCD (informational
+  QCD_MADE_BEFORE_AGE_70_HALF_<ROLE>), a missing / out-of-year date is blocking (QCD_DATE_NEEDED_OWNER_TURNS_70_HALF_IN_YEAR_<ROLE>);
+  70½ on or before 1 January -> unchanged (qualifies); after 31 December -> unchanged (no QCD).
+- Tests: Hrb2025Sc00062Test D-G (DOB 01/20/1955: 09/01 excluded, 05/01 taxable, blank blocks, 07/20 itself excluded; E and F
+  red on the old engine). Full unit suite 4,131 green. e2e qcd-distribution-date-ui.spec.ts (2 passed); the 13 specs that use the IRA forms re-run: 108 passed, 1 flaky (a W-2 code-D catch-up test, no QCD: compute timed out once, passed on retry).
+- c:/us-tax-hrb2025: sc_00062 md note (values unchanged); OPEN_QUESTIONS A3 answered.
+
 ## 2026-10-16T16:30:00-04:00 - The rental at-risk (§465) carryover is entered and released per property (outstanding.md A49 + B22, owner-approved field)
 - IRC 465(a)(2): a loss disallowed by the at-risk rules "shall be treated as a deduction allocable to such activity in the
   first succeeding taxable year". The carryover was one form-level amount released against the room of every property

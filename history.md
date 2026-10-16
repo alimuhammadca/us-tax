@@ -1,3 +1,27 @@
+## 2026-10-16T09:30:00-04:00 - Round-2 QA scenarios sc_00331-00340 (QSBS 75% vs 100%, installment sale of section 1245 property, section 1259 constructive sale, AMT exemption phase-out ends, Form 6251 Part III bands, ISO later-year sale, AMT foreign tax credit, ATNOLD, backdoor Roth pro rata, NUA and the 10%)
+- c:/us-tax-hrb2025: sc_00331-00340 written (md + xlsx, 108 checks, 30 runs - sc_00338 A graded on the regular tax only). Reshaped: 340
+  (duplicated round-2 sc_00259 -> the 10% early-distribution tax only on box 2a in an NUA lump sum (2,000, not 10,000) and a non-lump-sum NUA
+  taxed with its 10% (owe 29,067)); 338 (H&R Block's ATNOL box refuses 3,000,000 and the 90% cap cannot bind with AMT due below ~792,900 ->
+  round 1 kept as A, graded on the regular tax only; B/C grade the line 2e add-back and the separate ATNOLD: AMT 45,883 / 34,627). Kept and
+  extended: 331 (round 1's 2,000,000 adjustment blocked by the six-figure refusal -> gain 96,000: 09/28/2010 all excluded 25,067; 09/27/2010
+  75%, the 24,000 included is 28% rate gain 30,827; at the 28% ceiling 46,065); 332 (round 1 owe 967 kept; Form 6252 in forms mode; gain under
+  the depreciation, no 6252, refund 2,933; no 2025 payment, recapture still taxed, refund 533); 333 (round 1's 26,249 -> Tax Table 26,255; short
+  closed 01/30/2026 -> no 2025 sale 11,255; a lot under a year -> short-term 34,667); 334 (round 1 A; AMTI exactly 626,350 -> full exemption, AMT
+  24,393; 1,000,350 -> exemption 0, AMT 101,281); 335 (round 1's 78,513 -> 78,516; ordinary AMT base over 239,100 at 28%, AMT 61,112; the whole
+  96,700 zero band in the AMT, AMT 24,405); 336 (round 1's TMT 1,027 -> 7,994; PAB 100,000 makes the refigured gain decide the AMT 7,739; a sale
+  at 60 - the 3,000 AMT loss limit, line 2k -43,000, AMT 8,459; exercise moved to 2023 so no 2024 AMT credit reaches 2025); 337 (four wrong
+  round-1 figures and two mixed numerators -> exact fractions: no election 15,477, election 14,692, tax under both limits 15,000); 339 (round 1
+  refund 2,621 kept; Form 8606 line 6 in forms mode; rolled into the 401(k) before year end -> tax-free 4,133; 21,000 left -> 5,250 taxable).
+  No IRS PDF downloaded (all text already in _tools/irs_text).
+- us-tax-be: one engine fix, mutation-checked: 09bd4733 (a Form 4797 Part III property that is also on Form 6252 no longer puts its section
+  1231 remainder on Schedule D - Form 6252 line 12 instructions; a one-argument overload kept for the reflection test). Pin tests
+  Hrb2025Sc00331-00340Test (30 tests, 814a1baa). No unit-test pin changed. Gate (TaxReturnComputeServiceTest 1,170, Sc*SqaScenarioTest 650,
+  Hrb2025*Test 1,176) from a freshly deleted surefire-reports directory: 2,996 green. No e2e spec changed (form4797-installment-likekind.spec.ts
+  tests the advisory through Form 8824, not 6252).
+- Slips: sc_00333's commit (adac0cf) says 10 checks; the spreadsheet has 9 - corrected in an empty commit 4d55517.
+- Open (owner): outstanding.md A66-A68 (section 1202 fields and percentage; no section 1259 input; ISO AMT basis per lot) and B37-B38 (the
+  4797/6252 date match and installment section 1250; a code-G IRA rollover on Form 8606 line 7).
+
 ## 2026-10-16T00:20:00-04:00 - Round-2 QA scenarios sc_00321-00330 (1099-PATR on Schedule F, Social Security repaid more than received, PTC year-of-marriage Part V, mid-quarter convention, decedent's final return, Schedule C line 36, section 280A(g), excess deferrals Roth and corrective, unrecaptured 1250 under and over 197,300, 1250 and 28% slices together)
 - c:/us-tax-hrb2025: sc_00321-00330 written (md + xlsx, 108 checks, 28 graded runs - sc_00323 B fill-if-forms-mode). Reshaped: 321 (two bare rows
   -> a Schedule F return: line 3b 5,000 / 3,800 with 1,200 personal propane and fuel on 3a only / 11,000 with per-unit retains; box 4 on 25b);

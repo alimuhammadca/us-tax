@@ -6,7 +6,8 @@
   mirroring Form 8889 line 9 / code W; a typed value wins. MSA form: hint under line 1. No new field.
 - Tests: Hrb2025Sc00091Test C2 (code R alone -> line 1 1,000, line 23 0, refund 1,625; red on the old engine, which
   deducted 950) and C3 (typed 600 wins). Full unit suite 4,133 green. e2e line8853-msa-ltc.spec.ts gains a code R case
-  with a control.
+  with a control. The 19 specs that touch HSA/MSA or W-2 box 12: 280 passed, 8 skipped, 1 flaky; 1 failed (a
+  medicaid-waiver picker-dialog test, no compute) and passed when re-run alone.
 - c:/us-tax-hrb2025: sc_00091 md note (values unchanged); OPEN_QUESTIONS A9 answered.
 
 ## 2026-10-16T17:30:00-04:00 - The QCD's date decides the age-70½ test for an owner who turns 70½ during 2025 (outstanding.md A3, owner-approved field)

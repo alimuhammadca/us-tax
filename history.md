@@ -1,3 +1,16 @@
+## 2026-10-17T23:30:00-04:00 - Schedule 1 line 12 eligibility: group, 100-mile test, performing-artist tests (outstanding.md A8, owner-approved fields)
+- IRC 62(a)(2)(B)/(C)/(E) and 62(b): reservist travel more than 100 miles from home; qualified performing artist (2+ arts
+  employers paying $200+, expenses > 10% of that income, AGI without the deduction <= $16,000, joint return if married
+  unless apart all year); fee-basis state/local official.
+- V294: pf_income_adjustments.line12_expense_category / reservist_travel_over_100_miles / performing_artist_two_employers_200 /
+  performing_arts_wages_amount (entity + mapper).
+- Engine: withLine12Eligibility (before line 1h / line 10) - blocking SCHEDULE1_LINE12_ELIGIBILITY_ANSWER_REQUIRED_*, advisory
+  SCHEDULE1_LINE12_NOT_ELIGIBLE_*; $16,000 AGI test on a second pass (PERFORMING_ARTIST_AGI_OVER_LIMIT ThreadLocal).
+- UI: income adjustments (both persons) - group radio, 100-mile radio, two-employers radio, arts wages, with help.
+- Tests: Hrb2025Sc00090Test 5 (B/D entered and refused); Line10IncomeAdjustmentsApiTest + TaxReturnComputeServiceTest seeds
+  given a group; e2e line12-eligibility-ui.spec.ts, line10-income-adjustments.spec.ts updated; full unit suite 4,200 green.
+- c:/us-tax-hrb2025: sc_00090 app note + known-limits row; OPEN_QUESTIONS A8 answered.
+
 ## 2026-10-17T22:30:00-04:00 - Form 3903 worked out from the costs and W-2 code P; the excess goes to line 1h (outstanding.md A7, owner-approved)
 - Form 3903 (2025): line 4 "the total amount the government paid you ... not included in box 1 of your Form W-2 ... box 12 ...
   code P"; line 5 "If line 3 is less than line 4, subtract line 3 from line 4 and include the result on Form 1040 ... line 1h."

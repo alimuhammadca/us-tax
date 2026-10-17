@@ -1,3 +1,15 @@
+## 2026-10-17T15:30:00-04:00 - Traditional IRA required minimum distribution computed (outstanding.md A61, owner-approved fields)
+- Pub. 590-B (2025): RMD = 12/31/2024 balance / Table III denominator for the age on the 2025 birthday (Table II when the sole
+  beneficiary is a spouse more than 10 years younger - not computed); required from 73, the first year may wait until April 1;
+  a QLAC's value is left out (Instructions for Form 1098-Q). Shortfall -> Form 5329 Part IX, 25% or 10% if corrected in time.
+- V290: pf_ira_income rmd_prior_year_end_ira_balance, rmd_qlac_value, rmd_spouse_sole_beneficiary_10yr_younger,
+  rmd_ira_shortfall_corrected_timely (the fourth approved mid-build).
+- Engine: rmdExciseForPerson (typed pension shortfall wins) -> computeIraRmdShortfall, pub590bTableIIIDenominator.
+- UI: IRA forms (both persons) - the section shows for 73+ outside the "had IRA distributions" gate; its answers survive a "No".
+- Tests: Hrb2025Sc00320Test 9 (+6; mutations: no-compute and ignore-QLAC each caught); e2e ira-rmd-computed-ui.spec.ts; full unit
+  suite 4,185 green. Pub. 590-B (2025) saved to docs/IRS-Forms.
+- c:/us-tax-hrb2025: sc_00320 app note; OPEN_QUESTIONS A61 answered.
+
 ## 2026-10-17T14:30:00-04:00 - Form 1099-Q (529 / Coverdell ESA): taxable earnings and the Form 5329 Part II 10% (outstanding.md A58, owner-approved fields)
 - Pub. 970 (2025) ch. 6-7: AQEE = qualified expenses - tax-free assistance - expenses used for an education credit; taxable earnings
   = earnings x (1 - AQEE / distributions); the 10% excepts the part taxable only because of the credit or a tax-free scholarship.

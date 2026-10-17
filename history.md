@@ -10,7 +10,8 @@
   deductions) already covers it; never on line 7. Informational UNEMPLOYMENT_PRIOR_YEAR_REPAYMENT_<ROLE>.
 - Tests: Hrb2025Sc00145Test C (2,000 -> = A, refund 1,225, note), D (3,500 itemized -> line 16 3,500), E (§1341 credit ->
   not deducted), F (typed deduction -> not doubled); C and D red on the old engine. Full unit suite 4,141 green. e2e
-  unemployment-prior-year-repayment-ui.spec.ts (typed on the form: 2,000 -> line 7 15,000; 3,500 -> line 16 3,500).
+  unemployment-prior-year-repayment-ui.spec.ts (typed on the form: 2,000 -> line 7 15,000; 3,500 -> line 16 3,500). The 29 specs that use
+  the Other incomes form or a claim-of-right input re-run: 230 passed, 1 skipped.
 - c:/us-tax-hrb2025: sc_00145 md note (values unchanged); OPEN_QUESTIONS A21 answered.
 
 ## 2026-10-16T19:00:00-04:00 - Form 5329 Part VI: the 6% additional tax on excess Archer MSA contributions (outstanding.md A10, owner-approved fields)

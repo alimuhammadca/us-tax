@@ -1,3 +1,18 @@
+## 2026-10-17T12:30:00-04:00 - NUA in employer stock: the election to include it, and the sale split at the NUA (outstanding.md A46, owner-approved fields)
+- IRC 402(e)(4)(B) (NUA excluded "unless the taxpayer elects"); Notice 98-24 (on the sale the NUA is long-term whatever the holding
+  period; later appreciation follows the holding period from the distribution); J.K. Lasser 8.8 Example 2.
+- V287: pf_pension_annuity_income.elect_to_include_nua_in_income; pf_capital_gain_loss.nua_stock_sale_1099b_entry_id,
+  nua_in_shares_sold_amount, nua_shares_plan_cost_basis (the third field approved mid-build - a broker may report the market value
+  as the basis, so the plan's cost is asked).
+- Engine: elected box 6 -> line 5b and the 72(t) base; adjustPensionLinesForForm4972 also removes an elected NUA under Part III;
+  splitNuaStockSales splits the named short-term 1099-B row into long-term (up to the NUA) + short-term; one row with the plan's cost
+  for a long-term or loss sale; NUA_SALE_1099B_NOT_FOUND (blocking, overridable).
+- UI: pension forms ask the election on the taxable-amount screen when box 6 is on file (summary group "Employer stock (NUA)");
+  capital gain/loss forms add "Employer stock from a retirement plan" (pick the 1099-B, NUA, plan's cost) when a 1099-B is on file.
+- Tests: Hrb2025Sc00259Test 8 (5 new, all red on the old engine); e2e nua-employer-stock-ui.spec.ts (B2 typed on the capital form,
+  D on the pension form); full unit suite 4,172 green.
+- c:/us-tax-hrb2025: sc_00259 app note (B/C as issued, Run D); OPEN_QUESTIONS A46 answered.
+
 ## 2026-10-17T11:00:00-04:00 - Form 5329 exception limits: $5,000 per child (19), account-value limits (22, 23) (outstanding.md A42, owner-approved fields)
 - IRC 72(t)(2)(H) / (I) / (K); Pub. 590-B (2025): birth or adoption up to $5,000 per child; emergency expense the lesser of $1,000 or
   the account minus $1,000; domestic abuse the lesser of $10,300 or 50% of the account.

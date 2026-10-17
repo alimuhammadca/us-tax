@@ -1,3 +1,15 @@
+## 2026-10-17T19:30:00-04:00 - Form 5329 exception 02 from an employer plan needs a separation from service (outstanding.md A70, owner-approved, no new field)
+- 2025 Instructions for Form 5329, exception 02: "if from an employer plan, payments must begin after separation from service";
+  IRC 72(t)(3)(B) (not applied to IRAs).
+- Engine: withoutPlanException02BeforeSeparation on the pension forms - no separation year (or one after 2025) drops the exempt
+  amount, advisory FORM_5329_EXCEPTION_02_NOT_MET_*.
+- UI: pension forms show the existing separation-year field for exception 02 with its own help line (and a "they turns" typo in
+  the spouse exception-01 help fixed).
+- Per-1099-R exceptions not built (owner-approved): the exempt amount already confines 02 to the series.
+- Tests: Hrb2025Sc00342Test 5 (+2); e2e exception-02-employer-plan-separation-ui.spec.ts + pension exception specs (40 passed);
+  full unit suite 4,191 green.
+- c:/us-tax-hrb2025: sc_00342 app note; OPEN_QUESTIONS A70 answered.
+
 ## 2026-10-17T18:30:00-04:00 - Five-year Roth conversion recapture on Form 5329 line 1 (outstanding.md A69, owner-approved list)
 - 2025 Instructions for Form 5329, line 1 ("the early distribution allocated to the taxable portion of your 2021 through 2025
   conversions or rollovers"); IRC 408A(d)(4)(B) ordering - contributions, conversions first-in first-out (taxable part first),

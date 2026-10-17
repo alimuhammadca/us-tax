@@ -9,7 +9,8 @@
 - Engine: withoutIneligibleException01 (pension forms before computePensionForPerson; IRA forms next to the QCD gate).
 - Tests: Hrb2025Sc00144Test C2 (Run C claiming 01 -> 2,000 applies), D (no year -> blocking), E (public safety at 52),
   F (left at 54, money at 56 -> 10%), G (25 years), H (IRA code 01 -> 10%); C2, D, F, H red on the old engine. Full unit
-  suite 4,147 green. e2e exception-01-separation-year-ui.spec.ts (wizard: blocked -> 2025 + No -> 2,000 -> public safety -> 0).
+  suite 4,147 green. e2e exception-01-separation-year-ui.spec.ts (wizard: blocked -> 2025 + No -> 2,000 -> public safety -> 0). The 9 specs that use the
+  pension form or a Form 5329 exception re-run: 71 passed.
 - c:/us-tax-hrb2025: sc_00144 md note (values unchanged); OPEN_QUESTIONS A22 answered.
 
 ## 2026-10-16T20:30:00-04:00 - Unemployment benefits from an earlier year paid back in 2025 (outstanding.md A21, owner-approved field)

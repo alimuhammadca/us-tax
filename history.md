@@ -1,3 +1,15 @@
+## 2026-10-17T20:30:00-04:00 - One IRA-to-IRA rollover per 1-year period (outstanding.md A71, owner-approved fields)
+- IRC 408(d)(3)(B); Pub. 590-A (2025) "Waiting period between rollovers" - the 1-year period begins on the date the IRA
+  distribution is received.
+- V293: pf_ira_income.ira_rollover_received_date / ira_previous_rollover_received_date (entity + mapper).
+- Engine: withoutBarredIraRollover (both persons, before computeIraForPerson) removes a barred rollover amount, advisory
+  IRA_ROLLOVER_ONE_PER_YEAR_* (the redeposit is an excess contribution - A39 fields).
+- UI: IRA forms (both persons) - two date fields under the rollover amount.
+- Tests: Hrb2025Sc00344Test 5 (+2); e2e ira-one-rollover-per-year-ui.spec.ts; full unit suite 4,193 green.
+- line4abc-ira-income.spec.ts: the two new date fields push the QCD / HFD radios into the zone near the sticky save bar where
+  Playwright clicks don't reach ngModel (the spec's own note); those two now use the spec's existing native-click helper - 20 passed.
+- c:/us-tax-hrb2025: sc_00344 app note; OPEN_QUESTIONS A71 answered.
+
 ## 2026-10-17T19:30:00-04:00 - Form 5329 exception 02 from an employer plan needs a separation from service (outstanding.md A70, owner-approved, no new field)
 - 2025 Instructions for Form 5329, exception 02: "if from an employer plan, payments must begin after separation from service";
   IRC 72(t)(3)(B) (not applied to IRAs).

@@ -1,3 +1,17 @@
+## 2026-10-16T21:30:00-04:00 - Form 5329 exception 01 is checked against the separation year and the date of birth (outstanding.md A22, owner-approved fields)
+- 2025 Instructions for Form 5329, exception 01: "(doesn't apply to IRAs) ... after separation from service when the
+  separation from service occurs in or after the year you reach age 55 (age 50 for qualified public safety employees and
+  private sector firefighters) or 25 years of service under the plan, whichever is earlier"; IRC 72(t)(2)(A)(v), (t)(10).
+  The code and exempt amount were taken as entered.
+- V282 pf_pension_annuity_income: separation_from_service_year, exception_01_public_safety (NO / PUBLIC_SAFETY /
+  PUBLIC_SAFETY_25_YEARS); entity + PensionAnnuityIncomeMapper; taxpayer + spouse pension forms (exception screen, shown
+  when the code is 01).
+- Engine: withoutIneligibleException01 (pension forms before computePensionForPerson; IRA forms next to the QCD gate).
+- Tests: Hrb2025Sc00144Test C2 (Run C claiming 01 -> 2,000 applies), D (no year -> blocking), E (public safety at 52),
+  F (left at 54, money at 56 -> 10%), G (25 years), H (IRA code 01 -> 10%); C2, D, F, H red on the old engine. Full unit
+  suite 4,147 green. e2e exception-01-separation-year-ui.spec.ts (wizard: blocked -> 2025 + No -> 2,000 -> public safety -> 0).
+- c:/us-tax-hrb2025: sc_00144 md note (values unchanged); OPEN_QUESTIONS A22 answered.
+
 ## 2026-10-16T20:30:00-04:00 - Unemployment benefits from an earlier year paid back in 2025 (outstanding.md A21, owner-approved field)
 - Pub. 525 (2025), Repayment of unemployment compensation: same-year -> net on Schedule 1 line 7; an earlier year's
   benefits -> "more than $3,000, you can deduct the amount repaid on Schedule A (Form 1040), line 16, if you itemize

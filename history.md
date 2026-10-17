@@ -1,3 +1,15 @@
+## 2026-10-17T18:30:00-04:00 - Five-year Roth conversion recapture on Form 5329 line 1 (outstanding.md A69, owner-approved list)
+- 2025 Instructions for Form 5329, line 1 ("the early distribution allocated to the taxable portion of your 2021 through 2025
+  conversions or rollovers"); IRC 408A(d)(4)(B) ordering - contributions, conversions first-in first-out (taxable part first),
+  earnings; 408A(d)(3)(F).
+- V292: child table pf_ira_roth_conversion (year, amount, taxable part) under pf_ira_income; IraIncomeMapper saves / loads
+  rothConversions2021To2025.
+- Engine: rothConversionRecapture joins the code-J line-1 base; the line-4b ceiling on the 10% base (the rollover guard) is widened
+  by the recapture, which is never income - without that the recapture was capped away (found while testing).
+- UI: IRA forms (both persons) - a repeating conversions list in the Roth section, saved only with Roth distributions.
+- Tests: Hrb2025Sc00343Test 4 (A/B/C pinned in full, C2); e2e roth-conversion-recapture-ui.spec.ts; full unit suite 4,189 green.
+- c:/us-tax-hrb2025: sc_00343 app note; OPEN_QUESTIONS A69 answered.
+
 ## 2026-10-17T17:00:00-04:00 - Social Security repaid for 2024, over $3,000: Pub. 915 methods 1 and 2, the smaller tax (outstanding.md A63, owner-approved fields)
 - Pub. 915 (2025) "Deduction more than $3,000": method 1 deducts only the part included in the earlier year's income; method 2
   refigures that year without the repaid benefits and takes the tax decrease as a credit (2025 Schedule 3 line 13b); the smaller tax.

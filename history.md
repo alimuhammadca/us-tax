@@ -1,3 +1,15 @@
+## 2026-10-17T11:00:00-04:00 - Form 5329 exception limits: $5,000 per child (19), account-value limits (22, 23) (outstanding.md A42, owner-approved fields)
+- IRC 72(t)(2)(H) / (I) / (K); Pub. 590-B (2025): birth or adoption up to $5,000 per child; emergency expense the lesser of $1,000 or
+  the account minus $1,000; domestic abuse the lesser of $10,300 or 50% of the account.
+- V286: form_5329_exception_birth_adoption_count / form_5329_exception_account_balance on pf_ira_income and pf_pension_annuity_income.
+- Engine: capSecure2EarlyDistributionException gains the count and balance (IRA and pension paths); exception 19 was uncapped, now
+  5,000 x count (blank = one); the exception number is read from its leading digits ("19 twins" works).
+- UI: IRA and pension forms (taxpayer + spouse) show the count for 19 and the balance for 22 / 23; cleared for other codes. IRA label
+  "exception code (01-12)" corrected to (01-23).
+- Tests: Hrb2025Sc00248Test 9 (4 red on the old cap); e2e early-distribution-exception-limits-ui.spec.ts (twins typed on the IRA form;
+  D2/D via API) + exception-01 green; full unit suite 4,167 green.
+- c:/us-tax-hrb2025: sc_00248 app note (Runs B3, D2); OPEN_QUESTIONS A42 answered.
+
 ## 2026-10-17T10:15:00-04:00 - General Rule annuity: expected return from Pub. 939 Table V, lifetime exclusion limit (outstanding.md A41, owner-approved fields)
 - Pub. 939 (Rev. 12-2025) Single-life annuity: expected return = annual payment x Table V multiple at the age on the birthday nearest
   the annuity starting date; "Exclusion limited to net cost" (IRC 72(b)(2)) for starting dates after 1986.

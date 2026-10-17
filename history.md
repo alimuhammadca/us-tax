@@ -1,3 +1,14 @@
+## 2026-10-17T17:00:00-04:00 - Social Security repaid for 2024, over $3,000: Pub. 915 methods 1 and 2, the smaller tax (outstanding.md A63, owner-approved fields)
+- Pub. 915 (2025) "Deduction more than $3,000": method 1 deducts only the part included in the earlier year's income; method 2
+  refigures that year without the repaid benefits and takes the tax decrease as a credit (2025 Schedule 3 line 13b); the smaller tax.
+- V291: pf_social_security_benefits ss_repaid_prior_year_benefits / _taxable_benefits / _taxable_income / _filing_status.
+- Engine: refigurePriorYearSocialSecurity + taxableSocialSecurityPub915 + tax2024 (2024 brackets checked against the 2024
+  Instructions for Form 1040 Tax Rate Schedules and Tax Computation Worksheet - saved to docs/IRS-Forms/i1040gi-2024.pdf); prepare()
+  second pass with the credit, keeps the smaller net tax.
+- UI: Social Security forms (both persons) show "Benefits repaid for an earlier year" when the SSA-1099s net below -3,000.
+- Tests: Hrb2025Sc00322Test 6 (+3); e2e ss-repayment-1341-refigure-ui.spec.ts; full unit suite 4,188 green.
+- c:/us-tax-hrb2025: sc_00322 app note (C computed, D); OPEN_QUESTIONS A63 answered.
+
 ## 2026-10-17T15:30:00-04:00 - Traditional IRA required minimum distribution computed (outstanding.md A61, owner-approved fields)
 - Pub. 590-B (2025): RMD = 12/31/2024 balance / Table III denominator for the age on the 2025 birthday (Table II when the sole
   beneficiary is a spouse more than 10 years younger - not computed); required from 73, the first year may wait until April 1;

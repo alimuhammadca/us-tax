@@ -154,7 +154,7 @@ User-entered `otherAdjustmentNontaxableOlympicParalympicLine24c` takes precedenc
 
 ### Statement gating flag
 
-`INCOME_ADJUSTMENTS_STATEMENT_CONFIRMATION_REQUIRED` — blocking; emitted when `hadIncomeAdjustmentsForSchedule1 = true` but the upload confirmation checkbox is not checked.
+~~`INCOME_ADJUSTMENTS_STATEMENT_CONFIRMATION_REQUIRED`~~ — **removed 2026-10-17.** It keyed on an upload-confirmation question the form stopped asking (IA-UX-R2#7) and no mapper stored, so it blocked every return with income adjustments.
 
 ---
 

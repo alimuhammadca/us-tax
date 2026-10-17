@@ -1,3 +1,12 @@
+## 2026-10-17T09:30:00-04:00 - Removed INCOME_ADJUSTMENTS_STATEMENT_CONFIRMATION_REQUIRED (owner-approved)
+- The flag keyed on confirmAllReceivedAdjustmentStatementsUploaded, a question the Income adjustments form stopped asking
+  (IA-UX-R2#7, 2026-06-06) and no mapper stores, so every return with income adjustments was blocked until overridden.
+- Engine: validateIncomeAdjustmentsStatementGating no longer emits it (the 1098-E / 1099-INT-OID / K-1 received-vs-uploaded
+  checks stay). UI: flag-form-links entry removed.
+- Tests: TaxReturnComputeServiceTest flagsIncomeAdjustmentsStatementAndOutOfScopeGaps now asserts the flag is absent; e2e
+  ira-excess-withdrawn-by-due-date-ui.spec.ts now expects a 200 with no override; stale comments in
+  line10-income-adjustments.spec.ts cleaned. Full unit suite 4,155 green. knowledge/line-10-adjustments.md updated.
+
 ## 2026-10-17T07:40:00-04:00 - IRA excess contribution withdrawn by the due date, and its earnings (outstanding.md A39, owner-approved fields)
 - IRC 408(d)(4) / 4973(b); Pub. 590-A "Excess Contributions Withdrawn by Due Date of Return": no 6% on an excess taken out with its
   earnings by the due date; the earnings are income for the contribution year, with the 10% early-distribution tax under 59 1/2.

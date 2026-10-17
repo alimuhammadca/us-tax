@@ -1,3 +1,14 @@
+## 2026-10-17T21:30:00-04:00 - RRB-1099-R box 3 as the Simplified Method cost; age from the starting date (outstanding.md A83, owner-approved)
+- Pub. 575 (2025), RRB-1099-R box 3: "use the latest reported employee contribution amount shown in box 3 as the cost"; box 5/6
+  "are non-contributory pensions and are fully taxable". Simplified Method Worksheet line 3: the age AT the annuity starting date.
+- Engine: withSimplifiedMethodRrbCostAndAge (both persons, before the inputs-missing check) - blank cost <- box 3; age figured
+  from annuityStartingDate + dateOfBirth (replaces a blank or different typed age); advisories
+  PENSION_SIMPLIFIED_METHOD_COST_FROM_RRB_BOX3_* / _COST_DIFFERS_FROM_RRB_BOX3_* / _AGE_FROM_STARTING_DATE_*. RRB boxes 5 + 6 kept
+  out of the Simplified Method gross and added back fully taxable. No new fields, no migration.
+- UI: pension forms (both persons) - cost and age help reworded (full cost; box 3 for railroad; age worked out from the date).
+- Tests: Hrb2025Sc00374Test 9 (+5); e2e rrb-box3-simplified-method-ui.spec.ts; full unit suite 4,198 green.
+- c:/us-tax-hrb2025: sc_00374 app note; OPEN_QUESTIONS A83 answered.
+
 ## 2026-10-17T20:30:00-04:00 - One IRA-to-IRA rollover per 1-year period (outstanding.md A71, owner-approved fields)
 - IRC 408(d)(3)(B); Pub. 590-A (2025) "Waiting period between rollovers" - the 1-year period begins on the date the IRA
   distribution is received.

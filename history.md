@@ -1,3 +1,18 @@
+## 2026-10-17T07:40:00-04:00 - IRA excess contribution withdrawn by the due date, and its earnings (outstanding.md A39, owner-approved fields)
+- IRC 408(d)(4) / 4973(b); Pub. 590-A "Excess Contributions Withdrawn by Due Date of Return": no 6% on an excess taken out with its
+  earnings by the due date; the earnings are income for the contribution year, with the 10% early-distribution tax under 59 1/2.
+- Found: the six V165 inputs the 6% excise reads (traditional/Roth contribution, earlier-year excess, year-end value) were on no form -
+  only the API could reach Form 5329 Parts III-IV.
+- V284: ira_excess_withdrawn_by_due_date, traditional_/roth_ira_excess_withdrawn_amount, ira_excess_withdrawn_earnings (entity + mapper).
+- Engine: netIraContribution (excise + spousal-IRA compensation); earnings -> lines 4a/4b; 10% -> Form 5329 Part I (age 59 1/2 on
+  12/31/2025); IRA 1099-R code 8 + typed earnings -> overridable IRA_EXCESS_EARNINGS_MAY_REPEAT_1099R_CODE_8.
+- UI: "IRA contributions over the limit" group on both Income adjustments forms.
+- Tests: Hrb2025Sc00234Test (C as 8,000 - 1,000; C2 earnings 50 -> refund 1,754; 59 1/2 case; D2 Roth withdrawn -> 1,405); e2e
+  ira-excess-withdrawn-by-due-date-ui.spec.ts; related e2e (form5329-excess, line10 x3 specs) green; full unit suite 4,155 green.
+- Noticed, not fixed: INCOME_ADJUSTMENTS_STATEMENT_CONFIRMATION_REQUIRED keys on confirmAllReceivedAdjustmentStatementsUploaded,
+  which no form asks and no mapper stores, so every return with income adjustments carries it (overridable).
+- c:/us-tax-hrb2025: sc_00234 md note (H&R Block values unchanged); OPEN_QUESTIONS A39 answered.
+
 ## 2026-10-17T00:30:00-04:00 - Form 8853 line 24 from reimbursement-basis Forms 1099-LTC; 1099-LTC box 1 now reaches line 17 (outstanding.md A31)
 - 2025 Instructions for Form 8853, line 24: "Enter the reimbursements you received or expect to receive through insurance or
   otherwise ... Box 3 of Form 1099-LTC should indicate if payments were made on a reimbursement basis." Line 24 was typed only;

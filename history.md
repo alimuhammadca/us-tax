@@ -1,3 +1,17 @@
+## 2026-10-17T10:15:00-04:00 - General Rule annuity: expected return from Pub. 939 Table V, lifetime exclusion limit (outstanding.md A41, owner-approved fields)
+- Pub. 939 (Rev. 12-2025) Single-life annuity: expected return = annual payment x Table V multiple at the age on the birthday nearest
+  the annuity starting date; "Exclusion limited to net cost" (IRC 72(b)(2)) for starting dates after 1986.
+- V285: pf_pension_annuity_income.general_rule_payment_amount / general_rule_payment_frequency (entity + mapper).
+- Engine: withTableVExpectedReturn (blank expected return only; typed wins), ageAtNearestBirthday, pub939TableVMultiple (Table V
+  ages 5-115), frequency adjustment -0.1/-0.2/-0.5 with an advisory note; capGeneralRuleExclusionAtUnrecoveredCost on the per-person
+  and per-annuity General Rule paths.
+- UI: General Rule screen (taxpayer + spouse) shows the annuity starting date, regular payment, frequency and earlier-years recovery
+  (the date and recovery are now shared with the Simplified Method and kept while either method is selected); expected return
+  optional; per-annuity entries show the earlier-years recovery for General Rule entries too.
+- Tests: Hrb2025Sc00246Test 10 (6 red on the old engine); e2e general-rule-table-v-ui.spec.ts (Run A typed on the form with the
+  expected return blank; Run D lifetime limit); pension-per-annuity-ui + exception-01 e2e green; full unit suite 4,162 green.
+- c:/us-tax-hrb2025: sc_00246 app note (Run D); OPEN_QUESTIONS A41 answered.
+
 ## 2026-10-17T09:30:00-04:00 - Removed INCOME_ADJUSTMENTS_STATEMENT_CONFIRMATION_REQUIRED (owner-approved)
 - The flag keyed on confirmAllReceivedAdjustmentStatementsUploaded, a question the Income adjustments form stopped asking
   (IA-UX-R2#7, 2026-06-06) and no mapper stores, so every return with income adjustments was blocked until overridden.

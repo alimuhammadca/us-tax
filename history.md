@@ -1,3 +1,18 @@
+## 2026-10-16T20:30:00-04:00 - Unemployment benefits from an earlier year paid back in 2025 (outstanding.md A21, owner-approved field)
+- Pub. 525 (2025), Repayment of unemployment compensation: same-year -> net on Schedule 1 line 7; an earlier year's
+  benefits -> "more than $3,000, you can deduct the amount repaid on Schedule A (Form 1040), line 16, if you itemize
+  deductions, or you can take a credit against your tax on Schedule 3 (Form 1040), line 13b"; $3,000 or less is a
+  suspended miscellaneous deduction. There was no input for the earlier-year case.
+- V281 pf_other_incomes.prior_year_unemployment_repaid_in_2025 (entity + OtherIncomesMapper). UI (taxpayer + spouse Other
+  incomes): the new amount; the same-year question and amount reworded ("...paid back in 2025 ... received in 2025").
+- Engine: priorYearUnemploymentRepaymentAddon -> computeScheduleALine16AutoAddon (the Social Security repayment helper):
+  > $3,000 to Schedule A line 16 unless a §1341 credit (Other payments) or a typed claim-of-right deduction (Standard
+  deductions) already covers it; never on line 7. Informational UNEMPLOYMENT_PRIOR_YEAR_REPAYMENT_<ROLE>.
+- Tests: Hrb2025Sc00145Test C (2,000 -> = A, refund 1,225, note), D (3,500 itemized -> line 16 3,500), E (§1341 credit ->
+  not deducted), F (typed deduction -> not doubled); C and D red on the old engine. Full unit suite 4,141 green. e2e
+  unemployment-prior-year-repayment-ui.spec.ts (typed on the form: 2,000 -> line 7 15,000; 3,500 -> line 16 3,500).
+- c:/us-tax-hrb2025: sc_00145 md note (values unchanged); OPEN_QUESTIONS A21 answered.
+
 ## 2026-10-16T19:00:00-04:00 - Form 5329 Part VI: the 6% additional tax on excess Archer MSA contributions (outstanding.md A10, owner-approved fields)
 - IRC 4973(d); 2025 Instructions for Form 5329 Part VI (lines 34-41) and Form 8853 ("Excess Contributions You Make",
   "Excess Employer Contributions", "Deducting an Excess Contribution in a Later Year"). The excess was never measured.

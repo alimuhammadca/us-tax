@@ -1,3 +1,30 @@
+## 2026-10-17T00:30:00-04:00 - The line-1h disability pension is EIC earned income automatically (outstanding.md A30)
+- Pub. 596 (2025): "Taxable benefits you receive under your employer's disability retirement plan are considered earned
+  income until you reach minimum retirement age" (IRC 32(c)(2)). The pension reached line 1h but the EIC counted it only when
+  retyped under the EIC form's "Other earned income not on a W-2" - left blank, the EIC was 0 (sc_00200: 197 missed).
+- Engine: OtherEarnedIncomeComputation carries the per-person disability pension (after the PSO exclusion); computeLine27aEIC
+  adds the taxpayer's (both on MFJ). A typed "other earned income" next to it raises blocking, overridable
+  EIC_OTHER_EARNED_INCOME_MAY_REPEAT_LINE_1H_DISABILITY_PENSION (the same pension would count twice). UI: EIC form help and
+  hint reworded ("counted automatically - don't enter it again"); no new field.
+- Tests: Hrb2025Sc00200Test A-C no longer retype the pension (EIC 197 / 228 / 197, all red on the old engine) + D (typed too
+  -> the flag). e2e eic-line1h-disability-pension.spec.ts.
+- c:/us-tax-hrb2025: sc_00200 md note (values unchanged); OPEN_QUESTIONS A30 answered.
+
+## 2026-10-16T23:40:00-04:00 - Pension form: one entry per partly taxable pension (outstanding.md A29, owner-approved fields)
+- 2025 i1040 lines 5a/5b, Simplified Method Worksheet: "If you had more than one partially taxable pension or annuity, figure
+  the taxable part of each separately." The engine already ran the worksheet per annuityStreams[] entry (V46), but the form
+  took one cost / age / payments set per person, so two partly taxable pensions got the pooled approximation and the blocking
+  PENSION_BASIS_RECOVERY_PER_ANNUITY_LIMITATION_* flag.
+- UI only (us-tax-ui, taxpayer + spouse pension forms): "How many of your pensions include after-tax contributions?" One /
+  More than one; More than one shows a card per pension - payer, box 1 gross, date the first payment was due, age on that
+  date (filled in from the date of birth, editable), survivor age, Simplified Method or General Rule and its inputs - saved
+  as annuityStreams[]. The per-person Simplified Method fields are cleared when entries exist and the per-person basis screen
+  is skipped; an incomplete card says it is counted as fully taxable. Summary lists the entries. No backend change.
+- Tests: e2e pension-per-annuity-ui.spec.ts - sc_00193 Run C typed on the form (5b 43,200, refund 1,441, no per-annuity
+  flag), Run D's date 06/01/2023 fills age 60 (5b 43,394, refund 1,423); spouse card takes the age from spouseDateOfBirth
+  (5b 10,846). Existing pension specs re-run.
+- c:/us-tax-hrb2025: sc_00193 md (our-app steps; values unchanged); OPEN_QUESTIONS A29 answered.
+
 ## 2026-10-16T22:45:00-04:00 - Medical mileage input, priced at 21 cents a mile (outstanding.md A23, owner-approved field)
 - Pub. 502 (2025), Transportation: "you can use the standard medical mileage rate of 21 cents a mile" (IRC 213(d)(1)(B));
   parking and tolls are added separately. There was only a dollar total, so the filer had to price the miles.

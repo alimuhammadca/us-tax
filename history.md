@@ -1,3 +1,14 @@
+## 2026-10-17T14:30:00-04:00 - Form 1099-Q (529 / Coverdell ESA): taxable earnings and the Form 5329 Part II 10% (outstanding.md A58, owner-approved fields)
+- Pub. 970 (2025) ch. 6-7: AQEE = qualified expenses - tax-free assistance - expenses used for an education credit; taxable earnings
+  = earnings x (1 - AQEE / distributions); the 10% excepts the part taxable only because of the credit or a tax-free scholarship.
+- V289: pf_other_incomes.qtp_qualified_education_expenses / qtp_tax_free_education_assistance (entity + mapper).
+- Engine: computeQtpTaxableEarnings (per person, 1099-Q recipient TIN; credit expenses from the education-credits student) ->
+  a Schedule 1 line 8z item; Form 5329 Part II line 5 / line 6 now include it (the ABLE-only comment updated).
+- UI: other-incomes forms (both persons) show the two fields when a 1099-Q is on file (FieldDef.requires1099Q).
+- Tests: Hrb2025Sc00313Test 6 (3 new, all red on the old engine; B now pinned in full with the 75); e2e
+  qtp-1099q-taxable-earnings-ui.spec.ts (B2 typed on the form, C2 via API, no blocking flags); full unit suite 4,179 green.
+- c:/us-tax-hrb2025: sc_00313 app note; OPEN_QUESTIONS A58 answered.
+
 ## 2026-10-17T13:30:00-04:00 - HSA excess contribution withdrawn by the due date (outstanding.md A54, owner-approved fields)
 - 2025 Instructions for Form 5329, line 47 (contributions "unless withdrawn"); Pub. 969 (2025): an excess withdrawn with its earnings
   by the due date is treated as not contributed; the earnings are income for the year received.

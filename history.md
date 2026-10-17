@@ -1,3 +1,15 @@
+## 2026-10-16T22:45:00-04:00 - Medical mileage input, priced at 21 cents a mile (outstanding.md A23, owner-approved field)
+- Pub. 502 (2025), Transportation: "you can use the standard medical mileage rate of 21 cents a mile" (IRC 213(d)(1)(B));
+  parking and tolls are added separately. There was only a dollar total, so the filer had to price the miles.
+- V283 pf_standard_deductions.medical_miles_driven (entity + StandardDeductionsMapper); ReferenceData.MEDICAL_MILEAGE_RATE
+  0.21, exposed on GET /api/reference-data. UI: "Miles driven for medical care in 2025" under the medical amount, with the
+  priced amount shown; the itemized preview includes it.
+- Engine (buildScheduleA): line 1 = medical dollars + miles x 0.21 before the 7.5% floor. MfsScheduleAAllocator: the miles
+  are a Schedule A amount field that follows medicalDentalExpensesPaidBy.
+- Tests: Hrb2025Sc00158Test B now enters 400 miles (line 4 84, refund 2,402) + B2 (miles alone -> line 1 84); both red on
+  the old engine. MfsScheduleAAllocatorMedicalMilesTest (2). Full unit suite 4,150 green. e2e medical-mileage-ui.spec.ts.
+- c:/us-tax-hrb2025: sc_00158 md (our-app instructions now use the miles field; values unchanged); OPEN_QUESTIONS A23 answered.
+
 ## 2026-10-16T21:30:00-04:00 - Form 5329 exception 01 is checked against the separation year and the date of birth (outstanding.md A22, owner-approved fields)
 - 2025 Instructions for Form 5329, exception 01: "(doesn't apply to IRAs) ... after separation from service when the
   separation from service occurs in or after the year you reach age 55 (age 50 for qualified public safety employees and

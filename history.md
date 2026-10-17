@@ -1,3 +1,14 @@
+## 2026-10-17T13:30:00-04:00 - HSA excess contribution withdrawn by the due date (outstanding.md A54, owner-approved fields)
+- 2025 Instructions for Form 5329, line 47 (contributions "unless withdrawn"); Pub. 969 (2025): an excess withdrawn with its earnings
+  by the due date is treated as not contributed; the earnings are income for the year received.
+- V288: pf_form_8889_hsa.hsa_excess_withdrawn_by_due_date / hsa_excess_withdrawn_amount (entity + mapper).
+- Engine: hsaExcessWithdrawn -> computeExcessHsaExcise subtracts it from the current-year excess; a 2025 1099-SA code 2 on file with
+  an amount typed -> HSA_EXCESS_WITHDRAWN_MAY_REPEAT_1099SA_CODE_2_* (blocking, overridable).
+- UI: form-hsa (both persons) asks the yes/no when line 2 has a contribution, and the amount on Yes.
+- Tests: Hrb2025Sc00294Test 9 (3 red on the old engine); e2e hsa-excess-withdrawn-by-due-date-ui.spec.ts + HSA specs green (6);
+  full unit suite 4,176 green.
+- c:/us-tax-hrb2025: sc_00294 app note (C as it happened, C2); OPEN_QUESTIONS A54 answered.
+
 ## 2026-10-17T12:30:00-04:00 - NUA in employer stock: the election to include it, and the sale split at the NUA (outstanding.md A46, owner-approved fields)
 - IRC 402(e)(4)(B) (NUA excluded "unless the taxpayer elects"); Notice 98-24 (on the sale the NUA is long-term whatever the holding
   period; later appreciation follows the holding period from the distribution); J.K. Lasser 8.8 Example 2.

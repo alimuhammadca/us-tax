@@ -1,3 +1,12 @@
+## 2026-10-17T22:30:00-04:00 - Form 3903 worked out from the costs and W-2 code P; the excess goes to line 1h (outstanding.md A7, owner-approved)
+- Form 3903 (2025): line 4 "the total amount the government paid you ... not included in box 1 of your Form W-2 ... box 12 ...
+  code P"; line 5 "If line 3 is less than line 4, subtract line 3 from line 4 and include the result on Form 1040 ... line 1h."
+- Engine: withForm3903CodeP (W-2 code P per person by SSN), gatedMovingExpense = costs - code P (advisory
+  FORM_3903_CODE_P_SUBTRACTED_*), form3903ExcessPayments -> computeOtherEarnedIncome line 1h. No new field, no migration.
+- UI: income adjustments (both persons) - the moving box label and help reworded to the full costs (code P taken off for you).
+- Tests: Hrb2025Sc00088Test 5 (B re-seeded, + D); e2e form3903-code-p-excess-ui.spec.ts; full unit suite 4,199 green.
+- c:/us-tax-hrb2025: sc_00088 app note + known-limits row; OPEN_QUESTIONS A7 answered.
+
 ## 2026-10-17T21:30:00-04:00 - RRB-1099-R box 3 as the Simplified Method cost; age from the starting date (outstanding.md A83, owner-approved)
 - Pub. 575 (2025), RRB-1099-R box 3: "use the latest reported employee contribution amount shown in box 3 as the cost"; box 5/6
   "are non-contributory pensions and are fully taxable". Simplified Method Worksheet line 3: the age AT the annuity starting date.

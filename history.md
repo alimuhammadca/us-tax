@@ -1,3 +1,16 @@
+## 2026-10-17T00:30:00-04:00 - Form 8853 line 24 from reimbursement-basis Forms 1099-LTC; 1099-LTC box 1 now reaches line 17 (outstanding.md A31)
+- 2025 Instructions for Form 8853, line 24: "Enter the reimbursements you received or expect to receive through insurance or
+  otherwise ... Box 3 of Form 1099-LTC should indicate if payments were made on a reimbursement basis." Line 24 was typed only;
+  left blank, the per diem limitation stayed too high (sc_00206 Run C: 10,000 taxable instead of 22,000, refund 3,733 vs 853).
+- Engine: a blank line 24 = box 1 of the person's 1099-LTCs with box 3 "Reimbursed amount"; a typed line 24 wins.
+- Bug found with it: the stored 1099-LTC (Form1099LtcMapper) carries grossLTCBenefitsPaidAmount and policyholderTIN; the engine
+  read grossLtcBenefitsPaidAmount and recipientTIN, so line 17 was 0 for every uploaded 1099-LTC (hidden: line 26 is built from
+  the typed line 18) and on MFJ each spouse's line 17 took both spouses' forms. sum1099LtcBox1 reads both spellings.
+- UI (form-msa-ltc): a hint under line 24 with the 1099-LTC amount on file. No new field.
+- Tests: Hrb2025Sc00206Test now seeds stored-shape 1099-LTCs and leaves line 24 blank (A-D, all red on the old engine) + C2
+  (typed line 24 wins, refund 133). e2e ltc-reimbursement-line24-ui.spec.ts. Full unit suite green.
+- c:/us-tax-hrb2025: sc_00206 md note (values unchanged); OPEN_QUESTIONS A31 answered.
+
 ## 2026-10-17T00:30:00-04:00 - The line-1h disability pension is EIC earned income automatically (outstanding.md A30)
 - Pub. 596 (2025): "Taxable benefits you receive under your employer's disability retirement plan are considered earned
   income until you reach minimum retirement age" (IRC 32(c)(2)). The pension reached line 1h but the EIC counted it only when

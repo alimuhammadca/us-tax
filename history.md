@@ -1,3 +1,10 @@
+## 2026-10-18T19:00:00-04:00 - Rounding conventions: Pub. 936 ratio to three places; Schedule SE and Form 2210 kept and pinned (OPEN_QUESTIONS B1/B47, B8, B11, B13, owner-approved)
+- Pub. 936 (2025) Table 1 line 14 ("rounded to three places"); 2025 Form 1040 instructions, rounding off to whole dollars; 2025 Schedule SE line 4c; 2025 Instructions for Form 2210, penalty worksheet.
+- Engine: pub936Table1Line14 - the mortgage-limit ratio rounded to three places (single-limit and two-vintage paths). No other code change.
+- Kept: Schedule SE line 4a rounded before the $400 test (B8); Schedule SE lines rounded one by one, as H&R Block does (B11); Form 2210 columns in cents, total rounded once (B13).
+- Tests: Hrb2025Sc00366Test D 43,190 + E 39,120; Hrb2025Sc00207Test profit 433; Hrb2025Sc00228Test column pins; B11 notes in Sc00210/00211/00219/00220; e2e open-questions-batch-1018-ui (A79 updated + B1 test).
+- QA: sc_00366 run E (750,000 / 1,150,000, 60,000 interest -> 39,120) added for H&R Block.
+
 ## 2026-10-19T03:30:00-04:00 - Community property on married-filing-separately returns (outstanding.md A27, owner-approved)
 - Pub. 555 (2025); Form 8958.
 - V344: three columns on pf_filing_status (entity + FilingStatusMapper).

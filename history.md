@@ -1,3 +1,10 @@
+## 2026-10-18T12:30:00-04:00 - Schedule C line 36 - personal withdrawals and returns subtracted (outstanding.md A65, owner-approved)
+- Pub. 334 (2025) ch. 6, line 36.
+- V315: pf_business_activity purchases_withdrawn_for_personal_use / purchase_returns_and_allowances (entity + BusinessIncomeMapper).
+- Engine: scheduleCCogs.
+- UI: business income COGS list - two boxes; purchases relabelled.
+- Tests: Hrb2025Sc00326Test re-seeded.
+
 ## 2026-10-18T12:00:00-04:00 - QBI W-2 wages - wages in cost of goods sold count, wages not on a W-2 do not (outstanding.md A36, owner-approved)
 - IRC 199A(b)(4); Treas. Reg. 1.199A-2(b)(2)(iii), (b)(4).
 - V314: pf_business_activity cost_of_labor_w2_wages / wages_not_on_w2 (entity + BusinessIncomeMapper).

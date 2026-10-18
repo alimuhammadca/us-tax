@@ -1,3 +1,11 @@
+## 2026-10-19T02:00:00-04:00 - Defaults and gates (OPEN_QUESTIONS B42, B5, B20, B48 built; B21 closed; owner-approved)
+- Rev. Proc. 2023-34 (2024 standard deduction); Pub. 525 Recoveries; IRC 469(i)(5); 2025 Instructions for Form 8960 line 9b and Reasonable method allocations.
+- B42: blank 2024 standard deduction defaulted from the 2024 filing status and dates of birth (state refund worksheet, Form 1098 box 4).
+- B5: RENTAL_MFS_LIVED_APART_ALL_YEAR_UNANSWERED (blocking, overrideable) when it changes the return. B20: FORM_1098_BOX4_REFUND_PRIOR_YEAR_ITEMIZING_UNANSWERED advisory.
+- B48: Form 8960 line 9b itemizers only, capped at taxes deducted (no sales tax), default on income tax x line 8 / AGI.
+- B21: closed - pinned (CanceledDebtNoInformationReturnTest).
+- Tests: Sc00359 D + helper, Sc00252 E, Sc00185 E, Sc00371 A2/B2/C2, one older 8960 fixture made an itemizer; e2e open-questions-b5-b20-b42-b48.spec.ts.
+
 ## 2026-10-19T00:30:00-04:00 - Student loan interest follows "actually claimed"; Medicaid waiver election applied per credit (OPEN_QUESTIONS B16, B18, owner-approved)
 - 2025 Schedule 1 line 21 instructions ("aren't claimed"); Pub. 970 (2025) ch. 4; 2025 i1040 EIC Step 5 line 2; 2025 Schedule 8812 Earned Income Worksheet line 4.
 - B16: V347 pf_standard_deductions.someone_is_claiming_you / _spouse; UI follow-ups on the Standard deductions form; line 21 barred only when actually claimed (or unanswered).

@@ -1,3 +1,10 @@
+## 2026-10-18T18:30:00-04:00 - EIC after a prior disallowance - reason, ban period, when no Form 8862 is needed (outstanding.md A37, owner-approved)
+- Pub. 596 (2025) chapter 5; IRC section 32(k); Instructions for Form 8862.
+- V327: three columns on pf_earned_income_credit (entity + EarnedIncomeCreditMapper, taxpayer form).
+- Engine: the Form 8862 EIC gate reads the reason and year.
+- UI: EIC form - reason select, year, and an allowed-since checkbox under the prior-denial question.
+- Tests: Hrb2025Sc00231Test 4 (B, C, D reseeded).
+
 ## 2026-10-18T18:00:00-04:00 - Form 8615 - the age and support tests (outstanding.md A19, owner-approved)
 - 2025 Instructions for Form 8615, Who Must File (incl. Certain January 1 birthdays).
 - V326: pf_kiddie_income.earned_income_more_than_half_of_support (entity + KiddieIncomeMapper).

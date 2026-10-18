@@ -1,3 +1,16 @@
+## 2026-10-18T02:30:00-04:00 - Schedule A: sales-tax calculator boxes, real-estate tax by days, mortgage date (outstanding.md A13, owner-approved fields)
+- Schedule A instructions line 5a (optional sales tax tables + major purchases), line 5b and Pub. 530 (real estate tax
+  divided at the sale date), IRC 163(h)(3)(F) (the limit by the date the debt was incurred; binding-contract exception).
+- V297: pf_standard_deductions sales_tax_table_amount / sales_tax_major_purchases_amount / home_sold_date /
+  home_sold_property_tax_bill / home_bought_date / home_bought_property_tax_bill / mortgage_origination_date /
+  mortgage_binding_contract_before_cutoff (entity + mapper).
+- Engine: buildScheduleA - sales tax sum; realEstateTaxDaySplit; mortgageTierFromDate (blank date + blank tier now $750k
+  with advisory SCHEDULE_A_MORTGAGE_DATE_MISSING - was no limit).
+- UI: standard deductions form - the two sales-tax boxes, the four sold/bought fields, the mortgage date + binding-contract
+  question; the tier radio removed (owner-approved).
+- Tests: Hrb2025Sc00102Test, Hrb2025Sc00106Test, Hrb2025Sc00107Test (+1); e2e schedule-a-sales-tax-re-split-mortgage-date-ui.spec.ts.
+- c:/us-tax-hrb2025: sc_00102 / 00106 / 00107 app notes + known-limits rows; OPEN_QUESTIONS A13 answered.
+
 ## 2026-10-18T01:30:00-04:00 - Refinance points: improvement share and a paid-off loan's leftover points (outstanding.md A12, owner-approved fields)
 - IRC 461(g); Pub. 936 (2025) Points - Refinancing (improvement share in full, rest over the loan) and Mortgage ending early
   (remaining spread points deducted when the loan ends, unless refinanced with the same lender).

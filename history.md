@@ -1,3 +1,10 @@
+## 2026-10-18T22:30:00-04:00 - Bonus depreciation - the acquisition date and the 40% election (outstanding.md A55, owner-approved)
+- 2025 Instructions for Form 4562, line 14; IRC section 168(k)(10) as amended by P.L. 119-21.
+- V335: two columns on pf_depreciation_asset (entity + DepreciationMapper).
+- Engine: placedInServiceAfterBonusCutover reads dateAcquired and electBonus40Percent.
+- UI: Depreciation asset form - date acquired and the 40% election checkbox.
+- Tests: Hrb2025Sc00296Test 4 (+C, A2).
+
 ## 2026-10-18T22:00:00-04:00 - Medicaid waiver payments - the home-sharing test per care recipient (outstanding.md A45, owner-approved)
 - Notice 2014-7; IRC section 131; 2025 Form 1040 instructions, line 1d.
 - V334: two columns on pf_medicaid_waiver_entry (entity + Medicaid mapper).

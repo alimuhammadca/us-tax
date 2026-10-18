@@ -1,3 +1,10 @@
+## 2026-10-19T03:00:00-04:00 - Form 4797 Part IV - section 179 / 280F recapture derived from the asset (outstanding.md A73, owner-approved)
+- Pub. 946 (2025) ch. 2 (section 179 recapture) and ch. 5 (excess depreciation of listed property); Form 4797 Part IV.
+- V343: pf_depreciation_asset.prior_year_business_use_percent (entity + DepreciationMapper).
+- Engine: withDerivedForm4797PartIv feeding computeForm4797Part3Recapture (advisories collected before the flags list).
+- UI: Depreciation asset form - earlier business-use percent.
+- Tests: Hrb2025Sc00357Test 6, Hrb2025Sc00358Test 5.
+
 ## 2026-10-19T02:30:00-04:00 - Schedule H - figured from one row per household employee (outstanding.md A52, owner-approved)
 - 2025 Instructions for Schedule H (lines A, 1-5, 15; the $2,800 and $1,000 tests).
 - V342: table pf_schedule_h_employee (entity PfScheduleHEmployee; ScheduleHMapper saves / loads / deletes the rows).

@@ -1,3 +1,10 @@
+## 2026-10-18T23:00:00-04:00 - Form 982 line 10a - basis of property, with the section 1017(b)(2) limit (outstanding.md A74, owner-approved)
+- IRC sections 108(b), 1017(a), 1017(b)(2); 2025 Instructions for Form 982, line 10a.
+- V336: three columns on pf_other_incomes (entity + OtherIncomesMapper).
+- Engine: line 10a in applySection108AttributeReduction, in Form 982 order.
+- UI: Other incomes form (taxpayer) - three COD inputs.
+- Tests: Hrb2025Sc00360Test 5 (+2); Section108AttributeReductionTest, Form982ExclusionOrderingTest unchanged.
+
 ## 2026-10-18T22:30:00-04:00 - Bonus depreciation - the acquisition date and the 40% election (outstanding.md A55, owner-approved)
 - 2025 Instructions for Form 4562, line 14; IRC section 168(k)(10) as amended by P.L. 119-21.
 - V335: two columns on pf_depreciation_asset (entity + DepreciationMapper).

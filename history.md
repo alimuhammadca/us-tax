@@ -1,3 +1,10 @@
+## 2026-10-18T22:00:00-04:00 - Medicaid waiver payments - the home-sharing test per care recipient (outstanding.md A45, owner-approved)
+- Notice 2014-7; IRC section 131; 2025 Form 1040 instructions, line 1d.
+- V334: two columns on pf_medicaid_waiver_entry (entity + Medicaid mapper).
+- Engine: computeMedicaidForPerson per-row test; gate limited to unanswered rows.
+- UI: Medicaid waiver forms (taxpayer, spouse) - person cared for + lives-in-your-home per row.
+- Tests: Hrb2025Sc00258Test B, C reseeded; Sc00236 / Sc00249 / TaxReturnComputeServiceTest unchanged.
+
 ## 2026-10-18T21:30:00-04:00 - Below-market gift loans - section 7872 imputed interest (outstanding.md A76, owner-approved)
 - IRC section 7872(c)(2), (d)(1); Rev. Rul. 2025-13 (2025 blended annual rate 4.22%).
 - V333: four columns on pf_interest_income (entity + InterestIncomeMapper).

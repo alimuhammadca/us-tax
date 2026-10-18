@@ -1,3 +1,12 @@
+## 2026-10-18T21:00:00-04:00 - Section 179 carryover bridge, derived Form 4952 line 4e and Form 8828 line 15, Form 6252/6781/8824 arithmetic advisories (OPEN_QUESTIONS B10, B45, B31, B14, B26, B2, B15, owner-approved)
+- 2025 Form 4562 Part I lines 9-13 and §179(b)(3)(B); 2025 Instructions for Form 4952 line 4e; Instructions for Form 8828 (Rev. 11-2024) line 15; 2025 Forms 6252 (and its line 19 instruction), 6781 and 8824.
+- B10: V345 out_schedule_1.add_inc_section179_carryover - the twelfth carryforward bridge (line 13 kept, next year's line 10). Only the business-income limit carries; an election above the dollar limit is lost.
+- B45: a blank Form 4952 line 4e cap is figured from Schedule D (line 15 less any line 7 loss).
+- B31: a blank Form 8828 line 15 is figured (line 11 + tax-exempt interest - home-sale gain in income); a typed figure that differs is flagged.
+- B14/B26: advisories FORM_6252_ARITHMETIC_DIFFERS, FORM_6781_ARITHMETIC_DIFFERS, FORM_8824_ARITHMETIC_DIFFERS; typed lines still used.
+- B2: sc_00068 pins no §280A carryover. B15: already built by A15; sc_00240 runs from the 2024 taxable income.
+- Tests: Hrb2025Sc00219Test (B, D, E, F), Sc00368Test (cap blank), Sc00302Test (E, F, D blank), Sc00239Test, Sc00240Test, Sc00068Test, new StatementArithmeticFlagsTest; e2e open-questions-b10-b14-b26-b31-b45.spec.ts.
+
 ## 2026-10-18T19:00:00-04:00 - Rounding conventions: Pub. 936 ratio to three places; Schedule SE and Form 2210 kept and pinned (OPEN_QUESTIONS B1/B47, B8, B11, B13, owner-approved)
 - Pub. 936 (2025) Table 1 line 14 ("rounded to three places"); 2025 Form 1040 instructions, rounding off to whole dollars; 2025 Schedule SE line 4c; 2025 Instructions for Form 2210, penalty worksheet.
 - Engine: pub936Table1Line14 - the mortgage-limit ratio rounded to three places (single-limit and two-vintage paths). No other code change.

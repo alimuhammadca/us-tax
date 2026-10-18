@@ -1,3 +1,10 @@
+## 2026-10-18T09:00:00-04:00 - Self-employed health insurance - months eligible for an employer plan (outstanding.md A87, owner-approved)
+- IRC 162(l)(2)(B); 2025 Form 1040 instructions, Schedule 1 line 17 (any month or part of a month); Pub. 974.
+- V308: pf_se_deductions.se_employer_plan_eligible_months (entity + SeDeductionsMapper).
+- Engine: seEmployerPlanMonths; the Pub. 974 solver filters the 8962 rows; all twelve months -> no medical premium.
+- UI: self-employed deductions form - twelve month checkboxes.
+- Tests: Hrb2025Sc00387Test B/C with the flag on.
+
 ## 2026-10-18T08:30:00-04:00 - Canceled main-home mortgage - the 108(h)(4) ordering rule (outstanding.md A75, owner-approved)
 - IRC 108(h)(2), (h)(4); Pub. 4681 (2025) Example 3 and the cash-out refinance rule.
 - V307: pf_other_incomes cod_mortgage_principal_before_discharge / cod_mortgage_qpri_principal (entity + OtherIncomesMapper).

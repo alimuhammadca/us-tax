@@ -1,3 +1,10 @@
+## 2026-10-18T05:30:00-04:00 - Bargain sale to charity - the basis split and both parts routed (outstanding.md A77, owner-approved)
+- IRC 1011(b); Pub. 544 Bargain sales to charity; Pub. 526 Bargain Sales and Step 3.
+- V301: pf_form_8283_donation.bargain_sale_amount_received (entity + Form8283Mapper).
+- Engine: bargainSaleSplit, withBargainSaleRows (Form 8949 row), withBargainSaleGiftParts (Schedule A), computeForm8283 tests the gift part.
+- UI: Form 8283 row - the amount-received box with help.
+- Tests: Hrb2025Sc00365Test 6 (+3).
+
 ## 2026-10-18T05:00:00-04:00 - Form 8283 similar items grouped for the $5,000 appraisal test (outstanding.md A56, owner-approved)
 - Pub. 526 (2025), Deduction over $5,000; Instructions for Form 8283, Similar Items of Property.
 - V300: pf_form_8283_donation.property_category (entity + Form8283Mapper).

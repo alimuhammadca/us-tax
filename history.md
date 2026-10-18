@@ -1,3 +1,10 @@
+## 2026-10-18T11:30:00-04:00 - Schedule C car-loan interest - the business share from the vehicle's miles (outstanding.md A34, owner-approved)
+- Schedule C instructions (car and truck expenses, line 16b); Pub. 463 ch. 4.
+- V313: pf_business_vehicle.car_loan_interest (entity + BusinessIncomeMapper).
+- Engine: scheduleCVehicleLoanInterest in the tentative profit.
+- UI: business income vehicle card - car loan interest box.
+- Tests: Hrb2025Sc00218Test C re-seeded.
+
 ## 2026-10-18T11:00:00-04:00 - Schedule C meals at 80% under the DOT hours-of-service limits (outstanding.md A32, owner-approved)
 - IRC 274(n)(3); Schedule C instructions line 24b; Pub. 463.
 - V312: pf_business_activity.meals_subject_to_dot_hours_of_service (entity + BusinessIncomeMapper).

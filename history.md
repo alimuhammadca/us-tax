@@ -1,3 +1,9 @@
+## 2026-10-19T00:30:00-04:00 - Student loan interest follows "actually claimed"; Medicaid waiver election applied per credit (OPEN_QUESTIONS B16, B18, owner-approved)
+- 2025 Schedule 1 line 21 instructions ("aren't claimed"); Pub. 970 (2025) ch. 4; 2025 i1040 EIC Step 5 line 2; 2025 Schedule 8812 Earned Income Worksheet line 4.
+- B16: V347 pf_standard_deductions.someone_is_claiming_you / _spouse; UI follow-ups on the Standard deductions form; line 21 barred only when actually claimed (or unanswered).
+- B18: with the election on the EIC is taken the larger way; with it off an advisory gives the ACTC gain; Schedule 8812 line 18a now removes not-elected W-2 box 1 qualified dollars. UI help text reworded.
+- Tests: Hrb2025Sc00243Test B/B0; Hrb2025Sc00249Test D, A-advisory, F; e2e open-questions-b16-b18.spec.ts.
+
 ## 2026-10-18T23:30:00-04:00 - Credits and eligibility batch (OPEN_QUESTIONS B17, B43, B4, B44, B50, B54 built; B19 pinned; B12 closed; owner-approved)
 - 2025 i1040 EIC Step 5 and Pub. 596 Rule 7; §162(l)(2)(A); 2025 Form 8880; 2025 Instructions for Form 8863 line 7; 2025 Schedule 1-A instructions (Parts II and IV); Pub. 974 (2025).
 - B17: EIC earned income now includes Form 1040 lines 1b, 1c, 1e, 1f, 1g. B43: SE retirement / health limits use the trades' share of the half-SE.

@@ -1,3 +1,10 @@
+## 2026-10-18T09:30:00-04:00 - Home office mortgage interest and taxes - only the personal part on Schedule A (outstanding.md A53, owner-approved)
+- Pub. 587 (2025); Instructions for Form 8829 line 10.
+- V309: pf_home_office_entry.mortgage_taxes_also_on_schedule_a (entity + HomeOfficeMapper).
+- Engine: withHomeOfficeScheduleAParts in prepare (beside the A11 Schedule A pre-processing).
+- UI: home office form - the Yes/No question per office.
+- Tests: Hrb2025Sc00281Test 5 (+E itemizer).
+
 ## 2026-10-18T09:00:00-04:00 - Self-employed health insurance - months eligible for an employer plan (outstanding.md A87, owner-approved)
 - IRC 162(l)(2)(B); 2025 Form 1040 instructions, Schedule 1 line 17 (any month or part of a month); Pub. 974.
 - V308: pf_se_deductions.se_employer_plan_eligible_months (entity + SeDeductionsMapper).

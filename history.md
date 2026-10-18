@@ -1,3 +1,10 @@
+## 2026-10-19T01:10:00-04:00 - Forms 1099-A, 1099-CAP, 1099-LS / 1099-SB - cross-checked (outstanding.md A60, owner-approved)
+- Pub. 4681 (2025) Table 1-1; Pub. 550 (2025) and Form 1099-CAP instructions; Rev. Ruls. 2009-13, 2020-05.
+- No migration.
+- Engine: crossCheckSpecialtyCapitalStatements.
+- UI: none.
+- Tests: Hrb2025Sc00314Test 7, Hrb2025Sc00318Test 4, Hrb2025Sc00319Test 6.
+
 ## 2026-10-19T00:50:00-04:00 - Form 1099-PATR - cooperative distributions to Schedule F lines 3a/3b (outstanding.md A62, owner-approved)
 - 2025 Instructions for Schedule F, lines 3a/3b; Form 1099-PATR (Rev. 4-2025) boxes 1-3, 5.
 - No migration.

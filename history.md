@@ -1,3 +1,12 @@
+## 2026-10-18T23:30:00-04:00 - Credits and eligibility batch (OPEN_QUESTIONS B17, B43, B4, B44, B50, B54 built; B19 pinned; B12 closed; owner-approved)
+- 2025 i1040 EIC Step 5 and Pub. 596 Rule 7; §162(l)(2)(A); 2025 Form 8880; 2025 Instructions for Form 8863 line 7; 2025 Schedule 1-A instructions (Parts II and IV); Pub. 974 (2025).
+- B17: EIC earned income now includes Form 1040 lines 1b, 1c, 1e, 1f, 1g. B43: SE retirement / health limits use the trades' share of the half-SE.
+- B4 / B44: Saver's credit age and the refundable AOTC under-24 age come from the date of birth. No new fields.
+- B50: a car-loan vehicle condition answered No is an advisory (LINE13B_CAR_LOAN_VEHICLE_EXCLUDED); only a blank one blocks.
+- B54: Marketplace label reworded (UI); a 1095-A claiming a credit starts the Pub. 974 coordination (SE_HEALTH_MARKETPLACE_INFERRED_FROM_1095A).
+- B19: allocated tips on Form 4137 count as qualified tips - pinned. B12: closed (fa03a3b4).
+- Tests: Sc00249 b17, Sc00356 D, Sc00173 C2/D2, Sc00353 B2/B3, Sc00387 A2, Sc00257 D; car-loan tests updated; e2e open-questions-b4-b17-b44.spec.ts.
+
 ## 2026-10-18T22:00:00-04:00 - Form 4562 line 10 input field (owner-approved, V346)
 - 2025 Form 4562 line 10 ("Carryover of disallowed deduction from line 13 of your 2024 Form 4562").
 - V346 pf_se_tax_options.prior_year_section179_carryover; SeTaxOptionsMapper; SE tax options form field "Section 179 deduction carried over from 2024 (Form 4562 line 10)".

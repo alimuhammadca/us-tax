@@ -1,3 +1,10 @@
+## 2026-10-18T07:30:00-04:00 - Form 1098 box 4 recovery limited to the 2024 mortgage interest deducted (outstanding.md A43, owner-approved)
+- Pub. 525 (2025) Recovery limited to deduction; IRC 111(a).
+- V305: pf_prior_year_tax.prior_year_mortgage_interest_deducted (entity + PriorYearTaxMapper).
+- Engine: the box 4 line 8z recovery = min(refund, itemized excess less the state refund, interest deducted).
+- UI: prior-year tax form - the 2024 mortgage interest deducted box with help.
+- Tests: Hrb2025Sc00252Test 4 (+1).
+
 ## 2026-10-18T07:00:00-04:00 - Seller-financed mortgage - line 8b with the seller's identity; no upload gate for the seller (outstanding.md A48, owner-approved)
 - 2025 Schedule A instructions line 8b; IRC 6109(h).
 - V304: pf_standard_deductions seller_financed_mortgage_interest_paid / _lender_name / _lender_tin / _lender_address.

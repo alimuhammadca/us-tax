@@ -1,3 +1,10 @@
+## 2026-10-18T15:30:00-04:00 - Section 962 - the deemed-paid foreign taxes per category (outstanding.md A40, owner-approved)
+- IRC sections 78, 960(d), 962; Reg. 1.962-1(b)(1)(i)(A)(3).
+- V321: two columns on pf_line16_tax (entity + Line16TaxMapper).
+- Engine: computeSection962Tax split path (gross-up, 80% GILTI, per-category limit).
+- UI: Other tax items form - two boxes under the deemed-paid credit.
+- Tests: Hrb2025Sc00240Test 6 (+E, F); Sc00240SqaScenarioTest and TaxReturnComputeServiceTest unchanged (combined box still honoured).
+
 ## 2026-10-18T15:00:00-04:00 - Form 2210 - the penalty from the actual payment dates (outstanding.md A35, owner-approved)
 - 2025 Instructions for Form 2210, Part III Section B / penalty worksheet (payments applied to the earliest underpayment; days to the payment date).
 - V320: four date columns on pf_estimated_tax_payments (entity + EstimatedTaxPaymentsMapper).

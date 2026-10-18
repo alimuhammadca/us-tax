@@ -1,3 +1,17 @@
+## 2026-10-18T00:30:00-04:00 - Schedule A medical repayments and the line 5a breakdown (outstanding.md A11, owner-approved fields)
+- IRC 213(a) ("not compensated for by insurance or otherwise"); 105(a)/(b) and Pub. 502 "Excess reimbursement" (income when
+  from employer-paid coverage); 2025 Schedule A instructions line 5a (withholding + paid in 2025 for a prior year + 2025
+  estimates).
+- V295: pf_standard_deductions.medical_reimbursements_received / medical_coverage_employer_paid /
+  state_local_income_tax_paid_for_prior_years / state_local_estimated_tax_paid_2025 (entity + mapper).
+- Engine: buildScheduleA nets repayments; withMedicalExcessReimbursementLine8z; withScheduleALine5a reads statement
+  withholding (W-2 17/19, W-2G, 1099 state rows; MFS by TIN). Advisories MEDICAL_EXCESS_REIMBURSEMENT_PART_EMPLOYER_PAID,
+  SCHEDULE_A_LINE5A_WITHHOLDING_ADDED.
+- UI: standard deductions form - repayments box + employer radio; the state income tax box reworded to "other", two new
+  boxes, the imported-withholding note now says it is added for you; previews follow.
+- Tests: Hrb2025Sc00098Test 5, Hrb2025Sc00100Test 4; e2e schedule-a-reimbursement-line5a-ui.spec.ts; full unit suite 4,202 green.
+- c:/us-tax-hrb2025: sc_00098 + sc_00100 app notes and known-limits rows; OPEN_QUESTIONS A11 answered.
+
 ## 2026-10-17T23:30:00-04:00 - Schedule 1 line 12 eligibility: group, 100-mile test, performing-artist tests (outstanding.md A8, owner-approved fields)
 - IRC 62(a)(2)(B)/(C)/(E) and 62(b): reservist travel more than 100 miles from home; qualified performing artist (2+ arts
   employers paying $200+, expenses > 10% of that income, AGI without the deduction <= $16,000, joint return if married

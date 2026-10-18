@@ -1,3 +1,10 @@
+## 2026-10-18T08:30:00-04:00 - Canceled main-home mortgage - the 108(h)(4) ordering rule (outstanding.md A75, owner-approved)
+- IRC 108(h)(2), (h)(4); Pub. 4681 (2025) Example 3 and the cash-out refinance rule.
+- V307: pf_other_incomes cod_mortgage_principal_before_discharge / cod_mortgage_qpri_principal (entity + OtherIncomesMapper).
+- Engine: qpriAfterOrderingRule in computeCodExclusionBreakdown (filing status passed for the MFS limit).
+- UI: other incomes forms (both persons) - two new boxes, the canceled-amount label reworded.
+- Tests: Hrb2025Sc00361Test A-C from the facts.
+
 ## 2026-10-18T08:00:00-04:00 - Several items damaged in one casualty - Form 4684 per-item columns (outstanding.md A44, owner-approved)
 - 2025 Instructions for Form 4684, Section A (separate column per item; line 10 total; $100 once per casualty).
 - V306: pf_casualty_item (cascade from pf_standard_deductions); StandardDeductionsMapper save/load/delete.

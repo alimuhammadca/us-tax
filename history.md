@@ -1,3 +1,10 @@
+## 2026-10-18T18:00:00-04:00 - Form 8615 - the age and support tests (outstanding.md A19, owner-approved)
+- 2025 Instructions for Form 8615, Who Must File (incl. Certain January 1 birthdays).
+- V326: pf_kiddie_income.earned_income_more_than_half_of_support (entity + KiddieIncomeMapper).
+- Engine: withForm8615AgeSupportTest at the kiddie form load (flags added with the first flags).
+- UI: Kiddie income form - support question shown when the child is 18 or older (or the age is unknown).
+- Tests: Hrb2025Sc00132Test 5 (D reseeded, +D2).
+
 ## 2026-10-18T17:30:00-04:00 - Form 5695 Part I - a utility subsidy reduces the property cost (outstanding.md A20, owner-approved)
 - 2025 Instructions for Form 5695, Part I (subsidized energy financing / utility rebates).
 - V325: pf_energy_credit.residential_energy_subsidy (entity + EnergyCreditMapper).

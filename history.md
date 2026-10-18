@@ -1,3 +1,10 @@
+## 2026-10-19T01:40:00-04:00 - Form 8621 Part V - the section 1291 excess distribution computed (outstanding.md A86, owner-approved)
+- Instructions for Form 8621 (Rev. 12-2025), lines 15-16; IRC section 1291.
+- V340: five columns on pf_line16_tax (entity + Line16TaxMapper + LINE16_TAX_COALESCE_KEYS).
+- Engine: computeForm8621PartV in prepare; line 8z item, 1291TAX via form8621Line16eAmount, line 3b correction.
+- UI: Other tax items form - the Part V inputs in the Form 8621 section.
+- Tests: Hrb2025Sc00385Test 4 (A/B/C reseeded, +D).
+
 ## 2026-10-19T01:10:00-04:00 - Forms 1099-A, 1099-CAP, 1099-LS / 1099-SB - cross-checked (outstanding.md A60, owner-approved)
 - Pub. 4681 (2025) Table 1-1; Pub. 550 (2025) and Form 1099-CAP instructions; Rev. Ruls. 2009-13, 2020-05.
 - No migration.

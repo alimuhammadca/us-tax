@@ -1,3 +1,10 @@
+## 2026-10-19T00:30:00-04:00 - Section 121 - the reduced maximum from the days, and nonqualified use (outstanding.md A59, owner-approved)
+- Pub. 523 (2025) Worksheet 1 Section B; IRC section 121(b)(5), 121(c).
+- V339: three columns on pf_property_1099s_disposition (entity + CapitalGainLossMapper).
+- Engine: buildPrincipalResidenceTransaction derives the reduced cap and the nonqualified-use share.
+- UI: Capital gain/loss forms (taxpayer, spouse) - three inputs on the home sale.
+- Tests: Hrb2025Sc00312Test 4 (A/B reseeded, +nonqualified use).
+
 ## 2026-10-19T00:10:00-04:00 - ISO shares sold - line 2k from the AMT basis (outstanding.md A68, owner-approved)
 - 2025 Instructions for Form 6251, line 2k (AMT basis of ISO stock; separate 3,000 loss limit).
 - V338: two columns on pf_capital_gain_loss (entity + CapitalGainLossMapper).

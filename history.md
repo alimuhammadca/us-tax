@@ -1,3 +1,10 @@
+## 2026-10-19T02:30:00-04:00 - Schedule H - figured from one row per household employee (outstanding.md A52, owner-approved)
+- 2025 Instructions for Schedule H (lines A, 1-5, 15; the $2,800 and $1,000 tests).
+- V342: table pf_schedule_h_employee (entity PfScheduleHEmployee; ScheduleHMapper saves / loads / deletes the rows).
+- Engine: computeScheduleH derives lines 1, 3, 5 and 15 from the rows.
+- UI: none (no Schedule H form).
+- Tests: Hrb2025Sc00285Test 4 reseeded.
+
 ## 2026-10-19T02:00:00-04:00 - Self-employed LTC premiums - the age limit per covered person (outstanding.md A33, owner-approved)
 - Instructions for Form 7206 (2025), line 2; IRC section 213(d)(10); Rev. Proc. 2024-40.
 - V341: table pf_se_ltc_covered_person (entity PfSeLtcCoveredPerson; SeDeductionsMapper saves / loads / deletes the rows).

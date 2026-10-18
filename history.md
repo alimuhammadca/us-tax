@@ -1,3 +1,10 @@
+## 2026-10-18T05:00:00-04:00 - Form 8283 similar items grouped for the $5,000 appraisal test (outstanding.md A56, owner-approved)
+- Pub. 526 (2025), Deduction over $5,000; Instructions for Form 8283, Similar Items of Property.
+- V300: pf_form_8283_donation.property_category (entity + Form8283Mapper).
+- Engine: computeForm8283 two passes (group total per category) -> Section B + appraisal gate.
+- UI: Form 8283 row - Type of property select; needsAppraisal() uses the group total.
+- Tests: Hrb2025Sc00300Test 4 (+1).
+
 ## 2026-10-18T04:30:00-04:00 - Impairment-related work expenses: disability question and employer repayment (outstanding.md A16, owner-approved fields)
 - IRC 67(d) (a handicapped individual - a disability that limits employment); Pub. 529; 67(g) (other job costs suspended).
 - V299: pf_standard_deductions.impairment_disability_limits_work / impairment_expenses_employer_reimbursed (entity + mapper).

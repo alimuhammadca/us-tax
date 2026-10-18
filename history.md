@@ -1,3 +1,10 @@
+## 2026-10-18T13:00:00-04:00 - Form 8938 - the last-day and any-time thresholds (outstanding.md A57, owner-approved)
+- Instructions for Form 8938, reporting thresholds.
+- V316: pf_form_8938_item.year_end_value (entity + Form8938Mapper).
+- Engine: computeForm8938 two-prong test.
+- UI: Form 8938 form - a year-end value box per account and asset.
+- Tests: Hrb2025Sc00309Test 3 (+B).
+
 ## 2026-10-18T12:30:00-04:00 - Schedule C line 36 - personal withdrawals and returns subtracted (outstanding.md A65, owner-approved)
 - Pub. 334 (2025) ch. 6, line 36.
 - V315: pf_business_activity purchases_withdrawn_for_personal_use / purchase_returns_and_allowances (entity + BusinessIncomeMapper).

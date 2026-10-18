@@ -1,3 +1,10 @@
+## 2026-10-18T17:30:00-04:00 - Form 5695 Part I - a utility subsidy reduces the property cost (outstanding.md A20, owner-approved)
+- 2025 Instructions for Form 5695, Part I (subsidized energy financing / utility rebates).
+- V325: pf_energy_credit.residential_energy_subsidy (entity + EnergyCreditMapper).
+- Engine: populateForm5695PartI subsidy reduction.
+- UI: Energy credit form - a subsidy box for you and for the spouse.
+- Tests: Hrb2025Sc00138Test 5 (+E).
+
 ## 2026-10-18T17:00:00-04:00 - Foreign earned income - choosing not to claim the exclusion (outstanding.md A72, owner-approved)
 - Instructions for Form 2555 (2025), Pub. 54 (the exclusion is an election; revocation).
 - V324: pf_foreign_earned_income.claims_foreign_earned_income_exclusion (entity + ForeignEarnedIncomeMapper, spouse-prefixed key).

@@ -1,3 +1,10 @@
+## 2026-10-19T03:30:00-04:00 - Community property on married-filing-separately returns (outstanding.md A27, owner-approved)
+- Pub. 555 (2025); Form 8958.
+- V344: three columns on pf_filing_status (entity + FilingStatusMapper).
+- Engine: withCommunityPropertySplit on the W-2 / 1099-INT / 1099-DIV lists in prepare.
+- UI: Filing status form - community-property question and the two shares (MFS).
+- Tests: CommunityPropertySplitTest 3 (new).
+
 ## 2026-10-19T03:00:00-04:00 - Form 4797 Part IV - section 179 / 280F recapture derived from the asset (outstanding.md A73, owner-approved)
 - Pub. 946 (2025) ch. 2 (section 179 recapture) and ch. 5 (excess depreciation of listed property); Form 4797 Part IV.
 - V343: pf_depreciation_asset.prior_year_business_use_percent (entity + DepreciationMapper).

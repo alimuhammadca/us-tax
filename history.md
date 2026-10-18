@@ -1,3 +1,10 @@
+## 2026-10-18T12:00:00-04:00 - QBI W-2 wages - wages in cost of goods sold count, wages not on a W-2 do not (outstanding.md A36, owner-approved)
+- IRC 199A(b)(4); Treas. Reg. 1.199A-2(b)(2)(iii), (b)(4).
+- V314: pf_business_activity cost_of_labor_w2_wages / wages_not_on_w2 (entity + BusinessIncomeMapper).
+- Engine: qbiW2WagesForBusiness into BizIntermediate.
+- UI: business income form - two boxes in the expense and COGS lists.
+- Tests: Hrb2025Sc00223Test 5 (+2).
+
 ## 2026-10-18T11:30:00-04:00 - Schedule C car-loan interest - the business share from the vehicle's miles (outstanding.md A34, owner-approved)
 - Schedule C instructions (car and truck expenses, line 16b); Pub. 463 ch. 4.
 - V313: pf_business_vehicle.car_loan_interest (entity + BusinessIncomeMapper).

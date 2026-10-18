@@ -1,3 +1,10 @@
+## 2026-10-19T00:10:00-04:00 - ISO shares sold - line 2k from the AMT basis (outstanding.md A68, owner-approved)
+- 2025 Instructions for Form 6251, line 2k (AMT basis of ISO stock; separate 3,000 loss limit).
+- V338: two columns on pf_capital_gain_loss (entity + CapitalGainLossMapper).
+- Engine: ISO refigure next to the manual line 2k in prepare.
+- UI: Capital gain/loss forms (taxpayer, spouse) - ISO sale picker and AMT basis.
+- Tests: Hrb2025Sc00336Test 3 reseeded.
+
 ## 2026-10-18T23:45:00-04:00 - Section 1202 - the exclusion percentage from the code-Q row's acquisition date (outstanding.md A66, owner-approved)
 - IRC section 1202(a), (b); section 57(a)(7); 2025 Schedule D instructions (28% Rate Gain Worksheet line 2).
 - No migration (no new field).

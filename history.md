@@ -1,3 +1,10 @@
+## 2026-10-18T23:45:00-04:00 - Section 1202 - the exclusion percentage from the code-Q row's acquisition date (outstanding.md A66, owner-approved)
+- IRC section 1202(a), (b); section 57(a)(7); 2025 Schedule D instructions (28% Rate Gain Worksheet line 2).
+- No migration (no new field).
+- Engine: section1202QRows / section1202ExclusionTotal; holding-period block on code-Q rows.
+- UI: none (the code-Q row carries the facts).
+- Tests: Hrb2025Sc00331Test 3 reseeded; TaxReturnComputeServiceTest unchanged.
+
 ## 2026-10-18T23:30:00-04:00 - Constructive sales (section 1259) - the closed-transaction exception and the term (outstanding.md A67, owner-approved)
 - IRC section 1259(c)(3); Pub. 550 (2025), Constructive Sales of Appreciated Financial Positions.
 - V337: three columns on pf_capital_gain_loss_transaction (entity + CapitalGainLossMapper).

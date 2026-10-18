@@ -1,3 +1,10 @@
+## 2026-10-18T14:00:00-04:00 - Section 691(c) estate tax on IRD - computed from the Pub. 559 inputs (outstanding.md A18, owner-approved)
+- Pub. 559 (2025), Estate Tax Deduction; IRC section 691(c).
+- V318: three columns on pf_standard_deductions (entity + StandardDeductionsMapper + MfsScheduleAAllocator).
+- Engine: the share is computed when the three inputs are entered; flags IRD_INCLUDED_EXCEEDS_TOTAL, ESTATE_TAX_ON_IRD_COMPUTED_DIFFERS.
+- UI: deductions form - three boxes with help under the estate-tax-on-IRD amount.
+- Tests: Hrb2025Sc00121Test 3.
+
 ## 2026-10-18T13:30:00-04:00 - Alimony - a pre-2019 agreement modified to adopt the TCJA rules (outstanding.md A38, owner-approved)
 - TCJA section 11051(c)(2); 2025 Form 1040 instructions, Schedule 1 lines 2a and 19a.
 - V317: pf_other_incomes.alimony_modification_adopts_tcja, pf_income_adjustments.alimony_paid_modification_adopts_tcja (entities + mappers).

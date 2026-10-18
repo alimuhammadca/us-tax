@@ -1,3 +1,10 @@
+## 2026-10-18T17:00:00-04:00 - Foreign earned income - choosing not to claim the exclusion (outstanding.md A72, owner-approved)
+- Instructions for Form 2555 (2025), Pub. 54 (the exclusion is an election; revocation).
+- V324: pf_foreign_earned_income.claims_foreign_earned_income_exclusion (entity + ForeignEarnedIncomeMapper, spouse-prefixed key).
+- Engine: foreignEarnedIncomeExclusionDeclined at the three Form 2555 entry points.
+- UI: Foreign earned income form - Yes/No question before the housing exclusion.
+- Tests: Hrb2025Sc00348Test C.
+
 ## 2026-10-18T16:31:00-04:00 - Schedule 1-A - qualified overtime from the total overtime pay and the rate (outstanding.md A82, owner-approved)
 - 2025 Instructions for Schedule 1-A, qualified overtime compensation and Example 3.
 - V323 (shared with A81): taxpayer_/spouse_overtime_total_pay, _overtime_rate_multiple (entity + AdditionalDeductionsMapper).

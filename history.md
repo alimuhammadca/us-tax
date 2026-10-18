@@ -1,3 +1,10 @@
+## 2026-10-18T20:30:00-04:00 - Claim of right over $3,000 - the deduction and the credit compared (outstanding.md A15, owner-approved)
+- Pub. 525 (2025), Repayments (methods 1 and 2); IRC section 1341.
+- V331: two columns on pf_standard_deductions (entity + StandardDeductionsMapper).
+- Engine: method-2 credit with tax2024, two-pass comparison like A63.
+- UI: Standard deductions form - earlier-year taxable income and filing status under the repayment.
+- Tests: Hrb2025Sc00120Test A, C reseeded.
+
 ## 2026-10-18T20:01:00-04:00 - Married filing separately - lived apart all year (with A25) (outstanding.md A28, owner-approved)
 - See A25 (V330).
 - Tests: Hrb2025Sc00185Test reseeded.

@@ -1,3 +1,10 @@
+## 2026-10-19T00:50:00-04:00 - Form 1099-PATR - cooperative distributions to Schedule F lines 3a/3b (outstanding.md A62, owner-approved)
+- 2025 Instructions for Schedule F, lines 3a/3b; Form 1099-PATR (Rev. 4-2025) boxes 1-3, 5.
+- No migration.
+- Engine: withPatrOnScheduleF pre-processing of the farm forms.
+- UI: none.
+- Tests: Hrb2025Sc00321Test 5 (+A2, C2).
+
 ## 2026-10-19T00:30:00-04:00 - Section 121 - the reduced maximum from the days, and nonqualified use (outstanding.md A59, owner-approved)
 - Pub. 523 (2025) Worksheet 1 Section B; IRC section 121(b)(5), 121(c).
 - V339: three columns on pf_property_1099s_disposition (entity + CapitalGainLossMapper).

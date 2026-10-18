@@ -1,3 +1,10 @@
+## 2026-10-18T06:00:00-04:00 - Medical home improvements - Pub. 502 Worksheet A (outstanding.md A78, owner-approved)
+- Pub. 502 (2025) Capital Expenses, Worksheet A; Treas. Reg. 1.213-1(e)(1)(iii).
+- V302: pf_standard_deductions medical_home_improvement_cost / _value_increase / medical_accessibility_improvements_cost.
+- Engine: medicalHomeImprovementAmount into Schedule A line 1 (and the A11 excess test); MfsScheduleAAllocator fields.
+- UI: standard deductions form - three medical boxes with help; preview follows.
+- Tests: Hrb2025Sc00367Test A-C from the facts.
+
 ## 2026-10-18T05:30:00-04:00 - Bargain sale to charity - the basis split and both parts routed (outstanding.md A77, owner-approved)
 - IRC 1011(b); Pub. 544 Bargain sales to charity; Pub. 526 Bargain Sales and Step 3.
 - V301: pf_form_8283_donation.bargain_sale_amount_received (entity + Form8283Mapper).

@@ -1,3 +1,17 @@
+## 2026-10-18T03:30:00-04:00 - Qualified disaster from dates, investment theft, short-held charity property (outstanding.md A14, owner-approved fields)
+- Instructions for Form 4684 (2025) (qualified disaster window; $500, no 10%; line 16); IRC 165(c)(2) and Treas. Reg.
+  1.165-1(d)(3) (theft in a transaction for profit, less a reasonable prospect of recovery); IRC 170(e)(1)(A) and 1222
+  (property held one year or less is deducted at basis).
+- V298: pf_standard_deductions casualty_disaster_declaration_date / casualty_incident_begin_date / casualty_incident_end_date /
+  investment_theft_loss_amount / investment_theft_for_profit / investment_theft_recovery_prospect (entity + mapper).
+- Engine: isQualifiedDisaster + event-1 qualified loss to line 16; investment theft to the Form 4684 Section B line-16
+  amount; withShortHeldCharityAtBasis from the Form 8283 rows. Flags SCHEDULE_A_QUALIFIED_DISASTER_LOSS,
+  SCHEDULE_A_INVESTMENT_THEFT_PROFIT_MOTIVE_REQUIRED (blocking), SCHEDULE_A_INVESTMENT_THEFT_NOT_FOR_PROFIT,
+  CHARITABLE_SHORT_HELD_PROPERTY_AT_BASIS.
+- UI: standard deductions form - three disaster dates, the investment-theft block, help text.
+- Tests: Hrb2025Sc00113Test, Hrb2025Sc00115Test (+1), Hrb2025Sc00119Test; e2e schedule-a-disaster-theft-short-held-ui.spec.ts.
+- c:/us-tax-hrb2025: sc_00113 / 00115 / 00119 app notes + known-limits rows; OPEN_QUESTIONS A14 answered.
+
 ## 2026-10-18T02:30:00-04:00 - Schedule A: sales-tax calculator boxes, real-estate tax by days, mortgage date (outstanding.md A13, owner-approved fields)
 - Schedule A instructions line 5a (optional sales tax tables + major purchases), line 5b and Pub. 530 (real estate tax
   divided at the sale date), IRC 163(h)(3)(F) (the limit by the date the debt was incurred; binding-contract exception).

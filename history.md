@@ -1,3 +1,10 @@
+## 2026-10-18T10:30:00-04:00 - Schedule SE line 1b CRP - receiving Social Security when the CRP was paid (outstanding.md A51, owner-approved)
+- 2025 Schedule SE instructions line 1b; IRC 1402(a)(1).
+- V311: pf_se_tax_options.receiving_ss_benefits_when_crp_paid (entity + SeTaxOptionsMapper).
+- Engine: the Schedule SE CRP test uses the answer, else the statement detection; two advisories.
+- UI: self-employment tax options form - the Yes/No question.
+- Tests: Hrb2025Sc00287Test 3 (+C).
+
 ## 2026-10-18T10:00:00-04:00 - Clergy housing allowance - the smallest-of exclusion and the excess on line 1h (outstanding.md A50, owner-approved)
 - IRC 107(2), 1402(a)(8); Pub. 517 (2025).
 - V310: pf_se_tax_options clergy_housing_amount_used / clergy_home_fair_rental_value (entity + SeTaxOptionsMapper).

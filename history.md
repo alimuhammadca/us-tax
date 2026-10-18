@@ -1,3 +1,10 @@
+## 2026-10-18T15:00:00-04:00 - Form 2210 - the penalty from the actual payment dates (outstanding.md A35, owner-approved)
+- 2025 Instructions for Form 2210, Part III Section B / penalty worksheet (payments applied to the earliest underpayment; days to the payment date).
+- V320: four date columns on pf_estimated_tax_payments (entity + EstimatedTaxPaymentsMapper).
+- Engine: form2210PenaltiesFromPaymentDates replaces the per-period penalties when a date is entered (Form 2210-F unchanged).
+- UI: estimated-tax-payments form - a Date paid box under each installment amount.
+- Tests: Hrb2025Sc00228Test 6 (+E, F).
+
 ## 2026-10-18T14:30:00-04:00 - Section 171 bond premium - the earlier-inclusions limit and the carryforward (outstanding.md A17, owner-approved)
 - Reg. 1.171-2(a)(4); Pub. 550 (2025), Bond Premium Amortization.
 - V319: three columns on pf_interest_income (entity + InterestIncomeMapper).

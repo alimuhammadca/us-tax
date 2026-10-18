@@ -1,3 +1,14 @@
+## 2026-10-18T20:01:00-04:00 - Married filing separately - lived apart all year (with A25) (outstanding.md A28, owner-approved)
+- See A25 (V330).
+- Tests: Hrb2025Sc00185Test reseeded.
+
+## 2026-10-18T20:00:00-04:00 - Married filing separately - one lived-with-spouse answer (outstanding.md A25, owner-approved)
+- Pub. 915 (2025), Pub. 590-A (2025), Schedule R instructions - MFS lived-apart rules.
+- V330: pf_filing_status.mfs_lived_with_spouse_any_time (entity + FilingStatusMapper).
+- Engine: prepare propagates the answer into the Social Security and Schedule R form copies.
+- UI: Filing status form - Yes/No question for MFS.
+- Tests: Hrb2025Sc00180Test, Hrb2025Sc00185Test reseeded.
+
 ## 2026-10-18T19:31:00-04:00 - A decedent's age 65 measured at death (outstanding.md A64, owner-approved)
 - Pub. 17 (2025) ch. 10; Pub. 559 (2025); 2025 Form 1040 instructions, Schedule 1-A Part V.
 - V329 (shared with A26): pf_identification.date_of_death.

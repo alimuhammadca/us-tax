@@ -1,3 +1,10 @@
+## 2026-10-18T07:00:00-04:00 - Seller-financed mortgage - line 8b with the seller's identity; no upload gate for the seller (outstanding.md A48, owner-approved)
+- 2025 Schedule A instructions line 8b; IRC 6109(h).
+- V304: pf_standard_deductions seller_financed_mortgage_interest_paid / _lender_name / _lender_tin / _lender_address.
+- Engine: buildScheduleA mortgage interest + line 8b flags; validateInterestStatementGating seller-financed skip.
+- UI: standard deductions form - the seller-financed interest box and the three identity fields; preview.
+- Tests: Hrb2025Sc00265Test, Hrb2025Sc00316Test.
+
 ## 2026-10-18T06:30:00-04:00 - Mortgage debt of two vintages - Pub. 936 Table 1 (outstanding.md A79, owner-approved)
 - Pub. 936 (2025) Table 1 lines 2-11; IRC 163(h)(3)(F)(iii).
 - V303: pf_standard_deductions.home_acquisition_debt_pre2017_average_balance.

@@ -1,3 +1,10 @@
+## 2026-10-18T16:00:00-04:00 - Form 8960 line 5c - only for an owner who materially participated (outstanding.md A80, owner-approved)
+- Instructions for Form 8960 (2025), line 5c; IRC section 1411(c)(4).
+- V322: pf_line16_tax.form8960_line5c_materially_participated (entity + Line16TaxMapper + coalesce key).
+- Engine: withForm8960Line5cParticipation.
+- UI: Other tax items form - Yes/No question under the line 5c amount.
+- Tests: Hrb2025Sc00370Test 4 (+B2).
+
 ## 2026-10-18T15:30:00-04:00 - Section 962 - the deemed-paid foreign taxes per category (outstanding.md A40, owner-approved)
 - IRC sections 78, 960(d), 962; Reg. 1.962-1(b)(1)(i)(A)(3).
 - V321: two columns on pf_line16_tax (entity + Line16TaxMapper).

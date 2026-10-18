@@ -1,3 +1,10 @@
+## 2026-10-18T14:30:00-04:00 - Section 171 bond premium - the earlier-inclusions limit and the carryforward (outstanding.md A17, owner-approved)
+- Reg. 1.171-2(a)(4); Pub. 550 (2025), Bond Premium Amortization.
+- V319: three columns on pf_interest_income (entity + InterestIncomeMapper).
+- Engine: prepare caps the Schedule A line 16 excess premium (both spouses summed, MFS own form).
+- UI: interest forms (taxpayer and spouse) - three boxes with help in the adjustments section.
+- Tests: Hrb2025Sc00122Test 3 (+C).
+
 ## 2026-10-18T14:00:00-04:00 - Section 691(c) estate tax on IRD - computed from the Pub. 559 inputs (outstanding.md A18, owner-approved)
 - Pub. 559 (2025), Estate Tax Deduction; IRC section 691(c).
 - V318: three columns on pf_standard_deductions (entity + StandardDeductionsMapper + MfsScheduleAAllocator).

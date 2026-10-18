@@ -1,3 +1,17 @@
+## 2026-10-18T21:01:00-04:00 - Dividends with no Form 1099-DIV - reported without an upload demand (outstanding.md A47, owner-approved)
+- Pub. 550 (2025), Dividends (report them even without a Form 1099-DIV).
+- V332 (shared with A24): three columns on pf_dividend_income (entity + DividendIncomeMapper).
+- Engine: computeDividendForPerson adds them; the upload gate skips them.
+- UI: Dividend forms (taxpayer, spouse) - ordinary / qualified / payers; taxpayer isValid accepts them.
+- Tests: Hrb2025Sc00263Test 3.
+
+## 2026-10-18T21:00:00-04:00 - Interest with no Form 1099 - reported without an upload demand (outstanding.md A24, owner-approved)
+- 2025 Instructions for Schedule B, line 1; 2025 Form 1040 instructions, line 2b.
+- V332 (shared with A47): two columns on pf_interest_income (entity + InterestIncomeMapper).
+- Engine: computeInterestForPerson adds it; the upload gate skips it.
+- UI: Interest forms (taxpayer, spouse) - amount + payers; taxpayer isValid also accepts seller-financed-only interest.
+- Tests: Hrb2025Sc00170Test D.
+
 ## 2026-10-18T20:30:00-04:00 - Claim of right over $3,000 - the deduction and the credit compared (outstanding.md A15, owner-approved)
 - Pub. 525 (2025), Repayments (methods 1 and 2); IRC section 1341.
 - V331: two columns on pf_standard_deductions (entity + StandardDeductionsMapper).

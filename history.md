@@ -1,3 +1,13 @@
+## 2026-10-18T04:30:00-04:00 - Impairment-related work expenses: disability question and employer repayment (outstanding.md A16, owner-approved fields)
+- IRC 67(d) (a handicapped individual - a disability that limits employment); Pub. 529; 67(g) (other job costs suspended).
+- V299: pf_standard_deductions.impairment_disability_limits_work / impairment_expenses_employer_reimbursed (entity + mapper).
+- Engine: buildScheduleA line 16 IRWE - blank answer blocks, No refuses, Yes deducts costs minus repayment.
+- UI: standard deductions form - the IRWE box reworded to full costs, the disability question, the repayment box; help says
+  ordinary job costs are not deductible. No box for them (owner decision).
+- Tests: Hrb2025Sc00118Test 5 (+1); TaxReturnComputeServiceTest + schedule-a-line16-other-itemized.spec.ts seeds updated;
+  full unit suite 4,205 green.
+- c:/us-tax-hrb2025: sc_00118 app note + known-limits row; OPEN_QUESTIONS A16 answered.
+
 ## 2026-10-18T03:30:00-04:00 - Qualified disaster from dates, investment theft, short-held charity property (outstanding.md A14, owner-approved fields)
 - Instructions for Form 4684 (2025) (qualified disaster window; $500, no 10%; line 16); IRC 165(c)(2) and Treas. Reg.
   1.165-1(d)(3) (theft in a transaction for profit, less a reasonable prospect of recovery); IRC 170(e)(1)(A) and 1222

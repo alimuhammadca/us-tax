@@ -1,3 +1,10 @@
+## 2026-10-18T23:30:00-04:00 - Constructive sales (section 1259) - the closed-transaction exception and the term (outstanding.md A67, owner-approved)
+- IRC section 1259(c)(3); Pub. 550 (2025), Constructive Sales of Appreciated Financial Positions.
+- V337: three columns on pf_capital_gain_loss_transaction (entity + CapitalGainLossMapper).
+- Engine: buildManualTransactions section 1259 branch.
+- UI: Capital gain/loss forms (taxpayer, spouse) - per-transaction constructive-sale block.
+- Tests: Hrb2025Sc00333Test 3 reseeded.
+
 ## 2026-10-18T23:00:00-04:00 - Form 982 line 10a - basis of property, with the section 1017(b)(2) limit (outstanding.md A74, owner-approved)
 - IRC sections 108(b), 1017(a), 1017(b)(2); 2025 Instructions for Form 982, line 10a.
 - V336: three columns on pf_other_incomes (entity + OtherIncomesMapper).

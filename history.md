@@ -1,3 +1,10 @@
+## 2026-10-18T10:00:00-04:00 - Clergy housing allowance - the smallest-of exclusion and the excess on line 1h (outstanding.md A50, owner-approved)
+- IRC 107(2), 1402(a)(8); Pub. 517 (2025).
+- V310: pf_se_tax_options clergy_housing_amount_used / clergy_home_fair_rental_value (entity + SeTaxOptionsMapper).
+- Engine: clergyExcessHousingAllowance -> computeOtherEarnedIncome line 1h (new se-tax-options params); EIC adjustment counts it once.
+- UI: self-employment tax options form - two clergy boxes with help.
+- Tests: Hrb2025Sc00286Test 3 (B, C pinned).
+
 ## 2026-10-18T09:30:00-04:00 - Home office mortgage interest and taxes - only the personal part on Schedule A (outstanding.md A53, owner-approved)
 - Pub. 587 (2025); Instructions for Form 8829 line 10.
 - V309: pf_home_office_entry.mortgage_taxes_also_on_schedule_a (entity + HomeOfficeMapper).

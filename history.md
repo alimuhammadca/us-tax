@@ -1,3 +1,17 @@
+## 2026-10-18T19:01:00-04:00 - Qualifying child of more than one person - the tiebreaker applied to the CTC / ODC (outstanding.md A85, owner-approved)
+- 2025 Form 1040 instructions, Qualifying child of more than one person; IRC section 152(c)(4).
+- V328 (shared with A84): three dependent columns (entity, DependentInput, DependentRecord, DependentService).
+- Engine: dependentTiebreakerLost in computeSchedule8812.
+- UI: Dependent form - three follow-up questions when another taxpayer can claim the child.
+- Tests: Hrb2025Sc00383Test B, C reseeded.
+
+## 2026-10-18T19:00:00-04:00 - Head of household - a multiple-support-agreement dependent is not a qualifying person (outstanding.md A84, owner-approved)
+- 2025 Form 1040 instructions, Head of Household; Pub. 17 (2025) Table 2-1 note 5.
+- V328 (shared with A85): dependent.claimed_under_multiple_support_agreement (entity, DependentInput, DependentRecord, DependentService).
+- Engine: validateHohQualifyingPersonNotMsaOnly after the gross-income test.
+- UI: Dependent form - Yes/No question.
+- Tests: Hrb2025Sc00382Test 4 (+B2).
+
 ## 2026-10-18T18:30:00-04:00 - EIC after a prior disallowance - reason, ban period, when no Form 8862 is needed (outstanding.md A37, owner-approved)
 - Pub. 596 (2025) chapter 5; IRC section 32(k); Instructions for Form 8862.
 - V327: three columns on pf_earned_income_credit (entity + EarnedIncomeCreditMapper, taxpayer form).

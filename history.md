@@ -1,3 +1,10 @@
+## 2026-10-18T13:30:00-04:00 - Alimony - a pre-2019 agreement modified to adopt the TCJA rules (outstanding.md A38, owner-approved)
+- TCJA section 11051(c)(2); 2025 Form 1040 instructions, Schedule 1 lines 2a and 19a.
+- V317: pf_other_incomes.alimony_modification_adopts_tcja, pf_income_adjustments.alimony_paid_modification_adopts_tcja (entities + mappers).
+- Engine: withoutTcjaAdoptedAlimony in prepare (both persons, both sides).
+- UI: other-incomes forms (question after the 2b date) and income-adjustments forms (checkbox after the 19c date).
+- Tests: Hrb2025Sc00235Test 5 (+D2).
+
 ## 2026-10-18T13:00:00-04:00 - Form 8938 - the last-day and any-time thresholds (outstanding.md A57, owner-approved)
 - Instructions for Form 8938, reporting thresholds.
 - V316: pf_form_8938_item.year_end_value (entity + Form8938Mapper).

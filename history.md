@@ -1,3 +1,9 @@
+## 2026-10-18T22:00:00-04:00 - Form 4562 line 10 input field (owner-approved, V346)
+- 2025 Form 4562 line 10 ("Carryover of disallowed deduction from line 13 of your 2024 Form 4562").
+- V346 pf_se_tax_options.prior_year_section179_carryover; SeTaxOptionsMapper; SE tax options form field "Section 179 deduction carried over from 2024 (Form 4562 line 10)".
+- Compute: line 10 = taxpayer + spouse entries (spouse not on MFS); the V345 bridge seeds it only when neither is typed.
+- e2e open-questions-b10-b14-b26-b31-b45.spec.ts: round trip + compute (75,000 in -> 60,000 deducted, 15,000 on), typed 4,000 wins over the bridged 10,000, UI shows and saves the field.
+
 ## 2026-10-18T21:00:00-04:00 - Section 179 carryover bridge, derived Form 4952 line 4e and Form 8828 line 15, Form 6252/6781/8824 arithmetic advisories (OPEN_QUESTIONS B10, B45, B31, B14, B26, B2, B15, owner-approved)
 - 2025 Form 4562 Part I lines 9-13 and §179(b)(3)(B); 2025 Instructions for Form 4952 line 4e; Instructions for Form 8828 (Rev. 11-2024) line 15; 2025 Forms 6252 (and its line 19 instruction), 6781 and 8824.
 - B10: V345 out_schedule_1.add_inc_section179_carryover - the twelfth carryforward bridge (line 13 kept, next year's line 10). Only the business-income limit carries; an election above the dollar limit is lost.

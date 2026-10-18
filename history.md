@@ -1,3 +1,10 @@
+## 2026-10-18T06:30:00-04:00 - Mortgage debt of two vintages - Pub. 936 Table 1 (outstanding.md A79, owner-approved)
+- Pub. 936 (2025) Table 1 lines 2-11; IRC 163(h)(3)(F)(iii).
+- V303: pf_standard_deductions.home_acquisition_debt_pre2017_average_balance.
+- Engine: buildScheduleA two-vintage branch (Table 1) before the single-tier path.
+- UI: standard deductions form - the pre-2017 part box with help.
+- Tests: Hrb2025Sc00366Test 4 (C re-seeded, + D).
+
 ## 2026-10-18T06:00:00-04:00 - Medical home improvements - Pub. 502 Worksheet A (outstanding.md A78, owner-approved)
 - Pub. 502 (2025) Capital Expenses, Worksheet A; Treas. Reg. 1.213-1(e)(1)(iii).
 - V302: pf_standard_deductions medical_home_improvement_cost / _value_increase / medical_accessibility_improvements_cost.

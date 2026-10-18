@@ -1,3 +1,17 @@
+## 2026-10-18T19:31:00-04:00 - A decedent's age 65 measured at death (outstanding.md A64, owner-approved)
+- Pub. 17 (2025) ch. 10; Pub. 559 (2025); 2025 Form 1040 instructions, Schedule 1-A Part V.
+- V329 (shared with A26): pf_identification.date_of_death.
+- Engine: age65AtDeath at the line 12 indicators, Schedule 1-A Part V, seniorDeductionEligibleFromAge and Schedule R; DATE_OF_DEATH_NOT_IN_TAX_YEAR.
+- UI: Identification form - date of death.
+- Tests: Hrb2025Sc00325Test 3 (+C).
+
+## 2026-10-18T19:30:00-04:00 - Filing status after a spouse's death - checked from the date of death (outstanding.md A26, owner-approved)
+- 2025 Form 1040 instructions, Filing Status (MFJ, QSS); IRC section 6013(a)(2)-(3), 7703(a)(1).
+- V329 (shared with A64): pf_identification.date_of_death (entity + IdentificationMapper, spouse-prefixed key).
+- Engine: validateDatesOfDeath after the dependents load.
+- UI: Spouse identification form - date of death.
+- Tests: Hrb2025Sc00188Test 5 (+C2, C3).
+
 ## 2026-10-18T19:01:00-04:00 - Qualifying child of more than one person - the tiebreaker applied to the CTC / ODC (outstanding.md A85, owner-approved)
 - 2025 Form 1040 instructions, Qualifying child of more than one person; IRC section 152(c)(4).
 - V328 (shared with A84): three dependent columns (entity, DependentInput, DependentRecord, DependentService).

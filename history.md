@@ -1,3 +1,13 @@
+## 2026-10-18T01:30:00-04:00 - Refinance points: improvement share and a paid-off loan's leftover points (outstanding.md A12, owner-approved fields)
+- IRC 461(g); Pub. 936 (2025) Points - Refinancing (improvement share in full, rest over the loan) and Mortgage ending early
+  (remaining spread points deducted when the loan ends, unless refinanced with the same lender).
+- V296: pf_standard_deductions.home_mortgage_points_improvement_percent / prior_loan_undeducted_points /
+  prior_loan_refinanced_with_same_lender (entity + mapper).
+- Engine: buildScheduleA points block - improvement share + spread rest; leftover in full or spread (same lender).
+- UI: standard deductions form - improvement % (spread points), leftover points, same-lender question, with help.
+- Tests: Hrb2025Sc00110Test B-D entered as facts; e2e refinance-points-ui.spec.ts.
+- c:/us-tax-hrb2025: sc_00110 app note + known-limits row; OPEN_QUESTIONS A12 answered.
+
 ## 2026-10-18T00:30:00-04:00 - Schedule A medical repayments and the line 5a breakdown (outstanding.md A11, owner-approved fields)
 - IRC 213(a) ("not compensated for by insurance or otherwise"); 105(a)/(b) and Pub. 502 "Excess reimbursement" (income when
   from employer-paid coverage); 2025 Schedule A instructions line 5a (withholding + paid in 2025 for a prior year + 2025

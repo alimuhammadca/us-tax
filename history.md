@@ -1,3 +1,10 @@
+## 2026-10-18T08:00:00-04:00 - Several items damaged in one casualty - Form 4684 per-item columns (outstanding.md A44, owner-approved)
+- 2025 Instructions for Form 4684, Section A (separate column per item; line 10 total; $100 once per casualty).
+- V306: pf_casualty_item (cascade from pf_standard_deductions); StandardDeductionsMapper save/load/delete.
+- Engine: casualtyItemsLine9Sum into event 1's line 10 (also the qualified-disaster path).
+- UI: standard deductions form - repeatable 'another item damaged in this same casualty' rows.
+- Tests: Hrb2025Sc00254Test 4 (B re-seeded, + divergence).
+
 ## 2026-10-18T07:30:00-04:00 - Form 1098 box 4 recovery limited to the 2024 mortgage interest deducted (outstanding.md A43, owner-approved)
 - Pub. 525 (2025) Recovery limited to deduction; IRC 111(a).
 - V305: pf_prior_year_tax.prior_year_mortgage_interest_deducted (entity + PriorYearTaxMapper).

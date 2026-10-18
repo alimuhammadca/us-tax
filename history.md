@@ -1,3 +1,10 @@
+## 2026-10-18T21:30:00-04:00 - Below-market gift loans - section 7872 imputed interest (outstanding.md A76, owner-approved)
+- IRC section 7872(c)(2), (d)(1); Rev. Rul. 2025-13 (2025 blended annual rate 4.22%).
+- V333: four columns on pf_interest_income (entity + InterestIncomeMapper).
+- Engine: section7872ImputedInterest in computeInterestForPerson.
+- UI: Interest forms (taxpayer, spouse) - the loan block.
+- Tests: Hrb2025Sc00362Test 3 reseeded.
+
 ## 2026-10-18T21:01:00-04:00 - Dividends with no Form 1099-DIV - reported without an upload demand (outstanding.md A47, owner-approved)
 - Pub. 550 (2025), Dividends (report them even without a Form 1099-DIV).
 - V332 (shared with A24): three columns on pf_dividend_income (entity + DividendIncomeMapper).

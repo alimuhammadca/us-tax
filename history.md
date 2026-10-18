@@ -1,3 +1,17 @@
+## 2026-10-18T16:31:00-04:00 - Schedule 1-A - qualified overtime from the total overtime pay and the rate (outstanding.md A82, owner-approved)
+- 2025 Instructions for Schedule 1-A, qualified overtime compensation and Example 3.
+- V323 (shared with A81): taxpayer_/spouse_overtime_total_pay, _overtime_rate_multiple (entity + AdditionalDeductionsMapper).
+- Engine: schedule1AQualifiedOvertime.
+- UI: Additional deductions form - total overtime pay and rate boxes in each overtime section.
+- Tests: Hrb2025Sc00378Test B.
+
+## 2026-10-18T16:30:00-04:00 - Schedule 1-A - the Forms 4070 tip total in place of W-2 box 7 (outstanding.md A81, owner-approved)
+- 2025 Instructions for Schedule 1-A, line 4a methods.
+- V323 (shared with A82): taxpayer_/spouse_form4070_tips_total (entity + AdditionalDeductionsMapper).
+- Engine: schedule1AForm4070Tips.
+- UI: Additional deductions form - a Forms 4070 total box in each tips section.
+- Tests: Hrb2025Sc00377Test B.
+
 ## 2026-10-18T16:00:00-04:00 - Form 8960 line 5c - only for an owner who materially participated (outstanding.md A80, owner-approved)
 - Instructions for Form 8960 (2025), line 5c; IRC section 1411(c)(4).
 - V322: pf_line16_tax.form8960_line5c_materially_participated (entity + Line16TaxMapper + coalesce key).

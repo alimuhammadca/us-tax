@@ -1,3 +1,10 @@
+## 2026-10-18T11:00:00-04:00 - Schedule C meals at 80% under the DOT hours-of-service limits (outstanding.md A32, owner-approved)
+- IRC 274(n)(3); Schedule C instructions line 24b; Pub. 463.
+- V312: pf_business_activity.meals_subject_to_dot_hours_of_service (entity + BusinessIncomeMapper).
+- Engine: scheduleCExpenses meals rate.
+- UI: business income form - the checkbox under the expenses.
+- Tests: Hrb2025Sc00220Test (+1).
+
 ## 2026-10-18T10:30:00-04:00 - Schedule SE line 1b CRP - receiving Social Security when the CRP was paid (outstanding.md A51, owner-approved)
 - 2025 Schedule SE instructions line 1b; IRC 1402(a)(1).
 - V311: pf_se_tax_options.receiving_ss_benefits_when_crp_paid (entity + SeTaxOptionsMapper).

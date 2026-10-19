@@ -535,3 +535,8 @@ rental as nonpassive must follow the same three-way rule (royalty / exception / 
 only against the room of the activity that produced it (§465(a)(2)) - never pooled across properties. Any new
 carryover input for an at-risk activity goes on the activity, not on the parent form; a total that cannot be matched
 to an activity is carried forward with a note, not released against whichever activity has room.
+
+**A held rate table is checked against the published table, row by row (2026-10-19, OPEN_QUESTIONS B35).** Six of
+the eight MACRS mid-quarter rows in the engine were wrong - none of the six totalled 100% - and had been used live. Any percentage
+table copied into the code (MACRS, AMT, locality limits) gets a unit test that compares it to the IRS PDF figures or
+to a generator that reproduces them; a depreciation row must total exactly 100%.

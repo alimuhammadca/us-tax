@@ -1,3 +1,12 @@
+## 2026-10-19T06:00:00-04:00 - Depreciation and business / Investments and foreign (OPEN_QUESTIONS B46, B39, B23, B35, B41, B40/B51, B36, B32; owner-approved)
+- Sources: 2025 i1116 (Foreign Qualified Dividends; Line 3d; Line 18 + Worksheet for Line 18; Reg. 1.904-4(c)); 2025 i6251 "What Depreciation Isn't Refigured"; Pub. 946 (2025) Tables A-1..A-5; Notice 2025-16 Section 3; Pub. 527; 2025 i8949 code Z; K-1 instructions.
+- B46: K-1 dividends -> lines 3b/3a + Schedule B; K-1 royalties -> Schedule 1 line 5 + Form 8960 line 4.
+- B39: Form 1116 line 1a x 0.4054 / 0.5405 and the Worksheet for Line 18 when the adjustment exception is not met (sc_00345 B 1,016, C 1,418).
+- B23: no AMT refigure for property placed in service after 2015. B41: apportioned deduction in the high-tax kickout; Form 5329 flag names code J.
+- B35: Pub. 946 table generator; mid-quarter for every class and method; half-year fallback + advisory. FOUND AND FIXED: six wrong rows in the held 5/7-year mid-quarter table (none of them totalled 100%).
+- B40/B51: all 136 Notice 2025-16 localities (backend + Foreign earned income locality list). B36, B32: advisories.
+- Tests: MacrsMidQuarterGeneratorTest, AmtBonusEligibleDepreciationTest, Form1116HighTaxKickoutTest, Form2555HighCostLocalitiesTest, Sc00369 D/E, Sc00345 B/C pinned, Sc00327, Sc00315 B2/C2, Sc00324 D; e2e open-questions-b32-b35-b36-b39-b40-b46.spec.ts + form6251-amt-depreciation-line2l (B23).
+
 ## 2026-10-19T04:30:00-04:00 - Pension form: the required minimum distribution questions get their own step (owner-approved)
 - They sat on the "Early withdrawal penalty" screen, which opens only after an early-distribution Yes, so a filer of 73+ never saw them.
 - New wizard step 'required-minimum-distribution' (taxpayer + spouse pension forms): shown at 73+ by date of birth, when the date of birth is unknown, or when a shortfall is saved; summary group with Edit. No field, compute or tax-return-form change.

@@ -1,3 +1,7 @@
+## 2026-10-20T01:00:00-04:00 - Form 8621 uses each prior year's top rate (OPEN_QUESTIONS B74; owner-approved)
+- IRC 1291(c)(2). Per-year top-rate table for both the typed allocation (split by days from the acquisition date; 37% + advisory without it) and the A86 Part V path (which had 39.6% for 2003-2012 instead of 35%).
+- Tests: Section1291YearRatesTest; e2e open-questions-b74-section1291-year-rates.spec.ts (37,780 / 37,000).
+
 ## 2026-10-20T00:30:00-04:00 - Joint Form 8960 adds each spouse's adjustments (OPEN_QUESTIONS B73; owner-approved)
 - One Form 8960 per joint return: lines 5b, 6, 7, 9c, 10 summed across the spouses' Other tax items forms; line 5c per owner (participation answer); overrides 3 / 9a / 9b first-entered; duplicate-amount advisory; help note.
 - Tests: Form8960JointMergeTest (incl. NII 57,000 through prepare); Line16TaxMergeTest updated to the new rule; e2e open-questions-b73-form8960-joint.spec.ts.

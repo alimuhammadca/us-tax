@@ -1,3 +1,7 @@
+## 2026-10-20T00:30:00-04:00 - Joint Form 8960 adds each spouse's adjustments (OPEN_QUESTIONS B73; owner-approved)
+- One Form 8960 per joint return: lines 5b, 6, 7, 9c, 10 summed across the spouses' Other tax items forms; line 5c per owner (participation answer); overrides 3 / 9a / 9b first-entered; duplicate-amount advisory; help note.
+- Tests: Form8960JointMergeTest (incl. NII 57,000 through prepare); Line16TaxMergeTest updated to the new rule; e2e open-questions-b73-form8960-joint.spec.ts.
+
 ## 2026-10-20T00:00:00-04:00 - Joint-return Other tax items merge keeps every field (OPEN_QUESTIONS B72; owner-approved)
 - mergeLine16TaxForms gave merge rules to the 7 dropped keys (PFIC 1291 allocation, section 962 inputs), carries unlisted keys over, and a drift-guard test checks every Line16TaxMapper key has a rule.
 - Tests: Line16TaxMergeKeysTest (drift guard, merge, safety net, joint 1291TAX 3,700); e2e open-questions-b72-line16-merge-joint.spec.ts.

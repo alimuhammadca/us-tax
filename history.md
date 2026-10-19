@@ -1,3 +1,6 @@
+## 2026-10-19T20:00:00-04:00 - Clergy housing "reasonable salary" cap closed (OPEN_QUESTIONS B66; owner-approved)
+- Pub. 517 (2025): not modelled (no IRS figure - a facts-and-circumstances test); help text on the housing allowance mentions it.
+
 ## 2026-10-19T19:30:00-04:00 - CRP exclusion: Social Security receipt read from gross benefits (OPEN_QUESTIONS B65; owner-approved)
 - 2025 Schedule SE line 1b ("If you received social security retirement or disability benefits").
 - The automatic check uses SSA-1099 box 3 / RRB-1099 gross SSEB, not the net box 5 (repayments could make it 0 or negative); net only as a fallback.

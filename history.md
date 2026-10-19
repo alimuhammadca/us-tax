@@ -1,3 +1,8 @@
+## 2026-10-19T04:30:00-04:00 - Pension form: the required minimum distribution questions get their own step (owner-approved)
+- They sat on the "Early withdrawal penalty" screen, which opens only after an early-distribution Yes, so a filer of 73+ never saw them.
+- New wizard step 'required-minimum-distribution' (taxpayer + spouse pension forms): shown at 73+ by date of birth, when the date of birth is unknown, or when a shortfall is saved; summary group with Edit. No field, compute or tax-return-form change.
+- e2e open-questions-b3-b33-b38.spec.ts: summary Edit reaches the step; wizard walk born 1950 shows it, born 1980 skips it (red with the routing disabled).
+
 ## 2026-10-19T03:30:00-04:00 - Retirement and pensions (OPEN_QUESTIONS B38, B33, B49, B3 built; B29, B7 pinned; B34 closed; owner-approved)
 - 2025 i8606 line 7; 2025 Form 8880 line 4; Pub. 575 (2025) RRB-1099-R boxes 3/4; 2025 i5329 Waiver of tax for reasonable cause and line 43.
 - B38: code-G IRA 1099-R subtracted from Form 8606 line 7. B33: 1099-QA distributions on Form 8880 line 4 (UI labels reworded).

@@ -1,3 +1,8 @@
+## 2026-10-19T19:00:00-04:00 - K-1 code AQ CRP on Schedule SE line 1b (OPEN_QUESTIONS B64; owner-approved)
+- 2025 Schedule SE line 1b ("... or listed on Schedule K-1 (Form 1065), box 20, code AQ"); 2025 Partner's Instructions, code AQ; IRC 1402(a)(1).
+- A partner on Social Security no longer pays SE tax on the partnership's CRP payments (subtracted from the box 14 code A amount); EIC earned income follows.
+- Tests: K1CrpScheduleSeLine1bTest (2,120 vs 2,826); e2e open-questions-b64-k1-crp-schedule-se.spec.ts.
+
 ## 2026-10-19T18:30:00-04:00 - Schedule H: same employee on both spouses' forms (OPEN_QUESTIONS B63; owner-approved)
 - 2025 Instructions for Schedule H: "Only two Schedules H can be attached to Form 1040 ... one Schedule H for each of the primary taxpayer and the secondary taxpayer"; line 25 rule already met by construction.
 - Advisory SCHEDULE_H_EMPLOYEE_ON_BOTH_SPOUSES (joint return, same employee name on both forms; both Schedules H still count) + a hint on the Household employees form.

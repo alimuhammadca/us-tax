@@ -1,3 +1,16 @@
+## 2026-10-19T17:00:00-04:00 - Form 8829 casualty losses on line 29 (OPEN_QUESTIONS B61; owner-approved)
+- 2025 Instructions for Form 8829, lines 9-11 and line 29: casualty losses are "excess casualty losses" limited with depreciation, except a federally declared disaster part an itemizer may put on line 9.
+- Moved from the operating tier to tier 3 (FORM_8829_TIER3_PAIRS); input relabelled "Casualty losses (29)". No figure changes (shared limit; one carryover total).
+- Follow-ups B110 (line 9 disaster part), B111 (Form 4684 Section B; split line 43 / 44 carryovers).
+- Tests: HomeOfficeCasualtyTierTest.
+
+## 2026-10-19T16:00:00-04:00 - 2024 itemizing answers reachable again (OPEN_QUESTIONS B60; owner-approved fields, V351)
+- Pub. 525 (2025) Recoveries; IRC 111. The prior-year tax form (2024 itemizing answers) has no place in the navigation since the Refund and Amount Owed form replaced it, and a saved Refund and Amount Owed form hid its answers anyway - so a non-itemizer's state refund and Form 1098 box 4 refund were always taxed in full.
+- Engine: field-by-field merge of the two forms (Refund and Amount Owed wins); STATE_REFUND_PRIOR_YEAR_ITEMIZING_UNANSWERED advisory; B20 advisory text points to the right form.
+- Refund and Amount Owed form: "Did you itemize deductions on your 2024 return?" + the four amounts on Yes, shown when such a refund is on the return.
+- New open question B109 (Form 2210-F 2024 farm figures, same hidden form).
+- Tests: StateRefundWorksheetGateTest (+5); e2e open-questions-b60-prior-year-itemizing.spec.ts (API merge + UI answer).
+
 ## 2026-10-19T14:00:00-04:00 - Vacation-home carryovers (OPEN_QUESTIONS B58 with B57; owner-approved fields, V350)
 - IRC 280A(c)(5); Pub. 527 (2025) Worksheet 5-1 (lines 2a/2b and 4b/4c for standard-deduction filers; 4d, 6c, 7a, 7b).
 - B58: rental form, per home used personally - "Operating expenses carried over from 2024 (line 7a)" and "Depreciation carried over from 2024 (line 7b)"; line 7a computed per home, kept on Schedule 1 (out_schedule_1.add_inc_rental_operating_carryforward) and imported next year.

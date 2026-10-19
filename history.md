@@ -1,3 +1,8 @@
+## 2026-10-20T04:00:00-04:00 - Form 4797 Part IV recapture goes back to its own schedule (OPEN_QUESTIONS B80; owner-approved)
+- 2025 Instructions for Form 4797, line 35: "other income" on the schedule that took the deduction. A recapture derived from a depreciation asset (A73) now lands on that activity - Schedule C line 6 (matching business), Schedule F line 8 (SE tax + QBI), Schedule E line 3 (no SE tax) - using the same matchers that attach the asset's depreciation. The derivation now covers Schedule F and rental (listed only) assets; a farm/rental asset whose activity is not on the return raises FORM_4797_PART_IV_ACTIVITY_NOT_FOUND instead of falling into Schedule C. Typed Part IV entries keep the single-Schedule-C / line 4 routing (Form 4797 is a statement - no activity field added).
+- New questions B113 (rental listed property at 50% or less is not on ADS) and B114 (line 35 basis increase).
+- Tests: Form4797PartIvActivityRoutingTest; e2e open-questions-b80-part-iv-activity-routing.spec.ts (Schedule F 50,960 / 49,200).
+
 ## 2026-10-20T03:30:00-04:00 - Depreciation asset flags are checkboxes (OPEN_QUESTIONS B79; owner-approved)
 - "Elect bonus", "Listed", "Passenger automobile" and "Heavy SUV" were single radios that could not be cleared once picked; now checkboxes (same fields). Passenger automobile and heavy SUV are exclusive (both ticked applied both caps); unticking bonus clears the 40% election. UI only.
 - Tests: e2e open-questions-b79-depreciation-checkboxes.spec.ts (tick, clear, save, reopen).

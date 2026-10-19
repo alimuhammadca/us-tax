@@ -1,3 +1,9 @@
+## 2026-10-19T09:00:00-04:00 - Schedule 8812 preview fills lines 1 and 2a-2d (OPEN_QUESTIONS B55; owner-approved: values, not structure)
+- 2025 Schedule 8812 lines 1-3 (line 1 = Form 1040 line 11a; 2a Puerto Rico, 2b Form 2555 lines 45 + 50, 2c Form 4563 line 15; 2d = 2a-2c; 3 = 1 + 2d).
+- Backend: Schedule8812 line1Agi / line2a.. / line2dTotalExcluded (recordSchedule8812Lines1To2d), V349 out_schedule_8812 columns.
+- UI (us-tax-ui + us-tax-return-forms): the existing line 1 / 2a-2d boxes are filled; no box added or removed.
+- Tests: Schedule8812Lines1To2dTest, Hrb2025Sc00004Test; e2e open-questions-b55-schedule8812-lines-1-2.spec.ts (computed, stored, printed).
+
 ## 2026-10-19T06:00:00-04:00 - Depreciation and business / Investments and foreign (OPEN_QUESTIONS B46, B39, B23, B35, B41, B40/B51, B36, B32; owner-approved)
 - Sources: 2025 i1116 (Foreign Qualified Dividends; Line 3d; Line 18 + Worksheet for Line 18; Reg. 1.904-4(c)); 2025 i6251 "What Depreciation Isn't Refigured"; Pub. 946 (2025) Tables A-1..A-5; Notice 2025-16 Section 3; Pub. 527; 2025 i8949 code Z; K-1 instructions.
 - B46: K-1 dividends -> lines 3b/3a + Schedule B; K-1 royalties -> Schedule 1 line 5 + Form 8960 line 4.

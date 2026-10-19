@@ -1,3 +1,7 @@
+## 2026-10-20T02:00:00-04:00 - Form 4562 line 14 = the bonus actually allowed (OPEN_QUESTIONS B76; owner-approved)
+- Line 14 now comes from the per-asset depreciation result (listed 50%-or-less ADS, section 280F cap, heavy-SUV section 179 cap applied), so lines 14 + 19 match the deduction. The separate recomputation was removed. New open question B112 (Part V listed property).
+- Tests: Form4562Line14ActualBonusTest; e2e open-questions-b76-form4562-line14.spec.ts.
+
 ## 2026-10-20T01:30:00-04:00 - Prior-year bonus depreciation reduces the MACRS basis (OPEN_QUESTIONS B75; owner-approved)
 - IRC 168(k) phase-down table in ReferenceData; 2022-2024 (and earlier) assets with bonus elected are depreciated in 2025 only on the basis the bonus left (business and rental paths) - the full-basis MACRS overstated depreciation every year.
 - Tests: PriorYearBonusDepreciationTest; e2e open-questions-b75-prior-year-bonus.spec.ts (Schedule C 49,616 vs 48,080).

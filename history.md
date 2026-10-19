@@ -1,3 +1,7 @@
+## 2026-10-19T23:30:00-04:00 - ISO line 2i counts only this year's exercises (OPEN_QUESTIONS B71; owner-approved)
+- 2025 Instructions for Form 6251, line 2i. A prior-year Form 3921 (box 2 date) no longer adds its spread again in a sale year; advisory points to the AMT basis (line 2k, A68).
+- Tests: IsoPriorYearExerciseTest; e2e open-questions-b71-iso-prior-year-3921.spec.ts (2023 -> 0, 2025 -> 300,000).
+
 ## 2026-10-19T23:00:00-04:00 - Farm QBI W-2 wages (OPEN_QUESTIONS B70; owner-approved field, V353)
 - Treas. Reg. 1.199A-2(b)(2); 2025 Schedule F line 22 instructions. New farm field "Wages on the Forms W-2 you issued to farm employees (box 1 total)" sets the farm's QBI W-2 wages; line 22 is the fallback, with an advisory above the QBI threshold.
 - Tests: FarmQbiW2WagesTest (line 13a 30,000 -> 22,500); e2e open-questions-b70-farm-qbi-w2-wages.spec.ts.

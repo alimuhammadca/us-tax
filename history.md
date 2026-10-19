@@ -1,3 +1,8 @@
+## 2026-10-20T03:00:00-04:00 - ADS recovery period = class life (OPEN_QUESTIONS B78; owner-approved)
+- New optional input field on the depreciation asset: ADS recovery period (class life, Pub. 946 Appendix B) - V354 pf_depreciation_asset.ads_recovery_period_years. Used for listed property 50% or less, the ADS method and the Form 4797 Part IV line 34(b) recomputation. Without it: real property 30 (40 before 2018) / 40, a passenger automobile 5, else the GDS period with advisory ADS_PERIOD_ASSUMED_GDS.
+- ADS real property is straight line mid-month over 30/40 (was 27.5/39); fractional class lives (e.g. 9.5) depreciate (were 0); current-year ADS-method property is on Form 4562 Section C lines 20a-20d (existing boxes) instead of the GDS line 19 row.
+- Tests: AdsRecoveryPeriodTest; e2e open-questions-b78-ads-recovery-period.spec.ts (Schedule C 49,000 / 48,571; line 20a 500).
+
 ## 2026-10-20T02:30:00-04:00 - Prior-year section 179 / bonus figured on the year-placed business use (OPEN_QUESTIONS B77; owner-approved)
 - When the A73 earlier business-use percent is entered on a prior-year asset, the section 179 claimed is capped at cost x that percent and the bonus taken on what it left; 2025 MACRS runs on cost x the 2025 percent less both (Pub. 946 Depreciation Worksheet for Passenger Automobiles lines 13-18). Without it, nothing changes. Input-form label reworded ("in the year placed in service, only if it has changed") with a hint; no new field.
 - Tests: PriorYearBusinessUseBasisTest; e2e open-questions-b77-prior-business-use.spec.ts (Schedule C 49,040 vs 50,000).

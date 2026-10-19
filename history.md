@@ -1,3 +1,7 @@
+## 2026-10-20T03:30:00-04:00 - Depreciation asset flags are checkboxes (OPEN_QUESTIONS B79; owner-approved)
+- "Elect bonus", "Listed", "Passenger automobile" and "Heavy SUV" were single radios that could not be cleared once picked; now checkboxes (same fields). Passenger automobile and heavy SUV are exclusive (both ticked applied both caps); unticking bonus clears the 40% election. UI only.
+- Tests: e2e open-questions-b79-depreciation-checkboxes.spec.ts (tick, clear, save, reopen).
+
 ## 2026-10-20T03:00:00-04:00 - ADS recovery period = class life (OPEN_QUESTIONS B78; owner-approved)
 - New optional input field on the depreciation asset: ADS recovery period (class life, Pub. 946 Appendix B) - V354 pf_depreciation_asset.ads_recovery_period_years. Used for listed property 50% or less, the ADS method and the Form 4797 Part IV line 34(b) recomputation. Without it: real property 30 (40 before 2018) / 40, a passenger automobile 5, else the GDS period with advisory ADS_PERIOD_ASSUMED_GDS.
 - ADS real property is straight line mid-month over 30/40 (was 27.5/39); fractional class lives (e.g. 9.5) depreciate (were 0); current-year ADS-method property is on Form 4562 Section C lines 20a-20d (existing boxes) instead of the GDS line 19 row.

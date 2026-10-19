@@ -1,3 +1,7 @@
+## 2026-10-19T23:00:00-04:00 - Farm QBI W-2 wages (OPEN_QUESTIONS B70; owner-approved field, V353)
+- Treas. Reg. 1.199A-2(b)(2); 2025 Schedule F line 22 instructions. New farm field "Wages on the Forms W-2 you issued to farm employees (box 1 total)" sets the farm's QBI W-2 wages; line 22 is the fallback, with an advisory above the QBI threshold.
+- Tests: FarmQbiW2WagesTest (line 13a 30,000 -> 22,500); e2e open-questions-b70-farm-qbi-w2-wages.spec.ts.
+
 ## 2026-10-19T22:30:00-04:00 - SE health premiums over the Form 7206 limit go to Schedule A (OPEN_QUESTIONS B69; owner-approved)
 - 2025 Instructions for Form 7206 ("any medical insurance payments not deductible on Schedule 1 ... line 17, can be included as medical expenses on Schedule A").
 - Leftover premiums (health incl. employer-plan months, age-limited LTC, Medicare, less line 17) join Schedule A line 1 with an advisory; Marketplace / PTC plans get an advisory only; help text tells filers not to type them too.

@@ -1,3 +1,8 @@
+## 2026-10-19T18:00:00-04:00 - Household employees (Schedule H) input form (OPEN_QUESTIONS B62; owner-approved)
+- 2025 Schedule H and instructions ($2,800 test, line A exclusions, $1,000-a-quarter FUTA test, lines 10-12 Section A questions).
+- New Incomes form for taxpayer and spouse over the existing schedule-h backend (no backend change): employee rows, federal tax withheld, FUTA questions. SCHEDULE_H_FUTA_CREDIT_REDUCTION_NOT_APPLIED link and the household-employee scenario card now open it; "Other tax items" line 9 gets a pointer.
+- sc_00285 note updated. Tests: e2e open-questions-b62-household-employees.spec.ts (runs A 1,572 and D 18 through the browser, reload round trip).
+
 ## 2026-10-19T17:00:00-04:00 - Form 8829 casualty losses on line 29 (OPEN_QUESTIONS B61; owner-approved)
 - 2025 Instructions for Form 8829, lines 9-11 and line 29: casualty losses are "excess casualty losses" limited with depreciation, except a federally declared disaster part an itemizer may put on line 9.
 - Moved from the operating tier to tier 3 (FORM_8829_TIER3_PAIRS); input relabelled "Casualty losses (29)". No figure changes (shared limit; one carryover total).

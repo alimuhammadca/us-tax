@@ -1,3 +1,6 @@
+## 2026-10-19T20:30:00-04:00 - Schedule C meals rounded per line (OPEN_QUESTIONS B67; owner-approved)
+- Line 24b (meals x 50% / 80%) now whole dollars like the other computed lines; at most $0.50 of net profit. ScheduleCMealsRoundingTest.
+
 ## 2026-10-19T20:00:00-04:00 - Clergy housing "reasonable salary" cap closed (OPEN_QUESTIONS B66; owner-approved)
 - Pub. 517 (2025): not modelled (no IRS figure - a facts-and-circumstances test); help text on the housing allowance mentions it.
 

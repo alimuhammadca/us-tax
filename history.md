@@ -1,3 +1,7 @@
+## 2026-10-20T02:30:00-04:00 - Prior-year section 179 / bonus figured on the year-placed business use (OPEN_QUESTIONS B77; owner-approved)
+- When the A73 earlier business-use percent is entered on a prior-year asset, the section 179 claimed is capped at cost x that percent and the bonus taken on what it left; 2025 MACRS runs on cost x the 2025 percent less both (Pub. 946 Depreciation Worksheet for Passenger Automobiles lines 13-18). Without it, nothing changes. Input-form label reworded ("in the year placed in service, only if it has changed") with a hint; no new field.
+- Tests: PriorYearBusinessUseBasisTest; e2e open-questions-b77-prior-business-use.spec.ts (Schedule C 49,040 vs 50,000).
+
 ## 2026-10-20T02:00:00-04:00 - Form 4562 line 14 = the bonus actually allowed (OPEN_QUESTIONS B76; owner-approved)
 - Line 14 now comes from the per-asset depreciation result (listed 50%-or-less ADS, section 280F cap, heavy-SUV section 179 cap applied), so lines 14 + 19 match the deduction. The separate recomputation was removed. New open question B112 (Part V listed property).
 - Tests: Form4562Line14ActualBonusTest; e2e open-questions-b76-form4562-line14.spec.ts.

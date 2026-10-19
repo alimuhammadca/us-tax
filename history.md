@@ -1,3 +1,8 @@
+## 2026-10-19T11:00:00-04:00 - Form 8839 line 17 settled and corrected (OPEN_QUESTIONS B56; owner-approved)
+- 2025 i8839 Credit Limit Worksheet (line 3 footnote: Schedule 8812 CLW-B line 14 replaces Form 1040 line 19 when CLW-B applies); 2025 i1040s8 CLW-B conditions; 2025 Form 8839 line 17 = worksheet line 5.
+- The engine's limit (tax - CLW-B line 14) was already right; line 17 now carries min(line 16, limit) instead of the limit itself. Credit unchanged.
+- Tests: Hrb2025Sc00019Test pinned (line 17 10,000; run B wages 100,000 -> 7,246 = 7,746 - 500, carryforward 2,754, CTC 500, ACTC 1,700); e2e open-questions-b56-form8839-line17.spec.ts.
+
 ## 2026-10-19T09:00:00-04:00 - Schedule 8812 preview fills lines 1 and 2a-2d (OPEN_QUESTIONS B55; owner-approved: values, not structure)
 - 2025 Schedule 8812 lines 1-3 (line 1 = Form 1040 line 11a; 2a Puerto Rico, 2b Form 2555 lines 45 + 50, 2c Form 4563 line 15; 2d = 2a-2c; 3 = 1 + 2d).
 - Backend: Schedule8812 line1Agi / line2a.. / line2dTotalExcluded (recordSchedule8812Lines1To2d), V349 out_schedule_8812 columns.

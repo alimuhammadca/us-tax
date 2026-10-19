@@ -1,3 +1,11 @@
+## 2026-10-19T03:30:00-04:00 - Retirement and pensions (OPEN_QUESTIONS B38, B33, B49, B3 built; B29, B7 pinned; B34 closed; owner-approved)
+- 2025 i8606 line 7; 2025 Form 8880 line 4; Pub. 575 (2025) RRB-1099-R boxes 3/4; 2025 i5329 Waiver of tax for reasonable cause and line 43.
+- B38: code-G IRA 1099-R subtracted from Form 8606 line 7. B33: 1099-QA distributions on Form 8880 line 4 (UI labels reworded).
+- B49: RRB Simplified Method tax-free part capped at box 4 + RRB_TAX_FREE_PART_NOT_FIGURED_* advisory.
+- B3: V348 pf_pension_annuity_income.rmd_shortfall_waived_amount (UI field) - waived part untaxed, RC advisory.
+- B29 / B7: test pins (Sc00294 F; Sc00200 SQA answered run). B34: closed (A63).
+- Tests: Sc00339 B2, Sc00317 reseeded + B2, Sc00374 D + advisory, Sc00049 C/C2, Sc00294 F, Sc00200 SQA; e2e open-questions-b3-b33-b38.spec.ts.
+
 ## 2026-10-19T02:00:00-04:00 - Defaults and gates (OPEN_QUESTIONS B42, B5, B20, B48 built; B21 closed; owner-approved)
 - Rev. Proc. 2023-34 (2024 standard deduction); Pub. 525 Recoveries; IRC 469(i)(5); 2025 Instructions for Form 8960 line 9b and Reasonable method allocations.
 - B42: blank 2024 standard deduction defaulted from the 2024 filing status and dates of birth (state refund worksheet, Form 1098 box 4).

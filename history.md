@@ -1,3 +1,7 @@
+## 2026-10-20T01:30:00-04:00 - Prior-year bonus depreciation reduces the MACRS basis (OPEN_QUESTIONS B75; owner-approved)
+- IRC 168(k) phase-down table in ReferenceData; 2022-2024 (and earlier) assets with bonus elected are depreciated in 2025 only on the basis the bonus left (business and rental paths) - the full-basis MACRS overstated depreciation every year.
+- Tests: PriorYearBonusDepreciationTest; e2e open-questions-b75-prior-year-bonus.spec.ts (Schedule C 49,616 vs 48,080).
+
 ## 2026-10-20T01:00:00-04:00 - Form 8621 uses each prior year's top rate (OPEN_QUESTIONS B74; owner-approved)
 - IRC 1291(c)(2). Per-year top-rate table for both the typed allocation (split by days from the acquisition date; 37% + advisory without it) and the A86 Part V path (which had 39.6% for 2003-2012 instead of 35%).
 - Tests: Section1291YearRatesTest; e2e open-questions-b74-section1291-year-rates.spec.ts (37,780 / 37,000).

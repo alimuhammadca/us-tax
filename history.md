@@ -1,3 +1,8 @@
+## 2026-10-19T18:30:00-04:00 - Schedule H: same employee on both spouses' forms (OPEN_QUESTIONS B63; owner-approved)
+- 2025 Instructions for Schedule H: "Only two Schedules H can be attached to Form 1040 ... one Schedule H for each of the primary taxpayer and the secondary taxpayer"; line 25 rule already met by construction.
+- Advisory SCHEDULE_H_EMPLOYEE_ON_BOTH_SPOUSES (joint return, same employee name on both forms; both Schedules H still count) + a hint on the Household employees form.
+- Tests: ScheduleHSameEmployeeTest; e2e open-questions-b62 (B63).
+
 ## 2026-10-19T18:00:00-04:00 - Household employees (Schedule H) input form (OPEN_QUESTIONS B62; owner-approved)
 - 2025 Schedule H and instructions ($2,800 test, line A exclusions, $1,000-a-quarter FUTA test, lines 10-12 Section A questions).
 - New Incomes form for taxpayer and spouse over the existing schedule-h backend (no backend change): employee rows, federal tax withheld, FUTA questions. SCHEDULE_H_FUTA_CREDIT_REDUCTION_NOT_APPLIED link and the household-employee scenario card now open it; "Other tax items" line 9 gets a pointer.

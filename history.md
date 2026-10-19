@@ -1,3 +1,8 @@
+## 2026-10-19T21:30:00-04:00 - Car loan interest not deducted twice (OPEN_QUESTIONS B68; owner-approved field, V352)
+- 2025 Form 1040 instructions, Schedule 1-A Part IV ("you cannot deduct the same amount more than once"; personal use > 50%).
+- VIN on business-income vehicle rows; a matching Part IV vehicle loses the Schedule C line 16b share (typed amount wins); advisories for mostly-business use and for unmatched 16b interest; help text on line 9 and the VIN.
+- Tests: CarLoanInterestBusinessShareTest (3,600 / 5,000 / 6,000 / 1,800); e2e open-questions-b68-car-loan-business-share.spec.ts (VIN round trip, field shown).
+
 ## 2026-10-19T20:30:00-04:00 - Schedule C meals rounded per line (OPEN_QUESTIONS B67; owner-approved)
 - Line 24b (meals x 50% / 80%) now whole dollars like the other computed lines; at most $0.50 of net profit. ScheduleCMealsRoundingTest.
 

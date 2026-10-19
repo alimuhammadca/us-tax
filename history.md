@@ -1,3 +1,8 @@
+## 2026-10-19T19:30:00-04:00 - CRP exclusion: Social Security receipt read from gross benefits (OPEN_QUESTIONS B65; owner-approved)
+- 2025 Schedule SE line 1b ("If you received social security retirement or disability benefits").
+- The automatic check uses SSA-1099 box 3 / RRB-1099 gross SSEB, not the net box 5 (repayments could make it 0 or negative); net only as a fallback.
+- Tests: Hrb2025Sc00287Test run D (box 5 -2,000 -> SE tax 2,826, was 3,956), K1CrpScheduleSeLine1bTest (+3); sc_00287 note; e2e open-questions-b64 (B65).
+
 ## 2026-10-19T19:00:00-04:00 - K-1 code AQ CRP on Schedule SE line 1b (OPEN_QUESTIONS B64; owner-approved)
 - 2025 Schedule SE line 1b ("... or listed on Schedule K-1 (Form 1065), box 20, code AQ"); 2025 Partner's Instructions, code AQ; IRC 1402(a)(1).
 - A partner on Social Security no longer pays SE tax on the partnership's CRP payments (subtracted from the box 14 code A amount); EIC earned income follows.

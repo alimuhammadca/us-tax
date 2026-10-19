@@ -1,3 +1,7 @@
+## 2026-10-20T00:00:00-04:00 - Joint-return Other tax items merge keeps every field (OPEN_QUESTIONS B72; owner-approved)
+- mergeLine16TaxForms gave merge rules to the 7 dropped keys (PFIC 1291 allocation, section 962 inputs), carries unlisted keys over, and a drift-guard test checks every Line16TaxMapper key has a rule.
+- Tests: Line16TaxMergeKeysTest (drift guard, merge, safety net, joint 1291TAX 3,700); e2e open-questions-b72-line16-merge-joint.spec.ts.
+
 ## 2026-10-19T23:30:00-04:00 - ISO line 2i counts only this year's exercises (OPEN_QUESTIONS B71; owner-approved)
 - 2025 Instructions for Form 6251, line 2i. A prior-year Form 3921 (box 2 date) no longer adds its spread again in a sale year; advisory points to the AMT basis (line 2k, A68).
 - Tests: IsoPriorYearExerciseTest; e2e open-questions-b71-iso-prior-year-3921.spec.ts (2023 -> 0, 2025 -> 300,000).

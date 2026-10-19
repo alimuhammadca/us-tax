@@ -1,3 +1,9 @@
+## 2026-10-19T22:30:00-04:00 - SE health premiums over the Form 7206 limit go to Schedule A (OPEN_QUESTIONS B69; owner-approved)
+- 2025 Instructions for Form 7206 ("any medical insurance payments not deductible on Schedule 1 ... line 17, can be included as medical expenses on Schedule A").
+- Leftover premiums (health incl. employer-plan months, age-limited LTC, Medicare, less line 17) join Schedule A line 1 with an advisory; Marketplace / PTC plans get an advisory only; help text tells filers not to type them too.
+- prepare(String) now saves/restores the per-pass ThreadLocal (prepareReturn body).
+- Tests: SeHealthPremiumsScheduleATest (line 17 9,293; Schedule A 7,707; Marketplace control); e2e open-questions-b69-se-premiums-schedule-a.spec.ts.
+
 ## 2026-10-19T21:30:00-04:00 - Car loan interest not deducted twice (OPEN_QUESTIONS B68; owner-approved field, V352)
 - 2025 Form 1040 instructions, Schedule 1-A Part IV ("you cannot deduct the same amount more than once"; personal use > 50%).
 - VIN on business-income vehicle rows; a matching Part IV vehicle loses the Schedule C line 16b share (typed amount wins); advisories for mostly-business use and for unmatched 16b interest; help text on line 9 and the VIN.

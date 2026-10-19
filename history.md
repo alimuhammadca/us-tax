@@ -1,3 +1,11 @@
+## 2026-10-19T14:00:00-04:00 - Vacation-home carryovers (OPEN_QUESTIONS B58 with B57; owner-approved fields, V350)
+- IRC 280A(c)(5); Pub. 527 (2025) Worksheet 5-1 (lines 2a/2b and 4b/4c for standard-deduction filers; 4d, 6c, 7a, 7b).
+- B58: rental form, per home used personally - "Operating expenses carried over from 2024 (line 7a)" and "Depreciation carried over from 2024 (line 7b)"; line 7a computed per home, kept on Schedule 1 (out_schedule_1.add_inc_rental_operating_carryforward) and imported next year.
+- Imported totals go to the only home used personally; with several homes they roll forward with RENTAL_VACATION_HOME_CARRYOVER_NOT_ASSIGNED (also for the depreciation import, which was spread across homes).
+- B57: interest and taxes join the operating tier for a standard-deduction filer (re-run shared with Form 8829). Current-year net unchanged; the excess carries.
+- Each prepare() pass now works on its own copy of the forms map (a re-run no longer sees the previous pass's in-memory edits).
+- Tests: VacationHomeCarryoverTest (8); e2e open-questions-b57-b58-vacation-home-carryovers.spec.ts (two-year, typed carryovers, fields shown).
+
 ## 2026-10-19T11:00:00-04:00 - Form 8839 line 17 settled and corrected (OPEN_QUESTIONS B56; owner-approved)
 - 2025 i8839 Credit Limit Worksheet (line 3 footnote: Schedule 8812 CLW-B line 14 replaces Form 1040 line 19 when CLW-B applies); 2025 i1040s8 CLW-B conditions; 2025 Form 8839 line 17 = worksheet line 5.
 - The engine's limit (tax - CLW-B line 14) was already right; line 17 now carries min(line 16, limit) instead of the limit itself. Credit unchanged.

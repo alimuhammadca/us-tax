@@ -1,6 +1,6 @@
 # Form 8958 (Allocation of Tax Amounts Between Certain Individuals in Community Property States) — Implementation Plan
 
-_Authored 2026-10-20 (OPEN_QUESTIONS B108). Status: Stages A and B DONE 2026-10-20 (owner reviewed the blank form side by side with the IRS PDF); Stage C next._
+_Authored 2026-10-20 (OPEN_QUESTIONS B108). Status: ALL STAGES DONE 2026-10-20 (Stages A-B owner-reviewed; Stage C with the capital-gains split, as the owner asked)._
 
 ## Background
 - A27 (`withCommunityPropertySplit`, V344) splits W-2 box 1 / withholding and 1099-INT / 1099-DIV amounts between the two
@@ -63,5 +63,10 @@ _Authored 2026-10-20 (OPEN_QUESTIONS B108). Status: Stages A and B DONE 2026-10-
   (Form 982 path as the current recipe, TEMP gate, per-return input for MFS-only forms).
 - Commits: us-tax-be, us-tax-ui, us-tax-return-forms, us-tax (pdfs/); us-tax-hrb2025 commit only.
 
-## Open decisions
-- Capital-gains split extension for line 6 (1099-DIV 2a-2d, 1099-B / 1099-DA under the investment percentage): pending.
+## Stage C/D outcome
+- Capital-gains split approved ("start stage C with capital gains") and built: 1099-DIV 2a-2d split; 1099-B / 1099-DA full share
+  copies (Form 8949 row keeps dates / description / box), marked `communityPropertyShare`.
+- Found by the Spouse-tab e2e: her return had his sale's share but no capital screening of her own, so Schedule D was not
+  required while Exception 1 was ruled out -> LINE7B_INTERNAL_INCONSISTENCY blocked her return. A share copy now requires
+  Schedule D.
+- Follow-ups: B118 self-employment split (lines 5, 9, 10), B119 pensions / rents / refunds / other (4, 7, 8, 12), B120 deductions.

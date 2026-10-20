@@ -1,3 +1,9 @@
+## 2026-10-20T14:00:00-04:00 - Form 2210 June due date and Form 2210-F payment dates (OPEN_QUESTIONS B97; owner-approved)
+- Form 2210: the 2025 Instructions for Form 2210 print 06/15/25 as the column (b) date (Table 2: 15+92+92+105 = 304 days), so the date and day counts stay. Their Sunday rule: a payment made on the next business day "is considered made on the due date". The A35 dated path charged a 06/16/25 payment (the date our help text gives) 1 day; `f2210OnTimeDate` (weekends + DC legal holidays) now treats it as on time.
+- Form 2210-F: line 12 is estimated tax paid BY 01/15/26 - dated payments after that were counted, hiding the underpayment. They now pay line 13 on their dates: line 14 (date paid / 04/15/26, now filled), line 15 days, per-payment penalty; advisory FORM_2210F_UNDERPAYMENT_PAID_IN_PARTS when paid in parts. Same next-business-day rule.
+- New question B116: the 2210-F "file and pay by March 2, 2026" exception is not asked.
+- Tests: Hrb2025Sc00228Test runE/runF (06/16 on time - column (b) pinned, since 0.29 rounds to 0; 06/17 = 2 days); Hrb2025Sc00303Test runD/runE/line 14 (02/10/26 -> 26 days, $5; two parts -> $8 + advisory); e2e open-questions-b97-form2210-due-dates.spec.ts (3). Existing 2210 / 2210-F specs green. Suite 4,462/0.
+
 ## 2026-10-20T13:00:00-04:00 - Form 8938 header boxes (OPEN_QUESTIONS B96; owner-approved)
 - computeForm8938 wrote the filer's name into calendar_year_suffix ("For calendar year 20__") and the SSN into tax_year_beginning_month_day. The field map was right; the engine keys were wrong. Now name_shown_on_return (line 1) and taxpayer_identification_number (line 2), plus two blank boxes filled (values only): calendar_year_suffix "25" and line 3a Specified individual (line 4 skipped per the form). Form 8938 Rev. November 2021.
 - Header boxes of Forms 8379 and 8828 (positional names) checked against the printed labels - correct. 8283 / 8611 / 8990 keys correct.

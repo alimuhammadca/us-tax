@@ -219,6 +219,20 @@ sections:
         helpText: >
           Used to compute the prior-year safe-harbor threshold. Leave blank if unknown —
           the system uses only the 90% current-year threshold in that case.
+      - id: priorYearGrossFarmIncome
+        label: 2024 gross income from farming or fishing
+        type: currency
+        showIf: return has farm (Schedule F), business (Schedule C) or Form 4835 farm-rental income, or a value is saved
+        helpText: >
+          B109 (V361). Gross amounts per Pub. 505 Farming and Fishing (Schedule F line 9, Form 4835 line 7, K-1 gross farming
+          or fishing income, Form 4797 livestock gains, Schedule C line 7 of a fishing business, crew pay). Joint 2024
+          return: include the spouse. With the total below, at least two-thirds -> Form 2210-F (either year).
+      - id: priorYearTotalGrossIncome
+        label: 2024 total gross income
+        type: currency
+        showIf: same as priorYearGrossFarmIncome
+        helpText: >
+          All 2024 income not exempt from tax - income amounts, not losses; gross receipts, not profit.
       - id: madeEstimatedPayments
         label: Did you make any 2025 estimated tax payments directly to the IRS?
         type: boolean

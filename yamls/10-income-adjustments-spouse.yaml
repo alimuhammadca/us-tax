@@ -113,11 +113,6 @@ sections:
         required: false
         label: Is your spouse covered by a retirement plan at work?
         help: Includes 401(k), 403(b), pension, SEP, SIMPLE, and other qualified plans. Affects whether the spouse's IRA contribution is fully deductible. If uncertain, check Box 13 (Retirement plan) on spouse's W-2.
-      - name: iraDeductionMfsLivedApartLine20
-        type: boolean
-        required: false
-        label: Is spouse filing separately and did they live apart from you all year?
-        help: Affects IRA deduction phase-out rules. Select Yes only if filing married separately and the spouses lived apart the entire year.
       - name: studentLoanInterestDeductionLine21
         type: amount
         required: false

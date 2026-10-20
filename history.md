@@ -1,3 +1,7 @@
+## 2026-10-20T08:30:00-04:00 - Principal-residence sale uses the resolved sale date (OPEN_QUESTIONS B89; owner-approved)
+- `buildPrincipalResidenceTransaction` read disp.dateSold everywhere, ignoring the sale date the caller already resolved (the disposition's, else the 1099-S closing date). With the sale date blank: Form 8949 column (c) was blank, and the A59 day counts were lost - days owned null, so a reduced (partial) exclusion was never figured and the whole gain was taxed; the section 121(b)(5) nonqualified-use share was skipped. Now the resolved (normalized) date is passed in and used throughout.
+- Tests: PrincipalResidenceClosingDateTest (partial exclusion 0 instead of 100,000; nonqualified use 19,984 instead of 0); e2e open-questions-b89-residence-closing-date.spec.ts.
+
 ## 2026-10-20T08:00:00-04:00 - Form 8949 description from 1099-S box 3 (OPEN_QUESTIONS B88; owner-approved)
 - The description fallback read "addressOrLegalDescription"; Form1099SMapper stores box 3 as "propertyAddressOrLegalDescription", so column (a) always said "Real estate sale (1099-S)" when the disposition row had no description. Now reads the real key (old key kept as a second fallback). The only mismatched 1099-S key (all reads checked against the mapper).
 - New question B115: with the capital-gain screening answers unanswered, a 1099-S sale reaches line 7 but no Form 8949 is produced (found writing the e2e).

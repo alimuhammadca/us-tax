@@ -1,3 +1,8 @@
+## 2026-10-20T08:00:00-04:00 - Form 8949 description from 1099-S box 3 (OPEN_QUESTIONS B88; owner-approved)
+- The description fallback read "addressOrLegalDescription"; Form1099SMapper stores box 3 as "propertyAddressOrLegalDescription", so column (a) always said "Real estate sale (1099-S)" when the disposition row had no description. Now reads the real key (old key kept as a second fallback). The only mismatched 1099-S key (all reads checked against the mapper).
+- New question B115: with the capital-gain screening answers unanswered, a 1099-S sale reaches line 7 but no Form 8949 is produced (found writing the e2e).
+- Tests: Hrb2025Sc00239Test.runDTheDescriptionComesFrom1099SBox3; e2e open-questions-b88-1099s-description.spec.ts.
+
 ## 2026-10-20T07:30:00-04:00 - Schedule B payer names for hand-entered interest and dividends (OPEN_QUESTIONS B87; owner-approved)
 - Schedule B lines 1 and 5: "List name of payer". New optional "Who paid it/them (names for Schedule B)" fields beside "Taxable interest not on statements" and "Other ordinary dividends" on the four Interest/Dividend income forms (V357: pf_interest_income.manual_taxable_interest_payers, pf_dividend_income.manual_ordinary_dividend_payers). Interest was listed as "<person> manual taxable interest"; the hand-entered dividends were added to line 3b but NOT listed on Part II, so line 5 did not add up to line 6 - now listed. No names -> "... not on statements (payer not entered) - <person>" and advisory SCHEDULE_B_PAYER_NAME_MISSING.
 - Tests: ScheduleBManualPayerNamesTest; e2e open-questions-b87-schedule-b-payer-names.spec.ts; line2ab-interest-income.spec.ts label pin updated.

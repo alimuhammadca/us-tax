@@ -43,11 +43,26 @@ sections:
       - name: casualtyLossesDirect
         type: amount
         required: false
-        label: Casualty losses - direct (line 9)
+        label: Casualty losses - direct (line 29; B61)
       - name: casualtyLossesIndirect
         type: amount
         required: false
-        label: Casualty losses - indirect (line 9)
+        label: Casualty losses - indirect (line 29; B61)
+      - name: casualtyFederallyDeclaredDisaster
+        type: boolean
+        required: false
+        showIf: casualtyLossesDirect > 0 or casualtyLossesIndirect > 0
+        label: Was any of this casualty loss from a federally declared disaster?
+        helpText: B110 (V362) - only then can part of it go on Form 8829 line 9.
+      - name: casualtyLine9DisasterAmount
+        type: amount
+        required: false
+        showIf: casualtyFederallyDeclaredDisaster == true
+        label: Amount for line 9 (worksheet Form 4684, Step 2)
+        helpText: >
+          2025 Instructions for Form 8829, "Casualty losses reported on line 9" - whole-home amount from lines 15 and 18 of a
+          worksheet Form 4684 (itemizer - 10% of AGI without the home business; standard deduction - net qualified disaster
+          loss only). Capped at the indirect casualty loss; the business part is in the unlimited tier, the rest stays on line 29.
       - name: mortgageInterestDirect
         type: amount
         required: false

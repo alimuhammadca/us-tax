@@ -233,6 +233,13 @@ sections:
         showIf: same as priorYearGrossFarmIncome
         helpText: >
           All 2024 income not exempt from tax - income amounts, not losses; gross receipts, not profit.
+      - id: fileAndPayByMarch2
+        label: Will you file this return and pay the full amount owed by March 2, 2026?
+        type: boolean
+        showIf: same as priorYearGrossFarmIncome
+        helpText: >
+          Form 2210-F exception (B116) - a farmer or fisher who files and pays all tax due by March 2, 2026 owes no
+          underpayment penalty and does not file Form 2210-F. Optional; blank or No figures the penalty.
       - id: madeEstimatedPayments
         label: Did you make any 2025 estimated tax payments directly to the IRS?
         type: boolean

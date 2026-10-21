@@ -36,6 +36,14 @@ sections:
         type: amount
         required: false
         label: Income from production (crop/livestock shares) (line 1)
+      - name: communityPct
+        type: percent
+        required: false
+        showIf: filing-status filingStatus = Married filing separately and communityPropertyState = true
+        label: Community share of this property (%)
+        help: B123 (V371) - Pub. 555 / Form 8958 line 8. The community part of this farm rental is split evenly between the two
+          separate returns before the passive-loss limits; blank = the interest / dividends percentage on Filing status; 0 =
+          separate property.
       - name: coopDistributions
         type: amount
         required: false

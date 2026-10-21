@@ -48,6 +48,12 @@ sections:
         type: boolean
         required: true
         label: Did you materially participate in the operation of this farm? (line E)
+      - name: communityPct
+        type: percent
+        required: false
+        showIf: filing-status filingStatus = Married filing separately and communityPropertyState = true
+        label: Community share of this farm (%) - blank = all community property
+        help: B118 (V366) - Pub. 555 / Form 8958 line 5. The community part of the farm's net profit is split evenly between the two separate returns for income tax; self-employment tax stays with the spouse who carries it on. 0 = separate property.
       - name: priorYearAtRiskCarryforward
         type: amount
         required: false

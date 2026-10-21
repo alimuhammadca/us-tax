@@ -108,6 +108,20 @@ sections:
         required: false
         placeholder: 0.00
         label: Prior-year accumulated depreciation
+      - name: earlierPartIvRecapture
+        type: boolean
+        required: false
+        showIf: placed in service before 2025 and (isListedProperty == true or section179Election > 0)
+        label: Was a Form 4797 Part IV recapture reported on this asset in an earlier year?
+        helpText: >
+          B114 (V364) - Form 4797 line 35, "increase your basis in the property by the recapture amount". Yes: a section 179
+          asset is depreciated as if the 179 deduction had never been taken; listed property stays on ADS straight line. The
+          bridge fills it from last year's asset rows (matching owner, description, activity, date placed in service, cost).
+      - name: earlierPartIvRecaptureAmount
+        type: amount
+        required: false
+        showIf: earlierPartIvRecapture == true
+        label: Recapture amount (Form 4797 line 35)
 
   - name: computedOutputs
     title: Computed outputs

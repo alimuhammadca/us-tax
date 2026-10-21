@@ -233,6 +233,13 @@ sections:
         showIf: same as priorYearGrossFarmIncome
         helpText: >
           All 2024 income not exempt from tax - income amounts, not losses; gross receipts, not profit.
+      - id: currentYearOtherGrossFarmFishingIncome
+        label: Other 2025 gross income from farming or fishing
+        type: currency
+        showIf: same as priorYearGrossFarmIncome (or opened by the "Show the farmer and fisher questions" link)
+        helpText: >
+          B121 (V369) - Pub. 505: crew pay on a fishing vessel, fishing services, livestock gains on Form 4797, K-1 farming /
+          fishing income not entered as a K-1 code. Schedule F, Form 4835, fishing businesses and K-1 codes are counted already.
       - id: fileAndPayByMarch2
         label: Will you file this return and pay the full amount owed by March 2, 2026?
         type: boolean

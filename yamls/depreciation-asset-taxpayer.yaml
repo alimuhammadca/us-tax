@@ -122,6 +122,43 @@ sections:
         required: false
         showIf: earlierPartIvRecapture == true
         label: Recapture amount (Form 4797 line 35)
+      # B122 (V370): Form 4562 Part V line 24a / 24b (listed property) and Section B lines 30-36 (a vehicle). Blank -> the
+      # answers on the Business income form (Schedule C Part IV vehicle row, lines 46 / 47a / 47b) are used.
+      - name: listedEvidenceSupportsUse
+        type: boolean
+        required: false
+        showIf: isListedProperty == true or isPassengerAutomobile == true or isHeavySuv == true
+        label: Do you have evidence to support the business use claimed? (Form 4562 line 24a)
+      - name: listedEvidenceWritten
+        type: boolean
+        required: false
+        showIf: listedEvidenceSupportsUse == true
+        label: Is the evidence written? (line 24b)
+      - name: vehicleBusinessMiles
+        type: integer
+        required: false
+        showIf: isListedProperty == true or isPassengerAutomobile == true or isHeavySuv == true
+        label: Business miles driven in 2025 (do not include commuting) (line 30)
+      - name: vehicleCommutingMiles
+        type: integer
+        required: false
+        showIf: isListedProperty == true or isPassengerAutomobile == true or isHeavySuv == true
+        label: Commuting miles (line 31)
+      - name: vehicleOtherPersonalMiles
+        type: integer
+        required: false
+        showIf: isListedProperty == true or isPassengerAutomobile == true or isHeavySuv == true
+        label: Other personal (noncommuting) miles (line 32)
+      - name: vehicleAvailableOffDuty
+        type: boolean
+        required: false
+        showIf: isListedProperty == true or isPassengerAutomobile == true or isHeavySuv == true
+        label: Was the vehicle available for personal use during off-duty hours? (line 34)
+      - name: vehicleAnotherAvailable
+        type: boolean
+        required: false
+        showIf: isListedProperty == true or isPassengerAutomobile == true or isHeavySuv == true
+        label: Is another vehicle available for personal use? (line 36)
 
   - name: computedOutputs
     title: Computed outputs

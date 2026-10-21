@@ -40,6 +40,12 @@ sections:
         required: true
         label: Business code (line B)
         help: The 6-digit NAICS code from the Schedule C instructions that best fits your activity.
+      - name: commercialFishingBusiness
+        type: boolean
+        required: false
+        label: Is this a commercial fishing business? (catching or harvesting fish, shellfish or other aquatic life)
+        help: B121 (V369) - its Schedule C line 7 is gross income from fishing for the Form 2210-F two-thirds test (Pub. 505).
+          Business code 114110 (Fishing) counts as Yes unless answered No.
       - name: businessName
         type: text
         required: false

@@ -65,3 +65,42 @@ sections:
         help: If a corrected 2024 return was filed and the extra refund was applied toward 2025 taxes instead of being paid out, enter it here.
         placeholder: "0.00"
         required: false
+
+  - name: withholdingTiming
+    title: Withholding Timing (Optional)
+    help: OPEN_QUESTIONS B6 (V372) - Form 2210 box D. Withholding counted on the dates it was actually withheld instead of
+      one-fourth on each due date (Instructions for Form 2210, Part III line 11); the choice can be made separately for wage
+      withholding and all other withholding (Pub. 505). The engine figures the penalty both ways and uses these amounts only
+      when lower. A joint return adds both spouses' amounts.
+    fields:
+      - name: withholdingActualDates
+        type: boolean
+        label: Was most of your 2025 tax withholding taken out early in the year?
+        required: false
+      - name: withholdingActualDatesKind
+        type: enum
+        options: [wages, other, both]
+        label: Which withholding?
+        help: Blank = both.
+        showIf: withholdingActualDates == true
+        required: false
+      - name: withheldPeriod1Amount
+        type: decimal
+        label: Withheld January 1 - April 15, 2025
+        showIf: withholdingActualDates == true
+        required: false
+      - name: withheldPeriod2Amount
+        type: decimal
+        label: Withheld April 16 - June 15, 2025
+        showIf: withholdingActualDates == true
+        required: false
+      - name: withheldPeriod3Amount
+        type: decimal
+        label: Withheld June 16 - September 15, 2025
+        showIf: withholdingActualDates == true
+        required: false
+      - name: withheldPeriod4Amount
+        type: decimal
+        label: Withheld September 16 - December 31, 2025
+        showIf: withholdingActualDates == true
+        required: false

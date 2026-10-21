@@ -60,6 +60,50 @@ sections:
         placeholder: "0.00"
         required: false
 
+  - name: jointPayments
+    title: Payments Made Jointly with Your Spouse (Optional)
+    showIf: madeEstimatedTaxPayments == true and filing status is not Married filing jointly
+    help: >
+      B120 (V368) - Pub. 505 / Pub. 555. Spouses who paid estimated tax jointly but file separately divide the payments as they
+      agree; otherwise each return claims total x its tax / the tax on both returns. Entered once here; the spouse's return gets
+      the rest of the share. On a joint return the whole amount counts.
+    fields:
+      - name: madeJointEstimatedPayments
+        type: boolean
+        label: Did you make any 2025 estimated tax payments jointly with your spouse?
+        required: false
+      - name: jointInstallment1Amount
+        type: decimal
+        label: Joint payment for January - March 2025
+        showIf: madeJointEstimatedPayments == true
+        required: false
+      - name: jointInstallment2Amount
+        type: decimal
+        label: Joint payment for April - May 2025
+        showIf: madeJointEstimatedPayments == true
+        required: false
+      - name: jointInstallment3Amount
+        type: decimal
+        label: Joint payment for June - August 2025
+        showIf: madeJointEstimatedPayments == true
+        required: false
+      - name: jointInstallment4Amount
+        type: decimal
+        label: Joint payment for September - December 2025
+        showIf: madeJointEstimatedPayments == true
+        required: false
+      - name: jointPriorYearOverpaymentCredited
+        type: decimal
+        label: 2024 refund (from a joint 2024 return) applied to 2025
+        showIf: madeJointEstimatedPayments == true
+        required: false
+      - name: jointPaymentsYourSharePct
+        type: percent
+        label: Your share of the joint payments (%)
+        help: Blank = in proportion to the tax on the two separate returns.
+        showIf: madeJointEstimatedPayments == true
+        required: false
+
   - name: divorceAnnotation
     title: Payments Made Jointly with a Former Spouse (Optional)
     showIf: madeEstimatedTaxPayments == true

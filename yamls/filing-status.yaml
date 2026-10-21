@@ -78,3 +78,40 @@ sections:
           spouse who you treating as a U.S. resident
 
           
+
+      # Community property on a married-filing-separately return (A27 V344, B119 V367; Pub. 555, Form 8958)
+      - name: communityPropertyState
+        type: boolean
+        required: false
+        label: Do you and your spouse live in a community property state (AZ, CA, ID, LA, NV, NM, TX, WA, WI)?
+        showIf: "filingStatus === 'Married filing separately'"
+      - name: cpWagesCommunityPct
+        type: percent
+        required: false
+        label: Share of the wages, unemployment compensation and state income tax refunds that is community income (%) - usually 100
+        showIf: "filingStatus === 'Married filing separately' && communityPropertyState === true"
+        help: Blank = 100.
+      - name: cpInterestDividendsCommunityPct
+        type: percent
+        required: false
+        label: Share of the interest and dividends that is community income (%)
+        showIf: "filingStatus === 'Married filing separately' && communityPropertyState === true"
+        help: Blank = 0. Also used for capital gains on community property.
+      - name: cpPensionsCommunityPctTaxpayer
+        type: percent
+        required: false
+        label: Share of your pensions and annuities that is community income (%) - not IRAs
+        showIf: "filingStatus === 'Married filing separately' && communityPropertyState === true"
+        help: B119 - the part earned while married and living in a community property state (Form 8958 line 7). IRAs are separate property. Blank = 0.
+      - name: cpPensionsCommunityPctSpouse
+        type: percent
+        required: false
+        label: Share of your spouse's pensions and annuities that is community income (%) - not IRAs
+        showIf: "filingStatus === 'Married filing separately' && communityPropertyState === true"
+        help: B119 - Blank = 0.
+      - name: cpPassThroughCommunityPct
+        type: percent
+        required: false
+        label: Share of the partnership, S corporation, estate and trust income (Schedules K-1) that is community income (%)
+        showIf: "filingStatus === 'Married filing separately' && communityPropertyState === true"
+        help: B119 - Form 8958 line 8. A partner's self-employment earnings stay with the partner. Blank = 0.

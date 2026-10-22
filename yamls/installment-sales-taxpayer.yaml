@@ -1,0 +1,161 @@
+# Installment sales (Form 6252). One entry per sale; the engine figures Form 6252 lines 1-37 (form-6252-plan.md,
+# owner-approved 2026-10-22) and reports line 26 on Schedule D (capital assets) or Form 4797 (business or rental property).
+name: installment-sales-taxpayer
+title: Installment sales (Form 6252)
+multiplicity: single
+formName: Form 6252
+category: income
+instructions:
+  - Enter each property sold with at least one payment received after the year of the sale.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: hasInstallmentSale
+        type: boolean
+        required: true
+        label: Did you sell property in 2025 with at least one payment due after 2025, or receive 2025 payments on an installment sale from an earlier year?
+
+  - name: sale
+    title: Sale
+    multiplicity: multiple
+    showIf: hasInstallmentSale == true
+    fields:
+      - name: propertyCode
+        type: select
+        required: false
+        label: "What kind of sale is it?"
+        options:
+          - "1"
+          - "2"
+          - "3"
+          - "4"
+      - name: propertyDescription
+        type: text
+        required: false
+        label: "Describe the property"
+      - name: propertyUse
+        type: select
+        required: false
+        label: "How was it used?"
+        options:
+          - "capital"
+          - "business_real"
+          - "business_other"
+      - name: dateAcquired
+        type: date
+        required: false
+        label: "Date acquired"
+      - name: dateSold
+        type: date
+        required: false
+        label: "Date sold"
+      - name: soldToRelatedParty
+        type: boolean
+        required: false
+        label: "Was it sold to a related party?"
+      - name: sellingPriceDeterminable
+        type: boolean
+        required: false
+        label: "Could the total selling price be determined by the end of the year of the sale?"
+      - name: sellingPrice
+        type: amount
+        required: false
+        label: "Selling price including mortgages and other debts (stated maximum for a contingent sale)"
+      - name: mortgagesAssumedByBuyer
+        type: amount
+        required: false
+        label: "Mortgages and debts the buyer took over"
+      - name: costOrBasis
+        type: amount
+        required: false
+        label: "Cost or other basis, including improvements"
+      - name: depreciationAllowed
+        type: amount
+        required: false
+        label: "Depreciation allowed or allowable, including section 179"
+      - name: sellingExpenses
+        type: amount
+        required: false
+        label: "Commissions and other expenses of sale"
+      - name: ordinaryRecaptureYearOfSale
+        type: amount
+        required: false
+        label: "Ordinary income recapture in the year of the sale (optional; figured when blank)"
+        showIf: "propertyUse in [business_real, business_other]"
+      - name: mainHomeExcludedGain
+        type: amount
+        required: false
+        label: "If it was your main home - the gain you are excluding"
+        showIf: "propertyUse == capital"
+      - name: paymentsReceivedThisYear
+        type: amount
+        required: false
+        label: "Payments received in 2025 (no interest)"
+      - name: paymentsReceivedPriorYears
+        type: amount
+        required: false
+        label: "Payments received before 2025"
+        showIf: "dateSold before 2025"
+      - name: grossProfitPercentageYearOfSale
+        type: decimal
+        required: false
+        label: "Gross profit percentage from the year of the sale (optional)"
+        showIf: "dateSold before 2025"
+      - name: recaptureOrdinaryPortion
+        type: amount
+        required: false
+        label: "Section 1252/1254/1255 recapture or pre-June 7 1984 recapture (optional)"
+      - name: relatedPartyName
+        type: text
+        required: false
+        label: "Related party's name"
+        showIf: "soldToRelatedParty == true"
+      - name: relatedPartyAddress
+        type: text
+        required: false
+        label: "Related party's address"
+        showIf: "soldToRelatedParty == true"
+      - name: relatedPartyTin
+        type: text
+        required: false
+        label: "Related party's taxpayer identifying number"
+        showIf: "soldToRelatedParty == true"
+      - name: relatedPartyResold
+        type: boolean
+        required: false
+        label: "Did the related party resell or dispose of the property in 2025?"
+        showIf: "soldToRelatedParty == true"
+      - name: secondDispositionException
+        type: select
+        required: false
+        label: "Which of these applies? (line 29)"
+        showIf: "relatedPartyResold == true"
+        options:
+          - "none"
+          - "a"
+          - "b"
+          - "c"
+          - "d"
+          - "e"
+      - name: secondDispositionDate
+        type: date
+        required: false
+        label: "Date of the second disposition"
+        showIf: "secondDispositionException == a"
+      - name: taxAvoidanceExplanation
+        type: text
+        required: false
+        label: "Explanation (box 29e)"
+        showIf: "secondDispositionException == e"
+      - name: relatedPartyAmountRealized
+        type: amount
+        required: false
+        label: "Amount the related party realized (cumulative)"
+        showIf: "secondDispositionException == none"
+      - name: relatedPartyRecaptureOrdinary
+        type: amount
+        required: false
+        label: "Ordinary income recapture part (optional)"
+        showIf: "secondDispositionException == none"

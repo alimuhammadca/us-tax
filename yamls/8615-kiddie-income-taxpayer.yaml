@@ -53,9 +53,9 @@ sections:
       - name: childItemizedDeductionLine2
         type: amount
         required: false
-        label: Line 2 – Deductions connected with the unearned income
+        label: Itemized deductions directly connected with the unearned income (feeds line 2)
         placeholder: 0.00
-        help: Use the larger of $2,700 or $1,350 plus the Schedule A line 17 expenses tied to the unearned income.
+        help: The child's Schedule A line 17 expenses directly connected with the unearned income (0 if none or standard deduction). Line 2 is figured as $2,700, or for an itemizing child the larger of $2,700 or $1,350 plus this amount.
       - name: childTaxableIncomeLine4
         type: amount
         required: true

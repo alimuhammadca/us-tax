@@ -1,6 +1,7 @@
 # Form 4684 Section B (Business and Income-Producing Property) - Implementation Plan
 
-_Authored 2026-10-23. Status: DRAFT - the intake field list and the decisions below need the owner's sign-off._
+_Authored 2026-10-23. Owner approved the field list and the three recommended decisions the same day ("approved, go ahead and
+build it"). Status: BUILT 2026-10-23._
 
 ## Why
 A casualty or theft of business, rental or investment property cannot be entered. Section B's only input is the Form 4684
@@ -73,6 +74,18 @@ Per property:
 3. **Fold the Form 8829 line 35 home-office casualty (B111) into Part II** column (b)(i), held more than a year
    (recommended): the Form 8829 instructions put it on Form 4684 line 27 ("See Form 8829"). Today it goes straight to Schedule
    1 line 4 - the same result unless there are Section B gains.
+
+## As built - deviations (reported to the owner)
+- **Decision 3 (Form 8829 home-office casualty) is partial.** That amount is known only after Schedule C, which runs after
+  Form 4797. It is folded into Part II (column (b)(i), long term) whenever there is no long-term gain on line 36 - then the form
+  gives the same ordinary loss it already got. With a long-term Section B gain the netting could make it section 1231, so it
+  stays an ordinary loss, is left off Part II, and FORM_8829_LINE35_CASUALTY_TO_FORM_4684 says so.
+- The Form 4797 Part III step for a depreciable gain is figured in `Form4684SectionB` (section 1245: the smaller of the
+  depreciation and the gain; straight-line section 1250: none, with the unrecaptured gain to Schedule D line 19) and shown on
+  the Form 4797 preview; its line 32 goes to Form 4684 line 33, not Form 4797 line 6.
+- All synthesized amounts reach the engine through one Form 4797 entry per owner and use (Schedule C or not), so Schedule C
+  QBI gets the Schedule C property's ordinary result.
+- The intake form's hint text is shorter than drafted: the UI's initial bundle is at its 10 MB budget.
 
 ## Out of scope
 Section C (Ponzi schemes under Rev. Proc. 2009-20) and Section D (election to deduct a federally declared disaster loss in the

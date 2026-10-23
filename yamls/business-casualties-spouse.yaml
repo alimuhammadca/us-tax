@@ -1,0 +1,87 @@
+# Business casualties and thefts (Form 4684 Section B), spouse. One entry per damaged, destroyed or stolen property; entries with the
+# same casualty description are one Part I. The engine figures Parts I-II and reports the result on Form 4797 or Schedule A
+# (form-4684-section-b-plan.md, owner-approved 2026-10-23).
+name: business-casualties-spouse
+title: Business casualties and thefts (Form 4684 Section B, spouse)
+multiplicity: single
+formName: Form 4684
+category: income
+instructions:
+  - Enter each piece of business, rental or investment property damaged, destroyed or stolen in 2025.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: hasBusinessCasualty
+        type: boolean
+        required: true
+        label: Did business, rental or investment property of your spouse's get damaged, destroyed or stolen in 2025?
+
+  - name: property
+    title: Property
+    multiplicity: multiple
+    showIf: hasBusinessCasualty == true
+    fields:
+      - name: casualtyDescription
+        type: text
+        required: false
+        label: "Which casualty or theft (line 29/34 (a); groups Part I)"
+      - name: casualtyDate
+        type: date
+        required: false
+        label: "Date of the casualty, or the date the theft was discovered (must be in 2025)"
+      - name: propertyDescription
+        type: text
+        required: false
+        label: "The property and where it was (line 19)"
+      - name: propertyType
+        type: select
+        required: false
+        label: "What kind of property"
+        options:
+          - "building"
+          - "equipment"
+          - "land"
+          - "investment"
+      - name: usedIn
+        type: select
+        required: false
+        label: "Used in (column (b)(i) vs (b)(ii); employee = not deductible)"
+        options:
+          - "schedule_c"
+          - "schedule_f"
+          - "rental"
+          - "investment"
+          - "employee"
+      - name: dateAcquired
+        type: date
+        required: false
+        label: "Date acquired (line 19; held a year or less vs more)"
+      - name: adjustedBasis
+        type: amount
+        required: false
+        label: "Adjusted basis (line 20)"
+      - name: depreciationAllowed
+        type: amount
+        required: false
+        label: "Depreciation allowed or allowable (recapture on a gain)"
+        showIf: "propertyType == building || propertyType == equipment"
+      - name: reimbursement
+        type: amount
+        required: false
+        label: "Insurance or other reimbursement, received or expected (line 21)"
+      - name: totallyDestroyedOrStolen
+        type: boolean
+        required: false
+        label: "Totally destroyed or stolen (line 26 = line 20)"
+      - name: fmvBefore
+        type: amount
+        required: false
+        label: "Fair market value just before (line 23)"
+        showIf: "totallyDestroyedOrStolen == false"
+      - name: fmvAfter
+        type: amount
+        required: false
+        label: "Fair market value just after (line 24)"
+        showIf: "totallyDestroyedOrStolen == false"

@@ -1,3 +1,10 @@
+## 2026-10-23T23:59:00-04:00 - Housekeeping (outstanding.md E)
+- e2e se-home-office-280a-tiers.spec.ts (changed by 9f4d39d8, never run): 1 passed.
+- Hrb2025Sc00245Test / Hrb2025Sc00247Test seeded 1099-R box 2a as taxableAmount (compute reads taxableAmountAmount) - corrected; harmless (box 1 = box 2a); both green. No other Java or e2e seed used the old key.
+- line28-actc-schedule8812.spec.ts comment: Form 4137 is Schedule 2 line 5, Form 8919 line 6 (comment only).
+- us-tax-be/context.md: entries added for B77-B124, B6/B9/B24-B53 and the 2026-10-23 work (intake forms V376-V384, constant-pool moves, Schedule A limits).
+- Untracked files: the 2025 IRS sources i1040sr, i172 (moved out of _dl_ folders), i1040sd, i6251, i8962, p974 committed under docs/IRS-Forms; old e2e / dev-server logs and an ad-hoc screenshot folder removed from us-tax-be and ignored (/ui-dev.log, /e2e/*.log, /e2e/shots-*/).
+
 ## 2026-10-23T23:30:00-04:00 - Form 8824: the unsupported cases are asked and blocked (owner-approved field, V384)
 - Why: a former main home with the section 121 exclusion, an installment note received and a section 1043 sale are not figured, but no field identified them, so such an exchange was figured as if ordinary (form-8824-plan.md deviation 1).
 - Like-kind exchanges, per exchange: "Does any of these apply?" (specialCases checkboxes; pf_like_kind_exchange_item.special_cases, V384). Form8824Compute blocks the first three with FORM_8824_MAIN_HOME / INSTALLMENT_NOTE / SECTION_1043_NOT_SUPPORTED (naming the exchange and where the case is covered) and leaves the exchange out; a multi-asset exchange is figured as one group with the advisory FORM_8824_MULTI_ASSET_FIGURED_AS_ONE_GROUP. The screening hint that listed the cases is replaced by the question.

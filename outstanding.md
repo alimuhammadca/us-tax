@@ -902,7 +902,7 @@ Schedule K-3 (deferred), 1099-H (expired), W-2c (edit the W-2 entry).
 
 | # | Statement | Status | Work |
 |---|---|---|---|
-| S1 | **Form 1098 (Mortgage Interest Statement)** | ✅ CAPTURE DONE 2026-07-18 (`se_form_1098` / V137) | Capture built. Remaining: ROUTE box 1 mortgage interest → Schedule E per-property interest (and cross-check Schedule A). Lower priority — rental interest is already enterable manually. |
+| S1 | **Form 1098 (Mortgage Interest Statement)** | ✅ CAPTURE DONE 2026-07-18 (`se_form_1098` / V137) | Capture built. Remaining: ROUTE box 1 mortgage interest → Schedule E per-property interest (and cross-check Schedule A). Lower priority — rental interest is already enterable manually. | **Verified 2026-10-23:** still open - compute reads only box 4 (A43); box 1 / 5 / 6 are never read, and Schedule A line 8a and Schedule E line 12 are both typed (no double count in code). Routing needs a new "which home / rental is this 1098 for" field.
 | S2 | 1099-NEC box 1 | exists | Route to the owning Schedule C business (by recipient TIN + user assignment), replacing the tips-only path. |
 | S3 | 1099-K box 1a | exists | Business-vs-personal classification UI; business portion routes to a Schedule C (or Schedule E for rentals) as gross receipts; personal-items disclosure path stays. |
 | S4 | 1099-MISC boxes 1/2 (rents/royalties) → Schedule E; boxes 5/9/10/11 → Schedule C/F | exists | Wire routing. |
@@ -1103,7 +1103,7 @@ deploy-time steps from `DEPLOYMENT.md`: append the admin origin to the backend `
 `admin.taxbeans.com` to Firebase authorized domains.
 
 
-## ~~Save-as-PDF "silent blank-field" bug — the ~10–15-form FQN sweep~~ **RESOLVED for 9 forms 2026-07-13; 3 asset-blocked forms remain**
+## ~~Save-as-PDF "silent blank-field" bug — the ~10–15-form FQN sweep~~ **RESOLVED 2026-07-13 (all 12 forms; the 3 asset-blocked ones - 8801, Schedule 1-A, Schedule D - regenerated in b2b0079, verified 2026-10-23)**
 
 Verified the four sub-items of the old "PDF-render / view-shape" roadmap line and fixed the real one.
 
@@ -1165,6 +1165,8 @@ form). Also unchanged: negative (loss) safe-harbor rentals do not create QBI (bu
 
 ## Form 5329 Part III/IV excess-contribution 6% excise — implemented with documented simplifications (2026-07-25)
 
+**Verified 2026-10-23:** simplifications 1 (Roth MAGI - the conversion subtraction is now done, see line ~506) and 2 (combined limit) are DONE; 3 (year-end value) is the form's own rule whenever the value is entered (A39 field). **NEW GAP (open):** `computeExcessContributionExcisePerson` (TaxReturnComputeService ~35400 / ~35417) adds the prior-year IRA excess as typed - Part III lines 19-21 / Part IV lines 27-28 (this year's unused room, excess distributions) are never subtracted, so an excess corrected by under-contributing in 2025 is taxed 6% again and the absorbed amount never reaches Schedule 1 line 20. HSA / Archer MSA already do this. Unused room needs no new field; excess distributions would.
+
 **Status: implemented (sc_00171/00176); simplifications #1 and #2 REFINED 2026-07-28, #3 unchanged.**
 The §4973 6% excise on excess traditional/Roth IRA contributions is computed (V165/V166 inputs+outputs;
 `computeExcessContributionExcisePerson` → Form 5329 → Schedule 2 line 8).
@@ -1187,6 +1189,8 @@ The §4973 6% excise on excess traditional/Roth IRA contributions is computed (V
    at min(excess, value), and when absent uses the full excess — a correct conservative default. No change.
 
 ## Line 5b §72(t): early-distribution penalty base nets rollover only, not basis/PSO — DEFERRED (2026-07-24)
+
+**Verified 2026-10-23:** rollover, PSO (402(l)) and box 5 when 2b is checked are netted (2026-07-28). **Still open, no new fields needed:** (1) basis recovered under the Simplified Method / General Rule changes line 5b but not the §72(t) base (TaxReturnComputeService ~22018 vs ~22150-22185) - e.g. 12,000 code 1, 2,000 recovered: line 5b 10,000, penalty 1,200 instead of 1,000; it also skews the PSO split; (2) box 2a blank: line 5b falls back to box 1 but the base is null, so no penalty.
 
 **Status: partial-scope refinement, not an active bug.** The sc_00144 fix (2026-07-24) makes the IRC §72(t)
 early-distribution penalty base (`earlyDistributionBaseTenPercent`/`…TwentyFivePercent` in
@@ -1335,6 +1339,8 @@ a line-38 penalty off by the rate ratio. **Owner decision 2026-07-14: leave defe
 **★ MFS Spouse-Forms Migration — ✅ COMPLETE (#12–#50 all done), 2026-06-24.** Every Spouse-tab form now produces a correct standalone Married-Filing-Separately return; MFJ is never broken. The final stretch #46–#50 each corrected a "Bucket D / defer" first-guess (all carried per-filer data): #46 Form 4868 full mirror; #47 estimated-tax verification-only; #48 Form 8862 owner_role split (V87 — fixed a cross-leg recertification leak); #49 31-other-payments owner_role split (V88 — fixed a household double-count); #50 ctc-actc-screening owner_role split (V89 — fixed a lost CTC gate that undermined #48). No blocking items remain. ~~The only deferred items are minor per-form enhancements tracked in their form sections below (all filing-convenience / rare-edge, NOT credit-value bugs): Form 8936 #33 (spouse MAGI add-back + prior-year-MAGI); Form 8834 #36 (spouse confirm-available field → cosmetic advisory note); Form 8859 #38 (spouse Schedule 8812 Worksheet B line-2 override); Form 8962 #39 (standalone spouse-leg APTC repayment via her own 1095-A / shared-policy allocation — needs a full mirror).~~ **ALL FOUR RESOLVED: #39 Form 8962 (2026-07-13, full mirror — see the Form 8962 section); #33/#36/#38 (2026-07-13, V126 — see their form sections). No MFS spouse-form residuals remain.** New rare-edge defers from the final stretch: Form 4868 #46 (spouse standalone extension only on a non-MFJ return — the MFJ supplement path is unchanged); 31-other-payments #49 / Form 8862 #48 carry no residual gaps (full per-filer mirrors). See `history.md` 2026-06-24 completion milestone + `rules.md` (MFS Spouse-Forms Migration — Canonical Rules, now incl. the owner_role-split playbook + dev-restart gotcha) + `C:\us-tax\mfs-spouse-migration.md`.
 
 ## Dependent-Own Returns — capabilities, limitations, and the dependent-statements gap (analysis 2026-07-11)
+
+**Verified 2026-10-23:** limitations 1 (statements by the dependent's SSN) and 2 (EIC / self-claim advisory) DONE; 4 is a caution. Left, by choice: an auto-offered core statement list on the dependent tab (UI only) and an optional dependent_id on statement rows (SSN matching works today).
 
 **Can the app produce separate returns for dependents? YES** — the same multi-return architecture that powers the MFS split also produces a standalone Single Form 1040 for a dependent who files their own return. It is live at runtime with no feature flag. Full stack present: `tax_return_v2` (`return_kind='dependent_own'`) + `tax_return_v2_person` filer link + `person.files_own_return`; `TaxReturnV2LifecycleService.enable/disableDependentOwn`; REST (`POST /api/tax-return-v2/dependent-own/{enable,disable}/{dependentId}`, `GET /api/tax-return-v2`, `POST /api/tax-return/compute/{taxReturnId}`); compute scoping via `scopeForDependentOwn` → `DependentOwnFormScoper.scope()` (drops household forms, injects synthetic identity as filer, forces Single, statements route by SSN); frontend `dependent-own-toggle-panel` + per-dependent Tax Return section in `shell.component.ts`. Tests: `dependent-own-basic`/`-eic-ineligible`/`-kiddie-tax` e2e + `Phase8a/8b` unit.
 

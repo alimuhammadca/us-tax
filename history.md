@@ -1,3 +1,9 @@
+## 2026-10-23T16:00:00-04:00 - Constant-pool headroom restored (TaxReturnComputeService 32,560 -> 31,730 of 32,767)
+- Why: 210 entries were left; past 32,767 the Panache field-access rewrite stops applying and every compute returns 500 while the unit tests still pass (B112).
+- Moved unchanged into package-private helper classes, one commit each: Form2555HighCostLocalities (the Notice 2025-16 table, 136 localities, and its lookup - 451 entries), StatementSsnRules (46 statement-SSN rules, the skips, the issuer-name fields - 162), Form4562Builder (buildForm4562List, its row tables and label helpers; it still calls the service's per-asset depreciation helpers, now package-private - 217). The two tests that read the moved members by reflection now read the new classes.
+- TaxReturnComputeServiceConstantPoolTest also fails within 300 entries of the limit (checked: fails at a 1,100 margin, passes at 300).
+- Tests: full unit suite green after each move (4,674); e2e - Form 2555 (16), statement attribution (128 + 2 flaky that passed on retry), Form 4562 / depreciation (29).
+
 ## 2026-10-23T12:00:00-04:00 - Form 4684 Section B: Business casualties and thefts intake -> figured Section B -> Form 4797 / Schedule A (form-4684-section-b-plan.md; owner-approved field list)
 - Why: a casualty or theft of business, rental or investment property could not be entered - Section B's only input was the dormant Form 4684 statement mapper, so the Section B code never received anything; a gain (insurance above basis) was never reported.
 - Intake: Business casualties and thefts (Form 4684) under Incomes, taxpayer and spouse, one entry per damaged, destroyed or stolen property (casualty description - the same words make one Part I -, date, property, type, used in, date acquired, adjusted basis, depreciation, reimbursement, totally destroyed or stolen, FMV before/after). pf_business_casualty + _item, V381; PERSONAL_FORMS, UserDataBulkDelete, MfsFormScoper.

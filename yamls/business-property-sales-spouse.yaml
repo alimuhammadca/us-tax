@@ -1,0 +1,85 @@
+# Business property sales (Form 4797), spouse. One entry per sale; each becomes a Form 4797 Part III property and the engine
+# figures the recapture, section 1231 gain or loss and unrecaptured section 1250 gain (form-4797-sales-plan.md, owner-approved 2026-10-23).
+name: business-property-sales-spouse
+title: Business property sales (Form 4797, spouse)
+multiplicity: single
+formName: Form 4797
+category: income
+instructions:
+  - Enter each piece of business or rental property sold, exchanged or otherwise disposed of in 2025.
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: hasBusinessPropertySale
+        type: boolean
+        required: true
+        label: Did your spouse sell, exchange or otherwise dispose of business or rental property in 2025?
+
+  - name: sale
+    title: Sale
+    multiplicity: multiple
+    showIf: hasBusinessPropertySale == true
+    fields:
+      - name: description
+        type: text
+        required: false
+        label: "Describe the property"
+      - name: propertyType
+        type: select
+        required: false
+        label: "What kind of property?"
+        options:
+          - "building"
+          - "equipment"
+          - "land"
+      - name: usedFor
+        type: select
+        required: false
+        label: "Used in"
+        options:
+          - "schedule_c"
+          - "schedule_f"
+          - "rental"
+          - "other"
+      - name: inherited
+        type: boolean
+        required: false
+        label: "Inherited? (long-term whatever the dates)"
+      - name: dateAcquired
+        type: date
+        required: false
+        label: "Date acquired"
+        showIf: "inherited != true"
+      - name: dateSold
+        type: date
+        required: false
+        label: "Date sold or disposed of"
+      - name: grossSalesPrice
+        type: amount
+        required: false
+        label: "Gross sales price (Form 1099-S box 2)"
+      - name: sellingExpenses
+        type: amount
+        required: false
+        label: "Commissions and other expenses of sale"
+      - name: costOrBasis
+        type: amount
+        required: false
+        label: "Cost or other basis, including improvements"
+      - name: depreciationAllowed
+        type: amount
+        required: false
+        label: "Depreciation allowed or allowable, incl. section 179 and bonus"
+        showIf: "propertyType != land"
+      - name: additionalDepreciation1250
+        type: amount
+        required: false
+        label: "Depreciation above straight-line (optional)"
+        showIf: "propertyType == building"
+      - name: amtDepreciation
+        type: amount
+        required: false
+        label: "AMT depreciation, if different (optional)"
+        showIf: "propertyType != land"

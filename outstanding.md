@@ -377,10 +377,22 @@ own age-band limit.
 
 **Related, same lens (input-side statutory figures not derived):** medical mileage is not computed
 either (2025 rate **$0.21/mile**, no constant in `ReferenceData`), nor is the capital-improvement FMV
-offset, nor the $50/night lodging limit. All are user-precomputed today.
+offset, nor the $50/night lodging limit. All are user-precomputed today. **Update 2026-10-23: all three now derived** - mileage
+(A23, V283), the capital-improvement offset (A78, V302), and the lodging limit (V383, `MedicalLodgingLimit`: $50 x nights x
+people, owner-approved fields).
 See `[[feedback_input_side_statutory_reduction_audit_lens]]`.
 
 ### Sub-gap — the Optional State/Local Sales Tax Table is not derived (found 2026-08-29, sc_00102)
+
+**Status: DONE 2026-10-23 (owner-approved fields, V383).** Standard deductions asks the method (actual receipts / optional
+tables); with the tables, whether you lived in one state all year, whether your locality charged a local sales tax, its rate,
+the locality (for the 17 local-table states, from the IRS chart) and other nontaxable income. `OptionalSalesTax` runs the 2025
+worksheet: line 1 from the state on the address by income (line 11b + tax-exempt interest + nontaxable social security / IRA /
+pension, not rollovers, + the other nontaxable income) and family size; lines 2-6 by local table x rate or the rate ratio; line 7
+the major purchases. The tables are `src/main/resources/sales-tax/optional-{state,local}-2025.csv`, extracted from the IRS PDF by
+`scripts/extract-optional-sales-tax-2025.py` (asserts: 46 tables x 19 bands, TX 885, AL / Local A first rows) - **REVISE ANNUALLY**.
+Someone who moved keeps the IRS calculator amount. `Sc00102SqaScenarioTest.optionalSalesTaxTableIsDerived` (885 + 283 + 2,500 =
+3,668), `OptionalSalesTaxTest`, e2e `sales-tax-tables-and-medical-lodging.spec.ts`. The text below is the original finding.
 
 `stateLocalSalesTaxesPaid` is taken as user input and deducted as entered. There is no 2025 Optional
 State Sales Tax Table in the codebase, so a wrong figure cannot be detected. **This is how sc_00102's

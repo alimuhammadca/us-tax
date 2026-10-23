@@ -79,6 +79,22 @@ sections:
           - name: premiums
             type: number
             label: Premiums paid
+      # Pub. 502 (V383, owner-approved 2026-10-23): medical lodging, $50 a night per person.
+      - name: medicalLodgingPaid
+        type: number
+        required: false
+        label: Lodging while away from home for medical care
+      - name: medicalLodgingNights
+        type: number
+        required: false
+        label: Number of nights
+        showIf: "medicalLodgingPaid > 0"
+      - name: medicalLodgingPeople
+        type: select
+        required: false
+        label: Who stayed (the patient alone / the patient and one person who had to travel with them)
+        options: ["1", "2"]
+        showIf: "medicalLodgingPaid > 0"
       - name: stateLocalTaxChoice
         type: select
         required: false
@@ -86,6 +102,38 @@ sections:
         options:
           - Income
           - Sales
+      # V383 (owner-approved 2026-10-23): line 5a by the 2025 State and Local General Sales Tax Deduction Worksheet.
+      - name: salesTaxMethod
+        type: select
+        required: false
+        label: Actual receipts or the optional sales tax tables
+        options: ["actual", "tables"]
+        showIf: "stateLocalTaxChoice == Sales"
+      - name: salesTaxLivedInStateAllYear
+        type: boolean
+        required: false
+        label: Lived in your state all year (No - enter the IRS calculator amount)
+        showIf: "salesTaxMethod == tables"
+      - name: localSalesTaxImposed
+        type: boolean
+        required: false
+        label: Your locality charged a local general sales tax
+        showIf: "salesTaxLivedInStateAllYear == true"
+      - name: localSalesTaxRate
+        type: number
+        required: false
+        label: Local general sales tax rate (%)
+        showIf: "localSalesTaxImposed == true"
+      - name: localSalesTaxArea
+        type: select
+        required: false
+        label: Locality from the IRS chart (17 local-table states) - the local table A-D
+        showIf: "localSalesTaxImposed == true"
+      - name: nontaxableIncomeOther
+        type: number
+        required: false
+        label: Other nontaxable income (veterans' benefits, workers' compensation, public assistance, nontaxable combat pay)
+        showIf: "salesTaxLivedInStateAllYear == true"
       - name: stateLocalIncomeTaxesPaid
         type: number
         required: false

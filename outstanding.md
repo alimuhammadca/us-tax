@@ -334,7 +334,7 @@ Items marked **[fields]** need the owner's sign-off because they add or change f
 
 ## ★ GAP — §213(d)(10) long-term-care premium cap is NOT enforced (found 2026-08-29, sc_00098)
 
-**Status: OPEN for Schedule A. Real, reproducible, silently OVERSTATES the medical deduction.** (The self‑employed side — Form 7206 line 2 / Schedule 1 line 17 — now enforces the age bands: fix a05c9fd3, 2026‑10‑15, sc_00215; `ReferenceData.ltcPremiumAgeLimit` can be reused here.)
+**Status: DONE 2026-10-23 (owner-approved fields, V382).** Standard deductions takes long-term care premiums apart from medical expenses - for you, your spouse and each dependent (picked from the Dependents list); `LtcPremiumCap` caps each at `ReferenceData.ltcPremiumAgeLimit` for the age at the end of 2025 (from the dates of birth on file) and adds the allowed total to `medicalDentalExpensesPaid`, so the 7.5% floor and every Schedule A path see it. Advisory `LTC_PREMIUMS_LIMITED_BY_AGE` (entered vs allowed); blocking `LTC_PREMIUMS_AGE_UNKNOWN` / `LTC_PREMIUMS_DEPENDENT_NOT_FOUND`. Separate returns: each keeps only the filer's own (the allocator puts the spouse's in her return's filer slot) and the dependents it claims. `Sc00098SqaScenarioTest.ltcCapIsEnforced` (18,685; was 19,875), `LtcPremiumCapTest`, e2e `ltc-premiums-schedule-a.spec.ts`. The rest of this section is the original finding. (Was: OPEN for Schedule A - silently OVERSTATED the medical deduction; the self-employed side already enforced the bands, a05c9fd3.)
 
 Schedule A takes medical as a single lump sum — `medicalDentalExpensesPaid` — and applies only the
 7.5%-of-AGI floor (`TaxReturnComputeService` ~line 12099). **No per-item statutory limit is applied**,

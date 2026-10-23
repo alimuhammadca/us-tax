@@ -57,6 +57,28 @@ sections:
         type: number
         required: false
         label: Medical and dental expenses paid
+      # IRC 213(d)(10) (V382, owner-approved 2026-10-23): long-term care premiums per insured person, capped by age at the end
+      # of the year (480 / 900 / 1,800 / 4,810 / 6,020); ages from the dates of birth on file.
+      - name: ltcPremiumsTaxpayer
+        type: number
+        required: false
+        label: Qualified long-term care insurance premiums you paid for yourself
+      - name: ltcPremiumsSpouse
+        type: number
+        required: false
+        label: Qualified long-term care insurance premiums for your spouse
+        showIf: "filingStatus == MFJ || filingStatus == MFS"
+      - name: ltcPremiumsDependents
+        type: list
+        required: false
+        label: Qualified long-term care insurance premiums for a dependent (one row per dependent)
+        fields:
+          - name: dependentSSN
+            type: select
+            label: Dependent (from the Dependents list)
+          - name: premiums
+            type: number
+            label: Premiums paid
       - name: stateLocalTaxChoice
         type: select
         required: false

@@ -37,9 +37,10 @@ the property received (line 25) was never figured.
    path in compute stays for the unit tests that feed it.
 
 ## Deviations from the approved list (reported to the owner)
-- The out-of-scope cases (a former main home with the section 121 exclusion, an installment note received, Part IV section
-  1043) and multi-asset exchanges have no field that identifies them, so no flag can fire; the form's screening hint says they
-  are not handled. A Yes/No question would need the owner's sign-off.
+- ~~The out-of-scope cases ... have no field that identifies them~~ **Resolved 2026-10-23 (owner-approved, V384):** each exchange
+  asks "Does any of these apply?" (`specialCases`) - a former main home with section 121, an installment note, a section 1043
+  sale are blocked (FORM_8824_MAIN_HOME / INSTALLMENT_NOTE / SECTION_1043_NOT_SUPPORTED); a multi-asset exchange is figured as
+  one group with an advisory (FORM_8824_MULTI_ASSET_FIGURED_AS_ONE_GROUP).
 - Depreciation on property marked "investment" sends it through Form 4797 (depreciable property is not a capital asset), with
   an advisory.
 

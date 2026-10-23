@@ -1,0 +1,179 @@
+# Like-kind exchanges (Form 8824), spouse. One entry per section 1031 exchange of real property; the engine figures Parts I-III,
+# reports the recognized gain on Schedule D or Form 4797 and fills in Form 8824 (form-8824-plan.md, owner-approved 2026-10-23).
+name: like-kind-exchanges-spouse
+title: Like-kind exchanges (Form 8824, spouse)
+multiplicity: single
+formName: Form 8824
+category: income
+instructions:
+  - Enter each exchange of real property for other real property (a section 1031 like-kind exchange).
+sections:
+  - name: screening
+    title: Screening
+    multiplicity: single
+    fields:
+      - name: hasLikeKindExchange
+        type: boolean
+        required: true
+        label: Did your spouse exchange real property for other real property (a section 1031 like-kind exchange) in 2025, or in 2023 or 2024 with a related party?
+
+  - name: exchange
+    title: Exchange
+    multiplicity: multiple
+    showIf: hasLikeKindExchange == true
+    fields:
+      - name: propertyGivenUpDescription
+        type: text
+        required: false
+        label: "Property given up (line 1)"
+      - name: propertyReceivedDescription
+        type: text
+        required: false
+        label: "Property received (line 2)"
+      - name: propertyUse
+        type: select
+        required: false
+        label: "How was the property given up used?"
+        options:
+          - "investment"
+          - "business"
+      - name: bothRealProperty
+        type: boolean
+        required: false
+        label: "Both properties are real property held for business or investment"
+      - name: givenUpOutsideUs
+        type: boolean
+        required: false
+        label: "The property given up is outside the United States"
+      - name: receivedOutsideUs
+        type: boolean
+        required: false
+        label: "The property received is outside the United States"
+      - name: dateAcquired
+        type: date
+        required: false
+        label: "Date the property given up was originally acquired (line 3)"
+      - name: dateTransferred
+        type: date
+        required: false
+        label: "Date transferred to the other party (line 4)"
+      - name: dateIdentified
+        type: date
+        required: false
+        label: "Date the replacement property was identified in writing (line 5)"
+      - name: dateReceived
+        type: date
+        required: false
+        label: "Date the replacement property was received (line 6)"
+      - name: adjustedBasisGivenUp
+        type: amount
+        required: false
+        label: "Adjusted basis of the property given up (line 18)"
+      - name: depreciationAllowed
+        type: amount
+        required: false
+        label: "Depreciation allowed or allowable on the property given up"
+      - name: section1245DepreciationAllowed
+        type: amount
+        required: false
+        label: "Depreciation on parts that are section 1245 property (optional, line 21)"
+      - name: fmvLikeKindReceived
+        type: amount
+        required: false
+        label: "Fair market value of the property received (line 16)"
+      - name: fmv1245Received
+        type: amount
+        required: false
+        label: "Fair market value of section 1245 parts of the property received (optional, line 25b)"
+      - name: cashReceived
+        type: amount
+        required: false
+        label: "Cash received (line 15)"
+      - name: otherPropertyReceivedFmv
+        type: amount
+        required: false
+        label: "FMV of other (not like-kind) property received (line 15)"
+      - name: otherPropertyReceivedDescription
+        type: text
+        required: false
+        label: "Description of the other property received (line 15a)"
+        showIf: "otherPropertyReceivedFmv > 0"
+      - name: liabilitiesAssumedByOtherParty
+        type: amount
+        required: false
+        label: "Debt on your property the other party took over (line 15 / 18)"
+      - name: liabilitiesYouAssumed
+        type: amount
+        required: false
+        label: "Debt on the property received that you took over (line 15 / 18)"
+      - name: cashPaid
+        type: amount
+        required: false
+        label: "Cash paid to the other party (line 15 / 18)"
+      - name: otherPropertyGivenUpFmv
+        type: amount
+        required: false
+        label: "FMV of other (not like-kind) property given up (line 12)"
+      - name: otherPropertyGivenUpBasis
+        type: amount
+        required: false
+        label: "Adjusted basis of the other property given up (line 13)"
+        showIf: "otherPropertyGivenUpFmv > 0"
+      - name: otherPropertyGivenUpDescription
+        type: text
+        required: false
+        label: "Description of the other property given up (line 12a)"
+        showIf: "otherPropertyGivenUpFmv > 0"
+      - name: exchangeExpenses
+        type: amount
+        required: false
+        label: "Exchange expenses (line 15 / 18)"
+      - name: relatedParty
+        type: boolean
+        required: false
+        label: "Exchange made with a related party (line 7)"
+      - name: relatedPartyName
+        type: text
+        required: false
+        label: "Related party's name (line 8)"
+        showIf: "relatedParty == true"
+      - name: relatedPartyRelationship
+        type: text
+        required: false
+        label: "Relationship (line 8)"
+        showIf: "relatedParty == true"
+      - name: relatedPartyTin
+        type: text
+        required: false
+        label: "Related party's SSN or EIN (line 8)"
+        showIf: "relatedParty == true"
+      - name: relatedPartyAddress
+        type: text
+        required: false
+        label: "Related party's address (line 8)"
+        showIf: "relatedParty == true"
+      - name: relatedPartyDisposed
+        type: boolean
+        required: false
+        label: "Related party disposed of the property within 2 years (line 9)"
+        showIf: "relatedParty == true"
+      - name: youDisposed
+        type: boolean
+        required: false
+        label: "Your spouse disposed of the property received within 2 years (line 10)"
+        showIf: "relatedParty == true"
+      - name: relatedPartyException
+        type: select
+        required: false
+        label: "Exception to the disposition (line 11)"
+        options:
+          - "none"
+          - "death"
+          - "involuntary_conversion"
+          - "no_tax_avoidance"
+        showIf: "relatedPartyDisposed == true || youDisposed == true"
+      - name: taxAvoidanceExplanation
+        type: text
+        required: false
+        label: "Explanation for line 11c"
+        showIf: "relatedPartyException == no_tax_avoidance"

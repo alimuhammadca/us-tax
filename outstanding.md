@@ -1,5 +1,9 @@
 # Outstanding Items
 
+## YAML drift (found 2026-10-24)
+
+- `yamls/10-income-adjustments-*.yaml` lack the Form 5329 contribution section (A39, V165/V284/V385 fields) and there is no rental income intake YAML; the Angular components are the field source of truth. Documentation only.
+
 ## ★ Round-2 QA scenarios (us-tax-hrb2025) — shortcomings and required improvements — opened 2026-10-15
 
 Collected from the round-2 scenario batches sc_00041–00391 (and kept up to date as later batches report). The open items from sc_00001–00040, built before this section existed, were added on 2026-10-16 as B55–B56 and in E.
@@ -902,7 +906,7 @@ Schedule K-3 (deferred), 1099-H (expired), W-2c (edit the W-2 entry).
 
 | # | Statement | Status | Work |
 |---|---|---|---|
-| S1 | **Form 1098 (Mortgage Interest Statement)** | ✅ CAPTURE DONE 2026-07-18 (`se_form_1098` / V137) | Capture built. Remaining: ROUTE box 1 mortgage interest → Schedule E per-property interest (and cross-check Schedule A). Lower priority — rental interest is already enterable manually. | **Verified 2026-10-23:** still open - compute reads only box 4 (A43); box 1 / 5 / 6 are never read, and Schedule A line 8a and Schedule E line 12 are both typed (no double count in code). Routing needs a new "which home / rental is this 1098 for" field.
+| S1 | **Form 1098 (Mortgage Interest Statement)** | ✅ CAPTURE DONE 2026-07-18 (`se_form_1098` / V137) | Capture built. Remaining: ROUTE box 1 mortgage interest → Schedule E per-property interest (and cross-check Schedule A). Lower priority — rental interest is already enterable manually. | **Verified 2026-10-23:** still open - compute reads only box 4 (A43); box 1 / 5 / 6 are never read, and Schedule A line 8a and Schedule E line 12 are both typed (no double count in code). **DONE 2026-10-24 (V385):** rental properties link a Form 1098 (Schedule E line 12 from box 1 x share); Schedule A advisory only, by owner choice.
 | S2 | 1099-NEC box 1 | exists | Route to the owning Schedule C business (by recipient TIN + user assignment), replacing the tips-only path. |
 | S3 | 1099-K box 1a | exists | Business-vs-personal classification UI; business portion routes to a Schedule C (or Schedule E for rentals) as gross receipts; personal-items disclosure path stays. |
 | S4 | 1099-MISC boxes 1/2 (rents/royalties) → Schedule E; boxes 5/9/10/11 → Schedule C/F | exists | Wire routing. |
@@ -1165,7 +1169,7 @@ form). Also unchanged: negative (loss) safe-harbor rentals do not create QBI (bu
 
 ## Form 5329 Part III/IV excess-contribution 6% excise — implemented with documented simplifications (2026-07-25)
 
-**Verified 2026-10-23:** simplifications 1 (Roth MAGI - the conversion subtraction is now done, see line ~506) and 2 (combined limit) are DONE; 3 (year-end value) is the form's own rule whenever the value is entered (A39 field). **Unused-room part FIXED 2026-10-24** (lines 10 / 19 absorb the prior excess; advisory IRA_PRIOR_YEAR_EXCESS_ABSORBED for the deduction). **Lines 11 and 20 FIXED 2026-10-24** (history.md). **Still open:** line 12 (prior excess returned in 2025) needs a field; line 20's "entire balance withdrawn - not less than line 18" floor needs the balance. Was: ~~`computeExcessContributionExcisePerson` (TaxReturnComputeService ~35400 / ~35417) adds the prior-year IRA excess as typed - Part III lines 19-21 / Part IV lines 27-28 (this year's unused room, excess distributions) are never subtracted, so an excess corrected by under-contributing in 2025 is taxed 6% again and the absorbed amount never reaches Schedule 1 line 20. HSA / Archer MSA already do this. Unused room needs no new field; excess distributions would.~~
+**Verified 2026-10-23:** simplifications 1 (Roth MAGI - the conversion subtraction is now done, see line ~506) and 2 (combined limit) are DONE; 3 (year-end value) is the form's own rule whenever the value is entered (A39 field). **Unused-room part FIXED 2026-10-24** (lines 10 / 19 absorb the prior excess; advisory IRA_PRIOR_YEAR_EXCESS_ABSORBED for the deduction). **Lines 11 and 20 FIXED 2026-10-24** (history.md). **Lines 12 and 20 floor DONE 2026-10-24 (V385, owner-approved fields).** Form 5329 Parts III/IV are now figured line by line. Was: ~~`computeExcessContributionExcisePerson` (TaxReturnComputeService ~35400 / ~35417) adds the prior-year IRA excess as typed - Part III lines 19-21 / Part IV lines 27-28 (this year's unused room, excess distributions) are never subtracted, so an excess corrected by under-contributing in 2025 is taxed 6% again and the absorbed amount never reaches Schedule 1 line 20. HSA / Archer MSA already do this. Unused room needs no new field; excess distributions would.~~
 
 **Status: implemented (sc_00171/00176); simplifications #1 and #2 REFINED 2026-07-28, #3 unchanged.**
 The §4973 6% excise on excess traditional/Roth IRA contributions is computed (V165/V166 inputs+outputs;

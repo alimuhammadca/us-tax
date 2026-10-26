@@ -557,3 +557,12 @@ comment and in the screen's help text, and raise an advisory when they disagree.
 **A blank date or amount never means "the most generous answer" (2026-10-25, D-2555-1/2).** A missing qualifying period or
 wage figure excludes nothing and blocks; it is not 365 days or "no limit".
 
+**One form, one limit, across the people on a joint return (2026-10-26, D-4797-2, D-w-2-1, D-4562-11).** A joint return files
+ONE Form 4797, one Form 4562 Part I and one Schedule 3 line 11 per person: section 1231 nets across both spouses before
+anything is called capital or ordinary; a K-1 section 179 shares the dollar and business-income limits with Schedule C / F;
+social security tax and tier 1 RRTA tax share one $10,918.20 limit per person. Never compute a limit twice in parallel.
+
+**An amount a schedule does not take is not printed as if it were (2026-10-26, D-4562-10, D-6781-6).** A depreciation
+asset that matches no business, farm or property, or a Form 6781 row of another person, is left off the attached form
+with an advisory - the attached form and the tax must agree.
+

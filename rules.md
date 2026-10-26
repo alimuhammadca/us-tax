@@ -566,3 +566,11 @@ social security tax and tier 1 RRTA tax share one $10,918.20 limit per person. N
 asset that matches no business, farm or property, or a Form 6781 row of another person, is left off the attached form
 with an advisory - the attached form and the tax must agree.
 
+
+**A statement screen's slot map is checked against the IRS PDF's field rectangles and printed box labels (2026-10-26,
+D-k1-1065-1, D-k1-1041-1).** Generated semantic field names can be wrong; a slot is in the box whose printed label sits
+above it. A re-key ships with a migration that moves the saved values to the box they were entered in.
+
+**A test the law applies in the year property is placed in service is not re-applied in later years (2026-10-26,
+D-4562-2).** Section 179's more-than-50% business use is tested when the asset is placed in service; a later drop is
+recapture (Form 4797 Part IV), not a lost election.

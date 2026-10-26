@@ -83,7 +83,7 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 | Id | Severity | Effect | What is wrong (IRS source · code) | Detail |
 |---|---|---|---|---|
 | D-1a-1 | ~~high~~ **FIXED 2026-10-25** | wrong amount, silent | dependent's W-2 counted on parent's Single/MFJ/HOH/QSS line 1a (no SSN filter unless scopedFilerSsn) — p17 p.10 / TRCS:40978-40982, W2Mapper.java:85-96 — coordinator re-verified by reading | `new_knowledge/1a.md` |
-| D-1a-2 | medium | wrong split 1a vs Sch 1 8t | box 11 always subtracted; no way to move NQDC/457 payment when box 11 blank or box 11 holds non-box-1 deferrals — i1040gi p.24,92; iw2w3--2025 p.19,32 / TRCS:41016-41019, :32498 | `new_knowledge/1a.md` |
+| D-1a-2 | ~~medium~~ **FIXED 2026-10-26** | wrong split 1a vs Sch 1 8t | box 11 always subtracted; no way to move NQDC/457 payment when box 11 blank or box 11 holds non-box-1 deferrals — i1040gi p.24,92; iw2w3--2025 p.19,32 / TRCS:41016-41019, :32498 | `new_knowledge/1a.md` |
 | D-1a-3 | ~~medium~~ **FIXED 2026-10-26** | wrong amount, silent | W-2GU/VI/AS stored but never read by compute (non-bona-fide residents must include) — p570 p.24-25 / W2TerritoryMapper | `new_knowledge/1a.md` |
 | D-1a-4 | ~~medium~~ **FIXED 2026-10-26** | income dropped if advisory ignored | statutory employee box 1 left out of 1a correctly, but not carried to Schedule C — i1040gi p.25, i1040sc p.5 / TRCS:40997-41009 | `new_knowledge/1a.md` |
 | D-1a-9 | ~~medium~~ **FIXED 2026-10-26** | wrong amounts elsewhere | line 8t (sumW2Box11Nqdc) and sumW2WagesAfterCarveOuts read unfiltered W-2 list (feeds SS worksheet, 2441, rental MAGI, MAGI rebuild) — TRCS:41207-41219, :33967, :38961, :3822, :4539 | `new_knowledge/1a.md` - closed by the person filter (ReturnStatementOwners, 2026-10-25) - re-verified by mutation |
@@ -108,7 +108,7 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 
 | Id | Severity | Effect | What is wrong (IRS source · code) | Detail |
 |---|---|---|---|---|
-| D-1b-1 | medium | silent | dependent's own return has no Employment form, so household wages missing from dependent's 1b/1z/earned-income std ded — p17 p.10, i1040gi p.24 / DependentOwnFormScoper.java:150-200 | `new_knowledge/1b.md` |
+| D-1b-1 | ~~medium~~ **FIXED 2026-10-26** | silent | dependent's own return has no Employment form, so household wages missing from dependent's 1b/1z/earned-income std ded — p17 p.10, i1040gi p.24 / DependentOwnFormScoper.java:150-200 | `new_knowledge/1b.md` |
 | D-1b-2 | ~~medium~~ **FIXED 2026-10-26** | wrong line + tax not owed | "paid as contractor/1099" household row removed from 1b and forced to Form 8919 (7.65%, no $2,800 test) — i1040gi p.24, i1040sh p.4-5, f8919 p.1 (unverified whether 8919 can ever apply to household; >$2,800 maybe legit) / TRCS:42377-42380, 14242-14300, 40381-40470 | `new_knowledge/1b.md` |
 | D-1b-4 | ~~medium~~ **FIXED 2026-10-26** | income dropped (advisory only) | self-employed household worker → advisory only; UI text still says SE unsupported (stale since 2026-07-20) — i1040sh p.2, f8919 p.2 / TRCS:14090-14114, form-employment-taxpayer.component.ts:205-208,1176-1179 | `new_knowledge/1b.md` |
 | D-1b-5 | ~~medium~~ **FIXED 2026-10-26** | silent understatement | Form 2441 earned income omits line 1b — i2441 p.4 / TRCS:38961-39011 | `new_knowledge/1b.md` |
@@ -154,7 +154,7 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 | D-1f-2 | ~~medium~~ **FIXED 2026-10-26** | wrong phase-out fraction | line 25 MAGI = AGI (already holds phase-1 1f) + exclusions + line 23; student-loan interest not added back (Example B −9,560 vs IRS −5,653) — i8839 p.9 / TRCS:44251, :44303 | `new_knowledge/1f.md` - closed by D-1f-1 |
 | D-1f-3 | ~~medium~~ **FIXED 2026-10-26** | blocked | foreign child not final → blocking ADOPTION_BENEFITS_FOREIGN_CHILD_NOT_FINAL; IRS: benefits go on 1f — i8839 p.6 / TRCS:39589-39597 | `new_knowledge/1f.md` |
 | D-1f-4 | ~~medium~~ **FIXED 2026-10-26** | silent | prior-year benefits (line 20) / foreign prior-year inputs shown only when 2025 code T exists — i8839 p.6,8 / form-adoption-expenses.component.html:501, :622 | `new_knowledge/1f.md` |
-| D-1f-5 | medium | silent over-exclusion | MFS exclusion unlocked by one "lived apart OR legally separated" answer (needs 3 conditions) — i8839 p.2 / TRCS:39391-39393 | `new_knowledge/1f.md` |
+| D-1f-5 | ~~medium~~ **FIXED 2026-10-26** | silent over-exclusion | MFS exclusion unlocked by one "lived apart OR legally separated" answer (needs 3 conditions) — i8839 p.2 / TRCS:39391-39393 | `new_knowledge/1f.md` |
 | D-1f-6 | ~~medium~~ **FIXED 2026-10-26** | silent | mergeAdoptionForms appends spouse children (duplicate child → two $17,280 caps), drops spouse §1372 marks, merges on primary MFS — i8839 p.8 / TRCS:38668-38709, MfsFormScoper.java:772-790 | `new_knowledge/1f.md` |
 | D-1f-9 | low-medium | silent | special-needs line 24 = line 21 without asking about a qualified adoption assistance program — i8839 p.8 / TRCS:39728, :39914 | `new_knowledge/1f.md` |
 | D-1f-7 | low | blocked (allocation mismatch) | UI pre-fills allocation from every W-2's code T in account; compute uses SSN-filtered — f8839 p.2 / form-adoption-expenses.component.ts:387-408, :1251-1316 | `new_knowledge/1f.md` |
@@ -337,7 +337,7 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 | D-7a-3 | ~~high~~ **FIXED 2026-10-25** | duplicated deduction | prior-year primary return's capital loss carryover imported on every compute of the account (each MFS leg, each dependent-own return) — i1040sd p.10 / TRCS:2714-2726, :1139-1160 — coordinator verified (uid-only lookup, no returnKind gate) | `new_knowledge/7a.md` |
 | D-7a-4 | ~~medium~~ **FIXED 2026-10-26** | wrong deduction | blank ST/LT carryover → typed "total loss deduction taken last year" used as carryover — i1040sd p.10 / TRCS:23788-23822, form-capital-gain-loss-taxpayer.component.ts:1603 | `new_knowledge/7a.md` |
 | D-7a-5 | ~~medium~~ **FIXED 2026-10-26** | silent (28% rate lost; ordinary as capital) | 1099-B ordinary/collectibles/box 1f and 1099-DA box 6 ordinary/box 1h stored, never read — i1040sd p.10-11, i1099b--2025 p.12 / TRCS:24900-24936, 26168-26231 | `new_knowledge/7a.md` |
-| D-7a-6 | medium | silent | home-sale exclusion $500,000 on any joint return, $250,000 otherwise (ignores use test / Test 2 / surviving spouse) — i1040sd p.2 / TRCS:25634-25636 | `new_knowledge/7a.md` |
+| D-7a-6 | ~~medium~~ **FIXED 2026-10-26** | silent | home-sale exclusion $500,000 on any joint return, $250,000 otherwise (ignores use test / Test 2 / surviving spouse) — i1040sd p.2 / TRCS:25634-25636 | `new_knowledge/7a.md` |
 | D-7a-7 | low | preferential rate on child's 28%/25% gain | Form 8814 reads only child's box 2a — i8814 p.3, i1040gi p.31 / TRCS:24423-24428 | `new_knowledge/7a.md` |
 | D-7a-8 | low | cosmetic | any capital-type statement in account forces Schedule D (Exception 1 lost; 7b box unchecked) — i1040gi p.31 / TRCS:23738-23747, 23869-23888 | `new_knowledge/7a.md` |
 | D-7a-9 | low | not supported | K-1 (1041) box 11 C/D stored, never read — i1041sk1 p.3 / ScheduleK1Form1041Mapper.java:169-174 | `new_knowledge/7a.md` |
@@ -393,7 +393,7 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 | D-10-4 | ~~medium~~ **FIXED 2026-10-26** | AGI understated | line 15 prorated for AS/PR excluder in output but line 26/AGI use full value — p570 ch.4 / TRCS:33264-33265, :33217 | `new_knowledge/10.md` |
 | D-10-5 | ~~medium~~ **FIXED 2026-10-26** | silent | line 24k K-1 (1041) box 11 code A never read; import key never written; UI says imported automatically — i1041sk1 p.2, i1040gi p.100 | `new_knowledge/10.md` |
 | D-10-6 | ~~medium~~ **FIXED 2026-10-26** | overstated | typed IRA deduction never compared with traditional contribution — i1040gi p.98 / TRCS:32971, :4486 | `new_knowledge/10.md` |
-| D-10-9 | medium | silent | line 17 for >2% S-corp shareholder unsupported (needs Sch C/F profit) — i1040gi p.94 / TRCS:29726-29749 | `new_knowledge/10.md` |
+| D-10-9 | ~~medium~~ **FIXED 2026-10-26** | silent | line 17 for >2% S-corp shareholder unsupported (needs Sch C/F profit) — i1040gi p.94 / TRCS:29726-29749 | `new_knowledge/10.md` |
 | D-10-7 | low | MAGI too low | IRA MAGI omits Form 2555 line 50 housing deduction add-back — p590a p.16 / TRCS:4563-4576 | `new_knowledge/10.md` |
 | D-10-8 | low | blocker missed/false | IRA compensation uses raw box 1 incl. box 11; SE comp subtracts only half SE tax (related D-1b-6, D-1g-2, D-1z-1) — i1040gi p.95,98 / TRCS:41140-41148, :41113 | `new_knowledge/10.md` |
 | D-10-10 | low | overstated if over-typed | typed line 23 wins over computed 8853, uncapped — i8853 p.4 / TRCS:10707, :33037 | `new_knowledge/10.md` |
@@ -414,7 +414,7 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 | D-sch-d-1 | ~~medium~~ **FIXED 2026-10-26** | silent (25% on gain) | Unrecaptured §1250 worksheet: 4797 property amounts and K-1 9c/8c added to line 19 uncapped; cap only via §1231 lookback — i1040sd p.13 / TRCS:25356-25360, :25476, :25496, :1747-1750 | `new_knowledge/forms/schedule-d.md` |
 | D-sch-d-2 | medium | silent, not supported | 28% worksheet lines 1 (8949 code C collectibles) and 3 (collectibles on 4684/6252/6781/8824) only via typed amount — i1040sd p.11 / TRCS:23780-23785 | `new_knowledge/forms/schedule-d.md` - **PARTLY FIXED 2026-10-26: worksheet line 1 now takes every Form 8949 Part II code C row (typed / 1099-DA); line 3 (collectibles on 4684/6252/6781/8824) needs a collectibles marker on those entries - new field** |
 | D-8949-2 | ~~medium~~ **FIXED 2026-10-26** | silent | 1099-B box 7 / 1099-DA box 5 "loss not allowed" (code L) stored, never read — i1040sd p.4 / Se1099B.java:154, Se1099Da.java:59 | `new_knowledge/forms/8949.md` |
-| D-8949-3 | medium | not supported | broker-row corrections with codes B/D/E/L/N/O/T not possible (only W from box 1g/1i) — i8949 p.1,8-11 / TRCS:24900-24936, :25029-25065 | `new_knowledge/forms/8949.md` |
+| D-8949-3 | ~~medium~~ **FIXED 2026-10-26** | not supported | broker-row corrections with codes B/D/E/L/N/O/T not possible (only W from box 1g/1i) — i8949 p.1,8-11 / TRCS:24900-24936, :25029-25065 | `new_knowledge/forms/8949.md` |
 | D-8949-4 | ~~medium~~ **FIXED 2026-10-26** | gain overstated, silent | blank box 1e/1g basis treated as $0 for noncovered — i8949 p.7 / TRCS:26158-26166 | `new_knowledge/forms/8949.md` |
 | D-8949-5 | ~~medium~~ **FIXED 2026-10-26** | wrong amount | property row with no matching 1099-S gets $0 proceeds (loss of whole basis); screen warning only — i8949 p.6 / TRCS:25756-25758 | `new_knowledge/forms/8949.md` |
 | D-sch-d-3 | low | cosmetic | typed non-broker proceeds/basis/adjustments added to 1a/8a incl. column (g) — i1040sd p.10, i8949 p.3-4 / TRCS:23716-23729 | `new_knowledge/forms/schedule-d.md` |
@@ -431,7 +431,7 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 |---|---|---|---|---|
 | D-sch-b-1 | ~~high~~ **FIXED 2026-10-25** | wrong disclosure, silent | Part III questions only on taxpayer Interest form inside "interest = Yes"; dividend/spouse/MFS spouse/dependent-own never ask; unanswered → false, preview prints "No"; foreign account with no interest and dividends ≤$1,500 → no Schedule B — i1040sb p.1, i1040gi p.23 / form-interest-income-taxpayer.component.ts:195,1009-1053,1871-1908; TRCS:19077-19079; form-tax-return-scheduleb.component.ts:214-219 | `new_knowledge/forms/schedule-b.md` |
 | D-8815-5 | ~~high~~ **FIXED 2026-10-25** | wrong amount, silent | any single worksheet input switches worksheet on and blanks count 0; filling only foreign add-backs → line 9 = add-backs → full exclusion at any income — f8815 p.3-4 / TRCS:9183-9202, 9136-9162 | `new_knowledge/forms/8815.md` |
-| D-sch-b-3 | medium | not supported, silent | line 7b country list: no input/field — i1040sb p.3 | `new_knowledge/forms/schedule-b.md` |
+| D-sch-b-3 | ~~medium~~ **FIXED 2026-10-26** | not supported, silent | line 7b country list: no input/field — i1040sb p.3 | `new_knowledge/forms/schedule-b.md` |
 | D-8815-1 | ~~medium~~ **FIXED 2026-10-26** | exclusion too large (superset of D-11a-7) | 8815 line 9 MAGI omits student loan interest, adoption benefits, 2555 line 50 add-backs — f8815 p.4 / TRCS:7240-7248, 8886-8892 | `new_knowledge/forms/8815.md` |
 | D-8815-2 | ~~medium~~ **FIXED 2026-10-26** | not supported, silent | line 2 not reduced by expenses used for 8863 / tax-free Coverdell/QTP — f8815 p.3, p17 p.61 | `new_knowledge/forms/8815.md` |
 | D-sch-b-2 | low | wording | 7a Q2 asks ">$10,000?" not "required to file FinCEN 114"; printed "No" when Q1 No — i1040sb p.3 / TRCS:19078 | `new_knowledge/forms/schedule-b.md` |
@@ -447,13 +447,13 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 |---|---|---|---|---|
 | D-4562-1 | ~~high~~ **FIXED 2026-10-25** | building expensed, no flag | bonus given on 27.5/39-year buildings in Sch C/F paths — i4562 p.6 / TRCS:28156-28165 | `new_knowledge/forms/4562.md` |
 | D-sch-c-1 | ~~medium~~ **FIXED 2026-10-26** | passive loss in full, silent | line G materiallyParticipated saved never read for Sch C (only farm) — i1040sc p.4-5,14 / TRCS:27662 | `new_knowledge/forms/schedule-c.md` |
-| D-sch-c-2 | medium | form missing | no Schedule C output; preview blank, always listed, says "OUT OF SCOPE" — f1040sc p.1 / form-tax-return-schedule-c.component.ts:79-87,166-177, shell.component.ts:1820 | `new_knowledge/forms/schedule-c.md` |
+| D-sch-c-2 | ~~medium~~ **FIXED 2026-10-26** | form missing | no Schedule C output; preview blank, always listed, says "OUT OF SCOPE" — f1040sc p.1 / form-tax-return-schedule-c.component.ts:79-87,166-177, shell.component.ts:1820 | `new_knowledge/forms/schedule-c.md` |
 | D-sch-c-3 | ~~medium~~ **FIXED 2026-10-26** | overstated income + SE tax | 1099-K auto-fill takes full box 1a, doesn't subtract personal-items/error amounts — i1040gi p.88 / TRCS:26924-26927, :28939-28950, :32117-32124 | `new_knowledge/forms/schedule-c.md` |
 | D-8829-1 | medium | overstated / carryover misplaced | line 8 is profit before §179 — f8829 p.1, p334 p.42 / TRCS:26992-26996, :27076-27197 | `new_knowledge/forms/8829.md` |
-| D-8829-3 | medium | overstated, silent | non-exclusive daycare hours share not asked; days saved never read — f8829 p.1, i8829 p.2 / HomeOfficeMapper.java:69 | `new_knowledge/forms/8829.md` |
-| D-8829-5 | medium | first/last year overstated ($641 vs $27) | line 41 always basis/39 — i8829 p.5-6 / TRCS:28837-28839 | `new_knowledge/forms/8829.md` |
-| D-8829-9 | medium | form missing | no Form 8829 backend model; preview gets no values — form-tax-return-8829.component.ts:6-12 | `new_knowledge/forms/8829.md` |
-| D-4562-2 | medium | wrong amount | §179 >50% business use / building exclusion not checked — i4562 p.2-3 / TRCS:28143-28153 | `new_knowledge/forms/4562.md` |
+| D-8829-3 | ~~medium~~ **FIXED 2026-10-26** | overstated, silent | non-exclusive daycare hours share not asked; days saved never read — f8829 p.1, i8829 p.2 / HomeOfficeMapper.java:69 | `new_knowledge/forms/8829.md` |
+| D-8829-5 | ~~medium~~ **FIXED 2026-10-26** | first/last year overstated ($641 vs $27) | line 41 always basis/39 — i8829 p.5-6 / TRCS:28837-28839 | `new_knowledge/forms/8829.md` |
+| D-8829-9 | ~~medium~~ **FIXED 2026-10-26** | form missing | no Form 8829 backend model; preview gets no values — form-tax-return-8829.component.ts:6-12 | `new_knowledge/forms/8829.md` |
+| D-4562-2 | ~~medium~~ **FIXED 2026-10-26** | wrong amount | §179 >50% business use / building exclusion not checked — i4562 p.2-3 / TRCS:28143-28153 | `new_knowledge/forms/4562.md` |
 | D-4562-3 | ~~medium~~ **FIXED 2026-10-26** | wrong amount | passenger-car listed-property rules only when "Listed property" box ticked — i4562 p.3,13,15 / TRCS:28122-28123 | `new_knowledge/forms/4562.md` |
 | D-4562-4 | ~~medium~~ **FIXED 2026-10-26** | overstated | 150% DB election reads 200% DB table — i4562 p.11-12,21 / TRCS:28558-28565 | `new_knowledge/forms/4562.md` |
 | D-4562-10 | ~~medium~~ **FIXED 2026-10-26** | deduction lost | unmatched/"Other" asset lands on no schedule, still printed — f4562 p.2 / TRCS:27882-27905, Form4562Builder.java:74-81 | `new_knowledge/forms/4562.md` |
@@ -490,8 +490,8 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 |---|---|---|---|---|
 | D-4835-2 | ~~medium~~ **FIXED 2026-10-26** | over-deduction, silent | one anyActiveParticipation switch for whole pool → non-active farm loss gets $25k allowance — f4835 p.2, i8582 p.1,4 / TRCS:31078, :30440-30441 | `new_knowledge/forms/4835.md` |
 | D-4835-3 | ~~medium~~ **FIXED 2026-10-26** | double deduction | farm prior-suspended entry + imported 2024 total both added — f4835 p.3 / TRCS:31082-31084, :31116-31118 | `new_knowledge/forms/4835.md` |
-| D-4835-4 | medium | deduction lost | conservation expense over 25% cap not carried forward — i1040sf p.6 / TRCS:31327-31332 | `new_knowledge/forms/4835.md` |
-| D-4835-6 | medium | form missing | no Form 4835 output; preview blank — form-tax-return-4835.component.ts:4-6 | `new_knowledge/forms/4835.md` |
+| D-4835-4 | ~~medium~~ **FIXED 2026-10-26** | deduction lost | conservation expense over 25% cap not carried forward — i1040sf p.6 / TRCS:31327-31332 | `new_knowledge/forms/4835.md` |
+| D-4835-6 | ~~medium~~ **FIXED 2026-10-26** | form missing | no Form 4835 output; preview blank — form-tax-return-4835.component.ts:4-6 | `new_knowledge/forms/4835.md` |
 | D-4835-7 | low-medium | deferred deduction | no field for prior-year at-risk loss on farm form — f4835 p.1,3 / TRCS:30591-30613 | `new_knowledge/forms/4835.md` |
 | D-4835-1 | low | Sch E lines 26/40 wrong (total unchanged) | farm prior suspended loss pooled with rentals; released loss lands on line 26 — f4835 p.3, i8582 p.14 / TRCS:31082-31084, :31162-31167 | `new_knowledge/forms/4835.md` |
 | D-4835-5 | low | cap too low | 25% cap base is one activity's line 7 — i1040sf p.6 / TRCS:31330 | `new_knowledge/forms/4835.md` |
@@ -552,7 +552,7 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 |---|---|---|---|---|
 | D-4797-1 | ~~high~~ **FIXED 2026-10-25** | silent | K-1 1065 box 10 / 1120-S box 9 net §1231 saved, never read by compute — i4797 p.6 / ScheduleK1Form1065Mapper.java:200, ScheduleK1Form1120sMapper.java:159 — coordinator verified (only mappers + GenericFieldMapper reference the keys) | `new_knowledge/forms/4797.md` |
 | D-4797-2 | ~~medium~~ **FIXED 2026-10-26** | wrong amount on MFJ (~$900 on 10k/−10k) | §1231 netted per spouse; lookback subtracted from first entry's line 9 — f4797 p.1, i4797 p.6 / TRCS:2265-2277, 1814-1827, 1742-1747 | `new_knowledge/forms/4797.md` |
-| D-4797-3 | medium | silent | line 8 lookback reads only this app's stored returns; no input for losses on returns filed elsewhere — i4797 p.6-7 / TRCS:1662-1680 | `new_knowledge/forms/4797.md` |
+| D-4797-3 | ~~medium~~ **FIXED 2026-10-26** | silent | line 8 lookback reads only this app's stored returns; no input for losses on returns filed elsewhere — i4797 p.6-7 / TRCS:1662-1680 | `new_knowledge/forms/4797.md` |
 | D-4797-4 | ~~medium~~ **FIXED 2026-10-26** | silent | section1231RoutingDelta returns 0 on scoped (MFS) computes; preview prints line 8 but tax treats as capital — f4797 p.1 / TRCS:1731 | `new_knowledge/forms/4797.md` |
 | D-4797-5 | low | cosmetic | line 1a not printed; line 8 printed as min; attachment note conditional — Form4797Fields.java:131-136 | `new_knowledge/forms/4797.md` |
 | D-4797-6 | low | loss not limited | "Used in: Other" depreciable property treated as §1231 — i4797 p.2 / Form4797SalesCompute.java:105 | `new_knowledge/forms/4797.md` |
@@ -573,7 +573,7 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 |---|---|---|---|---|
 | D-sch-f-1 | ~~medium-high~~ **FIXED 2026-10-26** | SE tax too low, silent | farm with line E "No" left out of Sch SE (also EIC earned income, SE health/retirement limits, 2210-F gross farm income) — i1040sf p.9, i1040sse p.3-4 / TRCS:27662, 27755-27759, 7091 | `new_knowledge/forms/schedule-f.md` |
 | D-sch-f-2 | ~~medium~~ **FIXED 2026-10-26** | silent | line E "No": no Form 8582 step; passive farm income not in 8960 line 4a (same root D-sch-c-1) — i1040sf p.3,9, i8960 p.5,8 / TRCS:5524-5530, 43506-43601 | `new_knowledge/forms/schedule-f.md` |
-| D-sch-f-3 | medium | silent | line 12 conservation expenses no 25% cap / carryforward — i1040sf p.6 / TRCS:27637-27639 | `new_knowledge/forms/schedule-f.md` |
+| D-sch-f-3 | ~~medium~~ **FIXED 2026-10-26** | silent | line 12 conservation expenses no 25% cap / carryforward — i1040sf p.6 / TRCS:27637-27639 | `new_knowledge/forms/schedule-f.md` |
 | D-sch-f-4 | medium-low | silent | line 6d 2024 deferred crop insurance not asked; UI labels 2026 deferral "6d"; cropInsuranceDeferredAmount never read — i1040sf p.5 / form-farm-income.component.ts:178 | `new_knowledge/forms/schedule-f.md` |
 | D-sch-se-3 | medium-low | SE tax too high near wage base | line 8a excludes RRTA tier 1 compensation (rrtaCompensationW2Box14 stored) — p334 p.43-44 / TRCS:52174-52195 | `new_knowledge/forms/schedule-se.md` |
 | D-sch-f-7 | low-medium | form missing | no Schedule F output; preview always blank and listed — form-tax-return-schedule-f.component.ts, shell.component.ts:1658 | `new_knowledge/forms/schedule-f.md` |
@@ -601,7 +601,7 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 | D-sch-e-3 | ~~medium~~ **FIXED 2026-10-26** | silent omission | K-1 (1041) boxes 5/7/8 stored never read — i1041sk1 p.2, i1040se p.10 / ScheduleK1Form1041Mapper.java:151-155 | `new_knowledge/forms/schedule-e.md` |
 | D-sch-e-5 | medium-low | overstated interest | personal-use day split runs before Form 1098 link; linked 1098 never split by days — i1040se p.5 / TRCS:2621 vs :3550 | `new_knowledge/forms/schedule-e.md` |
 | D-sch-e-7 | ~~medium~~ **FIXED 2026-10-26** | under-deduction | MFJ real estate professional status applies only to qualifying spouse's own properties — i1040se p.3, i8582 p.2,5 / TRCS:30522, :30942-30944 | `new_knowledge/forms/schedule-e.md` |
-| D-sch-e-8 | medium | possible over-deduction | partnership/S-corp basis limits, Form 7203 not modelled — i1040se p.8,10 | `new_knowledge/forms/schedule-e.md` |
+| D-sch-e-8 | medium - **PARTLY FIXED 2026-10-26** (S corporation box 1 loss limited to the shareholder stock and debt basis, V389; partnership basis (Form 7203 analog for partners) still open) | possible over-deduction | partnership/S-corp basis limits, Form 7203 not modelled — i1040se p.8,10 | `new_knowledge/forms/schedule-e.md` |
 | D-8582-4 | ~~medium~~ **FIXED 2026-10-26** | over-deduction | K-1 / non-rental prior losses pooled with rentals and get allowance — i8582 p.10 / TRCS:31116-31121 | `new_knowledge/forms/8582.md` |
 | D-8582-5 | ~~medium~~ **FIXED 2026-10-26** | double deduction | bridge import skipped only when a property has its own entry, not K-1 entry | `new_knowledge/forms/8582.md` |
 | D-8582-6 | ~~medium~~ **FIXED 2026-10-26** | over/under | royalties pooled as passive unless material participation Yes — i8582 p.7, i1040se p.4 / TRCS:30962, :31020-31034 | `new_knowledge/forms/8582.md` |
@@ -609,7 +609,7 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 | D-8582-10 | ~~medium~~ **FIXED 2026-10-26** | over-deduction | Schedule F with no material participation deducted in full (Sch C = D-sch-c-1; overlaps D-sch-f-2) — i8582 p.3 / TRCS:27754-27758 | `new_knowledge/forms/8582.md` |
 | D-6198-2 | ~~medium~~ **FIXED 2026-10-26** | deduction lost | passive K-1 k1AtRiskSuspended preview-only, never persisted (comment at :7611 says carried) — i6198 p.2 | `new_knowledge/forms/6198.md` |
 | D-6198-3 | medium-low | over-deduction | one cap on net of all passive K-1s — i6198 p.2 / TRCS:3858-3871 | `new_knowledge/forms/6198.md` |
-| D-6198-7 | medium | possible over-deduction | 1120-S and 1041 losses not at-risk/basis limited — i1040se p.2,8 / TRCS:31514-31523 | `new_knowledge/forms/6198.md` |
+| D-6198-7 | medium - **PARTLY FIXED 2026-10-26** (S corporation box 1 loss limited to the shareholder stock and debt basis, V389; the 1041 at-risk limit still open) | possible over-deduction | 1120-S and 1041 losses not at-risk/basis limited — i1040se p.2,8 / TRCS:31514-31523 | `new_knowledge/forms/6198.md` |
 | D-8582-7 | low-medium | over-deduction | §280A(c)(5) home pooled; its income frees passive losses — i8582 p.3 | `new_knowledge/forms/8582.md` |
 | D-8582-9 | low-medium | loss lost | now-nonpassive property ignores its prior suspended loss — i8582 p.8-9 / TRCS:30992-30993 | `new_knowledge/forms/8582.md` |
 | D-8582-11 | low-medium | over-deduction | PTP losses pooled (K-1 item D not read) — i8582 p.15-16 | `new_knowledge/forms/8582.md` |
@@ -631,7 +631,7 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 |---|---|---|---|---|
 | D-8606-1 | ~~medium~~ **FIXED 2026-10-26** | silent (basis unrecorded; later over-tax) | 8606 inputs hidden unless "received money from IRA" Yes; Yes without IRA 1099-R blocks; IRA deduction phase-out not moved to line 1 — i8606 p.2,9, p590a p.16 / form-ira-income-taxpayer.component.ts:125-1020, TRCS:21494-21514, 4600-4690 | `new_knowledge/forms/8606.md` |
 | D-8606-2 | ~~medium~~ **FIXED 2026-10-26** | over-taxed if blank, silent | line 2 (and Roth 22/24) typed every year; no carryforward bridge from out_form_8606 line 14; help says tracked automatically; se_form_8606 dormant — i8606 p.8-10 / TRCS:21350, IRA form :1507,:1513 | `new_knowledge/forms/8606.md` |
-| D-8606-9 | medium | untaxed (same root D-4b-1) | no separate form per decedent for inherited IRA with basis — i8606 p.2,8, p590b p.6 | `new_knowledge/forms/8606.md` |
+| D-8606-9 | ~~medium~~ **FIXED 2026-10-26** | untaxed (same root D-4b-1) | no separate form per decedent for inherited IRA with basis — i8606 p.2,8, p590b p.6 | `new_knowledge/forms/8606.md` |
 | D-8606-3 | low-medium | under-taxed | line 22 help asks for all Roth contributions ever, no subtraction of prior distributions — i8606 p.14,18-20 / IRA form :1522 | `new_knowledge/forms/8606.md` |
 | D-8606-4 | low | under-taxed | line 6 omits outstanding rollovers / repayments; date-of-death value — i8606 p.9-10, p590b p.16 | `new_knowledge/forms/8606.md` |
 | D-8606-5 | low | small | Worksheet 1-1 special computation not modelled — i8606 p.10, p590b p.16-18 / TRCS:21370-21390 | `new_knowledge/forms/8606.md` |
@@ -664,7 +664,7 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 |---|---|---|---|---|
 | D-2555-1 | ~~high~~ **FIXED 2026-10-25** | silent | blank foreignWagesAmount → FEIE = full prorated $130,000; 8d can cancel unrelated income — i2555 p.1, f2555 p.3 / TRCS:9389-9391 — coordinator verified | `new_knowledge/forms/2555.md` |
 | D-2555-2 | ~~high~~ **FIXED 2026-10-25** | silent | blank date → 365 days; no overlap → 0 then treated as full year (Aug 14 start: $130,000 vs ~$49,900) — i2555 p.3,6 / TRCS:9417-9419, :9333-9335, :9359-9360, :9368-9369 — coordinator verified (blank dates → 365) | `new_knowledge/forms/2555.md` |
-| D-2555-3 | medium | not supported | tax home, bona fide residence treaty limit, 330 full days, US Gov pay, Cuba, US business days not checked — i2555 p.1-4 | `new_knowledge/forms/2555.md` |
+| D-2555-3 | ~~medium~~ **FIXED 2026-10-26** | not supported | tax home, bona fide residence treaty limit, 330 full days, US Gov pay, Cuba, US business days not checked — i2555 p.1-4 | `new_knowledge/forms/2555.md` |
 | D-2555-7 | ~~medium~~ **FIXED 2026-10-26** | line 16 understated | FEITW line 4 capital-gain excess modifications not applied (AMT copy does) — i1040gi p.37 / TRCS:12498-12509 | `new_knowledge/forms/2555.md` |
 | D-2555-9 | ~~medium~~ **FIXED 2026-10-26** | EIC wrongly allowed | EIC blocked only by self-attested hasForm2555, not computed form — i2555 p.3, i1040gi p.40 / TRCS:51119-51121 | `new_knowledge/forms/2555.md` |
 | D-2555-4 | low | wrong amount | line 36 = line 33 (no employer-provided share) — f2555 p.3, i2555 p.6 / TRCS:9373-9375 | `new_knowledge/forms/2555.md` |
@@ -684,7 +684,7 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 | D-2441-1 | ~~high~~ **FIXED 2026-10-25** | silent (credit 0 / too small for self-employed parent) | only non-W-2 earned-income field shows when "employer benefits" Yes; SE earnings never computed (overlaps D-1e-4) — i2441 p.4 / form-childcare-expenses.component.html:596,649, TRCS:38956-39073 | `new_knowledge/forms/2441.md` |
 | D-2441-2 | ~~medium~~ **FIXED 2026-10-26** | silent over-credit | no W-2 matching filer/spouse SSN → every W-2 in account counted (dependent's too; also on SSN format mismatch D-1e-2) — i2441 p.4, p17 p.10 / TRCS:38961, 38966-38968 | `new_knowledge/forms/2441.md` - closed by the person filter (ReturnStatementOwners, 2026-10-25) - re-verified by mutation |
 | D-2441-3 | ~~medium~~ **FIXED 2026-10-26** | blocked | child turning 13 in 2025 → non-overrideable block (should qualify for months under 13) — i2441 p.1 / TRCS:41855-41866 | `new_knowledge/forms/2441.md` |
-| D-2441-4 | medium | blocked / over-credit | custodial parent's non-dependent child → NOT_IN_FAMILY block; noncustodial parent listing child passes — i2441 p.1 / TRCS:41835-41851, :41884 | `new_knowledge/forms/2441.md` |
+| D-2441-4 | ~~medium~~ **FIXED 2026-10-26** | blocked / over-credit | custodial parent's non-dependent child → NOT_IN_FAMILY block; noncustodial parent listing child passes — i2441 p.1 / TRCS:41835-41851, :41884 | `new_knowledge/forms/2441.md` |
 | D-2441-8 | low-medium | silent | provider eligibility never checked; credit allowed with no provider — i2441 p.2-3 | `new_knowledge/forms/2441.md` |
 | D-2441-5 | low | over-credit | MFS question omits home-cost test — i2441 p.2 / TRCS:39060 | `new_knowledge/forms/2441.md` |
 | D-2441-6 | low | over-credit | line 3 = line 31 only when box 10 > 0 (grace-period benefits ignored) — f2441 p.1 / TRCS:39132 | `new_knowledge/forms/2441.md` |
@@ -700,7 +700,7 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 | D-8839-1 | ~~high~~ **FIXED 2026-10-25** | silent (credit a year early / prior-year expenses lost) | line 5 timing by finality year not modelled; one gross amount per child; help says "paid … in 2025" — i8839 p.3,5,7 / form-adoption-expenses.component.ts:554-555 | `new_knowledge/forms/8839.md` |
 | D-8839-2 | ~~medium~~ **FIXED 2026-10-26** | credit too high (MAGI > $259,190 with benefits) | line 7 uses phase-1 line 1f (root D-1f-1) — i8839 p.7 / TRCS:44251 | `new_knowledge/forms/8839.md` - closed by D-1f-1 |
 | D-8839-5 | ~~medium~~ **FIXED 2026-10-26** | under-credit | MFJ keeps only taxpayer form's line 15 carryforward — i8839 p.2 / TRCS:38686 | `new_knowledge/forms/8839.md` |
-| D-8839-8 | medium | over-credit (stepparent adoption) | under-18/disabled and spouse's-child rules not checked (root D-1f-8) — i8839 p.2 | `new_knowledge/forms/8839.md` |
+| D-8839-8 | ~~medium~~ **FIXED 2026-10-26** | over-credit (stepparent adoption) | under-18/disabled and spouse's-child rules not checked (root D-1f-8) — i8839 p.2 | `new_knowledge/forms/8839.md` |
 | D-8839-4 | low-medium | not supported (affects 2026) | 5-year carryforward not computed/stored; no bridge — i8839 p.7-8 | `new_knowledge/forms/8839.md` |
 | D-8839-9 | low-medium | blocked | foreign child not final → blocking flag even with no benefits (root D-1f-3) — i8839 p.3,5 / TRCS:39589-39597 | `new_knowledge/forms/8839.md` |
 | D-8839-3 | low | line 18 too high | Credit Limit Worksheet: Form 8396 runs after adoption credit so Sch 3 6g null — i8839 p.7 / TRCS:6909, 44377-44391 | `new_knowledge/forms/8839.md` |
@@ -724,7 +724,7 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 |---|---|---|---|---|
 | D-461-1 | ~~medium~~ **FIXED 2026-10-26** | 8p and NOL overstated | line 7a never enters aggregate; business §1231 gain lost ($500k loss + $100k gain → $187k vs $87k) — i461 p.1-2, i172 p.4 / TRCS:32297 | `new_knowledge/forms/461.md` |
 | D-461-3 | ~~medium~~ **FIXED 2026-10-26** | 8p wrong either way | passive K-1 items and passive rentals excluded — i461 p.1-2 / TRCS:32293-32298 | `new_knowledge/forms/461.md` |
-| D-461-4 | medium | attachment missing | no Form 461 output/preview/PDF — i461 p.1 | `new_knowledge/forms/461.md` |
+| D-461-4 | ~~medium~~ **FIXED 2026-10-26** | attachment missing | no Form 461 output/preview/PDF — i461 p.1 | `new_knowledge/forms/461.md` |
 | D-461-2 | low | 8p understated | K-1 portfolio royalties counted as business — i461 p.2 / TRCS:4394 | `new_knowledge/forms/461.md` |
 
 #### 172
@@ -732,8 +732,8 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 | Id | Severity | Effect | What is wrong (IRS source · code) | Detail |
 |---|---|---|---|---|
 | D-172-1 | ~~medium~~ **FIXED 2026-10-26** | NOL wrong | line 6 only std/itemized; line 7 only five income items (HSA $4k → NOL $54k vs $50k) — i172 p.4-5 / TRCS:7455-7458 | `new_knowledge/forms/172.md` |
-| D-172-4 | medium | carryback wrong | farming loss 2-year carryback / waiver not supported — i172 p.2 / TRCS:7488-7489 | `new_knowledge/forms/172.md` |
-| D-172-5 | medium | printed form wrong (tax unaffected) | preview puts values on wrong lines; NOL line blank — i172 p.3 / form-tax-return-172.component.ts:180-192 | `new_knowledge/forms/172.md` |
+| D-172-4 | ~~medium~~ **FIXED 2026-10-26** | carryback wrong | farming loss 2-year carryback / waiver not supported — i172 p.2 / TRCS:7488-7489 | `new_knowledge/forms/172.md` |
+| D-172-5 | ~~medium~~ **FIXED 2026-10-26** | printed form wrong (tax unaffected) | preview puts values on wrong lines; NOL line blank — i172 p.3 / form-tax-return-172.component.ts:180-192 | `new_knowledge/forms/172.md` |
 | D-172-2 | low | NOL overstated | business capital items lines 10–14 not computed — i172 p.5 / TRCS:7450-7461 | `new_knowledge/forms/172.md` |
 | D-172-3 | low | pre-2018 NOL under-deducted | single amount with 80% limit; no oldest-first — i172 p.1-2 / TRCS:7420-7423 | `new_knowledge/forms/172.md` |
 | D-172-6 | low | missing attachment | 80% limitation statement — i172 p.6 | `new_knowledge/forms/172.md` |
@@ -745,7 +745,7 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 | Id | Severity | Effect | What is wrong (IRS source · code) | Detail |
 |---|---|---|---|---|
 | D-982-1 | ~~medium~~ **FIXED 2026-10-26** | under-reported income (MFJ) | title 11 Yes on either spouse's form excludes all canceled debt of both, incl. debt canceled outside the case — i982 p.1-3 / TRCS:31967-31968, :31990-31994 | `new_knowledge/forms/982.md` |
-| D-982-2 | medium | silent | farm debt exclusion uncapped (attributes + basis), 50% gross-receipts and lender tests not asked — i982 p.2 / TRCS:31999, :55302 | `new_knowledge/forms/982.md` |
+| D-982-2 | ~~medium~~ **FIXED 2026-10-26** | silent | farm debt exclusion uncapped (attributes + basis), 50% gross-receipts and lender tests not asked — i982 p.2 / TRCS:31999, :55302 | `new_knowledge/forms/982.md` |
 | D-982-3 | ~~medium~~ **FIXED 2026-10-26** | silent | QRPBI excess over FMV/basis limits not added back — i982 p.3 / TRCS:32001, :55388-55394 | `new_knowledge/forms/982.md` |
 | D-982-4 | low-medium | MTC carryforward overstated | line 8 minimum tax credit reduction skipped though 8801 line 26 computed — i982 p.2 / TRCS:55480, :6867, :45229 | `new_knowledge/forms/982.md` |
 | D-982-5 | low | silent | QPRI $750k/$375k cap applies only when loan fields entered — i982 p.1,3 / TRCS:53457-53469 | `new_knowledge/forms/982.md` |
@@ -757,7 +757,7 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 | D-8889-1 | ~~medium~~ **FIXED 2026-10-26** | over-deduction | family limit split only on MFJ; MFS each spouse gets $8,550 — i8889 p.4,7 / TRCS:2909-2931 | `new_knowledge/forms/8889.md` |
 | D-8889-2 | ~~medium~~ **FIXED 2026-10-26** | under-reported income | excess employer contributions in excise base but never added to income — i8889 p.8 / TRCS:10136 | `new_knowledge/forms/8889.md` |
 | D-8889-3 | ~~medium~~ **FIXED 2026-10-26** | tax overstated on MFS | HSA excise summed for taxpayer + spouse with no MFS guard — TRCS:3391-3399, :5370-5376, MfsFormScoper.java:780-791 | `new_knowledge/forms/8889.md` |
-| D-8889-8 | medium | filed form not produced | preview reads non-existent form8889 key; header empty — i8889 p.1,4 / form-tax-return-8889.component.ts:99,169-171, TRCS:10013 | `new_knowledge/forms/8889.md` |
+| D-8889-8 | ~~medium~~ **FIXED 2026-10-26** | filed form not produced | preview reads non-existent form8889 key; header empty — i8889 p.1,4 / form-tax-return-8889.component.ts:99,169-171, TRCS:10013 | `new_knowledge/forms/8889.md` |
 | D-8889-4 | low-medium | over-deduction | dependent filer HSA deduction not blocked (someoneCanClaimYou not read) — i8889 p.4 / TRCS:14423 | `new_knowledge/forms/8889.md` |
 | D-8889-5 | low | wrong limit | line 3 not month-by-month for coverage switch — i8889 p.6 / TRCS:9628-9635 | `new_knowledge/forms/8889.md` |
 | D-8889-6 | low | rare | non-spouse beneficiary FMV (box 4), codes 5/6 not recognised — i8889 p.3, i1099sa--2025 p.2-3 / TRCS:10228-10242 | `new_knowledge/forms/8889.md` |
@@ -770,7 +770,7 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 | Id | Severity | Effect | What is wrong (IRS source · code) | Detail |
 |---|---|---|---|---|
 | D-8853-1 | ~~medium~~ **FIXED 2026-10-26** | Sch 2 17e/17f overstated on MFS | lines 9b/13b summed without MFS guard — TRCS:2980, :10727-10745 | `new_knowledge/forms/8853.md` |
-| D-8853-7 | medium | filed form not produced | preview passes no values; header empty — i8853 p.1 / form-tax-return-8853.component.ts:8, TRCS:10581 | `new_knowledge/forms/8853.md` |
+| D-8853-7 | ~~medium~~ **FIXED 2026-10-26** | filed form not produced | preview passes no values; header empty — i8853 p.1 / form-tax-return-8853.component.ts:8, TRCS:10581 | `new_knowledge/forms/8853.md` |
 | D-8853-2 | low-medium | over/under-taxed | 20% exemption all-or-nothing checkbox; no age-65 / code 3/4 — i8853 p.6 / TRCS:9880-9881 | `new_knowledge/forms/8853.md` |
 | D-8853-3 | low | tax overstated | MA MSA additional 50% worksheet not applied — i8853 p.7 / TRCS:9894-9895 | `new_knowledge/forms/8853.md` |
 | D-8853-4 | low | over-deduction | line 3 full-year 65/75%; MFS family 37.5%; deductible range — i8853 p.2-5 / TRCS:9844-9859 | `new_knowledge/forms/8853.md` |
@@ -783,12 +783,12 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 | Id | Severity | Effect | What is wrong (IRS source · code) | Detail |
 |---|---|---|---|---|
 | D-7206-2 | ~~high~~ **FIXED 2026-10-25** | deduction lost, silent | partner with K-1 box 14A only gets no line 17 (14A not in net-for-SE; no Sch C/F → null) — i7206 p.1 / TRCS:28970-28972, :29726-29728 | `new_knowledge/forms/7206.md` |
-| D-2106-2 | medium | over-claim | reservist travel >100 miles / per diem cap not applied — i2106 p.3 / TRCS:10308-10314 | `new_knowledge/forms/2106.md` |
-| D-2106-5 | medium | form missing | combined "attach" marker only; preview blank, listed on every return — i2106 p.3-4 / TRCS:38219-38226, shell.component.ts:1790 | `new_knowledge/forms/2106.md` |
+| D-2106-2 | ~~medium~~ **FIXED 2026-10-26** | over-claim | reservist travel >100 miles / per diem cap not applied — i2106 p.3 / TRCS:10308-10314 | `new_knowledge/forms/2106.md` |
+| D-2106-5 | ~~medium~~ **FIXED 2026-10-26** | form missing | combined "attach" marker only; preview blank, listed on every return — i2106 p.3-4 / TRCS:38219-38226, shell.component.ts:1790 | `new_knowledge/forms/2106.md` |
 | D-3903-1 | ~~medium~~ **FIXED 2026-10-26** | income understated | code P excess to 1h only when costs > 0 AND active-duty Yes; blank costs → never — f3903 p.1, i3903 p.1-2 / TRCS:10392-10402 | `new_knowledge/forms/3903.md` |
-| D-3903-3 | medium | form missing | combined marker; preview blank; one amount per person — f3903 p.1 / TRCS:38228-38235 | `new_knowledge/forms/3903.md` |
+| D-3903-3 | ~~medium~~ **FIXED 2026-10-26** | form missing | combined marker; preview blank; one amount per person — f3903 p.1 / TRCS:38228-38235 | `new_knowledge/forms/3903.md` |
 | D-7206-1 | ~~medium~~ **FIXED 2026-10-26** | wrong either way | limit pools all Sch C/F profit (losses netted) with whole ½ SE / line 16 ($18,587 vs $48,587; $60,408 vs $4,647) — f7206 p.1, i7206 p.2 / TRCS:29731-29749, :29806 | `new_knowledge/forms/7206.md` |
-| D-7206-8 | medium | form missing | no 7206 output / marker; preview blank on every return — i7206 p.1 / shell.component.ts:1649-1651 | `new_knowledge/forms/7206.md` |
+| D-7206-8 | ~~medium~~ **FIXED 2026-10-26** | form missing | no 7206 output / marker; preview blank on every return — i7206 p.1 / shell.component.ts:1649-1651 | `new_knowledge/forms/7206.md` |
 | D-7206-5 | low-medium | overstated | employer-plan eligibility months: only all-12-months zeroes; Medicare never reduced; dependent/under-27 employer not asked — i7206 p.2, i1040gi p.94 / TRCS:29801-29805 | `new_knowledge/forms/7206.md` |
 | D-2106-1 | low | income understated | reimbursement over expenses (col. A excess) not added to 1a — f2106 p.1 / TRCS:52396 | `new_knowledge/forms/2106.md` |
 | D-2106-3 | low | trusted entry | Part II vehicle not modelled — f2106 p.2, i2106 p.4-8 | `new_knowledge/forms/2106.md` |
@@ -875,7 +875,7 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 | Id | Severity | Effect | What is wrong (IRS source · code) | Detail |
 |---|---|---|---|---|
 | D-1099-nec-1 | ~~medium~~ **FIXED 2026-10-26** | silent (no Sch C/SE; withholding still credited) | 1099-NEC box 1 / 1099-K box 1a read only inside per-business loop; with no business entered nothing reads them, no flag; Employment form says 1099-NEC "not supported" — f1099nec p.5, i1040sc p.5 / TRCS:26908-26914, form-employment-taxpayer.component.ts:115 | `new_mappings/1099-nec.md` |
-| D-1099-nec-2 | medium | 13b understated | uploaded 1099-NEC tips count only when isTipIncome true (never set; mapper writes null); 1099-MISC/K never read for tips; screen says tips read from statements — i1040gi p.101 / TRCS:54804-54816, Form1099NecMapper.java:137, form-additional-deductions.component.html:64,156 | `new_mappings/1099-nec.md` |
+| D-1099-nec-2 | ~~medium~~ **FIXED 2026-10-26** | 13b understated | uploaded 1099-NEC tips count only when isTipIncome true (never set; mapper writes null); 1099-MISC/K never read for tips; screen says tips read from statements — i1040gi p.101 / TRCS:54804-54816, Form1099NecMapper.java:137, form-additional-deductions.component.html:64,156 | `new_mappings/1099-nec.md` |
 | D-1099-nec-3 | low | tax understated | box 3 golden parachute (Sch 2 17k) never read — i1040gi p.114 / TRCS:43350-43361 | `new_mappings/1099-nec.md` |
 | D-1099-nec-4 | low | usability | 1099-NEC/K hidden on dependent tab yet compute builds dependent Sch C from them / statement-selection.service.ts:133-134, TRCS:677-693 | `new_mappings/1099-nec.md` |
 | D-1099-k-1 | low | deduction overstated | Sch A 5a MFS filter uses STATEMENT_PERSON_TIN_KEYS without payeeTIN → every household 1099-K box 8 on both legs — i1040sca_2025 p.3 / TRCS:8542-8543, 8562-8573 | `new_mappings/1099-k.md` |
@@ -955,8 +955,8 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 | D-1095-a-5 | ~~medium~~ **FIXED 2026-10-26** | understated repayment / double count | MFS leg drops other spouse's 1095-As before 50% allocation; blank/dependent SSN 1095-As on both legs — i8962_2025 p.17,19 / TRCS:6197-6206 | `new_mappings/1095-a.md` |
 | D-1095-a-6 | ~~medium~~ **FIXED 2026-10-26** | double credit/repayment | HoH-split legs (Exception 1) unfiltered — both spouses' 1095-As on each leg — i8962_2025 p.19 / TRCS:6197, :3548, MfsFormScoper.java:850-861 | `new_mappings/1095-a.md` |
 | D-1095-a-7 | ~~medium~~ **FIXED 2026-10-26** | blocking | last-4 recipient SSN ("XXX-XX-1234") / former spouse SSN → STATEMENT_DOES_NOT_BELONG_TO_FAMILY — i1095a p.1, i8962_2025 p.2,18 / TRCS:53713-53719, :13892-13915 | `new_mappings/1095-a.md` |
-| D-1095-b-1 | medium | overstated credit | other MEC eligibility (Medicaid/Medicare/CHIP/employer) not considered; 1095-B never loaded — i8962_2025 p.5 / TRCS:12892-12960 | `new_mappings/1095-b.md` |
-| D-1095-c-1 | medium | overstated credit | affordable employer offer / enrollment (lines 14–16, Part III) never read; employerCoverageNotAffordable only copied to output — i8962_2025 p.5, f1095c p.2,4 / TRCS:12823, Form8962OutputMapper.java:77,179 | `new_mappings/1095-c.md` |
+| D-1095-b-1 | ~~medium~~ **FIXED 2026-10-26** | overstated credit | other MEC eligibility (Medicaid/Medicare/CHIP/employer) not considered; 1095-B never loaded — i8962_2025 p.5 / TRCS:12892-12960 | `new_mappings/1095-b.md` |
+| D-1095-c-1 | ~~medium~~ **FIXED 2026-10-26** | overstated credit | affordable employer offer / enrollment (lines 14–16, Part III) never read; employerCoverageNotAffordable only copied to output — i8962_2025 p.5, f1095c p.2,4 / TRCS:12823, Form8962OutputMapper.java:77,179 | `new_mappings/1095-c.md` |
 | D-1095-a-8 | low | silent | Part II covered individuals saved never read — f1095a p.3, i8962_2025 p.14,19 / Form1095AMapper.java:169-189 | `new_mappings/1095-a.md` |
 | D-1095-a-9 | low | edge | monthly rows read by position, monthName ignored; annualTotals never read — f1095a p.3 / TRCS:12903-12904 | `new_mappings/1095-a.md` |
 | D-1095-b-2 | low | blocking | truncated / outside-household responsible individual SSN → family check blocks a statement compute never reads — StatementSsnRules.java:87 | `new_mappings/1095-b.md` |
@@ -968,8 +968,8 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 |---|---|---|---|---|
 | D-k1-1065-2 | ~~high~~ **FIXED 2026-10-25** | silent income omission (SE tax still charged via 14A) | guaranteed payments 4a/4b/4c never income (only community-property table reads 4c) — i1065sk1 p.15 / CommunityProperty.java:592, TRCS:4291, 4394 — coordinator verified | `new_mappings/schedule-k1-1065.md` |
 | D-k1-1065-3 / D-k1-1120s-2 / D-k1-1041-9 | ~~high~~ **FIXED 2026-10-25** | silent: K-1 QBI never on 13a | section199A* keys compute reads have no input on K-1 screens; save writes null; QBI form says "no need to re-enter"; blocking check keyed on unwritten key — i1065sk1 p.29-30, i1120ssk p.17-18, i1041sk1 p.4 / TRCS:17572-17620, 17960-18010, 17488-17510, ScheduleK1Form1065Mapper.java:110-116 | `new_mappings/schedule-k1-1065.md` |
-| D-k1-1065-1 | medium | silent rows lost | screen slot→key map (from mislabelled pdfs CSV) saves 23 Part III inputs under another box's key (box 11 row 2 → line 12, box 12 → 13 row 1, box 14 row 2 → 15, box 17 rows 2-3 → 18, box 20 row 4 → 21 …); extraction matches — f1065sk1 p.1 / form-schedule-k1-1065.component.ts:272-311, GenericFieldMapper.java:2693-2735, pdfs/schedule_k1_form_1065_field_map_semantic.csv | `new_mappings/schedule-k1-1065.md` |
-| D-k1-1041-1 | medium | silent (rows misread as AMT, wrong sign; credit counted as farm income) | boxes 11/12/13/14 print 5/5/3/6 rows; screen + extraction assume 3/3/5/8 — fk1041 p.1, i1041sk1 p.2-4 / form-schedule-k1-1041 UI:203-240, GenericFieldMapper.java:2901-2922, TRCS:31626-31634, Form2210FGrossIncome.java:62-68 | `new_mappings/schedule-k1-1041.md` |
+| D-k1-1065-1 | ~~medium~~ **FIXED 2026-10-26** | silent rows lost | screen slot→key map (from mislabelled pdfs CSV) saves 23 Part III inputs under another box's key (box 11 row 2 → line 12, box 12 → 13 row 1, box 14 row 2 → 15, box 17 rows 2-3 → 18, box 20 row 4 → 21 …); extraction matches — f1065sk1 p.1 / form-schedule-k1-1065.component.ts:272-311, GenericFieldMapper.java:2693-2735, pdfs/schedule_k1_form_1065_field_map_semantic.csv | `new_mappings/schedule-k1-1065.md` |
+| D-k1-1041-1 | ~~medium~~ **FIXED 2026-10-26** | silent (rows misread as AMT, wrong sign; credit counted as farm income) | boxes 11/12/13/14 print 5/5/3/6 rows; screen + extraction assume 3/3/5/8 — fk1041 p.1, i1041sk1 p.2-4 / form-schedule-k1-1041 UI:203-240, GenericFieldMapper.java:2901-2922, TRCS:31626-31634, Form2210FGrossIncome.java:62-68 | `new_mappings/schedule-k1-1041.md` |
 | D-k1-1065-4 / D-k1-1120s-3 | medium | silent | box 11 / box 10 other income codes never read — i1065sk1 p.16-18, i1120ssk p.8-9 | `new_mappings/schedule-k1-1065.md` |
 | D-k1-1065-5 / D-k1-1120s-4 | medium | deduction lost | box 13 / box 12 deductions never read — i1065sk1 p.18-21, i1120ssk p.10-12 | `new_mappings/schedule-k1-1065.md` |
 | D-k1-1065-6 / D-k1-1120s-5 | medium | refund understated | credits code O backup withholding (25c), code H (Sch 3 13a) never read — i1065sk1 p.22-23, i1120ssk p.13 | `new_mappings/schedule-k1-1065.md` |
@@ -990,7 +990,7 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 |---|---|---|---|---|
 | D-1042-s-1 | ~~medium~~ **FIXED 2026-10-26** | payments/refund understated | 1042-S withholding never read; 25c = W-2G + 8959 only — i1040gi p.39, i1042s--2025 p.29 / TRCS:49822-49851, :49642 | `new_mappings/1042-s.md` |
 | D-2439-1 | ~~medium~~ **FIXED 2026-10-26** | refundable credit overstated | Sch 3 13a credit loops all household 2439s without person filter (box 1a is filtered) — i1040sd p.6 / TRCS:48229-48236, 25277-25280 | `new_mappings/2439.md` - closed by the person filter (ReturnStatementOwners, 2026-10-25) - re-verified by mutation |
-| D-3921-1 | medium | AMT income overstated | same-year ISO disposition exclusion key has no column/UI → every exercise added to 6251 line 2i — i6251 p.4, p525 p.12 / TRCS:36428 | `new_mappings/3921.md` |
+| D-3921-1 | ~~medium~~ **FIXED 2026-10-26** | AMT income overstated | same-year ISO disposition exclusion key has no column/UI → every exercise added to 6251 line 2i — i6251 p.4, p525 p.12 / TRCS:36428 | `new_mappings/3921.md` |
 | D-3921-2 | ~~medium~~ **FIXED 2026-10-26** | 2i understated/dropped | boxes 3–5 parseFloat ("1,000" → 1) — form-3921.component.ts:867-869 | `new_mappings/3921.md` |
 | D-2439-2 | low-medium | wrong person's Sch D | UI binds shareholderTin, mapper prefers shareholderTIN → TIN can't change after first save — f2439 p.3 / Form2439Mapper.java:116-119 | `new_mappings/2439.md` |
 | D-1099-ptr-2 | low-medium | wrong amount / blocking | box 6 §199A(g) and box 7 patron reduction never read; answering patron question blocks — f1099ptr p.4, i1040sf p.1, i1040gi p.34 / TRCS:4073, 17448-17454 | `new_mappings/1099-ptr.md` |

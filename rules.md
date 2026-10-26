@@ -540,3 +540,20 @@ to an activity is carried forward with a note, not released against whichever ac
 the eight MACRS mid-quarter rows in the engine were wrong - none of the six totalled 100% - and had been used live. Any percentage
 table copied into the code (MACRS, AMT, locality limits) gets a unit test that compares it to the IRS PDF figures or
 to a generator that reproduces them; a depreciation row must total exactly 100%.
+
+**A statement belongs to the return of the person it was issued to (2026-10-25, D-1a-1 and root causes 1-2).** Every
+compute read of a household statement list goes through `ownEntries()` / `ReturnStatementOwners`: an entry whose person
+field is another household member's SSN is left off this return (income AND withholding together). A blank person field
+stays on the primary / MFS-head return (advisory) and is dropped on the MFS-spouse leg and a dependent's own return. A
+new statement type gets its person field in `ReturnStatementOwners.OWNER_FIELD`, `StatementSsnRules` and the UI
+`newEntrySeed`; a new statement read in TaxReturnComputeService uses `ownEntries`, never `listEntriesWithData` (except a
+consumer that legitimately reads another person's statements, like Form 8814, with a comment saying so).
+
+**A box the screen says is "applied automatically" must be read by compute (2026-10-25, root cause 3).** 1099-G box 1,
+W-2G box 1/7, 1099-C box 2, K-1 guaranteed payments, K-1 net section 1231 and K-1 QBI were saved and never read. When a
+statement amount and a typed amount describe the same line, say which wins (additive, floor, or typed-wins) in the code
+comment and in the screen's help text, and raise an advisory when they disagree.
+
+**A blank date or amount never means "the most generous answer" (2026-10-25, D-2555-1/2).** A missing qualifying period or
+wage figure excludes nothing and blocks; it is not 365 days or "no limit".
+

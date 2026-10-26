@@ -120,7 +120,7 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 
 | Id | Severity | Effect | What is wrong (IRS source · code) | Detail |
 |---|---|---|---|---|
-| D-1e-2 | medium-high | silent | box 10 SSN match is trimmed text not digits; dash/no-dash mismatch drops box 10 + earned income — i2441 p.5 / TRCS:41252, :41661 | `new_knowledge/1e.md` |
+| D-1e-2 | ~~medium-high~~ **FIXED 2026-10-26** | silent | box 10 SSN match is trimmed text not digits; dash/no-dash mismatch drops box 10 + earned income — i2441 p.5 / TRCS:41252, :41661 | `new_knowledge/1e.md` |
 | D-1e-1 | medium | silent wrong amount | blank total-care-expenses → 2441 line 16 includes the benefits themselves (IRS example $2,000 benefits/$900 expenses gives $0 vs $1,100); pinned by unit :13417 + e2e; UI hint describes different default — i2441 p.5 / TRCS:38936-38943 | `new_knowledge/1e.md` |
 | D-1e-4 | medium | not supported, silent unless typed | earned income lacks net SE earnings, 1b, 1d, strike benefits, combat-pay election — i2441 p.4-5, p503 p.4,11 / TRCS:38977-38982 | `new_knowledge/1e.md` |
 | D-1e-5 | medium | wrong exclusion | student/disabled deemed income applied to taxpayer on every filing status (only on joint) — p503 p.11 / TRCS:39017-39018 | `new_knowledge/1e.md` |
@@ -165,7 +165,7 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 
 | Id | Severity | Effect | What is wrong (IRS source · code) | Detail |
 |---|---|---|---|---|
-| D-1g-2 | medium-high | silent wrong tax (Roth excise) / false blocker (trad IRA) | computeIraCompensation omits line 1g; 5329 treats missing comp as 0 ($20k 8919 wages + $3k Roth → $180 excise); same root as D-1b-6 — p590a p.6 / TRCS:41140-41148, :35434 | `new_knowledge/1g.md` |
+| D-1g-2 | ~~medium-high~~ **FIXED 2026-10-26** | silent wrong tax (Roth excise) / false blocker (trad IRA) | computeIraCompensation omits line 1g; 5329 treats missing comp as 0 ($20k 8919 wages + $3k Roth → $180 excise); same root as D-1b-6 — p590a p.6 / TRCS:41140-41148, :35434 | `new_knowledge/1g.md` |
 | D-1g-3 | medium | silent double count + SE tax | single business with blank gross receipts auto-fills 1099-NEC total incl. the 8919 firm's — f8919 p.2 / TRCS:26914, :26925-26927, :28924-28950 | `new_knowledge/1g.md` |
 | D-1g-4 | medium | penalty base overstated | Form 2210 line 2 = Sch 2 line 21 incl. lines 5/6/7/13 (4137, 8919) which "tax shown" excludes; also 2210-F — i1040gi p.65, i2210 p.2 / TRCS:50279-50282, :43920-43933, :50850 | `new_knowledge/1g.md` |
 | D-1g-1 | low | not supported, silent | dependent tab has no Form 8919 — p17 p.10 / shell.component.ts:1373-1374, DependentOwnFormScoper | `new_knowledge/1g.md` |
@@ -209,7 +209,7 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 
 | Id | Severity | Effect | What is wrong (IRS source · code) | Detail |
 |---|---|---|---|---|
-| D-1z-1 | medium-high | wrong amounts + false blocker | rebuilt wage figures read W-2s only — Form 4852 wages missing from SS worksheet line 3, IRA-MAGI, EIC, 2441, IRA compensation, §469 MAGI, §179 limit — f4852 p.1, i1040gi p.32,42, i2441 p.4 / TRCS:33967-33969, 4537-4539, 51221, 38961-38965, 41140-41148, 3822, 4063 | `new_knowledge/1z.md` |
+| D-1z-1 | ~~medium-high~~ **FIXED 2026-10-26** | wrong amounts + false blocker | rebuilt wage figures read W-2s only — Form 4852 wages missing from SS worksheet line 3, IRA-MAGI, EIC, 2441, IRA compensation, §469 MAGI, §179 limit — f4852 p.1, i1040gi p.32,42, i2441 p.4 / TRCS:33967-33969, 4537-4539, 51221, 38961-38965, 41140-41148, 3822, 4063 | `new_knowledge/1z.md` |
 | D-1z-3 | medium | EIC understated, silent | EIC rebuild takes only disability part of 1h (overlaps D-1h-10) — i1040gi p.42 / TRCS:51266-51270 | `new_knowledge/1z.md` |
 | D-1z-4 | medium | MAGI too low → rental allowance too large | §469 MAGI wage part = W-2 box 1 only; no 1b–1h, no 4852, no person filter — i8582 p.11 / TRCS:3821-3827 | `new_knowledge/1z.md` |
 | D-1z-5 | low-medium | §179 limit too high | Form 4562 line 11 uses raw box 1 of every W-2 in account — i4562 p.5 / TRCS:4063 | `new_knowledge/1z.md` |
@@ -246,7 +246,7 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 | Id | Severity | Effect | What is wrong (IRS source · code) | Detail |
 |---|---|---|---|---|
 | D-3b-1 | ~~high~~ **FIXED 2026-10-25** | silent | K-1 dividends from every K-1 in account (dependent's on parent's 3a/3b; parents' on child's own) — same root as D-2b-1/D-1a-1 — i8814 p.3, i1065sk1 p.15, i1120ssk p.7, i1041sk1 p.2 / TRCS:3720-3723, 31667-31679, 36079-36106 | `new_knowledge/3b.md` |
-| D-3c-1 | medium-high | wrong 3a/3b/8z/7a/16, or non-overridable block | Form 8814 auto-built for every dependent with 1099-INT/DIV; "Are you electing…?" never saved/read; >$13,500 blocks with no override — i8814 p.1-2 / TRCS:24352-24384, :24619-24638 — coordinator verified (TRCS:24374-24384 builds per dependent with statements; electionMade is UI-only state form-child-interest-dividends.component.ts:448,614) | `new_knowledge/3c.md` |
+| D-3c-1 | ~~medium-high~~ **FIXED 2026-10-26** | wrong 3a/3b/8z/7a/16, or non-overridable block | Form 8814 auto-built for every dependent with 1099-INT/DIV; "Are you electing…?" never saved/read; >$13,500 blocks with no override — i8814 p.1-2 / TRCS:24352-24384, :24619-24638 — coordinator verified (TRCS:24374-24384 builds per dependent with statements; electionMade is UI-only state form-child-interest-dividends.component.ts:448,614) | `new_knowledge/3c.md` |
 | D-3b-2 | medium | silent understatement | person whose "had dividend income" is not Yes gets nothing even with 1099-DIVs under their SSN; no flag — i1040gi p.26 / TRCS:19932-19934 | `new_knowledge/3b.md` |
 | D-3c-2 | medium | election where not allowed | child-eligibility not checked from data (W-2/other income, box 4 withholding); disabled passes at any age; Jan 1 birthday rule missed — i8814 p.1 / TRCS:24324-24326, :42112-42123 | `new_knowledge/3c.md` |
 | D-3c-3 | medium | double reporting | MFS: hand-entered children household-wide; line 9 can land on both spouses' returns (advisory only) — i8814 p.1-2 / TRCS:24475-24520, ChildInterestDividendsMapper.java:86 | `new_knowledge/3c.md` |
@@ -571,7 +571,7 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 
 | Id | Severity | Effect | What is wrong (IRS source · code) | Detail |
 |---|---|---|---|---|
-| D-sch-f-1 | medium-high | SE tax too low, silent | farm with line E "No" left out of Sch SE (also EIC earned income, SE health/retirement limits, 2210-F gross farm income) — i1040sf p.9, i1040sse p.3-4 / TRCS:27662, 27755-27759, 7091 | `new_knowledge/forms/schedule-f.md` |
+| D-sch-f-1 | ~~medium-high~~ **FIXED 2026-10-26** | SE tax too low, silent | farm with line E "No" left out of Sch SE (also EIC earned income, SE health/retirement limits, 2210-F gross farm income) — i1040sf p.9, i1040sse p.3-4 / TRCS:27662, 27755-27759, 7091 | `new_knowledge/forms/schedule-f.md` |
 | D-sch-f-2 | medium | silent | line E "No": no Form 8582 step; passive farm income not in 8960 line 4a (same root D-sch-c-1) — i1040sf p.3,9, i8960 p.5,8 / TRCS:5524-5530, 43506-43601 | `new_knowledge/forms/schedule-f.md` |
 | D-sch-f-3 | medium | silent | line 12 conservation expenses no 25% cap / carryforward — i1040sf p.6 / TRCS:27637-27639 | `new_knowledge/forms/schedule-f.md` |
 | D-sch-f-4 | medium-low | silent | line 6d 2024 deferred crop insurance not asked; UI labels 2026 deferral "6d"; cropInsuranceDeferredAmount never read — i1040sf p.5 / form-farm-income.component.ts:178 | `new_knowledge/forms/schedule-f.md` |
@@ -597,7 +597,7 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 | D-8582-1 | ~~high~~ **FIXED 2026-10-25** | over-deduction, silent | passive income spent on other-passive losses first; rental +10k/−20k + K-1 −10k → app 30k vs IRS 20k — f8582 p.1, i8582 p.11 / TRCS:30442-30444 | `new_knowledge/forms/8582.md` |
 | D-8582-2 | ~~high~~ **FIXED 2026-10-25** | over-deduction, silent | one qualifying disposition releases the whole rental pool's suspended losses — i8582 p.1,9 / TRCS:31041, :30448-30450 — coordinator verified (single anyDisposed switch) | `new_knowledge/forms/8582.md` |
 | D-6198-1 | ~~high~~ **FIXED 2026-10-25** | deduction lost, silent | nonpassive 1065 box 1 loss capped at capital contributed this year + ending recourse + QNR; beginning capital ignored; excess dropped — i6198 p.2-4, i1065sk1 p.12 / TRCS:31537-31543 | `new_knowledge/forms/6198.md` |
-| D-8582-3 | medium-high | over-deduction | one pool-wide active-participation switch (same root D-4835-2) — i8582 p.10 / TRCS:31040, :30440 | `new_knowledge/forms/8582.md` |
+| D-8582-3 | ~~medium-high~~ **FIXED 2026-10-26** | over-deduction | one pool-wide active-participation switch (same root D-4835-2) — i8582 p.10 / TRCS:31040, :30440 | `new_knowledge/forms/8582.md` |
 | D-sch-e-3 | medium | silent omission | K-1 (1041) boxes 5/7/8 stored never read — i1041sk1 p.2, i1040se p.10 / ScheduleK1Form1041Mapper.java:151-155 | `new_knowledge/forms/schedule-e.md` |
 | D-sch-e-5 | medium-low | overstated interest | personal-use day split runs before Form 1098 link; linked 1098 never split by days — i1040se p.5 / TRCS:2621 vs :3550 | `new_knowledge/forms/schedule-e.md` |
 | D-sch-e-7 | medium | under-deduction | MFJ real estate professional status applies only to qualifying spouse's own properties — i1040se p.3, i8582 p.2,5 / TRCS:30522, :30942-30944 | `new_knowledge/forms/schedule-e.md` |
@@ -868,7 +868,7 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 
 | Id | Severity | Effect | What is wrong (IRS source · code) | Detail |
 |---|---|---|---|---|
-| D-ui-1 | medium-high | silent sign flip | shared UI parser parseAmountAndNotes treats only "(1,000)" as negative; a leading minus is dropped ("-1000.00" → 1000, "-" into notes). Used by 40 statement screens (W-2 family, every 1099, 1098s, 5498s, SSA/RRB, 1042-S, 3922). Any legitimately negative box typed with "-" or re-saved after load (load writes "-1000.00") becomes positive: SSA/RRB box 5, 1099-B boxes 8–11 (§1256 losses → gains), 1099-OID box 8 deflation, etc. / us-tax-ui/src/app/utils/amount-notes-parser.ts:18 — coordinator verified | `us-tax-ui/src/app/utils/amount-notes-parser.ts` |
+| D-ui-1 | ~~medium-high~~ **FIXED 2026-10-26** | silent sign flip | shared UI parser parseAmountAndNotes treats only "(1,000)" as negative; a leading minus is dropped ("-1000.00" → 1000, "-" into notes). Used by 40 statement screens (W-2 family, every 1099, 1098s, 5498s, SSA/RRB, 1042-S, 3922). Any legitimately negative box typed with "-" or re-saved after load (load writes "-1000.00") becomes positive: SSA/RRB box 5, 1099-B boxes 8–11 (§1256 losses → gains), 1099-OID box 8 deflation, etc. / us-tax-ui/src/app/utils/amount-notes-parser.ts:18 — coordinator verified | `us-tax-ui/src/app/utils/amount-notes-parser.ts` |
 
 #### mappings: 1099-MISC / NEC / K
 

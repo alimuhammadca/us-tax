@@ -1,3 +1,8 @@
+## 2026-10-26T15:30:00-04:00 - Partnership basis limit (V391, D-sch-e-8); 1041 at-risk closed (D-6198-7)
+- IRC 704(d): per-partnership rows on the Suspended passive losses (K-1) input form (owner-approved placement) - EIN, name, basis at year end before losses, loss suspended by the basis limit in earlier years. Each matching K-1 (1065) box 1 loss plus that carryover is capped at the basis before the at-risk and passive rules (order per i1065sk1 "Limitations on Losses"); the rest carries forward with an advisory. Item L is not used as basis (i1065sk1).
+- 1041 at-risk: closed without code - the estate or trust applies section 465 on its own Form 6198 (i6198 "Who Must File"); i1041sk1 boxes 6-8 name only section 469, whose beneficiary rules "haven't yet been issued".
+- Tests: PartnershipBasisLimitTest; e2e partnership-basis-limit.spec.ts. Unit 4,838/4,838; related e2e 23/23.
+
 ## 2026-10-26T13:30:00-04:00 - Last owner-approved medium fields (V390, input forms only)
 - Owner approved D-5b-3, D-4684-2/3, D-6781-1 and D-sch-d-2 line 3 "making sure the change is not modifying a statement or a tax return form": every new field is on an input screen. Forms 4684 / 6252 / 6781 / 8824 entry screens (statement forms) are unchanged.
 - D-5b-3: Pension form - the part of a rollover that went into a Roth IRA or designated Roth account stays taxable on line 5b; the screen text no longer says every rollover is untaxed.

@@ -289,7 +289,7 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 | D-5a-1 | ~~medium~~ **FIXED 2026-10-26** | silent | blank-TIN 1099-R / RRB-1099-R goes to taxpayer of every return (incl. each MFS and dependent-own); RRB recipient number not pre-filled — i8814 p.1 / TRCS:36015-36018, :35946-35949 | `new_knowledge/5a.md` - closed by the person filter (ReturnStatementOwners, 2026-10-25) - re-verified by mutation |
 | D-5a-2 | ~~medium~~ **FIXED 2026-10-26** | double count | Form 4852 8a/8b added while replaced 1099-R still counts (same as D-1a-6, D-4a-4) — f4852 p.1 / TRCS:46829-46859, :46967-47006 | `new_knowledge/5a.md` |
 | D-5b-2 | ~~medium~~ **FIXED 2026-10-26** | silent | reported rollover recomputes whole total from box 1, discarding SM/GR/per-pension, box 2a, NUA — i1040gi p.30 / TRCS:22249-22252 | `new_knowledge/5b.md` |
-| D-5b-3 | medium | silent understatement | rollover destination (Roth) never asked; any rollover subtracted; screen says not taxable — i1040gi p.30 / form-pension-annuity-income-taxpayer.component.ts:375 | `new_knowledge/5b.md` |
+| D-5b-3 | ~~medium~~ **FIXED 2026-10-26** (V390) | silent understatement | rollover destination (Roth) never asked; any rollover subtracted; screen says not taxable — i1040gi p.30 / form-pension-annuity-income-taxpayer.component.ts:375 | `new_knowledge/5b.md` |
 | D-5b-4 | ~~medium~~ **FIXED 2026-10-26** | silent | PSO exclusion $3,000 when premiums blank (minNonNull(null,3000)) — i1040gi p.28 / TRCS:22281, :52408-52416 | `new_knowledge/5b.md` |
 | D-5b-6 | ~~medium~~ **FIXED 2026-10-26** | wrong amount (overridable block with 2+, silent with 1) | person-level Simplified Method over all statements; General Rule replaces whole total — i1040gi p.29 / TRCS:22189, :22212, :22651 | `new_knowledge/5b.md` |
 | D-5b-7 | ~~medium~~ **FIXED 2026-10-26** | silent overstatement | with per-pension entries, uncovered statements count at box 1 (direct rollover 2a=0 becomes taxable) / TRCS:22180-22182 | `new_knowledge/5b.md` |
@@ -412,7 +412,7 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 |---|---|---|---|---|
 | D-8949-1 | ~~high~~ **FIXED 2026-10-25** | silent omission (likely routine for 2025 1099-DA) | 1099-B/1099-DA with no term box and no usable dates (blank/"VARIOUS") skipped: no row, no flag — i8949 p.2,7, i1099da--2025 p.9 / TRCS:24914-24917, :25043-25046, :26172-26235 — coordinator verified (`if (!hasText(box)) continue;`) | `new_knowledge/forms/8949.md` |
 | D-sch-d-1 | ~~medium~~ **FIXED 2026-10-26** | silent (25% on gain) | Unrecaptured §1250 worksheet: 4797 property amounts and K-1 9c/8c added to line 19 uncapped; cap only via §1231 lookback — i1040sd p.13 / TRCS:25356-25360, :25476, :25496, :1747-1750 | `new_knowledge/forms/schedule-d.md` |
-| D-sch-d-2 | medium | silent, not supported | 28% worksheet lines 1 (8949 code C collectibles) and 3 (collectibles on 4684/6252/6781/8824) only via typed amount — i1040sd p.11 / TRCS:23780-23785 | `new_knowledge/forms/schedule-d.md` - **PARTLY FIXED 2026-10-26: worksheet line 1 now takes every Form 8949 Part II code C row (typed / 1099-DA); line 3 (collectibles on 4684/6252/6781/8824) needs a collectibles marker on those entries - new field** |
+| D-sch-d-2 | ~~medium~~ **FIXED 2026-10-26** (line 3 on the Capital gain/loss form, V390) | silent, not supported | 28% worksheet lines 1 (8949 code C collectibles) and 3 (collectibles on 4684/6252/6781/8824) only via typed amount — i1040sd p.11 / TRCS:23780-23785 | `new_knowledge/forms/schedule-d.md` - **PARTLY FIXED 2026-10-26: worksheet line 1 now takes every Form 8949 Part II code C row (typed / 1099-DA); line 3 (collectibles on 4684/6252/6781/8824) needs a collectibles marker on those entries - new field** |
 | D-8949-2 | ~~medium~~ **FIXED 2026-10-26** | silent | 1099-B box 7 / 1099-DA box 5 "loss not allowed" (code L) stored, never read — i1040sd p.4 / Se1099B.java:154, Se1099Da.java:59 | `new_knowledge/forms/8949.md` |
 | D-8949-3 | ~~medium~~ **FIXED 2026-10-26** | not supported | broker-row corrections with codes B/D/E/L/N/O/T not possible (only W from box 1g/1i) — i8949 p.1,8-11 / TRCS:24900-24936, :25029-25065 | `new_knowledge/forms/8949.md` |
 | D-8949-4 | ~~medium~~ **FIXED 2026-10-26** | gain overstated, silent | blank box 1e/1g basis treated as $0 for noncovered — i8949 p.7 / TRCS:26158-26166 | `new_knowledge/forms/8949.md` |
@@ -519,7 +519,7 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 
 | Id | Severity | Effect | What is wrong (IRS source · code) | Detail |
 |---|---|---|---|---|
-| D-6781-1 | medium | silent | line 4 straddle/hedge adjustments always 0; box 11 used in full 60/40; dealers' §1256 not to Sch SE — f6781 p.2-3, i1040sse p.4 / Form6781Compute.java:47-53 | `new_knowledge/forms/6781.md` |
+| D-6781-1 | ~~medium~~ **FIXED 2026-10-26** (V390) | silent | line 4 straddle/hedge adjustments always 0; box 11 used in full 60/40; dealers' §1256 not to Sch SE — f6781 p.2-3, i1040sse p.4 / Form6781Compute.java:47-53 | `new_knowledge/forms/6781.md` |
 | D-6781-6 | ~~medium~~ **FIXED 2026-10-26** | attached form disagrees with Sch D (tax right) | preview rows from every TIN (other spouse on MFS, dependents) — f6781 p.1 / Form6781Compute.java:76-79 | `new_knowledge/forms/6781.md` |
 | D-6781-7 | medium (narrow) | silent | MFS community property: box 8–11 not split; other spouse's 1099-B copied in full — f8958 p.3 / CommunityProperty.java:58-97, TRCS:3131-3135 | `new_knowledge/forms/6781.md` |
 | D-6781-9 | ~~medium~~ **FIXED 2026-10-26** | silent | K-1 1065 box 11C / 1120-S box 10C (Form 6781) saved, never read — i1065sk1 p.16, i1120ssk p.8 / ScheduleK1Form1065Mapper.java:203-204, ScheduleK1Form1120sMapper.java:162-171 | `new_knowledge/forms/6781.md` |
@@ -534,8 +534,8 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 | Id | Severity | Effect | What is wrong (IRS source · code) | Detail |
 |---|---|---|---|---|
 | D-4684-1 | ~~high~~ **FIXED 2026-10-25** | silent (lost or doubled) | non-itemizer qualified disaster loss election saved only beside a typed amount; typed + figured summed — i4684 p.5,9, i1040sca p.11 / TRCS:16669-16670, 16872, form-standard-deductions.component.ts:1366 | `new_knowledge/forms/4684.md` |
-| D-4684-2 | medium | silent | only casualty 1 can be qualified disaster ($500 / no 10%) — f4684 p.1, i4684 p.7-8 / Form4684SectionA.java:102,110 | `new_knowledge/forms/4684.md` |
-| D-4684-3 | medium | overstated | qualified disaster = three dates, no DR/EM test (COVID-only excluded) — i4684 p.2-3,5 / TRCS:53247-53257 | `new_knowledge/forms/4684.md` |
+| D-4684-2 | ~~medium~~ **FIXED 2026-10-26** (V390) | silent | only casualty 1 can be qualified disaster ($500 / no 10%) — f4684 p.1, i4684 p.7-8 / Form4684SectionA.java:102,110 | `new_knowledge/forms/4684.md` |
+| D-4684-3 | ~~medium~~ **FIXED 2026-10-26** (V390) | overstated | qualified disaster = three dates, no DR/EM test (COVID-only excluded) — i4684 p.2-3,5 / TRCS:53247-53257 | `new_knowledge/forms/4684.md` |
 | D-4684-4 | ~~medium~~ **FIXED 2026-10-26** | silent | MFS: casualty fields not allocated; spouse leg copies all — i1040sca p.1 / MfsScheduleAAllocator.java:100-131, MfsFormScoper.java:804-828 | `new_knowledge/forms/4684.md` |
 | D-4684-5 | low | up to $400 | line 11 $500 comparison vs line 4 not made — i4684 p.8 / Form4684SectionA.java:61-63 | `new_knowledge/forms/4684.md` |
 | D-4684-6 | low | silent | unclaimed coverage line 3 / gain only on received reimbursement — i4684 p.7-8 / Form4684SectionA.java:37-39 | `new_knowledge/forms/4684.md` |

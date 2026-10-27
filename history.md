@@ -1,3 +1,8 @@
+## 2026-10-27T17:00 - Form 5329 intermediate lines (V411)
+
+- Parts II (5-7), VI (34-40), VII (42-48) and IX (52a-54b) now on the model (helper Form5329Lines), persisted on out_form_5329 (V411, 23 columns) and filled into the existing preview boxes in both UI repos. No computed amount changed. MFJ sums each line across spouses on the one combined form (per-person floors on 38/46 and the 54a/54b split are figured per person first). Lines 52/53 stay blank when the shortfall is typed or fully waived.
+- TRCS constant pool 29,415 -> 29,440. Unit 5225/5225; Form 5329 e2e 20/20.
+
 ## 2026-10-27T15:00 - Constant-pool headroom + Form 5329 Parts II/VI/VII/IX persisted (V410)
 
 - Refactor: eight large methods moved unchanged out of TaxReturnComputeService (buildScheduleA, computeForm8863/8815, computeSchedule1A, computeForm8962, computeIncomeAdjustments, computeOtherIncomes, computeCapitalGainLoss) into ScheduleAComputations, EducationCreditComputations, Schedule1AComputations, Form8962Computations, Schedule1Computations, CapitalGainLossComputations; private stubs delegate. Constant pool 32,466 -> 29,415 (guard 32,467, JVM 32,767). Next candidates if needed: computeForm4972, computeIraDistributions, computeSchedule8812, computeRentalScheduleE.

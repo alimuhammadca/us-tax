@@ -1,3 +1,12 @@
+## 2026-10-27T22:00 - Form 5329 audit fixes (V412, V413)
+
+- Tax: no 10% on earnings of an excess IRA contribution withdrawn by the due date (exception 21; i5329, Pub. 590-B 2025) - Hrb sc00057 4257->4247, sc00234 C2 4246->4241; MFJ reads the spouse's pension/IRA opt-in, affirmation and code; HSA $0 year-end value honoured (line 49). Helpers Form5329Fixes, Form5329Lines.
+- Form values (existing boxes only): lines 17/25; Part I lines 1-3 (exception-21 earnings on lines 1 and 2); Part III 9-16; Part IV 18-24; line 2 code zero-padded / 99 for several / free text -> 99 + advisory; exception-19 statement advisory; Part IX form produced even when the waiver makes the tax $0.
+- New personal-form inputs: pension RMD required / distributed (taxpayer + spouse); Coverdell rollover / withdrawn excess (line 28); "no exception applies" confirmation on both pension forms.
+- MFJ: one-spouse name/SSN on the form; both spouses -> FORM_5329_BOTH_SPOUSES advisory with per-spouse totals (no second preview - fixed form format). Coverdell line 27 MAGI advisory.
+- 15th carryforward bridge: per-person lines 16/24/32/40/48 (V413) seed next year's prior-year excess inputs when the tax line was > 0 (blanks only).
+- Unit 5271/5271. e2e: Form 5329 / IRA / pension / HSA / MSA / RMD / carryforward specs green (spec-envelope fixes in the new wave-2 spec).
+
 ## 2026-10-27T17:00 - Form 5329 intermediate lines (V411)
 
 - Parts II (5-7), VI (34-40), VII (42-48) and IX (52a-54b) now on the model (helper Form5329Lines), persisted on out_form_5329 (V411, 23 columns) and filled into the existing preview boxes in both UI repos. No computed amount changed. MFJ sums each line across spouses on the one combined form (per-person floors on 38/46 and the 54a/54b split are figured per person first). Lines 52/53 stay blank when the shortfall is typed or fully waived.

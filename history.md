@@ -1,6 +1,6 @@
 ## 2026-10-28T00:30 - Last open medium IRS deviations (V416)
 
-- Medium tally: 207 total; 200 FIXED/closed, 0 open (D-sch-d-2 now fully fixed).
+- Medium rows in outstanding.md: 201 rows (some rows combine 1065/1120-S IDs, so 207 items), all FIXED/closed; 0 open.
 - D-k1-1065-4/5/6 + D-k1-1120s-3/4/5: K-1 coded rows (1065 boxes 11/13/15, 1120-S 10/12/13) now read (K1CodedItems) - routed where the app figures the destination (8z/8b/8c/8n/8o, Form 4797 line 10, Schedule A buckets, Form 4952, Sch 1 18, line 25c, Sch 3 13a), advisory with amount + IRS destination otherwise. Code letters checked against the 2025 instructions.
 - D-w-2-5: W-2 code FF (QSEHRA) reduces / disallows the PTC (PtcQsehra); new personal input qsehraAffordable (taxpayer + spouse, V416).
 - D-6781-7: community-property MFS splits 1099-B boxes 8-11 (CommunityProperty.split1099B); Form 8958 line 6 box 11.

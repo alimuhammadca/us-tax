@@ -1,3 +1,13 @@
+## 2026-10-28T00:30 - Last open medium IRS deviations (V416)
+
+- Medium tally: 207 total; 200 FIXED/closed, 0 open (D-sch-d-2 now fully fixed).
+- D-k1-1065-4/5/6 + D-k1-1120s-3/4/5: K-1 coded rows (1065 boxes 11/13/15, 1120-S 10/12/13) now read (K1CodedItems) - routed where the app figures the destination (8z/8b/8c/8n/8o, Form 4797 line 10, Schedule A buckets, Form 4952, Sch 1 18, line 25c, Sch 3 13a), advisory with amount + IRS destination otherwise. Code letters checked against the 2025 instructions.
+- D-w-2-5: W-2 code FF (QSEHRA) reduces / disallows the PTC (PtcQsehra); new personal input qsehraAffordable (taxpayer + spouse, V416).
+- D-6781-7: community-property MFS splits 1099-B boxes 8-11 (CommunityProperty.split1099B); Form 8958 line 6 box 11.
+- D-sch-d-2: Form 6781 Part II collectible marks -> 28% worksheet line 3; Form 8824 closed (real property only); 1099-B collectible with blank box 2 now reaches line 1.
+- Unit 5318 green (9 known worktree CRLF only in worktrees); targeted e2e 42 specs 119 passed, 1 flaky (UI sidebar timing).
+- Not covered: K-1 code A in NIIT; at-risk/basis on coded items; QSEHRA treated as full-year.
+
 ## 2026-10-27T23:30 - Separate Form 5329 for each spouse (V414)
 
 - Owner decision: on MFJ with Form 5329 amounts for both spouses, form5329 (taxpayer) and form5329Spouse each carry the person's own header and lines (i5329 "Joint returns ... complete a separate form for each of you"); Schedule 2 line 8 = sum of both. One spouse only -> single form with that spouse's header. Part II ABLE from 1099-QA (cannot be split) keeps one form + advisory.

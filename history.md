@@ -1,3 +1,10 @@
+## 2026-10-27T23:30 - Separate Form 5329 for each spouse (V414)
+
+- Owner decision: on MFJ with Form 5329 amounts for both spouses, form5329 (taxpayer) and form5329Spouse each carry the person's own header and lines (i5329 "Joint returns ... complete a separate form for each of you"); Schedule 2 line 8 = sum of both. One spouse only -> single form with that spouse's header. Part II ABLE from 1099-QA (cannot be split) keeps one form + advisory.
+- out_form_5329 gets owner_role + surrogate id, unique (tax_return_id, owner_role) (V414); Form5329SpouseOutputMapper; GET returns form5329Spouse. Carryforward reads the taxpayer row's per-person lines.
+- UI (both repos): spouse copy of the same preview via owner input; sidebar "Form 5329 (spouse)" when it exists. No template change.
+- Unit 5279/5279; e2e Form 5329 / IRA / pension / HSA / MSA / 8978 specs 94/94 (one MFJ spec updated from the combined 700 to 300 + 400).
+
 ## 2026-10-27T22:00 - Form 5329 audit fixes (V412, V413)
 
 - Tax: no 10% on earnings of an excess IRA contribution withdrawn by the due date (exception 21; i5329, Pub. 590-B 2025) - Hrb sc00057 4257->4247, sc00234 C2 4246->4241; MFJ reads the spouse's pension/IRA opt-in, affirmation and code; HSA $0 year-end value honoured (line 49). Helpers Form5329Fixes, Form5329Lines.

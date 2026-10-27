@@ -1,3 +1,9 @@
+## 2026-10-27T15:00 - Constant-pool headroom + Form 5329 Parts II/VI/VII/IX persisted (V410)
+
+- Refactor: eight large methods moved unchanged out of TaxReturnComputeService (buildScheduleA, computeForm8863/8815, computeSchedule1A, computeForm8962, computeIncomeAdjustments, computeOtherIncomes, computeCapitalGainLoss) into ScheduleAComputations, EducationCreditComputations, Schedule1AComputations, Form8962Computations, Schedule1Computations, CapitalGainLossComputations; private stubs delegate. Constant pool 32,466 -> 29,415 (guard 32,467, JVM 32,767). Next candidates if needed: computeForm4972, computeIraDistributions, computeSchedule8812, computeRentalScheduleE.
+- Form 5329: Part II line 8, Part VI line 41, Part VII line 49, Part IX line 55 now persisted on out_form_5329 (V410) and filled into the existing preview boxes (both UI repos). Intermediate lines not on the model stay blank.
+- Unit 5213/5213 green (main checkout). Targeted e2e 36 specs (Schedule A, 8863, 8815, Schedule 1-A, 8962, Schedule 1, capital gains, 5329): 270 passed, 3 skipped, 1 setup timeout passed on re-run.
+
 ## 2026-10-27T08:00 - Held/decision items without statement or tax-return form changes (V409)
 
 - D-8829-1 / D-sch-c-6: home office now figured after the allowed section 179 on Schedule C line 29, Pub. 946 two-limit order (HomeOfficeSection179Order). Hand-checked: 8829 deduction 7,000 + 2,000 carryover (was line 31 -2,000); simplified 1,000 (was -500); no-wage case keeps section 179 in full.

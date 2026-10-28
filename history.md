@@ -1,3 +1,9 @@
+## 2026-10-28T21:00 - Form 8824: exchange-group liabilities sign fixed; partly-home line 20 per the instruction
+
+- Exchange groups (D-8824-4): Regs. 1.1031(j)-1(b)(2)(iv) - deficiency = FMV transferred - (FMV received - excess liabilities ASSUMED allocated to the group, capped at FMV received); the code subtracted liabilities (sign backwards), under-recognizing gain (example: 0 -> 40). Input relabelled "Excess liabilities you assumed, allocated to this group" (relieved liabilities are cash in the residual group); over-cap advisory.
+- Partly-home (D-8824-6, owner option (b)): home worksheet line 20 = line 19 as i8824 "Property used partly as home" says; lines 23-25 follow the form (line 25 includes the exclusion added back + advisory FORM_8824_PARTLY_HOME_LINE_25_INCLUDES_EXCLUSION); the home part's gain goes to Form 8949 (box F/C) with code H and the exclusion as a negative adjustment. Taxable result unchanged (40% duplex: 70,000); printed line 20 70,000 -> 170,000, line 25 380,000 -> 480,000.
+- Unit 7 new tests + re-derived D-8824-6 expectations, mutation-checked; suite 5487/5487. e2e new spec + 9 related specs: 36 passed, 1 flaky passed on retry.
+
 ## 2026-10-28T20:00 - Section 1244 stock gain no longer produces an empty Form 4797
 
 - i4797 "Section 1244 (Small Business) Stock": only the ordinary loss within the $50,000 / $100,000 limit goes on Form 4797 line 10; gains and excess losses go to Schedule D. A 1244 sale with no ordinary loss (gain, or loss with the limit used up) used to keep a Form 4797 entry with line 19 "Losses on Section 1244 ..." and dates but no amounts, so a Form 4797 attachment appeared and the Schedule 1 line 4 Form 4797 box / Form 4684 Section B check counted it. Now such an entry is an internal 8949 carrier only (Wave2FieldsW4.CARRIER_8949_ONLY / withoutCarriers): Form 4797 output, fields and every "has Form 4797" check skip it; Form 8949 / Schedule D still collect its row. Amounts unchanged.

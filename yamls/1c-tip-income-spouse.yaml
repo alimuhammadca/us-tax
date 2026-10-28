@@ -1,0 +1,19 @@
+# Form 1040 line 1c - tip income not reported to the employer (Form 4137) - spouse.
+# Spouse variant of 1c-tip-income-taxpayer.yaml (separate component).
+name: tip-income-spouse
+title: Tip income (spouse)
+multiplicity: single
+formName: Form 4137
+category: income
+instructions:
+  - Answer Yes if your spouse received cash or charge tips of $20 or more in a month that were not reported to the employer.
+
+sections:
+  - name: screening
+    title: Tip income (spouse)
+    multiplicity: single
+    fields:
+      - name: hasUnreportedTips
+        type: boolean
+        required: true
+        label: "Did your spouse receive tip income that was not fully reported to their employer in 2025?"

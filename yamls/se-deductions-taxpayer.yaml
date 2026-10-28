@@ -10,6 +10,9 @@ category: deductions
 instructions:
   - Enter self-employed health insurance premiums and self-employed retirement plan contributions.
   - The deductible amounts are limited to your self-employment earnings and computed later; they flow to Schedule 1 lines 16 and 17.
+# driftIgnore (YAML drift sync 2026-10-28): jan..dec are the component's monthKeys checkbox ids; the model stores the checked
+# months as CSV strings (seEmployerPlanEligibleMonths / seDependentEmployerPlanEligibleMonths / seLtcEmployerPlanEligibleMonths).
+driftIgnore: [jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec]
 sections:
   - name: screening
     title: Screening
@@ -30,6 +33,12 @@ sections:
         required: false
         placeholder: 0.00
         label: Medical, dental, and vision premiums paid
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: seHealthPremiumsPaidFromPsoExclusion
+        type: amount
+        required: false
+        label: "Part of these premiums paid from your retirement plan under the public safety officer exclusion"
+        showIf: "hasSeDeductions === true && psoElection"
       - name: seLongTermCarePremiums
         type: amount
         required: false
@@ -56,6 +65,36 @@ sections:
           business, used to split the §162(l) self-employed-health deduction and the premium tax credit
           across each business's earned-income limit (Pub. 974 "More than one trade or business"). Blank
           defaults to an even 50/50 split; ignored when only one spouse is self-employed.
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: seEmployerPlanEligibleMonths
+        type: text
+        required: false
+        label: "Months you (or your spouse's employer) offered you a subsidized health plan you could have joined, for any part of the month"
+        showIf: "hasSeDeductions === true"
+        help: "Saved as a CSV of month keys (jan,feb,...). Self-employed health insurance is not deductible for those months (Form 7206)."
+      - name: seDependentEmployerPlanEligibleMonths
+        type: text
+        required: false
+        label: "Months the employer of your dependent, or of your child under 27 at the end of 2025, offered a subsidized health plan you could have joined"
+        showIf: "hasSeDeductions === true"
+        help: "Saved as a CSV of month keys (i7206 p.2)."
+      - name: seLtcEmployerPlanEligibleMonths
+        type: text
+        required: false
+        label: "Months any of those employers offered a subsidized plan that provides long-term care insurance"
+        showIf: "hasSeDeductions === true"
+        help: "Saved as a CSV of month keys; tested separately for long-term care premiums."
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: sCorpMoreThan2PctShareholder
+        type: boolean
+        required: false
+        label: "The premiums were paid by an S corporation in which I own more than 2%, and are included in my W-2 wages from it"
+        showIf: "hasSeDeductions === true"
+      - name: sCorpWages
+        type: amount
+        required: false
+        label: "W-2 box 1 wages from that S corporation"
+        showIf: "hasSeDeductions === true && sCorpMoreThan2PctShareholder === true"
 
   - name: retirement
     title: Self-employed retirement contributions (line 16)

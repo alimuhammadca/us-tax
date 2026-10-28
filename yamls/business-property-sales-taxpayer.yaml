@@ -83,3 +83,14 @@ sections:
         required: false
         label: "AMT depreciation, if different (optional)"
         showIf: "propertyType != land"
+
+  # D-4797-3 (V388).
+  - name: section1231Lookback
+    title: "Section 1231(c) lookback (Form 4797 line 8)"
+    multiplicity: single
+    fields:
+      - name: priorYearsNonrecaptured1231Losses
+        type: number
+        required: false
+        label: "Net section 1231 losses from 2020-2024 returns not prepared in this app, not yet recaptured - optional"
+        help: "A net section 1231 gain this year is ordinary income up to these losses (Form 4797 line 8)."

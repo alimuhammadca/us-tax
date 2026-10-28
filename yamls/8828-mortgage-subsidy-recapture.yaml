@@ -1,0 +1,88 @@
+# Form 8828 - Recapture of Federal Mortgage Subsidy (return-level).
+# Component: form-form-8828.component.ts (formId = form-8828). Recapture tax flows to Schedule 2.
+name: form-8828
+title: "Form 8828 - Recapture of Federal Mortgage Subsidy"
+multiplicity: single
+formName: "Form 8828"
+category: "otherTaxes"
+sections:
+  - name: screening
+    title: "Screening"
+    multiplicity: single
+    fields:
+      - name: hasMortgageSubsidyRecapture
+        type: boolean
+        required: true
+        label: "Do you owe a federal mortgage subsidy recapture?"
+
+  - name: propertyAndLoan
+    title: "Property and subsidized loan (lines 1-8)"
+    multiplicity: single
+    showIf: "hasMortgageSubsidyRecapture == true"
+    fields:
+      - name: propertyAddress
+        type: text
+        required: false
+        label: "Address of property (line 1)"
+      - name: subsidyType
+        type: select
+        required: false
+        label: "Type of federal subsidy (line 2)"
+        options: ["bond", "mcc"]
+      - name: issuerName
+        type: text
+        required: false
+        label: "Bond/certificate issuer (line 3)"
+      - name: lenderName
+        type: text
+        required: false
+        label: "Original lending institution (line 4)"
+      - name: closingDate
+        type: date
+        required: false
+        label: "Closing date (line 5)"
+        help: "MM/DD/YYYY"
+      - name: saleDate
+        type: date
+        required: false
+        label: "Date of sale/disposition (line 6)"
+        help: "MM/DD/YYYY"
+      - name: loanFullyRepaidDate
+        type: date
+        required: false
+        label: "Date the original loan was fully repaid (line 8)"
+        help: "Only if the subsidized loan was fully repaid before the sale; within 4 years of closing it redetermines the line 20 holding period percentage."
+
+  - name: recaptureComputation
+    title: "Recapture computation inputs (lines 9-20)"
+    multiplicity: single
+    showIf: "hasMortgageSubsidyRecapture == true"
+    fields:
+      - name: line9SalesPrice
+        type: number
+        required: false
+        label: "9 Sales price"
+      - name: line10ExpensesOfSale
+        type: number
+        required: false
+        label: "10 Expenses of sale"
+      - name: line12AdjustedBasis
+        type: number
+        required: false
+        label: "12 Adjusted basis"
+      - name: line15ModifiedAgi
+        type: number
+        required: false
+        label: "15 Modified adjusted gross income"
+      - name: line16AdjustedQualifyingIncome
+        type: number
+        required: false
+        label: "16 Adjusted qualifying income"
+      - name: line19FederallySubsidizedAmount
+        type: number
+        required: false
+        label: "19 Federally subsidized amount"
+      - name: line20HoldingPeriodPercentage
+        type: number
+        required: false
+        label: "20 Holding period percentage (whole %, e.g. 100)"

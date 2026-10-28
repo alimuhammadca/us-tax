@@ -12,10 +12,10 @@ instructions:
   - At least one non-IRA Form 1099-R or Form RRB-1099-R must be uploaded before continue.
   - This taxpayer form owns return-level line 5c and Form 4972/Form 5329 gating to avoid spouse conflicts.
   - Self-employment income is out of scope and excluded.
-  - UI renders as a sub-interview wizard; section order below matches wizard screen flow:
+  - "UI renders as a sub-interview wizard; section order below matches wizard screen flow:
     screening → statementUploadCheck → classificationAndRouting → pensionDetails →
     exceptionAmounts → uncommonGate → psoInputs → taxableComputationInputsSimplifiedMethod →
-    taxableComputationInputsGeneralRule → earlyDistributionPenalty → summary (save screen).
+    taxableComputationInputsGeneralRule → earlyDistributionPenalty → summary (save screen)."
 sections:
   - name: screening
     title: Screening
@@ -114,6 +114,25 @@ sections:
         label: Total amount rolled over
         placeholder: 0.00
         help: Enter the total amount rolled over from all qualified plans and annuities.
+
+      - name: pensionRolloverToRothAmount
+        type: amount
+        required: false
+        label: Part of that rollover that went into a Roth IRA or Roth account
+        showIf: hadPensionRollover == true
+
+      - name: pensionRolloverToRothInPlan
+        type: boolean
+        required: false
+        label: "Did that Roth rollover go into a Roth account inside your employer's plan (an in-plan Roth rollover) rather than a Roth IRA?"
+        showIf: "pensionRolloverToRothAmount > 0"
+
+      - name: electToIncludeNuaInIncome
+        type: boolean
+        required: false
+        label: "Your pension statement shows net unrealized appreciation in employer stock (1099-R box 6). Include it in 2025 income?"
+        showIf: "1099-R box 6 NUA > 0"
+        help: Box 6 NUA is excluded from box 2a and taxed as long-term capital gain on sale; you may elect to include it now (IRC 402(e)(4)(B)).
       - name: taxableEmployeeContributionsAlreadyTaxedBox5Total
         type: amount
         required: false
@@ -186,6 +205,12 @@ sections:
         required: false
         label: Are you electing to exclude qualifying insurance premiums from your pension income?
         help: The PSO exclusion lets eligible retired public safety officers exclude up to $3,000 per year in qualifying premiums paid from their pension.
+
+      - name: psoFromRetiringEmployerGovPlan
+        type: boolean
+        required: false
+        label: "Is this distribution from the governmental plan (qualified trust, 403(a), 403(b) or 457(b)) of the employer you retired from as a public safety officer?"
+        showIf: electsPsoPremiumExclusion == true
       - name: totalQualifyingPsoPremiumsPaid
         type: amount
         required: false
@@ -264,6 +289,19 @@ sections:
         placeholder: 0.000000
         help: Enter override ratio only when required by reviewed computation support.
 
+      - name: generalRulePaymentAmount
+        type: amount
+        required: false
+        label: Amount of each regular payment
+        showIf: needsGeneralRuleComputation == true (annuity starting date out of Simplified Method range)
+
+      - name: generalRulePaymentFrequency
+        type: select
+        required: false
+        label: How often are the payments paid
+        showIf: needsGeneralRuleComputation == true (annuity starting date out of Simplified Method range)
+        options: [monthly, quarterly, semiannually, annually]
+
   - name: earlyDistributionPenalty
     title: Early distribution penalty
     multiplicity: single
@@ -293,6 +331,32 @@ sections:
         label: Amount NOT subject to the additional tax (exempt portion)
         placeholder: 0.00
         help: Form 5329 Part I line 2 — the dollar amount of the early distribution the §72(t)(2) exception covers (NOT subject to the 10%/25% additional tax). Only the remainder is taxed. Leave blank if the full distribution is subject to the additional tax.
+
+      - name: exception01PublicSafety
+        type: boolean
+        required: false
+        label: "Was you a public-safety employee or private-sector firefighter?"
+        showIf: "hasEarlyDistributionAdditionalTaxForForm5329 == true && exception code 01"
+
+      - name: separationFromServiceYear
+        type: number
+        required: false
+        label: Year you left the employer that maintains this plan
+        showIf: "hasEarlyDistributionAdditionalTaxForForm5329 == true && exception code 01 or 02"
+
+      - name: form5329ExceptionBirthAdoptionCount
+        type: number
+        required: false
+        label: Number of children born or adopted that this withdrawal was for
+        showIf: "hasEarlyDistributionAdditionalTaxForForm5329 == true && exception code 19"
+        help: "Form 5329 exception 19 (qualified birth or adoption) is limited to $5,000 per child."
+
+      - name: form5329ExceptionAccountBalance
+        type: amount
+        required: false
+        label: Account balance just before the withdrawal
+        showIf: "hasEarlyDistributionAdditionalTaxForForm5329 == true && exception code 22 or 23"
+        help: "Exception 22 is limited to the lesser of $10,300 or half the account; exception 23 to the lesser of $1,000 or the account minus $1,000."
       - name: noEarlyDistributionExceptionApplies
         type: boolean
         required: false
@@ -310,6 +374,23 @@ sections:
         showIf: rmdShortfallAmount > 0
         label: Did you correct the RMD shortfall within the two-year correction window?
         help: Yes reduces the §4974 additional tax from 25% to 10% (the missed distribution was taken and a waiver is requested within two years). No means the 25% rate applies.
+
+      - name: rmdRequiredAmount
+        type: amount
+        required: false
+        label: Required minimum distribution for 2025
+
+      - name: rmdDistributedAmount
+        type: amount
+        required: false
+        label: Amount distributed for 2025
+
+      - name: rmdShortfallWaivedAmount
+        type: amount
+        required: false
+        label: Part of the shortfall you are asking the IRS to waive (reasonable cause)
+        showIf: rmdShortfallAmount or rmdRequiredAmount entered
+        help: Form 5329 Part IX.
 
   # Backend-only statement imports. Not rendered in form component.
   - name: importedStatementFields

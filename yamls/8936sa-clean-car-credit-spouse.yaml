@@ -111,6 +111,20 @@ sections:
         required: false
         label: Can the purchaser be claimed as a dependent on another return?
 
+  - name: spouseModifiedAgi
+    title: "Spouse modified AGI test (Form 8936 Part I)"
+    multiplicity: single
+    showIf: "spouseHasCleanCarCreditInputs == true"
+    fields:
+      - name: spousePriorYearMagi
+        type: number
+        required: false
+        label: "Spouse's last-year Modified Adjusted Gross Income"
+      - name: spouseCurrentYearAdditionalMagiAddbacks
+        type: number
+        required: false
+        label: "Spouse's this-year add-backs (foreign earned income exclusion, etc.)"
+
   - name: importedFields
     title: Imported fields (backend only)
     multiplicity: single

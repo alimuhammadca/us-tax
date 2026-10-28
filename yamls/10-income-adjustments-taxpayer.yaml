@@ -242,6 +242,240 @@ sections:
         placeholder: 0.00
         help: Enter amount for this line 24z item.
 
+  - name: educatorExpenseDetails
+    title: "Educator expenses - eligibility and reductions (Schedule 1 line 11)"
+    multiplicity: single
+    showIf: "(educatorExpensesLine11 ?? 0) > 0"
+    fields:
+      - name: isEligibleEducator
+        type: boolean
+        required: false
+        label: "Were you a kindergarten through grade 12 teacher, instructor, counselor, principal or aide who worked at least 900 hours in a school year?"
+        showIf: "(educatorExpensesLine11 ?? 0) > 0"
+      - name: educatorExpenseReductions
+        type: number
+        required: false
+        label: "Amounts that reduce these expenses (optional)"
+        showIf: "(educatorExpensesLine11 ?? 0) > 0 && isEligibleEducator != false"
+
+  - name: form2106Line12Expenses
+    title: "Reservist / performing artist / fee-basis official expenses (Form 2106 Part I -> Schedule 1 line 12)"
+    multiplicity: single
+    showIf: "reservistPerformingArtistFeeBasisExpensesLine12 shown"
+    fields:
+      - name: line12ExpenseCategory
+        type: select
+        required: false
+        label: "Which of these describes you?"
+        options: ["reservist", "performingArtist", "feeBasisOfficial"]
+      - name: reservistTravelOver100Miles
+        type: boolean
+        required: false
+        label: "Was the travel to your drills or meetings more than 100 miles from home?"
+        showIf: "line12ExpenseCategory == 'reservist'"
+      - name: reservistFederalPerDiemTotal
+        type: number
+        required: false
+        label: "Federal per diem for your travel days (lodging plus meals and incidentals) - optional"
+        showIf: "line12ExpenseCategory == 'reservist' && reservistTravelOver100Miles == true"
+      - name: performingArtistTwoEmployers200
+        type: boolean
+        required: false
+        label: "Did at least two performing-arts employers each pay you $200 or more?"
+        showIf: "line12ExpenseCategory == 'performingArtist'"
+      - name: performingArtsWagesAmount
+        type: number
+        required: false
+        label: "Wages from performing arts"
+        showIf: "line12ExpenseCategory == 'performingArtist'"
+      - name: form2106Line1VehicleExpense
+        type: number
+        required: false
+        label: "Vehicle expense (Form 2106 line 1)"
+        help: "Figured from the Part II vehicles when a vehicle is entered."
+      - name: form2106Line2ParkingTollsTransportation
+        type: number
+        required: false
+        label: "Parking fees, tolls, and local transportation (Form 2106 line 2)"
+      - name: form2106Line3TravelExpense
+        type: number
+        required: false
+        label: "Travel expense while away from home (lodging, airfare - not meals) (Form 2106 line 3)"
+      - name: form2106Line4OtherBusinessExpenses
+        type: number
+        required: false
+        label: "Other business expenses (not meals) (Form 2106 line 4)"
+      - name: form2106Line5MealsExpense
+        type: number
+        required: false
+        label: "Meals (before the 50%/80% limit) (Form 2106 line 5)"
+      - name: form2106SubjectToDotHoursOfService
+        type: boolean
+        required: false
+        label: "These meals are subject to the DOT hours-of-service limits (80% instead of 50%)"
+      - name: form2106Line7ReimbursementNonMeals
+        type: number
+        required: false
+        label: "Employer reimbursement - non-meals (not in W-2 box 1) (Form 2106 line 7)"
+      - name: form2106Line7ReimbursementMeals
+        type: number
+        required: false
+        label: "Employer reimbursement - meals (not in W-2 box 1) (Form 2106 line 7)"
+      - name: form2106Line10ReservistPart
+        type: number
+        required: false
+        label: "Split of the Form 2106 total (line 10): reserve travel more than 100 miles from home"
+      - name: form2106Line10FeeBasisPart
+        type: number
+        required: false
+        label: "Split of the Form 2106 total (line 10): fee-basis state or local government job"
+      - name: form2106Line10PerformingArtistPart
+        type: number
+        required: false
+        label: "Split of the Form 2106 total (line 10): performing-arts work"
+        showIf: "line12ExpenseCategory == 'performingArtist'"
+      - name: form2106Line10ImpairmentPart
+        type: number
+        required: false
+        label: "Split of the Form 2106 total (line 10): impairment-related work expenses (disability)"
+
+  # Saved as the form2106Vehicles list.
+  - name: form2106Vehicles
+    title: "Vehicles used for this work (Form 2106 Part II, lines 11-30; one row per vehicle)"
+    multiplicity: multiple
+    showIf: "reservistPerformingArtistFeeBasisExpensesLine12 shown"
+    fields:
+      - name: datePlacedInService
+        type: date
+        required: false
+        label: "Date placed in service"
+      - name: totalMiles
+        type: number
+        required: false
+        label: "Total miles driven in 2025 (line 12)"
+      - name: businessMiles
+        type: number
+        required: false
+        label: "Business miles - not commuting (line 13)"
+      - name: commutingMiles
+        type: number
+        required: false
+        label: "Commuting miles (line 16)"
+      - name: otherMiles
+        type: number
+        required: false
+        label: "Other personal miles (line 17) - optional"
+      - name: hasEvidence
+        type: boolean
+        required: false
+        label: "Do you have evidence to support the deduction (line 20)?"
+      - name: evidenceWritten
+        type: boolean
+        required: false
+        label: "Is the evidence written (line 21)?"
+      - name: method
+        type: select
+        required: false
+        label: "Method"
+        options: ["standardMileage", "actual"]
+      - name: gasOilRepairsInsurance
+        type: number
+        required: false
+        label: "Gasoline, oil, repairs, insurance and similar (line 23)"
+        showIf: "method == 'actual'"
+      - name: vehicleRentals
+        type: number
+        required: false
+        label: "Vehicle rentals (line 24a)"
+        showIf: "method == 'actual'"
+      - name: inclusionAmount
+        type: number
+        required: false
+        label: "Lease inclusion amount (line 24b)"
+        showIf: "method == 'actual'"
+      - name: depreciation
+        type: number
+        required: false
+        label: "Depreciation and section 179 for the vehicle (line 28)"
+        showIf: "method == 'actual'"
+      - name: costBasis
+        type: number
+        required: false
+        label: "Cost or other basis of the vehicle (line 30)"
+        showIf: "method == 'actual'"
+
+  # outstanding.md A39 (owner-approved fields): IRA contributions and the 6% excess-contribution tax, Form 5329 Parts III-IV.
+  - name: iraContributionsExcessForm5329
+    title: "IRA contributions and the 6% tax on excess contributions (Form 5329 Parts III-IV)"
+    multiplicity: single
+    fields:
+      - name: traditionalIraContributionAmount
+        type: number
+        required: false
+        label: "Amount you put into traditional IRAs for 2025"
+        help: "Everything put into traditional IRAs for 2025 (including Jan 1 - Apr 15, 2026 deposits for 2025); compared with the $7,000 ($8,000 age 50+) limit."
+      - name: rothIraContributionAmount
+        type: number
+        required: false
+        label: "Amount you put into Roth IRAs for 2025"
+      - name: iraExcessWithdrawnByDueDate
+        type: boolean
+        required: false
+        label: "Did you take any of it back out before the return was due (April 15, 2026)?"
+        showIf: "an IRA contribution was entered"
+      - name: traditionalIraExcessWithdrawnAmount
+        type: number
+        required: false
+        label: "Amount taken back out of the traditional IRA (not counting earnings)"
+        showIf: "iraExcessWithdrawnByDueDate == true && traditionalIraContributionAmount"
+      - name: rothIraExcessWithdrawnAmount
+        type: number
+        required: false
+        label: "Amount taken back out of the Roth IRA (not counting earnings)"
+        showIf: "iraExcessWithdrawnByDueDate == true && rothIraContributionAmount"
+      - name: iraExcessWithdrawnEarnings
+        type: number
+        required: false
+        label: "Earnings taken out with it"
+        showIf: "iraExcessWithdrawnByDueDate == true"
+      - name: traditionalIraPriorYearExcess
+        type: number
+        required: false
+        label: "Excess traditional IRA contributions from earlier years still in the account"
+        help: "Form 5329 line 9 (excess from earlier years still in the account)."
+      - name: traditionalIraPriorExcessReturned
+        type: number
+        required: false
+        label: "Of that earlier excess, amount returned to you in 2025"
+        showIf: "(traditionalIraPriorYearExcess ?? 0) > 0"
+        help: "An excess from an earlier year taken out in 2025 (Form 5329 line 12)."
+      - name: traditionalIraPriorExcessReturnedDeductible
+        type: boolean
+        required: false
+        label: "Did you deduct any of it, or could you have? (it then counts as a distribution instead)"
+        showIf: "(traditionalIraPriorExcessReturned ?? 0) > 0"
+      - name: traditionalIraYearEndValue
+        type: number
+        required: false
+        label: "Value of your traditional IRAs on December 31, 2025"
+        help: "The line 17 6% tax is limited to 6% of the December 31, 2025 value."
+      - name: rothIraPriorYearExcess
+        type: number
+        required: false
+        label: "Excess Roth IRA contributions from earlier years still in the account"
+        help: "Form 5329 line 18 (excess from earlier years still in the account)."
+      - name: rothIraEntireBalanceWithdrawn
+        type: boolean
+        required: false
+        label: "Did you withdraw the entire balance of all your Roth IRAs in 2025?"
+        showIf: "(rothIraPriorYearExcess ?? 0) > 0"
+        help: "If every Roth IRA was emptied, none of the earlier excess is left (Form 5329 line 20)."
+      - name: rothIraYearEndValue
+        type: number
+        required: false
+        label: "Value of your Roth IRAs on December 31, 2025"
+        help: "The line 25 6% tax is limited to 6% of the December 31, 2025 value."
+
   # Backend-only imported fields. Not rendered in the actual form component.
   - name: importedStatementFields
     title: Imported statement fields (backend only)

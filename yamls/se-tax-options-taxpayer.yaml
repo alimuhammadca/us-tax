@@ -37,6 +37,51 @@ sections:
         type: amount
         required: false
         label: Housing / parsonage allowance (subject to SE tax)
+
+      - name: clergyHousingAmountUsed
+        type: amount
+        required: false
+        label: "Amount of the allowance you actually spent on your home (rent or mortgage, utilities, furnishings, repairs)"
+        showIf: isClergy == true
+
+      - name: clergyHomeFairRentalValue
+        type: amount
+        required: false
+        label: "Your home's fair rental value for the year (furnished, plus utilities)"
+        showIf: isClergy == true
+
+      - name: clergyReasonablePayForServices
+        type: amount
+        required: false
+        label: Reasonable pay for your services as a minister (if you know it)
+        showIf: isClergy == true
+
+      - name: ministerialW2Wages
+        type: amount
+        required: false
+        label: "Ministerial W-2 wages (church salary, no FICA - subject to SE tax)"
+        showIf: isClergy == true
+
+      - name: ministerUnreimbursedExpenses
+        type: amount
+        required: false
+        label: Unreimbursed business expenses as a church-employed minister (optional)
+        showIf: isClergy == true
+
+      - name: foreignGovernmentWages
+        type: amount
+        required: false
+        label: Pay as a U.S. citizen from a foreign government or an international organization for work in the United States (optional)
+
+      - name: notaryFeeIncome
+        type: amount
+        required: false
+        label: Notary public fees included in your business income (excluded from SE tax)
+
+      - name: receivingSsBenefitsWhenCrpPaid
+        type: boolean
+        required: false
+        label: "If you received Conservation Reserve Program (CRP) payments: were you already receiving Social Security retirement or disability benefits when you received them?"
       - name: form4361Exemption
         type: boolean
         required: false
@@ -45,6 +90,17 @@ sections:
         type: boolean
         required: false
         label: Form 4029 approved - recognized religious sect exemption
+
+      - name: totalizationExempt
+        type: boolean
+        required: false
+        label: "Is your self-employment income exempt from U.S. self-employment tax under a social security (totalization) agreement with another country?"
+
+      - name: totalizationCountry
+        type: text
+        required: false
+        label: Country
+        showIf: totalizationExempt == true
 
   - name: optionalMethods
     title: Optional methods
@@ -60,6 +116,18 @@ sections:
         required: false
         label: Use the nonfarm optional method
 
+      - name: metTwoOfThreePriorYearsSe400
+        type: boolean
+        required: false
+        label: "Did you have $400+ net self-employment earnings in at least 2 of the last 3 years?"
+        showIf: nonfarmOptionalMethod == true
+
+      - name: nonfarmOptionalMethodPriorUses
+        type: number
+        required: false
+        label: "How many prior years have you used the nonfarm optional method? (max 5 allowed in a lifetime)"
+        showIf: nonfarmOptionalMethod == true
+
   - name: other
     title: Other
     multiplicity: single
@@ -73,6 +141,21 @@ sections:
         type: amount
         required: false
         label: Prior-year unreported tips subject to SE tax
+
+      - name: priorYearBusinessAtRiskCarryforward
+        type: amount
+        required: false
+        label: Prior-year suspended at-risk loss - Schedule C business (465 carryforward)
+
+      - name: priorYearSection179Carryover
+        type: amount
+        required: false
+        label: Section 179 deduction carried over from 2024 (Form 4562 line 10)
+
+      - name: priorYearFarmAtRiskCarryforward
+        type: amount
+        required: false
+        label: Prior-year suspended at-risk loss - Schedule F farm (465 carryforward)
       - name: groupTermLifeAdditions
         type: amount
         required: false

@@ -65,6 +65,11 @@ sections:
         help: >
           Every filer must enter their occupation. This appears in the signature area
           of Form 1040 and is used by the IRS for statistical purposes.
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: dateOfDeath
+        type: date
+        required: false
+        label: "Date of death (only for a final return of someone who died in 2025)"
 
       - name: identityProtectionPin
         type: text

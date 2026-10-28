@@ -1,0 +1,118 @@
+# Form 8990 - Limitation on Business Interest Expense Under Section 163(j). One per return.
+name: form-8990
+title: Form 8990 - Business Interest Expense Limitation (163(j))
+multiplicity: single
+formName: Form 8990
+category: deductions
+instructions:
+  - Only needed if you have business interest expense subject to the 163(j) limitation.
+  - Line 1 is auto-derived from Schedule C/F interest; enter it here only if you have no business schedules.
+  - "The line 2 prior-year disallowed carryforward auto-imports from last year's return when available."
+
+sections:
+  - name: screening
+    title: Business interest expense
+    multiplicity: single
+    fields:
+      - name: hasBusinessInterestExpense
+        type: boolean
+        required: true
+        label: "Do you have business interest expense subject to the section 163(j) limitation?"
+
+  - name: sectionI
+    title: Section I - Business interest expense
+    multiplicity: single
+    showIf: hasBusinessInterestExpense == true
+    fields:
+      - name: line1CurrentBizInterest
+        type: amount
+        required: false
+        label: 1 Current year business interest expense (auto-derived from your Schedule C/F interest; enter here only if you have no business schedules)
+      - name: line2DisallowedCarryforwardPrior
+        type: amount
+        required: false
+        label: 2 Disallowed carryforwards from prior years
+      - name: line3PartnerExcess
+        type: amount
+        required: false
+        label: "3 Partner's excess business interest expense"
+      - name: line4FloorPlan
+        type: amount
+        required: false
+        label: 4 Floor plan financing interest expense
+
+  - name: sectionII
+    title: Section II - Adjusted taxable income
+    multiplicity: single
+    showIf: hasBusinessInterestExpense == true
+    fields:
+      - name: line6TentativeTaxableIncome
+        type: amount
+        required: false
+        label: 6 Tentative taxable income
+      - name: line7LossNotAllocable
+        type: amount
+        required: false
+        label: 7 Loss/deduction not allocable to a trade or business
+      - name: line8BizInterestNotPassthrough
+        type: amount
+        required: false
+        label: 8 Business interest expense not from a pass-through
+      - name: line9Nol172
+        type: amount
+        required: false
+        label: 9 Net operating loss deduction (172)
+      - name: line10Qbi199a
+        type: amount
+        required: false
+        label: 10 QBI deduction (199A)
+      - name: line11Depreciation
+        type: amount
+        required: false
+        label: "11 Depreciation, amortization, or depletion"
+      - name: line12LossFromPassthrough
+        type: amount
+        required: false
+        label: 12 Loss/deduction items from a pass-through
+      - name: line13OtherAdditions
+        type: amount
+        required: false
+        label: 13 Other additions
+      - name: line14PartnerExcessTaxableIncome
+        type: amount
+        required: false
+        label: "14 Partner's excess taxable income"
+      - name: line15ScorpExcessTaxableIncome
+        type: amount
+        required: false
+        label: "15 S corp shareholder's excess taxable income"
+      - name: line17IncomeNotAllocable
+        type: amount
+        required: false
+        label: 17 Income/gain not allocable (reduction)
+      - name: line18BizInterestIncomeNotPassthrough
+        type: amount
+        required: false
+        label: 18 Business interest income not from a pass-through (reduction)
+      - name: line19IncomeFromPassthrough
+        type: amount
+        required: false
+        label: 19 Income/gain from a pass-through (reduction)
+      - name: line20OtherReductions
+        type: amount
+        required: false
+        label: 20 Other reductions
+
+  - name: sectionIII
+    title: Section III - Business interest income
+    multiplicity: single
+    showIf: hasBusinessInterestExpense == true
+    fields:
+      - name: line23CurrentBizInterestIncome
+        type: amount
+        required: false
+        label: 23 Current year business interest income
+      - name: line24ExcessBizInterestIncomePassthrough
+        type: amount
+        required: false
+        label: 24 Excess business interest income from pass-throughs

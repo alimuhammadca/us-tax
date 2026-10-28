@@ -177,3 +177,84 @@ sections:
         required: false
         label: "Explanation for line 11c"
         showIf: "relatedPartyException == no_tax_avoidance"
+      # Special cases, Form 8824 Part III detail and related-party (Part II) follow-ups.
+      - name: specialCases
+        type: list
+        required: false
+        label: "Do any of these special cases apply? (check all that apply)"
+        options: ["main_home", "installment_note", "section_1043", "multi_asset"]
+        help: "Checkbox list stored as an array of the option values."
+      - name: section121ExcludedGain
+        type: number
+        required: false
+        label: "Home-sale exclusion (section 121) you are claiming"
+        showIf: "specialCases includes 'main_home'"
+      - name: homeUsePercentAtExchange
+        type: number
+        required: false
+        label: "If part of the property was still your home on the exchange date, what percent? (blank if none)"
+        showIf: "specialCases includes 'main_home'"
+      - name: noteFaceAmount
+        type: number
+        required: false
+        label: "Face amount of the note you received"
+        showIf: "specialCases includes 'installment_note'"
+      - name: notePaymentsReceived
+        type: number
+        required: false
+        label: "Principal paid on the note in 2025"
+        showIf: "specialCases includes 'installment_note'"
+      - name: section1043CertificateNumber
+        type: text
+        required: false
+        label: "Certificate of divestiture number"
+        showIf: "specialCases includes 'section_1043'"
+      - name: section1043SalesPrice
+        type: number
+        required: false
+        label: "Sales price of the divested property, less selling expenses"
+        showIf: "specialCases includes 'section_1043'"
+      - name: section1043Basis
+        type: number
+        required: false
+        label: "Basis of the divested property"
+        showIf: "specialCases includes 'section_1043'"
+      - name: section1043ReplacementCost
+        type: number
+        required: false
+        label: "Cost of replacement property bought within 60 days after the sale"
+        showIf: "specialCases includes 'section_1043'"
+      - name: section1043OrdinaryRecapture
+        type: number
+        required: false
+        label: "Ordinary income recapture on the divested property (optional)"
+        showIf: "specialCases includes 'section_1043'"
+      - name: section1250AdditionalDepreciation
+        type: number
+        required: false
+        label: "Depreciation above straight-line on the building given up - optional"
+      - name: otherPropertyGivenUpKind
+        type: select
+        required: false
+        label: "What kind of property was it?"
+        options: ["capital", "business", "ordinary"]
+        help: "Its gain or loss is reported as if it had been sold, on its own form and with its own holding period."
+      - name: otherPropertyGivenUpDateAcquired
+        type: date
+        required: false
+        label: "Date the other property was acquired (YYYY-MM-DD)"
+        showIf: "otherPropertyGivenUpKind == 'capital' || otherPropertyGivenUpKind == 'business'"
+      - name: riskOfLossReduced
+        type: boolean
+        required: false
+        label: "Was your or the related party's risk of loss on the property substantially reduced for part of the 2 years (for example by a put, a short sale or a similar arrangement)?"
+        showIf: "relatedParty == true"
+      - name: riskOfLossReducedDays
+        type: number
+        required: false
+        label: "For how many days?"
+        showIf: "riskOfLossReduced == true"
+      - name: relatedPartySoldReplacementViaQi
+        type: boolean
+        required: false
+        label: "Did a related party sell the property you received into the exchange for cash or other property, through a qualified intermediary or another unrelated party?"

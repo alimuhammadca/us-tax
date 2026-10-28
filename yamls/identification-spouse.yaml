@@ -57,6 +57,11 @@ sections:
           credits and deductions (e.g. additional standard deduction for age >= 65,
           kiddie tax rules, EIC age gates).
 
+      - name: spouseDateOfDeath
+        type: date
+        required: false
+        label: "Spouse's date of death (if your spouse has died)"
+
       - name: spouseOccupation
         type: text
         required: true

@@ -1,0 +1,292 @@
+# Rental real estate and royalty income (Schedule E Part I) - spouse.
+# Component: form-rental-income.component.ts (one component serves rental-income-taxpayer and, via @Input formId,
+# rental-income-spouse). Net income/loss routes to Schedule 1 line 5 after the §280A, at-risk and passive limits.
+name: rental-income-spouse
+title: "Rental & royalty income (Schedule E, spouse)"
+multiplicity: single
+formName: "Schedule E"
+category: "income"
+instructions:
+  - "Enter each property separately; rents or royalties minus expenses, depreciation and depletion carry to Schedule 1 line 5."
+sections:
+  - name: screening
+    title: "Screening"
+    multiplicity: single
+    fields:
+      - name: hasRentalOrRoyaltyIncome
+        type: boolean
+        required: true
+        label: "Did you have any rental real estate or royalty income in 2025?"
+
+  - name: ownerElections
+    title: "Owner-level elections and passive income"
+    multiplicity: single
+    showIf: "hasRentalOrRoyaltyIncome == true"
+    fields:
+      - name: isRealEstateProfessional
+        type: boolean
+        required: false
+        label: "You qualify as a real estate professional (> 750 hours and more than half of working time in real property trades) — rental losses are fully deductible"
+      - name: claims199aRentalSafeHarbor
+        type: boolean
+        required: false
+        label: "Elect the Rev. Proc. 2019-38 §199A rental safe harbor (treat the rental enterprise as a trade or business for the QBI deduction)"
+      - name: otherPassiveIncome
+        type: number
+        required: false
+        label: "Passive income from other activities (e.g. limited partnership K-1s)"
+
+  # Saved under the `spouseProperties` list key (the component picks taxpayerProperties / spouseProperties from its formId).
+  - name: spouseProperties
+    title: "Properties (Schedule E Part I, one row per property)"
+    multiplicity: multiple
+    showIf: "hasRentalOrRoyaltyIncome == true"
+    fields:
+      - name: propertyType
+        type: select
+        required: false
+        label: "Type"
+        options: ["RENTAL_REAL_ESTATE", "ROYALTY"]
+      - name: propertyDescription
+        type: text
+        required: false
+        label: "Description / address"
+      - name: communityPct
+        type: number
+        required: false
+        label: "Community share of this property (%)"
+        showIf: "filing-status filingStatus = Married filing separately and communityPropertyState = true"
+      - name: rentsReceived
+        type: number
+        required: false
+        label: "Rents received (Schedule E line 3)"
+        showIf: "propertyType == 'RENTAL_REAL_ESTATE'"
+      - name: royaltiesReceived
+        type: number
+        required: false
+        label: "Royalties received (Schedule E line 4)"
+        showIf: "propertyType == 'ROYALTY'"
+      - name: leaseBonusAndAdvanceRoyalties
+        type: number
+        required: false
+        label: "Of that, lease bonuses and advance royalties (amounts paid whether or not anything is produced)"
+        showIf: "propertyType == 'ROYALTY'"
+      - name: advanceRoyalties
+        type: number
+        required: false
+        label: "Of that, advance royalties (paid ahead for minerals not yet produced) — the rest is lease bonus"
+        showIf: "propertyType == 'ROYALTY' && (leaseBonusAndAdvanceRoyalties ?? 0) > 0"
+      - name: advertising
+        type: number
+        required: false
+        label: "Advertising (line 5)"
+      - name: autoAndTravel
+        type: number
+        required: false
+        label: "Auto and travel (line 6)"
+      - name: cleaningAndMaintenance
+        type: number
+        required: false
+        label: "Cleaning and maintenance (line 7)"
+      - name: commissions
+        type: number
+        required: false
+        label: "Commissions (line 8)"
+      - name: insurance
+        type: number
+        required: false
+        label: "Insurance (line 9)"
+      - name: legalAndProfessional
+        type: number
+        required: false
+        label: "Legal and other professional fees (line 10)"
+      - name: managementFees
+        type: number
+        required: false
+        label: "Management fees (line 11)"
+      - name: mortgageInterest
+        type: number
+        required: false
+        label: "Mortgage interest paid to banks (line 12)"
+      - name: otherInterest
+        type: number
+        required: false
+        label: "Other interest (line 13)"
+      - name: repairs
+        type: number
+        required: false
+        label: "Repairs (line 14)"
+      - name: supplies
+        type: number
+        required: false
+        label: "Supplies (line 15)"
+      - name: taxes
+        type: number
+        required: false
+        label: "Taxes (line 16)"
+      - name: utilities
+        type: number
+        required: false
+        label: "Utilities (line 17)"
+      - name: otherOperatingExpenses
+        type: number
+        required: false
+        label: "Other expenses (line 19)"
+      - name: form1098EntryId
+        type: select
+        required: false
+        label: "Which Form 1098 is for this property?"
+        showIf: "mortgageInterest entered and at least one Form 1098 statement on file"
+        help: "Id of the Form 1098 statement entry that belongs to this property (V385)."
+      - name: form1098SharePct
+        type: number
+        required: false
+        label: "Share of that Form 1098 for this property (%)"
+        showIf: "form1098EntryId"
+      - name: depreciationAmount
+        type: number
+        required: false
+        label: "Depreciation (from your Form 4562) (Schedule E line 18)"
+        showIf: "propertyType == 'RENTAL_REAL_ESTATE'"
+      - name: depletionAmount
+        type: number
+        required: false
+        label: "Depletion (leave blank for automatic 15% percentage depletion of production royalties) (Schedule E line 18)"
+        showIf: "propertyType == 'ROYALTY'"
+      - name: mineralAdjustedBasis
+        type: number
+        required: false
+        label: "Adjusted basis of this mineral interest at the start of 2025 (cost less all depletion taken before)"
+        showIf: "propertyType == 'ROYALTY' && depletionAmount == null"
+      - name: royaltiesExpectedOverLease
+        type: number
+        required: false
+        label: "Royalties you expect to receive over the life of the lease (for the bonus)"
+        showIf: "propertyType == 'ROYALTY' && depletionAmount == null && (leaseBonusAndAdvanceRoyalties ?? 0) > (advanceRoyalties ?? 0)"
+      - name: unitsPaidForInYear
+        type: number
+        required: false
+        label: "Units (barrels, mcf, tons) you were paid for in 2025, including units paid for in advance"
+        showIf: "propertyType == 'ROYALTY' && depletionAmount == null"
+      - name: unitsRemainingEndOfYear
+        type: number
+        required: false
+        label: "Estimated units remaining to be recovered at the end of 2025"
+        showIf: "propertyType == 'ROYALTY' && depletionAmount == null"
+      - name: leaseEndedWithoutProduction
+        type: boolean
+        required: false
+        label: "This lease ended or was abandoned in 2025 before anything was produced"
+        showIf: "propertyType == 'ROYALTY' && depletionAmount == null"
+      - name: priorDepletionToRestore
+        type: number
+        required: false
+        label: "Depletion you deducted in earlier years on its bonus or advance royalties (it is income again in 2025)"
+        showIf: "leaseEndedWithoutProduction == true"
+      - name: rentalDays
+        type: number
+        required: false
+        label: "Days rented at fair value"
+        showIf: "propertyType == 'RENTAL_REAL_ESTATE'"
+      - name: personalUseDays
+        type: number
+        required: false
+        label: "Days of personal use"
+        showIf: "propertyType == 'RENTAL_REAL_ESTATE'"
+      - name: expensesEnteredAs
+        type: select
+        required: false
+        label: "How did you enter the expenses above?"
+        options: ["RENTAL_SHARE", "ANNUAL_TOTALS"]
+        showIf: "propertyType == 'RENTAL_REAL_ESTATE' && (personalUseDays ?? 0) > 0"
+      - name: priorYearVacationOperatingCarryover
+        type: number
+        required: false
+        label: "Operating expenses carried over from 2024 (Pub. 527 Worksheet 5-1, line 7a)"
+        showIf: "property used as a home (§280A personal-use test)"
+      - name: priorYearVacationDepreciationCarryover
+        type: number
+        required: false
+        label: "Depreciation carried over from 2024 (Pub. 527 Worksheet 5-1, line 7b)"
+        showIf: "property used as a home (§280A personal-use test)"
+      - name: isBelowMarketRental
+        type: boolean
+        required: false
+        label: "Rented below market value (e.g. to a relative)"
+        showIf: "propertyType == 'RENTAL_REAL_ESTATE'"
+      - name: activeParticipation
+        type: boolean
+        required: false
+        label: "Actively participate (management decisions) — eligible for the $25,000 loss allowance"
+        showIf: "propertyType == 'RENTAL_REAL_ESTATE'"
+      - name: rentalActivityType
+        type: select
+        required: false
+        label: "What kind of rental is this?"
+        options: ["LONG_TERM", "AVG_7_DAYS_OR_LESS", "AVG_30_DAYS_SERVICES", "EXTRAORDINARY_SERVICES", "OTHER_EXCEPTION"]
+        showIf: "propertyType == 'RENTAL_REAL_ESTATE'"
+      - name: materialParticipation
+        type: boolean
+        required: false
+        label: "Did you materially participate in this rental (e.g. more than 500 hours in 2025)?"
+        showIf: "propertyType == 'RENTAL_REAL_ESTATE'"
+      - name: rentedToYourOwnBusiness
+        type: boolean
+        required: false
+        label: "Is this property rented to a business that you materially participates in (for example your own company)?"
+        showIf: "propertyType == 'RENTAL_REAL_ESTATE'"
+      - name: mostlyLand
+        type: boolean
+        required: false
+        label: "Is less than 30% of what you paid for this property depreciable (mostly land)?"
+        showIf: "propertyType == 'RENTAL_REAL_ESTATE'"
+      - name: amountAtRisk
+        type: number
+        required: false
+        label: "Amount at risk (cash invested + recourse debt + qualified nonrecourse financing secured by this real property) — leave blank if fully at risk"
+      - name: priorYearAtRiskCarryforward
+        type: number
+        required: false
+        label: "Prior-year at-risk loss carried over (Form 6198)"
+      - name: priorYearSuspendedPassiveLoss
+        type: number
+        required: false
+        label: "Prior-year suspended passive loss carried into 2025"
+      - name: priorYearAmtSuspendedPassiveLoss
+        type: number
+        required: false
+        label: "AMT version of that suspended loss (only if different)"
+      - name: fullyDisposedInCurrentYear
+        type: boolean
+        required: false
+        label: "Sold / fully disposed of this property in 2025 (releases suspended losses)"
+      - name: soldToRelatedParty
+        type: boolean
+        required: false
+        label: "Was the buyer related to you?"
+        showIf: "fullyDisposedInCurrentYear == true"
+
+  - name: remicInterests
+    title: "Residual interests in REMICs (Schedule E Part IV, Schedule Q / Form 1066) - optional"
+    multiplicity: multiple
+    fields:
+      - name: remicName
+        type: text
+        required: false
+        label: "Name of the REMIC"
+      - name: remicEin
+        type: text
+        required: false
+        label: "Employer identification number"
+      - name: excessInclusion
+        type: number
+        required: false
+        label: "Excess inclusion (Schedules Q, line 2c - total for the year)"
+      - name: taxableIncomeOrNetLoss
+        type: number
+        required: false
+        label: "Taxable income or (net loss) (Schedules Q, line 1b)"
+      - name: incomeFromScheduleQ
+        type: number
+        required: false
+        label: "Income from Schedules Q, line 3b"

@@ -11,10 +11,10 @@ instructions:
   - Use this only for spouse-specific pension/annuity inputs for Form 1040 lines 5a/5b/5c.
   - Return-level upload checks and line 5c/Form 4972/Form 5329 gating stay on pension-annuity-income-taxpayer.
   - Self-employment income is out of scope and excluded.
-  - UI renders as a sub-interview wizard; section order below matches wizard screen flow:
+  - "UI renders as a sub-interview wizard; section order below matches wizard screen flow:
     screening → classificationAndRouting → pensionDetails → exceptionAmounts (conditional) →
     uncommonGate → psoInputs → taxableComputationInputsSimplifiedMethod →
-    taxableComputationInputsGeneralRule → summary (save screen).
+    taxableComputationInputsGeneralRule → summary (save screen)."
 sections:
   - name: screening
     title: Screening
@@ -77,6 +77,25 @@ sections:
         label: Total amount your spouse rolled over
         placeholder: 0.00
         help: Enter the total amount rolled over from all qualified plans and annuities.
+
+      - name: pensionRolloverToRothAmount
+        type: amount
+        required: false
+        label: Part of that rollover that went into a Roth IRA or Roth account
+        showIf: hadPensionRollover == true
+
+      - name: pensionRolloverToRothInPlan
+        type: boolean
+        required: false
+        label: "Did that Roth rollover go into a Roth account inside your spouse's employer's plan (an in-plan Roth rollover) rather than a Roth IRA?"
+        showIf: "pensionRolloverToRothAmount > 0"
+
+      - name: electToIncludeNuaInIncome
+        type: boolean
+        required: false
+        label: "Your spouse's pension statement shows net unrealized appreciation in employer stock (1099-R box 6). Include it in 2025 income?"
+        showIf: "1099-R box 6 NUA > 0"
+        help: Box 6 NUA is excluded from box 2a and taxed as long-term capital gain on sale; you may elect to include it now (IRC 402(e)(4)(B)).
       - name: taxableEmployeeContributionsAlreadyTaxedBox5Total
         type: amount
         required: false
@@ -129,6 +148,12 @@ sections:
         required: false
         label: Is your spouse electing to exclude qualifying insurance premiums from pension income?
         help: The PSO exclusion lets eligible retired public safety officers exclude up to $3,000 per year in qualifying premiums paid from their pension.
+
+      - name: psoFromRetiringEmployerGovPlan
+        type: boolean
+        required: false
+        label: "Is this distribution from the governmental plan (qualified trust, 403(a), 403(b) or 457(b)) of the employer your spouse retired from as a public safety officer?"
+        showIf: electsPsoPremiumExclusion == true
       - name: totalQualifyingPsoPremiumsPaid
         type: amount
         required: false
@@ -211,6 +236,19 @@ sections:
         label: Spouse exclusion ratio override (General Rule)
         placeholder: 0.000000
         help: Enter spouse override ratio only when required by reviewed computation support.
+
+      - name: generalRulePaymentAmount
+        type: amount
+        required: false
+        label: Amount of each regular payment
+        showIf: needsGeneralRuleComputation == true (annuity starting date out of Simplified Method range)
+
+      - name: generalRulePaymentFrequency
+        type: select
+        required: false
+        label: How often are the payments paid
+        showIf: needsGeneralRuleComputation == true (annuity starting date out of Simplified Method range)
+        options: [monthly, quarterly, semiannually, annually]
       - name: rmdShortfallAmount
         type: number
         required: false
@@ -222,6 +260,90 @@ sections:
         showIf: rmdShortfallAmount > 0
         label: Was the RMD shortfall corrected within the two-year correction window?
         help: Yes reduces the §4974 additional tax from 25% to 10%. No means the 25% rate applies.
+
+      - name: rmdRequiredAmount
+        type: amount
+        required: false
+        label: Required minimum distribution for 2025
+
+      - name: rmdDistributedAmount
+        type: amount
+        required: false
+        label: Amount distributed for 2025
+
+      - name: rmdShortfallWaivedAmount
+        type: amount
+        required: false
+        label: Part of the shortfall you are asking the IRS to waive (reasonable cause)
+        showIf: rmdShortfallAmount or rmdRequiredAmount entered
+        help: Form 5329 Part IX.
+
+  - name: line5cWriteIns
+    title: "Special notes on your spouse's pension income (line 5c)"
+    multiplicity: single
+    showIf: hadPensionOrAnnuityIncome == true
+    fields:
+      - name: hasOtherLine5cWriteInCode
+        type: boolean
+        required: false
+        label: "Has a tax professional or specific IRS instruction told you a special note is required next to your spouse's pension income?"
+      - name: line5cOtherWriteInText
+        type: text
+        required: false
+        label: Note text
+        showIf: hasOtherLine5cWriteInCode == true
+      - name: line5cOtherWriteInAmount
+        type: amount
+        required: false
+        label: Amount associated with this note (if any)
+        showIf: hasOtherLine5cWriteInCode == true
+
+  - name: earlyDistributionPenalty
+    title: Early withdrawal penalty (Form 5329 Part I)
+    multiplicity: single
+    showIf: hadPensionOrAnnuityIncome == true
+    fields:
+      - name: hasEarlyDistributionAdditionalTaxForForm5329
+        type: boolean
+        required: true
+        label: "Does your spouse owe the 10% early withdrawal penalty on these distributions?"
+      - name: form5329ExceptionCodeOrReason
+        type: text
+        required: false
+        label: "Exception code or explanation, if the penalty is partially reduced"
+        showIf: hasEarlyDistributionAdditionalTaxForForm5329 == true
+      - name: form5329ExceptionAmountNotSubjectToTax
+        type: amount
+        required: false
+        label: Amount NOT subject to the additional tax (exempt portion)
+        showIf: "hasEarlyDistributionAdditionalTaxForForm5329 == true && form5329ExceptionCodeOrReason != null"
+      - name: noEarlyDistributionExceptionApplies
+        type: boolean
+        required: false
+        label: No exception applies - full additional tax
+        showIf: "hasEarlyDistributionAdditionalTaxForForm5329 == true && form5329ExceptionCodeOrReason == null"
+      - name: exception01PublicSafety
+        type: boolean
+        required: false
+        label: "Was your spouse a public-safety employee or private-sector firefighter?"
+        showIf: "hasEarlyDistributionAdditionalTaxForForm5329 == true && exception code 01"
+      - name: separationFromServiceYear
+        type: number
+        required: false
+        label: Year your spouse left the employer that maintains this plan
+        showIf: "hasEarlyDistributionAdditionalTaxForForm5329 == true && exception code 01 or 02"
+      - name: form5329ExceptionBirthAdoptionCount
+        type: number
+        required: false
+        label: Number of children born or adopted that this withdrawal was for
+        showIf: "hasEarlyDistributionAdditionalTaxForForm5329 == true && exception code 19"
+        help: "Form 5329 exception 19 (qualified birth or adoption) is limited to $5,000 per child."
+      - name: form5329ExceptionAccountBalance
+        type: amount
+        required: false
+        label: Account balance just before the withdrawal
+        showIf: "hasEarlyDistributionAdditionalTaxForForm5329 == true && exception code 22 or 23"
+        help: "Exception 22 is limited to the lesser of $10,300 or half the account; exception 23 to the lesser of $1,000 or the account minus $1,000."
 
   # Backend-only statement imports. Not rendered in form component.
   - name: importedStatementFields

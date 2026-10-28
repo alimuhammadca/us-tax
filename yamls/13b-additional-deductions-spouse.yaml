@@ -53,6 +53,15 @@ sections:
         placeholder: 0.00
         label: Spouse tips from 1099-NEC, 1099-MISC, or 1099-K not already in uploaded statements
         help: Enter any tip amounts for the spouse from non-W-2/non-4137 sources not already reflected in uploaded statements. Shown only when spouseReceivedQualifiedTips is true.
+      - name: spouseForm4070TipsTotal
+        type: number
+        required: false
+        label: "Total tips your spouse reported to the employer on all Forms 4070 (optional - replaces W-2 box 7)"
+        help: "Schedule 1-A instructions allow the Forms 4070 total instead of W-2 box 7 (useful above the $176,100 social security wage base)."
+      - name: spouseTradeTipsNetIncomeCap
+        type: number
+        required: false
+        label: "Net income cap for self-employment trade tips (leave blank if none)"
 
   - name: spouseQualifiedOvertimeDeduction
     title: Overtime deduction (spouse)
@@ -80,6 +89,16 @@ sections:
         placeholder: 0.00
         label: Spouse overtime from non-W-2 sources not in uploaded statements
         help: Enter spouse qualified overtime from 1099-NEC, 1099-MISC box 3, or similar sources not already in uploaded statements. Shown only when spouseReceivedQualifiedOvertime is true.
+      - name: spouseOvertimeTotalPay
+        type: number
+        required: false
+        label: "Total pay for the overtime hours (optional)"
+        help: "With the rate, qualified overtime = total overtime pay x 0.5 / rate (Schedule 1-A instructions, Example 3)."
+      - name: spouseOvertimeRateMultiple
+        type: number
+        required: false
+        label: "Overtime rate (times the regular rate, e.g. 1.5 or 2)"
+        showIf: "spouseOvertimeTotalPay"
 
   - name: spouseEnhancedSeniorDeduction
     title: Senior deduction (spouse)

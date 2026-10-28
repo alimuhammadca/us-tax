@@ -56,6 +56,89 @@ sections:
         label: Spouse educator expenses
         placeholder: 0.00
         help: K-12 teachers and other eligible educators may deduct up to $300 for unreimbursed classroom expenses.
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: isEligibleEducator
+        type: boolean
+        required: false
+        label: "Was your spouse a kindergarten through grade 12 teacher, instructor, counselor, principal or aide who worked at least 900 hours in a school year?"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true && (educatorExpensesLine11 ?? 0) > 0"
+      - name: educatorExpenseReductions
+        type: amount
+        required: false
+        label: "Amounts that reduce these expenses (optional)"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true && (educatorExpensesLine11 ?? 0) > 0 && isEligibleEducator !== false"
+      - name: line12ExpenseCategory
+        type: select
+        required: false
+        label: "Which of these describes your spouse?"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true"
+        options:
+          - value: "reservist"
+            label: "Armed Forces reservist or National Guard member"
+          - value: "performingArtist"
+            label: "Performing artist"
+          - value: "feeBasisOfficial"
+            label: "State or local government official paid on a fee basis"
+      - name: reservistTravelOver100Miles
+        type: boolean
+        required: false
+        label: "Was the travel to your spouse's drills or meetings more than 100 miles from home?"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true && line12ExpenseCategory === 'reservist'"
+      - name: reservistFederalPerDiemTotal
+        type: amount
+        required: false
+        label: "Federal per diem for your spouse's travel days (lodging plus meals and incidentals) - optional"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true && line12ExpenseCategory === 'reservist' && reservistTravelOver100Miles === true"
+      - name: performingArtistTwoEmployers200
+        type: boolean
+        required: false
+        label: "Did at least two performing-arts employers each pay your spouse $200 or more?"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true && line12ExpenseCategory === 'performingArtist'"
+      - name: performingArtsWagesAmount
+        type: amount
+        required: false
+        label: "Wages from performing arts"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true && line12ExpenseCategory === 'performingArtist'"
+      - name: form2106Line1VehicleExpense
+        type: amount
+        required: false
+        label: "Vehicle expense"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true"
+      - name: form2106Line2ParkingTollsTransportation
+        type: amount
+        required: false
+        label: "Parking fees, tolls, and local transportation"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true"
+      - name: form2106Line3TravelExpense
+        type: amount
+        required: false
+        label: "Travel expense while away from home (lodging, airfare — not meals)"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true"
+      - name: form2106Line4OtherBusinessExpenses
+        type: amount
+        required: false
+        label: "Other business expenses (not meals)"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true"
+      - name: form2106Line5MealsExpense
+        type: amount
+        required: false
+        label: "Meals (before the 50%/80% limit)"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true"
+      - name: form2106SubjectToDotHoursOfService
+        type: boolean
+        required: false
+        label: "These meals are subject to the DOT hours-of-service limits (80% instead of 50%)"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true"
+      - name: form2106Line7ReimbursementNonMeals
+        type: amount
+        required: false
+        label: "Employer reimbursement — non-meals (not in W-2 box 1)"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true"
+      - name: form2106Line7ReimbursementMeals
+        type: amount
+        required: false
+        label: "Employer reimbursement — meals (not in W-2 box 1)"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true"
       - name: reservistPerformingArtistFeeBasisExpensesLine12
         type: amount
         required: false
@@ -74,6 +157,12 @@ sections:
         label: Spouse moving expenses (Armed Forces only)
         placeholder: 0.00
         help: Only active-duty Armed Forces members who move due to a military order may deduct moving expenses.
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: isActiveDutyMilitaryMoveLine14
+        type: boolean
+        required: false
+        label: "Is your spouse an active-duty Armed Forces member moving under a military order?"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true && movingExpensesArmedForcesLine14 !== null && movingExpensesArmedForcesLine14 !== 0"
       - name: movingExpensesStorageFeesOnlyLine14
         type: boolean
         required: false
@@ -113,6 +202,72 @@ sections:
         required: false
         label: Is your spouse covered by a retirement plan at work?
         help: Includes 401(k), 403(b), pension, SEP, SIMPLE, and other qualified plans. Affects whether the spouse's IRA contribution is fully deductible. If uncertain, check Box 13 (Retirement plan) on spouse's W-2.
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: traditionalIraContributionAmount
+        type: amount
+        required: false
+        label: "Amount your spouse put into traditional IRAs for 2025"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true"
+      - name: rothIraContributionAmount
+        type: amount
+        required: false
+        label: "Amount your spouse put into Roth IRAs for 2025"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true"
+      - name: iraExcessWithdrawnByDueDate
+        type: boolean
+        required: false
+        label: "Did your spouse take any of it back out before the return was due (April 15, 2026)?"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true && hasIraContribution()"
+      - name: traditionalIraExcessWithdrawnAmount
+        type: amount
+        required: false
+        label: "Amount taken back out of the traditional IRA (not counting earnings)"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true && hasIraContribution() && iraExcessWithdrawnByDueDate === true && traditionalIraContributionAmount"
+      - name: rothIraExcessWithdrawnAmount
+        type: amount
+        required: false
+        label: "Amount taken back out of the Roth IRA (not counting earnings)"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true && hasIraContribution() && iraExcessWithdrawnByDueDate === true && rothIraContributionAmount"
+      - name: iraExcessWithdrawnEarnings
+        type: amount
+        required: false
+        label: "Earnings taken out with it"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true && hasIraContribution() && iraExcessWithdrawnByDueDate === true"
+      - name: traditionalIraPriorYearExcess
+        type: amount
+        required: false
+        label: "Excess traditional IRA contributions from earlier years still in the account"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true"
+      - name: traditionalIraPriorExcessReturned
+        type: amount
+        required: false
+        label: "Of that earlier excess, amount returned to you in 2025"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true && (traditionalIraPriorYearExcess ?? 0) > 0"
+      - name: traditionalIraPriorExcessReturnedDeductible
+        type: boolean
+        required: false
+        label: "Did you deduct any of it, or could you have? (it then counts as a distribution instead)"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true && (traditionalIraPriorYearExcess ?? 0) > 0 && (traditionalIraPriorExcessReturned ?? 0) > 0"
+      - name: traditionalIraYearEndValue
+        type: amount
+        required: false
+        label: "Value of your spouse's traditional IRAs on December 31, 2025"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true"
+      - name: rothIraPriorYearExcess
+        type: amount
+        required: false
+        label: "Excess Roth IRA contributions from earlier years still in the account"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true"
+      - name: rothIraEntireBalanceWithdrawn
+        type: boolean
+        required: false
+        label: "Did you withdraw the entire balance of all your spouse's Roth IRAs in 2025?"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true && (rothIraPriorYearExcess ?? 0) > 0"
+      - name: rothIraYearEndValue
+        type: amount
+        required: false
+        label: "Value of your spouse's Roth IRAs on December 31, 2025"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true"
       - name: studentLoanInterestDeductionLine21
         type: amount
         required: false
@@ -125,6 +280,27 @@ sections:
         label: Spouse Archer MSA deduction
         placeholder: 0.00
         help: Enter spouse deductible Archer MSA amount for line 23.
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: form2106Line10ReservistPart
+        type: amount
+        required: false
+        label: "Reserve travel more than 100 miles from home"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true"
+      - name: form2106Line10FeeBasisPart
+        type: amount
+        required: false
+        label: "Fee-basis state or local government job"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true"
+      - name: form2106Line10PerformingArtistPart
+        type: amount
+        required: false
+        label: "Performing-arts work"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true && line12ExpenseCategory === 'performingArtist'"
+      - name: form2106Line10ImpairmentPart
+        type: amount
+        required: false
+        label: "Impairment-related work expenses (disability)"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true"
 
   - name: schedule1OtherAdjustments24aTo24k
     title: Less common adjustments
@@ -235,6 +411,82 @@ sections:
         label: Amount
         placeholder: 0.00
         help: Enter amount for this spouse line 24z item.
+
+  # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+  - name: form2106Vehicles
+    title: "Form 2106 Part II - vehicle expenses (one entry per vehicle)"
+    multiplicity: multiple
+    fields:
+      - name: datePlacedInService
+        type: date
+        required: false
+        label: "Date placed in service"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true"
+      - name: totalMiles
+        type: number
+        required: false
+        label: "Total miles driven in 2025 (line 12)"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true"
+      - name: businessMiles
+        type: number
+        required: false
+        label: "Business miles - not commuting (line 13)"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true"
+      - name: commutingMiles
+        type: number
+        required: false
+        label: "Commuting miles (line 16)"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true"
+      - name: otherMiles
+        type: number
+        required: false
+        label: "Other personal miles (line 17) - optional"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true"
+      - name: hasEvidence
+        type: boolean
+        required: false
+        label: "Do you have evidence to support the deduction (line 20)?"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true"
+      - name: evidenceWritten
+        type: boolean
+        required: false
+        label: "Is the evidence written (line 21)?"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true"
+      - name: method
+        type: select
+        required: false
+        label: "Method"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true"
+        options:
+          - value: "standardMileage"
+            label: "Standard mileage rate (70 cents a mile)"
+          - value: "actual"
+            label: "Actual expenses"
+      - name: gasOilRepairsInsurance
+        type: amount
+        required: false
+        label: "Gasoline, oil, repairs, insurance and similar (line 23)"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true && method === 'actual'"
+      - name: vehicleRentals
+        type: amount
+        required: false
+        label: "Vehicle rentals (line 24a)"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true && method === 'actual'"
+      - name: inclusionAmount
+        type: amount
+        required: false
+        label: "Lease inclusion amount (line 24b)"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true && method === 'actual'"
+      - name: depreciation
+        type: amount
+        required: false
+        label: "Depreciation and section 179 for the vehicle (line 28)"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true && method === 'actual'"
+      - name: costBasis
+        type: amount
+        required: false
+        label: "Cost or other basis of the vehicle (line 30)"
+        showIf: "hadIncomeAdjustmentsForSchedule1 === true && method === 'actual'"
 
   # Backend-only imported fields. Not rendered in the actual form component.
   - name: importedStatementFields

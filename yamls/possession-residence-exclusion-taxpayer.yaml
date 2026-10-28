@@ -1,0 +1,161 @@
+# U.S. possession bona-fide-resident income exclusion (IRC 931 / 933; Form 4563 for American Samoa) - taxpayer / family head.
+# Unified intake for American Samoa, Puerto Rico, Guam, USVI and CNMI residents.
+name: possession-residence-exclusion-taxpayer
+title: Income from living in a U.S. territory (possession exclusion)
+multiplicity: single
+formName: Form 4563
+category: income
+instructions:
+  - Answer Yes only if you lived in a U.S. territory in 2025 and some of your income is excluded from U.S. tax.
+  - Amounts entered here are excluded income from sources within the territory.
+
+sections:
+  - name: screening
+    title: "Did this apply?"
+    multiplicity: single
+    fields:
+      - name: hasPossessionExcludedIncome
+        type: boolean
+        required: true
+        label: "Did you have income from living in a US territory in 2025?"
+
+  - name: territory
+    title: "Which territory?"
+    multiplicity: single
+    showIf: hasPossessionExcludedIncome == true
+    fields:
+      - name: possession
+        type: select
+        required: true
+        label: Territory
+        options: [american_samoa, puerto_rico, guam, usvi, cnmi]
+
+  - name: residence
+    title: Where you lived
+    multiplicity: single
+    showIf: hasPossessionExcludedIncome == true
+    fields:
+      - name: isBonaFideResidentEntireTaxYear
+        type: boolean
+        required: true
+        label: "Were you a permanent (bona fide) resident of the territory for all of 2025?"
+      - name: priorYearWasBonaFideResident
+        type: boolean
+        required: false
+        label: "Were you a permanent resident of the territory in 2024?"
+        help: Asked for a part-year resident claiming a large exclusion.
+      - name: typeOfLivingQuarters
+        type: select
+        required: false
+        label: Type of housing in American Samoa
+        showIf: "possession == 'american_samoa'"
+        options: [rented_house, employer_furnished, own_home, quarters_in_hotel]
+      - name: familyLivedWithYou
+        type: boolean
+        required: false
+        label: "Did members of your family live with you in American Samoa?"
+        showIf: "possession == 'american_samoa'"
+      - name: familyLivedWithYouDates
+        type: text
+        required: false
+        label: "When did family members live in American Samoa?"
+        showIf: familyLivedWithYou == true
+      - name: homeMaintainedInUs
+        type: boolean
+        required: false
+        label: "Did you keep a home in the United States while living in American Samoa?"
+        showIf: "possession == 'american_samoa'"
+      - name: homeMaintainedInUsAddress
+        type: text
+        required: false
+        label: US home address
+        showIf: homeMaintainedInUs == true
+      - name: homeMaintainedInUsOccupiedBy
+        type: text
+        required: false
+        label: "Who lived in the US home while abroad?"
+        showIf: homeMaintainedInUs == true
+      - name: daysInAmericanSamoa
+        type: number
+        required: false
+        label: Days in American Samoa during 2025
+        showIf: "possession == 'american_samoa'"
+      - name: daysInUs
+        type: number
+        required: false
+        label: Days in the United States during 2025
+        showIf: "possession == 'american_samoa'"
+      - name: daysElsewhere
+        type: number
+        required: false
+        label: Days elsewhere during 2025
+        showIf: "possession == 'american_samoa'"
+
+  - name: employmentEntries
+    title: Employers in American Samoa
+    multiplicity: multiple
+    showIf: "possession == 'american_samoa'"
+    fields:
+      - name: employerName
+        type: text
+        required: false
+        label: Employer name
+      - name: employmentType
+        type: select
+        required: false
+        label: Type of employer
+        options: [american_samoa_government, us_government, private]
+      - name: employerAddress
+        type: text
+        required: false
+        label: Employer address
+      - name: datesOfEmployment
+        type: text
+        required: false
+        label: Dates of employment
+
+  - name: excludedIncome
+    title: Income from sources within the territory (excluded)
+    multiplicity: single
+    showIf: "hasPossessionExcludedIncome == true && possession != null"
+    fields:
+      - name: wagesFromPossessionSources
+        type: amount
+        required: false
+        label: "Wages, salaries, tips from territory sources (label varies by territory)"
+      - name: taxableInterestExcluded
+        type: amount
+        required: false
+        label: Taxable interest from territory sources
+      - name: ordinaryDividendsExcluded
+        type: amount
+        required: false
+        label: Ordinary dividends from territory sources
+      - name: rentsRoyaltiesExcluded
+        type: amount
+        required: false
+        label: Rents and royalties from territory sources
+      - name: farmGrossIncomeExcluded
+        type: amount
+        required: false
+        label: Farm income from territory sources
+      - name: businessGrossIncomeExcluded
+        type: amount
+        required: false
+        label: Business income from territory sources
+      - name: capitalGainsLossNetExcluded
+        type: amount
+        required: false
+        label: Capital gain or (loss) from territory sources
+      - name: otherIncomeDescription
+        type: text
+        required: false
+        label: Other income from territory sources - description
+      - name: otherIncomeAmount
+        type: amount
+        required: false
+        label: Other income from territory sources - amount
+      - name: totalExcludedIncomeOverride
+        type: amount
+        required: false
+        label: Total override (optional - replaces the auto-computed sum above)

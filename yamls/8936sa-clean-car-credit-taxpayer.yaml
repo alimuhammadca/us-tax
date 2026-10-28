@@ -47,6 +47,25 @@ sections:
         placeholder: 0.00
         label: Prior-year MAGI for the Form 8936 lookback rule
 
+      - name: spouseHasCleanCarCreditInputs
+        type: boolean
+        required: true
+        label: "Did your spouse buy a clean vehicle on their own account in 2025 that should be claimed on this joint return?"
+        showIf: spouse tab and claimsCleanCarCreditOnReturn == true
+
+      - name: spousePriorYearMagi
+        type: amount
+        required: false
+        label: "Spouse's last-year Modified Adjusted Gross Income"
+        showIf: spouseHasCleanCarCreditInputs == true
+        help: "Spouse's income for the credit (if you file separately)."
+
+      - name: spouseCurrentYearAdditionalMagiAddbacks
+        type: amount
+        required: false
+        label: "Spouse's this-year add-backs (foreign earned income exclusion, etc.)"
+        showIf: spouseHasCleanCarCreditInputs == true
+
   - name: taxpayerVehicles
     title: Taxpayer clean vehicles
     multiplicity: multiple

@@ -43,6 +43,41 @@ sections:
         label: Spouse Form 2555 foreign housing exclusion
         help: Enter the amount from the spouse's Form 2555, line 47 (foreign housing exclusion), if applicable and not already entered on the taxpayer tab.
 
+  - name: spousePremiumTaxCredit
+    title: "Spouse's own premium tax credit (Form 8962)"
+    multiplicity: single
+    fields:
+      - name: spousePtcClaimsOrReceivedPtc
+        type: boolean
+        required: false
+        label: "Did your spouse claim or receive advance premium tax credit on their own coverage?"
+      - name: spousePtcReceivedAny1095A
+        type: boolean
+        required: false
+        label: "Did your spouse receive a Form 1095-A?"
+        showIf: "spousePtcClaimsOrReceivedPtc == true"
+      - name: spousePtcTaxFamilySize
+        type: number
+        required: false
+        label: "Your spouse's tax household size"
+        showIf: "spousePtcClaimsOrReceivedPtc == true"
+      - name: spousePtcFplRegion
+        type: select
+        required: false
+        label: "Where your spouse lives (federal poverty line region)"
+        options: ["continental", "alaska", "hawaii"]
+        showIf: "spousePtcClaimsOrReceivedPtc == true"
+      - name: spousePtcMfsException
+        type: boolean
+        required: false
+        label: "Is your spouse a victim of domestic abuse or spousal abandonment (allowed to claim the credit while filing separately)?"
+        showIf: "spousePtcClaimsOrReceivedPtc == true"
+      - name: spousePtcQsehraAffordable
+        type: boolean
+        required: false
+        label: "If your spouse's W-2 box 12 shows code FF (a QSEHRA from a small employer): is the QSEHRA considered affordable coverage (Pub. 974 Worksheet N)?"
+        showIf: "spousePtcClaimsOrReceivedPtc == true"
+
   # Backend-only computed values. Not rendered in the UI.
   - name: computedOutputs
     title: Computed outputs (backend only)

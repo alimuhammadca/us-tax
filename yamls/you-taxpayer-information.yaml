@@ -1,0 +1,68 @@
+# Legacy taxpayer information form (formId = you). Superseded by identification-taxpayer, which reads 'you' as a
+# fallback (shell + childcare component). Component: form-you.component.ts.
+name: you
+title: "Taxpayer Information (legacy 'you' form)"
+multiplicity: single
+formName: "1040"
+category: "personal"
+sections:
+  - name: identity
+    title: "Identity"
+    multiplicity: single
+    fields:
+      - name: firstName
+        type: text
+        required: true
+        label: "Your first name and middle initial"
+      - name: lastName
+        type: text
+        required: true
+        label: "Your last name"
+      - name: ssn
+        type: text
+        required: true
+        label: "Your Social Security number"
+        help: "9 digits (123456789) or formatted (123-45-6789)."
+      - name: dateOfBirth
+        type: date
+        required: true
+        label: "Your date of birth"
+        help: "YYYY-MM-DD"
+
+  - name: address
+    title: "Home address"
+    multiplicity: single
+    fields:
+      - name: streetAddress
+        type: text
+        required: true
+        label: "Home address (number and street)"
+      - name: aptNumber
+        type: text
+        required: false
+        label: "Apt. no."
+      - name: city
+        type: text
+        required: true
+        label: "City, town, or post office"
+      - name: state
+        type: select
+        required: true
+        label: "State"
+      - name: zipCode
+        type: text
+        required: false
+        label: "ZIP code"
+        help: "5 digits or ZIP+4."
+      - name: foreignCountry
+        type: select
+        required: false
+        label: "Foreign country name"
+      - name: foreignProvince
+        type: text
+        required: false
+        label: "Foreign province/state/county"
+      - name: postalCode
+        type: text
+        required: false
+        label: "Foreign postal code"

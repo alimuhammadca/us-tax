@@ -1,0 +1,94 @@
+# Employment income screening (Form 1040 line 1a/1b) - legacy combined filer + spouse form (formId = employment-income).
+# Component: form-employment.component.ts. Yes/No questions are p-select controls bound to true/false.
+name: employment-income
+title: "Employment income (filer and spouse)"
+multiplicity: single
+formName: "1040"
+category: "income"
+sections:
+  - name: filerEmploymentIncome
+    title: "Filer employment income"
+    multiplicity: single
+    fields:
+      - name: filerHasEmploymentIncome
+        type: boolean
+        required: true
+        label: "Did you receive any wages (including household employee wages) during the tax year?"
+      - name: filerSubmittedW2
+        type: boolean
+        required: false
+        label: "Did you upload/submit your W-2 form(s)?"
+        showIf: "filerHasEmploymentIncome == true"
+      - name: filerHouseholdWork
+        type: boolean
+        required: false
+        label: "Did you receive pay for household work (babysitter, nanny, caregiver/health aide, housekeeper, yard worker, etc.)?"
+        showIf: "filerHasEmploymentIncome == true"
+      - name: filerHouseholdEmployeeUnderControlTest
+        type: boolean
+        required: false
+        label: "Did the person paying you control what you did and how you did it?"
+        showIf: "filerHouseholdWork == true"
+      - name: filerHouseholdReceivedW2
+        type: boolean
+        required: false
+        label: "Did you receive a Form W-2 for this household work?"
+        showIf: "filerHouseholdWork == true && filerHouseholdEmployeeUnderControlTest == true"
+
+  - name: filerHouseholdEmployers
+    title: "Household employers and wages not reported on a W-2 (filer)"
+    multiplicity: multiple
+    showIf: "filerHouseholdWork == true && filerHouseholdEmployeeUnderControlTest == true && filerHouseholdReceivedW2 == false"
+    fields:
+      - name: employerName
+        type: text
+        required: false
+        label: "Employer name (optional)"
+      - name: wages
+        type: number
+        required: true
+        label: "Wages"
+
+  - name: spouseEmploymentIncome
+    title: "Spouse employment income"
+    multiplicity: single
+    showIf: "joint return"
+    fields:
+      - name: spouseHasEmploymentIncome
+        type: boolean
+        required: true
+        label: "Did your spouse receive any wages (including household employee wages) during the tax year?"
+      - name: spouseSubmittedW2
+        type: boolean
+        required: false
+        label: "Did you upload/submit your spouse's W-2 form(s)?"
+        showIf: "spouseHasEmploymentIncome == true"
+      - name: spouseHouseholdWork
+        type: boolean
+        required: false
+        label: "Did your spouse receive pay for household work (babysitter, nanny, caregiver/health aide, housekeeper, yard worker, etc.)?"
+        showIf: "spouseHasEmploymentIncome == true"
+      - name: spouseHouseholdEmployeeUnderControlTest
+        type: boolean
+        required: false
+        label: "Did the person paying your spouse control what they did and how they did it?"
+        showIf: "spouseHouseholdWork == true"
+      - name: spouseHouseholdReceivedW2
+        type: boolean
+        required: false
+        label: "Did your spouse receive a Form W-2 for this household work?"
+        showIf: "spouseHouseholdWork == true && spouseHouseholdEmployeeUnderControlTest == true"
+
+  - name: spouseHouseholdEmployers
+    title: "Household employers and wages not reported on a W-2 (spouse)"
+    multiplicity: multiple
+    showIf: "spouseHouseholdWork == true && spouseHouseholdEmployeeUnderControlTest == true && spouseHouseholdReceivedW2 == false"
+    fields:
+      - name: employerName
+        type: text
+        required: false
+        label: "Employer name (optional)"
+      - name: wages
+        type: number
+        required: true
+        label: "Wages"

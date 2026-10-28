@@ -36,6 +36,12 @@ sections:
             value: head-of-household
           - label: Qualifying widow(er)
             value: qualifying-widow
+      - name: earnedIncomeMoreThanHalfOfSupport
+        type: boolean
+        required: false
+        label: "Was the child's earned income (wages, self-employment) more than half of the child's own support for 2025?"
+        showIf: "hasKiddieTaxUnearnedIncome == true && (child age at year end unknown or 18+)"
+        help: "Form 8615 applies to an 18-year-old (or a full-time student 19-23) only if earned income was not more than half of the child's support."
 
   - name: child-unearned-income
     title: Part I – Child’s net unearned income

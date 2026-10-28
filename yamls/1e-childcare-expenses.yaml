@@ -13,6 +13,11 @@
 # - "readOnly: true" means UI should not allow editing (may display as summary).
 # - Where your app has its own enums, adjust `type` strings accordingly.
 
+# Header id for scripts/yaml-drift.py: this file documents the childcare-expenses personal form
+# (form-childcare-expenses.component.ts; the model nests generalQuestions / qualifyingPersons / careProviders /
+# creditComputation / dependentCareBenefits objects, one per section below).
+formId: childcare-expenses
+
 childcareExpenses:
   version: 1
   scope:

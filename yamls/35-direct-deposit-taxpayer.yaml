@@ -1,4 +1,5 @@
 formId: 35-direct-deposit
+# Field entries also carry name: (= id:) so scripts/yaml-drift.py can match them to the component model keys.
 label: Direct deposit (refund)
 
 sections:
@@ -6,6 +7,7 @@ sections:
     label: Direct deposit — where to send your refund
     fields:
       - id: wantsDirectDeposit
+        name: wantsDirectDeposit
         label: Do you want your refund deposited directly to a bank account?
         type: boolean
         required: true
@@ -17,6 +19,7 @@ sections:
           of Refund form.
 
       - id: routingNumber
+        name: routingNumber
         label: Routing number
         type: string
         required: false
@@ -31,6 +34,7 @@ sections:
           message: Routing number must be exactly 9 digits
 
       - id: accountType
+        name: accountType
         label: Account type
         type: enum
         required: false
@@ -46,6 +50,7 @@ sections:
             label: Savings
 
       - id: accountNumber
+        name: accountNumber
         label: Account number
         type: string
         required: false

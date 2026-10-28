@@ -32,6 +32,19 @@ sections:
         type: boolean
         required: false
         label: Actively participated (eligible for the $25,000 special allowance)
+
+      - name: materiallyParticipatedAsReProfessional
+        type: boolean
+        required: false
+        label: "Did you materially participate in the operation of this farm rental (as a real estate professional)?"
+        showIf: isRealEstateProfessional == true (Rental income form)
+        help: "If you also materially participated, a loss is not limited by the passive activity rules (Form 4835 line 32)."
+
+      - name: qbiTradeOrBusiness
+        type: boolean
+        required: false
+        label: "Is this farm rental a trade or business for the qualified business income deduction (section 162, or the Rev. Proc. 2019-38 safe harbor)?"
+        help: "If Yes, its net income or loss counts toward the 20% qualified business income deduction (Form 8995)."
       - name: incomeFromProduction
         type: amount
         required: false
@@ -88,6 +101,11 @@ sections:
         type: amount
         required: false
         label: Amount of crop insurance deferred to 2026
+
+      - name: cropInsurancePriorYearDeferred
+        type: amount
+        required: false
+        label: "Crop insurance deferred from prior year, taxable now (5d)"
       - name: otherIncome
         type: amount
         required: false
@@ -104,6 +122,11 @@ sections:
         type: amount
         required: false
         label: Conservation expenses (line 10)
+
+      - name: priorYearConservationCarryover
+        type: amount
+        required: false
+        label: "Conservation expenses carried from 2024 (10) - over the 2024 25% limit"
       - name: customHireExpense
         type: amount
         required: false

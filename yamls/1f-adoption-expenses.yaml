@@ -13,6 +13,9 @@
 # - User inputs + imported fields: editable (imported may be readOnly if you prefer).
 # - Computed/derived fields: remove or readOnly.
 
+# Header fix (yaml-drift): the personal form id this spec documents.
+name: adoption-expenses
+
 adoptionBenefits8839:
   version: 4
   scope:
@@ -54,6 +57,17 @@ adoptionBenefits8839:
           showIf:
             field: importedStatementFields.w2Box12CodeTTotal
             greaterThan: 0
+
+        # MFS-only questions (married filing separately can claim the exclusion/credit only if both are Yes).
+        - name: mfsChildLivedWithYouOverHalfYear
+          type: boolean
+          required: false
+          label: "Only if you file married filing separately: did an eligible child live with you for more than half of 2025?"
+
+        - name: mfsPaidOverHalfHomeCost
+          type: boolean
+          required: false
+          label: "Only if you file married filing separately: did you pay over half the cost of keeping up your home for 2025?"
 
     - name: children
       title: Child information (Part I — up to 6 children)
@@ -221,6 +235,19 @@ adoptionBenefits8839:
           required: false
           label: Credit carried forward from prior years
           help: Enter the unused adoption credit carried forward from a prior-year Form 8839, if any. Unused credit may be carried forward for up to five years.
+
+        # Shown for an MFS filer with a carryforward (line15CreditCarryforward > 0).
+        - name: carryforwardOriginYearMarried
+          type: boolean
+          required: false
+          label: "Only if you file married filing separately: were you married in the year the qualified adoption expenses for this carryforward first became allowable?"
+          showIf: line15CreditCarryforward > 0
+
+        - name: carryforwardOriginYearFiledJoint
+          type: boolean
+          required: false
+          label: Did you file a joint return for that year?
+          showIf: carryforwardOriginYearMarried == true
 
     - name: employerBenefitsPartIII
       title: Employer-provided adoption benefits (Part III — computes Form 1040 line 1f)

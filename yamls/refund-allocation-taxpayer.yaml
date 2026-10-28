@@ -13,6 +13,7 @@ sections:
       deposit your entire refund into that account if routing to other accounts fails.
     fields:
       - id: wantsRefundAllocation
+        name: wantsRefundAllocation
         label: Would you like to split your refund among 2 or 3 separate bank accounts?
         type: boolean
         required: true
@@ -27,6 +28,7 @@ sections:
     showIf: wantsRefundAllocation == true
     fields:
       - id: account1Amount
+        name: account1Amount
         label: Amount to deposit into account 1 (whole dollars)
         type: number
         required: true
@@ -36,6 +38,7 @@ sections:
           amount — the system will warn you if they do not match.
 
       - id: account1Routing
+        name: account1Routing
         label: Routing number for account 1 (9 digits)
         type: string
         required: true
@@ -46,6 +49,7 @@ sections:
         hint: First two digits must be 01–12 or 21–32.
 
       - id: account1Type
+        name: account1Type
         label: Account type for account 1
         type: select
         options: [checking, savings]
@@ -55,6 +59,7 @@ sections:
           you are unsure, check your bank statement or online banking profile.
 
       - id: account1Number
+        name: account1Number
         label: Account number for account 1 (up to 17 characters; hyphens allowed)
         type: string
         required: true
@@ -68,6 +73,7 @@ sections:
     showIf: wantsRefundAllocation == true
     fields:
       - id: account2Amount
+        name: account2Amount
         label: Amount to deposit into account 2 (whole dollars)
         type: number
         required: true
@@ -76,6 +82,7 @@ sections:
           The minimum is $1.
 
       - id: account2Routing
+        name: account2Routing
         label: Routing number for account 2 (9 digits)
         type: string
         required: true
@@ -85,6 +92,7 @@ sections:
           two accounts at the same bank may share a routing number.
 
       - id: account2Type
+        name: account2Type
         label: Account type for account 2
         type: select
         options: [checking, savings]
@@ -93,6 +101,7 @@ sections:
           Select Checking or Savings for this account.
 
       - id: account2Number
+        name: account2Number
         label: Account number for account 2 (up to 17 characters; hyphens allowed)
         type: string
         required: true
@@ -104,6 +113,7 @@ sections:
     showIf: wantsRefundAllocation == true
     fields:
       - id: account3Amount
+        name: account3Amount
         label: Amount to deposit into account 3 (whole dollars)
         type: number
         required: false
@@ -113,6 +123,7 @@ sections:
           refund here. Make sure this is an account you would accept for the full refund.
 
       - id: account3Routing
+        name: account3Routing
         label: Routing number for account 3 (9 digits)
         type: string
         required: false
@@ -120,6 +131,7 @@ sections:
           The 9-digit ABA routing number for the third account's bank.
 
       - id: account3Type
+        name: account3Type
         label: Account type for account 3
         type: select
         options: [checking, savings]
@@ -128,6 +140,7 @@ sections:
           Select Checking or Savings for this optional third account.
 
       - id: account3Number
+        name: account3Number
         label: Account number for account 3 (up to 17 characters; hyphens allowed)
         type: string
         required: false

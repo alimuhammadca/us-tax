@@ -1,0 +1,80 @@
+# Form 8611 - Recapture of Low-Income Housing Credit (return-level).
+# Component: form-form-8611.component.ts (formId = form-8611). Recapture flows to Schedule 2.
+name: form-8611
+title: "Form 8611 - Recapture of Low-Income Housing Credit"
+multiplicity: single
+formName: "Form 8611"
+category: "otherTaxes"
+sections:
+  - name: screening
+    title: "Screening"
+    multiplicity: single
+    fields:
+      - name: hasLihcRecapture
+        type: boolean
+        required: true
+        label: "Do you have a low-income housing credit recapture?"
+
+  - name: building
+    title: "Building (Form 8609 identifiers)"
+    multiplicity: single
+    showIf: "hasLihcRecapture == true"
+    fields:
+      - name: buildingAddress
+        type: text
+        required: false
+        label: "Address of building (as shown on Form 8609)"
+      - name: buildingBin
+        type: text
+        required: false
+        label: "Building identification number (BIN)"
+      - name: datePlacedInService
+        type: date
+        required: false
+        label: "Date placed in service"
+      - name: creditPeriodElectedNextYear
+        type: boolean
+        required: false
+        label: "Did you elect on Form 8609 (line 10a) to start the credit period the year after the building was placed in service?"
+
+  - name: recaptureComputation
+    title: "Recapture computation inputs (lines 1-16)"
+    multiplicity: single
+    showIf: "hasLihcRecapture == true"
+    fields:
+      - name: line1PriorCredits
+        type: number
+        required: false
+        label: "1 Total credits reported (prior years)"
+      - name: line2AdditionsCredits
+        type: number
+        required: false
+        label: "2 Credits attributable to additions to qualified basis"
+      - name: line4RecapturePercentage
+        type: number
+        required: false
+        label: "4 Credit recapture percentage (decimal, e.g. 0.333; leave blank to look it up)"
+      - name: line6QbDecreasePercentage
+        type: number
+        required: false
+        label: "6 Percentage decrease in qualified basis (decimal)"
+      - name: line8FlowthroughRecapture
+        type: number
+        required: false
+        label: "8 Recapture amount from flow-through entity"
+      - name: line9UnusedAccelerated
+        type: number
+        required: false
+        label: "9 Unused portion of the accelerated amount"
+      - name: line11Interest
+        type: number
+        required: false
+        label: "11 Interest on the line 10 recapture amount"
+      - name: line13UnusedCredits
+        type: number
+        required: false
+        label: "13 Unused credits attributable to this building"
+      - name: line16Interest
+        type: number
+        required: false
+        label: "16 Interest on the line 7 amount (§42(j)(5) only)"

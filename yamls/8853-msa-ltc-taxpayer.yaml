@@ -1,0 +1,220 @@
+# Form 8853 - Archer MSAs and Long-Term Care Insurance Contracts (taxpayer / family head).
+# One per person. Compute combines these inputs with uploaded 1099-SA / 1099-LTC statements.
+name: msa-ltc-taxpayer
+title: "Archer MSA & Long-Term Care (Form 8853)"
+multiplicity: single
+formName: Form 8853
+category: income
+instructions:
+  - "Answer Yes if this person had an Archer MSA or a Medicare Advantage MSA, or received payments under a long-term care insurance contract, during 2025."
+  - Form 8853 is computed from the amounts below plus any 1099-SA / 1099-LTC you uploaded.
+
+sections:
+  - name: screening
+    title: Archer MSA / LTC activity
+    multiplicity: single
+    fields:
+      - name: hasMsaLtcActivity
+        type: boolean
+        required: true
+        label: "Did you have an Archer MSA or Medicare Advantage MSA, or receive long-term care insurance contract payments, during 2025?"
+
+  - name: archerMsa
+    title: Section A - Archer MSA
+    multiplicity: single
+    showIf: hasMsaLtcActivity == true
+    fields:
+      - name: coverageType
+        type: select
+        required: false
+        label: HDHP coverage
+        options: [self-only, family]
+      - name: annualDeductible
+        type: amount
+        required: false
+        label: HDHP annual deductible
+      - name: spouseFamilyPlanDeductible
+        type: amount
+        required: false
+        label: "Your spouse's family HDHP annual deductible (if any)"
+        showIf: "coverageType == 'family'"
+      - name: limitationLine3Override
+        type: amount
+        required: false
+        label: Line 3 limitation override (optional)
+      - name: employerContributionsLine1
+        type: amount
+        required: false
+        label: Employer contributions (line 1)
+      - name: contributionsMadeLine2
+        type: amount
+        required: false
+        label: Your contributions (line 2)
+      - name: compensationLine4
+        type: amount
+        required: false
+        label: Compensation from the HDHP employer (line 4)
+      - name: unreimbursedMedicalLine7
+        type: amount
+        required: false
+        label: Unreimbursed qualified medical expenses (line 7)
+      - name: distributionsRolledOverLine6b
+        type: amount
+        required: false
+        label: Rollovers / excess withdrawn (line 6b)
+      - name: archerExcessWithdrawnByDueDate
+        type: amount
+        required: false
+        label: Excess taken out by the due date
+      - name: archerPriorYearExcessContributions
+        type: amount
+        required: false
+        label: Excess contributions carried from 2024 (2024 Form 5329 line 40)
+      - name: archerMsaYearEndValue
+        type: amount
+        required: false
+        label: "Value of your Archer MSAs on December 31, 2025"
+      - name: eligibleAllTwelveMonths
+        type: boolean
+        required: false
+        label: "Were you an eligible individual with this coverage for all 12 months of 2025?"
+      - name: monthsEligibleCount
+        type: number
+        required: false
+        label: Months eligible on the first day of the month (0-12)
+        showIf: eligibleAllTwelveMonths == false
+      - name: archerExceptionApplies
+        type: boolean
+        required: false
+        label: "Do taxable Archer MSA distributions qualify for an exception to the 20% tax (disability, death, or age 65)?"
+      - name: archerExceptionExemptAmount
+        type: amount
+        required: false
+        label: "Taxable distributions made after the account holder died, became disabled or turned 65"
+        showIf: archerExceptionApplies == true
+
+  - name: medicareAdvantageMsa
+    title: Section B - Medicare Advantage MSA
+    multiplicity: single
+    showIf: hasMsaLtcActivity == true
+    fields:
+      - name: maMsaUnreimbursedMedicalLine11
+        type: amount
+        required: false
+        label: Unreimbursed qualified medical expenses (line 11)
+      - name: maMsaExceptionApplies
+        type: boolean
+        required: false
+        label: "Do taxable MA MSA distributions qualify for an exception to the 50% tax?"
+      - name: maMsaHeldOn20241231
+        type: boolean
+        required: false
+        label: "Did you have a Medicare Advantage MSA on December 31, 2024?"
+      - name: maMsaValue20241231
+        type: amount
+        required: false
+        label: "Value of your Medicare Advantage MSA on December 31, 2024"
+        showIf: maMsaHeldOn20241231 == true
+      - name: maMsaHdhpDeductibleJan2025
+        type: amount
+        required: false
+        label: "Annual deductible of your HDHP policy on January 1, 2025"
+        showIf: maMsaHeldOn20241231 == true
+
+  - name: longTermCare
+    title: Section C - Long-Term Care insurance contracts
+    multiplicity: single
+    showIf: hasMsaLtcActivity == true
+    help: Per-diem LTC payments come from uploaded 1099-LTC (box 1). These amounts figure the taxable portion under the per-diem limitation.
+    fields:
+      - name: ltcInsuredName
+        type: text
+        required: false
+        label: Name of insured (line 14a)
+      - name: ltcInsuredSsn
+        type: text
+        required: false
+        label: SSN of insured (line 14b)
+      - name: ltcQualifiedContractPortionLine18
+        type: amount
+        required: false
+        label: Per-diem from qualified LTC contracts (line 18)
+      - name: ltcAcceleratedDeathBenefitsLine19
+        type: amount
+        required: false
+        label: Accelerated death benefits (line 19)
+      - name: ltcDaysInPeriodLine21
+        type: number
+        required: false
+        label: Days in the LTC period (line 21)
+      - name: ltcQualifiedServiceCostsLine22
+        type: amount
+        required: false
+        label: Costs of qualified LTC services (line 22)
+      - name: ltcReimbursementsLine24
+        type: amount
+        required: false
+        label: Reimbursements for qualified LTC services (line 24)
+        help: "If blank, the 1099-LTC 'reimbursed amount' total on file is used."
+      - name: ltcInsuredTerminallyIllLine16
+        type: boolean
+        required: false
+        label: "Was the insured a terminally ill individual (line 16)?"
+      - name: ltcOtherPayeeReceivedLine15
+        type: boolean
+        required: false
+        label: "Did anyone else receive per diem payments for this insured (line 15)?"
+      - name: ltcPerDiemLimitationShareLine25
+        type: amount
+        required: false
+        label: Your share of the per diem limitation (line 25)
+        showIf: ltcOtherPayeeReceivedLine15 == true
+
+  - name: ltcAdditionalSections
+    title: More insureds or LTC periods (additional Section C)
+    multiplicity: multiple
+    showIf: hasMsaLtcActivity == true
+    help: "Another insured, or a changed payment rate (more than one LTC period), each needs its own Section C (lines 14-26)."
+    fields:
+      - name: ltcInsuredName
+        type: text
+        required: false
+        label: Name of insured (line 14a)
+      - name: ltcInsuredSsn
+        type: text
+        required: false
+        label: SSN of insured (line 14b)
+      - name: ltcQualifiedContractPortionLine18
+        type: amount
+        required: false
+        label: Per-diem from qualified LTC contracts (line 18)
+      - name: ltcAcceleratedDeathBenefitsLine19
+        type: amount
+        required: false
+        label: Accelerated death benefits (line 19)
+      - name: ltcDaysInPeriodLine21
+        type: number
+        required: false
+        label: Days in the LTC period (line 21)
+      - name: ltcQualifiedServiceCostsLine22
+        type: amount
+        required: false
+        label: Costs of qualified LTC services (line 22)
+      - name: ltcReimbursementsLine24
+        type: amount
+        required: false
+        label: Reimbursements for qualified LTC services (line 24)
+        help: "If blank, the 1099-LTC 'reimbursed amount' total on file is used."
+      - name: ltcInsuredTerminallyIllLine16
+        type: boolean
+        required: false
+        label: "Was the insured a terminally ill individual (line 16)?"
+      - name: ltcOtherPayeeReceivedLine15
+        type: boolean
+        required: false
+        label: "Did anyone else receive per diem payments for this insured (line 15)?"
+      - name: ltcPerDiemLimitationShareLine25
+        type: amount
+        required: false
+        label: Your share of the per diem limitation (line 25)
+        showIf: ltcOtherPayeeReceivedLine15 == true

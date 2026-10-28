@@ -77,6 +77,16 @@ sections:
         showIf: livesWithCareRecipient == false
         label: A documented Notice 2014-7 exception applies (the care recipient's home is also your spouse's home with no separate home, or a qualifying state program)
         help: Check only if an exception lets your spouse exclude the qualified payments despite answering No to living with the care recipient. Suppresses the blocking Notice 2014-7 home-sharing violation flag at compute time (fires when livesWithCareRecipient is No AND qualified amounts are present AND the earned-income election is on).
+      - name: qualifiedIndividualsUnder19Count
+        type: number
+        required: false
+        label: "Number of qualified individuals under age 19 your spouse cared for"
+        help: "Notice 2014-7 home-care limit: up to 10 under age 19."
+      - name: qualifiedIndividualsAge19OrOlderCount
+        type: number
+        required: false
+        label: "Number of qualified individuals age 19 or older your spouse cared for"
+        help: "Notice 2014-7 home-care limit: up to 5 age 19 or older."
 
   - name: medicaidWaiverPayments
     title: Medicaid waiver payments
@@ -137,3 +147,12 @@ sections:
         required: false
         label: Notes (optional)
         placeholder: Any details helpful for classification or reconciliation
+      # Per-payment care recipient (shown when more than one person was cared for).
+      - name: careRecipientName
+        type: text
+        required: false
+        label: "Person cared for"
+      - name: careRecipientLivesInProviderHome
+        type: boolean
+        required: false
+        label: "Did this person live in your spouse's home with them?"

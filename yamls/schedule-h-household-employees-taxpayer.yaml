@@ -1,0 +1,108 @@
+# Schedule H (Form 1040) - Household Employment Taxes (taxpayer / family head). Routes to Schedule 2 line 9.
+name: schedule-h-taxpayer
+title: Household employees (Schedule H)
+multiplicity: single
+formName: Schedule H
+category: taxes
+instructions:
+  - "Enter each employee on the form of the spouse who is their employer (the one who pays them and gives them a Form W-2) - not on both spouses' forms."
+
+sections:
+  - name: screening
+    title: Household employees (Schedule H)
+    multiplicity: single
+    fields:
+      - name: hasHouseholdEmployees
+        type: boolean
+        required: true
+        label: "Did you pay a household employee in 2025?"
+
+  - name: householdEmployees
+    title: Employees
+    multiplicity: multiple
+    showIf: hasHouseholdEmployees == true
+    fields:
+      - name: employeeName
+        type: text
+        required: false
+        label: "Employee's name"
+      - name: cashWagesPaid
+        type: amount
+        required: false
+        label: Cash wages you paid this employee in 2025
+        help: "Cash, checks and money orders - not food, lodging or other noncash pay."
+      - name: relationship
+        type: select
+        required: false
+        label: "Is this employee any of the following?"
+        options: [OTHER, SPOUSE, CHILD_UNDER_21, PARENT]
+      - name: parentExceptionApplies
+        type: boolean
+        required: false
+        label: "Did your parent care for your child who was under 18 (or needed an adult's care for at least 4 weeks in a row), while you were divorced and not remarried, widowed, or married to someone who couldn't care for the child for at least 4 weeks in a row?"
+        showIf: "relationship == 'PARENT'"
+        help: "If Yes, social security and Medicare taxes apply to your parent's wages; otherwise they don't."
+      - name: under18AtAnyTime
+        type: boolean
+        required: false
+        label: "Was the employee under 18 at any time in 2025?"
+        showIf: "relationship != 'SPOUSE' && relationship != 'CHILD_UNDER_21'"
+      - name: householdWorkPrincipalOccupation
+        type: boolean
+        required: false
+        label: "Was household work the employee's principal occupation?"
+        showIf: "under18AtAnyTime == true && relationship != 'SPOUSE' && relationship != 'CHILD_UNDER_21'"
+
+  - name: federalIncomeTaxWithheld
+    title: Federal income tax withheld
+    multiplicity: single
+    showIf: hasHouseholdEmployees == true
+    fields:
+      - name: federalIncomeTaxWithheld
+        type: amount
+        required: false
+        label: "Federal income tax you withheld from your household employees' wages in 2025 (all employees)"
+        help: "Leave blank if you didn't withhold any."
+
+  - name: futa
+    title: Federal unemployment tax (FUTA)
+    multiplicity: single
+    showIf: hasHouseholdEmployees == true
+    fields:
+      - name: paidCashWages1000PlusAnyQuarter
+        type: boolean
+        required: false
+        label: "Did you pay total cash wages of $1,000 or more in any calendar quarter of 2024 or 2025 to all household employees together?"
+        help: "Don't count wages paid to your spouse, your child under 21 or your parent."
+      - name: paidUnemploymentToOneState
+        type: boolean
+        required: false
+        label: "Did you pay unemployment contributions to only one state?"
+        showIf: paidCashWages1000PlusAnyQuarter == true
+        help: "If you paid contributions to a credit reduction state, answer No."
+      - name: paidAllStateContributionsByDueDate
+        type: boolean
+        required: false
+        label: "Did you pay all state unemployment contributions for 2025 by April 15, 2026?"
+        showIf: paidCashWages1000PlusAnyQuarter == true
+      - name: allFutaWagesTaxableForState
+        type: boolean
+        required: false
+        label: "Were all the wages taxable for FUTA also taxable for your state's unemployment tax?"
+        showIf: paidCashWages1000PlusAnyQuarter == true
+      - name: isCreditReductionState
+        type: boolean
+        required: false
+        label: "Is that state a credit reduction state for 2025?"
+        showIf: paidCashWages1000PlusAnyQuarter == true
+        help: A state that has not repaid federal unemployment loans; see Worksheet 2 in the Schedule H instructions.
+      - name: stateWhereContributionsPaid
+        type: text
+        required: false
+        label: State where you paid unemployment contributions
+        showIf: paidCashWages1000PlusAnyQuarter == true
+      - name: stateUnemploymentContributionsPaid
+        type: amount
+        required: false
+        label: State unemployment contributions you paid for 2025
+        showIf: paidCashWages1000PlusAnyQuarter == true

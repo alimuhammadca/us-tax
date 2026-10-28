@@ -39,6 +39,25 @@ sections:
         label: Qualified dividends not reported on statements (line 3a)
         placeholder: 0.00
         help: Enter spouse qualified dividends not shown on uploaded 1099-DIV statements.
+      - name: manualOrdinaryDividendPayers
+        type: text
+        required: false
+        label: "Who paid the ordinary dividends not on statements (names for Schedule B)"
+        showIf: "(manualOrdinaryDividendsNotOnStatements ?? 0) > 0"
+      - name: ordinaryDividendsNoInformationReturn
+        type: number
+        required: false
+        label: "Ordinary dividends with no Form 1099-DIV at all (spouse)"
+      - name: qualifiedDividendsNoInformationReturn
+        type: number
+        required: false
+        label: "Of which qualified dividends"
+        showIf: "(ordinaryDividendsNoInformationReturn ?? 0) > 0"
+      - name: noInformationReturnDividendPayers
+        type: text
+        required: false
+        label: "Who paid the dividends with no Form 1099-DIV (names for Schedule B)"
+        showIf: "(ordinaryDividendsNoInformationReturn ?? 0) > 0"
 
   - name: nomineeDividends
     title: Nominee dividends
@@ -110,6 +129,45 @@ sections:
         label: Spouse nonqualified dividends from non-treaty foreign corporations
         placeholder: 0.00
         help: "Most filers leave this blank. Per IRS Publication 550 and Internal Revenue Code §1(h)(11)(C), a dividend from a foreign corporation is qualified only when the corporation (a) is incorporated in a U.S. possession, OR (b) is eligible for benefits of a U.S. tax treaty with an exchange-of-information program identified by the Treasury Secretary, OR (c) its stock is readily tradable on an established U.S. securities market. Enter spouse's dividends in box 1b that fail ALL THREE tests. Distinct from the surrogate foreign-corporation field above, which covers only Internal Revenue Code §7874 corporate inversions."
+      # Gate for the categories above.
+      - name: hasQualifiedDividendDisallowances
+        type: boolean
+        required: false
+        label: "Do you need to reduce the qualified-dividend amount your spouse's broker reported?"
+
+  - name: statementUploadCheck
+    title: "Statement upload check and imported-amount verification"
+    multiplicity: single
+    fields:
+      - name: confirmAllReceived1099DivUploaded
+        type: boolean
+        required: true
+        label: "Has your spouse uploaded all the 1099-DIV statements they received?"
+      - name: ordinaryDivAmountCorrect
+        type: boolean
+        required: false
+        label: "Does this amount look correct? (total ordinary dividends from the spouse's 1099-DIV statements)"
+        showIf: "1099-DIV statements on file"
+      - name: qualifiedDivAmountCorrect
+        type: boolean
+        required: false
+        label: "Does this amount look correct? (total qualified dividends from the spouse's 1099-DIV statements)"
+        showIf: "1099-DIV statements on file"
+
+  - name: k1PreviouslyTaxedEarnings
+    title: "K-1 dividends from previously taxed earnings and profits (PTEP)"
+    multiplicity: single
+    showIf: "K-1 dividends on file || (k1PtepOrdinaryDividendsExcluded ?? 0) > 0"
+    fields:
+      - name: k1PtepOrdinaryDividendsExcluded
+        type: number
+        required: false
+        label: "K-1 ordinary dividends attributable to PTEP (Schedule K-3 Part V)"
+      - name: k1PtepQualifiedDividendsExcluded
+        type: number
+        required: false
+        label: "Of that, qualified dividends"
+        showIf: "(k1PtepOrdinaryDividendsExcluded ?? 0) > 0"
 
   # Backend-only statement imports. Not rendered in form component.
   - name: importedStatementFields

@@ -30,6 +30,30 @@ sections:
           Select Yes if your spouse had foreign taxes not already reflected on the
           taxpayer form. This field is disabled and hidden when filing status is not MFJ.
 
+      - name: spouseConfirms1099DivUploaded
+        type: boolean
+        required: false
+        label: "Has the spouse uploaded all Forms 1099-DIV reporting foreign tax (box 7)?"
+        showIf: spouseHasForeignTaxCredit == true
+
+      - name: spouseConfirms1099IntUploaded
+        type: boolean
+        required: false
+        label: "Has the spouse uploaded all Forms 1099-INT reporting foreign tax (box 6)?"
+        showIf: spouseHasForeignTaxCredit == true
+
+      - name: spouseClaimsSimplifiedException
+        type: boolean
+        required: false
+        label: "Does the spouse elect the simplified exception (foreign tax <= $300 MFS - no Form 1116 required)?"
+        showIf: spouseHasForeignTaxCredit == true
+
+      - name: spouseSimplifiedForeignTaxesOverride
+        type: amount
+        required: false
+        label: Override total foreign taxes (optional - leave blank to use imported amount from statements)
+        showIf: spouseClaimsSimplifiedException == true
+
   - name: spouseForeignIncomeSources
     title: Spouse foreign income sources
     multiplicity: multiple
@@ -174,6 +198,11 @@ sections:
         help: >
           Enter spouse's prior year unused FTC carryforward. Combined with taxpayer
           carryforward for the same category.
+
+      - name: priorYearCarryoverOriginYear
+        type: number
+        required: false
+        label: Year that carryover arose
 
   # Backend-only imported statement fields. Not rendered in the UI form component.
   - name: importedStatementFields

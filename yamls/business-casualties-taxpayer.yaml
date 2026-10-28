@@ -31,6 +31,22 @@ sections:
         type: date
         required: false
         label: "Date of the casualty, or the date the theft was discovered (must be in 2025)"
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: lossSustainedIn2025
+        type: boolean
+        required: false
+        label: "Was the loss sustained in 2025 - for example a reimbursement claim was settled or denied in 2025?"
+        showIf: "hasBusinessCasualty === true && yearOf(casualtyDate) !== null && yearOf(casualtyDate)! < 2025"
+      - name: electPrecedingYearDisasterLoss
+        type: boolean
+        required: false
+        label: "Is this a 2026 federally declared disaster loss you elect to deduct on your 2025 return (Form 4684 Section D)?"
+        showIf: "hasBusinessCasualty === true && yearOf(casualtyDate) === 2026"
+      - name: disasterDeclarationNumber
+        type: text
+        required: false
+        label: "FEMA declaration number (for example DR-4901-TX)"
+        showIf: "hasBusinessCasualty === true && yearOf(casualtyDate) === 2026 && electPrecedingYearDisasterLoss === true"
       - name: propertyDescription
         type: text
         required: false
@@ -67,10 +83,22 @@ sections:
         required: false
         label: "Depreciation allowed or allowable (recapture on a gain)"
         showIf: "propertyType == building || propertyType == equipment"
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: additionalDepreciation1250
+        type: amount
+        required: false
+        label: "Depreciation above straight line, including bonus / special allowance (section 1250 additional depreciation)"
+        showIf: "hasBusinessCasualty === true && propertyType === 'building'"
       - name: reimbursement
         type: amount
         required: false
         label: "Insurance or other reimbursement, received or expected (line 21)"
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: reimbursementNotReceived
+        type: amount
+        required: false
+        label: "Part of this amount not received in 2025 - coverage not claimed or payment still expected"
+        showIf: "hasBusinessCasualty === true"
       - name: totallyDestroyedOrStolen
         type: boolean
         required: false

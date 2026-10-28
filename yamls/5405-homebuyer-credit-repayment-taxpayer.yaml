@@ -1,0 +1,54 @@
+# Form 5405 - Repayment of the 2008 first-time homebuyer credit (taxpayer / family head) -> Schedule 2 line 10.
+# Component: form-form-5405.component.ts (formId form-5405-taxpayer; the same component saves form-5405-spouse for the
+# spouse). Created 2026-10-28 (YAML drift sync).
+name: form-5405-taxpayer
+title: Form 5405 - Repaying the 2008 first-time homebuyer credit (taxpayer / family head)
+multiplicity: single
+formName: Form 5405
+category: otherTaxes
+instructions:
+  - A 2008 first-time homebuyer credit is repaid over 15 years, generally $500 a year (Form 5405 -> Schedule 2, line 10).
+  - If the home stopped being your main home, the rest may be due now. Skip this page if you never took the 2008 credit.
+
+sections:
+  - name: screening
+    title: Repaying the 2008 first-time homebuyer credit
+    multiplicity: single
+    fields:
+      - name: isRepayingCredit
+        type: boolean
+        required: true
+        label: Are you repaying the 2008 first-time homebuyer credit this year?
+
+  - name: repayment
+    title: Repayment details
+    multiplicity: single
+    showIf: isRepayingCredit == true
+    fields:
+      - name: remainingBalanceBeforeThisYear
+        type: amount
+        required: false
+        label: Credit balance still owed before this year's payment
+        help: The part of the original credit you have not yet repaid. It caps this year's payment.
+      - name: annualInstallmentAmount
+        type: amount
+        required: false
+        label: Annual installment (usually $500)
+        help: The original credit divided by 15. Leave the disposition below as "Still my main home" for the normal yearly payment.
+      - name: dispositionType
+        type: select
+        required: false
+        label: Did the home change this year?
+        options:
+          - value: none
+            label: Still my main home - pay the yearly installment
+          - value: ceased
+            label: No longer my main home - repay the full balance
+          - value: sold
+            label: Sold it to someone unrelated - repay limited to the gain
+      - name: gainOnDisposition
+        type: amount
+        required: false
+        label: Gain on the sale
+        showIf: "dispositionType == 'sold'"
+        help: Your repayment is capped at this gain; if there was no gain, you owe nothing more.

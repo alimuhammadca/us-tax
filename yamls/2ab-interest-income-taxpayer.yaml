@@ -71,6 +71,41 @@ sections:
         label: Taxable portion of 1099-OID box 2 to include (override)
         placeholder: 0.00
         help: "Use only when you need to override the taxable portion derived from 1099-OID box 2. This flows to Form 1040 line 2b."
+      - name: taxableInterestNoInformationReturn
+        type: number
+        required: false
+        label: "Taxable interest with no Form 1099 at all"
+      - name: noInformationReturnInterestPayers
+        type: text
+        required: false
+        label: "Who paid the interest with no Form 1099 (names for Schedule B)"
+        showIf: "(taxableInterestNoInformationReturn ?? 0) > 0"
+      - name: manualTaxableInterestPayers
+        type: text
+        required: false
+        label: "Who paid the taxable interest not on statements (names for Schedule B)"
+        showIf: "(manualTaxableInterestNotOnStatements ?? 0) > 0"
+        help: "B87."
+      - name: giftLoanAmountOutstanding
+        type: number
+        required: false
+        label: "Interest-free or low-interest loan you made to a person (amount owed to you)"
+        help: "Below-market (gift) loan - IRC §7872 imputed interest."
+      - name: giftLoanOutstandingAllYear
+        type: boolean
+        required: false
+        label: "Was that amount owed to you the whole year?"
+        showIf: "(giftLoanAmountOutstanding ?? 0) > 0"
+      - name: giftLoanInterestRateCharged
+        type: number
+        required: false
+        label: "Interest rate you charge (%), 0 if none"
+        showIf: "(giftLoanAmountOutstanding ?? 0) > 0"
+      - name: giftLoanBorrowerNetInvestmentIncome
+        type: number
+        required: false
+        label: "Borrower's 2025 net investment income"
+        showIf: "(giftLoanAmountOutstanding ?? 0) > 0 && (giftLoanAmountOutstanding ?? 0) <= 100000"
 
   - name: interestAdjustments
     title: Interest adjustments
@@ -164,6 +199,22 @@ sections:
         label: Did you pay more than face value for an OID bond and are reducing reported OID using acquisition premium amortization?
         help: Select Yes when you are reducing reported OID using acquisition premium rules.
         showIf: hasInterestAdjustments == true
+      # Bond premium amortization history (Pub. 550 / §171 carryforward).
+      - name: bondPremiumPriorInterestInclusions
+        type: number
+        required: false
+        label: "Interest from this bond included on earlier returns"
+        showIf: "hasInterestAdjustments == true"
+      - name: bondPremiumPriorDeductions
+        type: number
+        required: false
+        label: "Bond premium deducted on earlier returns"
+        showIf: "hasInterestAdjustments == true"
+      - name: bondPremiumCarryforwardFromPriorYear
+        type: number
+        required: false
+        label: "Excess bond premium carried forward from 2024"
+        showIf: "hasInterestAdjustments == true"
 
   - name: scheduleBConditions
     title: Savings bond exclusion
@@ -272,6 +323,47 @@ sections:
         required: false
         label: I have a special circumstance that disqualifies me (bonds in child's name; bondholder under 24 at issuance)
         showIf: claimsSavingsBondExclusionForm8815 == true
+      # Form 8815 line 6 worksheet (Series EE/I interest) and line 9 MAGI worksheet inputs.
+      - name: form8815Line6WsFaceValuePaperEEBondsCashed
+        type: number
+        required: false
+        label: "Face value of paper Series EE bonds cashed"
+        showIf: "claimsSavingsBondExclusionForm8815 == true"
+      - name: form8815Line6WsFaceValueElectronicEEAndPaperICashed
+        type: number
+        required: false
+        label: "Face value of electronic EE + Series I bonds cashed"
+        showIf: "claimsSavingsBondExclusionForm8815 == true"
+      - name: form8815Line6WsInterestReportedInPriorYears
+        type: number
+        required: false
+        label: "Interest you reported in earlier tax years"
+        showIf: "claimsSavingsBondExclusionForm8815 == true"
+      - name: form8815Line9WsAmountFromScheduleBLine2
+        type: number
+        required: false
+        label: "Total interest from Schedule B line 2"
+        showIf: "claimsSavingsBondExclusionForm8815 == true"
+      - name: form8815Line9WsForm1040AndSchedule1IncomeSubtotal
+        type: number
+        required: false
+        label: "Form 1040 + Schedule 1 income subtotal"
+        showIf: "claimsSavingsBondExclusionForm8815 == true"
+      - name: form8815Line9WsSchedule1AdjustmentsLines11To20_23_25
+        type: number
+        required: false
+        label: "Schedule 1 adjustments (lines 11-20, 23, 25)"
+        showIf: "claimsSavingsBondExclusionForm8815 == true"
+      - name: form8815Line9WsForm2555Addback
+        type: number
+        required: false
+        label: "Form 2555 foreign earned income exclusion (add-back)"
+        showIf: "claimsSavingsBondExclusionForm8815 == true"
+      - name: form8815Line9WsOtherAddbacks
+        type: number
+        required: false
+        label: "Other add-backs (Form 4563, adoption assistance, Puerto Rico)"
+        showIf: "claimsSavingsBondExclusionForm8815 == true"
 
   - name: scheduleBForeignConditions
     title: Foreign account disclosure
@@ -303,6 +395,11 @@ sections:
         label: Did you receive money or property from a foreign trust, or did you transfer money or property to a foreign trust?
         help: "A foreign trust is a trust that is not under the primary supervision of a U.S. court or not controlled by U.S. persons. Include distributions you received as a beneficiary."
         showIf: hasForeignFinancialSituation == true
+      - name: foreignAccountCountries
+        type: text
+        required: false
+        label: "Country or countries where the foreign accounts are (Schedule B line 7b)"
+        showIf: "hasFbarRequirement == true"
 
   # Backend-only statement imports. Not rendered in form component.
   - name: importedStatementFields

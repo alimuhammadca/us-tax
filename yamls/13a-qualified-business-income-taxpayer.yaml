@@ -1,7 +1,9 @@
 # Form 1040 line 13a taxpayer/family head workflow.
 # Approach: keep source statements authoritative and use this form only for supplemental non-statement facts.
 # NOTE: Raw K-1 and 1099-DIV box 5 data belong in statement workflows, not here.
-name: qualified-business-income-taxpayer
+# Header id fixed 2026-10-28 (YAML drift sync): was qualified-business-income-taxpayer, which is not a personal form id; the component
+# (form-qbi-deduction.component.ts) saves qbi-deduction-taxpayer.
+name: qbi-deduction-taxpayer
 title: Form 1040 - Qualified business income deduction (taxpayer/family head, line 13a)
 multiplicity: single
 formName: 1040
@@ -21,6 +23,12 @@ sections:
         required: true
         label: Did you have any qualified business income deduction inputs for line 13a?
         help: Select Yes if you have relevant section 199A inputs from statements or prior-year carryforward support.
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      # was: hadQualifiedBusinessIncomeInputs (stale alias kept above; the component binds hadInputs)
+      - name: hadInputs
+        type: boolean
+        required: false
+        label: "Did you have any qualified business income deduction inputs for line 13a?"
 
   - name: outOfScopeScreening
     title: Things we can't help with yet
@@ -34,11 +42,35 @@ sections:
         required: false
         label: Did any of your line 13a inputs come from Schedule C or Schedule F self-employment activity?
         help: Select Yes if any section 199A input came from sole proprietorship or farm self-employment activity; this is currently out of scope.
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      # was: hasScheduleCOrScheduleFQbiSources (stale alias kept above; the component binds hasSelfEmploymentQbiSources)
+      - name: hasSelfEmploymentQbiSources
+        type: boolean
+        required: false
+        label: "Did any of your line 13a inputs come from Schedule C or Schedule F self-employment activity?"
+        showIf: "hadInputs === true"
       - name: isCooperativePatronOfAgriculturalHorticulturalCooperative
         type: boolean
         required: false
         label: Are you a patron of a specified agricultural or horticultural cooperative?
         help: Select Yes if you received a domestic production activities deduction from a specified cooperative (Form 8995-A Schedule D). This path is currently out of scope.
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      # was: isCooperativePatronOfAgriculturalHorticulturalCooperative (stale alias kept above; the component binds isCooperativePatron)
+      - name: isCooperativePatron
+        type: boolean
+        required: false
+        label: "Are you a patron of a specified agricultural or horticultural cooperative?"
+        showIf: "hadInputs === true"
+      - name: coopQbiAllocable
+        type: amount
+        required: false
+        label: "Business income allocable to the cooperative's qualified payments (Form 8995-A Schedule D)"
+        showIf: "hadInputs === true && isCooperativePatron === true"
+      - name: coopWagesAllocable
+        type: amount
+        required: false
+        label: "W-2 wages allocable to those qualified payments (Form 8995-A Schedule D)"
+        showIf: "hadInputs === true && isCooperativePatron === true"
 
   - name: statementUploadCheck
     title: Your uploaded statements
@@ -53,6 +85,13 @@ sections:
         required: true
         label: I confirm all received statements for my line 13a deduction are uploaded
         help: You must confirm this before saving.
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      # was: confirmAllReceivedQbiStatementsUploaded (stale alias kept above; the component binds confirmAllStatementsUploaded)
+      - name: confirmAllStatementsUploaded
+        type: boolean
+        required: false
+        label: "I confirm all received statements for my line 13a deduction are uploaded"
+        showIf: "hadInputs === true"
 
   - name: priorYearCarryforward
     title: Prior-year loss carryforwards
@@ -67,29 +106,64 @@ sections:
         required: false
         label: Do you have a prior-year QBI loss carryforward?
         help: Select Yes if your prior return or QBI worksheet shows a carryforward that reduces the current-year line 13a deduction.
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      # was: hasPriorYearQbiLossCarryforward (stale alias kept above; the component binds hasPriorYearCarryforward)
+      - name: hasPriorYearCarryforward
+        type: boolean
+        required: false
+        label: "Do you have a prior-year QBI loss carryforward?"
+        showIf: "hadInputs === true"
       - name: priorYearQbiLossCarryforwardAmount
         type: amount
         required: false
         placeholder: 0.00
         label: Prior-year QBI loss carryforward amount
         help: Enter the carryforward amount from your prior-year QBI support. Shown only when hasPriorYearQbiLossCarryforward is true.
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      # was: priorYearQbiLossCarryforwardAmount (stale alias kept above; the component binds priorYearCarryforwardAmount)
+      - name: priorYearCarryforwardAmount
+        type: amount
+        required: false
+        label: "Prior-year QBI loss carryforward amount"
+        showIf: "hadInputs === true && hasPriorYearCarryforward === true"
       - name: priorYearQbiCarryforwardNotes
         type: text
         required: false
         placeholder: Prior-year return or worksheet reference
         label: Prior-year QBI carryforward notes
         help: Note where this carryforward came from. Shown only when hasPriorYearQbiLossCarryforward is true.
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      # was: priorYearQbiCarryforwardNotes (stale alias kept above; the component binds priorYearCarryforwardNotes)
+      - name: priorYearCarryforwardNotes
+        type: text
+        required: false
+        label: "Prior-year QBI carryforward notes"
+        showIf: "hadInputs === true && hasPriorYearCarryforward === true"
       - name: hasPriorYearReitPtpLossCarryforward
         type: boolean
         required: false
         label: Do you have a prior-year REIT/PTP net loss carryforward?
         help: Select Yes if your prior-year qualified REIT dividends and PTP income netted to a loss that carries forward to offset current-year REIT/PTP income.
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      # was: hasPriorYearReitPtpLossCarryforward (stale alias kept above; the component binds hasPriorYearReitPtpCarryforward)
+      - name: hasPriorYearReitPtpCarryforward
+        type: boolean
+        required: false
+        label: "Do you have a prior-year REIT/PTP net loss carryforward?"
+        showIf: "hadInputs === true"
       - name: priorYearReitPtpLossCarryforwardAmount
         type: amount
         required: false
         placeholder: 0.00
         label: Prior-year REIT/PTP net loss carryforward amount
         help: Enter the carryforward amount. Reduces current-year qualified REIT/PTP income before the 20% component is computed. Shown only when hasPriorYearReitPtpLossCarryforward is true.
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      # was: priorYearReitPtpLossCarryforwardAmount (stale alias kept above; the component binds priorYearReitPtpCarryforwardAmount)
+      - name: priorYearReitPtpCarryforwardAmount
+        type: amount
+        required: false
+        label: "Prior-year REIT/PTP loss carryforward amount"
+        showIf: "hadInputs === true && hasPriorYearReitPtpCarryforward === true"
 
   - name: supplementalAdjustments
     title: Supplemental line 13a adjustments
@@ -104,6 +178,13 @@ sections:
         placeholder: 0.00
         label: Manual qualified business income adjustment
         help: Enter any non-self-employment QBI adjustment not already captured from statements.
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      # was: manualQualifiedBusinessIncomeAdjustment (stale alias kept above; the component binds manualQbiAdjustment)
+      - name: manualQbiAdjustment
+        type: amount
+        required: false
+        label: "Additional qualified business income (not shown above)"
+        showIf: "hadInputs === true && showAdvanced"
       - name: manualQualifiedReitDividendAdjustment
         type: amount
         required: false
@@ -122,3 +203,10 @@ sections:
         placeholder: Explain the adjustment
         label: Supplemental adjustment notes
         help: Briefly explain any manual line 13a adjustment entered above.
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      # was: qbiSupplementalAdjustmentNotes (stale alias kept above; the component binds supplementalAdjustmentNotes)
+      - name: supplementalAdjustmentNotes
+        type: text
+        required: false
+        label: "Supplemental adjustment notes"
+        showIf: "hadInputs === true && showAdvanced"

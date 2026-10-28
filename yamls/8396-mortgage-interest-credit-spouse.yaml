@@ -29,6 +29,69 @@ sections:
         label: Spouse-paid eligible mortgage interest to add to the joint Form 8396 line 1 calculation
         placeholder: 0.00
 
+  # Same keys as the taxpayer core; saved under mortgage-interest-credit-spouse when the spouse files separately.
+  - name: spouseMccCore
+    title: "Spouse's own Form 8396 (MFS only) - Mortgage Credit Certificate"
+    multiplicity: single
+    showIf: "spouse tab && filing status == Married filing separately && spouseHasMortgageInterestCreditInputs == true"
+    fields:
+      - name: hasQualifiedMortgageCreditCertificate
+        type: boolean
+        required: false
+        label: "Do you have a qualified Mortgage Credit Certificate (MCC)?"
+      - name: mccCertificateNumber
+        type: text
+        required: false
+        label: "Mortgage Credit Certificate number"
+      - name: mccHomeAddress
+        type: text
+        required: false
+        label: "Certified home address"
+      - name: mainHomeWithinMccJurisdiction
+        type: boolean
+        required: false
+        label: "Is the certified home your qualified main home within the issuing jurisdiction?"
+      - name: certificateCreditRatePercent
+        type: number
+        required: false
+        label: "MCC certificate credit rate percentage"
+      - name: originalMortgageAmount
+        type: number
+        required: false
+        label: "Original mortgage amount"
+      - name: certifiedIndebtednessAmount
+        type: number
+        required: false
+        label: "Certified indebtedness amount"
+      - name: totalMortgageInterestPaid
+        type: number
+        required: false
+        label: "Total current-year mortgage interest paid"
+      - name: certifiedMortgageInterestPaidOverride
+        type: number
+        required: false
+        label: "Certified mortgage interest paid override"
+      - name: interestPaidToRelatedPerson
+        type: boolean
+        required: false
+        label: "Was any mortgage interest paid to a related person?"
+      - name: nonSpouseOwnerSharePercent
+        type: number
+        required: false
+        label: "Non-spouse ownership share percentage"
+      - name: carryforward2024From2024Form8396Line17
+        type: number
+        required: false
+        label: "Unused credit from 2024 carried into 2025"
+      - name: carryforward2023From2024Form8396Line14
+        type: number
+        required: false
+        label: "Unused credit from 2023 carried into 2025"
+      - name: carryforward2022From2024Form8396Line16
+        type: number
+        required: false
+        label: "Unused credit from 2022 carried into 2025"
+
   - name: importedSupport
     title: Imported support values (backend only - not rendered)
     multiplicity: single

@@ -1,0 +1,79 @@
+# Form 1040 line 1a - wages (W-2) screening for the spouse (Married Filing Jointly second view).
+# Component: form-employment-spouse.component.ts (formId employment-income-spouse). Created 2026-10-28 (YAML drift sync).
+# W-2 amounts come from uploaded statements; this form holds the spouse's screening and special-situation answers.
+name: employment-income-spouse
+title: Employment income (wages) - spouse
+multiplicity: single
+formName: "1040"
+category: income
+instructions:
+  - "Upload every W-2 your spouse received. If one is missing, use Form 4852 (substitute W-2)."
+
+sections:
+  - name: screening
+    title: Spouse wages
+    multiplicity: single
+    fields:
+      - name: hasEmploymentIncome
+        type: boolean
+        required: true
+        label: "Did your spouse receive any wages (including household employee wages) during the tax year?"
+      - name: isMissingW2
+        type: boolean
+        required: true
+        label: "Is your spouse missing one or more W-2s from their employers?"
+        showIf: hasEmploymentIncome == true
+
+  - name: householdEmployeeWages
+    title: Household employee wages (no W-2)
+    multiplicity: single
+    showIf: hasEmploymentIncome == true
+    fields:
+      - name: householdWork
+        type: boolean
+        required: true
+        label: "Did your spouse receive pay for household work (babysitter, nanny, caregiver/health aide, housekeeper, yard worker, etc.)?"
+      - name: householdEmployeeUnderControlTest
+        type: boolean
+        required: false
+        label: "Did the person paying your spouse control what they did and how they did it?"
+        showIf: householdWork == true
+      - name: householdReceivedW2
+        type: boolean
+        required: false
+        label: "Did every household employer give your spouse a Form W-2 for this work?"
+        showIf: "householdWork == true && householdEmployeeUnderControlTest == true"
+
+  - name: specialSituations
+    title: Special wage situations (incarceration wages, chapter 11)
+    multiplicity: single
+    showIf: hasEmploymentIncome == true
+    fields:
+      - name: hasInmateWages
+        type: boolean
+        required: false
+        label: "Was any of your spouse's W-2(s) or W-2 Substitute (Form 4852) issued for wages earned while incarcerated?"
+      - name: isChapter11Debtor
+        type: boolean
+        required: false
+        label: "Was your spouse a debtor in a chapter 11 bankruptcy case during 2025?"
+      - name: chapter11PetitionDate
+        type: date
+        required: false
+        label: Date the chapter 11 case began
+        showIf: isChapter11Debtor == true
+      - name: chapter11EstateWagesAmount
+        type: amount
+        required: false
+        label: W-2 wages that belong to the bankruptcy estate (earned after the case began)
+        showIf: isChapter11Debtor == true
+      - name: chapter11EstateWithholdingAmount
+        type: amount
+        required: false
+        label: Federal income tax withheld on those wages (W-2 box 2 share)
+        showIf: isChapter11Debtor == true
+      - name: chapter11AllocationStatement
+        type: text
+        required: false
+        label: How the W-2 and 1099 income and withholding were allocated (for the attached statement)
+        showIf: isChapter11Debtor == true

@@ -1,0 +1,77 @@
+# Form 8379 - Injured Spouse Allocation. One per return (MFJ). Column (a) comes from the joint return;
+# column (b) is entered here; column (c) = (a) - (b) is computed.
+name: form-8379
+title: Form 8379 - Injured Spouse Allocation
+multiplicity: single
+formName: Form 8379
+category: payments
+instructions:
+  - "File this only if part of the joint refund may be applied to the other spouse's past-due debt."
+
+sections:
+  - name: screening
+    title: Form 8379 - Injured Spouse Allocation
+    multiplicity: single
+    fields:
+      - name: filingInjuredSpouseClaim
+        type: boolean
+        required: true
+        label: "Are you filing an injured spouse claim?"
+      - name: injuredSpouse
+        type: select
+        required: false
+        label: "Which spouse is the injured spouse?"
+        showIf: filingInjuredSpouseClaim == true
+        options: [taxpayer, spouse]
+      - name: refundInBothNames
+        type: boolean
+        required: false
+        label: Issue the refund in both names (line 11)
+        showIf: filingInjuredSpouseClaim == true
+      - name: communityPropertyStates
+        type: text
+        required: false
+        label: "Community property state(s), if any (line 5)"
+        showIf: filingInjuredSpouseClaim == true
+
+  - name: partIII
+    title: Part III - Allocated to the injured spouse (column b)
+    multiplicity: single
+    showIf: filingInjuredSpouseClaim == true
+    fields:
+      - name: alloc13aWages
+        type: amount
+        required: false
+        label: 13a Wages (Form W-2)
+      - name: alloc13bOtherIncome
+        type: amount
+        required: false
+        label: 13b All other income
+      - name: alloc14Adjustments
+        type: amount
+        required: false
+        label: 14 Adjustments to income
+      - name: alloc15Deduction
+        type: amount
+        required: false
+        label: 15 Standard/itemized deduction
+      - name: alloc16NonrefundableCredits
+        type: amount
+        required: false
+        label: 16 Nonrefundable credits
+      - name: alloc17RefundableCredits
+        type: amount
+        required: false
+        label: 17 Refundable credits (no EIC)
+      - name: alloc18OtherTaxes
+        type: amount
+        required: false
+        label: 18 Other taxes
+      - name: alloc19Withholding
+        type: amount
+        required: false
+        label: 19 Federal income tax withheld
+      - name: alloc20Payments
+        type: amount
+        required: false
+        label: 20 Payments

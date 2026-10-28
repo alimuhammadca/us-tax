@@ -142,6 +142,12 @@ sections:
         required: false
         label: Date of original divorce or separation agreement (line 2b)
         help: Enter the original agreement date when line 2a alimony is reported.
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: alimonyModificationAdoptsTcja
+        type: boolean
+        required: false
+        label: "Was the agreement changed after 2018, with the change expressly saying the new tax rules apply (alimony not taxable)?"
+        showIf: "alimonyReceivedLine2a > 0"
       - name: otherGainsLossesLine4
         type: amount
         required: false
@@ -171,6 +177,15 @@ sections:
         label: Unemployment repayment adjustment amount
         placeholder: 0.00
         help: Enter repayment amount used to reduce Schedule 1 line 7.
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: governmentalUnemploymentProgramContributions
+        type: amount
+        required: false
+        label: "Contributions you made to a governmental unemployment compensation program in 2025 (line 7)"
+      - name: priorYearUnemploymentRepaidIn2025
+        type: amount
+        required: false
+        label: "Unemployment benefits from an earlier year that you paid back in 2025"
 
   - name: schedule1OtherIncome8
     title: Schedule 1 other income (line 8a through line 8v)
@@ -183,6 +198,21 @@ sections:
         label: Net operating loss (line 8a)
         placeholder: 0.00
         help: Enter as positive input; engine applies required negative sign.
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: otherIncomeNetOperatingLossPre2018Portion
+        type: amount
+        required: false
+        label: "Part of the line 8a carryforward from NOLs that arose in tax years before 2018 (not subject to the 80% limit)"
+        showIf: "otherIncomeNetOperatingLoss8a > 0"
+      - name: atnolCarryforwardAmount
+        type: amount
+        required: false
+        label: "Alternative Tax Net Operating Loss (ATNOL) carryforward for the AMT — only if it differs from the amount above"
+        showIf: "otherIncomeNetOperatingLoss8a > 0"
+      - name: farmingLossCarrybackWaived
+        type: boolean
+        required: false
+        label: "If 2025 ends in a net operating loss from farming: do you elect to waive the 2-year carryback and carry the loss forward only?"
       - name: otherIncomeGambling8b
         type: amount
         required: false
@@ -195,6 +225,137 @@ sections:
         label: Cancellation of debt (line 8c)
         placeholder: 0.00
         help: Enter cancellation-of-debt income included on line 8c.
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: codExcludeUnderInsolvency
+        type: boolean
+        required: false
+        label: "Were you insolvent immediately before the debt was cancelled (total debts exceeded the value of everything you owned)?"
+        showIf: "otherIncomeCancellationOfDebt8c > 0"
+      - name: codTotalLiabilitiesBeforeDischarge
+        type: amount
+        required: false
+        label: "Total liabilities (everything you owed) immediately before the cancellation"
+        showIf: "codExcludeUnderInsolvency == true"
+      - name: codFmvAssetsBeforeDischarge
+        type: amount
+        required: false
+        label: "Fair market value of all your assets (everything you owned) immediately before the cancellation"
+        showIf: "codExcludeUnderInsolvency == true"
+      - name: codExcludeQualifiedPrincipalResidence
+        type: boolean
+        required: false
+        label: "Was the cancelled debt a mortgage used to buy, build, or substantially improve your main home?"
+        showIf: "otherIncomeCancellationOfDebt8c > 0"
+      - name: codQprExclusionAmount
+        type: amount
+        required: false
+        label: "Amount of the cancelled main-home mortgage debt"
+        showIf: "codExcludeQualifiedPrincipalResidence == true"
+      - name: codMortgagePrincipalBeforeDischarge
+        type: amount
+        required: false
+        label: "Loan balance just before the debt was cancelled"
+        showIf: "codExcludeQualifiedPrincipalResidence == true"
+      - name: codMortgageQpriPrincipal
+        type: amount
+        required: false
+        label: "Part of that balance used to buy, build or improve your main home (a refinance counts only up to the old loan balance just before it)"
+        showIf: "codExcludeQualifiedPrincipalResidence == true"
+      - name: codHomeBasisBeforeReduction
+        type: amount
+        required: false
+        label: "Your cost basis in the home before this reduction (for the required basis reduction)"
+        showIf: "codExcludeQualifiedPrincipalResidence == true"
+      - name: codRetainedResidenceAfterDischarge
+        type: boolean
+        required: false
+        label: "Did you still own the home after the debt was cancelled? (Answer No if it was foreclosed on, or sold as part of the cancellation.)"
+        showIf: "codExcludeQualifiedPrincipalResidence == true"
+      - name: codExcludeTitle11Bankruptcy
+        type: boolean
+        required: false
+        label: "Was the debt cancelled in a bankruptcy case (Title 11)?"
+        showIf: "otherIncomeCancellationOfDebt8c > 0"
+      - name: codExcludeQualifiedFarm
+        type: boolean
+        required: false
+        label: "Was the cancelled debt farm debt from a farming business?"
+        showIf: "otherIncomeCancellationOfDebt8c > 0"
+      - name: codFarmExclusionAmount
+        type: amount
+        required: false
+        label: "Amount of the cancelled farm debt to exclude"
+        showIf: "codExcludeQualifiedFarm == true"
+      - name: codFarmGrossReceiptsTest
+        type: boolean
+        required: false
+        label: "Did at least 50% of your gross receipts for 2022-2024 come from farming?"
+        showIf: "codExcludeQualifiedFarm == true"
+      - name: codFarmQualifiedLender
+        type: boolean
+        required: false
+        label: "Was the debt canceled by a lender regularly in the business of lending (not a relative, the seller, or a promoter), or by a government?"
+        showIf: "codExcludeQualifiedFarm == true"
+      - name: codFarmDepreciablePropertyBasis
+        type: amount
+        required: false
+        label: "Basis in farm equipment and other depreciable property (reduced first)"
+        showIf: "codExcludeQualifiedFarm == true"
+      - name: codFarmLandBasis
+        type: amount
+        required: false
+        label: "Basis in farmland (reduced next)"
+        showIf: "codExcludeQualifiedFarm == true"
+      - name: codFarmOtherPropertyBasis
+        type: amount
+        required: false
+        label: "Basis in other business or investment property (reduced last)"
+        showIf: "codExcludeQualifiedFarm == true"
+      - name: codExcludeQrpbi
+        type: boolean
+        required: false
+        label: "Was the cancelled debt a mortgage on real property used in a trade or business?"
+        showIf: "otherIncomeCancellationOfDebt8c > 0"
+      - name: codQrpbiExclusionAmount
+        type: amount
+        required: false
+        label: "Amount of the cancelled business-property debt to exclude"
+        showIf: "codExcludeQrpbi == true"
+      - name: codDepreciableRealPropertyBasis
+        type: amount
+        required: false
+        label: "Basis in that depreciable real property before this reduction"
+        showIf: "codExcludeQrpbi == true"
+      - name: codElectSection108b5BasisFirst
+        type: boolean
+        required: false
+        label: "Reduce the basis of depreciable property BEFORE the net operating loss? (Choosing this keeps the loss carryforward intact.)"
+        showIf: "otherIncomeCancellationOfDebt8c > 0"
+      - name: codDepreciablePropertyBasis
+        type: amount
+        required: false
+        label: "Total basis in depreciable property available to reduce"
+        showIf: "codElectSection108b5BasisFirst == true"
+      - name: codElectSection1221Depreciable
+        type: boolean
+        required: false
+        label: "Treat real property held for sale to customers as depreciable property? (Leave unanswered if it does not apply.)"
+        showIf: "otherIncomeCancellationOfDebt8c > 0"
+      - name: codPropertyBasisAfterDischarge
+        type: amount
+        required: false
+        label: "Total basis of all property you own at the start of 2026 (for the Form 982 line 10a basis reduction)"
+        showIf: "otherIncomeCancellationOfDebt8c > 0"
+      - name: codMoneyAfterDischarge
+        type: amount
+        required: false
+        label: "Cash and bank balances right after the debt was cancelled (bankruptcy or insolvency only)"
+        showIf: "otherIncomeCancellationOfDebt8c > 0"
+      - name: codLiabilitiesAfterDischarge
+        type: amount
+        required: false
+        label: "Total liabilities right after the debt was cancelled (leave blank to use the liabilities before minus the cancelled debt)"
+        showIf: "otherIncomeCancellationOfDebt8c > 0"
       - name: otherIncomeForeignEarnedIncomeExclusion8d
         type: amount
         required: false
@@ -279,6 +440,55 @@ sections:
         label: Taxable ABLE account distributions (line 8q)
         placeholder: 0.00
         help: Enter taxable ABLE account distributions.
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: ableQualifiedDisabilityExpenses
+        type: amount
+        required: false
+        label: "ABLE account: qualified disability expenses paid this year (Pub. 907 Table 1)"
+      - name: form5329Line6ExceptionAmount
+        type: amount
+        required: false
+        label: "ABLE/education distributions NOT subject to the 10% additional tax (Form 5329 line 6)"
+      - name: qtpQualifiedEducationExpenses
+        type: amount
+        required: false
+        label: "529 plan or Coverdell ESA (Form 1099-Q): qualified education expenses paid in 2025 (Pub. 970)"
+      - name: qtpTaxFreeEducationAssistance
+        type: amount
+        required: false
+        label: "529 plan or Coverdell ESA: tax-free scholarships, grants and other tax-free education help (Pub. 970)"
+      - name: qtpRolledOverOrRecontributedAmount
+        type: amount
+        required: false
+        label: "Part of your 2025 Form 1099-Q distributions rolled over to another 529 plan or ABLE account, or refunded and recontributed, within 60 days (Pub. 970)"
+      - name: ableRolledOverWithin60DaysAmount
+        type: amount
+        required: false
+        label: "Part of your 2025 Form 1099-QA distributions rolled over to another ABLE account within 60 days (Pub. 907)"
+      - name: coverdellPriorYearExcessLine26
+        type: amount
+        required: false
+        label: "Coverdell ESA: excess contributions carried from 2024 (2024 Form 5329 line 32, when its line 33 was more than zero)"
+      - name: coverdellExcessContributions2025Line31
+        type: amount
+        required: false
+        label: "Coverdell ESA: 2025 contributions over the $2,000 limit, not withdrawn before June 1, 2026 (Form 5329 line 31)"
+      - name: coverdellRolloverOrWithdrawnExcessLine28
+        type: amount
+        required: false
+        label: "Coverdell ESA: 2025 distributions that were rolled over within 60 days or were withdrawn excess contributions (Form 5329 line 28)"
+      - name: coverdellYearEndValue
+        type: amount
+        required: false
+        label: "Coverdell ESA: value of your Coverdell ESAs on December 31, 2025 (Form 5329 line 33)"
+      - name: ableExcessContributions2025Line50
+        type: amount
+        required: false
+        label: "ABLE account: 2025 contributions over the limit, not returned by the due date (Form 5329 line 50)"
+      - name: ableYearEndValue
+        type: amount
+        required: false
+        label: "ABLE account: value on December 31, 2025 (leave blank to use the Form 5498-QA fair market value) (Form 5329 line 51)"
       - name: otherIncomeScholarships8r
         type: amount
         required: false
@@ -323,6 +533,12 @@ sections:
         label: Amount
         placeholder: 0.00
         help: Enter amount for this line 8z item.
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: isStateLocalTaxRefundForAmt
+        type: boolean
+        required: false
+        label: "This is a refund of state/local property, sales, or foreign taxes I itemized in a prior year"
+        showIf: "hadAdditionalIncomeForSchedule1 === true"
 
   # Backend-only imported fields. Not rendered in the actual form component.
   - name: importedStatementFields

@@ -1,0 +1,127 @@
+# Health Savings Account (Form 8889) - taxpayer/family head.
+# Component: form-hsa.component.ts (@Input formId = hsa-taxpayer).
+name: hsa-taxpayer
+title: "Health Savings Account (Form 8889, taxpayer/family head)"
+multiplicity: single
+formName: "Form 8889"
+category: "deductions"
+sections:
+  - name: screening
+    title: "Screening"
+    multiplicity: single
+    fields:
+      - name: hasHsaActivity
+        type: boolean
+        required: true
+        label: "Did you have an HSA (contributions or distributions) in 2025?"
+
+  - name: partIContributions
+    title: "Part I - HSA contributions and deduction"
+    multiplicity: single
+    showIf: "hasHsaActivity == true"
+    fields:
+      - name: coverageType
+        type: select
+        required: false
+        label: "HDHP coverage during 2025"
+        options: ["self-only", "family"]
+      - name: eligibleAllTwelveMonths
+        type: boolean
+        required: false
+        label: "Were you an eligible individual with this coverage for all 12 months of 2025?"
+      - name: monthsEligibleCount
+        type: number
+        required: false
+        label: "Months eligible (1–12)"
+        showIf: "eligibleAllTwelveMonths == false"
+      - name: lastMonthRuleApplies
+        type: boolean
+        required: false
+        label: "Last-month rule (eligible on December 1, 2025)?"
+      - name: contributionsMadeLine2
+        type: number
+        required: false
+        label: "HSA contributions you made (line 2)"
+      - name: archerMsaContributionsLine4
+        type: number
+        required: false
+        label: "Archer MSA contributions (line 4)"
+      - name: familyCoverageAllocationLine6
+        type: number
+        required: false
+        label: "Family-coverage allocation (line 6 override, optional)"
+      - name: employerContributionsLine9
+        type: number
+        required: false
+        label: "Employer contributions (line 9)"
+      - name: fundingDistributionsLine10
+        type: number
+        required: false
+        label: "Qualified HSA funding distributions (line 10)"
+      - name: hsaExcessWithdrawnByDueDate
+        type: boolean
+        required: false
+        label: "Did you take any excess contribution back out before your return was due (April 15, 2026)?"
+        showIf: "has an HSA contribution"
+      - name: hsaExcessWithdrawnAmount
+        type: number
+        required: false
+        label: "Amount of excess contributions taken out"
+        showIf: "has an HSA contribution && hsaExcessWithdrawnByDueDate == true"
+      - name: priorYearExcessHsaContributionCarryforward
+        type: number
+        required: false
+        label: "Excess HSA contributions carried over from a prior year (2024 Form 5329, line 48)"
+      - name: yearEndHsaValue
+        type: number
+        required: false
+        label: "Year-end HSA value (fair market value on Dec 31)"
+
+  - name: partIIDistributions
+    title: "Part II - HSA distributions"
+    multiplicity: single
+    showIf: "hasHsaActivity == true"
+    fields:
+      - name: totalHsaDistributionsLine14aOverride
+        type: number
+        required: false
+        label: "Total HSA distributions (Form 8889 line 14a) — manual override"
+      - name: distributionsRolledOverLine14b
+        type: number
+        required: false
+        label: "Rollovers / excess withdrawn (line 14b)"
+      - name: qualifiedMedicalExpensesLine15
+        type: number
+        required: false
+        label: "Qualified medical expenses paid from the HSA (line 15)"
+      - name: distributionExceptionApplies
+        type: boolean
+        required: false
+        label: "Do any taxable distributions qualify for an exception to the 20% additional tax (disability, death, or age 65)?"
+      - name: distributionExceptionPartialAmount
+        type: number
+        required: false
+        label: "Amount exempt from the 20% additional tax (partial exception)"
+
+  - name: partIIIFailureToBeEligible
+    title: "Part III - Income and additional tax for failure to maintain HDHP coverage"
+    multiplicity: single
+    showIf: "hasHsaActivity == true"
+    fields:
+      - name: usedLastMonthRuleForPriorYear
+        type: boolean
+        required: false
+        label: "Did you use the HSA last-month rule for the prior year (2024)?"
+      - name: failedLastMonthRuleTestingPeriod
+        type: boolean
+        required: false
+        label: "Did you stop being HSA-eligible at any time in 2025 (failing the testing period)?"
+        showIf: "usedLastMonthRuleForPriorYear == true"
+      - name: lastMonthRuleFailureIncomeLine18
+        type: number
+        required: false
+        label: "Last-month-rule failure income (line 18)"
+      - name: fundingDistributionFailureIncomeLine19
+        type: number
+        required: false
+        label: "Funding-distribution failure income (line 19)"

@@ -60,6 +60,41 @@ sections:
         label: Taxable portion of 1099-OID box 2 to include (override)
         placeholder: 0.00
         help: "Use only when spouse taxable 1099-OID box 2 needs an override. This flows to Form 1040 line 2b."
+      - name: taxableInterestNoInformationReturn
+        type: number
+        required: false
+        label: "Taxable interest with no Form 1099 at all (spouse)"
+      - name: noInformationReturnInterestPayers
+        type: text
+        required: false
+        label: "Who paid the interest with no Form 1099 (names for Schedule B)"
+        showIf: "(taxableInterestNoInformationReturn ?? 0) > 0"
+      - name: manualTaxableInterestPayers
+        type: text
+        required: false
+        label: "Who paid the taxable interest not on statements (names for Schedule B)"
+        showIf: "(manualTaxableInterestNotOnStatements ?? 0) > 0"
+        help: "B87."
+      - name: giftLoanAmountOutstanding
+        type: number
+        required: false
+        label: "Interest-free or low-interest loan you made to a person (amount owed to you)"
+        help: "Below-market (gift) loan - IRC §7872 imputed interest."
+      - name: giftLoanOutstandingAllYear
+        type: boolean
+        required: false
+        label: "Was that amount owed to you the whole year?"
+        showIf: "(giftLoanAmountOutstanding ?? 0) > 0"
+      - name: giftLoanInterestRateCharged
+        type: number
+        required: false
+        label: "Interest rate you charge (%), 0 if none"
+        showIf: "(giftLoanAmountOutstanding ?? 0) > 0"
+      - name: giftLoanBorrowerNetInvestmentIncome
+        type: number
+        required: false
+        label: "Borrower's 2025 net investment income"
+        showIf: "(giftLoanAmountOutstanding ?? 0) > 0 && (giftLoanAmountOutstanding ?? 0) <= 100000"
 
   - name: interestAdjustments
     title: Interest adjustments
@@ -135,6 +170,49 @@ sections:
         label: Has your spouse made the Internal Revenue Code §1278(b) election to include market discount as interest each year?
         help: "Most filers leave this NO. By default, market discount (1099-OID box 5) accrued during your spouse's ownership of a bond is taxed only when the bond is sold or redeemed — at that point it becomes ordinary income on Schedule D. The §1278(b) election lets your spouse instead include accrued market discount as interest income each year. The election is IRREVOCABLE and applies to ALL market discount bonds your spouse acquires after the election year. Only choose Yes if a written §1278(b) election statement has been filed per IRS Publication 550."
         showIf: hasInterestAdjustments == true
+      # Bond premium amortization history (Pub. 550 / §171 carryforward).
+      - name: bondPremiumPriorInterestInclusions
+        type: number
+        required: false
+        label: "Interest from this bond included on earlier returns"
+        showIf: "hasInterestAdjustments == true"
+      - name: bondPremiumPriorDeductions
+        type: number
+        required: false
+        label: "Bond premium deducted on earlier returns"
+        showIf: "hasInterestAdjustments == true"
+      - name: bondPremiumCarryforwardFromPriorYear
+        type: number
+        required: false
+        label: "Excess bond premium carried forward from 2024"
+        showIf: "hasInterestAdjustments == true"
+
+  - name: statementUploadCheck
+    title: "Statement upload check"
+    multiplicity: single
+    fields:
+      - name: confirmAllReceivedInterestStatementsUploaded
+        type: boolean
+        required: true
+        label: "Has your spouse uploaded all the interest statements they received (1099-INT, 1099-DIV, 1099-OID)?"
+
+  - name: scheduleBForeignConditions
+    title: "Schedule B Part III - foreign accounts and trusts (spouse)"
+    multiplicity: single
+    fields:
+      - name: hasForeignAccountForScheduleBPartIII
+        type: boolean
+        required: false
+        label: "My spouse had a financial account at a foreign bank, brokerage, or investment institution at any time during 2025, or signature authority over such an account"
+      - name: hasFbarRequirement
+        type: boolean
+        required: false
+        label: "Is your spouse required to file FinCEN Form 114 (FBAR) for 2025? (Generally yes if the foreign accounts together exceeded $10,000 at any time in 2025 - see the FinCEN instructions for exceptions.)"
+        showIf: "hasForeignAccountForScheduleBPartIII == true"
+      - name: hasForeignTrustDistributionOrTransfer
+        type: boolean
+        required: false
+        label: "During 2025, my spouse received a distribution from, or was the grantor of, or transferor to, a foreign trust"
 
   # Backend-only statement imports. Not rendered in form component.
   - name: importedStatementFields

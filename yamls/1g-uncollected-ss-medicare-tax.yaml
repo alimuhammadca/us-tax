@@ -9,6 +9,10 @@
 # Filing status note:
 # - If MFJ, IRS requires a separate Form 8919 for each spouse who must file it.
 
+# Header id added 2026-10-28 (YAML drift sync): this file documents the taxpayer form (form-uncollected-ss-medicare-taxpayer
+# .component.ts saves uncollected-ss-medicare-taxpayer); the spouse copy is 1g-uncollected-ss-medicare-tax-spouse.yaml.
+name: uncollected-ss-medicare-taxpayer
+
 uncollectedSSMedicareWages8919:
   version: 2
   formName: 8919
@@ -16,6 +20,17 @@ uncollectedSSMedicareWages8919:
   multiplicity: perSpouse
 
   sections:
+    # Added 2026-10-28 (YAML drift sync): the component's model nests a `screening` object (model.screening.appliesToFiler).
+    - name: screening
+      title: "Screening (model.screening)"
+      multiplicity: single
+      fields:
+        - name: appliesToFiler
+          type: boolean
+          required: true
+          label: "Does this form apply to you?"
+          help: "Yes only if a firm paid you as an independent contractor but you believe you were an employee, and it did not withhold your share of SS/Medicare tax (not for unreported tips)."
+
     - name: identity
       title: Taxpayer identity (imported)
       multiplicity: single

@@ -232,6 +232,28 @@ sections:
           Enter unused foreign tax credit from prior years that is eligible to be carried
           forward to 2025.
 
+      - name: priorYearCarryoverOriginYear
+        type: number
+        required: false
+        label: Year that carryover arose
+
+  - name: amtForeignTaxCredit
+    title: AMT foreign tax credit - simplified limitation election
+    multiplicity: single
+    showIf: "hasForeignTaxCredit == true && claimsSimplifiedException != true"
+    help: "AMT foreign tax credit (Form 1116 AMT copy): the simplified limitation election is made in the first year and kept thereafter."
+    fields:
+      - name: amtFtcPriorClaimStatus
+        type: select
+        required: false
+        label: "Have you claimed a foreign tax credit against the alternative minimum tax on an earlier return?"
+        options: [elected, not_elected, first_year]
+      - name: amtFtcFirstYearElectsSimplified
+        type: boolean
+        required: false
+        label: "Do you want to use the simplified method from this year onward?"
+        showIf: "amtFtcPriorClaimStatus == 'first_year'"
+
   # Backend-only imported statement fields. Not rendered in the UI form component.
   - name: importedStatementFields
     title: Imported statement fields (backend only — not rendered)

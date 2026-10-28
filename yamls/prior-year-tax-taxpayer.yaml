@@ -23,6 +23,17 @@ sections:
         hint: >
           If it was over $150,000 ($75,000 MFS), the safe-harbor threshold is 110% of
           your 2024 tax instead of 100%.
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - id: priorYearGrossFarmIncome
+        name: priorYearGrossFarmIncome
+        type: amount
+        required: false
+        label: "Your 2024 GROSS farming or fishing income"
+      - id: priorYearTotalGrossIncome
+        name: priorYearTotalGrossIncome
+        type: amount
+        required: false
+        label: "Your 2024 TOTAL gross income"
 
       - id: priorYearTaxLiability
         label: Your 2024 Total Tax Liability
@@ -55,6 +66,13 @@ sections:
           annualized income installment method or had special circumstances for part of
           the year. Select Yes only if your tax advisor has recommended it. This causes
           the IRS to review whether a reduced penalty is appropriate.
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - id: boxBWaiverAmount
+        name: boxBWaiverAmount
+        type: amount
+        required: false
+        label: "Amount of penalty to waive"
+        showIf: "waivePartialPenalty === true"
 
       - id: jointSeparateMismatch
         label: Did your filing status change between 2024 and 2025?
@@ -65,6 +83,42 @@ sections:
           2025, or vice versa. This affects how the prior-year safe harbor is calculated
           because the 2024 total tax was computed under a different filing status than
           your 2025 return.
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - id: boxEAllocatedPriorYearTax
+        name: boxEAllocatedPriorYearTax
+        type: amount
+        required: false
+        label: "Your share of the 2024 tax (for the safe harbor)"
+        showIf: "jointSeparateMismatch === true"
+      - id: annualizedMethodElected
+        name: annualizedMethodElected
+        type: boolean
+        required: false
+        label: "Was your income uneven during the year (e.g., most of it late in the year)? Use the annualized income method."
+      - id: annualizedIncome1
+        name: annualizedIncome1
+        type: amount
+        required: false
+        label: "Cumulative income through March 31"
+        showIf: "annualizedMethodElected === true"
+      - id: annualizedIncome2
+        name: annualizedIncome2
+        type: amount
+        required: false
+        label: "Cumulative income through May 31"
+        showIf: "annualizedMethodElected === true"
+      - id: annualizedIncome3
+        name: annualizedIncome3
+        type: amount
+        required: false
+        label: "Cumulative income through August 31"
+        showIf: "annualizedMethodElected === true"
+      - id: annualizedIncome4
+        name: annualizedIncome4
+        type: amount
+        required: false
+        label: "Cumulative income through December 31 (full year)"
+        showIf: "annualizedMethodElected === true"
 
   - id: estimatedPayments
     title: 2025 Estimated Tax Payments
@@ -123,6 +177,64 @@ sections:
           Enter the estimated tax payment you made for the September–December 2025 period.
           This payment was due January 15, 2026. You are not required to make this payment
           if you file and pay your full balance by February 2, 2026.
+
+  # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+  - id: s2024DeductionDetailStateLocalRefundWorksheet
+    name: s2024DeductionDetailStateLocalRefundWorksheet
+    title: "2024 Deduction Detail (state/local refund worksheet)"
+    multiplicity: single
+    fields:
+      - id: priorYearFilingStatus
+        name: priorYearFilingStatus
+        type: select
+        required: false
+        label: "Your 2024 filing status"
+        options:
+          - value: "single"
+            label: "Single"
+          - value: "married-filing-jointly"
+            label: "Married Filing Jointly"
+          - value: "married-filing-separately"
+            label: "Married Filing Separately"
+          - value: "head-of-household"
+            label: "Head of Household"
+          - value: "qualifying-surviving-spouse"
+            label: "Qualifying Surviving Spouse"
+      - id: priorYearItemizedDeductionsClaimed
+        name: priorYearItemizedDeductionsClaimed
+        type: boolean
+        required: false
+        label: "Did you itemize deductions (Schedule A) on your 2024 return?"
+      - id: priorYearMortgageInterestDeducted
+        name: priorYearMortgageInterestDeducted
+        type: amount
+        required: false
+        label: "2024 home mortgage interest you deducted (Schedule A lines 8a-8c)"
+        showIf: "priorYearItemizedDeductionsClaimed === true"
+      - id: priorYearTotalItemizedDeductions
+        name: priorYearTotalItemizedDeductions
+        type: amount
+        required: false
+        label: "2024 total itemized deductions (Schedule A line 17)"
+        showIf: "priorYearItemizedDeductionsClaimed === true"
+      - id: priorYearStandardDeductionAvailable
+        name: priorYearStandardDeductionAvailable
+        type: amount
+        required: false
+        label: "2024 standard deduction you could have taken"
+        showIf: "priorYearItemizedDeductionsClaimed === true"
+      - id: priorYearStateLocalTaxesBeforeCap
+        name: priorYearStateLocalTaxesBeforeCap
+        type: amount
+        required: false
+        label: "2024 state/local taxes paid (Schedule A line 5d, before the SALT cap)"
+        showIf: "priorYearItemizedDeductionsClaimed === true"
+      - id: priorYearTaxableIncome
+        name: priorYearTaxableIncome
+        type: amount
+        required: false
+        label: "2024 taxable income (Form 1040 line 15)"
+        showIf: "priorYearItemizedDeductionsClaimed === true"
 
   - id: computedOutputs
     readOnly: true

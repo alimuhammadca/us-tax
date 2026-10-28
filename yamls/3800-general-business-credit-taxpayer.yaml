@@ -1,0 +1,23 @@
+# Form 3800 - General business credit carryforward from prior years (taxpayer / family head).
+name: general-business-credit-taxpayer
+title: General business credit carryforward
+multiplicity: single
+formName: Form 3800
+category: credits
+instructions:
+  - "Enter any unused general business credit carried forward into 2025 from a prior year's Form 3800."
+
+sections:
+  - name: carryforward
+    title: General business credit carryforward
+    multiplicity: single
+    fields:
+      - name: hasGeneralBusinessCreditCarryforward
+        type: boolean
+        required: true
+        label: "Do you have a general business credit carrying forward from a prior year?"
+      - name: priorYearGeneralBusinessCreditCarryforward
+        type: amount
+        required: false
+        label: General business credit carried forward into 2025
+        showIf: hasGeneralBusinessCreditCarryforward == true

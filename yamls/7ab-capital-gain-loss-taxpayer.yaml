@@ -36,6 +36,50 @@ sections:
         required: false
         label: Do you have capital gains or losses from a partnership, S-corp, trust, or other source not already captured by uploaded 1099-B, 1099-DA, 1099-DIV, or Form 2439 statements?
         help: Select Yes if you have a Schedule K-1 or similar source with capital items. You will enter the net amounts manually in the supplemental section below.
+
+      - name: hasUploadedAtLeastOneCapitalStatement
+        type: boolean
+        required: true
+        label: "Have you uploaded at least one applicable capital statement?"
+
+      - name: received1099DivWithCapitalGainDistributions
+        type: boolean
+        required: false
+        label: "Did you receive Form 1099-DIV with capital gain distributions?"
+
+      - name: uploaded1099DivWithCapitalGainDistributions
+        type: boolean
+        required: false
+        label: "If yes, did you upload all applicable 1099-DIV statements?"
+        showIf: received1099DivWithCapitalGainDistributions == true
+
+      - name: received1099BOr1099Da
+        type: boolean
+        required: false
+        label: "Did you receive Form 1099-B or Form 1099-DA?"
+
+      - name: uploaded1099BOr1099Da
+        type: boolean
+        required: false
+        label: "If yes, did you upload all received 1099-B/1099-DA statements?"
+        showIf: received1099BOr1099Da == true
+
+      - name: receivedForm2439
+        type: boolean
+        required: false
+        label: "Did you receive Form 2439?"
+
+      - name: uploadedForm2439
+        type: boolean
+        required: false
+        label: "If yes, did you upload all received Form 2439 statements?"
+        showIf: receivedForm2439 == true
+
+      - name: uploadedOtherScheduleDSourceStatements
+        type: boolean
+        required: false
+        label: "If yes, did you upload all applicable source statements?"
+        showIf: receivedOtherScheduleDSourceStatements == true
       - name: confirmAllReceivedCapitalStatementsUploaded
         type: boolean
         required: true
@@ -66,6 +110,21 @@ sections:
         required: false
         label: Do you have a capital loss carryover from a prior year that you could not fully deduct?
         help: Select Yes if last year's Schedule D showed a carryover loss (line 26 for short-term, line 27 for long-term). Enter the amounts in the carryover section that will appear below.
+
+      - name: hadCapitalAssetSalesOrExchanges
+        type: boolean
+        required: false
+        label: "Did you sell or exchange any investment property (stocks, bonds, real estate, crypto)?"
+
+      - name: hasForm2439UndistributedCapitalGains
+        type: boolean
+        required: false
+        label: "Did a mutual fund or REIT send you a notice saying they kept some capital gains internally? (Most filers answer No - this is a rare situation)"
+
+      - name: hasAny1099DivBoxes2b2c2dAmounts
+        type: boolean
+        required: false
+        label: "On any of your 1099-DIVs, are amounts filled in for unrecaptured 1250 gain (box 2b), 1202 gain (box 2c), or collectibles gain (box 2d)?"
       - name: hasOtherScheduleDSourceForms
         type: boolean
         required: false
@@ -176,6 +235,21 @@ sections:
         label: Long-term gains or losses passed through from a partnership, S-corp, or trust (K-1)
         placeholder: "0.00"
         help: Net long-term capital gain or loss shown on Schedule K-1 forms you received. Use a negative number for a net loss. Sum all K-1s that include long-term capital items.
+
+      - name: collectiblesGainOtherForms
+        type: amount
+        required: false
+        label: "Collectibles gain or loss included on Forms 4684, 6252, 6781 or 8824 (28% rate)"
+
+      - name: form6781Line4Adjustment
+        type: amount
+        required: false
+        label: "Form 6781 line 4 adjustment - straddles, hedging, or a wrong Form 1099-B box 11 (a negative amount for a loss)"
+
+      - name: section1256Dealer
+        type: boolean
+        required: false
+        label: "Are you a dealer in section 1256 contracts (the net gain or loss is self-employment income)?"
 
   - name: uncommonSituationsScreening
     title: Less common situations
@@ -364,6 +438,159 @@ sections:
         label: Allowable capital loss deducted on last year's return (capped at $3,000 or $1,500 MFS)
         placeholder: "0.00"
         help: Enter the amount from line 21 of last year's Schedule D — the actual loss amount deducted on that return, limited to $3,000 (or $1,500 for Married Filing Separately). This is used to compute this year's carryover split.
+
+      - name: priorYearScheduleDLine21AllowableLossTerm
+        type: select
+        required: false
+        label: "Was that carried-over loss short-term or long-term? (only needed if you used the single amount above)"
+        options: [SHORT, LONG]
+
+      - name: amtCapitalGainLossAdjustment
+        type: amount
+        required: false
+        label: "AMT capital gain/loss adjustment (Form 6251 line 2k) - only if your AMT capital gain or loss differs from the regular amount (e.g. a different AMT carryover, incentive stock options, or 1202)"
+
+  - name: isoSharesSold
+    title: Incentive stock option (ISO) shares sold
+    multiplicity: single
+    showIf: "hadCapitalGainOrLoss == true && 1099-B sales on file"
+    help: "Only if you sold shares bought by exercising an incentive stock option in an earlier year (AMT basis, Form 6251)."
+    fields:
+      - name: isoStockSale1099BEntryId
+        type: select
+        required: false
+        label: Which sale (Form 1099-B)
+        help: Options are the 1099-B sale entries on file.
+      - name: isoSharesAmtBasis
+        type: amount
+        required: false
+        label: AMT basis of the shares sold (exercise price + bargain element)
+        showIf: "isoStockSale1099BEntryId != null"
+
+  - name: nuaSharesSold
+    title: Employer stock from a retirement plan (net unrealized appreciation)
+    multiplicity: single
+    showIf: "hadCapitalGainOrLoss == true && 1099-B sales on file"
+    fields:
+      - name: nuaStockSale1099BEntryId
+        type: select
+        required: false
+        label: Which sale (Form 1099-B)
+        help: Options are the 1099-B sale entries on file.
+      - name: nuaInSharesSoldAmount
+        type: amount
+        required: false
+        label: Net unrealized appreciation in the shares sold
+        showIf: "nuaStockSale1099BEntryId != null"
+      - name: nuaSharesPlanCostBasis
+        type: amount
+        required: false
+        label: "The plan's cost of the shares sold (your basis)"
+        showIf: "nuaStockSale1099BEntryId != null"
+
+  - name: form6781Elections
+    title: More section 1256 contracts and straddles (Form 6781)
+    multiplicity: single
+    showIf: hadCapitalGainOrLoss == true
+    fields:
+      - name: section1256CarrybackElected
+        type: boolean
+        required: false
+        label: "Elect to carry back a net section 1256 contracts loss to the 3 prior years (Form 6781 box D)?"
+      - name: section1256CarrybackAmount
+        type: amount
+        required: false
+        label: Amount carried back (Form 6781 line 6)
+        showIf: section1256CarrybackElected == true
+      - name: form6781BoxAMixedStraddleElection
+        type: boolean
+        required: false
+        label: Box A - mixed straddle election
+      - name: form6781BoxBStraddleIdentificationElection
+        type: boolean
+        required: false
+        label: Box B - straddle-by-straddle identification election
+      - name: form6781BoxCMixedStraddleAccountElection
+        type: boolean
+        required: false
+        label: Box C - mixed straddle account election
+
+  - name: section1256ContractsWithout1099B
+    title: Section 1256 contracts not on a 2025 Form 1099-B (Form 6781 line 1)
+    multiplicity: multiple
+    showIf: hadCapitalGainOrLoss == true
+    help: "Futures, foreign currency or nonequity option contracts with no 2025 Form 1099-B; enter each one's 2025 gain or loss (negative for a loss), including contracts still open at year end."
+    fields:
+      - name: identification
+        type: text
+        required: false
+        label: Identification of the account or contract
+      - name: gainOrLoss
+        type: amount
+        required: false
+        label: Gain or (loss)
+
+  - name: form6781StraddlePositions
+    title: Straddle positions (Form 6781 Part II)
+    multiplicity: multiple
+    showIf: hadCapitalGainOrLoss == true
+    help: A loss is allowed only to the extent it is more than the unrecognized gain on the offsetting positions still held.
+    fields:
+      - name: description
+        type: text
+        required: false
+        label: "Description (property, delivery date, long or short position)"
+      - name: dateEntered
+        type: date
+        required: false
+        label: Date entered or acquired
+      - name: dateClosed
+        type: date
+        required: false
+        label: Date closed out or sold
+      - name: grossSalesPrice
+        type: amount
+        required: false
+        label: Gross sales price
+      - name: costPlusExpense
+        type: amount
+        required: false
+        label: Cost or other basis plus expense of sale
+      - name: unrecognizedGainOffsetting
+        type: amount
+        required: false
+        label: Unrecognized gain on offsetting positions (loss positions only)
+      - name: longTerm
+        type: boolean
+        required: false
+        label: "Held more than one year (long-term)?"
+      - name: collectible
+        type: boolean
+        required: false
+        label: "Is the property a collectible (art, antiques, gems, metals, stamps, coins)? Long-term only - taxed at up to 28%"
+
+  - name: form6781UnrecognizedGains
+    title: Unrecognized gains at year end (Form 6781 Part III)
+    multiplicity: multiple
+    showIf: hadCapitalGainOrLoss == true
+    help: "Only if you have a recognized loss on any position: a memo list of positions held at year end whose value exceeded basis."
+    fields:
+      - name: description
+        type: text
+        required: false
+        label: Description of property
+      - name: dateAcquired
+        type: date
+        required: false
+        label: Date acquired
+      - name: fmvLastBusinessDay
+        type: amount
+        required: false
+        label: Fair market value on the last business day of 2025
+      - name: costOrBasis
+        type: amount
+        required: false
+        label: Cost or other basis as adjusted
 
   # Backend-only statement imports. Not rendered in form component.
   - name: importedStatementFields

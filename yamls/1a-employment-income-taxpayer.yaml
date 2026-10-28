@@ -1,0 +1,74 @@
+# Form 1040 line 1a - wages (W-2) screening for the taxpayer / family head.
+# W-2 amounts come from uploaded statements; this form holds the screening and special-situation answers.
+name: employment-income-taxpayer
+title: Employment income (wages)
+multiplicity: single
+formName: "1040"
+category: income
+instructions:
+  - "Upload every W-2 you received. If one is missing, use Form 4852 (substitute W-2)."
+
+sections:
+  - name: screening
+    title: Your wages
+    multiplicity: single
+    fields:
+      - name: hasEmploymentIncome
+        type: boolean
+        required: true
+        label: "Did you receive any wages (including household employee wages) during the tax year?"
+        help: Auto-answered Yes when W-2s are on file; can be changed.
+      - name: isMissingW2
+        type: boolean
+        required: true
+        label: "Are you missing one or more W-2s from your employers?"
+        showIf: hasEmploymentIncome == true
+      - name: householdWork
+        type: boolean
+        required: true
+        label: "Did you receive pay for household work (babysitter, nanny, caregiver/health aide, housekeeper, yard worker, etc.)?"
+        showIf: hasEmploymentIncome == true
+      - name: householdEmployeeUnderControlTest
+        type: boolean
+        required: false
+        label: "Did the person paying you control what you did and how you did it?"
+        showIf: householdWork == true
+      - name: householdReceivedW2
+        type: boolean
+        required: false
+        label: "Did every household employer give you a Form W-2 for this work?"
+        showIf: "householdWork == true && householdEmployeeUnderControlTest == true"
+
+  - name: specialSituations
+    title: Special wage situations
+    multiplicity: single
+    showIf: hasEmploymentIncome == true
+    fields:
+      - name: hasInmateWages
+        type: boolean
+        required: false
+        label: "Was any of your W-2(s) or W-2 Substitute (Form 4852) issued for wages earned while incarcerated?"
+      - name: isChapter11Debtor
+        type: boolean
+        required: false
+        label: "Were you a debtor in a chapter 11 bankruptcy case during 2025?"
+      - name: chapter11PetitionDate
+        type: date
+        required: false
+        label: Date the chapter 11 case began
+        showIf: isChapter11Debtor == true
+      - name: chapter11EstateWagesAmount
+        type: amount
+        required: false
+        label: W-2 wages that belong to the bankruptcy estate (earned after the case began)
+        showIf: isChapter11Debtor == true
+      - name: chapter11EstateWithholdingAmount
+        type: amount
+        required: false
+        label: Federal income tax withheld on those wages (W-2 box 2 share)
+        showIf: isChapter11Debtor == true
+      - name: chapter11AllocationStatement
+        type: text
+        required: false
+        label: How the W-2 and 1099 income and withholding were allocated (for the attached statement)
+        showIf: isChapter11Debtor == true

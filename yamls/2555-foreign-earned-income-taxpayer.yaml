@@ -50,6 +50,17 @@ sections:
         placeholder: e.g. United States
         label: Country of citizenship
         help: Enter the country of which you are a citizen or national. Most US filers will enter United States.
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: abodeInUs
+        type: boolean
+        required: false
+        label: "Was your main home (abode) in the United States during this time?"
+        showIf: "hadForeignEarnedIncome === true"
+      - name: cubaTravelUnauthorized
+        type: boolean
+        required: false
+        label: "Was any of this time or work in Cuba without U.S. government authorization (a general or specific license)?"
+        showIf: "hadForeignEarnedIncome === true"
 
   - name: qualifyingTest
     title: Qualifying test
@@ -71,6 +82,17 @@ sections:
             label: I lived as a bona fide resident of a foreign country for an uninterrupted period that includes all of 2025
           - value: physical_presence
             label: I was physically present in a foreign country or countries for at least 330 full days during a 12-month period
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: bfNonresidentStatementNoTax
+        type: boolean
+        required: false
+        label: "Did you tell the foreign country that you are not a resident there, and owe it no income tax as a result?"
+        showIf: "hadForeignEarnedIncome === true && qualifyingTest === 'bona_fide_residence'"
+      - name: ppFullDaysAbroad
+        type: number
+        required: false
+        label: "Full days spent in foreign countries during the 12-month period"
+        showIf: "hadForeignEarnedIncome === true && qualifyingTest === 'physical_presence'"
       - name: bfResidenceStartDate
         type: date
         required: false
@@ -116,6 +138,27 @@ sections:
             label: Wages and salary (W-2 or foreign employer equivalent)
           - value: self_employed
             label: Self-employment income (not supported — contact a tax professional)
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: foreignSelfEmploymentNetIncome
+        type: amount
+        required: false
+        label: "Net profit from the foreign trade or business (US dollars)"
+        showIf: "hadForeignEarnedIncome === true && foreignEarnedIncomeType === 'self_employed'"
+      - name: foreignSeAllowableShareLine20a
+        type: amount
+        required: false
+        label: "Allowable share for personal services - business or profession (line 20a, optional)"
+        showIf: "hadForeignEarnedIncome === true && foreignEarnedIncomeType === 'self_employed'"
+      - name: foreignSeAllowableShareLine20b
+        type: amount
+        required: false
+        label: "Allowable share - partnership (line 20b, optional)"
+        showIf: "hadForeignEarnedIncome === true && foreignEarnedIncomeType === 'self_employed'"
+      - name: form2555Line44DeductionsAllocableToExcludedIncome
+        type: amount
+        required: false
+        label: "Deductions on Schedule 1 that relate to your excluded foreign income - Form 2555 line 44 (optional)"
+        showIf: "hadForeignEarnedIncome === true && foreignEarnedIncomeType === 'self_employed'"
       - name: employerName
         type: text
         required: false
@@ -134,6 +177,22 @@ sections:
         placeholder: 0.00
         label: Total foreign wages and salary in USD
         help: Enter the total wages and salary you earned from work performed in a foreign country, converted to US dollars.
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: paidByUsGovernment
+        type: boolean
+        required: false
+        label: "Was this pay from the U.S. Government or one of its agencies (as an employee)?"
+        showIf: "hadForeignEarnedIncome === true && foreignEarnedIncomeType === 'wages'"
+      - name: usWorkdays
+        type: number
+        required: false
+        label: "Days worked in the United States (optional)"
+        showIf: "hadForeignEarnedIncome === true && foreignEarnedIncomeType === 'wages'"
+      - name: totalWorkdays
+        type: number
+        required: false
+        label: "Total days worked in the year (optional)"
+        showIf: "hadForeignEarnedIncome === true && foreignEarnedIncomeType === 'wages'"
       - name: foreignWagesAlreadyInIncome
         type: boolean
         required: false
@@ -143,6 +202,12 @@ sections:
           exclusion nets them out). No if a foreign employer paid them with no US W-2 and you entered them on no
           other income form; the wages are then added to Form 1040 line 1h so they exist as income before the
           foreign earned income exclusion removes them. Prevents an understated AGI on foreign-only wages.
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: claimsForeignEarnedIncomeExclusion
+        type: boolean
+        required: false
+        label: "Do you claim the foreign earned income exclusion (Form 2555)?"
+        showIf: "hadForeignEarnedIncome === true && (foreignEarnedIncomeType === 'wages' || foreignEarnedIncomeType === 'self_employed')"
 
   - name: housingExclusion
     title: Foreign housing exclusion (optional)
@@ -158,6 +223,17 @@ sections:
         required: false
         label: Do you want to claim the foreign housing exclusion?
         help: Select Yes if your employer-provided housing amounts or reimbursements qualify for the housing exclusion.
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: spousesShareForeignHousehold
+        type: boolean
+        required: false
+        label: "Do you and your spouse live in the same foreign household?"
+        showIf: "hadForeignEarnedIncome === true && (foreignEarnedIncomeType === 'wages' || foreignEarnedIncomeType === 'self_employed') && person !== 'spouse' && housingDoubleClaimed()"
+      - name: householdsWithinCommutingDistance
+        type: boolean
+        required: false
+        label: "Are your tax homes or households within a reasonable commuting distance of each other?"
+        showIf: "hadForeignEarnedIncome === true && (foreignEarnedIncomeType === 'wages' || foreignEarnedIncomeType === 'self_employed') && person !== 'spouse' && housingDoubleClaimed() && spousesShareForeignHousehold === false"
       - name: housingExpensesTotal
         type: amount
         required: false
@@ -170,6 +246,23 @@ sections:
         placeholder: e.g. Germany
         label: Country where your housing was located
         help: Enter the country where your foreign housing was located. The IRS publishes per-country housing cost ceilings that limit the exclusion.
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: employerProvidedAmountsLine34
+        type: amount
+        required: false
+        label: "Employer-provided amounts - Form 2555 line 34 (optional)"
+        showIf: "hadForeignEarnedIncome === true && (foreignEarnedIncomeType === 'wages' || foreignEarnedIncomeType === 'self_employed') && claimsHousingExclusion === true"
+      - name: priorYearHousingDeductionCarryover
+        type: amount
+        required: false
+        label: "Housing deduction not used in 2024 (optional)"
+        showIf: "hadForeignEarnedIncome === true && (foreignEarnedIncomeType === 'wages' || foreignEarnedIncomeType === 'self_employed') && claimsHousingExclusion === true"
+      - name: foreignHousingHighCostLocality
+        type: select
+        required: false
+        label: "High-cost locality (raises the housing cap)"
+        showIf: "hadForeignEarnedIncome === true && (foreignEarnedIncomeType === 'wages' || foreignEarnedIncomeType === 'self_employed') && claimsHousingExclusion === true"
+        options: "HIGH_COST_LOCALITY_OPTIONS (the Form 2555 instructions' table of high-cost localities; blank = the standard cap)"
 
   # Backend-only computed values. NOT rendered in the UI form component.
   - name: computedOutputs

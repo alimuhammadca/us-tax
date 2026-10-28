@@ -1,0 +1,52 @@
+# Form 8919 - Uncollected Social Security and Medicare Tax on Wages - spouse.
+# Component: form-uncollected-ss-medicare-spouse.component.ts. The model nests a `screening` object, a `firms` list
+# and backend `imports`. (1g-uncollected-ss-medicare-tax.yaml documents the shared Form 8919 layout.)
+name: uncollected-ss-medicare-spouse
+title: "Uncollected Social Security and Medicare tax (Form 8919, spouse)"
+multiplicity: single
+formName: "Form 8919"
+category: "employmentTax"
+sections:
+  - name: screening
+    title: "Screening (model.screening)"
+    multiplicity: single
+    fields:
+      - name: appliesToFiler
+        type: boolean
+        required: true
+        label: "Does this form apply to your spouse?"
+        help: "Yes only if the spouse was paid as an independent contractor but believes they were an employee, and the firm did not withhold their share of SS/Medicare tax."
+
+  - name: firms
+    title: "Firms and wages without FICA withholding (Form 8919 lines 1-5)"
+    multiplicity: multiple
+    showIf: "screening.appliesToFiler == true"
+    fields:
+      - name: firmName
+        type: text
+        required: false
+        label: "Firm name"
+      - name: firmFederalIdNumber
+        type: text
+        required: false
+        label: "Firm's federal Employer Identification Number"
+      - name: reasonCode
+        type: select
+        required: false
+        label: "Reason code"
+      - name: irsDeterminationDate
+        type: date
+        required: false
+        label: "IRS determination/correspondence date"
+      - name: hasIrsLetter
+        type: boolean
+        required: false
+        label: "hasIrsLetter"
+      - name: received1099MiscOrNec
+        type: boolean
+        required: false
+        label: "Did your spouse receive Form 1099-MISC or 1099-NEC from this firm?"
+      - name: wagesNoFicaNotW2
+        type: number
+        required: false
+        label: "Wages this firm paid your spouse with no Social Security or Medicare tax withheld"

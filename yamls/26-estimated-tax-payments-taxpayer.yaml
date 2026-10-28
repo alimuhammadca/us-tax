@@ -24,24 +24,48 @@ sections:
         help: Due April 15, 2025. Enter the amount you actually paid to the IRS for this period. Leave blank if no payment was made.
         placeholder: "0.00"
         required: false
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: installment1PaymentDate
+        type: date
+        required: false
+        label: "Date paid (leave blank if paid by the due date)"
+        showIf: "madeEstimatedTaxPayments === true && installment1Amount"
       - name: installment2Amount
         type: decimal
         label: Payment for April – May 2025
         help: Due June 16, 2025 (June 15 was a Sunday). Leave blank if no payment was made for this period.
         placeholder: "0.00"
         required: false
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: installment2PaymentDate
+        type: date
+        required: false
+        label: "Date paid (leave blank if paid by the due date)"
+        showIf: "madeEstimatedTaxPayments === true && installment2Amount"
       - name: installment3Amount
         type: decimal
         label: Payment for June – August 2025
         help: Due September 15, 2025. Leave blank if no payment was made for this period.
         placeholder: "0.00"
         required: false
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: installment3PaymentDate
+        type: date
+        required: false
+        label: "Date paid (leave blank if paid by the due date)"
+        showIf: "madeEstimatedTaxPayments === true && installment3Amount"
       - name: installment4Amount
         type: decimal
         label: Payment for September – December 2025
         help: Due January 15, 2026. Not required if you file your return and pay your full balance by February 2, 2026.
         placeholder: "0.00"
         required: false
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: installment4PaymentDate
+        type: date
+        required: false
+        label: "Date paid (leave blank if paid by the due date)"
+        showIf: "madeEstimatedTaxPayments === true && installment4Amount"
 
   - name: priorYearCredits
     title: 2024 Refund Applied to 2025

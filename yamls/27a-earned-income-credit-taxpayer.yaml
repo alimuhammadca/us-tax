@@ -39,6 +39,36 @@ sections:
         helpText: >
           If yes, you may need to file Form 8862 with this return before the credit
           can be allowed. The system will flag this for you.
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - id: eicPriorDisallowanceReason
+        name: eicPriorDisallowanceReason
+        type: select
+        required: false
+        label: "Why was the credit reduced or denied?"
+        showIf: "!loading && claimsEIC === true && eicPreviouslyDenied === true"
+        options:
+          - value: "MATH_CLERICAL"
+            label: "A math or clerical error"
+          - value: "CHILD_NOT_QUALIFYING"
+            label: "A child was found not to be my qualifying child"
+          - value: "RECKLESS_DISREGARD"
+            label: "Reckless or intentional disregard of the rules"
+          - value: "FRAUD"
+            label: "Fraud"
+          - value: "OTHER"
+            label: "Another reason"
+      - id: eicPriorDeterminationYear
+        name: eicPriorDeterminationYear
+        type: number
+        required: false
+        label: "Year of the IRS final decision"
+        showIf: "!loading && claimsEIC === true && eicPreviouslyDenied === true"
+      - id: eicAllowedSinceForm8862
+        name: eicAllowedSinceForm8862
+        type: boolean
+        required: false
+        label: "Since then I filed Form 8862 and the IRS allowed the credit"
+        showIf: "!loading && claimsEIC === true && eicPreviouslyDenied === true"
 
       - id: mainHomeInUsMoreThanHalfYear
         label: Was your main home in the United States for more than half of 2025?

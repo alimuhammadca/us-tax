@@ -140,3 +140,31 @@ sections:
           Enter the net amount of previously deferred Section 965 tax that became payable
           in 2025 due to a triggering event. See the Schedule 3 instructions for guidance
           on computing this amount.
+
+  - name: otherExtensionPayment
+    title: "Extension payment (separate from your main extension request) - Schedule 3 line 10"
+    multiplicity: single
+    fields:
+      - name: hasOtherExtensionPayment
+        type: boolean
+        required: false
+        label: "Did you pay any tax with an additional extension request during 2025, separate from a standard extension already entered in this application?"
+      - name: amountPaidWithOtherExtension
+        type: number
+        required: false
+        label: "Amount paid with the additional extension"
+        showIf: "hasOtherExtensionPayment == true"
+
+  - name: form3800ElectivePayment
+    title: "Direct-payment election from a business credit - Schedule 3 line 13c (Form 3800)"
+    multiplicity: single
+    fields:
+      - name: hasForm3800ElectivePayment
+        type: boolean
+        required: false
+        label: "Did you elect to receive a direct cash payment in place of certain business credits (for example, energy production, energy investment, or clean energy credits)?"
+      - name: netElectivePaymentElectionAmount
+        type: number
+        required: false
+        label: "Net elective payment amount"
+        showIf: "hasForm3800ElectivePayment == true"

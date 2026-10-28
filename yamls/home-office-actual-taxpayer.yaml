@@ -18,6 +18,17 @@ sections:
         type: boolean
         required: true
         label: Do you use the actual-expense home office method?
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: priorYearHomeOfficeOperatingCarryover
+        type: amount
+        required: false
+        label: "Prior-year operating-expense carryover (Form 8829 line 25)"
+        showIf: "hasActualHomeOffice === true"
+      - name: priorYearHomeOfficeDepreciationCarryover
+        type: amount
+        required: false
+        label: "Prior-year depreciation carryover (Form 8829 line 31)"
+        showIf: "hasActualHomeOffice === true"
 
   - name: homeOffice
     title: Home office

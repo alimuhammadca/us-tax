@@ -25,3 +25,9 @@ sections:
           (Bitcoin, Ether, etc.), non-fungible tokens (NFTs), and other digital
           representations of value recorded on a distributed ledger. Leaving this
           blank is not permitted.
+
+      # was: digitalAssetsYes
+      - name: hadDigitalAssetActivity
+        type: boolean
+        required: true
+        label: "At any time during 2025, did you receive (as a reward, award or payment for property or services), or sell, exchange, or otherwise dispose of a digital asset (or a financial interest in a digital asset)?"

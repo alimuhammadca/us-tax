@@ -7,6 +7,8 @@
 # The only user-input item is the ECR (education credit recapture) box-3 write-in. The
 # advanced/uncommon write-ins (962, 1291TAX, Form 8978, 965INC) are displayed in the UI as
 # information only (no data captured) — the user is told to add them manually after export.
+# Update (yaml-drift sync, 2026-10-28): the component now captures the 962, PFIC (Form 8621), Schedule 2
+# recapture / line 17 write-in and Form 8960 override inputs - documented in the sections below.
 name: 16-tax-taxpayer
 title: "Other tax items"
 multiplicity: single
@@ -54,6 +56,244 @@ sections:
         placeholder: 0.00
         label: Amount to add to this year's tax
         help: This amount will be added directly to the tax on this year's Form 1040 line 16.
+
+  - name: section962
+    title: "Section 962 election (line 16 box 3 '962')"
+    multiplicity: single
+    fields:
+      - name: hasSection962Election
+        type: boolean
+        required: false
+        label: "Are you making a Section 962 election (to be taxed at corporate rates on income from a foreign company you control)?"
+      - name: section962SubpartFInclusion
+        type: amount
+        required: false
+        label: Subpart F income included (Form 5471)
+        showIf: hasSection962Election == true
+      - name: section962GiltiInclusion
+        type: amount
+        required: false
+        label: GILTI inclusion (Form 8992 line 5)
+        showIf: hasSection962Election == true
+      - name: section962ClaimSection250Deduction
+        type: boolean
+        required: false
+        label: "Claim the 250 deduction (tax only 50% of the GILTI)?"
+        showIf: hasSection962Election == true
+      - name: section962DeemedPaidForeignTaxes
+        type: amount
+        required: false
+        label: "Deemed-paid foreign tax credit (960, from Form 1118)"
+        showIf: hasSection962Election == true
+      - name: section962SubpartFForeignTaxes
+        type: amount
+        required: false
+        label: Foreign taxes on the subpart F income
+        showIf: hasSection962Election == true
+      - name: section962GiltiForeignTaxes
+        type: amount
+        required: false
+        label: Foreign taxes on the GILTI
+        showIf: hasSection962Election == true
+      - name: section962TaxAmount
+        type: amount
+        required: false
+        label: 962 tax (before credit)
+        showIf: hasSection962Election == true
+        help: Advanced - enter the 962 tax directly instead of computing it from the inputs above.
+      - name: section962Form1118ForeignTaxCredits
+        type: amount
+        required: false
+        label: Form 1118 foreign tax credits
+        showIf: hasSection962Election == true
+
+  - name: form8621Pfic
+    title: "PFIC excess distribution (Form 8621, line 16 box 3 '1291TAX')"
+    multiplicity: single
+    fields:
+      - name: hasForm8621PficTax
+        type: boolean
+        required: false
+        label: "Do you owe tax on an excess distribution from a passive foreign investment company (PFIC, Form 8621 1291)?"
+      - name: pficSharesAcquiredDate
+        type: date
+        required: false
+        label: Date you acquired the PFIC shares (YYYY-MM-DD)
+        showIf: hasForm8621PficTax == true
+      - name: pficDistributionDate
+        type: date
+        required: false
+        label: Date of the 2025 distribution (YYYY-MM-DD)
+        showIf: hasForm8621PficTax == true
+      - name: pficDistributionAmount
+        type: amount
+        required: false
+        label: 2025 distribution (Form 8621 line 15a)
+        showIf: hasForm8621PficTax == true
+      - name: pficPriorThreeYearsDistributions
+        type: amount
+        required: false
+        label: Distributions in the 3 prior years (line 15b)
+        showIf: hasForm8621PficTax == true
+      - name: pficDistributionOn1099Div
+        type: boolean
+        required: false
+        label: This distribution is also on a Form 1099-DIV I uploaded
+        showIf: hasForm8621PficTax == true
+      - name: section1291PriorYearExcessAllocation
+        type: amount
+        required: false
+        label: Excess distribution allocated to prior PFIC years
+        showIf: hasForm8621PficTax == true
+      - name: form8621Line16eAmount
+        type: amount
+        required: false
+        label: Form 8621 line 16e (increase in tax)
+        showIf: hasForm8621PficTax == true
+        help: Advanced - enter the line 16e tax directly instead.
+
+  - name: schedule2Line23Recaptures
+    title: Other recapture and interest amounts (rare - Schedule 2 additions)
+    multiplicity: single
+    help: Collapsed by default in the UI (disclosure toggle).
+    fields:
+      - name: schedule2Line9HouseholdEmploymentTax
+        type: amount
+        required: false
+        label: Total household employment taxes you owe (from Schedule H) - Schedule 2 line 9
+      - name: schedule2Line14InstallmentLotsTimesharesInterest
+        type: amount
+        required: false
+        label: Interest on installment income from sale of residential lots or timeshares - Schedule 2 line 14
+      - name: schedule2Line15InstallmentOver150kInterest
+        type: amount
+        required: false
+        label: "Interest on deferred tax on installment sales with sales price over $150,000 - Schedule 2 line 15"
+      - name: schedule2Line16Form8611LihcRecapture
+        type: amount
+        required: false
+        label: Recapture of low-income housing credit (from Form 8611) - Schedule 2 line 16
+      - name: schedule2Line17cHsaNonMedicalDistributionTax
+        type: amount
+        required: false
+        label: "20% additional tax on Health Savings Account distributions not used for qualified medical expenses (Form 8889 line 17b) - Schedule 2 line 17c"
+      - name: schedule2Line17dHsaNotEligibleIndividualTax
+        type: amount
+        required: false
+        label: Additional tax on a Health Savings Account because you did not remain an eligible individual (Form 8889 line 21) - Schedule 2 line 17d
+      - name: schedule2Line19Form4255NetEpeRecapture
+        type: amount
+        required: false
+        label: "Recapture of net Elective Payment Election amounts (from Form 4255, line 1d, column (l)) - Schedule 2 line 19"
+
+  - name: schedule2Line17WriteIns
+    title: Specialized one-off taxes (Schedule 2 line 17 write-ins)
+    multiplicity: single
+    help: Collapsed by default in the UI (disclosure toggle).
+    fields:
+      - name: schedule2Line17aRecaptureOtherCreditsDescription
+        type: text
+        required: false
+        label: Line 17a - type of recaptured other credit (description)
+      - name: schedule2Line17aRecaptureOtherCreditsAmount
+        type: amount
+        required: false
+        label: Line 17a - amount of recaptured other credit
+      - name: schedule2Line17bRecaptureFederalMortgageSubsidy
+        type: amount
+        required: false
+        label: Line 17b - recapture of federal mortgage subsidy
+      - name: schedule2Line17eArcherMsaAdditionalTax
+        type: amount
+        required: false
+        label: Line 17e - additional tax on Archer MSA distributions (Form 8853)
+      - name: schedule2Line17fMedicareAdvantageMsaAdditionalTax
+        type: amount
+        required: false
+        label: Line 17f - additional tax on Medicare Advantage MSA distributions (Form 8853)
+      - name: schedule2Line17gCharitableContributionRecapture
+        type: amount
+        required: false
+        label: Line 17g - recapture of charitable contribution for fractional interest in tangible property
+      - name: schedule2Line17hSection409aAdditionalTax
+        type: amount
+        required: false
+        label: Line 17h - section 409A additional tax on nonqualified deferred compensation
+      - name: schedule2Line17iSection457aCompensation
+        type: amount
+        required: false
+        label: Line 17i - section 457A nonqualified deferred compensation amount
+      - name: schedule2Line17jSection72m5ExcessBenefitsTax
+        type: amount
+        required: false
+        label: Line 17j - section 72(m)(5) excess benefits tax (5-percent owners of qualified plans)
+      - name: schedule2Line17lTrustAccumulationDistributionTax
+        type: amount
+        required: false
+        label: Line 17l - tax on accumulation distribution of trusts (Form 4970)
+      - name: schedule2Line17mInsiderStockCompensationExciseTax
+        type: amount
+        required: false
+        label: Line 17m - excise tax on insider stock compensation from an expatriated corporation
+      - name: schedule2Line17nLookbackInterestSection167gOr460b
+        type: amount
+        required: false
+        label: Line 17n - look-back interest under section 167(g) or 460(b) (Form 8697 or 8866)
+      - name: schedule2Line17pForm8621Line16fInterest
+        type: amount
+        required: false
+        label: "Line 17p - interest from Form 8621, line 16f (PFIC section 1291 fund)"
+      - name: schedule2Line17qForm8621Line24Interest
+        type: amount
+        required: false
+        label: "Line 17q - interest from Form 8621, line 24"
+
+  - name: form8960Overrides
+    title: Net Investment Income Tax overrides (Form 8960 deferred lines)
+    multiplicity: single
+    help: Collapsed by default in the UI (disclosure toggle).
+    fields:
+      - name: form8960Line3AnnuitiesOverride
+        type: amount
+        required: false
+        label: Form 8960 line 3 - annuity income from non-qualified plans
+      - name: form8960Line5bNotSubjectToNiit
+        type: amount
+        required: false
+        label: "Form 8960 line 5b - gain or loss from disposition of property NOT subject to NIIT (enter a gain as a NEGATIVE number, a loss as positive)"
+      - name: form8960Line5cPartnershipScorpAdjustment
+        type: amount
+        required: false
+        label: Form 8960 line 5c - adjustment from disposition of partnership / S-corp stock (NEGATIVE to remove the business-attributable gain)
+      - name: form8960Line5cMateriallyParticipated
+        type: boolean
+        required: false
+        label: "Did you materially participate in the partnership's or S corporation's business?"
+        showIf: "form8960Line5cPartnershipScorpAdjustment != null"
+      - name: form8960Line6CfcPficAdjustments
+        type: amount
+        required: false
+        label: Form 8960 line 6 - CFC and PFIC investment-income adjustments
+      - name: form8960Line7OtherModifications
+        type: amount
+        required: false
+        label: Form 8960 line 7 - other modifications to investment income
+      - name: form8960Line9aInvestmentInterestExpense
+        type: amount
+        required: false
+        label: Form 8960 line 9a - investment interest expense allocable to investment income
+      - name: form8960Line9bStateLocalForeignIncomeTax
+        type: amount
+        required: false
+        label: "Form 8960 line 9b - state, local, and foreign income tax allocable to investment income"
+      - name: form8960Line9cMiscInvestmentExpenses
+        type: amount
+        required: false
+        label: Form 8960 line 9c - miscellaneous investment expenses
+      - name: form8960Line10AdditionalModifications
+        type: amount
+        required: false
+        label: Form 8960 line 10 - additional modifications to investment-expense deductions
 
   # Backend-only computed values. NOT rendered in the UI form component.
   - name: computedOutputs

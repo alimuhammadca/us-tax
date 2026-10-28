@@ -48,6 +48,19 @@ sections:
           If you are Married Filing Separately, enter your spouse's SSN or ITIN.
           This is required even if you and your spouse have separate returns.
 
+      # was: mfsSpouseName
+      - name: spouseNameIfMFS
+        type: text
+        required: false
+        label: "If filing MFS, enter spouse's name"
+        showIf: "filingStatus === 'Married filing separately'"
+
+      - name: mfsLivedWithSpouseAnyTime
+        type: boolean
+        required: false
+        label: "Did you and your spouse live together at any time in 2025 (even one day)?"
+        showIf: "filingStatus === 'Married filing separately'"
+
       - name: mfsOrHohLivedApartOrLegallySeparated
         type: boolean
         required: true
@@ -67,6 +80,32 @@ sections:
           Enter the name of the qualifying person who makes you eligible for Head of
           Household status. This is usually your dependent child.
 
+      # was: hohQualifyingPersonName
+      - name: qualifyingChildNameIfHOHorQSS
+        type: text
+        required: false
+        label: "If HOH or QSS, enter qualifying child's name (if not a dependent)"
+        showIf: "filingStatus === 'Head of household' Or filingStatus === 'Qualifying surviving spouse'"
+
+      - name: headHohMarriedLivedApart
+        type: boolean
+        required: true
+        label: "Are you married but lived apart from your spouse (considered unmarried)?"
+        showIf: "filingStatus === 'Head of household'"
+
+      - name: headKeptUpOwnHome
+        type: boolean
+        required: true
+        label: "Did you pay more than half the cost of keeping up your home for 2025?"
+        showIf: "filingStatus === 'Head of household'"
+
+      - name: qssSpouseDateOfDeath
+        type: date
+        required: true
+        label: Date your spouse died
+        showIf: "filingStatus === 'Qualifying surviving spouse'"
+        help: QSS is available only if the spouse died in 2023 or 2024.
+
       - name: alienPersonName
         type: text
         required: false
@@ -76,6 +115,18 @@ sections:
         help: >
           Enter the name of the nonresident / dual-status 
           spouse who you treating as a U.S. resident
+
+      - name: treatingNonresidentSpouseAsUSResident
+        type: boolean
+        required: false
+        label: Treat nonresident/dual-status spouse as U.S. resident (attach statement if required)
+
+      # was: alienPersonName
+      - name: nonresidentSpouseName
+        type: text
+        required: false
+        label: "Spouse's name (if electing resident treatment)"
+        showIf: treatingNonresidentSpouseAsUSResident == true
 
           
 
@@ -115,3 +166,50 @@ sections:
         label: Share of the partnership, S corporation, estate and trust income (Schedules K-1) that is community income (%)
         showIf: "filingStatus === 'Married filing separately' && communityPropertyState === true"
         help: B119 - Form 8958 line 8. A partner's self-employment earnings stay with the partner. Blank = 0.
+
+  - name: registeredDomesticPartner
+    title: Registered domestic partner (community property)
+    multiplicity: single
+    showIf: "filingStatus === 'Single' Or filingStatus === 'Head of household'"
+    help: "Pub. 555: registered domestic partners in a community property state split community income on their separate returns."
+    fields:
+      - name: isRegisteredDomesticPartner
+        type: boolean
+        required: false
+        label: "Are you a registered domestic partner living in Nevada, Washington or California?"
+      - name: rdpPartnerName
+        type: text
+        required: false
+        label: "Your partner's full name"
+        showIf: isRegisteredDomesticPartner == true
+      - name: rdpPartnerSsn
+        type: text
+        required: false
+        label: "Your partner's SSN"
+        showIf: isRegisteredDomesticPartner == true
+      - name: rdpPartnerWages
+        type: amount
+        required: false
+        label: "Your partner's community wages"
+        showIf: isRegisteredDomesticPartner == true
+      - name: rdpPartnerInterest
+        type: amount
+        required: false
+        label: "Your partner's community interest"
+        showIf: isRegisteredDomesticPartner == true
+      - name: rdpPartnerDividends
+        type: amount
+        required: false
+        label: "Your partner's community dividends"
+        showIf: isRegisteredDomesticPartner == true
+      - name: rdpPartnerNetSe
+        type: amount
+        required: false
+        label: "Your partner's net self-employment income from community businesses"
+        showIf: isRegisteredDomesticPartner == true
+      - name: rdpPartnerWithholding
+        type: amount
+        required: false
+        label: "Federal income tax withheld on your partner's community income"
+        showIf: isRegisteredDomesticPartner == true
+

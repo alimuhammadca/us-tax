@@ -28,6 +28,11 @@ sections:
         required: false
         label: Spouse released qualified electric vehicle passive activity credit contribution
         placeholder: 0.00
+      - name: spouseConfirmReleasedQevCreditAvailable
+        type: boolean
+        required: false
+        showIf: spouseHasElectricVehicleCreditInputs == true
+        label: Does your spouse have this released credit amount available from their passive-activity records? (only used if you file separately)
 
   - name: importedSupport
     title: Imported support values (backend only - not rendered)

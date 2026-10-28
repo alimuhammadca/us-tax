@@ -83,6 +83,11 @@ sections:
         required: false
         placeholder: 0.0
         label: Spouse fuel cell kilowatt capacity
+      - name: spouseResidentialEnergySubsidy
+        type: number
+        required: false
+        label: "Spouse subsidy or rebate from a utility for this property"
+        help: "A utility subsidy or rebate reduces the qualified costs."
 
   - name: spousePartIiEligibility
     title: Part II - Additional spouse-home eligibility and allocation inputs
@@ -106,6 +111,24 @@ sections:
         required: false
         placeholder: Spouse main home address
         label: Spouse main home address
+        # was: spouseMainHomeAddress (single free-text address, still shown as "Previously saved" when the split fields are empty)
+      - name: spouseMainHomeStreet
+        type: text
+        required: false
+        label: Street address
+      - name: spouseMainHomeCity
+        type: text
+        required: false
+        label: City
+      - name: spouseMainHomeState
+        type: text
+        required: false
+        label: State
+        help: 2-letter state code.
+      - name: spouseMainHomeZip
+        type: text
+        required: false
+        label: ZIP code
       - name: spousePartIIRelatedToConstruction
         type: boolean
         required: false

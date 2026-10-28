@@ -44,6 +44,50 @@ sections:
         required: false
         label: I confirm spouse SSI is excluded from taxable Social Security benefit calculations
         help: Confirm spouse SSI exclusion before continuing.
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: ssRepaidPriorYearBenefits
+        type: amount
+        required: false
+        label: "2024 Social Security benefits (net, 2024 SSA-1099 box 5)"
+        showIf: "hadSocialSecurityBenefits === true && ssRepaymentOver3000"
+      - name: ssRepaidPriorYearTaxableBenefits
+        type: amount
+        required: false
+        label: "2024 taxable Social Security (2024 Form 1040 line 6b)"
+        showIf: "hadSocialSecurityBenefits === true && ssRepaymentOver3000"
+      - name: ssRepaidPriorYearTaxableIncome
+        type: amount
+        required: false
+        label: "2024 taxable income (2024 Form 1040 line 15)"
+        showIf: "hadSocialSecurityBenefits === true && ssRepaymentOver3000"
+      - name: ssRepaidPriorYearFilingStatus
+        type: select
+        required: false
+        label: "2024 filing status"
+        showIf: "hadSocialSecurityBenefits === true && ssRepaymentOver3000"
+        options:
+          - value: "Single"
+            label: "Single"
+          - value: "Married filing jointly"
+            label: "Married filing jointly"
+          - value: "Married filing separately"
+            label: "Married filing separately"
+          - value: "Head of household"
+            label: "Head of household"
+          - value: "Qualifying surviving spouse"
+            label: "Qualifying surviving spouse"
+      - name: ssdiTerroristAttackExcluded
+        type: amount
+        required: false
+        label: "Spouse SSDI received for injuries from a terrorist attack (part of SSA-1099 box 5 to exclude)"
+      - name: livedWithSpouseAnyTimeDuringTaxYear
+        type: boolean
+        required: false
+        label: "Did your spouse live with you at any time during the tax year?"
+      - name: livedApartFromSpouseEntireTaxYear
+        type: boolean
+        required: false
+        label: "Did your spouse live apart from you for the entire tax year?"
 
   - name: lumpSumGate
     title: Lump-sum back payment
@@ -105,6 +149,33 @@ sections:
         label: Spouse prior-year taxable benefits previously reported
         placeholder: 0.00
         help: Enter spouse prior-year taxable Social Security benefits previously reported for that year.
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: priorYearWorksheetLine5ExclusionsForRecompute
+        type: amount
+        required: false
+        label: "Prior-year Form 2555 / 8839 / 4563 / Puerto Rico exclusions (for recomputation)"
+        showIf: "hadSocialSecurityBenefits === true && hasLumpSumBackPaymentForPriorYears === true"
+      - name: priorYearFilingStatus
+        type: select
+        required: false
+        label: "Prior-year filing status"
+        showIf: "hadSocialSecurityBenefits === true && hasLumpSumBackPaymentForPriorYears === true"
+        options:
+          - value: "Single"
+            label: "Single"
+          - value: "MarriedFilingJointly"
+            label: "Married filing jointly"
+          - value: "MarriedFilingSeparately"
+            label: "Married filing separately"
+          - value: "HeadOfHousehold"
+            label: "Head of household"
+          - value: "QualifyingSurvivingSpouse"
+            label: "Qualifying surviving spouse"
+      - name: priorYearMfsLivedWithSpouseAnyTime
+        type: boolean
+        required: false
+        label: "Lived with spouse any time in prior year?"
+        showIf: "hadSocialSecurityBenefits === true && hasLumpSumBackPaymentForPriorYears === true && priorYearFilingStatus === 'MarriedFilingSeparately'"
 
   # Backend-only statement imports. Not rendered in form component.
   - name: importedStatementFields

@@ -160,6 +160,46 @@ sections:
         showIf: isListedProperty == true or isPassengerAutomobile == true or isHeavySuv == true
         label: Is another vehicle available for personal use? (line 36)
 
+  # V403 (owner-approved, D-4562-15): saved as the amortizations list.
+  - name: amortizations
+    title: "Amortization (Form 4562 Part VI; asked whatever the asset answer)"
+    multiplicity: multiple
+    fields:
+      - name: description
+        type: text
+        required: false
+        label: "Description of costs"
+      - name: dateAmortizationBegins
+        type: date
+        required: false
+        label: "Date amortization begins (YYYY-MM-DD)"
+      - name: amortizableAmount
+        type: number
+        required: false
+        label: "Amortizable amount"
+      - name: codeSection
+        type: select
+        required: false
+        label: "Code section"
+        options: ["195", "248", "197", "other"]
+      - name: periodMonths
+        type: number
+        required: false
+        label: "Amortization period (months)"
+      - name: usedIn
+        type: select
+        required: false
+        label: "Used for"
+        options: ["schedule_c", "schedule_f", "rental", "other"]
+      - name: usedInDescription
+        type: text
+        required: false
+        label: "Which business/farm/property (name)"
+      - name: priorYearsAmortization
+        type: number
+        required: false
+        label: "Amortization taken in earlier years (not the first-year start-up deduction)"
+
   - name: computedOutputs
     title: Computed outputs
     multiplicity: single

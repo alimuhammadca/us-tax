@@ -52,6 +52,18 @@ sections:
         label: I confirm all received 1099-DIV statements are uploaded
         help: You must confirm this before saving the dividend-income form.
 
+      - name: ordinaryDivAmountCorrect
+        type: boolean
+        required: false
+        label: "Ordinary dividends (box 1a) total from your 1099-DIV statements - does this amount look correct?"
+        showIf: 1099-DIV statements on file
+
+      - name: qualifiedDivAmountCorrect
+        type: boolean
+        required: false
+        label: "Qualified dividends (box 1b) total from your 1099-DIV statements - does this amount look correct?"
+        showIf: 1099-DIV statements on file
+
   - name: supplementalDividendAmounts
     title: Supplemental dividend amounts
     multiplicity: single
@@ -63,12 +75,35 @@ sections:
         label: Ordinary dividends not reported on statements (line 3b)
         placeholder: 0.00
         help: Enter ordinary dividends not shown on uploaded 1099-DIV statements.
+
+      - name: manualOrdinaryDividendPayers
+        type: text
+        required: false
+        label: Who paid them (names for Schedule B)
       - name: manualQualifiedDividendsNotOnStatements
         type: amount
         required: false
         label: Qualified dividends not reported on statements (line 3a)
         placeholder: 0.00
         help: Enter qualified dividends not shown on uploaded 1099-DIV statements.
+
+      - name: ordinaryDividendsNoInformationReturn
+        type: amount
+        required: false
+        label: Ordinary dividends with no Form 1099-DIV at all
+        showIf: confirmAllReceived1099DivUploaded == true
+
+      - name: qualifiedDividendsNoInformationReturn
+        type: amount
+        required: false
+        label: Of which qualified dividends
+        showIf: confirmAllReceived1099DivUploaded == true
+
+      - name: noInformationReturnDividendPayers
+        type: text
+        required: false
+        label: Who paid them (names for Schedule B)
+        showIf: confirmAllReceived1099DivUploaded == true
 
   - name: nomineeDividends
     title: Nominee dividends
@@ -156,6 +191,31 @@ sections:
         required: false
         label: I will file Forms 1096 and 1099-DIV with the IRS when required
         help: IRS generally requires nominee filers to submit Forms 1096 and 1099-DIV.
+
+  - name: k1PtepDividends
+    title: K-1 dividends from previously taxed earnings (PTEP)
+    multiplicity: single
+    showIf: "hadDividendIncome == true && K-1 dividends on file"
+    fields:
+      - name: k1PtepOrdinaryDividendsExcluded
+        type: amount
+        required: false
+        label: K-1 ordinary dividends attributable to PTEP (Schedule K-3 Part V)
+      - name: k1PtepQualifiedDividendsExcluded
+        type: amount
+        required: false
+        label: "Of that, qualified dividends"
+
+  - name: qualifiedDividendAdjustmentGate
+    title: "Adjust the broker's qualified-dividend amount (rarely needed)"
+    multiplicity: single
+    showIf: hadDividendIncome == true
+    fields:
+      - name: hasQualifiedDividendDisallowances
+        type: boolean
+        required: false
+        label: "Do you need to reduce the qualified-dividend amount your broker reported?"
+        help: "Yes reveals the qualifiedDividendDisallowedCategories inputs (holding period, payments in lieu, etc.)."
 
   # Backend-only statement imports. Not rendered in form component.
   - name: importedStatementFields

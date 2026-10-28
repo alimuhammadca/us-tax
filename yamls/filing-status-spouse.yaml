@@ -1,0 +1,28 @@
+# Spouse filing status (separate-returns household: MFS or HOH for the spouse leg).
+# Component: form-filing-status-spouse.component.ts.
+name: filing-status-spouse
+title: "Filing status (spouse)"
+multiplicity: single
+formName: "1040"
+category: "personal"
+sections:
+  - name: spouseFilingStatusSection
+    title: "Spouse filing status"
+    multiplicity: single
+    fields:
+      - name: spouseFilingStatus
+        type: select
+        required: true
+        label: "Spouse's filing status"
+        options: ["Married filing separately", "Head of household"]
+        help: "Only applies when the Family Head files separately (Married filing separately or Head of household)."
+      - name: spouseKeptUpOwnHome
+        type: boolean
+        required: false
+        label: "Did the spouse pay more than half the cost of keeping up their own home for 2025?"
+        showIf: "spouseFilingStatus == 'Head of household'"
+      - name: spouseQualifyingPersonName
+        type: text
+        required: false
+        label: "Qualifying person's name (if the spouse's qualifying person is not claimed as a dependent)"
+        showIf: "spouseFilingStatus == 'Head of household'"

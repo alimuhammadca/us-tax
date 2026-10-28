@@ -107,6 +107,20 @@ sections:
         required: true
         label: Have you previously used Form 4972 after 1986 for a distribution from this same participant?
         help: Answer Yes if you have previously elected special tax treatment under Form 4972 after 1986 for a distribution from this same participant. A Yes answer disqualifies the distribution.
+      - name: partI_q6_noPriorBeneficiaryElection
+        type: boolean
+        required: false
+        label: "If you are receiving this distribution as a beneficiary of a deceased plan participant, have you ever used Form 4972 for a previous distribution received for that same participant (any year after 1986)?"
+        help: "Form 4972 Part I question 6 - Yes disqualifies."
+      - name: isQdroAlternatePayee
+        type: boolean
+        required: false
+        label: "I received this distribution as an alternate payee under a qualified domestic relations order (QDRO)"
+      - name: qdroParticipantBornBefore1936
+        type: boolean
+        required: false
+        label: "The plan participant (whose account this distribution came from) was born before January 2, 1936"
+        showIf: "isQdroAlternatePayee == true"
 
   - name: partElections
     title: Part elections
@@ -127,6 +141,11 @@ sections:
         required: false
         label: Elect Part III — 10-year tax option
         help: Check to apply the 10-year tax option using 1986 single-filer rates to the ordinary income portion of the lump-sum distribution.
+      - name: electToIncludeNuaInTaxableAmount
+        type: boolean
+        required: false
+        label: "Elect to include the box-6 NUA in this year's taxable amount"
+        showIf: "usePartII == true || usePartIII == true"
 
   - name: partIIIAdjustments
     title: Part III adjustments
@@ -139,6 +158,16 @@ sections:
         placeholder: 0.00
         label: Line 9 — Death benefit exclusion (if applicable)
         help: Enter the death benefit exclusion amount, if any. This applies only if the participant died and the distribution includes an excludable death benefit.
+      - name: participantDiedBefore19960821
+        type: boolean
+        required: false
+        label: "Did the plan participant die before August 21, 1996?"
+        help: "The death benefit exclusion applies only if the participant died before August 21, 1996."
+      - name: federalEstateTaxOnLumpSum
+        type: number
+        required: false
+        label: "Federal estate tax paid on the lump-sum distribution (from the estate administrator)"
+        help: "Form 4972 line 18 (reduces the Part III taxable amount)."
 
   # Backend-only computed values. NOT rendered in the UI form component.
   - name: computedOutputs

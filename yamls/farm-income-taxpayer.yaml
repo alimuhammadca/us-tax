@@ -289,6 +289,46 @@ sections:
         type: amount
         required: false
         label: Inventory of livestock/produce at end of year (line 48)
+      - name: qualifiedJointVenture
+        type: boolean
+        required: false
+        label: "Do you and your spouse own and run this farm together, both materially participating, and elect to be a qualified joint venture?"
+      - name: qjvTaxpayerSharePercent
+        type: number
+        required: false
+        label: "Your share of the farm (%) - blank means 50%"
+        showIf: "qualifiedJointVenture == true"
+      - name: cropInsurancePriorYearDeferred
+        type: number
+        required: false
+        label: "Crop insurance received in 2024 and deferred to 2025 (Schedule F line 6d)"
+      - name: crpPayments
+        type: number
+        required: false
+        label: "Conservation Reserve Program (CRP) payments included above"
+        help: "CRP payments are excluded from self-employment income when the recipient receives Social Security retirement or disability benefits."
+      - name: prepaidFarmSupplies
+        type: number
+        required: false
+        label: "Prepaid farm supplies included in the expenses below (optional)"
+        showIf: "accountingMethod != 'accrual'"
+      - name: priorYearConservationCarryover
+        type: number
+        required: false
+        label: "Conservation expenses carried from 2024 (Schedule F line 12) - over the 2024 25% limit"
+      - name: allInvestmentAtRisk
+        type: boolean
+        required: false
+        label: "All investment is at risk (line 36a)"
+      - name: someInvestmentNotAtRisk
+        type: boolean
+        required: false
+        label: "Some investment is not at risk (line 36b, Form 6198)"
+      - name: amountAtRisk
+        type: number
+        required: false
+        label: "Amount at risk (Form 6198) — caps a deductible loss"
+        showIf: "someInvestmentNotAtRisk == true"
 
   - name: otherExpenses
     title: Other expenses (line 32)

@@ -176,6 +176,23 @@ sections:
         required: true
         label: Prior tax year for this lump-sum allocation
         help: Enter the tax year to which this back-payment portion relates.
+
+      - name: priorYearFilingStatus
+        type: select
+        required: false
+        label: Prior-year filing status
+        options: [Single, MarriedFilingJointly, MarriedFilingSeparately, HeadOfHousehold, QualifyingSurvivingSpouse]
+
+      - name: priorYearMfsLivedWithSpouseAnyTime
+        type: boolean
+        required: false
+        label: "Lived with spouse any time in prior year?"
+        showIf: "priorYearFilingStatus == 'MarriedFilingSeparately'"
+
+      - name: priorYearWorksheetLine5ExclusionsForRecompute
+        type: amount
+        required: false
+        label: Prior-year Form 2555 / 8839 / 4563 / Puerto Rico exclusions (for recomputation)
       - name: lumpSumAllocatedToPriorYear
         type: amount
         required: true
@@ -212,6 +229,41 @@ sections:
         label: Prior-year taxable benefits previously reported
         placeholder: 0.00
         help: Enter taxable Social Security benefits previously reported for that prior year.
+
+  - name: ssRepaidPriorYear
+    title: Benefits repaid for an earlier year
+    multiplicity: single
+    showIf: "hadSocialSecurityBenefits == true && net benefits repaid exceed $3,000 (SSA-1099 box 5 < -3000)"
+    help: "Repayment of more than $3,000 of benefits included in income in an earlier year (Pub. 915 - itemized deduction or I.R.C. 1341 credit)."
+    fields:
+      - name: ssRepaidPriorYearBenefits
+        type: amount
+        required: false
+        label: "2024 Social Security benefits (net, 2024 SSA-1099 box 5)"
+      - name: ssRepaidPriorYearTaxableBenefits
+        type: amount
+        required: false
+        label: 2024 taxable Social Security (2024 Form 1040 line 6b)
+      - name: ssRepaidPriorYearTaxableIncome
+        type: amount
+        required: false
+        label: 2024 taxable income (2024 Form 1040 line 15)
+      - name: ssRepaidPriorYearFilingStatus
+        type: select
+        required: false
+        label: 2024 filing status
+        options: [Single, Married filing jointly, Married filing separately, Head of household, Qualifying surviving spouse]
+
+  - name: ssdiTerroristAttack
+    title: Disability payments for terrorist-attack injuries (rare)
+    multiplicity: single
+    showIf: hadSocialSecurityBenefits == true
+    help: Leave this blank unless part of your SSA-1099 box 5 is Social Security Disability Insurance for injuries from a terrorist attack.
+    fields:
+      - name: ssdiTerroristAttackExcluded
+        type: amount
+        required: false
+        label: SSDI received for injuries from a terrorist attack (part of SSA-1099 box 5 to exclude)
 
   # Backend-only statement imports. Not rendered in form component.
   - name: importedStatementFields

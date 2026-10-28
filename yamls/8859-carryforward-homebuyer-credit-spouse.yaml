@@ -28,6 +28,15 @@ sections:
         required: false
         label: Spouse prior-year Form 8859 line 4 carryforward contribution
         placeholder: 0.00
+      - name: spouseUseSchedule8812CreditLimitWorksheetBOverride
+        type: boolean
+        required: false
+        label: If you file separately and Schedule 8812 directs you to Credit Limit Worksheet B, override the tax-limit (line 2)?
+      - name: spouseSchedule8812CreditLimitWorksheetBLine14Override
+        type: amount
+        required: false
+        showIf: spouseHasCarryforwardHomebuyerCreditInputs == true and spouseUseSchedule8812CreditLimitWorksheetBOverride == true
+        label: Spouse's Schedule 8812 Credit Limit Worksheet B, line 14 amount
 
   - name: importedSupport
     title: Imported support values (backend only - not rendered)

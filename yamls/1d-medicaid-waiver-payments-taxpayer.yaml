@@ -196,3 +196,29 @@ sections:
         required: false
         label: Notes (optional)
         placeholder: Any details helpful for classification or reconciliation
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: careRecipientName
+        type: text
+        required: false
+        label: "Person cared for"
+        showIf: "receivedMedicaidWaiverPayments === true && hasTradeOrBusinessProvidingHomeCare !== true"
+      - name: careRecipientLivesInProviderHome
+        type: boolean
+        required: false
+        label: "Did this person live in your home with you?"
+        showIf: "receivedMedicaidWaiverPayments === true && hasTradeOrBusinessProvidingHomeCare !== true"
+
+  # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+  - name: federalPerPersonCap
+    title: "Federal per-person cap"
+    multiplicity: single
+    showIf: "receivedMedicaidWaiverPayments === true && hasTradeOrBusinessProvidingHomeCare !== true && multipleCareRecipientsAnswer === true"
+    fields:
+      - name: qualifiedIndividualsUnder19Count
+        type: number
+        required: false
+        label: "Number of qualified individuals under age 19 you cared for"
+      - name: qualifiedIndividualsAge19OrOlderCount
+        type: number
+        required: false
+        label: "Number of qualified individuals age 19 or older you cared for"

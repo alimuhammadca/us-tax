@@ -1,0 +1,112 @@
+# Form 8938 - Statement of Specified Foreign Financial Assets (FATCA) intake. Return-level form (no person suffix).
+# Component: form-form-8938.component.ts (formId form-8938). Created 2026-10-28 (YAML drift sync).
+# The component edits two row lists (accounts, assets) and saves them together as one `items` array; an asset row is
+# told apart by itemKind = other_asset. The app aggregates the Part I / Part II summaries and decides whether Form 8938
+# is required (the threshold depends on filing status and on livingAbroad).
+name: form-8938
+title: Form 8938 - Specified foreign financial assets
+multiplicity: single
+formName: Form 8938
+category: personal
+instructions:
+  - List each foreign account and other specified foreign financial asset; the app applies the FATCA reporting threshold.
+
+sections:
+  - name: screening
+    title: Form 8938 - Specified Foreign Financial Assets
+    multiplicity: single
+    fields:
+      - name: hasForeignFinancialAssets
+        type: boolean
+        required: false
+        label: Do you have any specified foreign financial assets?
+      - name: livingAbroad
+        type: boolean
+        required: false
+        label: I live abroad (raises the reporting threshold)
+        showIf: hasForeignFinancialAssets == true
+
+  - name: accounts
+    title: Foreign accounts (Part I / Part V) - saved in items[]
+    multiplicity: multiple
+    showIf: hasForeignFinancialAssets == true
+    fields:
+      - name: itemKind
+        type: select
+        required: false
+        label: Account type
+        options:
+          - value: deposit_account
+            label: Deposit account
+          - value: custodial_account
+            label: Custodial account
+      - name: institutionName
+        type: text
+        required: false
+        label: Financial institution
+      - name: accountNumber
+        type: text
+        required: false
+        label: Account number
+      - name: maxValue
+        type: amount
+        required: false
+        label: Maximum value (USD)
+      - name: yearEndValue
+        type: amount
+        required: false
+        label: Value on the last day of the year (USD)
+      - name: currency
+        type: text
+        required: false
+        label: Currency
+      - name: openedDuringYear
+        type: boolean
+        required: false
+        label: Opened this year
+      - name: closedDuringYear
+        type: boolean
+        required: false
+        label: Closed this year
+      - name: jointlyOwnedWithSpouse
+        type: boolean
+        required: false
+        label: Jointly owned
+
+  - name: assets
+    title: Other foreign assets (Part II / Part VI) - saved in items[] with itemKind other_asset
+    multiplicity: multiple
+    showIf: hasForeignFinancialAssets == true
+    fields:
+      - name: description
+        type: text
+        required: false
+        label: Description of asset
+      - name: identifyingNumber
+        type: text
+        required: false
+        label: Identifying number/designation
+      - name: maxValue
+        type: amount
+        required: false
+        label: Maximum value (USD)
+      - name: yearEndValue
+        type: amount
+        required: false
+        label: Value on the last day of the year (USD)
+      - name: currency
+        type: text
+        required: false
+        label: Currency
+      - name: acquiredDuringYear
+        type: boolean
+        required: false
+        label: Acquired this year
+      - name: disposedDuringYear
+        type: boolean
+        required: false
+        label: Disposed this year
+      - name: jointlyOwnedWithSpouse
+        type: boolean
+        required: false
+        label: Jointly owned

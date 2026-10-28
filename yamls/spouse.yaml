@@ -1,0 +1,31 @@
+# Spouse information (basic identity) - the 'spouse' personal form.
+# Separate from identification-spouse, which carries the spouse-prefixed identity keys.
+name: spouse
+title: Spouse information
+multiplicity: single
+formName: "1040"
+category: personal
+instructions:
+  - "Enter your spouse's name exactly as it appears on their Social Security card."
+
+sections:
+  - name: spouseInformation
+    title: Spouse information
+    multiplicity: single
+    fields:
+      - name: firstName
+        type: text
+        required: true
+        label: "Spouse's first name and middle initial"
+      - name: lastName
+        type: text
+        required: true
+        label: "Spouse's last name"
+      - name: ssn
+        type: text
+        required: true
+        label: "Spouse's Social Security number"
+      - name: dateOfBirth
+        type: date
+        required: true
+        label: "Spouse's date of birth"

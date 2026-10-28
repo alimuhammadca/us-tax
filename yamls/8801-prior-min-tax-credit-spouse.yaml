@@ -49,7 +49,7 @@ sections:
     instructions:
       - Enter the spouse's own 2024 AMT figures from her prior-year return; these drive her separate Form 8801.
     fields:
-      - { name: confirmPriorYearReturnsAvailable, type: boolean, required: false, label: Spouse's 2024 AMT worksheets available? }
+      - { name: confirmPriorYearReturnsAvailable, type: boolean, required: false, label: "Spouse's 2024 AMT worksheets available?" }
       - { name: priorYearFilingStatus, type: select, required: true, label: Spouse's 2024 filing status }
       - { name: priorYearForm6251Line1Plus2e, type: amount, required: false, label: Spouse's 2024 AMTI }
       - { name: priorYearExclusionItemAdjustments, type: amount, required: false, label: Exclusion-item adjustments }
@@ -59,13 +59,94 @@ sections:
       - { name: priorYearForm6251Line11, type: amount, required: true, label: Spouse's 2024 tentative minimum tax }
       - { name: priorYearForm8801Line26Carryforward, type: amount, required: false, label: Unused minimum tax credit carried into 2025 }
       - { name: priorYearUnallowedQualifiedElectricVehicleCredit, type: amount, required: false, label: Legacy qualified electric vehicle credit }
-      - { name: priorYearFiledForm2555, type: boolean, required: false, label: Spouse's 2024 return used the foreign earned income exclusion? }
-      - { name: priorYearUsesPartIII, type: boolean, required: false, label: Spouse's 2024 AMT used a special capital gain/qualified dividend calculation? }
+      - { name: priorYearFiledForm2555, type: boolean, required: false, label: "Spouse's 2024 return used the foreign earned income exclusion?" }
+      - { name: priorYearUsesPartIII, type: boolean, required: false, label: "Spouse's 2024 AMT used a special capital gain/qualified dividend calculation?" }
       - { name: partIIILine28Amount, type: amount, required: false, label: Net income from prior-year capital gain/loss calculation }
       - { name: partIIILine29Amount, type: amount, required: false, label: Qualified dividends from prior year }
       - { name: partIIILine30CapAmount, type: amount, required: false, label: Adjusted net capital gain cap }
       - { name: partIIILine35Amount, type: amount, required: false, label: Special rate income amount }
       - { name: partIIILine42Amount, type: amount, required: false, label: Tentative minimum tax from special-rate income }
+
+  # Same keys as the taxpayer core; saved under prior-min-tax-credit-spouse when the spouse files separately (MFS migration Form #32).
+  - name: spousePriorYearCore
+    title: "Spouse's own Form 8801 (MFS only) - prior-year AMT inputs"
+    multiplicity: single
+    showIf: "spouse tab && filing status == Married filing separately && spouseHasPriorMinTaxCreditInputs == true"
+    fields:
+      - name: confirmPriorYearReturnsAvailable
+        type: boolean
+        required: false
+        label: "Do you have your 2024 AMT calculation worksheets available to look up the values below?"
+      - name: priorYearFilingStatus
+        type: select
+        required: false
+        label: "2024 filing status"
+        options: ["Single", "Married filing jointly", "Married filing separately", "Head of household", "Qualifying surviving spouse"]
+      - name: priorYearForm6251Line1Plus2e
+        type: number
+        required: false
+        label: "Your 2024 alternative minimum taxable income (AMTI)"
+      - name: priorYearExclusionItemAdjustments
+        type: number
+        required: false
+        label: "Exclusion-item adjustments"
+      - name: priorYearMtcnold
+        type: number
+        required: false
+        label: "Net adjusted minimum taxable income carryover (signed)"
+      - name: priorYearForm6251Line10
+        type: number
+        required: false
+        label: "Your 2024 alternative minimum taxable income"
+      - name: priorYearForm6251Line11
+        type: number
+        required: false
+        label: "Your 2024 tentative minimum tax"
+      - name: priorYearMtftceOnExclusionItems
+        type: number
+        required: false
+        label: "Minimum tax foreign tax credit on exclusion items"
+      - name: priorYearForm8801Line26Carryforward
+        type: number
+        required: false
+        label: "Unused minimum tax credit carried into 2025"
+      - name: priorYearUnallowedQualifiedElectricVehicleCredit
+        type: number
+        required: false
+        label: "Legacy qualified electric vehicle credit (if applicable)"
+      - name: priorYearFiledForm2555
+        type: boolean
+        required: false
+        label: "Did your 2024 return use the foreign earned income exclusion?"
+      - name: priorYearUsesPartIII
+        type: boolean
+        required: false
+        label: "Did your 2024 AMT require a special capital gain or qualified dividend calculation?"
+      - name: partIIILine28Amount
+        type: number
+        required: false
+        label: "Net income from prior-year capital gain/loss calculation"
+        showIf: "priorYearUsesPartIII == true"
+      - name: partIIILine29Amount
+        type: number
+        required: false
+        label: "Qualified dividends from prior year"
+        showIf: "priorYearUsesPartIII == true"
+      - name: partIIILine30CapAmount
+        type: number
+        required: false
+        label: "Adjusted net capital gain cap"
+        showIf: "priorYearUsesPartIII == true"
+      - name: partIIILine35Amount
+        type: number
+        required: false
+        label: "Special rate income amount"
+        showIf: "priorYearUsesPartIII == true"
+      - name: partIIILine42Amount
+        type: number
+        required: false
+        label: "Tentative minimum tax portion from special-rate income"
+        showIf: "priorYearUsesPartIII == true"
 
   - name: importedCurrentYearFields
     title: Imported current-year fields (backend only - not rendered)

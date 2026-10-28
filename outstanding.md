@@ -1022,7 +1022,10 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 | D-5498-esa-1 | ~~low~~ **FIXED 2026-10-27** (wave 2, V408) | tax missing | Form 5329 Part V (Coverdell excess 6%) not computed; no warning box 1 > $2,000 — f5329 p.2, i5329 p.7-8 / Form5329.java:8-16, TRCS:42994-43016 | `new_mappings/5498-esa.md` - **wave 2:** Form 5329 Part V lines 26 / 31 and the year-end value |
 | D-5498-qa-1 | ~~low~~ **FIXED 2026-10-27** (wave 2, V408) | tax missing | Form 5329 Part VIII (ABLE excess 6%) not computed; no warning box 1 > $19,000 — f5329 p.2, i5329 p.9 | `new_mappings/5498-qa.md` - **wave 2:** Form 5329 Part VIII line 50 and the year-end value |
 
-## YAML drift (found 2026-10-24)
+## ~~YAML drift (found 2026-10-24)~~ **RESOLVED 2026-10-28**
+
+**Resolved 2026-10-28:** all personal-form YAMLs synced to the Angular components (90 files, 24 new incl. rental-income taxpayer/spouse and the Form 5329 Parts III-IV contribution section in 10-income-adjustments-*; 4 already-invalid YAMLs repaired; header ids fixed). Drift check: `python us-tax-be/scripts/yaml-drift.py [--form <id>] [--json f] [--fail]` - reports component keys missing from the YAML, form ids with no YAML, and YAMLs that do not parse; currently 0 / 0 / 0. Run it after adding personal-form fields.
+
 
 - `yamls/10-income-adjustments-*.yaml` lack the Form 5329 contribution section (A39, V165/V284/V385 fields) and there is no rental income intake YAML; the Angular components are the field source of truth. Documentation only.
 

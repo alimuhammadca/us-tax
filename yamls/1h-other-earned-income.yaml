@@ -6,6 +6,9 @@ category: wageAdjustments
 instructions:
   - Use this form to report other earned income that belongs on Form 1040 line 1h.
   - Line 1h is the sum of disability pension wages, excess elective deferrals, current-year corrective distributions, and strike/lockout benefits.
+# driftIgnore (YAML drift sync 2026-10-28): electiveDeferrals is the nested container object (electiveDeferrals.taxpayer / .spouse);
+# its members are documented in the electiveDeferrals* / special457b* / rule15year403b* / psoExclusion* sections.
+driftIgnore: [electiveDeferrals]
 sections:
   - name: imports
     title: Imported data (read-only)
@@ -311,6 +314,12 @@ sections:
         required: false
         readOnly: true
         label: Corrective distribution included in line 1h (computed)
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: receivedAfterApril15_2025
+        type: boolean
+        required: false
+        label: "Did you receive this distribution after April 15, 2025? (a prior-year excess received after April 15, 2025 is also 2025 wages - Pub. 525)"
+        showIf: "correctiveYear == 'prior'"
 
   - name: line1hSummary
     title: Step 5 - Line 1h summary
@@ -326,3 +335,21 @@ sections:
         required: false
         readOnly: true
         label: Line 1h statement descriptions
+
+  # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+  - name: foreignEmployerCompensation
+    title: "Pay from a foreign employer with no Form W-2 (line 1h, up to 10 rows)"
+    multiplicity: multiple
+    fields:
+      - name: employerName
+        type: text
+        required: false
+        label: "Employer name"
+      - name: countryCode
+        type: text
+        required: false
+        label: "Country where you worked (2-letter code)"
+      - name: amount
+        type: amount
+        required: false
+        label: "Amount (U.S. dollars)"

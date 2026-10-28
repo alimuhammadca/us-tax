@@ -21,3 +21,17 @@ sections:
         help: >
           Checking Yes directs $3 of your taxes to the Presidential Election Campaign
           Fund. It does not increase your tax or reduce your refund.
+
+      # was: presidentialElectionFundTaxpayer
+      - name: youFundElection
+        type: boolean
+        required: false
+        label: "Do you want $3 to go to the Presidential Election Campaign Fund?"
+        showIf: taxpayer tab
+
+      - name: spouseFundElection
+        type: boolean
+        required: false
+        label: "Does your spouse want $3 to go to the Presidential Election Campaign Fund?"
+        showIf: spouse tab (joint return)
+        help: Saved on this same form id from the spouse tab.

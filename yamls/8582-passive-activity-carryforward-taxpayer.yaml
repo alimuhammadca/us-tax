@@ -1,0 +1,49 @@
+# Suspended passive losses from K-1s (Form 8582 / Form 6198 carryforwards) - taxpayer/family head.
+# Component: form-passive-activity-carryforward.component.ts.
+name: passive-activity-carryforward-taxpayer
+title: "Suspended passive losses from K-1s (taxpayer/family head)"
+multiplicity: single
+formName: "Form 8582"
+category: "income"
+sections:
+  - name: screening
+    title: "Screening"
+    multiplicity: single
+    fields:
+      - name: hasPassiveActivityCarryforward
+        type: boolean
+        required: true
+        label: "Do you have a suspended passive loss from a K-1 to carry forward?"
+
+  - name: carryforwards
+    title: "Prior-year carryforwards and at-risk"
+    multiplicity: single
+    fields:
+      - name: priorYearSuspendedPassiveLoss
+        type: number
+        required: false
+        label: "Total prior-year suspended passive loss from K-1s"
+        showIf: "hasPassiveActivityCarryforward == true"
+      - name: someK1InvestmentNotAtRisk
+        type: boolean
+        required: false
+        label: "Is any of your investment in these passive K-1 activities NOT at risk?"
+        showIf: "hasPassiveActivityCarryforward == true"
+      - name: k1AmountAtRisk
+        type: number
+        required: false
+        label: "Total amount at risk in these K-1 activities"
+        showIf: "someK1InvestmentNotAtRisk == true"
+      - name: k1RentalActiveParticipation
+        type: boolean
+        required: false
+        label: "Did you actively participate in the rental real estate reported in box 2 of your K-1s?"
+        showIf: "hasPassiveActivityCarryforward == true"
+      - name: ptpPriorYearUnallowedLoss
+        type: number
+        required: false
+        label: "Prior-year unallowed loss from a publicly traded partnership (optional)"
+      - name: priorYearK1AtRiskCarryforward
+        type: number
+        required: false
+        label: "Prior-year partnership loss not allowed under the at-risk rules (nonpassive K-1s, optional)"

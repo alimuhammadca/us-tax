@@ -1,0 +1,89 @@
+# Form 1040 header - spouse home address.
+# Component: form-address-spouse.component.ts (formId address-spouse). Created 2026-10-28 (YAML drift sync).
+# By default the spouse uses the Family Head's address (sameAsTaxpayerAddress, default ON). On MFJ the joint return uses
+# the Family Head's address, so the toggle stays on; it is unchecked mainly when filing separately and living apart.
+name: address-spouse
+title: Form 1040 - Address (spouse)
+multiplicity: single
+formName: 1040
+category: personal
+instructions:
+  - The spouse's home address. By default the Family Head's address is used; uncheck the box to enter a different address
+    (e.g. when filing separately and living apart).
+
+sections:
+  - name: sameAddress
+    title: Address
+    multiplicity: single
+    fields:
+      - name: sameAsTaxpayerAddress
+        type: boolean
+        required: false
+        label: Same as the Family Head's address
+        help: Default on. When on, the Family Head's address is shown read-only and the fields below are hidden.
+
+  - name: address
+    title: Spouse home address
+    multiplicity: single
+    showIf: sameAsTaxpayerAddress != true
+    fields:
+      - name: isForeignAddress
+        type: boolean
+        required: true
+        label: Is this a foreign address?
+      - name: isMainHomeInUSA
+        type: boolean
+        required: true
+        label: Did the spouse live in the United States more than half of the tax year?
+      - name: streetAddress
+        type: text
+        required: true
+        label: Street address or P.O. box
+        placeholder: e.g. 123 Main St
+        showIf: "isForeignAddress != null"
+      - name: apartmentNumber
+        type: text
+        required: false
+        label: Apartment number
+        placeholder: e.g. 4B
+        showIf: "isForeignAddress != null"
+      - name: city
+        type: text
+        required: true
+        label: City
+        placeholder: e.g. Springfield
+        showIf: "isForeignAddress != null"
+      - name: state
+        type: select
+        required: true
+        label: State
+        showIf: "isForeignAddress == false"
+        options: "stateOptions (US states, DC and territories - the same list as address-taxpayer)"
+      - name: zipCode
+        type: text
+        required: true
+        label: ZIP code
+        showIf: "isForeignAddress == false"
+      - name: foreignCountry
+        type: text
+        required: true
+        label: Foreign country
+        showIf: "isForeignAddress == true"
+      - name: foreignProvinceStateCounty
+        type: text
+        required: true
+        label: Foreign province/state/county
+        showIf: "isForeignAddress == true"
+      - name: foreignPostalCode
+        type: text
+        required: true
+        label: Foreign postal code
+        showIf: "isForeignAddress == true"
+      - name: emailAddress
+        type: text
+        required: false
+        label: Email address
+      - name: phoneNumber
+        type: text
+        required: false
+        label: Phone number

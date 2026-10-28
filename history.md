@@ -1,3 +1,8 @@
+## 2026-10-28T12:00 - YAML drift sync + drift check
+
+- New `us-tax-be/scripts/yaml-drift.py`: per personal form id (PersonalResource.PERSONAL_FORMS), component keys (ngModel / {key:} / getField) of the component that SAVES the form, vs the YAML's field names (`name:` / `id:`); shared taxpayer/spouse components' spouseModel.* and {key:'spouse...'} keys go to the "-spouse" id; `driftIgnore: [...]` for UI plumbing; also reports YAMLs that do not parse. --form / --json / --fail.
+- First run: 1,202 missing keys over 86 form ids, 27 ids without a YAML (after filtering read-only forms and aggregator screens). Synced by 3 agents: 90 YAML files (24 new: rental-income taxpayer/spouse, 8853, 8889, 8990, 8379, 8828, 8611, 8283, 8938, 5405, Schedule H, possession exclusion, employment income, address-spouse, you, spouse, ...), +4,667 lines, additions only except 4 already-invalid YAMLs repaired (quoting / indentation) and 2 header ids fixed (qbi-deduction-taxpayer, adoption-expenses). Stale field names kept with `# was:` comments. Final: 0 drift, 0 missing YAMLs, 0 invalid.
+
 ## 2026-10-28T08:00 - D-8812-2555-1: Schedule 8812 line 2b
 
 - Line 2b now = Form 2555 lines 45 + 50 (taxpayer + spouse), per i1040s8 (2025); was lines 36 + 42, which counted line 44 twice and left out the line 50 housing deduction. Helper LowMediumGb.schedule8812Line2b.

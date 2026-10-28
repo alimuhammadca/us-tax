@@ -1,0 +1,85 @@
+# Form 8283 - Noncash Charitable Contributions (return-level).
+# Component: form-form-8283.component.ts (formId = form-8283).
+name: form-8283
+title: "Form 8283 - Noncash Charitable Contributions"
+multiplicity: single
+formName: "Form 8283"
+category: "deductions"
+sections:
+  - name: screening
+    title: "Screening"
+    multiplicity: single
+    fields:
+      - name: hasNoncashDonations
+        type: boolean
+        required: true
+        label: "Did you make any noncash charitable contributions?"
+
+  - name: donations
+    title: "Donated property (one row per item or group of similar items)"
+    multiplicity: multiple
+    showIf: "hasNoncashDonations == true"
+    fields:
+      - name: doneeName
+        type: text
+        required: false
+        label: "(a) Donee organization name"
+      - name: doneeAddress
+        type: text
+        required: false
+        label: "(a) Donee address"
+      - name: description
+        type: text
+        required: false
+        label: "(c) Description and condition of donated property"
+      - name: isVehicle
+        type: boolean
+        required: false
+        label: "(b) Donated vehicle"
+      - name: vehicleVin
+        type: text
+        required: false
+        label: "(b) Vehicle identification number"
+        showIf: "isVehicle == true"
+      - name: dateContributed
+        type: date
+        required: false
+        label: "(d) Date of contribution"
+      - name: dateAcquired
+        type: text
+        required: false
+        label: "(e) Date acquired by donor"
+      - name: howAcquired
+        type: text
+        required: false
+        label: "(f) How acquired by donor"
+      - name: costBasis
+        type: number
+        required: false
+        label: "(g) Donor's cost or adjusted basis"
+      - name: fairMarketValue
+        type: number
+        required: false
+        label: "(h) Fair market value"
+      - name: fmvMethod
+        type: text
+        required: false
+        label: "(i) Method used to determine fair market value"
+      - name: isPubliclyTradedSecurity
+        type: boolean
+        required: false
+        label: "Publicly traded security"
+      - name: bargainSaleAmountReceived
+        type: number
+        required: false
+        label: "Amount the charity paid you, if you sold it to them for less than its value (bargain sale)"
+      - name: propertyCategory
+        type: select
+        required: false
+        label: "Type of property"
+        options: ["ART", "COLLECTIBLES", "JEWELRY", "BOOKS", "CLOTHING", "HOUSEHOLD_FURNITURE", "ELECTRONICS", "NONPUBLIC_STOCK", "LAND", "BUILDINGS", "VEHICLE", "OTHER"]
+      - name: hasQualifiedAppraisal
+        type: boolean
+        required: false
+        label: "I have a qualified appraisal for this gift"
+        showIf: "qualified appraisal required (Section B property)"

@@ -32,10 +32,32 @@ sections:
         type: boolean
         required: false
         label: Someone can claim you as a dependent
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: someoneIsClaimingYou
+        type: boolean
+        required: false
+        label: "Is someone actually claiming you as a dependent on their 2025 return?"
+        showIf: "!isSpouse && someoneCanClaimYou === true"
       - name: youWereDualStatusAlien
         type: boolean
         required: false
         label: You were a dual-status alien
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: someoneCanClaimSpouse
+        type: boolean
+        required: false
+        label: "Can someone else claim your spouse as a dependent?"
+        showIf: "isSpouse"
+      - name: someoneIsClaimingSpouse
+        type: boolean
+        required: false
+        label: "Is someone actually claiming your spouse as a dependent on their 2025 return?"
+        showIf: "isSpouse && someoneCanClaimSpouse === true"
+      - name: spouseItemizesSeparateReturn
+        type: boolean
+        required: false
+        label: "Is your spouse itemizing deductions on a separate return?"
+        showIf: "isSpouse"
       - name: youBornBeforeThreshold
         type: boolean
         required: false
@@ -44,6 +66,22 @@ sections:
         type: boolean
         required: false
         label: You are blind
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: spouseBornBeforeThreshold
+        type: boolean
+        required: false
+        label: "Was your spouse born before January 2, 1961?"
+        showIf: "isSpouse"
+      - name: spouseIsBlind
+        type: boolean
+        required: false
+        label: "Is your spouse blind?"
+        showIf: "isSpouse"
+      - name: spouseMeetsAgeBlindnessMfsRequirements
+        type: boolean
+        required: false
+        label: "Does your spouse qualify for the age/blindness deduction increase?"
+        showIf: "isSpouse && (isMfs && (spouseBornBeforeThreshold || spouseIsBlind))"
       - name: dependentStandardDeductionEarnedIncome
         type: number
         required: false
@@ -57,6 +95,12 @@ sections:
         type: number
         required: false
         label: Medical and dental expenses paid
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: medicalMilesDriven
+        type: number
+        required: false
+        label: "Miles driven for medical care in 2025"
+        showIf: "!isSpouse && showScheduleA && hasMedicalExpenses === true"
       # IRC 213(d)(10) (V382, owner-approved 2026-10-23): long-term care premiums per insured person, capped by age at the end
       # of the year (480 / 900 / 1,800 / 4,810 / 6,020); ages from the dates of birth on file.
       - name: ltcPremiumsTaxpayer
@@ -95,6 +139,39 @@ sections:
         label: Who stayed (the patient alone / the patient and one person who had to travel with them)
         options: ["1", "2"]
         showIf: "medicalLodgingPaid > 0"
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: medicalHomeImprovementCost
+        type: amount
+        required: false
+        label: "Cost of home improvements made for medical care (for example an elevator or a pool for therapy)"
+        showIf: "!isSpouse && showScheduleA && hasMedicalExpenses === true"
+      - name: medicalHomeImprovementValueIncrease
+        type: amount
+        required: false
+        label: "How much those improvements increased the value of your home"
+        showIf: "!isSpouse && showScheduleA && hasMedicalExpenses === true"
+      - name: medicalAccessibilityImprovementsCost
+        type: amount
+        required: false
+        label: "Cost of changes to make your home accessible (ramps, wider doorways, lifts, grab bars)"
+        showIf: "!isSpouse && showScheduleA && hasMedicalExpenses === true"
+      - name: medicalReimbursementsReceived
+        type: amount
+        required: false
+        label: "Insurance or other repayments you received for these 2025 medical bills"
+        showIf: "!isSpouse && showScheduleA && hasMedicalExpenses === true"
+      - name: medicalCoverageEmployerPaid
+        type: select
+        required: false
+        label: "Did your employer pay the premiums for the coverage that repaid you?"
+        showIf: "!isSpouse && showScheduleA && (hasMedicalExpenses === true && (medicalReimbursementsReceived || 0) > 0)"
+        options:
+          - value: "all"
+            label: "Yes, all of them"
+          - value: "part"
+            label: "Part of them"
+          - value: "none"
+            label: "No, I paid them myself"
       - name: stateLocalTaxChoice
         type: select
         required: false
@@ -138,14 +215,57 @@ sections:
         type: number
         required: false
         label: State and local income taxes paid
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: stateLocalIncomeTaxPaidForPriorYears
+        type: amount
+        required: false
+        label: "State or local income tax paid in 2025 for an earlier year (balance due, not interest)"
+        showIf: "!isSpouse && showScheduleA && hasTaxesPaid === true && stateLocalTaxChoice !== 'Sales'"
+      - name: stateLocalEstimatedTaxPaid2025
+        type: amount
+        required: false
+        label: "State or local estimated tax payments made during 2025"
+        showIf: "!isSpouse && showScheduleA && hasTaxesPaid === true && stateLocalTaxChoice !== 'Sales'"
       - name: stateLocalSalesTaxesPaid
         type: number
         required: false
         label: State and local sales taxes paid
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: salesTaxTableAmount
+        type: amount
+        required: false
+        label: "Sales tax from the IRS Sales Tax Deduction Calculator (IRS.gov/SalesTax), which prorates the tables by the days in each place"
+        showIf: "!isSpouse && showScheduleA && hasTaxesPaid === true && (stateLocalTaxChoice === 'Sales' && (salesTaxMethod == null || (salesTaxMethod === 'tables' && salesTaxLivedInStateAllYear === false)))"
+      - name: salesTaxMajorPurchasesAmount
+        type: amount
+        required: false
+        label: "Sales tax on major purchases (car, boat, aircraft, home-building materials)"
+        showIf: "!isSpouse && showScheduleA && hasTaxesPaid === true && stateLocalTaxChoice === 'Sales'"
       - name: realEstateTaxesPaid
         type: number
         required: false
         label: Real estate taxes paid
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: homeSoldDate
+        type: date
+        required: false
+        label: "Home sold this year: date sold"
+        showIf: "!isSpouse && showScheduleA && hasTaxesPaid === true"
+      - name: homeSoldPropertyTaxBill
+        type: amount
+        required: false
+        label: "That home's full property tax bill for the year"
+        showIf: "!isSpouse && showScheduleA && hasTaxesPaid === true && homeSoldDate"
+      - name: homeBoughtDate
+        type: date
+        required: false
+        label: "Home bought this year: date bought"
+        showIf: "!isSpouse && showScheduleA && hasTaxesPaid === true"
+      - name: homeBoughtPropertyTaxBill
+        type: amount
+        required: false
+        label: "That home's full property tax bill for the year"
+        showIf: "!isSpouse && showScheduleA && hasTaxesPaid === true && homeBoughtDate"
       - name: personalPropertyTaxesPaid
         type: number
         required: false
@@ -154,10 +274,87 @@ sections:
         type: number
         required: false
         label: Qualified home mortgage interest paid
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: homeAcquisitionDebtAverageBalance
+        type: amount
+        required: false
+        label: "Average balance of your home acquisition debt in 2025"
+        showIf: "!isSpouse && showScheduleA && hasInterestExpenses === true && homeMortgageInterestPaid"
+      - name: sellerFinancedMortgageInterestPaid
+        type: amount
+        required: false
+        label: "Mortgage interest paid to the person you bought your home from (seller financing, no Form 1098)"
+        showIf: "!isSpouse && showScheduleA && hasInterestExpenses === true"
+      - name: sellerFinancedLenderName
+        type: text
+        required: false
+        label: "Seller's name"
+        showIf: "!isSpouse && showScheduleA && hasInterestExpenses === true && ((sellerFinancedMortgageInterestPaid || 0) > 0)"
+      - name: sellerFinancedLenderTin
+        type: text
+        required: false
+        label: "Seller's SSN or EIN"
+        showIf: "!isSpouse && showScheduleA && hasInterestExpenses === true && ((sellerFinancedMortgageInterestPaid || 0) > 0)"
+      - name: sellerFinancedLenderAddress
+        type: text
+        required: false
+        label: "Seller's address"
+        showIf: "!isSpouse && showScheduleA && hasInterestExpenses === true && ((sellerFinancedMortgageInterestPaid || 0) > 0)"
+      - name: homeAcquisitionDebtPre2017AverageBalance
+        type: amount
+        required: false
+        label: "If you also have newer mortgage debt: the part of that balance from loans taken out before December 16, 2017"
+        showIf: "!isSpouse && showScheduleA && hasInterestExpenses === true && homeMortgageInterestPaid && homeAcquisitionDebtAverageBalance"
+      - name: mortgageOriginationDate
+        type: date
+        required: false
+        label: "Date the mortgage was taken out"
+        showIf: "!isSpouse && showScheduleA && hasInterestExpenses === true && homeMortgageInterestPaid && homeAcquisitionDebtAverageBalance"
+      - name: mortgageBindingContractBeforeCutoff
+        type: boolean
+        required: false
+        label: "Did you sign a binding written contract before December 15, 2017 to close by January 1, 2018, and buy the home before April 1, 2018?"
+        showIf: "!isSpouse && showScheduleA && hasInterestExpenses === true && homeMortgageInterestPaid && homeAcquisitionDebtAverageBalance && mortgageOriginationDate && mortgageOriginationDate > '2017-12-15' && mortgageOriginationDate < '2018-04-01'"
       - name: homeMortgagePointsPaid
         type: number
         required: false
         label: Qualified home mortgage points paid
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: homeMortgagePointsType
+        type: select
+        required: false
+        label: "How were these points paid?"
+        showIf: "!isSpouse && showScheduleA && hasInterestExpenses === true && homeMortgagePointsPaid"
+        options:
+          - value: "DEDUCT_IN_FULL"
+            label: "To buy or improve my main home (deduct in full this year)"
+          - value: "AMORTIZE"
+            label: "Refinance or other (spread over the loan term)"
+      - name: homeMortgagePointsLoanTermMonths
+        type: number
+        required: false
+        label: "Loan term (months)"
+        showIf: "!isSpouse && showScheduleA && hasInterestExpenses === true && homeMortgagePointsPaid && homeMortgagePointsType === 'AMORTIZE'"
+      - name: homeMortgagePointsMonthsThisYear
+        type: number
+        required: false
+        label: "Months the loan was in effect during 2025"
+        showIf: "!isSpouse && showScheduleA && hasInterestExpenses === true && homeMortgagePointsPaid && homeMortgagePointsType === 'AMORTIZE'"
+      - name: homeMortgagePointsImprovementPercent
+        type: percent
+        required: false
+        label: "Share of the new loan used to buy, build or improve your main home (%)"
+        showIf: "!isSpouse && showScheduleA && hasInterestExpenses === true && homeMortgagePointsPaid && homeMortgagePointsType === 'AMORTIZE'"
+      - name: priorLoanUndeductedPoints
+        type: amount
+        required: false
+        label: "Points from an earlier loan you were still spreading and had not yet deducted, if that loan was paid off in 2025"
+        showIf: "!isSpouse && showScheduleA && hasInterestExpenses === true"
+      - name: priorLoanRefinancedWithSameLender
+        type: boolean
+        required: false
+        label: "Was that loan refinanced with the same lender?"
+        showIf: "!isSpouse && showScheduleA && hasInterestExpenses === true && ((priorLoanUndeductedPoints || 0) > 0)"
       - name: investmentInterestPaid
         type: number
         required: false
@@ -196,6 +393,17 @@ sections:
         required: false
         label: Donated vehicle / boat / airplane (claimed value)
         help: Enter the claimed value of a donated vehicle, boat, or airplane. If the charity sold it, your deduction is automatically limited to the gross sales proceeds shown in box 4c of the Form 1098-C you upload (IRC §170(f)(12)).
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: charitableCapitalGainPropertyContributions
+        type: amount
+        required: false
+        label: "Gifts of appreciated long-term property (fair market value)"
+        showIf: "!isSpouse && showScheduleA && hasCharitableContributions === true"
+      - name: charitableConservationEasement
+        type: amount
+        required: false
+        label: "Qualified conservation easement (qualified-appraisal fair market value)"
+        showIf: "!isSpouse && showScheduleA && hasCharitableContributions === true"
       - name: charitableUnrelatedUseTangibleFmv
         type: number
         required: false
@@ -225,6 +433,37 @@ sections:
         type: number
         required: false
         label: Prior-year charitable contribution carryover (Schedule A line 13)
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: priorYearCharitableCarryoverCash
+        type: amount
+        required: false
+        label: "Cash to public charities (60% limit)"
+        showIf: "!isSpouse && showScheduleA && hasCharitableContributions === true"
+      - name: priorYearCharitableCarryoverBasis
+        type: amount
+        required: false
+        label: "Ordinary / basis-limited property"
+        showIf: "!isSpouse && showScheduleA && hasCharitableContributions === true"
+      - name: priorYearCharitableCarryoverCapGain
+        type: amount
+        required: false
+        label: "Capital-gain property at FMV (30% limit)"
+        showIf: "!isSpouse && showScheduleA && hasCharitableContributions === true"
+      - name: priorYearCharitableCarryoverPfCash
+        type: amount
+        required: false
+        label: "Cash to a private foundation (30% limit)"
+        showIf: "!isSpouse && showScheduleA && hasCharitableContributions === true"
+      - name: priorYearCharitableCarryoverPfCapGain
+        type: amount
+        required: false
+        label: "Capital-gain property to a private foundation (20% limit)"
+        showIf: "!isSpouse && showScheduleA && hasCharitableContributions === true"
+      - name: priorYearCharitableCarryoverOriginYear
+        type: number
+        required: false
+        label: "Tax year the carryover arose"
+        showIf: "!isSpouse && showScheduleA && hasCharitableContributions === true"
       - name: personalCasualtyAndTheftLoss
         type: number
         required: false
@@ -256,6 +495,27 @@ sections:
         label: Impairment-related work expenses (Schedule A line 16)
         help: Attendant care at your workplace and similar expenses needed for a person with a disability to work are deductible in full with NO 2%-of-AGI floor (IRC §67(d)). Enter only the impairment-related portion.
         showIf: hasImpairmentRelatedWorkExpenses == true
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: impairmentDisabilityLimitsWork
+        type: boolean
+        required: false
+        label: "Did a physical or mental disability limit your ability to work?"
+        showIf: "!isSpouse && showScheduleA && (hasOtherItemizedDeductions === true && hasImpairmentRelatedWorkExpenses === true && (impairmentRelatedWorkExpenses || 0) > 0)"
+      - name: impairmentExpensesEmployerReimbursed
+        type: amount
+        required: false
+        label: "Amount your employer repaid for these costs (not included in your W-2 wages)"
+        showIf: "!isSpouse && showScheduleA && (hasOtherItemizedDeductions === true && hasImpairmentRelatedWorkExpenses === true && (impairmentRelatedWorkExpenses || 0) > 0)"
+      - name: impairmentMealsPortion
+        type: amount
+        required: false
+        label: "Part of these costs that was for meals (only 50% is deductible)"
+        showIf: "!isSpouse && showScheduleA && (hasOtherItemizedDeductions === true && hasImpairmentRelatedWorkExpenses === true && (impairmentRelatedWorkExpenses || 0) > 0)"
+      - name: impairmentMealsReimbursed
+        type: amount
+        required: false
+        label: "Part of the repayment that was for meals (optional - otherwise split in proportion)"
+        showIf: "!isSpouse && showScheduleA && (hasOtherItemizedDeductions === true && hasImpairmentRelatedWorkExpenses === true && (impairmentMealsPortion || 0) > 0 && (impairmentExpensesEmployerReimbursed || 0) > 0)"
       - name: receivedIrdWithEstateTaxPaid
         type: boolean
         required: false
@@ -266,11 +526,51 @@ sections:
         label: Estate tax attributable to income in respect of a decedent (Schedule A line 16)
         help: The federal estate tax attributable to the IRD you reported (IRC §691(c)) — the estate tax computed WITH the IRD minus the estate tax computed WITHOUT it. Relieves the estate + income double tax.
         showIf: receivedIrdWithEstateTaxPaid == true
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: irdEstateTaxAttributable
+        type: amount
+        required: false
+        label: "Estate tax caused by the IRD (estate tax with the IRD minus without it)"
+        showIf: "!isSpouse && showScheduleA && hasOtherItemizedDeductions === true && receivedIrdWithEstateTaxPaid === true"
+      - name: irdTotalEstateTaxValue
+        type: amount
+        required: false
+        label: "Total value of all IRD in the estate"
+        showIf: "!isSpouse && showScheduleA && hasOtherItemizedDeductions === true && receivedIrdWithEstateTaxPaid === true"
+      - name: irdIncludedThisYearValue
+        type: amount
+        required: false
+        label: "Value of the IRD you included in income this year"
+        showIf: "!isSpouse && showScheduleA && hasOtherItemizedDeductions === true && receivedIrdWithEstateTaxPaid === true"
       - name: claimOfRightRepaymentDeduction
         type: number
         required: false
         label: Claim-of-right repayment over $3,000 — deduction method (Schedule A line 16)
         help: If you repaid more than $3,000 that you included in income in an earlier year under a claim of right, you may deduct it here (IRC §1341). Alternatively you can take the §1341 credit (Schedule 3 line 13b) — use whichever gives the lower tax. Repayments of $3,000 or less are not deductible for 2025.
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: claimOfRightPriorYearTaxableIncome
+        type: amount
+        required: false
+        label: "Taxable income of the year you first reported the income (Form 1040 line 15)"
+        showIf: "!isSpouse && hasClaimOfRightRepayment === true && (claimOfRightRepaymentDeduction ?? 0) > 3000"
+      - name: claimOfRightPriorYearFilingStatus
+        type: select
+        required: false
+        label: "Filing status that year"
+        showIf: "!isSpouse && hasClaimOfRightRepayment === true && (claimOfRightRepaymentDeduction ?? 0) > 3000"
+        options:
+          - value: "null"
+            label: "Same as this year"
+          - value: "Single"
+            label: "Single"
+          - value: "Married filing jointly"
+            label: "Married filing jointly"
+          - value: "Married filing separately"
+            label: "Married filing separately"
+          - value: "Head of household"
+            label: "Head of household"
+          - value: "Qualifying surviving spouse"
+            label: "Qualifying surviving spouse"
       - name: netQualifiedDisasterLoss
         type: number
         required: false
@@ -287,3 +587,268 @@ sections:
         type: number
         required: false
         label: Section 250 deduction amount (DO NOT report on line 12e; routes to line 16 with an explanatory statement)
+
+  # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+  - name: casualtyAndTheftLosses
+    title: "Casualty and theft losses"
+    multiplicity: single
+    fields:
+      - name: investmentTheftLossAmount
+        type: amount
+        required: false
+        label: "Money or property stolen from an investment (fraud, Ponzi scheme), less anything you got back"
+        showIf: "!isSpouse && showScheduleA"
+      - name: investmentTheftForProfit
+        type: boolean
+        required: false
+        label: "Did you put the money in to make a profit?"
+        showIf: "!isSpouse && showScheduleA && ((investmentTheftLossAmount || 0) > 0)"
+      - name: investmentTheftRecoveryProspect
+        type: amount
+        required: false
+        label: "Part you have a reasonable chance of getting back (receiver, lawsuit, insurance claim)"
+        showIf: "!isSpouse && showScheduleA && ((investmentTheftLossAmount || 0) > 0 && investmentTheftForProfit === true)"
+      - name: ponziSafeHarbor
+        type: boolean
+        required: false
+        label: "It was a Ponzi-type scheme and I use the Rev. Proc. 2009-20 safe harbor (Form 4684 Section C)"
+        showIf: "!isSpouse && showScheduleA && ((investmentTheftLossAmount || 0) > 0 && investmentTheftForProfit === true)"
+      - name: ponziPursuingThirdPartyRecovery
+        type: boolean
+        required: false
+        label: "I have a potential third-party recovery (75% instead of 95%)"
+        showIf: "!isSpouse && showScheduleA && ((investmentTheftLossAmount || 0) > 0 && investmentTheftForProfit === true) && ponziSafeHarbor === true"
+      - name: ponziWithdrawals
+        type: amount
+        required: false
+        label: "Withdrawals for all years (Form 4684 line 44)"
+        showIf: "!isSpouse && showScheduleA && ((investmentTheftLossAmount || 0) > 0 && investmentTheftForProfit === true) && ponziSafeHarbor === true"
+      - name: ponziActualRecovery
+        type: amount
+        required: false
+        label: "Actual recovery (line 48)"
+        showIf: "!isSpouse && showScheduleA && ((investmentTheftLossAmount || 0) > 0 && investmentTheftForProfit === true) && ponziSafeHarbor === true"
+      - name: ponziPotentialRecovery
+        type: amount
+        required: false
+        label: "Potential insurance / SIPC recovery (line 49)"
+        showIf: "!isSpouse && showScheduleA && ((investmentTheftLossAmount || 0) > 0 && investmentTheftForProfit === true) && ponziSafeHarbor === true"
+      - name: casualtyPropertyAdjustedBasis
+        type: amount
+        required: false
+        label: "Adjusted basis of the damaged property"
+        showIf: "!isSpouse && showScheduleA && hasCasualtyLoss === true"
+      - name: casualtyFmvDecline
+        type: amount
+        required: false
+        label: "Decline in fair market value (or cost to repair)"
+        showIf: "!isSpouse && showScheduleA && hasCasualtyLoss === true"
+      - name: casualtyInsuranceReimbursement
+        type: amount
+        required: false
+        label: "Insurance or other reimbursement"
+        showIf: "!isSpouse && showScheduleA && hasCasualtyLoss === true"
+      - name: casualtyPropertyCollectible
+        type: boolean
+        required: false
+        label: "This property is a collectible held more than 1 year (art, antiques, gems, stamps, coins, precious metals) - a gain on it is taxed at up to 28%"
+        showIf: "!isSpouse && showScheduleA && hasCasualtyLoss === true"
+      - name: casualtyHeldOverOneYear
+        type: boolean
+        required: false
+        label: "Did you own the property for more than 1 year before the casualty or theft?"
+        showIf: "!isSpouse && showScheduleA && hasCasualtyLoss === true"
+      - name: casualtyReimbursementNotReceived
+        type: amount
+        required: false
+        label: "Part of this amount not received in 2025 - coverage not claimed or payment still expected"
+        showIf: "!isSpouse && showScheduleA && hasCasualtyLoss === true"
+      - name: casualtyFmvBefore
+        type: amount
+        required: false
+        label: "Fair market value just before (optional - with the value after, it gives the decline)"
+        showIf: "!isSpouse && showScheduleA && hasCasualtyLoss === true"
+      - name: casualtyFmvAfter
+        type: amount
+        required: false
+        label: "Fair market value just after"
+        showIf: "!isSpouse && showScheduleA && hasCasualtyLoss === true"
+      - name: casualtyDateAcquired
+        type: date
+        required: false
+        label: "Date the property was acquired"
+        showIf: "!isSpouse && showScheduleA && hasCasualtyLoss === true"
+      - name: casualtyPropertyZip
+        type: text
+        required: false
+        label: "ZIP code of the property most affected"
+        showIf: "!isSpouse && showScheduleA && hasCasualtyLoss === true"
+      - name: casualtyElectPrecedingYearDisasterLoss
+        type: boolean
+        required: false
+        label: "This is a 2026 federally declared disaster loss I elect to deduct on my 2025 return (Form 4684 Section D)"
+        showIf: "!isSpouse && showScheduleA && hasCasualtyLoss === true"
+      - name: casualtyPrecedingYearDisasterDate
+        type: date
+        required: false
+        label: "Date of the 2026 disaster loss"
+        showIf: "!isSpouse && showScheduleA && hasCasualtyLoss === true && casualtyElectPrecedingYearDisasterLoss === true"
+      - name: casualtyDisasterDeclarationDate
+        type: date
+        required: false
+        label: "Date the President declared the disaster"
+        showIf: "!isSpouse && showScheduleA && hasCasualtyLoss === true"
+      - name: casualtyIncidentBeginDate
+        type: date
+        required: false
+        label: "Date the disaster's incident period began"
+        showIf: "!isSpouse && showScheduleA && hasCasualtyLoss === true"
+      - name: casualtyIncidentEndDate
+        type: date
+        required: false
+        label: "Date the incident period ended"
+        showIf: "!isSpouse && showScheduleA && hasCasualtyLoss === true"
+      - name: casualtyDeclarationNumber
+        type: text
+        required: false
+        label: "FEMA declaration number (for example DR-4834-FL)"
+        showIf: "!isSpouse && showScheduleA && hasCasualtyLoss === true"
+
+  # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+  - name: allocateEachScheduleAItemBetweenSpousesMFS
+    title: "Allocate each Schedule A item between spouses (MFS)"
+    multiplicity: single
+    showIf: "showPaidByControls"
+    fields:
+      - name: medicalDentalExpensesPaidBy
+        type: select
+        required: false
+        label: "Medical and dental expenses paid by"
+        options:
+          - value: "joint"
+            label: "Joint (50/50 split) - shown as 'Both of us - community funds (50/50 split)' in a community-property state"
+          - value: "taxpayer"
+            label: "Taxpayer only"
+          - value: "spouse"
+            label: "Spouse only"
+      - name: stateLocalIncomeTaxesPaidBy
+        type: select
+        required: false
+        label: "State and local income taxes paid by"
+        options:
+          - value: "joint"
+            label: "Joint (50/50 split) - shown as 'Both of us - community funds (50/50 split)' in a community-property state"
+          - value: "taxpayer"
+            label: "Taxpayer only"
+          - value: "spouse"
+            label: "Spouse only"
+      - name: stateLocalSalesTaxesPaidBy
+        type: select
+        required: false
+        label: "State and local sales taxes paid by"
+        options:
+          - value: "joint"
+            label: "Joint (50/50 split) - shown as 'Both of us - community funds (50/50 split)' in a community-property state"
+          - value: "taxpayer"
+            label: "Taxpayer only"
+          - value: "spouse"
+            label: "Spouse only"
+      - name: realEstateTaxesPaidBy
+        type: select
+        required: false
+        label: "Real estate taxes paid by"
+        options:
+          - value: "joint"
+            label: "Joint (50/50 split) - shown as 'Both of us - community funds (50/50 split)' in a community-property state"
+          - value: "taxpayer"
+            label: "Taxpayer only"
+          - value: "spouse"
+            label: "Spouse only"
+      - name: personalPropertyTaxesPaidBy
+        type: select
+        required: false
+        label: "Personal property taxes paid by"
+        options:
+          - value: "joint"
+            label: "Joint (50/50 split) - shown as 'Both of us - community funds (50/50 split)' in a community-property state"
+          - value: "taxpayer"
+            label: "Taxpayer only"
+          - value: "spouse"
+            label: "Spouse only"
+      - name: foreignTaxesPaidBy
+        type: select
+        required: false
+        label: "Foreign taxes paid by"
+        options:
+          - value: "joint"
+            label: "Joint (50/50 split) - shown as 'Both of us - community funds (50/50 split)' in a community-property state"
+          - value: "taxpayer"
+            label: "Taxpayer only"
+          - value: "spouse"
+            label: "Spouse only"
+      - name: homeMortgageInterestPaidBy
+        type: select
+        required: false
+        label: "Home mortgage interest paid by"
+        options:
+          - value: "joint"
+            label: "Joint (50/50 split) - shown as 'Both of us - community funds (50/50 split)' in a community-property state"
+          - value: "taxpayer"
+            label: "Taxpayer only"
+          - value: "spouse"
+            label: "Spouse only"
+      - name: homeMortgagePointsPaidBy
+        type: select
+        required: false
+        label: "Home mortgage points paid by"
+        options:
+          - value: "joint"
+            label: "Joint (50/50 split) - shown as 'Both of us - community funds (50/50 split)' in a community-property state"
+          - value: "taxpayer"
+            label: "Taxpayer only"
+          - value: "spouse"
+            label: "Spouse only"
+      - name: investmentInterestPaidBy
+        type: select
+        required: false
+        label: "Investment interest paid by"
+        options:
+          - value: "joint"
+            label: "Joint (50/50 split) - shown as 'Both of us - community funds (50/50 split)' in a community-property state"
+          - value: "taxpayer"
+            label: "Taxpayer only"
+          - value: "spouse"
+            label: "Spouse only"
+      - name: charitableCashContributionsPaidBy
+        type: select
+        required: false
+        label: "Charitable cash contributions paid by"
+        options:
+          - value: "joint"
+            label: "Joint (50/50 split) - shown as 'Both of us - community funds (50/50 split)' in a community-property state"
+          - value: "taxpayer"
+            label: "Taxpayer only"
+          - value: "spouse"
+            label: "Spouse only"
+      - name: charitableNonCashContributionsPaidBy
+        type: select
+        required: false
+        label: "Charitable non-cash contributions paid by"
+        options:
+          - value: "joint"
+            label: "Joint (50/50 split) - shown as 'Both of us - community funds (50/50 split)' in a community-property state"
+          - value: "taxpayer"
+            label: "Taxpayer only"
+          - value: "spouse"
+            label: "Spouse only"
+      - name: personalCasualtyAndTheftLossPaidBy
+        type: select
+        required: false
+        label: "Personal casualty and theft loss paid by"
+        options:
+          - value: "joint"
+            label: "Joint (50/50 split) - shown as 'Both of us - community funds (50/50 split)' in a community-property state"
+          - value: "taxpayer"
+            label: "Taxpayer only"
+          - value: "spouse"
+            label: "Spouse only"

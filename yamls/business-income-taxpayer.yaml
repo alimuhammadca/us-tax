@@ -148,11 +148,27 @@ sections:
         required: false
         placeholder: 0.00
         label: Purchases less cost of items withdrawn for personal use (line 36)
+
+      - name: purchasesWithdrawnForPersonalUse
+        type: amount
+        required: false
+        label: Cost of merchandise you took for personal or family use
+        help: Line 36 is purchases less personal withdrawals and less returns - these are subtracted.
+
+      - name: purchaseReturnsAndAllowances
+        type: amount
+        required: false
+        label: Purchase returns and allowances
       - name: costOfLabor
         type: amount
         required: false
         placeholder: 0.00
         label: Cost of labor (line 37)
+
+      - name: costOfLaborW2Wages
+        type: amount
+        required: false
+        label: "Of the cost of labor, the part paid as W-2 wages (QBI wage limit)"
       - name: materialsAndSupplies
         type: amount
         required: false
@@ -283,6 +299,11 @@ sections:
         required: false
         placeholder: 0.00
         label: Wages, less employment credits (line 26)
+
+      - name: wagesNotOnW2
+        type: amount
+        required: false
+        label: "Of the line 26 wages, the part not reported on Forms W-2 (QBI wage limit)"
       - name: energyEfficientCommercialBldgsDeduction
         type: amount
         required: false
@@ -403,6 +424,18 @@ sections:
         required: false
         label: Tolls
         help: Business tolls — deductible on top of the standard mileage rate.
+
+      - name: carLoanInterest
+        type: amount
+        required: false
+        label: Car loan interest paid (full amount - we take the business share)
+
+      - name: vin
+        type: text
+        required: false
+        label: Vehicle identification number (VIN)
+        showIf: "carLoanInterest > 0"
+        help: "Needed if this car's loan interest is also claimed under 'No tax on car loan interest' (Schedule 1-A)."
 
   - name: otherExpenses
     title: Other expenses (Part V)

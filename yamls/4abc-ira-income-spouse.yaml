@@ -11,6 +11,10 @@ instructions:
   - Use this only for spouse-specific IRA distribution inputs for Form 1040 lines 4a/4b/4c.
   - Return-level upload and line 4c statement gating stay on ira-income-taxpayer.
   - Self-employment income is out of scope and excluded.
+# driftIgnore (YAML drift sync 2026-10-28): birthAdoption / emergencyExpense / domesticAbuse / terminalIllness are the component's
+# repayableTypes key PREFIXES, not model fields; the saved keys are <prefix>DistTraditional / RepaidTraditional / DistRoth /
+# RepaidRoth, documented as fields below.
+driftIgnore: [birthAdoption, emergencyExpense, domesticAbuse, terminalIllness]
 sections:
   - name: screening
     title: Screening
@@ -81,12 +85,34 @@ sections:
         label: Spouse total IRA rollover amount (Exception 1)
         placeholder: 0.00
         help: Enter spouse total IRA distribution amount rolled over during the year.
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: iraRolloverReceivedDate
+        type: date
+        required: false
+        label: "Date your spouse received the money that was rolled over"
+        showIf: "hadIraDistributions === true && hadIraRollover === true"
+      - name: iraPreviousRolloverReceivedDate
+        type: date
+        required: false
+        label: "Date of the previous IRA-to-IRA rollover distribution, if any in the 12 months before"
+        showIf: "hadIraDistributions === true && hadIraRollover === true"
       - name: totalQcdAmount
         type: amount
         required: false
         label: Spouse total qualified charitable distribution amount (Exception 3)
         placeholder: 0.00
         help: Enter spouse total IRA amount paid directly to charities as QCD.
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: qcdDistributionDate
+        type: date
+        required: false
+        label: "Date of the transfer to charity"
+        showIf: "hadIraDistributions === true && hadQcd === true && qcdDateNeeded()"
+      - name: qcdFromOngoingSepSimple
+        type: boolean
+        required: false
+        label: "Was any of this paid from an ongoing SEP or SIMPLE IRA (one the employer contributed to for 2025)?"
+        showIf: "hadIraDistributions === true && hadQcd === true"
       - name: inheritedIraQcdAmount
         type: amount
         required: false
@@ -105,12 +131,150 @@ sections:
         label: Spouse total HSA funding distribution amount (Exception 4)
         placeholder: 0.00
         help: Enter spouse total IRA amount treated as HSA funding distribution.
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: priorYearHfdMade
+        type: boolean
+        required: false
+        label: "Have your spouse made a qualified HSA funding distribution in an earlier year?"
+        showIf: "hadIraDistributions === true && hadHfd === true"
       - name: returnOfContributionAmount
         type: amount
         required: false
         label: Total amount returned to your spouse as a corrective distribution or recharacterization
         placeholder: 0.00
         help: Enter the total IRA amount returned by the custodian as an excess contribution return or recharacterized to a different IRA type. This is excluded from the Form 8606 basis calculation.
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: recharacterizationFromType
+        type: select
+        required: false
+        label: "If a contribution was recharacterized, which way did it move?"
+        showIf: "(hadIraDistributions === true || hadIraDistributions === false) && showUncommon && hadReturnOfContributionOrRecharacterization === true"
+        options:
+          - value: "traditional"
+            label: "Traditional IRA -> Roth IRA"
+          - value: "roth"
+            label: "Roth IRA -> Traditional IRA"
+      - name: recharacterizationOriginalContributionDate
+        type: date
+        required: false
+        label: "Date the original contribution was made"
+        showIf: "(hadIraDistributions === true || hadIraDistributions === false) && showUncommon && hadReturnOfContributionOrRecharacterization === true"
+      - name: recharacterizationDate
+        type: date
+        required: false
+        label: "Date of the recharacterization (trustee-to-trustee transfer)"
+        showIf: "(hadIraDistributions === true || hadIraDistributions === false) && showUncommon && hadReturnOfContributionOrRecharacterization === true"
+      - name: recharacterizationAmountTransferredInclEarnings
+        type: amount
+        required: false
+        label: "Amount transferred, including related earnings (or less a loss)"
+        showIf: "(hadIraDistributions === true || hadIraDistributions === false) && showUncommon && hadReturnOfContributionOrRecharacterization === true"
+      - name: explanationStatementPrepared
+        type: boolean
+        required: false
+        label: "I have prepared the statement explaining the recharacterization / returned contribution to attach to my return"
+        showIf: "(hadIraDistributions === true || hadIraDistributions === false) && showUncommon && hadReturnOfContributionOrRecharacterization === true"
+      - name: divorceTransferChangedBasis
+        type: boolean
+        required: false
+        label: "In 2025, did you or your spouse transfer all or part of a traditional IRA to the other under a divorce or separation agreement that changed the IRA's basis?"
+        showIf: "(hadIraDistributions === true || hadIraDistributions === false) && showUncommon"
+      - name: divorceTransferBasisAdjustment
+        type: amount
+        required: false
+        label: "Change in your spouse's basis from the transfer (+ increase / - decrease)"
+        showIf: "(hadIraDistributions === true || hadIraDistributions === false) && showUncommon && divorceTransferChangedBasis === true"
+      - name: hadReturnedContribution
+        type: boolean
+        required: false
+        label: "Was a contribution returned (with its earnings) by the custodian?"
+        showIf: "(hadIraDistributions === true || hadIraDistributions === false) && showUncommon && hadReturnOfContributionOrRecharacterization === true"
+      - name: hadRecharacterization
+        type: boolean
+        required: false
+        label: "Was a contribution recharacterized (moved from a traditional IRA to a Roth IRA, or the other way)?"
+        showIf: "(hadIraDistributions === true || hadIraDistributions === false) && showUncommon && hadReturnOfContributionOrRecharacterization === true"
+      - name: birthAdoptionDistTraditional
+        type: amount
+        required: false
+        label: "Qualified birth or adoption distribution: amount taken from a traditional, SEP or SIMPLE IRA in 2025"
+        showIf: "(hadIraDistributions === true || hadIraDistributions === false) && showUncommon"
+        help: "i8606 Line 15c / 25c Worksheets; Pub. 590-B 'Repaying the distribution'. A 2025 repayment of one of these distributions is treated as a rollover (do not also enter it as a rollover)."
+      - name: birthAdoptionRepaidTraditional
+        type: amount
+        required: false
+        label: "Qualified birth or adoption distribution: of that, repaid to a traditional IRA in 2025"
+        showIf: "(hadIraDistributions === true || hadIraDistributions === false) && showUncommon"
+      - name: birthAdoptionDistRoth
+        type: amount
+        required: false
+        label: "Qualified birth or adoption distribution: amount taken from a Roth IRA in 2025"
+        showIf: "(hadIraDistributions === true || hadIraDistributions === false) && showUncommon"
+      - name: birthAdoptionRepaidRoth
+        type: amount
+        required: false
+        label: "Qualified birth or adoption distribution: of that, repaid to a Roth IRA in 2025"
+        showIf: "(hadIraDistributions === true || hadIraDistributions === false) && showUncommon"
+      - name: emergencyExpenseDistTraditional
+        type: amount
+        required: false
+        label: "Emergency personal expense distribution: amount taken from a traditional, SEP or SIMPLE IRA in 2025"
+        showIf: "(hadIraDistributions === true || hadIraDistributions === false) && showUncommon"
+      - name: emergencyExpenseRepaidTraditional
+        type: amount
+        required: false
+        label: "Emergency personal expense distribution: of that, repaid to a traditional IRA in 2025"
+        showIf: "(hadIraDistributions === true || hadIraDistributions === false) && showUncommon"
+      - name: emergencyExpenseDistRoth
+        type: amount
+        required: false
+        label: "Emergency personal expense distribution: amount taken from a Roth IRA in 2025"
+        showIf: "(hadIraDistributions === true || hadIraDistributions === false) && showUncommon"
+      - name: emergencyExpenseRepaidRoth
+        type: amount
+        required: false
+        label: "Emergency personal expense distribution: of that, repaid to a Roth IRA in 2025"
+        showIf: "(hadIraDistributions === true || hadIraDistributions === false) && showUncommon"
+      - name: domesticAbuseDistTraditional
+        type: amount
+        required: false
+        label: "Domestic abuse victim distribution: amount taken from a traditional, SEP or SIMPLE IRA in 2025"
+        showIf: "(hadIraDistributions === true || hadIraDistributions === false) && showUncommon"
+      - name: domesticAbuseRepaidTraditional
+        type: amount
+        required: false
+        label: "Domestic abuse victim distribution: of that, repaid to a traditional IRA in 2025"
+        showIf: "(hadIraDistributions === true || hadIraDistributions === false) && showUncommon"
+      - name: domesticAbuseDistRoth
+        type: amount
+        required: false
+        label: "Domestic abuse victim distribution: amount taken from a Roth IRA in 2025"
+        showIf: "(hadIraDistributions === true || hadIraDistributions === false) && showUncommon"
+      - name: domesticAbuseRepaidRoth
+        type: amount
+        required: false
+        label: "Domestic abuse victim distribution: of that, repaid to a Roth IRA in 2025"
+        showIf: "(hadIraDistributions === true || hadIraDistributions === false) && showUncommon"
+      - name: terminalIllnessDistTraditional
+        type: amount
+        required: false
+        label: "Terminal illness distribution: amount taken from a traditional, SEP or SIMPLE IRA in 2025"
+        showIf: "(hadIraDistributions === true || hadIraDistributions === false) && showUncommon"
+      - name: terminalIllnessRepaidTraditional
+        type: amount
+        required: false
+        label: "Terminal illness distribution: of that, repaid to a traditional IRA in 2025"
+        showIf: "(hadIraDistributions === true || hadIraDistributions === false) && showUncommon"
+      - name: terminalIllnessDistRoth
+        type: amount
+        required: false
+        label: "Terminal illness distribution: amount taken from a Roth IRA in 2025"
+        showIf: "(hadIraDistributions === true || hadIraDistributions === false) && showUncommon"
+      - name: terminalIllnessRepaidRoth
+        type: amount
+        required: false
+        label: "Terminal illness distribution: of that, repaid to a Roth IRA in 2025"
+        showIf: "(hadIraDistributions === true || hadIraDistributions === false) && showUncommon"
       - name: inheritedTraditionalIraDistributionAmount
         type: amount
         required: false
@@ -181,6 +345,17 @@ sections:
         label: Spouse year-end value of all traditional/SEP/SIMPLE IRAs
         placeholder: 0.00
         help: Enter spouse Form 8606 line 6 value including outstanding rollovers.
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: outstandingRolloversAtYearEnd
+        type: amount
+        required: false
+        label: "Outstanding rollovers on December 31 (optional)"
+        showIf: "(hadIraDistributions === true || hadIraDistributions === false) && (hasNondeductibleTraditionalBasis === true || hasTraditionalToRothConversion === true) && showTraditionalBasisSection"
+      - name: repaymentsIn2025Of2025Distributions
+        type: amount
+        required: false
+        label: "Repayments made this year of this year's distributions treated as rollovers (optional)"
+        showIf: "(hadIraDistributions === true || hadIraDistributions === false) && (hasNondeductibleTraditionalBasis === true || hasTraditionalToRothConversion === true) && showTraditionalBasisSection"
       - name: totalTraditionalIraConvertedToRothFor8606Line8
         type: amount
         required: false
@@ -229,6 +404,87 @@ sections:
         label: Spouse qualified disaster repayments for Form 8606 line 25b
         placeholder: 0.00
         help: Enter spouse Roth-side qualified disaster repayments if applicable.
+      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: hasEarlyDistributionAdditionalTaxForForm5329
+        type: boolean
+        required: false
+        label: "Does your spouse owe the additional tax on an early distribution (Form 5329)?"
+        showIf: "hadIraDistributions === true"
+      - name: form5329ExceptionCodeOrReason
+        type: text
+        required: false
+        label: "§72(t)(2) exception code (01–23) or brief reason, if part of the distribution is exempt"
+        showIf: "hadIraDistributions === true && hasEarlyDistributionAdditionalTaxForForm5329 === true"
+      - name: form5329ExceptionAmountNotSubjectToTax
+        type: amount
+        required: false
+        label: "Amount NOT subject to the additional tax (exempt portion)"
+        showIf: "hadIraDistributions === true && hasEarlyDistributionAdditionalTaxForForm5329 === true && form5329ExceptionCodeOrReason"
+      - name: form5329ExceptionBirthAdoptionCount
+        type: number
+        required: false
+        label: "Number of children born or adopted that this withdrawal was for"
+        showIf: "hadIraDistributions === true && hasEarlyDistributionAdditionalTaxForForm5329 === true && exceptionIs19()"
+      - name: form5329ExceptionAccountBalance
+        type: amount
+        required: false
+        label: "Account balance just before the withdrawal"
+        showIf: "hadIraDistributions === true && hasEarlyDistributionAdditionalTaxForForm5329 === true && exceptionIs22or23()"
+      - name: noEarlyDistributionExceptionApplies
+        type: boolean
+        required: false
+        label: "I confirm no §72(t)(2) exception applies (pay the full additional tax)"
+        showIf: "hadIraDistributions === true && hasEarlyDistributionAdditionalTaxForForm5329 === true && !form5329ExceptionCodeOrReason"
+      - name: rmdPriorYearEndIraBalance
+        type: amount
+        required: false
+        label: "Total value of your spouse's traditional IRAs on December 31, 2024 (not inherited IRAs)"
+        showIf: "rmdApplies()"
+      - name: rmdQlacValue
+        type: amount
+        required: false
+        label: "Value of a QLAC included in that amount"
+        showIf: "rmdApplies() && rmdPriorYearEndIraBalance"
+      - name: rmdSpouseSoleBeneficiaryMoreThan10YearsYounger
+        type: boolean
+        required: false
+        label: "Is the spouse the sole beneficiary of the IRA and more than 10 years younger?"
+        showIf: "rmdApplies() && rmdPriorYearEndIraBalance"
+      - name: rmdIraShortfallCorrectedTimely
+        type: boolean
+        required: false
+        label: "If less than the minimum was taken: was the missed amount taken out within the correction window?"
+        showIf: "rmdApplies() && rmdPriorYearEndIraBalance"
+
+  # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+  - name: spouseRothIRADistributionDetails
+    title: "Spouse Roth IRA distribution details"
+    multiplicity: single
+    fields:
+      - name: rothContributionBefore2021
+        type: boolean
+        required: false
+        label: "Did your spouse make a Roth IRA contribution (including a conversion) for 2020 or an earlier year?"
+        showIf: "hadIraDistributions === true && hasRothIraDistributions === true && showRothDistributionSection && (hasRothCodeT || rothContributionBefore2021 != null)"
+
+  # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+  - name: rothConversions2021To2025
+    title: "Conversions or rollovers to a Roth IRA in 2021-2025 (saved as rothConversions2021To2025, one row per conversion)"
+    multiplicity: multiple
+    showIf: "hadIraDistributions === true && hasRothIraDistributions === true && showRothDistributionSection"
+    fields:
+      - name: conversionYear
+        type: number
+        required: false
+        label: "Year"
+      - name: conversionAmount
+        type: amount
+        required: false
+        label: "Amount converted"
+      - name: conversionTaxablePart
+        type: amount
+        required: false
+        label: "Taxable part when converted"
 
   # Backend-only statement imports. Not rendered in form component.
   - name: importedStatementFields

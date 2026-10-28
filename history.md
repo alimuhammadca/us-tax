@@ -1,3 +1,8 @@
+## 2026-10-28T08:00 - D-8812-2555-1: Schedule 8812 line 2b
+
+- Line 2b now = Form 2555 lines 45 + 50 (taxpayer + spouse), per i1040s8 (2025); was lines 36 + 42, which counted line 44 twice and left out the line 50 housing deduction. Helper LowMediumGb.schedule8812Line2b.
+- Unit: 120,000 (was 130,000) with line 44; 148,200 (was 139,100) with line 50; MFJ 147,000; controls. Mutation-checked. e2e: new spec + 10 CTC / Form 2555 specs, 58 passed.
+
 ## 2026-10-28T05:00 - Low items: remaining partial / follow-up rows (V421, V423)
 
 - Of the 319 low rows, 308 were already FIXED/CLOSED; this round closed the 4 partly-fixed lows (D-1a-8, D-1e-7, D-8824-6, D-sch-f-9) and the new low follow-ups, plus the open medium-low (D-sch-f-4, D-sch-se-3, D-sch-e-5, D-6198-3, D-1098-e-1) and low-medium (D-k1-coded-3) rows. Held (owner rule, structure): D-sch-se-7 / 7b, D-1099-s-4.

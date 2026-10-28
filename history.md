@@ -1,3 +1,8 @@
+## 2026-10-28T14:00 - D-6d-bridge-1: Schedule F crop insurance deferral bridge (17th carryforward)
+
+- CropDeferralCarryforward: reads the prior-year primary return's farm-income rows (pf_farm / pf_farm_activity at tax_year - 1, per owner role); a cash-method farm with the line 6c election and an amount deferred seeds this year's line 6d (cropInsurancePriorYearDeferred) on the matched farm - one farm each year 1:1, else principal product (case/space-insensitive) + activity code; blanks only (typed value, even 0, wins); flags SCHEDULE_F_CROP_DEFERRAL_IMPORTED / _NOT_MATCHED. One guarded call in prepareReturn; no migration / UI / new field. Effective from TY2026 (no 2024 data exists).
+- Unit 9 tests (two-year chain 8,000 -> line 6d 8,000, line 9 38,000; typed wins; no election; accrual; two farms; unmatched; MFJ), mutation-checked; suite 5452/5452. e2e crop-deferral-carryforward-bridge.spec.ts + 35 farm / Schedule F / bridge specs: 98 passed, 1 unrelated flake (Form 1116 bridge) passed on re-run.
+
 ## 2026-10-28T12:00 - YAML drift sync + drift check
 
 - New `us-tax-be/scripts/yaml-drift.py`: per personal form id (PersonalResource.PERSONAL_FORMS), component keys (ngModel / {key:} / getField) of the component that SAVES the form, vs the YAML's field names (`name:` / `id:`); shared taxpayer/spouse components' spouseModel.* and {key:'spouse...'} keys go to the "-spouse" id; `driftIgnore: [...]` for UI plumbing; also reports YAMLs that do not parse. --form / --json / --fail.

@@ -1,3 +1,10 @@
+## 2026-10-28T18:30 - Schedule K-1 (Form 1041) box 11 code B breakdown (V424)
+
+- New personal inputs (standard-deductions-taxpayer / -spouse, V424): the fiduciary's statement of allowable deductions split into state/local income or sales taxes (5a), real estate (5b), personal property (5c), home mortgage interest (8, after the filer's own debt limit), investment interest (Form 4952 line 1) and other line 16. Routed through the existing Schedule A rules (SALT cap, Form 4952, line 16). Per person (recipient TIN), MFJ and MFS (scoper / allocator). Reconciled to the code B total: blank -> advisory, short -> advisory, over -> overrideable block. No carryforward (i1041sk1 "can't carry the balance"): code B investment interest not allowed by Form 4952 is excluded from the next-year carryforward (allowed amount absorbs it first; printed Form 4952 unchanged).
+- YAML: section added to 12abcde-standard-deductions-taxpayer.yaml (yaml-drift.py caught the 6 keys).
+- Unit 17 new tests, mutation-checked; suite 5475/5475. e2e k1-1041-box11b-breakdown.spec.ts + 14 related specs: 105 passed, 1 skipped.
+- Recorded: D-k1-1041-11b-cp (community-property MFS split vs a full-amount breakdown).
+
 ## 2026-10-28T17:00 - Partnership dependent care benefits: Form 2441 line 24 -> Schedule E line 28 (UPE)
 
 - OwnBusinessDcap.addToPartnerships: dcapOwnBusinessActivity = "k1:<entryId>" (or, blank, the person's only K-1 with box 13 code O) puts line 24 on Schedule E Part II line 28 as unreimbursed partnership expenses ("UPE", i2441 line 24; i1040se UPE). After the 704(d) basis limit (partner's own expense, not a distributive share), before at-risk and passive. Nonpassive: lowers Schedule 1 line 5, QBI, and a general partner's box 14 code A SE earnings (i1065sk1 / i1040sse) with an attach-explanation note; passive: the partnership's Form 8582 activity. Shared $5,000 limit with the Schedule C/F route; advisories reconcile to final line 24. Schedule E preview: separate existing line 28 row (values only).

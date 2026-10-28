@@ -589,6 +589,38 @@ sections:
         label: Section 250 deduction amount (DO NOT report on line 12e; routes to line 16 with an explanatory statement)
 
   # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+  # Added 2026-10-28 (D-k1-1041-11b, V424): Schedule K-1 (Form 1041) box 11 code B breakdown from the fiduciary's statement.
+  - name: k1Form1041Box11CodeB
+    title: "Schedule K-1 (Form 1041) box 11 code B - excess deductions on termination"
+    multiplicity: single
+    showIf: "showScheduleA && k1CodeBTotal > 0"
+    instructions:
+      - "Enter the amounts from the fiduciary's statement of allowable deductions (Instructions for Schedule K-1 (Form 1041), box 11 code B). Taxes stay under the SALT cap; any part not deducted this year can't be carried forward."
+    fields:
+      - name: k1ExcessDeductionsStateLocalTaxes
+        type: amount
+        required: false
+        label: "State and local income (or sales) taxes - Schedule A line 5a"
+      - name: k1ExcessDeductionsRealEstateTaxes
+        type: amount
+        required: false
+        label: "Real estate taxes - Schedule A line 5b"
+      - name: k1ExcessDeductionsPersonalPropertyTaxes
+        type: amount
+        required: false
+        label: "Personal property taxes - Schedule A line 5c"
+      - name: k1ExcessDeductionsHomeMortgageInterest
+        type: amount
+        required: false
+        label: "Home mortgage interest - Schedule A line 8"
+      - name: k1ExcessDeductionsInvestmentInterest
+        type: amount
+        required: false
+        label: "Investment interest - Form 4952 line 1"
+      - name: k1ExcessDeductionsOtherLine16
+        type: amount
+        required: false
+        label: "Other itemized deductions - Schedule A line 16"
   - name: casualtyAndTheftLosses
     title: "Casualty and theft losses"
     multiplicity: single

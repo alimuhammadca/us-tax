@@ -1,3 +1,8 @@
+## 2026-10-28T17:00 - Partnership dependent care benefits: Form 2441 line 24 -> Schedule E line 28 (UPE)
+
+- OwnBusinessDcap.addToPartnerships: dcapOwnBusinessActivity = "k1:<entryId>" (or, blank, the person's only K-1 with box 13 code O) puts line 24 on Schedule E Part II line 28 as unreimbursed partnership expenses ("UPE", i2441 line 24; i1040se UPE). After the 704(d) basis limit (partner's own expense, not a distributive share), before at-risk and passive. Nonpassive: lowers Schedule 1 line 5, QBI, and a general partner's box 14 code A SE earnings (i1065sk1 / i1040sse) with an attach-explanation note; passive: the partnership's Form 8582 activity. Shared $5,000 limit with the Schedule C/F route; advisories reconcile to final line 24. Schedule E preview: separate existing line 28 row (values only).
+- Unit 6 tests (code O 4,000: line 5 10,000 -> 6,000, SE line 2 40,000 -> 36,000, SE tax 5,652 -> 5,087), mutation-checked; suite 5458/5458. e2e dcap-partnership-line24.spec.ts + 16 related specs: 90 passed.
+
 ## 2026-10-28T14:00 - D-6d-bridge-1: Schedule F crop insurance deferral bridge (17th carryforward)
 
 - CropDeferralCarryforward: reads the prior-year primary return's farm-income rows (pf_farm / pf_farm_activity at tax_year - 1, per owner role); a cash-method farm with the line 6c election and an amount deferred seeds this year's line 6d (cropInsurancePriorYearDeferred) on the matched farm - one farm each year 1:1, else principal product (case/space-insensitive) + activity code; blanks only (typed value, even 0, wins); flags SCHEDULE_F_CROP_DEFERRAL_IMPORTED / _NOT_MATCHED. One guarded call in prepareReturn; no migration / UI / new field. Effective from TY2026 (no 2024 data exists).

@@ -1,3 +1,14 @@
+## 2026-10-28T03:00 - Low-medium IRS deviations (V417-V420)
+
+- 35 open low-medium rows + 5 low-medium follow-ups + the Schedule B country bug, in 5 groups (analyze -> plan -> implement -> test). 40 confirmed and fixed; D-8839-9 was already fixed (D-1f-3).
+- G1 passive / at-risk (V417): 280A(c)(5) home out of the pool, former passive activities, PTPs separately, K-1 box 2 REP / active participation, Form 8582 Parts IV-VIII per activity, farm-rental at-risk carryforward, QNR label.
+- G2 wages / credits (V418): Form 2441 earned income less box 11 / 2555 line 43, special-needs QAAP answer, adoption credit carryforward (16th bridge), provider-required flag, 4562 line 11 own wages, MFJ lump-sum spouse rows, Roth MAGI rollover, 2555 line 45 in MAGIs; carryforward-only adoption needs no child row.
+- G3 depreciation / health (V419): auto unrecovered basis, MFS 4562 spouse assets, Schedule F values, 982 line 8, dependent HSA, Archer 20% exemption, Form 7206 months, REMIC AMT/NIIT, 4797 investment building.
+- G4 statements (V420): SSA/RRB withholding follows line 6a, 1099-PATR boxes 6/7, 1099-S box 4, Form 8814 OID/K-1/PFD, 1099-CAP scoping, 2439 TIN, 1098-C vehicle in the 8283 test, 1099-Q advisory, 8606 line 22 wording, Schedule B countries.
+- G5 K-1: coded losses through basis/at-risk, code A in NIIT, box 20/17/14 codes, 1041 14A and box 10.
+- Unit 5407/5407 (main). Targeted e2e 79 specs: 427 passed; 7 failures fixed (6 specs, 1 code) and re-run green; 2 flaky passed on re-run.
+- New follow-ups recorded: D-k1-coded-3, D-8582-15, D-2555-magi-2, D-sch-f-8b, D-test-2441-1.
+
 ## 2026-10-28T00:30 - Last open medium IRS deviations (V416)
 
 - Medium rows in outstanding.md: 201 rows (some rows carry two IDs), all FIXED/closed; 0 open.

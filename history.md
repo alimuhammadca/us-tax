@@ -1,3 +1,13 @@
+## 2026-10-28T05:00 - Low items: remaining partial / follow-up rows (V421, V423)
+
+- Of the 319 low rows, 308 were already FIXED/CLOSED; this round closed the 4 partly-fixed lows (D-1a-8, D-1e-7, D-8824-6, D-sch-f-9) and the new low follow-ups, plus the open medium-low (D-sch-f-4, D-sch-se-3, D-sch-e-5, D-6198-3, D-1098-e-1) and low-medium (D-k1-coded-3) rows. Held (owner rule, structure): D-sch-se-7 / 7b, D-1099-s-4.
+- A1 (V421): Schedule F line 6d + 2026 deferral wording; Schedule SE line 8a RRTA tier 1; one Schedule F per QJV spouse; own-business dependent care benefits deducted on the named business, K-1 code O to Form 2441.
+- A2: Form 1098 link before the rental day split; passive K-1 at-risk per activity; Schedule E line 22 = Form 8582 Part VIII; S corporation coded losses under the basis limit.
+- B (V423): child's 1098-E on the dependent tab; RDP partner name + percentages; partly-home like-kind exchange (two worksheets); QSEHRA months; ABLE Form 5329 split by beneficiary; Form 2555 lines 45/50 in adoption and Schedule 1-A MAGI.
+- Two weak e2e specs fixed (D-test-8853-1, D-test-2441-1).
+- Unit 5442 (9 known worktree CRLF only in worktrees). Targeted e2e 69 specs: 271 passed; 1 spec seed fixed (Form 2441 line 16) and re-run green; 1 flaky passed on re-run.
+- New follow-ups: D-8812-2555-1 (Schedule 8812 line 2b), D-6d-bridge-1 (crop deferral to next year's 6d).
+
 ## 2026-10-28T03:00 - Low-medium IRS deviations (V417-V420)
 
 - 35 open low-medium rows + 5 low-medium follow-ups + the Schedule B country bug, in 5 groups (analyze -> plan -> implement -> test). 40 confirmed and fixed; D-8839-9 was already fixed (D-1f-3).

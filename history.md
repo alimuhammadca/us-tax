@@ -1,3 +1,7 @@
+## 2026-10-30T09:00 - Full e2e regression after the 2026-10-26..28 work
+
+- 2,080 tests, 7.6 h: 2,062 passed, 12 skipped, 2 flaky, 4 failed. All 4 failures (form6251-line2m-amt-469-recompute :119, line8814-statement-driven :584 / :619, line8834-electric-vehicle-credit :19) were connection errors to the UI dev server (Failed to fetch / ECONNREFUSED / ETIMEDOUT :4200) - no wrong value; their four spec files re-run alone: 27/27 passed. No code change needed.
+
 ## 2026-10-28T21:00 - Form 8824: exchange-group liabilities sign fixed; partly-home line 20 per the instruction
 
 - Exchange groups (D-8824-4): Regs. 1.1031(j)-1(b)(2)(iv) - deficiency = FMV transferred - (FMV received - excess liabilities ASSUMED allocated to the group, capped at FMV received); the code subtracted liabilities (sign backwards), under-recognizing gain (example: 0 -> 40). Input relabelled "Excess liabilities you assumed, allocated to this group" (relieved liabilities are cash in the residual group); over-cap advisory.

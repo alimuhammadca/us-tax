@@ -1,3 +1,10 @@
+## 2026-10-30T20:00 - Pension spouse upload gate
+
+- Joint return: a spouse who says she had pension income / received a non-IRA 1099-R or RRB-1099-R now needs her own statement (recipient TIN = spouse SSN) on file; before, the taxpayer's 1099-R satisfied the gate and her missing statement passed silently. Same flags (PENSION_STATEMENT_UPLOAD_REQUIRED, MISSING_UPLOADED_NON_IRA_1099_R / _RRB_1099_R), same overrideability. PensionSpouseUploadGate.
+- Spouse pension form asks and saves the upload answers (same keys as the taxpayer form; no migration) - removes a false block on her MFS leg.
+- MFS legs: the gate counts only the filer's own 1099-R / RRB-1099-R (ownOnMfs); the pre-split lists keep both spouses' entries for the community-property split, so the other spouse's statement used to satisfy it. Amounts were unaffected.
+- YAML: spouse statement section added (drift check). Unit 10 new tests; suite 5497/5497. e2e pension-spouse-upload-gate.spec.ts 4/4, line5abc-pension-withdrawals 36/36.
+
 ## 2026-10-30T09:00 - Full e2e regression after the 2026-10-26..28 work
 
 - 2,080 tests, 7.6 h: 2,062 passed, 12 skipped, 2 flaky, 4 failed. All 4 failures (form6251-line2m-amt-469-recompute :119, line8814-statement-driven :584 / :619, line8834-electric-vehicle-credit :19) were connection errors to the UI dev server (Failed to fetch / ECONNREFUSED / ETIMEDOUT :4200) - no wrong value; their four spec files re-run alone: 27/27 passed. No code change needed.

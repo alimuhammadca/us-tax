@@ -26,6 +26,23 @@ sections:
         label: Did your spouse have any pension or annuity distributions during the tax year?
         help: If No, stop here and do not continue this spouse interview.
 
+  # Added 2026-10-30 (pension spouse upload gate): the spouse's own statement-upload answers (same keys as the taxpayer form;
+  # this form keeps one row per person). Checked per person on a joint return (PensionSpouseUploadGate).
+  - name: spouseStatementUploadCheck
+    title: "Your spouse's pension statements"
+    multiplicity: single
+    showIf: "hadPensionOrAnnuityIncome == true"
+    fields:
+      - name: received1099RNonIra
+        type: boolean
+        required: false
+        label: "Did your spouse receive a non-IRA Form 1099-R?"
+        help: "Auto-derived true when a non-IRA 1099-R in the spouse's SSN is on file; asked when none is uploaded yet."
+      - name: receivedRrb1099R
+        type: boolean
+        required: false
+        label: "Did your spouse receive a Form RRB-1099-R (Railroad Retirement)?"
+        help: "Auto-derived true when an RRB-1099-R in the spouse's SSN is on file; asked when none is uploaded yet."
   - name: classificationAndRouting
     title: Classification and routing
     multiplicity: single

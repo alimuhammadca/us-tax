@@ -1,6 +1,8 @@
 # Outstanding Items
 
-## ★ IRS deviations — 2026-10-24 documentation rebuild (open; NOT yet fixed)
+## ★ IRS deviations — 2026-10-24 documentation rebuild — **ALL FIXED or CLOSED by 2026-10-28**, except HELD D-sch-se-7 / D-sch-se-7b (2025 Schedule SE template - needs the 2025 PDF + owner sign-off), D-1099-s-4 (no change needed) and edge case D-k1-1041-11b-cp
+
+**Status 2026-10-30:** every row below carries its FIXED / CLOSED / HELD note; full e2e regression 2026-10-30: 2,062 passed, 4 environment failures re-run green.
 
 **What this is.** The rebuild of the line, form and statement documentation (`new_lines\`, `new_knowledge\`,
 `new_flowcharts\`, `new_mappings\` — 31 Form 1040 income lines 1a–11a, 32 feeding forms, 49 statements) compared the
@@ -13,7 +15,7 @@ and an example.
 tax or blocks a valid return; **medium** = wrong amount in a realistic case; **low** = rare, cosmetic, or advisory only.
 "Silent" means no flag tells the user.
 
-**Nothing here has been changed in the code.** Fixing any item that adds or removes a form field needs owner sign-off
+**(Original 2026-10-24 note, now historical:)** Nothing here had been changed in the code. Fixing any item that adds or removes a form field needs owner sign-off
 (input forms) and none may change a statement or tax-return form's structure.
 
 ### Shared root causes (fix once, many ids close)

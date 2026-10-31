@@ -4628,3 +4628,8 @@ Open, in priority order: **audit the remaining tax-model and key-value configs f
 names** — three instances found by accident so far. Then the `w-2.pdf` box-12 amounts and box 14b,
 `employeeSuffix` on `w-2-as.pdf` and `w-2.pdf`, `1099-g.png`'s duplicated phone fragment, and
 mapping an Azure 429 to 503 rather than a bare 500.
+
+## 2026-10-30 — Tax-return previews: pure HTML/CSS sweep (us-tax-ui)
+- Surveyed all 82 `form-tax-return-*` components + shared wrappers: every visible preview was already pure HTML/CSS (38 via `pure-pdf-preview`, the rest own `renderPage` renderers); no iframe/embed/pdf.js/alternate-view branches.
+- Deleted the one retired alternate view, `form-tax-return-required-attachment` (unreachable field-list, NG8113 unused), plus its shell import and spec lines. Save-as-PDF export paths kept. Build green (9.92 MB); tax-return-saved-pdf 6/6, schedule1-pdf-render 2/2, wired-form-previews-render 3/3.
+- us-tax-return-forms repo is ignored per owner.

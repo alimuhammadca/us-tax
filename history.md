@@ -4637,3 +4637,8 @@ mapping an Azure 429 to 503 rather than a bare 500.
 ## 2026-10-30 — Verify-code screen polish (us-tax-ui)
 - `/auth/verify-code`: the Verification code box gets focus once the SMS is sent and after Resend (deferred a tick: ngModel re-enables the disabled input asynchronously).
 - "Resend code" / "Cancel" (and the verify-email gate's links) now look clickable: brand indigo `#3538CD`, underlined, 0.95rem, hover + focus-visible ring. Verified with a stubbed-SMS Playwright check.
+
+## 2026-10-31 — Full e2e regression + flake root causes
+- Full regression: 2,069 passed, 0 failed, 3 flaky (passed on retry), 12 skipped (4.7 h).
+- Root cause of the recurring "Failed to fetch" / connect ETIMEDOUT flakes: the UI dev proxy sent `Connection: close`, piling ~1,100 TIME_WAIT on :8080; colliding SYNs were dropped (21 s hang). Fixed with a keep-alive agent — `proxy.conf.json` → `proxy.conf.mjs` (us-tax-ui d21d0fb); start the UI with `npm start -- --proxy-config proxy.conf.mjs`.
+- The 3 remaining flakes were ECONNRESET on Playwright's request context reusing a dev-server socket closed after its 5 s idle timeout; shared helpers (`seedRequiredDob`, `clearUserData`) now pass `maxRetries: 2`. The 2 affected specs: 55/55 pass.

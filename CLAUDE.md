@@ -249,7 +249,7 @@ Angular 21 + PrimeNG SPA. Run in dev mode:
 
 ```bash
 cd C:\us-tax\us-tax-ui
-npm start -- --proxy-config proxy.conf.json   # Proxies /api to localhost:8080
+npm start -- --proxy-config proxy.conf.mjs   # Proxies /api to localhost:8080
 ```
 
 Build check: `npm run build`

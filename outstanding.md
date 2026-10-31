@@ -3741,7 +3741,7 @@ Backend already returns `Map<String,Object>` of extracted fields; the gap list i
 
 ---
 
-## Reactivate or Delete the W-2 "Structured Form" Alternate View — Deferred 2026-04-28
+## ~~Reactivate or Delete the W-2 "Structured Form" Alternate View — Deferred 2026-04-28~~ **RESOLVED 2026-10-30: DELETED** (owner) - the unreachable structured-form views were removed from 18 statement components (W-2 family, W-2G, 1095-A/B/C, 3921, 5498, SSA-1099, RRB-1099, RRB-1099-R, capital statement, 8606, K-1s); -5,806 lines, bundle 10.46 -> 9.92 MB; replicas unchanged. Also fixed: 10 of them never showed "Saved successfully" (zoneless change detection after the async save).
 
 `form-w-2.component.ts` still contains the `*ngIf="!pdfView"` "structured form" view (~487 lines): sectioned form with separate fields, Add/Remove buttons for box-12 / box-14 / state-local arrays, routing-question gate, separate save button. This view was reachable via a Form/Pdf toggle that's now hidden (`*ngIf="false"` on the `view-toggle` div, which was removed from the template; `_pdfView = true` is the field default). The form view is technically dead but its code is functional.
 

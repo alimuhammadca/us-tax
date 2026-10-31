@@ -1,3 +1,9 @@
+## 2026-10-30T23:00 - Dead statement form views deleted; save message fixed on 10 statement forms
+
+- 18 statement components had a structured-form alternate view reachable only through a p-toggleswitch inside *ngIf="false" (or no switch at all): deleted with their form-only helpers / imports / CSS (-5,806 lines; initial bundle 10.46 MB -> 9.92 MB). Replicas unchanged. Help pop-ups (only opened from the deleted views) and the shell's 8853 / 8889 capital-statement routes (never offered in the picker) are left as unreachable code.
+- W-2G, 1095-A/B/C, 3921, 5498, 2439, RRB-1099, RRB-1099-R, SSA-1099: "Saved successfully" never appeared (zoneless - no change detection after the async save; NG0100). Each now runs cdr.detectChanges() after the save and in the message-clearing timeout, as the W-2 forms do. Smoke test per form (save message + value after reload) passed, mutation-checked on W-2G.
+- Checks: ng build; statement-form-picker, get-started, K-1 round-trips, attached-statement-advisories, dependent-statement-picker specs pass.
+
 ## 2026-10-30T20:00 - Pension spouse upload gate
 
 - Joint return: a spouse who says she had pension income / received a non-IRA 1099-R or RRB-1099-R now needs her own statement (recipient TIN = spouse SSN) on file; before, the taxpayer's 1099-R satisfied the gate and her missing statement passed silently. Same flags (PENSION_STATEMENT_UPLOAD_REQUIRED, MISSING_UPLOADED_NON_IRA_1099_R / _RRB_1099_R), same overrideability. PensionSpouseUploadGate.

@@ -4633,3 +4633,7 @@ mapping an Azure 429 to 503 rather than a bare 500.
 - Surveyed all 82 `form-tax-return-*` components + shared wrappers: every visible preview was already pure HTML/CSS (38 via `pure-pdf-preview`, the rest own `renderPage` renderers); no iframe/embed/pdf.js/alternate-view branches.
 - Deleted the one retired alternate view, `form-tax-return-required-attachment` (unreachable field-list, NG8113 unused), plus its shell import and spec lines. Save-as-PDF export paths kept. Build green (9.92 MB); tax-return-saved-pdf 6/6, schedule1-pdf-render 2/2, wired-form-previews-render 3/3.
 - us-tax-return-forms repo is ignored per owner.
+
+## 2026-10-30 — Verify-code screen polish (us-tax-ui)
+- `/auth/verify-code`: the Verification code box gets focus once the SMS is sent and after Resend (deferred a tick: ngModel re-enables the disabled input asynchronously).
+- "Resend code" / "Cancel" (and the verify-email gate's links) now look clickable: brand indigo `#3538CD`, underlined, 0.95rem, hover + focus-visible ring. Verified with a stubbed-SMS Playwright check.

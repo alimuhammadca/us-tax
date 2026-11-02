@@ -3,13 +3,15 @@
     python make_1040.py <blank f1040--2024.pdf>
 
 Output: <name>-1040-2024.pdf (flattened: no form fields, no XFA, so every viewer shows the data)
-plus <name>-1040-2024-page-N.png. Text fields are baked into the page; checkboxes are drawn as
+plus <name>-1040-2024.png and .jpg (both pages stacked in one 150 dpi image). Text fields are baked into the page; checkboxes are drawn as
 vector lines, because a check-mark font is not available in every viewer.
 Blank form: https://www.irs.gov/pub/irs-prior/f1040--2024.pdf
 Field names were identified from the printed labels next to each widget (2024 revision).
 """
+import io
 import sys
 import fitz  # PyMuPDF
+from PIL import Image
 
 # Checkbox keys: (field name, test on the widget rect) — the 2024 form reuses names across boxes.
 HOH = ('c1_3', lambda r: r.x0 > 300 and abs(r.y0 - 199) < 3)
@@ -102,8 +104,14 @@ def build(blank: str, name: str, spec: dict) -> None:
         shape.commit()
     out = f'{name}-1040-2024'
     doc.save(f'{out}.pdf', garbage=3, deflate=True)
-    for page in doc:
-        page.get_pixmap(dpi=150).save(f'{out}-page-{page.number + 1}.png')
+    pages = [Image.open(io.BytesIO(pg.get_pixmap(dpi=150).tobytes('png'))).convert('RGB') for pg in doc]
+    stacked = Image.new('RGB', (max(i.width for i in pages), sum(i.height for i in pages)), 'white')
+    y = 0
+    for img in pages:
+        stacked.paste(img, (0, y))
+        y += img.height
+    stacked.save(f'{out}.png', optimize=True)
+    stacked.save(f'{out}.jpg', quality=90)
     print(f'{out}.pdf  ticks={len(marks)}')
 
 

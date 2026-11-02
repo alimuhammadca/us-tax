@@ -6,23 +6,15 @@ The PDFs are **flattened** (no form fields, no XFA layer, check marks drawn as l
 every viewer. The blank IRS form carries an XFA layer that Adobe Reader / Edge show instead of filled fields,
 which is why an unflattened copy looks empty. Rebuild with `python make_1040.py <blank f1040--2024.pdf>`.
 
-| File | Use |
+Each return is one file per format: `<name>-1040-2024.pdf` (both pages), `.png` and `.jpg` (both pages stacked
+in one image — the app splits a stacked image into letter-size pages before sending it to Azure, which otherwise
+reads an image as a single page and loses page 1). Images are 150 dpi; smaller renders can lose the SSN digits.
+
+| Return | Covers |
 |---|---|
-| `rivera-1040-2024.pdf` | Both pages — the full test. Head of household, two dependents |
-| `rivera-1040-2024-page-1.png` | Photo/scan case: page 1 only (identity, address, filing status, dependents) |
-| `rivera-1040-2024-merged.png` | Both pages stacked in one image — read as two pages |
-| `rivera-1040-2024-page-2.png` | Page 2 only (occupation, phone, email, designee, bank) — shows a partial read |
-| `chen-1040-2024.pdf` | Married filing separately — spouse named on the filing-status line, no dependents |
-| `chen-1040-2024-page-1.png` | Page 1 of the MFS return as an image |
-| `chen-1040-2024-page-2.png` | Page 2 of the MFS return |
-| `sample-1040-2024.pdf` | The e2e household (MFJ, one child) — same as `e2e/tests/fixtures/prior-1040` |
-| `sample-1040-2024-page-1.png` | Page 1 of the same, as an image |
-
-Every `.png` above also has a `.jpg` copy with the same name (`chen-1040-2024-merged.png` / `.jpg` hold both MFS pages stacked).
-
-An image may hold one page, or several pages stacked into one tall image (`rivera-1040-2024-merged.png`):
-the app splits a stacked image into letter-size pages before sending it to Azure, which otherwise reads an
-image as a single page and loses page 1. Use at least ~150 dpi — smaller renders can lose the SSN digits.
+| `rivera-1040-2024` | Head of household, two dependents, third party designee, savings refund |
+| `chen-1040-2024` | Married filing separately — spouse named on the filing-status line, no dependents |
+| `sample-1040-2024` | The e2e household (MFJ, one child) — same as `e2e/tests/fixtures/prior-1040` |
 
 ## Expected result — `rivera-1040-2024.pdf` (verified 2026-10-12 against the local backend)
 
@@ -53,7 +45,7 @@ click *Fill in blanks again* — your change is kept, and the dependents are not
 | Dependents / designee | None on this return |
 | Last year's numbers shown | Total income $72,000 · AGI $72,000 · Taxable income $57,400 · Total tax $7,681 · Refund $519 |
 
-The page-1 PNG gives the same result minus the occupation, phone and email (they are on page 2). This file also
+The PNG and JPG give the same result. This file also
 guards a rule: a spouse SSN by itself must not be read as a joint return (only a spouse NAME on the
 "If joint return" line implies MFJ when the checkbox is unreadable).
 

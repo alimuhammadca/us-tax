@@ -1,3 +1,10 @@
+## 2026-11-02T20:00 - App dialogs replace browser alert/confirm; loading overlay no longer flickers
+
+- Every window.confirm / window.alert is gone: confirmDataLoss (38 call sites) and 9 direct calls use AppDialogService (PrimeNG ConfirmDialog, one <p-confirmdialog> in AppComponent). The red button is named after the action (Remove / Delete / Clear / Discard). Clear dependent no longer asks twice.
+- Remove needed two clicks and the screen flickered: the full-screen loading overlay blinked on every background request (6 times in ~1 s around the dialog) and sat above the dialog, taking clicks. It now still blocks clicks for every request (so nothing is typed into a form whose data is loading) but is seen only after 400 ms and then stays >= 300 ms; dialogs sit above it (baseZIndex 3000).
+- UI unit suite builds again (3 stale spec models fixed): 515/518 pass; 3 stale expectations remain (form-dependent radio count, two filing-status key tests) - not related.
+- e2e: helpers/app-dialog.ts (onAppDialog / answerAppDialog); 77 affected spec files: 642 passed, 11 skipped. (us-tax-ui 913d096, bf7f50d; us-tax-be c2917aa1 + this)
+
 ## 2026-11-02T17:00 - Select statements: ticking a statement no longer opens it
 
 - Ticking a statement on Select statements adds it to the Statements section and leaves the user on the picker (owner); unticking removes it (after the delete confirmation), also without moving. No placeholder entry is created until the statement is opened.

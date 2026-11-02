@@ -585,3 +585,7 @@ needs nothing extra; add `required` only when one item is indispensable.
 
 **The app does not amend a filed return (2026-11-02, owner).** No 1040-X scenario; Select tax scenarios tells the user to
 contact an accountant or tax professional.
+
+**No browser dialogs (2026-11-02, owner).** Never window.alert / window.confirm / window.prompt: use AppDialogService
+(`confirm`, `alert`) or `confirmDataLoss` (both async - await them). e2e answers them with helpers/app-dialog.ts.
+The loading overlay is invisible for the first 400 ms of a request (it still blocks clicks); don't make it show at once.

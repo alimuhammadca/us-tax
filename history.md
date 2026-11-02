@@ -2,6 +2,7 @@
 
 - After "Skip and enter my information" the button said "Go to Identification", but the next sidebar form after Last year 1040 is Select tax scenarios. It now reads "Continue to Select tax scenarios" and opens that form; the message no longer points at the Personal section. (us-tax-ui a31de16, e2e us-tax-be 14b0cf8f)
 - Checks: prior-year-1040 and get-started specs pass (11/11).
+- The six "what we fill in" labels under the upload box (Names and SSNs ... Third party designee) are removed; the intro sentence already lists them. prior-year-1040 spec passes (4/4).
 
 ## 2026-10-30T23:00 - Dead statement form views deleted; save message fixed on 10 statement forms
 

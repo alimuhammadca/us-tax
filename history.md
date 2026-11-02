@@ -1,3 +1,8 @@
+## 2026-11-02T12:00 - Last year 1040: skip continues to Select tax scenarios
+
+- After "Skip and enter my information" the button said "Go to Identification", but the next sidebar form after Last year 1040 is Select tax scenarios. It now reads "Continue to Select tax scenarios" and opens that form; the message no longer points at the Personal section. (us-tax-ui a31de16, e2e us-tax-be 14b0cf8f)
+- Checks: prior-year-1040 and get-started specs pass (11/11).
+
 ## 2026-10-30T23:00 - Dead statement form views deleted; save message fixed on 10 statement forms
 
 - 18 statement components had a structured-form alternate view reachable only through a p-toggleswitch inside *ngIf="false" (or no switch at all): deleted with their form-only helpers / imports / CSS (-5,806 lines; initial bundle 10.46 MB -> 9.92 MB). Replicas unchanged. Help pop-ups (only opened from the deleted views) and the shell's 8853 / 8889 capital-statement routes (never offered in the picker) are left as unreachable code.

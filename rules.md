@@ -586,6 +586,8 @@ needs nothing extra; add `required` only when one item is indispensable.
 **The app does not amend a filed return (2026-11-02, owner).** No 1040-X scenario; Select tax scenarios tells the user to
 contact an accountant or tax professional.
 
+**No hard-coded tax year (2026-11-02, owner).** Screen text and calculations take the year from `us-tax-ui/src/app/tax-year.ts` (`TAX_YEAR`, `PRIOR_TAX_YEAR`, `FILING_YEAR`, `AGE_65_BORN_BEFORE_YEAR`, `TAX_YEAR_START/END`), never a literal 2025 / 2024 / 2026. The backend's one source is `ReferenceData.TAX_YEAR` (`CurrentContext.DEFAULT_TAX_YEAR` points at it, and `GET /api/reference-data` returns it; the UI warns in the console on a mismatch). Kept as literals: saved field names (`...2025`), IRS form revision labels ("Rev. 4-2025"), code comments. Text follows the law year (`TAX_YEAR`), not the topbar's `YearScopeService.activeYear`. Migrated screen by screen (owner): done - Identification.
+
 **No browser dialogs (2026-11-02, owner).** Never window.alert / window.confirm / window.prompt: use AppDialogService
 (`confirm`, `alert`) or `confirmDataLoss` (both async - await them). e2e answers them with helpers/app-dialog.ts.
 The loading overlay is invisible for the first 400 ms of a request (it still blocks clicks); don't make it show at once.

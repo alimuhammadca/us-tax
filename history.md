@@ -1,3 +1,18 @@
+## 2026-11-02T23:30 - One tax-year constant; Identification uses it; plain subtitle
+
+- UI: new src/app/tax-year.ts (TAX_YEAR = 2025, PRIOR_TAX_YEAR, FILING_YEAR, AGE_65_BORN_BEFORE_YEAR, TAX_YEAR_START/END). YearScopeService.DEFAULT_YEAR uses it; ReferenceDataService warns if the backend's TAX_YEAR differs. Backend: CurrentContext.DEFAULT_TAX_YEAR = ReferenceData.TAX_YEAR (one source per side).
+- Audit: ~1,400 UI lines hard-code 2025 (+ ~1,100 with 2024/2026), backend ~1,700. Owner: migrate screen by screen. Identification done (help text, combat-zone label, date limits); saved field names, form revision labels and comments stay literal.
+- Identification subtitle replaced ("This screen follows the ... YAML") with "Enter your details exactly as they appear on your Social Security card. They go at the top of your Form 1040." (spouse: same, for the spouse).
+- Checks: e2e 92/92 (date-picker change) then 11/11 (identification specs after this); unit 5/5.
+
+## 2026-11-02T23:00 - Identification (taxpayer + spouse): layout, date pickers, IRS-based help
+
+- Middle initial is now half the width of First / Last name (2:1:2). The global .form-view .row grid was giving every column the same width, so the component's flex sizes were ignored; a name-row grid fixes it (one column on phones).
+- Date of birth and date of death sit side by side and both use the PrimeNG date picker (calendar button, still typeable as YYYY-MM-DD); Occupation moved to its own row. Date of birth stays masked once filled (CSS text-security) until the eye is clicked.
+- The combat-zone hint under the Yes/No ("Checks the combat-zone box ... does not change your tax") moved into the field's help.
+- Every help text rewritten from the 2025 Form 1040 instructions (Name and Address, Name Change, SSN, ITINs, Death of a Taxpayer, Line 12d age-65 rule, Sign Your Return, Identity Protection PIN) and Pub. 3 for the combat-zone deadline extension.
+- e2e: personal-form-actions types the date (PrimeNG's date picker ignores page.fill); spouse unit test checks isMasked.
+
 ## 2026-11-02T20:00 - App dialogs replace browser alert/confirm; loading overlay no longer flickers
 
 - Every window.confirm / window.alert is gone: confirmDataLoss (38 call sites) and 9 direct calls use AppDialogService (PrimeNG ConfirmDialog, one <p-confirmdialog> in AppComponent). The red button is named after the action (Remove / Delete / Clear / Discard). Clear dependent no longer asks twice.

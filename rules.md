@@ -574,3 +574,14 @@ above it. A re-key ships with a migration that moves the saved values to the box
 **A test the law applies in the year property is placed in service is not re-applied in later years (2026-10-26,
 D-4562-2).** Section 179's more-than-50% business use is tested when the asset is placed in service; a later drop is
 recapture (Form 4797 Part IV), not a lost election.
+
+
+**Ticked tax scenarios are checked before Compute return, as a warning, never a block (2026-11-02, owner).** A ticked
+scenario with none of its statements or forms entered (or without the item it marks `required`, e.g. a dependent for
+"children under 17") is listed in a "Before we compute" dialog: Go to Your checklist / Compute anyway / close. Every
+choice is written to `audit_log` (action `compute_scenario_warnings`, resource = tax year, details = what was shown and
+chosen) so a later complaint can be checked. Logic: `us-tax-ui/src/app/data/scenario-completeness.ts`. A new scenario
+needs nothing extra; add `required` only when one item is indispensable.
+
+**The app does not amend a filed return (2026-11-02, owner).** No 1040-X scenario; Select tax scenarios tells the user to
+contact an accountant or tax professional.

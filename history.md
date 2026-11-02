@@ -1,3 +1,11 @@
+## 2026-11-02T16:00 - Compute return warns about ticked tax scenarios with nothing entered; no amended returns
+
+- Before computing, ticked tax scenarios whose statements/forms have nothing entered are listed in a "Before we compute" dialog (Go to Your checklist / Compute anyway / close). Warning only. Household-level: any entry with data, the Family Head's or spouse's form, 'dependent' = a dependent added; previews and forms that can't be checked from saved data are left out. 8 scenarios mark an item they can't do without (spouse identification, dependent, child care expenses, W-2, 1095-A).
+- Each choice is audited: POST /api/tax-scenarios/compute-warnings -> audit_log action compute_scenario_warnings (kept through data resets).
+- "I need to fix a return I already filed" removed (owner: the app does not amend; see an accountant or tax professional) - a note under Tax payments, credits & filing says so, also found by searching "amend". 106 scenarios.
+- Fixed: Your checklist showed Employment / Tips / Medicaid waiver payments as not started even when saved (they save under employment-income-*, tip-income-*, medicaid-waiver-payments-*).
+- Checks: TaxScenariosResourceTest; scenario-completeness spec 7/7 (run under Node - the Karma build fails on an existing type error in form-dependent.component.spec.ts); e2e compute-scenario-warnings 3/3, tax-scenarios, get-started and 2 UI-compute specs 14/14; audit rows verified in Postgres; ng build.
+
 ## 2026-11-02T12:00 - Last year 1040: skip continues to Select tax scenarios
 
 - After "Skip and enter my information" the button said "Go to Identification", but the next sidebar form after Last year 1040 is Select tax scenarios. It now reads "Continue to Select tax scenarios" and opens that form; the message no longer points at the Personal section. (us-tax-ui a31de16, e2e us-tax-be 14b0cf8f)

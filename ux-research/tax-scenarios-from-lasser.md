@@ -230,19 +230,15 @@ app form. 105 map to an input form; 2 map only to a Tax Return preview (amended 
 | Ch. 42 / 43 depreciation detail (MACRS tables, conventions, listed property, luxury-auto caps) | Covered by "I bought equipment…" and "I used my car or truck for business". |
 | Ch. 48 IRS exams and penalties (except 48.7 foreign accounts) | This is procedure, not a filer situation. 48.7 is kept as the foreign-accounts scenario. |
 
-## Gaps: scenarios with weak or preview-only app support
+## Gaps: scenarios with weak or preview-only app support (re-checked 2026-11-02)
 
-- **"I need to fix a return I already filed"** maps only to the `tax-return-1040x` preview. There is
-  no input form for entering changes.
-- **"I may owe the alternative minimum tax"** maps only to the `tax-return-6251` preview. AMT is
-  computed, so this is a routing question rather than a missing feature.
-- **Installment sale (Form 6252).** A `Form6252Component` exists and is routed (`'6252'`), but it is
-  not in any sidebar array. The scenario points to capital-gain-loss instead.
-- **Household employee (Schedule H)** lives inside the "Other tax items" form (`16-tax-taxpayer`). The
-  sidebar has no Schedule H entry.
-- **Misclassified worker (Form 8919)** maps to Uncollected Social Security and the 8919 preview. There
-  is no statement for it (no 1099 equivalent).
-- **Opportunity Zone deferral (Form 8997), like-kind exchange (Form 8824) and Form 8857** have no
-  dedicated app form.
-- **"Not in book" 2025 scenarios** (tips, overtime, car loan interest, senior deduction) cite no book
-  section. Their authority is the 2025 Schedule 1-A instructions.
+- **Amended returns (Form 1040-X)** — the scenario was removed (owner, 2026-11-02): the app does not amend a filed
+  return. Select tax scenarios tells the user to contact an accountant or tax professional.
+- **"I may owe the alternative minimum tax"** maps to statements 3921 / 1099-INT and the `tax-return-6251` preview. AMT
+  is computed, so this is a routing question rather than a missing feature.
+- **Misclassified worker (Form 8919)** has no statement (no 1099 equivalent); Uncollected Social Security takes the input.
+- **Opportunity Zone deferral (Form 8997) and Form 8857** have no app form and are not scenarios.
+- Now supported (this list was stale): installment sales (Installment sales form + Form 6252), household employees
+  (`schedule-h-taxpayer`), like-kind exchanges (`like-kind-exchanges-taxpayer` + Form 8824).
+- **"Not in book" 2025 scenarios** (tips, overtime, car loan interest, senior deduction) cite no book section. Their
+  authority is the 2025 Schedule 1-A instructions.

@@ -1,5 +1,20 @@
 # Outstanding Items
 
+## Audit log timestamps are 5 hours off locally — `created_at` default converts to UTC twice (found 2026-11-02)
+
+`audit_log.created_at` is `TIMESTAMPTZ DEFAULT (NOW() AT TIME ZONE 'UTC')` (V134), and `AuditLogEntity` leaves it to
+the default (`insertable = false`). `NOW() AT TIME ZONE 'UTC'` gives a timestamp WITHOUT time zone holding the UTC
+clock time; storing it in a TIMESTAMPTZ column reads it back in the session's time zone. The local backend's JDBC
+session is America/Toronto, so a row written at 10:47 EST (15:47 UTC) is stored as 20:47 UTC, 5 hours late. Seen on
+the `compute_scenario_warnings` rows of 2026-11-02 (local Postgres). Other tables use the same default and may have
+the same problem.
+
+Production is right only if its database session runs in UTC, which hasn't been verified. This matters for audits:
+the time on a record must be trusted when checking a user's complaint.
+
+Fix: default to `NOW()` (TIMESTAMPTZ is already absolute) in a new migration; decide whether to correct existing rows
+(only possible if the session time zone they were written in is known).
+
 ## DECIDE LATER — Form 1040-X preview in the Tax Return sidebar (opened 2026-11-02)
 
 The owner decided on 2026-11-02 that the app does not amend a filed return; the user should see an accountant or tax

@@ -1,3 +1,8 @@
+## 2026-11-02T17:00 - Select statements: ticking a statement no longer opens it
+
+- Ticking a statement on Select statements adds it to the Statements section and leaves the user on the picker (owner); unticking removes it (after the delete confirmation), also without moving. No placeholder entry is created until the statement is opened.
+- e2e: new "keeps the user on Select statements" test; two helpers that relied on the jump now open the statement from the sidebar. 23/23 related specs pass.
+
 ## 2026-11-02T16:00 - Compute return warns about ticked tax scenarios with nothing entered; no amended returns
 
 - Before computing, ticked tax scenarios whose statements/forms have nothing entered are listed in a "Before we compute" dialog (Go to Your checklist / Compute anyway / close). Warning only. Household-level: any entry with data, the Family Head's or spouse's form, 'dependent' = a dependent added; previews and forms that can't be checked from saved data are left out. 8 scenarios mark an item they can't do without (spouse identification, dependent, child care expenses, W-2, 1095-A).

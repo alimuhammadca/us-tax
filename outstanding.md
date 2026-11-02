@@ -1,5 +1,15 @@
 # Outstanding Items
 
+## DECIDE LATER — Form 1040-X preview in the Tax Return sidebar (opened 2026-11-02)
+
+The owner decided on 2026-11-02 that the app does not amend a filed return; the user should see an accountant or tax
+professional. The "I need to fix a return I already filed" tax scenario was removed and Select tax scenarios now says
+so. The read-only **Form 1040-X preview** (`tax-return-1040x`, `form-tax-return-1040x.component.ts`) is still in the Tax
+Return sidebar. It has no input form and nothing computes it.
+
+**Owner, 2026-11-02:** "do not remove it". To decide later: keep it, remove it from the sidebar, or label it as not
+supported. Removing it or changing how it looks is a tax-return form change, so it needs the owner's sign-off.
+
 ## ★ IRS deviations — 2026-10-24 documentation rebuild — **ALL FIXED or CLOSED by 2026-10-28**, except HELD D-sch-se-7 / D-sch-se-7b (2025 Schedule SE template - needs the 2025 PDF + owner sign-off), D-1099-s-4 (no change needed) and edge case D-k1-1041-11b-cp
 
 **Status 2026-10-30:** every row below carries its FIXED / CLOSED / HELD note; full e2e regression 2026-10-30: 2,062 passed, 4 environment failures re-run green.

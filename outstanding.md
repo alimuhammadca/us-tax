@@ -1,5 +1,31 @@
 # Outstanding Items
 
+## Revise the date of birth / date of death logic (opened 2026-11-02, owner)
+
+The Identification screens now check dates as they are typed (real calendar date, date of birth 1900 to
+Dec 31 2025, taxpayer date of death within 2025, spouse date of death on or before Dec 31 2025, death not before
+birth). These limits copied the old rules; the owner wants the logic behind them revised, in the UI and the backend
+together. To review against the 2025 Form 1040 instructions ("Death of a Taxpayer", Filing Status, line 12d):
+
+1. **A death in 2026 before the 2025 return is filed.** The instructions: "If a taxpayer died before filing a return
+   for 2025, the taxpayer's spouse or personal representative may have to file and sign a return for that taxpayer
+   ... check the 'Deceased' box ... enter the date of death", and "if your spouse died in 2026 before filing a return
+   for 2025, you can file a joint return." Today both are refused: the taxpayer's date of death must be in 2025
+   (UI limit; backend blocking `DATE_OF_DEATH_NOT_IN_TAX_YEAR`, `TaxReturnComputeService.java:11608`), and a spouse
+   date after 2025 is blocked (UI limit; same flag, `:11641`). Decide the allowed range (up to the filing date?) and
+   what a 2026 death changes: the person was alive all of 2025, so age 65 is measured at Dec 31 2025, not at death
+   (`age65AtDeath` / `isAge65InTaxYear`), and the filing-status checks keyed on the death year (MFJ, QSS 2023/2024,
+   "still married" for a 2025 death) need a 2026 branch.
+2. **A taxpayer date of death before 2025.** Not a 2025 return for that person. Keep blocking it; check the message.
+3. **Date of birth.** The UI allows 1900 to Dec 31 2025. Decide whether a birth after the date of death, or after the
+   tax year, should also be a backend check (today it is UI-only, so a value saved through the API is not checked).
+4. **Death before birth.** UI-only check today; add the same check to the backend.
+5. **Server-side checks for typed formats.** SSN/ITIN rules, the 6-digit IP PIN and real dates are checked only in the
+   UI (`utils/id-validation.ts`). `pf_identification.date_of_birth` / `date_of_death` are `LocalDate`, but the SSN and IP
+   PIN are saved as typed. Decide whether the save endpoint should reject or flag invalid values.
+6. **Hard-coded 2025 in these checks.** The backend death-date rules use literal 2025 / 2023 / 2024; switch them to
+   `ReferenceData.TAX_YEAR` (rules.md "No hard-coded tax year").
+
 ## Audit log timestamps are 5 hours off locally — `created_at` default converts to UTC twice (found 2026-11-02)
 
 `audit_log.created_at` is `TIMESTAMPTZ DEFAULT (NOW() AT TIME ZONE 'UTC')` (V134), and `AuditLogEntity` leaves it to

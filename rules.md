@@ -586,6 +586,8 @@ needs nothing extra; add `required` only when one item is indispensable.
 **The app does not amend a filed return (2026-11-02, owner).** No 1040-X scenario; Select tax scenarios tells the user to
 contact an accountant or tax professional.
 
+**Formatted numbers and dates: digits only, validated (2026-11-02, owner).** SSN / ITIN, IP PIN and date fields never make the user type dashes or slashes: use `appDigitFormat="ssn" | "pin"` (`directives/digit-format.directive.ts`) and `<app-date-input>` (`components/date-input.component.ts`); both validate with `utils/id-validation.ts` and every invalid value shows a message saying what is wrong and how to fix it. A date field emits 'YYYY-MM-DD' only when complete and real. Migrated screen by screen with the tax year: done - Identification.
+
 **No hard-coded tax year (2026-11-02, owner).** Screen text and calculations take the year from `us-tax-ui/src/app/tax-year.ts` (`TAX_YEAR`, `PRIOR_TAX_YEAR`, `FILING_YEAR`, `AGE_65_BORN_BEFORE_YEAR`, `TAX_YEAR_START/END`), never a literal 2025 / 2024 / 2026. The backend's one source is `ReferenceData.TAX_YEAR` (`CurrentContext.DEFAULT_TAX_YEAR` points at it, and `GET /api/reference-data` returns it; the UI warns in the console on a mismatch). Kept as literals: saved field names (`...2025`), IRS form revision labels ("Rev. 4-2025"), code comments. Text follows the law year (`TAX_YEAR`), not the topbar's `YearScopeService.activeYear`. Migrated screen by screen (owner): done - Identification.
 
 **No browser dialogs (2026-11-02, owner).** Never window.alert / window.confirm / window.prompt: use AppDialogService

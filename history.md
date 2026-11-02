@@ -1,3 +1,12 @@
+## 2026-11-02T23:59 - Identification: digits-only SSN / ITIN / IP PIN / dates, with validation messages
+
+- Users type digits only; the dashes are added as they type (123-45-6789, 1985-03-14) and anything else is dropped. New `directives/digit-format.directive.ts` (appDigitFormat="ssn" | "pin") and `components/date-input.component.ts` (typed date + calendar button, masked DOB); rules in `utils/id-validation.ts`.
+- Checks with messages: SSN (9 digits; never 000 / 666 / 9xx start, 00 middle, 0000 end), ITIN (starts with 9; digits 4-5 in 50-65, 70-88, 90-92, 94-99), IP PIN (6 digits), dates (complete, real, leap years), DOB 1900 to Dec 31 of the tax year, taxpayer DOD in the tax year, spouse DOD not after it, DOD not before DOB.
+- A half-typed or impossible date is saved as empty (pf_identification dates are LocalDate); Save warns as before.
+- Fixed while testing: the calendar re-rendered without end when given a new Date on every change detection.
+- outstanding.md: "Revise the date of birth / date of death logic" (2026 deaths allowed by the IRS instructions are refused today; backend checks).
+- Checks: unit 10/10 (id-validation + identification); e2e 92/92.
+
 ## 2026-11-02T23:30 - One tax-year constant; Identification uses it; plain subtitle
 
 - UI: new src/app/tax-year.ts (TAX_YEAR = 2025, PRIOR_TAX_YEAR, FILING_YEAR, AGE_65_BORN_BEFORE_YEAR, TAX_YEAR_START/END). YearScopeService.DEFAULT_YEAR uses it; ReferenceDataService warns if the backend's TAX_YEAR differs. Backend: CurrentContext.DEFAULT_TAX_YEAR = ReferenceData.TAX_YEAR (one source per side).

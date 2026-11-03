@@ -1,5 +1,25 @@
 # Outstanding Items
 
+## Last year 1040 on the Spouse tab (deferred 2026-11-03, owner: "skip for now, keep for later")
+
+The Last year 1040 upload is on the Family Head tab only (`pf_prior_year_1040`, one row per uid + year;
+`PriorYear1040Prefill`). That is enough when the couple filed **jointly for 2024**: the one 1040 fills the spouse's
+Identification and marks the spouse address "same as yours", even when they file separately for 2025. It is a gap when
+the **spouse filed their own 2024 return** (MFS, or Single/HOH and married in 2025): that 1040 cannot be uploaded
+anywhere, whether the couple files MFJ or MFS for 2025.
+
+Proposed (not approved yet):
+1. Spouse tab Get started: Last year 1040 -> Prior-year carryovers -> Select tax scenarios -> Select statements -> Your
+   checklist. The page first asks "How did your spouse file for 2024?" - *jointly with you* -> note that the Family
+   Head's upload covers it, with a link; *their own return* -> an upload that fills blanks only on the spouse's forms
+   (identification-spouse, address-spouse incl. phone/email, third-party-designee-spouse), never overwriting.
+2. Needs an owner-approved field: a person column on `pf_prior_year_1040` (taxpayer | spouse) + migration, and the
+   resource / UserDataBulkDelete / clean-user-data paths keyed by it.
+3. Related, optional: the parser already reads last year's AGI (`adjustedGrossIncome`) and `totalTax` but nothing
+   uses them. They could pre-fill `prior-year-tax` (Form 2210 safe harbor, `PriorYearTaxMapper.priorYearAgi`). With
+   two separate 2024 returns and a 2025 joint return the prior-year tax is the two combined, so it needs both uploads.
+   Confirm the rule in the Form 2210 instructions (docs/books) before building.
+
 ## Revise the date of birth / date of death logic (opened 2026-11-02, owner)
 
 The Identification screens now check dates as they are typed (real calendar date, date of birth 1900 to

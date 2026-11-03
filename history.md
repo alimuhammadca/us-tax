@@ -1,3 +1,10 @@
+## 2026-11-03T16:00 - Third party designee screen: phone / PIN rules, PIN eye, end date from the tax year, IRS help
+
+- Phone: same rules as Address (`appDigitFormat="phone"`, digits only, formatted as typed, U.S. 10-digit checks; "Phone number outside the U.S." lays it out with the country code - UI only, derived from the saved digits). PIN: new `designeePin` format (5 digits, not 00000; "any five digits the designee chooses"), masked with a show/hide eye like the IP PIN. A malformed phone or PIN blocks the save with the field message.
+- Authorization end computed from TAX_YEAR: "no later than April 15, {TAX_YEAR + 2}" (due date of the {TAX_YEAR + 1} return, per the instructions), was a hard-coded April 15, 2027.
+- Help from the 2025 Form 1040 instructions "Third Party Designee" (`data/third-party-designee-help.ts`): who can be a designee, what the designee may and may not do, Pub. 947, the end date, the PIN.
+- Storage: InputNormalizer keeps only digits for `designeePhone` / `designeePin` on third-party-designee-* forms; Form 1040 output formats the phone (InputNormalizer.formatPhone). InputNormalizerTest 4/4; id-validation unit test; e2e third-party-designee (new screen test + digits saved, output formatted), MFS designee, actions/next-order/get-started: 17 pass.
+
 ## 2026-11-03T15:00 - Presidential election campaign screen: plain subtitle, IRS help
 
 - Both screens (taxpayer, spouse): subtitle no longer mentions YAML ("Form 1040 lets each filer send $3 of federal tax to the Presidential Election Campaign Fund. Your tax or refund won't change."); help from the 2025 Form 1040 instructions "Presidential Election Campaign Fund" (what the fund does incl. pediatric medical research, no change to tax or refund, one box per spouse on a joint return, each spouse on their own separate return) and the Privacy Act notice (the box is optional), in `data/presidential-election-help.ts`. The spouse help no longer says "complete only if filing a joint return" (wrong on separate returns).

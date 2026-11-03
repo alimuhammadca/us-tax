@@ -1,3 +1,9 @@
+## 2026-11-03T14:00 - Digital assets screen: plain subtitle, IRS help, tax year from tax-year.ts
+
+- Both Digital assets screens (taxpayer, spouse): subtitle no longer mentions YAML; the question reads "At any time during {TAX_YEAR} ..."; help rewritten from the 2025 Form 1040 instructions "Digital Assets" / "How To Report Digital Asset Transactions" (what counts, the Yes examples incl. mining/staking/hard fork, financial interest, the No cases, Form 1099-DA, where the activity is reported, the joint/separate behavior) in `data/digital-assets-help.ts`.
+- Shared help modal: capped at 90vh with a scrolling body (long help pushed the title and Close button off screen).
+- e2e: new digital-assets-screen.spec.ts; digital-assets / per-person / mapper / next-order specs 23 pass.
+
 ## 2026-11-03T13:00 - Prior-year carryovers moved to Get started; one per spouse
 
 - Owner: the page sat under Personal on the Family Head tab only. Now Get started step 2 (Last year 1040 -> Prior-year carryovers -> Select tax scenarios -> Select statements -> Your checklist) and in the Prev/Next flow; the Spouse tab has its own copy (step 1) whose links open the spouse's forms. Form 8990 (one per household) shows "Entered once for the household, on the Family Head tab" there.

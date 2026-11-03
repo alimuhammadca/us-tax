@@ -1,3 +1,9 @@
+## 2026-11-03T13:00 - Prior-year carryovers moved to Get started; one per spouse
+
+- Owner: the page sat under Personal on the Family Head tab only. Now Get started step 2 (Last year 1040 -> Prior-year carryovers -> Select tax scenarios -> Select statements -> Your checklist) and in the Prev/Next flow; the Spouse tab has its own copy (step 1) whose links open the spouse's forms. Form 8990 (one per household) shows "Entered once for the household, on the Family Head tab" there.
+- Removed the development-era "now supported" tag. Years from tax-year.ts. IRS-based help per carryover (i1040sd Capital Loss Carryover Worksheet, Pub. 536, i8582, i6198, i8995 lines 3/7/16/17, Pub. 526, i8990 line 2 / prior line 31, i8829 lines 25/31 from 2024 lines 43/44 - the old "lines 25/31" provenance was wrong, i1116, Form 3800, i8801 line 26, Form 5405, i6251 lines 2k/2m). Same card layout and Prev/Next bar as the other Get started pages.
+- e2e: prior-year-carryovers-onboarding (Family Head + spouse), get-started, personal-form-actions, personal-next-order updated; the checklist "all done" test now saves a complete Filing status (married for the year). 14 + 7 tax-scenario tests pass.
+
 ## 2026-11-03T10:00 - Filing status household facts: asked once, conflicts block (non-overrideable)
 
 - Owner-approved (V427 `pf_filing_status.married_for_year` NOT_MARRIED | MARRIED | SPOUSE_DIED_IN_YEAR, `spouse_nonresident_alien`; V426 `living_arrangement`, `legally_separated_year_end`). Single and head of household answer "Were you married for {year}?"; a married head of household answers the nonresident-alien question and the living-together question; married filing separately answers the living-together question; the legal-separation follow-up only where it can matter.

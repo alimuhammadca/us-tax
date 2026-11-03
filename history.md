@@ -1,3 +1,7 @@
+## 2026-11-03T18:30 - Form 1099-OID statement: box 12 / 13 labels no longer clipped
+
+- Boxes 12 and 13 rendered as "12" and "13 State identification": the labels ("12 State", "13 State identification no.") wrap in those narrow boxes and the label row was fixed at 1rem, so the second line was cut off. Label row in boxes 12-14 now sizes to its text. CSS-only change in `form-1099-oid.component.ts`; no field or compute change.
+
 ## 2026-11-03T18:00 - Form 1095-A statement: Part III line numbers 21-33
 
 - Part III (Coverage Information) rows now carry the printed line numbers, as Part II already did (16-20): 21 January ... 32 December, 33 Annual totals (Form 1095-A, 2025). Label-only change in `form-1095-a.component.ts`; no field, model or compute change.

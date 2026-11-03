@@ -1,3 +1,8 @@
+## 2026-11-03T15:00 - Presidential election campaign screen: plain subtitle, IRS help
+
+- Both screens (taxpayer, spouse): subtitle no longer mentions YAML ("Form 1040 lets each filer send $3 of federal tax to the Presidential Election Campaign Fund. Your tax or refund won't change."); help from the 2025 Form 1040 instructions "Presidential Election Campaign Fund" (what the fund does incl. pediatric medical research, no change to tax or refund, one box per spouse on a joint return, each spouse on their own separate return) and the Privacy Act notice (the box is optional), in `data/presidential-election-help.ts`. The spouse help no longer says "complete only if filing a joint return" (wrong on separate returns).
+- e2e: new presidential-election-screen.spec.ts; with mfs-spouse-presidential-election, per-person and next-order specs 11 pass.
+
 ## 2026-11-03T14:00 - Digital assets screen: plain subtitle, IRS help, tax year from tax-year.ts
 
 - Both Digital assets screens (taxpayer, spouse): subtitle no longer mentions YAML; the question reads "At any time during {TAX_YEAR} ..."; help rewritten from the 2025 Form 1040 instructions "Digital Assets" / "How To Report Digital Asset Transactions" (what counts, the Yes examples incl. mining/staking/hard fork, financial interest, the No cases, Form 1099-DA, where the activity is reported, the joint/separate behavior) in `data/digital-assets-help.ts`.

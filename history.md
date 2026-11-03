@@ -1,3 +1,7 @@
+## 2026-11-03T18:00 - Form 1095-A statement: Part III line numbers 21-33
+
+- Part III (Coverage Information) rows now carry the printed line numbers, as Part II already did (16-20): 21 January ... 32 December, 33 Annual totals (Form 1095-A, 2025). Label-only change in `form-1095-a.component.ts`; no field, model or compute change.
+
 ## 2026-11-03T16:00 - Third party designee screen: phone / PIN rules, PIN eye, end date from the tax year, IRS help
 
 - Phone: same rules as Address (`appDigitFormat="phone"`, digits only, formatted as typed, U.S. 10-digit checks; "Phone number outside the U.S." lays it out with the country code - UI only, derived from the saved digits). PIN: new `designeePin` format (5 digits, not 00000; "any five digits the designee chooses"), masked with a show/hide eye like the IP PIN. A malformed phone or PIN blocks the save with the field message.

@@ -1,3 +1,10 @@
+## 2026-11-03T19:00 - Form 1099-Q statement: Copy B with box 7 (FMV)
+
+- The screen mixed copies: Copy A title and notice, Copy B footer, and a grey filler where Copy B has box 7. It now shows Copy B (For Recipient), Rev. April 2025: "Copy B / For Recipient", the Copy B notice, and box 7 "If the fair market value (FMV) is shown below, see Pub. 970, Tax Benefits for Education, for how to figure earnings."
+- Box 7 is stored (owner-approved field): V428 `se_1099_q.fair_market_value_amount` / `fair_market_value_notes` (amount + notes, like boxes 1-3); entity + Form1099QMapper. Display only - no compute reads it (the Coverdell earnings-not-reported flag already points to it). No Azure extraction mapping (the prebuilt 1099-Q model's box 7 field is unverified).
+- e2e `form-1099q-box7-copy-b.spec.ts` (saved, reloaded, shown on Copy B) + `qtp-1099q-taxable-earnings-ui.spec.ts`: 3 pass.
+- Statement box audit closed by the owner: remaining differences are intentional. RRB-1099-R correction: the RRB's 01-19 TXL-1099-R lists boxes 1-10 with box 10 = Medicare premium total, matching the app (the earlier "missing 10/11, Medicare should be 12" came from a 2016 sample).
+
 ## 2026-11-03T18:30 - Form 1099-OID statement: box 12 / 13 labels no longer clipped
 
 - Boxes 12 and 13 rendered as "12" and "13 State identification": the labels ("12 State", "13 State identification no.") wrap in those narrow boxes and the label row was fixed at 1rem, so the second line was cut off. Label row in boxes 12-14 now sizes to its text. CSS-only change in `form-1099-oid.component.ts`; no field or compute change.

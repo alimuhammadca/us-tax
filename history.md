@@ -1,3 +1,10 @@
+## 2026-11-04T08:30 - W-2 box 14: amount read wherever it is in the text (UI pre-fill and compute)
+
+- Owner: the amount may be at the start of the text, not the end. Rule (same in `us-tax-ui utils/w2-box14.ts` and `W2Box14.amountInLabel`): candidates are money-looking numbers anywhere - "$", thousands commas or cents (strong) or a bare whole number of 2+ digits (weak); the "1" of "Tier 1", a code like "RRT22" and a bare year (19xx / 20xx) are never amounts; strong beat weak; one candidate is the amount.
+- Two items typed in one text ("RRTA comp 52,000.00 Tier 1 tax 3,224.00"): the amount paired with the item's name - after it when the text starts with a name, before it when it starts with an amount, with no other item name (tier 1 / 2, Medicare, comp) in between; otherwise none (the person enters it, no guess). The compute's RRTA compensation reads near "comp", tier 1 tax near "tier 1".
+- Handled: "52,000.00 RRTA compensation", "RRTA 52,000.00 compensation", "RRTA COMP: $52000", "RRTA comp - 52000", "52,000.00RRTA COMP", "RRTA comp 2025 52,000.00".
+- Tests: UI unit 5 groups; backend `OwnerApprovedFieldsW6Test` 16/16 (new `box14AmountAnywhereInTheText`); e2e typed W-2 now "52,000.00 RRTA compensation"; Tips + box 14 related e2e: 111 pass, 1 navigation flake (line1c :126, no W-2 / box 14; passes alone).
+
 ## 2026-11-04T07:50 - Tips: railroad (RRTA) compensation pre-filled from a typed or uploaded W-2
 
 - Bug: Tips pre-filled the RRTA compensation only from a separate box 14 amount (`box14Amount`), which neither the W-2 screen (box 14a is one text input) nor an upload (OCR fallback writes `box14Other[0].label`) saves - so for a railroad employer the box was never ticked and the amount stayed empty. All other boxes (name, EIN, 3, 7, 8) already pre-filled.

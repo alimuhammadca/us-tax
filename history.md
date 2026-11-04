@@ -1,3 +1,9 @@
+## 2026-11-04T21:45 - Adoption expenses: title like the other screens; checklist item 8 rule
+
+- Removed the "Tax Year 2025" and "Form 8839" tags next to the title (owner 2026-11-04); the title is now "Adoption expenses and benefits (person)" like the reviewed screens, and the badges name the form: "Forms W-2 (Wage and Tax Statement) on file", "Employer adoption benefits in Form W-2 box 12, code T".
+- Screen Review Checklist item 8: title pattern; no tax-year or form-number tags.
+- e2e: the 8 adoption-related specs, 72 passed.
+
 ## 2026-11-04T21:30 - Child and dependent care: box 10 rows link to their Form W-2; checklist item 6 rule
 
 - Each row in "Your Forms W-2 with dependent care benefits (box 10)" links (employer name) to that Form W-2 entry (`form-link` `[entryId]`), with partial save and "Back to Child and dependent care" (owner 2026-11-04).

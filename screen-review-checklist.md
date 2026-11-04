@@ -104,9 +104,12 @@ owner 2026-11-04).*
 - [ ] Does each spouse need their own copy (form ids `<base>-taxpayer` / `<base>-spouse`)? Household-only forms stay
       single.
 - [ ] Layout matches the section's other screens (`form-card`, shared `<form-actions>` Prev / Save / Next bar).
+- [ ] Title as on the other screens: `<h3>Screen name (person)</h3>` (`ownerNames.taxpayerLabel()` / `spouseLabel()`, or the
+      dependent's name), then the statement badges ("Forms W-2 (Wage and Tax Statement) on file: 2"). No "Tax Year 2025"
+      tag (the year is in the top bar and footer) and no "Form 8839" tag (the form is named in the subtitle or help).
 - [ ] Gaps found but deferred go in `outstanding.md` (e.g. MFS spouse Last year 1040).
 
-*From: Prior-year carryovers.*
+*From: Prior-year carryovers; Adoption expenses (title tags, owner 2026-11-04).*
 
 ## 9. Tax scenarios
 

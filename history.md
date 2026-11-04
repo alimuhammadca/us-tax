@@ -1,3 +1,10 @@
+## 2026-11-03T21:00 - Employment screen: help rewritten from IRS instructions
+
+- All help on the Employment screen (Family Head, spouse, dependent) now comes from one file, `data/employment-help.ts`, written from the 2025 Form 1040 instructions (line 1a, 1b, 1g; Missing or Incorrect Form W-2; Chapter 11 Bankruptcy Cases; Schedule 1 line 8u), Pub. 926 (household employee control test, household work examples, W-2 required at $2,800 or when federal income tax is withheld), Form 4852 instructions (ask the employer, IRS 800-829-1040 after end of February, amend if the real W-2 differs) and Form 8919 (reason codes, Form SS-8). Years from tax-year.ts.
+- Corrections to the old text: household W-2 rule was attributed to "Schedule H rules" (it is Pub. 926); inmate wages now state the IRS rule (Schedule 1 line 8u, not line 1a).
+- The chapter 11 question gained help, and its label uses TAX_YEAR (was hard-coded 2025); spouse wording "Was your spouse a debtor" (was "Were your spouse").
+- e2e `employment-help-screen.spec.ts`: 1 pass.
+
 ## 2026-11-03T20:00 - Tax scenarios: Incomes forms the calculation reads are now linked to scenarios
 
 - Five Incomes forms that feed the return were on no scenario. Linked (`data/tax-scenarios.ts`): Other earned income -> "W-2 employee" and "Pension / 401(k) distribution" (strike pay, excess deferrals returned, disability pension before retirement age); Lump-sum distributions (Form 4972) -> "Pension / 401(k) distribution"; Self-employment tax options -> "Freelance / gig" and "Farm"; Like-kind exchanges (Form 8824) and Business casualties (Form 4684 Section B) -> "Sold or traded business property"; Business casualties also -> "Disaster / theft loss".

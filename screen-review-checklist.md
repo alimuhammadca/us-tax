@@ -82,8 +82,12 @@ Started 2026-11-03. Related rules: `rules.md` ("No hard-coded tax year", "No for
 - [ ] `[beforeOpen]="saveForLink"`: partial save of the screen (no validation) before leaving.
 - [ ] Statement targets (`w-2`, ...) are selected if needed; `[entryId]` opens a specific entry (the W-2 to correct).
 - [ ] The opened screen shows "Back to <screen>" (`returnLabel`).
+- [ ] A list or summary that shows amounts taken from statements (e.g. "Form W-2, Acme Analytics Inc, Box 10: $1,500")
+      links each row to that statement entry: `<form-link formId="w-2" [entryId]="row.entryId">`, so the user can open and
+      check or correct the exact Form W-2 the amount came from. Keep the entry id when building the rows.
 
-*From: Employment (Form 4852, Business income, Uncollected Social Security, W-2).*
+*From: Employment (Form 4852, Business income, Uncollected Social Security, W-2); Child and dependent care (box 10 rows,
+owner 2026-11-04).*
 
 ## 7. Wording and grammar per tab
 

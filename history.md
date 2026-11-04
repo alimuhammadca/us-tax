@@ -1,3 +1,9 @@
+## 2026-11-04T21:30 - Child and dependent care: box 10 rows link to their Form W-2; checklist item 6 rule
+
+- Each row in "Your Forms W-2 with dependent care benefits (box 10)" links (employer name) to that Form W-2 entry (`form-link` `[entryId]`), with partial save and "Back to Child and dependent care" (owner 2026-11-04).
+- Screen Review Checklist item 6: a list or summary of amounts taken from statements links each row to its statement entry.
+- e2e: `childcare-screen.spec.ts` + 1 (the second row opens the second Form W-2). Related run after the deploy of cd3621a / b5214ab6: 76 passed.
+
 ## 2026-11-04T20:40 - Child and dependent care screen: Screen Review Checklist applied; provider ID accepts "Tax-Exempt" / "LAFCP"
 
 - Subtitle (there was none) per tab with TAX_YEAR; header without the bare form number; badges name Form W-2 in full. The spouse's own copy (separate return) said "you" throughout: now worded for the spouse (`who` in `data/childcare-expenses-help.ts`).

@@ -199,6 +199,7 @@ Income adjustments (alimony recipient SSN).*
 | Uncollected Social Security (Family Head, spouse, dependent) | 1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 13, 14 | 2026-11-04 |
 | Combat pay election (Family Head, spouse) | 1, 2, 3, 5, 6, 7, 9 | 2026-11-04 |
 | Child and dependent care (Family Head, spouse copy) | 1, 2, 3, 4, 5, 6, 7, 9, 12, 13, 14 | 2026-11-04 |
+| Adoption expenses and benefits (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 8, 9, 14 | 2026-11-04 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

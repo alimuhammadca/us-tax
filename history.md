@@ -1,3 +1,12 @@
+## 2026-11-04T22:30 - Adoption expenses and benefits screen: Screen Review Checklist applied
+
+- Subtitle per tab with TAX_YEAR (replaces the intro and its "IRS Pub 968" link: Pub. 968 isn't a current IRS source); the spouse's own copy (separate return) worded for the spouse (`who` in the new shared `data/adoption-expenses-help.ts`).
+- Help rewritten from the 2025 Instructions for Form 8839. Wrong claims fixed: "Form 8839 supports up to six children" (it has room for three; more forms are attached - this screen takes six); the identifying number "leave blank if ... foreign-born" (leave blank for any child without an SSN or ATIN); special needs "whom a state has determined" (from 2025 also an Indian tribal government); qualified-expense list worded as the instructions; the unsourced "$30,000-$50,000 typical" cost; the carryforward stays nonrefundable; up to $5,000 per child is refundable (line 30). Help added to the married-filing-separately, stepparent, written program, carryforward-by-year and carryforward-origin questions and to "several attempts for one U.S. child".
+- Years: labels, hints, the final-year input (max / placeholder) and the carryforward years (TAX_YEAR - 5 ... - 1) come from TAX_YEAR / PRIOR_TAX_YEAR; "born before 2008" is TAX_YEAR - 17. $17,280 shown from the per-child constant.
+- Forms named in full; the box 12 code T check lists each Form W-2 with a link to it, the S corporation list links each Form W-2 (item 6), the married-filing-separately note links Filing status.
+- Messages: the allocation and W-2 total messages name Form W-2 (e2e `line1f-adoption-benefits.spec.ts` updated). Earlier today: the title tags removed (item 8).
+- e2e: new `adoption-screen.spec.ts` (2).
+
 ## 2026-11-04T21:45 - Adoption expenses: title like the other screens; checklist item 8 rule
 
 - Removed the "Tax Year 2025" and "Form 8839" tags next to the title (owner 2026-11-04); the title is now "Adoption expenses and benefits (person)" like the reviewed screens, and the badges name the form: "Forms W-2 (Wage and Tax Statement) on file", "Employer adoption benefits in Form W-2 box 12, code T".

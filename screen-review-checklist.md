@@ -142,6 +142,14 @@ Started 2026-11-03. Related rules: `rules.md` ("No hard-coded tax year", "No for
 
 *From: owner 2026-11-03 (rule in `rules.md` "No formatting characters in the database"); applied on Tips (employer EIN).*
 
+## 13. Messages that quote the screen
+
+- [ ] When a label or question changes, search the backend for messages that quote it (blocking `TaxReturnFlag`
+      messages often name a question or checkbox in quotes) and update them, so the message still matches the screen.
+- [ ] The same IRS check applies to those messages: a claim the help no longer makes must go from the message too.
+
+*From: Medicaid waiver payments (home-sharing flag in `Line1WageComputations`).*
+
 ---
 
 ## Screens reviewed
@@ -157,6 +165,7 @@ Started 2026-11-03. Related rules: `rules.md` ("No hard-coded tax year", "No for
 | Third party designee | 2, 3, 4 | 2026-11-03 |
 | Employment (Family Head, spouse, dependent) | 1, 2, 3, 5, 6, 7 | 2026-11-03 |
 | Tips (Family Head, spouse, dependent) | 1, 2, 3, 5, 6, 7, 12 | 2026-11-03 |
+| Medicaid waiver payments (Family Head, spouse, dependent) | 1, 2, 3, 5, 6, 7, 9, 12, 13 | 2026-11-04 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

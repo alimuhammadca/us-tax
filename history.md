@@ -1,3 +1,15 @@
+## 2026-11-04T10:30 - Medicaid waiver payments screen: Screen Review Checklist applied; checklist item 13
+
+- Subtitle in plain words per tab (was a Notice 2014-7 explainer); question years from TAX_YEAR; dependent tab worded by name (taxpayer component `who`), spouse "Did this person live in your spouse's home with them?" (was "your home with you").
+- Help rewritten in shared `data/medicaid-waiver-help.ts` (Family Head / spouse / dependent by name) from Notice 2014-7, the IRS questions and answers on the notice (Q1-Q20), 2025 Form 1040 instructions (line 1d, Schedule 1 line 8s, EIC Worksheet A), Pub. 525 (difficulty-of-care payments), 2025 W-2/W-3 instructions (box 12 code II). Fixed: "care in the other person's own home is not qualified" and the home-sharing "exception" (Q2/Q4: a shared home counts even when it is the care recipient's and the provider has no other home - answer Yes); added: the election covers all payments, not part (Q9); each spouse chooses; employer payments are generally still social security / Medicare wages (Q18); Schedule C reporting (Q14).
+- "Still nontaxable" checkbox label reworded (was "A documented Notice 2014-7 exception applies (the care recipient's home is also my home ...)"); the warning above it points a shared home to Yes. Backend home-sharing flag message (`Line1WageComputations`) updated to the new labels and the Q2/Q4 rule.
+- Forms named in full (badge, notes, hints, source-type options "Form W-2" / "Form 1099-MISC" / "Form 1099-NEC", validation messages). Schedule C note links to Business income (taxpayer / spouse; bold text on a dependent tab), partial save first, "Back to Medicaid waiver payments".
+- Scenario caregiver-payments: + 1099-nec (Form 1040 instructions line 1d). Payer EIN already digits only (appTin, InputNormalizer).
+- Screen Review Checklist item 13: backend messages that quote the screen.
+- e2e: new `medicaid-waiver-screen.spec.ts` (2); `medicaid-waiver.spec.ts` selects "Form W-2".
+- Backend Schedule C message quotes the new business question (item 13).
+- e2e: new `medicaid-waiver-w2-reconcile.spec.ts` (3, owner request): code II / box 1 blank (auto-fill, election 1d + 8s), qualified inside box 1 (blocked until the overlap is entered, then 1a 30,000 / 8s -24,000 / total income 6,000), inconsistent entries (overage blocks, over box 1 capped at box 1, box 1 entered again as taxable blocks): 3 pass. Related Medicaid specs: 159 pass, 1 flaky (passed on retry), 2 skipped.
+
 ## 2026-11-04T08:30 - W-2 box 14: amount read wherever it is in the text (UI pre-fill and compute)
 
 - Owner: the amount may be at the start of the text, not the end. Rule (same in `us-tax-ui utils/w2-box14.ts` and `W2Box14.amountInLabel`): candidates are money-looking numbers anywhere - "$", thousands commas or cents (strong) or a bare whole number of 2+ digits (weak); the "1" of "Tier 1", a code like "RRT22" and a bare year (19xx / 20xx) are never amounts; strong beat weak; one candidate is the amount.

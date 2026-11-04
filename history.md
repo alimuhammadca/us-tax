@@ -2,7 +2,7 @@
 
 - Five Incomes forms that feed the return were on no scenario. Linked (`data/tax-scenarios.ts`): Other earned income -> "W-2 employee" and "Pension / 401(k) distribution" (strike pay, excess deferrals returned, disability pension before retirement age); Lump-sum distributions (Form 4972) -> "Pension / 401(k) distribution"; Self-employment tax options -> "Freelance / gig" and "Farm"; Like-kind exchanges (Form 8824) and Business casualties (Form 4684 Section B) -> "Sold or traded business property"; Business casualties also -> "Disaster / theft loss".
 - Scenario completeness check: a Family Head id with no suffix (other-earned-income, childcare-expenses, adoption-expenses) now also counts the spouse copy at <id>-spouse (was missed, giving a false "nothing entered" warning when only the spouse entered it). Unit tests scenario-completeness 9/9.
-- The four dependent-tab Incomes forms (Employment, Tips, Medicaid waiver, Form 8919) still have no matching scenario - pending owner decision.
+- New scenario (owner-approved) "My dependent had a job, tips or other earned income" (Family & household): the four dependent-tab Incomes forms (Employment, Tips, Medicaid waiver payments, Uncollected SS/Medicare) + W-2; requires a dependent. Wording from the 2025 Form 1040 instructions, Chart B (single dependent must file if earned income over $15,750). Unit tests 10/10.
 
 ## 2026-11-03T19:00 - Form 1099-Q statement: Copy B with box 7 (FMV)
 

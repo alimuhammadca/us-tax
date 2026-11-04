@@ -141,6 +141,8 @@ Started 2026-11-03. Related rules: `rules.md` ("No hard-coded tax year", "No for
       can already hold formatted values.
 - [ ] Output (printed forms, previews) formats the digits; values copied from statements stay digits only.
 - [ ] e2e: type the value with dashes and check the saved value is digits only.
+- [ ] Words the IRS instructions allow in place of the number are accepted and saved as spelled there (e.g. Form 2441
+      provider: "Tax-Exempt", "LAFCP"; Form 8919 firm: "unknown"): `appTin` with `[tinWords]`.
 
 *From: owner 2026-11-03 (rule in `rules.md` "No formatting characters in the database"); applied on Tips (employer EIN).*
 
@@ -189,6 +191,7 @@ Income adjustments (alimony recipient SSN).*
 | Medicaid waiver payments (Family Head, spouse, dependent) | 1, 2, 3, 5, 6, 7, 9, 12, 13 (second pass: 2, 3, 5, 7, 13) | 2026-11-04 |
 | Uncollected Social Security (Family Head, spouse, dependent) | 1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 13, 14 | 2026-11-04 |
 | Combat pay election (Family Head, spouse) | 1, 2, 3, 5, 6, 7, 9 | 2026-11-04 |
+| Child and dependent care (Family Head, spouse copy) | 1, 2, 3, 4, 5, 6, 7, 9, 12, 13, 14 | 2026-11-04 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

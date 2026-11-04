@@ -1,3 +1,14 @@
+## 2026-11-04T20:40 - Child and dependent care screen: Screen Review Checklist applied; provider ID accepts "Tax-Exempt" / "LAFCP"
+
+- Subtitle (there was none) per tab with TAX_YEAR; header without the bare form number; badges name Form W-2 in full. The spouse's own copy (separate return) said "you" throughout: now worded for the spouse (`who` in `data/childcare-expenses-help.ts`).
+- Help moved to the shared file, rewritten from the 2025 Instructions for Form 2441 and Pub. 503. Wrong claims fixed: provider address was "where the care was provided" (it is the provider's own address); a newborn's SSN "APPLIED FOR" (the instructions require the SSN, or "Died" for a child born and died without one); months as a student "don't count months when you had earned income" (each month is the higher of $250/$500 and the actual earnings); prior-year expenses "added to your 2025 credit base" and paid "January-February" (a separate line 9b credit through Worksheet A, paid any time in the year); the MFS note's "$5,000 cap" (that is the benefits exclusion). Help icons added to six questions without one.
+- Years: 15 typed 2025 / 2024 labels and hints now TAX_YEAR / PRIOR_TAX_YEAR. Child's date of birth is an `app-date-input` (max = year end).
+- Show/hide eye (item 14) on the qualifying person's SSN, the provider's ID and the child's date of birth (was a CSS blur only).
+- Provider's identification number accepts the IRS words "Tax-Exempt" and "LAFCP" (owner 2026-11-04; Form 2441 instructions line 1 column (c)): `TinDirective` `[tinWords]`, saved as spelled in the instructions.
+- Links: Filing status (MFS note) and Household employees (Schedule H) when a provider is a household employee; "Back to Child and dependent care".
+- Backend messages (item 13): eight messages called the screen "the Childcare expenses form" / "childcare-expenses form" (Line1WageComputations, LowMediumG2, OwnBusinessDcap, Wave2FieldsW0): now "the Child and dependent care screen".
+- e2e: new `childcare-screen.spec.ts` (2).
+
 ## 2026-11-04T19:40 - Combat pay election screen: Screen Review Checklist applied
 
 - Subtitle in plain words per tab with TAX_YEAR (was a paragraph that called line 1i the EIC line); Family Head tab no longer says "the taxpayer's W-2 statements", spouse tab "your spouse's".

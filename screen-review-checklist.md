@@ -54,7 +54,7 @@ Started 2026-11-03. Related rules: `rules.md` ("No hard-coded tax year", "No for
       message.
 - [ ] Digits only in the model and the database - no dashes, parentheses or spaces. Backend `InputNormalizer` strips
       them for the form id; output formats them (e.g. `InputNormalizer.formatPhone`).
-- [ ] PINs masked with a show/hide eye.
+- [ ] PINs masked with a show/hide eye (see item 14).
 
 *From: Identification, Address, Third party designee.*
 
@@ -151,6 +151,25 @@ Started 2026-11-03. Related rules: `rules.md` ("No hard-coded tax year", "No for
 - [ ] The same IRS check applies to those messages: a claim the help no longer makes must go from the message too.
 
 *From: Medicaid waiver payments (home-sharing flag in `Line1WageComputations`).*
+
+## 14. Show/hide eye on personal identifying information
+
+- [ ] Every field that holds a person's identifying information is hidden once it has a value, with an eye button to
+      show it: SSN / ITIN (filer, spouse, dependents and anyone else named on the screen, e.g. an alimony recipient or
+      registered domestic partner), date of birth, IP PIN / self-select PIN / designee PIN, and bank routing and account
+      numbers.
+- [ ] Same pattern as Identification: `showSensitive[field]` + `toggleSensitive(field)`; the input's `[type]` is
+      `password` when it has a value and is hidden (`inputTypeFor(field)`), `text` while empty or shown; a date field
+      uses `<app-date-input [masked]="isMasked(field)">` (CSS mask, since a date can't be `type="password"`).
+- [ ] The button sits in the label row before the help icon: `pi-eye` when hidden, `pi-eye-slash` when shown, with an
+      `aria-label` "Show ..." / "Hide ...". Hidden is the default every time the screen opens.
+- [ ] Masking is display only: the saved value is unchanged (digits only, item 12) and validation still runs on it.
+- [ ] Not PII: a business's EIN (employer, payer, firm). A field that can hold either (a firm's ID that may be a
+      person's SSN) at least masks the digits when not focused (`appMaskedEin`).
+- [ ] e2e: the value is hidden after typing and leaving the field, the eye shows it, and the saved value is right.
+
+*From: owner 2026-11-04; existing on Identification, Filing status, Third party designee, Refund and amount owed,
+Income adjustments (alimony recipient SSN).*
 
 ---
 

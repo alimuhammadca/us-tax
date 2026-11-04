@@ -1,3 +1,9 @@
+## 2026-11-04T07:50 - Tips: railroad (RRTA) compensation pre-filled from a typed or uploaded W-2
+
+- Bug: Tips pre-filled the RRTA compensation only from a separate box 14 amount (`box14Amount`), which neither the W-2 screen (box 14a is one text input) nor an upload (OCR fallback writes `box14Other[0].label`) saves - so for a railroad employer the box was never ticked and the amount stayed empty. All other boxes (name, EIN, 3, 7, 8) already pre-filled.
+- Fix: new `utils/w2-box14.ts` reads the trailing amount from the item text ("RRTA compensation 52,000.00"), the backend's `W2Box14.amountInLabel` rule (two or more digits, commas or cents, so "Tier 1" is never an amount), only for an item naming RRTA compensation (backend rule: RRTA + COMP); the note shows the text without the amount. Family Head / dependent and spouse Tips components. The compute was not affected (backend already read the text).
+- Tests: `w2-box14.spec.ts` (4 unit); e2e `tips-railroad-w2-autofill.spec.ts` (3: typed W-2, upload-shaped W-2, separate amount) + `tips-screen.spec.ts`: 5 pass.
+
 ## 2026-11-03T23:30 - Tips screen: Screen Review Checklist applied; checklist item 12 (SSN / ITIN / EIN)
 
 - Subtitle in plain words per tab (was Form 4137 / Schedule 2 line 5 mechanics); question year from TAX_YEAR.

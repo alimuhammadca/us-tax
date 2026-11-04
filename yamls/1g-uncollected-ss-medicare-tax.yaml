@@ -60,6 +60,11 @@ uncollectedSSMedicareWages8919:
           required: true
           label: Firm name (col a)
 
+        - name: firmIsIndividual
+          type: boolean
+          required: false
+          label: Is this firm a person (an individual) rather than a business? (col b is then an SSN, printed XXX-XX-XXXX; else an EIN, XX-XXXXXXX)
+
         - name: firmFederalIdNumber
           type: text
           required: false

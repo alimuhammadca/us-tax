@@ -1,3 +1,15 @@
+## 2026-11-04T18:50 - Uncollected Social Security screen: Screen Review Checklist applied; firm "person or business" (V429)
+
+- Subtitle in plain words per tab (TAX_YEAR); screening question names the year and the tab's person; dependent tab worded by name (`who`), spouse wording no longer says "joint return" (the spouse tab also serves a separate return).
+- Help moved to shared `data/uncollected-ss-medicare-help.ts` (Family Head / spouse / dependent), rewritten from the 2025 Form 8919 and its instructions: who must file (all four conditions; code G for anyone who files Form SS-8 by the return date), "firm" definition, not for contractor income (Schedule C / SE) or unreported tips (Form 4137), reason codes (C includes a section 530 employee; H examples and "don't file Form SS-8"; the code G caution), column (a) name as on the Form 1099, column (b) EIN or SSN / Form W-9 / "unknown". New help on the screening and IRS-letter questions.
+- Removed unsourced claims: "Saving this reports the firm to the IRS ... may pursue the firm" (replaced by the instructions' "credits these wages to your social security record" and, for code G, the IRS caution); "the IRS rejects e-filed returns when this field is blank" (screen and backend `MISSING_FIRM_FEDERAL_ID_FORM_8919` message).
+- Forms named in full; links: Business income (Schedule C) and Tips (Form 4137) from the screening note, the Family Head's joint-return note to the spouse's copy; "Back to Uncollected Social Security". Dependent sidebar label "Uncollected Social Security" (was "Uncollected SS/Medicare (Form 8919)").
+- IRS date is an `app-date-input`; typed $176,100 replaced by the wage-base constant; reason-code options reworded from the form.
+- Dependent tab matched the Family Head's W-2s and tips for its wage-base preview: now the dependent's own SSN and Tips screen.
+- Firm's federal identification number: show/hide eye (checklist item 14), saved digits only (the word "unknown" kept). New question per firm (owner 2026-11-04) "Is this firm a person (an individual) rather than a business?" - `firmIsIndividual`, V429 `pf_uncollected_firm` / `out_form_8919_firm.firm_is_individual`, through `Form8919Firm`; the Form 8919 preview prints column (b) as XX-XXXXXXX (business, EIN) or XXX-XX-XXXX (person, SSN), column (d) as MM/DD/YYYY, as the form instructions show.
+- Backend messages (item 13): reason-code, IRS-date and firm-ID messages name the form in full and quote the new labels. Scenario misclassified-worker: + w-2 (code H).
+- e2e: new `uncollected-ss-medicare-screen.spec.ts` (3); `line1g-uncollected-ss-medicare.spec.ts` picks the reason option by its code and the new letter wording.
+
 ## 2026-11-04T12:40 - Medicaid waiver payments: second checklist pass
 
 - Dependent tab (shares the Family Head component) still said "you" in places: picker warning ("This statement isn't Riley's", "this form", "Riley's wages line"), the picker default note, the Form W-2 section hint, the per-person counts and the over-cap warning now use `who`.

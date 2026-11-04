@@ -26,6 +26,11 @@ sections:
         type: text
         required: false
         label: "Firm name"
+      - name: firmIsIndividual
+        type: boolean
+        required: false
+        label: Is this firm a person (an individual) rather than a business? (col b is then an SSN, printed XXX-XX-XXXX; else an EIN, XX-XXXXXXX)
+
       - name: firmFederalIdNumber
         type: text
         required: false

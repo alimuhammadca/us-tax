@@ -164,8 +164,8 @@ Started 2026-11-03. Related rules: `rules.md` ("No hard-coded tax year", "No for
 - [ ] The button sits in the label row before the help icon: `pi-eye` when hidden, `pi-eye-slash` when shown, with an
       `aria-label` "Show ..." / "Hide ...". Hidden is the default every time the screen opens.
 - [ ] Masking is display only: the saved value is unchanged (digits only, item 12) and validation still runs on it.
-- [ ] Not PII: a business's EIN (employer, payer, firm). A field that can hold either (a firm's ID that may be a
-      person's SSN) at least masks the digits when not focused (`appMaskedEin`).
+- [ ] Not PII: a business's EIN (employer, payer). A field that can hold either (Form 8919's firm ID, which is an SSN
+      when the firm is a person) gets the eye too.
 - [ ] e2e: the value is hidden after typing and leaving the field, the eye shows it, and the saved value is right.
 
 *From: owner 2026-11-04; existing on Identification, Filing status, Third party designee, Refund and amount owed,
@@ -187,6 +187,7 @@ Income adjustments (alimony recipient SSN).*
 | Employment (Family Head, spouse, dependent) | 1, 2, 3, 5, 6, 7 | 2026-11-03 |
 | Tips (Family Head, spouse, dependent) | 1, 2, 3, 5, 6, 7, 12 | 2026-11-03 |
 | Medicaid waiver payments (Family Head, spouse, dependent) | 1, 2, 3, 5, 6, 7, 9, 12, 13 (second pass: 2, 3, 5, 7, 13) | 2026-11-04 |
+| Uncollected Social Security (Family Head, spouse, dependent) | 1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 13, 14 | 2026-11-04 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

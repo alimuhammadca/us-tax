@@ -1,3 +1,9 @@
+## 2026-11-03T20:00 - Tax scenarios: Incomes forms the calculation reads are now linked to scenarios
+
+- Five Incomes forms that feed the return were on no scenario. Linked (`data/tax-scenarios.ts`): Other earned income -> "W-2 employee" and "Pension / 401(k) distribution" (strike pay, excess deferrals returned, disability pension before retirement age); Lump-sum distributions (Form 4972) -> "Pension / 401(k) distribution"; Self-employment tax options -> "Freelance / gig" and "Farm"; Like-kind exchanges (Form 8824) and Business casualties (Form 4684 Section B) -> "Sold or traded business property"; Business casualties also -> "Disaster / theft loss".
+- Scenario completeness check: a Family Head id with no suffix (other-earned-income, childcare-expenses, adoption-expenses) now also counts the spouse copy at <id>-spouse (was missed, giving a false "nothing entered" warning when only the spouse entered it). Unit tests scenario-completeness 9/9.
+- The four dependent-tab Incomes forms (Employment, Tips, Medicaid waiver, Form 8919) still have no matching scenario - pending owner decision.
+
 ## 2026-11-03T19:00 - Form 1099-Q statement: Copy B with box 7 (FMV)
 
 - The screen mixed copies: Copy A title and notice, Copy B footer, and a grey filler where Copy B has box 7. It now shows Copy B (For Recipient), Rev. April 2025: "Copy B / For Recipient", the Copy B notice, and box 7 "If the fair market value (FMV) is shown below, see Pub. 970, Tax Benefits for Education, for how to figure earnings."

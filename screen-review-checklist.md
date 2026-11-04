@@ -89,6 +89,8 @@ Started 2026-11-03. Related rules: `rules.md` ("No hard-coded tax year", "No for
 
 - [ ] Each tab reads correctly: "Was your spouse", not "Were your spouse"; the dependent's name, not "you".
 - [ ] Remove leftover tags or internal markers shown to users (e.g. "NOW SUPPORTED").
+- [ ] A component shared by two tabs (Family Head and dependent): search its whole template for "you" / "your", not
+      only the questions - picker warnings, hints, notes and caps warnings are easy to miss (Medicaid waiver second pass).
 
 *From: Prior-year carryovers, Employment.*
 
@@ -165,7 +167,7 @@ Started 2026-11-03. Related rules: `rules.md` ("No hard-coded tax year", "No for
 | Third party designee | 2, 3, 4 | 2026-11-03 |
 | Employment (Family Head, spouse, dependent) | 1, 2, 3, 5, 6, 7 | 2026-11-03 |
 | Tips (Family Head, spouse, dependent) | 1, 2, 3, 5, 6, 7, 12 | 2026-11-03 |
-| Medicaid waiver payments (Family Head, spouse, dependent) | 1, 2, 3, 5, 6, 7, 9, 12, 13 | 2026-11-04 |
+| Medicaid waiver payments (Family Head, spouse, dependent) | 1, 2, 3, 5, 6, 7, 9, 12, 13 (second pass: 2, 3, 5, 7, 13) | 2026-11-04 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

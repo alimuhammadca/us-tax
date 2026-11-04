@@ -1,3 +1,11 @@
+## 2026-11-04T12:40 - Medicaid waiver payments: second checklist pass
+
+- Dependent tab (shares the Family Head component) still said "you" in places: picker warning ("This statement isn't Riley's", "this form", "Riley's wages line"), the picker default note, the Form W-2 section hint, the per-person counts and the over-cap warning now use `who`.
+- Typed "standard 2024+ reporting" / "legacy reporting" removed from the box 1 hint (both tabs) and the backend `MEDICAID_WAIVER_W2_BOX1_UNSPECIFIED` message: the 2025 Form W-2 instructions only say the excluded amount goes in box 12 code II, nothing about a year it began. The hint now says to enter how much of the qualified amount is in box 1 (0 if none), citing the TAX_YEAR Form W-2 instructions.
+- Forms named: section heading "If this payer gave you a Form W-2 (Wage and Tax Statement)", code II hint and validation messages "Form W-2 box ...".
+- Help icon + help text for "Did ... care for more than one person?" (Notice 2014-7; Pub. 525), on both tabs.
+- e2e: `medicaid-waiver-screen.spec.ts` dependent test extended; `medicaid-waiver.spec.ts` code II hint text. Related run before the edits (after deploy of ea2b7d5 / 94db82aa): 163 pass, 2 skipped.
+
 ## 2026-11-04T10:30 - Medicaid waiver payments screen: Screen Review Checklist applied; checklist item 13
 
 - Subtitle in plain words per tab (was a Notice 2014-7 explainer); question years from TAX_YEAR; dependent tab worded by name (taxpayer component `who`), spouse "Did this person live in your spouse's home with them?" (was "your home with you").

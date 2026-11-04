@@ -1,3 +1,11 @@
+## 2026-11-04T19:40 - Combat pay election screen: Screen Review Checklist applied
+
+- Subtitle in plain words per tab with TAX_YEAR (was a paragraph that called line 1i the EIC line); Family Head tab no longer says "the taxpayer's W-2 statements", spouse tab "your spouse's".
+- Help (new, there was none) in shared `data/combat-pay-help.ts`, with icons on the detected amount and the election question, from the 2025 Form 1040 instructions (line 1i; line 27a Step 5 and its caution; "Combat pay, nontaxable": each spouse makes their own election), the 2025 Schedule 8812 instructions (line 18b: all nontaxable combat pay counts for the additional child tax credit) and Pub. 3.
+- Wrong claims fixed: "used for these two credits only" (the election is for the earned income credit only; the ACTC always counts the pay) on the question; "Form 1040 line 1i" given as the EIC line; the comparison panel's "still affects the Additional Child Tax Credit" and "the IRS recommends computing your credits" (the IRS caution is about the EIC).
+- Forms named in full (Form W-2 (Wage and Tax Statement), Form 1040 (U.S. Individual Income Tax Return)); "Box 12 ... the letter Q" -> box 12 code Q; the no-combat-pay note and the correction hint link to the Form W-2 (partial save, "Back to Combat pay"). Spouse question notes that each spouse chooses.
+- e2e: new `combat-pay-screen.spec.ts` (2); `line1i-combat-pay.spec.ts` and the combat pay page object use the new note text.
+
 ## 2026-11-04T18:50 - Uncollected Social Security screen: Screen Review Checklist applied; firm "person or business" (V429)
 
 - Subtitle in plain words per tab (TAX_YEAR); screening question names the year and the tab's person; dependent tab worded by name (`who`), spouse wording no longer says "joint return" (the spouse tab also serves a separate return).

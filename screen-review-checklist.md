@@ -188,6 +188,7 @@ Income adjustments (alimony recipient SSN).*
 | Tips (Family Head, spouse, dependent) | 1, 2, 3, 5, 6, 7, 12 | 2026-11-03 |
 | Medicaid waiver payments (Family Head, spouse, dependent) | 1, 2, 3, 5, 6, 7, 9, 12, 13 (second pass: 2, 3, 5, 7, 13) | 2026-11-04 |
 | Uncollected Social Security (Family Head, spouse, dependent) | 1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 13, 14 | 2026-11-04 |
+| Combat pay election (Family Head, spouse) | 1, 2, 3, 5, 6, 7, 9 | 2026-11-04 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

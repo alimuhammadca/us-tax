@@ -126,6 +126,22 @@ Started 2026-11-03. Related rules: `rules.md` ("No hard-coded tax year", "No for
 - [ ] Unit tests for new helpers (e.g. `id-validation.spec.ts`, `scenario-completeness.spec.ts`).
 - [ ] Entry in `history.md`; commit and push us-tax-ui, us-tax-be (e2e / backend) and us-tax (docs).
 
+## 12. SSN, ITIN and EIN: formatting is not part of the value
+
+- [ ] Dashes and spaces in an SSN, ITIN or EIN are display only: the value is the 9 digits ("123-45-6789" is saved as
+      "123456789", an EIN "12-3456789" as "123456789"). A masked value keeps its X's ("XXXXX1234").
+- [ ] UI: every SSN / ITIN / EIN / TIN input uses `appTin` (`individual` | `ein` | `any`), which shows the value formatted
+      and keeps only the digits in the model; placeholders may show the formatted example.
+- [ ] Backend: the field name must be recognized by `InputNormalizer.isTinKey` (names ending in ssn / tin / ein, or
+      listed in `EXTRA_TIN_KEYS`) so the save path strips it - add a new name to `EXTRA_TIN_KEYS` if it doesn't match.
+      Nested rows (e.g. tips by employer) are covered.
+- [ ] Old rows: V425 cleaned existing pf_* / se_* / dependent columns; a new TIN column needs the same clean-up if it
+      can already hold formatted values.
+- [ ] Output (printed forms, previews) formats the digits; values copied from statements stay digits only.
+- [ ] e2e: type the value with dashes and check the saved value is digits only.
+
+*From: owner 2026-11-03 (rule in `rules.md` "No formatting characters in the database"); applied on Tips (employer EIN).*
+
 ---
 
 ## Screens reviewed
@@ -140,6 +156,7 @@ Started 2026-11-03. Related rules: `rules.md` ("No hard-coded tax year", "No for
 | Presidential election campaign | 1, 2 | 2026-11-03 |
 | Third party designee | 2, 3, 4 | 2026-11-03 |
 | Employment (Family Head, spouse, dependent) | 1, 2, 3, 5, 6, 7 | 2026-11-03 |
+| Tips (Family Head, spouse, dependent) | 1, 2, 3, 5, 6, 7, 12 | 2026-11-03 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

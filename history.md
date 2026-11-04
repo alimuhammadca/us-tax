@@ -1,3 +1,12 @@
+## 2026-11-03T23:30 - Tips screen: Screen Review Checklist applied; checklist item 12 (SSN / ITIN / EIN)
+
+- Subtitle in plain words per tab (was Form 4137 / Schedule 2 line 5 mechanics); question year from TAX_YEAR.
+- Help rewritten in shared `data/tips-help.ts` (Family Head / spouse / dependent by name) from Form 4137 (2025) and its instructions, Pub. 531 (Rev. 12-2024), Form 1040 instructions line 1c, Form 8959 instructions line 23. Fixed: Form 4070A recommended (Pub. 531: Forms 4070 / 4070A are historical - now the daily tip record Pub. 531 describes); EIN "not required" (Form 4137 col. (b) asks for it); RRTA tips can't go on Form 4137; shouting "FALLBACK ONLY / silently IGNORED". Added tip pools, service charges, December-tips timing.
+- Forms named in full; "(col. a-d)" removed from labels; RRTA withholding labelled "Additional Medicare Tax withheld (railroad, W-2 box 14)".
+- Links: "correct the W-2" opens the W-2 the employer row came from (UI-only w2AutoFilledEntryId, stripped before save), with Back to Tips.
+- Screen Review Checklist item 12 (owner): SSN / ITIN / EIN formatting is not part of the value. Tips employer EIN already complied (appTin="ein", InputNormalizer, V425); e2e types "12-3456789" and checks "123456789" is saved.
+- e2e: new `tips-screen.spec.ts` (2) + Tips and Employment related: 76 pass.
+
 ## 2026-11-03T22:30 - Employment screen: links in notes, forms named, plain subtitle
 
 - Notes link to the form they name (new shared `components/form-link.component.ts`): it saves the screen first (partial save, no validation), opens the person's own copy (taxpayer / spouse / dependent; plain bold text where the person has no such form - a dependent has no Form 4852 or Business income screen), selects a statement that isn't selected yet and can open a specific entry (the W-2 to correct). The opened screen shows "Back to Employment" (FormNavigationService.openLinked / goBackFromLinked; shell `.linked-back`). 17 links per screen: Business income (Schedule C), Uncollected Social Security (Form 8919), Form 4852, the W-2 statement.

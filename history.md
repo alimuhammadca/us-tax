@@ -1,3 +1,10 @@
+## 2026-11-05T23:30 - Social security benefits: lump sums read from the statements; last year's figures pre-filled
+
+- Owner-approved changes 2 and 3 (the rest of the inference analysis). Blanks only; anything typed wins; a note under each section says where the figures came from.
+- (2) The person's own Form SSA-1099 box 3 description ("*Box 3 includes $6,000.00 paid in 2025 for 2024", Pub. 915) and Form RRB-1099 boxes 7 / 8 / 9 (one / two / three or more years prior) answer "lump-sum payment for earlier years?" Yes and create one row per year - only while the question is unanswered and there are no rows. One year listed: the whole amount; several years, or box 9: the year or amount is left for the notice, and the note says so. New `utils/ss-lump-sum-inference.ts` (+ spec, 7 tests), both copies.
+- (3) Last year's figures from last year's return computed here (tax_return_v2 + out_form_1040), else the uploaded 2024 Form 1040: new `GET /api/social-security/prior-year` (`SocialSecurityPriorYearResource`). The 2024 lump-sum row follows Pub. 915 Worksheet 2: other income = line 9 - line 6b, adjustments = line 10 (so other income - adjustments = AGI), tax-exempt interest = line 2a, taxable benefits previously reported = line 6b, filing status. The repayment-over-$3,000 refigure gets 2024 lines 6a, 6b, 15 and filing status. A computed return's null 6a / 6b means no benefits (0); an upload's blank stays blank. `PriorYear1040Parser` now reads Box6a / Box6b (Azure prebuilt-tax.us.1040).
+- e2e: new `ss-prior-year-inference.spec.ts` (two-year: a 2024 return computed via X-Tax-Year, then the 2025 screen). The uploaded-1040 path is covered by the parser test and the shared mapping (an upload needs Azure).
+
 ## 2026-11-05T22:00 - Social security benefits: inferred Yes, the lump-sum election suggested, SSI questions removed
 
 - Owner asked which questions could be inferred; analysis of all 30 questions (sources: Forms SSA-1099 / RRB-1099, Filing status, last year's return, the uploaded 2024 Form 1040) and an impact review of 5 changes; owner chose 1, 4 and 5 (2 and 3 in outstanding.md).

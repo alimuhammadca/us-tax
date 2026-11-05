@@ -288,6 +288,24 @@ Uncollected Social Security, Combat pay, Child and dependent care, Adoption expe
 *From: owner 2026-11-05 (Pension withdrawals: a 16-step wizard; "why not have the revealing ui as we have done for other
 screens").*
 
+## 19. Plain language
+
+- [ ] Everyday words: "get" not "receive", "back payment" not "lump-sum back payment", "paid back" not "repaid beyond the
+      benefits received". A form's own term (lump-sum election, base amount) appears once, in the help, with what it means.
+- [ ] Years, not relative terms: "2024" / "that year" / "an earlier year", never "current-year", "prior-year" or "the tax
+      year" (years from tax-year.ts).
+- [ ] No program words: allocation, recomputation, override, worksheet support, previously reported, facts.
+- [ ] A label names the figure and where it is on the form: "Taxable benefits on the 2024 return (Form 1040 line 6b)". A line
+      number is shown only for years whose form has that line (Form 1040 lines 2a, 6a, 6b, 9, 10 are the same 2021-2025).
+- [ ] Section notes say what the answer changes, in one or two short sentences, and are checked against the IRS source
+      (the Social Security note claimed a "lower $25,000 base"; the base is $0 when the spouses lived together).
+- [ ] One fact, one question: two questions that are each other's opposite ("lived with your spouse at any time?" /
+      "lived apart all year?") become one, the other saved as its opposite in `normalizeForSave()` and read back from older
+      saves on load (field removal needs owner sign-off).
+- [ ] The same thing said once: no count badge, list and "entered" line all saying how many statements there are.
+
+*From: owner 2026-11-05 (Social security benefits: "the language on the ui is complicated").*
+
 ---
 
 ## Screens reviewed
@@ -313,7 +331,7 @@ screens").*
 | Dividend income (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 9, 13, 15, 16 | 2026-11-05 |
 | IRA income (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 9, 13, 15, 16, 17 | 2026-11-05 |
 | Pension withdrawals (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 13, 15, 16, 17, 18 | 2026-11-05 |
-| Social security benefits (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 13, 15, 16, 17 | 2026-11-05 |
+| Social security benefits (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 13, 15, 16, 17, 19 | 2026-11-05 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

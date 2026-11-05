@@ -1,3 +1,12 @@
+## 2026-11-06T00:30 - Social security benefits: plain language; the two "lived with / lived apart" questions merged
+
+- Owner: "the language on the ui is complicated". Every label, note and help on both copies reworded (new checklist item 19): "get" for "receive", years for "current-year / prior-year / the tax year", "back payment" for "lump-sum back payment", no "allocation / recomputation / previously reported / facts"; the rows' labels name the figure and its Form 1040 line ("That year's income, not counting Social Security (line 9 minus line 6b)"), the line shown only for 2021 and later (2019 had Social Security on line 5b); the repayment labels "on the 2024 return"; the count badges are hidden once the statements are listed.
+- Two statements corrected: the filing-separately note said the questions decide "whether the lower $25,000 base amount applies" (Pub. 915: the base is $0 if the spouses lived together at any time, $25,000 if apart all year); the help for the earlier year's "other income" called it adjusted gross income (it is line 9 minus line 6b).
+- Owner-approved merge: "Did you live with your spouse at any time in 2025?" is the only question; "lived apart all year" (line 6d) is saved as its opposite in normalizeForSave and, for an older save holding only that answer, read back as the opposite on load. Columns and compute unchanged (the backend still gets both).
+- Removed in passing: two more help icons inside radio options on each copy (filing status "Single", lump-sum "Yes").
+- Owner-approved: the spouse copy now shows its terrorist-attack disability amount (V401 `ssdiTerroristAttackExcluded`, saved but never shown); the compute already took it off the spouse's box 5 and raised the IRS-notice advisory.
+- e2e: `social-security-screen.spec.ts` new wording and a merge test (older save read back, Yes saved with "lived apart" false), a spouse disability test (saved; line 6a 21,000 + 9,000 - 2,000 = 28,000; advisory); `ss-prior-year-inference.spec.ts` checks a row label with its line.
+
 ## 2026-11-05T23:30 - Social security benefits: lump sums read from the statements; last year's figures pre-filled
 
 - Owner-approved changes 2 and 3 (the rest of the inference analysis). Blanks only; anything typed wins; a note under each section says where the figures came from.

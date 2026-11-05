@@ -67,11 +67,12 @@ sections:
       - name: livedWithSpouseAnyTimeDuringTaxYear
         type: boolean
         required: false
-        label: "Did your spouse live with you at any time during the tax year?"
+        label: "Did your spouse live with you at any time in 2025?"
       - name: livedApartFromSpouseEntireTaxYear
         type: boolean
         required: false
-        label: "Did your spouse live apart from you for the entire tax year?"
+        label: "(not asked) the opposite of livedWithSpouseAnyTimeDuringTaxYear"
+        help: Not on the screen since 2026-11-05 (owner); saved as the opposite of the "lived with" answer. Drives line 6d.
 
   - name: lumpSumGate
     title: Lump-sum back payment

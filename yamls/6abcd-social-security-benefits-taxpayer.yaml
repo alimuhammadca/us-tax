@@ -83,13 +83,13 @@ sections:
       - name: livedWithSpouseAnyTimeDuringTaxYear
         type: boolean
         required: false
-        label: Did you live with your spouse at any time during the tax year?
+        label: Did you live with your spouse at any time in 2025?
         help: Select Yes for any cohabitation during the tax year. This affects worksheet branching.
       - name: livedApartFromSpouseEntireTaxYear
         type: boolean
         required: false
-        label: Did you live apart from your spouse for the entire tax year?
-        help: If MFS and lived apart all year, line 6d should be checked.
+        label: (not asked) the opposite of livedWithSpouseAnyTimeDuringTaxYear
+        help: Not on the screen since 2026-11-05 (owner); saved as the opposite of the "lived with your spouse" answer. Drives line 6d.
 
   - name: lumpSumElectionScreening
     title: Lump-sum election screening (return-level)

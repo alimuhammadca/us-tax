@@ -1,5 +1,32 @@
 # Outstanding Items
 
+## IRA income: a spouse-only IRA return is blocked by the upload check (found 2026-11-05, screen review)
+
+- `validateIraStatementGating` reads only the Family Head's `hasUploadedAtLeastOneIra1099RStatement` and
+  `confirmAllReceived1099RUploaded`. On a joint return where only the spouse took money out of an IRA, those are blank (the
+  Family Head answered No), and the spouse's IRA income screen has no such questions, so `IRA_STATEMENT_UPLOAD_REQUIRED`
+  blocks the return. Same gap Dividend income had (B84, fixed by the spouse's own upload question and "either spouse's
+  answer"). Fix: add "Has your spouse entered every Form 1099-R they received for an IRA?" to the spouse copy and read either
+  spouse's answer (statements on file count as "at least one"). A field addition: needs the owner's sign-off.
+
+## IRA income: QCD offset keeps inherited-IRA QCDs out - no IRS source found (found 2026-11-05, screen review)
+
+- The compute (`TaxReturnComputeService`, effectiveQcdAmount) applies the "deductible contributions after 70 1/2" offset only
+  to QCDs from the person's own IRAs, adding back `inheritedIraQcdAmount`. Pub. 590-B (2025) states the offset on "the amount
+  of QCDs that you can exclude" with no inherited-IRA exception. The old help claimed the exception; the new help no longer
+  does. Owner to decide whether the compute should keep the carve-out.
+
+## Screens with their own Save button instead of the shared bar (checklist item 17 audit, 2026-11-05)
+
+- 44 personal screens still end with a Save of their own (no `<form-actions>`), two of them with the sticky bar IRA income
+  had (Foreign earned income, Possession residence exclusion). Switch each when it is reviewed. Among them: business
+  casualties, business income, business property sales, capital gain/loss (both), child interest and dividends, dependents,
+  depreciation asset, farm income, farm rental, foreign earned income, foreign tax credit (both), Form 8862, home office,
+  household employees, HSA, income adjustments (both), installment sales, kiddie income, like-kind exchanges, line 16 tax,
+  lump-sum distribution, MSA / LTC, other incomes (both), possession residence exclusion, premium tax credit, rental income,
+  SE deductions, SE tax options, social security benefits (both), additional deductions, education credits (the item 17
+  audit lists the rest).
+
 ## PrimeNG text inputs without InputTextModule (found 2026-11-05, checklist item 16 audit)
 
 - `form-standard-deductions.component` and `form-line16-tax.component` use `pInputText` but don't import `InputTextModule`,

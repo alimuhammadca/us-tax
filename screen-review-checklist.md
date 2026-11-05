@@ -33,7 +33,8 @@ Started 2026-11-03. Related rules: `rules.md` ("No hard-coded tax year", "No for
       to Schedule 1 line 8u, not line 1a; a frozen deposit is one held by a bankrupt or insolvent institution, not any
       court-frozen account; a section 1278(b) choice covers bonds acquired that year and later, not "once in a lifetime";
       a "this application does NOT compute" note about a tax the return does compute (Dividend income, Form 8960); a
-      penalty amount from an older year ($310, not the 2025 $340); a rule stated backwards (surrogate foreign corporation).
+      penalty amount from an older year ($310, not the 2025 $340); a rule stated backwards (surrogate foreign corporation); codes the IRS never gave as examples ("ABLE",
+      "PYAB" for line 4c); threats the instructions don't make (a CP2000 notice and a 10% penalty for a rollover statement).
 - [ ] Long help must scroll inside the modal (shared help-modal already does: max-height 90vh).
 
 *From: Digital assets, Presidential election, Third party designee, Prior-year carryovers, Employment.*
@@ -247,6 +248,23 @@ Uncollected Social Security, Combat pay, Child and dependent care, Adoption expe
 
 *From: owner 2026-11-05 (Dividend income, "Who paid them (names for Schedule B)").*
 
+## 17. The bottom bar is the shared one, not the screen's own
+
+- [ ] The screen ends with the shared `<form-actions>` bar (`components/form-actions.component.ts`): Prev on the left (Personal
+      screens), Reset, then Save and Next on the right, in the same place and style on every screen. Not a Save button of the
+      screen's own: no `<div class="form-actions">` / `form-actions-sticky` with a `pButton` Save, no floating or sticky
+      bar, no second Save at the top.
+- [ ] Save is never `[disabled]` for missing answers and never refused by an `isValid()` that returns early: the screen
+      saves what is there and names what is still needed (`missingAnswers()`, "Saved. Still to answer ...").
+- [ ] Delete the screen's own bar CSS (`.form-actions-sticky`, `.form-actions`) when switching, so no leftover rule
+      restyles the shared bar.
+- [ ] Quick audit: a component with `label="Save"`, `>Save<` or `form-actions-sticky` and no `<form-actions` is not
+      compliant (44 personal screens on 2026-11-05 - see `outstanding.md`).
+- [ ] e2e: `form-actions .form-actions-bar` is there, `.form-actions-sticky` is not, and Save sends the PUT with a question
+      left unanswered.
+
+*From: owner 2026-11-05 (IRA income: its own sticky Save bar, Save refused until the upload questions were answered).*
+
 ---
 
 ## Screens reviewed
@@ -270,6 +288,7 @@ Uncollected Social Security, Combat pay, Child and dependent care, Adoption expe
 | Other earned income (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 8, 9, 15 | 2026-11-05 |
 | Interest income (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 9, 12, 13, 14, 15 | 2026-11-05 |
 | Dividend income (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 9, 13, 15, 16 | 2026-11-05 |
+| IRA income (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 9, 13, 15, 16, 17 | 2026-11-05 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

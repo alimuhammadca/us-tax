@@ -31,7 +31,9 @@ Started 2026-11-03. Related rules: `rules.md` ("No hard-coded tax year", "No for
 - [ ] Every question has a help icon; add one where it is missing (e.g. the chapter 11 question).
 - [ ] Check the old text for wrong claims and fix them (e.g. "Schedule H rules" was really Pub. 926; inmate wages go
       to Schedule 1 line 8u, not line 1a; a frozen deposit is one held by a bankrupt or insolvent institution, not any
-      court-frozen account; a section 1278(b) choice covers bonds acquired that year and later, not "once in a lifetime").
+      court-frozen account; a section 1278(b) choice covers bonds acquired that year and later, not "once in a lifetime";
+      a "this application does NOT compute" note about a tax the return does compute (Dividend income, Form 8960); a
+      penalty amount from an older year ($310, not the 2025 $340); a rule stated backwards (surrogate foreign corporation).
 - [ ] Long help must scroll inside the modal (shared help-modal already does: max-height 90vh).
 
 *From: Digital assets, Presidential election, Third party designee, Prior-year carryovers, Employment.*
@@ -223,6 +225,28 @@ Income adjustments (alimony recipient SSN).*
 *From: owner 2026-11-04 (Adoption expenses "Ctrl+S" hint; Clear and Reset on Employment, Tips, Medicaid waiver payments,
 Uncollected Social Security, Combat pay, Child and dependent care, Adoption expenses).*
 
+## 16. The same kind of field looks and works the same
+
+- [ ] Compare every field with the fields beside it and with the same kind of field elsewhere on the screen (and on the
+      other tab's copy): same control, same size and border, same label row with a help icon, a placeholder of the same
+      kind. A field that looks different is usually built differently (owner 2026-11-05: Dividend income's "Who paid them
+      (names for Schedule B)" was a bare browser input next to styled amount fields).
+- [ ] A PrimeNG directive works only when its module is imported by the component: `pInputText` needs `InputTextModule`,
+      `pTextarea` `TextareaModule`, `pButton` `ButtonModule`. Without it Angular raises no error - the element renders
+      as a plain browser control (no `p-inputtext` class, different height and border). Check the component's
+      `imports`, not the template. Quick audit: every file with `pInputText` must also name `InputTextModule`.
+- [ ] Same markup for the same thing: help icons are `<i class="pi pi-info-circle help-icon" role="button"
+      tabindex="0" aria-label="Help for ...">`, not a `<button>?</button>` on one question; every label sits in a
+      `label-row`; a text field beside amount fields gets the same row layout.
+- [ ] A question's `<label for>` points at the radio group's id, not at its Yes radio: `for="x_yes"` makes the question
+      text part of the Yes radio's accessible name, so "Yes" is no longer found by role (`selectRadioOption`).
+- [ ] Two fields that look alike must say how they differ (Dividend income: "Dividends with no Form 1099-DIV at all"
+      and "Other dividends not on an entered Form 1099-DIV" had near-identical labels).
+- [ ] e2e: assert the class (`toHaveClass(/p-inputtext/)`) and that the field's label row has a help icon; compare the
+      height with a neighbouring field.
+
+*From: owner 2026-11-05 (Dividend income, "Who paid them (names for Schedule B)").*
+
 ---
 
 ## Screens reviewed
@@ -245,6 +269,7 @@ Uncollected Social Security, Combat pay, Child and dependent care, Adoption expe
 | Adoption expenses and benefits (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 8, 9, 14, 15 | 2026-11-04 |
 | Other earned income (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 8, 9, 15 | 2026-11-05 |
 | Interest income (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 9, 12, 13, 14, 15 | 2026-11-05 |
+| Dividend income (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 9, 13, 15, 16 | 2026-11-05 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

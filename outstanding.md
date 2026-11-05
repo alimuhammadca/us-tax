@@ -1,5 +1,16 @@
 # Outstanding Items
 
+## Dividend income spouse copy: no nominee filing answers (found 2026-11-05, screen review)
+
+- The Family Head's copy asks whether the nominee Form 1099-DIV will be given to the owner and filed with the IRS
+  (`willIssueNominee1099DivToActualOwner`, `willFileNominee1096And1099DivWithIrs`); the spouse's copy has no such fields, so
+  it only states the rule (with help). Adding them is a field addition: needs the owner's sign-off.
+
+## PrimeNG text inputs without InputTextModule (found 2026-11-05, checklist item 16 audit)
+
+- `form-standard-deductions.component` and `form-line16-tax.component` use `pInputText` but don't import `InputTextModule`,
+  so those inputs render as bare browser inputs. Fix when those screens are reviewed (one import each).
+
 ## Interest income spouse copy: three fields the Family Head copy has (found 2026-11-05, screen review)
 
 - The spouse's Interest income has no "Country or countries where the foreign accounts are" (Schedule B line 7b) for the

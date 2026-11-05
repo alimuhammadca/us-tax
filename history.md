@@ -1,3 +1,7 @@
+## 2026-11-05T09:00 - Other earned income: foreign employer country picked from the IRS country codes
+
+- "Country where you worked" (pay from a foreign employer with no Form W-2, line 1h "FEC") was a free 2-letter text box. Now a searchable dropdown of the 259 IRS country codes (new `us-tax-ui/src/app/data/irs-country-codes.ts`, from irs.gov/e-file-providers/country-codes, updated 16-Sep-2026), shown as "Germany (GM)"; only the code is saved (`countryCode`). Pub. 4164 section 12.1: "US" when the work was done in the United States, else the foreign code, so the list includes "United States of America (US)". These are IRS (not ISO) codes. A saved code not on the list still shows. Help explains the code. e2e: `other-earned-income-screen.spec.ts` new test (pick Germany, saved "GM", shown on reopen); related run 58 passed.
+
 ## 2026-11-05T07:00 - Interest income: Screen Review Checklist applied
 
 - Interest income (Family Head, spouse copy): subtitle per tab with TAX_YEAR ("Tell us about the interest you earned in 2025 ..."); help moved to one shared `data/interest-income-help.ts` (worded per tab) and rewritten from the 2025 Form 1040 instructions (lines 2a/2b), the 2025 Schedule B instructions, Pub. 550 (2025), Pub. 17 ch. 6, the 2025 Form 8815 and its instructions, Pub. 970 ch. 10 and Rev. Rul. 2025-13; help icons on every question (gift loan follow-ups, payer names, Form 8815 rows and both worksheets, line 7b countries).

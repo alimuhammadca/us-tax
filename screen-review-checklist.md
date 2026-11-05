@@ -94,8 +94,8 @@ owner 2026-11-04).*
 - [ ] Each tab reads correctly: "Was your spouse", not "Were your spouse"; the dependent's name, not "you".
 - [ ] Remove leftover tags or internal markers shown to users (e.g. "NOW SUPPORTED").
 - [ ] No template code shown as text: in an inline template (inside backticks) an apostrophe in a quoted string needs
-      `\'` (e.g. `'your spouse\'s'`), because `'` reaches Angular as a bare `'` and the whole `{{ ... }}` prints as
-      text. Look at every message that only shows for another person (spouse, dependent) - that is where it hides.
+      `\\'` (e.g. `'your spouse\\'s'`), because `\'` reaches Angular as a bare `'` and the whole `{{ ... }}` prints
+      as text. Look at every message that only shows for another person (spouse, dependent) - that is where it hides.
 - [ ] A component shared by two tabs (Family Head and dependent): search its whole template for "you" / "your", not
       only the questions - picker warnings, hints, notes and caps warnings are easy to miss (Medicaid waiver second pass).
 

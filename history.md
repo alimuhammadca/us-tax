@@ -1,6 +1,6 @@
 ## 2026-11-05T01:30 - Medicaid waiver picker: "{{ ... }}" shown as text; rows link to their statement
 
-- Owner 2026-11-05: the picker's "This statement isn't yours" warning showed raw `{{ avail.recipientLabel === 'Spouse' ? ... }}`. Cause: in a component's inline template (a TS template literal) `'` becomes `'`, so Angular saw `'your spouse's'` and couldn't parse the interpolation. Fixed with `\'` (Angular then gets `'`). A scan of every inline template found 4 such spots: Medicaid waiver payments (Family Head 2, spouse 1) and Capital gain/loss (spouse, "Where to find these on your spouse's statements").
+- Owner 2026-11-05: the picker's "This statement isn't yours" warning showed raw `{{ avail.recipientLabel === 'Spouse' ? ... }}`. Cause: in a component's inline template (a TS template literal) `\'` becomes `'`, so Angular saw `'your spouse's'` and couldn't parse the interpolation. Fixed with `\\'` (Angular then gets `\'`). A scan of every inline template found 4 such spots: Medicaid waiver payments (Family Head 2, spouse 1) and Capital gain/loss (spouse, "Where to find these on your spouse's statements").
 - Each picker row's payer name links to that Form W-2 / 1099-MISC / 1099-NEC entry (checklist item 6), with partial save and "Back to Medicaid waiver payments"; both copies.
 - e2e: `medicaid-waiver-screen.spec.ts` + 1 (no "{{" on the screen; each row opens its own Form W-2). Medicaid specs: 60 passed.
 

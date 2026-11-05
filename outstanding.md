@@ -1,5 +1,22 @@
 # Outstanding Items
 
+## Sort the statements and forms in each sidebar section (opened 2026-11-05, owner)
+
+The owner wants the items in each sidebar section sorted: Statements, Incomes, Deductions, Personal and Tax Return (on
+every person tab - Family Head, spouse, dependents). Today each list is in the order it was written by hand:
+`us-tax-ui/src/app/shell/shell.component.ts` - `personalTaxpayerItems` / `personalSpouseItems`, `incomeItems`,
+`deductionItems`, `dependentIncomeItems`, `taxReturnBaseItems`, and the selected-statements list built around
+`statementItems` (from the Select statements choices).
+
+To decide with the owner before building:
+1. The sort order per section - alphabetical by the label shown, by form number (Form W-2, Form 1099-B, ... Schedule
+   K-1), or in Form 1040 line order (Incomes: line 1a wages first, then 1c tips, 1d Medicaid waiver, ...).
+2. Whether some items stay pinned first (for example Personal's Identification, Address, Filing status, which the
+   Prev / Next bar walks in order - `FormNavigationService.personalOrder`; and the Get started steps).
+3. Statements: whether statements of the same form stay together (several Forms W-2) and how they are labelled.
+4. Keep the Prev / Next order (`FormNavigationService.setPersonalOrder`) and the e2e specs that open screens by
+   position in step with the new order; `person-tabs-labels.spec.ts` checks sidebar labels.
+
 ## Last year 1040 on the Spouse tab (deferred 2026-11-03, owner: "skip for now, keep for later")
 
 The Last year 1040 upload is on the Family Head tab only (`pf_prior_year_1040`, one row per uid + year;

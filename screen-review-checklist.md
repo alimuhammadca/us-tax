@@ -151,6 +151,12 @@ owner 2026-11-04).*
 - [ ] Before trusting an e2e run, check the UI dev build after the LAST edit is clean (no `X [ERROR]` after the last
       "Changes detected"): with a template error the dev server keeps serving the previous bundle, so the run passes on
       old code (Pension withdrawals: a broken heading passed 60 tests).
+- [ ] A clean build is not proof either: the watcher can miss a file (a data file edited by a script was never rebuilt,
+      and a later rebuild still served the old module). Compare the edited file's time with the last "Application bundle
+      generation complete", and grep the served code for one new string (curl `localhost:4200/`, its `.js` files and the
+      `chunk-*.js` they name); if it isn't there, restart `npm start` (Social security benefits: 4 tests failed on old help).
+- [ ] After a backend edit, wait for `/q/health/ready` before starting the run: a hot reload in the middle of a run fails
+      its requests and looks like a flaky test.
 - [ ] A question the screen asks must be saved. An answer kept only in the component (a wizard's routing answer) comes
       back blank on reopening; it needs a column (field addition: owner's sign-off).
 - [ ] Unit tests for new helpers (e.g. `id-validation.spec.ts`, `scenario-completeness.spec.ts`).
@@ -244,6 +250,9 @@ Uncollected Social Security, Combat pay, Child and dependent care, Adoption expe
 - [ ] Same markup for the same thing: help icons are `<i class="pi pi-info-circle help-icon" role="button"
       tabindex="0" aria-label="Help for ...">`, not a `<button>?</button>` on one question; every label sits in a
       `label-row`; a text field beside amount fields gets the same row layout.
+- [ ] Exactly one help icon per question, in its label row - never inside a radio option after "Yes" or "Single" (a
+      script that adds icons can run past labels that already have one). Quick audit: no `help-icon` between
+      `class="radio-option"` and its closing `</div>`.
 - [ ] A question's `<label for>` points at the radio group's id, not at its Yes radio: `for="x_yes"` makes the question
       text part of the Yes radio's accessible name, so "Yes" is no longer found by role (`selectRadioOption`).
 - [ ] Two fields that look alike must say how they differ (Dividend income: "Dividends with no Form 1099-DIV at all"
@@ -306,6 +315,72 @@ screens").*
 
 *From: owner 2026-11-05 (Social security benefits: "the language on the ui is complicated").*
 
+## 20. Answers the app can work out are filled in, never forced
+
+- [ ] For each question, ask: can it be answered from something already entered - the person's statements, another
+      screen (Filing status, Identification), last year's return computed here, or the uploaded last-year Form 1040?
+      List the candidates with their source and check each against the IRS meaning of the question before mapping
+      (Pub. 915's "other income" is line 9 minus line 6b, not AGI).
+- [ ] Fill only blanks, and only while the user hasn't answered: anything typed or saved wins, and the filled answer
+      stays editable. Where the answer can't be fully worked out (a lump sum listed for several years with no split), fill
+      what is known and say what is left.
+- [ ] Say where it came from, under the answer or section: "We answered Yes because a Form SSA-1099 with your SSN is
+      entered", "Filled in from your 2024 return. Check the figures." (`.auto-answer-note`).
+- [ ] A conflict the user can still override (answered No while a statement with their SSN is on file) gets a non-blocking
+      advisory from the compute naming both; a conflict that would make the return wrong blocks (non-overrideable,
+      `[[feedback_household_facts_once_conflicts_block]]`).
+- [ ] An election (a choice the IRS leaves to the filer, e.g. the lump-sum election) is never made for the user: the
+      compute says when it would lower the tax, and doesn't use a chosen election that wouldn't.
+- [ ] Blank vs zero in the source: a figure missing from a return computed here means none (0); a blank on an uploaded
+      or read document may be a box that wasn't read, so it stays blank.
+- [ ] A fact the household answers once (lived together, married) is read from its owning screen, not asked again; the
+      screen says where it was answered.
+- [ ] e2e: the filled value and its note; a typed value is kept on reopening; the conflict advisory.
+
+*From: owner 2026-11-05 (Social security benefits: "could they be inferred ... always allow the user to override if it
+does not cause any conflict": Yes from the statements, lump-sum rows from Form SSA-1099 box 3 / Form RRB-1099 boxes 7-9,
+last year's figures from last year's return or upload, the lump-sum election suggestion).*
+
+## 21. Every question earns its place, and every saved field can be reached
+
+- [ ] For each question, find what reads it: the compute (`TaxReturnComputeService` and helpers), a blocking check or
+      the screen's own reveal logic. A question nothing reads is removed from both copies, the help and the intake YAML,
+      with a note if users would look for it ("SSI isn't taxed and isn't on Form SSA-1099, so leave it out"). Keep the
+      column; remove the dead validator and its registry entries (`NonOverrideableFlags`) too.
+- [ ] Two questions that are one fact turned around become one (item 19).
+- [ ] The other way: every field the screen's model saves and the compute reads is shown on every copy where that person
+      can have it (the spouse copy saved a terrorist-attack disability amount it never displayed). Quick audit: each key
+      in the component's field lists (`exclusionsFields`, `allFieldDefs`) appears in the template.
+- [ ] Removing or merging a question needs the owner's sign-off (field deletion), even when nothing reads it.
+
+*From: owner 2026-11-05 (Social security benefits: the three SSI questions removed, "why remove the SSI fields?" - unused
+since D-6a-1; the spouse disability field shown).*
+
+## 22. Both spouses: the spouse copy is complete and the checks read either spouse
+
+- [ ] Return-level checks that read a screen's answers (statement upload gates, "every statement entered") read both
+      copies: a joint return where only the spouse has the income must not be blocked by the Family Head's blank answer
+      (Social Security and IRA income were always blocked; Dividend income had the same pattern).
+- [ ] The spouse copy asks every per-person question the Family Head copy asks (upload question, nominee questions),
+      reads the spouse's own identity fields (`spouseSsn` / `spouseDateOfBirth` on identification-spouse, not
+      `ssn` / `dateOfBirth`) and lists only the spouse's statements (item 6).
+- [ ] e2e: a joint return where only the spouse has the statements computes without the upload blocker once the spouse
+      answers.
+
+*From: owner 2026-11-05 (IRA income and Social security benefits: "add the spouse upload question").*
+
+## 23. Statement fields the screen reads are real
+
+- [ ] Every statement key a screen reads (`r.data['...']` for a row amount, a count, an inference) exists in that
+      statement's model and mapper - grep the statement component and `*Mapper.java` for the name. A wrong key fails
+      silently: the row shows $0.00 or the inference never fires (the Form RRB-1099 row read a key that doesn't exist;
+      the right one is `netSSEBAmount`).
+- [ ] Free-text boxes the IRS uses to carry a figure (Form SSA-1099's box 3 description "Box 3 includes $... paid in 2025
+      for 2024") are parsed with a unit-tested helper, and an unreadable text leaves the answer blank.
+- [ ] e2e: seed the statement through the API with the real field names and check the screen shows the amount.
+
+*From: Social security benefits (Form RRB-1099 row; lump sums read from the statements), 2026-11-05.*
+
 ---
 
 ## Screens reviewed
@@ -331,7 +406,7 @@ screens").*
 | Dividend income (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 9, 13, 15, 16 | 2026-11-05 |
 | IRA income (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 9, 13, 15, 16, 17 | 2026-11-05 |
 | Pension withdrawals (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 13, 15, 16, 17, 18 | 2026-11-05 |
-| Social security benefits (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 13, 15, 16, 17, 19 | 2026-11-05 |
+| Social security benefits (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 11, 13, 15, 16, 17, 19, 20, 21, 22, 23 | 2026-11-05 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

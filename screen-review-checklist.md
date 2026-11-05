@@ -180,6 +180,26 @@ owner 2026-11-04).*
 *From: owner 2026-11-04; existing on Identification, Filing status, Third party designee, Refund and amount owed,
 Income adjustments (alimony recipient SSN).*
 
+## 15. Clear in every section, Reset on every screen
+
+- [ ] Every section (`<section class="section">`) has a Clear button in its header (`sectionClear` directive,
+      `section.clear()`): it asks first ("Clear this section?") and blanks only that section's answers. A section
+      without a heading gets one (e.g. "Chapter 11 bankruptcy"); a collapsible "Less common situations" panel carries
+      Clear on its own heading.
+- [ ] Every screen has Reset in the shared bottom bar (`<form-actions [showReset]="true" (reset)="resetScreen()">`):
+      after asking ("Clear everything on this screen and start over?", `RESET_SCREEN_MESSAGE`) it restores the screen's
+      blank model, saves it (partial save, no validation) and says "This screen was reset." Values imported from
+      statements (Form W-2 totals) are kept.
+- [ ] The screen uses the shared bar for Save (and Prev / Next where the sidebar order has them), not its own Save
+      button; "Add ..." buttons sit above the bar. Save is never disabled for missing answers (save partial, warn).
+- [ ] The Save button and the status message are reachable on every path of the screen, including after a "No" to
+      the screening question.
+- [ ] No keyboard-shortcut hints ("Ctrl+S") or other screen-only buttons in the bar.
+- [ ] e2e: Reset asks, clears and saves blank; a section Clear blanks only that section.
+
+*From: owner 2026-11-04 (Adoption expenses "Ctrl+S" hint; Clear and Reset on Employment, Tips, Medicaid waiver payments,
+Uncollected Social Security, Combat pay, Child and dependent care, Adoption expenses).*
+
 ---
 
 ## Screens reviewed
@@ -193,13 +213,13 @@ Income adjustments (alimony recipient SSN).*
 | Digital assets | 1, 2, 3 | 2026-11-03 |
 | Presidential election campaign | 1, 2 | 2026-11-03 |
 | Third party designee | 2, 3, 4 | 2026-11-03 |
-| Employment (Family Head, spouse, dependent) | 1, 2, 3, 5, 6, 7 | 2026-11-03 |
-| Tips (Family Head, spouse, dependent) | 1, 2, 3, 5, 6, 7, 12 | 2026-11-03 |
-| Medicaid waiver payments (Family Head, spouse, dependent) | 1, 2, 3, 5, 6, 7, 9, 12, 13 (second pass: 2, 3, 5, 7, 13) | 2026-11-04 |
-| Uncollected Social Security (Family Head, spouse, dependent) | 1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 13, 14 | 2026-11-04 |
-| Combat pay election (Family Head, spouse) | 1, 2, 3, 5, 6, 7, 9 | 2026-11-04 |
-| Child and dependent care (Family Head, spouse copy) | 1, 2, 3, 4, 5, 6, 7, 9, 12, 13, 14 | 2026-11-04 |
-| Adoption expenses and benefits (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 8, 9, 14 | 2026-11-04 |
+| Employment (Family Head, spouse, dependent) | 1, 2, 3, 5, 6, 7; 15 on 2026-11-04 | 2026-11-03 |
+| Tips (Family Head, spouse, dependent) | 1, 2, 3, 5, 6, 7, 12; 15 on 2026-11-04 | 2026-11-03 |
+| Medicaid waiver payments (Family Head, spouse, dependent) | 1, 2, 3, 5, 6, 7, 9, 12, 13 (second pass: 2, 3, 5, 7, 13); 15 | 2026-11-04 |
+| Uncollected Social Security (Family Head, spouse, dependent) | 1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 13, 14, 15 | 2026-11-04 |
+| Combat pay election (Family Head, spouse) | 1, 2, 3, 5, 6, 7, 9, 15 | 2026-11-04 |
+| Child and dependent care (Family Head, spouse copy) | 1, 2, 3, 4, 5, 6, 7, 9, 12, 13, 14, 15 | 2026-11-04 |
+| Adoption expenses and benefits (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 8, 9, 14, 15 | 2026-11-04 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

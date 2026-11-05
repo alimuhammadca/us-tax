@@ -1,3 +1,12 @@
+## 2026-11-05T00:20 - Clear in every section, Reset on every screen (checklist item 15); Uncollected screening answer stored (V430)
+
+- Owner 2026-11-04: Adoption expenses showed a gray "Ctrl+S" box next to Save (a keyboard-shortcut hint from a 2026-05 UX pass, on that screen only): removed (Ctrl+S still saves there).
+- Reset on every screen: the shared `form-actions` bar gets an optional Reset (`[showReset]`, `(reset)`); the screen asks (`RESET_SCREEN_MESSAGE` in `utils/form-utils.ts`), restores its blank model, saves it (partial save) and says "This screen was reset." Employment, Tips, Medicaid waiver payments, Uncollected Social Security, Combat pay, Child and dependent care and Adoption expenses (12 components with the spouse copies) now use the shared bar instead of their own Save buttons; "Add ..." buttons sit above it. Save is no longer disabled on these screens (save partial, warn).
+- Clear in every section: 22 sections got a Clear button (`sectionClear`); sections without a heading got one (Chapter 11 bankruptcy, Nontaxable combat pay, Married filing separately); the "Less common situations" panels carry Clear on their own heading.
+- Uncollected Social Security: after a "No" the screen had no Save button or status message (both sat inside the "Yes" part) - both are now on every path. The screening answer was sent but never stored (no column): V430 `pf_uncollected_ss_medicare.applies_to_filer` (owner approved), mapper reads/writes `screening.appliesToFiler`; rows saved before V430 with firms are read as Yes.
+- Screen Review Checklist item 15 (Clear / Reset / shared bar / Save on every path / no shortcut hints); reviewed rows updated.
+- e2e: new `screen-clear-reset.spec.ts` (3). `line1f-adoption-benefits.spec.ts` and `line1z-total-wages.spec.ts`: the "Less common situations" helper opens the panel only when closed (an Enter in a field now submits and the screen opens it), and "allocation mismatch" checks the message instead of a disabled Save. Related run before those fixes: 231 passed, 6 failed (all that helper).
+
 ## 2026-11-04T22:30 - Adoption expenses and benefits screen: Screen Review Checklist applied
 
 - Subtitle per tab with TAX_YEAR (replaces the intro and its "IRS Pub 968" link: Pub. 968 isn't a current IRS source); the spouse's own copy (separate return) worded for the spouse (`who` in the new shared `data/adoption-expenses-help.ts`).

@@ -1,5 +1,16 @@
 # Outstanding Items
 
+## Pension withdrawals: "payments before 59 1/2?" is not saved (found 2026-11-05, screen review)
+
+- `hadEarlyDistributionBeforeAge59` lives only in the component (it was the wizard's routing answer): a "No" is forgotten when
+  the screen is reopened (a "Yes" is inferred back from the saved additional-tax answer). Saving it is a field addition
+  (pf_pension_annuity_income column + mapper): needs the owner's sign-off.
+
+## Interest income: Form 8815 section is still a 3-step wizard inside the page (found 2026-11-05, checklist item 18 audit)
+
+- The savings-bond education exclusion section steps through "Step 1 / 2 / 3" (`form8815Step`) with its own Back / Next.
+  Item 18: make it one revealing section when Interest income is next touched.
+
 ## Screens with their own Save button instead of the shared bar (checklist item 17 audit, 2026-11-05)
 
 - 44 personal screens still end with a Save of their own (no `<form-actions>`), two of them with the sticky bar IRA income

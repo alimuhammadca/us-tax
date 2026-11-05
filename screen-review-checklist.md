@@ -265,6 +265,24 @@ Uncollected Social Security, Combat pay, Child and dependent care, Adoption expe
 
 *From: owner 2026-11-05 (IRA income: its own sticky Save bar, Save refused until the upload questions were answered).*
 
+## 18. Screens are built the same way: one page that reveals its follow-up questions
+
+- [ ] A screen is one page of sections, like Employment, Interest income or IRA income. A follow-up question appears in place,
+      under the answer that needs it (`*ngIf` on the answer), not on another step. No step-by-step wizard: no Back / Continue
+      buttons, no "Step N" label, no review step that repeats the answers with Edit buttons, no "next screen" wording.
+- [ ] Converting a wizard: each step becomes a `<section class="section" sectionClear>` with a heading (a noun, not the
+      step's question), shown under the same condition the step order used (Pension withdrawals: `visible(step)` walks the
+      old `getNextScreen()`), so no follow-up logic is lost; side effects of "Continue" (clearing answers that no longer
+      apply) move into `normalizeForSave()`; the review step is removed (the answers are already on the page).
+- [ ] The shared bottom bar (item 17) is the only navigation; Save is never held back until a step is finished.
+- [ ] Text that talks about steps ("select Continue", "on the next screens", "return here and continue") is reworded.
+- [ ] Quick audit: `screenHistory`, `continueToNext`, `wizard-nav`, `currentScreen` or a `*Step` counter in a component.
+- [ ] e2e: no `.wizard-nav` / `.step-label` / review section and no Continue button; answering a gating question shows its
+      follow-up section on the same page; specs that clicked Continue or a review Edit button are updated.
+
+*From: owner 2026-11-05 (Pension withdrawals: a 16-step wizard; "why not have the revealing ui as we have done for other
+screens").*
+
 ---
 
 ## Screens reviewed
@@ -289,6 +307,7 @@ Uncollected Social Security, Combat pay, Child and dependent care, Adoption expe
 | Interest income (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 9, 12, 13, 14, 15 | 2026-11-05 |
 | Dividend income (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 9, 13, 15, 16 | 2026-11-05 |
 | IRA income (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 9, 13, 15, 16, 17 | 2026-11-05 |
+| Pension withdrawals (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 13, 15, 16, 17, 18 | 2026-11-05 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

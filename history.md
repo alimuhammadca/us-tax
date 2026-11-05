@@ -1,3 +1,7 @@
+## 2026-11-05T12:30 - Dividend income spouse copy: the two nominee filing questions
+
+- Owner-approved (2026-11-05). The spouse's copy now asks, like the Family Head's, "Will your spouse give the actual owner a Form 1099-DIV showing their share?" and "Will your spouse file that Form 1099-DIV with the IRS (with Form 1096 on paper)?" (Schedule B instructions, Nominees; not needed when the owner is the other spouse). No migration: `pf_dividend_income` is one row per owner_role and `DividendIncomeMapper` already saved both columns for the spouse; only the screen was missing them. e2e: `dividend-income-screen.spec.ts` spouse test answers both and checks they are saved. Outstanding item closed.
+
 ## 2026-11-05T12:00 - Dividend income: Screen Review Checklist applied; "Who paid them" fields like the others; checklist item 16
 
 - "Who paid them (names for Schedule B)" (both rows, both copies) looked different from the fields beside it because the components used `pInputText` without importing `InputTextModule`: Angular raised no error and rendered a bare browser input. Imported; each field now has a label row with a help icon and a "Payer name" placeholder (the old one, "e.g. Loan to J. Smith", was an interest example). The disallowance question used a `<button>?</button>` instead of the info icon: now the same icon as every other question. New checklist item 16 "The same kind of field looks and works the same" (audit found the same missing import on Standard deductions and Line 16 tax - recorded in outstanding.md).

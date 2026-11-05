@@ -1,14 +1,5 @@
 # Outstanding Items
 
-## IRA income: a spouse-only IRA return is blocked by the upload check (found 2026-11-05, screen review)
-
-- `validateIraStatementGating` reads only the Family Head's `hasUploadedAtLeastOneIra1099RStatement` and
-  `confirmAllReceived1099RUploaded`. On a joint return where only the spouse took money out of an IRA, those are blank (the
-  Family Head answered No), and the spouse's IRA income screen has no such questions, so `IRA_STATEMENT_UPLOAD_REQUIRED`
-  blocks the return. Same gap Dividend income had (B84, fixed by the spouse's own upload question and "either spouse's
-  answer"). Fix: add "Has your spouse entered every Form 1099-R they received for an IRA?" to the spouse copy and read either
-  spouse's answer (statements on file count as "at least one"). A field addition: needs the owner's sign-off.
-
 ## IRA income: QCD offset keeps inherited-IRA QCDs out - no IRS source found (found 2026-11-05, screen review)
 
 - The compute (`TaxReturnComputeService`, effectiveQcdAmount) applies the "deductible contributions after 70 1/2" offset only

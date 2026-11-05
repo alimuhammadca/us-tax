@@ -1,3 +1,9 @@
+## 2026-11-05T11:00 - Child and dependent care: "Is the provider a person or a business?" (V431)
+
+- Owner-approved field (2026-11-05). Form 2441 line 1 column (c) is a person's SSN / ITIN or a business's EIN; the number is saved digits only, so a reopened individual provider's SSN showed as ##-#######. New `providerIsIndividual` (V431: `pf_childcare_care_provider.provider_is_individual`, `out_form_2441_care_provider.provider_is_individual`, nullable) through the screen, `ChildcareExpensesMapper`, `Line1WageComputations`, `Form2441OutputMapper` and the output model; intake YAML `1e-childcare-expenses.yaml`.
+- Screen: the question above the provider's name, with IRS-based help; the ID field's placeholder and layout follow it (`[tinShowAs]`): 123-45-6789 for a person, 12-3456789 for a business; unanswered keeps the old rule. Form 2441 preview prints the number in the same layout.
+- e2e: `childcare-screen.spec.ts` new test (typed 400123456 shows 400-12-3456, switches with the answer, saved digits only + `providerIsIndividual` true, same layout on reopen). Outstanding item closed.
+
 ## 2026-11-05T10:00 - SSN always shown ###-##-#### on the Incomes screens (checklist item 12)
 
 - Owner: an SSN is shown like the Identification screen, ###-##-####, never ##-####### (EIN layout). Cause: `appTin="any"` picked the layout from the field name, and `ENTITY_FIELD` matched "ein" in `sfBuyerSsnOrEin` / `spouseSfBuyerSsnOrEin` (Interest income, seller-financed buyer's SSN) - shown 33-3445555. The Uncollected Social Security firm ID had no `appTin`, so a reopened value showed as bare digits whether the firm was a person or a business.

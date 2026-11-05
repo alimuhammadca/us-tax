@@ -173,8 +173,8 @@ owner 2026-11-04).*
       value (`toHaveValue('123-45-6789')`), not only the saved digits.
 
 *From: owner 2026-11-03 (rule in `rules.md` "No formatting characters in the database"); applied on Tips (employer EIN).
-SSN layout ###-##-####: owner 2026-11-05; fixed on Interest income (buyer SSN) and Uncollected Social Security (firm
-that is a person).*
+SSN layout ###-##-####: owner 2026-11-05; fixed on Interest income (buyer SSN), Uncollected Social Security (firm
+that is a person) and Child and dependent care (provider a person or a business, V431).*
 
 ## 13. Messages that quote the screen
 

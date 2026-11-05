@@ -105,6 +105,12 @@ childcareExpenses:
           label: Care provider's address
           help: Street, city, state, ZIP.
 
+        # V431 (owner, 2026-11-05): a person or a business - says which kind of number column (c) holds.
+        - name: providerIsIndividual
+          type: boolean
+          required: false
+          label: Is the provider a person or a business? (a person's number is an SSN or ITIN, shown XXX-XX-XXXX; a business's an EIN, XX-XXXXXXX)
+
         # Provider identifying number: SSN or EIN; required in most cases.
         - name: providerIdentifyingNumber
           type: text

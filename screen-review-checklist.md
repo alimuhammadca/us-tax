@@ -229,6 +229,7 @@ Uncollected Social Security, Combat pay, Child and dependent care, Adoption expe
 | Combat pay election (Family Head, spouse) | 1, 2, 3, 5, 6, 7, 9, 15 | 2026-11-04 |
 | Child and dependent care (Family Head, spouse copy) | 1, 2, 3, 4, 5, 6, 7, 9, 12, 13, 14, 15 | 2026-11-04 |
 | Adoption expenses and benefits (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 8, 9, 14, 15 | 2026-11-04 |
+| Other earned income (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 8, 9, 15 | 2026-11-05 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

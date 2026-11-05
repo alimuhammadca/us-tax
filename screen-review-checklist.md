@@ -148,6 +148,11 @@ owner 2026-11-04).*
 - [ ] An e2e spec per reviewed screen covering each tab: subtitle text, key IRS phrases in the help, the year, links
       open the right copy and come back, values saved digits-only.
 - [ ] Update existing specs that assert the old wording; run the related e2e (`--workers=1`, fresh `--output`).
+- [ ] Before trusting an e2e run, check the UI dev build after the LAST edit is clean (no `X [ERROR]` after the last
+      "Changes detected"): with a template error the dev server keeps serving the previous bundle, so the run passes on
+      old code (Pension withdrawals: a broken heading passed 60 tests).
+- [ ] A question the screen asks must be saved. An answer kept only in the component (a wizard's routing answer) comes
+      back blank on reopening; it needs a column (field addition: owner's sign-off).
 - [ ] Unit tests for new helpers (e.g. `id-validation.spec.ts`, `scenario-completeness.spec.ts`).
 - [ ] Entry in `history.md`; commit and push us-tax-ui, us-tax-be (e2e / backend) and us-tax (docs).
 

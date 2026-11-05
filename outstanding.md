@@ -1,5 +1,16 @@
 # Outstanding Items
 
+## Social security benefits: inferences not done yet (analysed 2026-11-05, owner chose 1, 4, 5 first)
+
+- (2) Detect a lump-sum payment for earlier years from the statements and pre-fill the rows: Form RRB-1099 has the
+  earlier-year boxes (ssebPriorYearY1 / Y2 / Y3Plus, "Y3Plus" has no single year); Form SSA-1099 has only the free-text box 3
+  description ("*Box 3 includes $ paid in 2025 for 2024, 2023, and other tax years", Pub. 915) - total and years, a per-year
+  split only when one year is listed. Pre-fill only while the rows are empty and the question unanswered.
+- (3) The 2024 figures (repayment over $3,000: 2024 lines 6a, 6b, 15, filing status; the 2024 lump-sum row) from last year's
+  return in the app (TaxReturnV2 + OutForm1040: 6a, 6b, 2a, 11, 15, filing status) or the uploaded 2024 Form 1040 (has 2a,
+  10, 11, 15, filing status; lines 6a / 6b need Box6a / Box6b added to PriorYear1040Parser). Check each lump-sum field's
+  meaning against Pub. 915 Worksheet 2 before mapping ("other income" is not AGI).
+
 ## Interest income: Form 8815 section is still a 3-step wizard inside the page (found 2026-11-05, checklist item 18 audit)
 
 - The savings-bond education exclusion section steps through "Step 1 / 2 / 3" (`form8815Step`) with its own Back / Next.

@@ -11,7 +11,7 @@ instructions:
   - Upload validation is mandatory before entering supplemental details.
   - At least one SSA-1099 or RRB-1099 statement must be uploaded before continue.
   - This taxpayer form owns return-level line 6c election and line 6d facts to avoid spouse conflicts.
-  - Supplemental Security Income (SSI) is excluded and must not be included in taxable-benefit calculations.
+  - Supplemental Security Income (SSI) is not taxable and not on Form SSA-1099; nothing is asked about it (owner 2026-11-05).
   - Self-employment income is out of scope and excluded.
 sections:
   - name: screening
@@ -68,23 +68,6 @@ sections:
     multiplicity: single
     showIf: hadSocialSecurityBenefits == true
     fields:
-      - name: hasSupplementalSecurityIncome
-        type: boolean
-        required: false
-        label: Did you receive Supplemental Security Income (SSI)?
-        help: SSI is not taxable and must be excluded from Form 1040 lines 6a/6b.
-      - name: supplementalSecurityIncomeAmount
-        type: amount
-        required: false
-        label: SSI amount received (excluded)
-        placeholder: 0.00
-        help: Enter SSI amount only for exclusion documentation; do not include it in taxable-benefit calculations.
-      - name: confirmSsiExcludedFromTaxableBenefits
-        type: boolean
-        required: false
-        label: I confirm SSI is excluded from taxable Social Security benefit calculations
-        help: Confirm SSI exclusion before continuing.
-
   - name: line6dMfsApartFacts
     title: Line 6d facts (return-level)
     multiplicity: single

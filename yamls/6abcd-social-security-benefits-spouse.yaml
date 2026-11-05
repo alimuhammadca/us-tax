@@ -10,7 +10,7 @@ category: income
 instructions:
   - Use this only for spouse-specific Social Security and Railroad Retirement inputs for Form 1040 lines 6a/6b/6c/6d.
   - Return-level upload checks, line 6c election, and line 6d MFS-apart facts stay on social-security-benefits-taxpayer.
-  - Supplemental Security Income (SSI) is excluded and must not be included in taxable-benefit calculations.
+  - Supplemental Security Income (SSI) is not taxable and not on Form SSA-1099; nothing is asked about it (owner 2026-11-05).
   - Self-employment income is out of scope and excluded.
 sections:
   - name: screening
@@ -28,22 +28,6 @@ sections:
     multiplicity: single
     showIf: hadSocialSecurityBenefits == true
     fields:
-      - name: hasSupplementalSecurityIncome
-        type: boolean
-        required: false
-        label: Did your spouse receive Supplemental Security Income (SSI)?
-        help: SSI is not taxable and must be excluded from Form 1040 lines 6a/6b.
-      - name: supplementalSecurityIncomeAmount
-        type: amount
-        required: false
-        label: Spouse SSI amount received (excluded)
-        placeholder: 0.00
-        help: Enter spouse SSI amount only for exclusion documentation; do not include it in taxable-benefit calculations.
-      - name: confirmSsiExcludedFromTaxableBenefits
-        type: boolean
-        required: false
-        label: I confirm spouse SSI is excluded from taxable Social Security benefit calculations
-        help: Confirm spouse SSI exclusion before continuing.
       # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
       - name: ssRepaidPriorYearBenefits
         type: amount

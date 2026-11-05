@@ -163,8 +163,18 @@ owner 2026-11-04).*
 - [ ] e2e: type the value with dashes and check the saved value is digits only.
 - [ ] Words the IRS instructions allow in place of the number are accepted and saved as spelled there (e.g. Form 2441
       provider: "Tax-Exempt", "LAFCP"; Form 8919 firm: "unknown"): `appTin` with `[tinWords]`.
+- [ ] **An SSN (or ITIN) is always shown ###-##-####**, as on the Identification screen - never ##-####### (that layout
+      is only for an EIN). Check every SSN field on the screen after typing it, after leaving it and after reopening the
+      screen. With `appTin="any"` the layout is chosen from the field name (payer / employer / provider / firm ... ->
+      EIN), so an SSN in a field whose name also says EIN or an entity (e.g. `buyerSsnOrEin`, `firmFederalIdNumber` of a
+      firm that is a person) came out as an EIN. Use `appTin="individual"` when only an SSN / ITIN belongs there;
+      when the screen knows whether it is a person or a business, bind `[tinShowAs]="... ? 'ssn' : 'ein'"`. An ITIN is
+      always shown as an individual's; a field named for an SSN (`...Ssn...`) shows an SSN layout. e2e: assert the shown
+      value (`toHaveValue('123-45-6789')`), not only the saved digits.
 
-*From: owner 2026-11-03 (rule in `rules.md` "No formatting characters in the database"); applied on Tips (employer EIN).*
+*From: owner 2026-11-03 (rule in `rules.md` "No formatting characters in the database"); applied on Tips (employer EIN).
+SSN layout ###-##-####: owner 2026-11-05; fixed on Interest income (buyer SSN) and Uncollected Social Security (firm
+that is a person).*
 
 ## 13. Messages that quote the screen
 

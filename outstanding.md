@@ -1,5 +1,12 @@
 # Outstanding Items
 
+## Child and dependent care provider ID: SSN layout needs "person or business" (found 2026-11-05, owner SSN-layout rule)
+
+- Form 2441 line 1 column (c) takes the provider's SSN or EIN. The screen doesn't ask whether the provider is a person or a
+  business, so a reopened individual provider's SSN shows as ##-####### (an ITIN, or a number just typed with SSN dashes,
+  shows right). Fix: a "Is the provider a person or a business?" answer bound to `[tinShowAs]`, like the Uncollected
+  Social Security firm. That is a field addition: needs the owner's sign-off.
+
 ## Interest income spouse copy: three fields the Family Head copy has (found 2026-11-05, screen review)
 
 - The spouse's Interest income has no "Country or countries where the foreign accounts are" (Schedule B line 7b) for the

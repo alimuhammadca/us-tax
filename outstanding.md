@@ -1,5 +1,13 @@
 # Outstanding Items
 
+## Social security benefits: a spouse-only return is blocked by the upload check (found 2026-11-05, screen review)
+
+- `validateSocialSecurityStatementGating` reads only the Family Head's `hasUploadedAtLeastOneSsaOrRrbStatement` and
+  `confirmAllReceivedSsaRrbStatementsUploaded`. On a joint return where only the spouse receives benefits, the Family Head
+  answers No (those answers are blanked), the spouse's screen has no upload question, and SOCIAL_SECURITY_STATEMENT_UPLOAD_REQUIRED
+  blocks the return. Same gap IRA income had (fixed 2026-11-05 with the spouse's own question and "either spouse's answer").
+  A field addition on the spouse copy: needs the owner's sign-off.
+
 ## Interest income: Form 8815 section is still a 3-step wizard inside the page (found 2026-11-05, checklist item 18 audit)
 
 - The savings-bond education exclusion section steps through "Step 1 / 2 / 3" (`form8815Step`) with its own Back / Next.

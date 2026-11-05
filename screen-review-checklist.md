@@ -313,6 +313,7 @@ screens").*
 | Dividend income (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 9, 13, 15, 16 | 2026-11-05 |
 | IRA income (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 9, 13, 15, 16, 17 | 2026-11-05 |
 | Pension withdrawals (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 13, 15, 16, 17, 18 | 2026-11-05 |
+| Social security benefits (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 13, 15, 16, 17 | 2026-11-05 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

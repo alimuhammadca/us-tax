@@ -1,12 +1,5 @@
 # Outstanding Items
 
-## IRA income: QCD offset keeps inherited-IRA QCDs out - no IRS source found (found 2026-11-05, screen review)
-
-- The compute (`TaxReturnComputeService`, effectiveQcdAmount) applies the "deductible contributions after 70 1/2" offset only
-  to QCDs from the person's own IRAs, adding back `inheritedIraQcdAmount`. Pub. 590-B (2025) states the offset on "the amount
-  of QCDs that you can exclude" with no inherited-IRA exception. The old help claimed the exception; the new help no longer
-  does. Owner to decide whether the compute should keep the carve-out.
-
 ## Screens with their own Save button instead of the shared bar (checklist item 17 audit, 2026-11-05)
 
 - 44 personal screens still end with a Save of their own (no `<form-actions>`), two of them with the sticky bar IRA income

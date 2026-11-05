@@ -1,5 +1,11 @@
 # Outstanding Items
 
+## Interest income spouse copy: three fields the Family Head copy has (found 2026-11-05, screen review)
+
+- The spouse's Interest income has no "Country or countries where the foreign accounts are" (Schedule B line 7b) for the
+  spouse's own separate return, and no "payer already reduced the amount", "reducing interest by bond premium" or
+  "reducing OID by acquisition premium" questions. Adding them is a field addition: needs the owner's sign-off.
+
 ## Sort the statements and forms in each sidebar section (opened 2026-11-05, owner)
 
 The owner wants the items in each sidebar section sorted: Statements, Incomes, Deductions, Personal and Tax Return (on

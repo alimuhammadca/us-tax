@@ -30,7 +30,8 @@ Started 2026-11-03. Related rules: `rules.md` ("No hard-coded tax year", "No for
       any rule specific to that person (a dependent's wages go on the dependent's own return).
 - [ ] Every question has a help icon; add one where it is missing (e.g. the chapter 11 question).
 - [ ] Check the old text for wrong claims and fix them (e.g. "Schedule H rules" was really Pub. 926; inmate wages go
-      to Schedule 1 line 8u, not line 1a).
+      to Schedule 1 line 8u, not line 1a; a frozen deposit is one held by a bankrupt or insolvent institution, not any
+      court-frozen account; a section 1278(b) choice covers bonds acquired that year and later, not "once in a lifetime").
 - [ ] Long help must scroll inside the modal (shared help-modal already does: max-height 90vh).
 
 *From: Digital assets, Presidential election, Third party designee, Prior-year carryovers, Employment.*
@@ -91,6 +92,9 @@ Started 2026-11-03. Related rules: `rules.md` ("No hard-coded tax year", "No for
       `utils/statement-recipient.ts` STATEMENT_PERSON_TIN; not Form 1042-S, whose U.S. TIN is "if any"). Owner 2026-11-05.
 - [ ] A statement with no SSN is matched by the name on it when it fits exactly one household person
       (`utils/person-name-match.ts`, backend `PersonNameMatch`), and the screen says "matched by name".
+- [ ] Use the shared test, not a copy: `utils/statement-owner.ts` (`loadHouseholdPeople`, `statementOwnedBy`: SSN first,
+      then the name). A comment that says a screen filters by SSN is not the filter - check the code (Interest income
+      listed every person's Forms 1099 under a comment claiming a spouse-TIN filter).
 
 *From: Employment (Form 4852, Business income, Uncollected Social Security, W-2); Child and dependent care (box 10 rows,
 owner 2026-11-04).*
@@ -230,6 +234,7 @@ Uncollected Social Security, Combat pay, Child and dependent care, Adoption expe
 | Child and dependent care (Family Head, spouse copy) | 1, 2, 3, 4, 5, 6, 7, 9, 12, 13, 14, 15 | 2026-11-04 |
 | Adoption expenses and benefits (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 8, 9, 14, 15 | 2026-11-04 |
 | Other earned income (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 8, 9, 15 | 2026-11-05 |
+| Interest income (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 9, 12, 13, 14, 15 | 2026-11-05 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

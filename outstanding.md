@@ -1,5 +1,19 @@
 # Outstanding Items
 
+## Like-kind exchanges (Form 8824): found in the 2026-11-06 review, not changed
+
+- Not asked (field additions - owner sign-off): the value and basis of the section 1245 parts GIVEN UP (section 1245 recapture is the
+  lesser of the depreciation or the gain - Taylor example); section 1252 / 1254 / 1255 property (line 21, 25b); like-kind intangible real
+  property received (line 25c); whether a QI was used, QI default (Rev. Proc. 2010-14), reverse / parking exchanges (Rev. Proc. 2000-37);
+  incidental personal property; Part IV lines 27-29 descriptions (the Part I fields are reused) and whether the replacement is permitted
+  property; QOF deferral (Form 8997) and the new section 1062 farmland election; recourse vs nonrecourse debt.
+- The property received is not added to Depreciable assets with its line 25 basis (the screen points there); the basis is figured at
+  compute only.
+- The installment-note path: the section 1245 / 1250 recapture on the note's share is said in help to be taxed in full this year - not
+  re-verified against Form6252Compute's handling of an 8824 note.
+- `propertyUse` has no "held mainly for sale" or "personal residence only" choice (would be disqualifiers) - covered in help only.
+- Line 8 prints the related party's SSN or EIN as saved digits (no dashes) on the form.
+
 ## Business property sales (Form 4797): found in the 2026-11-06 review, not changed
 
 - `Wave2FieldsW4.saleGain` (the at-risk widening of a linked activity) ignores the date-sold year, section 1244, section 121 and sales the

@@ -416,6 +416,10 @@ since D-6a-1; the spouse disability field shown).*
       save (Business property sales: the section 1231 lookback amount). Quick audit: each `[(ngModel)]` key appears in the payload.
 - [ ] A link to an entry on another screen is saved by name, not by its position in that list - a position silently points elsewhere
       when the list is reordered (Business property sales: "rental:0").
+- [ ] A message (flag) about the spouse's entry opens the spouse's copy: set the flag's `formId` to the spouse form when the
+      checklist link table names only the taxpayer copy (Like-kind exchanges).
+- [ ] A label built from `ownerDisplayName` + "'s" reads "you's" on the taxpayer tab: word it from the `CgWho` (poss / Poss) instead
+      (Like-kind exchanges).
 - [ ] A field that must match a name entered on another screen (an asset's business, farm or rental) is a pick list of that person's
       own names, saving the same text - not free text that silently fails to match (Depreciable assets).
 - [ ] Questions about all the entries of a list (Schedule C lines 46-47 about the vehicles) come after the entries, in the form's
@@ -464,6 +468,7 @@ were on Capital gain/loss and Social security benefits rows, fixed together.*
 | Self-employment tax options (Family Head, spouse) | 1-8, 11-17, 19-21, 24 | 2026-11-06 |
 | Depreciable assets (Family Head, spouse) | 1-8, 11-17, 19-21, 24 | 2026-11-06 |
 | Business property sales (Family Head, spouse) | 1-8, 11-17, 19-24 | 2026-11-06 |
+| Like-kind exchanges (Family Head, spouse) | 1-8, 11-17, 19-24 | 2026-11-06 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

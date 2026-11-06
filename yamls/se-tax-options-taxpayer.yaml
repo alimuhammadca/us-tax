@@ -141,6 +141,7 @@ sections:
         type: amount
         required: false
         label: Prior-year unreported tips subject to SE tax
+        retired: true  # owner 2026-11-06: not a Schedule SE item; no longer asked or added to line 2 (column kept, saved blank)
 
       - name: priorYearBusinessAtRiskCarryforward
         type: amount
@@ -160,6 +161,7 @@ sections:
         type: amount
         required: false
         label: Group-term-life insurance additions to SE income
+        retired: true  # owner 2026-11-06: not a Schedule SE item; no longer asked or added to line 2 (column kept, saved blank)
 
   - name: computedOutputs
     title: Computed outputs

@@ -1,5 +1,18 @@
 # Outstanding Items
 
+## Self-employment tax options: found in the 2026-11-06 review, not changed
+
+- Not asked (field additions - owner sign-off): a parsonage's rental value furnished in kind and meals / lodging for the employer's
+  convenience (clergy, Schedule SE line 2); Form 2031; community income taxed to the other spouse; chapter 11 income; the general
+  partner expense reduction.
+- The carryovers are a household total seeded onto the Family Head's copy only and summed across both copies; the business and
+  farm at-risk ones are released against the first at-risk business / farm (per-business fields win). On MFS legs no bridge runs.
+- The section 179 bridge is skipped when either copy has any value (a typed 0 stops it); the at-risk bridges only for a positive value.
+- Check: a 2024 asset placed in service in 2024 produced no section 179 carryover in a 2024 return figured here, while the same asset
+  dated 2025 did (the B10 spec uses a 2025 date) - the section 179 placed-in-service test may be tied to 2025, not the return's year.
+- Flags without a link to this screen: SE_CRP_SS_TIMING_UNCONFIRMED / SE_CRP_SS_NOT_FOUND (they tell the user to come here),
+  CLERGY_HOUSING_LIMIT_INPUTS_MISSING (also has no TAXPAYER / SPOUSE suffix), SE_TOTALIZATION_AGREEMENT_EXEMPT.
+
 ## Farm rental (Form 4835): found in the 2026-11-06 review, not changed
 
 - Not asked (field additions - owner sign-off): the EIN; the qualified joint venture election (spouses each filing a Form 4835); the

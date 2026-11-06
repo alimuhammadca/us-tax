@@ -472,7 +472,7 @@ were on Capital gain/loss and Social security benefits rows, fixed together.*
 | Depreciable assets (Family Head, spouse) | 1-8, 11-17, 19-21, 24 | 2026-11-06 |
 | Business property sales (Family Head, spouse) | 1-8, 11-17, 19-24 | 2026-11-06 |
 | Like-kind exchanges (Family Head, spouse) | 1-8, 11-17, 19-24 | 2026-11-06 |
-| Business casualties and thefts (Family Head, spouse) | 1-8, 11, 13, 15-17, 19-21, 24 | 2026-11-06 |
+| Business casualties and thefts (Family Head, spouse) | 1-9, 11, 13, 15-24 (second pass: 5, form titles in help) | 2026-11-06 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

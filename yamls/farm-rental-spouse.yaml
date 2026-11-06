@@ -31,7 +31,7 @@ sections:
       - name: activeParticipation
         type: boolean
         required: false
-        label: Actively participated (eligible for the $25,000 special allowance)
+        label: Did you actively participate in the operation of this farm in 2025?  # Form 4835 line A; Yes / No since 2026-11-06
       - name: incomeFromProduction
         type: amount
         required: false
@@ -87,7 +87,7 @@ sections:
       - name: cropInsuranceDeferredAmount
         type: amount
         required: false
-        label: Amount of crop insurance deferred to 2026
+        label: Amount of crop insurance deferred to 2026  # line 5b = 5a less this (FarmRentalCropInsurance, 2026-11-06); next year's 5d
       - name: otherIncome
         type: amount
         required: false

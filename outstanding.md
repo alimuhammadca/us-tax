@@ -1,5 +1,15 @@
 # Outstanding Items
 
+## Farm rental (Form 4835): found in the 2026-11-06 review, not changed
+
+- Not asked (field additions - owner sign-off): the EIN; the qualified joint venture election (spouses each filing a Form 4835); the
+  disposition of the whole activity (frees suspended losses); a "some investment not at risk" answer (34a / 34b come from whether the
+  amount at risk is blank).
+- Depreciable assets has no farm rental activity type: line 12 is typed, with no Form 4562 asset detail.
+- Blank taxable lines 2b, 3b and 4c count as zero (only 5b is now figured from 5a); Schedule F fills a blank taxable line from its total.
+- The conservation carryover to next year has no note for Form 4835 (ConservationLimit gets no flags list for farm rentals).
+- The Form 1099-G box 9 market gain check counts only Schedule F program payments.
+
 ## Farm income (Schedule F): found in the 2026-11-06 review, not changed
 
 - Not asked (field additions - owner sign-off): line D (EIN); the election to report weather-related livestock sales next year;

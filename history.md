@@ -1,3 +1,13 @@
+## 2026-11-06T03:00 - Installment sales: Screen Review Checklist applied
+
+- One component serves both tabs (installment-sales-taxpayer / -spouse). Title and subtitle per tab with the person's name and TAX_YEAR (the screen said "Did your spouse..." through a display-name input and typed 2025 in seven places); Form 6252, Schedule D and Form 4797 named in full.
+- Help (there was none): new `data/installment-sales-help.ts` from the 2025 Form 6252 instructions - every question has an icon. Corrected on the way: a related party is a spouse, child, grandchild, parent or sibling, or a related corporation, S corporation, partnership, estate or trust (section 453(f)(1)) - the hint said "a business you control"; the line 29 choices read "my sale" / "my death" on the spouse tab and now follow the form ("the first sale", "the original seller or buyer").
+- Controls (item 16): the native selects and radios became p-select / p-radioButton; the YYYY-MM-DD text dates became app-date-input; the related party's SSN or EIN uses appTin (digits only) and is hidden with an eye (item 14); every label in a label row with its help icon.
+- The shared bar with Reset (it had its own Save and a "Saved." text), Clear in each section, save partial naming what is left; follow-up answers that no longer apply (main home gain on a business sale, related party details after No...) are cleared on save.
+- Links (item 6): the notes name Capital gain/loss and Business property sales and open the tab's own copy. Backend messages now say "Installment sales screen" / "Capital gain/loss screen".
+- Every field is read by Form6252Compute (audited). Not done (item 20): a sale from an earlier year is retyped each year - last year's Form 6252 computed here could fill it (outstanding.md).
+- e2e: `installment-sales-form-6252.spec.ts` updated for the shared controls, plus a screen test (help, related party number digits only and hidden, save partial, Reset).
+
 ## 2026-11-06T02:00 - Capital gain/loss: Screen Review Checklist applied; the screen rebuilt on both copies; four compute bugs fixed
 
 - Review by two audits (backend field use, IRS text against the 2025 Schedule D / Form 8949 instructions, Form 6781, Pubs. 523 / 544 / 550) and the owner's decisions (2026-11-06): same Form 8949 box picker on both copies; show the Form 8997 answer, the spouse statement questions, the bad debt on the Family Head copy, involuntary conversion and the section 1202 exclusion; remove the nominee confirmation, the carried-over loss term and the spouse's "amounts look correct"; remove the intro cards, glossary, examples and the browser-side estimates (their IRS-checked content is in the help).

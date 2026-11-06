@@ -412,6 +412,7 @@ since D-6a-1; the spouse disability field shown).*
 | Pension withdrawals (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 13, 15, 16, 17, 18 | 2026-11-05 |
 | Social security benefits (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 11, 13, 15, 16, 17, 19, 20, 21, 22, 23 | 2026-11-05 |
 | Capital gain/loss (Family Head, spouse, dependent) | 1-8, 11, 13, 15-23 | 2026-11-06 |
+| Installment sales (Family Head, spouse) | 1-8, 11-17, 19, 21 | 2026-11-06 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

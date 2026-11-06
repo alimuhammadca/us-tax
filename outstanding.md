@@ -1,5 +1,12 @@
 # Outstanding Items
 
+## Installment sales: carry last year's sales forward (found 2026-11-06, checklist item 20)
+
+- A sale from an earlier year is typed again every year (description, code, use, dates, price, basis, gross profit percentage,
+  payments before this year). Last year's Form 6252 figured here (out_form_6252) has all of it: the screen could fill a new
+  year's rows from it (payments before this year = last year's lines 21 + 23), as the other carryforward bridges do. Ask the
+  owner.
+
 ## Capital gain/loss: found in the 2026-11-06 review, not changed
 
 - The compute reads `imported1099DivBox2a/2b/2c/2dTotal` and `imported1099B1099DaHasQofFlag` from the capital form, but nothing

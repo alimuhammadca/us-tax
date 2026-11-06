@@ -1,3 +1,10 @@
+## 2026-11-06T12:00 - Full e2e regression: 2150 passed, 6 failed; all 6 fixed
+
+- Interest income (both copies): the question labels pointed at the Yes radio (`for="x_yes"`), so clicking a question's label answered it Yes, and the e2e helper picked the wrong group's Yes (business-related interest) - 3 interest specs failed. The labels now point at the radio group (checklist item on `<label for>`).
+- w2-required-employment.spec: still expected Save to be disabled with a question unanswered and the old W-2 wording; the Employment screen saves what is there (save partial) and names the form in full - spec updated.
+- dividend-income-screen.spec (spouse nominee): read the saved form before the Save response arrived - it now waits for the PUT.
+- Rerun of the 4 spec files: 20 passed.
+
 ## 2026-11-06T06:00 - Other incomes: Screen Review Checklist applied; screen rebuilt on both copies; the statement check fixed
 
 - Two audits (backend field use; IRS text against the 2025 Schedule 1 instructions, Pubs. 525 / 17, Forms 8853 / 8889 / W-2G / 5329) and the owner's decisions (2026-11-06): remove the hidden Schedule C / F out-of-scope questions and the never-shown "uploaded at least one statement" (columns kept, saved blank); remove the "Schedule 1 totals so far" panel (typed amounts only - it under-stated); show the state refund status and fill it from last year; show last year's net operating loss.

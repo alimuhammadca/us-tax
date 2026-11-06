@@ -1,5 +1,18 @@
 # Outstanding Items
 
+## Rental & royalty income: found in the 2026-11-06 review, not changed
+
+- Schedule E Part I items the screen doesn't ask (each a field addition - owner sign-off): lines A / B (payments needing Forms 1099,
+  filed or not); a structured line 1a address (street / city / state / ZIP, foreign address); the line 1b type code 1-8 (the output
+  writes "6" for a royalty and "1" otherwise - `ScheduleEParts.java:138`; codes 5 and 7 could come from the mostly-land and
+  self-rental answers); the line 2 QJV box; line 43 (real estate professional reconciliation). Fair rental / personal use days are
+  asked but not printed on line 2.
+- Last year's suspended passive loss and at-risk loss reach the next year only as household totals (`out_schedule_1`); with two or
+  more properties they wait for a per-property split ("not assigned" notes). `OutForm8582.worksheet_fields_json` (V417) keeps the
+  per-activity worksheet but nothing reads it next year - a per-property bridge could fill the two carryover boxes.
+- The imported at-risk and vacation-home carryovers are seeded onto the Family Head's form only (TRCS ~2503-2525); a joint return
+  where only the spouse has the rental is not covered by a test.
+
 ## Capital gain/loss: found in the 2026-11-06 review, not changed
 
 - The compute reads `imported1099DivBox2a/2b/2c/2dTotal` and `imported1099B1099DaHasQofFlag` from the capital form, but nothing

@@ -405,6 +405,11 @@ since D-6a-1; the spouse disability field shown).*
 - [ ] Each repeated entry (a sale, a firm, a year) has **Clear** (`sectionClear` on the card) and **Remove** (asks first:
       "Remove this ... ? This will delete the data ..."), in its header; a title from the entry (its description) when it has one.
 - [ ] Add buttons are the plain `toolbar-button` used on the fixed screens, not PrimeNG `pButton` icon buttons.
+- [ ] A component style that changes a shared rule (the `.row` grid) needs at least the shared rule's specificity: `.prop-row` alone
+      loses to `.app-shell .form-view .row`, so write `.form-view .row.prop-row`. Check it in the screenshot, not in the CSS
+      (Rental & royalty income: a lone amount still stretched across the card).
+- [ ] A question with only a "Yes" radio (a checkbox in disguise) can never be answered No: every question gets Yes and No, with
+      its label on the group (Rental & royalty income had six).
 - [ ] Before calling the screen done: take a screenshot of it with a filled-in entry and one of a fixed screen of the same
       section (Incomes: Uncollected Social Security has entries, a select, a date and an eye field) and compare them - section
       cards, label size, input fill, date field, Clear / Remove, add button, spacing between stacked questions.
@@ -442,6 +447,7 @@ were on Capital gain/loss and Social security benefits rows, fixed together.*
 | Capital gain/loss (Family Head, spouse, dependent) | 1-8, 11, 13, 15-24 | 2026-11-06 |
 | Installment sales (Family Head, spouse) | 1-8, 11-17, 19, 20, 21, 24 | 2026-11-06 |
 | Other incomes (Family Head, spouse) | 1-8, 11, 13, 15-24 | 2026-11-06 |
+| Rental & royalty income (Family Head, spouse) | 1-8, 11-17, 19-24 | 2026-11-06 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

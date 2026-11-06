@@ -26,15 +26,15 @@ sections:
       - name: isRealEstateProfessional
         type: boolean
         required: false
-        label: "You qualify as a real estate professional (> 750 hours and more than half of working time in real property trades) — rental losses are fully deductible"
+        label: "Did you qualify as a real estate professional in 2025 (more than 750 hours and more than half of your work in real estate businesses)?"  # Yes / No (2026-11-06 screen review)
       - name: claims199aRentalSafeHarbor
         type: boolean
         required: false
-        label: "Elect the Rev. Proc. 2019-38 §199A rental safe harbor (treat the rental enterprise as a trade or business for the QBI deduction)"
+        label: "Do your rentals meet the safe harbor for the qualified business income deduction (250 hours of rental services, separate books)?"  # Yes / No; Rev. Proc. 2019-38
       - name: otherPassiveIncome
         type: number
         required: false
-        label: "Passive income from other activities (e.g. limited partnership K-1s)"
+        label: "Passive income not entered anywhere else (not a Schedule K-1 entered under Statements)"  # advisory RENTAL_OTHER_PASSIVE_INCOME_WITH_K1 when passive K-1s are also entered
 
   # Saved under the `spouseProperties` list key (the component picks taxpayerProperties / spouseProperties from its formId).
   - name: spouseProperties
@@ -148,6 +148,17 @@ sections:
         required: false
         label: "Depreciation (from your Form 4562) (Schedule E line 18)"
         showIf: "propertyType == 'RENTAL_REAL_ESTATE'"
+      # Shown on the screen since 2026-11-06 (owner): Form 6251 line 2m - 200% DB personal-property depreciation vs its 150% DB AMT figure.
+      - name: personalPropertyDepreciation
+        type: number
+        required: false
+        label: "Of that, on furniture and appliances (200% method)"
+        showIf: "propertyType == 'RENTAL_REAL_ESTATE' && depreciationAmount > 0"
+      - name: personalPropertyAmtDepreciation
+        type: number
+        required: false
+        label: "The same for the alternative minimum tax (150% method)"
+        showIf: "personalPropertyDepreciation != null"
       - name: depletionAmount
         type: number
         required: false

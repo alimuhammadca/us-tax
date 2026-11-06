@@ -1,3 +1,9 @@
+## 2026-11-06T03:30 - Installment sales: last year's sales still being paid are carried forward
+
+- Owner-approved (checklist item 20). Form 6252 is filed every year until the last payment, with the same sale facts. The screen reads last year's Installment sales answers (the same personal form for the year before, `PersonalDataService.getPriorYearForm`) and, for each sale still being paid (received through last year < the contract price, Form 6252 line 18 = line 7 + line 17), makes this year's row: the same facts, payments before this year = last year's line 23 + line 21 + pledged-loan proceeds, this year's payments, the resale answers and line 25 left blank; the gross profit percentage is left for the return to figure from the same amounts.
+- A blank screen is filled in with a note ("Filled in from your 2024 Installment sales: 1 sale still being paid"); with rows already there, a button adds the missing sales (matched by description and date sold); answering No while a sale is still being paid shows a warning. Nothing typed this year is changed.
+- New `utils/installment-carry-forward.ts` (+ spec, 4 tests). e2e: `installment-sales-form-6252.spec.ts` two-year test (2024 sale paid 40,000 -> 2025 row with 40,000 before 2025; 40,000 paid in 2025 x 0.55 = 22,000 on line 7a) and the No warning.
+
 ## 2026-11-06T03:00 - Installment sales: Screen Review Checklist applied
 
 - One component serves both tabs (installment-sales-taxpayer / -spouse). Title and subtitle per tab with the person's name and TAX_YEAR (the screen said "Did your spouse..." through a display-name input and typed 2025 in seven places); Form 6252, Schedule D and Form 4797 named in full.

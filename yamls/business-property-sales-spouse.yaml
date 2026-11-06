@@ -83,3 +83,4 @@ sections:
         required: false
         label: "AMT depreciation, if different (optional)"
         showIf: "propertyType != land"
+# 2026-11-06 screen review: atRiskActivity is saved as "rental:<address>" / "farm:<crop>" / "business:<name>" (old "rental:0" positions still read).

@@ -92,5 +92,6 @@ sections:
       - name: priorYearsNonrecaptured1231Losses
         type: number
         required: false
-        label: "Net section 1231 losses from 2020-2024 returns not prepared in this app, not yet recaptured - optional"
+        label: "Net section 1231 losses from 2020-2024 returns not prepared in this app, not yet recaptured - optional"  # saved and loaded since 2026-11-06 (was never sent)
         help: "A net section 1231 gain this year is ordinary income up to these losses (Form 4797 line 8)."
+# 2026-11-06 screen review: atRiskActivity is saved as "rental:<address>" / "farm:<crop>" / "business:<name>" (old "rental:0" positions still read).

@@ -1,5 +1,19 @@
 # Outstanding Items
 
+## Business property sales (Form 4797): found in the 2026-11-06 review, not changed
+
+- `Wave2FieldsW4.saleGain` (the at-risk widening of a linked activity) ignores the date-sold year, section 1244, section 121 and sales the
+  return rejected - a rejected sale still widens the at-risk limit; only gains are counted (Form 6198 lines 2a / 2b also take losses).
+- `FORM_1099S_PROPERTY_TYPE_REQUIRES_FORM_4797` says "the Form 4797 statement" and links to Capital gain/loss; `FORM_4797_POSSIBLE_SECTION_1250_REAL_PROPERTY`
+  is linked to Capital gain/loss too; FORM_4797_SECTION_1244_* have no link.
+- MFS: the spouse's typed section 1231 lookback is dropped on the spouse leg; the lookback reads returns of kind "primary" by uid (on an MFS
+  leg the spouse may get the Family Head's history - not verified).
+- No check ties a Depreciable asset disposed of this year to a sale here (the screen now offers the shortcut); depreciation allowed isn't
+  filled from the asset (not kept per asset).
+- Not asked (field additions - owner sign-off): section 1254, section 1239 related-party sales, timber (631), unharvested crops, K-1 section
+  1231 amounts, the condemnation (section 1033) path, line 1a 1099 reconciliation, section 1245 real property types (single-purpose
+  agricultural structures) beyond "Equipment".
+
 ## Depreciable assets (Form 4562): found in the 2026-11-06 review, not changed
 
 - The year fix (owner 2026-11-06) makes the depreciation engine's year tests follow the return's year (`ReferenceData.computeYear()`),

@@ -170,6 +170,9 @@ owner 2026-11-04).*
       its requests and looks like a flaky test.
 - [ ] A question the screen asks must be saved. An answer kept only in the component (a wizard's routing answer) comes
       back blank on reopening; it needs a column (field addition: owner's sign-off).
+- [ ] A "no such word" check uses a whole-word pattern: `not.toContainText(' you ')` trims the text to "you", which then matches "your
+      spouse" (Business casualties and thefts). Write `not.toContainText(/\byou\b/)`. A file path in a spec is a Windows path
+      (`C:/Users/...`): a Git Bash path (`/c/Users/...`) makes Node write under `C:\c\`.
 - [ ] Unit tests for new helpers (e.g. `id-validation.spec.ts`, `scenario-completeness.spec.ts`).
 - [ ] Entry in `history.md`; commit and push us-tax-ui, us-tax-be (e2e / backend) and us-tax (docs).
 
@@ -469,6 +472,7 @@ were on Capital gain/loss and Social security benefits rows, fixed together.*
 | Depreciable assets (Family Head, spouse) | 1-8, 11-17, 19-21, 24 | 2026-11-06 |
 | Business property sales (Family Head, spouse) | 1-8, 11-17, 19-24 | 2026-11-06 |
 | Like-kind exchanges (Family Head, spouse) | 1-8, 11-17, 19-24 | 2026-11-06 |
+| Business casualties and thefts (Family Head, spouse) | 1-8, 11, 13, 15-17, 19-21, 24 | 2026-11-06 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

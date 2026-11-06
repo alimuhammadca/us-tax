@@ -1,5 +1,17 @@
 # Outstanding Items
 
+## Business casualties and thefts (Form 4684 Section B): found in the 2026-11-06 review, not changed
+
+- Not asked (field additions - owner sign-off): a home rented out or used for a business not on Schedule C (section 280A(c)(5) limit,
+  "See attached statement" on line 27); property used in a passive activity (a casualty gain or loss isn't counted in the passive loss
+  unless such losses recur regularly - Form 8582); the business part of mixed-use property is entered by the user (no split helper).
+- A destroyed or stolen asset is not marked disposed of on Depreciable assets automatically, and a partly destroyed MACRS asset's basis
+  is not reduced there (Regs. 1.168(i)-8) - the screen and the FORM_4684_STOP_DEPRECIATING message point there.
+- Business property sales `saleFromAsset` maps qualified improvement property to section 1245 ("equipment"); it is section 1250 property
+  unless section 179 was taken on it (section 1245(a)(3)(C)) - this screen's helper does that; the sale helper was not changed.
+- The section 1033 postponement is a message only (the user leaves the property out); no replacement-property record or Form 4684
+  statement is made.
+
 ## Like-kind exchanges (Form 8824): found in the 2026-11-06 review, not changed
 
 - Not asked (field additions - owner sign-off): the value and basis of the section 1245 parts GIVEN UP (section 1245 recapture is the

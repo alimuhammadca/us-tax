@@ -1,3 +1,10 @@
+## 2026-11-06T04:00 - Installment sales, Capital gain/loss, Social security benefits: the look of the fixed screens
+
+- Owner: Installment sales didn't look like the fixed Incomes screens - strange date fields, Remove instead of Clear on the sales, input boxes invisible until the mouse is over them; "did you even apply all the rules?". Compared by screenshot with Uncollected Social Security: the screen had no `form-view` wrapper (the shared section cards, labels and input boxes apply only inside it), its own CSS redid fields, labels and grids, and each sale sat on a grey background the same colour as the grey-filled inputs.
+- Installment sales: `form-view`; each sale is its own section (titled by its description) with Clear and Remove (asks first), the uppercase sub-headings and `.row` grid of Uncollected Social Security; plain Add buttons; the local CSS that redid the shared look removed.
+- Capital gain/loss (both copies) and Social security benefits (both copies) had the same grey rows and local CSS: rows are white cards with Clear and Remove (asks first), `.row` grids, plain Add buttons, spacing between stacked questions, the VARIOUS checkbox beside its label.
+- New checklist item 24 (shared styles; no grey row backgrounds; Clear + Remove on each entry; compare screenshots with a fixed screen of the section before calling a screen done).
+
 ## 2026-11-06T03:30 - Installment sales: last year's sales still being paid are carried forward
 
 - Owner-approved (checklist item 20). Form 6252 is filed every year until the last payment, with the same sale facts. The screen reads last year's Installment sales answers (the same personal form for the year before, `PersonalDataService.getPriorYearForm`) and, for each sale still being paid (received through last year < the contract price, Form 6252 line 18 = line 7 + line 17), makes this year's row: the same facts, payments before this year = last year's line 23 + line 21 + pledged-loan proceeds, this year's payments, the resale answers and line 25 left blank; the gross profit percentage is left for the return to figure from the same amounts.

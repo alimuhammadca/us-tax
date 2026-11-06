@@ -385,6 +385,27 @@ since D-6a-1; the spouse disability field shown).*
 
 *From: Social security benefits (Form RRB-1099 row; lump sums read from the statements), 2026-11-05.*
 
+## 24. Looks like the screens already fixed: shared styles, compared side by side
+
+- [ ] The screen's sections sit inside `<div class="form-view">`: the shared styles in `styles.scss` (white section cards, small
+      grey labels, the grey-filled inputs, the `.row` field grid) apply only there. Without it the sections have no card and
+      the fields no box (Installment sales, 2026-11-06).
+- [ ] No local CSS that redoes the shared look: no own `.field`, `.label-row`, `.help-icon`, `.section-instructions`, label
+      colours or field grid in the component. Use `.row` for fields side by side.
+- [ ] Inputs are grey-filled (`#F9FAFB`) with no border until focus - so never put them on a grey background: a repeated
+      entry is a white card (`.row-card`, or its own `.section` as the firms on Uncollected Social Security), not the grey
+      dashed `.section-item`, or the fields look like plain text until the mouse is over them.
+- [ ] Each repeated entry (a sale, a firm, a year) has **Clear** (`sectionClear` on the card) and **Remove** (asks first:
+      "Remove this ... ? This will delete the data ..."), in its header; a title from the entry (its description) when it has one.
+- [ ] Add buttons are the plain `toolbar-button` used on the fixed screens, not PrimeNG `pButton` icon buttons.
+- [ ] Before calling the screen done: take a screenshot of it with a filled-in entry and one of a fixed screen of the same
+      section (Incomes: Uncollected Social Security has entries, a select, a date and an eye field) and compare them - section
+      cards, label size, input fill, date field, Clear / Remove, add button, spacing between stacked questions.
+
+*From: owner 2026-11-06 ("It does not have the look and feel of the previous screens ... The date fields look strange. The
+sections are supposed to have Clear rather than Remove. Input field outline do not show until mouseover"). The same faults
+were on Capital gain/loss and Social security benefits rows, fixed together.*
+
 ---
 
 ## Screens reviewed
@@ -410,9 +431,9 @@ since D-6a-1; the spouse disability field shown).*
 | Dividend income (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 9, 13, 15, 16 | 2026-11-05 |
 | IRA income (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 9, 13, 15, 16, 17 | 2026-11-05 |
 | Pension withdrawals (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 13, 15, 16, 17, 18 | 2026-11-05 |
-| Social security benefits (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 11, 13, 15, 16, 17, 19, 20, 21, 22, 23 | 2026-11-05 |
-| Capital gain/loss (Family Head, spouse, dependent) | 1-8, 11, 13, 15-23 | 2026-11-06 |
-| Installment sales (Family Head, spouse) | 1-8, 11-17, 19, 21 | 2026-11-06 |
+| Social security benefits (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 11, 13, 15, 16, 17, 19, 20, 21, 22, 23, 24 | 2026-11-06 |
+| Capital gain/loss (Family Head, spouse, dependent) | 1-8, 11, 13, 15-24 | 2026-11-06 |
+| Installment sales (Family Head, spouse) | 1-8, 11-17, 19, 20, 21, 24 | 2026-11-06 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

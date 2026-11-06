@@ -1,3 +1,12 @@
+# 2026-11-06 (owner, Screen Review Checklist): the screen was rebuilt; this file predates it. Now on BOTH copies: the
+# statement questions (received / entered per kind, answered from the person's own statements when on file; "at least one
+# uploaded" is set from them), the activity questions, qofForm8997AcknowledgedExternallyFiled (shown when the QOF answer is
+# Yes), the less common gates hasNomineeCapitalGainDistributions / hasCollectiblesOrSection1202Gain /
+# hasRealEstateDepreciationRecapture / hasNonbusinessBadDebt / hasInvoluntaryConversion with their amounts (incl.
+# section1202ExclusionAmount / Percentage and the five involuntaryConversion* fields), and the same row lists (a sale's
+# form8949Box; transactionTerm is set from it). No longer asked (columns kept): confirmNomineeStatementWillBeProvided,
+# priorYearScheduleDLine21AllowableLossTerm, verifiedCapitalStatementTotals, basisReportedToIrs (spouse rows; older rows get
+# their box from it), the lines 1a / 8a adjustment amounts. See history.md 2026-11-06.
 # Form 1040 line 7a/7b (taxpayer/family head) workflow.
 # Revisions (Phases 1-4): reframed labels, help text added, uncommon-situations gate,
 # statement auto-derivation, Form 8949 box redesign (basisReportedToIrs replaces form8949Box).

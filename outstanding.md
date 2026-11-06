@@ -1,5 +1,16 @@
 # Outstanding Items
 
+## Capital gain/loss: found in the 2026-11-06 review, not changed
+
+- The compute reads `imported1099DivBox2a/2b/2c/2dTotal` and `imported1099B1099DaHasQofFlag` from the capital form, but nothing
+  produces them (the mapper's keys are spelled `imported1099div...`); harmless (it falls back to the statements) but dead.
+- A spouse's "Qualified Opportunity Fund: Yes" doesn't rule out Exception 1 (CapitalGainLossComputations reads the Family
+  Head's answer only), while it does raise the Form 8997 blocker.
+- On a separate return the Form 1099-B `proceedsFromQOF` / 1099-DA box 3b QOF scan covers every entry with no person filter.
+- Forms 2439, 6252, 4797, 4684, 6781 and 8824 are not in `utils/statement-recipient.ts` STATEMENT_PERSON_TIN; the screen reads
+  Form 2439 by `shareholderTIN` and the others by `ownerRole` itself.
+- The reduced home sale exclusion is figured per return, not per spouse as Pub. 523 Worksheet 3 does on a joint return.
+
 ## Interest income: Form 8815 section is still a 3-step wizard inside the page (found 2026-11-05, checklist item 18 audit)
 
 - The savings-bond education exclusion section steps through "Step 1 / 2 / 3" (`form8815Step`) with its own Back / Next.

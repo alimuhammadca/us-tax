@@ -155,6 +155,10 @@ owner 2026-11-04).*
       and a later rebuild still served the old module). Compare the edited file's time with the last "Application bundle
       generation complete", and grep the served code for one new string (curl `localhost:4200/`, its `.js` files and the
       `chunk-*.js` they name); if it isn't there, restart `npm start` (Social security benefits: 4 tests failed on old help).
+- [ ] A template list must not come from a getter that builds new arrays or objects on every call (`get questions() { return
+      [...] }`): `*ngFor` then destroys and recreates every field on each check, the page never settles and every UI test
+      times out with "Target page ... has been closed" and an empty result folder. Build the list once and keep it
+      (Capital gain/loss, 2026-11-06).
 - [ ] After a backend edit, wait for `/q/health/ready` before starting the run: a hot reload in the middle of a run fails
       its requests and looks like a flaky test.
 - [ ] A question the screen asks must be saved. An answer kept only in the component (a wizard's routing answer) comes
@@ -407,6 +411,7 @@ since D-6a-1; the spouse disability field shown).*
 | IRA income (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 9, 13, 15, 16, 17 | 2026-11-05 |
 | Pension withdrawals (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 13, 15, 16, 17, 18 | 2026-11-05 |
 | Social security benefits (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 11, 13, 15, 16, 17, 19, 20, 21, 22, 23 | 2026-11-05 |
+| Capital gain/loss (Family Head, spouse, dependent) | 1-8, 11, 13, 15-23 | 2026-11-06 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

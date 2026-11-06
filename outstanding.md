@@ -1,5 +1,20 @@
 # Outstanding Items
 
+## Archer MSA / LTC (Form 8853): found in the 2026-11-06 review, not changed
+
+- MFJ with both spouses on family coverage: each copy gets the full 75% of the lower deductible - looks like a doubled limit (i8853 p.3
+  "treated as having only the family coverage plan"); medium confidence, not changed. `spouseFamilyPlanDeductible` is typed, not read
+  from the other spouse's copy.
+- Medicare Advantage MSA: no partial amount for the death / disability exception (Archer has one) - a field addition.
+- Form 1099-SA code 2 (excess taken out) is not added to Archer line 6b automatically (the HSA path does); no line 6a / 10 override.
+- Form 5498-SA is read by no compute; Medicare months are not derived from the date of birth; the dependent rule (no deduction) is applied
+  on Form 8889 but not Form 8853.
+- `additionalLtcSections` / `additionalLtcSectionsLine26` are not persisted on the output, so GET /api/tax-return loses them; extra-section
+  SSNs print unformatted.
+- Messages with no person suffix still open the Family Head's copy for the spouse (SCHEDULE1_LINE23_TYPED_DIFFERS_FROM_FORM_8853,
+  SCHEDULE1_LINE23_ARCHER_MSA_DEDUCTION_LIMIT_ADVISORY, OTHER_INCOME_FORM_8853_REQUIRED_TO_BE_FILED_SEPARATELY; FORM_1099_SA_FORM_MISSING
+  opens HSA for an MSA Form 1099-SA). A typed Schedule 1 line 8e (Other incomes) silently beats the figured Form 8853 amount.
+
 ## HSA (Form 8889): found in the 2026-11-06 review, not changed
 
 - Line 6: a share typed by either spouse turns off the automatic half split for both, and nothing checks that the two shares total no

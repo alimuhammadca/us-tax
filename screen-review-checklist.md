@@ -269,6 +269,8 @@ Uncollected Social Security, Combat pay, Child and dependent care, Adoption expe
 - [ ] Exactly one help icon per question, in its label row - never inside a radio option after "Yes" or "Single" (a
       script that adds icons can run past labels that already have one). Quick audit: no `help-icon` between
       `class="radio-option"` and its closing `</div>`.
+- [ ] Radio ids in repeated rows follow one pattern across screens: `<name>_yes_<row>` / `<name>_no_<row>` (Like-kind exchanges, Archer
+      MSA / LTC) - a `<name>_<row>_yes` variant on one screen broke the spec written from the other.
 - [ ] A question's `<label for>` points at the radio group's id, not at its Yes radio: `for="x_yes"` makes the question
       text part of the Yes radio's accessible name, so "Yes" is no longer found by role (`selectRadioOption`).
 - [ ] Two fields that look alike must say how they differ (Dividend income: "Dividends with no Form 1099-DIV at all"
@@ -480,6 +482,7 @@ were on Capital gain/loss and Social security benefits rows, fixed together.*
 | Business casualties and thefts (Family Head, spouse) | 1-9, 11, 13, 15-24 (second pass: 5, form titles in help) | 2026-11-06 |
 | Income adjustments (Family Head, spouse) | 1-9, 11-24 | 2026-11-06 |
 | HSA (Family Head, spouse) | 1-8, 11, 13-17, 19-24 | 2026-11-06 |
+| Archer MSA / LTC (Family Head, spouse) | 1-8, 11-17, 19-24 | 2026-11-06 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

@@ -412,6 +412,8 @@ since D-6a-1; the spouse disability field shown).*
       its label on the group (Rental & royalty income had six).
 - [ ] `.row-card` is not a shared style: a screen that uses it for entry cards must give it the white card with a border (as on
       Social security benefits), or the entries run into the section (Business income, Rental & royalty income REMICs).
+- [ ] A field that must match a name entered on another screen (an asset's business, farm or rental) is a pick list of that person's
+      own names, saving the same text - not free text that silently fails to match (Depreciable assets).
 - [ ] Questions about all the entries of a list (Schedule C lines 46-47 about the vehicles) come after the entries, in the form's
       order, not before them.
 - [ ] Before calling the screen done: take a screenshot of it with a filled-in entry and one of a fixed screen of the same
@@ -456,6 +458,7 @@ were on Capital gain/loss and Social security benefits rows, fixed together.*
 | Farm income (Family Head, spouse) | 1-8, 11-17, 19-24 | 2026-11-06 |
 | Farm rental (Family Head, spouse) | 1-8, 11-17, 19-24 | 2026-11-06 |
 | Self-employment tax options (Family Head, spouse) | 1-8, 11-17, 19-21, 24 | 2026-11-06 |
+| Depreciable assets (Family Head, spouse) | 1-8, 11-17, 19-21, 24 | 2026-11-06 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

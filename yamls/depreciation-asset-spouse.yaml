@@ -40,7 +40,7 @@ sections:
       - name: activityDescription
         type: text
         required: false
-        label: Which business/farm/property (name)
+        label: Which business, farm or rental  # pick list of this person's own names since 2026-11-06 (same saved text)
       - name: datePlacedInService
         type: text
         required: false

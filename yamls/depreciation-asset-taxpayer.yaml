@@ -40,7 +40,7 @@ sections:
       - name: activityDescription
         type: text
         required: false
-        label: Which business/farm/property (name)
+        label: Which business, farm or rental  # pick list of this person's own names since 2026-11-06 (same saved text)
       - name: datePlacedInService
         type: text
         required: false
@@ -181,7 +181,7 @@ sections:
         type: select
         required: false
         label: "Code section"
-        options: ["195", "248", "197", "other"]
+        options: ["195", "197", "other"]  # 248 (corporations only) dropped 2026-11-06; an older 248 stays shown, marked
       - name: periodMonths
         type: number
         required: false

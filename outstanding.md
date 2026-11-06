@@ -1,5 +1,24 @@
 # Outstanding Items
 
+## Depreciable assets (Form 4562): found in the 2026-11-06 review, not changed
+
+- The year fix (owner 2026-11-06) makes the depreciation engine's year tests follow the return's year (`ReferenceData.computeYear()`),
+  but the dollar limits stay the 2025 ones: a 2024 return figured here uses the 2025 section 179 limit ($2,500,000 / $4,000,000; 2024
+  was $1,220,000 / $3,050,000), 100% / 40% bonus (2024 was 60%), the $31,300 SUV cap and the 2025 auto caps by vintage. Year-specific
+  limits would need a table per year.
+- Other fixed-2025 tests outside depreciation remain (ages, Form 8611, installment sale years, the Form 2441 child age, etc. - grep
+  `ReferenceData.TAX_YEAR` in TaxReturnComputeService).
+- Not asked (field additions - owner sign-off): the class-wide elections (150% / straight line / ADS by class, bonus election out by class
+  with its statement), the general asset account, line 24c (aircraft), line 35 (5% owner), Section C (employer policy), basis reductions
+  for credits, like-kind exchange carryover basis, the personal-to-business conversion value, QPP designated basis and statement.
+- Earlier depreciation and amortization aren't kept per asset after a return, so the carried asset asks the user to add last year's.
+- `DepreciationAssetClaims.claimedOnly` doesn't skip a not-for-profit business (an asset named for one gets no depreciation and no flag);
+  amortization with "Other" or no match is skipped silently, yet Form 4562 Part VI can still list it.
+- Flags without a link to this screen: DEPRECIATION_ASSET_ON_NO_SCHEDULE_*, ADS_PERIOD_ASSUMED_GDS, DEPRECIATION_RECAPTURE_PRIOR_USE_UNKNOWN,
+  FORM_4797_PART_IV_*, BONUS_ELECTION_OUT_*, FORM_4562_PART_VI_*; `SCHEDULE_C/F_TYPED_DEPRECIATION_IGNORED` calls it "the Depreciation form".
+- Full backend suite (2026-11-06): 2 failures not in depreciation - NonOverrideableFlagMessagesTest (filing status / social security
+  blocking messages name no form) and TaxReturnComputeServiceTest.thirdPartyDesignee_populatedWhenAllowed (phone shown "(555) 123-4567").
+
 ## Self-employment tax options: found in the 2026-11-06 review, not changed
 
 - Not asked (field additions - owner sign-off): a parsonage's rental value furnished in kind and meals / lodging for the employer's

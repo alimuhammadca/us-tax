@@ -453,6 +453,7 @@ were on Capital gain/loss and Social security benefits rows, fixed together.*
 | Other incomes (Family Head, spouse) | 1-8, 11, 13, 15-24 | 2026-11-06 |
 | Rental & royalty income (Family Head, spouse) | 1-8, 11-17, 19-24 | 2026-11-06 |
 | Business income (Family Head, spouse) | 1-8, 11-17, 19-24 | 2026-11-06 |
+| Farm income (Family Head, spouse) | 1-8, 11-17, 19-24 | 2026-11-06 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

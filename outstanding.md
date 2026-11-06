@@ -1,5 +1,16 @@
 # Outstanding Items
 
+## Farm income (Schedule F): found in the 2026-11-06 review, not changed
+
+- Not asked (field additions - owner sign-off): line D (EIN); the election to report weather-related livestock sales next year;
+  Schedule J farm income averaging; the farm NOL 2-year carryback; the preproductive-period election; line 34 prior-year passive loss.
+- QJV: the split reads only the Family Head's line E - the spouse's material participation is never asked (both must participate,
+  Schedule F instructions). The QJV farm is matched to its split by position.
+- Statement matching differs: the line 4a / 5b / 6a fill needs an exact SSN; the 1099-PATR fill also takes a last-4 or blank TIN.
+  `FORM_1099G_BOX7_AGRICULTURE_PAYMENTS` fires even when box 7 was filled into line 4a (duplicates the fill note).
+- The Schedule F instructions say farmers don't use Form 8829 for a home office (Pub. 587 worksheet) - check how a farm home
+  office is handled. Conservation and prepaid-supplies excess have no next-year bridge (typed by the user).
+
 ## Business income (Schedule C): found in the 2026-11-06 review, not changed
 
 - Not asked (field additions - owner sign-off): the line 1 explanation when Forms 1099 total more than gross receipts; notary

@@ -1,7 +1,8 @@
 # Schedule F farm income (taxpayer/family head).
 # Self-employment Stage 1 capture. One entry per farm; each farm nests per-other-expense
 # (line 32) rows and captures either cash-method (Part I) or accrual-method (Part III) income.
-# Compute (net farm profit -> Schedule 1 line 6, Schedule SE) is added in Stage 2.
+# Computed: net farm profit -> Schedule 1 line 6, Schedule SE. 2026-11-06 screen review: lines F / G shown; the person's own
+# Forms 1099-G box 7, 1099-MISC box 9, 1099-A (CCC) and 1099-PATR fill blank lines (one farm); last year's farms carried forward.
 name: farm-income-taxpayer
 title: Farm income (Schedule F, taxpayer/family head)
 multiplicity: single
@@ -36,7 +37,7 @@ sections:
       - name: activityCode
         type: text
         required: false
-        label: Activity code (line B)
+        label: Activity code (line B)  # picked from the 17 Part IV codes since 2026-11-06
       - name: accountingMethod
         type: select
         required: true
@@ -305,7 +306,7 @@ sections:
       - name: crpPayments
         type: number
         required: false
-        label: "Conservation Reserve Program (CRP) payments included above"
+        label: "Of the agricultural program payments, Conservation Reserve Program (CRP) payments"
         help: "CRP payments are excluded from self-employment income when the recipient receives Social Security retirement or disability benefits."
       - name: prepaidFarmSupplies
         type: number
@@ -319,16 +320,17 @@ sections:
       - name: allInvestmentAtRisk
         type: boolean
         required: false
-        label: "All investment is at risk (line 36a)"
+        label: "Is all of your investment in this farm at risk? (lines 36a / 36b, one Yes / No question since 2026-11-06)"
       - name: someInvestmentNotAtRisk
         type: boolean
         required: false
         label: "Some investment is not at risk (line 36b, Form 6198)"
+        computed: true  # saved as the opposite of allInvestmentAtRisk (owner 2026-11-06)
       - name: amountAtRisk
         type: number
         required: false
         label: "Amount at risk (Form 6198) — caps a deductible loss"
-        showIf: "someInvestmentNotAtRisk == true"
+        showIf: "allInvestmentAtRisk == false"
 
   - name: otherExpenses
     title: Other expenses (line 32)

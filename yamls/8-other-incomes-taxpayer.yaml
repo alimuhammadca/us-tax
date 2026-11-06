@@ -1,3 +1,6 @@
+# 2026-11-06 (owner, Screen Review Checklist): the screen was rebuilt; this file predates it. No longer asked (columns kept, saved blank):
+# hasUploadedAtLeastOneOtherIncomeStatement, hasScheduleCBusinessIncomeOutOfScope, hasScheduleFFarmIncomeOutOfScope. The "every
+# statement entered" question is always asked after a Yes. See history.md 2026-11-06.
 # Form 1040 line 8 (Schedule 1 line 10) workflow for taxpayer/family head.
 # Approach: keep user questions + imported statement fields + computed outputs in one YAML.
 # NOTE: Sections marked as backend-only are NOT supposed to be rendered in the actual form component.

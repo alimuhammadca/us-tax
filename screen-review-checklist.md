@@ -36,6 +36,13 @@ Started 2026-11-03. Related rules: `rules.md` ("No hard-coded tax year", "No for
       penalty amount from an older year ($310, not the 2025 $340); a rule stated backwards (surrogate foreign corporation); codes the IRS never gave as examples ("ABLE",
       "PYAB" for line 4c); threats the instructions don't make (a CP2000 notice and a 10% penalty for a rollover statement).
 - [ ] Long help must scroll inside the modal (shared help-modal already does: max-height 90vh).
+- [ ] Explanations go behind the help icon, not on the screen. An on-screen note is only for something the user must act on
+      or should know about their own answers: a warning, a pointer with a link to the screen where something is entered, a
+      note saying an answer was filled in. A paragraph explaining a rule under a question ("The Section 962 election is now
+      supported. Enter your CFC inclusions ... consult a tax professional") is help: move it into the question's help and
+      leave at most one line with the link (owner 2026-11-06, Other incomes).
+- [ ] A note that names another screen uses the sidebar name and links to it (it said "Line 16 tax form"; the screen is
+      Other tax items).
 
 *From: Digital assets, Presidential election, Third party designee, Prior-year carryovers, Employment.*
 
@@ -434,6 +441,7 @@ were on Capital gain/loss and Social security benefits rows, fixed together.*
 | Social security benefits (Family Head, spouse copy) | 1, 2, 3, 5, 6, 7, 11, 13, 15, 16, 17, 19, 20, 21, 22, 23, 24 | 2026-11-06 |
 | Capital gain/loss (Family Head, spouse, dependent) | 1-8, 11, 13, 15-24 | 2026-11-06 |
 | Installment sales (Family Head, spouse) | 1-8, 11-17, 19, 20, 21, 24 | 2026-11-06 |
+| Other incomes (Family Head, spouse) | 1-8, 11, 13, 15-24 | 2026-11-06 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

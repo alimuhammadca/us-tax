@@ -1,7 +1,8 @@
 # Schedule F farm income (spouse).
 # Self-employment Stage 1 capture. One entry per farm; each farm nests per-other-expense
 # (line 32) rows and captures either cash-method (Part I) or accrual-method (Part III) income.
-# Compute (net farm profit -> Schedule 1 line 6, Schedule SE) is added in Stage 2.
+# Computed: net farm profit -> Schedule 1 line 6, Schedule SE. 2026-11-06 screen review: lines F / G shown; the person's own
+# Forms 1099-G box 7, 1099-MISC box 9, 1099-A (CCC) and 1099-PATR fill blank lines (one farm); last year's farms carried forward.
 name: farm-income-spouse
 title: Farm income (Schedule F, spouse)
 multiplicity: single
@@ -36,7 +37,7 @@ sections:
       - name: activityCode
         type: text
         required: false
-        label: Activity code (line B)
+        label: Activity code (line B)  # picked from the 17 Part IV codes since 2026-11-06
       - name: accountingMethod
         type: select
         required: true

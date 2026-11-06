@@ -391,6 +391,9 @@ since D-6a-1; the spouse disability field shown).*
       the right one is `netSSEBAmount`).
 - [ ] Free-text boxes the IRS uses to carry a figure (Form SSA-1099's box 3 description "Box 3 includes $... paid in 2025
       for 2024") are parsed with a unit-tested helper, and an unreadable text leaves the answer blank.
+- [ ] The statement entry LIST (`statementData.listEntries`) carries only ids: read amounts and SSNs from `getEntry` for each one.
+      A screen that read them off the list showed $0 for every total and counted every household statement as the person's own,
+      silently (Income adjustments). Same for the spouse's own SSN: `identification-spouse` keeps it as `spouseSsn`.
 - [ ] e2e: seed the statement through the API with the real field names and check the screen shows the amount.
 
 *From: Social security benefits (Form RRB-1099 row; lump sums read from the statements), 2026-11-05.*
@@ -473,6 +476,7 @@ were on Capital gain/loss and Social security benefits rows, fixed together.*
 | Business property sales (Family Head, spouse) | 1-8, 11-17, 19-24 | 2026-11-06 |
 | Like-kind exchanges (Family Head, spouse) | 1-8, 11-17, 19-24 | 2026-11-06 |
 | Business casualties and thefts (Family Head, spouse) | 1-9, 11, 13, 15-24 (second pass: 5, form titles in help) | 2026-11-06 |
+| Income adjustments (Family Head, spouse) | 1-9, 11-24 | 2026-11-06 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

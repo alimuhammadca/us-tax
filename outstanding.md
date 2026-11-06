@@ -1,5 +1,19 @@
 # Outstanding Items
 
+## Income adjustments (Schedule 1 Part II): found in the 2026-11-06 review, not changed
+
+- `validateIncomeAdjustmentsStatementGating` (TRCS ~30978) reads upload-gate keys nothing saves (received1098E, uploaded1098E, ...), so the
+  three INCOME_ADJUSTMENTS_MISSING_UPLOADED_* flags can never fire - dead code; also dead: the `imported*Total` keys and the
+  `...OutOfScopeAmount` keys Schedule1Computations reads, and the mapper-only `iraDeductionMfsLivedApartLine20` (LowIrsFixesChunk2:203).
+- MFS: the section 219(g)(7) "spouse is covered" test (TRCS ~5160) reads the other spouse's copy, which MfsFormScoper drops on a scoped
+  MFS leg - likely never true there (not confirmed). The spouse's OWN coverage answer is fixed (renamed by MfsFormScoper).
+- Flags with no person suffix still open the Family Head's copy when only the spouse entered the amount (line 18 mismatch, line 21
+  MFS/dependent, line 23 advisory, 24b, 24c, 24h, 24i, the Social Security / IRA coordination notes); ALIMONY_MODIFICATION_ADOPTS_TCJA_*
+  is shared by alimony paid and received, so it has no link.
+- The "less common adjustments" Yes / No is not saved (derived on load from the amounts): a Yes with no amount comes back blank.
+- The old self-employment questions (lines 15-17) are removed from the screen (owner); their columns keep any saved value, unread.
+- Line 24z rows can no longer be entered (owner); rows saved earlier are listed with "Remove them".
+
 ## Business casualties and thefts (Form 4684 Section B): found in the 2026-11-06 review, not changed
 
 - Not asked (field additions - owner sign-off): a home rented out or used for a business not on Schedule C (section 280A(c)(5) limit,

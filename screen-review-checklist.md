@@ -410,6 +410,10 @@ since D-6a-1; the spouse disability field shown).*
       (Rental & royalty income: a lone amount still stretched across the card).
 - [ ] A question with only a "Yes" radio (a checkbox in disguise) can never be answered No: every question gets Yes and No, with
       its label on the group (Rental & royalty income had six).
+- [ ] `.row-card` is not a shared style: a screen that uses it for entry cards must give it the white card with a border (as on
+      Social security benefits), or the entries run into the section (Business income, Rental & royalty income REMICs).
+- [ ] Questions about all the entries of a list (Schedule C lines 46-47 about the vehicles) come after the entries, in the form's
+      order, not before them.
 - [ ] Before calling the screen done: take a screenshot of it with a filled-in entry and one of a fixed screen of the same
       section (Incomes: Uncollected Social Security has entries, a select, a date and an eye field) and compare them - section
       cards, label size, input fill, date field, Clear / Remove, add button, spacing between stacked questions.
@@ -448,6 +452,7 @@ were on Capital gain/loss and Social security benefits rows, fixed together.*
 | Installment sales (Family Head, spouse) | 1-8, 11-17, 19, 20, 21, 24 | 2026-11-06 |
 | Other incomes (Family Head, spouse) | 1-8, 11, 13, 15-24 | 2026-11-06 |
 | Rental & royalty income (Family Head, spouse) | 1-8, 11-17, 19-24 | 2026-11-06 |
+| Business income (Family Head, spouse) | 1-8, 11-17, 19-24 | 2026-11-06 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

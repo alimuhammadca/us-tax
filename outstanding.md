@@ -1,5 +1,19 @@
 # Outstanding Items
 
+## Business income (Schedule C): found in the 2026-11-06 review, not changed
+
+- Not asked (field additions - owner sign-off): the line 1 explanation when Forms 1099 total more than gross receipts; notary
+  income (no SE tax); meals that are 100% deductible (treated as wages, or reported on a Form 1099-NEC); the standard mileage
+  eligibility checks (5+ vehicles, first-year rule, leased car); Part V items (startup cost election, de minimis safe harbor,
+  amortization, section 174A); line 31 prior-year passive loss with line G No; section 481(a) adjustments.
+- `STATUTORY_EMPLOYEE_W2_SCHEDULE_C` fires on every statutory Form W-2, even when a statutory-employee business is entered (the
+  wording now reads "if you haven't already"); the blocking `STATUTORY_EMPLOYEE_W2_NOT_ON_SCHEDULE_C` covers the unlinked case.
+- `data/flag-form-links.ts` has no entry for FORM_1099_NEC_K_WITHOUT_BUSINESS, STATUTORY_EMPLOYEE_W2_NOT_ON_SCHEDULE_C,
+  HOME_OFFICE_NOT_MATCHED_TO_BUSINESS, QBI_WAGE_PARTS_EXCEED or VEHICLE_LOAN_INTEREST_* (no link to the screen from the flag).
+- The no-business advisory (`ScheduleCStatements` ~136-166) treats a blank or unknown TIN as the Family Head's and, on MFS, does not
+  exclude the other spouse's SSN (the bartering check does).
+- The screen's gross-receipts fill leaves out the 1099-K personal-items amount entered on Other incomes (the return subtracts it).
+
 ## Rental & royalty income: found in the 2026-11-06 review, not changed
 
 - Schedule E Part I items the screen doesn't ask (each a field addition - owner sign-off): lines A / B (payments needing Forms 1099,

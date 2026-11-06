@@ -1,7 +1,8 @@
 # Schedule C sole-proprietor business income (taxpayer/family head).
 # Self-employment Phase SE-1 (Stage 1 capture). One entry per business; each business
 # nests per-vehicle (Part IV) and per-other-expense (Part V) repeatable rows.
-# Compute (net profit -> Schedule 1 line 3, Schedule SE) is added in Stage 2.
+# Computed: net profit -> Schedule 1 line 3, Schedule SE. 2026-11-06 screen review: lines I / J, 34, 43, 45, 46, 47a / 47b are shown;
+# the person's own Forms 1099-NEC / 1099-K / 1099-MISC 5-6 / 1099-B bartering fill blank gross receipts (one business).
 name: business-income-taxpayer
 title: Business income (Schedule C, taxpayer/family head)
 multiplicity: single
@@ -287,7 +288,7 @@ sections:
         type: amount
         required: false
         placeholder: 0.00
-        label: Deductible meals (line 24b, full amount)
+        label: Business meals - the full cost (the return applies the 50% / 80% limit for line 24b)
         help: Enter the full meal cost; the 50% limit is applied when the return is computed.
       - name: utilities
         type: amount
@@ -354,15 +355,17 @@ sections:
         type: text
         required: false
         label: If a hobby, briefly describe the activity
+        retired: true  # owner 2026-11-06: read by nothing; no longer asked, column kept and saved blank
       - name: allInvestmentAtRisk
         type: boolean
         required: false
-        label: All investment in this activity is at risk (line 32a)
+        label: Is all of your investment in this business at risk? (lines 32a / 32b, one Yes / No question since 2026-11-06)
         help: Answer only if the business had a loss.
       - name: someInvestmentNotAtRisk
         type: boolean
         required: false
         label: Some investment is not at risk (line 32b, requires Form 6198)
+        computed: true  # saved as the opposite of allInvestmentAtRisk (owner 2026-11-06)
         help: Answer only if the business had a loss.
       - name: priorYearAtRiskCarryforward
         type: amount

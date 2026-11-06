@@ -116,6 +116,8 @@ owner 2026-11-04).*
 - [ ] No template code shown as text: in an inline template (inside backticks) an apostrophe in a quoted string needs
       `\\'` (e.g. `'your spouse\\'s'`), because `\'` reaches Angular as a bare `'` and the whole `{{ ... }}` prints
       as text. Look at every message that only shows for another person (spouse, dependent) - that is where it hides.
+- [ ] Build "Were you" / "Was your spouse" from who the screen is about, not by patching a sentence: `.replace('Was you', 'Were you')` also
+      turns "Was your spouse" into "Were your spouse" (HSA). The spouse e2e asserting the spouse's question caught it.
 - [ ] A component shared by two tabs (Family Head and dependent): search its whole template for "you" / "your", not
       only the questions - picker warnings, hints, notes and caps warnings are easy to miss (Medicaid waiver second pass).
 
@@ -477,6 +479,7 @@ were on Capital gain/loss and Social security benefits rows, fixed together.*
 | Like-kind exchanges (Family Head, spouse) | 1-8, 11-17, 19-24 | 2026-11-06 |
 | Business casualties and thefts (Family Head, spouse) | 1-9, 11, 13, 15-24 (second pass: 5, form titles in help) | 2026-11-06 |
 | Income adjustments (Family Head, spouse) | 1-9, 11-24 | 2026-11-06 |
+| HSA (Family Head, spouse) | 1-8, 11, 13-17, 19-24 | 2026-11-06 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

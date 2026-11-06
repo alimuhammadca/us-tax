@@ -1,5 +1,19 @@
 # Outstanding Items
 
+## HSA (Form 8889): found in the 2026-11-06 review, not changed
+
+- Line 6: a share typed by either spouse turns off the automatic half split for both, and nothing checks that the two shares total no
+  more than the family limit; FORM_8889_FAMILY_LIMIT_ALLOCATION_NEEDED is dead (hsaFamilyAllocationNeeded never true); the
+  SPLIT_APPLIED message says "both spouses have family coverage" in the mixed case. On an MFS leg the other spouse's form is dropped, so
+  the split and the catch-up family check (HsaMsaRules:129) don't run there.
+- Line 3 rule 4 (eligible all year but the coverage type changed): the chart only shows for part-year eligibility, so that case can't be
+  entered month by month.
+- Line 14b adds 1099-SA code 2 amounts to the typed amount (help now says not to include them); hsaExcessWithdrawnAmount also reads the
+  withdrawn excess (TRCS ~10524) - not re-verified for a double count.
+- usedLastMonthRuleForPriorYear / failedLastMonthRuleTestingPeriod only raise a message; the line 18 amount is still typed.
+- Form 5498-SA is read by no compute (the screen now fills the year-end value from box 5). Medicare months are not derived from the
+  date of birth (only explained).
+
 ## Income adjustments (Schedule 1 Part II): found in the 2026-11-06 review, not changed
 
 - `validateIncomeAdjustmentsStatementGating` (TRCS ~30978) reads upload-gate keys nothing saves (received1098E, uploaded1098E, ...), so the

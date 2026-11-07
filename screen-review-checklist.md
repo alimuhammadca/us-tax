@@ -190,6 +190,11 @@ owner 2026-11-04).*
       state), not asked - and the figure it changes is computed, not left as an "understated" message (Household employees).
 - [ ] A screen that explains what the calculation will do with an entry (a note under each employee) uses the same rules as the
       calculation, in a unit-tested helper (Household employees: `employeeTaxes`).
+- [ ] A screen for a return built elsewhere (the child's own return, an MFS leg) must have its answers actually reach that return: the
+      dependent_own return built its own Form 8615 copy and read only the support answer from Kiddie income - the gate, filing status
+      and five typed amounts did nothing. Trace each key from the save to the compute of the return it is meant for.
+- [ ] "Earned income" means what the IRS worksheet says, not line 1z alone: Form 8615 counts Schedule 1 lines 3 and 6 (business and
+      farm profit) too (Kiddie income).
 - [ ] Unit tests for new helpers (e.g. `id-validation.spec.ts`, `scenario-completeness.spec.ts`).
 - [ ] Entry in `history.md`; commit and push us-tax-ui, us-tax-be (e2e / backend) and us-tax (docs).
 
@@ -511,6 +516,7 @@ were on Capital gain/loss and Social security benefits rows, fixed together.*
 | Lump-sum distributions (Family Head, spouse) | 1-8, 11, 13-24 | 2026-11-07 |
 | Other tax items (Family Head, spouse) | 1-8, 11, 13-24 | 2026-11-07 |
 | Household employees (Family Head, spouse) | 1-8, 11-17, 19-24 | 2026-11-07 |
+| Kiddie income (dependent) | 1-8, 11, 13, 15-21, 24 | 2026-11-07 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

@@ -1,5 +1,15 @@
 # Outstanding Items
 
+## Kiddie income (Form 8615): found in the 2026-11-07 review, not changed
+
+- No Form 8615 preview or PDF: the form is figured on the child's own return but never shown (owner: defer; the Schedule H staged method).
+- The 30% rule for a child's business where capital is material (Form 8615 earned income), a qualified disability trust distribution, and
+  "the child is required to file a return" are not checked; the legacy household copy (kiddie-income-taxpayer, not in the sidebar) still
+  reads the typed amounts.
+- Found while comparing screens: Tips on a dependent's tab asks "Did you receive tip income ... your employer" (form-tip-income-taxpayer
+  screening label) - the dependent's name is used elsewhere on that screen. Child's int. & dividends (Form 8814, dependent tab) is not
+  reviewed yet.
+
 ## Household employees (Schedule H): found in the 2026-11-07 review, not changed
 
 - Schedule H on the return is done (`schedule-h-plan.md`); under persistent MFS the spouse's preview reads the household computation, not

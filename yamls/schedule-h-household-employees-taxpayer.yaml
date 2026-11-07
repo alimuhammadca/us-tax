@@ -1,15 +1,16 @@
-# Schedule H (Form 1040) - Household Employment Taxes (taxpayer / family head). Routes to Schedule 2 line 9.
+# Schedule H (Form 1040) - Household Employment Taxes (Family Head; the spouse's copy schedule-h-spouse saves the same bare keys).
+# Routes to Schedule 2 line 9. Screen review 2026-11-07: the employer's EIN, Section B line 17 rows and the late contributions (V435); the
+# credit reduction state worked out from the state (isCreditReductionState no longer asked or read); the old typed totals
+# (totalCashWages*) no longer read and cleared on save. Labels are worded for the tab on the screen; help in data/household-employees-help.ts.
 name: schedule-h-taxpayer
 title: Household employees (Schedule H)
 multiplicity: single
 formName: Schedule H
 category: taxes
-instructions:
-  - "Enter each employee on the form of the spouse who is their employer (the one who pays them and gives them a Form W-2) - not on both spouses' forms."
 
 sections:
   - name: screening
-    title: Household employees (Schedule H)
+    title: Household employees
     multiplicity: single
     fields:
       - name: hasHouseholdEmployees
@@ -17,8 +18,24 @@ sections:
         required: true
         label: "Did you pay a household employee in 2025?"
 
+  - name: employer
+    title: Employer
+    multiplicity: single
+    showIf: hasHouseholdEmployees == true
+    fields:
+      - name: employerEin
+        type: ein
+        required: false
+        label: "Your employer identification number (EIN)"
+        help: "Digits only, or the words Applied For."
+      - name: employerEinAppliedDate
+        type: date
+        required: false
+        label: Date applied for
+        showIf: "employerEin == 'Applied For'"
+
   - name: householdEmployees
-    title: Employees
+    title: One card per employee
     multiplicity: multiple
     showIf: hasHouseholdEmployees == true
     fields:
@@ -29,28 +46,26 @@ sections:
       - name: cashWagesPaid
         type: amount
         required: false
-        label: Cash wages you paid this employee in 2025
-        help: "Cash, checks and money orders - not food, lodging or other noncash pay."
+        label: Cash wages paid in 2025
       - name: relationship
         type: select
         required: false
-        label: "Is this employee any of the following?"
+        label: "Family member?"
         options: [OTHER, SPOUSE, CHILD_UNDER_21, PARENT]
       - name: parentExceptionApplies
         type: boolean
         required: false
-        label: "Did your parent care for your child who was under 18 (or needed an adult's care for at least 4 weeks in a row), while you were divorced and not remarried, widowed, or married to someone who couldn't care for the child for at least 4 weeks in a row?"
+        label: "Does the exception for parents apply?"
         showIf: "relationship == 'PARENT'"
-        help: "If Yes, social security and Medicare taxes apply to your parent's wages; otherwise they don't."
       - name: under18AtAnyTime
         type: boolean
         required: false
-        label: "Was the employee under 18 at any time in 2025?"
+        label: "Was this employee under 18 at any time in 2025?"
         showIf: "relationship != 'SPOUSE' && relationship != 'CHILD_UNDER_21'"
       - name: householdWorkPrincipalOccupation
         type: boolean
         required: false
-        label: "Was household work the employee's principal occupation?"
+        label: "Was household work this employee's principal occupation, not a student's job?"
         showIf: "under18AtAnyTime == true && relationship != 'SPOUSE' && relationship != 'CHILD_UNDER_21'"
 
   - name: federalIncomeTaxWithheld
@@ -61,25 +76,22 @@ sections:
       - name: federalIncomeTaxWithheld
         type: amount
         required: false
-        label: "Federal income tax you withheld from your household employees' wages in 2025 (all employees)"
-        help: "Leave blank if you didn't withhold any."
+        label: "Federal income tax withheld from all household employees in 2025, if any"
 
   - name: futa
-    title: Federal unemployment tax (FUTA)
+    title: Federal unemployment (FUTA) tax
     multiplicity: single
     showIf: hasHouseholdEmployees == true
     fields:
       - name: paidCashWages1000PlusAnyQuarter
         type: boolean
         required: false
-        label: "Did you pay total cash wages of $1,000 or more in any calendar quarter of 2024 or 2025 to all household employees together?"
-        help: "Don't count wages paid to your spouse, your child under 21 or your parent."
+        label: "Did you pay total cash wages of $1,000 or more in any calendar quarter of 2024 or 2025 to all household employees (not counting a spouse, a child under 21 or a parent)?"
       - name: paidUnemploymentToOneState
         type: boolean
         required: false
         label: "Did you pay unemployment contributions to only one state?"
         showIf: paidCashWages1000PlusAnyQuarter == true
-        help: "If you paid contributions to a credit reduction state, answer No."
       - name: paidAllStateContributionsByDueDate
         type: boolean
         required: false
@@ -88,21 +100,63 @@ sections:
       - name: allFutaWagesTaxableForState
         type: boolean
         required: false
-        label: "Were all the wages taxable for FUTA also taxable for your state's unemployment tax?"
+        label: "Were all wages that are taxable for FUTA tax also taxable for the state's unemployment tax?"
         showIf: paidCashWages1000PlusAnyQuarter == true
-      - name: isCreditReductionState
-        type: boolean
-        required: false
-        label: "Is that state a credit reduction state for 2025?"
-        showIf: paidCashWages1000PlusAnyQuarter == true
-        help: A state that has not repaid federal unemployment loans; see Worksheet 2 in the Schedule H instructions.
       - name: stateWhereContributionsPaid
-        type: text
+        type: select
         required: false
-        label: State where you paid unemployment contributions
-        showIf: paidCashWages1000PlusAnyQuarter == true
+        label: State where the contributions were paid
+        options: "the 50 states, DC, PR, VI (Schedule H line 13); a credit reduction state (Worksheet 2: CA, VI for 2025) means Section B"
+        showIf: paidUnemploymentToOneState == true
       - name: stateUnemploymentContributionsPaid
         type: amount
         required: false
-        label: State unemployment contributions you paid for 2025
-        showIf: paidCashWages1000PlusAnyQuarter == true
+        label: Contributions paid to the state unemployment fund for 2025 (line 14)
+        showIf: "Section A (lines 10-12 Yes, not a credit reduction state)"
+
+  - name: stateContributions
+    title: One card per state (Schedule H line 17)
+    multiplicity: multiple
+    showIf: "Section B (a No on lines 10-12, or a credit reduction state)"
+    fields:
+      - name: stateCode
+        type: select
+        required: false
+        label: State
+      - name: taxableWages
+        type: amount
+        required: false
+        label: "Taxable wages under the state's unemployment law (column b)"
+      - name: experienceRate
+        type: percent
+        required: false
+        label: "State experience rate (%), if one was given (column d)"
+      - name: ratePeriodFrom
+        type: date
+        required: false
+        label: Rate period from (column c)
+        showIf: experienceRate != null
+      - name: ratePeriodTo
+        type: date
+        required: false
+        label: Rate period to (column c)
+        showIf: experienceRate != null
+      - name: contributionsPaid
+        type: amount
+        required: false
+        label: Contributions for 2025 paid by April 15, 2026 (column h)
+      - name: futaWages
+        type: amount
+        required: false
+        label: "FUTA wages subject to the state's unemployment law (Worksheet 2)"
+        showIf: "more than one state and this one a credit reduction state"
+
+  - name: lateContributions
+    title: Contributions paid late
+    multiplicity: single
+    showIf: "Section B and paidAllStateContributionsByDueDate == false"
+    fields:
+      - name: stateContributionsPaidLate
+        type: amount
+        required: false
+        label: State contributions for 2025 paid after April 15, 2026 (Worksheet 1 line 4)

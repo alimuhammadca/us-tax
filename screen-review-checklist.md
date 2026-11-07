@@ -183,6 +183,13 @@ owner 2026-11-04).*
 - [ ] A "no such word" check uses a whole-word pattern: `not.toContainText(' you ')` trims the text to "you", which then matches "your
       spouse" (Business casualties and thefts). Write `not.toContainText(/\byou\b/)`. A file path in a spec is a Windows path
       (`C:/Users/...`): a Git Bash path (`/c/Users/...`) makes Node write under `C:\c\`.
+- [ ] A per-item limit on the form is applied per item, not to the total: Schedule H line 1 takes "only the first $176,100 of that
+      employee's cash wages" - the calculation added every employee's full wages (Household employees). Read each line's instruction
+      for "each", "per" and "that employee's".
+- [ ] A question whose answer the IRS publishes (is this a credit reduction state?) is worked out from what the user already picked (the
+      state), not asked - and the figure it changes is computed, not left as an "understated" message (Household employees).
+- [ ] A screen that explains what the calculation will do with an entry (a note under each employee) uses the same rules as the
+      calculation, in a unit-tested helper (Household employees: `employeeTaxes`).
 - [ ] Unit tests for new helpers (e.g. `id-validation.spec.ts`, `scenario-completeness.spec.ts`).
 - [ ] Entry in `history.md`; commit and push us-tax-ui, us-tax-be (e2e / backend) and us-tax (docs).
 
@@ -503,6 +510,7 @@ were on Capital gain/loss and Social security benefits rows, fixed together.*
 | Income earned in a US territory (Family Head, spouse) | 1-8, 11, 13-24 | 2026-11-07 |
 | Lump-sum distributions (Family Head, spouse) | 1-8, 11, 13-24 | 2026-11-07 |
 | Other tax items (Family Head, spouse) | 1-8, 11, 13-24 | 2026-11-07 |
+| Household employees (Family Head, spouse) | 1-8, 11-17, 19-24 | 2026-11-07 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

@@ -1,5 +1,14 @@
 # Outstanding Items
 
+## Household employees (Schedule H): found in the 2026-11-07 review, not changed
+
+- Schedule H on the return: Stage A (blank pure HTML/CSS form) done; Stages B-C (fields from ScheduleHCompute, out_schedule_h, the
+  computation slots) wait for the owner's visual review - `schedule-h-plan.md`.
+- State disability plan payments (subtracted on line 8 with "disability"), Puerto Rico employers (no line 7), a fiscal year, the
+  quarters of the $1,000 test (asked as one answer) and an employee's Form W-2 are not handled; line 17 prints two states (more are
+  counted in lines 18-19, with a message about the attached statement).
+- Worksheet 2 rates are the 2025 ones (ReferenceData); the FUTA wages of a credit reduction state are asked only with more than one state.
+
 ## Other tax items: found in the 2026-11-07 review, not changed
 
 - Foreign Earned Income Tax Worksheet line 2b (`feitwLine2bDisallowedDeductions`) is read by the calculation but asked nowhere; it belongs on

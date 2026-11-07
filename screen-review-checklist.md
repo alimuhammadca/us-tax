@@ -353,6 +353,9 @@ screens").*
       or read document may be a box that wasn't read, so it stays blank.
 - [ ] A fact the household answers once (lived together, married) is read from its owning screen, not asked again; the
       screen says where it was answered.
+- [ ] A filled amount comes from a statement the return does not already count: filling excluded territory wages from ordinary Forms
+      W-2 (still on line 1a) counted them twice; the Form W-2AS, which the compute keeps off line 1a, is the right source (Income earned
+      in a US territory).
 - [ ] e2e: the filled value and its note; a typed value is kept on reopening; the conflict advisory.
 
 *From: owner 2026-11-05 (Social security benefits: "could they be inferred ... always allow the user to override if it
@@ -434,6 +437,9 @@ since D-6a-1; the spouse disability field shown).*
       copy with an "Other (type below)" placeholder that has no box - it saved "__other__" onto Form 2555 (Foreign income).
 - [ ] A field that must match a name entered on another screen (an asset's business, farm or rental) is a pick list of that person's
       own names, saving the same text - not free text that silently fails to match (Depreciable assets).
+- [ ] A pick list that mirrors a printed form uses the form's own choices (Form 4563 line 2 has Rented room / Rented house or apartment /
+      Quarters furnished by employer / Purchased home - the screen had "Hotel"); a cases-by-place screen checks for each place what the IRS
+      lets it do (Guam, CNMI and USVI residents exclude nothing on Form 1040) - Income earned in a US territory.
 - [ ] Questions about all the entries of a list (Schedule C lines 46-47 about the vehicles) come after the entries, in the form's
       order, not before them.
 - [ ] Before calling the screen done: take a screenshot of it with a filled-in entry and one of a fixed screen of the same
@@ -486,6 +492,7 @@ were on Capital gain/loss and Social security benefits rows, fixed together.*
 | HSA (Family Head, spouse) | 1-8, 11, 13-17, 19-24 | 2026-11-06 |
 | Archer MSA / LTC (Family Head, spouse) | 1-8, 11-17, 19-24 | 2026-11-06 |
 | Foreign income (Family Head, spouse) | 1-8, 11, 13-21, 24 | 2026-11-06 |
+| Income earned in a US territory (Family Head, spouse) | 1-8, 11, 13-24 | 2026-11-07 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

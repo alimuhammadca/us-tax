@@ -1,5 +1,16 @@
 # Outstanding Items
 
+## Income earned in a US territory (Form 4563): found in the 2026-11-07 review, not changed
+
+- Puerto Rico: no Form 499R-2/W-2PR statement, so Puerto Rico wages are typed only; the part-year rule for leaving Puerto Rico (income
+  before the move) and the year-of-move tests are explained, not checked.
+- An ordinary Form W-2 for work in American Samoa or Puerto Rico stays on line 1a (the screen says so); no advisory when the excluded
+  wages match one.
+- The 10-year rule for gains on property held before residence, U.S. government pay entered as excluded wages, and income typed for
+  Guam / CNMI / USVI under an old save are not flagged; Form 8898 is a separate notice (not produced).
+- Form 4563 line 6 prints the first four absences (no continuation statement); line 4b's rented / relationship answers are free text.
+- Additional deductions still has its own typed "American Samoa excluded income" and Puerto Rico boxes (FORM_4563_EXCLUSION_AMOUNT_MISMATCH).
+
 ## Foreign income (Form 2555): found in the 2026-11-06 review, not changed
 
 - MFS: the household /flags run skips the spouse copy, so the MFS spouse's Form 2555 problems never reach a checklist; the married-couples

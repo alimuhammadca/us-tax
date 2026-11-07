@@ -49,47 +49,56 @@ sections:
         required: false
         label: Type of housing in American Samoa
         showIf: "possession == 'american_samoa'"
-        options: [rented_house, employer_furnished, own_home, quarters_in_hotel]
+        options: [rented_room, rented_house, employer_furnished, own_home]   # Form 4563 line 2; the old quarters_in_hotel shows as rented_room
       - name: familyLivedWithYou
         type: boolean
         required: false
-        label: "Did members of your family live with you in American Samoa?"
+        label: "Did any of your family live with you in American Samoa during any part of 2025?"
         showIf: "possession == 'american_samoa'"
       - name: familyLivedWithYouDates
         type: text
         required: false
-        label: "When did family members live in American Samoa?"
+        label: "Who, and for what period?"   # Form 4563 line 3b
         showIf: familyLivedWithYou == true
       - name: homeMaintainedInUs
         type: boolean
         required: false
-        label: "Did you keep a home in the United States while living in American Samoa?"
+        label: "Did you keep any home outside American Samoa?"   # Form 4563 line 4a
         showIf: "possession == 'american_samoa'"
       - name: homeMaintainedInUsAddress
         type: text
         required: false
-        label: US home address
+        label: "Address of each home, and whether it was rented"
         showIf: homeMaintainedInUs == true
       - name: homeMaintainedInUsOccupiedBy
         type: text
         required: false
-        label: "Who lived in the US home while abroad?"
+        label: "Who lived there, and their relationship to you"
         showIf: homeMaintainedInUs == true
-      - name: daysInAmericanSamoa
+      # daysInAmericanSamoa / daysInUs / daysElsewhere: no longer asked (2026-11-07, owner) - Form 4563 line 6 is the absences table below.
+
+  - name: absences
+    title: Absences from American Samoa (Form 4563 line 6, V434)
+    multiplicity: multiple
+    showIf: "possession == 'american_samoa'"
+    fields:
+      - name: dateLeft
+        type: date
+        required: false
+        label: Date left
+      - name: dateReturned
+        type: date
+        required: false
+        label: Date returned
+      - name: daysAbsent
         type: number
         required: false
-        label: Days in American Samoa during 2025
-        showIf: "possession == 'american_samoa'"
-      - name: daysInUs
-        type: number
+        label: Number of days absent
+        help: Counted from the two dates when blank (the days of leaving and returning are days in American Samoa).
+      - name: reason
+        type: text
         required: false
-        label: Days in the United States during 2025
-        showIf: "possession == 'american_samoa'"
-      - name: daysElsewhere
-        type: number
-        required: false
-        label: Days elsewhere during 2025
-        showIf: "possession == 'american_samoa'"
+        label: Reason for absence
 
   - name: employmentEntries
     title: Employers in American Samoa
@@ -103,21 +112,18 @@ sections:
       - name: employmentType
         type: select
         required: false
-        label: Type of employer
-        options: [american_samoa_government, us_government, private]
+        label: "Employer, or self-employed"   # Form 4563 line 5; U.S. government pay can't be excluded (warning)
+        options: [private, american_samoa_government, us_government, self_employed]
       - name: employerAddress
         type: text
         required: false
         label: Employer address
-      - name: datesOfEmployment
-        type: text
-        required: false
-        label: Dates of employment
+      # datesOfEmployment: no longer asked (2026-11-07, owner; not on Form 4563); kept as saved.
 
   - name: excludedIncome
     title: Income from sources within the territory (excluded)
     multiplicity: single
-    showIf: "hasPossessionExcludedIncome == true && possession != null"
+    showIf: "hasPossessionExcludedIncome == true && (possession == 'american_samoa' || possession == 'puerto_rico')"   # Guam / CNMI / USVI file with the territory (Pub. 570)
     fields:
       - name: wagesFromPossessionSources
         type: amount
@@ -138,15 +144,15 @@ sections:
       - name: farmGrossIncomeExcluded
         type: amount
         required: false
-        label: Farm income from territory sources
+        label: "Net profit of a farm in the territory (Form 4563 line 13)"
       - name: businessGrossIncomeExcluded
         type: amount
         required: false
-        label: Business income from territory sources
+        label: "Net profit of a business in the territory (Form 4563 line 10)"
       - name: capitalGainsLossNetExcluded
         type: amount
         required: false
-        label: Capital gain or (loss) from territory sources
+        label: "Capital gain from territory sources (Form 4563 line 11; no loss)"
       - name: otherIncomeDescription
         type: text
         required: false

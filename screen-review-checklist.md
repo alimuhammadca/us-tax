@@ -170,6 +170,9 @@ owner 2026-11-04).*
       (Capital gain/loss, 2026-11-06).
 - [ ] After a backend edit, wait for `/q/health/ready` before starting the run: a hot reload in the middle of a run fails
       its requests and looks like a flaky test.
+- [ ] A rule the screen shows (a "Disqualifies" banner, an eligibility verdict) must be the calculation's rule: the screen said either of
+      Form 4972 lines 3 and 4 disqualified, the calculation (and the form) said only both - every beneficiary saw "not eligible". Test
+      the verdict in the e2e with one No and with both (Lump-sum distributions).
 - [ ] A question the screen asks must be saved. An answer kept only in the component (a wizard's routing answer) comes
       back blank on reopening; it needs a column (field addition: owner's sign-off).
 - [ ] A "no such word" check uses a whole-word pattern: `not.toContainText(' you ')` trims the text to "you", which then matches "your
@@ -493,6 +496,7 @@ were on Capital gain/loss and Social security benefits rows, fixed together.*
 | Archer MSA / LTC (Family Head, spouse) | 1-8, 11-17, 19-24 | 2026-11-06 |
 | Foreign income (Family Head, spouse) | 1-8, 11, 13-21, 24 | 2026-11-06 |
 | Income earned in a US territory (Family Head, spouse) | 1-8, 11, 13-24 | 2026-11-07 |
+| Lump-sum distributions (Family Head, spouse) | 1-8, 11, 13-24 | 2026-11-07 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

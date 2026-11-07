@@ -1,5 +1,14 @@
 # Outstanding Items
 
+## Lump-sum distributions (Form 4972): found in the 2026-11-07 review, not changed
+
+- The alternate-payee path (QDRO) skips the participant's 5-year test in the calculation; Pub. 575 requires a payment that would be a
+  lump-sum distribution had the participant received it (owner: reword only, no new field).
+- The calculation doesn't check that the chosen Form 1099-R is the person's or not an IRA (the screen filters); 403(b) / 457 Forms 1099-R
+  can't be told from the form's boxes and are still listed.
+- An earlier rolled-over distribution from the same plan, a plan that received a rollover after 2001, and the 5% owner exclusion aren't
+  asked; the joint-return rule (a separate Form 4972 per spouse) is handled by the two copies.
+
 ## Income earned in a US territory (Form 4563): found in the 2026-11-07 review, not changed
 
 - Puerto Rico: no Form 499R-2/W-2PR statement, so Puerto Rico wages are typed only; the part-year rule for leaving Puerto Rico (income

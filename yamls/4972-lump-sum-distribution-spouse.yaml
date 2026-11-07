@@ -19,7 +19,7 @@ sections:
       - name: spouseElectsForm4972
         type: boolean
         required: true
-        label: Does your spouse elect Form 4972 special tax treatment for a lump-sum distribution?
+        label: "Does your spouse want to use Form 4972 (Tax on Lump-Sum Distributions) for a lump-sum distribution from a retirement plan?"
         help: Select Yes if your spouse received a qualifying lump-sum distribution from a qualified retirement plan and wishes to use the special tax treatment under Form 4972.
 
   - name: statementSource
@@ -84,7 +84,7 @@ sections:
       - name: spousePartI_q1_entireBalance
         type: boolean
         required: true
-        label: Was this the participant's entire balance from all qualified plans of one kind?
+        label: "1. Was this a distribution of a plan participant's entire balance from all of an employer's qualified plans of one kind (pension, profit-sharing or stock bonus)?"
         help: Answer Yes if the distribution represents the entire balance from all plans of one kind from this employer.
       - name: spousePartI_q2_noRollover
         type: boolean
@@ -94,17 +94,17 @@ sections:
       - name: spousePartI_q3_bornBefore1936OrBeneficiary
         type: boolean
         required: true
-        label: Was your spouse born before January 2, 1936, or are they a beneficiary of someone born before January 2, 1936?
+        label: "3. Was this distribution paid to your spouse as a beneficiary of a plan participant who was born before January 2, 1936?"   # 2026-11-07: Form 4972 line 3
         help: Answer Yes if the plan participant (your spouse or the person they inherited from) was born before January 2, 1936.
       - name: spousePartI_q4_fiveYearsParticipation
         type: boolean
         required: true
-        label: Did the participant have at least 5 years of plan participation before the year of distribution?
+        label: "4. Was your spouse the plan participant who received this distribution, born before January 2, 1936, and a participant in the plan for at least 5 years before the year of the distribution?"   # line 4; only lines 3 AND 4 both No disqualify
         help: Answer Yes if the plan participant was a plan participant for at least 5 years before the year the lump-sum distribution was received.
       - name: spousePartI_q5_noPriorElection
         type: boolean
         required: true
-        label: Has your spouse previously used Form 4972 after 1986 for a distribution from this same participant?
+        label: "5a. Did your spouse use Form 4972 after 1986 for an earlier distribution from your spouse's own plan?"
         help: Answer Yes if your spouse has previously elected special tax treatment under Form 4972 after 1986 for a distribution from this same participant. A Yes answer disqualifies the distribution.
 
   - name: partElections

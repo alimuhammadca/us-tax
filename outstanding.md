@@ -1,5 +1,17 @@
 # Outstanding Items
 
+## Foreign income (Form 2555): found in the 2026-11-06 review, not changed
+
+- MFS: the household /flags run skips the spouse copy, so the MFS spouse's Form 2555 problems never reach a checklist; the married-couples
+  housing rule (no duplicated expenses) is checked only on MFJ, and an unanswered household question passes.
+- Schedule 1 line 8d typed on Other incomes is silently ignored whenever Form 2555 computes (no advisory, unlike 24j), and a typed 8d
+  still excludes when the election is declined or eligibility fails.
+- No line 18 trip table (the 330 days are one typed number); `housingLocationCountry` duplicates the locality choice (only printed); the
+  UI keeps its own copies of $130,000 / $39,000 and the Notice 2025-16 table (now in data/foreign-housing-localities.ts).
+- "No" to "already on a Form W-2" with a W-2 carrying the same pay double-counts with no flag; foreign self-employment net profit is
+  typed again, not read from Business income.
+- Notice 2025-16 amounts and the IRS yearly exchange rates are not in the local library - unverified.
+
 ## Archer MSA / LTC (Form 8853): found in the 2026-11-06 review, not changed
 
 - MFJ with both spouses on family coverage: each copy gets the full 75% of the lower deductible - looks like a doubled limit (i8853 p.3

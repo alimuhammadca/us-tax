@@ -157,10 +157,7 @@ sections:
     multiplicity: single
     help: Collapsed by default in the UI (disclosure toggle).
     fields:
-      - name: schedule2Line9HouseholdEmploymentTax
-        type: amount
-        required: false
-        label: Total household employment taxes you owe (from Schedule H) - Schedule 2 line 9
+      # schedule2Line9HouseholdEmploymentTax: no longer asked (owner 2026-11-07) - figured on Household employees (Schedule H); column kept, ignored by the calculation.
       - name: schedule2Line14InstallmentLotsTimesharesInterest
         type: amount
         required: false
@@ -169,18 +166,9 @@ sections:
         type: amount
         required: false
         label: "Interest on deferred tax on installment sales with sales price over $150,000 - Schedule 2 line 15"
-      - name: schedule2Line16Form8611LihcRecapture
-        type: amount
-        required: false
-        label: Recapture of low-income housing credit (from Form 8611) - Schedule 2 line 16
-      - name: schedule2Line17cHsaNonMedicalDistributionTax
-        type: amount
-        required: false
-        label: "20% additional tax on Health Savings Account distributions not used for qualified medical expenses (Form 8889 line 17b) - Schedule 2 line 17c"
-      - name: schedule2Line17dHsaNotEligibleIndividualTax
-        type: amount
-        required: false
-        label: Additional tax on a Health Savings Account because you did not remain an eligible individual (Form 8889 line 21) - Schedule 2 line 17d
+      # schedule2Line16Form8611LihcRecapture: no longer asked (owner 2026-11-07) - figured on LIHC recapture (Form 8611); column kept, ignored by the calculation.
+      # schedule2Line17cHsaNonMedicalDistributionTax: no longer asked (owner 2026-11-07) - figured on HSA (Form 8889); column kept, ignored by the calculation.
+      # schedule2Line17dHsaNotEligibleIndividualTax: no longer asked (owner 2026-11-07) - figured on HSA (Form 8889); column kept, ignored by the calculation.
       - name: schedule2Line19Form4255NetEpeRecapture
         type: amount
         required: false
@@ -199,18 +187,9 @@ sections:
         type: amount
         required: false
         label: Line 17a - amount of recaptured other credit
-      - name: schedule2Line17bRecaptureFederalMortgageSubsidy
-        type: amount
-        required: false
-        label: Line 17b - recapture of federal mortgage subsidy
-      - name: schedule2Line17eArcherMsaAdditionalTax
-        type: amount
-        required: false
-        label: Line 17e - additional tax on Archer MSA distributions (Form 8853)
-      - name: schedule2Line17fMedicareAdvantageMsaAdditionalTax
-        type: amount
-        required: false
-        label: Line 17f - additional tax on Medicare Advantage MSA distributions (Form 8853)
+      # schedule2Line17bRecaptureFederalMortgageSubsidy: no longer asked (owner 2026-11-07) - figured on Mortgage subsidy recapture (Form 8828); column kept, ignored by the calculation.
+      # schedule2Line17eArcherMsaAdditionalTax: no longer asked (owner 2026-11-07) - figured on Archer MSA / LTC (Form 8853); column kept, ignored by the calculation.
+      # schedule2Line17fMedicareAdvantageMsaAdditionalTax: no longer asked (owner 2026-11-07) - figured on Archer MSA / LTC (Form 8853); column kept, ignored by the calculation.
       - name: schedule2Line17gCharitableContributionRecapture
         type: amount
         required: false
@@ -286,10 +265,7 @@ sections:
         type: amount
         required: false
         label: "Form 8960 line 9b - state, local, and foreign income tax allocable to investment income"
-      - name: form8960Line9cMiscInvestmentExpenses
-        type: amount
-        required: false
-        label: Form 8960 line 9c - miscellaneous investment expenses
+      # form8960Line9cMiscInvestmentExpenses: no longer asked (owner 2026-11-07) - not deductible for 2025 (Instructions for Form 8960, line 9c); column kept, ignored by the calculation.
       - name: form8960Line10AdditionalModifications
         type: amount
         required: false

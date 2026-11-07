@@ -1,5 +1,15 @@
 # Outstanding Items
 
+## Other tax items: found in the 2026-11-07 review, not changed
+
+- Foreign Earned Income Tax Worksheet line 2b (`feitwLine2bDisallowedDeductions`) is read by the calculation but asked nowhere; it belongs on
+  Foreign income (owner: keep as saved).
+- The section 962 election is also asked on Other incomes (`hasSection962CfcElection`, only for the 8n/8o blocker) and exists backend-only on
+  standard deductions - three copies of one fact; SECTION_962_DEDUCTION_NOT_ON_LINE_12E is raised from the hidden copy.
+- On a joint return the PFIC Part V facts are first-entry while line 16e is summed; section 453A interest (line 15) is detected on Form 6252
+  but not figured; Form 1098-T boxes 4 / 6 could prompt the education credit recapture question.
+- The Form 8960 messages don't say which spouse's copy; a typed line 17h replaces the Form 1099-MISC box 15 figure for both spouses.
+
 ## Lump-sum distributions (Form 4972): found in the 2026-11-07 review, not changed
 
 - The alternate-payee path (QDRO) skips the participant's 5-year test in the calculation; Pub. 575 requires a payment that would be a

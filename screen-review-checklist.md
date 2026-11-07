@@ -173,6 +173,11 @@ owner 2026-11-04).*
 - [ ] A rule the screen shows (a "Disqualifies" banner, an eligibility verdict) must be the calculation's rule: the screen said either of
       Form 4972 lines 3 and 4 disqualified, the calculation (and the form) said only both - every beneficiary saw "not eligible". Test
       the verdict in the e2e with one No and with both (Lump-sum distributions).
+- [ ] Every key the calculation reads from the screen's form is either asked on the screen or sent back as loaded: a mapper that rebuilds
+      every column from the payload erases a key the screen doesn't send (Other tax items erased Form 8978, section 965(i) and line 2b on
+      every save). Compare the mapper's columns with the screen's payload.
+- [ ] An amount another screen figures is not typed here too: typed and figured amounts were added (Form 8611, 8828) or the typed one
+      replaced the figured one for both spouses (HSA / MSA). Link to the screen that figures it instead (Other tax items).
 - [ ] A question the screen asks must be saved. An answer kept only in the component (a wizard's routing answer) comes
       back blank on reopening; it needs a column (field addition: owner's sign-off).
 - [ ] A "no such word" check uses a whole-word pattern: `not.toContainText(' you ')` trims the text to "you", which then matches "your
@@ -497,6 +502,7 @@ were on Capital gain/loss and Social security benefits rows, fixed together.*
 | Foreign income (Family Head, spouse) | 1-8, 11, 13-21, 24 | 2026-11-06 |
 | Income earned in a US territory (Family Head, spouse) | 1-8, 11, 13-24 | 2026-11-07 |
 | Lump-sum distributions (Family Head, spouse) | 1-8, 11, 13-24 | 2026-11-07 |
+| Other tax items (Family Head, spouse) | 1-8, 11, 13-24 | 2026-11-07 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

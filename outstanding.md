@@ -2,8 +2,9 @@
 
 ## Household employees (Schedule H): found in the 2026-11-07 review, not changed
 
-- Schedule H on the return: Stage A (blank pure HTML/CSS form) done; Stages B-C (fields from ScheduleHCompute, out_schedule_h, the
-  computation slots) wait for the owner's visual review - `schedule-h-plan.md`.
+- Schedule H on the return is done (`schedule-h-plan.md`); under persistent MFS the spouse's preview reads the household computation, not
+  the spouse's own leg (same as Form 4137). Stage A differences left as drawn: line 13's dashed rule solid, the lines 10-12 Yes / No cells
+  as checkboxes, the line 17 row shading.
 - State disability plan payments (subtracted on line 8 with "disability"), Puerto Rico employers (no line 7), a fiscal year, the
   quarters of the $1,000 test (asked as one answer) and an employee's Form W-2 are not handled; line 17 prints two states (more are
   counted in lines 18-19, with a message about the attached statement).

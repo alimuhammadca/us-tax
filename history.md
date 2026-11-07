@@ -1,3 +1,9 @@
+## 2026-11-07T18:30 - Schedule H (Form 1040) on the return: Stages B and C
+
+- Owner reviewed Stage A ("go ahead with stages B and C"). `ScheduleHFormFields` fills the preview from the finished Schedule H, following the form's skips (line A Yes skips B and C, line C Yes skips lines 1-9 with line 25 "-0-", Section A or B, two line 17 rows, line 27 Yes) and the EIN or "Applied For" with the date.
+- Saved with the return in the existing attached-forms holder (`AttachedForms.scheduleHList`, `out_attached_forms` JSON) - one copy per person with that person's name and SSN - instead of a new `out_schedule_h` table; `schedule-h-plan.md` updated.
+- Tests: `ScheduleHScreenReviewTest` 11; TaxReturnComputeServiceTest only the known third-party-designee failure; e2e `tax-return-schedule-h-preview.spec.ts` (each spouse's figures after a reload).
+
 ## 2026-11-07T17:00 - Household employees (Schedule H): Screen Review Checklist applied; line 1 capped; credit reduction and Section B figured; Schedule H preview (Stage A)
 
 - Two audits (every saved key against the backend; the text against the 2025 Instructions for Schedule H and Schedule H (Form 1040) 2025).

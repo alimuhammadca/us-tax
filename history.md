@@ -1,3 +1,7 @@
+## 2026-11-07T21:00 - Tips (dependent tab): worded for the dependent
+
+- The dependent's copy (form-tip-income-taxpayer with a dependentId) asked "Did you receive tip income that was not fully reported to your employer" and spoke of "your" records, W-2 and SSN; it now uses the dependent's name (`who`, as the reviewed screens do). "You can save this form" and "For your records" still address the person filling it in. e2e `tips-screen.spec.ts` asserts the question.
+
 ## 2026-11-07T20:30 - Child's int. & dividends (Form 8814): Screen Review Checklist applied; the election per child; statement amounts no longer frozen
 
 - Two audits (every saved key against computeChildInterestDividends; the text against the 2025 Instructions for Form 8814 and Form 8814 line 2a).

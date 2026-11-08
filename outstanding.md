@@ -6,8 +6,6 @@
 - The 30% rule for a child's business where capital is material (Form 8615 earned income), a qualified disability trust distribution, and
   "the child is required to file a return" are not checked; the legacy household copy (kiddie-income-taxpayer, not in the sidebar) still
   reads the typed amounts.
-- Found while comparing screens: Tips on a dependent's tab asks "Did you receive tip income ... your employer" (form-tip-income-taxpayer
-  screening label) - the dependent's name is used elsewhere on that screen.
 
 ## Child's int. & dividends (Form 8814): found in the 2026-11-07 review, not changed
 

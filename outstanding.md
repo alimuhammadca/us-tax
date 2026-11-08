@@ -7,8 +7,14 @@
   "the child is required to file a return" are not checked; the legacy household copy (kiddie-income-taxpayer, not in the sidebar) still
   reads the typed amounts.
 - Found while comparing screens: Tips on a dependent's tab asks "Did you receive tip income ... your employer" (form-tip-income-taxpayer
-  screening label) - the dependent's name is used elsewhere on that screen. Child's int. & dividends (Form 8814, dependent tab) is not
-  reviewed yet.
+  screening label) - the dependent's name is used elsewhere on that screen.
+
+## Child's int. & dividends (Form 8814): found in the 2026-11-07 review, not changed
+
+- A No is not saved (the election is the entry): on reopening an unanswered question shows; FORM8814_CHILD_STATEMENTS_NOT_ELECTED reminds
+  when the child has statements.
+- The child's Form 1099-OID interest and Schedule K-1 dividends are added by the calculation but not listed on the screen; Alaska Permanent
+  Fund dividends aren't read from a Form 1099-MISC; the "required to file" condition isn't checked.
 
 ## Household employees (Schedule H): found in the 2026-11-07 review, not changed
 

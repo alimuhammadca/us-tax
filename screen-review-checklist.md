@@ -195,6 +195,10 @@ owner 2026-11-04).*
       and five typed amounts did nothing. Trace each key from the save to the compute of the return it is meant for.
 - [ ] "Earned income" means what the IRS worksheet says, not line 1z alone: Form 8615 counts Schedule 1 lines 3 and 6 (business and
       farm profit) too (Kiddie income).
+- [ ] A statement figure is shown, not copied into the box: a box filled from statements and saved becomes a typed amount that overrides the
+      statements forever (Child's int. & dividends). Show the total as the placeholder or a note; save only what the user typed.
+- [ ] A screen on a person's tab is about that person: a household list of every child on each dependent's tab, with names and SSNs typed
+      again, becomes the one child's question with the identity from the dependent record (Child's int. & dividends).
 - [ ] Unit tests for new helpers (e.g. `id-validation.spec.ts`, `scenario-completeness.spec.ts`).
 - [ ] Entry in `history.md`; commit and push us-tax-ui, us-tax-be (e2e / backend) and us-tax (docs).
 
@@ -517,6 +521,7 @@ were on Capital gain/loss and Social security benefits rows, fixed together.*
 | Other tax items (Family Head, spouse) | 1-8, 11, 13-24 | 2026-11-07 |
 | Household employees (Family Head, spouse) | 1-8, 11-17, 19-24 | 2026-11-07 |
 | Kiddie income (dependent) | 1-8, 11, 13, 15-21, 24 | 2026-11-07 |
+| Child's int. & dividends (dependent) | 1-8, 11-24 | 2026-11-07 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

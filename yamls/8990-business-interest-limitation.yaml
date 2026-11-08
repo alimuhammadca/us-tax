@@ -1,3 +1,6 @@
+# Screen review 2026-11-08 (owner-approved): a spouse copy, form-8990-spouse (pf_form_8990 owner_role 'spouse'), with the same fields - a joint
+# return adds both copies, a separate return uses its own. Lines 8, 9 and 11 are figured from the return when blank (line 1 from Schedule C / F
+# as before); line 10 stays typed. The gate asks the gross receipts test ($31 million for 2025) or a tax shelter.
 # Form 8990 - Limitation on Business Interest Expense Under Section 163(j). One per return.
 name: form-8990
 title: Form 8990 - Business Interest Expense Limitation (163(j))

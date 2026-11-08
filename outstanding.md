@@ -1,5 +1,11 @@
 # Outstanding Items
 
+## Business interest limit (Form 8990): found in the 2026-11-08 review, not changed
+
+- Line 6 (tentative taxable income) and line 10 (QBI deduction) are typed: both need the return figured twice (the QBI deduction depends on
+  the limit). A small business taxpayer with a carryforward from a year it was limited: the carryforward is not deducted when the gate is No.
+- Schedules A and B (partners / S corporation shareholders), excepted-business allocation and the gross receipts test itself are not asked.
+
 ## Mortgage subsidy recapture (Form 8828): found in the 2026-11-08 review, not changed
 
 - The sale is typed here although the home sale may also be on Capital gain/loss (Form 1099-S); the sales price, expenses and basis could be

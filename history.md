@@ -1,3 +1,22 @@
+## 2026-11-08T18:45 - Business interest limit (Form 8990): Screen Review Checklist applied; lines 8, 9, 11 figured; spouse copy
+
+- Audit against the Instructions for Form 8990 (Rev. December 2025).
+- Bugs: (1) line 8 (business interest expense not from a pass-through, "to the extent includable in tentative taxable income") was never
+  added back unless typed - adjusted taxable income was understated by the Schedule C / F interest and the limit was too low; (2) line 22
+  printed negative ("If line 22 is zero or less, enter zero"); (3) on separate returns both spouses' forms had the same typed amounts;
+  (4) the exemption explanation sat on the screen, and the gate asked "subject to the section 163(j) limitation".
+- Owner's decisions (2026-11-08): lines 8, 9 and 11 figured from the return when blank - line 8 the Schedule C / F interest, line 9 the
+  Schedule 1 line 8a net operating loss, line 11 Schedule C line 13 and Schedule F depreciation (not section 179; carried out of
+  computeScheduleC / computeFarmIntermediates); line 10 (QBI) stays typed - it is worked out after the limit, so the screen says "not
+  figured"; a spouse copy (form-8990-spouse, the existing owner_role 'spouse' row) - a joint return adds both copies, a separate return
+  uses its own (MfsFormScoper).
+- New class `Form8990Compute` (out of TaxReturnComputeService). Rebuilt screen: shared look and bar; sections with Clear; the gate asks the
+  gross receipts test ($31 million, 2025); the figured lines and last year's carryforward as placeholders; the limit from the calculation's
+  rules (`utils/business-interest-screen.ts`); help from the instructions (`data/business-interest-help.ts`).
+- Tests: backend `Form8990ScreenReviewTest` (3), sc_00276 / sc_00305 pass unchanged; UI `business-interest-screen.spec.ts` (3); e2e
+  `business-interest-screen.spec.ts` (2); `form8990-carryforward-bridge.spec.ts` line 6 lowered to 100,000 - with line 8 now added back the old
+  200,000 gave ATI 350,000 and no carryforward.
+
 ## 2026-11-08T17:45 - Mortgage subsidy recapture (Form 8828): Screen Review Checklist applied; date boxes; lines 7 and 8; Whose is it; moved to Incomes
 
 - Audit against the Instructions for Form 8828 (Rev. November 2024) and Form 8828 (Rev. November 2024).

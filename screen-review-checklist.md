@@ -232,6 +232,9 @@ owner 2026-11-04).*
       form (Mortgage subsidy recapture). Look at every date box on the preview.
 - [ ] A "Do not complete this form" note on the form (a loan closed before 1991) is a rule: the screen says so and the calculation leaves
       the form out (Mortgage subsidy recapture).
+- [ ] A figure filled from the return must be one the return has worked out at the point the calculation needs it; one worked out later
+      that depends on this calculation (the QBI deduction for the business interest limit) stays typed, and the screen says why (Business
+      interest limit).
 - [ ] Unit tests for new helpers (e.g. `id-validation.spec.ts`, `scenario-completeness.spec.ts`).
 - [ ] Entry in `history.md`; commit and push us-tax-ui, us-tax-be (e2e / backend) and us-tax (docs).
 
@@ -585,6 +588,7 @@ Deductions labels renamed in the Incomes style. Headings still in the old "Form 
 | Foreign assets (Form 8938; household, Family Head tab; moved to Applications) | 1-8, 11, 13-21, 24, 25 | 2026-11-08 |
 | Low-income housing credit recapture (Form 8611; household, Family Head tab; moved to Incomes) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-08 |
 | Mortgage subsidy recapture (Form 8828; household, Family Head tab; moved to Incomes) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-08 |
+| Business interest limit (Form 8990; Family Head and spouse copies) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-08 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

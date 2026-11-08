@@ -1,3 +1,6 @@
+# Screen review 2026-11-07 (owner): retired fields are marked "retired" (no longer asked or read; saved blank; columns kept). The
+# senior deduction comes from the date of birth; the MAGI exclusions from Foreign income / Income earned in a US territory; each car
+# loan vehicle also asks vehicleIsApplicablePassengerVehicle and vehicleForPersonalUse (V437). Help: data/additional-deductions-help.ts.
 # Form 1040 line 13b (Schedule 1-A line 38) workflow for taxpayer/family head.
 # Approach: keep user questions + imported statement fields + computed outputs in one YAML.
 # NOTE: Sections marked as backend-only are NOT supposed to be rendered in the actual form component.
@@ -47,29 +50,34 @@ sections:
       - If you have foreign earned income, a housing exclusion, or income excluded as a Puerto Rico or American Samoa resident, those amounts adjust the Schedule 1-A phaseout base.
     fields:
       - name: hasMagiExclusions
+        retired: "2026-11-07 - MAGI exclusions come from Foreign income and Income earned in a US territory"
         type: boolean
         required: false
         label: Do you have income excluded under Form 2555, Form 4563, or bona fide Puerto Rico residency?
         help: Select Yes only if applicable. The 4 amount fields below are shown only when this is true.
       - name: puertoRicoExcludedIncome
+        retired: "2026-11-07 - figured from Income earned in a US territory"
         type: amount
         required: false
         placeholder: 0.00
         label: Puerto Rico excluded income
         help: Enter bona fide residents of Puerto Rico excluded income, if applicable. Shown only when hasMagiExclusions is true.
       - name: form2555Line45ExcludedIncome
+        retired: "2026-11-07 - figured from Foreign income"
         type: amount
         required: false
         placeholder: 0.00
         label: Foreign earned income exclusion
         help: Enter the Form 2555 line 45 amount for the foreign earned income exclusion. Shown only when hasMagiExclusions is true.
       - name: form2555Line50HousingExclusion
+        retired: "2026-11-07 - figured from Foreign income"
         type: amount
         required: false
         placeholder: 0.00
         label: Foreign housing exclusion
         help: Enter the Form 2555 line 50 amount for the foreign housing exclusion. Shown only when hasMagiExclusions is true.
       - name: form4563Line15ExcludedIncome
+        retired: "2026-11-07 - figured from Income earned in a US territory"
         type: amount
         required: false
         placeholder: 0.00
@@ -96,6 +104,7 @@ sections:
         label: I confirm my occupation is on the IRS tipped-occupations list
         help: The deduction applies only to tips in qualifying occupations. Shown only when taxpayerReceivedQualifiedTips is true.
       - name: taxpayerHasMultipleTipEmployers
+        retired: "2026-11-07 - read by nothing"
         type: boolean
         required: false
         label: Did you receive tips from more than one employer?
@@ -156,6 +165,21 @@ sections:
     instructions:
       - Add one row for each qualifying new passenger vehicle loan.
     fields:
+      - name: vehicleIsNewToTaxpayer
+        type: boolean
+        label: "Is it new - its original use starts with the buyer?"
+      - name: vehicleIsApplicablePassengerVehicle
+        type: boolean
+        label: "Is it a car, minivan, van, SUV, pickup truck or motorcycle under 14,000 lbs GVWR? (V437)"
+      - name: vehicleFinalAssemblyInUs
+        type: boolean
+        label: "Did its final assembly take place in the United States?"
+      - name: vehicleForPersonalUse
+        type: boolean
+        label: "Was it bought for personal use (more than half the time)? (V437)"
+      - name: vehicleSecuredByFirstLien
+        type: boolean
+        label: "Is the loan secured by a first lien on the vehicle?"
       - name: vehicleVin
         type: text
         required: false
@@ -184,6 +208,7 @@ sections:
       - Phaseout at 6% of MAGI above $75,000 ($150,000 if MFJ). Return must be MFJ if married.
     fields:
       - name: taxpayerBornBeforeJan2_1961
+        retired: "2026-11-07 - the date of birth on Identification decides"
         type: boolean
         required: false
         label: Were you born before January 2, 1961?

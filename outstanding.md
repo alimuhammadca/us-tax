@@ -7,6 +7,16 @@
   "the child is required to file a return" are not checked; the legacy household copy (kiddie-income-taxpayer, not in the sidebar) still
   reads the typed amounts.
 
+## Additional deductions (Schedule 1-A): found in the 2026-11-07 review, not changed
+
+- Tips: the SSN "valid for employment", tips in a specified service trade or business, and the occupation code (TTOC) aren't asked; the
+  business net income for tips (Schedule 1-A line 5) is typed, not taken from Schedule C / F; one net income for all of a person's
+  businesses (the Multiple Trades or Businesses Worksheet isn't built).
+- Overtime: the FLSA-eligible question isn't asked; the Forms W-2 box 14 overtime premium isn't read.
+- Car loan: the loan "originated by you", lemon-law replacements and the change of obligor at death aren't asked; existing vehicles must
+  answer the two new conditions (V437) before the return is figured.
+- The statements confirmation is asked on the Family Head's copy only (it covers both spouses' statements).
+
 ## Child's int. & dividends (Form 8814): found in the 2026-11-07 review, not changed
 
 - A No is not saved (the election is the entry): on reopening an unanswered question shows; FORM8814_CHILD_STATEMENTS_NOT_ELECTED reminds

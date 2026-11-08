@@ -199,6 +199,11 @@ owner 2026-11-04).*
       statements forever (Child's int. & dividends). Show the total as the placeholder or a note; save only what the user typed.
 - [ ] A screen on a person's tab is about that person: a household list of every child on each dependent's tab, with names and SSNs typed
       again, becomes the one child's question with the identity from the dependent record (Child's int. & dividends).
+- [ ] An answer about a fact another screen owns (a date of birth) must not override that screen: the typed "born before January 2, 1961"
+      replaced the date of birth on Identification for the senior deduction (Additional deductions). Read the fact; show where it came from.
+- [ ] A figure one screen works out must reach every calculation that uses it, not only the one the screen was built for: the Puerto Rico
+      exclusion from the territory screen reached no MAGI, while a box typed elsewhere did (Additional deductions). Grep every reader of
+      the old key.
 - [ ] Unit tests for new helpers (e.g. `id-validation.spec.ts`, `scenario-completeness.spec.ts`).
 - [ ] Entry in `history.md`; commit and push us-tax-ui, us-tax-be (e2e / backend) and us-tax (docs).
 
@@ -522,6 +527,7 @@ were on Capital gain/loss and Social security benefits rows, fixed together.*
 | Household employees (Family Head, spouse) | 1-8, 11-17, 19-24 | 2026-11-07 |
 | Kiddie income (dependent) | 1-8, 11, 13, 15-21, 24 | 2026-11-07 |
 | Child's int. & dividends (dependent) | 1-8, 11-24 | 2026-11-07 |
+| Additional deductions (Family Head, spouse) | 1-8, 11-24 | 2026-11-07 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

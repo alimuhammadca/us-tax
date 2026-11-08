@@ -1,3 +1,6 @@
+# Screen review 2026-11-07 (owner): retired fields are marked "retired" (no longer asked or read; saved blank; columns kept). The
+# senior deduction comes from the date of birth; the MAGI exclusions from Foreign income / Income earned in a US territory; each car
+# loan vehicle also asks vehicleIsApplicablePassengerVehicle and vehicleForPersonalUse (V437). Help: data/additional-deductions-help.ts.
 # Form 1040 line 13b (Schedule 1-A) workflow for spouse.
 # Approach: spouse-specific tip, overtime, and senior amounts only.
 # Return-level questions (MAGI exclusions, car loan interest, filing-status gates) are on the taxpayer form.
@@ -43,6 +46,7 @@ sections:
         label: I confirm the spouse's occupation is on the IRS tipped-occupations list
         help: The deduction applies only to tips in qualifying occupations. Shown only when spouseReceivedQualifiedTips is true.
       - name: spouseHasMultipleTipEmployers
+        retired: "2026-11-07 - read by nothing"
         type: boolean
         required: false
         label: Did the spouse receive tips from more than one employer?
@@ -109,6 +113,7 @@ sections:
       - The return must be MFJ and the spouse must have a valid SSN.
     fields:
       - name: spouseBornBeforeJan2_1961
+        retired: "2026-11-07 - the date of birth on Identification decides"
         type: boolean
         required: false
         label: Was the spouse born before January 2, 1961?

@@ -28,6 +28,12 @@ sections:
         type: text
         required: false
         label: "(a) Donee address"
+      - name: givenBy
+        type: select
+        required: false
+        label: "Given by"
+        options: ["taxpayer", "spouse", "joint"]
+        showIf: "married (V438, owner 2026-11-08): a separate return keeps that spouse's gifts and half of the joint ones"
       - name: description
         type: text
         required: false
@@ -46,7 +52,7 @@ sections:
         required: false
         label: "(d) Date of contribution"
       - name: dateAcquired
-        type: text
+        type: date   # YYYY-MM-DD, or "Various" (similar items all held 12 months or more); old "MM/DD/YYYY" text is read as a date
         required: false
         label: "(e) Date acquired by donor"
       - name: howAcquired
@@ -77,7 +83,13 @@ sections:
         type: select
         required: false
         label: "Type of property"
-        options: ["ART", "COLLECTIBLES", "JEWELRY", "BOOKS", "CLOTHING", "HOUSEHOLD_FURNITURE", "ELECTRONICS", "NONPUBLIC_STOCK", "LAND", "BUILDINGS", "VEHICLE", "OTHER"]
+        options: ["CLOTHING", "HOUSEHOLD_FURNITURE", "ELECTRONICS", "BOOKS", "ART", "COLLECTIBLES", "JEWELRY", "VEHICLE", "EQUIPMENT", "NONPUBLIC_STOCK", "DIGITAL_ASSETS", "INTELLECTUAL_PROPERTY", "LAND", "BUILDINGS", "OTHER"]
+        showIf: "isPubliclyTradedSecurity != true"
+      - name: goodUsedCondition
+        type: boolean
+        required: false
+        label: "Is it in good used condition or better?"
+        showIf: "propertyCategory in [CLOTHING, HOUSEHOLD_FURNITURE, ELECTRONICS] (V438, owner 2026-11-08)"
       - name: hasQualifiedAppraisal
         type: boolean
         required: false

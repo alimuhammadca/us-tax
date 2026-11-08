@@ -204,6 +204,14 @@ owner 2026-11-04).*
 - [ ] A figure one screen works out must reach every calculation that uses it, not only the one the screen was built for: the Puerto Rico
       exclusion from the territory screen reached no MAGI, while a box typed elsewhere did (Additional deductions). Grep every reader of
       the old key.
+- [ ] A date is entered with the shared date control and saved as YYYY-MM-DD - never a text box with an "MM/DD/YYYY" hint: the calculation
+      parses YYYY-MM-DD, so typed dates silently switched off every rule that reads them (Noncash charity: property held a year or less was
+      never moved to cost and every bargain sale was short-term). Read the old typed values as dates on load (UI and mapper).
+- [ ] A list that only reports what another screen deducts (Form 8283 vs the Standard deductions amounts) shows those amounts with a link
+      and is checked against them in the compute - leaving out what the list itself adds to the deduction (a bargain sale's part given),
+      or the check fires on a correct return (Noncash charity).
+- [ ] A household list on a separate return: each spouse's return keeps that spouse's own entries and half of the joint ones ("Given by",
+      MfsFormScoper) - otherwise the spouse's return reports the Family Head's (Noncash charity).
 - [ ] Unit tests for new helpers (e.g. `id-validation.spec.ts`, `scenario-completeness.spec.ts`).
 - [ ] Entry in `history.md`; commit and push us-tax-ui, us-tax-be (e2e / backend) and us-tax (docs).
 
@@ -528,6 +536,7 @@ were on Capital gain/loss and Social security benefits rows, fixed together.*
 | Kiddie income (dependent) | 1-8, 11, 13, 15-21, 24 | 2026-11-07 |
 | Child's int. & dividends (dependent) | 1-8, 11-24 | 2026-11-07 |
 | Additional deductions (Family Head, spouse) | 1-8, 11-24 | 2026-11-07 |
+| Noncash charity (Form 8283; household, Family Head tab) | 1-8, 11, 13, 15-21, 24 | 2026-11-08 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

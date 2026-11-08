@@ -1,5 +1,16 @@
 # Outstanding Items
 
+## Noncash charity (Form 8283): found in the 2026-11-08 review, not changed
+
+- The deduction amounts are still typed on Standard deductions (cost-basis box, appreciated property, private foundation, unrelated use);
+  the list only reports and is checked against them. Owner: work them out from the list when Standard deductions is reviewed.
+- Not asked: partial interests and restricted use (Section B Part II), qualified conservation contributions on the list, Part III items of
+  $500 or less inside a Section B group, art of $20,000 or more needing the appraisal attached, a vehicle's 1098-C picked per gift (the
+  Section A / B choice for a vehicle uses any Form 1098-C on file with box 5a or 5b).
+- Backend tests failing on main before this review (not caused by it): `NonOverrideableFlagMessagesTest` (26 non-overrideable messages name
+  no form to open; FORM_1099S_REAL_ESTATE_REPORTED unparseable) and `Sc00206SqaScenarioTest.theTerminallyIllNote...` (NullPointer), besides
+  the known `thirdPartyDesignee_populatedWhenAllowed`.
+
 ## Kiddie income (Form 8615): found in the 2026-11-07 review, not changed
 
 - No Form 8615 preview or PDF: the form is figured on the child's own return but never shown (owner: defer; the Schedule H staged method).

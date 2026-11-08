@@ -1,3 +1,7 @@
+## 2026-11-07T21:15 - Sidebar: "Income earned in a US territory"
+
+- Owner: use "Income earned in a US territory" everywhere. The sidebar said "US possession exclusion" while the screen's title, help, message links and records used the new name; both sidebar entries (Family Head, spouse) renamed. IRS form wording ("U.S. possession" on Forms 1099-DIV, 1116, 1040) unchanged. territory-income-screen e2e 2/2.
+
 ## 2026-11-07T21:00 - Tips (dependent tab): worded for the dependent
 
 - The dependent's copy (form-tip-income-taxpayer with a dependentId) asked "Did you receive tip income that was not fully reported to your employer" and spoke of "your" records, W-2 and SSN; it now uses the dependent's name (`who`, as the reviewed screens do). "You can save this form" and "For your records" still address the person filling it in. e2e `tips-screen.spec.ts` asserts the question.

@@ -207,7 +207,7 @@ owner 2026-11-04).*
 - [ ] A date is entered with the shared date control and saved as YYYY-MM-DD - never a text box with an "MM/DD/YYYY" hint: the calculation
       parses YYYY-MM-DD, so typed dates silently switched off every rule that reads them (Noncash charity: property held a year or less was
       never moved to cost and every bargain sale was short-term). Read the old typed values as dates on load (UI and mapper).
-- [ ] A list that only reports what another screen deducts (Form 8283 vs the Standard deductions amounts) shows those amounts with a link
+- [ ] A list that only reports what another screen deducts (Form 8283 vs the Standard or itemized deductions amounts) shows those amounts with a link
       and is checked against them in the compute - leaving out what the list itself adds to the deduction (a bargain sale's part given),
       or the check fires on a correct return (Noncash charity).
 - [ ] A household list on a separate return: each spouse's return keeps that spouse's own entries and half of the joint ones ("Given by",
@@ -493,6 +493,30 @@ since D-6a-1; the spouse disability field shown).*
 *From: owner 2026-11-06 ("It does not have the look and feel of the previous screens ... The date fields look strange. The
 sections are supposed to have Clear rather than Remove. Input field outline do not show until mouseover"). The same faults
 were on Capital gain/loss and Social security benefits rows, fixed together.*
+
+## 25. The screen's name: the sidebar label and the heading in the Incomes style
+
+- [ ] The sidebar label names what the screen is about in plain words, as the Incomes labels do ("Interest income",
+      "Pension withdrawals", "Income earned in a US territory") - no abbreviations or shorthand ("LIHC", "Alt fuel", "Prior
+      min tax", "Elderly/Disabled"), no program words ("Interest expense" for investment interest, "Qualified business income"
+      for the deduction), and accurate in number and scope ("Standard or itemized deductions", not "Standard deductions").
+- [ ] A form tag only when the screen is built around one form, and always with the word: "(Form 6252)", "(Schedule C)" - never a
+      bare number ("(5405)", "(3800)") or a statement in place of the form the screen fills ("(K-1)" for Form 8582). A screen
+      that feeds several forms has no tag ("Self-employed health insurance and retirement plans": Form 7206 and Schedule 1).
+- [ ] Sentence case: only the first word and proper names capitalized ("Electric vehicle credit", not "Electric Vehicle credit";
+      "Earned income credit", not "Earned Income Credit").
+- [ ] The heading is the sidebar name without the form tag, then the person: `<h3>Home energy credits (Dana)</h3>` - not the old
+      "Form 8611 — Recapture of Low-Income Housing Credit" or "Form 8880 – Savings credit (taxpayer)" (the IRS title goes in the
+      subtitle or help, item 5; names, not "taxpayer", item 8). The spouse and dependent copies use the same name.
+- [ ] Renaming a screen: update everything that quotes the old name - the calculation's messages (`Open the \"<sidebar label>\"
+      form`, checked by `NonOverrideableFlagMessagesTest`; item 13), `<form-link>` text and `returnLabel` on other screens, help and
+      notes that name it, the e2e sidebar regexes and heading asserts, the checklist and `outstanding.md`. In a Java string a quoted
+      name needs `\"` - a bare `"` breaks the build.
+- [ ] e2e: the sidebar link shows the new label and the heading reads "<name> (<person>)".
+
+*From: owner 2026-11-08 ("look at the titles of the forms in incomes section and then look at the titles in Deductions"): the
+Deductions labels renamed in the Incomes style. Headings still in the old "Form NNNN — title" style (Forms 8611, 8828, 8938,
+8990, 1116, 8880, "Earned Income Credit") are fixed when each screen is reviewed.*
 
 ---
 

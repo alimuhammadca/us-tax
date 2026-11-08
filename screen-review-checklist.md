@@ -228,6 +228,10 @@ owner 2026-11-04).*
 - [ ] The form's own skip rules decide which lines are asked: "Skip lines 1-7 and go to line 8" if passed through on a K-1; "Only section
       42(j)(5) partnerships need to complete lines 16 and 17" - ask the routing question and leave the skipped lines blank on the form, not
       zero (Low-income housing credit recapture).
+- [ ] A date on the form split into month / day / year boxes gets each part in its own box - the whole date in the month box is a wrong
+      form (Mortgage subsidy recapture). Look at every date box on the preview.
+- [ ] A "Do not complete this form" note on the form (a loan closed before 1991) is a rule: the screen says so and the calculation leaves
+      the form out (Mortgage subsidy recapture).
 - [ ] Unit tests for new helpers (e.g. `id-validation.spec.ts`, `scenario-completeness.spec.ts`).
 - [ ] Entry in `history.md`; commit and push us-tax-ui, us-tax-be (e2e / backend) and us-tax (docs).
 
@@ -580,6 +584,7 @@ Deductions labels renamed in the Incomes style. Headings still in the old "Form 
 | Injured spouse (Form 8379; joint return, Family Head tab; moved to Applications) | 1-8, 11, 13, 15-21, 24 | 2026-11-08 |
 | Foreign assets (Form 8938; household, Family Head tab; moved to Applications) | 1-8, 11, 13-21, 24, 25 | 2026-11-08 |
 | Low-income housing credit recapture (Form 8611; household, Family Head tab; moved to Incomes) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-08 |
+| Mortgage subsidy recapture (Form 8828; household, Family Head tab; moved to Incomes) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-08 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

@@ -1,5 +1,12 @@
 # Outstanding Items
 
+## Mortgage subsidy recapture (Form 8828): found in the 2026-11-08 review, not changed
+
+- The sale is typed here although the home sale may also be on Capital gain/loss (Form 1099-S); the sales price, expenses and basis could be
+  filled from it.
+- Line 13's qualifying subordinate mortgage loan (QSML) adjustment ("QSML" and the share of gain paid to the lender) is not supported; one
+  home per year only.
+
 ## Low-income housing credit recapture (Form 8611): found in the 2026-11-08 review, not changed
 
 - Line 15 (credit carried forward) reaches nothing: it should carry to next year's Form 3800 (General business credit). The screen shows it.

@@ -1,3 +1,21 @@
+## 2026-11-08T17:45 - Mortgage subsidy recapture (Form 8828): Screen Review Checklist applied; date boxes; lines 7 and 8; Whose is it; moved to Incomes
+
+- Audit against the Instructions for Form 8828 (Rev. November 2024) and Form 8828 (Rev. November 2024).
+- Bugs: (1) lines 5 and 6 put the whole date into the month box - the form has month, day and year boxes; (2) line 7 (years and full months
+  from closing to sale) and line 8 (the repayment date) were never filled; (3) on separate returns the full recapture tax went on both
+  spouses' returns - the instructions figure it on each owner's interest; (4) a loan closed before 1991 still produced the form ("recapture
+  tax does not apply. Do not complete this form"); (5) dates typed as text, lone tick boxes and the screen's own Save.
+- Owner's decisions (2026-11-08, V442): "Whose home is it" (you / spouse / both) - a separate return keeps its owner's home, a jointly owned
+  home at half of the sales price, expenses, basis and subsidized amount with that spouse's own modified AGI (MfsFormScoper); the screen moved
+  from Deductions to Incomes after Low-income housing credit recapture.
+- New class `Form8828Compute` (out of TaxReturnComputeService, with the Holding Period Percentage Worksheet); FORM_8828_NOT_SUBJECT
+  (advisory) and FORM_8828_ANSWERS_MISSING (blocking, overrideable: subsidy type, address, closing and sale dates). Rebuilt screen: shared
+  look and bar; sections with Clear; date controls (old typed dates read as dates); line 7 shown; line 15 shows the figured modified AGI;
+  the worksheet line 20 and the tax from the calculation's rules (`utils/mortgage-subsidy-screen.ts`); help from the instructions
+  (`data/mortgage-subsidy-help.ts`).
+- Tests: backend `Form8828ScreenReviewTest` (5), sc_00302 tests pass unchanged; UI `mortgage-subsidy-screen.spec.ts` (4); e2e
+  `mortgage-subsidy-screen.spec.ts` (2); the B31 spec passes.
+
 ## 2026-11-08T17:00 - Low-income housing credit recapture (Form 8611): Screen Review Checklist applied; one form per building; K-1 path; lines 9/13 figured; moved to Incomes
 
 - Audit against Form 8611 (Rev. December 2021) and the instructions printed on it.

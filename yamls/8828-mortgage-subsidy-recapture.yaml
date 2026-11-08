@@ -1,3 +1,6 @@
+# Screen review 2026-11-08 (owner-approved, V442): owner (taxpayer / spouse / joint; married only) added; dates are YYYY-MM-DD (date
+# control); line 7 is figured; line 15 is figured when blank; line 20 is figured by the Holding Period Percentage Worksheet when the loan was
+# repaid within 4 years of closing and before the sale. The screen is under Incomes, after Low-income housing credit recapture.
 # Form 8828 - Recapture of Federal Mortgage Subsidy (return-level).
 # Component: form-form-8828.component.ts (formId = form-8828). Recapture tax flows to Schedule 2.
 name: form-8828

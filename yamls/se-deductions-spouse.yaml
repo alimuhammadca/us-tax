@@ -1,3 +1,7 @@
+# Screen review 2026-11-08: same fields; the screen is "Self-employed health insurance and retirement plans" with sections Self-employed
+# deductions, Health insurance, Months with an employer plan, Retirement plans. sCorpMoreThan2PctShareholder and marketplacePlan are Yes / No
+# questions; the month lists are tick boxes saved as CSV month keys (jan..dec); seLtcOtherCoveredPersons.coveredPerson is 'spouse' (the other
+# spouse) or a dependent id.
 # Self-employed deductions (spouse): Schedule 1 lines 16-17.
 # Single-instance capture of Form 7206 self-employed health insurance inputs and
 # self-employed retirement plan contributions. Compute (Form 7206 limit, line-16

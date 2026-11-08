@@ -1,3 +1,17 @@
+## 2026-11-08T19:15 - Self-employed health insurance and retirement plans: Screen Review Checklist applied
+
+- Audit against the 2025 Instructions for Form 7206 and the 2025 Form 1040 instructions for Schedule 1 lines 16-17. The calculation already
+  applies the rules (Form 7206 limits, the long-term care age limits from each person's date of birth, the employer-plan months, the S
+  corporation wage limit, the SEP / SIMPLE / qualified plan limits); every saved answer is read - no backend change.
+- Screen bugs: (1) the Marketplace question had only a Yes radio - No could never be answered; (2) the S corporation question was a lone
+  tick box; (3) the long-term care person list used a bare browser select labelled "Spouse" (on the spouse's tab "spouse" means the Family
+  Head); (4) month boxes were browser check boxes; (5) no help at all, line numbers and a typed 2025 in the text, the screen's own Save, no
+  Reset or Clear, no form-view look.
+- Rebuilt screen: shared look and bar; sections with Clear (Self-employed deductions, Health insurance, Months with an employer plan,
+  Retirement plans); Yes / No questions; p-select / p-checkbox; the other spouse and dependents by name; a pointer with links to Business
+  income and Farm income; help from the instructions (`data/se-deductions-help.ts`); year from tax-year.ts.
+- Tests: e2e `se-deductions-screen.spec.ts` (2); `personal-forms-show-saved-data.spec.ts` uses the new field id.
+
 ## 2026-11-08T18:45 - Business interest limit (Form 8990): Screen Review Checklist applied; lines 8, 9, 11 figured; spouse copy
 
 - Audit against the Instructions for Form 8990 (Rev. December 2025).

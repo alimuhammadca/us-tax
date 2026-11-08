@@ -219,6 +219,10 @@ owner 2026-11-04).*
       (line 1a), not line 1z, and line 18 includes Schedule 2 line 1z (Injured spouse).
 - [ ] A screen that splits figures of the return shows the figure being split (the last computed amount) and the other part beside each
       box, and warns when the part typed is more than the whole (Injured spouse).
+- [ ] A field map's semantic names are a claim: check each box name against the printed form before writing values into it - Form 8938's
+      line 22 names had "jointly owned" on the "opened" box (Foreign assets). Render the page and compare positions.
+- [ ] A form with a part per item (Form 8938 Part V / VI, one account and one asset per page 2) fills the first on the form and the rest as
+      additional pages (`copies`), with the form's "additional statements" box and count (Foreign assets).
 - [ ] Unit tests for new helpers (e.g. `id-validation.spec.ts`, `scenario-completeness.spec.ts`).
 - [ ] Entry in `history.md`; commit and push us-tax-ui, us-tax-be (e2e / backend) and us-tax (docs).
 
@@ -569,6 +573,7 @@ Deductions labels renamed in the Incomes style. Headings still in the old "Form 
 | Additional deductions (Family Head, spouse) | 1-8, 11-24 | 2026-11-07 |
 | Noncash charity (Form 8283; household, Family Head tab) | 1-8, 11, 13, 15-21, 24 | 2026-11-08 |
 | Injured spouse (Form 8379; joint return, Family Head tab; moved to Applications) | 1-8, 11, 13, 15-21, 24 | 2026-11-08 |
+| Foreign assets (Form 8938; household, Family Head tab; moved to Applications) | 1-8, 11, 13-21, 24, 25 | 2026-11-08 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

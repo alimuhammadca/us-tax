@@ -4,109 +4,79 @@
 # told apart by itemKind = other_asset. The app aggregates the Part I / Part II summaries and decides whether Form 8938
 # is required (the threshold depends on filing status and on livingAbroad).
 name: form-8938
-title: Form 8938 - Specified foreign financial assets
+title: Foreign assets (Form 8938)
 multiplicity: single
 formName: Form 8938
-category: personal
+category: applications
 instructions:
   - List each foreign account and other specified foreign financial asset; the app applies the FATCA reporting threshold.
 
 sections:
+  # Screen review 2026-11-08 (owner-approved, V440): "Whose is it" for separate returns and everything page 2 (Parts V and VI) asks;
+  # the screen moved from Deductions to Applications. Living abroad is filled from Foreign income when unanswered.
   - name: screening
-    title: Form 8938 - Specified Foreign Financial Assets
+    title: Foreign financial assets
     multiplicity: single
     fields:
       - name: hasForeignFinancialAssets
         type: boolean
-        required: false
-        label: Do you have any specified foreign financial assets?
+        required: true
+        label: Did you (or your spouse) have a financial account outside the United States, or another foreign financial asset, at any time in the year?
       - name: livingAbroad
         type: boolean
         required: false
-        label: I live abroad (raises the reporting threshold)
+        label: "Did you live abroad - a tax home in a foreign country and the bona fide residence or 330-day physical presence test?"
         showIf: hasForeignFinancialAssets == true
 
   - name: accounts
-    title: Foreign accounts (Part I / Part V) - saved in items[]
+    title: Foreign deposit and custodial accounts (Part V, one per account) - saved in items[]
     multiplicity: multiple
     showIf: hasForeignFinancialAssets == true
     fields:
-      - name: itemKind
-        type: select
-        required: false
-        label: Account type
-        options:
-          - value: deposit_account
-            label: Deposit account
-          - value: custodial_account
-            label: Custodial account
-      - name: institutionName
-        type: text
-        required: false
-        label: Financial institution
-      - name: accountNumber
-        type: text
-        required: false
-        label: Account number
-      - name: maxValue
-        type: amount
-        required: false
-        label: Maximum value (USD)
-      - name: yearEndValue
-        type: amount
-        required: false
-        label: Value on the last day of the year (USD)
-      - name: currency
-        type: text
-        required: false
-        label: Currency
-      - name: openedDuringYear
-        type: boolean
-        required: false
-        label: Opened this year
-      - name: closedDuringYear
-        type: boolean
-        required: false
-        label: Closed this year
-      - name: jointlyOwnedWithSpouse
-        type: boolean
-        required: false
-        label: Jointly owned
+      - {name: owner, type: select, label: "Whose is it? (married only)", options: [taxpayer, spouse, joint]}
+      - {name: itemKind, type: select, label: Type of account (line 20), options: [deposit_account, custodial_account]}
+      - {name: institutionName, type: text, label: Financial institution (line 26a)}
+      - {name: accountNumber, type: text, label: Account number (line 21; hidden with an eye)}
+      - {name: giin, type: text, label: GIIN (optional; line 26b; letters and digits only)}
+      - {name: addressStreet, type: text, label: Mailing address - number and street (line 27)}
+      - {name: addressCity, type: text, label: City, state or province, and postal code (line 28)}
+      - {name: country, type: select, label: Country (line 28; also Schedule B line 7b)}
+      - {name: maxValue, type: amount, label: Maximum value in the year, U.S. dollars (line 23)}
+      - {name: yearEndValue, type: amount, label: Value on December 31, U.S. dollars (threshold test)}
+      - {name: currency, type: text, label: Currency it is kept in (line 25a)}
+      - {name: exchangeRate, type: decimal, label: Exchange rate used (line 25b), showIf: currency is foreign}
+      - {name: exchangeRateSource, type: text, label: Source of the rate if not the Bureau of the Fiscal Service (line 25c), showIf: currency is foreign}
+      - {name: openedDuringYear, type: boolean, label: Opened in the year (line 22a)}
+      - {name: dateStart, type: date, label: Date opened, showIf: openedDuringYear == true}
+      - {name: closedDuringYear, type: boolean, label: Closed in the year (line 22b)}
+      - {name: dateEnd, type: date, label: Date closed, showIf: closedDuringYear == true}
+      - {name: taxItemReported, type: boolean, label: "Any income, gain, loss, deduction or credit from it on the return? (No ticks line 22d)"}
+      - {name: jointlyOwnedWithSpouse, type: boolean, readOnly: true, label: "Older saves; now owner == joint (line 22c)"}
 
   - name: assets
-    title: Other foreign assets (Part II / Part VI) - saved in items[] with itemKind other_asset
+    title: Other foreign assets (Part VI, one per asset) - saved in items[] with itemKind other_asset
     multiplicity: multiple
     showIf: hasForeignFinancialAssets == true
     fields:
-      - name: description
-        type: text
-        required: false
-        label: Description of asset
-      - name: identifyingNumber
-        type: text
-        required: false
-        label: Identifying number/designation
-      - name: maxValue
-        type: amount
-        required: false
-        label: Maximum value (USD)
-      - name: yearEndValue
-        type: amount
-        required: false
-        label: Value on the last day of the year (USD)
-      - name: currency
-        type: text
-        required: false
-        label: Currency
-      - name: acquiredDuringYear
-        type: boolean
-        required: false
-        label: Acquired this year
-      - name: disposedDuringYear
-        type: boolean
-        required: false
-        label: Disposed this year
-      - name: jointlyOwnedWithSpouse
-        type: boolean
-        required: false
-        label: Jointly owned
+      - {name: owner, type: select, label: "Whose is it? (married only)", options: [taxpayer, spouse, joint]}
+      - {name: description, type: text, label: Description of the asset (line 29)}
+      - {name: identifyingNumber, type: text, label: Identifying number or other designation (line 30)}
+      - {name: entityInterest, type: boolean, label: "Stock of or an interest in a foreign entity? (Yes: line 35; No: line 36)"}
+      - {name: institutionName, type: text, label: Name of the foreign entity (35a) or of the issuer or counterparty (36a)}
+      - {name: partyRole, type: select, label: Issuer or counterparty (line 36a), options: [issuer, counterparty], showIf: entityInterest == false}
+      - {name: partyType, type: select, label: Type of entity (35c) or issuer / counterparty (36b), options: [individual, partnership, corporation, trust, estate]}
+      - {name: partyUsPerson, type: boolean, label: Issuer or counterparty is a U.S. person (line 36c), showIf: entityInterest == false}
+      - {name: giin, type: text, label: GIIN (optional; line 35b), showIf: entityInterest == true}
+      - {name: addressStreet, type: text, label: Mailing address - number and street (35d / 36d)}
+      - {name: addressCity, type: text, label: City, state or province, and postal code (35e / 36e)}
+      - {name: country, type: select, label: Country (35e / 36e)}
+      - {name: maxValue, type: amount, label: Maximum value in the year, U.S. dollars (line 32)}
+      - {name: yearEndValue, type: amount, label: Value on December 31, U.S. dollars}
+      - {name: currency, type: text, label: Currency (line 34a)}
+      - {name: exchangeRate, type: decimal, label: Exchange rate used (line 34b)}
+      - {name: exchangeRateSource, type: text, label: Source of the rate (line 34c)}
+      - {name: acquiredDuringYear, type: boolean, label: Acquired in the year}
+      - {name: dateStart, type: date, label: Date acquired, or Various (line 31a), showIf: acquiredDuringYear == true}
+      - {name: disposedDuringYear, type: boolean, label: Sold or disposed of in the year}
+      - {name: dateEnd, type: date, label: Date disposed of, or Various (line 31b), showIf: disposedDuringYear == true}
+      - {name: taxItemReported, type: boolean, label: "Any tax item from it on the return? (No ticks line 31d)"}

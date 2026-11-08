@@ -1,5 +1,15 @@
 # Outstanding Items
 
+## Foreign assets (Form 8938): found in the 2026-11-08 review, not changed
+
+- Part III (tax items from the assets, and where reported) and Part IV (assets reported instead on Forms 3520, 3520-A, 5471, 8621, 8865)
+  are not filled. The Form 8621 count could come from the app's own Forms 8621.
+- Who is a specified individual is not checked (a nonresident alien who is not electing resident status doesn't file), and on a separate
+  return a joint asset always counts at half - the full value applies when the spouse is not a specified individual.
+- An additional page 2 renders as a full form in the preview (page 1 blank); several issuers or counterparties for one asset (one line 36
+  each) are not asked.
+- The "any time" test adds up each item's maximum value, which can be more than the highest total at one moment.
+
 ## Injured spouse (Form 8379): found in the 2026-11-08 review, not changed
 
 - "Injured Spouse" written in the upper left corner of Form 1040 page 1 when Form 8379 goes with the return (How To File) - the Form 1040

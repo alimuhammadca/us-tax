@@ -1,3 +1,25 @@
+## 2026-11-08T16:30 - Foreign assets (Form 8938): Screen Review Checklist applied; page 2 filled; Whose is it; moved to Applications
+
+- Audit against the Instructions for Form 8938 (Rev. November 2021) and Form 8938 (Rev. November 2021).
+- Bugs: (1) on separate returns both spouses' Forms 8938 got the household's whole list, and a joint asset counted in full for each
+  threshold - the instructions count it at half (Examples 8-9); (2) page 2 (Parts V and VI) was never filled; (3) the f8938 field map named
+  the line 22 boxes wrongly (top-left "jointly owned", top-right "opened") - renamed by the printed form: 22a opened, 22b closed, 22c jointly
+  owned; (4) Schedule B line 7b read a country key the screen never saved, so the account's country never reached it; (5) living abroad was a
+  lone tick box, and a "No" could not be told from unanswered.
+- Owner's decisions (2026-11-08, V440): "Whose is it" per account / asset (you / your spouse / both; MfsFormScoper keeps each spouse's own and
+  the joint ones, Form8938Compute counts a joint one at half on a separate return); every page 2 item asked - GIIN, mailing address with
+  country, exchange rate and its source, dates opened / closed / acquired / disposed ("Various" for assets), whether a tax item was
+  reported, and for other assets the foreign entity (line 35) or the issuer / counterparty (line 36); one Part V account and one Part VI
+  asset per page 2, extra pages as `copies` (out_form_8938.copies_json) with the "additional statements" box and count; the screen moved from
+  Deductions to Applications.
+- New class `Form8938Compute` (out of TaxReturnComputeService); FORM_8938_ANSWERS_MISSING (blocking, overrideable) when the form is needed
+  and a page 2 detail is missing. Rebuilt screen: shared look and bar with Reset and save partial; cards with Clear and Remove; Yes / No
+  questions; the account number hidden with an eye; the threshold verdict from the calculation's rules (`utils/foreign-assets-screen.ts`;
+  per spouse on separate returns); living abroad filled from Foreign income (Form 2555 tests) when unanswered; help from the instructions
+  (`data/foreign-assets-help.ts`); the preview shows each additional page 2.
+- Tests: backend `Form8938ScreenReviewTest` (6), `ComputedPreviewFieldKeysTest` reads the new class; UI `foreign-assets-screen.spec.ts` (5);
+  e2e `foreign-assets-screen.spec.ts` (2); B96 spec passes unchanged.
+
 ## 2026-11-08T13:50 - Injured spouse (Form 8379): Screen Review Checklist applied; Part I answered; line 12; moved to Applications; the joint lines the instructions name
 
 - Audit against the Instructions for Form 8379 (Rev. November 2024) and Form 8379 (Rev. November 2023).

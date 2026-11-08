@@ -1,3 +1,23 @@
+## 2026-11-08T17:00 - Low-income housing credit recapture (Form 8611): Screen Review Checklist applied; one form per building; K-1 path; lines 9/13 figured; moved to Incomes
+
+- Audit against Form 8611 (Rev. December 2021) and the instructions printed on it.
+- Bugs: (1) one building only, though the form says "Complete a separate Form 8611 for each building"; (2) on separate returns the household's
+  recapture tax went on both spouses' returns; (3) a recapture from a K-1 still filled lines 1-7 (zeros on the form) - the form says to skip
+  them; (4) lines 16-17 (section 42(j)(5) partnerships only) were asked and printed on an individual's form; (5) the date placed in service was
+  typed text; (6) item F (tax-exempt bonds) was never asked; (7) the old screen's own Save bar and lone tick boxes.
+- Owner's decisions (2026-11-08, V441): a list of buildings (pf_form_8611_building; the current answers copied in as building 1), each with
+  "Whose is it" (a separate return keeps its own buildings and half of a joint one, MfsFormScoper) and item F; one Form 8611 per building
+  (`copies`, out_form_8611.copies_json), all line 14s to Schedule 2 line 16; "Does this recapture come to you on a Schedule K-1?" - Yes asks
+  only line 8 (and 9, 11), No lines 1-7; lines 9 and 13 figured from the line 9 steps (unused credits and those from additions); the line 16
+  question removed; the screen moved from Deductions to Incomes after Other tax items.
+- New class `Form8611Compute` (out of TaxReturnComputeService); line 4 lookup per building (`Form8611Recapture.prefillBuilding`);
+  FORM_8611_ANSWERS_MISSING (blocking, overrideable) for a building's BIN, address or bond issuer / CUSIP; an old flat payload is building 1.
+  Rebuilt screen: shared look and bar; cards with Clear and Remove; Yes / No questions; date controls; the looked-up line 4 as placeholder;
+  each building's line 14 / 15 shown with the calculation's rules (`utils/lihc-recapture-screen.ts`); help from the form's instructions
+  (`data/lihc-recapture-help.ts`); the preview shows a Form 8611 per building.
+- Tests: backend `Form8611ScreenReviewTest` (6); `Sc00299SqaScenarioTest` - lines 1-7 now blank on the K-1 path (was a precondition that line 7
+  still printed); UI `lihc-recapture-screen.spec.ts` (3); e2e `lihc-recapture-screen.spec.ts` (2); B28 and B53 specs pass unchanged.
+
 ## 2026-11-08T16:30 - Foreign assets (Form 8938): Screen Review Checklist applied; page 2 filled; Whose is it; moved to Applications
 
 - Audit against the Instructions for Form 8938 (Rev. November 2021) and Form 8938 (Rev. November 2021).

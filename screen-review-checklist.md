@@ -223,6 +223,11 @@ owner 2026-11-04).*
       line 22 names had "jointly owned" on the "opened" box (Foreign assets). Render the page and compare positions.
 - [ ] A form with a part per item (Form 8938 Part V / VI, one account and one asset per page 2) fills the first on the form and the rest as
       additional pages (`copies`), with the form's "additional statements" box and count (Foreign assets).
+- [ ] A form filed "for each" item (each building, each property) is a list on the screen with one form per item - a single set of
+      answers can't report two buildings (Low-income housing credit recapture). Keep the old single save readable as item 1.
+- [ ] The form's own skip rules decide which lines are asked: "Skip lines 1-7 and go to line 8" if passed through on a K-1; "Only section
+      42(j)(5) partnerships need to complete lines 16 and 17" - ask the routing question and leave the skipped lines blank on the form, not
+      zero (Low-income housing credit recapture).
 - [ ] Unit tests for new helpers (e.g. `id-validation.spec.ts`, `scenario-completeness.spec.ts`).
 - [ ] Entry in `history.md`; commit and push us-tax-ui, us-tax-be (e2e / backend) and us-tax (docs).
 
@@ -574,6 +579,7 @@ Deductions labels renamed in the Incomes style. Headings still in the old "Form 
 | Noncash charity (Form 8283; household, Family Head tab) | 1-8, 11, 13, 15-21, 24 | 2026-11-08 |
 | Injured spouse (Form 8379; joint return, Family Head tab; moved to Applications) | 1-8, 11, 13, 15-21, 24 | 2026-11-08 |
 | Foreign assets (Form 8938; household, Family Head tab; moved to Applications) | 1-8, 11, 13-21, 24, 25 | 2026-11-08 |
+| Low-income housing credit recapture (Form 8611; household, Family Head tab; moved to Incomes) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-08 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

@@ -1,3 +1,8 @@
+# Screen review 2026-11-08 (owner-approved, V441): one Form 8611 per building - the answers below (from buildingBin on) are per building in
+# buildings[] (pf_form_8611_building), with owner (taxpayer / spouse / joint), item F (taxExemptBonds, bondIssuerName, bondDateOfIssue,
+# bondNameOfIssue, bondCusip), fromK1 (Yes: line 8 / 9 / 11; No: lines 1, 2, 4, 6), unusedCreditsPrior and unusedCreditsAdditions (lines 9 and
+# 13 figured; the typed line 9 only on the K-1 path, a typed line 13 kept from older saves). line16Interest is no longer asked (section
+# 42(j)(5) partnerships only). Dates are YYYY-MM-DD. The screen is under Incomes, after Other tax items.
 # Form 8611 - Recapture of Low-Income Housing Credit (return-level).
 # Component: form-form-8611.component.ts (formId = form-8611). Recapture flows to Schedule 2.
 name: form-8611

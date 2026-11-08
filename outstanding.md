@@ -1,5 +1,12 @@
 # Outstanding Items
 
+## Low-income housing credit recapture (Form 8611): found in the 2026-11-08 review, not changed
+
+- Line 15 (credit carried forward) reaches nothing: it should carry to next year's Form 3800 (General business credit). The screen shows it.
+- Line 2 is typed; the Line 2 Worksheet (from Form 8609-A lines 10, 11, 14, 15, 16 for each year) is not asked. Line 11 interest is typed.
+- e2e `other-tax-items-screen.spec.ts` "Family Head" fails on main before this review: the saved payload has line 17a's description and
+  amount empty although the fields show them - needs a look (Other tax items).
+
 ## Foreign assets (Form 8938): found in the 2026-11-08 review, not changed
 
 - Part III (tax items from the assets, and where reported) and Part IV (assets reported instead on Forms 3520, 3520-A, 5471, 8621, 8865)

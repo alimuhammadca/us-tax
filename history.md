@@ -1,3 +1,26 @@
+## 2026-11-08T13:50 - Injured spouse (Form 8379): Screen Review Checklist applied; Part I answered; line 12; moved to Applications; the joint lines the instructions name
+
+- Audit against the Instructions for Form 8379 (Rev. November 2024) and Form 8379 (Rev. November 2023).
+- Bugs: (1) Part I was never answered or ticked - a filer who is legally obligated for the debt, or has no withholding, payments, earned income
+  with EIC/ACTC or refundable credit, still got a Form 8379 the form says not to file; (2) column (a) line 13a used all of line 1z (tips,
+  household wages...) where the instructions say the Forms W-2 income, generally line 1a - now line 1a, and 13b is lines 1b-9; (3) line 18
+  left out Schedule 2 line 1z ("line 1z, and in Part II") - now included, and the B27 "SE tax only" test for the figured share compares with it;
+  (4) a share above the joint amount gave a negative column (c) silently, and a share on a line with no joint amount was dropped silently.
+- Owner's decisions (2026-11-08, V439): Part I line 4 ("legally obligated?") and the line 5 Yes / No asked; line 2 from Filing status and
+  lines 6-9 worked out from the return and ticked; a Part I answer that means "not an injured spouse" leaves the form out with
+  FORM_8379_NOT_INJURED_SPOUSE (advisory); line 12's refund address (Yes / No, street, city/state/ZIP); the nine community property states as
+  checkboxes (saved as names in the same column; old typed text "TX, CA" read back; filled from the Address state when unanswered, with a
+  note); the screen moved from Deductions to Applications.
+- New flags: FORM_8379_ANSWERS_MISSING and FORM_8379_SHARE_MORE_THAN_JOINT (blocking, overrideable), FORM_8379_NOT_JOINT (advisory - a claim
+  on a return that isn't joint was dropped silently). Unanswered line 12 ticks No.
+- New class `Form8379Compute` (out of TaxReturnComputeService). Rebuilt screen: shared look and bar with Reset and save partial; sections with
+  Clear; the injured spouse by name; the joint amount, the other spouse's share and the figured share (placeholder) per line from the last
+  computed return (`utils/injured-spouse-screen.ts`); help from the instructions (`data/injured-spouse-help.ts`; the 2025 basic standard
+  deduction is $31,500 - the November 2024 instructions print $30,000).
+- Tests: backend `Hrb2025Sc00298Test` +10 (one existing test answers line 5 Yes, since a typed $0 withholding now makes Part I fail),
+  `ComputedPreviewFieldKeysTest` reads the new class; UI `injured-spouse-screen.spec.ts` (4); e2e `injured-spouse-screen.spec.ts` (2), B27 spec
+  seeds the new answers.
+
 ## 2026-11-08T11:30 - Noncash charity (Form 8283): Screen Review Checklist applied; dates the calculation can read; Section B filled; Given by; condition of clothing
 
 - Audit against the Instructions for Form 8283 (Rev. December 2025) and the 2025 Instructions for Schedule A line 12.

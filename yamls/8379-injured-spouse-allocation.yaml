@@ -4,74 +4,112 @@ name: form-8379
 title: Form 8379 - Injured Spouse Allocation
 multiplicity: single
 formName: Form 8379
-category: payments
+category: applications
 instructions:
   - "File this only if part of the joint refund may be applied to the other spouse's past-due debt."
 
 sections:
+  # Screen review 2026-11-08 (owner-approved, V439): Part I line 4 and the line 5 Yes / No, the nine states as a pick list, line 12.
+  # Part I line 2 comes from Filing status and lines 6-9 are worked out from the return; the screen is under Applications.
   - name: screening
-    title: Form 8379 - Injured Spouse Allocation
+    title: Injured spouse claim
     multiplicity: single
     fields:
       - name: filingInjuredSpouseClaim
         type: boolean
         required: true
-        label: "Are you filing an injured spouse claim?"
+        label: "Did (or will) the IRS use your joint refund to pay a past-due debt owed by only one of you? (line 3)"
+        showIf: filingStatus == married_filing_jointly
       - name: injuredSpouse
         type: select
-        required: false
-        label: "Which spouse is the injured spouse?"
+        required: true
+        label: "Who is the injured spouse - the one who doesn't owe the debt?"
         showIf: filingInjuredSpouseClaim == true
         options: [taxpayer, spouse]
+      - name: legallyObligated
+        type: boolean
+        required: true
+        label: "Is the injured spouse legally obligated to pay this past-due amount too? (line 4; Yes = not an injured spouse)"
+        showIf: filingInjuredSpouseClaim == true
+
+  - name: communityProperty
+    title: Community property
+    multiplicity: single
+    showIf: filingInjuredSpouseClaim == true && legallyObligated != true
+    fields:
+      - name: communityPropertyResident
+        type: boolean
+        required: true
+        label: "Did the injured spouse live in a community property state at any time in the year? (line 5)"
+      - name: communityPropertyStates
+        type: multiselect
+        required: false
+        label: "Which community property states? (saved as the state names, comma separated)"
+        showIf: communityPropertyResident == true
+        options: [Arizona, California, Idaho, Louisiana, Nevada, New Mexico, Texas, Washington, Wisconsin]
+
+  - name: refund
+    title: Refund
+    multiplicity: single
+    showIf: filingInjuredSpouseClaim == true && legallyObligated != true
+    fields:
       - name: refundInBothNames
         type: boolean
         required: false
-        label: Issue the refund in both names (line 11)
-        showIf: filingInjuredSpouseClaim == true
-      - name: communityPropertyStates
+        label: Do you want the injured spouse refund issued in both your names? (line 11)
+      - name: differentRefundAddress
+        type: boolean
+        required: false
+        label: Should the refund be mailed to an address other than the one on your return? (line 12)
+      - name: refundAddressStreet
         type: text
         required: false
-        label: "Community property state(s), if any (line 5)"
-        showIf: filingInjuredSpouseClaim == true
+        label: Number and street
+        showIf: differentRefundAddress == true
+      - name: refundAddressCityStateZip
+        type: text
+        required: false
+        label: City, state and ZIP code
+        showIf: differentRefundAddress == true
 
   - name: partIII
-    title: Part III - Allocated to the injured spouse (column b)
+    title: Splitting the joint return (Part III column (b), the injured spouse's share)
     multiplicity: single
-    showIf: filingInjuredSpouseClaim == true
+    showIf: filingInjuredSpouseClaim == true && legallyObligated != true
     fields:
       - name: alloc13aWages
         type: amount
         required: false
-        label: 13a Wages (Form W-2)
+        label: Wages on Forms W-2 (line 13a; figured if blank)
       - name: alloc13bOtherIncome
         type: amount
         required: false
-        label: 13b All other income
+        label: All other income (line 13b)
       - name: alloc14Adjustments
         type: amount
         required: false
-        label: 14 Adjustments to income
+        label: Adjustments to income (line 14)
       - name: alloc15Deduction
         type: amount
         required: false
-        label: 15 Standard/itemized deduction
+        label: Standard deduction or itemized deductions (line 15; figured if blank with the standard deduction)
       - name: alloc16NonrefundableCredits
         type: amount
         required: false
-        label: 16 Nonrefundable credits
+        label: Nonrefundable credits (line 16)
       - name: alloc17RefundableCredits
         type: amount
         required: false
-        label: 17 Refundable credits (no EIC)
+        label: Refundable credits, not the earned income credit (line 17)
       - name: alloc18OtherTaxes
         type: amount
         required: false
-        label: 18 Other taxes
+        label: Other taxes (line 18; figured if blank when self-employment tax is the only other tax)
       - name: alloc19Withholding
         type: amount
         required: false
-        label: 19 Federal income tax withheld
+        label: Federal income tax withheld (line 19; figured if blank)
       - name: alloc20Payments
         type: amount
         required: false
-        label: 20 Payments
+        label: Estimated tax and other payments (line 20)

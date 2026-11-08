@@ -1,5 +1,13 @@
 # Outstanding Items
 
+## Injured spouse (Form 8379): found in the 2026-11-08 review, not changed
+
+- "Injured Spouse" written in the upper left corner of Form 1040 page 1 when Form 8379 goes with the return (How To File) - the Form 1040
+  preview and export don't show it.
+- Line 13b's "Identify the type and amount" of the other income is not listed; Part IV (signature, only when filed by itself) is out of
+  scope (self-filing with the return).
+- Line 15 isn't figured when either spouse can be claimed as a dependent (needs the Standard Deduction Worksheet for Dependents line 4c).
+
 ## Noncash charity (Form 8283): found in the 2026-11-08 review, not changed
 
 - The deduction amounts are still typed on Standard deductions (cost-basis box, appreciated property, private foundation, unrelated use);

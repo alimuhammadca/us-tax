@@ -212,6 +212,13 @@ owner 2026-11-04).*
       or the check fires on a correct return (Noncash charity).
 - [ ] A household list on a separate return: each spouse's return keeps that spouse's own entries and half of the joint ones ("Given by",
       MfsFormScoper) - otherwise the spouse's return reports the Family Head's (Noncash charity).
+- [ ] A form with an eligibility part ("Stop here. Do not file this form") has every stop question asked or worked out from the return,
+      and the calculation leaves the form out with a note when the answers say not to file it - Form 8379 was produced for a spouse legally
+      obligated for the debt (Injured spouse).
+- [ ] A figure taken from the return for another form uses the exact lines its instructions name: Form 8379 line 13a is the Forms W-2 income
+      (line 1a), not line 1z, and line 18 includes Schedule 2 line 1z (Injured spouse).
+- [ ] A screen that splits figures of the return shows the figure being split (the last computed amount) and the other part beside each
+      box, and warns when the part typed is more than the whole (Injured spouse).
 - [ ] Unit tests for new helpers (e.g. `id-validation.spec.ts`, `scenario-completeness.spec.ts`).
 - [ ] Entry in `history.md`; commit and push us-tax-ui, us-tax-be (e2e / backend) and us-tax (docs).
 
@@ -537,6 +544,7 @@ were on Capital gain/loss and Social security benefits rows, fixed together.*
 | Child's int. & dividends (dependent) | 1-8, 11-24 | 2026-11-07 |
 | Additional deductions (Family Head, spouse) | 1-8, 11-24 | 2026-11-07 |
 | Noncash charity (Form 8283; household, Family Head tab) | 1-8, 11, 13, 15-21, 24 | 2026-11-08 |
+| Injured spouse (Form 8379; joint return, Family Head tab; moved to Applications) | 1-8, 11, 13, 15-21, 24 | 2026-11-08 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

@@ -1,3 +1,9 @@
+## 2026-11-08T10:00 - Sidebar: a click no longer scrolls the sidebar back up
+
+- Owner: the sidebar must not scroll after an item is clicked. Cause: `getMenuSections()` builds new section and item objects on every check and the `*ngFor` matched them by identity, so a click took every section out of the sidebar and put it back - the sidebar's scroll went to the top (an item lower down jumped about 550 px, and the owner had to find and click it again). Fix: `trackBy` on the sections (by name) and the items (by id), so the same elements stay. Also the selected item's 1px transparent border made it 2px taller than the others, so the list shifted 2px as the selection moved; removed.
+- Probe: all 170 items of a Family Head tab clicked once with every section open - before, every item past the first screenful moved the sidebar; after, none moves and each one is selected.
+- e2e `sidebar-click-keeps-scroll.spec.ts`.
+
 ## 2026-11-07T23:30 - Additional deductions (Schedule 1-A): Screen Review Checklist applied; senior from the date of birth; Puerto Rico exclusion reaches every MAGI; two vehicle conditions
 
 - Two audits (every saved key against Schedule1AComputations and the other MAGI readers; the text against the 2025 Instructions for Form 1040, Schedule 1-A Parts I-V).

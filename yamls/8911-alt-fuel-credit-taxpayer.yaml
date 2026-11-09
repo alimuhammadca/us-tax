@@ -1,181 +1,38 @@
-# Form 8911 - Alternative Fuel Vehicle Refueling Property Credit - taxpayer.
-# Current app scope supports one consolidated Form 8911 per return and one
-# Schedule A (Form 8911) attachment per qualifying property. The taxpayer form
-# owns the return-level workflow plus taxpayer-owned property entries.
+# Form 8911 / Schedule A (Form 8911) (Rev. December 2025) - Alternative fuel vehicle refueling credit (Family Head). Component:
+# form-alt-fuel-credit.component.ts. Screen review 2026-11-09: the census tract confirmation was removed with its column (V449, owner
+# 2026-11-09); line 5 is Form 1040 line 16 + Schedule 2 line 1z; construction begun before January 29, 2023 counts as meeting PWA.
 name: alt-fuel-credit-taxpayer
-title: Form 8911 - Alt fuel credit (taxpayer)
+title: Alternative fuel vehicle refueling credit (Form 8911)
 multiplicity: single
-formName: 8911
-category: deductions
-instructions:
-  - Use this form for the return-level Form 8911 workflow and taxpayer-owned refueling property entries.
-  - In the current app scope, the return produces one consolidated Form 8911 and one Schedule A attachment per qualifying property.
-  - Business and investment-use credit is shown on Form 8911 line 3 for form-completion purposes, but the downstream Form 3800 path remains deferred.
-  - Current-year tax-limit fields are imported from the computed return when available so you do not re-enter them.
+formName: Form 8911
+category: credits
 sections:
-  - name: screening
-    title: Screening
+  - name: claim
+    title: Claiming the credit
     multiplicity: single
     fields:
-      - name: claimsAltFuelCreditOnReturn
-        type: boolean
-        required: true
-        label: Do you need to compute an alternative fuel vehicle refueling property credit for 2025?
-      - name: confirmEligibleCensusTractSupportReady
-        type: boolean
-        required: false
-        label: Do you have support showing the property was installed in an eligible census tract?
-
-  - name: passthroughCredit
-    title: Pass-through business credit support
-    multiplicity: single
+      - { name: claimsAltFuelCreditOnReturn, type: boolean, required: true, label: "Did you place an electric vehicle charger or other alternative fuel refueling property in service in the tax year?" }
+      - { name: passthroughRefuelingPropertyCredit, type: amount, required: false, showIf: claimsAltFuelCreditOnReturn == true, label: "Credit from a partnership or S corporation (Schedule K-1 code AO; Form 8911 line 2)" }
+  - name: properties
+    title: Refueling property
     showIf: claimsAltFuelCreditOnReturn == true
-    instructions:
-      - Enter any released or pass-through refueling property credit amount that feeds Form 8911 line 2.
-      - If only a pass-through credit exists and there are no qualifying properties, the downstream Form 3800 path remains deferred in the current app scope.
-    fields:
-      - name: passthroughRefuelingPropertyCredit
-        type: amount
-        required: false
-        label: Pass-through alternative fuel vehicle refueling property credit amount
-        placeholder: 0.00
-
-  - name: taxpayerProperties
-    title: Taxpayer-owned qualifying properties
     multiplicity: multiple
-    showIf: claimsAltFuelCreditOnReturn == true
-    instructions:
-      - Add one entry for each refueling property that could require its own Schedule A (Form 8911) attachment.
-      - For personal-use credit, the property must be installed at your main home and located in an eligible census tract.
+    listKey: taxpayerProperties
     fields:
-      - name: propertyNickname
-        type: text
-        required: false
-        label: Property nickname
-      - name: registrationNumber
-        type: text
-        required: false
-        label: Registration number
-      - name: propertyDescription
-        type: text
-        required: false
-        label: Property description
-      - name: ownerNameTinIfDifferent
-        type: text
-        required: false
-        label: Owner name and TIN if different
-      - name: propertyLocation
-        type: text
-        required: false
-        label: Property location
-      - name: constructionBeganDate
-        type: date
-        required: false
-        label: Construction began date
-      - name: placedInServiceDate
-        type: date
-        required: false
-        label: Placed in service date
-      - name: eligibleCensusTract
-        type: boolean
-        required: false
-        label: Was the property placed in service in an eligible census tract?
-      - name: eligibleCensusTractGeoid
-        type: text
-        required: false
-        label: Eligible census tract GEOID
-      - name: certificationPermitNumber
-        type: text
-        required: false
-        label: Certification or permit number
-      - name: propertyCost
-        type: amount
-        required: false
-        label: Total property cost
-        placeholder: 0.00
-      - name: businessInvestmentUsePercentage
-        type: amount
-        required: false
-        label: Business or investment-use percentage
-        placeholder: 0.00
-      - name: section179Deduction
-        type: amount
-        required: false
-        label: Section 179 deduction claimed for the property
-        placeholder: 0.00
-      - name: pwaRequirementsMet
-        type: boolean
-        required: false
-        label: Were prevailing wage and apprenticeship requirements met?
-      - name: installedAtMainHome
-        type: boolean
-        required: false
-        label: Was the property installed at your main home?
-      - name: originalUseBeginsWithTaxpayer
-        type: boolean
-        required: false
-        label: Did the original use of the property begin with you?
-      - name: usedPredominantlyOutsideUs
-        type: boolean
-        required: false
-        label: Was the property used predominantly outside the United States?
-
-  - name: importedSupport
-    title: Imported current-year support (backend only - not rendered)
-    multiplicity: single
-    showIf: claimsAltFuelCreditOnReturn == true
-    fields:
-      - name: importedFilingStatus
-        type: text
-        required: false
-        readOnly: true
-        label: Imported filing status
-      - name: importedForm1040Line16
-        type: amount
-        required: false
-        readOnly: true
-        label: Imported Form 1040 line 16 regular tax
-      - name: importedSchedule2Line1z
-        type: amount
-        required: false
-        readOnly: true
-        label: Imported Schedule 2 line 1z total tax
-      - name: importedSchedule3ForeignTaxCredit
-        type: amount
-        required: false
-        readOnly: true
-        label: Imported Schedule 3 foreign tax credit
-      - name: importedSchedule3PriorCreditsSubtotal
-        type: amount
-        required: false
-        readOnly: true
-        label: Imported Form 8911 line 6b prior credits subtotal
-      - name: importedForm6251Line9
-        type: amount
-        required: false
-        readOnly: true
-        label: Imported Form 6251 line 9 tentative minimum tax
-
-  - name: computedOutputs
-    title: Computed outputs (backend only - not rendered)
-    multiplicity: single
-    showIf: claimsAltFuelCreditOnReturn == true
-    fields:
-      - name: form8911Line3
-        type: amount
-        required: false
-        readOnly: true
-        computed: true
-        label: Computed - Form 8911 line 3 total business and investment-use credit
-      - name: form8911Line10
-        type: amount
-        required: false
-        readOnly: true
-        computed: true
-        label: Computed - Form 8911 line 10 alternative fuel vehicle refueling property credit
-      - name: generatedScheduleAAttachmentCount
-        type: amount
-        required: false
-        readOnly: true
-        computed: true
-        label: Computed - number of Schedule A (Form 8911) attachments
+      - { name: propertyDescription, type: text, required: false, label: "Description (Schedule A line 2a)" }
+      - { name: propertyLocation, type: text, required: false, label: "Address (line 3a)" }
+      - { name: propertyNickname, type: text, required: false, label: "Name for this property (not on the form)" }
+      - { name: constructionBeganDate, type: date, required: false, label: "Date construction began (line 4)", help: "Before January 29, 2023: line 13 is Yes." }
+      - { name: placedInServiceDate, type: date, required: false, label: "Date placed in service (line 5)", help: "No credit after June 30, 2026 (P.L. 119-21)." }
+      - { name: propertyCost, type: amount, required: false, label: "Cost, with installation (line 8)" }
+      - { name: eligibleCensusTract, type: boolean, required: false, label: "Placed in service in an eligible census tract? (line 6a)" }
+      - { name: eligibleCensusTractGeoid, type: text, required: false, showIf: eligibleCensusTract == true, label: "Census tract GEOID, 11 digits (line 6b)" }
+      - { name: certificationPermitNumber, type: text, required: false, showIf: eligibleCensusTract == true, label: "Certification or permit number (line 7)" }
+      - { name: originalUseBeginsWithTaxpayer, type: boolean, required: false, label: "Original use began with you?" }
+      - { name: usedPredominantlyOutsideUs, type: boolean, required: false, label: "Used mostly outside the United States?" }
+      - { name: businessInvestmentUsePercentage, type: percent, required: false, label: "Business or investment use % (line 9)" }
+      - { name: section179Deduction, type: amount, required: false, showIf: businessInvestmentUsePercentage > 0, label: "Section 179 deduction (line 11)" }
+      - { name: pwaRequirementsMet, type: boolean, required: false, showIf: businessInvestmentUsePercentage > 0 && constructionBeganDate >= 2023-01-29, label: "Meets the prevailing wage and apprenticeship requirements? (line 13)" }
+      - { name: registrationNumber, type: text, required: false, showIf: businessInvestmentUsePercentage > 0, label: "IRS registration number - payment or transfer election only (line 1)" }
+      - { name: ownerNameTinIfDifferent, type: text, required: false, showIf: businessInvestmentUsePercentage > 0, label: "Owner name and TIN if not the filer (line 2b)" }
+      - { name: installedAtMainHome, type: boolean, required: false, showIf: businessInvestmentUsePercentage < 100, label: "Installed at your main home? (line 17)" }

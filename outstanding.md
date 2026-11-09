@@ -1,5 +1,14 @@
 # Outstanding Items
 
+## Alternative fuel vehicle refueling credit (Form 8911): found in the 2026-11-09 review, not changed
+
+- The business part (line 3) and the Schedule K-1 code AO credit (line 2) are general business credits (Form 3800 line 1s), not figured;
+  the K-1 code AO amount is typed, not read from the entered K-1.
+- Schedule A line 3b (latitude / longitude) has no box; line 2b's owner name and TIN are one free-text box.
+- A property that fails a Schedule A stop (no eligible tract, used, outside the U.S.) is left off silently in the calculation; the screen
+  warns on it.
+- Basis reduction (Schedule A lines 16 + 21) is not passed to depreciation.
+
 ## Clean vehicle credit (Form 8936): found in the 2026-11-09 review, not changed
 
 - The business/investment-use part of a new clean vehicle credit (Schedule A line 11) is a general business credit (Form 3800 line 1y)

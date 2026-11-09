@@ -1,3 +1,22 @@
+## 2026-11-09T19:00 - Alternative fuel vehicle refueling credit (Form 8911): Screen Review Checklist applied
+
+- Audit against the Instructions for Form 8911 (Rev. December 2025) (docs/books/i8911.pdf), Form 8911 and Schedule A (Form 8911)
+  (docs/IRS-Forms). The P.L. 119-21 termination (no credit for property placed in service after June 30, 2026) was already applied.
+- Calculation:
+  - Line 5 is "Form 1040 line 16; and Schedule 2 line 1z". It read the regular tax and `Schedule2Tax.totalTax`, which nothing sets, so
+    the Schedule 2 line 1z additions (excess advance premium tax credit repayment, clean vehicle repayments, ...) were never in the limit.
+  - Schedule A line 13: "If construction began before January 29, 2023, skip the instructions and answer Yes" - such a project now
+    gets 30%, not 6%, for the business part.
+- Screen: rebuilt in the shared pattern with Reset and save partial; title "Alternative fuel vehicle refueling credit (person)". The
+  save was refused unless "Do you have documentation confirming the property was installed in an eligible census tract?" was Yes;
+  nothing read it - removed with its column (V449, owner 2026-11-09). The import summary of tax figures, the "?" help buttons and the
+  blue item cards are gone; properties are white cards with Clear and Remove and the shared date control; the business-only questions
+  (section 179, PWA, registration number, owner) show only with business use, the main home question only below 100%; warnings for a
+  date outside the year or after June 30, 2026, no eligible tract, used property, use outside the U.S., a GEOID that isn't 11 digits.
+  Help rewritten from the instructions (`data/alt-fuel-credit-help.ts`).
+- Tests: Java `AltFuelRefuelingCreditScreenReviewTest` (2); a new Karma spec (2); e2e `alt-fuel-credit-screen.spec.ts` (3) plus the
+  Form 8911 and saved-PDF specs (updated) - 13 pass.
+
 ## 2026-11-09T18:00 - Clean vehicle credit (Form 8936): Screen Review Checklist applied
 
 - Audit against the Instructions for Form 8936 (2025) (docs/books/i8936.pdf) and Schedule A (Form 8936) (2025) (docs/IRS-Forms/f8936sa.pdf).

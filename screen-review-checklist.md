@@ -286,6 +286,8 @@ owner 2026-11-04).*
       credit). Read the form's "stop here" lines for the transfer and repayment paths.
 - [ ] An answer that a form lists as a stop ("You can't claim a credit") must change the calculation: the seller's report answer and the
       used vehicle's model year rule gated nothing (Clean vehicle credit).
+- [ ] A field the calculation reads must be one something sets: Form 8911 line 5 read `Schedule2Tax.totalTax`, which no code writes, so
+      Schedule 2 line 1z never reached the limit (Alternative fuel vehicle refueling credit). Grep the setter of every getter a line uses.
 - [ ] Unit tests for new helpers (e.g. `id-validation.spec.ts`, `scenario-completeness.spec.ts`).
 - [ ] Entry in `history.md`; commit and push us-tax-ui, us-tax-be (e2e / backend) and us-tax (docs).
 
@@ -651,6 +653,7 @@ Deductions labels renamed in the Incomes style. Headings still in the old "Form 
 | Investment interest (Form 4952; Family Head, spouse) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-09 |
 | Prior-year minimum tax credit (Form 8801; Family Head, spouse) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-09 |
 | Clean vehicle credit (Form 8936; Family Head, spouse) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-09 |
+| Alternative fuel vehicle refueling credit (Form 8911; Family Head, spouse) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-09 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

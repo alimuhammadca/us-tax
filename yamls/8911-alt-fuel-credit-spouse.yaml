@@ -1,122 +1,39 @@
-# Form 8911 - Alternative Fuel Vehicle Refueling Property Credit - spouse.
-# The spouse form is supplemental only on MFJ returns. The output remains one
-# consolidated Form 8911 per return plus one Schedule A attachment per property.
+# Form 8911 / Schedule A (Form 8911) (Rev. December 2025) - Alternative fuel vehicle refueling credit (spouse). Component:
+# form-alt-fuel-credit.component.ts. Screen review 2026-11-09: the census tract confirmation was removed with its column (V449, owner
+# 2026-11-09); line 5 is Form 1040 line 16 + Schedule 2 line 1z; construction begun before January 29, 2023 counts as meeting PWA.
+# Joint return: merged into the one Form 8911; separate return: the spouse's own (MfsFormScoper).
 name: alt-fuel-credit-spouse
-title: Form 8911 - Alt fuel credit (spouse)
+title: Alternative fuel vehicle refueling credit (Form 8911)
 multiplicity: single
-formName: 8911
-category: deductions
-instructions:
-  - Use this form only for spouse-owned refueling properties or spouse-side pass-through credit amounts on a joint return.
-  - The current app scope still produces one joint Form 8911 for the return.
+formName: Form 8911
+category: credits
 sections:
-  - name: screening
-    title: Spouse supplemental input
+  - name: claim
+    title: Claiming the credit
     multiplicity: single
     fields:
-      - name: spouseHasAltFuelCreditInputs
-        type: boolean
-        required: true
-        label: Does your spouse have additional refueling property credit information to add?
-
-  - name: spousePassThroughCredit
-    title: Spouse pass-through credit support
-    multiplicity: single
+      - { name: spouseHasAltFuelCreditInputs, type: boolean, required: true, label: "Did your spouse place an electric vehicle charger or other alternative fuel refueling property in service in the tax year?" }
+      - { name: spousePassthroughRefuelingPropertyCreditContribution, type: amount, required: false, showIf: spouseHasAltFuelCreditInputs == true, label: "Credit from a partnership or S corporation (Schedule K-1 code AO)" }
+  - name: properties
+    title: Refueling property
     showIf: spouseHasAltFuelCreditInputs == true
-    fields:
-      - name: spousePassthroughRefuelingPropertyCreditContribution
-        type: amount
-        required: false
-        label: Spouse pass-through alternative fuel vehicle refueling property credit contribution
-        placeholder: 0.00
-
-  - name: spouseProperties
-    title: Spouse-owned qualifying properties
     multiplicity: multiple
-    showIf: spouseHasAltFuelCreditInputs == true
-    instructions:
-      - Add one entry for each spouse-owned refueling property that may require its own Schedule A (Form 8911) attachment.
+    listKey: spouseProperties
     fields:
-      - name: propertyNickname
-        type: text
-        required: false
-        label: Property nickname
-      - name: registrationNumber
-        type: text
-        required: false
-        label: Registration number
-      - name: propertyDescription
-        type: text
-        required: false
-        label: Property description
-      - name: ownerNameTinIfDifferent
-        type: text
-        required: false
-        label: Owner name and TIN if different
-      - name: propertyLocation
-        type: text
-        required: false
-        label: Property location
-      - name: constructionBeganDate
-        type: date
-        required: false
-        label: Construction began date
-      - name: placedInServiceDate
-        type: date
-        required: false
-        label: Placed in service date
-      - name: eligibleCensusTract
-        type: boolean
-        required: false
-        label: Was the property placed in service in an eligible census tract?
-      - name: eligibleCensusTractGeoid
-        type: text
-        required: false
-        label: Eligible census tract GEOID
-      - name: certificationPermitNumber
-        type: text
-        required: false
-        label: Certification or permit number
-      - name: propertyCost
-        type: amount
-        required: false
-        label: Total property cost
-        placeholder: 0.00
-      - name: businessInvestmentUsePercentage
-        type: amount
-        required: false
-        label: Business or investment-use percentage
-        placeholder: 0.00
-      - name: section179Deduction
-        type: amount
-        required: false
-        label: Section 179 deduction claimed for the property
-        placeholder: 0.00
-      - name: pwaRequirementsMet
-        type: boolean
-        required: false
-        label: Were prevailing wage and apprenticeship requirements met?
-      - name: installedAtMainHome
-        type: boolean
-        required: false
-        label: Was the property installed at your main home?
-      - name: originalUseBeginsWithTaxpayer
-        type: boolean
-        required: false
-        label: Did the original use of the property begin with you?
-      - name: usedPredominantlyOutsideUs
-        type: boolean
-        required: false
-        label: Was the property used predominantly outside the United States?
-
-  - name: computedOutputs
-    title: Computed outputs (backend only - not rendered)
-    multiplicity: single
-    showIf: spouseHasAltFuelCreditInputs == true
-    fields:
-      - name: spouseGeneratedScheduleAAttachmentCount
-        type: amount
-        required: false
-        readOnly: true
-        computed: true
-        label: Computed - spouse-side Schedule A attachment count
+      - { name: propertyDescription, type: text, required: false, label: "Description (Schedule A line 2a)" }
+      - { name: propertyLocation, type: text, required: false, label: "Address (line 3a)" }
+      - { name: propertyNickname, type: text, required: false, label: "Name for this property (not on the form)" }
+      - { name: constructionBeganDate, type: date, required: false, label: "Date construction began (line 4)", help: "Before January 29, 2023: line 13 is Yes." }
+      - { name: placedInServiceDate, type: date, required: false, label: "Date placed in service (line 5)", help: "No credit after June 30, 2026 (P.L. 119-21)." }
+      - { name: propertyCost, type: amount, required: false, label: "Cost, with installation (line 8)" }
+      - { name: eligibleCensusTract, type: boolean, required: false, label: "Placed in service in an eligible census tract? (line 6a)" }
+      - { name: eligibleCensusTractGeoid, type: text, required: false, showIf: eligibleCensusTract == true, label: "Census tract GEOID, 11 digits (line 6b)" }
+      - { name: certificationPermitNumber, type: text, required: false, showIf: eligibleCensusTract == true, label: "Certification or permit number (line 7)" }
+      - { name: originalUseBeginsWithTaxpayer, type: boolean, required: false, label: "Original use began with your spouse?" }
+      - { name: usedPredominantlyOutsideUs, type: boolean, required: false, label: "Used mostly outside the United States?" }
+      - { name: businessInvestmentUsePercentage, type: percent, required: false, label: "Business or investment use % (line 9)" }
+      - { name: section179Deduction, type: amount, required: false, showIf: businessInvestmentUsePercentage > 0, label: "Section 179 deduction (line 11)" }
+      - { name: pwaRequirementsMet, type: boolean, required: false, showIf: businessInvestmentUsePercentage > 0 && constructionBeganDate >= 2023-01-29, label: "Meets the prevailing wage and apprenticeship requirements? (line 13)" }
+      - { name: registrationNumber, type: text, required: false, showIf: businessInvestmentUsePercentage > 0, label: "IRS registration number - payment or transfer election only (line 1)" }
+      - { name: ownerNameTinIfDifferent, type: text, required: false, showIf: businessInvestmentUsePercentage > 0, label: "Owner name and TIN if not the filer (line 2b)" }
+      - { name: installedAtMainHome, type: boolean, required: false, showIf: businessInvestmentUsePercentage < 100, label: "Installed at your spouse's main home? (line 17)" }

@@ -1,3 +1,26 @@
+## 2026-11-09T17:00 - Prior-year minimum tax credit (Form 8801): Screen Review Checklist applied
+
+- Audit against the Instructions for Form 8801 (2025) (docs/books/i8801.pdf) and Form 8801 (2025) (docs/IRS-Forms/f8801.pdf).
+- Labels pointed at the wrong lines: the box feeding line 14 (2024 Form 6251 line 10, the regular tax) said "Your 2024 alternative
+  minimum taxable income" and the one feeding line 16 (Form 6251 line 11, the AMT) said "tentative minimum tax". Following them, line 15
+  came out zero and the whole AMT became credit. Every box now names its line; line 1 accepts a negative amount.
+- Calculation:
+  - Line 3 (MTCNOLD, printed in parentheses) is subtracted; it was added. Line 4 gets the married-filing-separately addition (25% over
+    $875,950, at most $66,650) and is never below zero (`Form8801Rules`).
+  - Line 51 is line 27 minus line 50; it was the reverse, a negative 25% tax when the 2024 Schedule D line 19 had a gain.
+  - Foreign Earned Income Tax Worksheet: line 11 is the tax on line 3 less the tax on line 2c; the subtraction was missing. Each
+    person's box is now that person's line 2c part (line 27 = line 10 + 2c) - the two boxes were summed as worksheet line 3, which
+    counts line 10 twice on a joint return.
+  - The 19th carryforward bridge: last year's Form 8801 line 26 fills a blank line 19 and claims the credit unless the screen says No.
+- Screen: the shared look and bar with Reset and save partial; title "Prior-year minimum tax credit (person)". The save was refused
+  unless "Do you have your 2024 AMT calculation worksheets available?" was Yes; nothing read it - removed with its column (V447, owner
+  2026-11-09). The spouse tab asks only the Form 2555 part on a joint return and the spouse's own Form 8801 on a separate one. Help
+  rewritten from the instructions (`data/prior-min-tax-credit-help.ts`).
+- Unit specs (Karma) for this screen and for Credit for the elderly or disabled and Investment interest were stale after those rebuilds
+  (they were not run then) - rewritten; the full UI unit suite has 3 failures in Dependents and Filing status, which were not touched.
+- Tests: Java `PriorYearMinTaxCreditScreenReviewTest` (5); e2e `prior-min-tax-credit-screen.spec.ts` (3, incl. the two-year bridge) plus
+  the two Form 8801 specs (updated) - 7 pass.
+
 ## 2026-11-09T16:00 - Investment interest (Form 4952): Screen Review Checklist applied
 
 - Audit against Form 4952 (2025) and its instructions (docs/books/f4952--2025.pdf).

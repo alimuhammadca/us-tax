@@ -1,5 +1,15 @@
 # Outstanding Items
 
+## Prior-year minimum tax credit (Form 8801): found in the 2026-11-09 review, not changed
+
+- Only line 26 bridges from last year's return. Lines 1, 2, 14 and 16 (2024 Form 6251 lines 1/2e, the exclusion items, lines 10 and 11)
+  are typed: out_form_6251 keeps lines 10 and 11 but not every exclusion item (2c, 2d, 2h), and bridging lines 14/16 without line 2 would
+  credit AMT that came from exclusion items.
+- Part III lines 28-30, 35 and 42 are typed from the 2024 worksheets; the Form 2555 "AMT capital gain excess" modifications and the
+  MTFTCE (line 12, separate Forms 1116) are the user's.
+- The Form 1040-NR line 10 rule (net gain on U.S. real property interests) is not applied.
+- The bridge runs on the primary return only; an MFS spouse leg's line 26 is not carried.
+
 ## Investment interest (Form 4952): found in the 2026-11-09 review, not changed
 
 - Gross investment income (line 4a) and qualified dividends (line 4b) are typed; the return's Forms 1099-INT / 1099-DIV could fill them

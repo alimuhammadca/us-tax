@@ -275,6 +275,12 @@ owner 2026-11-04).*
       itemized deductions path, not the Form 4952 the screen fills (Investment interest). Grep the bridge's reader and each form that has the line.
 - [ ] Amounts the calculation adds from statements (Schedule K-1 code H interest, K-1 investment income) are named on the screen as
       "added for you", or the user types them again and they count twice (Investment interest).
+- [ ] A label that names a line of last year's form must name the line the calculation reads: "2024 alternative minimum taxable
+      income" fed Form 8801 line 14 (2024 Form 6251 line 10, the regular tax), so following the label credited the whole AMT
+      (Prior-year minimum tax credit). Compare each label with the printed form's line it lands on.
+- [ ] A line printed in parentheses on the form is subtracted - check the sign the calculation gives it (Form 8801 line 3 was added).
+- [ ] Run the component's Karma spec (`npx ng test --watch=false --include=<spec>`) after a rebuild: removed getters and models fail to
+      compile there while the dev build and e2e stay green (Credit for the elderly or disabled, Investment interest).
 - [ ] Unit tests for new helpers (e.g. `id-validation.spec.ts`, `scenario-completeness.spec.ts`).
 - [ ] Entry in `history.md`; commit and push us-tax-ui, us-tax-be (e2e / backend) and us-tax (docs).
 
@@ -638,6 +644,7 @@ Deductions labels renamed in the Incomes style. Headings still in the old "Form 
 | General business credit (Form 3800; Family Head, spouse) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-09 |
 | Credit for the elderly or disabled (Schedule R; Family Head, spouse) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-09 |
 | Investment interest (Form 4952; Family Head, spouse) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-09 |
+| Prior-year minimum tax credit (Form 8801; Family Head, spouse) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-09 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

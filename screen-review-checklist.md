@@ -262,6 +262,10 @@ owner 2026-11-04).*
       same key - and the calculation's owner check reads the statement's own number field (item E), not only `recipientTIN`.
 - [ ] Where a carried-over amount goes can depend on this year's answer: a K-1 rental loss gets the special allowance only if actively
       participated in "both the year the loss arose and the current tax year" (Form 8582 Part IV) - otherwise Part V.
+- [ ] A credit limit "based on the amount of tax" is the tax the other credits leave: check the form's own lines for what comes off
+      first (Form 3800 line 10b) and that those credits are computed before it - the general business credit was limited by the
+      whole tax, and Form 8801 ran before the credits its line 22 subtracts (General business credit). Check the compute order of
+      every credit the form subtracts.
 - [ ] Unit tests for new helpers (e.g. `id-validation.spec.ts`, `scenario-completeness.spec.ts`).
 - [ ] Entry in `history.md`; commit and push us-tax-ui, us-tax-be (e2e / backend) and us-tax (docs).
 
@@ -622,6 +626,7 @@ Deductions labels renamed in the Incomes style. Headings still in the old "Form 
 | Home energy credits (Form 5695; Family Head, spouse) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-08 |
 | Homebuyer credit repayment (Form 5405; Family Head, spouse; 2024 and earlier only) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-08 |
 | Suspended passive losses (Form 8582; Family Head, spouse) | 1-8, 11, 13, 15-21, 23-25 | 2026-11-09 |
+| General business credit (Form 3800; Family Head, spouse) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-09 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

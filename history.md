@@ -1,3 +1,24 @@
+## 2026-11-09T11:30 - General business credit (Form 3800): Screen Review Checklist applied
+
+- Audit against the 2025 Instructions for Form 3800 and Schedule A and Form 3800 (2025), downloaded from irs.gov (not in
+  docs/books; docs/IRS-Forms holds the 2024 form).
+- Calculation:
+  - The tax limit follows Form 3800 Part II Section A (lines 7-17). It used regular tax + AMT with nothing subtracted and 25% of
+    regular tax over $25,000, so with any other credit on the return the general business credit was allowed against tax those
+    credits had already used. Now: line 7 (Form 1040 line 16 + Schedule 2 line 1z), line 10a the foreign tax credit, line 10b
+    Form 1040 line 19 and the Schedule 3 credits other than the general business credit, Form 8801 and Form 8912, line 13 25% of net
+    regular tax over $25,000 ($12,500 on a separate return when the spouse also has a business credit, IRC 38(c)(6)(A)).
+  - Order: the general business credit and then Form 8801 now come after every other nonrefundable credit (adoption, mortgage
+    interest, DC homebuyer, Forms 8834 / 8911), before Form 8912. Both ran before those credits, so Form 3800 line 10b and Form 8801
+    line 22 never subtracted them (Form 8801 line 22 also never subtracted the general business credit, which ran after it).
+- Screen: the shared look and bar with Reset and save partial; title "General business credit (person)"; the question and the
+  amount (Form 3800 Part I line 4, non-passive carryforwards); help from the instructions (`data/general-business-credit-help.ts`)
+  including the 20-year carryforward, the 1-year carryback on an amended return, passive credits (Form 8582-CR) left out, the tax
+  limit and the bridge from last year's return.
+- Tests: Java `GeneralBusinessCreditScreenReviewTest` (5); e2e `general-business-credit-screen.spec.ts` (3) plus the two
+  carryforward specs and prior-year-carryovers-onboarding (updated for the new question) - 10 pass. Backend suite: only the four
+  failures already on main.
+
 ## 2026-11-09T06:30 - Suspended passive losses (Form 8582): Screen Review Checklist applied
 
 - Audit against the 2025 Instructions for Form 8582, the Instructions for Form 6198 (Rev. November 2025) and the Partner's

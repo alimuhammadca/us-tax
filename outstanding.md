@@ -1,5 +1,16 @@
 # Outstanding Items
 
+## General business credit (Form 3800): found in the 2026-11-09 review, not changed
+
+- Only a carryforward total is entered. Current-year business credits (Form 3800 Part III: Forms 6765, 8881, 8941, 5884, 8826 ...,
+  and the credits on Schedule K-1 box 15 / 13) are not figured, so they never reach Schedule 3 line 6a, and Form 3800 itself is not
+  produced.
+- One total, not per credit and year: credits past their 20-year carryforward can't be dropped, specified credits (IRC 38(c)(4),
+  allowed against the tentative minimum tax, Part II line 34) are treated as ordinary ones, and passive activity credits (Form
+  8582-CR) have no entry.
+- Line 7 includes Form 8621 tax, section 965(i) tax and education credit recapture, which the instructions leave out (the same
+  simplification as Form 8912 line 7).
+
 ## Suspended passive losses (Form 8582): found in the 2026-11-09 review, not changed
 
 - Last year's unallowed K-1 losses are entered as three totals, not per activity, so a K-1 activity sold in full this year doesn't

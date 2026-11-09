@@ -1,3 +1,6 @@
+# Screen review 2026-11-10 (V455): age 65 comes from the date of birth (Identification), the dependent's earned income is figured,
+# investment interest is only on investment-interest-expense-deduction (Form 4952), the casualty / disaster totals come from the details;
+# the typed age, earned income, investment interest, casualty / disaster totals, home equity, tier and QDCG election fields are removed.
 # Form 1040 line 12a-12e taxpayer/family head workflow.
 # Approach: keep return-level deduction election, Schedule A inputs, and taxpayer indicators on the taxpayer form.
 # NOTE: This file is the shared yamls-folder copy of the active line 12 taxpayer interview.
@@ -58,20 +61,11 @@ sections:
         required: false
         label: "Is your spouse itemizing deductions on a separate return?"
         showIf: "isSpouse"
-      - name: youBornBeforeThreshold
-        type: boolean
-        required: false
-        label: You were born before the threshold date for the tax year
       - name: youAreBlind
         type: boolean
         required: false
         label: You are blind
       # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
-      - name: spouseBornBeforeThreshold
-        type: boolean
-        required: false
-        label: "Was your spouse born before January 2, 1961?"
-        showIf: "isSpouse"
       - name: spouseIsBlind
         type: boolean
         required: false
@@ -81,12 +75,7 @@ sections:
         type: boolean
         required: false
         label: "Does your spouse qualify for the age/blindness deduction increase?"
-        showIf: "isSpouse && (isMfs && (spouseBornBeforeThreshold || spouseIsBlind))"
-      - name: dependentStandardDeductionEarnedIncome
-        type: number
-        required: false
-        label: Dependent standard deduction earned income
-
+        showIf: "isSpouse && (isMfs && (spouseAge65FromDateOfBirth || spouseIsBlind))"
   - name: scheduleAInputs
     title: Schedule A inputs
     multiplicity: single
@@ -355,30 +344,15 @@ sections:
         required: false
         label: "Was that loan refinanced with the same lender?"
         showIf: "!isSpouse && showScheduleA && hasInterestExpenses === true && ((priorLoanUndeductedPoints || 0) > 0)"
-      - name: investmentInterestPaid
-        type: number
-        required: false
-        label: Investment interest paid
-      - name: netInvestmentIncome
-        type: number
-        required: false
-        label: Net investment income for the investment-interest limit
-      - name: priorYearInvestmentInterestCarryover
-        type: number
-        required: false
-        label: Prior-year disallowed investment interest carryover (Form 4952 line 7)
-      - name: electInvestmentIncomeIncludesQualifiedDividendsAndCapitalGain
-        type: boolean
-        required: false
-        label: Elect to include qualified dividends or net long-term capital gain in investment income (Form 4952 line 4g)
-      - name: electedQualifiedDividendsAndCapitalGainAmount
-        type: number
-        required: false
-        label: Amount of qualified dividends or net long-term capital gain elected (Form 4952 line 4g amount)
       - name: charitableCashContributions
         type: number
         required: false
         label: Charitable cash contributions
+      # Added 2026-11-10 (screen review, V455 - owner sign-off): the calculation read it and no screen set it.
+      - name: charitableCashPrivateFoundation
+        type: amount
+        required: false
+        label: "Cash gifts to a private foundation (30% limit)"
       - name: charitableNonCashContributions
         type: number
         required: false
@@ -464,11 +438,6 @@ sections:
         required: false
         label: "Tax year the carryover arose"
         showIf: "!isSpouse && showScheduleA && hasCharitableContributions === true"
-      - name: personalCasualtyAndTheftLoss
-        type: number
-        required: false
-        label: Personal casualty and theft losses from a federally declared disaster (separate from the net qualified disaster loss standard-deduction increase)
-        help: Enter the FINAL deductible amount from Form 4684 — already reduced by the $100-per-event floor and the 10%-of-AGI floor (IRC §165(h)). To have these reductions applied automatically, use the per-event casualty inputs (adjusted basis, FMV decline, insurance reimbursement, disaster indicator) instead.
       - name: foreignTaxesPaid
         type: number
         required: false
@@ -548,6 +517,12 @@ sections:
         label: Claim-of-right repayment over $3,000 — deduction method (Schedule A line 16)
         help: If you repaid more than $3,000 that you included in income in an earlier year under a claim of right, you may deduct it here (IRC §1341). Alternatively you can take the §1341 credit (Schedule 3 line 13b) — use whichever gives the lower tax. Repayments of $3,000 or less are not deductible for 2025.
       # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      # Added 2026-11-10 (screen review, V455 - owner sign-off): the section 1341 credit uses that year's rates.
+      - name: claimOfRightPriorYear
+        type: integer
+        required: false
+        label: "Year you reported the income"
+        showIf: "!isSpouse && hasClaimOfRightRepayment === true && (claimOfRightRepaymentDeduction ?? 0) > 3000"
       - name: claimOfRightPriorYearTaxableIncome
         type: amount
         required: false
@@ -571,10 +546,6 @@ sections:
             label: "Head of household"
           - value: "Qualifying surviving spouse"
             label: "Qualifying surviving spouse"
-      - name: netQualifiedDisasterLoss
-        type: number
-        required: false
-        label: Net qualified disaster loss from a federally declared disaster
       - name: electDisasterLossStandardDeductionIncrease
         type: boolean
         required: false
@@ -833,17 +804,6 @@ sections:
         type: select
         required: false
         label: "Home mortgage points paid by"
-        options:
-          - value: "joint"
-            label: "Joint (50/50 split) - shown as 'Both of us - community funds (50/50 split)' in a community-property state"
-          - value: "taxpayer"
-            label: "Taxpayer only"
-          - value: "spouse"
-            label: "Spouse only"
-      - name: investmentInterestPaidBy
-        type: select
-        required: false
-        label: "Investment interest paid by"
         options:
           - value: "joint"
             label: "Joint (50/50 split) - shown as 'Both of us - community funds (50/50 split)' in a community-property state"

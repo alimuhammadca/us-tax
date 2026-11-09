@@ -1,5 +1,16 @@
 # Outstanding Items
 
+## Standard or itemized deductions (lines 12a-12e, Schedule A): found in the 2026-11-10 review, not changed
+
+- Medical lodging is capped at 2 people ($50 a night each); Pub. 502 allows $50 for each person who goes along with the patient.
+- W-2GU / W-2VI / W-2AS territory income tax withheld doesn't reach Schedule A line 5a.
+- "Part" employer-paid coverage: the excess reimbursement is taxed in full instead of in proportion to the employer-paid share (Pub. 502).
+- On separate returns a statement with no TIN counts on both returns.
+- The private-foundation 30% pool subtracts the limited capital-gain amount, not the full one (Pub. 526 worksheet 2).
+- Points are not run through the Pub. 936 Table 1 ratio when the debt is over the limit (unverified).
+- A blank average mortgage balance applies no debt limit (the label now says the balance is needed only over $750,000).
+- Gambling / other line 16 / investment-theft losses have no paid-by answer on separate returns; they split 50/50.
+
 ## Qualified business income deduction (line 13a): found in the 2026-11-10 review, not changed
 
 - `collectQbiInputsForPerson` still reads eight received* / uploaded* K-1 and 1099-DIV keys no screen or table saves; the gating flags

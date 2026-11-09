@@ -514,6 +514,11 @@ last year's figures from last year's return or upload, the lump-sum election sug
       can have it (the spouse copy saved a terrorist-attack disability amount it never displayed). Quick audit: each key
       in the component's field lists (`exclusionsFields`, `allFieldDefs`) appears in the template.
 - [ ] Removing or merging a question needs the owner's sign-off (field deletion), even when nothing reads it.
+- [ ] Dropping a column: grep `db/changelog/changes/*.sql` for it too. A dual-write trigger or view that reads a dropped column
+      makes every save of the screen fail with a 500 (`record "new" has no field ...`), and the Java unit tests never see it -
+      only an e2e save does. Redefine the trigger function in the same migration (Standard or itemized deductions, V455 / V70).
+- [ ] A question the app can work out from another screen (age 65 from the date of birth, the dependent's earned income from the
+      return) is shown as a line with a link to where it comes from, not asked (item 20).
 
 *From: owner 2026-11-05 (Social security benefits: the three SSI questions removed, "why remove the SSI fields?" - unused
 since D-6a-1; the spouse disability field shown).*
@@ -688,6 +693,7 @@ Deductions labels renamed in the Incomes style. Headings still in the old "Form 
 | District of Columbia homebuyer credit (Form 8859; Family Head, spouse) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-09 |
 | Premium tax credit (Form 8962; Family Head, spouse) | 1-8, 11, 13, 15-25 | 2026-11-09 |
 | Qualified business income deduction (line 13a; Family Head, spouse) | 1-8, 11, 13, 15-25 | 2026-11-10 |
+| Standard or itemized deductions (lines 12a-12e, Schedule A; Family Head, spouse) | 1-8, 11, 13, 15-25 | 2026-11-10 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

@@ -1,3 +1,6 @@
+# Screen review 2026-11-10 (V455): age 65 comes from the date of birth (Identification), the dependent's earned income is figured,
+# investment interest is only on investment-interest-expense-deduction (Form 4952), the casualty / disaster totals come from the details;
+# the typed age, earned income, investment interest, casualty / disaster totals, home equity, tier and QDCG election fields are removed.
 # Form 1040 line 12a-12e spouse workflow.
 # Approach: keep spouse-only dependency, separate-return itemization, and age/blindness indicators on the spouse form.
 # NOTE: This file is the shared yamls-folder copy of the active line 12 spouse interview.
@@ -22,10 +25,6 @@ sections:
         type: boolean
         required: false
         label: Your spouse itemizes on a separate return
-      - name: spouseBornBeforeThreshold
-        type: boolean
-        required: false
-        label: Your spouse was born before the threshold date for the tax year
       - name: spouseIsBlind
         type: boolean
         required: false

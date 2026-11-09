@@ -1,3 +1,28 @@
+## 2026-11-10T06:00 - Standard or itemized deductions (lines 12a-12e, Schedule A): Screen Review Checklist applied
+
+- Audit against the 2025 Form 1040 line 12 instructions, Schedule A and its instructions, Form 4684 / 4952, Pubs. 501, 502, 526, 547, 936.
+- Removed (owner 2026-11-10, V455, 15 columns):
+  - The two age questions - age 65 comes from the date of birth (both spouses; the spouse's on separate returns only with the
+    no-income answer).
+  - The dependent's earned income - figured from the return.
+  - Investment interest, net investment income, its paid-by, the prior-year carryover and the QDCG election - only the Investment
+    interest expense screen (Form 4952) sets them; a prior-year line 7 alone still produces the form.
+  - The typed casualty / theft and qualified-disaster totals - the Form 4684 Section A worksheet figures them from the details.
+  - Home equity (3), the debt-limit tier - nothing read them.
+- Added (owner sign-off): cash to a private foundation (the calculation read it, nothing set it); the year the claim-of-right income
+  was reported - the section 1341 credit uses that year's rates (`ClaimOfRightTax`, 2020-2024), not always 2024's.
+- Calculation fixes: line 12c not on MFJ; the spouse's age / blind boxes only on MFJ / MFS; the dependent worksheet always uses the
+  figured earned income; points with no type (or amortized with no term) are not deducted and ask for the answer (they defaulted to
+  "in full"); a typed charity carryover ages out after 5 years; separate returns: the allocator split missing items (prior-year state
+  tax, estimates, reimbursements, home sold / bought tax bills, sales tax) and the spouse leg's long-term care premiums.
+- Screen: rebuilt in the shared pattern with Reset and save partial (saving was refused until certain boxes were filled), one part per
+  Schedule A part (`forms/standard-deductions/`), each opened by its Yes / No (worked out from the saved amounts). The live
+  "itemized vs standard" preview, intro cards, glossary, examples and SALT banner are gone. The Form 1098-C and Schedule K-1 (Form 1041)
+  code B parts read each statement - they read the list, which holds only ids, so they never showed.
+- V455.2 redefines the V70 dual-write trigger: it read the dropped columns and every save failed (500) - only the e2e save caught it.
+- Tests: Java `StandardDeductionsScreenReviewTest` (7) and the affected unit tests; Karma spec (7); e2e
+  `standard-deductions-screen.spec.ts` (2) plus the specs that seeded the removed fields or drove the old screen.
+
 ## 2026-11-10T03:00 - Qualified business income deduction (line 13a): Screen Review Checklist applied
 
 - Audit against Form 8995 / 8995-A (2025) and their instructions, and the line 13a calculation.

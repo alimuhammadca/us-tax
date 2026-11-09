@@ -1,5 +1,9 @@
 # Outstanding Items
 
+## Electric vehicle credit (Form 8834): found in the 2026-11-09 review, not changed
+
+- Line 1 is typed: Form 8582-CR (passive activity credits) is not figured, so the released credit can't come from it.
+
 ## Credit for tax credit bonds (Form 8912): found in the 2026-11-09 review, not changed
 
 - The unused credit of a CREB or a QZAB issued before October 4, 2008 can be deducted (this year or next) instead of carried; not figured.

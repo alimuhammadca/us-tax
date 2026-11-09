@@ -1,46 +1,14 @@
-# Form 8834 - Qualified Electric Vehicle Credit - spouse.
-# This spouse form is additive only. The output remains one consolidated Form 8834 per return.
+# Form 8834 (Rev. October 2024) - Electric vehicle credit (spouse). Joint return: added to the one Form 8834; separate return: the
+# spouse's own (MfsFormScoper). Screen review 2026-11-09: the spouse's confirmation was removed with its column (V450).
 name: electric-vehicle-credit-spouse
-title: Form 8834 - Electric Vehicle credit (spouse)
+title: Electric vehicle credit (Form 8834)
 multiplicity: single
-formName: 8834
-category: deductions
-instructions:
-  - Use this spouse form only on married filing jointly returns when the spouse has an additional released qualified electric vehicle passive activity credit to add to the joint Form 8834.
-  - Do not use this form if the taxpayer-side released credit already includes the spouse amount.
+formName: Form 8834
+category: credits
 sections:
-  - name: spouseScreening
-    title: Spouse supplemental screening
+  - name: credit
+    title: Released credit
     multiplicity: single
     fields:
-      - name: spouseHasElectricVehicleCreditInputs
-        type: boolean
-        required: true
-        label: Does your spouse have an additional released qualified electric vehicle passive activity credit amount to add?
-
-  - name: spouseContribution
-    title: Spouse released credit contribution
-    multiplicity: single
-    showIf: spouseHasElectricVehicleCreditInputs == true
-    fields:
-      - name: spouseReleasedQevPassiveActivityCreditContribution
-        type: amount
-        required: false
-        label: Spouse released qualified electric vehicle passive activity credit contribution
-        placeholder: 0.00
-      - name: spouseConfirmReleasedQevCreditAvailable
-        type: boolean
-        required: false
-        showIf: spouseHasElectricVehicleCreditInputs == true
-        label: Does your spouse have this released credit amount available from their passive-activity records? (only used if you file separately)
-
-  - name: importedSupport
-    title: Imported support values (backend only - not rendered)
-    multiplicity: single
-    showIf: spouseHasElectricVehicleCreditInputs == true
-    fields:
-      - name: jointForm8834Ownership
-        type: text
-        required: false
-        readOnly: true
-        label: Backend note - spouse data rolls into the joint Form 8834
+      - { name: spouseHasElectricVehicleCreditInputs, type: boolean, required: true, label: "Does Form 8582-CR allow your spouse a qualified electric vehicle passive activity credit for the tax year?" }
+      - { name: spouseReleasedQevPassiveActivityCreditContribution, type: amount, required: false, showIf: spouseHasElectricVehicleCreditInputs == true, label: "Credit allowed for the year on Form 8582-CR (Form 8834 line 1)" }

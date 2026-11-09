@@ -1,3 +1,16 @@
+## 2026-11-09T21:00 - Electric vehicle credit (Form 8834): Screen Review Checklist applied
+
+- Audit against Form 8834 (Rev. October 2024) and its instructions (docs/IRS-Forms/f8834.pdf).
+- Calculation: line 2 is "Form 1040 line 16; and Schedule 2 line 1z". It used Form 1040 line 18, which also has the alternative
+  minimum tax, so the limit was too high by the AMT (and line 6 then subtracted the tentative minimum tax from it).
+- Screen: rebuilt in the shared pattern with Reset and save partial (the save was refused until the amount was entered); title
+  "Electric vehicle credit (person)". The two "released credit amount available" confirmations (Family Head and spouse) only added a note
+  to the form - removed with their columns and the note (V450, owner 2026-11-09). The import summary of tax figures and the "?" help
+  buttons are gone; a link to Clean vehicle credit for vehicles placed in service after 2022. Help rewritten from the form's
+  instructions (`data/electric-vehicle-credit-help.ts`).
+- Tests: Java `ElectricVehicleCreditScreenReviewTest` (1) and the scoper test for the removed field; a new Karma spec (2); e2e
+  `electric-vehicle-credit-screen.spec.ts` (3) plus the two Form 8834 specs (updated) - 7 pass.
+
 ## 2026-11-09T20:00 - Credit for tax credit bonds (Form 8912): Screen Review Checklist applied
 
 - Audit against the Instructions for Form 8912 (Rev. December 2024) (docs/books/i8912.pdf) and Form 8912 (docs/IRS-Forms/f8912.pdf).

@@ -1,5 +1,11 @@
 # Outstanding Items
 
+## Qualified business income deduction (line 13a): found in the 2026-11-10 review, not changed
+
+- `collectQbiInputsForPerson` still reads eight received* / uploaded* K-1 and 1099-DIV keys no screen or table saves; the gating flags
+  they drive can't fire. Dead code to remove with the QbiPersonInputs record.
+- Aggregation is offered for Schedule C businesses and K-1s, not for a farm or a safe-harbor rental.
+
 ## Premium tax credit (Form 8962): found in the 2026-11-09 review, not changed
 
 - Dependents' modified AGI (line 2b) is typed: a dependent's own return isn't figured here.

@@ -310,6 +310,12 @@ owner 2026-11-04).*
       renumbering left the field names behind (Premium tax credit).
 - [ ] A rule for a past year only (the 2021 unemployment rule) is not a reason to ask - check the year in the instructions before
       keeping a question (Premium tax credit).
+- [ ] A screening question the calculation needs as a switch (hadQualifiedBusinessIncomeInputs) can often be worked out from what is on
+      file and what was entered - save it, don't ask it (Qualified business income deduction).
+- [ ] A screen's own "estimate" that leaves out part of the calculation (statements) misleads - remove it; the return shows the result
+      (Qualified business income deduction).
+- [ ] `npx tsc -p tsconfig.app.json` does not check templates; read the dev server log after each template change (a `[entryId]`
+      type error only showed there).
 - [ ] Unit tests for new helpers (e.g. `id-validation.spec.ts`, `scenario-completeness.spec.ts`).
 - [ ] Entry in `history.md`; commit and push us-tax-ui, us-tax-be (e2e / backend) and us-tax (docs).
 
@@ -681,6 +687,7 @@ Deductions labels renamed in the Incomes style. Headings still in the old "Form 
 | Mortgage interest credit (Form 8396; Family Head, spouse) | 1-8, 11, 13, 15-22, 24, 25 | 2026-11-09 |
 | District of Columbia homebuyer credit (Form 8859; Family Head, spouse) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-09 |
 | Premium tax credit (Form 8962; Family Head, spouse) | 1-8, 11, 13, 15-25 | 2026-11-09 |
+| Qualified business income deduction (line 13a; Family Head, spouse) | 1-8, 11, 13, 15-25 | 2026-11-10 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

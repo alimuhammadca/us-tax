@@ -1,3 +1,22 @@
+## 2026-11-10T03:00 - Qualified business income deduction (line 13a): Screen Review Checklist applied
+
+- Audit against Form 8995 / 8995-A (2025) and their instructions, and the line 13a calculation.
+- Removed (owner 2026-11-10, V454, 5 columns):
+  - The "all statements uploaded" confirmation. Without it a Yes blocked the return (LINE13A_STATEMENT_UPLOAD_REQUIRED_*); the
+    statements entered are what count. The two carryforward bridges no longer set it.
+  - "Did any inputs come from Schedule C or Schedule F?" - not read since Schedule C / F QBI is figured, and the screen still said a Yes
+    blocked the deduction.
+  - The cooperative patron question - a Form 1099-PATR box 6 / 7 / 13 makes the person a patron; the two Schedule D amounts are asked
+    only with box 7 (CooperativePatron no longer reads the answer).
+  - Two notes fields nothing read.
+- Screen: rebuilt in the shared pattern with Reset and save partial (it had its own bar and a required confirmation). The screening
+  question is worked out: hadQualifiedBusinessIncomeInputs is saved Yes when the person has a source or an entry, so a carryforward-only
+  entry is still figured. "Already counted" lists the Schedule C businesses, Schedule F, a safe-harbor rental, the Schedules K-1 and
+  Forms 1099-DIV with box 5, with links; one card per business for Statement A and the aggregation group (the tables are gone); the
+  badge counts and the client-side "tentative estimate" (statements left out) are gone. Help rewritten (`data/qbi-deduction-help.ts`).
+- Tests: Java `QbiDeductionScreenReviewTest` (2) and the patron test moved to a Form 1099-PATR; a new Karma spec (3); e2e
+  `qbi-deduction-screen.spec.ts` (2) plus the line 13a specs (the UI one updated).
+
 ## 2026-11-10T01:00 - Premium tax credit (Form 8962): Screen Review Checklist applied
 
 - Audit against Form 8962 (2025) and its instructions (docs/books/i8962_2025.pdf) and Pub. 974.

@@ -1,5 +1,16 @@
 # Outstanding Items
 
+## Investment interest (Form 4952): found in the 2026-11-09 review, not changed
+
+- Gross investment income (line 4a) and qualified dividends (line 4b) are typed; the return's Forms 1099-INT / 1099-DIV could fill them
+  (only the investment part - interest from a business isn't investment income), shown as a figure, not copied.
+- Investment interest is asked on two screens: Standard or itemized deductions (a simple interest / net investment income pair) and this
+  one. With this screen Yes, the first is ignored (the screen says so). One place would be better.
+- The line 4e "Elec." choice (treating less of line 4g as net capital gain, for Form 1116 filers) and the AMT-side second Form 4952
+  (Form 6251 line 2c) are not figured; their questions were removed (owner 2026-11-09).
+- The line 8 parts are taken off Schedule A and an advisory says where to deduct them; they are not carried onto Schedule E / C / F or
+  Form 6198 automatically.
+
 ## Credit for the elderly or disabled (Schedule R): found in the 2026-11-09 review, not changed
 
 - The credit needs the claim answer: a person 65 or older who never opens the screen gets no Schedule R (the Yes is filled only when

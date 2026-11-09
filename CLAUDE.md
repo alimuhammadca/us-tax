@@ -208,8 +208,9 @@ one per return (MFJ combined). Line 4a is GROSS investment income and **includes
 line 7 carrying forward. The **§163(d)(4)(B) election** on line 4g is computed and, critically, the
 elected amount is **removed from preferential income** in the line-16 worksheets so it is not
 double-benefited — and an amount on line 4g **forces the Schedule D Tax Worksheet**, per the Form 4952
-instructions. Still deferred: the **second AMT computational copy** (`requiresAmtRecomputation` is
-captured and persisted but no AMT recompute consumes it).
+instructions. Still deferred: the **second AMT computational copy** (the screen's AMT question was removed 2026-11-09, V446 -
+nothing consumed it; `requiresAmtRecomputation` on the output is no longer set). Line 8 parts for royalties / a
+nonpassive business / an activity not at risk come off Schedule A (`Form4952Line8Parts`).
 
 **Now fully computed (formerly listed here — corrected 2026-07-12):** Form 8863
 (education credits — AOTC → line 29 refundable, LLC → Sched 3 line 3, MAGI phaseout,

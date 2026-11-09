@@ -1,3 +1,26 @@
+## 2026-11-09T16:00 - Investment interest (Form 4952): Screen Review Checklist applied
+
+- Audit against Form 4952 (2025) and its instructions (docs/books/f4952--2025.pdf).
+- Screen: rebuilt in the shared pattern (inline template, the .html removed) with Reset and save partial; title "Investment interest
+  (person)" - the spouse tab showed the Family Head's name and a subtitle saying the screen "appears only on the taxpayer tab". Save was
+  refused until eight statement upload questions were Yes; nothing read them. Removed with the line 4g election notes, the line 4e "Elec."
+  amount, the joint/community question and notes and the AMT recompute question - and their columns (V446, owner 2026-11-09: "remove the
+  columns since we do not care about the old saves"). Years from tax-year.ts; a note when investment interest is also typed on Standard
+  or itemized deductions (not used once this screen is Yes).
+- Help rewritten from the instructions (`data/investment-interest-help.ts`): what is and isn't investment interest, line 4a sources, the
+  4e net capital gain, line 5, the line 4g election (taxed at ordinary rates, revocable only with consent, the 6-month amended-return
+  rule), line 8 routing. It now says the Schedule K-1 code H interest and K-1 investment income/expenses are added by the calculation
+  (typing them here too double-counted them).
+- Calculation:
+  - Line 8 parts (owner 2026-11-09): the royalty part (Schedule E), the nonpassive business part (its schedule) and the part for an
+    activity not at risk (Form 6198 line 4) were asked but read by nothing - all of line 8 went to Schedule A. They now come out of
+    line 8 (never more than it) and only the rest reaches Schedule A line 9, with advisory FORM_4952_LINE8_ELSEWHERE naming where each
+    part is deducted (`Form4952Line8Parts`); the parts merge on a joint return.
+  - Last year's Form 4952 line 7 (the section 163(d)(2) bridge) now fills a blank line 2 on this form; it reached only the Standard or
+    itemized deductions path, so a filer with this screen lost the carried-over interest. A typed line 2 wins.
+- Tests: Java `InvestmentInterestScreenReviewTest` (5); e2e `investment-interest-screen.spec.ts` (3) plus six related specs (one updated)
+  - 34 pass.
+
 ## 2026-11-09T15:00 - Credit for the elderly or disabled (Schedule R): Screen Review Checklist applied
 
 - Audit against the 2025 Instructions for Schedule R (docs/books/i1040sr.pdf; Pub. 524 was discontinued after 2023).

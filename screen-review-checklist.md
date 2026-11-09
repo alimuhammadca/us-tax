@@ -271,6 +271,10 @@ owner 2026-11-04).*
       (Credit for the elderly or disabled). Grep the scoper for where each gate key goes.
 - [ ] Facts on file decide which questions are asked: questions for a case the person's own record rules out (disability questions for
       someone 65 or older) are hidden and cleared, and the record is read from the key its screen saves (`spouseDateOfBirth`).
+- [ ] A carryforward bridge must reach every path that figures the line: last year's Form 4952 line 7 filled only the Standard or
+      itemized deductions path, not the Form 4952 the screen fills (Investment interest). Grep the bridge's reader and each form that has the line.
+- [ ] Amounts the calculation adds from statements (Schedule K-1 code H interest, K-1 investment income) are named on the screen as
+      "added for you", or the user types them again and they count twice (Investment interest).
 - [ ] Unit tests for new helpers (e.g. `id-validation.spec.ts`, `scenario-completeness.spec.ts`).
 - [ ] Entry in `history.md`; commit and push us-tax-ui, us-tax-be (e2e / backend) and us-tax (docs).
 
@@ -633,6 +637,7 @@ Deductions labels renamed in the Incomes style. Headings still in the old "Form 
 | Suspended passive losses (Form 8582; Family Head, spouse) | 1-8, 11, 13, 15-21, 23-25 | 2026-11-09 |
 | General business credit (Form 3800; Family Head, spouse) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-09 |
 | Credit for the elderly or disabled (Schedule R; Family Head, spouse) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-09 |
+| Investment interest (Form 4952; Family Head, spouse) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-09 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

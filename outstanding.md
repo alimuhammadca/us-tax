@@ -1,5 +1,14 @@
 # Outstanding Items
 
+## Clean vehicle credit (Form 8936): found in the 2026-11-09 review, not changed
+
+- The business/investment-use part of a new clean vehicle credit (Schedule A line 11) is a general business credit (Form 3800 line 1y)
+  and is not figured; the commercial clean vehicle credit (Part V, Form 8936 line 19+) neither.
+- The 2024 MAGI is typed; it could be filled from a 2024 return done here (line 11 plus the exclusions). The 2024 test uses the 2025
+  filing status; the instructions' special rule tests each year with its own status.
+- "Can someone claim you as a dependent?" is asked here; the household answer lives on several screens (EIC, Saver's credit), not one.
+- Basis reduction for a business vehicle (Schedule A line 9 / 17) is not passed to depreciation.
+
 ## Prior-year minimum tax credit (Form 8801): found in the 2026-11-09 review, not changed
 
 - Only line 26 bridges from last year's return. Lines 1, 2, 14 and 16 (2024 Form 6251 lines 1/2e, the exclusion items, lines 10 and 11)

@@ -281,6 +281,11 @@ owner 2026-11-04).*
 - [ ] A line printed in parentheses on the form is subtracted - check the sign the calculation gives it (Form 8801 line 3 was added).
 - [ ] Run the component's Karma spec (`npx ng test --watch=false --include=<spec>`) after a rebuild: removed getters and models fail to
       compile there while the dev build and e2e stay green (Credit for the elderly or disabled, Investment interest).
+- [ ] A credit the buyer already received (transferred to the dealer, an advance payment) is reconciled, not claimed again: the
+      transferred clean vehicle credit also went on Schedule 3, and the repayment when it didn't qualify reached no line (Clean vehicle
+      credit). Read the form's "stop here" lines for the transfer and repayment paths.
+- [ ] An answer that a form lists as a stop ("You can't claim a credit") must change the calculation: the seller's report answer and the
+      used vehicle's model year rule gated nothing (Clean vehicle credit).
 - [ ] Unit tests for new helpers (e.g. `id-validation.spec.ts`, `scenario-completeness.spec.ts`).
 - [ ] Entry in `history.md`; commit and push us-tax-ui, us-tax-be (e2e / backend) and us-tax (docs).
 
@@ -645,6 +650,7 @@ Deductions labels renamed in the Incomes style. Headings still in the old "Form 
 | Credit for the elderly or disabled (Schedule R; Family Head, spouse) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-09 |
 | Investment interest (Form 4952; Family Head, spouse) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-09 |
 | Prior-year minimum tax credit (Form 8801; Family Head, spouse) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-09 |
+| Clean vehicle credit (Form 8936; Family Head, spouse) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-09 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

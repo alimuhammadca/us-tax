@@ -1,3 +1,30 @@
+## 2026-11-09T18:00 - Clean vehicle credit (Form 8936): Screen Review Checklist applied
+
+- Audit against the Instructions for Form 8936 (2025) (docs/books/i8936.pdf) and Schedule A (Form 8936) (2025) (docs/IRS-Forms/f8936sa.pdf).
+  The September 30, 2025 cutoff (P.L. 119-21) was already applied; "acquired" is the binding contract and a payment, so the screen
+  now asks that date first and warns on the vehicle.
+- Calculation (`CleanVehicleRules`):
+  - A credit transferred to the dealer at the sale was also put on Schedule 3 line 6f / 6m - claimed twice. Schedule A lines 8c/8d/
+    13b/13c: "If you transferred the credit amount to the dealer at the time of sale, stop here". It is now not claimed again; Form 8936
+    and Schedule A are still filed.
+  - A transferred credit not allowed (resold within 30 days, or MAGI over the limit for both years - line 4b) is repaid on Schedule 2
+    line 1b (new) / 1c (previously owned) and added to Form 1040 line 17 before the credits read line 18; nothing reported it. Line 8d /
+    13c is now asked only when 2025 is over the limit (a high 2024 MAGI alone checked line 4b).
+  - A blank 2024 MAGI no longer counts as under the limit when 2025 is over it (note to enter it).
+  - Previously owned: the model year must be at least 2 years before the year acquired (not checked).
+  - "Did you get the seller's report?" gated nothing; a No now means no credit, with a note.
+  - Only allowed vehicles share the Schedule 3 line 6m / 6f amount (a disallowed vehicle took an allowed one's share).
+  - Line 16 limit: Schedule 3 line 6b (prior-year minimum tax credit) is not subtracted - the instructions list lines 1-4, 5b, 6d, 6i.
+  - Form 8936 lines 1b-1d (Puerto Rico, Form 2555 lines 45 and 50, Form 4563) are figured from the return when the box is blank.
+- Screen: rebuilt (inline template, the .html removed) in the shared pattern with Reset and save partial; vehicles as white cards with
+  Clear and Remove and a plain "Add a vehicle"; the shared date control; the import summary, required legend and the red/amber boxes
+  replaced by field warnings. The save was refused unless "I confirm that seller reports and supporting documentation are available"
+  was Yes; nothing read it - removed with its column (V448, owner 2026-11-09). On a joint return the spouse tab asks for the vehicles in
+  the spouse's name (the income test is the Family Head's); the 3-year question now says "another vehicle" and the dependent one asks
+  about the filer. Help rewritten from the instructions (`data/clean-vehicle-credit-help.ts`).
+- Tests: Java `CleanVehicleCreditScreenReviewTest` (7); Karma spec rewritten (3); e2e `clean-vehicle-credit-screen.spec.ts` (3) plus
+  the two clean vehicle specs (updated) - 10 pass.
+
 ## 2026-11-09T17:00 - Prior-year minimum tax credit (Form 8801): Screen Review Checklist applied
 
 - Audit against the Instructions for Form 8801 (2025) (docs/books/i8801.pdf) and Form 8801 (2025) (docs/IRS-Forms/f8801.pdf).

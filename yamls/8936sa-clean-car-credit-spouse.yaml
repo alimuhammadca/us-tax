@@ -1,142 +1,51 @@
-# Schedule A (Form 8936) spouse workflow.
-# This spouse form is additive only. The return still produces one combined
-# Schedule 3 result, but each spouse-owned vehicle becomes its own Schedule A
-# attachment when the return is computed.
+# Form 8936 / Schedule A (Form 8936) - Clean vehicle credit (spouse). Component: form-clean-car-credit.component.ts. Screen review
+# 2026-11-09 (Instructions for Form 8936 (2025)): the "seller reports and support ready" confirmation was removed with its column (V448,
+# owner 2026-11-09); no credit for a vehicle acquired after September 30, 2025; a transferred credit is not claimed again and is repaid on
+# Schedule 2 line 1b / 1c when the vehicle doesn't qualify (CleanVehicleRules); MAGI lines 1b-1d figured from the return when blank.
+# Joint return: the vehicles whose seller's report names the spouse (income on the Family Head's screen); separate return: the spouse's own
+# Form 8936 (MfsFormScoper maps spouseVehicles / the gate / the spouse MAGI keys).
 name: clean-car-credit-spouse
-title: Schedule A (Form 8936) - Clean car credit (spouse)
+title: Clean vehicle credit (Form 8936)
 multiplicity: single
-formName: 8936sa
-category: deductions
-instructions:
-  - Use this spouse form only for spouse-owned vehicles on a joint return.
-  - The return still uses one joint MAGI test, but each spouse vehicle gets its own Schedule A attachment.
-  - Business and commercial vehicle paths are deferred in this phase.
+formName: Form 8936
+category: credits
 sections:
-  - name: screening
-    title: Screening
+  - name: claim
+    title: Claiming the credit
     multiplicity: single
     fields:
-      - name: spouseHasCleanCarCreditInputs
-        type: boolean
-        required: true
-        label: Does the spouse have clean car credit vehicle inputs?
-
-  - name: spouseVehicles
-    title: Spouse clean vehicles
+      - { name: spouseHasCleanCarCreditInputs, type: boolean, required: true, label: "Joint: Did your spouse buy a clean vehicle whose seller's report is in your spouse's name? Separate: Did your spouse buy a clean vehicle and start using it in the tax year?" }
+  - name: income
+    title: Income limit
+    showIf: spouseHasCleanCarCreditInputs == true && filingStatus == 'Married filing separately'
+    multiplicity: single
+    fields:
+      - { name: spousePriorYearMagi, type: amount, required: false, label: "Spouse's prior-year modified AGI (line 3a)" }
+      - { name: spouseCurrentYearAdditionalMagiAddbacks, type: amount, required: false, label: "Excluded income added to AGI (lines 1b-1d)" }
+  - name: vehicles
+    title: Vehicles
+    showIf: spouseHasCleanCarCreditInputs == true
     multiplicity: multiple
-    showIf: spouseHasCleanCarCreditInputs == true
+    listKey: spouseVehicles
     fields:
-      - name: vehicleNickname
-        type: text
-        required: false
-        placeholder: Optional label used only in the UI
-        label: Vehicle nickname
-      - name: creditPath
-        type: select
-        required: true
-        label: Credit path
-        options:
-          - New clean vehicle
-          - Previously owned clean vehicle
-      - name: vehicleYear
-        type: number
-        required: true
-        label: Vehicle year
-      - name: vehicleMake
-        type: text
-        required: true
-        label: Vehicle make
-      - name: vehicleModel
-        type: text
-        required: true
-        label: Vehicle model
-      - name: vehicleVin
-        type: text
-        required: true
-        label: VIN
-      - name: vehiclePlacedInServiceDate
-        type: date
-        required: true
-        label: Placed-in-service date
-      - name: vehicleAcquiredDate
-        type: date
-        required: false
-        label: Acquisition date
-      - name: sellerReportReceived
-        type: boolean
-        required: false
-        label: Seller or dealer report received
-      - name: creditTransferredToDealer
-        type: boolean
-        required: false
-        label: Was the credit transferred to the dealer at the time of sale?
-      - name: transferredCreditAmount
-        type: amount
-        required: false
-        placeholder: 0.00
-        label: Transferred credit amount
-      - name: resoldWithin30Days
-        type: boolean
-        required: false
-        label: Was the vehicle resold within 30 days?
-      - name: newVehicleAcquiredForUseOrLeaseNotResale
-        type: boolean
-        required: false
-        label: New vehicle acquired for use or lease, not resale
-      - name: newVehicleTentativeCreditAmount
-        type: amount
-        required: false
-        placeholder: 0.00
-        label: New clean vehicle tentative credit amount
-      - name: businessUsePercentage
-        type: amount
-        required: false
-        placeholder: 0
-        label: Business or investment use percentage
-      - name: previouslyOwnedAcquiredForUseNotResale
-        type: boolean
-        required: false
-        label: Previously owned vehicle acquired for use, not resale
-      - name: previouslyOwnedSalesPrice
-        type: amount
-        required: false
-        placeholder: 0.00
-        label: Previously owned vehicle sales price
-      - name: previouslyOwnedClaimedInPrior3Years
-        type: boolean
-        required: false
-        label: Previously owned clean vehicle credit claimed in the prior 3 years
-      - name: previouslyOwnedCanBeClaimedAsDependent
-        type: boolean
-        required: false
-        label: Can the purchaser be claimed as a dependent on another return?
-
-  - name: spouseModifiedAgi
-    title: "Spouse modified AGI test (Form 8936 Part I)"
-    multiplicity: single
-    showIf: "spouseHasCleanCarCreditInputs == true"
-    fields:
-      - name: spousePriorYearMagi
-        type: number
-        required: false
-        label: "Spouse's last-year Modified Adjusted Gross Income"
-      - name: spouseCurrentYearAdditionalMagiAddbacks
-        type: number
-        required: false
-        label: "Spouse's this-year add-backs (foreign earned income exclusion, etc.)"
-
-  - name: importedFields
-    title: Imported fields (backend only)
-    multiplicity: single
-    showIf: spouseHasCleanCarCreditInputs == true
-    fields:
-      - name: importedJointFilingStatus
-        type: text
-        required: false
-        readOnly: true
-        label: Imported joint filing status
-      - name: importedJointCurrentYearAgi
-        type: amount
-        required: false
-        readOnly: true
-        label: Imported joint current-year AGI
+      - { name: vehicleNickname, type: text, required: false, label: "Name for this vehicle (not on the form)" }
+      - { name: creditPath, type: select, required: false, options: ["New clean vehicle", "Previously owned clean vehicle"], label: "New or previously owned (Schedule A line 5 / 6)" }
+      - { name: vehicleVin, type: text, required: false, label: "Vehicle identification number (line 2)" }
+      - { name: vehicleYear, type: number, required: false, label: "Model year (line 1a)" }
+      - { name: vehicleMake, type: text, required: false, label: "Make (line 1b)" }
+      - { name: vehicleModel, type: text, required: false, label: "Model (line 1c)" }
+      - { name: vehicleAcquiredDate, type: date, required: false, label: "Date acquired - written binding contract and a payment (the September 30 cutoff)" }
+      - { name: vehiclePlacedInServiceDate, type: date, required: false, label: "Date placed in service - took possession (line 3)" }
+      - { name: sellerReportReceived, type: boolean, required: false, label: "Got the seller's report?", help: "No: no credit (CleanVehicleRules)." }
+      - { name: creditTransferredToDealer, type: boolean, required: false, label: "Credit transferred to the dealer at the time of sale? (line 4a)" }
+      - { name: transferredCreditAmount, type: amount, required: false, showIf: creditTransferredToDealer == true, label: "Amount transferred (seller's report)", help: "Not claimed again; repaid on Schedule 2 line 1b / 1c when line 4b is checked." }
+      - { name: resoldWithin30Days, type: boolean, required: false, label: "Resold within 30 days of the date placed in service? (line 8a / 13a)" }
+      - { name: newVehicleAcquiredForUseOrLeaseNotResale, type: boolean, required: false, showIf: creditPath == 'New clean vehicle', label: "Acquired for use or to lease to others, not for resale? (line 8e)" }
+      - { name: newVehicleType, type: radio, required: false, showIf: creditPath == 'New clean vehicle', options: [CAR, VAN_SUV_PICKUP], label: "Vehicle class (MSRP $55,000 / $80,000)" }
+      - { name: newVehicleMsrp, type: amount, required: false, showIf: creditPath == 'New clean vehicle', label: "Manufacturer's suggested retail price" }
+      - { name: newVehicleTentativeCreditAmount, type: amount, required: false, showIf: creditPath == 'New clean vehicle', label: "Tentative credit (seller's report; line 9)" }
+      - { name: businessUsePercentage, type: percent, required: false, showIf: creditPath == 'New clean vehicle', label: "Business or investment use % (line 10)" }
+      - { name: previouslyOwnedAcquiredForUseNotResale, type: boolean, required: false, showIf: creditPath == 'Previously owned clean vehicle', label: "Acquired for use, not for resale? (line 13f)" }
+      - { name: previouslyOwnedSalesPrice, type: amount, required: false, showIf: creditPath == 'Previously owned clean vehicle', label: "Sales price (line 14; at most $25,000)" }
+      - { name: previouslyOwnedClaimedInPrior3Years, type: boolean, required: false, showIf: creditPath == 'Previously owned clean vehicle', label: "Claimed the used credit for another vehicle bought in the 3 years before this one? (line 13d)" }
+      - { name: previouslyOwnedCanBeClaimedAsDependent, type: boolean, required: false, showIf: creditPath == 'Previously owned clean vehicle', label: "Can someone claim your spouse as a dependent? (line 13g)" }

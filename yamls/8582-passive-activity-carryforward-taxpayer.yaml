@@ -1,49 +1,91 @@
-# Suspended passive losses from K-1s (Form 8582 / Form 6198 carryforwards) - taxpayer/family head.
-# Component: form-passive-activity-carryforward.component.ts.
+# Suspended passive losses (Form 8582 / Form 6198 / IRC 704(d)) - taxpayer / family head.
+# Component: form-passive-activity-carryforward.component.ts (formId passive-activity-carryforward-taxpayer; the same component saves
+# passive-activity-carryforward-spouse for the spouse). Screen review 2026-11-09 (owner): last year's unallowed losses in three boxes -
+# V445 added the K-1 box 2 rental real estate one (Form 8582 Part IV column (c), with the special allowance when actively participated
+# in both years, else Part V); the at-risk answers are kept whatever the carryover answer; the at-risk carryover serves a lone passive
+# partnership K-1 too; the basis rows pick the partnership from the person's own Schedules K-1 (Form 1065).
 name: passive-activity-carryforward-taxpayer
-title: "Suspended passive losses from K-1s (taxpayer/family head)"
+title: "Suspended passive losses (Form 8582)"
 multiplicity: single
 formName: "Form 8582"
-category: "income"
+category: "deductions"
 sections:
   - name: screening
-    title: "Screening"
+    title: "Losses carried over from the prior year"
     multiplicity: single
     fields:
       - name: hasPassiveActivityCarryforward
         type: boolean
         required: true
-        label: "Do you have a suspended passive loss from a K-1 to carry forward?"
+        label: "Do you have passive losses from a Schedule K-1 that couldn't be deducted in the prior year or earlier?"
+        help: "If last year's return was done here, its unallowed losses are brought in (an amount entered here is used instead)."
+      - name: priorYearSuspendedPassiveLoss
+        type: amount
+        required: false
+        showIf: "hasPassiveActivityCarryforward == true"
+        label: "Other passive K-1 activities"
+        help: "Form 8582 Part VII column (c) - Part V (all other passive activities), no special allowance."
+      - name: k1RentalPriorYearUnallowedLoss
+        type: amount
+        required: false
+        showIf: "hasPassiveActivityCarryforward == true"
+        label: "K-1 rental real estate actively participated in (box 2)"
+        help: "Part IV column (c) / Part I line 1c when actively participated in this year too; otherwise Part V."
+      - name: ptpPriorYearUnallowedLoss
+        type: amount
+        required: false
+        showIf: "hasPassiveActivityCarryforward == true"
+        label: "A publicly traded partnership"
+        help: "Allowed only against the same PTP's income; used when there is one PTP K-1."
 
-  - name: carryforwards
-    title: "Prior-year carryforwards and at-risk"
+  - name: rentalRealEstate
+    title: "K-1 rental real estate"
     multiplicity: single
     fields:
-      - name: priorYearSuspendedPassiveLoss
-        type: number
-        required: false
-        label: "Total prior-year suspended passive loss from K-1s"
-        showIf: "hasPassiveActivityCarryforward == true"
-      - name: someK1InvestmentNotAtRisk
-        type: boolean
-        required: false
-        label: "Is any of your investment in these passive K-1 activities NOT at risk?"
-        showIf: "hasPassiveActivityCarryforward == true"
-      - name: k1AmountAtRisk
-        type: number
-        required: false
-        label: "Total amount at risk in these K-1 activities"
-        showIf: "someK1InvestmentNotAtRisk == true"
       - name: k1RentalActiveParticipation
         type: boolean
         required: false
-        label: "Did you actively participate in the rental real estate reported in box 2 of your K-1s?"
-        showIf: "hasPassiveActivityCarryforward == true"
-      - name: ptpPriorYearUnallowedLoss
-        type: number
+        label: "Did you actively participate this year in the rental real estate reported in box 2 of a Schedule K-1?"
+
+  - name: atRisk
+    title: "Amount at risk"
+    multiplicity: single
+    fields:
+      - name: someK1InvestmentNotAtRisk
+        type: boolean
         required: false
-        label: "Prior-year unallowed loss from a publicly traded partnership (optional)"
+        label: "Is any of your investment in a passive K-1 activity not at risk?"
+      - name: k1AmountAtRisk
+        type: amount
+        required: false
+        showIf: "someK1InvestmentNotAtRisk == true"
+        label: "Amount at risk in those activities"
+        help: "Limits the combined loss of the passive K-1s without items K and L (a partnership K-1 with them uses its own)."
       - name: priorYearK1AtRiskCarryforward
-        type: number
+        type: amount
         required: false
-        label: "Prior-year partnership loss not allowed under the at-risk rules (nonpassive K-1s, optional)"
+        label: "Partnership loss not allowed in the prior year under the at-risk rules"
+        help: "Joins this year's loss of the only nonpassive partnership K-1, or with none, the only passive one (Form 6198)."
+
+  - name: partnershipBasis
+    title: "Your basis in a partnership"
+    multiplicity: multiple
+    fields:
+      - name: partnershipEin
+        type: select
+        required: true
+        label: "Partnership (Schedule K-1 item A)"
+        help: "Picked from the person's own Schedules K-1 (Form 1065); saved as the EIN, digits only."
+      - name: partnershipName
+        type: text
+        required: false
+        readOnly: true
+        label: "Partnership name (from the K-1)"
+      - name: adjustedBasisBeforeLosses
+        type: amount
+        required: false
+        label: "Basis at year end, before this year's losses"
+      - name: priorYearBasisSuspendedLoss
+        type: amount
+        required: false
+        label: "Loss not allowed in earlier years because of basis"

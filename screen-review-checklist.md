@@ -253,6 +253,15 @@ owner 2026-11-04).*
       No barred the credit. Work the second fact out from the answers that state it (each school's line 22 question) (Education credits).
 - [ ] Read a person's name from the key the owning screen saves: Identification (spouse) saves `spouseFirstNamefirstName`, not
       `spouseFirstName` - the spouse showed with no first name in pick lists (Education credits; also `statement-owner.ts`).
+- [ ] An answer is cleared on save only by the question that hides it: the at-risk answers (this year's losses) were erased whenever
+      "losses carried over?" was No (Suspended passive losses). Check each key `normalizeForSave` nulls against the `*ngIf` that shows it.
+- [ ] A box the calculation uses for one case only must not be where a message sends other cases: the passive at-risk note told the user
+      to type the carryover in a box applied only to a nonpassive K-1, and it was dropped as "not matched" (Suspended passive losses).
+      Read every message that names the screen and check the box it names takes that case.
+- [ ] A typed key the calculation matches a statement by (a partnership EIN) is a pick list of the person's own statements, saving the
+      same key - and the calculation's owner check reads the statement's own number field (item E), not only `recipientTIN`.
+- [ ] Where a carried-over amount goes can depend on this year's answer: a K-1 rental loss gets the special allowance only if actively
+      participated in "both the year the loss arose and the current tax year" (Form 8582 Part IV) - otherwise Part V.
 - [ ] Unit tests for new helpers (e.g. `id-validation.spec.ts`, `scenario-completeness.spec.ts`).
 - [ ] Entry in `history.md`; commit and push us-tax-ui, us-tax-be (e2e / backend) and us-tax (docs).
 
@@ -612,6 +621,7 @@ Deductions labels renamed in the Incomes style. Headings still in the old "Form 
 | Education credits (Form 8863; Family Head, spouse) | 1-8, 11-21, 24, 25 | 2026-11-08 |
 | Home energy credits (Form 5695; Family Head, spouse) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-08 |
 | Homebuyer credit repayment (Form 5405; Family Head, spouse; 2024 and earlier only) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-08 |
+| Suspended passive losses (Form 8582; Family Head, spouse) | 1-8, 11, 13, 15-21, 23-25 | 2026-11-09 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

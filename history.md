@@ -1,3 +1,31 @@
+## 2026-11-09T06:30 - Suspended passive losses (Form 8582): Screen Review Checklist applied
+
+- Audit against the 2025 Instructions for Form 8582, the Instructions for Form 6198 (Rev. November 2025) and the Partner's
+  Instructions for Schedule K-1 (Form 1065) (2025).
+- Owner answers: the at-risk carryover box serves either kind of partnership ("one box, either kind"); add a box for last year's
+  unallowed loss of K-1 box 2 rental real estate (V445).
+- Calculation:
+  - V445 `k1RentalPriorYearUnallowedLoss`: Form 8582 Part IV column (c) / Part I line 1c, with the special allowance, when the filer
+    actively participates this year too; otherwise Part V ("Don't enter a prior-year unallowed loss in column (c) of Part IV unless
+    you actively participated in the activity in both the year the loss arose and the current tax year"). It stops the prior-year
+    bridge like the other typed K-1 loss (K1PassiveClasses.rentalPriorSplit).
+  - The at-risk carryover joins the box 1 loss of the return's only partnership K-1 when that K-1 is passive (i6198: "must be
+    included in the current year amounts"), so its own amount at risk and then Form 8582 limit it (K1AtRisk.withPassiveCarryover).
+    It was dropped as "not matched", while the K1_PASSIVE_AT_RISK_LOSS_CARRIED_FORWARD note told the user to type it there; the
+    note named a "Passive activity carryforward form" that doesn't exist.
+  - A partnership basis row is matched to the owner's K-1 by item E too (PartnershipBasisLimit read only recipientTIN, which a K-1
+    entered on the screen doesn't have, so a spouse's K-1 with the same EIN could take the row).
+- Screen: the shared look and bar with Reset and save partial; sections Losses carried over from 2024 (three boxes), K-1 rental real
+  estate, Amount at risk, Your basis in a partnership (cards with Clear / Remove). The at-risk answers were erased by a No to the
+  carryover question - they are about this year's losses and are now kept. The basis partnership is picked from the person's own
+  Schedules K-1 (Form 1065) instead of a typed EIN. An older save with a carried-over amount and no answer opens as Yes. Title
+  "Suspended passive losses (person)"; help from the instructions (`data/passive-losses-help.ts`); Prior-year carryovers names the
+  screen by its sidebar name; the PTP and at-risk messages quote the new labels.
+- Tests: Java `SuspendedPassiveLossesScreenReviewTest` (9); UI `utils/passive-losses-screen.spec.ts`; e2e
+  `suspended-passive-losses-screen.spec.ts` (4) plus low-medium-a2 / -g1 and partnership-basis-limit - 16 pass. Backend suite: the
+  known thirdPartyDesignee failure and three that fail on main without this change (NonOverrideableFlagMessagesTest x2,
+  Sc00206SqaScenarioTest x1).
+
 ## 2026-11-08T23:00 - Homebuyer credit repayment (Form 5405): Screen Review Checklist applied
 
 - Audit against Form 5405 and its instructions (Rev. November 2024, downloaded from irs.gov - not in docs/books) and the 2025

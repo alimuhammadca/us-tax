@@ -1,5 +1,16 @@
 # Outstanding Items
 
+## Suspended passive losses (Form 8582): found in the 2026-11-09 review, not changed
+
+- Last year's unallowed K-1 losses are entered as three totals, not per activity, so a K-1 activity sold in full this year doesn't
+  release its own carried loss (Form 8582 "entire disposition"); the PTP box and the at-risk carryover are used only when exactly one
+  matching K-1 is on the return.
+- The prior-year bridge brings last year's whole Form 8582 carryforward (rentals and K-1s) into the rental pool, where it can use the
+  special allowance even for K-1 losses that belong in Part V.
+- Failing on main before this review (not from it): NonOverrideableFlagMessagesTest (FORM_1099S_REAL_ESTATE_REPORTED message shape;
+  the filing-status / HOH / Social Security messages name no form) and Sc00206SqaScenarioTest.theTerminallyIllNoteNeedsAdbOnlyPayments
+  (NullPointerException).
+
 ## Homebuyer credit repayment (Form 5405): found in the 2026-11-08 review, not changed
 
 - Form 5405 itself is not produced (no preview): a 2024 disposition repays through Schedule 2 line 10 but the form with Part I-III

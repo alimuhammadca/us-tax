@@ -1,3 +1,23 @@
+## 2026-11-09T20:00 - Credit for tax credit bonds (Form 8912): Screen Review Checklist applied
+
+- Audit against the Instructions for Form 8912 (Rev. December 2024) (docs/books/i8912.pdf) and Form 8912 (docs/IRS-Forms/f8912.pdf).
+- Calculation:
+  - Part III is "Bond Credit(s) Reported to You on Form(s) 1097-BTC". The screen kept its own typed copy of those rows and the Forms
+    1097-BTC entered on Statements were never used for the credit (or for the interest it adds to line 2b) - only for the carryforward
+    split. Part III now comes from the return's Forms 1097-BTC, box 1 (`Form8912Statements`); the typed rows were removed from the
+    screen and are no longer read (owner 2026-11-09). A Form 1097-BTC with an unanswered claim counts as claiming.
+  - Line 7 is "Form 1040 line 16; and Schedule 2 line 1z" - it read `Schedule2Tax.totalTax`, which nothing sets (the same defect as
+    Form 8911 line 5).
+  - Part IV line 20 takes 70% for a new clean renewable energy bond or a qualified energy conservation bond. The bond type was typed text
+    compared upper-cased with "NCREB" / "QECB", so a type written in words got 100%. It is now a pick list, and words map to codes.
+- Screen: rebuilt in the shared pattern with Reset and save partial; title "Credit for tax credit bonds (person)". The import summary of
+  tax figures, the "?" help buttons and the blue item cards are gone. The person's Forms 1097-BTC are listed with links (or a link to add
+  one); Part IV bonds are white cards with Clear and Remove, the issuer EIN uses the EIN input, dates the shared date control, a warning
+  for a bond issued after 2017, and the credit figured from principal x rate x percentage when left blank. Help rewritten from the
+  instructions (`data/bond-credit-help.ts`).
+- Tests: Java `TaxCreditBondsScreenReviewTest` (3) and four existing test files moved from typed rows to Form 1097-BTC statements; a new
+  Karma spec (3); e2e `bond-credit-screen.spec.ts` (3) plus the three bond credit specs (updated) - 11 pass.
+
 ## 2026-11-09T19:00 - Alternative fuel vehicle refueling credit (Form 8911): Screen Review Checklist applied
 
 - Audit against the Instructions for Form 8911 (Rev. December 2025) (docs/books/i8911.pdf), Form 8911 and Schedule A (Form 8911)

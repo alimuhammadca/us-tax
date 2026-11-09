@@ -288,6 +288,11 @@ owner 2026-11-04).*
       used vehicle's model year rule gated nothing (Clean vehicle credit).
 - [ ] A field the calculation reads must be one something sets: Form 8911 line 5 read `Schedule2Tax.totalTax`, which no code writes, so
       Schedule 2 line 1z never reached the limit (Alternative fuel vehicle refueling credit). Grep the setter of every getter a line uses.
+- [ ] A screen that asks again for a statement the app already has (typed Form 1097-BTC rows next to the Form 1097-BTC statement
+      screen) is a second source the calculation may read instead of the statements - check which one it reads, read the statements and
+      list them with links (Credit for tax credit bonds).
+- [ ] A value the calculation compares with codes ("NCREB", "QECB") must be a pick list of those codes: typed words never matched (Credit
+      for tax credit bonds).
 - [ ] Unit tests for new helpers (e.g. `id-validation.spec.ts`, `scenario-completeness.spec.ts`).
 - [ ] Entry in `history.md`; commit and push us-tax-ui, us-tax-be (e2e / backend) and us-tax (docs).
 
@@ -654,6 +659,7 @@ Deductions labels renamed in the Incomes style. Headings still in the old "Form 
 | Prior-year minimum tax credit (Form 8801; Family Head, spouse) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-09 |
 | Clean vehicle credit (Form 8936; Family Head, spouse) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-09 |
 | Alternative fuel vehicle refueling credit (Form 8911; Family Head, spouse) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-09 |
+| Credit for tax credit bonds (Form 8912; Family Head, spouse) | 1-8, 11, 13, 15-21, 23-25 | 2026-11-09 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

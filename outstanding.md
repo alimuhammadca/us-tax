@@ -1,5 +1,13 @@
 # Outstanding Items
 
+## Credit for tax credit bonds (Form 8912): found in the 2026-11-09 review, not changed
+
+- The unused credit of a CREB or a QZAB issued before October 4, 2008 can be deducted (this year or next) instead of carried; not figured.
+- The pass-through CREB limit (line 12, taxable income from the entity / taxable income) is not applied.
+- Fiscal-year boxes 5a-5l of Form 1097-BTC are not used (calendar-year filers only).
+- Old typed Form 1097-BTC rows saved before 2026-11-09 stay in storage, unread; anyone who typed a credit without entering the Form
+  1097-BTC on Statements must enter the statement.
+
 ## Alternative fuel vehicle refueling credit (Form 8911): found in the 2026-11-09 review, not changed
 
 - The business part (line 3) and the Schedule K-1 code AO credit (line 2) are general business credits (Form 3800 line 1s), not figured;

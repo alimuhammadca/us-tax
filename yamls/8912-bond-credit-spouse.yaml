@@ -1,111 +1,35 @@
-# Form 8912 - Credit to Holders of Tax Credit Bonds - spouse supplemental form.
-# Use this only for spouse-side additions on an MFJ return. The output remains one joint Form 8912.
+# Form 8912 (Rev. December 2024) - Credit for tax credit bonds (spouse). Component: form-bond-credit.component.ts. Screen review
+# 2026-11-09: Part III comes from the Forms 1097-BTC on Statements (box 1) - the typed copy of those rows (taxpayer1097BtcEntries /
+# spouse1097BtcEntries) was removed from the screen and is no longer read (owner 2026-11-09; Form8912Statements); line 7 is Form 1040
+# line 16 + Schedule 2 line 1z; the bond type is a pick list (the 70% rule matched only the codes). Last year's carryforward fills line 3.
+# Joint return: the spouse's carryover and Part IV bonds join the one Form 8912; separate return: the spouse's own (MfsFormScoper).
 name: bond-credit-spouse
-title: Form 8912 - Bond credit (spouse)
+title: Credit for tax credit bonds (Form 8912)
 multiplicity: single
-formName: 8912
-category: deductions
-instructions:
-  - Use this form only when filing jointly and the spouse has additional bond-credit entries or carryforward contribution to add.
-  - The output remains one joint Form 8912 per return.
+formName: Form 8912
+category: credits
 sections:
-  - name: screening
-    title: Screening
+  - name: claim
+    title: Claiming the credit
     multiplicity: single
     fields:
-      - name: spouseHasBondCreditInputs
-        type: boolean
-        required: true
-        label: Does your spouse have additional bond credit information to add?
-
-  - name: carryforward
-    title: Spouse carryforward contribution
-    multiplicity: single
+      - { name: spouseHasBondCreditInputs, type: boolean, required: true, label: "Did your spouse hold a tax credit bond in the tax year?" }
+      - { name: spousePriorYearCarryforwardContribution, type: amount, required: false, showIf: spouseHasBondCreditInputs == true, label: "Unused credit carried from the prior year (line 3)" }
+  - name: bonds
+    title: Bonds without a Form 1097-BTC (Part IV)
     showIf: spouseHasBondCreditInputs == true
-    fields:
-      - name: spousePriorYearCarryforwardContribution
-        type: amount
-        required: false
-        label: Spouse prior-year Form 8912 carryforward contribution
-        placeholder: 0.00
-
-  - name: spouse1097BtcEntries
-    title: Spouse Form 1097-BTC entries
     multiplicity: multiple
-    showIf: spouseHasBondCreditInputs == true
+    listKey: spouseDirectBondEntries
     fields:
-      - name: issuerName
-        type: text
-        required: false
-        label: Issuer name
-      - name: issuerEin
-        type: text
-        required: false
-        label: Issuer EIN
-      - name: uniqueIdentifier
-        type: text
-        required: false
-        label: Unique identifier
-      - name: creditAmount
-        type: amount
-        required: false
-        label: Credit amount from Form 1097-BTC
-        placeholder: 0.00
-
-  - name: spouseDirectBondEntries
-    title: Spouse directly held bond entries
-    multiplicity: multiple
-    showIf: spouseHasBondCreditInputs == true
-    fields:
-      - name: bondType
-        type: text
-        required: false
-        label: Bond type
-      - name: issuerName
-        type: text
-        required: false
-        label: Bond issuer name
-      - name: issuerCityState
-        type: text
-        required: false
-        label: Bond issuer city and state
-      - name: issuerEin
-        type: text
-        required: false
-        label: Bond issuer EIN
-      - name: issueDate
-        type: date
-        required: false
-        label: Bond issue date
-      - name: maturityDate
-        type: date
-        required: false
-        label: Bond maturity date
-      - name: disposalDate
-        type: date
-        required: false
-        label: Bond disposal date
-      - name: cusipOrPaymentDates
-        type: text
-        required: false
-        label: CUSIP number or payment dates
-      - name: basisAmount
-        type: amount
-        required: false
-        label: Outstanding principal or interest payable
-        placeholder: 0.00
-      - name: creditRatePercent
-        type: amount
-        required: false
-        label: Treasury credit rate percent
-        placeholder: 0.00
-      - name: allocationPercentage
-        type: amount
-        required: false
-        label: Allocation percentage held
-        placeholder: 0.00
-      - name: line19BaseCreditAmount
-        type: amount
-        required: false
-        label: Form 8912 Part IV line 19 base credit amount
-        placeholder: 0.00
+      - { name: bondType, type: select, required: false, options: [CREB, NCREB, QECB, QZAB, QSCB, BAB], label: "Bond type (line 20: 70% for NCREB / QECB)" }
+      - { name: issuerName, type: text, required: false, label: "Issuer name (line 15a)" }
+      - { name: issuerCityState, type: text, required: false, label: "Issuer city or town and state (line 15a)" }
+      - { name: issuerEin, type: ein, required: false, label: "Issuer EIN (line 15b)" }
+      - { name: issueDate, type: date, required: false, label: "Date issued (line 16a)", help: "After 2017: no credit." }
+      - { name: maturityDate, type: date, required: false, label: "Date it matures (line 16b)" }
+      - { name: disposalDate, type: date, required: false, label: "Date disposed of (line 17)" }
+      - { name: cusipOrPaymentDates, type: text, required: false, label: "CUSIP number or payment dates (line 18 (a))" }
+      - { name: basisAmount, type: amount, required: false, label: "Outstanding principal / BAB interest payable (line 18 (b))" }
+      - { name: creditRatePercent, type: percent, required: false, label: "Credit rate (line 18 (c))" }
+      - { name: allocationPercentage, type: percent, required: false, label: "Percentage for the year (line 18 (e))" }
+      - { name: line19BaseCreditAmount, type: amount, required: false, label: "Credit figured (line 18 (f))", help: "Blank: principal x rate x percentage." }

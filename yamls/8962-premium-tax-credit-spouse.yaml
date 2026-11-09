@@ -1,91 +1,53 @@
-# Form 8962 spouse supplemental intake.
-# Form 8962 is one consolidated return-level form. This spouse form captures
-# only the spouse-specific MAGI add-backs for Worksheet 1-1.
-# The taxpayer form owns all return-level gating, FPL settings, shared policy
-# allocation (Part IV), and the year-of-marriage election (Part V).
-# NOTE: Backend-only sections are not rendered in the UI intake component.
+# Form 8962 (2025) - Premium tax credit (spouse). Only on a separate return (her own Form 8962; MfsFormScoper un-prefixes the
+# spousePtc* keys onto her leg). On a joint return the screen only points to the Family Head's. Screen review 2026-11-09: the joint
+# Form 2555 add-backs and the confirmation were removed (V453); her own months-with-no-credit, noncitizen and Part IV answers added
+# to the screen (the mapper already had Part IV; spousePtcIneligibleCoverageMonths is new in the mapper, same column).
 name: premium-tax-credit-spouse
-title: Form 8962 - Premium tax credit (spouse supplemental)
+title: Premium tax credit (Form 8962)
 multiplicity: single
-formName: 8962
-category: deductions
-instructions:
-  - Use this form to enter spouse-specific MAGI add-backs only. All other Form 8962 questions are on the taxpayer Form 8962 tab.
-  - The spouse's AGI is automatically combined with the taxpayer's AGI by the backend when computing household income (line 3).
+formName: Form 8962
+category: credits
 sections:
-  - name: screening
-    title: Screening
+  - name: coverage
+    title: Marketplace coverage
     multiplicity: single
+    showIf: "married filing separately"
     fields:
-      - name: spouseHasAdditionalPtcInputs
-        type: boolean
-        required: true
-        label: Does the spouse have any Form 2555 foreign income exclusions that must be added back for Form 8962 MAGI?
-        help: Select Yes if the spouse has a Form 2555 foreign earned income or housing exclusion that must be added back to compute household income for Form 8962.
-
-  - name: spouseModifiedAgiAddbacks
-    title: Spouse modified AGI add-backs (Worksheet 1-1)
+      - { name: spousePtcClaimsOrReceivedPtc, type: boolean, required: true, label: "Was your spouse enrolled in a health plan through the Marketplace in 2025?" }
+  - name: household
+    title: Tax family
     multiplicity: single
-    showIf: spouseHasAdditionalPtcInputs == true
-    instructions:
-      - The backend already includes the spouse AGI in the household income calculation. Enter only additional add-backs below that are specific to the spouse.
+    showIf: spousePtcclaimsOrReceivedPtc == true
     fields:
-      - name: spouseMagiAddbackForm2555Fei
-        type: amount
-        required: false
-        placeholder: 0.00
-        label: Spouse Form 2555 foreign earned income exclusion
-        help: Enter the amount from the spouse's Form 2555, line 45 or line 50 (foreign earned income exclusion), if not already entered on the taxpayer Form 8962 tab.
-      - name: spouseMagiAddbackForm2555Housing
-        type: amount
-        required: false
-        placeholder: 0.00
-        label: Spouse Form 2555 foreign housing exclusion
-        help: Enter the amount from the spouse's Form 2555, line 47 (foreign housing exclusion), if applicable and not already entered on the taxpayer tab.
-
-  - name: spousePremiumTaxCredit
-    title: "Spouse's own premium tax credit (Form 8962)"
+      - { name: spousePtctaxFamilySize, type: integer, required: false, label: "Tax family size (line 1)", note: "blank: figured from the return" }
+      - { name: spousePtcfplRegion, type: select, options: [continental, alaska, hawaii], required: false, label: "Poverty table (line 4)", note: "blank: from the address" }
+      - { name: spousePtcmfsException, type: boolean, required: false, showIf: "married filing separately", label: "Domestic abuse / spousal abandonment exception (line A)" }
+      - { name: spousePtcnoncitizenMarketplaceCoverage, type: boolean, required: false, label: "Anyone enrolled lawfully present and not eligible for Medicaid because of immigration status?" }
+  - name: months
+    title: Months with no credit
     multiplicity: single
+    showIf: spousePtcclaimsOrReceivedPtc == true
     fields:
-      - name: spousePtcClaimsOrReceivedPtc
-        type: boolean
-        required: false
-        label: "Did your spouse claim or receive advance premium tax credit on their own coverage?"
-      - name: spousePtcReceivedAny1095A
-        type: boolean
-        required: false
-        label: "Did your spouse receive a Form 1095-A?"
-        showIf: "spousePtcClaimsOrReceivedPtc == true"
-      - name: spousePtcTaxFamilySize
-        type: number
-        required: false
-        label: "Your spouse's tax household size"
-        showIf: "spousePtcClaimsOrReceivedPtc == true"
-      - name: spousePtcFplRegion
-        type: select
-        required: false
-        label: "Where your spouse lives (federal poverty line region)"
-        options: ["continental", "alaska", "hawaii"]
-        showIf: "spousePtcClaimsOrReceivedPtc == true"
-      - name: spousePtcMfsException
-        type: boolean
-        required: false
-        label: "Is your spouse a victim of domestic abuse or spousal abandonment (allowed to claim the credit while filing separately)?"
-        showIf: "spousePtcClaimsOrReceivedPtc == true"
-      - name: spousePtcQsehraAffordable
-        type: boolean
-        required: false
-        label: "If your spouse's W-2 box 12 shows code FF (a QSEHRA from a small employer): is the QSEHRA considered affordable coverage (Pub. 974 Worksheet N)?"
-        showIf: "spousePtcClaimsOrReceivedPtc == true"
-
-  # Backend-only computed values. Not rendered in the UI.
-  - name: computedOutputs
-    title: Computed outputs (backend only)
+      - { name: spousePtcineligibleCoverageMonths, type: months, required: false, label: "Months when everyone on the plan could get other coverage or had affordable job-based coverage" }
+      - { name: spousePtcqsehraAffordable, type: boolean, required: false, showIf: "a Form W-2 shows box 12 code FF", label: "Is the QSEHRA affordable (Pub. 974 Worksheet N)?" }
+      - { name: spousePtcqsehraMonths, type: months, required: false, showIf: "a Form W-2 shows box 12 code FF", label: "Months the QSEHRA was provided" }
+  - name: shared
+    title: Policy shared with another return (Part IV)
     multiplicity: single
+    showIf: spousePtcclaimsOrReceivedPtc == true
     fields:
-      - name: computedSpouseModifiedAgi
-        type: amount
-        required: false
-        readOnly: true
-        computed: true
-        label: Computed spouse modified AGI (AGI + add-backs)
+      - { name: spousePtchasSharedPolicyAllocation, type: boolean, required: false, label: "Did a policy cover someone on another tax return, or someone on this return through another family's policy?" }
+  - name: spousePtcSharedPolicyAllocation
+    title: Allocation
+    multiplicity: multiple
+    max: 4
+    showIf: spousePtchasSharedPolicyAllocation == true
+    fields:
+      - { name: sharedPolicyNumber, type: string, label: "Policy number (Form 1095-A line 2)" }
+      - { name: sharedOtherTaxpayerSsn, type: ssn, label: "Other taxpayer's SSN", note: "digits only" }
+      - { name: sharedAllocationStartMonth, type: month, label: "Start month" }
+      - { name: sharedAllocationStopMonth, type: month, label: "Stop month" }
+      - { name: sharedPremiumAllocationPct, type: percent, label: "Premium on this return", note: "saved as a fraction" }
+      - { name: sharedSlcspAllocationPct, type: percent, label: "Benchmark (SLCSP) premium on this return" }
+      - { name: sharedAptcAllocationPct, type: percent, label: "Advance payments on this return" }
+      - { name: substituteMonthlySlcspAmount, type: amount, showIf: "married filing separately", label: "Benchmark premium for your own coverage family, monthly (Allocation Situation 2)" }

@@ -1,3 +1,29 @@
+## 2026-11-10T01:00 - Premium tax credit (Form 8962): Screen Review Checklist applied
+
+- Audit against Form 8962 (2025) and its instructions (docs/books/i8962_2025.pdf) and Pub. 974.
+- Calculation:
+  - Modified AGI added back Form 2555 line 45 but not line 50 (the self-employed housing deduction) - "Form 2555, lines 45 and 50".
+  - The noncitizen answer was asked and never read: below 100% of the poverty line with no advance payments, an enrolled alien
+    lawfully present and not eligible for Medicaid keeps the credit (i8962 "Alien lawfully present in the United States").
+  - The poverty-table region was saved as "continental" for everyone unless changed, so an Alaska or Hawaii address used the lower
+    table; it is now blank by default and a blank region comes from the address (`PtcRegion`; a picked region wins - i8962 line 4).
+  - A Yes with no Form 1095-A now always blocks (`PTC_1095A_NOT_ENTERED`); it blocked only after a separate "received a Form
+    1095-A" answer.
+  - The Form 8962 preview ticked line 9 from the unemployment answer and line 10 from the job-offer answer; line 9 is now Part IV
+    allocations or the Part V election and line 10 the annual-calculation result.
+- Removed (owner 2026-11-09, V453, 15 columns): the "uploaded every Form 1095-A" confirmation and the two fields it was copied into;
+  the unemployment (2021-only rule) and job-based offer questions (no effect; the months checkboxes carry the rule); the typed Form
+  2555 add-backs on both copies (an override of the figured Form 2555); the typed Part V monthly contributions (figured, Pub. 974
+  Worksheets I / III).
+- Screen: rebuilt in the shared pattern with Reset and save partial (it had its own bar, Ctrl+S, badges and a confirm callout). The
+  Forms 1095-A are listed with links (none: a warning and a link); family size and region show what a blank uses; the separate-return
+  exception is asked only on a separate return, the QSEHRA questions only with a Form W-2 code FF, Part V only when married; dependents
+  are picked from the return (the section shows only with dependents); the other taxpayer's SSN is digits only (appTin). Spouse copy:
+  on a joint return it only points to the Family Head's screen; on a separate return it is complete (noncitizen, months with no
+  credit, Part IV added). Help rewritten from the instructions (`data/premium-tax-credit-help.ts`).
+- Tests: Java `PremiumTaxCreditScreenReviewTest` (4) and two tests rewritten for removed fields; a new Karma spec (3); e2e
+  `premium-tax-credit-screen.spec.ts` (3) plus the 11 premium tax credit specs (one updated).
+
 ## 2026-11-09T23:45 - District of Columbia homebuyer credit (Form 8859): Screen Review Checklist applied
 
 - Audit against Form 8859 (2025) and its instructions (docs/IRS-Forms/f8859.pdf). The Tax Liability Limit Worksheet's list of

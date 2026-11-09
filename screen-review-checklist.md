@@ -304,6 +304,12 @@ owner 2026-11-04).*
       with a wrong one - propose removing it (District of Columbia homebuyer credit).
 - [ ] In help text, keep a form's name on one line ("Form 5405", not "Form" at a line end): the title is added only where the name
       matches as written, so a split name gets no IRS title (District of Columbia homebuyer credit).
+- [ ] A default value saved in the screen's model (fplRegion "continental") answers the question for everyone who never touched
+      it, and outranks what the app could work out (the address). Start blank and let the calculation fill it (Premium tax credit).
+- [ ] Read how a tax-return preview ticks its checkboxes: Form 8962 lines 9 and 10 were drawn from two unrelated answers, after a
+      renumbering left the field names behind (Premium tax credit).
+- [ ] A rule for a past year only (the 2021 unemployment rule) is not a reason to ask - check the year in the instructions before
+      keeping a question (Premium tax credit).
 - [ ] Unit tests for new helpers (e.g. `id-validation.spec.ts`, `scenario-completeness.spec.ts`).
 - [ ] Entry in `history.md`; commit and push us-tax-ui, us-tax-be (e2e / backend) and us-tax (docs).
 
@@ -674,6 +680,7 @@ Deductions labels renamed in the Incomes style. Headings still in the old "Form 
 | Electric vehicle credit (Form 8834; Family Head, spouse) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-09 |
 | Mortgage interest credit (Form 8396; Family Head, spouse) | 1-8, 11, 13, 15-22, 24, 25 | 2026-11-09 |
 | District of Columbia homebuyer credit (Form 8859; Family Head, spouse) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-09 |
+| Premium tax credit (Form 8962; Family Head, spouse) | 1-8, 11, 13, 15-25 | 2026-11-09 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

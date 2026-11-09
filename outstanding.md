@@ -1,5 +1,10 @@
 # Outstanding Items
 
+## Premium tax credit (Form 8962): found in the 2026-11-09 review, not changed
+
+- Dependents' modified AGI (line 2b) is typed: a dependent's own return isn't figured here.
+- The spouse's copy on a separate return has no dependents' list and no Part V (the table has no spouse columns for them).
+
 ## Mortgage interest credit (Form 8396): found in the 2026-11-09 review, not changed
 
 - A refinanced mortgage with a reissued certificate at a different rate during the year needs line 3 figured for each part of the year

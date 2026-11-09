@@ -1,5 +1,12 @@
 # Outstanding Items
 
+## Homebuyer credit repayment (Form 5405): found in the 2026-11-08 review, not changed
+
+- Form 5405 itself is not produced (no preview): a 2024 disposition repays through Schedule 2 line 10 but the form with Part I-III
+  is not attached.
+- On a joint 2024 return each spouse's half is entered on their own copy; a transfer from the spouse (line 4 "the total credit
+  claimed by both") is entered by hand.
+
 ## Home energy credits (Form 5695): found in the 2026-11-08 review, not changed
 
 - Joint occupants (lines 7c / 32a): the fuel cell $1,667-per-half-kW cap and the per-item credit allocation among occupants are not

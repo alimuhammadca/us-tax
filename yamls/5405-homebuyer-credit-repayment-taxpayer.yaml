@@ -1,54 +1,102 @@
-# Form 5405 - Repayment of the 2008 first-time homebuyer credit (taxpayer / family head) -> Schedule 2 line 10.
+# Form 5405 - Repayment of the First-Time Homebuyer Credit (taxpayer / family head) -> Schedule 2 line 10.
 # Component: form-form-5405.component.ts (formId form-5405-taxpayer; the same component saves form-5405-spouse for the
-# spouse). Created 2026-10-28 (YAML drift sync).
+# spouse). Created 2026-10-28 (YAML drift sync). Screen review 2026-11-08 (owner): "2024 is the last year to file Form 5405"
+# (Instructions for Form 5405, Rev. November 2024) - the screen is in the sidebar only for 2024 and earlier returns and nothing is
+# figured for 2025 and later (2025 Schedule 2 line 10 is reserved). V444 added Part I lines 1, 2, 3e-3g and Part III lines 9, 10, 12.
 name: form-5405-taxpayer
-title: Form 5405 - Repaying the 2008 first-time homebuyer credit (taxpayer / family head)
+title: Homebuyer credit repayment (Form 5405)
 multiplicity: single
 formName: Form 5405
 category: otherTaxes
+lastTaxYear: 2024
 instructions:
-  - A 2008 first-time homebuyer credit is repaid over 15 years, generally $500 a year (Form 5405 -> Schedule 2, line 10).
-  - If the home stopped being your main home, the rest may be due now. Skip this page if you never took the 2008 credit.
+  - The credit for a home bought in 2008 is repaid over 15 years, from the 2010 return through the 2024 return.
+  - If the home was sold or stopped being the main home, the balance is generally repaid now (Form 5405); 2024 is the final payment.
 
 sections:
   - name: screening
-    title: Repaying the 2008 first-time homebuyer credit
+    title: First-time homebuyer credit
     multiplicity: single
     fields:
       - name: isRepayingCredit
         type: boolean
         required: true
-        label: Are you repaying the 2008 first-time homebuyer credit this year?
-
-  - name: repayment
-    title: Repayment details
-    multiplicity: single
-    showIf: isRepayingCredit == true
-    fields:
+        label: Did you claim the first-time homebuyer credit for a home bought in 2008, with part of it not yet repaid?
       - name: remainingBalanceBeforeThisYear
         type: amount
         required: false
-        label: Credit balance still owed before this year's payment
-        help: The part of the original credit you have not yet repaid. It caps this year's payment.
+        showIf: isRepayingCredit == true
+        label: Credit not yet repaid (line 6)
+        help: Line 4 (the credit claimed; half each on a joint 2008 return) less line 5 (repaid 2010 through last year). Brought in from last year's return when done here.
       - name: annualInstallmentAmount
         type: amount
         required: false
-        label: Annual installment (usually $500)
-        help: The original credit divided by 15. Leave the disposition below as "Still my main home" for the normal yearly payment.
+        showIf: "isRepayingCredit == true && taxYear < 2024 && dispositionType == 'none'"
+        label: This year's installment
+        help: At least 1/15 of the credit. Not asked for 2024 - the final payment is the whole balance.
+
+  - name: home
+    title: The home this year
+    multiplicity: single
+    showIf: isRepayingCredit == true
+    fields:
       - name: dispositionType
         type: select
         required: false
-        label: Did the home change this year?
+        label: What happened to the home? (Part I line 3)
         options:
           - value: none
-            label: Still my main home - pay the yearly installment
-          - value: ceased
-            label: No longer my main home - repay the full balance
+            label: Still the main home all year
           - value: sold
-            label: Sold it to someone unrelated - repay limited to the gain
+            label: Sold to someone not related, including foreclosure (3a / 3b - limited to the gain)
+          - value: related_or_gift
+            label: Sold to a related person, or given away (3c - the balance)
+          - value: ceased
+            label: Whole home rented out or used for business, or no longer the main home (3d - the balance)
+          - value: to_spouse
+            label: Transferred to the spouse, or to an ex-spouse in a divorce (3e - nothing; the spouse repays)
+          - value: destroyed
+            label: Destroyed, condemned, or sold under threat of condemnation (3f / 3g - limited to the gain)
+          - value: died
+            label: The person who claimed the credit died (3h - nothing)
+      - name: dispositionDate
+        type: date
+        required: false
+        showIf: "dispositionType != 'none'"
+        label: Date it happened (line 1)
+      - name: militaryOrdersException
+        type: boolean
+        required: false
+        showIf: "dispositionType not in ['none', 'to_spouse', 'died']"
+        label: Because of U.S. Government orders for extended duty (uniformed services, Foreign Service, intelligence community)? (line 2 - no repayment)
+      - name: exSpouseName
+        type: text
+        required: false
+        showIf: "dispositionType == 'to_spouse'"
+        label: Ex-spouse's full name, if divorced (line 3e)
+      - name: buyerRelated
+        type: boolean
+        required: false
+        showIf: "dispositionType == 'destroyed'"
+        label: Sold under threat of condemnation to a related person? (then the balance is repaid)
+      - name: sellingPrice
+        type: amount
+        required: false
+        showIf: "dispositionType == 'sold' || (dispositionType == 'destroyed' && buyerRelated != true)"
+        label: Selling price, insurance or award (Part III line 9)
+      - name: sellingExpenses
+        type: amount
+        required: false
+        showIf: "dispositionType == 'sold' || (dispositionType == 'destroyed' && buyerRelated != true)"
+        label: Selling expenses (line 10)
+      - name: adjustedBasis
+        type: amount
+        required: false
+        showIf: "dispositionType == 'sold' || (dispositionType == 'destroyed' && buyerRelated != true)"
+        label: Adjusted basis of the home (line 12, Pub. 523 Worksheet 2)
       - name: gainOnDisposition
         type: amount
         required: false
-        label: Gain on the sale
-        showIf: "dispositionType == 'sold'"
-        help: Your repayment is capped at this gain; if there was no gain, you owe nothing more.
+        readOnly: true
+        computed: true
+        label: Gain or loss (line 15) - (line 9 - line 10) - (line 12 - line 6)

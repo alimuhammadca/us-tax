@@ -235,6 +235,11 @@ owner 2026-11-04).*
 - [ ] A figure filled from the return must be one the return has worked out at the point the calculation needs it; one worked out later
       that depends on this calculation (the QBI deduction for the business interest limit) stays typed, and the screen says why (Business
       interest limit).
+- [ ] Check the rule still exists in the tax year: a repayment, recapture or phase-in can end. Form 5405's repayment ended with the
+      2024 return ("2024 is the last year to file Form 5405"; 2025 Schedule 2 line 10 "Reserved for Future Use"), yet the app added
+      it to 2025 and carried the balance into 2025. Read the form's What's New and the 1040 line's instruction for the year; hide the
+      screen for later years (shell `lastYearOfForm`) and figure nothing (Homebuyer credit repayment).
+- [ ] A "last year" of a schedule changes the amount: the final installment is the balance, not the usual 1/15 (Form 5405, 2024).
 - [ ] Fields the screen shows in parts must be saved in parts: the Form 5695 main home's street / city / state / ZIP boxes were joined into
       one string on save and came back empty on every reopen. Check every box the screen shows is a saved key (item 24) (Home energy credits).
 - [ ] The saved return must keep what the preview prints: out_form_5695 kept only a few totals, so a reloaded return showed most of
@@ -606,6 +611,7 @@ Deductions labels renamed in the Incomes style. Headings still in the old "Form 
 | Home office (Form 8829; Family Head, spouse) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-08 |
 | Education credits (Form 8863; Family Head, spouse) | 1-8, 11-21, 24, 25 | 2026-11-08 |
 | Home energy credits (Form 5695; Family Head, spouse) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-08 |
+| Homebuyer credit repayment (Form 5405; Family Head, spouse; 2024 and earlier only) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-08 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

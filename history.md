@@ -1,3 +1,26 @@
+## 2026-11-08T23:00 - Homebuyer credit repayment (Form 5405): Screen Review Checklist applied
+
+- Audit against Form 5405 and its instructions (Rev. November 2024, downloaded from irs.gov - not in docs/books) and the 2025
+  Instructions for Form 1040. "2024 is the last year to file Form 5405": the 2008 credit's 15-year repayment ran from the 2010 return
+  through the 2024 return; 2025 Schedule 2 line 10 is "Reserved for Future Use". The app was still adding the $500 installment to 2025
+  Schedule 2 line 10 and bringing 2024's balance into 2025.
+- Owner answer: hide for 2025 and later, keep and review for 2024.
+- Calculation (`Form5405Repayment`): nothing for 2025+, with an advisory flag FORM_5405_NOT_AFTER_2024 for a saved answer; the 2025
+  bridge stops. For 2024 the payment with no disposition is the whole balance (the final payment - it charged the $500 installment);
+  each Part I line 3 box (3a/3b gain-limited, 3c/3d the balance, 3e/3h nothing, 3f/3g gain-limited or the balance to a related
+  person), line 2 (government orders - nothing), the Part III gain from lines 9, 10 and 12; nothing carries forward after a disposition
+  (the part a gain didn't cover was carried as still owed).
+- V444: pf_form_5405 disposition_date, military_orders_exception, buyer_related, ex_spouse_name, selling_price, selling_expenses,
+  adjusted_basis.
+- Screen: the sidebar item, the "repaying the 2008 credit" tax scenario and the Prior-year carryovers row show only for 2024 and
+  earlier; for 2024 the shared look and bar with Reset and save partial, Part I and Part III, the repayment shown with the
+  calculation's rules (`utils/homebuyer-credit-screen.ts`); a 2025 deep link shows why there is nothing to enter; help from the
+  instructions (`data/homebuyer-credit-help.ts`). Title "Homebuyer credit repayment (person)".
+- Tests: Java `Form5405RepaymentTest`; UI `utils/homebuyer-credit-screen.spec.ts`; e2e `form5405-screen.spec.ts` (2025 sidebar,
+  2024 screen via the year selector, 2025 flag); `carryforward-new-forms.spec.ts` and `carryforward-new-forms-bridge.spec.ts` now
+  expect nothing in 2025 and the final payment in 2024 (they encoded the 2025 repayment). 19 e2e pass incl. start-page and
+  get-started.
+
 ## 2026-11-08T21:00 - Home energy credits (Form 5695): Screen Review Checklist applied
 
 - Audit against the 2025 Form 5695 and its instructions. Owner answers: add the Part I home address and fill the homes from Address;

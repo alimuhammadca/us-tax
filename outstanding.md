@@ -1,5 +1,14 @@
 # Outstanding Items
 
+## Additional deductions (line 13b, Schedule 1-A): found in the 2026-11-10 review, not changed
+
+- The "tips" box on Forms 1099-NEC / 1099-MISC / 1099-K counts the whole box as tips; a form with only part tips (the Instructions'
+  $55,000 Form 1099-K with $7,000 of tips) must be typed in "Tips in your own business" instead. Needs a tips amount on the statement
+  (statement structure - owner sign-off).
+- Line 4c uses the larger of the totals, not the Qualified Tips From More Than One Employer Worksheet per employer.
+- Form W-2 box 14 tips and overtime are not read (typed); an SSN marked "Not Valid for Employment" can't be told from a valid one.
+- With more than one business the tips limit is typed for the business the tips came from (one figure, not one per business).
+
 ## Standard or itemized deductions (lines 12a-12e, Schedule A): found in the 2026-11-10 review, not changed
 
 - Medical lodging is capped at 2 people ($50 a night each); Pub. 502 allows $50 for each person who goes along with the patient.

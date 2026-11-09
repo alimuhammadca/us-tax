@@ -519,6 +519,13 @@ last year's figures from last year's return or upload, the lump-sum election sug
       only an e2e save does. Redefine the trigger function in the same migration (Standard or itemized deductions, V455 / V70).
 - [ ] A question the app can work out from another screen (age 65 from the date of birth, the dependent's earned income from the
       return) is shown as a line with a link to where it comes from, not asked (item 20).
+- [ ] "A valid SSN" in the instructions means one valid for employment: a number starting with 9 is an ITIN and must not pass a check
+      that only tests the field is filled (Additional deductions: an ITIN got the tips, overtime and senior deductions).
+- [ ] A "can't be more than" limit the user types is a limit that fails open when left blank - figure it from the return where the return
+      has the figure, and name it in "Still to answer" otherwise (Additional deductions: the business tips limit).
+- [ ] A date the law fixes ("loans originated after December 31, 2024") stays that date - it is not the tax year minus one (item 3).
+- [ ] Read a refinancing rule for the figure it limits by ("the outstanding balance of the refinanced loan as of the date of the
+      refinancing") and make the label ask that figure (the screen asked the original principal).
 
 *From: owner 2026-11-05 (Social security benefits: the three SSI questions removed, "why remove the SSI fields?" - unused
 since D-6a-1; the spouse disability field shown).*
@@ -694,6 +701,7 @@ Deductions labels renamed in the Incomes style. Headings still in the old "Form 
 | Premium tax credit (Form 8962; Family Head, spouse) | 1-8, 11, 13, 15-25 | 2026-11-09 |
 | Qualified business income deduction (line 13a; Family Head, spouse) | 1-8, 11, 13, 15-25 | 2026-11-10 |
 | Standard or itemized deductions (lines 12a-12e, Schedule A; Family Head, spouse) | 1-8, 11, 13, 15-25 | 2026-11-10 |
+| Additional deductions (Schedule 1-A; Family Head, spouse; second pass) | 1-8, 11, 13, 15-25 | 2026-11-10 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

@@ -1,3 +1,30 @@
+## 2026-11-10T09:00 - Additional deductions (line 13b, Schedule 1-A): second Screen Review Checklist pass
+
+- Audit against the 2025 Instructions for Schedule 1-A (i1040gi, "Instructions for Schedule 1-A") and the form.
+- Removed (owner 2026-11-10, V456):
+  - "Are all your statements with tips or overtime entered?" - it blocked the whole Schedule 1-A (SCHEDULE_1A_STATEMENTS_NOT_CONFIRMED_UPLOADED),
+    even a car-loan-only return; no IRS rule asks it.
+  - The opening question - each part's own Yes / No opens it; the saved opening answer is worked out from them (the calculation also
+    treats any part answered Yes as the opt-in).
+  - Nine columns retired on 2026-11-07 or never read (the born-before answers, the typed MAGI exclusions, "has MAGI exclusions", "tips
+    from more than one employer") and their fallbacks in the calculation.
+- Added (owner sign-off): each vehicle asks "the loan is in the buyer's name" (requirement 2) and, when refinanced, the date of the old
+  loan (it must be after 2024); the refinance boxes now ask the old loan's balance on the day of the refinancing and the new loan's
+  amount ("limited to the outstanding balance of the refinanced loan as of the date of the refinancing") - the original principal
+  allowed too much.
+- Calculation fixes:
+  - An ITIN counted as a valid SSN for tips, overtime and the senior deduction - "valid for employment and ... issued by the SSA".
+  - Line 4c added Form W-2 box 7 to the Form 4137 unreported tips; it is "the larger of line 4a or line 4b" (Example 2).
+  - The line 5 net income limit was optional and typed - left blank, no limit applied. It is figured from the return's only business
+    (net profit less the deductible part of SE tax, SEP / SIMPLE and SE health insurance; `Schedule1ATradeTipsLimit`); with more than
+    one business the screen asks it and "Still to answer" names it.
+- Screen: help rewritten from the audit (16 fixes - the SSTB transition relief, the refinancing and lien rule, the personal-use people,
+  the per-person senior reduction and the death rule, Form 4070 / box 14 methods, form titles); the overtime note when the total pay
+  replaces the typed amount; the ITIN note; the loan date "after December 31, 2024" is the law's date, not the tax year.
+- V456.2 redefines the V71 dual-write trigger without the dropped columns (checklist item 21).
+- Tests: Java `Schedule1AReviewTest` (6) and the affected unit tests (vehicle seeds answer the new condition; the ITIN spouse in the MFJ
+  senior test gets a real SSN); Karma spec (5) + helper spec; e2e `additional-deductions-screen.spec.ts` (3) and the line 13b specs.
+
 ## 2026-11-10T06:00 - Standard or itemized deductions (lines 12a-12e, Schedule A): Screen Review Checklist applied
 
 - Audit against the 2025 Form 1040 line 12 instructions, Schedule A and its instructions, Form 4684 / 4952, Pubs. 501, 502, 526, 547, 936.

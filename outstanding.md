@@ -1,5 +1,15 @@
 # Outstanding Items
 
+## Credit for the elderly or disabled (Schedule R): found in the 2026-11-09 review, not changed
+
+- The credit needs the claim answer: a person 65 or older who never opens the screen gets no Schedule R (the Yes is filled only when
+  the screen is opened). Consider claiming by age automatically.
+- Line 13a is Form 1040 line 6a minus 6b; workers' compensation that reduced Social Security benefits ("treat ... as social security
+  benefits") isn't added.
+- The screen's age uses the date of birth only; the calculation also applies the "age 65 on the day before death" rule for a 2025
+  decedent, so the screen can ask disability questions the calculation won't need.
+- Part II line 2: the first name(s) of the spouse(s) for whom the box is checked (boxes 4, 5, 6) is not written on the form.
+
 ## General business credit (Form 3800): found in the 2026-11-09 review, not changed
 
 - Only a carryforward total is entered. Current-year business credits (Form 3800 Part III: Forms 6765, 8881, 8941, 5884, 8826 ...,

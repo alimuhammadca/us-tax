@@ -1,3 +1,27 @@
+## 2026-11-09T15:00 - Credit for the elderly or disabled (Schedule R): Screen Review Checklist applied
+
+- Audit against the 2025 Instructions for Schedule R (docs/books/i1040sr.pdf; Pub. 524 was discontinued after 2023).
+- Screen: the shared look and bar with Reset and save partial; title "Credit for the elderly or disabled (person)". The save was
+  refused unless "Do you have the pension, physician statement, and disability support needed?" was Yes - nothing read it; removed
+  (owner 2026-11-09, column kept). The import boxes (raw filing status / DOB), the required legend and the "Not sure" panels are gone
+  (the panels' text is in the help).
+- The age from Identification (`isSenior`) decides: at 65 or older the claim is filled with Yes (note says why) and the disability
+  questions aren't asked; under 65 they are, in the IRS order (retired, mandatory retirement age, taxable disability income, amount,
+  physician's statement). The spouse DOB was read from a key Identification doesn't save, so it was always blank.
+- Spouse tab on a separate return: its gate is the spouse leg's claim (MfsFormScoper), but it asked "anything to add?" and the help told
+  a spouse who qualifies by age to answer No - a 65+ spouse filing separately never got the credit. It now asks "Does your spouse want
+  to claim the credit ... on their own return?", filled with Yes at 65 or older (owner 2026-11-09). On a joint return a note links to
+  the Family Head's screen when the claim there isn't Yes. The lived-apart answer comes from Filing status (`mfsLivedWithSpouseAnyTime`;
+  the screen read `livingArrangement` only), and the screen says what it was.
+- Help rewritten from the instructions (`data/elderly-disabled-credit-help.ts`). Wrong claims fixed: permanent and total disability is
+  "at least a year or ... death", not "indefinitely"; line 13b is veterans' pensions and benefits excluded under a law other than the
+  Internal Revenue Code (it said "any federal law other than the Social Security exclusions"); the physician question is the Part II line 2
+  box for a statement from an earlier year signed on line B, not "a statement on file".
+- Calculation: line 13b adds the spouse's amount only on a joint return (a spouse copy kept from an earlier status was added); the Part II
+  line 2 box is checked only for boxes 2, 4, 5, 6, 9.
+- Tests: Java `ElderlyDisabledCreditScreenReviewTest` (4, incl. the instructions' Example 1); e2e `elderly-disabled-credit-screen.spec.ts`
+  (4) plus the three Schedule R specs (one updated for the new screen and sidebar label) - 12 pass.
+
 ## 2026-11-09T11:30 - General business credit (Form 3800): Screen Review Checklist applied
 
 - Audit against the 2025 Instructions for Form 3800 and Schedule A and Form 3800 (2025), downloaded from irs.gov (not in

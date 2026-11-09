@@ -1,114 +1,73 @@
-# Schedule R (Form 1040) - taxpayer intake.
-# One Schedule R per return. The taxpayer intake owns the return-level screening,
-# MFS lived-apart gating, taxpayer disability facts, and taxpayer nontaxable pension inputs.
+# Schedule R (Form 1040) - Credit for the elderly or disabled, Family Head (taxpayer).
+# Component: form-elderly-disabled-credit.component.ts (formId elderly-disabled-credit-taxpayer; the same component saves
+# elderly-disabled-credit-spouse). Screen review 2026-11-09 (Instructions for Schedule R (2025)): one Schedule R per return on a
+# joint return; the age comes from the date of birth on Identification (65 or older fills the claim with Yes and skips the
+# disability questions); confirmQualificationSupportReady removed from the screen (read by nothing, owner 2026-11-09; column kept).
 name: elderly-disabled-credit-taxpayer
-title: Schedule R - Elderly/Disabled credit (taxpayer)
+title: Credit for the elderly or disabled (Schedule R)
 multiplicity: single
-formName: 1040SR
-category: deductions
+formName: Schedule R
+category: credits
 instructions:
-  - Use this form to determine whether the return may claim Schedule R, Credit for the Elderly or the Disabled.
-  - Schedule R is one form per return, not one per spouse.
-  - Filing status, date of birth, Social Security, and current-year tax limitation inputs are imported from other saved forms and the computed return when available.
+  - "A credit for a person 65 or older at the end of the year, or younger and retired on permanent and total disability."
 sections:
-  - name: screening
-    title: Screening
+  - name: claim
+    title: Claiming the credit
     multiplicity: single
     fields:
       - name: claimsElderlyDisabledCredit
         type: boolean
         required: true
-        label: Do you want to evaluate the 2025 elderly or disabled credit for this return?
-        help: >
-          Select Yes if the taxpayer may qualify by being age 65 or older at the end of 2025,
-          or by retiring on permanent and total disability.
-      - name: confirmQualificationSupportReady
-        type: boolean
-        required: false
-        label: Do you have the pension, physician-statement, and disability support needed for Schedule R?
-        help: >
-          Have the 2025 pension/disability records and any physician or VA certification details
-          available before saving.
+        label: "Do you want to claim the credit for the elderly or disabled? (joint: on your joint return)"
+        help: "Filled with Yes when the Family Head (or the spouse on a joint return) is 65 or older by the date of birth."
       - name: mfsLivedApartAllYear
         type: boolean
         required: false
-        label: If filing MFS, did you live apart from your spouse for all of 2025?
-        help: >
-          Married filing separately taxpayers who lived with a spouse at any time in 2025 cannot claim Schedule R.
+        showIf: claimsElderlyDisabledCredit == true && filingStatus == 'Married filing separately' && filingStatus.mfsLivedWithSpouseAnyTime == null
+        label: Did you live apart from your spouse at all times during the tax year?
+        help: "Asked only when Filing status hasn't answered it; Filing status's answer wins."
 
   - name: taxpayerDisabilityFacts
-    title: Taxpayer disability-track inputs
+    title: Retirement on disability
     multiplicity: single
-    showIf: claimsElderlyDisabledCredit == true
-    instructions:
-      - Answer these questions even if you may qualify by age; the backend combines them with the imported DOB and filing status.
-      - If the taxpayer qualifies by age only, answer No to the disability-retirement question and continue.
+    showIf: claimsElderlyDisabledCredit == true && age65AtEndOfYear != true
     fields:
       - name: taxpayerRetiredOnPermanentTotalDisability
         type: boolean
         required: false
-        label: Did the taxpayer retire on permanent and total disability?
-      - name: taxpayerReceivedTaxableDisabilityIncome
-        type: boolean
-        required: false
-        label: Did the taxpayer receive taxable disability income in 2025?
-      - name: taxpayerTaxableDisabilityIncomeAmount
-        type: amount
-        required: false
-        label: Taxpayer taxable disability income included in wages
-        placeholder: 0.00
+        label: "Were you retired on permanent and total disability?"
       - name: taxpayerUnderMandatoryRetirementAgeOnJan1
         type: boolean
         required: false
-        label: Was the taxpayer under mandatory retirement age on January 1, 2025?
+        showIf: taxpayerRetiredOnPermanentTotalDisability == true
+        label: "Were you under the employer's mandatory retirement age on January 1 of the tax year?"
+      - name: taxpayerReceivedTaxableDisabilityIncome
+        type: boolean
+        required: false
+        showIf: taxpayerRetiredOnPermanentTotalDisability == true
+        label: "Did you get taxable disability income for the tax year?"
+      - name: taxpayerTaxableDisabilityIncomeAmount
+        type: amount
+        required: false
+        showIf: taxpayerReceivedTaxableDisabilityIncome == true
+        label: Taxable disability income for the tax year
+        help: "Schedule R line 11."
       - name: taxpayerExistingPhysicianStatement
         type: boolean
         required: false
-        label: Does the taxpayer already have a valid physician or VA statement on file?
-        help: >
-          This covers the recurring-statement path described in the Schedule R instructions.
+        showIf: taxpayerRetiredOnPermanentTotalDisability == true
+        label: "Do you have a physician's statement from an earlier year saying the condition will never improve (signed on line B)?"
+        help: "Checks the Schedule R Part II line 2 box (boxes 2, 4, 5, 6, 9 only)."
 
-  - name: taxpayerReductions
-    title: Taxpayer line 13b reductions
+  - name: taxpayerNontaxable
+    title: Nontaxable pensions and benefits
     multiplicity: single
     showIf: claimsElderlyDisabledCredit == true
     instructions:
-      - Enter only the taxpayer share of nontaxable pensions, annuities, or disability income excluded under federal law.
-      - Nontaxable Social Security is imported from Form 1040 lines 6a and 6b when the return is computed.
+      - "Nontaxable Social Security (line 13a) is figured from Social security benefits (Form 1040 line 6a minus 6b)."
     fields:
       - name: taxpayerNontaxablePensionBenefits
         type: amount
         required: false
-        label: Taxpayer nontaxable pensions, annuities, or disability income for Schedule R line 13b
-        placeholder: 0.00
-
-  - name: importedReturnData
-    title: Imported return fields (backend only - not rendered)
-    multiplicity: single
-    showIf: claimsElderlyDisabledCredit == true
-    fields:
-      - name: importedFilingStatus
-        type: text
-        required: false
-        readOnly: true
-        label: Imported filing status
-      - name: importedTaxpayerDateOfBirth
-        type: text
-        required: false
-        readOnly: true
-        label: Imported taxpayer date of birth
-      - name: importedForm1040Line11a
-        type: amount
-        required: false
-        readOnly: true
-        label: Imported Form 1040 line 11a
-      - name: importedForm1040Line18
-        type: amount
-        required: false
-        readOnly: true
-        label: Imported Form 1040 line 18
-      - name: importedSchedule3LimitInputs
-        type: amount
-        required: false
-        readOnly: true
-        label: Imported Schedule 3 limitation inputs
+        label: "Nontaxable veterans' and other pensions, annuities or disability benefits"
+        help: "Schedule R line 13b (the spouse's amount on a joint return only)."

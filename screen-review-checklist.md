@@ -266,6 +266,11 @@ owner 2026-11-04).*
       first (Form 3800 line 10b) and that those credits are computed before it - the general business credit was limited by the
       whole tax, and Form 8801 ran before the credits its line 22 subtracts (General business credit). Check the compute order of
       every credit the form subtracts.
+- [ ] A question the calculation uses as the gate of another return must be worded for that return: the spouse's "anything to add?"
+      question was the whole claim on the spouse's separate return, and its help told a spouse who qualifies by age to answer No
+      (Credit for the elderly or disabled). Grep the scoper for where each gate key goes.
+- [ ] Facts on file decide which questions are asked: questions for a case the person's own record rules out (disability questions for
+      someone 65 or older) are hidden and cleared, and the record is read from the key its screen saves (`spouseDateOfBirth`).
 - [ ] Unit tests for new helpers (e.g. `id-validation.spec.ts`, `scenario-completeness.spec.ts`).
 - [ ] Entry in `history.md`; commit and push us-tax-ui, us-tax-be (e2e / backend) and us-tax (docs).
 
@@ -627,6 +632,7 @@ Deductions labels renamed in the Incomes style. Headings still in the old "Form 
 | Homebuyer credit repayment (Form 5405; Family Head, spouse; 2024 and earlier only) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-08 |
 | Suspended passive losses (Form 8582; Family Head, spouse) | 1-8, 11, 13, 15-21, 23-25 | 2026-11-09 |
 | General business credit (Form 3800; Family Head, spouse) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-09 |
+| Credit for the elderly or disabled (Schedule R; Family Head, spouse) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-09 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

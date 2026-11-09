@@ -58,18 +58,16 @@ sections:
       - name: studentRelationshipToTaxReturn
         type: select
         required: true
-        placeholder: Select relationship
-        label: Relationship of the student to this return
-        help: Identify whether this student is the taxpayer, spouse, dependent, or another eligible student claimed on the return.
+        placeholder: Select
+        label: Who is the student?
+        help: Screen review 2026-11-08 - picked by name from Identification (you, your spouse on a joint return) or Dependents; the student's name and SSN are taken from that record. The credit is only for you, your spouse or a dependent you claim (2025 Instructions for Form 8863), so "other eligible student" was removed.
         options:
           - value: taxpayer
-            label: Taxpayer
+            label: You (by name)
           - value: spouse
-            label: Spouse
+            label: Your spouse (by name)
           - value: dependent
-            label: Dependent
-          - value: other_eligible_student
-            label: Other eligible student
+            label: A dependent (by name)
       - name: creditTypeRequested
         type: select
         required: true
@@ -93,12 +91,6 @@ sections:
         placeholder: 0.00
         label: Tax-free educational assistance that reduced the claimed expenses
         help: Enter the total scholarship, grant, employer assistance, veterans benefit, or other tax-free educational assistance amount applied against the student's expenses.
-      - name: educationSupportNotes
-        type: text
-        required: false
-        placeholder: Notes about qualified expenses or support
-        label: Student education-support notes
-        help: Briefly explain unusual documentation, adjustments, or expense-support facts for this student.
       - name: institution1NameLine22
         type: text
         required: true

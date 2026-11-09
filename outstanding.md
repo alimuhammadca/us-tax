@@ -1,5 +1,12 @@
 # Outstanding Items
 
+## Education credits (Form 8863): found in the 2026-11-08 review, not changed
+
+- The "no Form 1098-T" exception is one return-level answer on the Family Head's screen; a spouse's student without a Form 1098-T is not
+  prompted there (the calculation flags it). The other screening fields the calculation reads (claimed as a dependent, nonresident alien, TIN
+  issued by the due date) are not asked on the screen; they are kept as loaded.
+- A third school (an extra page 2 through line 22) is not supported.
+
 ## Business interest limit (Form 8990): found in the 2026-11-08 review, not changed
 
 - Line 6 (tentative taxable income) and line 10 (QBI deduction) are typed: both need the return figured twice (the QBI deduction depends on

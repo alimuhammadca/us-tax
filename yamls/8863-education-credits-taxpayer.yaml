@@ -82,49 +82,11 @@ sections:
         required: false
         label: Was the American Opportunity Credit previously denied or reduced due to a non-clerical error?
         help: Select Yes if AOTC was previously denied or reduced for reasons other than a math or clerical error. When Yes, Form 8862 Part IV must be completed to reclaim the credit.
-      - name: hasMagiAddBacks
-        type: boolean
-        required: false
-        label: Do you have income add-backs that increase your adjusted gross income for the education credit phaseout test?
-        help: Select Yes if you have Puerto Rico excluded income, Form 2555 foreign earned income, Form 2555 housing exclusion, or Form 4563 excluded income to add back for the Form 8863 MAGI computation. Select No if your AGI equals your Form 8863 MAGI.
-      - name: magiAddBackPuertoRicoExcludedIncome
-        type: amount
-        required: false
-        placeholder: 0.00
-        label: Puerto Rico excluded income add-back for education credit phaseout
-        help: Enter excluded Puerto Rico income if it must be added back when determining Form 8863 MAGI.
-      - name: magiAddBackForm2555ExcludedIncome
-        type: amount
-        required: false
-        placeholder: 0.00
-        label: Foreign earned income exclusion add-back for education credit phaseout
-        help: Enter the Form 2555 foreign earned income exclusion amount that must be added back for Form 8863 MAGI, if applicable.
-      - name: magiAddBackForm2555HousingExclusion
-        type: amount
-        required: false
-        placeholder: 0.00
-        label: Foreign housing exclusion add-back for education credit phaseout
-        help: Enter the Form 2555 housing exclusion amount that must be added back for Form 8863 MAGI, if applicable.
-      - name: magiAddBackForm4563ExcludedIncome
-        type: amount
-        required: false
-        placeholder: 0.00
-        label: U.S. possession excluded income add-back for education credit phaseout
-        help: Enter the Form 4563 excluded income amount that must be added back for Form 8863 MAGI, if applicable.
-      - name: refundableAotcRestrictionApplies
-        type: boolean
-        required: false
-        label: Does the under-24 refundable AOTC restriction apply to this return? (Manual override)
-        help: >
-          Manual override of the IRS Form 8863 line 7 box compound test. Leave blank to let the
-          application compute the answer from the five sub-questions below. Select Yes to force
-          the refundable AOTC (Form 1040 line 29) to zero regardless of those sub-answers. Select
-          No to force the 40% refundable share even if the sub-questions would otherwise restrict it.
-          Most filers should leave this field blank and answer the sub-questions instead.
       - name: under24WasUnder18AtYearEnd
         type: boolean
         required: false
         label: Were you under age 18 at the end of 2025?
+        computed: true   # screen review 2026-11-08: set from the date of birth on Identification, not asked
         help: Select Yes if the taxpayer was under 18 on December 31, 2025. This is the first of the three age legs of the IRS Form 8863 line 7 compound test (Internal Revenue Code section 25A(i)(1)(A)(ii)).
       - name: under24WasAge18AndEarnedIncomeLtHalfSupport
         type: boolean
@@ -141,22 +103,6 @@ sections:
         required: false
         label: Was at least one of your parents alive at the end of 2025?
         help: Select Yes if at least one biological, adoptive, or step parent was alive on December 31, 2025. The under-24 refundable restriction does NOT apply if both parents were deceased.
-      - name: educationCreditsReturnNotes
-        type: text
-        required: false
-        placeholder: Special return-level Form 8863 notes
-        label: Return-level education credit notes
-        help: Capture any return-level note that should carry forward to the consolidated Form 8863 workflow, such as unusual documentation or review notes.
-
-  - name: taxpayerEducationCreditStudents
-    title: Claimed students entered from the taxpayer tab (Part III)
-    multiplicity: multiple
-    showIf: claimsEducationCreditsOnReturn == true
-    instructions:
-      - Add one row per student claimed for Form 8863 from the taxpayer tab.
-      - Enter the student only once across the taxpayer and spouse education-credit forms.
-      - Use the student-level fields below to support Part III line 20 through line 31 for each student.
-    fields:
       - name: studentFirstNameLine20
         type: text
         required: true
@@ -183,18 +129,16 @@ sections:
       - name: studentRelationshipToTaxReturn
         type: select
         required: true
-        placeholder: Select relationship
-        label: Relationship of the student to this return
-        help: Identify whether this student is the taxpayer, spouse, dependent, or another eligible student claimed on the return.
+        placeholder: Select
+        label: Who is the student?
+        help: Screen review 2026-11-08 - picked by name from Identification (you, your spouse on a joint return) or Dependents; the student's name and SSN are taken from that record. The credit is only for you, your spouse or a dependent you claim (2025 Instructions for Form 8863), so "other eligible student" was removed.
         options:
           - value: taxpayer
-            label: Taxpayer
+            label: You (by name)
           - value: spouse
-            label: Spouse
+            label: Your spouse (by name)
           - value: dependent
-            label: Dependent
-          - value: other_eligible_student
-            label: Other eligible student
+            label: A dependent (by name)
       - name: creditTypeRequested
         type: select
         required: true
@@ -218,12 +162,6 @@ sections:
         placeholder: 0.00
         label: Tax-free educational assistance that reduced the claimed expenses
         help: Enter the total scholarship, grant, employer assistance, veterans benefit, or other tax-free educational assistance amount applied against the student's expenses.
-      - name: educationSupportNotes
-        type: text
-        required: false
-        placeholder: Notes about qualified expenses or support
-        label: Student education-support notes
-        help: Briefly explain unusual documentation, adjustments, or expense-support facts for this student.
       - name: institution1NameLine22
         type: text
         required: true

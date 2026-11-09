@@ -1,3 +1,26 @@
+## 2026-11-08T20:00 - Education credits (Form 8863): Screen Review Checklist applied
+
+- Audit against the 2025 Instructions for Form 8863. Owner answers: line 7 asked as the IRS questions; MAGI add-backs figured, boxes
+  dropped; Form 1098-T worked out per school; the student picked by name, the notes boxes removed.
+- Screen bugs: (1) the line 7 question (the refundable part) was about the STUDENT ("if a student is under 18 ...") - the rule is about the
+  filer; now the age comes from the date of birth and only the support / full-time student / parent questions that matter are asked (the
+  existing under24* fields, which the calculation already read; the single override is cleared on save); (2) the "all Forms 1098-T uploaded?"
+  answer was also saved as "received a Form 1098-T", so No always blocked the credit, and the IRS exception question was never asked - now
+  "received" comes from each school's line 22 answer and the exception is asked when a student has none; (3) the 2024 box 7 question was
+  hidden unless the 2025 answer was Yes (the form asks both); (4) the student's name and SSN were typed again, with an "Other eligible
+  student" choice the IRS doesn't allow - now a pick list of you / your spouse (joint return) / each dependent, name and SSN from the record,
+  the SSN behind the eye; (5) EIN saved with a dash; (6) Save refused until every student was complete, Ctrl+S, tax-year badge, collapse and
+  compare panels, an estimate banner ignoring the phase-out.
+- Calculation: the Puerto Rico exclusion from Income earned in a US territory now reaches the Form 8863 MAGI (it reached none - only a typed
+  box did); the typed add-back boxes are no longer read (`EducationCreditsInputs`). The Form 1098-T requirement is per student: a student with
+  no Form 1098-T from any school and no exception gets neither credit (flag EDUCATION_CREDIT_STUDENT_NO_1098T); before, only a return where
+  no student had one was stopped.
+- The school is filled from the student's Form 1098-T when blank (name, EIN, address, "got a 2025 Form 1098-T" Yes), with a note.
+- `utils/statement-owner.ts` read the spouse's first name from `spouseFirstName`; Identification saves `spouseFirstNamefirstName` (fixed).
+- Tests: Java `EducationCreditsScreenReviewTest`; UI `utils/education-credits-screen.spec.ts` and the component spec; e2e
+  `education-credits-screen.spec.ts` (3 tests); the two typed-student screen tests left `line8863-education-credits.spec.ts`. Run: 29 e2e
+  plus 12 related (MFS, Form 8862, preview) pass; the backend tests pass except the known `thirdPartyDesignee_populatedWhenAllowed`.
+
 ## 2026-11-08T19:45 - Home office (Form 8829): Screen Review Checklist applied
 
 - Audit against the 2025 Instructions for Form 8829; the calculation already applies them (no backend change).

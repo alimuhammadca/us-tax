@@ -235,6 +235,13 @@ owner 2026-11-04).*
 - [ ] A figure filled from the return must be one the return has worked out at the point the calculation needs it; one worked out later
       that depends on this calculation (the QBI deduction for the business interest limit) stays typed, and the screen says why (Business
       interest limit).
+- [ ] Check WHO a rule is about before asking it: Form 8863 line 7 (the refundable part) is about the filer's age, support and parents; the
+      screen asked about the student. Read the line's "you" / "the student" and ask about that person, from their own record where it has
+      the answer (the date of birth) (Education credits).
+- [ ] An answer saved under two keys must mean the same thing: "all Forms 1098-T entered?" was also saved as "received a Form 1098-T", so
+      No barred the credit. Work the second fact out from the answers that state it (each school's line 22 question) (Education credits).
+- [ ] Read a person's name from the key the owning screen saves: Identification (spouse) saves `spouseFirstNamefirstName`, not
+      `spouseFirstName` - the spouse showed with no first name in pick lists (Education credits; also `statement-owner.ts`).
 - [ ] Unit tests for new helpers (e.g. `id-validation.spec.ts`, `scenario-completeness.spec.ts`).
 - [ ] Entry in `history.md`; commit and push us-tax-ui, us-tax-be (e2e / backend) and us-tax (docs).
 
@@ -591,6 +598,7 @@ Deductions labels renamed in the Incomes style. Headings still in the old "Form 
 | Business interest limit (Form 8990; Family Head and spouse copies) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-08 |
 | Self-employed health insurance and retirement plans (Family Head, spouse) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-08 |
 | Home office (Form 8829; Family Head, spouse) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-08 |
+| Education credits (Form 8863; Family Head, spouse) | 1-8, 11-21, 24, 25 | 2026-11-08 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

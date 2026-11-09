@@ -1,3 +1,23 @@
+## 2026-11-09T23:00 - Mortgage interest credit (Form 8396): Screen Review Checklist applied
+
+- Audit against Form 8396 (2025) and its instructions (docs/IRS-Forms/f8396.pdf).
+- Calculation:
+  - Schedule A home mortgage interest was reduced by line 3 even when no credit was allowed (no qualified certificate, not the main
+    home in the issuer's area, interest paid to a related person). It is now reduced only with a credit - both the early reduction and
+    the fallback after the form.
+  - A certificate rate outside 10%-50% ("cannot be less than 10% or more than 50%") is not a qualified certificate: no credit.
+  - The Credit Limit Worksheet line 2 lists Schedule 3 line 6l (Form 8978 line 14); it was left out, so the limit was too high.
+  - The 20th carryforward bridge: last year's Form 8396 lines 16 / 14 / 17 (primary return) fill this year's lines 4 / 5 / 6 when the
+    credit is claimed and all three are blank (`Form8396Rules`). Nothing brought them in.
+- New fields (owner 2026-11-09): the certificate's issuer name and issue date, which the form's header asks for - V451 adds them to
+  `pf_mortgage_interest_credit` and `out_form_8396`; the Form 8396 preview fills them.
+- Screen: rebuilt in the shared pattern with Reset and save partial (the save was refused until the rate and interest were entered);
+  title "Mortgage interest credit (person)". The import summary of tax figures and the "?" help buttons are gone; the eligibility
+  answers that rule out the credit say so and hide the figures; a rate outside 10%-50% is flagged; a blank interest names the amount
+  on Deductions it uses, with a link. Help rewritten from the form's instructions (`data/mortgage-interest-credit-help.ts`).
+- Tests: Java `MortgageInterestCreditScreenReviewTest` (3); a new Karma spec (4); e2e `mortgage-interest-credit-screen.spec.ts` (4,
+  including the two-year bridge) plus the two Form 8396 specs - 8 pass.
+
 ## 2026-11-09T21:00 - Electric vehicle credit (Form 8834): Screen Review Checklist applied
 
 - Audit against Form 8834 (Rev. October 2024) and its instructions (docs/IRS-Forms/f8834.pdf).

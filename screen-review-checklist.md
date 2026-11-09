@@ -295,6 +295,11 @@ owner 2026-11-04).*
       list them with links (Credit for tax credit bonds).
 - [ ] A value the calculation compares with codes ("NCREB", "QECB") must be a pick list of those codes: typed words never matched (Credit
       for tax credit bonds).
+- [ ] A side effect of a credit (a deduction it reduces) follows the credit's own eligibility: Schedule A was cut by Form 8396 line 3
+      when the interest went to a related person and no credit was allowed - and a fallback path repeated it (Mortgage interest credit).
+      Grep every place the side effect is applied.
+- [ ] A Credit Limit Worksheet's list of lines is checked one by one against the code that sums it (Schedule 3 line 6l was missing on
+      Form 8396).
 - [ ] Unit tests for new helpers (e.g. `id-validation.spec.ts`, `scenario-completeness.spec.ts`).
 - [ ] Entry in `history.md`; commit and push us-tax-ui, us-tax-be (e2e / backend) and us-tax (docs).
 
@@ -663,6 +668,7 @@ Deductions labels renamed in the Incomes style. Headings still in the old "Form 
 | Alternative fuel vehicle refueling credit (Form 8911; Family Head, spouse) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-09 |
 | Credit for tax credit bonds (Form 8912; Family Head, spouse) | 1-8, 11, 13, 15-21, 23-25 | 2026-11-09 |
 | Electric vehicle credit (Form 8834; Family Head, spouse) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-09 |
+| Mortgage interest credit (Form 8396; Family Head, spouse) | 1-8, 11, 13, 15-22, 24, 25 | 2026-11-09 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

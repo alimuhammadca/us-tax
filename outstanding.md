@@ -1,5 +1,11 @@
 # Outstanding Items
 
+## Mortgage interest credit (Form 8396): found in the 2026-11-09 review, not changed
+
+- A refinanced mortgage with a reissued certificate at a different rate during the year needs line 3 figured for each part of the year
+  on an attached statement; the screen takes one rate, so the user enters the interest that gives the combined amount (the help says so).
+- Recapture when the home is sold within 9 years (Form 8828) is not figured.
+
 ## Electric vehicle credit (Form 8834): found in the 2026-11-09 review, not changed
 
 - Line 1 is typed: Form 8582-CR (passive activity credits) is not figured, so the released credit can't come from it.

@@ -1,104 +1,50 @@
-# Form 8396 - Mortgage Interest Credit - spouse.
-# This spouse form is additive only. The output remains one consolidated Form 8396 per return.
+# Form 8396 (2025) - Mortgage interest credit (spouse). Joint return: interest added to the one Form 8396 (line 1); separate return:
+# the spouse's own certificate under the same keys (MfsFormScoper). Screen review 2026-11-09: the issuer and issue date (V451).
 name: mortgage-interest-credit-spouse
-title: Form 8396 - Mortgage interest credit (spouse)
+title: Mortgage interest credit (Form 8396)
 multiplicity: single
-formName: 8396
-category: deductions
-instructions:
-  - Use this spouse form only on married filing jointly returns when the spouse paid eligible mortgage interest that should be added to the joint Form 8396.
-  - Do not use this form if the taxpayer-side mortgage-interest amount already includes the spouse-paid amount.
+formName: Form 8396
+category: credits
 sections:
-  - name: spouseScreening
-    title: Spouse supplemental screening
+  - name: gate
+    title: Interest your spouse paid (joint) / The credit (separate)
     multiplicity: single
     fields:
-      - name: spouseHasMortgageInterestCreditInputs
-        type: boolean
-        required: true
-        label: Does your spouse have supplemental mortgage-interest credit input to add?
-
-  - name: spouseContribution
-    title: Spouse mortgage-interest contribution
+      - { name: spouseHasMortgageInterestCreditInputs, type: boolean, required: true, label: "Joint: Did your spouse pay interest on the certified mortgage that isn't in the Family Head's amount? Separate: Does your spouse claim a mortgage interest credit on their separate return?" }
+      - { name: spouseMortgageInterestPaidContribution, type: amount, required: false, showIf: "joint return and spouseHasMortgageInterestCreditInputs == true", label: "Interest your spouse paid on the certified mortgage, not in the Family Head's amount" }
+  - name: eligibility
+    title: The credit
     multiplicity: single
-    showIf: spouseHasMortgageInterestCreditInputs == true
+    showIf: spouseHasMortgageInterestCreditInputs (separate return) == true
     fields:
-      - name: spouseMortgageInterestPaidContribution
-        type: amount
-        required: false
-        label: Spouse-paid eligible mortgage interest to add to the joint Form 8396 line 1 calculation
-        placeholder: 0.00
-
-  # Same keys as the taxpayer core; saved under mortgage-interest-credit-spouse when the spouse files separately.
-  - name: spouseMccCore
-    title: "Spouse's own Form 8396 (MFS only) - Mortgage Credit Certificate"
+      - { name: hasQualifiedMortgageCreditCertificate, type: boolean, required: false, label: "Was the certificate issued by a state or local government unit or agency under a qualified mortgage credit certificate program?" }
+      - { name: mainHomeWithinMccJurisdiction, type: boolean, required: false, label: "Is the home your spouse's main home, in the area of the government unit that issued the certificate?" }
+      - { name: interestPaidToRelatedPerson, type: boolean, required: false, label: "Was the mortgage interest paid to a related person?" }
+  - name: certificate
+    title: The certificate
     multiplicity: single
-    showIf: "spouse tab && filing status == Married filing separately && spouseHasMortgageInterestCreditInputs == true"
+    showIf: eligible (a qualified certificate, the main home, no related-person interest)
     fields:
-      - name: hasQualifiedMortgageCreditCertificate
-        type: boolean
-        required: false
-        label: "Do you have a qualified Mortgage Credit Certificate (MCC)?"
-      - name: mccCertificateNumber
-        type: text
-        required: false
-        label: "Mortgage Credit Certificate number"
-      - name: mccHomeAddress
-        type: text
-        required: false
-        label: "Certified home address"
-      - name: mainHomeWithinMccJurisdiction
-        type: boolean
-        required: false
-        label: "Is the certified home your qualified main home within the issuing jurisdiction?"
-      - name: certificateCreditRatePercent
-        type: number
-        required: false
-        label: "MCC certificate credit rate percentage"
-      - name: originalMortgageAmount
-        type: number
-        required: false
-        label: "Original mortgage amount"
-      - name: certifiedIndebtednessAmount
-        type: number
-        required: false
-        label: "Certified indebtedness amount"
-      - name: totalMortgageInterestPaid
-        type: number
-        required: false
-        label: "Total current-year mortgage interest paid"
-      - name: certifiedMortgageInterestPaidOverride
-        type: number
-        required: false
-        label: "Certified mortgage interest paid override"
-      - name: interestPaidToRelatedPerson
-        type: boolean
-        required: false
-        label: "Was any mortgage interest paid to a related person?"
-      - name: nonSpouseOwnerSharePercent
-        type: number
-        required: false
-        label: "Non-spouse ownership share percentage"
-      - name: carryforward2024From2024Form8396Line17
-        type: number
-        required: false
-        label: "Unused credit from 2024 carried into 2025"
-      - name: carryforward2023From2024Form8396Line14
-        type: number
-        required: false
-        label: "Unused credit from 2023 carried into 2025"
-      - name: carryforward2022From2024Form8396Line16
-        type: number
-        required: false
-        label: "Unused credit from 2022 carried into 2025"
-
-  - name: importedSupport
-    title: Imported support values (backend only - not rendered)
+      - { name: mccIssuerName, type: string, required: false, label: "Name of the issuer" }
+      - { name: mccCertificateNumber, type: string, required: false, label: "Certificate number" }
+      - { name: mccIssueDate, type: date, required: false, label: "Date the certificate was issued" }
+      - { name: mccHomeAddress, type: string, required: false, label: "Address of the home, if not the address on the return" }
+      - { name: certificateCreditRatePercent, type: percent, required: false, label: "Certificate credit rate (line 2)", note: "10%-50%; outside it no credit" }
+  - name: interest
+    title: Interest paid (line 1)
     multiplicity: single
-    showIf: spouseHasMortgageInterestCreditInputs == true
+    showIf: eligible
     fields:
-      - name: jointForm8396Ownership
-        type: text
-        required: false
-        readOnly: true
-        label: Backend note - spouse data rolls into the joint Form 8396
+      - { name: totalMortgageInterestPaid, type: amount, required: false, label: "Interest paid on the certified mortgage (Form 1098 box 1)" }
+      - { name: certifiedIndebtednessAmount, type: amount, required: false, label: "Loan amount on the certificate" }
+      - { name: originalMortgageAmount, type: amount, required: false, label: "Whole mortgage loan amount" }
+      - { name: certifiedMortgageInterestPaidOverride, type: amount, required: false, label: "Interest on the covered loan, if figured yourself" }
+      - { name: nonSpouseOwnerSharePercent, type: percent, required: false, label: "Your spouse's share of the home, if it has another owner" }
+  - name: carryforward
+    title: Credit carried forward from earlier years (lines 4-6)
+    multiplicity: single
+    showIf: eligible
+    fields:
+      - { name: carryforward2022From2024Form8396Line16, type: amount, required: false, label: "2022 credit (line 16 of the 2024 Form 8396)" }
+      - { name: carryforward2023From2024Form8396Line14, type: amount, required: false, label: "2023 credit (line 14 of the 2024 Form 8396)" }
+      - { name: carryforward2024From2024Form8396Line17, type: amount, required: false, label: "2024 credit (line 17 of the 2024 Form 8396)" }

@@ -590,6 +590,7 @@ Deductions labels renamed in the Incomes style. Headings still in the old "Form 
 | Mortgage subsidy recapture (Form 8828; household, Family Head tab; moved to Incomes) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-08 |
 | Business interest limit (Form 8990; Family Head and spouse copies) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-08 |
 | Self-employed health insurance and retirement plans (Family Head, spouse) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-08 |
+| Home office (Form 8829; Family Head, spouse) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-08 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

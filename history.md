@@ -1,3 +1,17 @@
+## 2026-11-08T19:45 - Home office (Form 8829): Screen Review Checklist applied
+
+- Audit against the 2025 Instructions for Form 8829; the calculation already applies them (no backend change).
+- Screen bugs: (1) the business was typed free text - the calculation matches it to the Schedule C business name or profession, and a name
+  that didn't match left the office unmatched (now a pick list of that person's Schedule C businesses, as on Depreciable assets; a single
+  business is picked for you); (2) the home office question ignored Business income, where the business already says it uses Form 8829
+  (now answered from it when unanswered, with a note); (3) a browser date box, browser radios for the disaster and Schedule A questions;
+  (4) explanations under the fields, no help, the screen's own Save, no Reset or Clear.
+- Rebuilt screen: shared look and bar; sections with Clear; each office a card with Clear and Remove; the expenses as a direct / indirect
+  grid (mortgage interest indirect only); the shared date control; Yes / No questions; a link to Business income for the simplified method;
+  help from the instructions (`data/home-office-help.ts`).
+- Tests: e2e `home-office-screen.spec.ts`; `open-questions-b110-form8829-line9-disaster.spec.ts` and `personal-forms-show-saved-data.spec.ts`
+  use the new field ids.
+
 ## 2026-11-08T19:15 - Self-employed health insurance and retirement plans: Screen Review Checklist applied
 
 - Audit against the 2025 Instructions for Form 7206 and the 2025 Form 1040 instructions for Schedule 1 lines 16-17. The calculation already

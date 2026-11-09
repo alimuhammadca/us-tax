@@ -1,3 +1,6 @@
+# Screen review 2026-11-08: same fields. activityDescription is picked from that person's Schedule C businesses (businessName, else the
+# profession); hasActualHomeOffice is answered Yes from Business income (homeOfficeMethod 'form8829') when unanswered; businessUseStartDate is
+# YYYY-MM-DD (date control); mortgageInterestDirect is never used (mortgage interest is indirect only).
 # Home office - actual expenses (Form 8829) - spouse.
 # Per-business multi-instance capture. The simplified $5/sqft method is on the Schedule C form.
 # Allocation and gross-income limit are computed in Stage 2.

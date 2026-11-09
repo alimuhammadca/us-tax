@@ -300,6 +300,10 @@ owner 2026-11-04).*
       Grep every place the side effect is applied.
 - [ ] A Credit Limit Worksheet's list of lines is checked one by one against the code that sums it (Schedule 3 line 6l was missing on
       Form 8396).
+- [ ] A typed override of a figure the app computes (Schedule 8812 Credit Limit Worksheet B line 14) can only replace a right number
+      with a wrong one - propose removing it (District of Columbia homebuyer credit).
+- [ ] In help text, keep a form's name on one line ("Form 5405", not "Form" at a line end): the title is added only where the name
+      matches as written, so a split name gets no IRS title (District of Columbia homebuyer credit).
 - [ ] Unit tests for new helpers (e.g. `id-validation.spec.ts`, `scenario-completeness.spec.ts`).
 - [ ] Entry in `history.md`; commit and push us-tax-ui, us-tax-be (e2e / backend) and us-tax (docs).
 
@@ -669,6 +673,7 @@ Deductions labels renamed in the Incomes style. Headings still in the old "Form 
 | Credit for tax credit bonds (Form 8912; Family Head, spouse) | 1-8, 11, 13, 15-21, 23-25 | 2026-11-09 |
 | Electric vehicle credit (Form 8834; Family Head, spouse) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-09 |
 | Mortgage interest credit (Form 8396; Family Head, spouse) | 1-8, 11, 13, 15-22, 24, 25 | 2026-11-09 |
+| District of Columbia homebuyer credit (Form 8859; Family Head, spouse) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-09 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

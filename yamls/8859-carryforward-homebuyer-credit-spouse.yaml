@@ -1,50 +1,15 @@
-# Form 8859 - Carryforward Homebuyer Credit - spouse.
-# This spouse form is additive only. The output remains one consolidated Form 8859 per return.
+# Form 8859 (2025) - Carryforward of the District of Columbia First-Time Homebuyer Credit (spouse). Joint return: added to line 1 of
+# the one Form 8859; separate return: the spouse's own (MfsFormScoper). Screen review 2026-11-09: the Worksheet B override was removed
+# with its columns (V452).
 name: carryforward-homebuyer-credit-spouse
-title: Form 8859 - Carryforward homebuyer credit (spouse)
+title: District of Columbia homebuyer credit (Form 8859)
 multiplicity: single
-formName: 8859
-category: deductions
-instructions:
-  - Use this spouse form only on married filing jointly returns when the spouse has an additional prior-year carryforward to add to the joint Form 8859.
-  - Do not use this form if the taxpayer-side carryforward already includes the spouse amount.
+formName: Form 8859
+category: credits
 sections:
-  - name: spouseScreening
-    title: Spouse supplemental screening
+  - name: credit
+    title: Unused credit
     multiplicity: single
     fields:
-      - name: spouseHasCarryforwardHomebuyerCreditInputs
-        type: boolean
-        required: true
-        label: Does your spouse have an additional carryforward homebuyer credit amount to add?
-
-  - name: spouseContribution
-    title: Spouse carryforward contribution
-    multiplicity: single
-    showIf: spouseHasCarryforwardHomebuyerCreditInputs == true
-    fields:
-      - name: spousePriorYearCarryforwardContribution
-        type: amount
-        required: false
-        label: Spouse prior-year Form 8859 line 4 carryforward contribution
-        placeholder: 0.00
-      - name: spouseUseSchedule8812CreditLimitWorksheetBOverride
-        type: boolean
-        required: false
-        label: If you file separately and Schedule 8812 directs you to Credit Limit Worksheet B, override the tax-limit (line 2)?
-      - name: spouseSchedule8812CreditLimitWorksheetBLine14Override
-        type: amount
-        required: false
-        showIf: spouseHasCarryforwardHomebuyerCreditInputs == true and spouseUseSchedule8812CreditLimitWorksheetBOverride == true
-        label: Spouse's Schedule 8812 Credit Limit Worksheet B, line 14 amount
-
-  - name: importedSupport
-    title: Imported support values (backend only - not rendered)
-    multiplicity: single
-    showIf: spouseHasCarryforwardHomebuyerCreditInputs == true
-    fields:
-      - name: jointForm8859Ownership
-        type: text
-        required: false
-        readOnly: true
-        label: Backend note - spouse data rolls into the joint Form 8859
+      - { name: spouseHasCarryforwardHomebuyerCreditInputs, type: boolean, required: true, label: "Joint: Does your spouse have an unused District of Columbia first-time homebuyer credit that isn't in the Family Head's amount? Separate: ...carried forward to 2025?" }
+      - { name: spousePriorYearCarryforwardContribution, type: amount, required: false, showIf: spouseHasCarryforwardHomebuyerCreditInputs == true, label: "Unused credit (line 4 of your spouse's 2024 Form 8859)" }

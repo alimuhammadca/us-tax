@@ -1,3 +1,21 @@
+## 2026-11-09T23:45 - District of Columbia homebuyer credit (Form 8859): Screen Review Checklist applied
+
+- Audit against Form 8859 (2025) and its instructions (docs/IRS-Forms/f8859.pdf). The Tax Liability Limit Worksheet's list of
+  credits matched the code line for line.
+- Calculation:
+  - The 21st carryforward bridge: last year's Form 8859 line 4 (primary return) fills this year's line 1 when it is blank (a typed
+    amount, a No, or a spouse's added amount on a joint return wins - last year's joint line 4 already holds both; an unanswered claim
+    counts as Yes) - `Form8859Rules`. Nothing brought it in.
+  - Line 2 always uses the figured Schedule 8812 Credit Limit Worksheet B line 14 when Schedule 8812 directs it (the shared
+    `ctcLine19ForClwB`); a typed override could replace it.
+- Removed (owner 2026-11-09, V452): the "prior-year amount available" confirmation (saved, read by nothing) and the Worksheet B line 14
+  override on both copies (4 columns; also out of MfsFormScoper).
+- Screen: rebuilt in the shared pattern with Reset and save partial (the save was refused until the amount was entered); the import
+  summary of tax figures and the "?" help buttons are gone. The old help said the credit was for homes bought in 2008 - that is the
+  national credit repaid on Form 5405; help rewritten from Form 8859 (`data/dc-homebuyer-credit-help.ts`).
+- Tests: Java `DcHomebuyerCreditScreenReviewTest` (2), the scoper test rewritten; a new Karma spec (2); e2e
+  `dc-homebuyer-credit-screen.spec.ts` (3, including the two-year bridge) plus the Form 8859 specs (updated) - 10 pass.
+
 ## 2026-11-09T23:00 - Mortgage interest credit (Form 8396): Screen Review Checklist applied
 
 - Audit against Form 8396 (2025) and its instructions (docs/IRS-Forms/f8396.pdf).

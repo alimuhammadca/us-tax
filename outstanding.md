@@ -1,5 +1,14 @@
 # Outstanding Items
 
+## Home energy credits (Form 5695): found in the 2026-11-08 review, not changed
+
+- Joint occupants (lines 7c / 32a): the fuel cell $1,667-per-half-kW cap and the per-item credit allocation among occupants are not
+  figured; the filer enters only what they paid and the box is checked.
+- Line 17e: the form says a Yes limits the credit to improvements not related to building the home; the instructions say skip lines
+  18a-20d. The calculation follows the form (the filer enters only the non-construction amounts).
+- The "statement" the form asks for (other homes, the items on the "all other" lines with their QMIDs, a second main home for fuel
+  cells) is not produced as an attachment.
+
 ## Education credits (Form 8863): found in the 2026-11-08 review, not changed
 
 - The "no Form 1098-T" exception is one return-level answer on the Family Head's screen; a spouse's student without a Form 1098-T is not

@@ -23,11 +23,6 @@ sections:
         required: true
         label: Will this return claim Form 5695 residential energy credits?
         help: Select Yes if this return will claim the Residential Clean Energy Credit, the Energy Efficient Home Improvement Credit, or both.
-      - name: confirmAllEnergySupportUploaded
-        type: boolean
-        required: false
-        label: I confirm all received Form 5695 support has been uploaded
-        help: Confirm only after invoices, audit reports, and other available support have been uploaded.
       - name: claimsResidentialCleanEnergyCredit
         type: boolean
         required: false
@@ -133,8 +128,65 @@ sections:
       - name: mainHomeAddress
         type: text
         required: false
+        computed: true   # screen review 2026-11-08: joined from the main home parts below
         placeholder: Main home address
         label: Main home address for Part II (line 17d)
+      - name: partIHomeStreet
+        type: text
+        required: false
+        label: Home where the Part I property was installed (above line 1) - number and street
+        help: V443 (screen review 2026-11-08). Filled from the Address screen when blank.
+      - name: partIHomeUnit
+        type: text
+        required: false
+        label: Home where the Part I property was installed (above line 1) - unit no.
+        help: V443 (screen review 2026-11-08). Filled from the Address screen when blank.
+      - name: partIHomeCity
+        type: text
+        required: false
+        label: Home where the Part I property was installed (above line 1) - city or town
+        help: V443 (screen review 2026-11-08). Filled from the Address screen when blank.
+      - name: partIHomeState
+        type: text
+        required: false
+        label: Home where the Part I property was installed (above line 1) - state
+        help: V443 (screen review 2026-11-08). Filled from the Address screen when blank.
+      - name: partIHomeZip
+        type: text
+        required: false
+        label: Home where the Part I property was installed (above line 1) - ZIP code
+        help: V443 (screen review 2026-11-08). Filled from the Address screen when blank.
+      - name: mainHomeStreet
+        type: text
+        required: false
+        label: Main home (lines 7b and 17d) - number and street
+        help: V443 (screen review 2026-11-08). Filled from the Address screen when blank.
+      - name: mainHomeUnit
+        type: text
+        required: false
+        label: Main home (lines 7b and 17d) - unit no.
+        help: V443 (screen review 2026-11-08). Filled from the Address screen when blank.
+      - name: mainHomeCity
+        type: text
+        required: false
+        label: Main home (lines 7b and 17d) - city or town
+        help: V443 (screen review 2026-11-08). Filled from the Address screen when blank.
+      - name: mainHomeState
+        type: text
+        required: false
+        label: Main home (lines 7b and 17d) - state
+        help: V443 (screen review 2026-11-08). Filled from the Address screen when blank.
+      - name: mainHomeZip
+        type: text
+        required: false
+        label: Main home (lines 7b and 17d) - ZIP code
+        help: V443 (screen review 2026-11-08). Filled from the Address screen when blank.
+      - name: improvementSubsidy
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Utility subsidy for the Part II improvements
+        help: V443 (screen review 2026-11-08). 2025 Instructions for Form 5695 - a subsidy reduces the cost for both credits; taken off the Part II costs in line order.
       - name: partIIRelatedToConstruction
         type: boolean
         required: false

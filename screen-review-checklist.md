@@ -235,6 +235,12 @@ owner 2026-11-04).*
 - [ ] A figure filled from the return must be one the return has worked out at the point the calculation needs it; one worked out later
       that depends on this calculation (the QBI deduction for the business interest limit) stays typed, and the screen says why (Business
       interest limit).
+- [ ] Fields the screen shows in parts must be saved in parts: the Form 5695 main home's street / city / state / ZIP boxes were joined into
+      one string on save and came back empty on every reopen. Check every box the screen shows is a saved key (item 24) (Home energy credits).
+- [ ] The saved return must keep what the preview prints: out_form_5695 kept only a few totals, so a reloaded return showed most of
+      Form 5695 blank. Compare the output mapper's columns with the lines the preview fills; keep the whole form (`form_json`) when the
+      columns are a subset (Home energy credits).
+- [ ] A rule the instructions state for "both credits" must reach both: the utility subsidy reduced only Part I (Home energy credits).
 - [ ] Check WHO a rule is about before asking it: Form 8863 line 7 (the refundable part) is about the filer's age, support and parents; the
       screen asked about the student. Read the line's "you" / "the student" and ask about that person, from their own record where it has
       the answer (the date of birth) (Education credits).
@@ -599,6 +605,7 @@ Deductions labels renamed in the Incomes style. Headings still in the old "Form 
 | Self-employed health insurance and retirement plans (Family Head, spouse) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-08 |
 | Home office (Form 8829; Family Head, spouse) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-08 |
 | Education credits (Form 8863; Family Head, spouse) | 1-8, 11-21, 24, 25 | 2026-11-08 |
+| Home energy credits (Form 5695; Family Head, spouse) | 1-8, 11, 13, 15-21, 24, 25 | 2026-11-08 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

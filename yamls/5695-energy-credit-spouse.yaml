@@ -109,9 +109,66 @@ sections:
       - name: spouseMainHomeAddress
         type: text
         required: false
+        computed: true   # screen review 2026-11-08: joined from the main home parts below
         placeholder: Spouse main home address
         label: Spouse main home address
         # was: spouseMainHomeAddress (single free-text address, still shown as "Previously saved" when the split fields are empty)
+      - name: spousePartIHomeStreet
+        type: text
+        required: false
+        label: Home where the Part I property was installed (above line 1) - number and street
+        help: V443 (screen review 2026-11-08). Filled from the Address screen when blank.
+      - name: spousePartIHomeUnit
+        type: text
+        required: false
+        label: Home where the Part I property was installed (above line 1) - unit no.
+        help: V443 (screen review 2026-11-08). Filled from the Address screen when blank.
+      - name: spousePartIHomeCity
+        type: text
+        required: false
+        label: Home where the Part I property was installed (above line 1) - city or town
+        help: V443 (screen review 2026-11-08). Filled from the Address screen when blank.
+      - name: spousePartIHomeState
+        type: text
+        required: false
+        label: Home where the Part I property was installed (above line 1) - state
+        help: V443 (screen review 2026-11-08). Filled from the Address screen when blank.
+      - name: spousePartIHomeZip
+        type: text
+        required: false
+        label: Home where the Part I property was installed (above line 1) - ZIP code
+        help: V443 (screen review 2026-11-08). Filled from the Address screen when blank.
+      - name: spouseMainHomeStreet
+        type: text
+        required: false
+        label: Main home (lines 7b and 17d) - number and street
+        help: V443 (screen review 2026-11-08). Filled from the Address screen when blank.
+      - name: spouseMainHomeUnit
+        type: text
+        required: false
+        label: Main home (lines 7b and 17d) - unit no.
+        help: V443 (screen review 2026-11-08). Filled from the Address screen when blank.
+      - name: spouseMainHomeCity
+        type: text
+        required: false
+        label: Main home (lines 7b and 17d) - city or town
+        help: V443 (screen review 2026-11-08). Filled from the Address screen when blank.
+      - name: spouseMainHomeState
+        type: text
+        required: false
+        label: Main home (lines 7b and 17d) - state
+        help: V443 (screen review 2026-11-08). Filled from the Address screen when blank.
+      - name: spouseMainHomeZip
+        type: text
+        required: false
+        label: Main home (lines 7b and 17d) - ZIP code
+        help: V443 (screen review 2026-11-08). Filled from the Address screen when blank.
+      - name: spouseImprovementSubsidy
+        type: amount
+        required: false
+        placeholder: 0.00
+        label: Utility subsidy for the Part II improvements
+        help: V443 (screen review 2026-11-08). 2025 Instructions for Form 5695 - a subsidy reduces the cost for both credits; taken off the Part II costs in line order.
       - name: spouseMainHomeStreet
         type: text
         required: false

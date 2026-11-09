@@ -1,3 +1,25 @@
+## 2026-11-08T21:00 - Home energy credits (Form 5695): Screen Review Checklist applied
+
+- Audit against the 2025 Form 5695 and its instructions. Owner answers: add the Part I home address and fill the homes from Address;
+  bring last year's line 16 forward; remove the "all support uploaded" question; add a Part II utility subsidy.
+- Screen bugs: (1) the Part I home address (above line 1) was never asked - blank on every form; (2) the main home's four boxes were
+  joined into one string on save and came back empty (a "Previously saved" panel on every reopen); (3) Save was refused until "I confirm
+  all received energy credit support has been uploaded" was Yes - a question nothing read (removed); (4) browser radios, "Not sure"
+  panels, a required legend, the screen's own Save, no Reset or Clear; (5) the enabled property code was free text; no QMID check.
+- V443: pf_energy_credit Part I home address and main home address in parts, improvement_subsidy; out_form_5695.form_json.
+- Calculation: a utility subsidy now reduces the Part II costs too, in the form's line order (`EnergyCreditInputs`; 2025 instructions:
+  "reduce your cost for the product" for both credits); the addresses reach the form in parts; line 19f is lines 19d + 19e (it held
+  every door - the credit was right, the printed lines didn't add up); the 18th carryforward bridge (last year's line 16 fills a blank
+  line 12, and an unanswered screen counts as claiming).
+- Saved return: out_form_5695 kept only a few totals, so a reloaded return lost lines 9-11, 17-26, 28-31 and every flag; the whole form
+  is now kept as JSON (`form_json`) and read back.
+- Preview: the addresses, 7c, 17e, 21a-21c, 25a-25d and each line's items (the most expensive with its QMID on the "a" lines, the rest
+  on the "all other" lines) are filled - they were blank.
+- Tests: Java `EnergyCreditsScreenReviewTest`; UI `utils/energy-credit-screen.spec.ts` and the component spec; e2e
+  `energy-credit-screen.spec.ts` and `form5695-carryforward-bridge.spec.ts` (two years); `line5695-energy-credit.spec.ts` updated
+  (ids, the State pick list, the removed question). 33 e2e pass; the backend tests pass except the known
+  `thirdPartyDesignee_populatedWhenAllowed`.
+
 ## 2026-11-08T20:00 - Education credits (Form 8863): Screen Review Checklist applied
 
 - Audit against the 2025 Instructions for Form 8863. Owner answers: line 7 asked as the IRS questions; MAGI add-backs figured, boxes

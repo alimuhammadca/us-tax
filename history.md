@@ -1,3 +1,16 @@
+## 2026-11-11T06:00 - Foreign assets (Form 8938): Screen Review Checklist, second pass
+
+- Checked against the items added since the 2026-11-08 review and the Form 8938 (Rev. November 2021) Parts III and IV, which were
+  printed blank: the screen asked only "is any tax item from it on your return?".
+- Owner-approved (V463): each account or asset asks its tax items when that answer is Yes - interest, dividends, royalties, other
+  income, gains (losses), deductions, credits, and where the deductions and credits are reported; Part III adds them by category
+  (line 13 accounts, line 14 other assets) with the usual lines (interest Form 1040 line 2b / Schedule B line 1, dividends line 3b /
+  Schedule B line 5, royalties Schedule E line 4, other income Schedule 1 line 8z, gains Schedule D) (`Form8938Parts`). Part IV asks
+  the number of Forms 3520, 3520-A, 5471 and 8865; line 18 (Forms 8621) counts the copies of Other tax items reporting a PFIC. The
+  preview's field names for lines 16 and 19 are swapped (checked against the printed positions) and mapped by line.
+- "Whose is it?" shows the names (not "You / Your spouse").
+- Tests: Java `Form8938PartsTest` (2); e2e `foreign-assets-screen.spec.ts` (+1).
+
 ## 2026-11-11T05:00 - Injured spouse (Form 8379): Screen Review Checklist, second pass
 
 - Checked against the items added since the 2026-11-08 review and the Form 8379 (Rev. November 2023) Part I lines 6-9.

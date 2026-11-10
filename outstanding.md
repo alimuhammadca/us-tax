@@ -1,5 +1,11 @@
 # Outstanding Items
 
+## Foreign assets (Form 8938): found in the 2026-11-10 second pass, not changed
+
+- Part III amounts are typed per account or asset; they aren't drawn from the statements (a foreign payer's Form 1099-INT) or the
+  return's lines, and nothing checks them against the return.
+- Line 18 counts one Form 8621 per copy of Other tax items reporting a PFIC; more PFICs (and PFICs filed without tax) aren't counted.
+
 ## Other payments / credits (Schedule 3 Part II): found in the 2026-11-10 review, not changed
 
 - Lines 12 and 13c are typed totals: Form 4136 and Form 3800 Part III are not produced.

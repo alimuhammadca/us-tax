@@ -51,6 +51,15 @@ sections:
       - {name: closedDuringYear, type: boolean, label: Closed in the year (line 22b)}
       - {name: dateEnd, type: date, label: Date closed, showIf: closedDuringYear == true}
       - {name: taxItemReported, type: boolean, label: "Any income, gain, loss, deduction or credit from it on the return? (No ticks line 22d)"}
+      - {name: taxInterest, type: amount, label: "Part III interest (when taxItemReported)"}
+      - {name: taxDividends, type: amount, label: "Part III dividends"}
+      - {name: taxRoyalties, type: amount, label: "Part III royalties"}
+      - {name: taxOtherIncome, type: amount, label: "Part III other income"}
+      - {name: taxGains, type: amount, label: "Part III gains (losses)"}
+      - {name: taxDeductions, type: amount, label: "Part III deductions"}
+      - {name: taxDeductionsWhere, type: string, label: "Where the deductions are reported"}
+      - {name: taxCredits, type: amount, label: "Part III credits"}
+      - {name: taxCreditsWhere, type: string, label: "Where the credits are reported"}
       - {name: jointlyOwnedWithSpouse, type: boolean, readOnly: true, label: "Older saves; now owner == joint (line 22c)"}
 
   - name: assets
@@ -80,3 +89,22 @@ sections:
       - {name: disposedDuringYear, type: boolean, label: Sold or disposed of in the year}
       - {name: dateEnd, type: date, label: Date disposed of, or Various (line 31b), showIf: disposedDuringYear == true}
       - {name: taxItemReported, type: boolean, label: "Any tax item from it on the return? (No ticks line 31d)"}
+      - {name: taxInterest, type: amount, label: "Part III interest (when taxItemReported)"}
+      - {name: taxDividends, type: amount, label: "Part III dividends"}
+      - {name: taxRoyalties, type: amount, label: "Part III royalties"}
+      - {name: taxOtherIncome, type: amount, label: "Part III other income"}
+      - {name: taxGains, type: amount, label: "Part III gains (losses)"}
+      - {name: taxDeductions, type: amount, label: "Part III deductions"}
+      - {name: taxDeductionsWhere, type: string, label: "Where the deductions are reported"}
+      - {name: taxCredits, type: amount, label: "Part III credits"}
+      - {name: taxCreditsWhere, type: string, label: "Where the credits are reported"}
+
+  # V463 (2026-11-10, owner): Part IV - the number of Forms 3520, 3520-A, 5471 and 8865 filed (line 18, Forms 8621, from Other
+  # tax items: one per copy reporting a PFIC). The preview field names for lines 16 and 19 are swapped; mapped by position.
+  - name: partIV
+    title: Assets reported on other forms (Part IV)
+    fields:
+      - {name: forms3520Count, type: integer, label: "Forms 3520 (line 15)"}
+      - {name: forms3520aCount, type: integer, label: "Forms 3520-A (line 16)"}
+      - {name: forms5471Count, type: integer, label: "Forms 5471 (line 17)"}
+      - {name: forms8865Count, type: integer, label: "Forms 8865 (line 19)"}

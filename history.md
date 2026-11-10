@@ -1,3 +1,28 @@
+## 2026-11-11T04:00 - Other payments / credits (Schedule 3 Part II): Screen Review Checklist applied
+
+- Audit against the 2025 Schedule 3 and the 2025 Instructions for Form 1040 (Schedule 3 lines 10-13z), Form 2350 and Form 4136.
+- Owner-approved (no column change): the opening question and the six Yes/No gates removed - each gate saved as worked out from
+  its amount; the typed section 1341 credit removed - line 13b is the credit the app figures (Standard or itemized deductions, the
+  claim-of-right refigure; Social Security benefits with the 2024 figures), shown on the screen; a typed amount replaced the figure
+  (`OtherPaymentsInputs` drops old saved answers); on a joint return the spouse's copy is added (it was saved but never read).
+- Fixes: line 13d was asked as a section 965(i) triggering event - a tax (entered on Other tax items, line 16 "965INC") - so a
+  Yes turned a tax owed into a payment; it is now the net 965 tax liability paid in installments, still to be paid in later years,
+  as the instructions say. Line 13z offers the IRS write-ins (960(c), Form 8689, 1062NL); the old suggestions ("repayment of
+  unemployment compensation", "additional excess social security") are not IRS write-ins. Form 4136's total is line 17 (the help
+  said line 14). Line 10 is for Form 2350; a Form 4868 payment links to Extension of time.
+- Tests changed with the rule: the section 1341 scenario tests (sc_00015, sc_00240 both trees, sc_00145 run E, sc_00322 run C) now
+  enter the repayment and the earlier year's taxable income on Standard or itemized deductions and get the same credits figured
+  (2,200; 1,320; 671); the "deduction and credit both claimed" tests became "the app takes one remedy" (a typed credit can no
+  longer be entered beside the deduction); sc_00322 run C (typed 838) is covered by run C2 (figured 838); the line 31/32 totals
+  tests use a line 13z write-in where they used a typed credit.
+  The line 6 "excess repayment with a typed credit" e2e had passed vacuously (no filing status: a 200 with no flags in the body);
+  it now sets Single and checks the 409 flag.
+- Screen: one page in the shared look (bar, Reset, save partial, section Clear) instead of its own Save, Ctrl+S, unsaved pill,
+  progress bar, badges, explainers, warnings and a confirm callout; write-ins as white row cards with Clear and Remove; help from
+  the IRS text (`data/other-payments-help.ts`).
+- Tests: Java `OtherPaymentsInputsTest` (2); Karma (3); e2e `other-payments-screen.spec.ts` (2) and the line 31, 32, 6, MFS and
+  Schedule R specs updated.
+
 ## 2026-11-11T02:30 - Credits after disallowance (Form 8862): Screen Review Checklist applied
 
 - Audit against the Form 8862 (Rev. December 2025) and its instructions. The screen didn't follow the form: line 4 was asked about

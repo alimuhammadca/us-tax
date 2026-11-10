@@ -555,6 +555,11 @@ last year's figures from last year's return or upload, the lump-sum election sug
       child (Credits after disallowance).
 - [ ] Compare the screen's questions with the form's lines one by one: a yes/no where the form asks a number (days, an age)
       prints nothing on the form (Credits after disallowance).
+- [ ] Check the sign: an item the screen enters as a payment or refundable credit must not be a tax. Line 13d was asked as a section
+      965(i) triggering event - a tax owed, already entered on Other tax items - so a Yes turned it into a refund (Other payments /
+      credits). Read the line's instruction for what it reports.
+- [ ] A screen's spouse copy must be read where the return needs it: on a joint return the Other payments spouse copy was saved but
+      never added (Other payments / credits). Grep the calculation for the spouse form id.
 - [ ] Read a refinancing rule for the figure it limits by ("the outstanding balance of the refinanced loan as of the date of the
       refinancing") and make the label ask that figure (the screen asked the original principal).
 
@@ -740,6 +745,7 @@ Deductions labels renamed in the Incomes style. Headings still in the old "Form 
 | Extension of time (Form 4868; Family Head, spouse) | 1-8, 11, 13, 15-25 | 2026-11-10 |
 | Estimated tax payments (line 26; Family Head, spouse) | 1-8, 11-25 | 2026-11-10 |
 | Credits after disallowance (Form 8862; Family Head, spouse) | 1-8, 11, 13, 15-25 | 2026-11-10 |
+| Other payments / credits (Schedule 3 Part II; Family Head, spouse) | 1-8, 11, 13, 15-25 | 2026-11-10 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

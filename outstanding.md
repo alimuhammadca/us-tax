@@ -1,5 +1,11 @@
 # Outstanding Items
 
+## Other payments / credits (Schedule 3 Part II): found in the 2026-11-10 review, not changed
+
+- Lines 12 and 13c are typed totals: Form 4136 and Form 3800 Part III are not produced.
+- `SECTION_1341_REPAYMENT_BELOW_THRESHOLD` and `SECTION_1341_DEDUCTION_AND_CREDIT_BOTH_CLAIMED` can no longer be reached from a
+  typed credit (it isn't read); the code stays for the figured paths.
+
 ## Credits after disallowance (Form 8862): found in the 2026-11-10 review, not changed
 
 - Line 8 date of death: no screen holds a child's date of death, so only births in the year are printed.

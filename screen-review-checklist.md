@@ -528,6 +528,10 @@ last year's figures from last year's return or upload, the lump-sum election sug
       country) and count once, with a note, or every older return doubles (Foreign tax credit).
 - [ ] One question doing two jobs (switching a credit on and silently dropping a deduction) is split or reworded so the answer means one
       thing; a return-level choice is asked once per return and read from that copy on a joint return (Foreign tax credit).
+- [ ] A note that tells the user to enter both spouses' amounts on one copy while the other copy asks its own counts the second spouse
+      twice - each copy asks only its own and the calculation combines them as the form says (Retirement savings credit).
+- [ ] A test that passes with a fixture key nothing reads proves nothing: when a key is dropped, grep the tests for it and check each
+      test still exercises the rule (three saver's credit tests had passed on a made-up key).
 - [ ] Read a refinancing rule for the figure it limits by ("the outstanding balance of the refinanced loan as of the date of the
       refinancing") and make the label ask that figure (the screen asked the original principal).
 
@@ -707,6 +711,7 @@ Deductions labels renamed in the Incomes style. Headings still in the old "Form 
 | Standard or itemized deductions (lines 12a-12e, Schedule A; Family Head, spouse) | 1-8, 11, 13, 15-25 | 2026-11-10 |
 | Additional deductions (Schedule 1-A; Family Head, spouse; second pass) | 1-8, 11, 13, 15-25 | 2026-11-10 |
 | Foreign tax credit (Form 1116; Family Head, spouse) | 1-8, 11, 13, 15-25 | 2026-11-10 |
+| Retirement savings credit (Form 8880; Family Head, spouse) | 1-8, 11, 13, 15-25 | 2026-11-10 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

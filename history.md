@@ -1,3 +1,26 @@
+## 2026-11-10T16:00 - Retirement savings credit (Form 8880): Screen Review Checklist applied
+
+- Audit against the 2025 Form 8880 and its instructions (docs/books/f8880.pdf, 2025) and the 2025 Form 1040 instructions.
+- Owner-approved (V458):
+  - No opening question: the credit is figured whenever someone has a contribution (`Form8880Inputs`). On a joint return the Family
+    Head's "No" dropped the spouse's credit, and a filer with Form W-2 box 12 deferrals who never opened the screen got none.
+  - Removed: the two upload answers (nothing read them); "born after January 1, 2008" (the date of birth decides); "can be claimed as a
+    dependent" (read from Standard or itemized deductions, "Is someone claiming you / your spouse" - the form's test is "is claimed");
+    the IRA contributions box (Income adjustments has them).
+  - Distributions: each copy enters only its own, by year - 2023, 2024 and 2026 up to the due date (the old "after 2022" box moved to
+    2024). The Family Head copy told users to include both spouses' while the spouse copy asked the spouse's own, so the spouse's
+    counted twice. New: the Family Head's "filed jointly for 2023 / 2024?" (line 4 exception - a non-joint year's spouse distributions
+    don't reduce the other column).
+- Calculation fixes: amounts rolled over or converted to a Roth IRA (IRA and pension screens) no longer count as line 4 distributions;
+  the Puerto Rico exclusion (the figured one - the typed key was retired) and the Form 2555 line 50 housing deduction are added back to
+  the line 8 AGI; the spouse's age / student / dependent tests apply even when the spouse copy was never saved.
+- Screen: one component for both copies (`form-savings-credit.component.ts`; the two old components removed) in the shared look with
+  the bar, Reset, save partial and section Clear; the age and dependent answers shown with links; the Form W-2 box 12 deferrals, the
+  Income adjustments IRA amount and the Forms 1099-R / 1099-QA listed with links (codes not counted marked); help from the IRS text
+  (`data/savings-credit-help.ts`); heading "Retirement savings credit (name)"; Income adjustments' link renamed.
+- Tests: Java fixtures of the saver's credit tests converted (three tests had passed without testing anything - their contribution key
+  wasn't read); Karma spec (4); e2e `savings-credit-screen.spec.ts` (2) and the Form 8880 specs.
+
 ## 2026-11-10T13:00 - Foreign tax credit (Form 1116): Screen Review Checklist applied
 
 - Audit against the 2025 Instructions for Form 1116 (docs/books/i1116.pdf, 2025 edition), the form, the 2025 Form 1040 instructions

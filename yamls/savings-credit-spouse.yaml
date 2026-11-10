@@ -1,3 +1,8 @@
+# Screen review 2026-11-10 (owner, V458): no opening question (hasSavingsCredit is saved as worked out - the credit is figured
+# from the contributions); the upload, born-after and dependent answers and the IRA box are dropped (the date of birth, Standard or
+# itemized deductions and Income adjustments decide); each copy's own distributions by year (2023, 2024, 2026 to the due date) and
+# the Family Head's filedJointly2023 / filedJointly2024 (Form 8880 line 4 exception). One component: form-savings-credit.component.ts;
+# help: data/savings-credit-help.ts.
 # Form 8880 — Credit for Qualified Retirement Savings Contributions (Saver's Credit) — spouse.
 # This form is additive — provides column (b) spouse data for a joint Form 8880.
 # Only applicable on MFJ returns. Taxpayer form owns the screening question and statement imports.
@@ -33,13 +38,6 @@ sections:
     instructions:
       - Answer each question for your spouse. A disqualified spouse cannot contribute to column (b).
     fields:
-      - name: spouseBornAfter2007
-        type: boolean
-        required: false
-        label: Was your spouse born after January 1, 2008? (i.e., age 17 or younger as of Jan 1, 2026)
-        help: >
-          The credit requires the spouse to be age 18 or older as of January 1, 2026.
-          If born after January 1, 2008, the spouse is disqualified from column (b).
       - name: spouseIsFullTimeStudent
         type: boolean
         required: false
@@ -49,14 +47,6 @@ sections:
           Full-time student means enrolled full-time at a school (including technical,
           trade, or mechanical schools). Does not include on-the-job training, correspondence
           schools, or internet-only courses.
-      - name: spouseIsClaimedAsDependent
-        type: boolean
-        required: false
-        label: Can your spouse be claimed as a dependent on someone else's 2025 tax return?
-        help: >
-          If another taxpayer is eligible to claim the spouse as a dependent on their 2025 return,
-          the spouse is disqualified from column (b) even if that taxpayer does not claim them.
-
   - name: spouseContributions
     title: Spouse contributions and distributions (column b)
     multiplicity: single
@@ -67,14 +57,14 @@ sections:
       - For distributions, note that the IRS cross-column rule is handled on the taxpayer form —
         enter only the spouse's own distributions here as a reference; the backend combines them.
     fields:
-      - name: spouseIraContributions
+      - name: spouseDistributions2023
         type: amount
         required: false
-        label: Spouse traditional and Roth IRA contributions (exclude rollovers)
-        placeholder: 0.00
-        help: >
-          Enter spouse's 2025 traditional IRA and Roth IRA contributions. Exclude rollovers,
-          direct transfers, and contributions returned before the tax deadline.
+        label: "Own distributions in 2023 (V458)"
+      - name: spouseDistributions2024
+        type: amount
+        required: false
+        label: "Own distributions in 2024 (V458)"
       - name: spouseAbleContributions
         type: amount
         required: false
@@ -94,19 +84,6 @@ sections:
           Enter spouse's elective deferrals not captured by spouse W-2 box 12 auto-import.
           Includes SEP-IRA, SIMPLE, 501(c)(18)(D), and voluntary after-tax contributions.
           Do not enter amounts already in spouse W-2 box 12 codes D, E, F, G, H, or S.
-      - name: spouseDistributions2023to2025
-        type: amount
-        required: false
-        label: >
-          Spouse distributions received after 12/31/2022 and before the 2025 return due date —
-          from any IRA, ABLE, or employer retirement plan
-        placeholder: 0.00
-        help: >
-          Enter spouse's distributions in this window from qualified plans. The backend
-          applies the MFJ cross-column rule (both spouses' distributions go into both columns)
-          using the amounts entered on both the taxpayer and spouse forms.
-          Do not include rollovers, direct transfers, or non-taxable rollover distributions.
-
   # Backend-only imported statement fields. Not rendered in the UI form component.
   - name: importedStatementFields
     title: Imported statement fields (backend only — not rendered)

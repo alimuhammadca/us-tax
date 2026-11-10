@@ -1,5 +1,12 @@
 # Outstanding Items
 
+## Retirement savings credit (Form 8880): found in the 2026-11-10 review, not changed
+
+- Form 1099-R code 4 is left out in full; only an inherited IRA of a beneficiary who isn't the spouse is excluded. Codes D / E and
+  military retirement are counted (they shouldn't be).
+- Form W-2 box 12 code G counts a non-governmental 457(b) plan too; section 414(h)(2) contributions can't be told apart.
+- ABLE contributions are typed (Form 5498-QA shows everyone's contributions).
+
 ## Foreign tax credit (Form 1116): found in the 2026-11-10 review, not changed
 
 - A mutual fund's Form 1099-DIV: the whole box 1a is counted as foreign income on the statement row; the fund's year-end statement

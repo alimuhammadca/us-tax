@@ -1,3 +1,11 @@
+## 2026-11-11T14:00 - You screen: removed (Screen Review Checklist)
+
+- The "You" screen (form-you: name, SSN, date of birth, address) could not be opened - no sidebar item - and duplicated Identification
+  and Address: the backend saves the "you" form id onto the Family Head's identification row (address keys are dropped - the address
+  is saved only through address-taxpayer), so a save would have erased the middle initial, date of death, occupation and IP PIN.
+  Owner-approved: the component and its shell route are removed. The shell's read-only fallback to a saved "you" form for the tab label
+  (older accounts) and the backend's "you" form-id alias stay.
+
 ## 2026-11-11T13:00 - Refund and amount owed: Screen Review Checklist
 
 - Moved from the Tax Return section (it sat among the form previews) to Applications, renamed "Refund and amount owed"; one page in the

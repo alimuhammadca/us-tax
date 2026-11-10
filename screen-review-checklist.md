@@ -771,6 +771,7 @@ Deductions labels renamed in the Incomes style. Headings still in the old "Form 
 | Spouse (legacy screen) | removed - unreachable duplicate of Identification (spouse) | 2026-11-10 |
 | Refund and amount owed (lines 34-38, Form 8888, Form 2210 inputs; Family Head, spouse) | 1-25; moved to Applications, 2024 figures filled, box E worked out, spouse copy fixed | 2026-11-10 |
 | Last year 1040 (upload) | skipped - owner 2026-11-10 | 2026-11-10 |
+| You (legacy screen) | removed - unreachable duplicate of Identification and Address | 2026-11-10 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

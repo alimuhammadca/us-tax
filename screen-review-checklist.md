@@ -770,6 +770,7 @@ Deductions labels renamed in the Incomes style. Headings still in the old "Form 
 | Dependent (Form 1040 Dependents section) | 1-25; credits worked out (Steps 1-5), rows 5-7 filled, eye on SSN and date of birth | 2026-11-10 |
 | Spouse (legacy screen) | removed - unreachable duplicate of Identification (spouse) | 2026-11-10 |
 | Refund and amount owed (lines 34-38, Form 8888, Form 2210 inputs; Family Head, spouse) | 1-25; moved to Applications, 2024 figures filled, box E worked out, spouse copy fixed | 2026-11-10 |
+| Last year 1040 (upload) | skipped - owner 2026-11-10 | 2026-11-10 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

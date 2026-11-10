@@ -746,6 +746,7 @@ Deductions labels renamed in the Incomes style. Headings still in the old "Form 
 | Estimated tax payments (line 26; Family Head, spouse) | 1-8, 11-25 | 2026-11-10 |
 | Credits after disallowance (Form 8862; Family Head, spouse) | 1-8, 11, 13, 15-25 | 2026-11-10 |
 | Other payments / credits (Schedule 3 Part II; Family Head, spouse) | 1-8, 11, 13, 15-25 | 2026-11-10 |
+| Injured spouse (Form 8379; second pass) | 9, 12, 14, 20-25 checked; line 20 figured, lines 6-9 shown | 2026-11-10 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

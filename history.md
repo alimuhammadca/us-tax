@@ -1,3 +1,15 @@
+## 2026-11-11T05:00 - Injured spouse (Form 8379): Screen Review Checklist, second pass
+
+- Checked against the items added since the 2026-11-08 review and the Form 8379 (Rev. November 2023) Part I lines 6-9.
+- Owner-approved (no column change; revisits B27): line 20 column (b) is figured when blank as the injured spouse's own payments -
+  the estimated tax on their Estimated tax payments copy, the spouse's Form 4868 payment and their Form 2350 payment - following
+  "allocate each spouse's separate estimated tax payments to the spouse who made them" (`Form8379Payments`); it stays the filers'
+  when there are joint payments (joint estimated tax, a refund applied from the joint return, the joint Form 4868 payment). A blank
+  line 20 also left line 6 ("did you make payments?") No for a spouse whose only payments were estimated tax.
+- Screen: lines 6-9, worked out from the return, are shown from the last computed return (item 21); line 20 is marked as figured
+  and its help says how.
+- Tests: Java `Form8379PaymentsTest` (2) and sc_00298's message; e2e `injured-spouse-screen.spec.ts` (+1).
+
 ## 2026-11-11T04:00 - Other payments / credits (Schedule 3 Part II): Screen Review Checklist applied
 
 - Audit against the 2025 Schedule 3 and the 2025 Instructions for Form 1040 (Schedule 3 lines 10-13z), Form 2350 and Form 4136.

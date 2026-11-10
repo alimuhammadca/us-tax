@@ -113,3 +113,5 @@ sections:
         type: amount
         required: false
         label: Estimated tax and other payments (line 20)
+        note: "Figured when blank (2026-11-10, owner): the injured spouse's own estimated tax, own Form 4868 payment and Form 2350
+          payment; left to the filers when there are joint payments (Form8379Payments)."

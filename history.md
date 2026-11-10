@@ -1,3 +1,19 @@
+## 2026-11-10T23:45 - Extension of time (Form 4868): Screen Review Checklist applied
+
+- Audit against the 2025 Form 4868 and its instructions.
+- Owner-approved (V460): the Form 1040-NR line 9 question removed (the app files Form 1040; line 9 stays unchecked); on a joint
+  return the spouse copy asks only the spouse's payment - the "separate details?" gate is saved as worked out and "included on the
+  same joint extension?" is gone. Calculation: the spouse's payment always counts on Schedule 3 line 10 of a joint return ("If you
+  and your spouse each filed a separate Form 4868 but later file a joint return, enter the total paid with both"); a No dropped it.
+- Fixes: line 5's suggestion is Form 1040 line 33 without Schedule 3 line 10 (it was withholding plus estimated tax only, leaving
+  out the refundable credits); out of the country, interest still runs from April 15 (the note said the tax was due June 15 with
+  interest after that); the late payment note names the 90% reasonable-cause rule; the payment list adds the IRS online account
+  and digital wallets the instructions name; a fiscal year Form 4868 can't be e-filed (warned).
+- Screen: one page in the shared look (bar, Reset, save partial, section Clear) instead of its own Save with Ctrl+S, unsaved /
+  complete chips, a progress summary, a tax-year badge, the names panel and a post-save checklist; years from tax-year.ts; dates
+  with the shared control; a No that would clear answers asks first; help from the IRS text (`data/extension-of-time-help.ts`).
+- Tests: Karma (3), e2e `extension-of-time-screen.spec.ts` (2) and the Form 4868 specs.
+
 ## 2026-11-10T23:00 - Missing or wrong W-2 or 1099-R (Form 4852): Screen Review Checklist applied
 
 - Audit against Form 4852 (Rev. September 2020) and its instructions.

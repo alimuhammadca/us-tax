@@ -1,3 +1,7 @@
+# Screen review 2026-11-10 (owner, V460): the Form 1040-NR line 9 question is removed (line 9 stays unchecked); on a joint return
+# the spouse copy asks only the spouse's payment (spouseHasExtensionOfTimeInputs saved as worked out, spouseIncludedOnJointExtension
+# removed - every Form 4868 payment counts on the joint return). Component: form-extension-of-time.component.ts; help:
+# data/extension-of-time-help.ts.
 # Form 4868 - Application for Automatic Extension of Time To File U.S. Individual
 # Income Tax Return - taxpayer (return-level owner).
 #
@@ -153,13 +157,6 @@ sections:
           U.S. citizens and resident aliens living and working outside the U.S. and Puerto Rico
           automatically get a 2-month extension to June 15, 2026 — no Form 4868 needed for that
           initial extension. Check Yes if you qualify for this automatic 2-month extension.
-      - name: form1040nrSpecialFlag
-        type: boolean
-        required: false
-        label: Are you a nonresident alien without wages subject to U.S. income tax withholding?
-        helpText: >
-          Nonresident aliens without U.S. wage withholding have a filing deadline of June 15, 2026.
-          Form 4868 extends this to October 15. Note: Form 1040-NR is not supported in this application.
 
   - name: importedSupport
     title: Imported support values

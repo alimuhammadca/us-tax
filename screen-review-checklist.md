@@ -542,6 +542,8 @@ last year's figures from last year's return or upload, the lump-sum election sug
       each replaced box's key for its readers.
 - [ ] A note that tells the user to delete something the calculation already handles (a wrong W-2 the Form 4852 replaces by EIN) is
       a wrong claim: say what the calculation does and what it needs (the EIN), and list the statements with the verdict.
+- [ ] A suggestion filled from the computed return uses the exact line the form names, with its exclusions: Form 4868 line 5 is
+      Form 1040 line 33 without Schedule 3 line 10, not withholding plus estimated tax (Extension of time).
 - [ ] Read a refinancing rule for the figure it limits by ("the outstanding balance of the refinanced loan as of the date of the
       refinancing") and make the label ask that figure (the screen asked the original principal).
 
@@ -724,6 +726,7 @@ Deductions labels renamed in the Incomes style. Headings still in the old "Form 
 | Retirement savings credit (Form 8880; Family Head, spouse) | 1-8, 11, 13, 15-25 | 2026-11-10 |
 | Earned income credit (line 27a; Family Head, spouse) | 1-8, 11-25 | 2026-11-10 |
 | Missing or wrong W-2 or 1099-R (Form 4852; Family Head, spouse) | 1-8, 11-25 | 2026-11-10 |
+| Extension of time (Form 4868; Family Head, spouse) | 1-8, 11, 13, 15-25 | 2026-11-10 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

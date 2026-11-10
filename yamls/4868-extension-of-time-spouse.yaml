@@ -1,3 +1,7 @@
+# Screen review 2026-11-10 (owner, V460): the Form 1040-NR line 9 question is removed (line 9 stays unchecked); on a joint return
+# the spouse copy asks only the spouse's payment (spouseHasExtensionOfTimeInputs saved as worked out, spouseIncludedOnJointExtension
+# removed - every Form 4868 payment counts on the joint return). Component: form-extension-of-time.component.ts; help:
+# data/extension-of-time-help.ts.
 # Form 4868 - spouse supplemental form.
 #
 # Use this only for spouse-side additions on an MFJ return. The output remains
@@ -23,8 +27,10 @@ sections:
     fields:
       - name: spouseHasExtensionOfTimeInputs
         type: boolean
-        required: true
-        label: Does your spouse have additional extension payment details to add?
+        required: false
+        readOnly: true
+        computed: true
+        label: "Worked out - Yes when the spouse's payment is entered (question removed 2026-11-10)"
         helpText: >
           On a joint return, both spouses share one Form 4868. Use this tab only if your spouse
           made a separate extension payment. In most cases this tab can be left as No.
@@ -32,15 +38,8 @@ sections:
   - name: spouseContribution
     title: Spouse supplemental extension details
     multiplicity: single
-    showIf: spouseHasExtensionOfTimeInputs == true
+    showIf: filingStatus == "Married filing jointly"
     fields:
-      - name: spouseIncludedOnJointExtension
-        type: boolean
-        required: false
-        label: Is the spouse included on the joint extension request?
-        helpText: >
-          Answer Yes if the spouse is included on the same Form 4868 as the taxpayer.
-          This is standard for a joint return.
       - name: spouseExtensionPaymentContribution
         type: amount
         required: false

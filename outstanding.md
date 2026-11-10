@@ -1,5 +1,15 @@
 # Outstanding Items
 
+## Estimated tax payments (Form 1040 line 26): found in the 2026-11-10 review, not changed
+
+- The legacy "Prior Year Tax & Estimated Payments" component (prior-year-tax-taxpayer) still asks the four 2025 payments again; it
+  is not in the sidebar and the calculation reads line 26 only from Estimated tax payments, but the component and its columns
+  remain. Remove it (field removal: owner sign-off).
+- One amount and one date per period: two payments in one period with different dates are entered as one (the help says to use
+  the last date, which can overstate the penalty).
+- Last year's uploaded Form 1040 fills the 2024 refund applied only for uploads read after 2026-11-10 (Box36 added to the parser);
+  older uploads need a new upload.
+
 ## Missing or wrong W-2 or 1099-R (Form 4852): found in the 2026-11-10 review, not changed
 
 - Employment's prison-wage pick saves the Form 4852 entry by its position in the list; removing or reordering a Form 4852 points

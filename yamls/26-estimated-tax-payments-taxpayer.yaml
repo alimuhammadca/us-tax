@@ -1,3 +1,7 @@
+# Screen review 2026-11-10 (owner, V461): the opening question is removed - madeEstimatedTaxPayments is saved as worked out (Yes
+# when any own payment or applied refund is entered); amendedReturnOverpaymentDate added (Form 2210: an overpayment from a 2024
+# payment after April 15, 2025 counts on that payment's date). Component: form-estimated-tax-payments.component.ts; help:
+# data/estimated-tax-payments-help.ts.
 name: estimated-tax-payments-taxpayer
 title: Estimated Tax Payments (Taxpayer)
 multiplicity: single
@@ -10,13 +14,13 @@ sections:
     fields:
       - name: madeEstimatedTaxPayments
         type: boolean
-        label: Did you make any 2025 estimated tax payments, or apply a 2024 refund toward 2025 taxes?
-        help: Estimated tax payments are amounts you send directly to the IRS to cover taxes not withheld from your paychecks. This also includes any portion of your 2024 tax refund you chose to apply toward 2025 taxes rather than receiving as a check.
         required: false
+        readOnly: true
+        computed: true
+        label: "Worked out - Yes when any payment or applied refund is entered (question removed 2026-11-10)"
 
   - name: installments
     title: 2025 Quarterly Payments
-    showIf: madeEstimatedTaxPayments == true
     fields:
       - name: installment1Amount
         type: decimal
@@ -29,7 +33,7 @@ sections:
         type: date
         required: false
         label: "Date paid (leave blank if paid by the due date)"
-        showIf: "madeEstimatedTaxPayments === true && installment1Amount"
+        showIf: "installment1Amount > 0"
       - name: installment2Amount
         type: decimal
         label: Payment for April – May 2025
@@ -41,7 +45,7 @@ sections:
         type: date
         required: false
         label: "Date paid (leave blank if paid by the due date)"
-        showIf: "madeEstimatedTaxPayments === true && installment2Amount"
+        showIf: "installment2Amount > 0"
       - name: installment3Amount
         type: decimal
         label: Payment for June – August 2025
@@ -53,7 +57,7 @@ sections:
         type: date
         required: false
         label: "Date paid (leave blank if paid by the due date)"
-        showIf: "madeEstimatedTaxPayments === true && installment3Amount"
+        showIf: "installment3Amount > 0"
       - name: installment4Amount
         type: decimal
         label: Payment for September – December 2025
@@ -65,11 +69,10 @@ sections:
         type: date
         required: false
         label: "Date paid (leave blank if paid by the due date)"
-        showIf: "madeEstimatedTaxPayments === true && installment4Amount"
+        showIf: "installment4Amount > 0"
 
   - name: priorYearCredits
     title: 2024 Refund Applied to 2025
-    showIf: madeEstimatedTaxPayments == true
     fields:
       - name: priorYearOverpaymentCredited
         type: decimal
@@ -83,10 +86,15 @@ sections:
         help: If you filed a corrected 2024 return and the extra refund from that correction was applied toward 2025 taxes instead of being paid out, enter it here.
         placeholder: "0.00"
         required: false
+      - name: amendedReturnOverpaymentDate
+        type: date
+        required: false
+        showIf: amendedReturnOverpaymentCredited > 0
+        label: Date of the 2024 tax payment it came from, if after April 15, 2025
 
   - name: jointPayments
     title: Payments Made Jointly with Your Spouse (Optional)
-    showIf: madeEstimatedTaxPayments == true and filing status is not Married filing jointly
+    showIf: married filing separately (or head of household while married), Family Head copy
     help: >
       B120 (V368) - Pub. 505 / Pub. 555. Spouses who paid estimated tax jointly but file separately divide the payments as they
       agree; otherwise each return claims total x its tax / the tax on both returns. Entered once here; the spouse's return gets
@@ -130,7 +138,6 @@ sections:
 
   - name: divorceAnnotation
     title: Payments Made Jointly with a Former Spouse (Optional)
-    showIf: madeEstimatedTaxPayments == true
     fields:
       - name: divorceFormerSpouseSSN
         type: string

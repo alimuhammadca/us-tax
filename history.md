@@ -1,3 +1,23 @@
+## 2026-11-11T00:30 - Estimated tax payments (Form 1040 line 26): Screen Review Checklist applied
+
+- Audit against the 2025 Instructions for Form 1040 (line 26), the 2025 Form 1040-ES and the 2025 Instructions for Form 2210.
+- Owner-approved (V461): the opening "did you make any payments?" question removed - saved as worked out from the amounts (the
+  calculation's switch); a date for the corrected 2024 return's overpayment ("If an overpayment is generated on your 2024 return
+  from a payment made after April 15, 2025, treat the payment as made on the date of payment") - the penalty counted it on April 15
+  (EstimatedTaxPaymentDates; Form 2210 dated penalty, the per-column payments and Form 2210-F).
+- Fixes: the former spouse's SSN was saved but never printed - it now goes in the Form 1040 line 26 space (Payments.formerSpouseSsn,
+  out_form_1040.pay_former_spouse_ssn_26, preview box line_26_a_ssn), digits only (the screen's own formatter saved dashes), hidden
+  with the eye; the joint-payments section showed on Single and head of household returns (now married filing separately, or
+  head of household while married); the 2024 refund applied is filled from last year's Form 1040 line 36 (computed here or uploaded:
+  GET /api/estimated-tax/prior-year; the upload parser reads Box36); Schedule K-1 (Form 1041) box 13 code A credits, which the
+  calculation adds to the fourth payment, are listed as added with links; due dates worked out from the year (June 16, 2025;
+  February 2, 2026).
+- Screen: one page in the shared look (bar, Reset, save partial, section Clear) instead of its own Save, Ctrl+S, callouts, subtotals
+  and "valid SSN" checkmark; dates with the shared control; a No that would clear answers asks first; help from the IRS text
+  (`data/estimated-tax-payments-help.ts`).
+- Tests: Karma (4), Java `EstimatedTaxPaymentDatesTest` (4, penalties figured by hand), e2e `estimated-tax-payments-screen.spec.ts`
+  (2) and the line 26 / Form 2210 specs updated.
+
 ## 2026-11-10T23:45 - Extension of time (Form 4868): Screen Review Checklist applied
 
 - Audit against the 2025 Form 4868 and its instructions.

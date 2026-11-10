@@ -1,3 +1,7 @@
+# Screen review 2026-11-10 (owner, V461): the opening question is removed - madeEstimatedTaxPayments is saved as worked out (Yes
+# when any own payment or applied refund is entered); amendedReturnOverpaymentDate added (Form 2210: an overpayment from a 2024
+# payment after April 15, 2025 counts on that payment's date). Component: form-estimated-tax-payments.component.ts; help:
+# data/estimated-tax-payments-help.ts.
 name: estimated-tax-payments-spouse
 title: Estimated Tax Payments (Spouse)
 multiplicity: single
@@ -16,13 +20,13 @@ sections:
     fields:
       - name: madeEstimatedTaxPayments
         type: boolean
-        label: Did your spouse make any 2025 estimated tax payments, or apply a 2024 refund toward 2025 taxes?
-        help: Estimated tax payments are amounts sent directly to the IRS to cover taxes not withheld from paychecks. This also includes any portion of a 2024 refund your spouse chose to apply toward 2025 taxes. On a joint return these are combined with the taxpayer's payments.
         required: false
+        readOnly: true
+        computed: true
+        label: "Worked out - Yes when any payment or applied refund is entered (question removed 2026-11-10)"
 
   - name: installments
     title: 2025 Quarterly Payments
-    showIf: madeEstimatedTaxPayments == true
     fields:
       - name: installment1Amount
         type: decimal
@@ -51,7 +55,6 @@ sections:
 
   - name: priorYearCredits
     title: 2024 Refund Applied to 2025
-    showIf: madeEstimatedTaxPayments == true
     fields:
       - name: priorYearOverpaymentCredited
         type: decimal
@@ -65,6 +68,11 @@ sections:
         help: If a corrected 2024 return was filed and the extra refund was applied toward 2025 taxes instead of being paid out, enter it here.
         placeholder: "0.00"
         required: false
+      - name: amendedReturnOverpaymentDate
+        type: date
+        required: false
+        showIf: amendedReturnOverpaymentCredited > 0
+        label: Date of the 2024 tax payment it came from, if after April 15, 2025
 
   - name: withholdingTiming
     title: Withholding Timing (Optional)

@@ -1,3 +1,56 @@
+## 2026-11-10T23:00 - Missing or wrong W-2 or 1099-R (Form 4852): Screen Review Checklist applied
+
+- Audit against Form 4852 (Rev. September 2020) and its instructions.
+- Owner-approved: the "Do you need to attach Form 4852?" question removed - needsForm4852 is saved as worked out (Yes when a Form
+  4852 is entered; an older Yes with none entered counts as none); renamed from "W-2 Substitute" to "Missing or wrong W-2 or
+  1099-R (Form 4852)" (the screen replaces a Form 1099-R too), with the calculation's two messages and Employment's help.
+- Calculation fix: Form 4852 lines 7c (Medicare wages), 7h (social security tax withheld) and 7i (Medicare tax withheld) reached
+  nothing - the screen said its amounts "flow into the return the same way a real W-2 would". They now count as W-2 boxes 5, 4
+  and 6 for Form 8959 Parts I and V, the excess social security credit and Schedule 8812 line 21 (`Form4852W2Taxes`).
+- Help fixes: the 2025 social security wage base is $176,100 (the help and a warning said $168,600, the 2024 figure); the IRS
+  call is after the end of February (not "after Feb 14"); line 7e includes the excise tax on excess parachute payments; line 8e
+  is the capital gain on a lump-sum distribution (Form 4972), not "pre-1974"; line 6 may be another TIN of the employer.
+- Screen: one page in the shared look (bar with Reset, save partial - Save was disabled until valid) with each Form 4852 a section
+  with Clear and Remove (Remove asks first); the glossary, the "Imported return values" panel (SSN and address shown again) and its
+  Prev / Save / Next buttons removed; lines 1-3 point to Identification and Address; the person's Forms W-2 and 1099-R listed with
+  links, marking the one a Form 4852 replaces by its EIN (the old note said to delete it, but the calculation already leaves it
+  out); the state a pick list; line 8b hidden and blank when line 8c is checked ("If you check this box, leave line 8b blank"); a
+  warning when lines 7b + 7d pass the wage base (line 7d instruction); "Still to answer" names lines 9 and 10 (the old note said
+  the calculation would require them; it doesn't); help from the IRS text (`data/form4852-help.ts`).
+- Tests: Karma (4), Java `Form4852W2TaxesTest`, e2e `form4852-screen.spec.ts` (2) and the Form 4852 page object.
+
+## 2026-11-10T22:00 - Earned income credit (line 27a): Screen Review Checklist applied
+
+- Audit against the 2025 Instructions for Form 1040, lines 27a-27c (Steps 1-6, Definitions and Special Rules) and the Instructions
+  for Form 8862.
+- Owner-approved (V459):
+  - No opening "Do you want to claim the Earned Income Credit?" question: the credit is figured whenever the rules allow it, with or
+    without a saved form (a return that qualified got no credit without the Yes). Line 27c's "decline" trigger went with it.
+  - Removed: the Form 2555 question (Eic2555Bar already marked it from a figured exclusion, either spouse); the nonresident question
+    (worked out: a joint return passes - it carries the resident choice - otherwise Standard or itemized deductions' dual-status
+    answer or Filing status's nonresident spouse bars it; a Yes used to bar even a joint return); the two "could someone claim you /
+    your spouse" questions (Standard or itemized deductions' "Someone can claim you"; joint returns skip the test, Step 4 question
+    4 - the calculation applied both); the typed "other earned income" boxes (all of line 1h is counted, so a typed strike or
+    disability amount counted twice; jury duty pay, which the label named, isn't earned income) and the per-child "also a
+    dependent" answer (nothing read it); the dead combat-pay and spouse columns.
+  - Qualifying children from Dependents (EicInputs: relationship, date of birth, student, disabled, months lived with you in the
+    United States), plus typed rows only for a child not on Dependents; a typed row with a dependent's SSN counts once and fills what
+    the record leaves blank.
+  - Added "Could you be a qualifying child of another person for 2025?" (Step 3 question 6 / Step 4 question 5; not on a joint return).
+- Calculation fixes: head of household with no child meeting the conditions gets no credit (Step 4 question 1; a child without an
+  SSN still skips Step 4); a joint return no longer applies the dependent test; a bona fide Puerto Rico resident (child tax credit
+  screen) has no main home in the United States; the separated-spouse rule is set even with no saved form and its child part is the
+  calculation's count; the spouse copy's prior-disallowance reason, year and Form 8862 answer are now saved (the mapper dropped them);
+  Form 8862 read the spouse's "previously denied" from the wrong key; the MFS message points to Filing status (and its flag link).
+- Screen: one page in the shared look (bar, Reset, save partial, section Clear) instead of five "Step" blocks, its own Save button, a
+  Ctrl+S shortcut, a tax-year badge and local CSS; the live estimate and the Forms W-2 summary removed (W-2 wages only, every
+  household W-2); the dependents listed with the calculation's verdict and a link to each; typed rows as white cards with Clear and
+  Remove, the SSN digits-only with the eye; the childless section shows the age and dependent lines with links; on a joint return the
+  spouse copy points to the Family Head copy; help from the IRS text (`data/earned-income-credit-help.ts`, `utils/eic-child.ts`);
+  heading "Earned income credit (name)".
+- Tests: Karma (component 5, helper 3), Java `EicInputsTest` and the EIC fixtures converted, e2e `earned-income-credit-screen.spec.ts`
+  (3) and the EIC specs.
+
 ## 2026-11-10T16:00 - Retirement savings credit (Form 8880): Screen Review Checklist applied
 
 - Audit against the 2025 Form 8880 and its instructions (docs/books/f8880.pdf, 2025) and the 2025 Form 1040 instructions.

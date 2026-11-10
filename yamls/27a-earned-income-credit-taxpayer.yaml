@@ -1,51 +1,90 @@
+# Screen review 2026-11-10 (owner, V459): no opening "claim the credit?" question - the credit is figured whenever the rules allow
+# it; the Form 2555, nonresident and two dependent questions are worked out (Foreign income, Standard or itemized deductions "Someone
+# can claim you" / dual-status alien, Filing status); the typed "other earned income" box is removed (all of Form 1040 line 1h is
+# counted); qualifying children come from Dependents, with typed rows only for a child not on Dependents ("also a dependent" removed);
+# "Could you be a qualifying child of another person?" added off a joint return. Component: form-earned-income-credit.component.ts;
+# help: data/earned-income-credit-help.ts; calculation: EicInputs + computeLine27aEIC.
 formId: earned-income-credit-taxpayer
-title: Earned Income Credit (EIC)
+title: Earned income credit
 description: >
-  Form 1040 Line 27a — 2025 Earned Income Credit.
-  Covers both spouses on MFJ returns. Spouse form is MFJ supplemental only.
+  Form 1040 line 27a - 2025 earned income credit. The Family Head's copy; on a joint return it is the one credit for both spouses.
+  On a separate return each spouse's copy is that spouse's own credit.
 
 sections:
 
   - id: screening
-    title: EIC Eligibility Screening
+    title: Who can take the credit
     fields:
-      - id: claimsEIC
-        label: Do you want to claim the Earned Income Credit (EIC)?
+      - id: couldBeQualifyingChildOfAnother
+        name: couldBeQualifyingChildOfAnother
         type: boolean
-        required: true
-
-      - id: hasForm2555
-        label: Did you live and work abroad and exclude foreign income from this return?
-        type: boolean
-        showIf: "claimsEIC === true"
-        helpText: >
-          If you are claiming the Foreign Earned Income Exclusion (Form 2555) on this return,
-          answer Yes. Filing Form 2555 disqualifies you from the EIC in the same tax year.
-
-      - id: isNonresidentAlien
-        label: Were you in the U.S. temporarily during 2025 — for example on a student or exchange visa — rather than as a permanent resident or citizen?
-        type: boolean
-        showIf: "claimsEIC === true"
-        helpText: >
-          A nonresident alien is someone present in the U.S. temporarily — for example on an F-1
-          student visa or J-1 exchange visa — who did not meet the substantial presence test for
-          the full year. If you lived in the U.S. all year, are a green card holder, or are a U.S.
-          citizen, answer No.
-
-      - id: eicPreviouslyDenied
-        label: Was your EIC reduced or disallowed by the IRS in a prior year (after 1996)?
-        type: boolean
-        showIf: "claimsEIC === true"
-        helpText: >
-          If yes, you may need to file Form 8862 with this return before the credit
-          can be allowed. The system will flag this for you.
-      # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
-      - id: eicPriorDisallowanceReason
-        name: eicPriorDisallowanceReason
-        type: select
         required: false
-        label: "Why was the credit reduced or denied?"
-        showIf: "!loading && claimsEIC === true && eicPreviouslyDenied === true"
+        showIf: filingStatus != "Married filing jointly"
+        label: "Could you be a qualifying child of another person for 2025? (V459)"
+        helpText: >
+          2025 Form 1040 instructions, line 27a Step 3 question 6 / Step 4 question 5. Answer No if the other person isn't required
+          to file and isn't filing, or files only to claim a refund of tax withheld or paid.
+
+  - id: qualifyingChildren
+    title: Qualifying children
+    multiplicity: multiple
+    description: >
+      The dependents who meet the qualifying child tests are counted from Dependents. Rows here are only for a child who isn't on
+      the Dependents list; a row with a dependent's SSN fills what the dependent's record leaves blank.
+    fields:
+      - id: childFirstName
+        label: First name
+        type: string
+      - id: childLastName
+        label: Last name
+        type: string
+      - id: childSSN
+        label: Social security number (digits only)
+        type: string
+      - id: childYearOfBirth
+        label: Year of birth
+        type: integer
+      - id: relationship
+        label: Relationship to you
+        type: select
+        options: [Son, Daughter, Stepchild, Foster child, Brother, Sister, Half brother, Half sister, Stepbrother, Stepsister,
+          Grandchild, Nephew, Niece]
+      - id: monthsLivedWithTaxpayer
+        label: Months lived with you in the United States
+        type: integer
+      - id: isPermanentlyDisabled
+        label: Was the child permanently and totally disabled at any time in 2025?
+        type: boolean
+      - id: isFullTimeStudent
+        label: Was the child a full-time student during some part of 5 months of 2025?
+        type: boolean
+        showIf: "age 19-23 and not disabled"
+      - id: childFiledJointReturn
+        label: Did the child file a joint return for 2025 (other than only to claim a refund)?
+        type: boolean
+
+  - id: childless
+    title: Without a qualifying child
+    showIf: "no counted qualifying child and filing status not MFS or HOH"
+    fields:
+      - id: mainHomeInUsMoreThanHalfYear
+        label: Was your main home in the United States for more than half of 2025?
+        type: boolean
+        helpText: >
+          Step 4 question 3. The age test (25-64) comes from the date of birth and the dependent test from Standard or itemized
+          deductions ("Someone can claim you"; not on a joint return). A bona fide Puerto Rico resident (child tax credit screen) is
+          answered No by the calculation.
+
+  - id: priorDisallowance
+    title: Credit reduced or denied before
+    fields:
+      - id: eicPreviouslyDenied
+        label: Did the IRS reduce or deny your earned income credit for a year after 1996?
+        type: boolean
+      - id: eicPriorDisallowanceReason
+        type: select
+        showIf: "eicPreviouslyDenied === true"
+        label: "Why was it reduced or denied?"
         options:
           - value: "MATH_CLERICAL"
             label: "A math or clerical error"
@@ -58,179 +97,17 @@ sections:
           - value: "OTHER"
             label: "Another reason"
       - id: eicPriorDeterminationYear
-        name: eicPriorDeterminationYear
         type: number
-        required: false
+        showIf: "eicPriorDisallowanceReason in (RECKLESS_DISREGARD, FRAUD)"
         label: "Year of the IRS final decision"
-        showIf: "!loading && claimsEIC === true && eicPreviouslyDenied === true"
       - id: eicAllowedSinceForm8862
-        name: eicAllowedSinceForm8862
         type: boolean
-        required: false
-        label: "Since then I filed Form 8862 and the IRS allowed the credit"
-        showIf: "!loading && claimsEIC === true && eicPreviouslyDenied === true"
+        showIf: "eicPreviouslyDenied === true"
+        label: "Since then, was Form 8862 filed and the credit allowed?"
 
-      - id: mainHomeInUsMoreThanHalfYear
-        label: Was your main home in the United States for more than half of 2025?
-        type: boolean
-        showIf: "claimsEIC === true"
-        helpText: >
-          For EIC purposes the United States includes the 50 states and the District of Columbia.
-          U.S. military personnel stationed outside the U.S. on extended active duty are treated
-          as living in the U.S. all year. This question is required for the childless EIC path
-          per Internal Revenue Code section 32(c)(1)(A)(ii)(I). Answer No only if you spent more
-          than half the year outside the U.S. for reasons other than active military duty.
-
-      - id: taxpayerCanBeClaimedAsDependent
-        label: Could anyone else (such as a parent) claim you as a dependent on their tax return for 2025?
-        type: boolean
-        showIf: "claimsEIC === true"
-        helpText: >
-          You cannot claim the childless Earned Income Credit if someone else is entitled to
-          claim you as a dependent on their return — even if they choose not to. This typically
-          applies to college students under age 24 still supported by their parents. The rule
-          is in Internal Revenue Code section 32(c)(1)(A)(ii)(III). If you have qualifying
-          children listed below, this answer does not block your credit but is still useful
-          to record.
-
-      - id: spouseCanBeClaimedAsDependent
-        label: Could anyone else claim your spouse as a dependent on their tax return for 2025?
-        type: boolean
-        showIf: "claimsEIC === true && filingStatus === 'Married filing jointly'"
-        helpText: >
-          On Married filing jointly returns, neither spouse may be claimable as someone else's
-          dependent for the childless EIC. If you have qualifying children listed below, this
-          answer does not block your credit but is still useful to record.
-
-  - id: elections
-    title: Earned Income Elections
-    showIf: "claimsEIC === true"
-    instructions:
-      - This optional entry affects the size of your EIC. Most filers can leave it blank.
-      - Other earned income — include jury duty pay, union strike benefits, or long-term disability pay not on a W-2.
-      - Combat zone pay is handled on the separate Combat Pay form and is not entered here.
-    fields:
-      - id: otherEarnedIncome
-        label: Other earned income not reported on a W-2 (jury duty pay, union strike benefits, etc.)
-        type: decimal
-        placeholder: "0.00"
-        helpText: >
-          Do not include pensions, Social Security, interest, dividends, capital gains,
-          or unemployment compensation — those are not earned income.
-
-  - id: qualifyingChildren
-    title: Qualifying Children for EIC
-    multiplicity: multiple
-    showIf: "claimsEIC === true"
-    description: >
-      List each child who qualifies you for the EIC. A qualifying child must meet the
-      relationship, age, residency, joint return, and SSN tests. Up to 3 children
-      affect the credit amount; list all qualifying children.
-    fields:
-      - id: childFirstName
-        label: Child's first name
-        type: string
-        required: true
-        helpText: >
-          Enter the child's first name exactly as it appears on their Social Security card.
-
-      - id: childLastName
-        label: Child's last name
-        type: string
-        required: true
-        helpText: >
-          Enter the child's last name exactly as it appears on their Social Security card.
-
-      - id: childSSN
-        label: Child's Social Security Number
-        type: string
-        required: true
-        helpText: >
-          Must be a valid SSN (not an ITIN or ATIN) issued by the return due date.
-          If the SSN is missing or invalid, the EIC is disallowed for this child.
-
-      - id: childYearOfBirth
-        label: Child's year of birth
-        type: integer
-        placeholder: "e.g. 2018"
-        required: true
-        helpText: >
-          Enter the four-digit year. The age determines whether the child meets the EIC
-          qualifying age test — must be under 19, under 24 if a full-time student, or any
-          age if permanently and totally disabled.
-
-      - id: isPermanentlyDisabled
-        label: Is this child permanently and totally disabled?
-        type: boolean
-        helpText: >
-          If yes, there is no age limit — the child qualifies at any age.
-
-      - id: isFullTimeStudent
-        label: Was this child a full-time student for at least 5 months of 2025?
-        type: boolean
-        showIf: "isPermanentlyDisabled !== true"
-        helpText: >
-          Answer Yes if the child was age 19–23 and enrolled full-time at a school or
-          vocational training program for at least 5 calendar months of the year. This
-          extends the qualifying age from 18 to 23. If the child is 18 or younger, this
-          question does not affect eligibility and can be left as No.
-
-      - id: relationship
-        label: Relationship to you
-        type: select
-        options:
-          - Son
-          - Daughter
-          - Stepchild
-          - Foster child (placed by authorized agency or court)
-          - Brother
-          - Sister
-          - Half-brother
-          - Half-sister
-          - Stepbrother
-          - Stepsister
-          - Grandchild
-          - Nephew
-          - Niece
-        required: true
-
-      - id: monthsLivedWithTaxpayer
-        label: Number of months the child lived with you in the United States in 2025
-        type: integer
-        placeholder: "1–12"
-        helpText: >
-          Must be more than 6 months. Enter 12 if the child lived with you all year.
-          Temporary absences (school, illness, vacation, military service) count as
-          time lived with you.
-        required: true
-
-      - id: isAlsoDependent
-        label: Is this child also claimed as a dependent on this return?
-        type: boolean
-        helpText: >
-          Many qualifying children for this credit are also claimed as dependents on the same return,
-          but the rules are separate. You can have a qualifying child for this credit even if a
-          divorce agreement gives the other parent the dependency claim.
-
-      - id: childFiledJointReturn
-        label: Did this child file a joint tax return with a spouse in 2025?
-        type: boolean
-        helpText: >
-          If yes, the child generally does not qualify for the EIC unless the joint return
-          was filed solely to claim a refund of withheld taxes or estimated tax paid
-          (and no tax liability exists on either spouse's return). Answer Yes only if the
-          child filed a joint return for reasons other than claiming a refund.
-
-  - id: mfsSeparatedSpouseException
-    title: Married Filing Separately — Special Rule
-    showIf: "claimsEIC === true"
+  - id: importedStatementFields
+    readOnly: true
     fields:
       - id: qualifiesForMfsSeparatedSpouseEicException
-        label: Are you filing separately from your spouse but lived apart from them for the entire last 6 months of 2025 and provided the main home for a qualifying child?
+        label: Special rule for separated spouses (worked out from Filing status; not shown)
         type: boolean
-        helpText: >
-          People who file separate returns are generally not eligible for the Earned Income Credit.
-          However, if you lived apart from your spouse for all of July through December 2025,
-          maintained the main home where a qualifying child lived for more than 6 months, and
-          paid more than half the cost of keeping up that home, you may still qualify.
-          See IRS Instructions for Form 1040, Line 27a. Answer Yes only if all three conditions apply.

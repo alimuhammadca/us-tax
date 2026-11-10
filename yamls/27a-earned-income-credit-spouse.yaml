@@ -1,37 +1,48 @@
+# Screen review 2026-11-10 (owner, V459): the same screen as the Family Head's (form-earned-income-credit.component.ts) with
+# spouse-prefixed keys. On a joint return the credit is figured once, on the Family Head's copy, and this copy only links there (the
+# old spouse "other earned income" box and its gate are removed - all of Form 1040 line 1h is counted). On a separate return it is
+# the spouse's own credit (MfsFormScoper un-prefixes the keys on her return).
 formId: earned-income-credit-spouse
-title: Earned Income Credit — Spouse Supplemental (MFJ only)
+title: Earned income credit (spouse)
 description: >
-  MFJ supplemental form for Line 27a. Only the spouse's own elections and
-  other earned income are entered here. Qualifying children are entered on
-  the taxpayer form (either spouse's qualifying child counts for the joint return).
+  Form 1040 line 27a for the spouse's own return when the spouses file separately. Keys are the Family Head copy's with the
+  "spouse" prefix: spouseCouldBeQualifyingChildOfAnother, spouseEicQualifyingChildren (same row fields), spouseMainHomeInUsMoreThanHalfYear,
+  spouseEicPreviouslyDenied, spouseEicPriorDisallowanceReason, spouseEicPriorDeterminationYear, spouseEicAllowedSinceForm8862,
+  spouseQualifiesForMfsSeparatedSpouseEicException (worked out from Filing status).
 
 sections:
 
   - id: screening
-    title: Screening
+    title: Who can take the credit
+    showIf: filingStatus == "Married filing separately"
     fields:
-      - id: spouseHasEicElections
-        label: Does your spouse have other earned income to add for the Earned Income Credit?
+      - id: spouseCouldBeQualifyingChildOfAnother
         type: boolean
-        helpText: >
-          Answer Yes if your spouse has earned income not reported on a W-2 such as jury duty
-          pay or union strike benefits. Combat zone pay is handled on the separate Combat Pay
-          form and is not entered here. Answer No if none applies — no other inputs are needed
-          on the spouse EIC form.
+        label: "Could your spouse be a qualifying child of another person for 2025? (V459)"
 
-  - id: spouseElections
-    title: Spouse EIC Elections
-    showIf: "spouseHasEicElections === true"
-    instructions:
-      - Enter the spouse's other earned income if any.
-      - If the spouse had no other earned income, leave it blank.
-      - Combat zone pay is handled on the separate Combat Pay form and is not entered here.
+  - id: qualifyingChildren
+    title: Qualifying children (the dependents your spouse claims, plus children not on Dependents)
+    multiplicity: multiple
+    showIf: filingStatus == "Married filing separately"
     fields:
-      - id: spouseOtherEarnedIncome
-        label: Spouse's other earned income not reported on a W-2 (jury duty pay, union strike benefits, etc.)
-        type: decimal
-        placeholder: "0.00"
-        helpText: >
-          Include the spouse's jury duty pay, union strike benefits, or long-term disability
-          payments received before reaching the normal retirement age set by their employer's
-          pension plan, if any. Do not include pensions, Social Security, or investment income.
+      - id: spouseEicQualifyingChildren
+        type: list
+        label: "Rows with the Family Head copy's child fields"
+
+  - id: priorDisallowance
+    title: Credit reduced or denied before
+    showIf: filingStatus == "Married filing separately"
+    fields:
+      - id: spouseEicPreviouslyDenied
+        type: boolean
+        label: Did the IRS reduce or deny your spouse's earned income credit for a year after 1996?
+      - id: spouseEicPriorDisallowanceReason
+        type: select
+        showIf: "spouseEicPreviouslyDenied === true"
+        label: "Why was it reduced or denied?"
+      - id: spouseEicPriorDeterminationYear
+        type: number
+        label: "Year of the IRS final decision"
+      - id: spouseEicAllowedSinceForm8862
+        type: boolean
+        label: "Since then, was Form 8862 filed and the credit allowed?"

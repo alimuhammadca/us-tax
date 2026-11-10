@@ -1,9 +1,13 @@
+# Screen review 2026-11-10 (owner): renamed "Missing or wrong W-2 or 1099-R (Form 4852)" (was "W-2 Substitute"); the
+# needsForm4852 question is removed - it is saved as worked out (Yes when a Form 4852 is entered). Lines 1-3 come from
+# Identification and Address; line 8b is blank when line 8c is checked; the state is a pick list (two-letter code saved).
+# Component: form-form4852.component.ts; help: data/form4852-help.ts.
 # Form 4852 - spouse substitute W-2 / 1099-R attachment.
 #
 # Use this per-person application form when the spouse did not receive a correct
 # Form W-2 or Form 1099-R in time to file and needs a separate Form 4852 attachment.
 name: form4852-spouse
-title: Form 4852 - Substitute W-2 / 1099-R (spouse)
+title: Missing or wrong W-2 or 1099-R (Form 4852) (spouse)
 multiplicity: single
 formName: 4852
 category: applications
@@ -19,8 +23,10 @@ sections:
     fields:
       - name: needsForm4852
         type: boolean
-        required: true
-        label: Does your spouse need a separate Form 4852 attachment?
+        required: false
+        readOnly: true
+        computed: true
+        label: "Worked out - Yes when a Form 4852 is entered (question removed 2026-11-10)"
 
   - name: substituteForm
     title: Substitute form type

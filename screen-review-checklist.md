@@ -532,6 +532,16 @@ last year's figures from last year's return or upload, the lump-sum election sug
       twice - each copy asks only its own and the calculation combines them as the form says (Retirement savings credit).
 - [ ] A test that passes with a fixture key nothing reads proves nothing: when a key is dropped, grep the tests for it and check each
       test still exercises the rule (three saver's credit tests had passed on a made-up key).
+- [ ] A list the screen types again (qualifying children with names, SSNs and years of birth) when another screen keeps the same
+      people (Dependents) reads them from there, with the verdict and a link; typed rows stay only for people that screen can't hold,
+      and an older typed row matching a record counts once (Earned income credit).
+- [ ] A flowchart's "you have a qualifying child" can mean the child meets the conditions without the SSN: follow each STOP to the
+      exact question it belongs to before applying it (Earned income credit: head of household stop, Step 4 question 1).
+- [ ] A substitute form (Form 4852 for a Form W-2) must reach every reader of the form it replaces, box by box: the Medicare wages
+      and the social security and Medicare tax withheld reached no line while only wages and income tax did (Form 4852). Grep
+      each replaced box's key for its readers.
+- [ ] A note that tells the user to delete something the calculation already handles (a wrong W-2 the Form 4852 replaces by EIN) is
+      a wrong claim: say what the calculation does and what it needs (the EIN), and list the statements with the verdict.
 - [ ] Read a refinancing rule for the figure it limits by ("the outstanding balance of the refinanced loan as of the date of the
       refinancing") and make the label ask that figure (the screen asked the original principal).
 
@@ -712,6 +722,8 @@ Deductions labels renamed in the Incomes style. Headings still in the old "Form 
 | Additional deductions (Schedule 1-A; Family Head, spouse; second pass) | 1-8, 11, 13, 15-25 | 2026-11-10 |
 | Foreign tax credit (Form 1116; Family Head, spouse) | 1-8, 11, 13, 15-25 | 2026-11-10 |
 | Retirement savings credit (Form 8880; Family Head, spouse) | 1-8, 11, 13, 15-25 | 2026-11-10 |
+| Earned income credit (line 27a; Family Head, spouse) | 1-8, 11-25 | 2026-11-10 |
+| Missing or wrong W-2 or 1099-R (Form 4852; Family Head, spouse) | 1-8, 11-25 | 2026-11-10 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

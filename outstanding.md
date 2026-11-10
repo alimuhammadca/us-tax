@@ -1,5 +1,21 @@
 # Outstanding Items
 
+## Missing or wrong W-2 or 1099-R (Form 4852): found in the 2026-11-10 review, not changed
+
+- Employment's prison-wage pick saves the Form 4852 entry by its position in the list; removing or reordering a Form 4852 points
+  it at another entry (checklist item 24: save links by name).
+- Lines 9 and 10 are required by the IRS but nothing at compute flags them blank (the screen lists them under "Still to answer").
+- A replaced Form W-2 or 1099-R is matched only by EIN; without line 6 the wrong statement still counts next to the Form 4852.
+
+## Earned income credit (line 27a): found in the 2026-11-10 review, not changed
+
+- A qualifying child without a valid SSN skips Step 4 in the 2025 instructions (only the head of household stop now follows that);
+  the calculation still applies the 25-64 age and dependent tests to such a filer. Check against Pub. 596 before changing.
+- "A social security number valid for work" is checked only as "not an ITIN"; a "Not Valid for Employment" SSN can't be told apart.
+- The Income earned in a US territory screen's Puerto Rico residence isn't read for the main home test (only the child tax credit
+  screen's answer is).
+- Married child rule (a married child qualifies only if you can claim the child as a dependent) isn't applied to typed rows.
+
 ## Retirement savings credit (Form 8880): found in the 2026-11-10 review, not changed
 
 - Form 1099-R code 4 is left out in full; only an inherited IRA of a beneficiary who isn't the spouse is excluded. Codes D / E and

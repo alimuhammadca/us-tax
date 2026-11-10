@@ -549,6 +549,12 @@ last year's figures from last year's return or upload, the lump-sum election sug
       preview's field list and the value that fills it (Estimated tax payments).
 - [ ] An amount the calculation adds from statements to a typed figure (Schedule K-1 (Form 1041) box 13 code A into the fourth estimated
       payment) is listed on the screen as added, with links, or the user types it too (Estimated tax payments).
+- [ ] A form whose answers are facts the return already holds (Form 8862: the credit's prior disallowance, the children, the
+      students' Form 8863 answers) is built from the return; the screen asks only what no screen holds (days, a citizenship
+      answer) and shows the rest with links. Ask the question of the person the form names: line 4 asks about the filer, not the
+      child (Credits after disallowance).
+- [ ] Compare the screen's questions with the form's lines one by one: a yes/no where the form asks a number (days, an age)
+      prints nothing on the form (Credits after disallowance).
 - [ ] Read a refinancing rule for the figure it limits by ("the outstanding balance of the refinanced loan as of the date of the
       refinancing") and make the label ask that figure (the screen asked the original principal).
 
@@ -733,6 +739,7 @@ Deductions labels renamed in the Incomes style. Headings still in the old "Form 
 | Missing or wrong W-2 or 1099-R (Form 4852; Family Head, spouse) | 1-8, 11-25 | 2026-11-10 |
 | Extension of time (Form 4868; Family Head, spouse) | 1-8, 11, 13, 15-25 | 2026-11-10 |
 | Estimated tax payments (line 26; Family Head, spouse) | 1-8, 11-25 | 2026-11-10 |
+| Credits after disallowance (Form 8862; Family Head, spouse) | 1-8, 11, 13, 15-25 | 2026-11-10 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

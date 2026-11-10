@@ -1,3 +1,30 @@
+## 2026-11-11T02:30 - Credits after disallowance (Form 8862): Screen Review Checklist applied
+
+- Audit against the Form 8862 (Rev. December 2025) and its instructions. The screen didn't follow the form: line 4 was asked about
+  the child ("could someone else claim this child?") instead of the filer; Part II asked yes/no where the form asks days and ages;
+  the preview printed only line 1 and the line 2 boxes; Part IV repeated Form 8863 lines 23-26.
+- Owner-approved (V462): Form 8862 is built from the return (`Form8862Facts`). Line 2 from the prior-disallowance answers on Earned
+  income credit, Child Tax Credit settings and Education credits (the opening question, the three "reclaiming?" questions and the
+  denial year removed); Part II to the form's lines - line 3 asked, line 4 from Earned income credit (No on a joint return), the
+  days each EIC child lived with the filer in the United States (line 7) and the days the main home was in the United States
+  (9a/9b) asked, line 5/6/8 from the EIC children and dates of birth, line 10 from the dates of birth (IRS age), line 11 from
+  Standard or itemized deductions (the six old yes/no answers dropped); Part III people from Dependents (line 12 CTC, line 13 ODC,
+  lines 14-16 Yes) with only line 17 asked per person; Part IV from Form 8863 lines 23-26 (the typed CTC rows and the student table
+  dropped). A box on line 2 is kept only for a credit the return claims; the whole form is saved (`out_form_8862.form_json`) and
+  printed. A credit held back says what is still needed (`FORM_8862_EIC_NOT_SHOWN` / `FORM_8862_CTC_NOT_SHOWN`).
+- The field map names lines 16 and 17 after an older revision ("citizen", "SSN valid"); the boxes sit on the 2025 lines 16 ("your
+  dependent") and 17 ("citizen, national or resident") - checked against the printed positions and mapped by line.
+- Child Tax Credit settings: its Form 8862 callout read the old child rows and told the user to tick a CTC option that no longer
+  exists; it now reads the line 17 answers.
+- Tests changed with the rule: sc_00261 run B (a prior AOTC disallowance now claims the AOTC with Form 8862 Part IV from the Form 8863
+  answers instead of blocking it); the three Form 8863 recertification-list tests (shorter list, misordered TINs, unmatched TIN)
+  were removed - the typed list no longer exists.
+- Screen: one page in the shared look (bar, Reset, save partial, section Clear) instead of its own Save, Ctrl+S, saved-at ticker,
+  explainer, warning banner, progress bar, counters, recap and "next step" callout; help from the IRS text
+  (`data/credits-after-disallowance-help.ts`).
+- Tests: Java `Form8862FactsTest` (6) and the Form 8862 tests rewritten; Karma (5); e2e `form8862-credits-after-disallowance.spec.ts`
+  rewritten (3) and the line 28, Form 8863 and MFS specs updated.
+
 ## 2026-11-11T00:30 - Estimated tax payments (Form 1040 line 26): Screen Review Checklist applied
 
 - Audit against the 2025 Instructions for Form 1040 (line 26), the 2025 Form 1040-ES and the 2025 Instructions for Form 2210.

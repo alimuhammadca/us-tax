@@ -1,245 +1,104 @@
 formId: form8862
 # Field entries also carry name: (= id:) so scripts/yaml-drift.py can match them to the component model keys.
-title: Credits After Disallowance (Form 8862)
+# Screen review 2026-11-10 (owner, V462): Form 8862 is built from the return (backend Form8862Facts). Line 2 is worked out from the
+# prior-disallowance answers on Earned income credit, Child Tax Credit settings and Education credits (the opening question, the
+# three "reclaiming?" questions and the denial year are removed; filedWithReturn / claims* are saved as worked out). Part II follows
+# the form's lines; Part III people come from Dependents with only line 17 asked; Part IV comes from Form 8863 lines 23-26 (the typed
+# CTC rows and students are removed). Component: form-form8862.component.ts; help: data/credits-after-disallowance-help.ts.
+# The spouse copy (form8862-spouse) is the spouse's own separate return; on a joint return it points to the Family Head's copy.
+title: Credits after disallowance (Form 8862)
 description: >
-  Filed when EIC, CTC/ACTC/ODC, or AOTC was previously denied by the IRS.
-  One form per return (not spouse-split). Complete only the parts for credits
-  you are reclaiming.
+  Information To Claim Certain Credits After Disallowance - attached when the EIC, CTC/ACTC/ODC or AOTC was reduced or disallowed
+  for an earlier year (not for a math or clerical error) and the credit is claimed again.
 
 sections:
-  - id: screening
-    title: Screening
+  - id: lineTwo
+    title: Credits disallowed before (line 2)
     fields:
       - id: filedWithReturn
         name: filedWithReturn
-        label: Did the IRS previously deny or reduce one of your tax credits?
         type: boolean
-        required: true
-        helpText: >
-          This applies if the IRS sent you a notice disallowing your Earned Income Credit,
-          Child Tax Credit, or American Opportunity Credit in a prior tax year.
-
-      - id: taxYearOfDisallowance
-        name: taxYearOfDisallowance
-        label: Which tax year did the IRS deny the credit?
-        type: number
-        placeholder: "e.g. 2023"
-        helpText: Enter the year shown on the IRS notice that denied your credit.
-        showIf: "filedWithReturn === true"
-
+        readOnly: true
+        computed: true
+        label: "Worked out - Yes when any credit needs Form 8862 (question removed 2026-11-10)"
       - id: claimsEIC
         name: claimsEIC
-        label: Are you reclaiming the Earned Income Credit?
         type: boolean
-        helpText: >
-          The Earned Income Credit is a refundable credit for people with lower-to-moderate
-          earned income. Select Yes if the IRS denied it and you want to reclaim it this year.
-        showIf: "filedWithReturn === true"
-
+        readOnly: true
+        computed: true
+        label: "Worked out from Earned income credit: disallowed before and Form 8862 needed"
       - id: claimsCTC
         name: claimsCTC
-        label: Are you reclaiming the Child Tax Credit, Additional Child Tax Credit, or Other Dependent Credit?
         type: boolean
-        helpText: >
-          These credits are for qualifying children and other dependents you support.
-          Select Yes if any of these credits were denied and you want to reclaim them.
-        showIf: "filedWithReturn === true && claimsEIC !== null"
-
+        readOnly: true
+        computed: true
+        label: "Worked out from Child Tax Credit settings"
       - id: claimsAOTC
         name: claimsAOTC
-        label: Are you reclaiming the American Opportunity Tax Credit?
         type: boolean
-        helpText: >
-          The American Opportunity Tax Credit covers qualified education expenses for the first
-          four years of college or vocational school. The Lifetime Learning Credit is a separate
-          credit and is never blocked by a prior denial.
-        showIf: "filedWithReturn === true && claimsCTC !== null"
+        readOnly: true
+        computed: true
+        label: "Worked out from Education credits"
 
-  - id: earnedIncomeCredit
-    title: Your Earned Income Credit
-    showIf: "filedWithReturn === true && claimsEIC === true"
+  - id: partTwo
+    title: Earned income credit (Part II)
+    showIf: "claimsEIC === true"
     fields:
       - id: eicLine3OnlyIncomeError
         name: eicLine3OnlyIncomeError
-        label: >
-          Was the only reason your Earned Income Credit was denied that the IRS said your
-          earned income or investment income was incorrect?
+        label: Was the only reason the credit was reduced or disallowed that you reported the earned income or investment income incorrectly? (line 3)
         type: boolean
-        helpText: >
-          This means the IRS found a math or data-entry error — for example, an incorrect
-          income total. If that was the only issue, the remaining EIC questions are skipped
-          and your credit will be restored automatically.
-
-      - id: eicHasQualifyingChildOnReturn
-        name: eicHasQualifyingChildOnReturn
-        label: Are you claiming a qualifying child on this return?
-        type: boolean
-        helpText: >
-          A qualifying child must be under age 19 (or 24 if a full-time student, or any age
-          if permanently disabled), related to you, and have lived with you for more than
-          half the year.
+      - id: people.eicDaysInUs
+        name: people.eicDaysInUs
+        label: Days each child lived with you in the United States (line 7) - one per EIC child from Dependents and Earned income credit, saved by key (SSN digits or name)
+        type: number
         showIf: "eicLine3OnlyIncomeError === false"
+      - id: daysMainHomeInUsYou
+        name: daysMainHomeInUsYou
+        label: Days your main home was in the United States (line 9a)
+        type: number
+        showIf: "eicLine3OnlyIncomeError === false && no child has 183 days"
+      - id: daysMainHomeInUsSpouse
+        name: daysMainHomeInUsSpouse
+        label: Days your spouse's main home was in the United States (line 9b, joint return)
+        type: number
+        showIf: "eicLine3OnlyIncomeError === false && no child has 183 days && married filing jointly"
+    readFrom:
+      line4: Earned income credit - couldBeQualifyingChildOfAnother (No on a joint return)
+      lines5to8: Dependents and the Earned income credit typed children; line 8 births from the date of birth
+      line10: Identification dates of birth (IRS age at the end of the year)
+      line11: Standard or itemized deductions - someoneCanClaimYou / someoneCanClaimSpouse
 
-      # Section A — with qualifying child(ren)
-      - id: eicChildLivedWithTaxpayerMoreThanSixMonths
-        name: eicChildLivedWithTaxpayerMoreThanSixMonths
-        label: >
-          Did your qualifying child live with you in the United States for more than half of
-          the tax year?
-        type: boolean
-        helpText: >
-          More than 6 months (183 days) is required. Temporary absences for school,
-          vacation, or illness count as time living with you.
-        showIf: "eicLine3OnlyIncomeError === false && eicHasQualifyingChildOnReturn === true"
-
-      - id: eicChildIsQualifyingChildOfAnother
-        name: eicChildIsQualifyingChildOfAnother
-        label: >
-          Is your qualifying child also the qualifying child of another person for Earned
-          Income Credit purposes?
-        type: boolean
-        helpText: >
-          Answer No if only you are claiming this child for the Earned Income Credit — the
-          most common situation. Answer Yes only if the same child could also qualify another
-          taxpayer (such as an ex-spouse) for the credit this year.
-        showIf: "eicLine3OnlyIncomeError === false && eicHasQualifyingChildOnReturn === true && eicChildLivedWithTaxpayerMoreThanSixMonths !== null"
-
-      # Section B — without qualifying children
-      - id: eicChildlessLivedInUSMoreThanSixMonths
-        name: eicChildlessLivedInUSMoreThanSixMonths
-        label: >
-          Did you (and your spouse, if married and filing jointly) live in the United States
-          for more than half the year?
-        type: boolean
-        helpText: >
-          Your main home must have been in the US for more than 6 months in 2025.
-          The 50 US states and the District of Columbia count — Puerto Rico and US territories
-          do not.
-        showIf: "eicLine3OnlyIncomeError === false && eicHasQualifyingChildOnReturn === false"
-
-      - id: eicChildlessAgeEligible
-        name: eicChildlessAgeEligible
-        label: >
-          Were you (or your spouse, if married and filing jointly) at least 25 years old but
-          under 65 at the end of the tax year?
-        type: boolean
-        helpText: >
-          At least one of you must meet this age range. Both spouses do not need to meet it —
-          only one.
-        showIf: "eicLine3OnlyIncomeError === false && eicHasQualifyingChildOnReturn === false && eicChildlessLivedInUSMoreThanSixMonths !== null"
-
-      - id: eicChildlessIsDependent
-        name: eicChildlessIsDependent
-        label: >
-          Could anyone else claim you (or your spouse, if married and filing jointly) as a
-          dependent on their tax return?
-        type: boolean
-        helpText: >
-          If a parent or another person could list you as a dependent on their return — even
-          if they chose not to — answer Yes. This disqualifies you from the childless Earned
-          Income Credit.
-        showIf: "eicLine3OnlyIncomeError === false && eicHasQualifyingChildOnReturn === false && eicChildlessAgeEligible !== null"
-
-  - id: childTaxCredit
-    title: Your Child Tax Credit
-    showIf: "filedWithReturn === true && claimsCTC === true"
-    multiplicity: multiple
-    sectionLabel: Child / Dependent
-    fieldGroup: ctcChildren
+  - id: partThree
+    title: Child tax credit and credit for other dependents (Part III)
+    showIf: "claimsCTC === true"
     fields:
-      - id: name
-        label: What is this child or dependent's name?
-        type: text
-        placeholder: "e.g. Emily Johnson"
-        helpText: Enter the name as it appears on this person's Social Security card.
-
-      - id: ctcChildLivedWithTaxpayer
-        label: Did this child or dependent live with you for more than half the year?
+      - id: people.usCitizen
+        name: people.usCitizen
+        label: Is <name> a U.S. citizen, U.S. national or U.S. resident? (line 17) - one per dependent qualifying for the CTC or the ODC
         type: boolean
-        helpText: >
-          More than 6 months (183 days) is required. Temporary absences for school,
-          vacation, or medical care count as time living with you.
+    readFrom:
+      line12: Dependents with qualifiesForCTC
+      line13: Dependents with qualifiesForODC (not CTC)
+      lines14to16: Yes for those dependents (Dependents certifies residency or its exception, the requirements, and the claim)
 
-      - id: ctcChildMeetsQualifyingChildTest
-        label: Does this child or dependent meet the qualifying child or qualifying relative test?
-        type: boolean
-        helpText: >
-          A qualifying child is generally under age 19 (or 24 if a full-time student), related
-          to you, and did not provide more than half their own support. A qualifying relative
-          is someone you support who is not a qualifying child.
-        showIf: "ctcChildLivedWithTaxpayer !== null"
+  - id: partFour
+    title: American opportunity credit (Part IV)
+    showIf: "claimsAOTC === true"
+    readFrom:
+      line18: Education credits students claiming the AOTC
+      line19a: Form 8863 line 24 Yes, line 25 No and line 26 No
+      line19b: Form 8863 line 23
 
-      - id: ctcChildIsDependent
-        label: Are you claiming this child or dependent as a dependent on this return?
-        type: boolean
-        helpText: >
-          The dependent must be listed on your tax return. If someone else is claiming this
-          person as a dependent, you cannot claim the credit.
-        showIf: "ctcChildMeetsQualifyingChildTest !== null"
-
-      - id: ctcChildIsUSCitizenOrResident
-        label: Is this child or dependent a US citizen, US national, or resident alien?
-        type: boolean
-        helpText: >
-          US citizens, people born in US territories such as Puerto Rico, and lawful permanent
-          residents qualify. Nonresident aliens generally do not.
-        showIf: "ctcChildIsDependent !== null"
-
-  - id: americanOpportunityCredit
-    title: Your American Opportunity Tax Credit
-    showIf: "filedWithReturn === true && claimsAOTC === true"
-    multiplicity: multiple
-    sectionLabel: Student
-    fieldGroup: aotcStudents
+  - id: computedOutputs
+    readOnly: true
+    computed: true
     fields:
-      - id: name
-        label: What is this student's name?
-        type: text
-        placeholder: "e.g. James Johnson"
-        helpText: Enter the student's name as it appears on their Social Security card.
-
-      - id: aotcStudentMeetsEligibleStudentTest
-        label: >
-          Is this student currently enrolled at least half-time in a program leading to a degree,
-          certificate, or other recognized credential — and have they not yet completed four years
-          of post-secondary education?
-        type: boolean
-        helpText: >
-          "At least half-time" is defined by the school. The four-year limit counts any prior
-          years the American Opportunity Credit or Hope credit was claimed for this student —
-          not the total number of years they have been in school.
-
-      - id: aotcStudentWithinFourYearLimit
-        label: >
-          Has the American Opportunity Tax Credit (or the Hope credit) been claimed for this
-          student for fewer than four prior tax years?
-        type: boolean
-        helpText: >
-          Answer Yes if the credit has been claimed 0, 1, 2, or 3 times before for this student.
-          Answer No if it has been claimed 4 or more times — the student would then be ineligible
-          for another American Opportunity Credit, but still eligible for the Lifetime Learning
-          Credit.
-        showIf: "aotcStudentMeetsEligibleStudentTest !== null"
-
-# (yaml-drift sync: dedented to top level - it was indented inside the sections list, which made the file invalid YAML)
-computedOutputs:
-    - id: eicEligible
-      label: EIC eligible (Part II gate)
-      readOnly: true
-      computed: true
-    - id: eicLine3OnlyIncomeErrorResult
-      label: EIC income-error shortcut applied
-      readOnly: true
-      computed: true
-    - id: ctcEligible
-      label: CTC/ACTC/ODC eligible (Part III gate)
-      readOnly: true
-      computed: true
-    - id: aotcEligible
-      label: AOTC eligible (Part IV gate)
-      readOnly: true
-      computed: true
-    - id: aotcStudentEligible
-      label: Per-student AOTC eligibility flags
-      readOnly: true
-      computed: true
+      - id: fields
+        name: fields
+        type: object
+        label: The whole Form 8862 by semantic field name (out_form_8862.form_json)
+      - id: missing
+        name: missing
+        type: list
+        label: What the screen still needs before a blocked credit can be claimed

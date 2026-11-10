@@ -1,5 +1,15 @@
 # Outstanding Items
 
+## Credits after disallowance (Form 8862): found in the 2026-11-10 review, not changed
+
+- Line 8 date of death: no screen holds a child's date of death, so only births in the year are printed.
+- More than 3 EIC children, 4 CTC children / other dependents or 3 students: the form says to attach a statement; the app prints
+  the first ones only.
+- On a joint return the EIC gate reads the Family Head's prior-disallowance answers only (as before); a disallowance reported on the
+  spouse's Earned income credit copy doesn't add Form 8862.
+- Lines 14-16 are Yes for every dependent marked as qualifying on Dependents; a dependent who qualifies only through an exception
+  is not told apart.
+
 ## Estimated tax payments (Form 1040 line 26): found in the 2026-11-10 review, not changed
 
 - The legacy "Prior Year Tax & Estimated Payments" component (prior-year-tax-taxpayer) still asks the four 2025 payments again; it

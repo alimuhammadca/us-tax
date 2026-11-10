@@ -569,6 +569,8 @@ last year's figures from last year's return or upload, the lump-sum election sug
       parent's Form 8332 release) found before the old answer is removed, or someone loses a credit the old Yes gave (Dependent).
 - [ ] A worked-out answer must leave records saved before the change as they were until the new questions are answered: key the
       new rule on an answer only the new screen asks (citizenship), or older free-text values decide against the user (Dependent).
+- [ ] Before reviewing a screen, check it can be reached (a sidebar item in a menu, a link) and which record it saves into: a screen
+      nobody can open that writes another screen's record with fewer fields erases the rest on save - remove it (Spouse).
 - [ ] Check every part of the preview prints something when it applies: a part with no source field (Form 8938 Parts III and IV) prints
       blank on every return. Grep the calculation for each part's field-name prefix (Foreign assets, second pass).
 - [ ] Read a refinancing rule for the figure it limits by ("the outstanding balance of the refinanced loan as of the date of the
@@ -761,6 +763,7 @@ Deductions labels renamed in the Incomes style. Headings still in the old "Form 
 | Foreign assets (Form 8938; second pass) | 9, 12, 22, 23 checked; Parts III and IV filled, owners by name | 2026-11-10 |
 | Child Tax Credit settings (Schedule 8812; Family Head, spouse) | 1-25; Puerto Rico worked out, joint spouse copy a note | 2026-11-10 |
 | Dependent (Form 1040 Dependents section) | 1-25; credits worked out (Steps 1-5), rows 5-7 filled, eye on SSN and date of birth | 2026-11-10 |
+| Spouse (legacy screen) | removed - unreachable duplicate of Identification (spouse) | 2026-11-10 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

@@ -1,3 +1,11 @@
+## 2026-11-11T11:00 - Spouse screen: removed (Screen Review Checklist)
+
+- The "Spouse" screen (form-spouse: name, SSN, date of birth) could not be opened - its sidebar item was defined but never placed in a
+  menu - and it was a second entry point to the spouse's identification row (the backend maps the "spouse" form id onto it, as
+  identification-spouse). Its save sent only the name, SSN and date of birth, so a save would have erased the spouse's date of death,
+  occupation and IP PIN. Owner-approved: the component and the unused menu item are removed; Identification (spouse), already
+  reviewed, is the one place for these facts. The backend's "spouse" form-id alias stays (older saves, the e2e seeding fallback).
+
 ## 2026-11-11T10:00 - Dependent: Screen Review Checklist
 
 - One page in the shared look: the bar with Save and Reset, save partial ("Saved. Still to answer"; a record needs the name, SSN and

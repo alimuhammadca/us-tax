@@ -1,3 +1,23 @@
+## 2026-11-11T10:00 - Dependent: Screen Review Checklist
+
+- One page in the shared look: the bar with Save and Reset, save partial ("Saved. Still to answer"; a record needs the name, SSN and
+  relationship - the dependents API requires them), section Clear, shared radios, selects and number inputs, the dependent's name in
+  the title, help from the 2025 Instructions for Form 1040 Dependents section and Who Qualifies as Your Dependent
+  (`data/dependent-help.ts`), years from tax-year.ts. The SSN and date of birth hidden with an eye; the shared date control; the
+  relationship a pick list of the IRS relationships (an older free-text answer kept). The own-return panel is a section in the
+  shared look.
+- Owner-approved (V465): "Does <name> qualify for the Child Tax Credit / the Credit for other dependents?" removed - the credits are
+  worked out from the facts by the flowchart's Steps 1-5 (`DependentQualification` in the calculation, `utils/dependent-qualification.ts`
+  on the screen, shown with the reason) and saved as worked out. Added: citizenship (U.S. citizen, national or resident alien / a
+  resident of Canada or Mexico / neither), "provided over half of their own support?", "you provided over half of the support?" (a
+  qualifying relative) and the custodial parent's release (Form 8332) for a child who lived with you 6 months or less. "Lived with you
+  more than half the year?" is worked out from the months; "also lived with the other parent?" removed (nothing read it). A record
+  without the citizenship answer (saved before the review) keeps the credits it was saved with.
+- Form 1040 rows (5) and (6) printed blank - now filled (lived with you / in the U.S., full-time student / disabled), mapped by the
+  printed position (the field names of row 5 are an older layout); row (7) shows the credit after the age and SSN checks.
+- Tests: Java `DependentQualificationTest` (4); Karma spec rewritten (5); e2e `dependent-screen.spec.ts` (2); the page object and
+  `personal-per-person-forms` / `person-tabs-labels` specs updated.
+
 ## 2026-11-11T08:00 - Child Tax Credit settings: Screen Review Checklist
 
 - One page in the shared look: the bar with Save and Reset, save partial ("Saved. Still to answer"), section Clear, shared radios and

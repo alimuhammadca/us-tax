@@ -1,5 +1,15 @@
 # Outstanding Items
 
+## Dependent: found in the 2026-11-10 review, not changed
+
+- A dependent who is no one's dependent by the rules (no credit, "Not a qualifying child or a qualifying relative") is still listed in
+  the Form 1040 Dependents section and counted elsewhere (head of household, the earned income credit); only the credits follow the
+  verdict.
+- The flowchart's joint-return question for the dependent (married, filed a joint return other than for a refund) and "could you be
+  claimed as a dependent" (Step 2 question 4) aren't applied to the credits.
+- An ATIN (9xx-93-xxxx) may be refused by the SSN / ITIN format check.
+- The dependents API still refuses a record without the name, SSN and relationship, so those three can't be saved partially.
+
 ## Foreign assets (Form 8938): found in the 2026-11-10 second pass, not changed
 
 - Part III amounts are typed per account or asset; they aren't drawn from the statements (a foreign payer's Form 1099-INT) or the

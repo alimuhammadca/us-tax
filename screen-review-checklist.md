@@ -571,6 +571,11 @@ last year's figures from last year's return or upload, the lump-sum election sug
       new rule on an answer only the new screen asks (citizenship), or older free-text values decide against the user (Dependent).
 - [ ] Before reviewing a screen, check it can be reached (a sidebar item in a menu, a link) and which record it saves into: a screen
       nobody can open that writes another screen's record with fewer fields erases the rest on save - remove it (Spouse).
+- [ ] When a screen replaced older screens, list every key the calculation reads from the old forms too: Form 2210's box B amount,
+      box E amount, Schedule AI and the 2024 filing status were read but could only be entered on an old screen with no menu item
+      (Refund and amount owed).
+- [ ] A spouse copy of a hub form must save: check the mapper's per-form-id switch covers the -spouse id (it saved nothing).
+- [ ] Check help against this year's IRS changes: the 2025 instructions say paper refund checks generally stop from October 2025.
 - [ ] Check every part of the preview prints something when it applies: a part with no source field (Form 8938 Parts III and IV) prints
       blank on every return. Grep the calculation for each part's field-name prefix (Foreign assets, second pass).
 - [ ] Read a refinancing rule for the figure it limits by ("the outstanding balance of the refinanced loan as of the date of the
@@ -764,6 +769,7 @@ Deductions labels renamed in the Incomes style. Headings still in the old "Form 
 | Child Tax Credit settings (Schedule 8812; Family Head, spouse) | 1-25; Puerto Rico worked out, joint spouse copy a note | 2026-11-10 |
 | Dependent (Form 1040 Dependents section) | 1-25; credits worked out (Steps 1-5), rows 5-7 filled, eye on SSN and date of birth | 2026-11-10 |
 | Spouse (legacy screen) | removed - unreachable duplicate of Identification (spouse) | 2026-11-10 |
+| Refund and amount owed (lines 34-38, Form 8888, Form 2210 inputs; Family Head, spouse) | 1-25; moved to Applications, 2024 figures filled, box E worked out, spouse copy fixed | 2026-11-10 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

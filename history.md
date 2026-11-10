@@ -1,3 +1,25 @@
+## 2026-11-11T13:00 - Refund and amount owed: Screen Review Checklist
+
+- Moved from the Tax Return section (it sat among the form previews) to Applications, renamed "Refund and amount owed"; one page in the
+  shared look - the bar with Save and Reset, save partial, section Clear, shared radios / selects / amounts, the name in the title,
+  help from the 2025 Form 1040 lines 34-38, Form 8888 and Form 2210 instructions (`data/refund-and-amount-owed-help.ts`), years from
+  tax-year.ts. Removed: the own Save bar, Ctrl+S, the badges and pills, the result banners (one computed line instead). The routing
+  and account numbers are hidden with an eye; the routing number is checked for the IRS prefix (01-12 / 21-32) and the check digit.
+- Help corrections: the IRS generally stops issuing paper refund checks from October 2025 (the screen said a paper check was the
+  default); Form 8888's fallback is "the last valid account listed", not account 3; a split refund isn't allowed with Form 8379 - the
+  split section now says so when Injured spouse applies.
+- Owner-approved (V466): the five estimated-payment answers removed - verified that Form 1040 line 26 and Form 2210 / 2210-F take every
+  payment from Estimated tax payments and nothing read these (the screen told users to enter them on both screens). The 2024 AGI,
+  tax and filing status are filled from last year's return computed here (the tax figured as Form 2210 line 8 says: line 22 plus the
+  listed Schedule 2 taxes less the refundable credits, `Form2210PriorYearTax`) or the uploaded 2024 Form 1040 (line 24 less lines
+  27-29, now read), through GET /api/estimated-tax/prior-year. Box E is worked out from the two filing statuses and asks the line 8
+  amount; the box B amount, the annualized income method (box C, four periods) and the 2024 filing status - read by the calculation
+  but only enterable on an old unreachable screen - are asked here. The spouse's own copy is in Applications on separate returns.
+- Bug: the spouse copy (refund-and-amount-owed-spouse) saved and loaded nothing - the mapper treated only the Family Head id as the whole
+  form - so on separate returns the spouse's Form 2210 2024 tax could never be entered. Fixed.
+- Tests: Java `Form2210PriorYearTaxTest` (2); Karma spec (4); e2e `refund-and-amount-owed-screen.spec.ts` (2); the old UI spec
+  (refund-and-amount-owed-ui.spec.ts) removed; B60 / B109 / B116 / B121 and refund-and-amount-owed specs updated.
+
 ## 2026-11-11T11:00 - Spouse screen: removed (Screen Review Checklist)
 
 - The "Spouse" screen (form-spouse: name, SSN, date of birth) could not be opened - its sidebar item was defined but never placed in a

@@ -560,6 +560,10 @@ last year's figures from last year's return or upload, the lump-sum election sug
       credits). Read the line's instruction for what it reports.
 - [ ] A screen's spouse copy must be read where the return needs it: on a joint return the Other payments spouse copy was saved but
       never added (Other payments / credits). Grep the calculation for the spouse form id.
+- [ ] Ask a household fact once: before keeping a question, grep the other screens' keys for the same fact (Puerto Rico residence
+      was asked on Child Tax Credit settings and on Income earned in a US territory). Work it out from the screen that owns it.
+- [ ] On a joint return, check which copy the calculation reads; a spouse copy that is saved but never read gets a note, not the
+      questions (Child Tax Credit settings).
 - [ ] Check every part of the preview prints something when it applies: a part with no source field (Form 8938 Parts III and IV) prints
       blank on every return. Grep the calculation for each part's field-name prefix (Foreign assets, second pass).
 - [ ] Read a refinancing rule for the figure it limits by ("the outstanding balance of the refinanced loan as of the date of the
@@ -750,6 +754,7 @@ Deductions labels renamed in the Incomes style. Headings still in the old "Form 
 | Other payments / credits (Schedule 3 Part II; Family Head, spouse) | 1-8, 11, 13, 15-25 | 2026-11-10 |
 | Injured spouse (Form 8379; second pass) | 9, 12, 14, 20-25 checked; line 20 figured, lines 6-9 shown | 2026-11-10 |
 | Foreign assets (Form 8938; second pass) | 9, 12, 22, 23 checked; Parts III and IV filled, owners by name | 2026-11-10 |
+| Child Tax Credit settings (Schedule 8812; Family Head, spouse) | 1-25; Puerto Rico worked out, joint spouse copy a note | 2026-11-10 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

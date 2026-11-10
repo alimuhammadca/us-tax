@@ -1,3 +1,19 @@
+## 2026-11-11T08:00 - Child Tax Credit settings: Screen Review Checklist
+
+- One page in the shared look: the bar with Save and Reset, save partial ("Saved. Still to answer"), section Clear, shared radios and
+  select, the person's name in the title, help from the 2025 Instructions for Form 1040 line 28, Schedule 8812 and Form 8862
+  (`data/ctc-settings-help.ts`), years from tax-year.ts. Removed: the own Save button and Ctrl+S, the tax-year badge, the 2025-law
+  banner, the line 19 / 28 table, the estimate banners with hard-coded $2,200 / $1,700 and the phase-out gauge, the answers summary,
+  the address-based Puerto Rico hint. Shown instead: the children from Dependents and the last computed lines 19 and 28.
+- Owner-approved (V464): the Puerto Rico question is removed - `CtcScreeningInputs` works out bona fide residence from Income earned
+  in a US territory (Puerto Rico, all year; either spouse on a joint return) for Schedule 8812 Part II-B and the Earned Income Credit's
+  main-home rule; the screen shows it. On a joint return the questions are asked once, on the Family Head's copy (the only one the
+  calculation reads) - the spouse copy shows a note and a link.
+- The year of the final decision is asked only for a reckless-disregard or fraud ban (the only reasons it is read); "allowed since
+  with Form 8862" is a Yes / No.
+- Tests: Java `CtcScreeningInputsTest` (2), the Part II-B test seeds the territory screen; Karma spec (4); e2e
+  `ctc-settings-screen.spec.ts` (2), line 28 / B105 / MFS specs updated.
+
 ## 2026-11-11T06:00 - Foreign assets (Form 8938): Screen Review Checklist, second pass
 
 - Checked against the items added since the 2026-11-08 review and the Form 8938 (Rev. November 2021) Parts III and IV, which were

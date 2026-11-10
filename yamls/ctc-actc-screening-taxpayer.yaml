@@ -1,47 +1,55 @@
-formId: ctc-actc-screening-taxpayer
-title: Child Tax Credit — Settings
+formId: ctc-actc-screening-taxpayer   # also ctc-actc-screening-spouse (same bare keys; her own on a separate return)
+title: Child Tax Credit settings
 description: >
-  Configure Child Tax Credit settings for this return.
-  Most families only need to answer the first question.
+  The child tax credit, the credit for other dependents and the additional child tax credit are figured on Schedule 8812 from
+  Dependents and the return. The screen asks the few questions the return can't answer. Screen review 2026-11-10 (owner, V464):
+  the Puerto Rico question is removed (worked out from Income earned in a US territory); on a joint return the questions are asked
+  once, on the Family Head's copy - the spouse copy shows a note.
 
 sections:
-  - id: settings
-    title: Child Tax Credit settings
+  - id: children
+    title: Qualifying children and other dependents
     instructions:
-      - Answer the questions below to configure how the Child Tax Credit is handled on your return.
-      - Most families only need to answer the first question.
+      - Shown from Dependents (qualifiesForCTC / qualifiesForODC) with the last computed Form 1040 lines 19 and 28. No inputs.
+
+  - id: denied
+    title: Credit reduced or denied before
     fields:
       - id: ctcPreviouslyDenied
-        label: Did the IRS previously deny or reduce your Child Tax Credit or Other Dependent Credit?
+        label: Did the IRS reduce or deny your (or your spouse's) child tax credit, additional child tax credit or credit for other dependents for a year after 2015?
         type: boolean
-        helpText: >
-          Answer Yes if the IRS sent you a notice in a prior year reducing or disallowing your
-          Child Tax Credit, Additional Child Tax Credit, or Other Dependent Credit. When you
-          answer Yes, complete the Credits After Disallowance section in the sidebar.
+      - id: ctcPriorDisallowanceReason
+        label: Why was it reduced or denied?
+        type: select
+        options: [MATH_CLERICAL, RECKLESS_DISREGARD, FRAUD, OTHER]
+        showIf: ctcPreviouslyDenied == true
+      - id: ctcPriorDeterminationYear
+        label: Year of the IRS final decision (2016 to the tax year)
+        type: integer
+        showIf: ctcPriorDisallowanceReason in [RECKLESS_DISREGARD, FRAUD]
+      - id: ctcAllowedSinceForm8862
+        label: Since then, was Form 8862 filed and the credit allowed?
+        type: boolean
+        showIf: ctcPreviouslyDenied == true
 
-  - id: rareSettings
-    title: Less common situations
-    instructions:
-      - These situations apply to very few filers. Leave blank if neither applies.
+  - id: actc
+    title: Additional child tax credit (line 28)
     fields:
-      # RESTORED 2026-09-02. Removed on 2026-08-04 on the ground that Schedule 8812 line 15 is now
-      # "Reserved for future use" -- true, but the election MOVED rather than ended. The 2025 Form
-      # 1040 line 28 reads "Additional child tax credit (ACTC) from Schedule 8812. If you do not
-      # want to claim the ACTC, check here", alongside the new twin EIC opt-out at line 27c.
+      # Form 1040 line 28: "If you do not want to claim the additional child tax credit, check the box on line 28."
       - id: electsNoActc
-        label: Would you like to skip the Additional Child Tax Credit this year?
+        label: Leave the additional child tax credit off the return (check the box on line 28)?
         type: boolean
-        helpText: >
-          The Additional Child Tax Credit is refundable and worth up to $1,700 per qualifying
-          child, so almost everyone answers No. The one common reason to say Yes: a return that
-          claims the ACTC (or the Earned Income Credit) cannot have any part of its refund
-          released before mid-February, so a filer owed a large withholding refund and only a
-          small ACTC can trade the credit for getting the rest of the money weeks sooner. Only
-          the refundable portion is given up -- the Child Tax Credit on Form 1040 line 19 is
-          unaffected.
+
+  - id: puertoRico
+    title: Bona fide resident of Puerto Rico
+    instructions:
+      - Shown, not asked (V464) - from Income earned in a US territory (possession puerto_rico, bona fide resident all year; either
+        spouse on a joint return). With it, Schedule 8812 Part II-B runs with any number of qualifying children.
+
+  - id: computedOutputs
+    readOnly: true
+    computed: true
+    fields:
       - id: isBonafidePuertoRicoResident
-        label: Were you a full-year resident of Puerto Rico during 2025?
+        label: Bona fide resident of Puerto Rico (CtcScreeningInputs, from possession-residence-exclusion-taxpayer / -spouse)
         type: boolean
-        helpText: >
-          Full-year residents of Puerto Rico who have at least one qualifying child may claim
-          the Additional Child Tax Credit with fewer than three children. Most filers answer No.

@@ -1,3 +1,8 @@
+# Screen review 2026-11-10 (owner, V457): the statements' foreign tax (Form 1099-DIV box 7, Form 1099-INT box 6, Schedule K-1
+# (Form 1065) box 21) is added automatically and listed; the opening answer is credit (Yes) or Schedule A deduction (No), asked once
+# per return; the 'no Form 1116' election's conditions are worked out, plus simplifiedHeldAndLegallyOwed; paid or accrued is one
+# answer per person (foreignTaxesAccrued) instead of creditBasis per row; the upload answers and the override are dropped.
+# One shared component: form-foreign-tax-credit.component.ts; help: data/foreign-tax-credit-help.ts.
 # Form 1116 — Foreign Tax Credit (taxpayer / family head) intake YAML.
 # Approach: taxpayer form owns statement imports and simplified exception gate.
 # Spouse form is additive — handles supplemental spouse-specific foreign income only.
@@ -21,29 +26,11 @@ sections:
     fields:
       - name: hasForeignTaxCredit
         type: boolean
-        required: true
-        label: Did you pay foreign income taxes or have foreign source income?
+        required: false
+        label: "How do you want to use the foreign taxes? Yes = take the credit, No = deduct on Schedule A (asked once per return)"
         help: >
           Select Yes if any 1099-DIV (box 7) or 1099-INT (box 6) shows foreign taxes paid,
           or if you had wages, business income, or other income from a foreign country.
-
-  - name: statementUploadCheck
-    title: Statement upload check
-    multiplicity: single
-    showIf: hasForeignTaxCredit == true
-    instructions:
-      - Confirm whether you uploaded 1099-DIV and/or 1099-INT statements that show foreign taxes.
-    fields:
-      - name: confirms1099DivUploaded
-        type: boolean
-        required: false
-        label: Did you receive a 1099-DIV with foreign tax paid (box 7)? If so, is it uploaded?
-        help: Select Yes if you have at least one 1099-DIV with a box 7 foreign tax amount uploaded.
-      - name: confirms1099IntUploaded
-        type: boolean
-        required: false
-        label: Did you receive a 1099-INT with foreign tax withheld (box 6)? If so, is it uploaded?
-        help: Select Yes if you have at least one 1099-INT with a box 6 foreign tax amount uploaded.
 
   - name: simplifiedExceptionGate
     title: Simplified exception
@@ -55,6 +42,14 @@ sections:
       - "(2) Total foreign taxes paid or accrued ≤ $300 (single) or $600 (MFJ)."
       - "(3) You are not excluding income from Puerto Rico."
     fields:
+      - name: simplifiedHeldAndLegallyOwed
+        type: boolean
+        required: false
+        label: "Were the stocks and bonds held at least 16 days, and was every foreign tax legally owed to a recognized country? (V457)"
+      - name: foreignTaxesAccrued
+        type: boolean
+        required: false
+        label: "Credit foreign taxes when they accrue, instead of when paid? (V457 - one lasting answer per person)"
       - name: claimsSimplifiedException
         type: boolean
         required: false
@@ -64,20 +59,6 @@ sections:
         help: >
           If Yes, the backend will apply the lesser of total foreign taxes or the
           US tax limitation automatically — no full Form 1116 needed.
-
-  - name: simplifiedExceptionEntry
-    title: Simplified exception — override entry
-    multiplicity: single
-    showIf: claimsSimplifiedException == true
-    fields:
-      - name: simplifiedForeignTaxesOverride
-        type: amount
-        required: false
-        label: Total foreign taxes paid (leave blank to use imported amount from statements)
-        placeholder: 0.00
-        help: >
-          Leave blank to let the backend sum foreign taxes from uploaded 1099-DIV (box 7)
-          and 1099-INT (box 6) statements. Enter a value here only to override that sum.
 
   - name: foreignIncomeSources
     title: Foreign income sources (full Form 1116)
@@ -104,16 +85,6 @@ sections:
         help: >
           Select the income category as defined on Form 1116.
           Passive = most investment income; general = wages, salaries; section951A = GILTI.
-      - name: creditBasis
-        type: dropdown
-        required: true
-        label: Credit basis
-        options:
-          - paid
-          - accrued
-        help: >
-          "Paid" means you actually paid the tax during 2025.
-          "Accrued" means the tax was owed and accrued in 2025 even if not yet remitted.
       - name: skipPartI
         type: boolean
         required: false

@@ -524,6 +524,10 @@ last year's figures from last year's return or upload, the lump-sum election sug
 - [ ] A "can't be more than" limit the user types is a limit that fails open when left blank - figure it from the return where the return
       has the figure, and name it in "Still to answer" otherwise (Additional deductions: the business tips limit).
 - [ ] A date the law fixes ("loans originated after December 31, 2024") stays that date - it is not the tax year minus one (item 3).
+- [ ] Statements added automatically next to typed rows: a return saved before had them typed too - match by what identifies them (the
+      country) and count once, with a note, or every older return doubles (Foreign tax credit).
+- [ ] One question doing two jobs (switching a credit on and silently dropping a deduction) is split or reworded so the answer means one
+      thing; a return-level choice is asked once per return and read from that copy on a joint return (Foreign tax credit).
 - [ ] Read a refinancing rule for the figure it limits by ("the outstanding balance of the refinanced loan as of the date of the
       refinancing") and make the label ask that figure (the screen asked the original principal).
 
@@ -702,6 +706,7 @@ Deductions labels renamed in the Incomes style. Headings still in the old "Form 
 | Qualified business income deduction (line 13a; Family Head, spouse) | 1-8, 11, 13, 15-25 | 2026-11-10 |
 | Standard or itemized deductions (lines 12a-12e, Schedule A; Family Head, spouse) | 1-8, 11, 13, 15-25 | 2026-11-10 |
 | Additional deductions (Schedule 1-A; Family Head, spouse; second pass) | 1-8, 11, 13, 15-25 | 2026-11-10 |
+| Foreign tax credit (Form 1116; Family Head, spouse) | 1-8, 11, 13, 15-25 | 2026-11-10 |
 
 Screens reviewed before an item existed may still need it (e.g. item 5 Form names and item 6 Links were added with
 Employment, after the earlier screens).

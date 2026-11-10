@@ -1,3 +1,8 @@
+# Screen review 2026-11-10 (owner, V457): the statements' foreign tax (Form 1099-DIV box 7, Form 1099-INT box 6, Schedule K-1
+# (Form 1065) box 21) is added automatically and listed; the opening answer is credit (Yes) or Schedule A deduction (No), asked once
+# per return; the 'no Form 1116' election's conditions are worked out, plus simplifiedHeldAndLegallyOwed; paid or accrued is one
+# answer per person (foreignTaxesAccrued) instead of creditBasis per row; the upload answers and the override are dropped.
+# One shared component: form-foreign-tax-credit.component.ts; help: data/foreign-tax-credit-help.ts.
 # Form 1116 — Foreign Tax Credit (spouse) intake YAML.
 # Approach: spouse form is additive — only supplements with spouse-specific foreign income
 # that the taxpayer form does not cover.
@@ -29,30 +34,20 @@ sections:
         help: >
           Select Yes if your spouse had foreign taxes not already reflected on the
           taxpayer form. This field is disabled and hidden when filing status is not MFJ.
-
-      - name: spouseConfirms1099DivUploaded
+      - name: spouseSimplifiedHeldAndLegallyOwed
         type: boolean
         required: false
-        label: "Has the spouse uploaded all Forms 1099-DIV reporting foreign tax (box 7)?"
-        showIf: spouseHasForeignTaxCredit == true
-
-      - name: spouseConfirms1099IntUploaded
+        label: "Were the stocks and bonds held at least 16 days, and was every foreign tax legally owed to a recognized country? (V457)"
+      - name: spouseForeignTaxesAccrued
         type: boolean
         required: false
-        label: "Has the spouse uploaded all Forms 1099-INT reporting foreign tax (box 6)?"
-        showIf: spouseHasForeignTaxCredit == true
+        label: "Credit foreign taxes when they accrue, instead of when paid? (V457 - one lasting answer per person)"
 
       - name: spouseClaimsSimplifiedException
         type: boolean
         required: false
         label: "Does the spouse elect the simplified exception (foreign tax <= $300 MFS - no Form 1116 required)?"
         showIf: spouseHasForeignTaxCredit == true
-
-      - name: spouseSimplifiedForeignTaxesOverride
-        type: amount
-        required: false
-        label: Override total foreign taxes (optional - leave blank to use imported amount from statements)
-        showIf: spouseClaimsSimplifiedException == true
 
   - name: spouseForeignIncomeSources
     title: Spouse foreign income sources
@@ -75,14 +70,6 @@ sections:
           - lumpSum
           - section901j
         help: Select the income category. Must match the corresponding taxpayer category to be combined.
-      - name: creditBasis
-        type: dropdown
-        required: true
-        label: Credit basis
-        options:
-          - paid
-          - accrued
-        help: Select paid or accrued basis for the spouse's foreign taxes.
       - name: skipPartI
         type: boolean
         required: false

@@ -1,3 +1,34 @@
+## 2026-11-10T13:00 - Foreign tax credit (Form 1116): Screen Review Checklist applied
+
+- Audit against the 2025 Instructions for Form 1116 (docs/books/i1116.pdf, 2025 edition), the form, the 2025 Form 1040 instructions
+  (Schedule 3 line 1) and the 2025 Instructions for Form 6251.
+- Owner-approved (V457):
+  - The statements' foreign tax is added automatically: Form 1099-DIV box 7 (country box 8), Form 1099-INT box 6 (country box 7) and
+    Schedule K-1 (Form 1065) box 21 become passive-category rows by country (`Form1116Inputs`). Before, only the "no Form 1116" path
+    read the 1099s; the full Form 1116 needed them typed again and K-1 tax was never read. A typed passive row for the same country
+    stands for the statement (counted once, with a note) so older saves don't double.
+  - The opening question is "take the credit or deduct on Schedule A", asked once per return (Family Head copy on a joint return).
+    Unanswered means the credit when there is foreign tax. A joint return where only the spouse paid foreign tax got no credit.
+  - The election to claim the credit without Form 1116: the conditions the return shows are worked out (all tax on statements, $300 /
+    $600, no Form 4563 / Puerto Rico exclusion); one new answer covers the 16-day holding period and the tax being legally owed to a
+    recognized country. A Yes that failed the limit used to give $0 and no message; it now figures Form 1116 with a note.
+  - Paid or accrued is one lasting answer per person (it binds later years) instead of one per income row; a person with any row
+    answered "accrued" keeps accrued.
+  - Removed: the four "all Forms 1099 uploaded" answers (nothing read them) and the typed override of the statement total.
+- Calculation fixes: lines 3a / 3b are the listed itemized deductions (medical, sales, real estate and personal property taxes) or the
+  standard deduction, plus Schedule 1 Part II - not the whole line 12e; mortgage interest is apportioned on line 4a and the Schedule 1-A
+  car loan interest on line 4b; line 3e adds back the Form 2555 exclusion and capital losses; line 20 subtracts the Form 4972 tax;
+  line 18 starts from line 11b less line 14 before the floor; the adjustment exception counts foreign capital gain distributions; a
+  carryover of a category with no tax this year still carries (also through the election year).
+- On separate returns each leg counts only its filer's statements (by the statement's TIN) - the household's 1099s reached both legs
+  once statement taxes were added automatically (caught by the MFS e2e).
+- Screen: one component for both copies (`form-foreign-tax-credit.component.ts`; the two old components removed), the shared look
+  and bar with save partial, Reset, section Clear and card Clear / Remove; the statements listed with links; the country from the shared
+  list plus the territories (not the U.S. Virgin Islands - Form 8689); the date control; the categories in the form's words; help from
+  the IRS text (`data/foreign-tax-credit-help.ts`). Heading "Foreign tax credit (name)".
+- Tests: Java `Form1116ReviewTest` (6) and the fixtures of the affected tests; Karma spec (4); e2e `foreign-tax-credit-screen.spec.ts`
+  (3), which replaces the two Part II breakdown UI specs.
+
 ## 2026-11-10T09:00 - Additional deductions (line 13b, Schedule 1-A): second Screen Review Checklist pass
 
 - Audit against the 2025 Instructions for Schedule 1-A (i1040gi, "Instructions for Schedule 1-A") and the form.

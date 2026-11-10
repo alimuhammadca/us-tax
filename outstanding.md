@@ -1,5 +1,18 @@
 # Outstanding Items
 
+## Foreign tax credit (Form 1116): found in the 2026-11-10 review, not changed
+
+- A mutual fund's Form 1099-DIV: the whole box 1a is counted as foreign income on the statement row; the fund's year-end statement
+  usually shows a smaller foreign-source part (it overstates line 1a). Needs a foreign-source amount on the statement (structure).
+- Schedule K-1 (Form 1120-S) and Schedule K-1 (Form 1041) foreign tax are not read (no box on those statements); K-1 / K-3 income by
+  category and country is typed.
+- The alternative minimum tax credit without the section 59(a)(4) election adds back all of line 3g and uses the regular carryover
+  (Form 6251 instructions: AMT items and an AMT carryover).
+- Line 3e doesn't use gross receipts before cost of goods sold for a business (net profit is in line 9).
+- Line 16 adjustments (section 461(l) disallowed loss) and the lump-sum category worksheet are not figured.
+- The 1-year carryback isn't modelled; the accrual choice isn't checked against last year's return.
+- A carryover isn't kept when the taxes are deducted on Schedule A this year (no Form 1116 is produced to carry it).
+
 ## Additional deductions (line 13b, Schedule 1-A): found in the 2026-11-10 review, not changed
 
 - The "tips" box on Forms 1099-NEC / 1099-MISC / 1099-K counts the whole box as tips; a form with only part tips (the Instructions'

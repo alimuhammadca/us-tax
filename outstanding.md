@@ -1,14 +1,16 @@
 # Outstanding Items
 
-## ★ Separate returns two years in a row (found 2026-11-11, not changed)
+## ★ Separate-return results are never saved (found 2026-11-11, not changed)
 
-- `TaxReturnV2LifecycleService.enableMfs` treats MFS as "already enabled" when separate-return legs of ANY year exist (`count("uid
-  = ?1 and (returnKind = mfs_head or mfs_spouse)")`, no tax year) and returns them - so a household that filed separately for 2024
-  gets its 2024 pair back for 2025, and no 2025 legs are created. Other lookups by return kind ignore the year too:
-  `TaxReturnComputeService` ~492-494 (mfs_head / mfs_spouse), `OptimizerService` ~65 (primary), `KiddieTaxParentReader` ~112, 198,
-  245, 269 (dependent_own), and likely `listReturns` / `isMfsEnabled` / disable. Found by the Form 8801 two-year e2e (it recomputed the
-  2024 spouse leg as 2025's). Fix: scope each to `currentContext.taxYear()` (create, list, enable check, disable, the compute's leg
-  lookups) and add a two-year separate-return e2e; then un-fixme `form8801-mfs-spouse-bridge.spec.ts`.
+- `POST /api/tax-return/compute/{taxReturnId}` (`TaxReturnResource.computeForReturn`) computes an MFS leg (or a dependent's own
+  return) and returns it without saving - by design ("avoids overwriting the primary's persisted output"), and every output mapper
+  saves under `anchor.primaryTaxReturnId(uid)`. So no `out_*` row exists for an mfs_head / mfs_spouse return, and every carry-over
+  that reads last year's SEPARATE return finds nothing: the Form 8801 line 26 bridge per return (2026-11-11), the capital loss
+  carryover's own-separate-return import (D-7a-3) and any other bridge keyed on mfs_head / mfs_spouse. Found by
+  `form8801-mfs-spouse-bridge.spec.ts` (test.fixme until fixed; its two-years-in-a-row lifecycle test passes).
+- Fix: let the output mappers save under the leg's own tax_return_id when a leg is computed (an anchor that resolves the computed
+  return, not the primary), then un-fixme the spec and add a two-year capital-loss-on-separate-returns e2e. A large change: every
+  mapper's save / load path.
 
 ## Refund and amount owed: found in the 2026-11-10 review, not changed
 
@@ -165,8 +167,8 @@
   MTFTCE (line 12, separate Forms 1116) are the user's.
 - The Form 1040-NR line 10 rule (net gain on U.S. real property interests) is not applied.
 - The bridge reads each return's own prior-year return since 2026-11-11 (a separate return its own separate return; a joint prior
-  credit isn't divided - an advisory asks for the share). It can't fire two years in a row on separate returns until the bug below
-  ("Separate returns two years in a row") is fixed - e2e `form8801-mfs-spouse-bridge.spec.ts` is `test.fixme` for it.
+  credit isn't divided - an advisory asks for the share) - but separate returns' results aren't saved yet (see "Separate-return
+  results are never saved"), so on separate returns it has nothing to read.
 
 ## Investment interest (Form 4952): found in the 2026-11-09 review, not changed
 

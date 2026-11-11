@@ -1,3 +1,18 @@
+## 2026-11-11T17:30 - Separate returns two years in a row (bug fixed)
+
+- Bug: every tax_return_v2 lookup by return kind ignored the tax year. TaxReturnV2LifecycleService.enableMfs counted any year's
+  separate-return legs as "already enabled" and returned them, so a household that filed separately for 2024 got its 2024 pair back
+  for 2025 and no 2025 legs were ever created (a 2025 separate return recomputed the 2024 one). The same in listReturns, disableMfs
+  (it would have deleted every year's legs), isMfsEnabled, the dependent's-own-return enable / disable / check, the compute's
+  section 63(c)(6) leg lookup, the joint-vs-separate optimizer's primary lookup and the kiddie-tax parent / sibling reader.
+- Fix: each names the request's tax year (CurrentContext.taxYear(), the X-Tax-Year header; the current year outside a request).
+  tax_return_v2.tax_year is NOT NULL, and only the primary return is unique per (uid, year), so each year now gets its own pair.
+- Tests: TaxReturnV2YearScopedQueriesTest - a source lint: every TaxReturnV2 query that filters on returnKind must name taxYear
+  (mutation-checked); e2e form8801-mfs-spouse-bridge - separate returns two years in a row (new pair per year, re-enabling 2024
+  returns 2024's) passes. Unit 5,732 / 0; e2e 16 specs 49 passed.
+- Found, not fixed (outstanding.md "Separate-return results are never saved"): compute/{taxReturnId} doesn't save a leg's outputs,
+  so a carry-over from last year's separate return has nothing to read; the Form 8801 two-year test stays test.fixme for it.
+
 ## 2026-11-11T16:30 - Form 8611 line 15 and next year's Form 3800; the Form 8801 bridge per return; a separate-returns bug found
 
 - Form 8611 (Instructions for Form 8611, lines 13 and 15): line 13 is the building's unused credits from earlier years - already in

@@ -11,12 +11,9 @@
 
 ## Dependent: found in the 2026-11-10 review, not changed
 
-- The earned income credit keeps its own qualifying-child tests for a person who is nobody's dependent (since 2026-11-11 off the
-  Form 1040 Dependents list and not a head of household qualifying person) - right for the EIC, which has no support test; check
-  Pub. 596 if a case looks wrong.
-- The flowchart's joint-return question for the dependent (married, filed a joint return other than for a refund) and "could you be
-  claimed as a dependent" (Step 2 question 4) aren't applied to the credits.
-- The dependents API still refuses a record without the name, SSN and relationship, so those three can't be saved partially.
+- The flowchart's joint-return question for the dependent (married, filed a joint return other than for a refund) isn't asked, so it
+  isn't applied - a field addition on Dependents (owner sign-off). ("Could you be claimed as a dependent", Step 2 question 4, is
+  applied since 2026-11-11 from Form 1040's "Someone can claim you / your spouse" boxes.)
 
 ## Foreign assets (Form 8938): found in the 2026-11-10 second pass, not changed
 

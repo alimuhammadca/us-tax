@@ -1,3 +1,19 @@
+## 2026-11-11T22:30 - Dependent: a filer who can be claimed claims no one; dependents save partially (outstanding.md)
+
+- 2025 Form 1040 instructions, Who Qualifies as Your Dependent: "If you could be claimed as a dependent by another taxpayer, you can't
+  claim anyone else as a dependent" (IRC 152(b)(1)). It held only on a dependent's own return; a filer who checked "Someone can claim
+  you as a dependent" (or the spouse's box on a joint return) still listed dependents and got the child tax credit / credit for other
+  dependents. Now the Dependents section and Schedule 8812 are empty and DEPENDENTS_FILER_CAN_BE_CLAIMED says why
+  (`DependentQualification.filerIsADependent`). The EIC keeps its own test; head of household is unchanged (a qualifying child
+  needn't be a dependent).
+- Save partial: the dependents API saved nothing without the name, SSN and relationship. A record is saved once any of the name, SSN,
+  relationship or date of birth is entered (an empty one is refused); the return is blocked by DEPENDENT_IDENTITY_INCOMPLETE (one per
+  dependent, linked to it) until the name, SSN and relationship are there. The Dependent screen saves the same way.
+- The EIC note ("its own qualifying-child tests for a person who is nobody's dependent") is correct (Pub. 596: an EIC child needn't be a
+  dependent) and was removed from outstanding.md. The dependent's joint-return question needs a field (owner sign-off).
+- Tests: Java `DependentQualificationTest` (+3), `DependentServiceTest` (+1, 1 changed); Karma `form-dependent.component.spec.ts` (1
+  changed); e2e `dependent-partial-save-and-dependent-filer.spec.ts` (2). Unit suite 5737/5737.
+
 ## 2026-11-11T21:40 - Refund and amount owed: last year's figures for the spouse, and the 2024 itemizing amounts (outstanding.md)
 
 - The spouse's copies of Refund and amount owed and Estimated tax payments filled nothing from last year: GET

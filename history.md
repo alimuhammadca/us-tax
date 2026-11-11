@@ -1,3 +1,17 @@
+## 2026-11-11T18:30 - Separate-return results are saved (bug fixed)
+
+- Bug: POST /api/tax-return/compute/{taxReturnId} computed a separate-return leg (or a dependent's own return) and returned it
+  without saving - every output mapper saves under OutputAnchorResolver.primaryTaxReturnId, the primary return - so no out_* row
+  existed for mfs_head / mfs_spouse and every carry-over from last year's separate return found nothing: the Form 8801 line 26
+  bridge per return, the capital loss carryover's own-separate-return import (D-7a-3).
+- Fix: TaxReturnDataService.saveComputationForReturn saves the leg with the same mapper sweep, OutputAnchorResolver answering that
+  return's id while it runs (a ThreadLocal set and cleared in a finally) - no mapper changed. The household's compute status stays
+  the primary's (TaxReturnBootstrap.ensureExists). computeForReturn saves every non-primary return; the joint-vs-separate optimizer
+  still doesn't. The out_* rows cascade-delete with the leg (FK to tax_return_v2).
+- Tests: OutputAnchorResolverOverrideTest (new); e2e form8801-mfs-spouse-bridge - the Form 8801 spouse bridge (no longer fixme, also
+  checks the primary's saved return isn't overwritten) and a new two-year capital loss carryover on separate returns (10,000 loss ->
+  1,500 deducted, 8,500 on her 2025 Schedule D line 6), plus the two-years-in-a-row lifecycle test. Unit 5,733 / 0.
+
 ## 2026-11-11T17:30 - Separate returns two years in a row (bug fixed)
 
 - Bug: every tax_return_v2 lookup by return kind ignored the tax year. TaxReturnV2LifecycleService.enableMfs counted any year's

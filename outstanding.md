@@ -1,17 +1,5 @@
 # Outstanding Items
 
-## ★ Separate-return results are never saved (found 2026-11-11, not changed)
-
-- `POST /api/tax-return/compute/{taxReturnId}` (`TaxReturnResource.computeForReturn`) computes an MFS leg (or a dependent's own
-  return) and returns it without saving - by design ("avoids overwriting the primary's persisted output"), and every output mapper
-  saves under `anchor.primaryTaxReturnId(uid)`. So no `out_*` row exists for an mfs_head / mfs_spouse return, and every carry-over
-  that reads last year's SEPARATE return finds nothing: the Form 8801 line 26 bridge per return (2026-11-11), the capital loss
-  carryover's own-separate-return import (D-7a-3) and any other bridge keyed on mfs_head / mfs_spouse. Found by
-  `form8801-mfs-spouse-bridge.spec.ts` (test.fixme until fixed; its two-years-in-a-row lifecycle test passes).
-- Fix: let the output mappers save under the leg's own tax_return_id when a leg is computed (an anchor that resolves the computed
-  return, not the primary), then un-fixme the spec and add a two-year capital-loss-on-separate-returns e2e. A large change: every
-  mapper's save / load path.
-
 ## Refund and amount owed: found in the 2026-11-10 review, not changed
 
 - The spouse's copy on separate returns isn't filled from last year (the prior return found is the household's primary one).
@@ -167,8 +155,7 @@
   MTFTCE (line 12, separate Forms 1116) are the user's.
 - The Form 1040-NR line 10 rule (net gain on U.S. real property interests) is not applied.
 - The bridge reads each return's own prior-year return since 2026-11-11 (a separate return its own separate return; a joint prior
-  credit isn't divided - an advisory asks for the share) - but separate returns' results aren't saved yet (see "Separate-return
-  results are never saved"), so on separate returns it has nothing to read.
+  credit isn't divided - an advisory asks for the share).
 
 ## Investment interest (Form 4952): found in the 2026-11-09 review, not changed
 

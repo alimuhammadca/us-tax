@@ -1,3 +1,18 @@
+## 2026-11-11T15:30 - Dependent who is nobody's dependent; separate-return statements checked
+
+- Dependents (2025 Form 1040 instructions, Who Qualifies as Your Dependent): a person the answers show is neither a qualifying child
+  nor a qualifying relative, the qualifying child of another taxpayer, or not a U.S. citizen / national / resident (nor of Canada or
+  Mexico) is left off the Form 1040 Dependents section - only the two credits followed the verdict before. Neither a qualifying child
+  nor a qualifying relative (or another taxpayer's qualifying child) is also no longer a head of household qualifying person; the
+  citizenship test stays out of that one (section 2(b) uses the section 152(c) qualifying child). The earned income credit keeps
+  its own tests (no support test). An advisory names the person (DEPENDENT_NOT_CLAIMABLE, opening that dependent).
+  DependentQualification.notADependent / claimable / flagNotDependents.
+- "On separate returns a statement with no TIN counts on both returns" (Schedule A): not reproduced - every statement Schedule A
+  reads has an owner field, and ReturnStatementOwners keeps a blank one on the Family Head's return only (since 2026-10-25); Form
+  1098 doesn't reach Schedule A directly. Locked in by MfsScheduleAStatementOwnerTest; the note is removed.
+- Tests: DependentQualificationTest (+2, one a full compute; mutation-checked: without the head of household filter no block is
+  raised), MfsScheduleAStatementOwnerTest (new). Unit 5,729 / 0.
+
 ## 2026-11-11T13:40:00-05:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43077190690 on 6f94529b - revision ca-ustax-be--0000592 serving

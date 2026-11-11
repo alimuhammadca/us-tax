@@ -11,9 +11,9 @@
 
 ## Dependent: found in the 2026-11-10 review, not changed
 
-- A dependent who is no one's dependent by the rules (no credit, "Not a qualifying child or a qualifying relative") is still listed in
-  the Form 1040 Dependents section and counted elsewhere (head of household, the earned income credit); only the credits follow the
-  verdict.
+- The earned income credit keeps its own qualifying-child tests for a person who is nobody's dependent (since 2026-11-11 off the
+  Form 1040 Dependents list and not a head of household qualifying person) - right for the EIC, which has no support test; check
+  Pub. 596 if a case looks wrong.
 - The flowchart's joint-return question for the dependent (married, filed a joint return other than for a refund) and "could you be
   claimed as a dependent" (Step 2 question 4) aren't applied to the credits.
 - The dependents API still refuses a record without the name, SSN and relationship, so those three can't be saved partially.
@@ -98,7 +98,6 @@
 - Medical lodging is capped at 2 people ($50 a night each); Pub. 502 allows $50 for each person who goes along with the patient.
 - W-2GU / W-2VI / W-2AS territory income tax withheld doesn't reach Schedule A line 5a.
 - "Part" employer-paid coverage: the excess reimbursement is taxed in full instead of in proportion to the employer-paid share (Pub. 502).
-- On separate returns a statement with no TIN counts on both returns.
 - The private-foundation 30% pool subtracts the limited capital-gain amount, not the full one (Pub. 526 worksheet 2).
 - Points are not run through the Pub. 936 Table 1 ratio when the debt is over the limit (unverified).
 - A blank average mortgage balance applies no debt limit (the label now says the balance is needed only over $750,000).

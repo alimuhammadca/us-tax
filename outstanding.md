@@ -339,9 +339,9 @@
 
 ## HSA (Form 8889): found in the 2026-11-06 review, not changed
 
-- Line 6: a share typed by either spouse turns off the automatic half split for both, and nothing checks that the two shares total no
-  more than the family limit. On an MFS leg the other spouse's form is dropped, so
-  the split and the catch-up family check (HsaMsaRules:129) don't run there.
+- Line 6 on an MFS leg: the other spouse's form is dropped, so the family split and the catch-up family check (HsaMsaRules) don't run
+  there. (On the household return a single typed share leaves the other spouse the rest, and two shares over the family limit block,
+  since 2026-11-11.)
 - Line 3 rule 4 (eligible all year but the coverage type changed): the chart only shows for part-year eligibility, so that case can't be
   entered month by month.
 - Line 14b adds 1099-SA code 2 amounts to the typed amount (help now says not to include them); hsaExcessWithdrawnAmount also reads the

@@ -1,3 +1,12 @@
+## 2026-11-12T00:30 - HSA: the shared family limit with a typed share (outstanding.md)
+
+- IRC 223(b)(5) / Instructions for Form 8889 line 6: spouses with family coverage share one $8,550 limit, divided equally unless they
+  agree otherwise. A share typed on either spouse's HSA screen turned off the equal split for both, so the other spouse kept a whole
+  limit (up to $8,550 over-deducted), and two typed shares were never checked against the family limit. Now one typed share leaves
+  the other spouse the rest of the limit, and two shares over it raise the blocking HSA_FAMILY_SHARES_OVER_LIMIT
+  (`HsaMsaRules.familyLine6Defaults` / `flagTypedSharesOverLimit`). Separate-return legs are unchanged (still open).
+- Tests: Java `HsaFamilyShareTest` (4). Unit suite 5753/5753.
+
 ## 2026-11-12T00:00 - Schedule A: the average mortgage balance is asked when Form 1098 shows a principal over the limit (outstanding.md)
 
 - The screen asks the average balance only over $750,000, and a blank balance deducted all the interest. A Form 1098 box 2

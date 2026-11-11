@@ -1,3 +1,14 @@
+## 2026-11-11T09:00 - Full e2e regression (2,284 tests) and fixes
+
+- Run 2 result: 2,266 passed, 5 failed, 3 flaky, 10 skipped (5.6 h). Run 1 was stopped at test 256 for a compute crash.
+- Fixed (app): a compute 500 for a dependent saved with the credit answers blank (`DependentQualification.workOut`: a Boolean /
+  boolean ternary unboxed null - live in prod since the V465 deploy); the Dependent screen reloaded a record it had just created,
+  losing what was typed after the first save; the "MFS filers generally cannot claim the EIC" advisory reached every separate return
+  since V459 - it now needs a qualifying-child candidate.
+- Fixed (specs): the state refund worksheet spec's PUT replaced the seeded Form 2210 prior-year answer; the extension of time spec raced
+  an Enter-triggered save; the MFS EIC spec expected the advisory for a head with no child. The farm income and HSA failures passed on
+  retry and alone (farm income overlapped a parallel e2e run - not to be repeated).
+
 ## 2026-11-11T14:00 - You screen: removed (Screen Review Checklist)
 
 - The "You" screen (form-you: name, SSN, date of birth, address) could not be opened - no sidebar item - and duplicated Identification

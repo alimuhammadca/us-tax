@@ -1,3 +1,25 @@
+## 2026-11-11T17:00 - Quick fixes from outstanding.md (items 6-9)
+
+- V467: TIMESTAMPTZ defaults NOW() instead of (NOW() AT TIME ZONE 'UTC') - a timestamp without time zone read back in the
+  session's zone, so a non-UTC session (local: America/Toronto) stored every created_at / updated_at 5 hours late. One loop
+  changes every such column (642 locally); a second re-creates the four dual-write trigger functions that assigned the same
+  expression (standard deductions, additional deductions, earned income credit, childcare). Existing rows are not changed (the
+  zone each was written in isn't recorded). Verified on the dev database: new rows within a second of now(). Guard:
+  TimestamptzDefaultMigrationTest refuses the expression in any migration after V467.
+- Messages that fired when they shouldn't: STATUTORY_EMPLOYEE_W2_SCHEDULE_C ("add a business ... if you haven't already") is
+  dropped once a statutory-employee business is entered; FORM_1099G_BOX7_AGRICULTURE_PAYMENTS isn't given when box 7 is already
+  on Schedule F (filled from the statement, or typed on line 4a / 39a); the Forms 1099-NEC / 1099-K no-business advisory leaves
+  out the other spouse's statements on a separate return (as the bartering check does).
+- Printing: Form 8824 line 8 and Form 6252 line 27 print the related party's number with dashes - an EIN for a business name
+  (Inc, LLC, Corp, Trust, Partnership ...), an SSN otherwise (InputNormalizer.formatSsnOrEin); the extra Form 8853 Sections C
+  print the insured's SSN as 123-45-6789.
+- Dead code removed (none of it could change a result): the capital form's imported1099DivBox2a-2d / QOF reads (misspelled;
+  the totals come from the statements); validateQbiStatementGating with seven LINE13A_MISSING_* blocks and 18 QbiPersonInputs
+  fields; validateIncomeAdjustmentsStatementGating with three INCOME_ADJUSTMENTS_MISSING_UPLOADED_* blocks - all driven by
+  received / uploaded answers no screen or table saves; their checklist links and LINE13A_COOPERATIVE_PATRON_UNSUPPORTED's.
+- Tests: OutstandingQuickFixes20261111Test (new), TimestamptzDefaultMigrationTest (new, checked with a probe migration);
+  Sc00264 and two TaxReturnComputeServiceTest cases pinned the old behavior / the unreachable flags - updated. Unit 5,705 / 0.
+
 ## 2026-11-11T16:00 - Quick fixes from outstanding.md (items 1-5)
 
 - Backend suite green again: 5,700 / 0 (was 3 failures + 1 error on main).

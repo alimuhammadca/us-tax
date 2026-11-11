@@ -108,8 +108,6 @@
 
 ## Qualified business income deduction (line 13a): found in the 2026-11-10 review, not changed
 
-- `collectQbiInputsForPerson` still reads eight received* / uploaded* K-1 and 1099-DIV keys no screen or table saves; the gating flags
-  they drive can't fire. Dead code to remove with the QbiPersonInputs record.
 - Aggregation is offered for Schedule C businesses and K-1s, not for a farm or a safe-harbor rental.
 
 ## Premium tax credit (Form 8962): found in the 2026-11-09 review, not changed
@@ -357,8 +355,7 @@
 - Form 1099-SA code 2 (excess taken out) is not added to Archer line 6b automatically (the HSA path does); no line 6a / 10 override.
 - Form 5498-SA is read by no compute; Medicare months are not derived from the date of birth; the dependent rule (no deduction) is applied
   on Form 8889 but not Form 8853.
-- `additionalLtcSections` / `additionalLtcSectionsLine26` are not persisted on the output, so GET /api/tax-return loses them; extra-section
-  SSNs print unformatted.
+- `additionalLtcSections` / `additionalLtcSectionsLine26` are not persisted on the output, so GET /api/tax-return loses them.
 - Messages with no person suffix still open the Family Head's copy for the spouse (SCHEDULE1_LINE23_TYPED_DIFFERS_FROM_FORM_8853,
   SCHEDULE1_LINE23_ARCHER_MSA_DEDUCTION_LIMIT_ADVISORY, OTHER_INCOME_FORM_8853_REQUIRED_TO_BE_FILED_SEPARATELY; FORM_1099_SA_FORM_MISSING
   opens HSA for an MSA Form 1099-SA). A typed Schedule 1 line 8e (Other incomes) silently beats the figured Form 8853 amount.
@@ -378,9 +375,8 @@
 
 ## Income adjustments (Schedule 1 Part II): found in the 2026-11-06 review, not changed
 
-- `validateIncomeAdjustmentsStatementGating` (TRCS ~30978) reads upload-gate keys nothing saves (received1098E, uploaded1098E, ...), so the
-  three INCOME_ADJUSTMENTS_MISSING_UPLOADED_* flags can never fire - dead code; also dead: the `imported*Total` keys and the
-  `...OutOfScopeAmount` keys Schedule1Computations reads, and the mapper-only `iraDeductionMfsLivedApartLine20` (LowIrsFixesChunk2:203).
+- Dead: the `imported*Total` keys and the `...OutOfScopeAmount` keys Schedule1Computations reads, and the mapper-only
+  `iraDeductionMfsLivedApartLine20` (LowIrsFixesChunk2:203). (The upload check that could never fire was removed 2026-11-11.)
 - MFS: the section 219(g)(7) "spouse is covered" test (TRCS ~5160) reads the other spouse's copy, which MfsFormScoper drops on a scoped
   MFS leg - likely never true there (not confirmed). The spouse's OWN coverage answer is fixed (renamed by MfsFormScoper).
 - Flags with no person suffix still open the Family Head's copy when only the spouse entered the amount (line 18 mismatch, line 21
@@ -414,7 +410,6 @@
 - The installment-note path: the section 1245 / 1250 recapture on the note's share is said in help to be taxed in full this year - not
   re-verified against Form6252Compute's handling of an 8824 note.
 - `propertyUse` has no "held mainly for sale" or "personal residence only" choice (would be disqualifiers) - covered in help only.
-- Line 8 prints the related party's SSN or EIN as saved digits (no dashes) on the form.
 
 ## Business property sales (Form 4797): found in the 2026-11-06 review, not changed
 
@@ -476,7 +471,6 @@
 - QJV: the split reads only the Family Head's line E - the spouse's material participation is never asked (both must participate,
   Schedule F instructions). The QJV farm is matched to its split by position.
 - Statement matching differs: the line 4a / 5b / 6a fill needs an exact SSN; the 1099-PATR fill also takes a last-4 or blank TIN.
-  `FORM_1099G_BOX7_AGRICULTURE_PAYMENTS` fires even when box 7 was filled into line 4a (duplicates the fill note).
 - The Schedule F instructions say farmers don't use Form 8829 for a home office (Pub. 587 worksheet) - check how a farm home
   office is handled. Conservation and prepaid-supplies excess have no next-year bridge (typed by the user).
 
@@ -486,10 +480,8 @@
   income (no SE tax); meals that are 100% deductible (treated as wages, or reported on a Form 1099-NEC); the standard mileage
   eligibility checks (5+ vehicles, first-year rule, leased car); Part V items (startup cost election, de minimis safe harbor,
   amortization, section 174A); line 31 prior-year passive loss with line G No; section 481(a) adjustments.
-- `STATUTORY_EMPLOYEE_W2_SCHEDULE_C` fires on every statutory Form W-2, even when a statutory-employee business is entered (the
-  wording now reads "if you haven't already"); the blocking `STATUTORY_EMPLOYEE_W2_NOT_ON_SCHEDULE_C` covers the unlinked case.
-- The no-business advisory (`ScheduleCStatements` ~136-166) treats a blank or unknown TIN as the Family Head's and, on MFS, does not
-  exclude the other spouse's SSN (the bartering check does).
+- The no-business advisory (`ScheduleCStatements`) treats a blank or unknown TIN as the Family Head's (the other spouse's SSN on a
+  separate return is excluded since 2026-11-11).
 - The screen's gross-receipts fill leaves out the 1099-K personal-items amount entered on Other incomes (the return subtracts it).
 
 ## Rental & royalty income: found in the 2026-11-06 review, not changed
@@ -507,8 +499,8 @@
 
 ## Capital gain/loss: found in the 2026-11-06 review, not changed
 
-- The compute reads `imported1099DivBox2a/2b/2c/2dTotal` and `imported1099B1099DaHasQofFlag` from the capital form, but nothing
-  produces them (the mapper's keys are spelled `imported1099div...`); harmless (it falls back to the statements) but dead.
+- The column `pf_capital_gain_loss.imported_1099div_box2a_capital_gain_distributions_total` (`imported1099divBox2aCapitalGainDistributionsTotal`) is saved by no screen
+  and read by nothing since 2026-11-11 (the compute's misspelled reads were removed); dropping it is a field removal (owner sign-off).
 - A spouse's "Qualified Opportunity Fund: Yes" doesn't rule out Exception 1 (CapitalGainLossComputations reads the Family
   Head's answer only), while it does raise the Form 8997 blocker.
 - On a separate return the Form 1099-B `proceedsFromQOF` / 1099-DA box 3b QOF scan covers every entry with no person filter.
@@ -598,21 +590,6 @@ together. To review against the 2025 Form 1040 instructions ("Death of a Taxpaye
 5. **Server-side checks for typed formats.** SSN/ITIN rules, the 6-digit IP PIN and real dates are checked only in the
    UI (`utils/id-validation.ts`). `pf_identification.date_of_birth` / `date_of_death` are `LocalDate`, but the SSN and IP
    PIN are saved as typed. Decide whether the save endpoint should reject or flag invalid values.
-
-## Audit log timestamps are 5 hours off locally — `created_at` default converts to UTC twice (found 2026-11-02)
-
-`audit_log.created_at` is `TIMESTAMPTZ DEFAULT (NOW() AT TIME ZONE 'UTC')` (V134), and `AuditLogEntity` leaves it to
-the default (`insertable = false`). `NOW() AT TIME ZONE 'UTC'` gives a timestamp WITHOUT time zone holding the UTC
-clock time; storing it in a TIMESTAMPTZ column reads it back in the session's time zone. The local backend's JDBC
-session is America/Toronto, so a row written at 10:47 EST (15:47 UTC) is stored as 20:47 UTC, 5 hours late. Seen on
-the `compute_scenario_warnings` rows of 2026-11-02 (local Postgres). Other tables use the same default and may have
-the same problem.
-
-Production is right only if its database session runs in UTC, which hasn't been verified. This matters for audits:
-the time on a record must be trusted when checking a user's complaint.
-
-Fix: default to `NOW()` (TIMESTAMPTZ is already absolute) in a new migration; decide whether to correct existing rows
-(only possible if the session time zone they were written in is known).
 
 ## DECIDE LATER — Form 1040-X preview in the Tax Return sidebar (opened 2026-11-02)
 

@@ -1,3 +1,18 @@
+## 2026-11-12T02:00 - Form 8379 line 15 for a dependent couple; the Dependent screen's save queue; two checks closed (outstanding.md)
+
+- Form 8379 line 15 column (b) with the standard deduction was left blank when someone can claim either spouse. Instructions for Form
+  8379, line 15: the basic standard deduction is then line 4c of the Standard Deduction Worksheet for Dependents - the standard deduction
+  less every age / blindness box - and column (b) is half of it plus the injured spouse's own boxes (`Form8379Prefill.dependentBasic`).
+- Dependent screen: a Save pressed while a save is running (an Enter in a field saves, and a partly entered dependent saves since
+  today) is run when it finishes - one record created, then updated, not two. The dependent-screen e2e waits for that Enter save
+  before listening for the Save response (its first try caught the partial response).
+- Checked and closed: the section 179 placed-in-service test follows the return's year (`computeYear()`; the B10 spec dates the asset
+  2024 and carries 10,000); a farm home office doesn't go through Form 8829 (Schedule F line 32, as the instructions say).
+- Left with a note: Schedule R Part II line 2 (the field map has no text field - form structure); the Form 8582 bridge split (confirmed,
+  larger: a new output column); Form 3800 / 8912 line 7 exclusions (the forms print only line 16 + Schedule 2 line 1z; the 3800
+  instructions aren't in the local library).
+- Tests: Java `Form8379DependentLine15Test` (2); Karma form-dependent (+1); e2e dependent-screen (2 waits).
+
 ## 2026-11-12T01:00 - Form 4972, income adjustment links, Form 4797 links, Form 8853 Section C copies saved (outstanding.md)
 
 - Form 4972: a chosen Form 1099-R with the IRA/SEP/SIMPLE box checked (Form 4972 can't be used for an IRA), or whose recipient SSN is

@@ -168,7 +168,8 @@
   the screen is opened). Consider claiming by age automatically.
 - Line 13a is Form 1040 line 6a minus 6b; workers' compensation that reduced Social Security benefits ("treat ... as social security
   benefits") isn't added.
-- Part II line 2: the first name(s) of the spouse(s) for whom the box is checked (boxes 4, 5, 6) is not written on the form.
+- Part II line 2: the first name(s) of the spouse(s) for whom the box is checked (boxes 4, 5, 6) is not written on the form - the
+  form's field map has no text field for it, so it needs a form-structure change (owner sign-off).
 
 ## General business credit (Form 3800): found in the 2026-11-09 review, not changed
 
@@ -187,7 +188,9 @@
   release its own carried loss (Form 8582 "entire disposition"); the PTP box and the at-risk carryover are used only when exactly one
   matching K-1 is on the return.
 - The prior-year bridge brings last year's whole Form 8582 carryforward (rentals and K-1s) into the rental pool, where it can use the
-  special allowance even for K-1 losses that belong in Part V.
+  special allowance even for K-1 losses that belong in Part V. (Confirmed 2026-11-11: compute469 already splits the unallowed loss -
+  rentalUnallowed vs the rest - but only the total is saved; the fix saves the split on the Schedule 1 output (a new output column), bridges
+  each part to its pool, and applies the section 108 reduction to both. Larger item.)
 
 ## Homebuyer credit repayment (Form 5405): found in the 2026-11-08 review, not changed
 
@@ -245,7 +248,6 @@
   preview and export don't show it.
 - Line 13b's "Identify the type and amount" of the other income is not listed; Part IV (signature, only when filed by itself) is out of
   scope (self-filing with the return).
-- Line 15 isn't figured when either spouse can be claimed as a dependent (needs the Standard Deduction Worksheet for Dependents line 4c).
 
 ## Noncash charity (Form 8283): found in the 2026-11-08 review, not changed
 
@@ -419,8 +421,6 @@
 - The carryovers are a household total seeded onto the Family Head's copy only and summed across both copies; the business and
   farm at-risk ones are released against the first at-risk business / farm (per-business fields win). On MFS legs no bridge runs.
 - The section 179 bridge is skipped when either copy has any value (a typed 0 stops it); the at-risk bridges only for a positive value.
-- Check: a 2024 asset placed in service in 2024 produced no section 179 carryover in a 2024 return figured here, while the same asset
-  dated 2025 did (the B10 spec uses a 2025 date) - the section 179 placed-in-service test may be tied to 2025, not the return's year.
 
 ## Farm rental (Form 4835): found in the 2026-11-06 review, not changed
 
@@ -439,8 +439,9 @@
   Schedule F instructions). The QJV farm is matched to its split by position.
 - Statement matching: the line 4a / 5b / 6a fill takes an exact or last-4 SSN (2026-11-11) but not a blank TIN, which the 1099-PATR
   fill also takes.
-- The Schedule F instructions say farmers don't use Form 8829 for a home office (Pub. 587 worksheet) - check how a farm home
-  office is handled. Conservation and prepaid-supplies excess have no next-year bridge (typed by the user).
+- Conservation and prepaid-supplies excess have no next-year bridge (typed by the user). (Checked 2026-11-11: a farm home office
+  never goes through Form 8829 - Home office offers only Schedule C businesses - so it is deducted on Schedule F line 32 as the
+  instructions say.)
 
 ## Business income (Schedule C): found in the 2026-11-06 review, not changed
 

@@ -1,3 +1,11 @@
+## 2026-11-12T00:15:00Z
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43121278576 on f98aedf5 - revision ca-ustax-be--0000594 serving 100%
+  traffic, image ustax-be:f98aedf; /q/health/ready UP (Liquibase V468, V469 applied). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43121281971 on a7916e8 - live at https://www.taxbeans.com
+  (bundle main-CNOVPMQK.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-12T04:00 - Separate returns: the spouse's own messages reach the checklist (outstanding.md)
 
 - The checklist's GET /api/tax-return/flags figured only the household (primary) return, which on separate returns leaves the spouse's

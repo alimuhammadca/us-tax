@@ -1,3 +1,13 @@
+## 2026-11-11T23:40 - Earned income credit: a qualifying child without a valid SSN skips Step 4 (outstanding.md)
+
+- 2025 Form 1040 instructions, line 27: Step 3 question 1 asks for a child "who meets the conditions to be your qualifying child"
+  (Schedule EIC: "even if that child doesn't have a valid SSN"), and the path ends "Skip Step 4; go to Step 5" - the amount is the
+  "no qualifying children who have valid SSNs" column. IRC 32(c)(3)(D)(i) leaves such a child out of subsection (b) only; the filer
+  still has a qualifying child under 32(c)(1)(A)(i). The calculation followed that only for the head of household stop: the 25-64
+  age test and the "can be claimed as a dependent" test still applied, and a separate return with the separated-spouse rule and only
+  a child without an SSN got nothing. Both now use "any child who meets the conditions"; the amount still counts valid-SSN children.
+- Tests: Java `EicChildWithoutSsnSkipsStep4Test` (3; a mutation back to the old gate fails 2).
+
 ## 2026-11-11T23:20 - Form 4852: the prison-wage pick follows its entry (outstanding.md)
 
 - Employment keeps the Form 4852 entries picked as prison wages by position (`inmateForm4852Indices`), and Form 4852 entries have no

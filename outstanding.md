@@ -51,8 +51,6 @@
 
 ## Earned income credit (line 27a): found in the 2026-11-10 review, not changed
 
-- A qualifying child without a valid SSN skips Step 4 in the 2025 instructions (only the head of household stop now follows that);
-  the calculation still applies the 25-64 age and dependent tests to such a filer. Check against Pub. 596 before changing.
 - "A social security number valid for work" is checked only as "not an ITIN"; a "Not Valid for Employment" SSN can't be told apart.
 - Married child rule (a married child qualifies only if you can claim the child as a dependent) isn't applied to typed rows.
 

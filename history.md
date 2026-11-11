@@ -1,3 +1,18 @@
+## 2026-11-12T01:00 - Form 4972, income adjustment links, Form 4797 links, Form 8853 Section C copies saved (outstanding.md)
+
+- Form 4972: a chosen Form 1099-R with the IRA/SEP/SIMPLE box checked (Form 4972 can't be used for an IRA), or whose recipient SSN is
+  the other person's, was used anyway (the screen filters its list, the calculation didn't check a saved choice). Form 4972 isn't
+  figured then and the message opens the person's Lump-sum distributions (`Form4972Messages.wrongStatement`).
+- Income adjustments: the line 18, 21, 23, 24b, 24c, 24h and 24i messages open the spouse's copy when only the spouse's copy holds
+  the amount (`IncomeAdjustmentFlagOwner`).
+- The four Form 4797 messages that linked to Capital gain/loss open Business property sales (the Form 8824 / line 5 one, Like-kind
+  exchanges - line 5 comes from the exchange).
+- V468: out_form_8853 keeps the additional Section C copies (one per additional insured) and their line 26; GET /api/tax-return lost them.
+- Left: on separate returns the household checklist runs the primary return, so the spouse's own forms' messages (Form 2555 and
+  others) don't reach it - an architecture item.
+- Tests: Java `Form4972StatementAndAdjustmentOwnerTest` (3), `Form8853AdditionalLtcJsonTest` (2); e2e owner-approved-fields-w6 (D-8853-6
+  now reads the saved return). Unit suite 5758/5758.
+
 ## 2026-11-12T00:30 - HSA: the shared family limit with a typed share (outstanding.md)
 
 - IRC 223(b)(5) / Instructions for Form 8889 line 6: spouses with family coverage share one $8,550 limit, divided equally unless they

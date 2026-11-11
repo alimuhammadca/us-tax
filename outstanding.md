@@ -301,8 +301,8 @@
 
 ## Lump-sum distributions (Form 4972): found in the 2026-11-07 review, not changed
 
-- The calculation doesn't check that the chosen Form 1099-R is the person's or not an IRA (the screen filters); 403(b) / 457 Forms 1099-R
-  can't be told from the form's boxes and are still listed.
+- 403(b) / 457 Forms 1099-R can't be told from the form's boxes and are still listed. (Since 2026-11-11 a chosen Form 1099-R with the
+  IRA/SEP/SIMPLE box, or paid to the other person, isn't used and a message says so.)
 - An earlier rolled-over distribution from the same plan, a plan that received a rollover after 2001, and the 5% owner exclusion aren't
   asked; the joint-return rule (a separate Form 4972 per spouse) is handled by the two copies.
 
@@ -319,7 +319,8 @@
 
 ## Foreign income (Form 2555): found in the 2026-11-06 review, not changed
 
-- MFS: the household /flags run skips the spouse copy, so the MFS spouse's Form 2555 problems never reach a checklist; the married-couples
+- MFS: the household /flags run is the primary return, which leaves out the spouse's copies - so on separate returns no spouse-only
+  form's messages (Form 2555 among them) reach the checklist; the checklist would need the spouse leg's compute (architecture); the married-couples
   housing rule (no duplicated expenses) is checked only on MFJ, and an unanswered household question passes.
 - No line 18 trip table (the 330 days are one typed number); `housingLocationCountry` duplicates the locality choice (only printed); the
   UI keeps its own copies of $130,000 / $39,000 and the Notice 2025-16 table (now in data/foreign-housing-localities.ts).
@@ -335,7 +336,6 @@
 - Medicare Advantage MSA: no partial amount for the death / disability exception (Archer has one) - a field addition.
 - No line 6a / 10 override (Form 1099-SA code 2 has been added to Archer line 6b since 2026-11-11).
 - Form 5498-SA is read by no compute; Medicare months are not derived from the date of birth.
-- `additionalLtcSections` / `additionalLtcSectionsLine26` are not persisted on the output, so GET /api/tax-return loses them.
 
 ## HSA (Form 8889): found in the 2026-11-06 review, not changed
 
@@ -354,9 +354,9 @@
 
 - The mapper-only `iraDeductionMfsLivedApartLine20` (LowIrsFixesChunk2:203) has a column nothing reads - removing it is a field removal
   (owner sign-off). (The dead `imported*Total` / `...OutOfScopeAmount` reads and the upload check were removed 2026-11-11.)
-- Flags with no person suffix still open the Family Head's copy when only the spouse entered the amount (line 18 mismatch, line 21
-  MFS/dependent, line 23 advisory, 24b, 24c, 24h, 24i, the Social Security / IRA coordination notes); ALIMONY_MODIFICATION_ADOPTS_TCJA_*
-  is shared by alimony paid and received, so it has no link.
+- The Social Security / IRA coordination notes still open the Family Head's copy (they are about the IRA deduction of either
+  spouse); ALIMONY_MODIFICATION_ADOPTS_TCJA_* is shared by alimony paid and received, so it has no link. (Lines 18, 21, 23, 24b, 24c,
+  24h and 24i open the spouse's copy when only the spouse entered the amount since 2026-11-11.)
 - The "less common adjustments" Yes / No is not saved (derived on load from the amounts): a Yes with no amount comes back blank.
 - The old self-employment questions (lines 15-17) are removed from the screen (owner); their columns keep any saved value, unread.
 - Line 24z rows can no longer be entered (owner); rows saved earlier are listed with "Remove them".
@@ -388,9 +388,6 @@
 
 - The at-risk widening of a linked activity (`Wave2FieldsW4.atRiskSaleGain`, 2026-11-11: this year's sales only, no section 1244 stock,
   the gain after a section 121 exclusion) counts only gains - Form 6198 lines 2a / 2b also take losses.
-- FORM_4797_RECAPTURE_MULTI_BUSINESS / _MIXED_COMPUTED_TRANSCRIBED / _RECAPTURE_INSTALLMENT_LIKEKIND and
-  FORM_8824_AND_FORM_4797_LINE5_BOTH_POPULATED_DOUBLE_COUNT_RISK still link to Capital gain/loss - check where their inputs live now
-  (FORM_1099S_PROPERTY_TYPE_REQUIRES_FORM_4797, FORM_4797_POSSIBLE_SECTION_1250_REAL_PROPERTY and FORM_4797_SECTION_1244_* fixed 2026-11-11).
 - MFS: the spouse's typed section 1231 lookback is dropped on the spouse leg; the lookback reads returns of kind "primary" by uid (on an MFS
   leg the spouse may get the Family Head's history - not verified).
 - No check ties a Depreciable asset disposed of this year to a sale here (the screen now offers the shortcut); depreciation allowed isn't

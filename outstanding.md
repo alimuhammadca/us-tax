@@ -16,7 +16,6 @@
   verdict.
 - The flowchart's joint-return question for the dependent (married, filed a joint return other than for a refund) and "could you be
   claimed as a dependent" (Step 2 question 4) aren't applied to the credits.
-- An ATIN (9xx-93-xxxx) may be refused by the SSN / ITIN format check.
 - The dependents API still refuses a record without the name, SSN and relationship, so those three can't be saved partially.
 
 ## Foreign assets (Form 8938): found in the 2026-11-10 second pass, not changed
@@ -203,9 +202,6 @@
   matching K-1 is on the return.
 - The prior-year bridge brings last year's whole Form 8582 carryforward (rentals and K-1s) into the rental pool, where it can use the
   special allowance even for K-1 losses that belong in Part V.
-- Failing on main before this review (not from it): NonOverrideableFlagMessagesTest (FORM_1099S_REAL_ESTATE_REPORTED message shape;
-  the filing-status / HOH / Social Security messages name no form) and Sc00206SqaScenarioTest.theTerminallyIllNoteNeedsAdbOnlyPayments
-  (NullPointerException).
 
 ## Homebuyer credit repayment (Form 5405): found in the 2026-11-08 review, not changed
 
@@ -275,9 +271,6 @@
 - Not asked: partial interests and restricted use (Section B Part II), qualified conservation contributions on the list, Part III items of
   $500 or less inside a Section B group, art of $20,000 or more needing the appraisal attached, a vehicle's 1098-C picked per gift (the
   Section A / B choice for a vehicle uses any Form 1098-C on file with box 5a or 5b).
-- Backend tests failing on main before this review (not caused by it): `NonOverrideableFlagMessagesTest` (26 non-overrideable messages name
-  no form to open; FORM_1099S_REAL_ESTATE_REPORTED unparseable) and `Sc00206SqaScenarioTest.theTerminallyIllNote...` (NullPointer), besides
-  the known `thirdPartyDesignee_populatedWhenAllowed`.
 
 ## Kiddie income (Form 8615): found in the 2026-11-07 review, not changed
 
@@ -373,8 +366,7 @@
 ## HSA (Form 8889): found in the 2026-11-06 review, not changed
 
 - Line 6: a share typed by either spouse turns off the automatic half split for both, and nothing checks that the two shares total no
-  more than the family limit; FORM_8889_FAMILY_LIMIT_ALLOCATION_NEEDED is dead (hsaFamilyAllocationNeeded never true); the
-  SPLIT_APPLIED message says "both spouses have family coverage" in the mixed case. On an MFS leg the other spouse's form is dropped, so
+  more than the family limit; FORM_8889_FAMILY_LIMIT_ALLOCATION_NEEDED is dead (hsaFamilyAllocationNeeded never true). On an MFS leg the other spouse's form is dropped, so
   the split and the catch-up family check (HsaMsaRules:129) don't run there.
 - Line 3 rule 4 (eligible all year but the coverage type changed): the chart only shows for part-year eligibility, so that case can't be
   entered month by month.
@@ -428,8 +420,9 @@
 
 - `Wave2FieldsW4.saleGain` (the at-risk widening of a linked activity) ignores the date-sold year, section 1244, section 121 and sales the
   return rejected - a rejected sale still widens the at-risk limit; only gains are counted (Form 6198 lines 2a / 2b also take losses).
-- `FORM_1099S_PROPERTY_TYPE_REQUIRES_FORM_4797` says "the Form 4797 statement" and links to Capital gain/loss; `FORM_4797_POSSIBLE_SECTION_1250_REAL_PROPERTY`
-  is linked to Capital gain/loss too; FORM_4797_SECTION_1244_* have no link.
+- FORM_4797_RECAPTURE_MULTI_BUSINESS / _MIXED_COMPUTED_TRANSCRIBED / _RECAPTURE_INSTALLMENT_LIKEKIND and
+  FORM_8824_AND_FORM_4797_LINE5_BOTH_POPULATED_DOUBLE_COUNT_RISK still link to Capital gain/loss - check where their inputs live now
+  (FORM_1099S_PROPERTY_TYPE_REQUIRES_FORM_4797, FORM_4797_POSSIBLE_SECTION_1250_REAL_PROPERTY and FORM_4797_SECTION_1244_* fixed 2026-11-11).
 - MFS: the spouse's typed section 1231 lookback is dropped on the spouse leg; the lookback reads returns of kind "primary" by uid (on an MFS
   leg the spouse may get the Family Head's history - not verified).
 - No check ties a Depreciable asset disposed of this year to a sale here (the screen now offers the shortcut); depreciation allowed isn't
@@ -452,10 +445,7 @@
 - Earlier depreciation and amortization aren't kept per asset after a return, so the carried asset asks the user to add last year's.
 - `DepreciationAssetClaims.claimedOnly` doesn't skip a not-for-profit business (an asset named for one gets no depreciation and no flag);
   amortization with "Other" or no match is skipped silently, yet Form 4562 Part VI can still list it.
-- Flags without a link to this screen: DEPRECIATION_ASSET_ON_NO_SCHEDULE_*, ADS_PERIOD_ASSUMED_GDS, DEPRECIATION_RECAPTURE_PRIOR_USE_UNKNOWN,
-  FORM_4797_PART_IV_*, BONUS_ELECTION_OUT_*, FORM_4562_PART_VI_*; `SCHEDULE_C/F_TYPED_DEPRECIATION_IGNORED` calls it "the Depreciation form".
-- Full backend suite (2026-11-06): 2 failures not in depreciation - NonOverrideableFlagMessagesTest (filing status / social security
-  blocking messages name no form) and TaxReturnComputeServiceTest.thirdPartyDesignee_populatedWhenAllowed (phone shown "(555) 123-4567").
+- Flags without a link to this screen: FORM_4797_PART_IV_* (the others were linked 2026-11-11).
 
 ## Self-employment tax options: found in the 2026-11-06 review, not changed
 
@@ -467,8 +457,7 @@
 - The section 179 bridge is skipped when either copy has any value (a typed 0 stops it); the at-risk bridges only for a positive value.
 - Check: a 2024 asset placed in service in 2024 produced no section 179 carryover in a 2024 return figured here, while the same asset
   dated 2025 did (the B10 spec uses a 2025 date) - the section 179 placed-in-service test may be tied to 2025, not the return's year.
-- Flags without a link to this screen: SE_CRP_SS_TIMING_UNCONFIRMED / SE_CRP_SS_NOT_FOUND (they tell the user to come here),
-  CLERGY_HOUSING_LIMIT_INPUTS_MISSING (also has no TAXPAYER / SPOUSE suffix), SE_TOTALIZATION_AGREEMENT_EXEMPT.
+- CLERGY_HOUSING_LIMIT_INPUTS_MISSING has no TAXPAYER / SPOUSE suffix, so its link (2026-11-11) always opens the Family Head's copy.
 
 ## Farm rental (Form 4835): found in the 2026-11-06 review, not changed
 
@@ -499,8 +488,6 @@
   amortization, section 174A); line 31 prior-year passive loss with line G No; section 481(a) adjustments.
 - `STATUTORY_EMPLOYEE_W2_SCHEDULE_C` fires on every statutory Form W-2, even when a statutory-employee business is entered (the
   wording now reads "if you haven't already"); the blocking `STATUTORY_EMPLOYEE_W2_NOT_ON_SCHEDULE_C` covers the unlinked case.
-- `data/flag-form-links.ts` has no entry for FORM_1099_NEC_K_WITHOUT_BUSINESS, STATUTORY_EMPLOYEE_W2_NOT_ON_SCHEDULE_C,
-  HOME_OFFICE_NOT_MATCHED_TO_BUSINESS, QBI_WAGE_PARTS_EXCEED or VEHICLE_LOAN_INTEREST_* (no link to the screen from the flag).
 - The no-business advisory (`ScheduleCStatements` ~136-166) treats a blank or unknown TIN as the Family Head's and, on MFS, does not
   exclude the other spouse's SSN (the bartering check does).
 - The screen's gross-receipts fill leaves out the 1099-K personal-items amount entered on Other incomes (the return subtracts it).
@@ -544,11 +531,6 @@
   lump-sum distribution, MSA / LTC, other incomes (both), possession residence exclusion, premium tax credit, rental income,
   SE deductions, SE tax options, social security benefits (both), additional deductions, education credits (the item 17
   audit lists the rest).
-
-## PrimeNG text inputs without InputTextModule (found 2026-11-05, checklist item 16 audit)
-
-- `form-standard-deductions.component` and `form-line16-tax.component` use `pInputText` but don't import `InputTextModule`,
-  so those inputs render as bare browser inputs. Fix when those screens are reviewed (one import each).
 
 ## Interest income spouse copy: three fields the Family Head copy has (found 2026-11-05, screen review)
 
@@ -616,8 +598,6 @@ together. To review against the 2025 Form 1040 instructions ("Death of a Taxpaye
 5. **Server-side checks for typed formats.** SSN/ITIN rules, the 6-digit IP PIN and real dates are checked only in the
    UI (`utils/id-validation.ts`). `pf_identification.date_of_birth` / `date_of_death` are `LocalDate`, but the SSN and IP
    PIN are saved as typed. Decide whether the save endpoint should reject or flag invalid values.
-6. **Hard-coded 2025 in these checks.** The backend death-date rules use literal 2025 / 2023 / 2024; switch them to
-   `ReferenceData.TAX_YEAR` (rules.md "No hard-coded tax year").
 
 ## Audit log timestamps are 5 hours off locally — `created_at` default converts to UTC twice (found 2026-11-02)
 

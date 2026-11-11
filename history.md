@@ -1,3 +1,26 @@
+## 2026-11-11T16:00 - Quick fixes from outstanding.md (items 1-5)
+
+- Backend suite green again: 5,700 / 0 (was 3 failures + 1 error on main).
+  - `thirdPartyDesignee_populatedWhenAllowed` expected the pre-V425 phone shape; the designee phone prints (555) 123-4567 (test updated).
+  - `Sc00206SqaScenarioTest`: since the 2026-11-06 review Form 8853 follows the line 16 note (only accelerated death benefits ->
+    lines 17-25 blank, line 26 -0-); the test expected line 20 = 0 (updated, with its comment).
+  - `NonOverrideableFlagMessagesTest`: the lint now accepts a named form or screen ("on the Filing status form"), not only "Open the";
+    it joins split string pieces; FORM_1099S_REAL_ESTATE_REPORTED is built with its literal code so the lint can read it. Seven
+    filing-status / head-of-household messages that named no screen now name Filing status (and the spouse's Identification).
+- Date-of-death checks (`validateDatesOfDeath`) take the year from ReferenceData.TAX_YEAR - no literal 2023 / 2024 / 2025.
+- ATIN (9xx-93-xxxx, a child placed for adoption, Form W-7A) accepted for a dependent: the Dependent screen (id-validation
+  `allowAtin`, directive `digitFormatAllowAtin`), the dependents API (`TinValidator.isValidDependentTin`) and the last-year 1040
+  prefill for dependents. Refused for the filer and spouse with a message that says what it is. The child gives the credit for
+  other dependents (DependentQualification already treated it so).
+- Your checklist links: 25 flag codes had no screen (Business income, SE tax options, home office, Depreciable assets, Business
+  property sales - section 1244); FORM_1099S_PROPERTY_TYPE_REQUIRES_FORM_4797 and FORM_4797_POSSIBLE_SECTION_1250_REAL_PROPERTY
+  now open Business property sales. Wording: "the Depreciation form" -> "Depreciable assets (Form 4562)"; "the Form 4797 statement"
+  -> Business property sales / Installment sales / Like-kind exchanges; the HSA family-limit split says when only one spouse has
+  family coverage.
+- Tests: Java TinValidatorTest, PriorYear1040ParserTest, QssSpouseDeathDateTest, TaxReturnComputeServiceTest (HSA mixed),
+  LowIrsFixesChunk2Test; Karma flag-form-links.spec.ts (new), id-validation.spec.ts; e2e dependent-screen.spec.ts (ATIN). e2e run of
+  the 9 touched specs: 38 passed. outstanding.md: the fixed items removed, InputTextModule (already fixed) removed.
+
 ## 2026-11-11T09:00 - Full e2e regression (2,284 tests) and fixes
 
 - Run 2 result: 2,266 passed, 5 failed, 3 flaky, 10 skipped (5.6 h). Run 1 was stopped at test 256 for a compute crash.

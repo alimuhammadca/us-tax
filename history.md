@@ -1,3 +1,15 @@
+## 2026-11-12T04:00 - Separate returns: the spouse's own messages reach the checklist (outstanding.md)
+
+- The checklist's GET /api/tax-return/flags figured only the household (primary) return, which on separate returns leaves the spouse's
+  forms out - so no message about the spouse's own forms (Form 2555, the spouse's Form 2210 2024 tax and every other spouse-only form)
+  reached it; they appeared only when the spouse's return was computed. When the separate returns are set up for the year and the
+  household return isn't joint, the endpoint now figures the spouse's leg too and adds its messages (`SpouseLegFlags`): the leg reads the
+  spouse's forms in the Family Head's slots, so each message is turned back - a "_TAXPAYER" code becomes "_SPOUSE", the form id the
+  spouse's copy (childcare / adoption included), `owner: "spouse"`, and the text starts "Your spouse's separate return:". A message the
+  household return already raises is not repeated. The checklist opens the spouse's copy for a spouse message known only by its code.
+- Tests: Java `SpouseLegFlagsTest` (2); Karma `form-your-checklist.spouse-copy.spec.ts` (2); e2e form8801-mfs-spouse-bridge (+1: her
+  unanswered Form 2210 2024 tax shows once separate returns are set up, marked as hers, and clears when answered). Unit suite 5767/5767.
+
 ## 2026-11-12T03:00 - Form 8582: last year's passive carryforward keeps its part (Part IV rental / Part V other) (outstanding.md)
 
 - The prior-year bridge brought last year's whole Form 8582 carryforward into the rental real estate pool, so a passive K-1's

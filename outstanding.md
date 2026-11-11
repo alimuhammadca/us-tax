@@ -319,8 +319,7 @@
 
 ## Foreign income (Form 2555): found in the 2026-11-06 review, not changed
 
-- MFS: the household /flags run is the primary return, which leaves out the spouse's copies - so on separate returns no spouse-only
-  form's messages (Form 2555 among them) reach the checklist; the checklist would need the spouse leg's compute (architecture); the married-couples
+- MFS: (fixed 2026-11-11 - the checklist adds the spouse leg's messages, SpouseLegFlags); the married-couples
   housing rule (no duplicated expenses) is checked only on MFJ, and an unanswered household question passes.
 - No line 18 trip table (the 330 days are one typed number); `housingLocationCountry` duplicates the locality choice (only printed); the
   UI keeps its own copies of $130,000 / $39,000 and the Notice 2025-16 table (now in data/foreign-housing-localities.ts).

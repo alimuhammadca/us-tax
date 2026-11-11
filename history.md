@@ -8,6 +8,9 @@
 - Fixed (specs): the state refund worksheet spec's PUT replaced the seeded Form 2210 prior-year answer; the extension of time spec raced
   an Enter-triggered save; the MFS EIC spec expected the advisory for a head with no child. The farm income and HSA failures passed on
   retry and alone (farm income overlapped a parallel e2e run - not to be repeated).
+- Re-run of the 8 failed/flaky tests on the fixed code: all pass. The HSA test then failed on both tries - its month-chart loop
+  clicked the next month while the previous list was still closing, so one month stayed "Not eligible"; it now waits for each
+  list to close and checks the month shows Self-only (passed 3 in a row, retries off).
 
 ## 2026-11-11T14:00 - You screen: removed (Screen Review Checklist)
 

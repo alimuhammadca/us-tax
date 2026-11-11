@@ -1,3 +1,46 @@
+## 2026-11-11T23:00 - Quick fixes from outstanding.md (seventh pass, items 1-3)
+
+- Form 8880 line 4 (Form 8880 (2025) instructions, "Don't include ... Distributions from an inherited IRA by a nonspousal
+  beneficiary"): a code 4 death distribution from a 401(k), 403(b), governmental 457(b) or other qualified plan now counts and
+  reduces the credit - every code 4 was left out; one with the IRA/SEP/SIMPLE box checked is still left out (an inherited IRA).
+  Code D (a nonqualified annuity, none of the plans line 4 lists) is left out (Form8880Inputs.inheritedIraOrNonqualified).
+- Form 4852: a form with line 9 or 10 blank (how the amounts were figured; the efforts to get the W-2 / 1099-R) gets the advisory
+  FORM_4852_EXPLANATION_MISSING_<person>, opening that person's Form 4852 (Form4852Explanations).
+- Form 8911: a refueling property that fails a Schedule A test (no eligible census tract, used property, used outside the U.S.,
+  placed in service after June 30, 2026) is named with the reason (FORM_8911_PROPERTY_NO_CREDIT_<person>) - it was left off
+  silently. The test itself is now one helper (Form8911Stops.reason) that the calculation uses too.
+- Tests: OutstandingQuickFixes20261111fTest (3, new).
+
+## 2026-11-11T22:00 - Quick fixes from outstanding.md (sixth pass, items 1-5)
+
+- Bug (from this morning's link fix): FORM_1099_NEC_K_WITHOUT_BUSINESS and DEPRECIATION_ASSET_ON_NO_SCHEDULE are raised with
+  _TAXPAYER / _SPOUSE; the bare-code entries never matched - now per-person, and the spec uses the codes the backend raises. An audit
+  of all 371 bare-code entries found no other one raised only with something appended.
+- IRA deduction on a separate return (section 219(g)(7)): each leg dropped the other spouse's Income adjustments copy, so "the
+  spouse is covered by a workplace plan" was never true - a filer whose spouse had a plan got the deduction un-phased (e.g. 7,000
+  instead of 1,400 at 8,000 of MAGI). MfsFormScoper carries the answer onto the filer's copy (OTHER_SPOUSE_COVERED_KEY).
+- At-risk widening by a linked Business property sale: only this year's sales, not section 1244 stock, the gain after a section
+  121 exclusion (Wave2FieldsW4.atRiskSaleGain).
+- An asset of a business marked not engaged in for profit: no longer kept and silently dropped - named in
+  DEPRECIATION_ASSET_ON_NO_SCHEDULE_<person> with the reason.
+- Dead reads removed: Schedule 1 lines 15 / 16 / 17 ...OutOfScopeAmount fallbacks and the imported1099Int / Oid early withdrawal
+  penalty, imported1098E and importedK1Section67e totals (saved by nothing).
+- Tests: MfsSpouseIraCoverageScopeTest (2 added; mutation-checked: without the fix line 10 stays 7,000), OutstandingQuickFixes20261111eTest
+  (2, new); Karma flag-form-links. Unit 5,723 / 0.
+
+## 2026-11-11T21:00 - Quick fixes from outstanding.md (fifth pass, items 1-4)
+
+- Schedule 1 line 8e / 8f: for a person whose Form 8853 / Form 8889 is figured, its amount is the line (a figured $0 too); a typed
+  or imported amount used to win (put-if-absent) and silently replaced the taxable distributions. A different typed amount raises
+  SCHEDULE1_LINE8E / LINE8F_TYPED_NOT_USED_<person>, opening that person's Other incomes (HsaMsaRules.figuredOtherIncomeLine).
+- Form 2555 wages answered "not already on a Form W-2" next to a Form W-2 of the same person with the same box 1 pay or employer:
+  advisory FORM_2555_WAGES_MAY_BE_ON_W2_<person> (Wave2FieldsW0.foreignWagesOnAW2); the answer is not changed.
+- CLERGY_HOUSING_LIMIT_INPUTS_MISSING carries the person's screen (Self-employment tax options, taxpayer or spouse).
+- Credit for the elderly or disabled screen: a 2025 decedent is 65 only if 65 at death (isSeniorAt - the return's age65AtDeath,
+  Pub. 17); the age note says "at death (date)".
+- Tests: OutstandingQuickFixes20261111dTest (5, new); Karma additional-deductions-screen (isSeniorAt); e2e
+  elderly-disabled-credit-screen (a decedent under 65 at death). Unit 5,719 / 0.
+
 ## 2026-11-11T20:00 - Quick fixes from outstanding.md (fourth pass, items 1-5)
 
 - Form 8853 line 5: no Archer MSA deduction for someone else's dependent (Instructions for Form 8853: "you can't deduct

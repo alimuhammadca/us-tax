@@ -54,7 +54,6 @@
 
 - Employment's prison-wage pick saves the Form 4852 entry by its position in the list; removing or reordering a Form 4852 points
   it at another entry (checklist item 24: save links by name).
-- Lines 9 and 10 are required by the IRS but nothing at compute flags them blank (the screen lists them under "Still to answer").
 - A replaced Form W-2 or 1099-R is matched only by EIN; without line 6 the wrong statement still counts next to the Form 4852.
 
 ## Earned income credit (line 27a): found in the 2026-11-10 review, not changed
@@ -66,8 +65,9 @@
 
 ## Retirement savings credit (Form 8880): found in the 2026-11-10 review, not changed
 
-- Form 1099-R code 4 is left out in full; only an inherited IRA of a beneficiary who isn't the spouse is excluded. Codes D / E and
-  military retirement are counted (they shouldn't be).
+- Line 4 (2026-11-11): code 4 counts unless the IRA/SEP/SIMPLE box is checked, so a spouse beneficiary's inherited-IRA distribution
+  is still left out (no answer tells them apart); code D is left out. Code E and military retirement (other than the TSP) are still
+  counted - a military plan can't be told from the Form 1099-R.
 - Form W-2 box 12 code G counts a non-governmental 457(b) plan too; section 414(h)(2) contributions can't be told apart.
 - ABLE contributions are typed (Form 5498-QA shows everyone's contributions).
 
@@ -136,8 +136,6 @@
 - The business part (line 3) and the Schedule K-1 code AO credit (line 2) are general business credits (Form 3800 line 1s), not figured;
   the K-1 code AO amount is typed, not read from the entered K-1.
 - Schedule A line 3b (latitude / longitude) has no box; line 2b's owner name and TIN are one free-text box.
-- A property that fails a Schedule A stop (no eligible tract, used, outside the U.S.) is left off silently in the calculation; the screen
-  warns on it.
 - Basis reduction (Schedule A lines 16 + 21) is not passed to depreciation.
 
 ## Clean vehicle credit (Form 8936): found in the 2026-11-09 review, not changed
@@ -176,8 +174,6 @@
   the screen is opened). Consider claiming by age automatically.
 - Line 13a is Form 1040 line 6a minus 6b; workers' compensation that reduced Social Security benefits ("treat ... as social security
   benefits") isn't added.
-- The screen's age uses the date of birth only; the calculation also applies the "age 65 on the day before death" rule for a 2025
-  decedent, so the screen can ask disability questions the calculation won't need.
 - Part II line 2: the first name(s) of the spouse(s) for whom the box is checked (boxes 4, 5, 6) is not written on the form.
 
 ## General business credit (Form 3800): found in the 2026-11-09 review, not changed
@@ -334,8 +330,8 @@
   housing rule (no duplicated expenses) is checked only on MFJ, and an unanswered household question passes.
 - No line 18 trip table (the 330 days are one typed number); `housingLocationCountry` duplicates the locality choice (only printed); the
   UI keeps its own copies of $130,000 / $39,000 and the Notice 2025-16 table (now in data/foreign-housing-localities.ts).
-- "No" to "already on a Form W-2" with a W-2 carrying the same pay double-counts with no flag; foreign self-employment net profit is
-  typed again, not read from Business income.
+- Foreign self-employment net profit is typed again, not read from Business income. ("No" to "already on a Form W-2" next to a W-2
+  with the same pay or employer has an advisory since 2026-11-11; the answer stays the user's.)
 - Notice 2025-16 amounts and the IRS yearly exchange rates are not in the local library - unverified.
 
 ## Archer MSA / LTC (Form 8853): found in the 2026-11-06 review, not changed
@@ -347,7 +343,6 @@
 - No line 6a / 10 override (Form 1099-SA code 2 has been added to Archer line 6b since 2026-11-11).
 - Form 5498-SA is read by no compute; Medicare months are not derived from the date of birth.
 - `additionalLtcSections` / `additionalLtcSectionsLine26` are not persisted on the output, so GET /api/tax-return loses them.
-- A typed Schedule 1 line 8e (Other incomes) silently beats the figured Form 8853 amount.
 
 ## HSA (Form 8889): found in the 2026-11-06 review, not changed
 
@@ -364,10 +359,8 @@
 
 ## Income adjustments (Schedule 1 Part II): found in the 2026-11-06 review, not changed
 
-- Dead: the `imported*Total` keys and the `...OutOfScopeAmount` keys Schedule1Computations reads, and the mapper-only
-  `iraDeductionMfsLivedApartLine20` (LowIrsFixesChunk2:203). (The upload check that could never fire was removed 2026-11-11.)
-- MFS: the section 219(g)(7) "spouse is covered" test (TRCS ~5160) reads the other spouse's copy, which MfsFormScoper drops on a scoped
-  MFS leg - likely never true there (not confirmed). The spouse's OWN coverage answer is fixed (renamed by MfsFormScoper).
+- The mapper-only `iraDeductionMfsLivedApartLine20` (LowIrsFixesChunk2:203) has a column nothing reads - removing it is a field removal
+  (owner sign-off). (The dead `imported*Total` / `...OutOfScopeAmount` reads and the upload check were removed 2026-11-11.)
 - Flags with no person suffix still open the Family Head's copy when only the spouse entered the amount (line 18 mismatch, line 21
   MFS/dependent, line 23 advisory, 24b, 24c, 24h, 24i, the Social Security / IRA coordination notes); ALIMONY_MODIFICATION_ADOPTS_TCJA_*
   is shared by alimony paid and received, so it has no link.
@@ -400,8 +393,8 @@
 
 ## Business property sales (Form 4797): found in the 2026-11-06 review, not changed
 
-- `Wave2FieldsW4.saleGain` (the at-risk widening of a linked activity) ignores the date-sold year, section 1244, section 121 and sales the
-  return rejected - a rejected sale still widens the at-risk limit; only gains are counted (Form 6198 lines 2a / 2b also take losses).
+- The at-risk widening of a linked activity (`Wave2FieldsW4.atRiskSaleGain`, 2026-11-11: this year's sales only, no section 1244 stock,
+  the gain after a section 121 exclusion) counts only gains - Form 6198 lines 2a / 2b also take losses.
 - FORM_4797_RECAPTURE_MULTI_BUSINESS / _MIXED_COMPUTED_TRANSCRIBED / _RECAPTURE_INSTALLMENT_LIKEKIND and
   FORM_8824_AND_FORM_4797_LINE5_BOTH_POPULATED_DOUBLE_COUNT_RISK still link to Capital gain/loss - check where their inputs live now
   (FORM_1099S_PROPERTY_TYPE_REQUIRES_FORM_4797, FORM_4797_POSSIBLE_SECTION_1250_REAL_PROPERTY and FORM_4797_SECTION_1244_* fixed 2026-11-11).
@@ -425,8 +418,8 @@
   with its statement), the general asset account, line 24c (aircraft), line 35 (5% owner), Section C (employer policy), basis reductions
   for credits, like-kind exchange carryover basis, the personal-to-business conversion value, QPP designated basis and statement.
 - Earlier depreciation and amortization aren't kept per asset after a return, so the carried asset asks the user to add last year's.
-- `DepreciationAssetClaims.claimedOnly` doesn't skip a not-for-profit business (an asset named for one gets no depreciation and no flag);
-  amortization with "Other" or no match is skipped silently, yet Form 4562 Part VI can still list it.
+- Amortization with "Other" or no match is skipped silently, yet Form 4562 Part VI can still list it. (An asset of a not-for-profit
+  business is reported since 2026-11-11.)
 
 ## Self-employment tax options: found in the 2026-11-06 review, not changed
 
@@ -438,7 +431,6 @@
 - The section 179 bridge is skipped when either copy has any value (a typed 0 stops it); the at-risk bridges only for a positive value.
 - Check: a 2024 asset placed in service in 2024 produced no section 179 carryover in a 2024 return figured here, while the same asset
   dated 2025 did (the B10 spec uses a 2025 date) - the section 179 placed-in-service test may be tied to 2025, not the return's year.
-- CLERGY_HOUSING_LIMIT_INPUTS_MISSING has no TAXPAYER / SPOUSE suffix, so its link (2026-11-11) always opens the Family Head's copy.
 
 ## Farm rental (Form 4835): found in the 2026-11-06 review, not changed
 

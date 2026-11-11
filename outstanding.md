@@ -187,10 +187,8 @@
 - Last year's unallowed K-1 losses are entered as three totals, not per activity, so a K-1 activity sold in full this year doesn't
   release its own carried loss (Form 8582 "entire disposition"); the PTP box and the at-risk carryover are used only when exactly one
   matching K-1 is on the return.
-- The prior-year bridge brings last year's whole Form 8582 carryforward (rentals and K-1s) into the rental pool, where it can use the
-  special allowance even for K-1 losses that belong in Part V. (Confirmed 2026-11-11: compute469 already splits the unallowed loss -
-  rentalUnallowed vs the rest - but only the total is saved; the fix saves the split on the Schedule 1 output (a new output column), bridges
-  each part to its pool, and applies the section 108 reduction to both. Larger item.)
+- The Part V share is one total (V469, 2026-11-11), not per activity: with every rental disposed of it is released with them only when no
+  passive K-1 is on the return; a K-1 activity disposed of this year doesn't release its own share (see the per-activity item above).
 
 ## Homebuyer credit repayment (Form 5405): found in the 2026-11-08 review, not changed
 

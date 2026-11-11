@@ -1,3 +1,15 @@
+## 2026-11-12T03:00 - Form 8582: last year's passive carryforward keeps its part (Part IV rental / Part V other) (outstanding.md)
+
+- The prior-year bridge brought last year's whole Form 8582 carryforward into the rental real estate pool, so a passive K-1's
+  suspended loss (Part V, "all other passive activities") used the $25,000 special allowance next year (40,000 carried in, 30,000 of
+  it a K-1's: 25,000 allowed instead of the rental's 10,000). V469: out_schedule_1 keeps the Part V share of the regular and AMT
+  carryovers (`compute469` already split the unallowed loss - `otherUnallowed`); next year the bridge sends it to the other-passive
+  pool and the rest to the rental pool (`PassiveCarryforwardSplit`), on both tracks. A return saved before V469 bridges as before.
+- A rental without active participation is Part V too: with every rental disposed of and no passive K-1 on the return, the Part V share
+  is released with them (469(g)), as the bridge did before. The section 108 reduction (Form 982 line 12) reduces the share in proportion.
+- Tests: Java `PassiveCarryforwardSplitTest` (5; a mutation of the release rule fails 1); e2e carryforward-bridges-v260-v261 (+1 two-year
+  test: -10,000 allowed, 30,000 carried as Part V); form6251-line2m-amt-469-recompute passes. Unit suite 5765/5765.
+
 ## 2026-11-12T02:00 - Form 8379 line 15 for a dependent couple; the Dependent screen's save queue; two checks closed (outstanding.md)
 
 - Form 8379 line 15 column (b) with the standard deduction was left blank when someone can claim either spouse. Instructions for Form

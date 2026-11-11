@@ -1,3 +1,21 @@
+## 2026-11-11T18:00 - Quick fixes from outstanding.md (third pass, items 1-5)
+
+- Your checklist links: FORM_4797_PART_IV_ACTIVITY_NOT_FOUND / _BASIS_INCREASE open Depreciable assets, _TYPED_AND_DERIVABLE opens
+  Business property sales (where the typed Part IV entry is).
+- Business property sales, "start from a depreciable asset": qualified improvement property is section 1250 real property
+  (a building) unless section 179 was taken on it (section 1245(a)(3)(C)) - the Business casualties rule (kindOfAsset), reused;
+  it was always "equipment".
+- Line 7a Exception 1: the spouse's "Qualified Opportunity Fund: Yes" now rules it out on a joint return (it already raised the
+  Form 8997 block; capitalSpouse is null on a separate return).
+- HSA: FORM_8889_FAMILY_LIMIT_ALLOCATION_NEEDED removed - nothing set it since the mixed case is split automatically.
+- Lump-sum distributions (Form 4972), alternate payee under a QDRO (owner: reword only, no new field): the follow-up asks whether
+  the participant was born before January 2, 1936 AND in the plan for at least 5 years before the year of the distribution; the
+  help says the payment must be one that would be a lump-sum distribution had the participant received it (Pub. 575).
+- Stale notes removed: the EIC Puerto Rico main-home answer (wired 2026-11-10) and the other-tax-items-screen e2e (passes).
+- Tests: Java TaxReturnComputeServiceTest (spouse QOF rules out Exception 1); Karma flag-form-links, business-property-sales-screen
+  (QIP); e2e lump-sum-screen (the QDRO wording). Unit 5,706 / 0; e2e 7 specs 26 passed (1 flaky on the first clear after a hot
+  reload, passed on retry).
+
 ## 2026-11-11T17:00 - Quick fixes from outstanding.md (items 6-9)
 
 - V467: TIMESTAMPTZ defaults NOW() instead of (NOW() AT TIME ZONE 'UTC') - a timestamp without time zone read back in the

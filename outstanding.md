@@ -62,8 +62,6 @@
 - A qualifying child without a valid SSN skips Step 4 in the 2025 instructions (only the head of household stop now follows that);
   the calculation still applies the 25-64 age and dependent tests to such a filer. Check against Pub. 596 before changing.
 - "A social security number valid for work" is checked only as "not an ITIN"; a "Not Valid for Employment" SSN can't be told apart.
-- The Income earned in a US territory screen's Puerto Rico residence isn't read for the main home test (only the child tax credit
-  screen's answer is).
 - Married child rule (a married child qualifies only if you can claim the child as a dependent) isn't applied to typed rows.
 
 ## Retirement savings credit (Form 8880): found in the 2026-11-10 review, not changed
@@ -241,8 +239,6 @@
 
 - Line 15 (credit carried forward) reaches nothing: it should carry to next year's Form 3800 (General business credit). The screen shows it.
 - Line 2 is typed; the Line 2 Worksheet (from Form 8609-A lines 10, 11, 14, 15, 16 for each year) is not asked. Line 11 interest is typed.
-- e2e `other-tax-items-screen.spec.ts` "Family Head" fails on main before this review: the saved payload has line 17a's description and
-  amount empty although the fields show them - needs a look (Other tax items).
 
 ## Foreign assets (Form 8938): found in the 2026-11-08 review, not changed
 
@@ -316,8 +312,6 @@
 
 ## Lump-sum distributions (Form 4972): found in the 2026-11-07 review, not changed
 
-- The alternate-payee path (QDRO) skips the participant's 5-year test in the calculation; Pub. 575 requires a payment that would be a
-  lump-sum distribution had the participant received it (owner: reword only, no new field).
 - The calculation doesn't check that the chosen Form 1099-R is the person's or not an IRA (the screen filters); 403(b) / 457 Forms 1099-R
   can't be told from the form's boxes and are still listed.
 - An earlier rolled-over distribution from the same plan, a plan that received a rollover after 2001, and the 5% owner exclusion aren't
@@ -363,7 +357,7 @@
 ## HSA (Form 8889): found in the 2026-11-06 review, not changed
 
 - Line 6: a share typed by either spouse turns off the automatic half split for both, and nothing checks that the two shares total no
-  more than the family limit; FORM_8889_FAMILY_LIMIT_ALLOCATION_NEEDED is dead (hsaFamilyAllocationNeeded never true). On an MFS leg the other spouse's form is dropped, so
+  more than the family limit. On an MFS leg the other spouse's form is dropped, so
   the split and the catch-up family check (HsaMsaRules:129) don't run there.
 - Line 3 rule 4 (eligible all year but the coverage type changed): the chart only shows for part-year eligibility, so that case can't be
   entered month by month.
@@ -393,8 +387,6 @@
   unless such losses recur regularly - Form 8582); the business part of mixed-use property is entered by the user (no split helper).
 - A destroyed or stolen asset is not marked disposed of on Depreciable assets automatically, and a partly destroyed MACRS asset's basis
   is not reduced there (Regs. 1.168(i)-8) - the screen and the FORM_4684_STOP_DEPRECIATING message point there.
-- Business property sales `saleFromAsset` maps qualified improvement property to section 1245 ("equipment"); it is section 1250 property
-  unless section 179 was taken on it (section 1245(a)(3)(C)) - this screen's helper does that; the sale helper was not changed.
 - The section 1033 postponement is a message only (the user leaves the property out); no replacement-property record or Form 4684
   statement is made.
 
@@ -440,7 +432,6 @@
 - Earlier depreciation and amortization aren't kept per asset after a return, so the carried asset asks the user to add last year's.
 - `DepreciationAssetClaims.claimedOnly` doesn't skip a not-for-profit business (an asset named for one gets no depreciation and no flag);
   amortization with "Other" or no match is skipped silently, yet Form 4562 Part VI can still list it.
-- Flags without a link to this screen: FORM_4797_PART_IV_* (the others were linked 2026-11-11).
 
 ## Self-employment tax options: found in the 2026-11-06 review, not changed
 
@@ -501,8 +492,6 @@
 
 - The column `pf_capital_gain_loss.imported_1099div_box2a_capital_gain_distributions_total` (`imported1099divBox2aCapitalGainDistributionsTotal`) is saved by no screen
   and read by nothing since 2026-11-11 (the compute's misspelled reads were removed); dropping it is a field removal (owner sign-off).
-- A spouse's "Qualified Opportunity Fund: Yes" doesn't rule out Exception 1 (CapitalGainLossComputations reads the Family
-  Head's answer only), while it does raise the Form 8997 blocker.
 - On a separate return the Form 1099-B `proceedsFromQOF` / 1099-DA box 3b QOF scan covers every entry with no person filter.
 - Forms 2439, 6252, 4797, 4684, 6781 and 8824 are not in `utils/statement-recipient.ts` STATEMENT_PERSON_TIN; the screen reads
   Form 2439 by `shareholderTIN` and the others by `ownerRole` itself.

@@ -1,3 +1,11 @@
+## 2026-11-11T21:20:00-05:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43099573573 on 8198a870 - revision ca-ustax-be--0000593 serving 100%
+  traffic, image ustax-be:8198a87; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43099579482 on 3be6f37 - live at https://www.taxbeans.com
+  (bundle main-WNKL6ST4.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-11T18:30 - Separate-return results are saved (bug fixed)
 
 - Bug: POST /api/tax-return/compute/{taxReturnId} computed a separate-return leg (or a dependent's own return) and returned it

@@ -1,3 +1,19 @@
+## 2026-11-11T19:00 - Quick fixes from outstanding.md (third pass, items 6-10)
+
+- Schedule E line 1b, Type of Property: 7 (self-rental) when the property is rented to your own business, 5 (land) when mostly land,
+  6 for a royalty, else 1 (ScheduleEParts.typeCode / answers) - every rental printed 1.
+- Schedule 1 line 8d: with Foreign income (Form 2555) used by either person, line 8d is Form 2555's only - none when the election is
+  declined or the tests fail - and a typed line 8d is not used (advisory SCHEDULE1_LINE8D_TYPED_NOT_USED, linked to Other incomes).
+  It used to exclude income silently with the election declined, and was dropped without a word when Form 2555 figured one.
+- Business income: the blank gross receipts fill takes off the Form 1099-K personal-items amount entered on Other incomes, as the
+  return does (OwnBusinessStatements.receiptsToFill; the fill note says so).
+- Form 8997 check: the Form 1099-B / 1099-DA QOF boxes count only this return's statements - the same person test the capital
+  transactions use (on a separate return the other spouse's are left out).
+- Form 8853 line 6b: the person's Archer MSA Forms 1099-SA with code 2 (excess contributions taken out) are added (Instructions for
+  Form 8853, line 6b), with an advisory; the help says not to type them.
+- Tests: OutstandingQuickFixes20261111bTest (4, new); Karma business-income-screen, flag-form-links; e2e business-income-screen
+  (the personal-items fill). Unit 5,710 / 0.
+
 ## 2026-11-11T18:00 - Quick fixes from outstanding.md (third pass, items 1-5)
 
 - Your checklist links: FORM_4797_PART_IV_ACTIVITY_NOT_FOUND / _BASIS_INCREASE open Depreciable assets, _TYPED_AND_DERIVABLE opens

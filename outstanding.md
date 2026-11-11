@@ -332,8 +332,6 @@
 
 - MFS: the household /flags run skips the spouse copy, so the MFS spouse's Form 2555 problems never reach a checklist; the married-couples
   housing rule (no duplicated expenses) is checked only on MFJ, and an unanswered household question passes.
-- Schedule 1 line 8d typed on Other incomes is silently ignored whenever Form 2555 computes (no advisory, unlike 24j), and a typed 8d
-  still excludes when the election is declined or eligibility fails.
 - No line 18 trip table (the 330 days are one typed number); `housingLocationCountry` duplicates the locality choice (only printed); the
   UI keeps its own copies of $130,000 / $39,000 and the Notice 2025-16 table (now in data/foreign-housing-localities.ts).
 - "No" to "already on a Form W-2" with a W-2 carrying the same pay double-counts with no flag; foreign self-employment net profit is
@@ -346,7 +344,7 @@
   "treated as having only the family coverage plan"); medium confidence, not changed. `spouseFamilyPlanDeductible` is typed, not read
   from the other spouse's copy.
 - Medicare Advantage MSA: no partial amount for the death / disability exception (Archer has one) - a field addition.
-- Form 1099-SA code 2 (excess taken out) is not added to Archer line 6b automatically (the HSA path does); no line 6a / 10 override.
+- No line 6a / 10 override (Form 1099-SA code 2 has been added to Archer line 6b since 2026-11-11).
 - Form 5498-SA is read by no compute; Medicare months are not derived from the date of birth; the dependent rule (no deduction) is applied
   on Form 8889 but not Form 8853.
 - `additionalLtcSections` / `additionalLtcSectionsLine26` are not persisted on the output, so GET /api/tax-return loses them.
@@ -473,14 +471,12 @@
   amortization, section 174A); line 31 prior-year passive loss with line G No; section 481(a) adjustments.
 - The no-business advisory (`ScheduleCStatements`) treats a blank or unknown TIN as the Family Head's (the other spouse's SSN on a
   separate return is excluded since 2026-11-11).
-- The screen's gross-receipts fill leaves out the 1099-K personal-items amount entered on Other incomes (the return subtracts it).
 
 ## Rental & royalty income: found in the 2026-11-06 review, not changed
 
 - Schedule E Part I items the screen doesn't ask (each a field addition - owner sign-off): lines A / B (payments needing Forms 1099,
-  filed or not); a structured line 1a address (street / city / state / ZIP, foreign address); the line 1b type code 1-8 (the output
-  writes "6" for a royalty and "1" otherwise - `ScheduleEParts.java:138`; codes 5 and 7 could come from the mostly-land and
-  self-rental answers); the line 2 QJV box; line 43 (real estate professional reconciliation). Fair rental / personal use days are
+  filed or not); a structured line 1a address (street / city / state / ZIP, foreign address); the line 1b type codes 2, 3, 4 and 8 (since
+  2026-11-11 the output writes 6 for a royalty, 7 for a self-rental, 5 for mostly land, else 1); the line 2 QJV box; line 43 (real estate professional reconciliation). Fair rental / personal use days are
   asked but not printed on line 2.
 - Last year's suspended passive loss and at-risk loss reach the next year only as household totals (`out_schedule_1`); with two or
   more properties they wait for a per-property split ("not assigned" notes). `OutForm8582.worksheet_fields_json` (V417) keeps the
@@ -492,7 +488,6 @@
 
 - The column `pf_capital_gain_loss.imported_1099div_box2a_capital_gain_distributions_total` (`imported1099divBox2aCapitalGainDistributionsTotal`) is saved by no screen
   and read by nothing since 2026-11-11 (the compute's misspelled reads were removed); dropping it is a field removal (owner sign-off).
-- On a separate return the Form 1099-B `proceedsFromQOF` / 1099-DA box 3b QOF scan covers every entry with no person filter.
 - Forms 2439, 6252, 4797, 4684, 6781 and 8824 are not in `utils/statement-recipient.ts` STATEMENT_PERSON_TIN; the screen reads
   Form 2439 by `shareholderTIN` and the others by `ownerRole` itself.
 - The reduced home sale exclusion is figured per return, not per spouse as Pub. 523 Worksheet 3 does on a joint return.

@@ -1,3 +1,18 @@
+## 2026-11-11T21:40 - Refund and amount owed: last year's figures for the spouse, and the 2024 itemizing amounts (outstanding.md)
+
+- The spouse's copies of Refund and amount owed and Estimated tax payments filled nothing from last year: GET
+  /api/estimated-tax/prior-year read only the household's primary return and the screens skipped it for the spouse. It now takes
+  `person=spouse` and reads the spouse's own 2024 separate return (the `mfs_spouse` leg, saved since 8198a870); nothing comes from a
+  joint 2024 return (Form 2210 line 8: a share of the joint tax, asked as box E) or the upload (the Family Head's). The Family Head's
+  copy prefers last year's `mfs_head` leg when last year wasn't joint. On a joint 2025 return the spouse's refund copy still fills
+  nothing (one return).
+- The "deductions refunded" section (tax benefit rule) fills from last year's computed return: itemized or not, Schedule A line 17,
+  line 5d, the mortgage interest deducted (line 8e = line 10 less the deductible investment interest) and Form 1040 line 15 - only
+  when the section shows anyway (a refund of a 2024 deduction), and only blanks.
+- The upload's Form 2210 line 8 gap stays: Form 1040 line 31 also holds the extension payment and excess social security tax.
+- Tests: e2e `form8801-mfs-spouse-bridge.spec.ts` (+3: each spouse's own separate return, a joint year fills nothing for the spouse,
+  the Schedule A amounts); Karma `form-refund-and-amount-owed.component.spec.ts` (+2).
+
 ## 2026-11-11T21:20:00Z
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43099573573 on 8198a870 - revision ca-ustax-be--0000593 serving 100%

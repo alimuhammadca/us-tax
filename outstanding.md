@@ -2,10 +2,10 @@
 
 ## Refund and amount owed: found in the 2026-11-10 review, not changed
 
-- The spouse's copy on separate returns isn't filled from last year (the prior return found is the household's primary one).
 - The upload's 2024 tax is line 24 less lines 27-29 as read: the Schedule 3 refundable credits (premium tax credit, fuels) and the
-  Schedule 2 taxes outside the Form 2210 list aren't on the uploaded figures - the screen says to check them.
-- The 2024 itemizing amounts (Schedule A lines 5d, 8, 17) aren't filled from last year's computed return.
+  Schedule 2 taxes outside the Form 2210 list aren't on the uploaded figures - the screen says to check them. (Checked 2026-11-11:
+  Form 1040 alone can't close it - line 31 is Schedule 3 line 15, which also holds the extension payment and excess social security
+  tax, and the Schedule 2 lines aren't on Form 1040. Needs the 2024 schedules uploaded.)
 - The four legacy screens (35-direct-deposit, refund-allocation-taxpayer, 36-apply-to-next-year, prior-year-tax-taxpayer) are still
   registered in the shell without a menu item.
 

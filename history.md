@@ -1,3 +1,11 @@
+## 2026-11-11T23:20 - Form 4852: the prison-wage pick follows its entry (outstanding.md)
+
+- Employment keeps the Form 4852 entries picked as prison wages by position (`inmateForm4852Indices`), and Form 4852 entries have no
+  stable id (the list is re-created on each save), so reordering or removing one pointed the pick - and the prison-wage total - at
+  another employer. Saving the Form 4852 list now moves each pick to where the same entry is (type, employer TIN and the first line of
+  the employer's name; duplicates in order) and drops a pick whose entry was removed (`Form4852PickRemap`). No field changed.
+- Tests: Java `Form4852PickRemapTest` (3); e2e `employment-form4852-inmate-link.spec.ts` (+1: reorder, edit, remove).
+
 ## 2026-11-11T23:00 - Form 8862: the spouse's prior disallowance counts on a joint return (outstanding.md)
 
 - Both copies of Earned income credit and Education credits ask whether the IRS reduced or denied the credit before, but the EIC / AOTC

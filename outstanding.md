@@ -47,8 +47,6 @@
 
 ## Missing or wrong W-2 or 1099-R (Form 4852): found in the 2026-11-10 review, not changed
 
-- Employment's prison-wage pick saves the Form 4852 entry by its position in the list; removing or reordering a Form 4852 points
-  it at another entry (checklist item 24: save links by name).
 - A replaced Form W-2 or 1099-R is matched only by EIN; without line 6 the wrong statement still counts next to the Form 4852.
 
 ## Earned income credit (line 27a): found in the 2026-11-10 review, not changed

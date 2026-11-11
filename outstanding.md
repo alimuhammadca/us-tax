@@ -345,12 +345,9 @@
   from the other spouse's copy.
 - Medicare Advantage MSA: no partial amount for the death / disability exception (Archer has one) - a field addition.
 - No line 6a / 10 override (Form 1099-SA code 2 has been added to Archer line 6b since 2026-11-11).
-- Form 5498-SA is read by no compute; Medicare months are not derived from the date of birth; the dependent rule (no deduction) is applied
-  on Form 8889 but not Form 8853.
+- Form 5498-SA is read by no compute; Medicare months are not derived from the date of birth.
 - `additionalLtcSections` / `additionalLtcSectionsLine26` are not persisted on the output, so GET /api/tax-return loses them.
-- Messages with no person suffix still open the Family Head's copy for the spouse (SCHEDULE1_LINE23_TYPED_DIFFERS_FROM_FORM_8853,
-  SCHEDULE1_LINE23_ARCHER_MSA_DEDUCTION_LIMIT_ADVISORY, OTHER_INCOME_FORM_8853_REQUIRED_TO_BE_FILED_SEPARATELY; FORM_1099_SA_FORM_MISSING
-  opens HSA for an MSA Form 1099-SA). A typed Schedule 1 line 8e (Other incomes) silently beats the figured Form 8853 amount.
+- A typed Schedule 1 line 8e (Other incomes) silently beats the figured Form 8853 amount.
 
 ## HSA (Form 8889): found in the 2026-11-06 review, not changed
 
@@ -449,7 +446,6 @@
   disposition of the whole activity (frees suspended losses); a "some investment not at risk" answer (34a / 34b come from whether the
   amount at risk is blank).
 - Depreciable assets has no farm rental activity type: line 12 is typed, with no Form 4562 asset detail.
-- Blank taxable lines 2b, 3b and 4c count as zero (only 5b is now figured from 5a); Schedule F fills a blank taxable line from its total.
 - The conservation carryover to next year has no note for Form 4835 (ConservationLimit gets no flags list for farm rentals).
 - The Form 1099-G box 9 market gain check counts only Schedule F program payments.
 
@@ -459,7 +455,8 @@
   Schedule J farm income averaging; the farm NOL 2-year carryback; the preproductive-period election; line 34 prior-year passive loss.
 - QJV: the split reads only the Family Head's line E - the spouse's material participation is never asked (both must participate,
   Schedule F instructions). The QJV farm is matched to its split by position.
-- Statement matching differs: the line 4a / 5b / 6a fill needs an exact SSN; the 1099-PATR fill also takes a last-4 or blank TIN.
+- Statement matching: the line 4a / 5b / 6a fill takes an exact or last-4 SSN (2026-11-11) but not a blank TIN, which the 1099-PATR
+  fill also takes.
 - The Schedule F instructions say farmers don't use Form 8829 for a home office (Pub. 587 worksheet) - check how a farm home
   office is handled. Conservation and prepaid-supplies excess have no next-year bridge (typed by the user).
 

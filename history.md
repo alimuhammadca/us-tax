@@ -1,3 +1,18 @@
+## 2026-11-11T20:00 - Quick fixes from outstanding.md (fourth pass, items 1-5)
+
+- Form 8853 line 5: no Archer MSA deduction for someone else's dependent (Instructions for Form 8853: "you can't deduct
+  contributions if you are someone else's dependent") - the Form 1040 "Someone can claim" answers, as Form 8889 already did
+  (HsaMsaRules.dependentNoArcherDeduction, advisory ARCHER_MSA_DEDUCTION_DEPENDENT_FILER).
+- Form 4835 lines 2b, 3b and 4c left blank next to a filled total take the total (4c only when line 4a's election wasn't made), with
+  an advisory, as Schedule F does - they counted as 0 (FarmRentalCropInsurance.taxableFromTotals; Form 2210-F follows).
+- Schedule F statement fill (Forms 1099-G box 7, 1099-MISC box 9, CCC 1099-A): a TIN shown as its last 4 digits belongs to the
+  person it matches (not when it fits both spouses), as the 1099-PATR fill and the capital statements do.
+- Messages open the right person's screen: FORM_1099_SA_FORM_MISSING (HSA or Archer MSA / LTC, that person's);
+  SCHEDULE1_LINE23_TYPED_DIFFERS_FROM_FORM_8853, SCHEDULE1_LINE23_ARCHER_MSA_DEDUCTION_LIMIT_ADVISORY and
+  OTHER_INCOME_FORM_8853 / 8889_REQUIRED_TO_BE_FILED_SEPARATELY carry the spouse's screen when it is the spouse's entry. Checklist
+  links added for the Form 4835 messages (they had none).
+- Tests: OutstandingQuickFixes20261111cTest (5, new); Karma flag-form-links. Unit 5,715 / 0.
+
 ## 2026-11-11T19:00 - Quick fixes from outstanding.md (third pass, items 6-10)
 
 - Schedule E line 1b, Type of Property: 7 (self-rental) when the property is rented to your own business, 5 (land) when mostly land,

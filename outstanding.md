@@ -1,5 +1,15 @@
 # Outstanding Items
 
+## ★ Separate returns two years in a row (found 2026-11-11, not changed)
+
+- `TaxReturnV2LifecycleService.enableMfs` treats MFS as "already enabled" when separate-return legs of ANY year exist (`count("uid
+  = ?1 and (returnKind = mfs_head or mfs_spouse)")`, no tax year) and returns them - so a household that filed separately for 2024
+  gets its 2024 pair back for 2025, and no 2025 legs are created. Other lookups by return kind ignore the year too:
+  `TaxReturnComputeService` ~492-494 (mfs_head / mfs_spouse), `OptimizerService` ~65 (primary), `KiddieTaxParentReader` ~112, 198,
+  245, 269 (dependent_own), and likely `listReturns` / `isMfsEnabled` / disable. Found by the Form 8801 two-year e2e (it recomputed the
+  2024 spouse leg as 2025's). Fix: scope each to `currentContext.taxYear()` (create, list, enable check, disable, the compute's leg
+  lookups) and add a two-year separate-return e2e; then un-fixme `form8801-mfs-spouse-bridge.spec.ts`.
+
 ## Refund and amount owed: found in the 2026-11-10 review, not changed
 
 - The spouse's copy on separate returns isn't filled from last year (the prior return found is the household's primary one).
@@ -154,7 +164,9 @@
 - Part III lines 28-30, 35 and 42 are typed from the 2024 worksheets; the Form 2555 "AMT capital gain excess" modifications and the
   MTFTCE (line 12, separate Forms 1116) are the user's.
 - The Form 1040-NR line 10 rule (net gain on U.S. real property interests) is not applied.
-- The bridge runs on the primary return only; an MFS spouse leg's line 26 is not carried.
+- The bridge reads each return's own prior-year return since 2026-11-11 (a separate return its own separate return; a joint prior
+  credit isn't divided - an advisory asks for the share). It can't fire two years in a row on separate returns until the bug below
+  ("Separate returns two years in a row") is fixed - e2e `form8801-mfs-spouse-bridge.spec.ts` is `test.fixme` for it.
 
 ## Investment interest (Form 4952): found in the 2026-11-09 review, not changed
 
@@ -232,7 +244,6 @@
 
 ## Low-income housing credit recapture (Form 8611): found in the 2026-11-08 review, not changed
 
-- Line 15 (credit carried forward) reaches nothing: it should carry to next year's Form 3800 (General business credit). The screen shows it.
 - Line 2 is typed; the Line 2 Worksheet (from Form 8609-A lines 10, 11, 14, 15, 16 for each year) is not asked. Line 11 interest is typed.
 
 ## Foreign assets (Form 8938): found in the 2026-11-08 review, not changed

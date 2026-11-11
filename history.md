@@ -1,3 +1,19 @@
+## 2026-11-11T16:30 - Form 8611 line 15 and next year's Form 3800; the Form 8801 bridge per return; a separate-returns bug found
+
+- Form 8611 (Instructions for Form 8611, lines 13 and 15): line 13 is the building's unused credits from earlier years - already in
+  the general business credit carryforward the filer enters - and line 15 is what is left of them after the recapture. So line 15
+  is not new credit: line 9 + line 13 - line 15 now comes off the carryforward saved for next year's Form 3800 (it used to offset
+  the recapture and carry forward in full). Advisory FORM_8611_CARRYFORWARD_REDUCED (Form8611Compute.reduceNextYearCarryforward).
+- Form 8801: the line 26 bridge reads this return's own prior-year return - a separate return its own last-year separate return
+  (or last year's primary when that was the head's separate return), a dependent's own return nothing; a joint prior-year credit
+  isn't imported on a separate return (it must be divided - advisory FORM_8801_JOINT_CREDIT_NOT_IMPORTED). It ran only on the
+  primary return (Form8801Rules.priorYearLine26ForReturn, the capital loss carryover's rule).
+- Found, not fixed (outstanding.md "Separate returns two years in a row"): MFS enable and several return-kind lookups ignore the tax
+  year, so a household that filed separately in 2024 gets its 2024 pair back for 2025. The new e2e for the spouse bridge is
+  test.fixme until that is fixed.
+- Tests: OutstandingQuickFixes20261111gTest (2, new); e2e carryforward-new-forms-bridge (two-year Form 8611 -> Form 3800, passes),
+  form8801-mfs-spouse-bridge (new, fixme). Unit 5,731 / 0; e2e 9 + 3 passed.
+
 ## 2026-11-11T15:30 - Dependent who is nobody's dependent; separate-return statements checked
 
 - Dependents (2025 Form 1040 instructions, Who Qualifies as Your Dependent): a person the answers show is neither a qualifying child

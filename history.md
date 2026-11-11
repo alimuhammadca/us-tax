@@ -1,3 +1,12 @@
+## 2026-11-11T23:00 - Form 8862: the spouse's prior disallowance counts on a joint return (outstanding.md)
+
+- Both copies of Earned income credit and Education credits ask whether the IRS reduced or denied the credit before, but the EIC / AOTC
+  gates and Form 8862 read only the Family Head's copy: on a joint return a disallowance reported on the spouse's copy was ignored, so
+  the credit was figured without Form 8862. The IRS keeps the recertification requirement on each spouse's SSN, so on a joint return the
+  stricter answer is used (a ban, over needing Form 8862, over needing none, over no denial; the Family Head's on a tie) -
+  `JointPriorDisallowance`, for the EIC and the American opportunity credit.
+- Tests: Java `JointPriorDisallowanceTest` (4, incl. a joint return whose EIC now waits for Form 8862 Part II).
+
 ## 2026-11-11T22:30 - Dependent: a filer who can be claimed claims no one; dependents save partially (outstanding.md)
 
 - 2025 Form 1040 instructions, Who Qualifies as Your Dependent: "If you could be claimed as a dependent by another taxpayer, you can't

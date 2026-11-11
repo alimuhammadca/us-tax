@@ -1,3 +1,12 @@
+## 2026-11-11T13:40:00-05:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43077190690 on 6f94529b - revision ca-ustax-be--0000592 serving
+  100% traffic, image ustax-be:6f94529; /q/health/ready UP (database check UP; V467 applied at startup). URL:
+  https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43078878787 on 5dfba1e - live at
+  https://www.taxbeans.com (bundle main-PSNIUFLL.js carries today's Schedule R and Business income strings).
+- The prod Postgres state was left to the workflow (its "Ensure prod Postgres is running" step); not started or stopped by hand.
+
 ## 2026-11-11T23:00 - Quick fixes from outstanding.md (seventh pass, items 1-3)
 
 - Form 8880 line 4 (Form 8880 (2025) instructions, "Don't include ... Distributions from an inherited IRA by a nonspousal

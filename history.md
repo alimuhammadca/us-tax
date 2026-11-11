@@ -5,7 +5,8 @@ Deployed latest code to production (Azure, via the manual GitHub Actions workflo
   https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
 - Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43078878787 on 5dfba1e - live at
   https://www.taxbeans.com (bundle main-PSNIUFLL.js carries today's Schedule R and Business income strings).
-- The prod Postgres state was left to the workflow (its "Ensure prod Postgres is running" step); not started or stopped by hand.
+- Prod Postgres: started by the workflow's own step; stopped by hand after the deploy was verified (owner's request; state Stopped).
+  The /deploy skill now ends with that stop step (us-tax-be bc2e8004).
 
 ## 2026-11-11T23:00 - Quick fixes from outstanding.md (seventh pass, items 1-3)
 

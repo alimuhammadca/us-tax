@@ -1,3 +1,12 @@
+## 2026-11-12T00:00 - Schedule A: the average mortgage balance is asked when Form 1098 shows a principal over the limit (outstanding.md)
+
+- The screen asks the average balance only over $750,000, and a blank balance deducted all the interest. A Form 1098 box 2
+  outstanding principal (the personal-use share) over the home acquisition debt limit ($750,000, $375,000 on a separate return, $1,000,000
+  for 1987-2017 debt) with the balance blank now raises the blocking SCHEDULE_A_MORTGAGE_AVERAGE_BALANCE_NEEDED (Pub. 936 Part II),
+  linked to Standard or itemized deductions; not with the standard deduction chosen.
+- Medical lodging's "1 or 2 people" is an owner-approved field matching Pub. 502's example; left for the owner (outstanding.md).
+- Tests: Java `MortgageAverageBalanceNeededTest` (2).
+
 ## 2026-11-11T23:40 - Earned income credit: a qualifying child without a valid SSN skips Step 4 (outstanding.md)
 
 - 2025 Form 1040 instructions, line 27: Step 3 question 1 asks for a child "who meets the conditions to be your qualifying child"

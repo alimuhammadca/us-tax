@@ -91,7 +91,10 @@
 - "Part" employer-paid coverage: the excess reimbursement is taxed in full instead of in proportion to the employer-paid share (Pub. 502).
 - The private-foundation 30% pool subtracts the limited capital-gain amount, not the full one (Pub. 526 worksheet 2).
 - Points are not run through the Pub. 936 Table 1 ratio when the debt is over the limit (unverified).
-- A blank average mortgage balance applies no debt limit (the label now says the balance is needed only over $750,000).
+- A blank average mortgage balance applies no debt limit when no Form 1098 shows the principal (since 2026-11-11 a Form 1098 box 2
+  over the limit asks for it - SCHEDULE_A_MORTGAGE_AVERAGE_BALANCE_NEEDED).
+- Medical lodging people (owner decision): the field allows the patient and one companion (owner-approved 2026-10-23, Pub. 502's
+  parent-and-child example); "$50 for each person" may allow more than one companion - widen it only with the owner's sign-off.
 - Gambling / other line 16 / investment-theft losses have no paid-by answer on separate returns; they split 50/50.
 
 ## Qualified business income deduction (line 13a): found in the 2026-11-10 review, not changed

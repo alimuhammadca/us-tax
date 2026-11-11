@@ -1,4 +1,4 @@
-## 2026-11-11T21:20:00-05:00
+## 2026-11-11T21:20:00Z
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43099573573 on 8198a870 - revision ca-ustax-be--0000593 serving 100%
   traffic, image ustax-be:8198a87; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.

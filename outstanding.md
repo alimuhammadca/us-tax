@@ -83,8 +83,10 @@
 - A carryover isn't kept when the taxes are deducted on Schedule A this year (no Form 1116 is produced to carry it). (Checked
   2026-11-12, Pub. 514 "Unused taxes carried to deduction year": the carryover can't be used that year, but a credit limit is still
   figured "as if you had chosen to credit foreign taxes" and the carryover is "absorbed in that year" up to the excess limit - so it
-  needs a hypothetical Form 1116 in the deduction year plus a carry-only record the credit paths ignore. Bigger work; a bridge that
-  simply skipped deduction years was tried and reverted, as it would overstate the carryover.)
+  needs a hypothetical Form 1116 in the deduction year plus a carry-only record the credit paths ignore.) Done 2026-11-12: the
+  deduction year figures Form 1116 as if the credit were claimed, keeps last year's vintages it didn't absorb and saves them on a
+  carry-only out_form_1116 row (never shown or credited) for next year's bridge - Form1116DeductionYear,
+  FORM_1116_CARRYOVER_IN_DEDUCTION_YEAR. Simplification: the as-if limit uses this return's taxable income (with the taxes deducted).
 
 ## Additional deductions (line 13b, Schedule 1-A): found in the 2026-11-10 review, not changed
 
@@ -203,7 +205,9 @@
 
 ## Suspended passive losses (Form 8582): found in the 2026-11-09 review, not changed
 
-- Last year's unallowed K-1 losses are entered as three totals, not per activity, so a K-1 activity sold in full this year doesn't
+- (Checked 2026-11-12: a large change - the passive engine and the Form 8582 worksheet treat the passive K-1s as one combined
+  amount, so each K-1 must become its own activity through the regular and AMT pools; not started.) Last year's unallowed K-1 losses
+  are entered as three totals, not per activity, so a K-1 activity sold in full this year doesn't
   release its own carried loss (Form 8582 "entire disposition"); the PTP box and the at-risk carryover are used only when exactly one
   matching K-1 is on the return.
 - The Part V share is one total (V469, 2026-11-11), not per activity: with every rental disposed of it is released with them only when no
@@ -489,8 +493,10 @@
   filed or not); a structured line 1a address (street / city / state / ZIP, foreign address); the line 1b type codes 2, 3, 4 and 8 (since
   2026-11-11 the output writes 6 for a royalty, 7 for a self-rental, 5 for mostly land, else 1); the line 2 QJV box; line 43 (real estate professional reconciliation). Fair rental / personal use days are
   asked and printed on line 2 since 2026-11-12 (ScheduleEParts.line2).
-- Last year's at-risk loss reaches the next year only as a household total (`out_schedule_1`); with two or more properties it waits
-  for a per-property split ("not assigned" notes). (Since 2026-11-12 the suspended PASSIVE loss is carried per property:
+- (Last year's at-risk loss is carried per property since 2026-11-12: the rental Form 6198 records each activity's suspended loss
+  - out_form_6198.activity_detail_json, V470 - and next year fills each property's blank carryover by name when the record accounts
+  for the whole total with rental properties only; a farm rental row, an unassigned total, a renamed property or a typed figure keeps
+  the household total as before - AtRiskCarryforwardByActivity, RENTAL_AT_RISK_CARRYOVER_BY_PROPERTY.) (Since 2026-11-12 the suspended PASSIVE loss is carried per property:
   each activity's Form 8582 unallowed loss is recorded in `worksheet_fields_json` and next year fills each rental / farm rental's
   blank prior-year loss by name - PassiveCarryforwardByActivity, FORM_8582_PRIOR_LOSS_BY_ACTIVITY. Only when the rows account for the
   whole total: a K-1 row, a Part V share, a renamed property, a typed figure, every rental sold or a separate return keeps the

@@ -1,3 +1,16 @@
+## 2026-11-12T21:00
+outstanding.md bigger items (owner: "do items 1-5"):
+- Per-property at-risk carryover: the rental Form 6198 records each activity's suspended at-risk loss (V470
+  out_form_6198.activity_detail_json); next year each rental property's blank carryover is filled by name when the record covers the
+  whole total (rental properties only), else the household total as before - AtRiskCarryforwardByActivity. Tests:
+  AtRiskCarryforwardByActivityTest, at-risk-by-property-bridge.spec.ts (two-year).
+- Form 1116 deduction year (Pub. 514, Unused taxes carried to deduction year): Form 1116 is figured as if the credit were claimed; the
+  carryover it absorbs is used up and the rest is saved on a carry-only out_form_1116 row (the screen loader skips it; next year's
+  bridge reads it) - Form1116DeductionYear. Tests: Form1116DeductionYearTest, form1116-deduction-year-carryover.spec.ts (three-year).
+- Not started (each a restructuring, reported to the owner): per-K-1 passive losses (each K-1 its own activity in the passive / AMT
+  pools), the AMT Form 1116, and Form 8990 lines 6 / 10 (the return figured twice).
+- Unit 5841/5841.
+
 ## 2026-11-12T19:30
 outstanding.md items 1-5 (owner: "do items 1-5"):
 - Schedule F QJV: the split is read from the farm's own figured row, not by list position (Wave2FieldsW4.markFarmQjv). Test

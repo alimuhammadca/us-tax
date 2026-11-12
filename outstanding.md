@@ -27,10 +27,8 @@
 
 - Lines 12 and 13c are typed totals: Form 4136 and Form 3800 Part III are not produced.
 - (`SECTION_1341_REPAYMENT_BELOW_THRESHOLD` was removed 2026-11-12: both figured credits - claim of right and the Social Security
-  repayment - are figured only over $3,000, so it could not fire.) `SECTION_1341_DEDUCTION_AND_CREDIT_BOTH_CLAIMED` (blocking,
-  non-overrideable) can't fire for the claim-of-right credit (its pass drops the deduction), but it can when a claim-of-right
-  deduction is typed AND the Social Security repayment credit wins (Pub. 915 method 2) - two different repayments, each with its own
-  remedy, so the block may be false there (or right, if the typed deduction is the same Social Security repayment). Owner decision.
+  repayment - are figured only over $3,000, so it could not fire.) `SECTION_1341_DEDUCTION_AND_CREDIT_BOTH_CLAIMED` is an advisory since
+  2026-11-12 (owner): it could only meet the figured Social Security repayment credit, a different repayment unless typed twice.)
 
 ## Credits after disallowance (Form 8862): found in the 2026-11-10 review, not changed
 

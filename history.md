@@ -1,3 +1,11 @@
+## 2026-11-13T02:15
+Section 1341: SECTION_1341_DEDUCTION_AND_CREDIT_BOTH_CLAIMED is an advisory (owner decision).
+- It was a non-overrideable block. With the typed credit no longer read and the claim-of-right refigure dropping the deduction, it fired
+  only when a claim-of-right deduction (another repayment) met the figured Social Security repayment credit (Pub. 915 method 2) - and
+  then the return couldn't be computed. Now a note on Standard or itemized deductions asks to clear the deduction only if it is the same
+  Social Security repayment. Removed from NonOverrideableFlags.
+- Test: Hrb2025Sc00322Test.aTypedClaimOfRightDeductionNextToTheSocialSecurityCreditIsAnAdvisory.
+
 ## 2026-11-13T01:50
 Schedule 3 line 13b: the dead SECTION_1341_REPAYMENT_BELOW_THRESHOLD advisory removed.
 - The typed section 1341 credit isn't read (2026-11-10 screen review); the two figured credits (claim of right A15, Social Security

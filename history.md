@@ -1,3 +1,11 @@
+## 2026-11-13T00:50
+Form 8936: the 2024 MAGI is tested against the 2024 filing status's limit.
+- Instructions for Form 8936 (2025), "Special rule for change in filing status": allowed when the MAGI is not over the threshold for the
+  preceding year's or the current year's filing status. Last year's status comes from a 2024 return done here (joint primary, else the
+  person's own separate return) or, for the Family Head, the uploaded 2024 Form 1040 (EstimatedTaxPriorYearResource.priorYearFilingStatus);
+  unknown keeps the 2025 status. New and previously owned vehicles.
+- Tests: CleanVehiclePriorStatusTest; e2e clean-vehicle-prior-year-filing-status.spec.ts (2024 joint / 2025 Single, and the Single control).
+
 ## 2026-11-13T00:20
 Form 8990: a small business no longer limited deducts last year's carryforward in full.
 - Instructions for Form 8990 (Rev. December 2025), "Change from being subject to section 163(j) to being exempt ... under the small

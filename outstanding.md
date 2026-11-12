@@ -154,7 +154,8 @@
   and is not figured; the commercial clean vehicle credit (Part V, Form 8936 line 19+) neither.
 - (The 2024 MAGI fills a blank line 3a from a 2024 return done here since 2026-11-11: line 11 plus the exclusions - Schedule 1-A /
   Schedule 8812 lines 2a-2d, else Form 2555 lines 45 + 50. An uploaded 2024 Form 1040 doesn't fill it: it has no exclusion amounts.)
-- The 2024 test uses the 2025 filing status; the instructions' special rule tests each year with its own status.
+- (The 2024 MAGI is tested against the 2024 filing status's limit - a 2024 return done here, else the uploaded 2024 Form 1040 - since
+  2026-11-12, i8936 "Special rule for change in filing status"; CleanVehicleRules.PRIOR_STATUS. Unknown: the 2025 status.)
 - "Can someone claim you as a dependent?" is asked here; the household answer lives on several screens (EIC, Saver's credit), not one.
 - Basis reduction for a business vehicle (Schedule A line 9 / 17) is not passed to depreciation.
 

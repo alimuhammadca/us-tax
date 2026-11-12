@@ -1,3 +1,11 @@
+## 2026-11-12T08:00 - Form 8960 line 5c messages name the spouse's copy (outstanding.md)
+
+- On a joint return the two Other tax items copies are merged, so the line 5c messages said "one of you" (passive owner) or "you"
+  (participation unanswered) and opened no screen. The merge now records whose copy each answer came from (Form8960Owners
+  markers) and each message names that copy ("Your spouse did not materially participate ... your spouse's Other tax items copy")
+  and opens it (formId 16-tax-spouse / 16-tax-taxpayer). Form8960JointMergeTest; e2e open-questions-b73-form8960-joint.spec.ts.
+- Schedule R line 13a (workers' compensation) checked, left: whether SSA-1099 box 3 already includes the offset needs Pub. 915.
+
 ## 2026-11-12T07:00 - Schedule F blank-TIN statements; Form 8936 2024 MAGI from last year's return (outstanding.md)
 
 - Schedule F: the line 4a / 5b / 6a fill (Forms 1099-G box 7, 1099-MISC box 9, CCC Form 1099-A) skipped a statement with no recipient

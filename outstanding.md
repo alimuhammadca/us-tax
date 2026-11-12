@@ -170,7 +170,8 @@
 - The credit needs the claim answer: a person 65 or older who never opens the screen gets no Schedule R (the Yes is filled only when
   the screen is opened). Consider claiming by age automatically.
 - Line 13a is Form 1040 line 6a minus 6b; workers' compensation that reduced Social Security benefits ("treat ... as social security
-  benefits") isn't added.
+  benefits") isn't added. (Checked 2026-11-12: p17 / p525 call that part of workers' compensation social security benefits; whether the
+  SSA-1099 box 3 already includes it - so line 6a has it - needs Pub. 915 or the SSA-1099 text, neither readable locally.)
 - Part II line 2: the first name(s) of the spouse(s) for whom the box is checked (boxes 4, 5, 6) is not written on the form - the
   form's field map has no text field for it, so it needs a form-structure change (owner sign-off).
 
@@ -300,7 +301,8 @@
   standard deductions - three copies of one fact; SECTION_962_DEDUCTION_NOT_ON_LINE_12E is raised from the hidden copy.
 - On a joint return the PFIC Part V facts are first-entry while line 16e is summed; section 453A interest (line 15) is detected on Form 6252
   but not figured; Form 1098-T boxes 4 / 6 could prompt the education credit recapture question.
-- The Form 8960 messages don't say which spouse's copy; a typed line 17h replaces the Form 1099-MISC box 15 figure for both spouses.
+- (The Form 8960 line 5c messages name and open the spouse's copy on a joint return since 2026-11-12, Form8960Owners.) A typed line 17h
+  replaces the Form 1099-MISC box 15 figure for both spouses.
 
 ## Lump-sum distributions (Form 4972): found in the 2026-11-07 review, not changed
 

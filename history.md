@@ -1,3 +1,13 @@
+## 2026-11-12T23:55
+Form 8582: each passive Schedule K-1 its own activity (per-K-1 passive losses, phase 2).
+- K1PerActivity: each non-PTP K-1's Part V items are their own worksheet row (Instructions for Form 8582, Parts V-VIII) when they add
+  up to the combined amount; last year's activity record keeps each K-1's unallowed loss (carry_N_partIv marks Part IV / V).
+- PassiveCarryforwardByActivity.seed seeds those K-1 rows by name next year when every recorded K-1 is on the return and the Part V
+  rows add up; K1Disposition then releases a sold K-1's OWN carried loss (no more FORM_8582_K1_DISPOSED_PRIOR_NOT_SPLIT in that case)
+  and the rest carries on. The household bridge stays off once seeded; AMT takes the seeded priors from the K-1 pool only.
+- computeRentalScheduleE no longer returns early when a carried K-1 loss exists with no items this year (it was dropped).
+- Tests: K1PerActivityTest; e2e k1-passive-by-activity-bridge.spec.ts (two-year).
+
 ## 2026-11-12T23:30
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43303562302 on f473a558 - revision ca-ustax-be--0000599 serving 100%

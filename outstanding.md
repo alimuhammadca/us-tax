@@ -208,11 +208,12 @@
 - (2026-11-12, owner-approved field V471: a passive K-1 marked final asks on Suspended passive losses whether the entire interest went
   in a fully taxable transaction to an unrelated party; a Yes takes it out of the passive pool and allows its items and - when it is
   the only passive K-1 - the typed carried loss in full, IRC 469(g) - K1Disposition, FORM_8582_K1_DISPOSED_RELEASED. With several
-  passive K-1s the carried share can't be told from the total (FORM_8582_K1_DISPOSED_PRIOR_NOT_SPLIT). Still to do: the per-K-1
-  worksheet rows and carryover (each K-1 its own Form 8582 activity, recorded and seeded by name), which needs the AMT side kept in
-  step - the seeded K-1 priors would otherwise sit both in the AMT total and the Part V pool. PTPs are left out.) Last year's
-  unallowed K-1 losses are entered as three totals, not per activity, so a K-1 activity sold in full this year doesn't
-  release its own carried loss (Form 8582 "entire disposition"); the PTP box and the at-risk carryover are used only when exactly one
+  passive K-1s the carried share can't be told from the total (FORM_8582_K1_DISPOSED_PRIOR_NOT_SPLIT). Phase 2 done 2026-11-12: each passive K-1 is its own Form 8582 row (K1PerActivity) and its own row in last year's
+  activity record (carry_N_partIv), seeded next year by name when every recorded K-1 is on this year's return and the Part V rows add
+  up to the K-1 share (else the typed/household total as before); a sold K-1 then releases its own carried loss and the rest carries
+  on. The AMT side takes the seeded priors from the K-1 pool only - the seed needs last year's AMT carryover equal to the regular one.
+  PTPs are left out.) Still open: a carryover TYPED by hand (first year on the app, or a record that can't be split) is
+  three totals, not per activity, so with several passive K-1s a sold one doesn't release its own share; the PTP box and the at-risk carryover are used only when exactly one
   matching K-1 is on the return.
 - The Part V share is one total (V469, 2026-11-11), not per activity: with every rental disposed of it is released with them only when no
   passive K-1 is on the return; a K-1 activity disposed of this year doesn't release its own share (see the per-activity item above).

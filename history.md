@@ -1,3 +1,11 @@
+## 2026-11-12T11:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43230941289 on e5666bce - revision ca-ustax-be--0000596 serving 100%
+  traffic, image ustax-be:e5666bc; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43232558534 on 5993a55 - live at https://www.taxbeans.com
+  (bundle main-CXLU5VPR.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-12T10:00 - Form 1098-T prior-year boxes 4 and 6 (outstanding.md)
 
 - Form 1098-T box 4 (adjustments for a prior year's qualified expenses) and box 6 (adjustments to a prior year's scholarships) were

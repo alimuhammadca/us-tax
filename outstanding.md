@@ -87,7 +87,9 @@
 ## Standard or itemized deductions (lines 12a-12e, Schedule A): found in the 2026-11-10 review, not changed
 
 - Medical lodging is capped at 2 people ($50 a night each); Pub. 502 allows $50 for each person who goes along with the patient.
-- W-2GU / W-2VI / W-2AS territory income tax withheld doesn't reach Schedule A line 5a.
+- W-2GU / W-2VI / W-2AS territory income tax withheld doesn't reach Schedule A line 5a. (Checked 2026-11-11: i1040sca line 6 - "include
+  U.S. territory taxes on the appropriate state and local tax line" - but the same box 2 tax is usually credited through Form 5074 /
+  8689 (TerritoryW2s' advisory), so deducting it is a choice like the foreign tax credit's: needs a question (field - owner sign-off).)
 - "Part" employer-paid coverage: the excess reimbursement is taxed in full instead of in proportion to the employer-paid share (Pub. 502).
 - The private-foundation 30% pool subtracts the limited capital-gain amount, not the full one (Pub. 526 worksheet 2).
 - Points are not run through the Pub. 936 Table 1 ratio when the debt is over the limit (unverified).

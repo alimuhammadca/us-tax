@@ -1,3 +1,14 @@
+## 2026-11-13T03:00
+Form 1116 line 16: the section 461(l) disallowed loss of foreign-source businesses (owner-approved field, V472).
+- Instructions for Form 1116 (2025), Line 16, adjustment 1: line 15 is increased by the business loss disallowed under section 461(l)
+  "to the extent it is attributable to the separate category". New yes/no on each Schedule C business and Schedule F farm: "Is this
+  business's income from outside the United States?" (pf_business_activity / pf_farm_activity.foreign_source_income). The Form 461
+  disallowed loss is shared over the business losses (Schedule C, Schedule F, Form 4797, Schedule E / K-1 business items) by size; the
+  marked businesses' share is the general category's line 16, line 17 = line 15 + line 16 (out_form_1116.line16_adjustments, the preview
+  fills the line 16 box). FORM_1116_LINE16_SECTION_461L_ADJUSTMENT explains it and asks for the attached statement.
+- Tests: ForeignSourceBusinessLossTest; e2e form1116-line16-section461l.spec.ts (400,000 foreign loss, 87,000 disallowed -> line 16
+  87,000; a U.S. business adds nothing; the answer saves and loads).
+
 ## 2026-11-13T02:15
 Section 1341: SECTION_1341_DEDUCTION_AND_CREDIT_BOTH_CLAIMED is an advisory (owner decision).
 - It was a non-overrideable block. With the typed credit no longer read and the claim-of-right refigure dropping the deduction, it fired

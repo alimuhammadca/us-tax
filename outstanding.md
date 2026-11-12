@@ -79,9 +79,11 @@
   and an AMT carryover kept year to year - a new saved figure; bigger work.)
 - (Line 3e uses gross income for a business - Schedule C line 7 - and a rental - the rents and royalties - instead of their net in
   line 9 since 2026-11-12, Form1116Inputs.netToGross.)
-- Line 16 adjustments (section 461(l) disallowed loss) and the lump-sum category worksheet are not figured. (Checked 2026-11-12: i1116
-  line 16 adjustment 1 adds back the disallowed loss "to the extent it is attributable to the separate category" - no business is
-  marked foreign-source and the Form 1116 country rows aren't linked to a Schedule C, so the share needs a field: owner sign-off.)
+- (Line 16 adjustment 1 - the section 461(l) disallowed loss - is figured since 2026-11-12, owner-approved field V472: each Schedule C
+  business and Schedule F farm asks "Is this business's income from outside the United States?"; the disallowed loss is shared over the
+  business losses by size and the marked businesses' part goes on the general category's line 16 (ForeignSourceBusinessLoss,
+  FORM_1116_LINE16_SECTION_461L_ADJUSTMENT). It assumes those losses are in line 1a's general category income; the AMT Form 1116 doesn't
+  take it.) Adjustments 2-6 (foreign / U.S. loss allocation, recapture) and the lump-sum category worksheet are not figured.
 - The 1-year carryback isn't modelled; the accrual choice isn't checked against last year's return.
 - A carryover isn't kept when the taxes are deducted on Schedule A this year (no Form 1116 is produced to carry it). (Checked
   2026-11-12, Pub. 514 "Unused taxes carried to deduction year": the carryover can't be used that year, but a credit limit is still

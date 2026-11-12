@@ -1,3 +1,11 @@
+## 2026-11-13T06:10
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43330893353 on b6797ebd - revision ca-ustax-be--0000601 serving 100%
+  traffic, image ustax-be:b6797eb; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43330897056 on 88cbc7b - live at https://www.taxbeans.com
+  (bundle main-JJKFTMRQ.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-13T05:00
 Form 2555 from the marked businesses; Form 8814 OID / K-1 on the screen; section 962 note from the visible election.
 - Form 2555: a blank foreign self-employment net profit is filled from the businesses marked "income from outside the United States"

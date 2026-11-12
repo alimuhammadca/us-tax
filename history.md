@@ -1,3 +1,21 @@
+## 2026-11-12T16:00
+outstanding.md items 1-7 (owner: "do items 1-7"):
+- UI: Schedule H and Form 4137 previews on separate returns read the tab's own figured return (its filer copy), not the household
+  one - [taxReturnId] from the shell, as Form 1040. Spec form-tax-return-schedule-h.component.spec.
+- Form 2555 line 20a: a blank foreign net profit comes from the person's one business on Schedule C (no farm) - ForeignSeNetProfit,
+  advisory FORM_2555_SE_NET_PROFIT_FROM_SCHEDULE_C. Test ForeignSeNetProfitTest.
+- Territory screen: income kept from an old save for Guam / CNMI / USVI gets TERRITORY_INCOME_NOT_EXCLUDED_ON_US_RETURN.
+- Schedule 1-A line 4c: the Qualified Tips From More Than One Employer Worksheet (2025 Form 1040 instructions) - per employer the
+  greater of Form W-2 box 7 and Form 4137 column (c) - TipsByEmployer. Test TipsByEmployerTest.
+- Section 453A interest (Schedule 2 line 15) figured for the year of sale per Pub. 537 (example re-run for an individual: 20%/37%
+  maximum rate, 7% underpayment rate for Dec 2025, Rev. Rul. 2025-18 / IRB 2025-37) - Form6252Compute.FIGURED_453A; a typed line 15
+  wins. Test Section453AInterestTest.
+- Per-property passive bridge: the AMT carryover is split too when it equals the regular one (the #7 bridge had left the AMT pool with
+  last year's whole AMT total, so a sold property's loss stayed in the AMT carryover); when they differ nothing is split.
+- Form 8889 on separate returns: each leg carries the other spouse's HSA copy (MfsFormScoper.OTHER_SPOUSE_HSA_KEY) for the line 6
+  family split and the catch-up test. Test MfsHsaFamilySplitTest.
+- Unit 5819/5819; UI 736/738 (the 2 Filing status spec failures predate this).
+
 ## 2026-11-12T15:00
 outstanding.md items 1-5 (owner: "do items 1-5"):
 - Reduced home sale exclusion per spouse (Pub. 523 Worksheet 3): not changed - needs the other spouse's days of use, a field (owner).

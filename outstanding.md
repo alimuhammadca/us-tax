@@ -82,7 +82,8 @@
 - The "tips" box on Forms 1099-NEC / 1099-MISC / 1099-K counts the whole box as tips; a form with only part tips (the Instructions'
   $55,000 Form 1099-K with $7,000 of tips) must be typed in "Tips in your own business" instead. Needs a tips amount on the statement
   (statement structure - owner sign-off).
-- Line 4c uses the larger of the totals, not the Qualified Tips From More Than One Employer Worksheet per employer.
+- (Line 4c follows the Qualified Tips From More Than One Employer Worksheet - per employer the greater of Form W-2 box 7 and Form 4137
+  column (c) - since 2026-11-12, TipsByEmployer; not with a typed Forms 4070 total, which is one figure for all employers.)
 - Form W-2 box 14 tips and overtime are not read (typed); an SSN marked "Not Valid for Employment" can't be told from a valid one.
 - With more than one business the tips limit is typed for the business the tips came from (one figure, not one per business).
 
@@ -290,8 +291,8 @@
 
 ## Household employees (Schedule H): found in the 2026-11-07 review, not changed
 
-- Schedule H on the return is done (`schedule-h-plan.md`); under persistent MFS the spouse's preview reads the household computation, not
-  the spouse's own leg (same as Form 4137). Stage A differences left as drawn: line 13's dashed rule solid, the lines 10-12 Yes / No cells
+- Schedule H on the return is done (`schedule-h-plan.md`); on separate returns the previews (and Form 4137's)
+  read the tab's own figured return since 2026-11-12 (the household return until it is figured). Stage A differences left as drawn: line 13's dashed rule solid, the lines 10-12 Yes / No cells
   as checkboxes, the line 17 row shading.
 - State disability plan payments (subtracted on line 8 with "disability"), Puerto Rico employers (no line 7), a fiscal year, the
   quarters of the $1,000 test (asked as one answer) and an employee's Form W-2 are not handled; line 17 prints two states (more are
@@ -304,8 +305,10 @@
   Foreign income (owner: keep as saved).
 - The section 962 election is also asked on Other incomes (`hasSection962CfcElection`, only for the 8n/8o blocker) and exists backend-only on
   standard deductions - three copies of one fact; SECTION_962_DEDUCTION_NOT_ON_LINE_12E is raised from the hidden copy.
-- On a joint return the PFIC Part V facts are first-entry while line 16e is summed; section 453A interest (line 15) is detected on Form 6252
-  but not figured; (since 2026-11-12 Form 1098-T box 4 asks about the
+- On a joint return the PFIC Part V facts are first-entry while line 16e is summed; section 453A interest (line 15) is figured for the year of
+  sale since 2026-11-12 (Pub. 537: deferred tax liability at 20% long-term / 37% otherwise x applicable percentage x the 7% December 2025
+  underpayment rate; a typed line 15 wins) - a later year's interest on a year-of-sale obligation is still an advisory (the year-of-sale
+  applicable percentage isn't kept); (since 2026-11-12 Form 1098-T box 4 asks about the
   education credit recapture and box 6 points to an amended return - Form1098TPriorYear.)
 - (The Form 8960 line 5c messages name and open the spouse's copy on a joint return since 2026-11-12, Form8960Owners.) A typed line 17h
   replaces the Form 1099-MISC box 15 figure for both spouses.
@@ -323,8 +326,8 @@
   before the move) and the year-of-move tests are explained, not checked.
 - An ordinary Form W-2 for work in American Samoa or Puerto Rico stays on line 1a (the screen says so). (Since 2026-11-12 excluded
   wages equal to one of the person's Forms W-2, or all of them together, get FORM_4563_EXCLUDED_WAGES_ALSO_ON_W2.)
-- The 10-year rule for gains on property held before residence, U.S. government pay entered as excluded wages, and income typed for
-  Guam / CNMI / USVI under an old save are not flagged; Form 8898 is a separate notice (not produced).
+- The 10-year rule for gains on property held before residence, and U.S. government pay entered as excluded wages are not flagged
+  (income kept from an old save for Guam / CNMI / USVI is, since 2026-11-12 - TERRITORY_INCOME_NOT_EXCLUDED_ON_US_RETURN); Form 8898 is a separate notice (not produced).
 - Form 4563 line 6 prints the first four absences (no continuation statement); line 4b's rented / relationship answers are free text.
 - Additional deductions still has its own typed "American Samoa excluded income" and Puerto Rico boxes (FORM_4563_EXCLUSION_AMOUNT_MISMATCH).
 
@@ -334,7 +337,8 @@
   housing rule (no duplicated expenses) is checked only on MFJ, and an unanswered household question passes.
 - No line 18 trip table (the 330 days are one typed number); `housingLocationCountry` duplicates the locality choice (only printed); the
   UI keeps its own copies of $130,000 / $39,000 and the Notice 2025-16 table (now in data/foreign-housing-localities.ts).
-- Foreign self-employment net profit is typed again, not read from Business income. ("No" to "already on a Form W-2" next to a W-2
+- Foreign self-employment net profit: since 2026-11-12 a blank one comes from the person's one business on Business income (no farm) -
+  ForeignSeNetProfit; with two or more businesses it is typed (Business income has no foreign-business marker). ("No" to "already on a Form W-2" next to a W-2
   with the same pay or employer has an advisory since 2026-11-11; the answer stays the user's.)
 - Notice 2025-16 amounts and the IRS yearly exchange rates are not in the local library - unverified.
 
@@ -350,8 +354,8 @@
 
 ## HSA (Form 8889): found in the 2026-11-06 review, not changed
 
-- Line 6 on an MFS leg: the other spouse's form is dropped, so the family split and the catch-up family check (HsaMsaRules) don't run
-  there. (On the household return a single typed share leaves the other spouse the rest, and two shares over the family limit block,
+- (Line 6 on a separate return: since 2026-11-12 each leg carries the other spouse's HSA copy - MfsFormScoper.OTHER_SPOUSE_HSA_KEY -
+  for the family split and the catch-up family test.) (On the household return a single typed share leaves the other spouse the rest, and two shares over the family limit block,
   since 2026-11-11.)
 - Line 3 rule 4 (eligible all year but the coverage type changed): the chart only shows for part-year eligibility, so that case can't be
   entered month by month.
@@ -473,7 +477,8 @@
   each activity's Form 8582 unallowed loss is recorded in `worksheet_fields_json` and next year fills each rental / farm rental's
   blank prior-year loss by name - PassiveCarryforwardByActivity, FORM_8582_PRIOR_LOSS_BY_ACTIVITY. Only when the rows account for the
   whole total: a K-1 row, a Part V share, a renamed property, a typed figure, every rental sold or a separate return keeps the
-  household total as before. The AMT carryover stays a household total.)
+  household total as before. The AMT carryover is split the same way when it equals the regular one (each property's
+  priorYearAmtSuspendedPassiveLoss); when it differs nothing is split and both totals bridge, since 2026-11-12.)
 
 ## Capital gain/loss: found in the 2026-11-06 review, not changed
 

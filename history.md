@@ -1,3 +1,11 @@
+## 2026-11-13T00:20
+Form 8990: a small business no longer limited deducts last year's carryforward in full.
+- Instructions for Form 8990 (Rev. December 2025), "Change from being subject to section 163(j) to being exempt ... under the small
+  business exemption": the bridged line 31 carryforward is deducted on Schedule 1 line 3 when Business interest limit is answered No;
+  no Form 8990 is filed (FORM_8990_CARRYFORWARD_RELEASED_SMALL_BUSINESS). Unanswered with a carryforward: it stays carried and
+  FORM_8990_CARRYFORWARD_LIMIT_NOT_ANSWERED asks. Form8990Compute.releasedWhenExempt.
+- Tests: Form8990SmallBusinessReleaseTest; e2e form8990-small-business-release.spec.ts (two-year).
+
 ## 2026-11-12T23:55
 Form 8582: each passive Schedule K-1 its own activity (per-K-1 passive losses, phase 2).
 - K1PerActivity: each non-PTP K-1's Part V items are their own worksheet row (Instructions for Form 8582, Parts V-VIII) when they add

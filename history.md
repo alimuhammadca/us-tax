@@ -1,3 +1,12 @@
+## 2026-11-13T04:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43322886681 on 559d9d56 - revision ca-ustax-be--0000600 serving 100%
+  traffic, image ustax-be:559d9d5; /q/health/ready UP (Liquibase V472 applied at startup). URL:
+  https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43322890952 on 1451316 - live at https://www.taxbeans.com
+  (bundle main-YJQV76XB.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-13T03:00
 Form 1116 line 16: the section 461(l) disallowed loss of foreign-source businesses (owner-approved field, V472).
 - Instructions for Form 1116 (2025), Line 16, adjustment 1: line 15 is increased by the business loss disallowed under section 461(l)

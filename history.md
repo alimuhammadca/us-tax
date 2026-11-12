@@ -1,3 +1,18 @@
+## 2026-11-12T13:00
+outstanding.md items (owner: "do items 1-6", second batch):
+- Schedule E line 2: the screen's fair rental days and personal use days are printed for each rental property (not a royalty) -
+  ScheduleEParts.line2. Test ScheduleELine2DaysTest.
+- Form 4835: the soil and water conservation carryover note is raised for farm rentals (flags reach ConservationLimit); the Form 1099-G
+  box 9 market gain check counts Form 4835 program payments. Test Form4835MarketGainAndConservationTest.
+- Form 8853: a blank spouse family-plan deductible is read from the other spouse's family-coverage copy; the return's filing status
+  now reaches form8853Rules (w5FilingStatus was set by nothing, so the married lowest-deductible rule and the separate-return 37.5%
+  never ran) - HsaMsaRules.forArcherRules. Test Form8853SpouseDeductibleTest.
+- Form 6198: a linked Form 4797 sale's loss reduces the activity's amount at risk (sales netted per activity, not below zero) -
+  Wave2FieldsW4.applyLinkedSaleGains. Test Form6198LinkedSaleLossTest.
+- Form 8889 line 14b: checked, no double count; not changed.
+- The Social Security / IRA coordination notes open the spouse's Income adjustments when only the spouse claimed the IRA deduction -
+  IncomeAdjustmentFlagOwner. Test IraCoordinationFlagOwnerTest.
+
 ## 2026-11-12T12:00
 outstanding.md items (owner: "do items 1-6"):
 - Schedule 1-A line 5 (tips business net income): already figured from Schedule C / F for a return with one business

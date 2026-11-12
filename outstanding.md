@@ -340,7 +340,9 @@
 
 ## Archer MSA / LTC (Form 8853): found in the 2026-11-06 review, not changed
 
-- `spouseFamilyPlanDeductible` is typed, not read from the other spouse's copy. (The joint-return doubled family limit was fixed
+- (Since 2026-11-12 a blank `spouseFamilyPlanDeductible` is read from the other spouse's family-coverage copy, and the return's
+  filing status reaches Wave2FieldsW5.form8853Rules - its key was set by nothing, so the married lowest-deductible rule and the
+  separate-return 37.5% had never run: HsaMsaRules.forArcherRules.) (The joint-return doubled family limit was fixed
   2026-11-11: both spouses' Archer MSAs share one limit, divided equally unless a line 3 is typed - HsaMsaRules.jointArcherFamilyLimit.)
 - Medicare Advantage MSA: no partial amount for the death / disability exception (Archer has one) - a field addition.
 - No line 6a / 10 override (Form 1099-SA code 2 has been added to Archer line 6b since 2026-11-11).
@@ -353,8 +355,9 @@
   since 2026-11-11.)
 - Line 3 rule 4 (eligible all year but the coverage type changed): the chart only shows for part-year eligibility, so that case can't be
   entered month by month.
-- Line 14b adds 1099-SA code 2 amounts to the typed amount (help now says not to include them); hsaExcessWithdrawnAmount also reads the
-  withdrawn excess (TRCS ~10524) - not re-verified for a double count.
+- Line 14b adds 1099-SA code 2 amounts to the typed amount (help says not to include them). (Checked 2026-11-12: no double count in
+  the calculation - line 14a takes each code 2 box 1 and line 14b takes it back, the earnings go to line 8z; hsaExcessWithdrawnAmount
+  only reduces the Form 5329 excess and blocks when a code 2 form is on file.)
 - usedLastMonthRuleForPriorYear / failedLastMonthRuleTestingPeriod only raise a message; the line 18 amount is still typed.
 - Form 5498-SA is read by no compute (the screen now fills the year-end value from box 5). Medicare months are not derived from the
   date of birth (only explained).
@@ -363,8 +366,8 @@
 
 - The mapper-only `iraDeductionMfsLivedApartLine20` (LowIrsFixesChunk2:203) has a column nothing reads - removing it is a field removal
   (owner sign-off). (The dead `imported*Total` / `...OutOfScopeAmount` reads and the upload check were removed 2026-11-11.)
-- The Social Security / IRA coordination notes still open the Family Head's copy (they are about the IRA deduction of either
-  spouse); ALIMONY_MODIFICATION_ADOPTS_TCJA_* is shared by alimony paid and received, so it has no link. (Lines 18, 21, 23, 24b, 24c,
+- (The Social Security / IRA coordination notes open the spouse's copy when only the spouse claimed the IRA deduction since
+  2026-11-12.) ALIMONY_MODIFICATION_ADOPTS_TCJA_* is shared by alimony paid and received, so it has no link. (Lines 18, 21, 23, 24b, 24c,
   24h and 24i open the spouse's copy when only the spouse entered the amount since 2026-11-11.)
 - The "less common adjustments" Yes / No is not saved (derived on load from the amounts): a Yes with no amount comes back blank.
 - The old self-employment questions (lines 15-17) are removed from the screen (owner); their columns keep any saved value, unread.
@@ -396,7 +399,8 @@
 ## Business property sales (Form 4797): found in the 2026-11-06 review, not changed
 
 - The at-risk widening of a linked activity (`Wave2FieldsW4.atRiskSaleGain`, 2026-11-11: this year's sales only, no section 1244 stock,
-  the gain after a section 121 exclusion) counts only gains - Form 6198 lines 2a / 2b also take losses.
+  the gain after a section 121 exclusion) counts losses too since 2026-11-12 (Form 6198 lines 2a-2c): the linked sales are netted per activity and a net loss reduces the amount at
+  risk left for the operating loss, never below zero. A sale loss larger than the amount at risk is still deducted in full on Form 4797.
 - MFS: the spouse's typed section 1231 lookback is dropped on the spouse leg; the lookback reads returns of kind "primary" by uid (on an MFS
   leg the spouse may get the Family Head's history - not verified).
 - No check ties a Depreciable asset disposed of this year to a sale here (the screen now offers the shortcut); depreciation allowed isn't
@@ -434,8 +438,8 @@
   disposition of the whole activity (frees suspended losses); a "some investment not at risk" answer (34a / 34b come from whether the
   amount at risk is blank).
 - Depreciable assets has no farm rental activity type: line 12 is typed, with no Form 4562 asset detail.
-- The conservation carryover to next year has no note for Form 4835 (ConservationLimit gets no flags list for farm rentals).
-- The Form 1099-G box 9 market gain check counts only Schedule F program payments.
+- (Since 2026-11-12 the conservation carryover note is raised for farm rentals too, and the Form 1099-G box 9 market gain check counts
+  Form 4835 line 3a program payments as well as Schedule F's.)
 
 ## Farm income (Schedule F): found in the 2026-11-06 review, not changed
 
@@ -463,7 +467,7 @@
 - Schedule E Part I items the screen doesn't ask (each a field addition - owner sign-off): lines A / B (payments needing Forms 1099,
   filed or not); a structured line 1a address (street / city / state / ZIP, foreign address); the line 1b type codes 2, 3, 4 and 8 (since
   2026-11-11 the output writes 6 for a royalty, 7 for a self-rental, 5 for mostly land, else 1); the line 2 QJV box; line 43 (real estate professional reconciliation). Fair rental / personal use days are
-  asked but not printed on line 2.
+  asked and printed on line 2 since 2026-11-12 (ScheduleEParts.line2).
 - Last year's suspended passive loss and at-risk loss reach the next year only as household totals (`out_schedule_1`); with two or
   more properties they wait for a per-property split ("not assigned" notes). `OutForm8582.worksheet_fields_json` (V417) keeps the
   per-activity worksheet but nothing reads it next year - a per-property bridge could fill the two carryover boxes.

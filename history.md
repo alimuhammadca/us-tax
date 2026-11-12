@@ -1,3 +1,11 @@
+## 2026-11-12T06:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43144232793 on 46566d32 - revision ca-ustax-be--0000595 serving 100%
+  traffic, image ustax-be:46566d3; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43144235943 on ed9b300 - live at https://www.taxbeans.com
+  (bundle main-VXHMXXVT.js).
+- Prod Postgres pg-ustax-9u14g NOT stopped: the stop command was blocked by the session's permission check; left running for the owner.
+
 ## 2026-11-12T05:00 - Archer MSA joint family limit; amortization on no activity; spouse-only rental bridge checked (outstanding.md)
 
 - Form 8853: on a joint return where both spouses contributed to an Archer MSA with family coverage, each copy took the full 75% of the

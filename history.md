@@ -1,3 +1,35 @@
+## 2026-11-12T19:30
+outstanding.md items 1-5 (owner: "do items 1-5"):
+- Schedule F QJV: the split is read from the farm's own figured row, not by list position (Wave2FieldsW4.markFarmQjv). Test
+  FarmQjvOwnRowTest.
+- Form 4797 section 1231 lookback on separate returns: checked - the spouse's return replayed the household's primary returns (the
+  Family Head's history); it now replays the spouse's own earlier separate returns (mfs_spouse) plus the typed figure.
+- Form 4852: a row with no EIN (line 6) replaces the statement whose employer / payer name (line 5) matches. Test Form4852NameMatchTest.
+- EIC married-child rule on typed rows: not changed - needs a "married at the end of 2025?" field (owner).
+- Form 5695 joint-occupant fuel cell cap: not changed - needs the total paid by all occupants (field, owner).
+- e2e: 7 Form 8814 cases that pinned a child at $1,350 or less (now not required to file, Form8814Required) moved above it; the $1,350
+  boundary case now checks there is no Form 8814 and the advisory.
+- Unit 5837/5837.
+
+## 2026-11-12T18:30
+outstanding.md items 1-10 (owner: "do items 1-10"):
+- Schedule A: the private-foundation 30% limit subtracts the full 50%-org capital gain property (Pub. 526 (2025) Worksheet 2 line 20).
+  Test CharityPrivateFoundationLimitTest.
+- Schedule A: points over the mortgage debt limit take the Pub. 936 Table 1 line 14 ratio. Test MortgagePointsDebtLimitTest.
+- Form 1116 line 3e at gross for a business (Schedule C line 7) and a rental (rents + royalties) - Form1116Inputs.netToGross.
+  Test Form1116Line3eGrossTest. The deduction-year carryover is NOT changed: Pub. 514 absorbs it up to a hypothetical limit (noted).
+- Form 1116 AMT without the 59(a)(4) election: not changed (a second Form 1116 on AMT figures + an AMT carryover; noted).
+- Schedule 2 line 17h per person: a typed figure replaces only that person's Form 1099-MISC box 15 part. Test Line17hPerPersonTest.
+- Form 4952 line 8 parts onto Schedule E / C / F: not changed - needs an activity link per part (field, owner).
+- Form 8814: a child with $1,350 or less isn't required to file - no Form 8814, FORM8814_CHILD_NOT_REQUIRED_TO_FILE (Form8814Required);
+  two TaxReturnComputeServiceTest cases that pinned a $150 / $500 child moved above the threshold.
+- Form 2555 married-couples housing check on separate returns (MfsFormScoper carries the other spouse's copy). Test MfsForeignHousingTest.
+- Form 4562 limits by year (2023 / 2024 / 2025): section 179 limit and phase-out, SUV cap, first-year auto caps; 2024 bonus 60%.
+  Test Form4562YearLimitsTest.
+- Form 8938: a joint asset in full on a separate return when the spouse is a nonresident alien (i8938 Example 11). Test
+  Form8938JointAssetTest.
+- Unit 5834/5834.
+
 ## 2026-11-12T17:30
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43264022241 on c12d3aff - revision ca-ustax-be--0000597 serving 100%

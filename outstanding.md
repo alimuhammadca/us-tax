@@ -49,12 +49,15 @@
 
 ## Missing or wrong W-2 or 1099-R (Form 4852): found in the 2026-11-10 review, not changed
 
-- A replaced Form W-2 or 1099-R is matched only by EIN; without line 6 the wrong statement still counts next to the Form 4852.
+- (A replaced Form W-2 or 1099-R is matched by EIN, or - with no EIN on line 6 - by the employer / payer name on line 5, since
+  2026-11-12, Form4852Replaces.)
 
 ## Earned income credit (line 27a): found in the 2026-11-10 review, not changed
 
 - "A social security number valid for work" is checked only as "not an ITIN"; a "Not Valid for Employment" SSN can't be told apart.
 - Married child rule (a married child qualifies only if you can claim the child as a dependent) isn't applied to typed rows.
+  (Checked 2026-11-12: the typed rows ask whether the child filed a joint return but not whether the child is married - a "married at
+  the end of 2025?" field is a field addition: owner sign-off.)
 
 ## Retirement savings credit (Form 8880): found in the 2026-11-10 review, not changed
 
@@ -71,11 +74,17 @@
 - Schedule K-1 (Form 1120-S) and Schedule K-1 (Form 1041) foreign tax are not read (no box on those statements); K-1 / K-3 income by
   category and country is typed.
 - The alternative minimum tax credit without the section 59(a)(4) election adds back all of line 3g and uses the regular carryover
-  (Form 6251 instructions: AMT items and an AMT carryover).
-- Line 3e doesn't use gross receipts before cost of goods sold for a business (net profit is in line 9).
+  (Form 6251 instructions: AMT items and an AMT carryover). (Checked 2026-11-12: needs a second Form 1116 on AMT figures per category
+  and an AMT carryover kept year to year - a new saved figure; bigger work.)
+- (Line 3e uses gross income for a business - Schedule C line 7 - and a rental - the rents and royalties - instead of their net in
+  line 9 since 2026-11-12, Form1116Inputs.netToGross.)
 - Line 16 adjustments (section 461(l) disallowed loss) and the lump-sum category worksheet are not figured.
 - The 1-year carryback isn't modelled; the accrual choice isn't checked against last year's return.
-- A carryover isn't kept when the taxes are deducted on Schedule A this year (no Form 1116 is produced to carry it).
+- A carryover isn't kept when the taxes are deducted on Schedule A this year (no Form 1116 is produced to carry it). (Checked
+  2026-11-12, Pub. 514 "Unused taxes carried to deduction year": the carryover can't be used that year, but a credit limit is still
+  figured "as if you had chosen to credit foreign taxes" and the carryover is "absorbed in that year" up to the excess limit - so it
+  needs a hypothetical Form 1116 in the deduction year plus a carry-only record the credit paths ignore. Bigger work; a bridge that
+  simply skipped deduction years was tried and reverted, as it would overstate the carryover.)
 
 ## Additional deductions (line 13b, Schedule 1-A): found in the 2026-11-10 review, not changed
 
@@ -94,8 +103,9 @@
   U.S. territory taxes on the appropriate state and local tax line" - but the same box 2 tax is usually credited through Form 5074 /
   8689 (TerritoryW2s' advisory), so deducting it is a choice like the foreign tax credit's: needs a question (field - owner sign-off).)
 - "Part" employer-paid coverage: the excess reimbursement is taxed in full instead of in proportion to the employer-paid share (Pub. 502).
-- The private-foundation 30% pool subtracts the limited capital-gain amount, not the full one (Pub. 526 worksheet 2).
-- Points are not run through the Pub. 936 Table 1 ratio when the debt is over the limit (unverified).
+- (The private-foundation 30% limit subtracts the full 50%-org capital gain property since 2026-11-12 - Pub. 526 Worksheet 2 line 20.)
+- (Points go through the Pub. 936 Table 1 line 14 ratio when the debt is over the limit since 2026-11-12 - the Table 1 line 13
+  instructions, "Claiming your deductible points".)
 - A blank average mortgage balance applies no debt limit when no Form 1098 shows the principal (since 2026-11-11 a Form 1098 box 2
   over the limit asks for it - SCHEDULE_A_MORTGAGE_AVERAGE_BALANCE_NEEDED).
 - Medical lodging people (owner decision): the field allows the patient and one companion (owner-approved 2026-10-23, Pub. 502's
@@ -166,7 +176,8 @@
 - The line 4e "Elec." choice (treating less of line 4g as net capital gain, for Form 1116 filers) and the AMT-side second Form 4952
   (Form 6251 line 2c) are not figured; their questions were removed (owner 2026-11-09).
 - The line 8 parts are taken off Schedule A and an advisory says where to deduct them; they are not carried onto Schedule E / C / F or
-  Form 6198 automatically.
+  Form 6198 automatically. (Checked 2026-11-12: the parts are amounts with no link to a business or property, so carrying them needs
+  an activity choice per part - a field: owner sign-off.)
 
 ## Credit for the elderly or disabled (Schedule R): found in the 2026-11-09 review, not changed
 
@@ -208,7 +219,9 @@
 ## Home energy credits (Form 5695): found in the 2026-11-08 review, not changed
 
 - Joint occupants (lines 7c / 32a): the fuel cell $1,667-per-half-kW cap and the per-item credit allocation among occupants are not
-  figured; the filer enters only what they paid and the box is checked.
+  figured; the filer enters only what they paid and the box is checked. (Checked 2026-11-12, i5695 Joint occupancy: the allocation is
+  "the amount you paid ... the denominator is the total amount paid by you and all other occupants" - the total paid by all occupants
+  is not asked, so it needs a field: owner sign-off.)
 - Line 17e: the form says a Yes limits the credit to improvements not related to building the home; the instructions say skip lines
   18a-20d. The calculation follows the form (the filer enters only the non-construction amounts).
 - The "statement" the form asks for (other homes, the items on the "all other" lines with their QMIDs, a second main home for fuel
@@ -244,7 +257,8 @@
 - Part III (tax items from the assets, and where reported) and Part IV (assets reported instead on Forms 3520, 3520-A, 5471, 8621, 8865)
   are not filled. The Form 8621 count could come from the app's own Forms 8621.
 - Who is a specified individual is not checked (a nonresident alien who is not electing resident status doesn't file), and on a separate
-  return a joint asset always counts at half - the full value applies when the spouse is not a specified individual.
+  return a joint asset counts in full when the spouse is a nonresident alien (not a specified individual - Instructions for Form 8938,
+  Example 11) since 2026-11-12; otherwise at half.
 - An additional page 2 renders as a full form in the preview (page 1 blank); several issuers or counterparties for one asset (one line 36
   each) are not asked.
 - The "any time" test adds up each item's maximum value, which can be more than the highest total at one moment.
@@ -287,7 +301,8 @@
 - A No is not saved (the election is the entry): on reopening an unanswered question shows; FORM8814_CHILD_STATEMENTS_NOT_ELECTED reminds
   when the child has statements.
 - The child's Form 1099-OID interest and Schedule K-1 dividends are added by the calculation but not listed on the screen; the Alaska Permanent
-  Fund dividend is read from the child's Form 1099-MISC box 3 since 2026-11-12 (payer "Alaska" + "Permanent Fund"); the "required to file" condition isn't checked.
+  Fund dividend is read from the child's Form 1099-MISC box 3 since 2026-11-12 (payer "Alaska" + "Permanent Fund"); since 2026-11-12 a child with $1,350 or less (not required to file -
+  2025 Form 1040 Chart B) gets no Form 8814 and FORM8814_CHILD_NOT_REQUIRED_TO_FILE (Form8814Required).
 
 ## Household employees (Schedule H): found in the 2026-11-07 review, not changed
 
@@ -311,7 +326,7 @@
   applicable percentage isn't kept); (since 2026-11-12 Form 1098-T box 4 asks about the
   education credit recapture and box 6 points to an amended return - Form1098TPriorYear.)
 - (The Form 8960 line 5c messages name and open the spouse's copy on a joint return since 2026-11-12, Form8960Owners.) A typed line 17h
-  replaces the Form 1099-MISC box 15 figure for both spouses.
+  replaces only its own person's Form 1099-MISC box 15 part since 2026-11-12 (Misc1099Income.applyLine17h).
 
 ## Lump-sum distributions (Form 4972): found in the 2026-11-07 review, not changed
 
@@ -334,7 +349,8 @@
 ## Foreign income (Form 2555): found in the 2026-11-06 review, not changed
 
 - MFS: (fixed 2026-11-11 - the checklist adds the spouse leg's messages, SpouseLegFlags); the married-couples
-  housing rule (no duplicated expenses) is checked only on MFJ, and an unanswered household question passes.
+  housing rule (no duplicated expenses) is checked on separate returns too since 2026-11-12 (the scoper carries the other spouse's
+  Form 2555 copy); an unanswered household question passes.
 - No line 18 trip table (the 330 days are one typed number); `housingLocationCountry` duplicates the locality choice (only printed); the
   UI keeps its own copies of $130,000 / $39,000 and the Notice 2025-16 table (now in data/foreign-housing-localities.ts).
 - Foreign self-employment net profit: since 2026-11-12 a blank one comes from the person's one business on Business income (no farm) -
@@ -405,8 +421,8 @@
 - The at-risk widening of a linked activity (`Wave2FieldsW4.atRiskSaleGain`, 2026-11-11: this year's sales only, no section 1244 stock,
   the gain after a section 121 exclusion) counts losses too since 2026-11-12 (Form 6198 lines 2a-2c): the linked sales are netted per activity and a net loss reduces the amount at
   risk left for the operating loss, never below zero. A sale loss larger than the amount at risk is still deducted in full on Form 4797.
-- MFS: the spouse's typed section 1231 lookback is dropped on the spouse leg; the lookback reads returns of kind "primary" by uid (on an MFS
-  leg the spouse may get the Family Head's history - not verified).
+- (MFS, checked 2026-11-12: the lookback replayed the household's primary returns - the Family Head's history - on the spouse's leg too;
+  the spouse's separate return now replays the spouse's own earlier separate returns (mfs_spouse) plus the typed figure.)
 - No check ties a Depreciable asset disposed of this year to a sale here (the screen now offers the shortcut); depreciation allowed isn't
   filled from the asset (not kept per asset).
 - Not asked (field additions - owner sign-off): section 1254, section 1239 related-party sales, timber (631), unharvested crops, K-1 section
@@ -416,9 +432,9 @@
 ## Depreciable assets (Form 4562): found in the 2026-11-06 review, not changed
 
 - The year fix (owner 2026-11-06) makes the depreciation engine's year tests follow the return's year (`ReferenceData.computeYear()`),
-  but the dollar limits stay the 2025 ones: a 2024 return figured here uses the 2025 section 179 limit ($2,500,000 / $4,000,000; 2024
-  was $1,220,000 / $3,050,000), 100% / 40% bonus (2024 was 60%), the $31,300 SUV cap and the 2025 auto caps by vintage. Year-specific
-  limits would need a table per year.
+  and since 2026-11-12 the dollar limits do too: the section 179 limit and phase-out, the SUV cap and the first-year auto caps for 2023
+  / 2024 / 2025 (ReferenceData.section179Max etc.), and 2024's 60% bonus (80% long production) for an asset placed in service then.
+  Years before 2023 use the 2023 figures.
 - Other fixed-2025 tests outside depreciation remain (ages, Form 8611, installment sale years, the Form 2441 child age, etc. - grep
   `ReferenceData.TAX_YEAR` in TaxReturnComputeService).
 - Not asked (field additions - owner sign-off): the class-wide elections (150% / straight line / ADS by class, bonus election out by class
@@ -450,7 +466,8 @@
 - Not asked (field additions - owner sign-off): line D (EIN); the election to report weather-related livestock sales next year;
   Schedule J farm income averaging; the farm NOL 2-year carryback; the preproductive-period election; line 34 prior-year passive loss.
 - QJV: the split reads only the Family Head's line E - the spouse's material participation is never asked (both must participate,
-  Schedule F instructions). The QJV farm is matched to its split by position.
+  Schedule F instructions). (The QJV split is read from the farm's own figured row since
+  2026-11-12, not matched by list position - Wave2FieldsW4.markFarmQjv.)
 - (Statement matching: the line 4a / 5b / 6a fill takes an exact or last-4 SSN, and since 2026-11-11 a blank TIN as the Family Head's,
   as the 1099-PATR fill does - not on the spouse's copy or where blank statements are dropped.)
 - Conservation and prepaid-supplies excess have no next-year bridge (typed by the user). (Checked 2026-11-11: a farm home office

@@ -1,3 +1,12 @@
+## 2026-11-12T22:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43290073012 on da4f6331 - revision ca-ustax-be--0000598 serving 100%
+  traffic, image ustax-be:da4f633; /q/health/ready UP (Liquibase V470 applied at startup). URL:
+  https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43290078112 on 3555826 - live at https://www.taxbeans.com
+  (bundle main-LHTLOWLX.js, unchanged).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-12T21:00
 outstanding.md bigger items (owner: "do items 1-5"):
 - Per-property at-risk carryover: the rental Form 6198 records each activity's suspended at-risk loss (V470

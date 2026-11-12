@@ -1,3 +1,12 @@
+## 2026-11-12T23:30
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43303562302 on f473a558 - revision ca-ustax-be--0000599 serving 100%
+  traffic, image ustax-be:f473a55; /q/health/ready UP (Liquibase V471 applied at startup). URL:
+  https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43303566150 on fab6268 - live at https://www.taxbeans.com
+  (bundle main-4E7ABDCG.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-12T22:30
 Per-K-1 passive losses, phase 1 (owner: "do the per-K-1 passive losses"; the field approved in the same exchange):
 - V471: pf_passive_activity_carryforward.k1_dispositions_json - on Suspended passive losses (Form 8582), each passive Schedule K-1

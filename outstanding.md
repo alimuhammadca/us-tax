@@ -468,9 +468,12 @@
   filed or not); a structured line 1a address (street / city / state / ZIP, foreign address); the line 1b type codes 2, 3, 4 and 8 (since
   2026-11-11 the output writes 6 for a royalty, 7 for a self-rental, 5 for mostly land, else 1); the line 2 QJV box; line 43 (real estate professional reconciliation). Fair rental / personal use days are
   asked and printed on line 2 since 2026-11-12 (ScheduleEParts.line2).
-- Last year's suspended passive loss and at-risk loss reach the next year only as household totals (`out_schedule_1`); with two or
-  more properties they wait for a per-property split ("not assigned" notes). `OutForm8582.worksheet_fields_json` (V417) keeps the
-  per-activity worksheet but nothing reads it next year - a per-property bridge could fill the two carryover boxes.
+- Last year's at-risk loss reaches the next year only as a household total (`out_schedule_1`); with two or more properties it waits
+  for a per-property split ("not assigned" notes). (Since 2026-11-12 the suspended PASSIVE loss is carried per property:
+  each activity's Form 8582 unallowed loss is recorded in `worksheet_fields_json` and next year fills each rental / farm rental's
+  blank prior-year loss by name - PassiveCarryforwardByActivity, FORM_8582_PRIOR_LOSS_BY_ACTIVITY. Only when the rows account for the
+  whole total: a K-1 row, a Part V share, a renamed property, a typed figure, every rental sold or a separate return keeps the
+  household total as before. The AMT carryover stays a household total.)
 
 ## Capital gain/loss: found in the 2026-11-06 review, not changed
 

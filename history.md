@@ -1,3 +1,13 @@
+## 2026-11-12T14:00
+outstanding.md (owner: "do #7"): last year's suspended passive losses carried per property.
+- Form 8582 records each activity's Part VIII unallowed loss (all of them, not just the five printed rows) in the saved worksheet
+  JSON; next year a blank prior-year suspended loss on each rental property / farm rental is filled from last year's row of the same
+  name, so selling one property frees its own loss (IRC 469(g)). Only when the rows account for the whole bridged total (rentals and
+  farm rentals only, each matching one activity, no Part V share, nothing typed, not every rental sold, not a separate return);
+  otherwise the household total bridges as before. Returns saved before this read the printed Part VIII rows. Advisory
+  FORM_8582_PRIOR_LOSS_BY_ACTIVITY - PassiveCarryforwardByActivity.
+- Tests: PassiveCarryforwardByActivityTest (unit), passive-loss-by-activity-bridge.spec.ts (two-year e2e, 2/2).
+
 ## 2026-11-12T13:00
 outstanding.md items (owner: "do items 1-6", second batch):
 - Schedule E line 2: the screen's fair rental days and personal use days are printed for each rental property (not a royalty) -

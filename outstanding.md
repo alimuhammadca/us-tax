@@ -127,7 +127,9 @@
 
 - A refinanced mortgage with a reissued certificate at a different rate during the year needs line 3 figured for each part of the year
   on an attached statement; the screen takes one rate, so the user enters the interest that gives the combined amount (the help says so).
-- Recapture when the home is sold within 9 years (Form 8828) is not figured.
+- (Recapture when the home is sold within 9 years is figured on Form 8828 - a mortgage credit certificate is one of its two subsidies;
+  since 2026-11-12 a Form 1099-S for the certificate home within 9 years of its date asks for Form 8828 until it is filled in,
+  FORM_8828_MCC_HOME_SOLD - Form 8396, Recapture of Credit.)
 
 ## Electric vehicle credit (Form 8834): found in the 2026-11-09 review, not changed
 

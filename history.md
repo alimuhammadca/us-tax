@@ -1,3 +1,11 @@
+## 2026-11-13T01:20
+Form 8396 / Form 8828: a mortgage credit certificate home sold within 9 years points to Form 8828.
+- outstanding.md's "Recapture when the home is sold within 9 years (Form 8828) is not figured" was half stale: Form 8828 figures it for a
+  mortgage credit certificate (line 2). What was missing is the link: Form 8396 (2025), Recapture of Credit. A Form 1099-S whose address
+  matches Mortgage interest credit's certificate home, closed within 9 years of the certificate's date, now gets FORM_8828_MCC_HOME_SOLD
+  (formId form-8828) until Form 8828 is answered Yes. Form8828Compute.flagMccHomeSold.
+- Tests: Form8828MccHomeSoldTest; e2e form8828-mcc-home-sold.spec.ts.
+
 ## 2026-11-13T00:50
 Form 8936: the 2024 MAGI is tested against the 2024 filing status's limit.
 - Instructions for Form 8936 (2025), "Special rule for change in filing status": allowed when the MAGI is not over the threshold for the

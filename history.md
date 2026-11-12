@@ -1,3 +1,10 @@
+## 2026-11-12T09:00 - Form 4563 / Puerto Rico excluded wages that are also on a Form W-2 (outstanding.md)
+
+- Wages excluded on Income earned in a US territory (American Samoa, Form 4563 line 15; Puerto Rico, IRC 933) are left out of U.S.
+  income, but an ordinary Form W-2 with the same pay still puts them on line 1a - counted and excluded at once, with no message.
+  TerritoryExclusion.flagWagesOnW2: when a person's excluded wages equal box 1 of one of their Forms W-2 (or all of them together),
+  FORM_4563_EXCLUDED_WAGES_ALSO_ON_W2 opens that person's screen; the amounts stay the user's. TerritoryExcludedWagesOnW2Test.
+
 ## 2026-11-12T08:00 - Form 8960 line 5c messages name the spouse's copy (outstanding.md)
 
 - On a joint return the two Other tax items copies are merged, so the line 5c messages said "one of you" (passive owner) or "you"

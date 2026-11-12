@@ -315,8 +315,8 @@
 
 - Puerto Rico: no Form 499R-2/W-2PR statement, so Puerto Rico wages are typed only; the part-year rule for leaving Puerto Rico (income
   before the move) and the year-of-move tests are explained, not checked.
-- An ordinary Form W-2 for work in American Samoa or Puerto Rico stays on line 1a (the screen says so); no advisory when the excluded
-  wages match one.
+- An ordinary Form W-2 for work in American Samoa or Puerto Rico stays on line 1a (the screen says so). (Since 2026-11-12 excluded
+  wages equal to one of the person's Forms W-2, or all of them together, get FORM_4563_EXCLUDED_WAGES_ALSO_ON_W2.)
 - The 10-year rule for gains on property held before residence, U.S. government pay entered as excluded wages, and income typed for
   Guam / CNMI / USVI under an old save are not flagged; Form 8898 is a separate notice (not produced).
 - Form 4563 line 6 prints the first four absences (no continuation statement); line 4b's rented / relationship answers are free text.

@@ -135,8 +135,9 @@
 
 - The business/investment-use part of a new clean vehicle credit (Schedule A line 11) is a general business credit (Form 3800 line 1y)
   and is not figured; the commercial clean vehicle credit (Part V, Form 8936 line 19+) neither.
-- The 2024 MAGI is typed; it could be filled from a 2024 return done here (line 11 plus the exclusions). The 2024 test uses the 2025
-  filing status; the instructions' special rule tests each year with its own status.
+- (The 2024 MAGI fills a blank line 3a from a 2024 return done here since 2026-11-11: line 11 plus the exclusions - Schedule 1-A /
+  Schedule 8812 lines 2a-2d, else Form 2555 lines 45 + 50. An uploaded 2024 Form 1040 doesn't fill it: it has no exclusion amounts.)
+- The 2024 test uses the 2025 filing status; the instructions' special rule tests each year with its own status.
 - "Can someone claim you as a dependent?" is asked here; the household answer lives on several screens (EIC, Saver's credit), not one.
 - Basis reduction for a business vehicle (Schedule A line 9 / 17) is not passed to depreciation.
 
@@ -432,8 +433,8 @@
   Schedule J farm income averaging; the farm NOL 2-year carryback; the preproductive-period election; line 34 prior-year passive loss.
 - QJV: the split reads only the Family Head's line E - the spouse's material participation is never asked (both must participate,
   Schedule F instructions). The QJV farm is matched to its split by position.
-- Statement matching: the line 4a / 5b / 6a fill takes an exact or last-4 SSN (2026-11-11) but not a blank TIN, which the 1099-PATR
-  fill also takes.
+- (Statement matching: the line 4a / 5b / 6a fill takes an exact or last-4 SSN, and since 2026-11-11 a blank TIN as the Family Head's,
+  as the 1099-PATR fill does - not on the spouse's copy or where blank statements are dropped.)
 - Conservation and prepaid-supplies excess have no next-year bridge (typed by the user). (Checked 2026-11-11: a farm home office
   never goes through Form 8829 - Home office offers only Schedule C businesses - so it is deducted on Schedule F line 32 as the
   instructions say.)

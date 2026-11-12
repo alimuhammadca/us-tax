@@ -1,3 +1,13 @@
+## 2026-11-12T07:00 - Schedule F blank-TIN statements; Form 8936 2024 MAGI from last year's return (outstanding.md)
+
+- Schedule F: the line 4a / 5b / 6a fill (Forms 1099-G box 7, 1099-MISC box 9, CCC Form 1099-A) skipped a statement with no recipient
+  TIN, which the person filter keeps on the primary return as the Family Head's - the Form 1099-PATR fill already took it. Now a blank
+  TIN fills the Family Head's single farm (not the spouse's, not where blank statements are dropped). ScheduleFBlankTinTest.
+- Form 8936 line 3a (2024 modified AGI): GET /api/estimated-tax/prior-year returns cleanVehicleMagi - last year's line 11 plus the
+  income excluded from it (Schedule 1-A / Schedule 8812 lines 2a-2d, else Form 2555 lines 45 + 50), from a return computed here only.
+  The Clean vehicle credit screen fills a blank line 3a with it, with a note; anything typed wins. UI spec + e2e
+  form8801-mfs-spouse-bridge.spec.ts (joint 2024: 120,000 on the Family Head's copy, nothing on the spouse's).
+
 ## 2026-11-12T06:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43144232793 on 46566d32 - revision ca-ustax-be--0000595 serving 100%

@@ -1,3 +1,11 @@
+## 2026-11-12T17:30
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43264022241 on c12d3aff - revision ca-ustax-be--0000597 serving 100%
+  traffic, image ustax-be:c12d3af; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43264026710 on 3555826 - live at https://www.taxbeans.com
+  (bundle main-LHTLOWLX.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-12T16:00
 outstanding.md items 1-7 (owner: "do items 1-7"):
 - UI: Schedule H and Form 4137 previews on separate returns read the tab's own figured return (its filer copy), not the household

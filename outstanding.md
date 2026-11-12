@@ -20,6 +20,8 @@
 - Part III amounts are typed per account or asset; they aren't drawn from the statements (a foreign payer's Form 1099-INT) or the
   return's lines, and nothing checks them against the return.
 - Line 18 counts one Form 8621 per copy of Other tax items reporting a PFIC; more PFICs (and PFICs filed without tax) aren't counted.
+  (Checked 2026-11-12: Other tax items holds one PFIC per copy, so a higher count needs a field - a PFIC count or a Forms 8621
+  count on Foreign assets like the Forms 3520 / 5471 counts: owner sign-off.)
 
 ## Other payments / credits (Schedule 3 Part II): found in the 2026-11-10 review, not changed
 
@@ -167,8 +169,9 @@
 
 ## Credit for the elderly or disabled (Schedule R): found in the 2026-11-09 review, not changed
 
-- The credit needs the claim answer: a person 65 or older who never opens the screen gets no Schedule R (the Yes is filled only when
-  the screen is opened). Consider claiming by age automatically.
+- (Since 2026-11-12 a blank claim answer is a claim when the Family Head, or the spouse on a joint return, is 65 or older -
+  ScheduleRByAge; an answered No stays; a credit figured that way gets SCHEDULE_R_CLAIMED_BY_AGE asking to check line 13b's
+  nontaxable pensions, which are only on the screen.)
 - Line 13a is Form 1040 line 6a minus 6b; workers' compensation that reduced Social Security benefits ("treat ... as social security
   benefits") isn't added. (Checked 2026-11-12: p17 / p525 call that part of workers' compensation social security benefits; whether the
   SSA-1099 box 3 already includes it - so line 6a has it - needs Pub. 915 or the SSA-1099 text, neither readable locally.)
@@ -183,8 +186,8 @@
 - One total, not per credit and year: credits past their 20-year carryforward can't be dropped, specified credits (IRC 38(c)(4),
   allowed against the tentative minimum tax, Part II line 34) are treated as ordinary ones, and passive activity credits (Form
   8582-CR) have no entry.
-- Line 7 includes Form 8621 tax, section 965(i) tax and education credit recapture, which the instructions leave out (the same
-  simplification as Form 8912 line 7).
+- (Line 7 leaves out education credit recapture, Form 8621 tax and section 965(i) tax since 2026-11-12 - i3800 line 7, Form3800Line7.
+  Form 8912 line 7 has no such exclusion and keeps them.)
 
 ## Suspended passive losses (Form 8582): found in the 2026-11-09 review, not changed
 
@@ -225,8 +228,9 @@
 
 ## Mortgage subsidy recapture (Form 8828): found in the 2026-11-08 review, not changed
 
-- The sale is typed here although the home sale may also be on Capital gain/loss (Form 1099-S); the sales price, expenses and basis could be
-  filled from it.
+- (Since 2026-11-12 a blank sales price, sale date or address comes from the home's Form 1099-S - the only one with gross proceeds, or
+  the one with the screen's address; FORM_8828_FILLED_FROM_1099S. Not on a separate return.) The expenses of sale and basis stay typed
+  (not on Form 1099-S).
 - Line 13's qualifying subordinate mortgage loan (QSML) adjustment ("QSML" and the share of gain paid to the lender) is not supported; one
   home per year only.
 
@@ -269,8 +273,9 @@
 ## Additional deductions (Schedule 1-A): found in the 2026-11-07 review, not changed
 
 - Tips: the SSN "valid for employment", tips in a specified service trade or business, and the occupation code (TTOC) aren't asked; the
-  business net income for tips (Schedule 1-A line 5) is typed, not taken from Schedule C / F; one net income for all of a person's
-  businesses (the Multiple Trades or Businesses Worksheet isn't built).
+  business net income for tips (Schedule 1-A line 5) is figured from Schedule C / F when the return has exactly one business
+  (Schedule1ATradeTipsLimit, since 2026-11-10); with more than one - including one each for two spouses - it is typed, one net
+  income per person (the Multiple Trades or Businesses Worksheet isn't built).
 - Overtime: the FLSA-eligible question isn't asked; the Forms W-2 box 14 overtime premium isn't read.
 - Car loan: the loan "originated by you", lemon-law replacements and the change of obligor at death aren't asked; existing vehicles must
   answer the two new conditions (V437) before the return is figured.
@@ -280,8 +285,8 @@
 
 - A No is not saved (the election is the entry): on reopening an unanswered question shows; FORM8814_CHILD_STATEMENTS_NOT_ELECTED reminds
   when the child has statements.
-- The child's Form 1099-OID interest and Schedule K-1 dividends are added by the calculation but not listed on the screen; Alaska Permanent
-  Fund dividends aren't read from a Form 1099-MISC; the "required to file" condition isn't checked.
+- The child's Form 1099-OID interest and Schedule K-1 dividends are added by the calculation but not listed on the screen; the Alaska Permanent
+  Fund dividend is read from the child's Form 1099-MISC box 3 since 2026-11-12 (payer "Alaska" + "Permanent Fund"); the "required to file" condition isn't checked.
 
 ## Household employees (Schedule H): found in the 2026-11-07 review, not changed
 

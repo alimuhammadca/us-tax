@@ -1,3 +1,17 @@
+## 2026-11-12T12:00
+outstanding.md items (owner: "do items 1-6"):
+- Schedule 1-A line 5 (tips business net income): already figured from Schedule C / F for a return with one business
+  (Schedule1ATradeTipsLimit, 2026-11-10) - the outstanding note was stale; corrected (more than one business stays typed).
+- Form 3800 Part II line 7 leaves out education credit recapture, Form 8621 tax and section 965(i) tax (2025 Instructions for Form
+  3800, line 7) - Form3800Line7; Form 8912 line 7 has no such exclusion and is unchanged. Test Form3800Line7Test.
+- Form 8938 line 18 Form 8621 count: not changed - Other tax items holds one PFIC per copy, so a higher count needs a field (owner).
+- Form 8814 line 2a: the child's Alaska Permanent Fund dividend comes from the State's Form 1099-MISC box 3 (payer name has "Alaska"
+  and "Permanent Fund"), unless line 2a or the Alaska portion is typed - ChildInterest8814.alaskaFromMisc. Test Form8814AlaskaMiscTest.
+- Schedule R: a blank claim answer is a claim when the Family Head (or the spouse on a joint return) is 65 or older; a No stays.
+  Advisory SCHEDULE_R_CLAIMED_BY_AGE asks to check line 13b's nontaxable pensions - ScheduleRByAge. Test ScheduleRByAgeTest.
+- Form 8828: a blank sales price (line 9), sale date (line 6) or address (line 1) comes from the home's Form 1099-S (boxes 2, 1, 3);
+  not on a separate return. Advisory FORM_8828_FILLED_FROM_1099S - Form8828Compute.withStatement. Test Form8828From1099STest.
+
 ## 2026-11-12T11:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43230941289 on e5666bce - revision ca-ustax-be--0000596 serving 100%

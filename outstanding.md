@@ -300,7 +300,8 @@
 - The section 962 election is also asked on Other incomes (`hasSection962CfcElection`, only for the 8n/8o blocker) and exists backend-only on
   standard deductions - three copies of one fact; SECTION_962_DEDUCTION_NOT_ON_LINE_12E is raised from the hidden copy.
 - On a joint return the PFIC Part V facts are first-entry while line 16e is summed; section 453A interest (line 15) is detected on Form 6252
-  but not figured; Form 1098-T boxes 4 / 6 could prompt the education credit recapture question.
+  but not figured; (since 2026-11-12 Form 1098-T box 4 asks about the
+  education credit recapture and box 6 points to an amended return - Form1098TPriorYear.)
 - (The Form 8960 line 5c messages name and open the spouse's copy on a joint return since 2026-11-12, Form8960Owners.) A typed line 17h
   replaces the Form 1099-MISC box 15 figure for both spouses.
 

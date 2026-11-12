@@ -1,3 +1,11 @@
+## 2026-11-12T10:00 - Form 1098-T prior-year boxes 4 and 6 (outstanding.md)
+
+- Form 1098-T box 4 (adjustments for a prior year's qualified expenses) and box 6 (adjustments to a prior year's scholarships) were
+  read by nothing. Form 1098-T Instructions for Student: box 4 "may reduce any allowable education credit that you claimed for the
+  prior year (may result in an increase in tax liability for the year of the refund)"; box 6 "You may have to file an amended income
+  tax return (Form 1040-X)". Form1098TPriorYear: box 4 with no recapture entered -> FORM_1098T_PRIOR_YEAR_EXPENSES_REDUCED (opens
+  Other tax items); box 6 -> FORM_1098T_PRIOR_YEAR_SCHOLARSHIP_ADJUSTED. Advisories only. Form1098TPriorYearTest.
+
 ## 2026-11-12T09:00 - Form 4563 / Puerto Rico excluded wages that are also on a Form W-2 (outstanding.md)
 
 - Wages excluded on Income earned in a US territory (American Samoa, Form 4563 line 15; Puerto Rico, IRC 933) are left out of U.S.

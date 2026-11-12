@@ -318,7 +318,8 @@
 
 - A No is not saved (the election is the entry): on reopening an unanswered question shows; FORM8814_CHILD_STATEMENTS_NOT_ELECTED reminds
   when the child has statements.
-- The child's Form 1099-OID interest and Schedule K-1 dividends are added by the calculation but not listed on the screen; the Alaska Permanent
+- (The child's Form 1099-OID interest and Schedule K-1 dividends are listed on the screen and in its totals since 2026-11-12, and a K-1
+  with the child's number only in Part II item E / F counts - ChildInterest8814.k1sForChild.) The Alaska Permanent
   Fund dividend is read from the child's Form 1099-MISC box 3 since 2026-11-12 (payer "Alaska" + "Permanent Fund"); since 2026-11-12 a child with $1,350 or less (not required to file -
   2025 Form 1040 Chart B) gets no Form 8814 and FORM8814_CHILD_NOT_REQUIRED_TO_FILE (Form8814Required).
 
@@ -337,7 +338,8 @@
 - Foreign Earned Income Tax Worksheet line 2b (`feitwLine2bDisallowedDeductions`) is read by the calculation but asked nowhere; it belongs on
   Foreign income (owner: keep as saved).
 - The section 962 election is also asked on Other incomes (`hasSection962CfcElection`, only for the 8n/8o blocker) and exists backend-only on
-  standard deductions - three copies of one fact; SECTION_962_DEDUCTION_NOT_ON_LINE_12E is raised from the hidden copy.
+  standard deductions - three copies of one fact (removing the extra two is a field removal: owner sign-off); since 2026-11-12
+  SECTION_962_DEDUCTION_NOT_ON_LINE_12E comes with the figured section 962 tax on Other tax items, not from the hidden copy.
 - On a joint return the PFIC Part V facts are first-entry while line 16e is summed; section 453A interest (line 15) is figured for the year of
   sale since 2026-11-12 (Pub. 537: deferred tax liability at 20% long-term / 37% otherwise x applicable percentage x the 7% December 2025
   underpayment rate; a typed line 15 wins) - a later year's interest on a year-of-sale obligation is still an advisory (the year-of-sale
@@ -372,7 +374,8 @@
 - No line 18 trip table (the 330 days are one typed number); `housingLocationCountry` duplicates the locality choice (only printed); the
   UI keeps its own copies of $130,000 / $39,000 and the Notice 2025-16 table (now in data/foreign-housing-localities.ts).
 - Foreign self-employment net profit: since 2026-11-12 a blank one comes from the person's one business on Business income (no farm) -
-  ForeignSeNetProfit; with two or more businesses it is typed (Business income has no foreign-business marker). ("No" to "already on a Form W-2" next to a W-2
+  ForeignSeNetProfit; with two or more businesses, the ones marked "income from outside the United States" (V472) fill it since
+  2026-11-12 (not with a marked farm or qualified joint venture). ("No" to "already on a Form W-2" next to a W-2
   with the same pay or employer has an advisory since 2026-11-11; the answer stays the user's.)
 - Notice 2025-16 amounts and the IRS yearly exchange rates are not in the local library - unverified.
 

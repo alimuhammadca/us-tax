@@ -1,3 +1,16 @@
+## 2026-11-13T05:00
+Form 2555 from the marked businesses; Form 8814 OID / K-1 on the screen; section 962 note from the visible election.
+- Form 2555: a blank foreign self-employment net profit is filled from the businesses marked "income from outside the United States"
+  (V472), any number of them (ForeignSourceBusinessLoss.noteScheduleC per person); a lone business answered No is no longer used; not
+  with a marked farm or qualified joint venture.
+- Form 8814: the Child's int. & dividends screen lists the child's Forms 1099-OID and Schedule K-1 dividends and adds them to its totals,
+  as the calculation does. The calculation now takes a child's K-1 with the child's number only in Part II item E / F
+  (ChildInterest8814.k1sForChild) - it read the recipient TIN only.
+- SECTION_962_DEDUCTION_NOT_ON_LINE_12E: raised with the figured section 962 tax (Other tax items), not from the hidden Standard or
+  itemized deductions copy; the message no longer says nothing is routed.
+- Tests: ForeignSeNetProfitTest, ChildInterest8814K1OwnerTest, child-interest-dividends-screen.spec.ts (UI), TaxReturnComputeServiceTest
+  section 962, Sc00240SqaScenarioTest; e2e foreign-business-2555-and-child-k1.spec.ts, line12e-standard-deductions.spec.ts (GAP-G8).
+
 ## 2026-11-13T04:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43322886681 on 559d9d56 - revision ca-ustax-be--0000600 serving 100%

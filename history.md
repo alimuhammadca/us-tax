@@ -1,3 +1,10 @@
+## 2026-11-13T01:50
+Schedule 3 line 13b: the dead SECTION_1341_REPAYMENT_BELOW_THRESHOLD advisory removed.
+- The typed section 1341 credit isn't read (2026-11-10 screen review); the two figured credits (claim of right A15, Social Security
+  repayment A63) are figured only over $3,000, so the advisory could not fire. Removed with its flag-form link (us-tax-ui).
+- SECTION_1341_DEDUCTION_AND_CREDIT_BOTH_CLAIMED kept: it can still fire when a typed claim-of-right deduction meets the figured Social
+  Security repayment credit - recorded in outstanding.md for the owner's decision.
+
 ## 2026-11-13T01:20
 Form 8396 / Form 8828: a mortgage credit certificate home sold within 9 years points to Form 8828.
 - outstanding.md's "Recapture when the home is sold within 9 years (Form 8828) is not figured" was half stale: Form 8828 figures it for a

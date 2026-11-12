@@ -26,8 +26,11 @@
 ## Other payments / credits (Schedule 3 Part II): found in the 2026-11-10 review, not changed
 
 - Lines 12 and 13c are typed totals: Form 4136 and Form 3800 Part III are not produced.
-- `SECTION_1341_REPAYMENT_BELOW_THRESHOLD` and `SECTION_1341_DEDUCTION_AND_CREDIT_BOTH_CLAIMED` can no longer be reached from a
-  typed credit (it isn't read); the code stays for the figured paths.
+- (`SECTION_1341_REPAYMENT_BELOW_THRESHOLD` was removed 2026-11-12: both figured credits - claim of right and the Social Security
+  repayment - are figured only over $3,000, so it could not fire.) `SECTION_1341_DEDUCTION_AND_CREDIT_BOTH_CLAIMED` (blocking,
+  non-overrideable) can't fire for the claim-of-right credit (its pass drops the deduction), but it can when a claim-of-right
+  deduction is typed AND the Social Security repayment credit wins (Pub. 915 method 2) - two different repayments, each with its own
+  remedy, so the block may be false there (or right, if the typed deduction is the same Social Security repayment). Owner decision.
 
 ## Credits after disallowance (Form 8862): found in the 2026-11-10 review, not changed
 
@@ -78,7 +81,9 @@
   and an AMT carryover kept year to year - a new saved figure; bigger work.)
 - (Line 3e uses gross income for a business - Schedule C line 7 - and a rental - the rents and royalties - instead of their net in
   line 9 since 2026-11-12, Form1116Inputs.netToGross.)
-- Line 16 adjustments (section 461(l) disallowed loss) and the lump-sum category worksheet are not figured.
+- Line 16 adjustments (section 461(l) disallowed loss) and the lump-sum category worksheet are not figured. (Checked 2026-11-12: i1116
+  line 16 adjustment 1 adds back the disallowed loss "to the extent it is attributable to the separate category" - no business is
+  marked foreign-source and the Form 1116 country rows aren't linked to a Schedule C, so the share needs a field: owner sign-off.)
 - The 1-year carryback isn't modelled; the accrual choice isn't checked against last year's return.
 - A carryover isn't kept when the taxes are deducted on Schedule A this year (no Form 1116 is produced to carry it). (Checked
   2026-11-12, Pub. 514 "Unused taxes carried to deduction year": the carryover can't be used that year, but a credit limit is still

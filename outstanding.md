@@ -158,8 +158,8 @@
 
 ## Investment interest (Form 4952): found in the 2026-11-09 review, not changed
 
-- Gross investment income (line 4a) and qualified dividends (line 4b) are typed; the return's Forms 1099-INT / 1099-DIV could fill them
-  (only the investment part - interest from a business isn't investment income), shown as a figure, not copied.
+- Gross investment income (line 4a) and qualified dividends (line 4b) are typed; since 2026-11-12 the screen shows the person's own
+  Forms 1099-INT (boxes 1 + 3) and 1099-DIV (1a, 1b) totals as a guide (`#statementIncomeGuide`), not copied.
 - Investment interest is asked on two screens: Standard or itemized deductions (a simple interest / net investment income pair) and this
   one. With this screen Yes, the first is ignored (the screen says so). One place would be better.
 - The line 4e "Elec." choice (treating less of line 4g as net capital gain, for Form 1116 filers) and the AMT-side second Form 4952
@@ -479,25 +479,22 @@
 
 - The column `pf_capital_gain_loss.imported_1099div_box2a_capital_gain_distributions_total` (`imported1099divBox2aCapitalGainDistributionsTotal`) is saved by no screen
   and read by nothing since 2026-11-11 (the compute's misspelled reads were removed); dropping it is a field removal (owner sign-off).
-- Forms 2439, 6252, 4797, 4684, 6781 and 8824 are not in `utils/statement-recipient.ts` STATEMENT_PERSON_TIN; the screen reads
-  Form 2439 by `shareholderTIN` and the others by `ownerRole` itself.
+- (Form 2439 is in `utils/statement-recipient.ts` STATEMENT_PERSON_TIN since 2026-11-12 - `shareholderTIN`. Forms 6252, 4797, 4684,
+  6781 and 8824 have no person number - their screens record `ownerRole` - so they stay out of it.)
 - The reduced home sale exclusion is figured per return, not per spouse as Pub. 523 Worksheet 3 does on a joint return.
+  (Checked 2026-11-12: Worksheet 3 adds the qualifying spouse's $250,000 to the other spouse's reduced share, which needs that
+  spouse's own days of use - the screen asks only whether the spouse lived there 2 of 5 years. A spouse "days used as main home"
+  field is a field addition: owner sign-off.)
 
-## Interest income: Form 8815 section is still a 3-step wizard inside the page (found 2026-11-05, checklist item 18 audit)
-
-- The savings-bond education exclusion section steps through "Step 1 / 2 / 3" (`form8815Step`) with its own Back / Next.
-  Item 18: make it one revealing section when Interest income is next touched.
 
 ## Screens with their own Save button instead of the shared bar (checklist item 17 audit, 2026-11-05)
 
-- 44 personal screens still end with a Save of their own (no `<form-actions>`), two of them with the sticky bar IRA income
-  had (Foreign earned income, Possession residence exclusion). Switch each when it is reviewed. Among them: business
-  casualties, business income, business property sales, capital gain/loss (both), child interest and dividends, dependents,
-  depreciation asset, farm income, farm rental, foreign earned income, foreign tax credit (both), Form 8862, home office,
-  household employees, HSA, income adjustments (both), installment sales, kiddie income, like-kind exchanges, line 16 tax,
-  lump-sum distribution, MSA / LTC, other incomes (both), possession residence exclusion, premium tax credit, rental income,
-  SE deductions, SE tax options, social security benefits (both), additional deductions, education credits (the item 17
-  audit lists the rest).
+- (Re-audited 2026-11-12: every personal screen in the sidebar has the shared `<form-actions>` bar.) Left: `form-dependents`
+  (registered as 'dependents' with no sidebar item - a legacy screen like the four under Refund; Save is disabled until valid),
+  and two components nothing uses, `form-filing-status.component.ts` and `form-employment.component.ts` (dead files - remove
+  with the legacy screens, owner sign-off). Form 1042-S is a statement (statement toolbar, not this bar).
+- The UI spec `form-filing-status-taxpayer.component.spec.ts` has 2 failing tests ("saves only canonical filing-status keys",
+  "saves the YAML nonresident-spouse field set") - they fail on the code before 2026-11-12's changes too; not looked into.
 
 ## Interest income spouse copy: three fields the Family Head copy has (found 2026-11-05, screen review)
 

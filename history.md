@@ -1,3 +1,15 @@
+## 2026-11-12T15:00
+outstanding.md items 1-5 (owner: "do items 1-5"):
+- Reduced home sale exclusion per spouse (Pub. 523 Worksheet 3): not changed - needs the other spouse's days of use, a field (owner).
+- UI: Form 2439 joins STATEMENT_PERSON_TIN (shareholderTIN); the other Capital gain/loss forms record ownerRole and stay out.
+- UI: Interest income's Form 8815 wizard is three parts on one page (Students and schools / Education costs and bond proceeds /
+  Income limit) - no step pills or Back / Next; the wizard state and CSS removed (both copies) - checklist item 18.
+- Shared bar audit: every sidebar personal screen already has <form-actions>; left the legacy 'dependents' screen and two unused
+  components (owner, with the legacy screens).
+- UI: Investment interest (Form 4952) shows the person's own Forms 1099-INT / 1099-DIV totals as a guide for lines 4a / 4b.
+- Tests: statement-owner.spec, form-interest-expense.component.spec (UI 734/736 - the 2 Filing status spec failures predate this);
+  e2e form8815-parts-and-4952-guide-ui.spec.ts 2/2, interest / investment interest specs 34/34.
+
 ## 2026-11-12T14:00
 outstanding.md (owner: "do #7"): last year's suspended passive losses carried per property.
 - Form 8582 records each activity's Part VIII unallowed loss (all of them, not just the five printed rows) in the saved worksheet

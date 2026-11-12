@@ -1,3 +1,17 @@
+## 2026-11-12T05:00 - Archer MSA joint family limit; amortization on no activity; spouse-only rental bridge checked (outstanding.md)
+
+- Form 8853: on a joint return where both spouses contributed to an Archer MSA with family coverage, each copy took the full 75% of the
+  deductible - a doubled limit. Instructions for Form 8853, How To Complete Part I (2): "If either spouse has an HDHP with family coverage,
+  you both are treated as having only the family coverage plan" (the lowest deductible when both do) - one limit, divided equally
+  unless a line 3 is typed on either copy (the agreed division). `HsaMsaRules.jointArcherFamilyLimit`; advisory
+  FORM_8853_FAMILY_LIMIT_DIVIDED. A single spouse's Archer MSA keeps the full limit.
+- Form 4562: an amortization whose activity is "Other" or matches no business, farm or rental was deducted nowhere but listed on Part
+  VI; FORM_4562_AMORTIZATION_NOT_ON_AN_ACTIVITY now says so and opens Depreciable assets (`Wave2FieldsW3a.unapplied`).
+- Rental: the imported at-risk carryover seeded on the Family Head's form reaches a rental only the spouse has (pooled, the only
+  activity) - locked in by `RentalBridgeSpouseOnlyTest`.
+- Tests: Java `ArcherMsaJointFamilyLimitTest` (2), `AmortizationNotOnActivityTest` (1), `RentalBridgeSpouseOnlyTest` (1). Unit suite
+  5771/5771; e2e msa-ltc-screen, owner-approved-fields-w6, depreciation-asset-screen, schedule-e-rental-income 22/22.
+
 ## 2026-11-12T00:15:00Z
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43121278576 on f98aedf5 - revision ca-ustax-be--0000594 serving 100%

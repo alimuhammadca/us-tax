@@ -329,9 +329,8 @@
 
 ## Archer MSA / LTC (Form 8853): found in the 2026-11-06 review, not changed
 
-- MFJ with both spouses on family coverage: each copy gets the full 75% of the lower deductible - looks like a doubled limit (i8853 p.3
-  "treated as having only the family coverage plan"); medium confidence, not changed. `spouseFamilyPlanDeductible` is typed, not read
-  from the other spouse's copy.
+- `spouseFamilyPlanDeductible` is typed, not read from the other spouse's copy. (The joint-return doubled family limit was fixed
+  2026-11-11: both spouses' Archer MSAs share one limit, divided equally unless a line 3 is typed - HsaMsaRules.jointArcherFamilyLimit.)
 - Medicare Advantage MSA: no partial amount for the death / disability exception (Archer has one) - a field addition.
 - No line 6a / 10 override (Form 1099-SA code 2 has been added to Archer line 6b since 2026-11-11).
 - Form 5498-SA is read by no compute; Medicare months are not derived from the date of birth.
@@ -407,8 +406,7 @@
   with its statement), the general asset account, line 24c (aircraft), line 35 (5% owner), Section C (employer policy), basis reductions
   for credits, like-kind exchange carryover basis, the personal-to-business conversion value, QPP designated basis and statement.
 - Earlier depreciation and amortization aren't kept per asset after a return, so the carried asset asks the user to add last year's.
-- Amortization with "Other" or no match is skipped silently, yet Form 4562 Part VI can still list it. (An asset of a not-for-profit
-  business is reported since 2026-11-11.)
+- (Amortization on no activity - "Other" or no match - is reported since 2026-11-11: FORM_4562_AMORTIZATION_NOT_ON_AN_ACTIVITY.)
 
 ## Self-employment tax options: found in the 2026-11-06 review, not changed
 
@@ -458,8 +456,6 @@
 - Last year's suspended passive loss and at-risk loss reach the next year only as household totals (`out_schedule_1`); with two or
   more properties they wait for a per-property split ("not assigned" notes). `OutForm8582.worksheet_fields_json` (V417) keeps the
   per-activity worksheet but nothing reads it next year - a per-property bridge could fill the two carryover boxes.
-- The imported at-risk and vacation-home carryovers are seeded onto the Family Head's form only (TRCS ~2503-2525); a joint return
-  where only the spouse has the rental is not covered by a test.
 
 ## Capital gain/loss: found in the 2026-11-06 review, not changed
 

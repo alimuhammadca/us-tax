@@ -205,9 +205,13 @@
 
 ## Suspended passive losses (Form 8582): found in the 2026-11-09 review, not changed
 
-- (Checked 2026-11-12: a large change - the passive engine and the Form 8582 worksheet treat the passive K-1s as one combined
-  amount, so each K-1 must become its own activity through the regular and AMT pools; not started.) Last year's unallowed K-1 losses
-  are entered as three totals, not per activity, so a K-1 activity sold in full this year doesn't
+- (2026-11-12, owner-approved field V471: a passive K-1 marked final asks on Suspended passive losses whether the entire interest went
+  in a fully taxable transaction to an unrelated party; a Yes takes it out of the passive pool and allows its items and - when it is
+  the only passive K-1 - the typed carried loss in full, IRC 469(g) - K1Disposition, FORM_8582_K1_DISPOSED_RELEASED. With several
+  passive K-1s the carried share can't be told from the total (FORM_8582_K1_DISPOSED_PRIOR_NOT_SPLIT). Still to do: the per-K-1
+  worksheet rows and carryover (each K-1 its own Form 8582 activity, recorded and seeded by name), which needs the AMT side kept in
+  step - the seeded K-1 priors would otherwise sit both in the AMT total and the Part V pool. PTPs are left out.) Last year's
+  unallowed K-1 losses are entered as three totals, not per activity, so a K-1 activity sold in full this year doesn't
   release its own carried loss (Form 8582 "entire disposition"); the PTP box and the at-risk carryover are used only when exactly one
   matching K-1 is on the return.
 - The Part V share is one total (V469, 2026-11-11), not per activity: with every rental disposed of it is released with them only when no

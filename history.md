@@ -1,3 +1,15 @@
+## 2026-11-12T22:30
+Per-K-1 passive losses, phase 1 (owner: "do the per-K-1 passive losses"; the field approved in the same exchange):
+- V471: pf_passive_activity_carryforward.k1_dispositions_json - on Suspended passive losses (Form 8582), each passive Schedule K-1
+  marked final (not a PTP) asks "did you dispose of the entire interest in a fully taxable transaction to an unrelated party?"
+  (a final K-1 alone can mean a liquidation, a gift or a death).
+- A Yes takes the K-1 out of the passive pool (box 1 when passive, boxes 2-3; a Form 1041 K-1's box 6 and rental items) and allows them,
+  with its carried loss when it is the only passive K-1, as nonpassive (IRC 469(g); i8582 Activities That Are Disposed Of) -
+  K1Disposition, K1PassiveClasses.Plan.disposedRelease; the bridged total stays off when a typed prior was released.
+- Not yet: per-K-1 Form 8582 rows and carryover (phase 2; AMT side to keep in step).
+- Tests: K1DispositionTest; k1-disposition-release.spec.ts (Yes -35,000 / No 35,000 carried; the screen question saves).
+  Unit 5844/5844.
+
 ## 2026-11-12T22:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43290073012 on da4f6331 - revision ca-ustax-be--0000598 serving 100%

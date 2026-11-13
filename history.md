@@ -1,3 +1,17 @@
+## 2026-11-13T15:30:00
+outstanding.md items (owner: "yes, do items 1-3").
+- Form 1116: last year's accrued choice binds this year (Instructions for Form 1116, Foreign Taxes Paid or Accrued). When last year's
+  return here credited accrued taxes, a blank "Taxes paid or accrued" is taken as accrued (FORM_1116_ACCRUED_FROM_PRIOR_YEAR, advisory)
+  and "paid" blocks (FORM_1116_ACCRUAL_CHOICE_BINDING). New Form1116AccrualElection; unit Form1116AccrualElectionTest; e2e
+  form1116-accrued-choice-binds-next-year.spec.ts.
+- Form 4684 Section B: a depreciable asset destroyed or stolen in the year (matched to one asset by description) is dated disposed of
+  on the casualty date in the calculation, so depreciation stops with the disposal-year convention (Pub. 946, When Depreciation Ends).
+  FORM_4684_ASSET_DEPRECIATION_STOPPED replaces the "record it as disposed of" note for it. New CasualtyDisposedAssets (applied in
+  loadPersonalForms); unit CasualtyDisposedAssetsTest; e2e casualty-destroyed-asset-stops-depreciating.spec.ts (rental depreciation
+  230 -> 115).
+- HSA line 3 rule 4: not changed - needs a "did the coverage type change?" question (owner sign-off); outstanding.md says why.
+- Form 8938 note "the Form 8621 count could come from the app's own Forms 8621" was stale (line 18 already counts them).
+
 ## 2026-11-13T14:10:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43435321810 on b4ee83e0 - revision ca-ustax-be--0000605 serving 100%

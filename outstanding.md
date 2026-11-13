@@ -87,7 +87,11 @@
   loss category spread over the income categories, and a net U.S. loss (the line 15 total over line 18) spread by foreign income - are
   figured since 2026-11-12 (Form1116LossAllocation, FORM_1116_LINE16_LOSS_ALLOCATION). Not kept: the separate limitation / overall
   foreign loss accounts and their recapture in later years (adjustments 4-6), and the lump-sum category worksheet.
-- The 1-year carryback isn't modelled; the accrual choice isn't checked against last year's return.
+- The 1-year carryback isn't modelled. (The accrual choice is checked against last year's return since 2026-11-13: when last year's
+  return here credited accrued taxes - last year's answer accrued and a Form 1116 claiming the credit - a blank answer is accrued with
+  FORM_1116_ACCRUED_FROM_PRIOR_YEAR and "paid" blocks with FORM_1116_ACCRUAL_CHOICE_BINDING (i1116: "you must credit foreign taxes in
+  the year they accrue on all future returns"), Form1116AccrualElection. Not on a separate return's scoped legs; a first year on the
+  app can't be told.)
 - A carryover isn't kept when the taxes are deducted on Schedule A this year (no Form 1116 is produced to carry it). (Checked
   2026-11-12, Pub. 514 "Unused taxes carried to deduction year": the carryover can't be used that year, but a credit limit is still
   figured "as if you had chosen to credit foreign taxes" and the carryover is "absorbed in that year" up to the excess limit - so it
@@ -276,7 +280,7 @@
 ## Foreign assets (Form 8938): found in the 2026-11-08 review, not changed
 
 - Part III (tax items from the assets, and where reported) and Part IV (assets reported instead on Forms 3520, 3520-A, 5471, 8621, 8865)
-  are not filled. The Form 8621 count could come from the app's own Forms 8621.
+  are not filled. (Checked 2026-11-13: Part IV line 18 already counts the app's own Forms 8621 - Form8938Parts.form8621Count.)
 - Who is a specified individual is not checked (a nonresident alien who is not electing resident status doesn't file), and on a separate
   return a joint asset counts in full when the spouse is a nonresident alien (not a specified individual - Instructions for Form 8938,
   Example 11) since 2026-11-12; otherwise at half.
@@ -398,7 +402,9 @@
   for the family split and the catch-up family test.) (On the household return a single typed share leaves the other spouse the rest, and two shares over the family limit block,
   since 2026-11-11.)
 - Line 3 rule 4 (eligible all year but the coverage type changed): the chart only shows for part-year eligibility, so that case can't be
-  entered month by month.
+  entered month by month. (Checked 2026-11-13, i8889 line 3 rule 4: line 3 is the greater of the chart and the December 1 coverage's
+  limit, so only family coverage earlier in the year and self-only on December 1 can lose; no saved answer tells a change of coverage
+  apart - showing the chart then needs a "did the coverage type change?" question: owner sign-off.)
 - Line 14b adds 1099-SA code 2 amounts to the typed amount (help says not to include them). (Checked 2026-11-12: no double count in
   the calculation - line 14a takes each code 2 box 1 and line 14b takes it back, the earnings go to line 8z; hsaExcessWithdrawnAmount
   only reduces the Form 5329 excess and blocks when a code 2 form is on file.)
@@ -424,8 +430,11 @@
 - Not asked (field additions - owner sign-off): a home rented out or used for a business not on Schedule C (section 280A(c)(5) limit,
   "See attached statement" on line 27); property used in a passive activity (a casualty gain or loss isn't counted in the passive loss
   unless such losses recur regularly - Form 8582); the business part of mixed-use property is entered by the user (no split helper).
-- A destroyed or stolen asset is not marked disposed of on Depreciable assets automatically, and a partly destroyed MACRS asset's basis
-  is not reduced there (Regs. 1.168(i)-8) - the screen and the FORM_4684_STOP_DEPRECIATING message point there.
+- (Since 2026-11-13 a casualty row marked totally destroyed or stolen in the year, matched by description to exactly one of the
+  person's depreciable assets not already disposed of, dates that asset disposed of on the casualty date in the calculation - the
+  disposal-year convention applies and FORM_4684_ASSET_DEPRECIATION_STOPPED replaces FORM_4684_STOP_DEPRECIATING; the saved asset
+  is not changed. CasualtyDisposedAssets.) A partly destroyed MACRS asset's basis is still not reduced there (Regs. 1.168(i)-8), and an
+  asset that can't be matched keeps the FORM_4684_STOP_DEPRECIATING message.
 - The section 1033 postponement is a message only (the user leaves the property out); no replacement-property record or Form 4684
   statement is made.
 

@@ -540,8 +540,9 @@
   (registered as 'dependents' with no sidebar item - a legacy screen like the four under Refund; Save is disabled until valid),
   and two components nothing uses, `form-filing-status.component.ts` and `form-employment.component.ts` (dead files - remove
   with the legacy screens, owner sign-off). Form 1042-S is a statement (statement toolbar, not this bar).
-- The UI spec `form-filing-status-taxpayer.component.spec.ts` has 2 failing tests ("saves only canonical filing-status keys",
-  "saves the YAML nonresident-spouse field set") - they fail on the code before 2026-11-12's changes too; not looked into.
+- (The UI spec `form-filing-status-taxpayer.component.spec.ts` passes since 2026-11-12: its two save tests ran `onSubmit` while the
+  second, un-awaited `ngOnInit` from `fixture.detectChanges()` was still loading (so nothing was saved), and pinned a key list that
+  later fields outgrew - they now wait for the load and check the values and that no legacy key is sent.)
 
 ## Interest income spouse copy: three fields the Family Head copy has (found 2026-11-05, screen review)
 
@@ -587,6 +588,13 @@ Proposed (not approved yet):
    Confirm the rule in the Form 2210 instructions (docs/books) before building.
 
 ## Revise the date of birth / date of death logic (opened 2026-11-02, owner)
+
+(2026-11-12, owner: items 1, 3 and 4 done - a date of death after 2025 up to today is accepted for the taxpayer and the spouse on the
+screens and in the calculation (the person was alive all of 2025; a joint return with a spouse who died in 2026 is allowed); before
+2025 or after today is refused (DATE_OF_DEATH_NOT_IN_TAX_YEAR); a date of birth after the tax year and a death before birth are now
+checked on the return too (PersonDates, DATE_OF_BIRTH_AFTER_TAX_YEAR / DATE_OF_DEATH_BEFORE_BIRTH). age65AtDeath uses the return's
+year. Still open: item 5 (server-side SSN / IP PIN format checks), and the "Deceased" box the help says the date checks - the Form 1040
+preview prints no such box (a tax-return form change: owner sign-off).)
 
 The Identification screens now check dates as they are typed (real calendar date, date of birth 1900 to
 Dec 31 2025, taxpayer date of death within 2025, spouse date of death on or before Dec 31 2025, death not before

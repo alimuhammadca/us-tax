@@ -1,3 +1,14 @@
+## 2026-11-13T08:10
+Filing status UI spec fixed; dates of death after the tax year; date of birth / death checks on the return.
+- form-filing-status-taxpayer.component.spec.ts: the two save tests raced the second ngOnInit (onSubmit skipped while loading) and
+  pinned an outdated key list - they wait for the load and check values plus no legacy keys. 8/8 pass.
+- Date of death (owner): 2025 Form 1040 instructions, Death of a Taxpayer and Filing Status - a person who died after 2025 but before the
+  2025 return is filed still has one, and a spouse who died in 2026 allows a joint return. Identification (taxpayer and spouse) takes a
+  date up to today; the calculation refuses only a date before 2025 (taxpayer) or after today. The person counts as alive all of 2025
+  (age at year end - age65AtDeath now keyed on the return's year).
+- PersonDates: a date of birth after December 31 of the tax year, or a death before birth, blocks on the return (was UI-only).
+- Tests: DateOfDeathRangeTest; UI identification / filing-status specs (26); e2e identification-death-after-year.spec.ts.
+
 ## 2026-11-13T07:20
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43335391589 on 46c9606a - revision ca-ustax-be--0000602 serving 100%

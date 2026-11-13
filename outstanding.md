@@ -160,7 +160,10 @@
 - The business part (line 3) and the Schedule K-1 code AO credit (line 2) are general business credits (Form 3800 line 1s), not figured;
   the K-1 code AO amount is typed, not read from the entered K-1.
 - Schedule A line 3b (latitude / longitude) has no box; line 2b's owner name and TIN are one free-text box.
-- Basis reduction (Schedule A lines 16 + 21) is not passed to depreciation.
+- (Basis reduction, Schedule A lines 16 + 21, reaches depreciation since 2026-11-13 when the personal part is claimed and the property
+  matches one depreciable asset placed in service this year by description: the return is figured again with that asset's cost
+  lowered - CreditBasisReduction, DEPRECIATION_BASIS_REDUCED_BY_CREDIT. A property with only a business part (line 16, not figured)
+  isn't reduced; the saved asset keeps its cost for later years - the note asks for the reduced cost.)
 
 ## Clean vehicle credit (Form 8936): found in the 2026-11-09 review, not changed
 
@@ -171,7 +174,11 @@
 - (The 2024 MAGI is tested against the 2024 filing status's limit - a 2024 return done here, else the uploaded 2024 Form 1040 - since
   2026-11-12, i8936 "Special rule for change in filing status"; CleanVehicleRules.PRIOR_STATUS. Unknown: the 2025 status.)
 - "Can someone claim you as a dependent?" is asked here; the household answer lives on several screens (EIC, Saver's credit), not one.
-- Basis reduction for a business vehicle (Schedule A line 9 / 17) is not passed to depreciation.
+- (Basis reduction, Schedule A line 9 / 17, reaches depreciation since 2026-11-13: a claimed or transferred credit lowers the cost
+  of the one depreciable asset placed in service this year whose description has the VIN or model - i8936 "reduce the basis of each
+  vehicle by the amount entered on line 9", the whole line 9 though only the personal part is claimed here; CreditBasisReduction
+  figures the return a second time. Not when the credit isn't claimed - a 100% business vehicle, whose credit (Form 3800) isn't
+  figured. A current-year MAGI that moves over the limit in the second pass isn't re-checked.)
 
 ## Prior-year minimum tax credit (Form 8801): found in the 2026-11-09 review, not changed
 
@@ -286,7 +293,10 @@
   Example 11) since 2026-11-12; otherwise at half.
 - An additional page 2 renders as a full form in the preview (page 1 blank); several issuers or counterparties for one asset (one line 36
   each) are not asked.
-- The "any time" test adds up each item's maximum value, which can be more than the highest total at one moment.
+- The "any time" test (2026-11-13, i8938 Reporting Thresholds: the total on one day) adds only the maximum values of items held on the
+  same day - by the opened / acquired and closed / disposed dates (Form8938Compute.anyTimeTotal); items held together still add their
+  maximums, which may be on different days - FORM_8938_ANY_TIME_FROM_MAXIMUMS says so when only that sum crosses the threshold (the
+  daily totals aren't asked).
 
 ## Injured spouse (Form 8379): found in the 2026-11-08 review, not changed
 

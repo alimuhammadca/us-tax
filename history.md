@@ -1,3 +1,15 @@
+## 2026-11-13T19:30:00
+outstanding.md items (owner: "yes, do items 1 and 2").
+- Forms 8936 / 8911: a claimed (or dealer-transferred) clean vehicle credit, and a claimed refueling property credit, lower the
+  property's depreciable basis (i8936 Basis reduction - line 9 / 17; i8911 Basis Reduction - lines 16 + 21; i4562 line 19). The
+  credits are figured after depreciation, so the return is figured once more with the matched asset's cost reduced (one asset
+  placed in service this year, by VIN / model or description). New CreditBasisReduction (ThreadLocal pass keyed by uid / year /
+  scope); DEPRECIATION_BASIS_REDUCED_BY_CREDIT. Unit CreditBasisReductionTest; e2e clean-vehicle-credit-reduces-depreciation-basis
+  (Schedule C 44,600 -> 45,500).
+- Form 8938: the "at any time" total adds only the maximums of items held on the same day (Form8938Compute.anyTimeTotal, from the
+  opened / acquired / closed / disposed dates); FORM_8938_ANY_TIME_FROM_MAXIMUMS when only the sum of maximums crosses the threshold.
+  Unit Form8938AnyTimeTotalTest; e2e form8938-any-time-same-day-total.
+
 ## 2026-11-13T18:00:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43452410508 on 1b21de57 - revision ca-ustax-be--0000607 serving 100%

@@ -320,7 +320,9 @@
 
 - No Form 8615 preview or PDF: the form is figured on the child's own return but never shown (owner: defer; the Schedule H staged method).
 - The 30% rule for a child's business where capital is material (Form 8615 earned income), a qualified disability trust distribution, and
-  "the child is required to file a return" are not checked; the legacy household copy (kiddie-income-taxpayer, not in the sidebar) still
+  "the child is required to file a return" are not checked (checked 2026-11-13: the last needs no check - Form 8615 needs over $2,700 of
+  unearned income and a dependent must file over $1,350 of it (2025 Form 1040 instructions, Chart B), so it is always met; only a blind
+  dependent's $3,350 differs, and blindness isn't asked for a dependent); the legacy household copy (kiddie-income-taxpayer, not in the sidebar) still
   reads the typed amounts.
 
 ## Additional deductions (Schedule 1-A): found in the 2026-11-07 review, not changed
@@ -475,7 +477,10 @@
 
 - The at-risk widening of a linked activity (`Wave2FieldsW4.atRiskSaleGain`, 2026-11-11: this year's sales only, no section 1244 stock,
   the gain after a section 121 exclusion) counts losses too since 2026-11-12 (Form 6198 lines 2a-2c): the linked sales are netted per activity and a net loss reduces the amount at
-  risk left for the operating loss, never below zero. A sale loss larger than the amount at risk is still deducted in full on Form 4797.
+  risk left for the operating loss, never below zero. A sale loss larger than the amount at risk is still deducted in full on Form 4797 - since 2026-11-13 with a note
+  (FORM_6198_SALE_LOSS_OVER_AT_RISK, Wave2FieldsW4.flagLinkedSaleLossOverAtRisk). Limiting it needs next year's Form 4797 to take the
+  disallowed loss back (i6198: "Include on your current year ... Form 4797 ... any prior year losses that you could not deduct because
+  of the at-risk rules") - no place holds it: a field or a computed Form 4797 line, owner sign-off.
 - (MFS, checked 2026-11-12: the lookback replayed the household's primary returns - the Family Head's history - on the spouse's leg too;
   the spouse's separate return now replays the spouse's own earlier separate returns (mfs_spouse) plus the typed figure.)
 - (An asset disposed of this year with no sale, exchange, installment sale or casualty row - by date or name - gets
@@ -510,7 +515,9 @@
   convenience (clergy, Schedule SE line 2); Form 2031; community income taxed to the other spouse; chapter 11 income; the general
   partner expense reduction.
 - The carryovers are a household total seeded onto the Family Head's copy only and summed across both copies; the business and
-  farm at-risk ones are released against the first at-risk business / farm (per-business fields win). On MFS legs no bridge runs.
+  farm at-risk ones are released against the first at-risk business / farm (per-business fields win). On MFS legs (since 2026-11-13) the section 179 and
+  Schedule C / F at-risk carryovers come from the spouse's own prior separate return - SeCarryMfs; a joint prior return's figures get
+  SE_CARRYOVERS_JOINT_PRIOR_NOT_DIVIDED (not divided - the owner of the property or activity carries them).
 - (Checked 2026-11-13: the screen saves a blank as null, so a 0 is always typed; the section 179 bridge honors it - and since then the
   business and farm at-risk bridges do too (a typed 0 was overwritten with last year's figure).)
 

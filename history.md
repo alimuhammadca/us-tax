@@ -1,3 +1,10 @@
+## 2026-11-13T07:20
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43335391589 on 46c9606a - revision ca-ustax-be--0000602 serving 100%
+  traffic, image ustax-be:46c9606; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend unchanged since the last deploy (88cbc7b, bundle main-JJKFTMRQ.js) - not redeployed.
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-13T06:40
 The return's own year for the remaining year checks; Form 8824 note's unrecaptured section 1250 gain; a disposed asset with no sale.
 - ReferenceData.TAX_YEAR -> ReferenceData.computeYear() in the computing code outside depreciation (34 places: ages, Form 8611, Form 8862

@@ -1,3 +1,16 @@
+## 2026-11-13T09:40
+Form 1116 line 16 adjustments 2 and 3; Identification partial SSN / IP PIN saves; SSN / IP PIN checks on the return.
+- Form1116LossAllocation (Instructions for Form 1116, Line 16): adjustment 2 spreads a loss category over the income categories by
+  income (the instructions' example: (1,600) passive, (400) treaty); adjustment 3 spreads a net U.S. loss - the line 15 total over line
+  18 - by each category's foreign income. A first build of each category gives the line 15s (its flags and carryforward thrown away;
+  the qualified-dividend pool copied - take() uses it up). The AMT credit already took line 16 (it reads line 17) - outstanding.md
+  corrected.
+- Identification: V76's CHECK constraints take only a whole SSN / 6-digit IP PIN, so a half-typed one (the screen saves partial data)
+  failed the whole save with a 500. IdentificationMapper leaves a partial number blank; the rest saves (taxpayer and spouse).
+- IdNumbers: an invalid SSN / ITIN (a dependent's also ATIN) or IP PIN on file blocks the return (TinValidator decides; messages as
+  the screens word them). The K-1 test fixture SSN 410-00-0001 (an SSN never has 00 as its 4th-5th digits) corrected.
+- Tests: Form1116LossAllocationTest, IdNumbersTest, IdentificationPartialNumbersTest; e2e form1116-us-loss-and-ip-pin.spec.ts.
+
 ## 2026-11-13T08:50
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43343222627 on b9783591 - revision ca-ustax-be--0000603 serving 100%

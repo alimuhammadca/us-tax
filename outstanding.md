@@ -82,8 +82,11 @@
 - (Line 16 adjustment 1 - the section 461(l) disallowed loss - is figured since 2026-11-12, owner-approved field V472: each Schedule C
   business and Schedule F farm asks "Is this business's income from outside the United States?"; the disallowed loss is shared over the
   business losses by size and the marked businesses' part goes on the general category's line 16 (ForeignSourceBusinessLoss,
-  FORM_1116_LINE16_SECTION_461L_ADJUSTMENT). It assumes those losses are in line 1a's general category income; the AMT Form 1116 doesn't
-  take it.) Adjustments 2-6 (foreign / U.S. loss allocation, recapture) and the lump-sum category worksheet are not figured.
+  FORM_1116_LINE16_SECTION_461L_ADJUSTMENT). It assumes those losses are in line 1a's general category income; the AMT credit takes it
+  too - it reads line 17, which includes line 16 (checked 2026-11-12; an earlier note here said otherwise).) Adjustments 2 and 3 - a
+  loss category spread over the income categories, and a net U.S. loss (the line 15 total over line 18) spread by foreign income - are
+  figured since 2026-11-12 (Form1116LossAllocation, FORM_1116_LINE16_LOSS_ALLOCATION). Not kept: the separate limitation / overall
+  foreign loss accounts and their recapture in later years (adjustments 4-6), and the lump-sum category worksheet.
 - The 1-year carryback isn't modelled; the accrual choice isn't checked against last year's return.
 - A carryover isn't kept when the taxes are deducted on Schedule A this year (no Form 1116 is produced to carry it). (Checked
   2026-11-12, Pub. 514 "Unused taxes carried to deduction year": the carryover can't be used that year, but a credit limit is still
@@ -593,8 +596,11 @@ Proposed (not approved yet):
 screens and in the calculation (the person was alive all of 2025; a joint return with a spouse who died in 2026 is allowed); before
 2025 or after today is refused (DATE_OF_DEATH_NOT_IN_TAX_YEAR); a date of birth after the tax year and a death before birth are now
 checked on the return too (PersonDates, DATE_OF_BIRTH_AFTER_TAX_YEAR / DATE_OF_DEATH_BEFORE_BIRTH). age65AtDeath uses the return's
-year. Still open: item 5 (server-side SSN / IP PIN format checks), and the "Deceased" box the help says the date checks - the Form 1040
-preview prints no such box (a tax-return form change: owner sign-off).)
+year. Item 5, checked 2026-11-12: the server did check - TinValidator refuses an invalid 9-digit SSN / ITIN at save, and V76's CHECK
+constraints allow only a whole SSN and a 6-digit IP PIN - but a half-typed SSN or PIN (the screens save partial data) failed the whole
+Identification save with a 500 and lost every change; IdentificationMapper now leaves a partial number blank. The return blocks an
+invalid SSN / ITIN / ATIN or IP PIN that is on file (IdNumbers - e.g. saved before the checks). Still open: the "Deceased" box the
+help says the date checks - the Form 1040 preview prints no such box (a tax-return form change: owner sign-off).)
 
 The Identification screens now check dates as they are typed (real calendar date, date of birth 1900 to
 Dec 31 2025, taxpayer date of death within 2025, spouse date of death on or before Dec 31 2025, death not before

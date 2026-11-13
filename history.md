@@ -1,3 +1,11 @@
+## 2026-11-13T14:10:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43435321810 on b4ee83e0 - revision ca-ustax-be--0000605 serving 100%
+  traffic, image ustax-be:b4ee83e; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43435325629 on 6c96786 - live at https://www.taxbeans.com
+  (bundle main-62EZGO4W.js). The first attempt failed in the build step fetching Google Fonts (transient); the re-run of the failed job passed.
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-13T19:00
 Form 8889 line 18 from last year; K-1 (1041) box 11 code B on community-property returns; at-risk bridges honor a typed 0; load audit.
 - HsaLastMonthRule (i8889 line 18: "the excess of the amount contributed over the redetermined amount"): last year's line 2 + 9 (up to

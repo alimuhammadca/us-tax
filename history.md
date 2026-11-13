@@ -1,3 +1,12 @@
+## 2026-11-14T02:30:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43493948055 on 047fdc97 - revision ca-ustax-be--0000611 serving 100%
+  traffic, image ustax-be:047fdc9; /q/health/ready UP. Includes 304f98ac (separate-return SE carryovers, linked-sale at-risk note).
+  URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): not redeployed - no UI change since 6c96786, live at https://www.taxbeans.com
+  (bundle main-62EZGO4W.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-14T01:30:00
 outstanding.md items (owner: "yes, do items 1-3").
 - Form 8801 Part III (lines 28, 29, 30, 35, 42) and the 2024 filing status fill from last year's Form 6251 Part III (lines 13, 14,

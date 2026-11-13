@@ -1,3 +1,22 @@
+## 2026-11-14T00:45:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43476743605 on 63df1749 - revision ca-ustax-be--0000610 serving 100%
+  traffic, image ustax-be:63df174; /q/health/ready UP (V474 applied at startup). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): not redeployed - no UI change since 6c96786, live at https://www.taxbeans.com
+  (bundle main-62EZGO4W.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
+## 2026-11-14T00:30:00
+outstanding.md items (owner: "yes, do items 1-3").
+- Form 8615 "the child is required to file": no change needed - over $2,700 of unearned income (Form 8615) is always over the $1,350
+  dependent filing threshold (Chart B); only a blind dependent differs (not asked). Noted in outstanding.md.
+- Form 4797 / 6198: a linked sale loss over the activity's amount at risk gets FORM_6198_SALE_LOSS_OVER_AT_RISK. The limit itself
+  waits for owner sign-off (next year's Form 4797 needs a place for the disallowed loss).
+- Separate returns: the section 179 and Schedule C / F at-risk carryovers come from the spouse's own prior separate return
+  (SeCarryMfs); a joint prior return gets a note.
+- Unit SeCarryMfsTest; e2e mfs-spouse-at-risk-carryover-bridge (2-year separate returns: 8,000 carried, Schedule C 12,000) and
+  form6198-linked-sale-loss-over-at-risk.
+
 ## 2026-11-13T23:30:00
 outstanding.md items (owner: "do items 1 - 3").
 - Schedule F / Form 4835: the soil and water conservation excess over 25% of gross farming income is kept with the return

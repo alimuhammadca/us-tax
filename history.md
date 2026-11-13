@@ -1,3 +1,11 @@
+## 2026-11-14T05:30:00
+outstanding.md items (owner: "yes, do items 1 and 2").
+- Schedule A noncash charity figured from the Form 8283 list when no noncash amount is typed (Form8283Deduction): long-term appreciated
+  property at value (30%), other at the smaller of value and cost (50%); assumes a public charity and a related use (note says so).
+- Form 8801 line 12 (MTFTCE) from last year's return here (Form8801Mtftce): the election's Schedule 3 line 1, else per category the
+  2024 foreign taxes up to line 11 x line 17 / line 10. (is_summary_form marks a category form, not a separate row - kept.)
+- Unit NoncashAndMtftceTest; e2e noncash-from-list-and-8801-line12 (2024 AMT from PAB interest + an ISO exercise).
+
 ## 2026-11-14T04:30:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43502331556 on a314069e - revision ca-ustax-be--0000612 serving 100%

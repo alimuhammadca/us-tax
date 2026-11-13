@@ -194,7 +194,9 @@
   (line 2j's Schedule K-1 (Form 1041) code J part, depletion on line 2m), and on a separate return (a joint prior return isn't divided).
 - (Part III lines 28-30, 35 and 42 fill from the 2024 Form 6251 Part III - lines 13, 14, 15, 20 and 27 - with lines 1, 2, 14 and 16 since
   2026-11-13, and the 2024 filing status from last year's return - Form8801PriorYearLines.) the Form 2555 "AMT capital gain excess" modifications and the
-  MTFTCE (line 12, separate Forms 1116) are the user's.
+  MTFTCE (line 12) fills from last year's return here since 2026-11-13 - the election's Schedule 3 line 1, else each
+  category's 2024 Form 1116 foreign taxes up to line 11 x its line 17 foreign income / line 10 (Form8801Mtftce; simplified: the regular
+  line 17, no Step 2 qualified dividend / capital gain adjustment).
 - The Form 1040-NR line 10 rule (net gain on U.S. real property interests) is not applied.
 - The bridge reads each return's own prior-year return since 2026-11-11 (a separate return its own separate return; a joint prior
   credit isn't divided - an advisory asks for the share).
@@ -317,8 +319,11 @@
 
 ## Noncash charity (Form 8283): found in the 2026-11-08 review, not changed
 
-- The deduction amounts are still typed on Standard or itemized deductions (cost-basis box, appreciated property, private foundation, unrelated use);
-  the list only reports and is checked against them. Owner: work them out from the list when Standard or itemized deductions is reviewed.
+- (Since 2026-11-13, when every typed noncash amount is blank, the list fills them - Form8283Deduction, SCHEDULE_A_NONCASH_FROM_FORM_8283_LIST:
+  property held over a year and worth more than its cost at value under the 30% limit, other property at the smaller of value and cost
+  under the 50% limit (Pub. 526); vehicles and bargain sales keep their own paths.) Assumed, as the note says: a public charity and a
+  related use - the list doesn't ask whether the charity is a private foundation or tangible property was put to an unrelated use
+  (asking would be two fields per gift: owner sign-off); for those the amounts stay typed.
 - Not asked: partial interests and restricted use (Section B Part II), qualified conservation contributions on the list, Part III items of
   $500 or less inside a Section B group, art of $20,000 or more needing the appraisal attached, a vehicle's 1098-C picked per gift (the
   Section A / B choice for a vehicle uses any Form 1098-C on file with box 5a or 5b).

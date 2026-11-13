@@ -1,3 +1,11 @@
+## 2026-11-14T06:30:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43510201828 on 3f0736a7 - revision ca-ustax-be--0000613 serving 100%
+  traffic, image ustax-be:3f0736a; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): not redeployed - no UI change since 1eeb6ad, live at https://www.taxbeans.com
+  (bundle main-6PYQUYAQ.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-14T05:30:00
 outstanding.md items (owner: "yes, do items 1 and 2").
 - Schedule A noncash charity figured from the Form 8283 list when no noncash amount is typed (Form8283Deduction): long-term appreciated

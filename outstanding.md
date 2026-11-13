@@ -433,8 +433,12 @@
 - (Since 2026-11-13 a casualty row marked totally destroyed or stolen in the year, matched by description to exactly one of the
   person's depreciable assets not already disposed of, dates that asset disposed of on the casualty date in the calculation - the
   disposal-year convention applies and FORM_4684_ASSET_DEPRECIATION_STOPPED replaces FORM_4684_STOP_DEPRECIATING; the saved asset
-  is not changed. CasualtyDisposedAssets.) A partly destroyed MACRS asset's basis is still not reduced there (Regs. 1.168(i)-8), and an
-  asset that can't be matched keeps the FORM_4684_STOP_DEPRECIATING message.
+  is not changed. CasualtyDisposedAssets.) (Since 2026-11-13 a partly destroyed building or equipment matched the same way is split in
+  the calculation - Instructions for Form 4684 line 20, Regs. 1.168(i)-8: the destroyed part's cost is the row's adjusted basis plus
+  its depreciation allowed; its share of the asset's depreciable cost comes off the cost, earlier depreciation and section 179, and
+  that part is dated disposed of on the casualty date (FORM_4684_ASSET_PART_DISPOSED); with no single match or a blank cost,
+  FORM_4684_PART_DISPOSED_NOT_SPLIT.) Still open: the split is this year's only - the saved asset keeps its full cost, so next year
+  needs the user to lower it (the message says so); an asset that can't be matched keeps the FORM_4684_STOP_DEPRECIATING message.
 - The section 1033 postponement is a message only (the user leaves the property out); no replacement-property record or Form 4684
   statement is made.
 

@@ -1,3 +1,14 @@
+## 2026-11-13T17:30:00
+outstanding.md, Form 4684 Section B (owner: "yes, do item #1"): a partly destroyed depreciable asset.
+- Instructions for Form 4684, line 20 / Regulations section 1.168(i)-8: a casualty that destroys part of a MACRS asset is a disposition
+  of that part - its basis and depreciation reserve come off the asset before this year's depreciation. A casualty row (building or
+  equipment, not totally destroyed, in the year) matched to one asset by description now splits that asset in the calculation: the
+  destroyed part's cost = the row's adjusted basis + depreciation allowed, its share scales cost / earlier depreciation / section 179;
+  the rest depreciates all year, the part to the casualty date (disposal-year convention). The saved asset isn't changed.
+  FORM_4684_ASSET_PART_DISPOSED (note) / FORM_4684_PART_DISPOSED_NOT_SPLIT (no match). CasualtyDisposedAssets.split; unit
+  CasualtyDisposedAssetsTest (6); e2e casualty-partly-destroyed-asset-split.spec.ts (duplex roof: depreciation 7,273 -> 6,955).
+- Tests: unit 5,887 passed; e2e 14 passed (new + casualty / Form 4797 / depreciation specs).
+
 ## 2026-11-13T16:40:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43445469082 on 5e58055b - revision ca-ustax-be--0000606 serving 100%

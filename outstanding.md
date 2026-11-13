@@ -17,8 +17,10 @@
 
 ## Foreign assets (Form 8938): found in the 2026-11-10 second pass, not changed
 
-- Part III amounts are typed per account or asset; they aren't drawn from the statements (a foreign payer's Form 1099-INT) or the
-  return's lines, and nothing checks them against the return.
+- (Since 2026-11-13 a deposit or custodial account's blank Part III interest / dividends come from the Form 1099-INT / 1099-DIV for
+  that account - by account number, else payer name - and Part III interest over Form 1040 lines 2a + 2b or dividends over line 3b
+  get FORM_8938_PART_III_NOT_ON_RETURN - Form8938Statements.) Other assets' Part III items and the royalties / other income / gains
+  lines stay typed.
 - Line 18 counts one Form 8621 per copy of Other tax items reporting a PFIC; more PFICs (and PFICs filed without tax) aren't counted.
   (Checked 2026-11-12: Other tax items holds one PFIC per copy, so a higher count needs a field - a PFIC count or a Forms 8621
   count on Foreign assets like the Forms 3520 / 5471 counts: owner sign-off.)
@@ -132,7 +134,9 @@
 
 ## Premium tax credit (Form 8962): found in the 2026-11-09 review, not changed
 
-- Dependents' modified AGI (line 2b) is typed: a dependent's own return isn't figured here.
+- (Since 2026-11-13 a blank line 2b is the modified AGI of the dependents whose own return here shows they must file - Chart B for a
+  dependent - DependentOwnMagi, FORM_8962_LINE2B_FROM_DEPENDENT_RETURNS.) A dependent with no return here is typed; a dependent's
+  self-employment filing requirement ($400 net earnings) and Form 2555 aren't checked.
 - The spouse's copy on a separate return has no dependents' list and no Part V (the table has no spouse columns for them).
 
 ## Mortgage interest credit (Form 8396): found in the 2026-11-09 review, not changed
@@ -186,7 +190,8 @@
   had AMT: Form 6251 keeps line 1 + 2e and lines 2a + 2b + 2c + 2d + 2g + 2h (i8801 line 2) next to lines 10 and 11 -
   Form8801PriorYearLines, FORM_8801_LINES_FROM_PRIOR_YEAR; a No to the claim stays No.) Still typed: exclusion items on other lines
   (line 2j's Schedule K-1 (Form 1041) code J part, depletion on line 2m), and on a separate return (a joint prior return isn't divided).
-- Part III lines 28-30, 35 and 42 are typed from the 2024 worksheets; the Form 2555 "AMT capital gain excess" modifications and the
+- (Part III lines 28-30, 35 and 42 fill from the 2024 Form 6251 Part III - lines 13, 14, 15, 20 and 27 - with lines 1, 2, 14 and 16 since
+  2026-11-13, and the 2024 filing status from last year's return - Form8801PriorYearLines.) the Form 2555 "AMT capital gain excess" modifications and the
   MTFTCE (line 12, separate Forms 1116) are the user's.
 - The Form 1040-NR line 10 rule (net gain on U.S. real property interests) is not applied.
 - The bridge reads each return's own prior-year return since 2026-11-11 (a separate return its own separate return; a joint prior

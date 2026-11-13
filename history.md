@@ -1,3 +1,13 @@
+## 2026-11-14T01:30:00
+outstanding.md items (owner: "yes, do items 1-3").
+- Form 8801 Part III (lines 28, 29, 30, 35, 42) and the 2024 filing status fill from last year's Form 6251 Part III (lines 13, 14,
+  15, 20, 27 - the same layout) with lines 1, 2, 14 and 16 (Form8801PriorYearLines).
+- Form 8962 line 2b: the modified AGI (AGI + tax-exempt interest + untaxed Social Security) of the dependents whose own return here
+  shows they must file (Chart B) when none is typed (DependentOwnMagi).
+- Form 8938 Part III: an account's blank interest / dividends from its Form 1099-INT / 1099-DIV; Part III interest or dividends
+  over the return's get a note (Form8938Statements).
+- Unit AmtPtcForeignAssetsTest; e2e amt-ptc-foreign-assets-bridges (3 tests).
+
 ## 2026-11-14T00:45:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43476743605 on 63df1749 - revision ca-ustax-be--0000610 serving 100%

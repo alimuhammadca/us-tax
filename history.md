@@ -1,3 +1,11 @@
+## 2026-11-13T16:40:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43445469082 on 5e58055b - revision ca-ustax-be--0000606 serving 100%
+  traffic, image ustax-be:5e58055; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): not redeployed - no UI change since 6c96786, live at https://www.taxbeans.com
+  (bundle main-62EZGO4W.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-13T15:30:00
 outstanding.md items (owner: "yes, do items 1-3").
 - Form 1116: last year's accrued choice binds this year (Instructions for Form 1116, Foreign Taxes Paid or Accrued). When last year's

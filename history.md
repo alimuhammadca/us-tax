@@ -1,3 +1,11 @@
+## 2026-11-13T08:50
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43343222627 on b9783591 - revision ca-ustax-be--0000603 serving 100%
+  traffic, image ustax-be:b978359; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43343226724 on eab97ec - live at https://www.taxbeans.com
+  (bundle main-6AYADKXU.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-13T08:10
 Filing status UI spec fixed; dates of death after the tax year; date of birth / death checks on the return.
 - form-filing-status-taxpayer.component.spec.ts: the two save tests raced the second ngOnInit (onSubmit skipped while loading) and

@@ -1,3 +1,14 @@
+## 2026-11-14T04:30:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43502331556 on a314069e - revision ca-ustax-be--0000612 serving 100%
+  traffic, image ustax-be:a314069; /q/health/ready UP (V475 applied at startup). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+  (9b59137f, after it, changes tests only.)
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43502335620 on 1eeb6ad - live at https://www.taxbeans.com
+  (bundle main-6PYQUYAQ.js, with the Foreign income screen's reference-data limits).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+- Correction: the batch's pre-commit unit run was a partial one read with stale reports; the fresh full run found two reflective tests
+  on the old computeAmtForeignTaxCredit signature (fixed in 9b59137f; 5,912 pass). Production code was not affected.
+
 ## 2026-11-14T03:30:00
 outstanding.md items (owner: "yes, do items 1-3").
 - Form 8824: a business exchange's property received not on Depreciable assets, or there with a cost above line 25, gets a note

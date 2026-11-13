@@ -1,3 +1,11 @@
+## 2026-11-13T20:30:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43461074700 on d8679085 - revision ca-ustax-be--0000608 serving 100%
+  traffic, image ustax-be:d867908; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): not redeployed - no UI change since 6c96786, live at https://www.taxbeans.com
+  (bundle main-62EZGO4W.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-13T19:30:00
 outstanding.md items (owner: "yes, do items 1 and 2").
 - Forms 8936 / 8911: a claimed (or dealer-transferred) clean vehicle credit, and a claimed refueling property credit, lower the

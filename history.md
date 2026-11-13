@@ -1,3 +1,15 @@
+## 2026-11-13T06:40
+The return's own year for the remaining year checks; Form 8824 note's unrecaptured section 1250 gain; a disposed asset with no sale.
+- ReferenceData.TAX_YEAR -> ReferenceData.computeYear() in the computing code outside depreciation (34 places: ages, Form 8611, Form 8862
+  line 1, Form 8880, the Form 2441 child age, installment sale years, Schedule H, the filing status checks, the QCD 70 1/2 test, ...);
+  FilingStatusConsistency's static year became a per-call one; Form 8862's read-back takes the return row's year.
+- Form 8824 with an installment note: the straight-line depreciation not recaptured on line 21 goes on the Form 6252 row's line 9 (basis
+  raised by the same), so the unrecaptured section 1250 gain reaches Schedule D line 19 as the note is paid - it was lost.
+- DisposedAssetCheck: a Depreciable asset disposed of this year that is on no Business property sales, Like-kind exchanges, Installment
+  sales or Business casualties row (by date or name) gets FORM_4797_DISPOSED_ASSET_NOT_REPORTED.
+- Tests: ComputeYearChecksTest, Form8824ComputeTest.theNotesGainCarriesItsUnrecapturedSection1250Gain, DisposedAssetCheckTest; e2e
+  form8824-note-unrecaptured-and-disposed-asset.spec.ts.
+
 ## 2026-11-13T06:10
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43330893353 on b6797ebd - revision ca-ustax-be--0000601 serving 100%

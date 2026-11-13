@@ -433,8 +433,9 @@
   property; QOF deferral (Form 8997) and the new section 1062 farmland election; recourse vs nonrecourse debt.
 - The property received is not added to Depreciable assets with its line 25 basis (the screen points there); the basis is figured at
   compute only.
-- The installment-note path: the section 1245 / 1250 recapture on the note's share is said in help to be taxed in full this year - not
-  re-verified against Form6252Compute's handling of an 8824 note.
+- (The installment-note path, checked 2026-11-12: the line 21 recapture is reported in full now through Form 4797 (section 453(i)) and
+  the line 22 gain only on Form 6252 - no double count. The straight-line depreciation in that gain - the unrecaptured section 1250
+  gain - was lost (the Form 6252 row had no depreciation); it goes on Form 6252 line 9 now, with the basis raised to match.)
 - `propertyUse` has no "held mainly for sale" or "personal residence only" choice (would be disqualifiers) - covered in help only.
 
 ## Business property sales (Form 4797): found in the 2026-11-06 review, not changed
@@ -444,8 +445,9 @@
   risk left for the operating loss, never below zero. A sale loss larger than the amount at risk is still deducted in full on Form 4797.
 - (MFS, checked 2026-11-12: the lookback replayed the household's primary returns - the Family Head's history - on the spouse's leg too;
   the spouse's separate return now replays the spouse's own earlier separate returns (mfs_spouse) plus the typed figure.)
-- No check ties a Depreciable asset disposed of this year to a sale here (the screen now offers the shortcut); depreciation allowed isn't
-  filled from the asset (not kept per asset).
+- (An asset disposed of this year with no sale, exchange, installment sale or casualty row - by date or name - gets
+  FORM_4797_DISPOSED_ASSET_NOT_REPORTED since 2026-11-12, DisposedAssetCheck.) Depreciation allowed isn't filled from the asset (not
+  kept per asset).
 - Not asked (field additions - owner sign-off): section 1254, section 1239 related-party sales, timber (631), unharvested crops, K-1 section
   1231 amounts, the condemnation (section 1033) path, line 1a 1099 reconciliation, section 1245 real property types (single-purpose
   agricultural structures) beyond "Equipment".
@@ -456,8 +458,8 @@
   and since 2026-11-12 the dollar limits do too: the section 179 limit and phase-out, the SUV cap and the first-year auto caps for 2023
   / 2024 / 2025 (ReferenceData.section179Max etc.), and 2024's 60% bonus (80% long production) for an asset placed in service then.
   Years before 2023 use the 2023 figures.
-- Other fixed-2025 tests outside depreciation remain (ages, Form 8611, installment sale years, the Form 2441 child age, etc. - grep
-  `ReferenceData.TAX_YEAR` in TaxReturnComputeService).
+- (The other fixed-2025 tests - ages, Form 8611, installment sale years, the Form 2441 child age, Form 8862, Form 8880, Schedule H, the
+  filing status checks - follow the return's year since 2026-11-12, ReferenceData.computeYear(); ComputeYearChecksTest.)
 - Not asked (field additions - owner sign-off): the class-wide elections (150% / straight line / ADS by class, bonus election out by class
   with its statement), the general asset account, line 24c (aircraft), line 35 (5% owner), Section C (employer policy), basis reductions
   for credits, like-kind exchange carryover basis, the personal-to-business conversion value, QPP designated basis and statement.

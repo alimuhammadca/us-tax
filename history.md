@@ -1,3 +1,10 @@
+## 2026-11-13T10:20
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43357262594 on 3964cb97 - revision ca-ustax-be--0000604 serving 100%
+  traffic, image ustax-be:3964cb9; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend unchanged since the last deploy (eab97ec, bundle main-6AYADKXU.js) - not redeployed.
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-13T09:40
 Form 1116 line 16 adjustments 2 and 3; Identification partial SSN / IP PIN saves; SSN / IP PIN checks on the return.
 - Form1116LossAllocation (Instructions for Form 1116, Line 16): adjustment 2 spreads a loss category over the income categories by

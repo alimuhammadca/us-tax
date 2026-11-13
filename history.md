@@ -1,3 +1,11 @@
+## 2026-11-13T18:00:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43452410508 on 1b21de57 - revision ca-ustax-be--0000607 serving 100%
+  traffic, image ustax-be:1b21de5; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): not redeployed - no UI change since 6c96786, live at https://www.taxbeans.com
+  (bundle main-62EZGO4W.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-13T17:30:00
 outstanding.md, Form 4684 Section B (owner: "yes, do item #1"): a partly destroyed depreciable asset.
 - Instructions for Form 4684, line 20 / Regulations section 1.168(i)-8: a casualty that destroys part of a MACRS asset is a disposition

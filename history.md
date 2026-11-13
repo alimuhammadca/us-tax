@@ -1,3 +1,15 @@
+## 2026-11-13T21:30:00
+outstanding.md items (owner: "yes, do items 1 - 3").
+- Form 4562: each asset's figures for the year are kept with the return (V473 out_form_4562.asset_detail_json - output column only);
+  next year a blank "Depreciation taken in earlier years" is last year's earlier depreciation + last year's section 179 + bonus +
+  MACRS (DepreciationPriorYear, FORM_4562_EARLIER_DEPRECIATION_FROM_PRIOR_YEAR). Prior-year bridge #22.
+- Forms 4797 / 4684: a blank depreciation allowed on a whole-asset sale or a total casualty of a building or equipment is the
+  matching asset's earlier depreciation + this year's disposal-year depreciation (DepreciationAllowedFill, DEPRECIATION_ALLOWED_FROM_ASSET).
+- Form 5498-SA: box 1 fills a blank Form 8853 line 2 (Archer MSA); Form 8889 lines 2 + 9 + 10 over boxes 2 + 3 get a note
+  (Form5498SaChecks).
+- Unit DepreciationCarryAnd5498SaTest; e2e depreciation-earlier-from-prior-year-and-sale (two years: 6,000 carried, depreciation
+  allowed 10,800, recapture 5,800) and form5498sa-archer-line2-and-hsa-check.
+
 ## 2026-11-13T20:30:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43461074700 on d8679085 - revision ca-ustax-be--0000608 serving 100%

@@ -404,7 +404,8 @@
   2026-11-11: both spouses' Archer MSAs share one limit, divided equally unless a line 3 is typed - HsaMsaRules.jointArcherFamilyLimit.)
 - Medicare Advantage MSA: no partial amount for the death / disability exception (Archer has one) - a field addition.
 - No line 6a / 10 override (Form 1099-SA code 2 has been added to Archer line 6b since 2026-11-11).
-- Form 5498-SA is read by no compute; Medicare months are not derived from the date of birth.
+- (Since 2026-11-13 a blank line 2 is box 1 of the person's Form 5498-SA marked Archer MSA - Form5498SaChecks,
+  FORM_8853_LINE2_FROM_5498SA.) Medicare months are not derived from the date of birth.
 
 ## HSA (Form 8889): found in the 2026-11-06 review, not changed
 
@@ -421,8 +422,9 @@
 - (Line 18, last-month rule testing period, is figured since 2026-11-13 when both answers are Yes, line 18 is blank and last year's
   return was done here with the rule: last year's line 2 + line 9 (up to line 8) over the limit its months of coverage allowed -
   HsaLastMonthRule, FORM_8889_LINE18_FROM_PRIOR_YEAR. Otherwise it is typed, with the message.)
-- Form 5498-SA is read by no compute (the screen now fills the year-end value from box 5). Medicare months are not derived from the
-  date of birth (only explained).
+- (Since 2026-11-13 lines 2 + 9 + 10 more than boxes 2 + 3 of the person's HSA Forms 5498-SA get FORM_8889_CONTRIBUTIONS_OVER_5498SA;
+  box 2 can't fill line 2 - it holds employer contributions and contributions made in 2025 for 2024 - Form5498SaChecks.) Medicare
+  months are not derived from the date of birth (only explained).
 
 ## Income adjustments (Schedule 1 Part II): found in the 2026-11-06 review, not changed
 
@@ -474,8 +476,10 @@
 - (MFS, checked 2026-11-12: the lookback replayed the household's primary returns - the Family Head's history - on the spouse's leg too;
   the spouse's separate return now replays the spouse's own earlier separate returns (mfs_spouse) plus the typed figure.)
 - (An asset disposed of this year with no sale, exchange, installment sale or casualty row - by date or name - gets
-  FORM_4797_DISPOSED_ASSET_NOT_REPORTED since 2026-11-12, DisposedAssetCheck.) Depreciation allowed isn't filled from the asset (not
-  kept per asset).
+  FORM_4797_DISPOSED_ASSET_NOT_REPORTED since 2026-11-12, DisposedAssetCheck.) (Since 2026-11-13 a blank depreciation
+  allowed on a whole-asset sale - or a totally destroyed / stolen casualty - of a building or equipment is the matching asset's
+  earlier depreciation plus this year's disposal-year depreciation, when the earlier part is known - DepreciationAllowedFill,
+  DEPRECIATION_ALLOWED_FROM_ASSET.)
 - Not asked (field additions - owner sign-off): section 1254, section 1239 related-party sales, timber (631), unharvested crops, K-1 section
   1231 amounts, the condemnation (section 1033) path, line 1a 1099 reconciliation, section 1245 real property types (single-purpose
   agricultural structures) beyond "Equipment".
@@ -491,7 +495,10 @@
 - Not asked (field additions - owner sign-off): the class-wide elections (150% / straight line / ADS by class, bonus election out by class
   with its statement), the general asset account, line 24c (aircraft), line 35 (5% owner), Section C (employer policy), basis reductions
   for credits, like-kind exchange carryover basis, the personal-to-business conversion value, QPP designated basis and statement.
-- Earlier depreciation and amortization aren't kept per asset after a return, so the carried asset asks the user to add last year's.
+- (Since 2026-11-13, V473, each Form 4562 keeps its assets' figures and a blank "Depreciation taken in earlier years" next year is
+  last year's earlier depreciation plus last year's section 179 + bonus + MACRS - same person, description and date placed in service;
+  only when last year's figure was complete - DepreciationPriorYear, FORM_4562_EARLIER_DEPRECIATION_FROM_PRIOR_YEAR. The screen's
+  carried-asset note still asks for it.) Amortization in earlier years is still typed per cost.
 - (Amortization on no activity - "Other" or no match - is reported since 2026-11-11: FORM_4562_AMORTIZATION_NOT_ON_AN_ACTIVITY.)
 
 ## Self-employment tax options: found in the 2026-11-06 review, not changed

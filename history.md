@@ -1,3 +1,14 @@
+## 2026-11-13T14:30
+Full e2e regression: 2,304 passed, 4 failed, 2 flaky, 10 skipped (2,320, 5.6 h, one worker) - the 4 failures fixed.
+- line16-tax.spec.ts (2 tests: Section 962 / multiple Box 3 codes): expected no flags; SECTION_962_DEDUCTION_NOT_ON_LINE_12E is raised
+  with the figured section 962 tax since 2026-11-12 - the tests allow that one informational note.
+- line1a-carveouts.spec.ts (statutory employee): expected STATUTORY_EMPLOYEE_W2_SCHEDULE_C after the business is entered; ddf98b72
+  (2026-11-11) drops it once a statutory-employee business exists (moot) - the test now checks it is gone.
+- form8862-credits-after-disallowance.spec.ts (EIC without a child): under load the Save beat the second number entry (body 120, not
+  365) - the test blurs the field and waits for the value before saving. Passed alone before and after.
+- Flaky, pass on retry, not changed: line1e-dependent-care (UI compute button - computeReturnViaUi's request wait, about 1 in 4),
+  schedule-e-rental-income passive K-1. The backend unit suite: 5,874 passed.
+
 ## 2026-11-13T10:20
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43357262594 on 3964cb97 - revision ca-ustax-be--0000604 serving 100%

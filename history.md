@@ -1,3 +1,43 @@
+## 2026-11-13T19:00
+Form 8889 line 18 from last year; K-1 (1041) box 11 code B on community-property returns; at-risk bridges honor a typed 0; load audit.
+- HsaLastMonthRule (i8889 line 18: "the excess of the amount contributed over the redetermined amount"): last year's line 2 + 9 (up to
+  line 8) less the Line 3 chart limit its months of HDHP coverage allowed (monthly chart, else months x the coverage limit; catch-up per
+  month at 55+; the line 6 / 5 family allocation), from last year's HSA entry and Form 8889 - fills a blank line 18 when both answers
+  are Yes. 2023-2025 limits.
+- D-k1-1041-11b-cp: CommunityProperty.splitOwned records each copy's share (communityPropertyFactor); the code B breakdown, typed at the
+  statement's full amount, is taken at the person's own K-1 share for the check and for Schedule A (it raised the BREAKDOWN_OVER block
+  and would have deducted the full amount on a separate return).
+- Business / farm at-risk bridges: any typed value wins, 0 included, as the section 179 bridge (a typed 0 was overwritten).
+- Load audit (94 personal screens replace their data after an asynchronous load): the loading overlay is present - click-blocking - for
+  every request (LoadingOverlayComponent), and the reads that skip it only fill blanks or feed the read-only checklist, so a user can't
+  type into a screen that is still loading; Playwright's fill bypasses the overlay, which is why only tests hit it. The dependent screen
+  (five reads) keeps typed-while-loading answers anyway (fixed earlier today); no other screen changed.
+- Tests: HsaCommunityAtRiskFixesTest; e2e hsa-last-month-rule-line18-from-prior-year.spec.ts, business-at-risk-carryforward-bridge
+  (typed 0). Unit suite 5,876 passed.
+
+## 2026-11-13T17:00
+Root causes of the full regression's skips and flakes, fixed (app bugs as well as tests).
+- Skipped (10): w2-document-extraction.spec.ts (8) was skipped unconditionally ("requires Azure Document Intelligence") though the dev
+  backend has it (run-dev.ps1) - now skipped only without the sample W-2. Running them found 3 stale tests and 2 app bugs:
+  * App: a statement screen's "Verify & Save" saves through its own onVerify(), not the form submit the shared StatementFormDirective
+    listens to, so the "extracted - please verify" banner and the button's label stayed after a successful save (50 screens).
+    StatementDataService.lastSaved (a signal) now tells the directive about every save of its form's active entry.
+  * App: a document Azure can't read (its own 400, or an "Invalid..." failed analysis) came back as a 500 "service error"; it is a 400
+    with a message now (AzureDocumentAnalyzer.DocumentRejectedException).
+  * Tests: 1099-INT is extractable now (the "unsupported form" test uses an id with no config); the model was read before the
+    extraction landed (wait for the banner); navigation by form id with the W-2 selected; the sample W-2 is Elizabeth's, so the test user
+    takes its SSN (another person's W-2 is rightly hidden from the Family Head's sidebar).
+  line10-income-adjustments (obsolete since 2026-06-06) and line8-other-incomes GAP-A4-A (retired 2026-10-26) deleted.
+- Flaky:
+  * App: a new dependent's screen read five things when it opened and then reset its answers - a name and SSN typed before the reads
+    came back were lost and the record saved without them (dependent-screen.spec.ts). Typed-while-loading answers are kept now; new test
+    (holds a read; fails without the fix).
+  * "ECONNREFUSED 127.0.0.1:4200" (schedule-e): the dev server listens on [::1] only and Playwright's API client sometimes took the IPv4
+    address - playwright.config.ts resolves localhost IPv6-first.
+  * line1e-dependent-care: savePersonalFormViaUi's click was dropped while the screen's own Enter-key save was in flight (onSubmit returns
+    while saving) - the helper clicks again when no PUT comes within 5 s.
+  * form8862: Save beat the second number entry under load - the test lets the field settle.
+
 ## 2026-11-13T14:30
 Full e2e regression: 2,304 passed, 4 failed, 2 flaky, 10 skipped (2,320, 5.6 h, one worker) - the 4 failures fixed.
 - line16-tax.spec.ts (2 tests: Section 962 / multiple Box 3 codes): expected no flags; SECTION_962_DEDUCTION_NOT_ON_LINE_12E is raised

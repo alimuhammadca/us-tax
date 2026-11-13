@@ -402,7 +402,9 @@
 - Line 14b adds 1099-SA code 2 amounts to the typed amount (help says not to include them). (Checked 2026-11-12: no double count in
   the calculation - line 14a takes each code 2 box 1 and line 14b takes it back, the earnings go to line 8z; hsaExcessWithdrawnAmount
   only reduces the Form 5329 excess and blocks when a code 2 form is on file.)
-- usedLastMonthRuleForPriorYear / failedLastMonthRuleTestingPeriod only raise a message; the line 18 amount is still typed.
+- (Line 18, last-month rule testing period, is figured since 2026-11-13 when both answers are Yes, line 18 is blank and last year's
+  return was done here with the rule: last year's line 2 + line 9 (up to line 8) over the limit its months of coverage allowed -
+  HsaLastMonthRule, FORM_8889_LINE18_FROM_PRIOR_YEAR. Otherwise it is typed, with the message.)
 - Form 5498-SA is read by no compute (the screen now fills the year-end value from box 5). Medicare months are not derived from the
   date of birth (only explained).
 
@@ -476,7 +478,8 @@
   partner expense reduction.
 - The carryovers are a household total seeded onto the Family Head's copy only and summed across both copies; the business and
   farm at-risk ones are released against the first at-risk business / farm (per-business fields win). On MFS legs no bridge runs.
-- The section 179 bridge is skipped when either copy has any value (a typed 0 stops it); the at-risk bridges only for a positive value.
+- (Checked 2026-11-13: the screen saves a blank as null, so a 0 is always typed; the section 179 bridge honors it - and since then the
+  business and farm at-risk bridges do too (a typed 0 was overwritten with last year's figure).)
 
 ## Farm rental (Form 4835): found in the 2026-11-06 review, not changed
 

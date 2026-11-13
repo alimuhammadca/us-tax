@@ -1,3 +1,11 @@
+## 2026-11-13T22:30:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43467090206 on f46c68da - revision ca-ustax-be--0000609 serving 100%
+  traffic, image ustax-be:f46c68d; /q/health/ready UP (V473 applied at startup). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): not redeployed - no UI change since 6c96786, live at https://www.taxbeans.com
+  (bundle main-62EZGO4W.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-13T21:30:00
 outstanding.md items (owner: "yes, do items 1 - 3").
 - Form 4562: each asset's figures for the year are kept with the return (V473 out_form_4562.asset_detail_json - output column only);

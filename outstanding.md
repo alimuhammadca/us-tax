@@ -76,9 +76,11 @@
   usually shows a smaller foreign-source part (it overstates line 1a). Needs a foreign-source amount on the statement (structure).
 - Schedule K-1 (Form 1120-S) and Schedule K-1 (Form 1041) foreign tax are not read (no box on those statements); K-1 / K-3 income by
   category and country is typed.
-- The alternative minimum tax credit without the section 59(a)(4) election adds back all of line 3g and uses the regular carryover
-  (Form 6251 instructions: AMT items and an AMT carryover). (Checked 2026-11-12: needs a second Form 1116 on AMT figures per category
-  and an AMT carryover kept year to year - a new saved figure; bigger work.)
+- (The alternative minimum tax credit without the section 59(a)(4) election, since 2026-11-13: only the AMT-disallowed share of line 3g
+  is added back - the standard deduction or Schedule A taxes, not medical or Part II adjustments - and each category keeps its own AMT
+  carryforward with the return (V475), used next year in place of the regular carryover; Form6251AmtFtc.) Still simplified: the AMT
+  carryover is one amount per category (no 10-year vintages); other AMT adjustments to foreign-source income (depreciation, etc.) aren't
+  refigured; with no AMT record from last year the regular carryover is used.
 - (Line 3e uses gross income for a business - Schedule C line 7 - and a rental - the rents and royalties - instead of their net in
   line 9 since 2026-11-12, Form1116Inputs.netToGross.)
 - (Line 16 adjustment 1 - the section 461(l) disallowed loss - is figured since 2026-11-12, owner-approved field V472: each Schedule C
@@ -398,8 +400,10 @@
 - MFS: (fixed 2026-11-11 - the checklist adds the spouse leg's messages, SpouseLegFlags); the married-couples
   housing rule (no duplicated expenses) is checked on separate returns too since 2026-11-12 (the scoper carries the other spouse's
   Form 2555 copy); an unanswered household question passes.
-- No line 18 trip table (the 330 days are one typed number); `housingLocationCountry` duplicates the locality choice (only printed); the
-  UI keeps its own copies of $130,000 / $39,000 and the Notice 2025-16 table (now in data/foreign-housing-localities.ts).
+- No line 18 trip table (the 330 days are one typed number); `housingLocationCountry` duplicates the locality choice (only printed); (since 2026-11-13
+  the screen takes the $130,000 limit and the Notice 2025-16 locality table from GET /api/reference-data - FOREIGN_EARNED_INCOME_EXCLUSION_MAX,
+  FOREIGN_HOUSING_LIMIT_FULL_YEAR, FOREIGN_HOUSING_HIGH_COST_LIMITS; data/foreign-housing-localities.ts stays as the fallback and the
+  help text still quotes the 2025 figures).
 - Foreign self-employment net profit: since 2026-11-12 a blank one comes from the person's one business on Business income (no farm) -
   ForeignSeNetProfit; with two or more businesses, the ones marked "income from outside the United States" (V472) fill it since
   2026-11-12 (not with a marked farm or qualified joint venture). ("No" to "already on a Form W-2" next to a W-2
@@ -471,8 +475,9 @@
   property received (line 25c); whether a QI was used, QI default (Rev. Proc. 2010-14), reverse / parking exchanges (Rev. Proc. 2000-37);
   incidental personal property; Part IV lines 27-29 descriptions (the Part I fields are reused) and whether the replacement is permitted
   property; QOF deferral (Form 8997) and the new section 1062 farmland election; recourse vs nonrecourse debt.
-- The property received is not added to Depreciable assets with its line 25 basis (the screen points there); the basis is figured at
-  compute only.
+- The property received is not added to Depreciable assets with its line 25 basis (the screen points there); since 2026-11-13 a business
+  exchange whose property received isn't on Depreciable assets, or is there with a cost above line 25, gets a note naming the basis
+  (Form8824AssetCheck).
 - (The installment-note path, checked 2026-11-12: the line 21 recapture is reported in full now through Form 4797 (section 453(i)) and
   the line 22 gain only on Form 6252 - no double count. The straight-line depreciation in that gain - the unrecaptured section 1250
   gain - was lost (the Form 6252 row had no depreciation); it goes on Form 6252 line 9 now, with the basis raised to match.)

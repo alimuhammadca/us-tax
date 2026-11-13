@@ -1,3 +1,14 @@
+## 2026-11-14T03:30:00
+outstanding.md items (owner: "yes, do items 1-3").
+- Form 8824: a business exchange's property received not on Depreciable assets, or there with a cost above line 25, gets a note
+  naming the line 25 basis (Form8824AssetCheck).
+- Form 6251 line 8 (AMT foreign tax credit, no section 59(a)(4) election): only the AMT-disallowed share of line 3g is added back
+  (standard deduction / Schedule A taxes - Form1116Inputs base [5]); each category's AMT carryforward is kept (V475
+  out_form_1116.amt_carryforward_to_next_years) and replaces the regular carryover next year (Form6251AmtFtc).
+- Form 2555 limits and the Notice 2025-16 locality table are served by GET /api/reference-data; the Foreign income screen uses them
+  (UI localityOptionsFrom; the built-in list stays as the fallback - the two tables were checked identical, 136 localities).
+- Unit AmtFtcAndExchangeAssetTest; e2e exchange-asset-and-amt-ftc-carryover.
+
 ## 2026-11-14T02:30:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43493948055 on 047fdc97 - revision ca-ustax-be--0000611 serving 100%

@@ -1,3 +1,15 @@
+## 2026-11-13T23:30:00
+outstanding.md items (owner: "do items 1 - 3").
+- Schedule F / Form 4835: the soil and water conservation excess over 25% of gross farming income is kept with the return
+  (AttachedForms.carryovers - no migration) and fills next year's blank prior-year conservation carryover (ConservationCarryBridge);
+  prepaid farm supplies over the 50% limit get a next-year note (deducted in the year used).
+- Form 8801: lines 1, 2, 14 and 16 fill from last year's Form 6251 here (V474 out_form_6251.line1_plus_line2e / line2_exclusion_items
+  - i8801 line 2 = 2024 Form 6251 lines 2a + 2b + 2c + 2d + 2g + 2h); Form8801PriorYearLines.
+- Form 8990: lines 6 and 10 figured when blank from a pass with all business interest allowed, then the return figured with the
+  limit (Form8990TwoPass). The two Form 8990 bridge specs now type line 10 = 0 to keep their pinned figures.
+- Unit FarmAmtInterestBridgesTest; e2e farm-amt-interest-bridges (conservation 2-year: Schedule F 33,000; Form 8801 2-year with a
+  2024 ISO exercise; Form 8990 line 30 = min(line 5, 30% of line 22)).
+
 ## 2026-11-13T22:30:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43467090206 on f46c68da - revision ca-ustax-be--0000609 serving 100%

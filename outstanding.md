@@ -182,9 +182,10 @@
 
 ## Prior-year minimum tax credit (Form 8801): found in the 2026-11-09 review, not changed
 
-- Only line 26 bridges from last year's return. Lines 1, 2, 14 and 16 (2024 Form 6251 lines 1/2e, the exclusion items, lines 10 and 11)
-  are typed: out_form_6251 keeps lines 10 and 11 but not every exclusion item (2c, 2d, 2h), and bridging lines 14/16 without line 2 would
-  credit AMT that came from exclusion items.
+- (Since 2026-11-13, V474, lines 1, 2, 14 and 16 fill together from last year's household return here when all four are blank and it
+  had AMT: Form 6251 keeps line 1 + 2e and lines 2a + 2b + 2c + 2d + 2g + 2h (i8801 line 2) next to lines 10 and 11 -
+  Form8801PriorYearLines, FORM_8801_LINES_FROM_PRIOR_YEAR; a No to the claim stays No.) Still typed: exclusion items on other lines
+  (line 2j's Schedule K-1 (Form 1041) code J part, depletion on line 2m), and on a separate return (a joint prior return isn't divided).
 - Part III lines 28-30, 35 and 42 are typed from the 2024 worksheets; the Form 2555 "AMT capital gain excess" modifications and the
   MTFTCE (line 12, separate Forms 1116) are the user's.
 - The Form 1040-NR line 10 rule (net gain on U.S. real property interests) is not applied.
@@ -267,8 +268,10 @@
 
 ## Business interest limit (Form 8990): found in the 2026-11-08 review, not changed
 
-- Line 6 (tentative taxable income) and line 10 (QBI deduction) are typed: both need the return figured twice (the QBI deduction depends on
-  the limit). (A small business taxpayer with a carryforward from a year it was limited deducts it in full when the gate is No since 2026-11-12 -
+- (Lines 6 and 10 are figured when blank since 2026-11-13: the return is figured first with all of line 5 allowed - i8990 line 6
+  "computed as though all of the business interest expense is otherwise allowable", line 10 the QBI deduction "determined without
+  regard to section 163(j)" - and that pass's taxable income (AGI less line 14, not floored) and QBI deduction fill them for the final
+  pass - Form8990TwoPass, FORM_8990_LINES_6_10_FIGURED.) (A small business taxpayer with a carryforward from a year it was limited deducts it in full when the gate is No since 2026-11-12 -
   i8990 "Change from being subject to section 163(j) to being exempt"; Form8990Compute.releasedWhenExempt, Schedule 1 line 3.)
 - Schedules A and B (partners / S corporation shareholders), excepted-business allocation and the gross receipts test itself are not asked.
 
@@ -529,7 +532,11 @@
   2026-11-12, not matched by list position - Wave2FieldsW4.markFarmQjv.)
 - (Statement matching: the line 4a / 5b / 6a fill takes an exact or last-4 SSN, and since 2026-11-11 a blank TIN as the Family Head's,
   as the 1099-PATR fill does - not on the spouse's copy or where blank statements are dropped.)
-- Conservation and prepaid-supplies excess have no next-year bridge (typed by the user). (Checked 2026-11-11: a farm home office
+- (Since 2026-11-13 the conservation excess carries itself: each farm's and farm rental's amount over the 25% limit is kept with the
+  return (AttachedForms.carryovers) and fills next year's blank prior-year conservation carryover on the same person's farm (by
+  principal product) or farm rental (by description) - ConservationCarryBridge, FARM_CONSERVATION_CARRYOVER_FROM_PRIOR_YEAR. Prepaid
+  supplies over the 50% limit get a next-year note only (SCHEDULE_F_PREPAID_SUPPLIES_FROM_PRIOR_YEAR): they're deducted in the year
+  used, which isn't asked.) (Checked 2026-11-11: a farm home office
   never goes through Form 8829 - Home office offers only Schedule C businesses - so it is deducted on Schedule F line 32 as the
   instructions say.)
 

@@ -1,3 +1,10 @@
+## 2026-11-14T20:00:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43616210697 on 86eab402 - revision ca-ustax-be--0000618 serving 100%
+  traffic, image ustax-be:86eab40; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): unchanged since 435c614 - not redeployed; live bundle main-HZ47DKJQ.js.
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-14T19:30:00
 Outstanding items 1-2 (Form 1116):
 - Form1116DeductionYear.asIfBase: a deduction year's as-if credit limit (Pub. 514, "as if you had chosen to credit foreign taxes") is

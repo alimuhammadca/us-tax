@@ -1,3 +1,11 @@
+## 2026-11-14T21:30:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43619905642 on 65cd1b6 - live at https://www.taxbeans.com
+  (bundle main-4ZVCO2PK.js, has the alphabetical sidebar sort).
+- Backend (Azure Container App ca-ustax-be): not redeployed - no source change since 86eab402 (only e2e specs); revision
+  ca-ustax-be--0000618 keeps serving.
+- Prod Postgres pg-ustax-9u14g untouched (state Stopped).
+
 ## 2026-11-14T21:00:00
 Sidebar sorted alphabetically (owner, outstanding.md "Sort the statements and forms in each sidebar section"):
 - us-tax-ui ShellComponent.sortByLabel (Intl.Collator en-US, numeric, base sensitivity) applied to Personal, Statements, Incomes,

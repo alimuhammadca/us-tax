@@ -1,3 +1,12 @@
+## 2026-11-14T21:00:00
+Sidebar sorted alphabetically (owner, outstanding.md "Sort the statements and forms in each sidebar section"):
+- us-tax-ui ShellComponent.sortByLabel (Intl.Collator en-US, numeric, base sensitivity) applied to Personal, Statements, Incomes,
+  Deductions, Applications and Tax Return in getMenuSections; the "Select statements" picker and info notes stay first; Get started
+  unsorted. Prev / Next (FormNavigationService.setPersonalOrder) follows the sorted Personal list - Address is now first after Get
+  started, Digital assets -> Filing status.
+- Tests: shell.component.spec (new sort test; 34/34); e2e sidebar-alphabetical-order.spec.ts (new); get-started, start-page and
+  personal-next-order specs updated for the new order.
+
 ## 2026-11-14T20:00:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43616210697 on 86eab402 - revision ca-ustax-be--0000618 serving 100%

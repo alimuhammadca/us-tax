@@ -646,7 +646,15 @@
   spouse's own separate return, and no "payer already reduced the amount", "reducing interest by bond premium" or
   "reducing OID by acquisition premium" questions. Adding them is a field addition: needs the owner's sign-off.
 
-## Sort the statements and forms in each sidebar section (opened 2026-11-05, owner)
+## ~~Sort the statements and forms in each sidebar section (opened 2026-11-05, owner)~~ **DONE 2026-11-14**
+
+(Owner 2026-11-14: alphabetical.) Personal, Statements, Incomes, Deductions, Applications and Tax Return are sorted by the label
+shown, numbers in number order (Form 982 before Form 1040) - `ShellComponent.sortByLabel` in `getMenuSections`; the "Select
+statements" picker and information notes stay first; Get started keeps its step order. Prev / Next follows the sorted Personal list
+(Address, Digital assets, Filing status, Identification, Presidential election campaign, Third party designee). Several Forms W-2 stay
+one sidebar item (the entries are inside the screen). e2e `sidebar-alphabetical-order.spec.ts`; `get-started`, `start-page`,
+`personal-next-order` updated for the new Prev / Next order. The original note:
+
 
 The owner wants the items in each sidebar section sorted: Statements, Incomes, Deductions, Personal and Tax Return (on
 every person tab - Family Head, spouse, dependents). Today each list is in the order it was written by hand:

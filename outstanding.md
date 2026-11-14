@@ -171,7 +171,8 @@
 - (Basis reduction, Schedule A lines 16 + 21, reaches depreciation since 2026-11-13 when the personal part is claimed and the property
   matches one depreciable asset placed in service this year by description: the return is figured again with that asset's cost
   lowered - CreditBasisReduction, DEPRECIATION_BASIS_REDUCED_BY_CREDIT. A property with only a business part (line 16, not figured)
-  isn't reduced; the saved asset keeps its cost for later years - the note asks for the reduced cost.)
+  isn't reduced. Since 2026-11-14 the lower cost is kept with the return and used again in later years while the saved asset keeps
+  that cost - AssetCostCarry, DEPRECIATION_COST_FROM_PRIOR_YEAR_CHANGE; a cost the user lowered is used as typed.)
 
 ## Clean vehicle credit (Form 8936): found in the 2026-11-09 review, not changed
 
@@ -186,7 +187,8 @@
   of the one depreciable asset placed in service this year whose description has the VIN or model - i8936 "reduce the basis of each
   vehicle by the amount entered on line 9", the whole line 9 though only the personal part is claimed here; CreditBasisReduction
   figures the return a second time. Not when the credit isn't claimed - a 100% business vehicle, whose credit (Form 3800) isn't
-  figured. A current-year MAGI that moves over the limit in the second pass isn't re-checked.)
+  figured. A current-year MAGI that moves over the limit in the second pass isn't re-checked. Later years use the lower cost too since
+  2026-11-14 - AssetCostCarry.)
 
 ## Prior-year minimum tax credit (Form 8801): found in the 2026-11-09 review, not changed
 
@@ -384,7 +386,8 @@
   (AttachedForms.carryovers, kind s453a - IRC 453A(c)(4) fixes it for that year's obligations) and a later year still owing figures its
   interest with it, by person, description and date sold (Section453ALaterYear, FORM_6252_SECTION_453A_LATER_YEAR_FIGURED); a sale
   with no record (sold before the app, or renamed) keeps the advisory. The figured interest reaches line 15 with no Other tax items
-  saved since 2026-11-14 (it was dropped then). Simplification: the 7% rate is the December 2025 one for every year; (since 2026-11-12 Form 1098-T box 4 asks about the
+  saved since 2026-11-14 (it was dropped then). (The rate is the underpayment rate for December of the return's year since 2026-11-14 - IRC 453A(c)(2)(B); IRS quarterly
+  interest rates, Q4 2017-2026: 2024 8%, 2025 7% - Form6252Compute.underpaymentRate; a year after the table uses the latest known.) (since 2026-11-12 Form 1098-T box 4 asks about the
   education credit recapture and box 6 points to an amended return - Form1098TPriorYear.)
 - (The Form 8960 line 5c messages name and open the spouse's copy on a joint return since 2026-11-12, Form8960Owners.) A typed line 17h
   replaces only its own person's Form 1099-MISC box 15 part since 2026-11-12 (Misc1099Income.applyLine17h).
@@ -477,8 +480,9 @@
   the calculation - Instructions for Form 4684 line 20, Regs. 1.168(i)-8: the destroyed part's cost is the row's adjusted basis plus
   its depreciation allowed; its share of the asset's depreciable cost comes off the cost, earlier depreciation and section 179, and
   that part is dated disposed of on the casualty date (FORM_4684_ASSET_PART_DISPOSED); with no single match or a blank cost,
-  FORM_4684_PART_DISPOSED_NOT_SPLIT.) Still open: the split is this year's only - the saved asset keeps its full cost, so next year
-  needs the user to lower it (the message says so); an asset that can't be matched keeps the FORM_4684_STOP_DEPRECIATING message.
+  FORM_4684_PART_DISPOSED_NOT_SPLIT.) (Since 2026-11-14 the share kept is saved with the return and the rest is figured again in later years while the
+  saved asset keeps its full cost - AssetCostCarry, DEPRECIATION_COST_FROM_PRIOR_YEAR_CHANGE; a lowered cost is used as typed.) An asset
+  that can't be matched keeps the FORM_4684_STOP_DEPRECIATING message.
 - The section 1033 postponement is a message only (the user leaves the property out); no replacement-property record or Form 4684
   statement is made.
 

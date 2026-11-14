@@ -1,3 +1,17 @@
+## 2026-11-14T15:00:00
+Outstanding items 1-3 (Forms 8911 / 8936, Form 4684 Section B, Other tax items):
+- AssetCostCarry (new): a credit's basis reduction (CreditBasisReduction) and a partly destroyed asset's split (CasualtyDisposedAssets -
+  the rest now carries its share kept) are kept with the return (AttachedForms.carryovers, kind "assetcost", through the pass's
+  AttachedFormInputs) and applied again next year to the same person's asset (description + date placed in service) while it still
+  has the saved cost - before DepreciationPriorYear, so a blank earlier depreciation still comes from last year's reduced figures; a
+  cost the user lowered is used as typed. DEPRECIATION_COST_FROM_PRIOR_YEAR_CHANGE. The year-one messages no longer ask to lower
+  the cost by hand. Pub. 946 Adjusted basis; Instructions for Form 8936 Basis reduction; Regs. 1.168(i)-8.
+- Section 453A interest uses the underpayment rate for December of the return's year (IRC 453A(c)(2)(B)): IRS quarterly interest
+  rates, Q4 2017-2026 (2023 8%, 2024 8%, 2025 7%, 2026 7%) - Form6252Compute.underpaymentRate; messages name the rate and month.
+  A 2024 year of sale: Pub. 537's example interest 139,200 (was 121,800 at 7%).
+- Tests: AssetCostCarryTest (5), Section453AInterestTest (+2); e2e asset-cost-carry-later-year.spec.ts (2, two-year),
+  section453a-later-year-interest.spec.ts (2024 range at 8%).
+
 ## 2026-11-14T13:00:00
 Full e2e regression (npm run test:regression, --workers=1 --retries=0): 2344 passed, 0 failed, 0 skipped, 1 flaky (5.7 h).
 - Flaky: other-payments-screen.spec.ts (Family Head) - the first try couldn't find the write-in select right after "Add a write-in"

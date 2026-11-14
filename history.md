@@ -1,3 +1,10 @@
+## 2026-11-14T16:00:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43593586194 on 96c1b934 - revision ca-ustax-be--0000616 serving 100%
+  traffic, image ustax-be:96c1b93; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): unchanged since 435c614 - not redeployed; live bundle main-HZ47DKJQ.js.
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-14T15:00:00
 Outstanding items 1-3 (Forms 8911 / 8936, Form 4684 Section B, Other tax items):
 - AssetCostCarry (new): a credit's basis reduction (CreditBasisReduction) and a partly destroyed asset's split (CasualtyDisposedAssets -

@@ -1,3 +1,11 @@
+## 2026-11-14T11:00:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43542704211 on 1693c050 - revision ca-ustax-be--0000615 serving 100%
+  traffic, image ustax-be:1693c05; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43542706831 on 435c614 - live at https://www.taxbeans.com
+  (bundle main-HZ47DKJQ.js, with the Foreign income help limits from reference data).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-14T10:00:00
 outstanding.md items (owner: "yes, do items 1-3").
 - Section 453A interest in later years (Section453ALaterYear): the year of sale keeps each sale's applicable percentage with the

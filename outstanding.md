@@ -91,8 +91,13 @@
   FORM_1116_LINE16_SECTION_461L_ADJUSTMENT). It assumes those losses are in line 1a's general category income; the AMT credit takes it
   too - it reads line 17, which includes line 16 (checked 2026-11-12; an earlier note here said otherwise).) Adjustments 2 and 3 - a
   loss category spread over the income categories, and a net U.S. loss (the line 15 total over line 18) spread by foreign income - are
-  figured since 2026-11-12 (Form1116LossAllocation, FORM_1116_LINE16_LOSS_ALLOCATION). Not kept: the separate limitation / overall
-  foreign loss accounts and their recapture in later years (adjustments 4-6), and the lump-sum category worksheet.
+  figured since 2026-11-12 (Form1116LossAllocation, FORM_1116_LINE16_LOSS_ALLOCATION). (Since 2026-11-14 the
+  accounts are kept with the return - AttachedForms.carryovers kind ftcloss: an overall foreign loss (a loss past the other categories'
+  income that offset U.S. income), separate limitation losses (the adjustment 2 shares) and overall domestic losses (the adjustment 3
+  shares) - and recaptured in later years on line 16 in the order listed: 4 up to 50% of foreign income, 5 the loss category's income
+  moved to the other categories, 6 up to 50% of U.S. source income; FORM_1116_LOSS_ACCOUNTS_KEPT lists the balances. Not asked: the
+  section 904(f)(3) disposition rule and the elections to recapture more than 50%; a category with no Form 1116 that year keeps its
+  balances.) Not done: the lump-sum category worksheet.
 - The 1-year carryback isn't modelled. (The accrual choice is checked against last year's return since 2026-11-13: when last year's
   return here credited accrued taxes - last year's answer accrued and a Form 1116 claiming the credit - a blank answer is accrued with
   FORM_1116_ACCRUED_FROM_PRIOR_YEAR and "paid" blocks with FORM_1116_ACCRUAL_CHOICE_BINDING (i1116: "you must credit foreign taxes in
@@ -104,7 +109,9 @@
   needs a hypothetical Form 1116 in the deduction year plus a carry-only record the credit paths ignore.) Done 2026-11-12: the
   deduction year figures Form 1116 as if the credit were claimed, keeps last year's vintages it didn't absorb and saves them on a
   carry-only out_form_1116 row (never shown or credited) for next year's bridge - Form1116DeductionYear,
-  FORM_1116_CARRYOVER_IN_DEDUCTION_YEAR. Simplification: the as-if limit uses this return's taxable income (with the taxes deducted).
+  FORM_1116_CARRYOVER_IN_DEDUCTION_YEAR. (Since 2026-11-14 the as-if limit uses taxable income without the Schedule A
+  foreign tax deduction - or with the standard deduction when Schedule A without it is smaller - line 3a to match, and line 20 raised
+  by the regular tax on that deduction (ordinary rates) - Form1116DeductionYear.asIfBase.)
 
 ## Additional deductions (line 13b, Schedule 1-A): found in the 2026-11-10 review, not changed
 

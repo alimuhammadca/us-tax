@@ -1,3 +1,15 @@
+## 2026-11-14T19:30:00
+Outstanding items 1-2 (Form 1116):
+- Form1116DeductionYear.asIfBase: a deduction year's as-if credit limit (Pub. 514, "as if you had chosen to credit foreign taxes") is
+  figured on taxable income without the Schedule A foreign tax deduction (Form1116Inputs base [6] / [7]); when Schedule A without
+  them is below the standard deduction, the standard deduction is used (line 3a too); line 20 adds the regular tax on that amount
+  (computeTaxBracket difference, AS_IF_TAX). More of the carryover is absorbed, less carried.
+- Form1116LossAllocation: overall foreign loss / separate limitation loss / overall domestic loss accounts kept (AttachedForms.carryovers,
+  kind ftcloss) and recaptured in later years - i1116 line 16 adjustments 4-6 (IRC 904(f), 904(g)); carryUnchanged keeps last year's
+  balances in a year with no Form 1116; FORM_1116_LOSS_ACCOUNTS_KEPT; the line 16 note now covers adjustments 2-6 and either sign.
+- Tests: Form1116LossAccountsTest (5, incl. the instructions' 2026 example), Form1116DeductionYearAsIfTest (3); e2e
+  form1116-loss-accounts-recapture.spec.ts (two-year). Related e2e 52/52; unit suite 5950/0/0/0.
+
 ## 2026-11-14T18:00:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43607673382 on 74b26771 - revision ca-ustax-be--0000617 serving 100%

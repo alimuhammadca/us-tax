@@ -1,3 +1,17 @@
+## 2026-11-14T23:00:00
+Separate returns - who paid the gambling losses, the other line 16 deductions and an investment theft (owner-approved fields,
+outstanding.md "Standard or itemized deductions"):
+- V477 pf_standard_deductions gambling_losses_deduction_paid_by / other_allowed_itemized_deductions_paid_by /
+  investment_theft_loss_amount_paid_by; entity + StandardDeductionsMapper.
+- MfsScheduleAAllocator: gamblingLossesDeduction and otherAllowedItemizedDeductions join SCHEDULE_A_AMOUNT_FIELDS; the investment
+  theft amounts (loss, recovery prospect, Ponzi withdrawals / recoveries) scale by investmentTheftLossAmountPaidBy. Before, all three
+  were copied whole to both separate returns (each spouse deducted the full amount). MfsFormScoper.stampPrimaryMfs counts the theft
+  answer as a paid-by answer.
+- us-tax-ui sd-paid-by: three rows (Gambling losses, Other itemized deductions (line 16), Theft from an investment); the help says
+  gambling losses are limited to that spouse's winnings.
+- Tests: MfsScheduleAAllocatorLine16PaidByTest (2); form-standard-deductions.component.spec (new test, 10/10); e2e
+  mfs-schedule-a-line16-paid-by.spec.ts (2) + mfs-schedule-a-allocator, mfs-standard-deduction-coordination, open-questions-b124 (6/6).
+
 ## 2026-11-14T22:30:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43646959248 on 58013966 - revision ca-ustax-be--0000619 serving

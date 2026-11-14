@@ -140,7 +140,10 @@
   over the limit asks for it - SCHEDULE_A_MORTGAGE_AVERAGE_BALANCE_NEEDED).
 - Medical lodging people (owner decision): the field allows the patient and one companion (owner-approved 2026-10-23, Pub. 502's
   parent-and-child example); "$50 for each person" may allow more than one companion - widen it only with the owner's sign-off.
-- Gambling / other line 16 / investment-theft losses have no paid-by answer on separate returns; they split 50/50.
+- (Gambling losses, the other line 16 deductions and an investment theft have their own "Who paid - separate returns" answers since
+  2026-11-14 - owner-approved fields V477; blank = joint, 50/50, and the theft's recoveries and Ponzi amounts scale with its share -
+  MfsScheduleAAllocator. Checked in the code: before this they were copied whole to both separate returns, not split 50/50 as noted.
+  Gambling losses are then limited on each return to that spouse's winnings.)
 
 ## Qualified business income deduction (line 13a): found in the 2026-11-10 review, not changed
 

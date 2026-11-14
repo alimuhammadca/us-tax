@@ -78,8 +78,10 @@
   category and country is typed.
 - (The alternative minimum tax credit without the section 59(a)(4) election, since 2026-11-13: only the AMT-disallowed share of line 3g
   is added back - the standard deduction or Schedule A taxes, not medical or Part II adjustments - and each category keeps its own AMT
-  carryforward with the return (V475), used next year in place of the regular carryover; Form6251AmtFtc.) Still simplified: the AMT
-  carryover is one amount per category (no 10-year vintages); other AMT adjustments to foreign-source income (depreciation, etc.) aren't
+  carryforward with the return (V475), used next year in place of the regular carryover; Form6251AmtFtc.) (Since 2026-11-14 the AMT carryover
+  is kept by year, AttachedForms.carryovers kind amtftc: a year more than 10 years back is dropped, the AMT credit uses this year's AMT
+  taxes first and then the oldest year, and a return with only the V475 total reads it as last year's - Form6251AmtFtc.carry.) Still
+  simplified: other AMT adjustments to foreign-source income (depreciation, etc.) aren't
   refigured; with no AMT record from last year the regular carryover is used.
 - (Line 3e uses gross income for a business - Schedule C line 7 - and a rental - the rents and royalties - instead of their net in
   line 9 since 2026-11-12, Form1116Inputs.netToGross.)
@@ -436,7 +438,9 @@
 - Medicare Advantage MSA: no partial amount for the death / disability exception (Archer has one) - a field addition.
 - No line 6a / 10 override (Form 1099-SA code 2 has been added to Archer line 6b since 2026-11-11).
 - (Since 2026-11-13 a blank line 2 is box 1 of the person's Form 5498-SA marked Archer MSA - Form5498SaChecks,
-  FORM_8853_LINE2_FROM_5498SA.) Medicare months are not derived from the date of birth.
+  FORM_8853_LINE2_FROM_5498SA.) Medicare months are not derived from the date of birth (enrollment isn't automatic at 65); since
+  2026-11-14 someone 65 or older with Archer MSA contributions and more eligible months than the months before Medicare could start
+  gets FORM_8853_MEDICARE_AGE_CHECK (MedicareAgeCheck).
 
 ## HSA (Form 8889): found in the 2026-11-06 review, not changed
 
@@ -455,7 +459,9 @@
   HsaLastMonthRule, FORM_8889_LINE18_FROM_PRIOR_YEAR. Otherwise it is typed, with the message.)
 - (Since 2026-11-13 lines 2 + 9 + 10 more than boxes 2 + 3 of the person's HSA Forms 5498-SA get FORM_8889_CONTRIBUTIONS_OVER_5498SA;
   box 2 can't fill line 2 - it holds employer contributions and contributions made in 2025 for 2024 - Form5498SaChecks.) Medicare
-  months are not derived from the date of birth (only explained).
+  months are not derived from the date of birth (enrollment isn't automatic at 65); since 2026-11-14 someone 65 or older with
+  contributions and more eligible months than the months before Medicare could start (the month of reaching 65) gets
+  FORM_8889_MEDICARE_AGE_CHECK (MedicareAgeCheck).
 
 ## Income adjustments (Schedule 1 Part II): found in the 2026-11-06 review, not changed
 
@@ -505,10 +511,12 @@
 
 - The at-risk widening of a linked activity (`Wave2FieldsW4.atRiskSaleGain`, 2026-11-11: this year's sales only, no section 1244 stock,
   the gain after a section 121 exclusion) counts losses too since 2026-11-12 (Form 6198 lines 2a-2c): the linked sales are netted per activity and a net loss reduces the amount at
-  risk left for the operating loss, never below zero. A sale loss larger than the amount at risk is still deducted in full on Form 4797 - since 2026-11-13 with a note
-  (FORM_6198_SALE_LOSS_OVER_AT_RISK, Wave2FieldsW4.flagLinkedSaleLossOverAtRisk). Limiting it needs next year's Form 4797 to take the
-  disallowed loss back (i6198: "Include on your current year ... Form 4797 ... any prior year losses that you could not deduct because
-  of the at-risk rules") - no place holds it: a field or a computed Form 4797 line, owner sign-off.
+  risk left for the operating loss, never below zero. (Since 2026-11-14 a sale loss larger than the amount at risk is limited on the household return: the excess, shared over the
+  activity's losses, is taken back on Form 4797 as a "Form 6198 at-risk limit" row (line 2 held over a year, line 10 otherwise) and
+  kept with the return (AttachedForms.carryovers, kind atrisksale); next year it goes on Form 4797 again ("Loss carried from ...") and
+  joins the same activity's netting, so it is allowed only as far as that year's amount at risk lets it - in full when no amount at risk
+  is entered; an activity not on next year's return keeps it carried with FORM_6198_PRIOR_SALE_LOSS_NO_ACTIVITY. AtRiskSaleLoss,
+  i6198 lines 2a-2c and 21. A scoped pass keeps the old note and deducts the whole loss.)
 - (MFS, checked 2026-11-12: the lookback replayed the household's primary returns - the Family Head's history - on the spouse's leg too;
   the spouse's separate return now replays the spouse's own earlier separate returns (mfs_spouse) plus the typed figure.)
 - (An asset disposed of this year with no sale, exchange, installment sale or casualty row - by date or name - gets

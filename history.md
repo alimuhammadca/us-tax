@@ -1,3 +1,20 @@
+## 2026-11-14T17:00:00
+Outstanding items 1-3 (Form 4797 / 6198, Form 1116 / 6251, Forms 8889 / 8853):
+- AtRiskSaleLoss (new): a linked Business property sale loss over the activity's amount at risk is no longer deducted in full on the
+  household return. Wave2FieldsW4.applyLinkedSaleGains shares the excess over the activity's losses (section 1231 / ordinary by holding
+  period, plus last year's carried loss); Form 4797 gets a "Form 6198 at-risk limit" row (line 2 or 10) taking it back, and it is kept
+  in AttachedForms.carryovers (kind atrisksale). Next year it goes on Form 4797 again and joins the activity's netting (i6198 lines
+  2a-2c, 21; IRC 465(a)(2)); fully at risk -> allowed in full; activity missing -> carried again with FORM_6198_PRIOR_SALE_LOSS_NO_ACTIVITY;
+  FORM_6198_PRIOR_SALE_LOSS_ON_FORM_4797 notes the carried loss. FORM_6198_SALE_LOSS_OVER_AT_RISK says the excess is taken back.
+  Wave2FieldsW4.activityRef factored out; AssetCostCarry.priorCarryovers shared; AttachedFormInputs gets per-pass prior records.
+- Form6251AmtFtc: the AMT foreign tax carryover is kept by year (kind amtftc): 10-year aging (IRC 904(c)), this year's AMT taxes
+  used first then the oldest year, section 951A not carried; a V475 total alone is read as last year's carryover.
+- MedicareAgeCheck (new): FORM_8889_MEDICARE_AGE_CHECK / FORM_8853_MEDICARE_AGE_CHECK when someone 65 or older (the month of reaching
+  65 - the day before the 65th birthday) has contributions and more eligible months than the months before Medicare could start.
+  A note only - turning 65 doesn't enroll anyone in Medicare (i8889 Eligible Individual, line 2; i8853 Eligible individual).
+- Tests: AtRiskSaleLossTest (6), Form6251AmtFtcVintageTest (4), MedicareAgeCheckTest (4); e2e at-risk-sale-loss-amt-ftc-medicare.spec.ts
+  (3, two-year at-risk: 2024 line 4 -2,000 with 3,000 kept, 2025 -1,000 with 2,000 kept). Related e2e 38/38; unit suite 5942/0/0/0.
+
 ## 2026-11-14T16:00:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43593586194 on 96c1b934 - revision ca-ustax-be--0000616 serving 100%

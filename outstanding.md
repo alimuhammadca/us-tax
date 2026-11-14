@@ -380,8 +380,11 @@
   SECTION_962_DEDUCTION_NOT_ON_LINE_12E comes with the figured section 962 tax on Other tax items, not from the hidden copy.
 - On a joint return the PFIC Part V facts are first-entry while line 16e is summed; section 453A interest (line 15) is figured for the year of
   sale since 2026-11-12 (Pub. 537: deferred tax liability at 20% long-term / 37% otherwise x applicable percentage x the 7% December 2025
-  underpayment rate; a typed line 15 wins) - a later year's interest on a year-of-sale obligation is still an advisory (the year-of-sale
-  applicable percentage isn't kept); (since 2026-11-12 Form 1098-T box 4 asks about the
+  underpayment rate; a typed line 15 wins); since 2026-11-14 the year of sale keeps each sale's applicable percentage with the return
+  (AttachedForms.carryovers, kind s453a - IRC 453A(c)(4) fixes it for that year's obligations) and a later year still owing figures its
+  interest with it, by person, description and date sold (Section453ALaterYear, FORM_6252_SECTION_453A_LATER_YEAR_FIGURED); a sale
+  with no record (sold before the app, or renamed) keeps the advisory. The figured interest reaches line 15 with no Other tax items
+  saved since 2026-11-14 (it was dropped then). Simplification: the 7% rate is the December 2025 one for every year; (since 2026-11-12 Form 1098-T box 4 asks about the
   education credit recapture and box 6 points to an amended return - Form1098TPriorYear.)
 - (The Form 8960 line 5c messages name and open the spouse's copy on a joint return since 2026-11-12, Form8960Owners.) A typed line 17h
   replaces only its own person's Form 1099-MISC box 15 part since 2026-11-12 (Misc1099Income.applyLine17h).
@@ -411,13 +414,15 @@
   Form 2555 copy); an unanswered household question passes.
 - No line 18 trip table (the 330 days are one typed number); `housingLocationCountry` duplicates the locality choice (only printed); (since 2026-11-13
   the screen takes the $130,000 limit and the Notice 2025-16 locality table from GET /api/reference-data - FOREIGN_EARNED_INCOME_EXCLUSION_MAX,
-  FOREIGN_HOUSING_LIMIT_FULL_YEAR, FOREIGN_HOUSING_HIGH_COST_LIMITS; data/foreign-housing-localities.ts stays as the fallback and the
-  help text still quotes the 2025 figures).
+  FOREIGN_HOUSING_LIMIT_FULL_YEAR, FOREIGN_HOUSING_HIGH_COST_LIMITS; data/foreign-housing-localities.ts stays as the fallback; since
+  2026-11-14 the help text's figures follow it too - foreignIncomeHelp's limits, the base amount at 16% of the exclusion).
 - Foreign self-employment net profit: since 2026-11-12 a blank one comes from the person's one business on Business income (no farm) -
   ForeignSeNetProfit; with two or more businesses, the ones marked "income from outside the United States" (V472) fill it since
   2026-11-12 (not with a marked farm or qualified joint venture). ("No" to "already on a Form W-2" next to a W-2
   with the same pay or employer has an advisory since 2026-11-11; the answer stays the user's.)
-- Notice 2025-16 amounts and the IRS yearly exchange rates are not in the local library - unverified.
+- (Notice 2025-16 checked against the IRS notice 2026-11-14: $130,000, the $20,800 base, the $39,000 limit and all 136 localities -
+  full-year and daily - match the backend table and the screen's fallback. The app keeps no exchange-rate table: amounts are typed in
+  dollars.)
 
 ## Archer MSA / LTC (Form 8853): found in the 2026-11-06 review, not changed
 

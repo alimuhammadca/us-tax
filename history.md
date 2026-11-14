@@ -1,3 +1,13 @@
+## 2026-11-14T10:00:00
+outstanding.md items (owner: "yes, do items 1-3").
+- Section 453A interest in later years (Section453ALaterYear): the year of sale keeps each sale's applicable percentage with the
+  return (AttachedForms.carryovers, kind s453a); a later year still owing figures the interest - unpaid balance x gross profit % x the
+  maximum rate x that percentage x 7% - matched by person, description and date sold (FORM_6252_SECTION_453A_LATER_YEAR_FIGURED).
+  Fix found on the way: the figured interest (2026-11-12) never reached Schedule 2 line 15 unless Other tax items was saved.
+- Notice 2025-16 checked against the IRS notice: all 136 localities (full-year and daily), $130,000, $20,800 and $39,000 match. No change.
+- Foreign income help text: the dollar figures come from reference data (foreignIncomeHelp limits), 2025 as the fallback.
+- Unit Section453ALaterYearTest; UI foreign-income-help.spec; e2e section453a-later-year-interest.
+
 ## 2026-11-14T08:30:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43533810857 on 9794a650 - revision ca-ustax-be--0000614 serving 100%

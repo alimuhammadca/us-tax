@@ -6,6 +6,12 @@ Deployed latest code to production (Azure, via the manual GitHub Actions workflo
   (bundle main-HZ47DKJQ.js, with the Foreign income help limits from reference data).
 - Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
 
+## 2026-11-14T08:10:00
+Full e2e regression (npm run test:regression, --workers=1 --retries=0): 2344 passed, 0 failed, 0 skipped, 1 flaky (5.7 h).
+- Flaky: other-payments-screen.spec.ts (Family Head) - the first try couldn't find the write-in select right after "Add a write-in"
+  (the row hadn't rendered; selectOption looks the control up once). The spec now waits for the "Write-in 1" row; re-run 3x with
+  retries off: 6/6 passed. Test-only change, no app code changed.
+
 ## 2026-11-14T10:00:00
 outstanding.md items (owner: "yes, do items 1-3").
 - Section 453A interest in later years (Section453ALaterYear): the year of sale keeps each sale's applicable percentage with the

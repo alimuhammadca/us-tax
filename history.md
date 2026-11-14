@@ -1,3 +1,11 @@
+## 2026-11-14T22:30:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43646959248 on 58013966 - revision ca-ustax-be--0000619 serving
+  100% traffic, image ustax-be:5801396; /q/health/ready UP (V476 applied). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43646961480 on 3d3e379 - live at https://www.taxbeans.com
+  (bundle main-ON7ERLOJ.js, has the medical premium shares).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-14T22:00:00
 Medical excess reimbursement - coverage paid partly by the employer (owner-approved fields, outstanding.md "Standard or itemized
 deductions"):

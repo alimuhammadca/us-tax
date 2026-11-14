@@ -137,8 +137,10 @@
 ## Premium tax credit (Form 8962): found in the 2026-11-09 review, not changed
 
 - (Since 2026-11-13 a blank line 2b is the modified AGI of the dependents whose own return here shows they must file - Chart B for a
-  dependent - DependentOwnMagi, FORM_8962_LINE2B_FROM_DEPENDENT_RETURNS.) A dependent with no return here is typed; a dependent's
-  self-employment filing requirement ($400 net earnings) and Form 2555 aren't checked.
+  dependent - DependentOwnMagi, FORM_8962_LINE2B_FROM_DEPENDENT_RETURNS. Since 2026-11-13 a dependent with $400 or more of net
+  self-employment earnings must file too (Table 3), self-employment earnings count as earned income in Chart B, and the dependent's
+  Form 2555 lines 45 + 50 are added back to the modified AGI.) A dependent with no return here is typed. (A dependent's own return
+  has no personal screens, so a Form 2555 can't be on it yet - the add-back is ready for when one can.)
 - The spouse's copy on a separate return has no dependents' list and no Part V (the table has no spouse columns for them).
 
 ## Mortgage interest credit (Form 8396): found in the 2026-11-09 review, not changed
@@ -190,8 +192,10 @@
 
 - (Since 2026-11-13, V474, lines 1, 2, 14 and 16 fill together from last year's household return here when all four are blank and it
   had AMT: Form 6251 keeps line 1 + 2e and lines 2a + 2b + 2c + 2d + 2g + 2h (i8801 line 2) next to lines 10 and 11 -
-  Form8801PriorYearLines, FORM_8801_LINES_FROM_PRIOR_YEAR; a No to the claim stays No.) Still typed: exclusion items on other lines
-  (line 2j's Schedule K-1 (Form 1041) code J part, depletion on line 2m), and on a separate return (a joint prior return isn't divided).
+  Form8801PriorYearLines, FORM_8801_LINES_FROM_PRIOR_YEAR; a No to the claim stays No. Since 2026-11-13 line 2 also takes last year's
+  Schedule K-1 (Form 1041) box 12 code J exclusion items, kept on Form 6251 as k1Form1041ExclusionItemsCodeJ - i8801 line 2.) Still
+  typed: depletion on line 2m (it can't be told from other passive adjustments), and on a separate return (a joint prior return
+  isn't divided).
 - (Part III lines 28-30, 35 and 42 fill from the 2024 Form 6251 Part III - lines 13, 14, 15, 20 and 27 - with lines 1, 2, 14 and 16 since
   2026-11-13, and the 2024 filing status from last year's return - Form8801PriorYearLines.) the Form 2555 "AMT capital gain excess" modifications and the
   MTFTCE (line 12) fills from last year's return here since 2026-11-13 - the election's Schedule 3 line 1, else each
@@ -521,7 +525,10 @@
 - (Since 2026-11-13, V473, each Form 4562 keeps its assets' figures and a blank "Depreciation taken in earlier years" next year is
   last year's earlier depreciation plus last year's section 179 + bonus + MACRS - same person, description and date placed in service;
   only when last year's figure was complete - DepreciationPriorYear, FORM_4562_EARLIER_DEPRECIATION_FROM_PRIOR_YEAR. The screen's
-  carried-asset note still asks for it.) Amortization in earlier years is still typed per cost.
+  carried-asset note still asks for it.) (Since 2026-11-13 a blank "Amortization in earlier years" is last year's earlier amortization
+  plus last year's column (f) - same person, description and begin date; only when last year's figure was complete -
+  DepreciationPriorYear, FORM_4562_EARLIER_AMORTIZATION_FROM_PRIOR_YEAR. An amortization on no activity files no Form 4562, so it
+  isn't recorded.)
 - (Amortization on no activity - "Other" or no match - is reported since 2026-11-11: FORM_4562_AMORTIZATION_NOT_ON_AN_ACTIVITY.)
 
 ## Self-employment tax options: found in the 2026-11-06 review, not changed

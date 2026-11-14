@@ -1,3 +1,15 @@
+## 2026-11-14T07:30:00
+outstanding.md items (owner: "yes, do items 1-3").
+- Form 8962 line 2b (DependentOwnMagi): a dependent with $400 or more of net self-employment earnings must file (2025 Form 1040
+  instructions, Table 3); self-employment earnings count as earned income in Chart B (they were counted as unearned); the dependent's
+  Form 2555 lines 45 + 50 are added back to the modified AGI (i8962 line 2a).
+- Form 8801 line 2 (Form8801PriorYearLines): last year's Schedule K-1 (Form 1041) box 12 code J exclusion items are kept on Form 6251
+  (k1Form1041ExclusionItemsCodeJ - JSON only, no column or form box) and added to next year's line 2 (i8801 line 2).
+- Form 4562 Part VI (DepreciationPriorYear): each amortized cost is recorded in out_form_4562.asset_detail_json (kind "amortization");
+  next year a blank "Amortization in earlier years" is last year's earlier amortization + column (f) by person, description and begin
+  date (FORM_4562_EARLIER_AMORTIZATION_FROM_PRIOR_YEAR). The bridge now runs before the amortization goes on its activity.
+- Unit DependentMagiCodeJAmortizationTest; e2e dependent-se-codej-amortization-bridges.
+
 ## 2026-11-14T06:30:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43510201828 on 3f0736a7 - revision ca-ustax-be--0000613 serving 100%

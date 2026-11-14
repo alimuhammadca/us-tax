@@ -1,3 +1,11 @@
+## 2026-11-14T08:30:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43533810857 on 9794a650 - revision ca-ustax-be--0000614 serving 100%
+  traffic, image ustax-be:9794a65; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): not redeployed - no UI change since 1eeb6ad, live at https://www.taxbeans.com
+  (bundle main-6PYQUYAQ.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-14T07:30:00
 outstanding.md items (owner: "yes, do items 1-3").
 - Form 8962 line 2b (DependentOwnMagi): a dependent with $400 or more of net self-employment earnings must file (2025 Form 1040

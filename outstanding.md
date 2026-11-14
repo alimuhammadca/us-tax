@@ -129,7 +129,10 @@
 - W-2GU / W-2VI / W-2AS territory income tax withheld doesn't reach Schedule A line 5a. (Checked 2026-11-11: i1040sca line 6 - "include
   U.S. territory taxes on the appropriate state and local tax line" - but the same box 2 tax is usually credited through Form 5074 /
   8689 (TerritoryW2s' advisory), so deducting it is a choice like the foreign tax credit's: needs a question (field - owner sign-off).)
-- "Part" employer-paid coverage: the excess reimbursement is taxed in full instead of in proportion to the employer-paid share (Pub. 502).
+- ("Part" employer-paid coverage is taxed in proportion to the employer's share since 2026-11-14 - owner-approved fields V476: the year's
+  premiums the employer paid (cafeteria-plan pre-tax premiums count as the employer's) and the premiums paid with after-tax money,
+  shown only for "Part of them"; Schedule 1 line 8z = excess x employer / total, Pub. 502 "Excess reimbursement" - MedicalExcessShare.
+  With either blank the whole excess is counted with MEDICAL_EXCESS_REIMBURSEMENT_PART_EMPLOYER_PAID asking for them.)
 - (The private-foundation 30% limit subtracts the full 50%-org capital gain property since 2026-11-12 - Pub. 526 Worksheet 2 line 20.)
 - (Points go through the Pub. 936 Table 1 line 14 ratio when the debt is over the limit since 2026-11-12 - the Table 1 line 13
   instructions, "Claiming your deductible points".)

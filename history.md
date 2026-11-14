@@ -1,3 +1,16 @@
+## 2026-11-14T22:00:00
+Medical excess reimbursement - coverage paid partly by the employer (owner-approved fields, outstanding.md "Standard or itemized
+deductions"):
+- V476 pf_standard_deductions.medical_premiums_employer_paid / medical_premiums_you_paid_after_tax; entity + StandardDeductionsMapper.
+- MedicalExcessShare.taxable: Schedule 1 line 8z = excess x employer's premiums / (employer's + after-tax own premiums), Pub. 502
+  "Excess reimbursement"; with a share blank (or both zero) the whole excess stays with the advisory
+  MEDICAL_EXCESS_REIMBURSEMENT_PART_EMPLOYER_PAID, now asking for the two amounts. Called from
+  TaxReturnComputeService.withMedicalExcessReimbursementLine8z (the flag text moved out - constant pool).
+- us-tax-ui sd-medical: the two amounts appear under "Part of them" (help medicalPremiumShares: Form W-2 box 12 code DD less the
+  after-tax part; pre-tax cafeteria premiums count as the employer's); cleared on save for any other answer.
+- Tests: MedicalExcessShareTest (5); form-standard-deductions.component.spec (new test, 9/9); e2e
+  medical-excess-reimbursement-employer-share.spec.ts (2) + schedule-a-reimbursement-line5a-ui.spec.ts (4/4).
+
 ## 2026-11-14T21:30:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43619905642 on 65cd1b6 - live at https://www.taxbeans.com

@@ -1,3 +1,12 @@
+## 2026-11-15T22:30:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43765654899 on dad43057 - revision ca-ustax-be--0000627 serving 100%
+  traffic, image ustax-be:dad4305; /q/health/ready UP (V484, V485 applied). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43765656801 on f4a9e29 - live at https://www.taxbeans.com
+  (bundle main-DONO3JOT.js).
+- Ships form-3800-epe-plan.md stages 1-3: Form 3800, Form 7210 and Form 8933 with their screens; elective payments to Schedule 3 line 13c.
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-15T21:45:00
 Form 8933 (Rev. December 2025), Carbon Oxide Sequestration Credit - form-3800-epe-plan.md stage 3 (owner-approved, V485). Its elective
 payment now reaches Schedule 3 line 13c through Form 3800 Part III line 1x.

@@ -1,3 +1,25 @@
+## 2026-11-15T07:00:00
+Refund and amount owed - the 2024 tax for Form 2210 line 8 asked as a worksheet (owner-approved fields V481, outstanding.md "Refund and
+amount owed"): not every filer uploads last year's Form 1040, and the line 8 figure isn't printed on any 2024 form, so the single typed
+total was usually line 24 (too high). Instructions for Form 2210 (2025), line 8.
+- Questions (Refund and amount owed, both copies; for a dependent's own return, a new section on the Dependent screen shown once the own
+  return is on): did you file a 2024 return for all 12 months (filed / no 2024 tax and not required to file, a citizen or resident -
+  the tax is 0, no penalty under §6654(e)(2) / didn't file or a short year - no line 8, not asked); then Form 1040 lines 24, 27, 28, 29;
+  "Schedule 3 filed?" -> lines 9, 12, 13b; "Schedule 2 filed?" -> lines 7, 13 and the other taxes the list leaves out (line 8 except on
+  distributions, household taxes under the * note, 17b, 17k, 17m-17q). The figured tax is shown.
+- Backend: V481 adds the 13 columns to pf_refund_amount_owed and pf_prior_year_tax and drops prior_year_tax_liability (nothing copied
+  - not in production). PriorYearTaxWorksheet figures the tax; the mappers put it on the loaded form as priorYearTaxLiability (derived,
+  never saved), so Form 2210 / 2210-F read it unchanged; FORM_2210_PRIOR_YEAR_TAX_UNANSWERED skips the "no 2024 return" answer and now
+  says to answer the 2024 tax questions (the Dependent screen for a dependent's own return). readDependentPriorYearTax reads the whole
+  dependent row (PriorYearTaxMapper.fields). GET /api/estimated-tax/prior-year returns "worksheet" (a return figured here: every answer
+  but the "other" Schedule 2 amount; an upload: the status, line 24, lines 27-29) instead of "tax"; Form2210PriorYearTax.fromComputed /
+  fromUpload removed (fromComputed also took off lines 30, 13a and 13z, which aren't on the line 8 list).
+- UI: shared PriorYearTaxWorksheetComponent + utils/prior-year-tax-worksheet.ts + data/prior-year-tax-worksheet-help.ts; the Dependent
+  screen saves prior-year-tax-dependent (every dependent's entry kept, replace-set).
+- Tests: PriorYearTaxWorksheetTest (6), Form2210PriorYearTaxTest (rewritten), Sc00228 +2 (not filed / no tax); unit suite 5973/0. UI
+  specs 18/18. e2e: new prior-year-tax-worksheet.spec.ts (3); 92 seeds in 60 specs moved from priorYearTaxLiability to the worksheet
+  fields. YAMLs refund-and-amount-owed-taxpayer, identification-dependent.
+
 ## 2026-11-15T05:00:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43674683275 on 14b0615e - revision ca-ustax-be--0000622 serving 100%

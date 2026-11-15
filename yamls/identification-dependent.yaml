@@ -59,6 +59,27 @@ sections:
     fields:
       - {name: claimedByMfs, type: select, options: [taxpayer, spouse]}
 
+  - name: priorYearTax
+    title: 2024 figures for the dependent's underpayment penalty (Form 2210)
+    showIf: "the app prepares the dependent's own return (dependent_own) and the dependent isn't married"
+    note: "V481 (owner-approved 2026-11-15): saved to prior-year-tax-dependent (one entry per dependent id, replace-set); the dependent's
+      own return reads it (readDependentPriorYearTax). Same worksheet as refund-and-amount-owed-taxpayer.yaml section priorYear."
+    fields:
+      - {name: priorYearAgi, type: amount, label: "2024 Form 1040 line 11"}
+      - {name: priorYearReturnStatus, type: select, options: [FILED, NO_TAX, NOT_FILED]}
+      - {name: priorYearTotalTax, type: amount, showIf: "priorYearReturnStatus == FILED"}
+      - {name: priorYearEarnedIncomeCredit, type: amount, showIf: "priorYearReturnStatus == FILED"}
+      - {name: priorYearAdditionalChildTaxCredit, type: amount, showIf: "priorYearReturnStatus == FILED"}
+      - {name: priorYearAmericanOpportunityCredit, type: amount, showIf: "priorYearReturnStatus == FILED"}
+      - {name: priorYearHadSchedule3, type: boolean, showIf: "priorYearReturnStatus == FILED"}
+      - {name: priorYearPremiumTaxCredit, type: amount, showIf: priorYearHadSchedule3}
+      - {name: priorYearFuelsCredit, type: amount, showIf: priorYearHadSchedule3}
+      - {name: priorYearSection1341Credit, type: amount, showIf: priorYearHadSchedule3}
+      - {name: priorYearHadSchedule2, type: boolean, showIf: "priorYearReturnStatus == FILED"}
+      - {name: priorYearTipsSsMedicareTax, type: amount, showIf: priorYearHadSchedule2}
+      - {name: priorYearUncollectedSsMedicareTax, type: amount, showIf: priorYearHadSchedule2}
+      - {name: priorYearOtherExcludedTaxes, type: amount, showIf: priorYearHadSchedule2}
+
   - name: computedOutputs
     readOnly: true
     computed: true

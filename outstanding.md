@@ -2,10 +2,15 @@
 
 ## Refund and amount owed: found in the 2026-11-10 review, not changed
 
-- The upload's 2024 tax is line 24 less lines 27-29 as read: the Schedule 3 refundable credits (premium tax credit, fuels) and the
-  Schedule 2 taxes outside the Form 2210 list aren't on the uploaded figures - the screen says to check them. (Checked 2026-11-11:
-  Form 1040 alone can't close it - line 31 is Schedule 3 line 15, which also holds the extension payment and excess social security
-  tax, and the Schedule 2 lines aren't on Form 1040. Needs the 2024 schedules uploaded.)
+- (The 2024 tax for Form 2210 line 8 is asked as a worksheet since 2026-11-15 - owner-approved fields V481: "did you file a 2024 return
+  for all 12 months" (filed / no tax and not required to file - 0, no penalty / didn't file or a short year - no line 8, not asked),
+  then 2024 Form 1040 lines 24 and 27-29, Schedule 3 lines 9, 12, 13b and the Schedule 2 taxes the line 8 list leaves out (lines 7,
+  13 and one "other" amount); the figure is shown and computed (PriorYearTaxWorksheet). A return figured here fills every answer but
+  the "other" Schedule 2 amount; an upload fills line 24 and 27-29 and leaves the two schedule questions. A dependent's own return asks
+  the same on the Dependent screen (prior-year-tax-dependent) - before, it had no screen and its blocker couldn't be cleared.)
+- Not covered: the optional §965 exclusion (Form 2210 line 8: "You may exclude the amount of your net tax liability under section
+  965") isn't asked - Schedule 2 line 19 stays in the 2024 tax; and the joint-2025 / separate-2024 sum (box E) is still one typed amount
+  rather than the two spouses' worksheets added together.
 - (The four legacy screens - 35-direct-deposit, refund-allocation-taxpayer, 36-apply-to-next-year, prior-year-tax-taxpayer, with
   prior-year-tax-spouse - are removed since 2026-11-14, owner-approved, V478: the components, the shell entries, the API form ids and
   their YAMLs; compute reads Refund and amount owed only; pf_prior_year_tax keeps only the dependent rows (prior-year-tax-dependent).

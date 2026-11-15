@@ -42,7 +42,22 @@ sections:
     fields:
       - {name: priorYearFilingStatus, type: select, note: "filled from last year's return or upload when blank"}
       - {name: priorYearAgi, type: amount, note: "filled - line 11"}
-      - {name: priorYearTaxLiability, type: amount, note: "filled - Form 2210 line 8 (line 22 + listed Schedule 2 taxes - refundable credits)"}
+      # V481 (owner-approved 2026-11-15): the 2024 tax (Form 2210 line 8) is figured from these, not typed - line 24, less lines 27-29,
+      # Schedule 3 lines 9/12/13b and the Schedule 2 taxes the line 8 list leaves out (PriorYearTaxWorksheet). A return figured here
+      # fills them all but the "other" Schedule 2 amount; an upload fills the status, line 24 and lines 27-29.
+      - {name: priorYearReturnStatus, type: select, options: [FILED, NO_TAX, NOT_FILED], label: "Did you file a 2024 return covering all 12 months?", note: "NO_TAX = 0 (no penalty, IRC 6654(e)(2)); NOT_FILED = no line 8, not asked"}
+      - {name: priorYearTotalTax, type: amount, showIf: "priorYearReturnStatus == FILED", label: "2024 Form 1040 line 24"}
+      - {name: priorYearEarnedIncomeCredit, type: amount, showIf: "priorYearReturnStatus == FILED", label: "line 27"}
+      - {name: priorYearAdditionalChildTaxCredit, type: amount, showIf: "priorYearReturnStatus == FILED", label: "line 28"}
+      - {name: priorYearAmericanOpportunityCredit, type: amount, showIf: "priorYearReturnStatus == FILED", label: "line 29"}
+      - {name: priorYearHadSchedule3, type: boolean, showIf: "priorYearReturnStatus == FILED"}
+      - {name: priorYearPremiumTaxCredit, type: amount, showIf: priorYearHadSchedule3, label: "Schedule 3 line 9"}
+      - {name: priorYearFuelsCredit, type: amount, showIf: priorYearHadSchedule3, label: "Schedule 3 line 12"}
+      - {name: priorYearSection1341Credit, type: amount, showIf: priorYearHadSchedule3, label: "Schedule 3 line 13b"}
+      - {name: priorYearHadSchedule2, type: boolean, showIf: "priorYearReturnStatus == FILED"}
+      - {name: priorYearTipsSsMedicareTax, type: amount, showIf: priorYearHadSchedule2, label: "Schedule 2 line 7"}
+      - {name: priorYearUncollectedSsMedicareTax, type: amount, showIf: priorYearHadSchedule2, label: "Schedule 2 line 13"}
+      - {name: priorYearOtherExcludedTaxes, type: amount, showIf: priorYearHadSchedule2, label: "line 8 (not on distributions), line 9 (household, if the * note holds), 17b, 17k, 17m-17q"}
       - {name: boxEAllocatedPriorYearTax, type: amount, showIf: "a joint return for one of 2024 / 2025 only (box E)"}
   - name: waiver
     title: Penalty waiver and annualized income (Form 2210 Part II)

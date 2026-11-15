@@ -1,7 +1,7 @@
 # Schedule 3 line 13c - Form 3800 Part III elective payment (section 6417) - Implementation Plan
 
 _Authored 2026-11-15 (outstanding.md, Other payments / credits: "Line 13c is a typed total: Form 3800 Part III is not produced").
-Owner chose option B: build it rather than keep the typed amount. Status: stage 1 Stage A DONE 2026-11-15 (blank Form 3800, waiting for the owner's visual review). Owner 2026-11-15: "start with stage 1 but keep in mind that you cannot change the structure of a statement or tax return form. You can modify an existing user input form or you could add a new user input form."_
+Owner chose option B: build it rather than keep the typed amount. Status: stage 1 DONE 2026-11-15 (Stage A owner-reviewed: "go ahead"; Stage B filled). Next: stage 2 (Form 7210). Owner 2026-11-15: "start with stage 1 but keep in mind that you cannot change the structure of a statement or tax return form. You can modify an existing user input form or you could add a new user input form."_
 
 ## Background (2025 Instructions for Form 3800 and Form 3800 (2025); irs.gov/pub/irs-prior/*--2025.pdf)
 - Schedule 3 line 13c = Form 3800 Part III line 6, column (j), the net elective payment election (EPE) amount.
@@ -54,3 +54,11 @@ Four new tax-return forms (about 2,600 fields in all) and three new screens: eac
   tax-return-3800-preview.spec.ts.
 - Seen in review: landscape pages are drawn at the preview's 8.5-inch width (the shared .tax-page max-width), so they are smaller
   than the portrait pages; the large "3800" renders light like the other shared-renderer forms.
+
+## Stage 1, Stage B - done 2026-11-15
+- Form3800Fields builds the fields from the finished Part II figures of applyGeneralBusinessCreditToSchedule3 (the typed carryforward):
+  items A and B(i) No; Part I line 4 / 6; Part II lines 7-17 (10b = 10c - 10a), Section B skipped with line 26 -0- (the form's own
+  note), lines 27-29, 36-37 -0-, line 38 = Schedule 3 line 6a; Part IV lines 6 and 7 columns (f), (g), (i). Whole dollars, -0- on
+  lines the form fills. Noted into AttachedForms.form3800List (name / identifying number from the return header). No input change.
+- Part IV per-credit lines stay blank (one total, not each credit and year) - advisory FORM_3800_PART_IV_ONE_TOTAL.
+- Tests: Form3800FieldsTest (3); e2e tax-return-3800-filled.spec.ts.

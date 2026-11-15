@@ -1,3 +1,16 @@
+## 2026-11-15T22:30:00
+Form 3800 (2025), General Business Credit, on the return - form-3800-epe-plan.md stage 1 (owner: build Schedule 3 line 13c / Form 3800
+Part III; "you cannot change the structure of a statement or tax return form").
+- Stage A (owner-reviewed): the 2025 form replaced the 2024 PDF; generate-semantic-3800.js names all 1,921 fields (pages 1-2 by hand;
+  the Part III-VI tables from the IRS row names, each row's columns checked, rows in printed order); generate-f3800-elements.py (9 pages,
+  pages 3-9 landscape); fields on grey IRS cells carry "shaded", painted by pure-pdf-preview (opt-in - no other form's layout has it);
+  form-tax-return-3800 in the Tax Return sidebar.
+- Stage B: Form3800Fields fills it from the general business credit carryforward's Part II figures - items A / B(i) No, Part I line 4 /
+  6, Part II lines 7-17, 26-29, 36-38 (line 38 = Schedule 3 line 6a), Part IV lines 6-7; advisory FORM_3800_PART_IV_ONE_TOTAL (one
+  total, not each credit and originating year). AttachedForms.form3800List. No input or existing-form change.
+- Tests: Form3800FieldsTest (3); e2e tax-return-3800-preview.spec.ts, tax-return-3800-filled.spec.ts, and the general business credit /
+  carryforward specs - 10 passed.
+
 ## 2026-11-15T20:30:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43745540891 on 61c282ef - revision ca-ustax-be--0000626 serving 100%

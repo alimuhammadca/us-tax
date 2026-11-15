@@ -50,7 +50,8 @@
   lines 5-16 (registered ultimate vendors, credit card issuers, kerosene used in aviation, diesel-water emulsions, exported dyed
   fuels; 9, 10 and 12 reserved; 11 expired after 2024) and Schedule A (Form 4136) for more than one business activity (blocks); the
   credit's inclusion in income when the fuel cost was deducted is an advisory only (FUEL_TAX_CREDIT_INCOME).
-- Line 13c is a typed total: Form 3800 Part III is not produced.
+- Line 13c is a typed total: Form 3800 Part III is not produced. In progress (owner chose to build it, form-3800-epe-plan.md): stage 1
+  (Form 3800 on the return) done 2026-11-15; next Form 7210, then Form 8933, Form 7207 and Part V.
 - (`SECTION_1341_REPAYMENT_BELOW_THRESHOLD` was removed 2026-11-12: both figured credits - claim of right and the Social Security
   repayment - are figured only over $3,000, so it could not fire.) `SECTION_1341_DEDUCTION_AND_CREDIT_BOTH_CLAIMED` is an advisory since
   2026-11-12 (owner): it could only meet the figured Social Security repayment credit, a different repayment unless typed twice.)
@@ -270,9 +271,10 @@
 
 ## General business credit (Form 3800): found in the 2026-11-09 review, not changed
 
-- Only a carryforward total is entered. Current-year business credits (Form 3800 Part III: Forms 6765, 8881, 8941, 5884, 8826 ...,
-  and the credits on Schedule K-1 box 15 / 13) are not figured, so they never reach Schedule 3 line 6a, and Form 3800 itself is not
-  produced.
+- (Form 3800 (2025) is produced since 2026-11-15 - pure-HTML preview, filled from the carryforward's Part II figures: Part I line 4,
+  Part II lines 7-38, Part IV lines 6-7; form-3800-epe-plan.md stage 1.) Only a carryforward total is entered. Current-year business
+  credits (Form 3800 Part III: Forms 6765, 8881, 8941, 5884, 8826 ..., and the credits on Schedule K-1 box 15 / 13) are not figured,
+  so they never reach Schedule 3 line 6a. Part IV shows the one total on lines 6-7 only (advisory FORM_3800_PART_IV_ONE_TOTAL).
 - One total, not per credit and year: credits past their 20-year carryforward can't be dropped, specified credits (IRC 38(c)(4),
   allowed against the tentative minimum tax, Part II line 34) are treated as ordinary ones, and passive activity credits (Form
   8582-CR) have no entry.

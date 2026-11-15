@@ -50,15 +50,11 @@
   lines 5-16 (registered ultimate vendors, credit card issuers, kerosene used in aviation, diesel-water emulsions, exported dyed
   fuels; 9, 10 and 12 reserved; 11 expired after 2024) and Schedule A (Form 4136) for more than one business activity (blocks); the
   credit's inclusion in income when the fuel cost was deducted is an advisory only (FUEL_TAX_CREDIT_INCOME).
-- Line 13c is a typed total: Form 3800 Part III is not produced. In progress (owner chose to build it, form-3800-epe-plan.md): stage 1
-  (Form 3800 on the return), stage 2 (Form 7210, clean hydrogen), stage 3 (Form 8933, carbon oxide sequestration) and stage 4 (Form
-  7207, advanced manufacturing production) done 2026-11-15 - their elective payments reach line 13c; next Part V. Form 7207 not covered
-  (blocks): line 5 related-person election, line 7 and line 8b (other entities); technical description, Appendix A and battery limits
-  advisory. Form 7210 not covered: line 11 (a partnership's or S
-  corporation's credit), passive credits (treated as not passive), Form 7220 and the increased-credit statement (advisory). Form 8933 not
-  covered (blocks): equipment placed in service before 2023, line 27 / 1e-3e (another party claims), lines 28-29 and the 45Q(f)(9)
-  election, line 7 (another taxpayer's election), line 8 (partnerships), line 10 recapture; Form 7220 and Schedules A-F (Form 8933)
-  advisory. Both: more than one facility with a registration number blocks until Part V.
+- Line 13c (Form 3800 Part III elective payments) - DONE 2026-11-15 (form-3800-epe-plan.md stages 1-5): Form 3800 is on the return,
+  Forms 7210, 8933 and 7207 figure the credits and their elective payments, Part V lists each facility, and the typed line 13c is gone
+  (V487). Still not covered: Form 7210 line 11 and passive credits (treated as not passive); Form 8933 pre-2023 equipment, line 27 /
+  1e-3e, lines 28-29 and the 45Q(f)(9) election, lines 7, 8 and 10 (blocks); Form 7207 line 5, lines 7 and 8b (blocks); more than 15
+  Part V rows (blocks); Forms 7220, Schedules A-F (Form 8933), Appendix A and the technical descriptions (advisories).
 - (`SECTION_1341_REPAYMENT_BELOW_THRESHOLD` was removed 2026-11-12: both figured credits - claim of right and the Social Security
   repayment - are figured only over $3,000, so it could not fire.) `SECTION_1341_DEDUCTION_AND_CREDIT_BOTH_CLAIMED` is an advisory since
   2026-11-12 (owner): it could only meet the figured Social Security repayment credit, a different repayment unless typed twice.)

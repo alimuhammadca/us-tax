@@ -1,7 +1,7 @@
 # Schedule 3 line 13c - Form 3800 Part III elective payment (section 6417) - Implementation Plan
 
 _Authored 2026-11-15 (outstanding.md, Other payments / credits: "Line 13c is a typed total: Form 3800 Part III is not produced").
-Owner chose option B: build it rather than keep the typed amount. Status: stage 1 DONE 2026-11-15 (Stage A owner-reviewed: "go ahead"; Stage B filled). Stage 2 DONE 2026-11-15 (Stage A owner-reviewed: "go ahead", which also approved the screen). Stage 3 DONE 2026-11-15 (Stage A owner-reviewed: "go ahead", which also approved the Stage B scope). Stage 4 DONE 2026-11-15 (Stage A owner-reviewed: "go ahead", which also approved the Stage B scope). Next: stage 5 (Part V; retire the typed line 13c). Owner 2026-11-15: "start with stage 1 but keep in mind that you cannot change the structure of a statement or tax return form. You can modify an existing user input form or you could add a new user input form."_
+Owner chose option B: build it rather than keep the typed amount. Status: stage 1 DONE 2026-11-15 (Stage A owner-reviewed: "go ahead"; Stage B filled). Stage 2 DONE 2026-11-15 (Stage A owner-reviewed: "go ahead", which also approved the screen). Stage 3 DONE 2026-11-15 (Stage A owner-reviewed: "go ahead", which also approved the Stage B scope). Stage 4 DONE 2026-11-15 (Stage A owner-reviewed: "go ahead", which also approved the Stage B scope). Stage 5 DONE 2026-11-15 (owner: "go ahead for stage 5"). The plan is complete. Owner 2026-11-15: "start with stage 1 but keep in mind that you cannot change the structure of a statement or tax return form. You can modify an existing user input form or you could add a new user input form."_
 
 ## Background (2025 Instructions for Form 3800 and Form 3800 (2025); irs.gov/pub/irs-prior/*--2025.pdf)
 - Schedule 3 line 13c = Form 3800 Part III line 6, column (j), the net elective payment election (EPE) amount.
@@ -136,3 +136,15 @@ Four new tax-return forms (about 2,600 fields in all) and three new screens: eac
   integrated-component rule, the battery limits.
 - Form3800Current: order 1x (8933), 1g (7210), 1b (7207) - Instructions for Form 3800, Order in which credits are used.
 - Tests: Form7207ComputeTest (3); UI spec (2); e2e advanced-manufacturing-credit-screen.spec.ts (2) with the related specs - 37 passed.
+
+## Stage 5 - done 2026-11-15
+- Part V: Form3800Current.Credit carries each facility's share (whole dollars, the last one taking the rounding so the rows add to the
+  line); a line's column (i) is shared - the unelected credit first, then the elected (so the line's net EPE stays the smaller of (h) or
+  (g) - (i)); Form3800Fields writes one Part V row per facility of every Part III line that adds more than one: (a) the line, (b) the
+  registration number, (e), (g), (h)(1) / (h)(2), (i)(1) / (i)(2), (j), (k). FORM_3800_PART_V_NOT_SUPPORTED retired; more than 15 rows
+  blocks (FORM_3800_PART_V_TOO_MANY_FACILITIES).
+- The typed line 13c is gone (V487 drops pf_other_payments_31.has_form_3800_elective_payment / net_elective_payment_election_amount):
+  OtherPaymentsInputs strips old keys, Form7210Compute.withNetEpe puts only the figured amount (FORM_3800_LINE_13C_TYPED_AND_FIGURED
+  retired); Other payments shows the figured line 13c with links to the Form 7210, 8933 and 7207 screens.
+- Tests: Form7207ComputeTest Part V test; OtherPaymentsInputsTest, Form7210/8933ComputeTest, TaxReturnComputeServiceTest updated; e2e
+  Part V test in advanced-manufacturing-credit-screen.spec.ts; other-payments-screen and line31 specs updated - 40 passed.

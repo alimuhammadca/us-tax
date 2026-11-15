@@ -4,6 +4,7 @@
 # installments (it was asked as a section 965(i) triggering event, which is a tax entered on Other tax items); line 13z offers the
 # IRS write-ins; on a joint return the spouse copy (31-other-payments-spouse, same keys) is added to this one. No column change.
 # V483 (2026-11-15): line 12 is figured from Form 4136 (Fuel tax credit screen); its typed amount was removed.
+# V487 (2026-11-15, form-3800-epe-plan.md stage 5): line 13c is figured on Form 3800; its typed amount was removed.
 # Component: form-other-payments.component.ts; help: data/other-payments-help.ts.
 name: 31-other-payments
 title: Other payments / credits
@@ -46,16 +47,10 @@ sections:
 
   - name: form3800ElectivePayment
     title: Elective payment from a business credit (line 13c)
-    fields:
-      - name: netElectivePaymentElectionAmount
-        type: decimal
-        label: Form 3800 Part III line 6 column (j)
-        required: false
-      - name: hasForm3800ElectivePayment
-        type: boolean
-        readOnly: true
-        computed: true
-        label: "Worked out - Yes when an amount is entered"
+    fields: []
+    note: Figured on Form 3800 Part III line 6 column (j) from the Clean hydrogen production credit (Form 7210), Carbon oxide
+      sequestration credit (Form 8933) and Advanced manufacturing production credit (Form 7207) screens - the amount from the last
+      computed return, with links to those screens. The typed amount was dropped (V487).
 
   - name: deferred965Tax
     title: Net 965 tax paid in installments (line 13d)

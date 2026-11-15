@@ -1,3 +1,12 @@
+## 2026-11-16T00:30:00
+Form 3800 Part V and the end of the typed line 13c - form-3800-epe-plan.md stage 5 (owner-approved, V487). The plan is complete.
+- Part V lists each facility of a Part III line that adds more than one (registration number, credit, gross EPE, the part applied
+  against tax - unelected credit first - the net EPE and the carryforward). More than one registration number no longer blocks; more
+  than 15 Part V rows does.
+- Other payments / credits: the typed line 13c (Form 3800 Part III line 6 column (j)) is removed - V487 drops its columns; the screen
+  shows the figured amount with links to the Form 7210, 8933 and 7207 screens.
+- Tests: unit (Part V, line 13c), UI spec, e2e - 40 passed.
+
 ## 2026-11-15T23:30:00
 Form 7207 (Rev. December 2025), Advanced Manufacturing Production Credit - form-3800-epe-plan.md stage 4 (owner-approved, V486). Its
 elective payment now reaches Schedule 3 line 13c through Form 3800 Part III line 1b.

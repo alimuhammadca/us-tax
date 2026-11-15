@@ -1,3 +1,12 @@
+## 2026-11-16T01:30:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43774039796 on 2dae562f - revision ca-ustax-be--0000628 serving 100%
+  traffic, image ustax-be:2dae562; /q/health/ready UP (V486, V487 applied). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43774041752 on 0694daf - live at https://www.taxbeans.com
+  (bundle main-F7Q6WNG2.js).
+- Ships form-3800-epe-plan.md stages 4-5: Form 7207 and its screen, Form 3800 Part V, the typed line 13c removed.
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-16T00:30:00
 Form 3800 Part V and the end of the typed line 13c - form-3800-epe-plan.md stage 5 (owner-approved, V487). The plan is complete.
 - Part V lists each facility of a Part III line that adds more than one (registration number, credit, gross EPE, the part applied

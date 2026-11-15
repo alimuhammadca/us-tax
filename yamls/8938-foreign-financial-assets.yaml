@@ -107,4 +107,5 @@ sections:
       - {name: forms3520Count, type: integer, label: "Forms 3520 (line 15)"}
       - {name: forms3520aCount, type: integer, label: "Forms 3520-A (line 16)"}
       - {name: forms5471Count, type: integer, label: "Forms 5471 (line 17)"}
+      - {name: forms8621Count, type: integer, label: "Forms 8621 (line 18)"}   # V482: blank = the PFIC copies of Other tax items; never below them
       - {name: forms8865Count, type: integer, label: "Forms 8865 (line 19)"}

@@ -1,3 +1,12 @@
+## 2026-11-15T14:00:00
+Form 8938 Part IV line 18 - the number of Forms 8621 - typed on Foreign assets (owner-approved field, V482).
+- Before: line 18 counted one Form 8621 per copy of Other tax items reporting PFIC tax (at most 2), so more PFICs, or a PFIC whose
+  Form 8621 has no tax, weren't counted.
+- Now: "Forms 8621 (line 18)" sits with the other Part IV counts (pf_form_8938.forms_8621_count). Blank uses the Other tax items count;
+  a typed number below it is raised to it with the advisory FORM_8938_FORMS_8621_BELOW_OTHER_TAX_ITEMS (only when Form 8938 is
+  produced). The screen note says which number is used. Form8938Parts.line18; help and yamls/8938-foreign-financial-assets.yaml updated.
+- Tests: Form8938PartsTest (new line 18 test); e2e foreign-assets-screen.spec.ts new "Part IV line 18" test - Form 8938 specs 9/9.
+
 ## 2026-11-15T13:00:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43736336958 on 89a2e1c5 - revision ca-ustax-be--0000624 serving 100%

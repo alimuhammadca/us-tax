@@ -38,9 +38,9 @@
   that account - by account number, else payer name - and Part III interest over Form 1040 lines 2a + 2b or dividends over line 3b
   get FORM_8938_PART_III_NOT_ON_RETURN - Form8938Statements.) Other assets' Part III items and the royalties / other income / gains
   lines stay typed.
-- Line 18 counts one Form 8621 per copy of Other tax items reporting a PFIC; more PFICs (and PFICs filed without tax) aren't counted.
-  (Checked 2026-11-12: Other tax items holds one PFIC per copy, so a higher count needs a field - a PFIC count or a Forms 8621
-  count on Foreign assets like the Forms 3520 / 5471 counts: owner sign-off.)
+- (Line 18, the number of Forms 8621, is typed on Foreign assets since 2026-11-15 - owner-approved field V482 forms8621Count: blank
+  uses the copies of Other tax items reporting a PFIC, as before; a typed number below them is raised to them with the advisory
+  FORM_8938_FORMS_8621_BELOW_OTHER_TAX_ITEMS - Form8938Parts.line18.)
 
 ## Other payments / credits (Schedule 3 Part II): found in the 2026-11-10 review, not changed
 

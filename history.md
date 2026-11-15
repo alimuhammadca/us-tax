@@ -1,3 +1,11 @@
+## 2026-11-15T05:00:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43674683275 on 14b0615e - revision ca-ustax-be--0000622 serving 100%
+  traffic, image ustax-be:14b0615; /q/health/ready UP (V479 + V480 applied). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43674685500 on 972b0e4 - live at https://www.taxbeans.com
+  (bundle main-KOQU2Q33.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-15T04:00:00
 Earned income credit - the married child rule for a typed child (owner-approved fields V480, outstanding.md "Earned income credit"):
 2025 Form 1040 instructions, line 27a, Married child - a child married at the end of 2025 is a qualifying child only if you can claim

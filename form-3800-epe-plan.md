@@ -1,7 +1,7 @@
 # Schedule 3 line 13c - Form 3800 Part III elective payment (section 6417) - Implementation Plan
 
 _Authored 2026-11-15 (outstanding.md, Other payments / credits: "Line 13c is a typed total: Form 3800 Part III is not produced").
-Owner chose option B: build it rather than keep the typed amount. Status: stage 1 DONE 2026-11-15 (Stage A owner-reviewed: "go ahead"; Stage B filled). Stage 2 DONE 2026-11-15 (Stage A owner-reviewed: "go ahead", which also approved the screen). Next: stage 3 (Form 8933). Owner 2026-11-15: "start with stage 1 but keep in mind that you cannot change the structure of a statement or tax return form. You can modify an existing user input form or you could add a new user input form."_
+Owner chose option B: build it rather than keep the typed amount. Status: stage 1 DONE 2026-11-15 (Stage A owner-reviewed: "go ahead"; Stage B filled). Stage 2 DONE 2026-11-15 (Stage A owner-reviewed: "go ahead", which also approved the screen). Stage 3 Stage A DONE 2026-11-16 (blank Form 8933, waiting for the owner's visual review and the Stage B scope). Owner 2026-11-15: "start with stage 1 but keep in mind that you cannot change the structure of a statement or tax return form. You can modify an existing user input form or you could add a new user input form."_
 
 ## Background (2025 Instructions for Form 3800 and Form 3800 (2025); irs.gov/pub/irs-prior/*--2025.pdf)
 - Schedule 3 line 13c = Form 3800 Part III line 6, column (j), the net elective payment election (EPE) amount.
@@ -86,3 +86,11 @@ Four new tax-return forms (about 2,600 fields in all) and three new screens: eac
   with no tax the whole elected credit is paid. Part I line 1, Part III lines 1g, 2 and 6 columns (b), (e), (g)-(j) filled. An unused,
   unelected credit carries to next year (the general business credit bridge).
 - Tests: Form7210ComputeTest (5); UI spec (2); e2e clean-hydrogen-credit-screen.spec.ts (2) with the related specs - 29 passed.
+
+## Stage 3, Stage A - done 2026-11-16
+- docs/IRS-Forms/f8933.pdf (Rev. December 2025, created 12/22/25). generate-semantic-8933.js: all 141 fields named by hand from the
+  printed lines (Part I Sections 1-4 with Yes / No pairs, Part II boxes 1-8, Part III lines 1a-10 and 7a-7c columns (i)-(iv)); checks:
+  Yes left of No on one baseline, every page's fields in printed order. generate-f8933-elements.py: the comb fields (line 3 facility
+  types, line 4c latitude / longitude) drawn as their 28 boxes.
+- "you must complete a separate Form 8933 for each facility": form-tax-return-8933, attachedForms.form8933List with a facility
+  selector. e2e tax-return-8933-preview.spec.ts.

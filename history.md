@@ -1,3 +1,11 @@
+## 2026-11-15T08:00:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43711693797 on e8462d7f - revision ca-ustax-be--0000623 serving 100%
+  traffic, image ustax-be:e8462d7; /q/health/ready UP (V481 applied). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43711696607 on dd433d0 - live at https://www.taxbeans.com
+  (bundle main-MAHQNDEL.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-15T07:00:00
 Refund and amount owed - the 2024 tax for Form 2210 line 8 asked as a worksheet (owner-approved fields V481, outstanding.md "Refund and
 amount owed"): not every filer uploads last year's Form 1040, and the line 8 figure isn't printed on any 2024 form, so the single typed

@@ -1,7 +1,7 @@
 # Schedule 3 line 13c - Form 3800 Part III elective payment (section 6417) - Implementation Plan
 
 _Authored 2026-11-15 (outstanding.md, Other payments / credits: "Line 13c is a typed total: Form 3800 Part III is not produced").
-Owner chose option B: build it rather than keep the typed amount. Status: stage 1 DONE 2026-11-15 (Stage A owner-reviewed: "go ahead"; Stage B filled). Stage 2 DONE 2026-11-15 (Stage A owner-reviewed: "go ahead", which also approved the screen). Stage 3 DONE 2026-11-15 (Stage A owner-reviewed: "go ahead", which also approved the Stage B scope). Next: stage 4 (Form 7207). Owner 2026-11-15: "start with stage 1 but keep in mind that you cannot change the structure of a statement or tax return form. You can modify an existing user input form or you could add a new user input form."_
+Owner chose option B: build it rather than keep the typed amount. Status: stage 1 DONE 2026-11-15 (Stage A owner-reviewed: "go ahead"; Stage B filled). Stage 2 DONE 2026-11-15 (Stage A owner-reviewed: "go ahead", which also approved the screen). Stage 3 DONE 2026-11-15 (Stage A owner-reviewed: "go ahead", which also approved the Stage B scope). Stage 4 Stage A DONE 2026-11-15 (blank Form 7207, waiting for the owner's visual review and the Stage B scope). Owner 2026-11-15: "start with stage 1 but keep in mind that you cannot change the structure of a statement or tax return form. You can modify an existing user input form or you could add a new user input form."_
 
 ## Background (2025 Instructions for Form 3800 and Form 3800 (2025); irs.gov/pub/irs-prior/*--2025.pdf)
 - Schedule 3 line 13c = Form 3800 Part III line 6, column (j), the net elective payment election (EPE) amount.
@@ -112,3 +112,14 @@ Four new tax-return forms (about 2,600 fields in all) and three new screens: eac
   both forms. Form3800Fields fills each Part III line plus lines 2 and 6.
 - Tests: Form8933ComputeTest (4), Form7210ComputeTest updated (5); UI spec (2); e2e carbon-oxide-sequestration-credit-screen.spec.ts
   (2) with the related specs - 34 passed.
+
+## Stage 4, Stage A - done 2026-11-15
+- docs/IRS-Forms/f7207.pdf (Rev. December 2025, created 10/21/25). generate-semantic-7207.js: all 490 fields named - page 1 and Part II
+  lines 7-8c by hand; the Part II table rows (1a-6b) by line and component, each row's four fields in x order: (b) and (c) are
+  1-point-wide fields with no printed box (named ..._col_b_hidden / ..._col_c_hidden, left out of the layout), (d) quantity or costs,
+  (e) amount of credit; Part III vessels 1-49 (name, purpose, official number, New / Retrofitted, sales price - rows 2 and 3 reuse leaf
+  names, so fields are keyed by their path) and the total; Part IV lines 1-74 from the printed mineral labels. Checks: Yes / New left of
+  No / Retrofitted on one baseline; every page's fields in printed order. generate-f7207-elements.py: the latitude / longitude comb
+  boxes drawn as cells; 440 drawn fields.
+- "File a separate Form 7207 for each facility": form-tax-return-7207, attachedForms.form7207List with a facility selector; Part IV
+  line 25 narrowed (textOverrides) - the IRS prints it with tighter spacing. e2e tax-return-7207-preview.spec.ts.

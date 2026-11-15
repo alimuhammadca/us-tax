@@ -1,3 +1,11 @@
+## 2026-11-15T20:30:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43745540891 on 61c282ef - revision ca-ustax-be--0000626 serving 100%
+  traffic, image ustax-be:61c282e; /q/health/ready UP (V483 applied). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43745544436 on ca39097 - live at https://www.taxbeans.com
+  (bundle main-KMUOEHXC.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-15T19:00:00
 Form 4136 (2025), Credit for Federal Tax Paid on Fuels - built and filled; Schedule 3 line 12 figured from it (owner-approved, V483,
 form-4136-plan.md). outstanding.md "Other payments / credits: Lines 12 and 13c are typed totals" - line 12 part.

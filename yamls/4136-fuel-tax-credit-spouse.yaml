@@ -1,0 +1,9 @@
+# Form 4136 (2025) - Fuel tax credit (spouse). Component: form-fuel-tax-credit.component.ts (person="spouse"). V483, owner-approved
+# 2026-11-15 (form-4136-plan.md). The same fields as fuel-tax-credit-taxpayer, used only when filing separately (MfsFormScoper renames
+# it to the spouse's own return). On a joint return the spouse tab only points to the Family Head's screen - one Form 4136 per return.
+name: fuel-tax-credit-spouse
+title: Fuel tax credit (Form 4136)
+multiplicity: single
+formName: Form 4136
+category: credits
+sameFieldsAs: 4136-fuel-tax-credit-taxpayer.yaml

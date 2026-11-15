@@ -3,6 +3,7 @@
 # Standard or itemized deductions and Social Security benefits; old saved answers are not read); line 13d is the net 965 tax paid in
 # installments (it was asked as a section 965(i) triggering event, which is a tax entered on Other tax items); line 13z offers the
 # IRS write-ins; on a joint return the spouse copy (31-other-payments-spouse, same keys) is added to this one. No column change.
+# V483 (2026-11-15): line 12 is figured from Form 4136 (Fuel tax credit screen); its typed amount was removed.
 # Component: form-other-payments.component.ts; help: data/other-payments-help.ts.
 name: 31-other-payments
 title: Other payments / credits
@@ -30,16 +31,11 @@ sections:
 
   - name: fuelTaxCredit
     title: Credit for federal tax on fuels (line 12)
-    fields:
-      - name: creditForFederalTaxOnFuels
-        type: decimal
-        label: Form 4136 line 17 total
-        required: false
-      - name: hasFuelTaxCredit
-        type: boolean
-        readOnly: true
-        computed: true
-        label: "Worked out - Yes when an amount is entered"
+    readOnly: true
+    computed: true
+    note: V483 (2026-11-15, owner-approved, form-4136-plan.md) - figured from Form 4136 line 17 on the Fuel tax credit screen
+      (4136-fuel-tax-credit-taxpayer.yaml); the screen shows the figure from the last computed return with a link. The typed
+      creditForFederalTaxOnFuels / hasFuelTaxCredit columns were dropped.
 
   - name: section1341
     title: Section 1341 credit for a repayment (line 13b)

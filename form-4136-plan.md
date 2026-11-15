@@ -1,6 +1,6 @@
 # Form 4136 (Credit for Federal Tax Paid on Fuels) - Implementation Plan
 
-_Authored 2026-11-15 (outstanding.md, Other payments / credits: "Lines 12 and 13c are typed totals: Form 4136 and Form 3800 Part III are
+_Status: ALL STAGES DONE 2026-11-15 (Stage A owner-reviewed: "go ahead"). Authored 2026-11-15 (outstanding.md, Other payments / credits: "Lines 12 and 13c are typed totals: Form 4136 and Form 3800 Part III are
 not produced"). Owner: "go with A. But make sure that the new form is built correctly. Look at the workflow of how other tax return forms
 were built. A tax return form must be implemented pure html/css form rather than a PDF embedded form." Scope approved: lines 1-4._
 
@@ -63,6 +63,9 @@ were built. A tax return form must be implemented pure html/css form rather than
   dollars / cents as printed, CRN), line 17.
 - Persistence: the per-person attached-forms holder (`AttachedForms.form4136List`, V387 JSON - the Schedule H pattern); no output
   table.
+- Done as planned, with: line 17 rounds to cents on the form, Schedule 3 line 12 to whole dollars (roundMoney); the screen is in the
+  Deductions section next to the other credit screens; the line A No / no gallons / Part I / type of use / fuel cost / home kerosene
+  checks block; the dye exceptions and the income inclusion are advisories.
 - The preview picks the active tab's copy by owner role.
 
 ## Stage D - tests, docs, commits

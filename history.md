@@ -1,3 +1,23 @@
+## 2026-11-15T19:00:00
+Form 4136 (2025), Credit for Federal Tax Paid on Fuels - built and filled; Schedule 3 line 12 figured from it (owner-approved, V483,
+form-4136-plan.md). outstanding.md "Other payments / credits: Lines 12 and 13c are typed totals" - line 12 part.
+- Stage A (owner-reviewed): the 2025 form replaced the 2024 PDF in docs/IRS-Forms (new Part I and column (d)); generate-semantic-4136.js
+  names all 485 fields by printed line and column (brackets 1a-1c, 3a-3b, 4a-4b, 7a-7b named for the group; all 463 Part II names match
+  the IRS's own Line* names); generate-f4136-elements.py (PyMuPDF); pure-HTML preview form-tax-return-4136 (Tax Return sidebar), the
+  form's grey cells kept over the field boxes (fieldOverrides).
+- Stage B: new screen "Fuel tax credit (Form 4136)" in Deductions (fuel-tax-credit-taxpayer / -spouse; pf_fuel_tax_credit +
+  pf_fuel_tax_credit_line, person_id trigger): the gate, the home kerosene exemption (line A Yes, B-F skipped, line 4a type 8), line A,
+  Part I B-F, lines 1-4 gallons / type of use (the codes each line allows) / actual fuel cost, the dye-exception questions; the rate,
+  each line's credit and line 17 shown. A joint return's spouse tab points to the Family Head's. Other payments / credits: the typed
+  line 12 removed (columns dropped) - shows the figured amount with a link.
+- Stage C: Form4136Compute - rate x gallons, one rounded amount per bracket, line 17 -> Schedule 3 line 12 (whole dollars); blocks:
+  line A not Yes, no gallons, more than one business activity (Schedule A not supported), Part I B / E / F missing, a type of use
+  missing or not allowed, a fuel cost missing, other lines with the home kerosene exemption; advisories: dye exceptions, the credit's
+  inclusion in income. The preview copy is AttachedForms.form4136List (built from the finished figures, as strings).
+- Tests: Form4136ComputeTest (5), TaxReturnComputeServiceTest fuel line 12 rewritten, OtherPaymentsInputsTest; UI specs
+  form-fuel-tax-credit (3) + form-other-payments; e2e fuel-tax-credit-screen.spec.ts (2), tax-return-4136-preview.spec.ts, and the five
+  specs that typed line 12 moved to the screen (helpers/fuel-tax-credit.ts farmGasoline) - 33 e2e passed.
+
 ## 2026-11-15T17:15:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43738731568 on 353e466a - revision ca-ustax-be--0000625 serving 100%

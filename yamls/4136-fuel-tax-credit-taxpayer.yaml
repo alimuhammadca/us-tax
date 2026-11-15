@@ -1,0 +1,52 @@
+# Form 4136 (2025) - Fuel tax credit (Family Head). Component: form-fuel-tax-credit.component.ts. V483, owner-approved 2026-11-15
+# (form-4136-plan.md): lines 1-4 of Part II and Part I; Schedule 3 line 12 is line 17 (the typed total on Other payments was removed).
+# On a joint return this copy holds the return's claim (the spouse copy only points here); filing separately each spouse has their
+# own (fuel-tax-credit-spouse, renamed by MfsFormScoper). Compute: Form4136Compute (rates and brackets from the 2025 form; the type
+# of use codes each line allows from the 2025 instructions). Lines 5-16 and Schedule A (Form 4136) are not asked (outstanding.md).
+name: fuel-tax-credit-taxpayer
+title: Fuel tax credit (Form 4136)
+multiplicity: single
+formName: Form 4136
+category: credits
+sections:
+  - name: claim
+    title: The credit
+    multiplicity: single
+    fields:
+      - { name: claimsFuelTaxCredit, type: boolean, required: true, label: "Did you pay federal tax on fuel used in the year in a way that isn't taxed?" }
+      - { name: homeKeroseneOnly, type: boolean, required: true, showIf: claimsFuelTaxCredit == true, label: "Is the only claim for undyed kerosene bought (not from a blocked pump) and used at home for heating, lighting or cooking? (line A exemption - lines B-F skipped; line 4a, type of use 8)" }
+      - { name: hasQualifyingBusiness, type: boolean, required: true, showIf: homeKeroseneOnly == false, label: "Did you own or operate a business that used the fuel in a qualifying way? (Part I line A)" }
+  - name: business
+    title: The business (Part I)
+    multiplicity: single
+    showIf: hasQualifyingBusiness == true
+    fields:
+      - { name: businessActivitiesCount, type: integer, required: true, label: "Number of qualifying business activities (line B; more than 1 needs Schedule A (Form 4136) - blocks)" }
+      - { name: businessName, type: string, required: false, label: "Business name (line C)" }
+      - { name: businessEin, type: ein, required: false, label: "EIN (line D) - digits only" }
+      - { name: principalBusinessCode, type: string, required: true, label: "Principal business activity code (line E, six digits)" }
+      - { name: equipmentMake, type: string, required: true, label: "Equipment that used most of the fuel: make (line F(i))" }
+      - { name: equipmentModel, type: string, required: true, label: "Model (line F(ii))" }
+      - { name: equipmentType, type: string, required: true, label: "Type of equipment (line F(iii))" }
+  - name: dye
+    title: Dye exceptions
+    multiplicity: single
+    showIf: hasQualifyingBusiness == true
+    fields:
+      - { name: dieselDyeException, type: boolean, required: false, label: "Did any of the diesel fuel contain visible evidence of dye? (line 3 box - attach an explanation)" }
+      - { name: keroseneDyeException, type: boolean, required: false, label: "Did any of the kerosene contain visible evidence of dye? (line 4 box - attach an explanation)" }
+  - name: lines
+    title: Part II lines 1-4 (pf_fuel_tax_credit_line)
+    multiplicity: multiple
+    note: One row per line asked - 1a-1d gasoline, 2a-2d aviation gasoline, 3a-3e undyed diesel, 4a-4f undyed kerosene. The rate,
+      the credit (rate x gallons; one amount for the brackets 1a-1c, 3a-3b, 4a-4b) and the CRN are shown, not entered.
+    fields:
+      - { name: line, type: string, required: true, label: "The line (1a ... 4f)" }
+      - { name: typeOfUse, type: integer, required: false, label: "Type of use, where the form leaves it blank (1c: 4,5,7,11,13,14,15; 2b: 1,2,9,10,11,13,14,15; 3a/4a: 2,6,7,8,11,13,14,15; 4e/4f: 2)" }
+      - { name: gallons, type: decimal, required: true, label: "Qualified gallons (column (c))" }
+      - { name: fuelCost, type: amount, required: true, label: "Actual fuel cost from your records (column (d))" }
+  - name: computedOutputs
+    readOnly: true
+    computed: true
+    fields:
+      - { name: line17, type: amount, label: "Form 4136 line 17 - Schedule 3 line 12 (Form4136Compute)" }

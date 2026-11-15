@@ -44,7 +44,13 @@
 
 ## Other payments / credits (Schedule 3 Part II): found in the 2026-11-10 review, not changed
 
-- Lines 12 and 13c are typed totals: Form 4136 and Form 3800 Part III are not produced.
+- (Line 12 is figured from Form 4136 since 2026-11-15 - owner-approved, V483, form-4136-plan.md: the Fuel tax credit screen asks
+  Part I and lines 1-4 (gasoline, aviation gasoline, undyed diesel, undyed kerosene), the credit is the rate x the gallons (one amount
+  per bracket), line 17 goes to Schedule 3 line 12, and the pure-HTML Form 4136 (2025) is filled. Form4136Compute.) Not covered:
+  lines 5-16 (registered ultimate vendors, credit card issuers, kerosene used in aviation, diesel-water emulsions, exported dyed
+  fuels; 9, 10 and 12 reserved; 11 expired after 2024) and Schedule A (Form 4136) for more than one business activity (blocks); the
+  credit's inclusion in income when the fuel cost was deducted is an advisory only (FUEL_TAX_CREDIT_INCOME).
+- Line 13c is a typed total: Form 3800 Part III is not produced.
 - (`SECTION_1341_REPAYMENT_BELOW_THRESHOLD` was removed 2026-11-12: both figured credits - claim of right and the Social Security
   repayment - are figured only over $3,000, so it could not fire.) `SECTION_1341_DEDUCTION_AND_CREDIT_BOTH_CLAIMED` is an advisory since
   2026-11-12 (owner): it could only meet the figured Social Security repayment credit, a different repayment unless typed twice.)

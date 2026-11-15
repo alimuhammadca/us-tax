@@ -1,3 +1,11 @@
+## 2026-11-15T17:15:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43738731568 on 353e466a - revision ca-ustax-be--0000625 serving 100%
+  traffic, image ustax-be:353e466; /q/health/ready UP (V482 applied). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43738734007 on 31ec84b - live at https://www.taxbeans.com
+  (bundle main-SLFIOGUA.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-15T14:00:00
 Form 8938 Part IV line 18 - the number of Forms 8621 - typed on Foreign assets (owner-approved field, V482).
 - Before: line 18 counted one Form 8621 per copy of Other tax items reporting PFIC tax (at most 2), so more PFICs, or a PFIC whose

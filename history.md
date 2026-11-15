@@ -1,3 +1,11 @@
+## 2026-11-15T02:30:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43666205936 on c4647369 - revision ca-ustax-be--0000621 serving 100%
+  traffic, image ustax-be:c464736; /q/health/ready UP (V478 applied). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43666207764 on 4439d4c - live at https://www.taxbeans.com
+  (bundle main-UGMFH7MW.js, the four legacy screens gone).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-15T00:00:00
 Legacy refund / prior-year screens removed (owner-approved, outstanding.md "Refund and amount owed" and "Estimated tax payments"; no
 data copied - the app is not in production):

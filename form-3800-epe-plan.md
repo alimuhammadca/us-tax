@@ -1,7 +1,7 @@
 # Schedule 3 line 13c - Form 3800 Part III elective payment (section 6417) - Implementation Plan
 
 _Authored 2026-11-15 (outstanding.md, Other payments / credits: "Line 13c is a typed total: Form 3800 Part III is not produced").
-Owner chose option B: build it rather than keep the typed amount. Status: PLAN - waiting for the owner's go-ahead on scope and order._
+Owner chose option B: build it rather than keep the typed amount. Status: stage 1 Stage A DONE 2026-11-15 (blank Form 3800, waiting for the owner's visual review). Owner 2026-11-15: "start with stage 1 but keep in mind that you cannot change the structure of a statement or tax return form. You can modify an existing user input form or you could add a new user input form."_
 
 ## Background (2025 Instructions for Form 3800 and Form 3800 (2025); irs.gov/pub/irs-prior/*--2025.pdf)
 - Schedule 3 line 13c = Form 3800 Part III line 6, column (j), the net elective payment election (EPE) amount.
@@ -42,3 +42,15 @@ Owner chose option B: build it rather than keep the typed amount. Status: PLAN -
 
 ## Size
 Four new tax-return forms (about 2,600 fields in all) and three new screens: each stage is about the size of the Form 4136 work.
+
+## Stage 1, Stage A - done 2026-11-15
+- docs/IRS-Forms/f3800.pdf replaced with the 2025 edition (it was 2024). generate-semantic-3800.js: all 1,921 fields named - pages 1-2 by
+  hand (Part I lines 1-6, Part II lines 7-38, items A and B), the tables from the IRS's own row names (Pg3Table ... Line1a) with each
+  row's fields left to right as its columns (every row has the table's column count; rows descend in printed order) - e.g.
+  partIII_line1g_col_j_net_epe_amount, partIV_line1b_col_i_carryforward_to_2026, partV_line3_col_h1_gross_epe_amount.
+- generate-f3800-elements.py (copy of the Form 4136 extractor): 9 pages, pages 3-9 landscape. A field inside a grey IRS cell carries
+  "shaded" (286 fields), painted by pure-pdf-preview as the field's background - opt-in, no other form's JSON has it.
+- form-tax-return-3800 wrapper (attachedForms.form3800List, filled in Stage B), Tax Return sidebar under the TEMP gate; e2e
+  tax-return-3800-preview.spec.ts.
+- Seen in review: landscape pages are drawn at the preview's 8.5-inch width (the shared .tax-page max-width), so they are smaller
+  than the portrait pages; the large "3800" renders light like the other shared-renderer forms.

@@ -1,3 +1,18 @@
+## 2026-11-15T00:00:00
+Legacy refund / prior-year screens removed (owner-approved, outstanding.md "Refund and amount owed" and "Estimated tax payments"; no
+data copied - the app is not in production):
+- us-tax-ui: form-prior-year-tax, form-refund-allocation, form-apply-next-year and form-direct-deposit components deleted with their
+  shell entries; Other incomes no longer falls back to prior-year-tax-taxpayer for the 2024 itemizing answer.
+- us-tax-be: PersonalResource drops prior-year-tax-taxpayer / -spouse, refund-allocation-taxpayer, 35-direct-deposit and
+  36-apply-to-next-year (a PUT now 400s); RefundAmountOwedMapper serves only refund-and-amount-owed-taxpayer / -spouse;
+  PriorYearTaxMapper only prior-year-tax-dependent. TaxReturnComputeService reads the prior-year, split-refund, line 36 and direct
+  deposit answers from Refund and amount owed only (mergePriorYearData removed); the dependent's own 2024 tax goes on that slot.
+  V478 deletes pf_prior_year_tax's taxpayer / spouse rows and the 22 columns only they used (owner_role = 'dependent' only).
+- yamls: the four legacy intake YAMLs deleted.
+- Tests: ~490 unit tests and 56 e2e specs moved from the legacy ids to Refund and amount owed (e2e mergePersonalFormApi helper, so
+  the seeded Form 2210 answer is kept); StateRefundWorksheetGateTest theRemovedPriorYearTaxFormIsNotRead; refund-and-amount-owed.spec
+  "The removed legacy forms are rejected ..." replaces the two fallback tests. Unit suite 5955/0.
+
 ## 2026-11-14T23:30:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43650511729 on d52624c0 - revision ca-ustax-be--0000620 serving

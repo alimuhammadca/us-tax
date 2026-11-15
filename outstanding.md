@@ -6,8 +6,10 @@
   Schedule 2 taxes outside the Form 2210 list aren't on the uploaded figures - the screen says to check them. (Checked 2026-11-11:
   Form 1040 alone can't close it - line 31 is Schedule 3 line 15, which also holds the extension payment and excess social security
   tax, and the Schedule 2 lines aren't on Form 1040. Needs the 2024 schedules uploaded.)
-- The four legacy screens (35-direct-deposit, refund-allocation-taxpayer, 36-apply-to-next-year, prior-year-tax-taxpayer) are still
-  registered in the shell without a menu item.
+- (The four legacy screens - 35-direct-deposit, refund-allocation-taxpayer, 36-apply-to-next-year, prior-year-tax-taxpayer, with
+  prior-year-tax-spouse - are removed since 2026-11-14, owner-approved, V478: the components, the shell entries, the API form ids and
+  their YAMLs; compute reads Refund and amount owed only; pf_prior_year_tax keeps only the dependent rows (prior-year-tax-dependent).
+  No answers were copied - the app is not in production.)
 
 ## Dependent: found in the 2026-11-10 review, not changed
 
@@ -42,9 +44,8 @@
 
 ## Estimated tax payments (Form 1040 line 26): found in the 2026-11-10 review, not changed
 
-- The legacy "Prior Year Tax & Estimated Payments" component (prior-year-tax-taxpayer) still asks the four 2025 payments again; it
-  is not in the sidebar and the calculation reads line 26 only from Estimated tax payments, but the component and its columns
-  remain. Remove it (field removal: owner sign-off).
+- (The legacy "Prior Year Tax & Estimated Payments" component (prior-year-tax-taxpayer) and its columns are removed since
+  2026-11-14 - V478, see "Refund and amount owed".)
 - One amount and one date per period: two payments in one period with different dates are entered as one (the help says to use
   the last date, which can overstate the penalty).
 - Last year's uploaded Form 1040 fills the 2024 refund applied only for uploads read after 2026-11-10 (Box36 added to the parser);

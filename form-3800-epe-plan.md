@@ -1,7 +1,7 @@
 # Schedule 3 line 13c - Form 3800 Part III elective payment (section 6417) - Implementation Plan
 
 _Authored 2026-11-15 (outstanding.md, Other payments / credits: "Line 13c is a typed total: Form 3800 Part III is not produced").
-Owner chose option B: build it rather than keep the typed amount. Status: stage 1 DONE 2026-11-15 (Stage A owner-reviewed: "go ahead"; Stage B filled). Stage 2 Stage A DONE 2026-11-15 (blank Form 7210, waiting for the owner's visual review). Owner 2026-11-15: "start with stage 1 but keep in mind that you cannot change the structure of a statement or tax return form. You can modify an existing user input form or you could add a new user input form."_
+Owner chose option B: build it rather than keep the typed amount. Status: stage 1 DONE 2026-11-15 (Stage A owner-reviewed: "go ahead"; Stage B filled). Stage 2 DONE 2026-11-15 (Stage A owner-reviewed: "go ahead", which also approved the screen). Next: stage 3 (Form 8933). Owner 2026-11-15: "start with stage 1 but keep in mind that you cannot change the structure of a statement or tax return form. You can modify an existing user input form or you could add a new user input form."_
 
 ## Background (2025 Instructions for Form 3800 and Form 3800 (2025); irs.gov/pub/irs-prior/*--2025.pdf)
 - Schedule 3 line 13c = Form 3800 Part III line 6, column (j), the net elective payment election (EPE) amount.
@@ -70,3 +70,19 @@ Four new tax-return forms (about 2,600 fields in all) and three new screens: eac
   19 character boxes (outlined cells; the field see-through, "shaded": transparent).
 - "File a separate Form 7210 for each qualified clean hydrogen production facility": form-tax-return-7210 shows
   attachedForms.form7210List with a facility selector (the Form 7206 pattern). e2e tax-return-7210-preview.spec.ts.
+
+## Stage 2, Stage B - done 2026-11-15
+- Screen "Clean hydrogen production credit (Form 7210)" in Deductions (clean-hydrogen-credit-taxpayer / -spouse; V484
+  pf_clean_hydrogen_credit + pf_clean_hydrogen_facility, person_id trigger): one entry per facility - address and description,
+  coordinates, dates, item A, the owner if not the filer (TIN with the eye), the increased credit, kilograms per tier, tax-exempt bonds,
+  the elective payment and its registration number; the credit shown as figured.
+- Form7210Compute: column (c) = kg x the printed amount, line 7, the bond reduction (lesser of 15% or the fraction), line 10 x 5.0 with
+  line 5; a facility begun in 2028 or later, not in service by year end, or past its 10 years earns nothing (blocked). Blocks: Part I
+  missing, no kilograms, an election without a registration number, bonds without the capital additions, more than one registration
+  number (Part V - stage 5). Advisories: Form 7220 and the statement for the increased credit; the verification report; treated as not
+  passive.
+- Form 3800: Part II now takes the carryforward first, then this year's credit (column (i)); column (j) = smaller of (h) or (g) - (i)
+  -> Schedule 3 line 13c (Form7210Compute.withNetEpe; a typed line 13c next to a figured one blocks, FORM_3800_LINE_13C_TYPED_AND_FIGURED);
+  with no tax the whole elected credit is paid. Part I line 1, Part III lines 1g, 2 and 6 columns (b), (e), (g)-(j) filled. An unused,
+  unelected credit carries to next year (the general business credit bridge).
+- Tests: Form7210ComputeTest (5); UI spec (2); e2e clean-hydrogen-credit-screen.spec.ts (2) with the related specs - 29 passed.

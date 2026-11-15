@@ -1,0 +1,38 @@
+# Form 7210 (2025) - Clean hydrogen production credit (Family Head). Component: form-clean-hydrogen-credit.component.ts. V484,
+# owner-approved 2026-11-15 (form-3800-epe-plan.md stage 2). One entry per facility ("File a separate Form 7210 for each qualified clean
+# hydrogen production facility"); on a joint return both spouses' facilities are on the return. Compute: Form7210Compute -> Form 3800
+# Part III line 1g (column (e)); Part II applies it after the carryforward; an elected credit's unused part is the net elective payment
+# (column (j)) -> Schedule 3 line 13c. Line 11 (a partnership's or S corporation's credit) isn't asked.
+name: clean-hydrogen-credit-taxpayer
+title: Clean hydrogen production credit (Form 7210)
+multiplicity: single
+formName: Form 7210
+category: credits
+sections:
+  - name: claim
+    title: The credit
+    fields:
+      - { name: hasCleanHydrogenFacility, type: boolean, required: true, label: "Did you produce qualified clean hydrogen in the year at a facility you own?" }
+  - name: facilities
+    title: Facility (one Form 7210 each)
+    multiplicity: multiple
+    showIf: hasCleanHydrogenFacility == true
+    fields:
+      - { name: addressDescription, type: string, required: true, label: "Address and name or description of the facility (line 2a)" }
+      - { name: latitude, type: decimal, required: true, label: "Latitude, decimal degrees (line 2b)" }
+      - { name: longitude, type: decimal, required: true, label: "Longitude, decimal degrees (line 2b)" }
+      - { name: constructionBegan, type: date, required: true, label: "Date construction began (line 3) - before 2028" }
+      - { name: placedInService, type: date, required: true, label: "Date placed in service (line 4) - credit for 10 years from it" }
+      - { name: emissionsValue, type: string, required: true, label: "Emissions value or rate, kg CO2e per kg (item A(i))" }
+      - { name: doeControlNumber, type: string, required: false, label: "DOE control number (item A(ii))" }
+      - { name: ownerName, type: string, required: false, label: "Owner's name, if not the filer (line 2(i))" }
+      - { name: ownerTin, type: tin, required: false, label: "Owner's TIN (line 2(ii)) - digits only" }
+      - { name: increasedCredit, type: boolean, required: true, label: "Meets the prevailing wage and apprenticeship requirements (line 5, x 5.0; Form 7220 advisory)" }
+      - { name: kgTierA, type: decimal, required: false, label: "Kilograms, less than 0.45 kg CO2e per kg (line 6a, $0.637)" }
+      - { name: kgTierB, type: decimal, required: false, label: "Kilograms, 0.45 to less than 1.5 (line 6b, $0.213)" }
+      - { name: kgTierC, type: decimal, required: false, label: "Kilograms, 1.5 to less than 2.5 (line 6c, $0.159)" }
+      - { name: kgTierD, type: decimal, required: false, label: "Kilograms, 2.5 to not greater than 4.0 (line 6d, $0.127)" }
+      - { name: taxExemptBondProceeds, type: amount, required: false, label: "Tax-exempt bond proceeds used to finance it (line 8a numerator)" }
+      - { name: capitalAccountAdditions, type: amount, required: false, label: "Additions to the facility's capital account (line 8a denominator)" }
+      - { name: electPayment, type: boolean, required: true, label: "Elect to have the credit paid (section 6417(d)(1)(B); Form 3800 Part III column (h))" }
+      - { name: registrationNumber, type: string, required: false, showIf: electPayment == true, label: "IRS pre-filing registration number (line 1; Form 3800 column (b))" }

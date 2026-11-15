@@ -1,0 +1,9 @@
+# Form 7210 (2025) - Clean hydrogen production credit (spouse). Component: form-clean-hydrogen-credit.component.ts (person="spouse").
+# V484 (form-3800-epe-plan.md stage 2). The spouse's own facilities: on a joint return they are on the return with the Family Head's;
+# filing separately, on the spouse's own return (MfsFormScoper renames the copy).
+name: clean-hydrogen-credit-spouse
+title: Clean hydrogen production credit (Form 7210)
+multiplicity: single
+formName: Form 7210
+category: credits
+sameFieldsAs: 7210-clean-hydrogen-credit-taxpayer.yaml

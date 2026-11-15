@@ -1,3 +1,15 @@
+## 2026-11-16T01:00:00
+Form 7210 (2025), Clean Hydrogen Production Credit - form-3800-epe-plan.md stage 2 (owner-approved, V484). Its elective payment now
+reaches Schedule 3 line 13c through Form 3800.
+- Stage A (owner-reviewed): the 2025 form; generate-semantic-7210.js (39 fields), generate-f7210-elements.py (line 2b comb boxes drawn as
+  19 cells); form-tax-return-7210, one copy per facility with a selector.
+- Stage B: the "Clean hydrogen production credit (Form 7210)" screen in Deductions, one entry per facility (pf_clean_hydrogen_credit /
+  pf_clean_hydrogen_facility); Form7210Compute (lines 6-12, eligibility, checks, the copies); Form 3800 Part II takes the carryforward
+  first and then this year's credit, column (j) - the net elective payment - goes to Schedule 3 line 13c (all of it when there is no
+  tax); Form 3800 Part I line 1 and Part III lines 1g / 2 / 6 filled.
+- Found while testing: with no income (no tax section) the Part II code stopped before an elected credit could be paid - fixed, with a test.
+- Tests: Form7210ComputeTest (5), UI spec (2), e2e clean-hydrogen-credit-screen (2) and the related specs - 29 passed.
+
 ## 2026-11-15T22:30:00
 Form 3800 (2025), General Business Credit, on the return - form-3800-epe-plan.md stage 1 (owner: build Schedule 3 line 13c / Form 3800
 Part III; "you cannot change the structure of a statement or tax return form").

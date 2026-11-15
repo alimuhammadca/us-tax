@@ -51,7 +51,10 @@
   fuels; 9, 10 and 12 reserved; 11 expired after 2024) and Schedule A (Form 4136) for more than one business activity (blocks); the
   credit's inclusion in income when the fuel cost was deducted is an advisory only (FUEL_TAX_CREDIT_INCOME).
 - Line 13c is a typed total: Form 3800 Part III is not produced. In progress (owner chose to build it, form-3800-epe-plan.md): stage 1
-  (Form 3800 on the return) done 2026-11-15; next Form 7210, then Form 8933, Form 7207 and Part V.
+  (Form 3800 on the return) and stage 2 (Form 7210, clean hydrogen - its elective payment reaches line 13c) done 2026-11-15; next Form
+  8933, then Form 7207 and Part V. Form 7210 not covered: line 11 (a partnership's or S corporation's credit), passive credits (treated
+  as not passive), Form 7220 and the increased-credit statement (advisory), more than one facility with a registration number (blocks
+  until Part V).
 - (`SECTION_1341_REPAYMENT_BELOW_THRESHOLD` was removed 2026-11-12: both figured credits - claim of right and the Social Security
   repayment - are figured only over $3,000, so it could not fire.) `SECTION_1341_DEDUCTION_AND_CREDIT_BOTH_CLAIMED` is an advisory since
   2026-11-12 (owner): it could only meet the figured Social Security repayment credit, a different repayment unless typed twice.)

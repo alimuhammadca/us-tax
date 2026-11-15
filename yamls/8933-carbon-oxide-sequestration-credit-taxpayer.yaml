@@ -1,0 +1,75 @@
+# Form 8933 (Rev. December 2025) - Carbon oxide sequestration credit (Family Head). Component: form-carbon-oxide-sequestration-credit.component.ts.
+# V485, owner-approved 2026-11-15 (form-3800-epe-plan.md stage 3). One entry per facility ("you must complete a separate Form 8933 for each
+# facility"); on a joint return both spouses' facilities are on the return. Carbon capture equipment placed in service after 2022 only.
+# Compute: Form8933Compute -> Form 3800 Part III line 1x (column (e)); Part II applies it after the carryforward and before Form 7210 (the
+# order credits are used); an elected credit's unused part is the net elective payment (column (j)) -> Schedule 3 line 13c. Lines 27 /
+# 1e-3e, 28-29, 7, 8 and 10 block (not supported).
+name: carbon-oxide-sequestration-credit-taxpayer
+title: Carbon oxide sequestration credit (Form 8933)
+multiplicity: single
+formName: Form 8933
+category: credits
+sections:
+  - name: claim
+    title: The credit
+    fields:
+      - { name: hasCarbonCaptureFacility, type: boolean, required: true, label: "Did you capture qualified carbon oxide in the year with carbon capture equipment or a DAC facility?" }
+  - name: facilities
+    title: Facility (one Form 8933 each)
+    multiplicity: multiple
+    showIf: hasCarbonCaptureFacility == true
+    fields:
+      - { name: facilityKind, type: select, required: true, options: [electricity, dac, industrial], label: "Kind of facility (Part I lines 9, 10 and 16): electricity-generating, direct air capture (DAC) or other industrial" }
+      - { name: natureOfFacility, type: string, required: false, showIf: "facilityKind == 'industrial'", label: "Nature of the facility, e.g. ethanol production (line 11)" }
+      - { name: facilityAddress, type: string, required: false, label: "Address of the facility, if applicable (line 4b)" }
+      - { name: latitude, type: decimal, required: true, label: "Latitude, decimal degrees (line 4c(i))" }
+      - { name: longitude, type: decimal, required: true, label: "Longitude, decimal degrees (line 4c(ii))" }
+      - { name: epaGgrtId, type: string, required: false, label: "EPA e-GGRT ID number(s), if available (line 2)" }
+      - { name: ownerName, type: string, required: false, label: "Owner's name, if not the filer (line 4a(i))" }
+      - { name: ownerTin, type: tin, required: false, label: "Owner's TIN (line 4a(ii)) - digits only" }
+      - { name: constructionBegan, type: date, required: true, label: "Date construction began (line 5) - before 2033" }
+      - { name: placedInService, type: date, required: true, label: "Date the carbon capture equipment (or DAC facility) was placed in service (line 6) - after 2022; credit for 12 years" }
+      - { name: undergroundDepositGas, type: boolean, required: false, showIf: "facilityKind != 'dac'", label: "Processes carbon dioxide or other gas from underground deposits (line 12)" }
+      - { name: co2ProductionWellGas, type: boolean, required: false, showIf: "undergroundDepositGas == true", label: "Any gas from a carbon dioxide production well (line 12a)" }
+      - { name: exceptionAttested, type: boolean, required: false, showIf: "co2ProductionWellGas == true", label: "You attest you meet the commercially-viable-product exception (line 12c)" }
+      - { name: engineerAttestationAttached, type: boolean, required: false, showIf: "exceptionAttested == true", label: "An independent registered engineer's attestment letter is attached (line 12d)" }
+      - { name: emissionsCo2, type: decimal, required: false, showIf: "facilityKind != 'dac'", label: "Carbon dioxide emissions in the year, metric tons, released plus captured (line 13a)" }
+      - { name: emissionsCo, type: decimal, required: false, showIf: "facilityKind != 'dac'", label: "Carbon monoxide emissions, metric tons (line 13b)" }
+      - { name: emissionsAnnualized, type: boolean, required: false, showIf: "facilityKind != 'dac'", label: "First-year emissions annualized (line 14)" }
+      - { name: annualizedEmissions, type: decimal, required: false, showIf: "emissionsAnnualized == true", label: "Annualized carbon oxide emissions, metric tons (line 14a; attach the statement)" }
+      - { name: aggregationRequired, type: boolean, required: false, showIf: "facilityKind != 'dac'", label: "Aggregation of facilities required to meet the capture thresholds (line 15; attach the statement)" }
+      - { name: ownsEquipment, type: boolean, required: true, label: "You own the carbon capture equipment (line 20)" }
+      - { name: authorityForClaiming, type: string, required: false, showIf: "ownsEquipment == false", label: "Your authority for claiming the credit (line 20a)" }
+      - { name: captureCapacity, type: decimal, required: false, label: "Carbon capture capacity, metric tons (line 22)" }
+      - { name: additionalEquipment, type: boolean, required: false, label: "Additional equipment installed on or after February 9, 2018 (line 23)" }
+      - { name: rule8020, type: boolean, required: false, showIf: "additionalEquipment == true", label: "Placed-in-service date set by the 80/20 rule (line 23c)" }
+      - { name: newEquipmentInvestment, type: amount, required: false, showIf: "rule8020 == true", label: "Investment in new carbon capture equipment (line 23d(i))" }
+      - { name: preexistingEquipmentFmv, type: amount, required: false, showIf: "rule8020 == true", label: "Fair market value of pre-existing equipment (line 23d(ii))" }
+      - { name: pipelineIncluded, type: boolean, required: false, showIf: "rule8020 == true", label: "Transportation pipeline included as new equipment (line 23e)" }
+      - { name: pipelineInvestment, type: amount, required: false, showIf: "pipelineIncluded == true", label: "Investment in the transportation pipeline (line 23f)" }
+      - { name: capturedCo2, type: decimal, required: true, label: "Carbon dioxide captured in the year, metric tons (line 24a; lines 7 and 24 add both)" }
+      - { name: capturedCo, type: decimal, required: false, label: "Carbon monoxide captured, metric tons (line 24b)" }
+      - { name: captureAnnualized, type: boolean, required: false, label: "First-year capture annualized (line 25)" }
+      - { name: annualizedCapture, type: decimal, required: false, showIf: "captureAnnualized == true", label: "Annualized carbon oxide, metric tons (line 25a)" }
+      - { name: disposalMeasured, type: decimal, required: false, label: "Disposal: metric tons measured at the point of disposal (Part III line 1a)" }
+      - { name: disposalByYou, type: decimal, required: false, label: "Disposal: metric tons securely stored by you (line 1b)" }
+      - { name: disposalByOther, type: decimal, required: false, label: "Disposal: metric tons securely stored by another person (line 1c)" }
+      - { name: eorMeasured, type: decimal, required: false, label: "Oil or gas recovery: metric tons measured at the point of injection (line 2a)" }
+      - { name: eorByYou, type: decimal, required: false, label: "Oil or gas recovery: metric tons injected by you (line 2b)" }
+      - { name: eorByOther, type: decimal, required: false, label: "Oil or gas recovery: metric tons injected by another person (line 2c)" }
+      - { name: utilizationMeasured, type: decimal, required: false, label: "Utilization: metric tons measured at the point of utilization (line 3a)" }
+      - { name: utilizationByYou, type: decimal, required: false, label: "Utilization: metric tons utilized by you (line 3b)" }
+      - { name: utilizationByOther, type: decimal, required: false, label: "Utilization: metric tons utilized by another person (line 3c)" }
+      - { name: displacementFactor, type: decimal, required: false, label: "Utilization: DOE displacement factor, 0.00 to 1.00 (line 3g)" }
+      - { name: allowOtherPartiesToClaim, type: boolean, required: false, label: "You elect to let another party claim some of the credit (line 27; not supported)" }
+      - { name: lcaApproved, type: boolean, required: false, label: "You have an IRS-approved lifecycle analysis (LCA) (Part II line 1; needed for utilization)" }
+      - { name: ensuredCapture, type: boolean, required: true, label: "You physically or contractually ensured the capture (Part II line 2)" }
+      - { name: ensuredDisposal, type: boolean, required: true, label: "You physically or contractually ensured the disposal, injection or utilization (Part II line 3)" }
+      - { name: increasedCredit, type: boolean, required: true, label: "Meets the prevailing wage and apprenticeship requirements (line 33, x 5.0; Form 7220 advisory)" }
+      - { name: taxExemptBondProceeds, type: amount, required: false, label: "Tax-exempt bond proceeds used to finance the facility (line 5a numerator)" }
+      - { name: capitalAccountAdditions, type: amount, required: false, label: "Additions to the facility's capital account (line 5a denominator)" }
+      - { name: specialElection, type: boolean, required: false, label: "Making the section 45Q(b)(3), 45Q(f)(6) or 45Q(f)(9) election (lines 28-29; not supported)" }
+      - { name: otherSourceCredit, type: boolean, required: false, label: "Credit another taxpayer elected to you, or from a partnership or S corporation (lines 7-8; not supported)" }
+      - { name: creditRecaptured, type: boolean, required: false, label: "Credit recaptured this year (line 10; not supported)" }
+      - { name: electPayment, type: boolean, required: true, label: "Elect to have the credit paid (section 6417(d)(1)(C); Form 3800 Part III column (h))" }
+      - { name: registrationNumber, type: string, required: false, showIf: "electPayment == true", label: "IRS-issued registration number (line 1; Form 3800 column (b))" }

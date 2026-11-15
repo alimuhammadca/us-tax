@@ -1,3 +1,15 @@
+## 2026-11-15T21:45:00
+Form 8933 (Rev. December 2025), Carbon Oxide Sequestration Credit - form-3800-epe-plan.md stage 3 (owner-approved, V485). Its elective
+payment now reaches Schedule 3 line 13c through Form 3800 Part III line 1x.
+- Stage A (owner-reviewed): the Rev. 12-2025 form; generate-semantic-8933.js (141 fields), generate-f8933-elements.py (28 comb cells);
+  form-tax-return-8933, one copy per facility with a selector.
+- Stage B: the "Carbon oxide sequestration credit (Form 8933)" screen in Deductions, one entry per facility (pf_carbon_oxide_credit /
+  pf_carbon_oxide_facility); Form8933Compute (rates by date and DAC, x 5, bonds, eligibility, checks, the copies) for carbon capture
+  equipment placed in service after 2022; Form3800Current applies this year's credits in the order the Form 3800 instructions list
+  (Form 8933 before Form 7210) and checks Part V across both.
+- Tests: Form8933ComputeTest (4), Form7210ComputeTest (5), UI spec (2), e2e carbon-oxide-sequestration-credit-screen (2) and the related
+  specs - 34 passed.
+
 ## 2026-11-16T01:00:00
 Form 7210 (2025), Clean Hydrogen Production Credit - form-3800-epe-plan.md stage 2 (owner-approved, V484). Its elective payment now
 reaches Schedule 3 line 13c through Form 3800.

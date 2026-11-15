@@ -1,0 +1,9 @@
+# Form 8933 (Rev. December 2025) - Carbon oxide sequestration credit (spouse). Component: form-carbon-oxide-sequestration-credit.component.ts
+# (person="spouse"). V485 (form-3800-epe-plan.md stage 3). The spouse's own facilities: on a joint return they are on the return with the
+# Family Head's; filing separately, on the spouse's own return (MfsFormScoper renames the copy).
+name: carbon-oxide-sequestration-credit-spouse
+title: Carbon oxide sequestration credit (Form 8933)
+multiplicity: single
+formName: Form 8933
+category: credits
+sameFieldsAs: 8933-carbon-oxide-sequestration-credit-taxpayer.yaml

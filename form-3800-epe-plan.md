@@ -1,7 +1,7 @@
 # Schedule 3 line 13c - Form 3800 Part III elective payment (section 6417) - Implementation Plan
 
 _Authored 2026-11-15 (outstanding.md, Other payments / credits: "Line 13c is a typed total: Form 3800 Part III is not produced").
-Owner chose option B: build it rather than keep the typed amount. Status: stage 1 DONE 2026-11-15 (Stage A owner-reviewed: "go ahead"; Stage B filled). Stage 2 DONE 2026-11-15 (Stage A owner-reviewed: "go ahead", which also approved the screen). Stage 3 Stage A DONE 2026-11-16 (blank Form 8933, waiting for the owner's visual review and the Stage B scope). Owner 2026-11-15: "start with stage 1 but keep in mind that you cannot change the structure of a statement or tax return form. You can modify an existing user input form or you could add a new user input form."_
+Owner chose option B: build it rather than keep the typed amount. Status: stage 1 DONE 2026-11-15 (Stage A owner-reviewed: "go ahead"; Stage B filled). Stage 2 DONE 2026-11-15 (Stage A owner-reviewed: "go ahead", which also approved the screen). Stage 3 DONE 2026-11-15 (Stage A owner-reviewed: "go ahead", which also approved the Stage B scope). Next: stage 4 (Form 7207). Owner 2026-11-15: "start with stage 1 but keep in mind that you cannot change the structure of a statement or tax return form. You can modify an existing user input form or you could add a new user input form."_
 
 ## Background (2025 Instructions for Form 3800 and Form 3800 (2025); irs.gov/pub/irs-prior/*--2025.pdf)
 - Schedule 3 line 13c = Form 3800 Part III line 6, column (j), the net elective payment election (EPE) amount.
@@ -94,3 +94,21 @@ Four new tax-return forms (about 2,600 fields in all) and three new screens: eac
   types, line 4c latitude / longitude) drawn as their 28 boxes.
 - "you must complete a separate Form 8933 for each facility": form-tax-return-8933, attachedForms.form8933List with a facility
   selector. e2e tax-return-8933-preview.spec.ts.
+
+## Stage 3, Stage B - done 2026-11-15
+- Screen "Carbon oxide sequestration credit (Form 8933)" in Deductions (carbon-oxide-sequestration-credit-taxpayer / -spouse; V485
+  pf_carbon_oxide_credit + pf_carbon_oxide_facility, 54 facility fields, person_id trigger): the kind of facility (industrial /
+  electricity-generating / DAC - a DAC facility skips lines 11-15), address, coordinates, EPA e-GGRT ID, owner if not the filer, the
+  dates, the industrial-facility questions (lines 12-15), the equipment (lines 20-25), tons per path (Part III lines 1a-1c, 2a-2c,
+  3a-3c, the displacement factor), Part II lines 1-3, line 33, the bonds, the unsupported situations, the elective payment.
+- Form8933Compute: rates $17 / $12 (equipment after 2022 and before July 5, 2025), $17 for all three after July 4, 2025, DAC $36 / $26;
+  x 5.0 with line 33; line 4, the bond reduction, line 6 = line 9 -> Form 3800 Part III line 1x. Derived: line 3 (GEO / EOR / UTZ), lines
+  7, 18, 26, 30-32. No credit (blocked): equipment before 2023, construction from 2033, not in service by year end, past the 12 years,
+  under the capture threshold (1,000 / 18,750 / 12,500 t), lines 27 / 1e-3e, 28-29 and (f)(9), 7-8, 10. Other blocks: Part I missing,
+  measured tons, displacement factor, LCA for utilization, Part II lines 2-3, line 20a, line 12a gas, registration number, bond
+  fraction. Advisories: Form 7220 + statement; the Schedules (Form 8933) and statements that apply.
+- Form3800Current: this year's credits in the order used (Instructions for Form 3800, Order in which credits are used - Form 8933
+  before Form 7210); column (i) applied in that order, column (j) per line; Part V (more than one registration number) checked across
+  both forms. Form3800Fields fills each Part III line plus lines 2 and 6.
+- Tests: Form8933ComputeTest (4), Form7210ComputeTest updated (5); UI spec (2); e2e carbon-oxide-sequestration-credit-screen.spec.ts
+  (2) with the related specs - 34 passed.

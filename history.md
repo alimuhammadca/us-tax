@@ -1,3 +1,11 @@
+## 2026-11-15T13:00:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43736336958 on 89a2e1c5 - revision ca-ustax-be--0000624 serving 100%
+  traffic, image ustax-be:89a2e1c; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43736339490 on bf7613f - live at https://www.taxbeans.com
+  (bundle main-WLP63RMV.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-15T10:30:00
 Form 2210 box E, a joint 2025 return after separate 2024 returns (outstanding.md "Refund and amount owed", owner-approved part 1).
 - Instructions for Form 2210 (2025), line 8: "If you are filing a joint return for 2025, but you didn't file a joint return for 2024,

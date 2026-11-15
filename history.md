@@ -1,3 +1,16 @@
+## 2026-11-15T10:30:00
+Form 2210 box E, a joint 2025 return after separate 2024 returns (outstanding.md "Refund and amount owed", owner-approved part 1).
+- Instructions for Form 2210 (2025), line 8: "If you are filing a joint return for 2025, but you didn't file a joint return for 2024,
+  add your 2024 tax (as figured earlier) to your spouse's 2024 tax (as figured earlier)". Before, the user worked the spouse's figure out
+  by hand and typed the total; now the Family Head's Refund and amount owed screen asks the spouse's 2024 worksheet (the same questions,
+  ids prefixed spouse_) and shows the two added.
+- Storage: the spouse's own copy (refund-and-amount-owed-spouse, the same pf_refund_amount_owed columns - no migration); saved with the
+  rest of that copy kept. Compute: prior1040/JointPriorYearTax.combine - 2025 MFJ and a non-joint 2024 status: the two figures added;
+  either "didn't file / a short year" - no line 8; either worksheet unfinished - the FORM_2210_PRIOR_YEAR_TAX_UNANSWERED blocker (its
+  message now names the spouse's questions). The typed box E amount is kept only for a joint 2024 return (your share); help rewritten.
+- Tests: JointPriorYearTaxTest (4); refund screen UI spec +1 (13/13 with the worksheet spec); e2e prior-year-tax-worksheet.spec.ts +1
+  (box E), with refund-and-amount-owed-screen and 12 specs that set a 2024 filing status.
+
 ## 2026-11-15T08:00:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43711693797 on e8462d7f - revision ca-ustax-be--0000623 serving 100%

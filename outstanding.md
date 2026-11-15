@@ -8,9 +8,14 @@
   13 and one "other" amount); the figure is shown and computed (PriorYearTaxWorksheet). A return figured here fills every answer but
   the "other" Schedule 2 amount; an upload fills line 24 and 27-29 and leaves the two schedule questions. A dependent's own return asks
   the same on the Dependent screen (prior-year-tax-dependent) - before, it had no screen and its blocker couldn't be cleared.)
+- (Box E, a joint 2025 return after separate 2024 returns, is the two spouses' worksheets added since 2026-11-15, owner-approved:
+  the spouse's 2024 worksheet is asked on the Family Head's screen and saved on the spouse's copy (refund-and-amount-owed-spouse, the
+  same columns - no new fields); either "didn't file / a short year" means no line 8; the typed box E amount is only for a joint 2024
+  return now (your share) - JointPriorYearTax.)
 - Not covered: the optional §965 exclusion (Form 2210 line 8: "You may exclude the amount of your net tax liability under section
-  965") isn't asked - Schedule 2 line 19 stays in the 2024 tax; and the joint-2025 / separate-2024 sum (box E) is still one typed amount
-  rather than the two spouses' worksheets added together.
+  965") isn't asked - Schedule 2 line 19 stays in the 2024 tax (owner 2026-11-15: skipped for now). For the 110% test after separate
+  2024 returns the Family Head's typed 2024 AGI is used (the 2025 instructions don't say whether the two AGIs are added); the share of a
+  joint 2024 tax is still typed.
 - (The four legacy screens - 35-direct-deposit, refund-allocation-taxpayer, 36-apply-to-next-year, prior-year-tax-taxpayer, with
   prior-year-tax-spouse - are removed since 2026-11-14, owner-approved, V478: the components, the shell entries, the API form ids and
   their YAMLs; compute reads Refund and amount owed only; pf_prior_year_tax keeps only the dependent rows (prior-year-tax-dependent).

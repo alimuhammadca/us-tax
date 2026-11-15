@@ -58,7 +58,9 @@ sections:
       - {name: priorYearTipsSsMedicareTax, type: amount, showIf: priorYearHadSchedule2, label: "Schedule 2 line 7"}
       - {name: priorYearUncollectedSsMedicareTax, type: amount, showIf: priorYearHadSchedule2, label: "Schedule 2 line 13"}
       - {name: priorYearOtherExcludedTaxes, type: amount, showIf: priorYearHadSchedule2, label: "line 8 (not on distributions), line 9 (household, if the * note holds), 17b, 17k, 17m-17q"}
-      - {name: boxEAllocatedPriorYearTax, type: amount, showIf: "a joint return for one of 2024 / 2025 only (box E)"}
+      - {name: boxEAllocatedPriorYearTax, type: amount, showIf: "a joint 2024 return, not joint for 2025 (box E) - your share of its tax"}
+      # Box E, joint for 2025 after separate 2024 returns (2026-11-15): the spouse's 2024 worksheet (the priorYearTax keys) is asked
+      # here and saved on refund-and-amount-owed-spouse; the compute adds the two figures (JointPriorYearTax).
   - name: waiver
     title: Penalty waiver and annualized income (Form 2210 Part II)
     fields:

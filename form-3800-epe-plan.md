@@ -1,7 +1,7 @@
 # Schedule 3 line 13c - Form 3800 Part III elective payment (section 6417) - Implementation Plan
 
 _Authored 2026-11-15 (outstanding.md, Other payments / credits: "Line 13c is a typed total: Form 3800 Part III is not produced").
-Owner chose option B: build it rather than keep the typed amount. Status: stage 1 DONE 2026-11-15 (Stage A owner-reviewed: "go ahead"; Stage B filled). Next: stage 2 (Form 7210). Owner 2026-11-15: "start with stage 1 but keep in mind that you cannot change the structure of a statement or tax return form. You can modify an existing user input form or you could add a new user input form."_
+Owner chose option B: build it rather than keep the typed amount. Status: stage 1 DONE 2026-11-15 (Stage A owner-reviewed: "go ahead"; Stage B filled). Stage 2 Stage A DONE 2026-11-15 (blank Form 7210, waiting for the owner's visual review). Owner 2026-11-15: "start with stage 1 but keep in mind that you cannot change the structure of a statement or tax return form. You can modify an existing user input form or you could add a new user input form."_
 
 ## Background (2025 Instructions for Form 3800 and Form 3800 (2025); irs.gov/pub/irs-prior/*--2025.pdf)
 - Schedule 3 line 13c = Form 3800 Part III line 6, column (j), the net elective payment election (EPE) amount.
@@ -62,3 +62,11 @@ Four new tax-return forms (about 2,600 fields in all) and three new screens: eac
   lines the form fills. Noted into AttachedForms.form3800List (name / identifying number from the return header). No input change.
 - Part IV per-credit lines stay blank (one total, not each credit and year) - advisory FORM_3800_PART_IV_ONE_TOTAL.
 - Tests: Form3800FieldsTest (3); e2e tax-return-3800-filled.spec.ts.
+
+## Stage 2, Stage A - done 2026-11-15
+- docs/IRS-Forms/f7210.pdf (2025, created 7/22/25). generate-semantic-7210.js: 39 fields by hand (item A, Part I lines 1-5 with the
+  line 2b latitude / longitude sign, degrees and decimal digits, Part II lines 6a-6d columns (a)-(c) and 7, Part III 8a-9, Part IV
+  10-12), rows 6a-6d and lines 7-12 geometry-checked. generate-f7210-elements.py: the six comb fields of line 2b are drawn as their
+  19 character boxes (outlined cells; the field see-through, "shaded": transparent).
+- "File a separate Form 7210 for each qualified clean hydrogen production facility": form-tax-return-7210 shows
+  attachedForms.form7210List with a facility selector (the Form 7206 pattern). e2e tax-return-7210-preview.spec.ts.

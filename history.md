@@ -1,3 +1,17 @@
+## 2026-11-15T04:00:00
+Earned income credit - the married child rule for a typed child (owner-approved fields V480, outstanding.md "Earned income credit"):
+2025 Form 1040 instructions, line 27a, Married child - a child married at the end of 2025 is a qualifying child only if you can claim
+the child as your dependent, or could have except for the special rule for children of divorced or separated parents.
+- us-tax-be: pf_eic_qualifying_child.child_married_at_year_end / child_released_to_other_parent (EarnedIncomeCreditMapper; the second
+  kept only when married). EicInputs.marriedChildBarred, called last in countEicQualifyingChildren: a typed row (not a dependent's)
+  married with "the other parent claims the child" No isn't counted (EIC_MARRIED_CHILD_NOT_YOUR_DEPENDENT, a note); blank isn't
+  counted and blocks (EIC_MARRIED_CHILD_RELEASE_UNANSWERED, overrideable). A dependent's row passes (you claim the child).
+- us-tax-ui Earned income credit screen: each typed child asks "Was the child married at the end of 2025?" and, if Yes, the
+  divorced-or-separated-parents question; the row's verdict and "Still to answer" follow; help for both. utils/eic-child.ts mirrors
+  the rule (a dependent's row ignores the typed answers). yamls/27a-earned-income-credit-taxpayer.yaml updated.
+- Tests: EicMarriedChildTest (5); eic-child.spec (married rule); e2e eic-married-child.spec.ts (2: compute + screen). EIC e2e specs
+  45/45; unit suite 5965/0.
+
 ## 2026-11-15T03:00:00
 A married dependent (owner-approved fields V479, outstanding.md "Dependent": the joint-return question wasn't asked):
 - us-tax-be: dependent.married_at_year_end / files_joint_return (DependentInput / DependentRecord, with the V465-V478 overloads).

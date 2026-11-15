@@ -62,6 +62,13 @@ sections:
       - id: childFiledJointReturn
         label: Did the child file a joint return for 2025 (other than only to claim a refund)?
         type: boolean
+      - id: childMarriedAtYearEnd
+        label: Was the child married at the end of 2025?
+        type: boolean
+      - id: childReleasedToOtherParent
+        label: Is the only reason the child is not your dependent that the other parent of the child claims the child (divorced or separated parents)?
+        type: boolean
+        showIf: "childMarriedAtYearEnd == true"
 
   - id: childless
     title: Without a qualifying child

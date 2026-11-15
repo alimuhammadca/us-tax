@@ -19,7 +19,7 @@
   blocks (not overrideable); a blank answer blocks (DEPENDENT_MARRIED_JOINT_RETURN_UNANSWERED); a married dependent is otherwise
   claimed as usual (e.g. parents married to each other), but the application doesn't prepare their own return - the enable call is
   refused and an own return started before blocks with DEPENDENT_MARRIED_OWN_RETURN_NOT_SUPPORTED. DependentQualification.flagMarried.
-  Not done: the earned income credit's married-child rule still reads only the typed rows' joint-return answer.) ("Could you be claimed as a dependent", Step 2 question 4, is
+  The earned income credit's married-child rule for typed rows is applied since 2026-11-15 too - V480, see "Earned income credit".) ("Could you be claimed as a dependent", Step 2 question 4, is
   applied since 2026-11-11 from Form 1040's "Someone can claim you / your spouse" boxes.)
 
 ## Foreign assets (Form 8938): found in the 2026-11-10 second pass, not changed
@@ -64,9 +64,10 @@
 ## Earned income credit (line 27a): found in the 2026-11-10 review, not changed
 
 - "A social security number valid for work" is checked only as "not an ITIN"; a "Not Valid for Employment" SSN can't be told apart.
-- Married child rule (a married child qualifies only if you can claim the child as a dependent) isn't applied to typed rows.
-  (Checked 2026-11-12: the typed rows ask whether the child filed a joint return but not whether the child is married - a "married at
-  the end of 2025?" field is a field addition: owner sign-off.)
+- (The married child rule is applied to typed rows since 2026-11-15 - owner-approved fields V480: each typed child asks "married at
+  the end of 2025?" and, if so, whether the only reason the child isn't your dependent is that the other parent claims the child
+  (divorced or separated parents). No leaves the child out (EIC_MARRIED_CHILD_NOT_YOUR_DEPENDENT); blank blocks
+  (EIC_MARRIED_CHILD_RELEASE_UNANSWERED, overrideable). A child on Dependents passes - you claim the child. EicInputs.marriedChildBarred.)
 
 ## Retirement savings credit (Form 8880): found in the 2026-11-10 review, not changed
 

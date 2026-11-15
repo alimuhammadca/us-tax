@@ -13,8 +13,13 @@
 
 ## Dependent: found in the 2026-11-10 review, not changed
 
-- The flowchart's joint-return question for the dependent (married, filed a joint return other than for a refund) isn't asked, so it
-  isn't applied - a field addition on Dependents (owner sign-off). ("Could you be claimed as a dependent", Step 2 question 4, is
+- (The joint-return test is applied since 2026-11-15 - owner-approved fields V479: Dependents asks "married at the end of the
+  year?" and, if so, "files a joint return other than only to get back tax withheld or estimated tax paid?". Owner decision: a
+  married dependent filing such a joint return isn't supported - off the Dependents list, DEPENDENT_MARRIED_JOINT_RETURN_NOT_SUPPORTED
+  blocks (not overrideable); a blank answer blocks (DEPENDENT_MARRIED_JOINT_RETURN_UNANSWERED); a married dependent is otherwise
+  claimed as usual (e.g. parents married to each other), but the application doesn't prepare their own return - the enable call is
+  refused and an own return started before blocks with DEPENDENT_MARRIED_OWN_RETURN_NOT_SUPPORTED. DependentQualification.flagMarried.
+  Not done: the earned income credit's married-child rule still reads only the typed rows' joint-return answer.) ("Could you be claimed as a dependent", Step 2 question 4, is
   applied since 2026-11-11 from Form 1040's "Someone can claim you / your spouse" boxes.)
 
 ## Foreign assets (Form 8938): found in the 2026-11-10 second pass, not changed

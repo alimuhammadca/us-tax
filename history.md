@@ -1,3 +1,18 @@
+## 2026-11-15T03:00:00
+A married dependent (owner-approved fields V479, outstanding.md "Dependent": the joint-return question wasn't asked):
+- us-tax-be: dependent.married_at_year_end / files_joint_return (DependentInput / DependentRecord, with the V465-V478 overloads).
+  DependentQualification: married + a joint return other than only for a refund is nobody's dependent (Step 2 question 3) and
+  DEPENDENT_MARRIED_JOINT_RETURN_NOT_SUPPORTED blocks (not overrideable); married with the answer blank -
+  DEPENDENT_MARRIED_JOINT_RETURN_UNANSWERED (blocking); married with no such joint return - claimed as usual. The application doesn't
+  prepare a married dependent's own return: TaxReturnV2LifecycleService.enableDependentOwn refuses it (400), and an own return started
+  before blocks with DEPENDENT_MARRIED_OWN_RETURN_NOT_SUPPORTED (not overrideable; markMarriedOwnReturn on the scoped filing status).
+- us-tax-ui Dependent screen: a Marriage section ("Was X married at the end of 2025?", then the joint-return question), a "not
+  supported" note, and for a married dependent "This application doesn't prepare a return for a married dependent." in place of the
+  own-return panel; utils/dependent-qualification.ts mirrors the rule; help for both questions.
+- Tests: DependentMarriedTest (5); form-dependent.component.spec (married questions); e2e dependent-married.spec.ts (2) - the
+  married parent you support is claimed ($500 credit for other dependents) and their own return is refused; a real joint return and a
+  blank answer block. Unit suite 5960/0; dependent e2e specs 31/31.
+
 ## 2026-11-15T02:30:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43666205936 on c4647369 - revision ca-ustax-be--0000621 serving 100%

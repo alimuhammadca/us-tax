@@ -1,7 +1,7 @@
 # Schedule 3 line 13c - Form 3800 Part III elective payment (section 6417) - Implementation Plan
 
 _Authored 2026-11-15 (outstanding.md, Other payments / credits: "Line 13c is a typed total: Form 3800 Part III is not produced").
-Owner chose option B: build it rather than keep the typed amount. Status: stage 1 DONE 2026-11-15 (Stage A owner-reviewed: "go ahead"; Stage B filled). Stage 2 DONE 2026-11-15 (Stage A owner-reviewed: "go ahead", which also approved the screen). Stage 3 DONE 2026-11-15 (Stage A owner-reviewed: "go ahead", which also approved the Stage B scope). Stage 4 Stage A DONE 2026-11-15 (blank Form 7207, waiting for the owner's visual review and the Stage B scope). Owner 2026-11-15: "start with stage 1 but keep in mind that you cannot change the structure of a statement or tax return form. You can modify an existing user input form or you could add a new user input form."_
+Owner chose option B: build it rather than keep the typed amount. Status: stage 1 DONE 2026-11-15 (Stage A owner-reviewed: "go ahead"; Stage B filled). Stage 2 DONE 2026-11-15 (Stage A owner-reviewed: "go ahead", which also approved the screen). Stage 3 DONE 2026-11-15 (Stage A owner-reviewed: "go ahead", which also approved the Stage B scope). Stage 4 DONE 2026-11-15 (Stage A owner-reviewed: "go ahead", which also approved the Stage B scope). Next: stage 5 (Part V; retire the typed line 13c). Owner 2026-11-15: "start with stage 1 but keep in mind that you cannot change the structure of a statement or tax return form. You can modify an existing user input form or you could add a new user input form."_
 
 ## Background (2025 Instructions for Form 3800 and Form 3800 (2025); irs.gov/pub/irs-prior/*--2025.pdf)
 - Schedule 3 line 13c = Form 3800 Part III line 6, column (j), the net elective payment election (EPE) amount.
@@ -123,3 +123,16 @@ Four new tax-return forms (about 2,600 fields in all) and three new screens: eac
   boxes drawn as cells; 440 drawn fields.
 - "File a separate Form 7207 for each facility": form-tax-return-7207, attachedForms.form7207List with a facility selector; Part IV
   line 25 narrowed (textOverrides) - the IRS prints it with tighter spacing. e2e tax-return-7207-preview.spec.ts.
+
+## Stage 4, Stage B - done 2026-11-15
+- Screen "Advanced manufacturing production credit (Form 7207)" in Deductions (advanced-manufacturing-credit-taxpayer / -spouse; V486
+  pf_adv_mfg_credit, pf_adv_mfg_facility, pf_adv_mfg_mineral, pf_adv_mfg_vessel - the children cascade): Part I, the units per Part II
+  component (1a-1g, 2b-2f, 3a-3f, 5a-5c), the costs of lines 4a and 6b, Part IV critical minerals (a list: the line 1-73 picked from
+  the printed labels, and the costs), Part III vessels (a list), credit from other entities (blocks), the elective payment.
+- Form7207Compute: column (e) = the printed credit per unit x the units; 10% of the costs (4a), Part IV line 74 (6a) and the vessel
+  sales (2a); 2.5% for metallurgical coal (6b); line 8a -> Form 3800 Part III line 1b. No credit (blocked): not in service by year end,
+  line 5 related-person election, line 6 section 48C facility, lines 7 / 8b. Other blocks: Part I missing, nothing produced,
+  registration number, an incomplete vessel, a mineral line missing or repeated. Advisory: the technical description, Appendix A, the
+  integrated-component rule, the battery limits.
+- Form3800Current: order 1x (8933), 1g (7210), 1b (7207) - Instructions for Form 3800, Order in which credits are used.
+- Tests: Form7207ComputeTest (3); UI spec (2); e2e advanced-manufacturing-credit-screen.spec.ts (2) with the related specs - 37 passed.

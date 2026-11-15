@@ -1,0 +1,69 @@
+# Form 7207 (Rev. December 2025) - Advanced manufacturing production credit (Family Head). Component: form-advanced-manufacturing-credit.component.ts.
+# V486, owner-approved 2026-11-15 (form-3800-epe-plan.md stage 4). One entry per facility ("File a separate Form 7207 for each facility"); on
+# a joint return both spouses' facilities are on the return. Compute: Form7207Compute -> Form 3800 Part III line 1b (column (e)), used after
+# Forms 8933 and 7210 (the order credits are used); an elected credit's unused part is the net elective payment (column (j)) -> Schedule 3
+# line 13c. Lines 5 (related-person election), 6 (section 48C facility), 7 and 8b block.
+name: advanced-manufacturing-credit-taxpayer
+title: Advanced manufacturing production credit (Form 7207)
+multiplicity: single
+formName: Form 7207
+category: credits
+sections:
+  - name: claim
+    title: The credit
+    fields:
+      - { name: hasAdvMfgFacility, type: boolean, required: true, label: "Did you produce eligible components in the United States and sell them to unrelated persons in the year?" }
+  - name: facilities
+    title: Facility (one Form 7207 each)
+    multiplicity: multiple
+    showIf: hasAdvMfgFacility == true
+    fields:
+      - { name: registrationNumber, type: string, required: false, showIf: "electPayment == true", label: "IRS-issued registration number (line 1; Form 3800 Part III line 1b column (b))" }
+      - { name: electPayment, type: boolean, required: true, label: "Elect to have the credit paid (section 6417(d)(1)(D); Form 3800 column (h))" }
+      - { name: placedInService, type: date, required: true, label: "Date the facility was placed in service (line 2)" }
+      - { name: facilityAddress, type: string, required: false, label: "Address of the facility, if applicable (line 3a)" }
+      - { name: ownerName, type: string, required: false, label: "Owner's name, if not the filer (line 3b(i))" }
+      - { name: ownerTin, type: tin, required: false, label: "Owner's TIN (line 3b(ii)) - digits only" }
+      - { name: latitude, type: decimal, required: true, label: "Latitude, decimal degrees (line 4(i))" }
+      - { name: longitude, type: decimal, required: true, label: "Longitude, decimal degrees (line 4(ii))" }
+      - { name: relatedPersonElection, type: boolean, required: true, label: "Section 45X(a)(3)(B) related-person election made (line 5; not supported)" }
+      - { name: section48cFacility, type: boolean, required: true, label: "Components produced at a section 48C credit facility (line 6; not allowed)" }
+      - { name: otherSourceCredit, type: boolean, required: false, label: "Credit from partnerships, S corporations, estates or trusts, or allocated to beneficiaries (lines 7 and 8b; not supported)" }
+      - { name: qty1A, type: decimal, required: false, label: "Part II line 1a: units sold (column (d))" }
+      - { name: qty1B, type: decimal, required: false, label: "Part II line 1b: units sold (column (d))" }
+      - { name: qty1C, type: decimal, required: false, label: "Part II line 1c: units sold (column (d))" }
+      - { name: qty1D, type: decimal, required: false, label: "Part II line 1d: units sold (column (d))" }
+      - { name: qty1E, type: decimal, required: false, label: "Part II line 1e: units sold (column (d))" }
+      - { name: qty1F, type: decimal, required: false, label: "Part II line 1f: units sold (column (d))" }
+      - { name: qty1G, type: decimal, required: false, label: "Part II line 1g: units sold (column (d))" }
+      - { name: qty2B, type: decimal, required: false, label: "Part II line 2b: units sold (column (d))" }
+      - { name: qty2C, type: decimal, required: false, label: "Part II line 2c: units sold (column (d))" }
+      - { name: qty2D, type: decimal, required: false, label: "Part II line 2d: units sold (column (d))" }
+      - { name: qty2E, type: decimal, required: false, label: "Part II line 2e: units sold (column (d))" }
+      - { name: qty2F, type: decimal, required: false, label: "Part II line 2f: units sold (column (d))" }
+      - { name: qty3A, type: decimal, required: false, label: "Part II line 3a: units sold (column (d))" }
+      - { name: qty3B, type: decimal, required: false, label: "Part II line 3b: units sold (column (d))" }
+      - { name: qty3C, type: decimal, required: false, label: "Part II line 3c: units sold (column (d))" }
+      - { name: qty3D, type: decimal, required: false, label: "Part II line 3d: units sold (column (d))" }
+      - { name: qty3E, type: decimal, required: false, label: "Part II line 3e: units sold (column (d))" }
+      - { name: qty3F, type: decimal, required: false, label: "Part II line 3f: units sold (column (d))" }
+      - { name: qty5A, type: decimal, required: false, label: "Part II line 5a: units sold (column (d))" }
+      - { name: qty5B, type: decimal, required: false, label: "Part II line 5b: units sold (column (d))" }
+      - { name: qty5C, type: decimal, required: false, label: "Part II line 5c: units sold (column (d))" }
+      - { name: costs4A, type: amount, required: false, label: "Electrode active materials: costs incurred (line 4a, 10%)" }
+      - { name: costs6B, type: amount, required: false, label: "Metallurgical coal: costs incurred (line 6b, 2.5%)" }
+  - name: minerals
+    title: Applicable critical minerals (Part IV, per facility)
+    multiplicity: multiple
+    fields:
+      - { name: mineralLine, type: integer, required: true, label: "Part IV line (1-73): the critical mineral and how it was processed" }
+      - { name: costs, type: amount, required: true, label: "Costs incurred in producing it (Part IV; line 74 -> Part II line 6a, 10%)" }
+  - name: vessels
+    title: Related offshore wind vessels (Part III, per facility)
+    multiplicity: multiple
+    fields:
+      - { name: vesselName, type: string, required: true, label: "Name of vessel" }
+      - { name: vesselPurpose, type: string, required: false, label: "Purpose of vessel" }
+      - { name: officialNumber, type: string, required: true, label: "Official number of vessel" }
+      - { name: vesselStatus, type: select, required: true, options: [new, retrofitted], label: "New or retrofitted" }
+      - { name: salesPrice, type: amount, required: true, label: "Sales price (total -> Part II line 2a, 10%)" }

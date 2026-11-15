@@ -1,3 +1,14 @@
+## 2026-11-15T23:30:00
+Form 7207 (Rev. December 2025), Advanced Manufacturing Production Credit - form-3800-epe-plan.md stage 4 (owner-approved, V486). Its
+elective payment now reaches Schedule 3 line 13c through Form 3800 Part III line 1b.
+- Stage A (owner-reviewed): the Rev. 12-2025 form; generate-semantic-7207.js (490 fields; Part II rows by line and component, the 1-point
+  (b) / (c) fields named _hidden and not drawn; Part III vessels keyed by path; Part IV from the printed labels), generate-f7207-elements.py;
+  form-tax-return-7207, one copy per facility (Part IV line 25 narrowed to its printed width).
+- Stage B: the "Advanced manufacturing production credit (Form 7207)" screen in Deductions, one entry per facility with its critical
+  minerals and vessels (pf_adv_mfg_credit / _facility / _mineral / _vessel); Form7207Compute (credit per unit, 10% / 2.5% of costs,
+  vessels, checks, the copies); Form 3800 uses it after Forms 8933 and 7210.
+- Tests: Form7207ComputeTest (3), UI spec (2), e2e advanced-manufacturing-credit-screen (2) and the related specs - 37 passed.
+
 ## 2026-11-15T22:30:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43765654899 on dad43057 - revision ca-ustax-be--0000627 serving 100%

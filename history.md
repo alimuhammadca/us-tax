@@ -1,3 +1,11 @@
+## 2026-11-16T23:00:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43880460642 on 098c7bed - revision ca-ustax-be--0000635 serving 100%
+  traffic, image ustax-be:098c7be; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43880467643 on 7807e31 - live at https://www.taxbeans.com
+  (bundle main-S2H7ROD7.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-16T22:00:00
 Retirement savings credit (Form 8880) ABLE contributions - outstanding.md "Retirement savings credit" (UI only, no field change).
 - Form 5498-QA box 1 shows ABLE contributions by everyone; line 1 counts only the beneficiary's own, so the amount stays typed. The

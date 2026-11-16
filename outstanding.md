@@ -68,15 +68,17 @@
   "Form 8862 statement" page under Tax Return - the form's questions 12 and 14-17, 13, 16 and 17, or 18 and 19, numbered by line, with
   the name and SSN, as the instructions ask; advisory FORM_8862_STATEMENT. Part II isn't affected: it lists the Schedule EIC children,
   three at most.)
-- Lines 14-16 are Yes for every dependent marked as qualifying on Dependents; a dependent who qualifies only through an exception
-  is not told apart.
+- (Lines 14-16: checked 2026-11-16 - not a gap. The Instructions for Form 8862, line 14: "If you meet one of these exceptions,
+  answer 'Yes' to question 14", so Yes is right for a child who qualifies through an exception; a person who doesn't qualify isn't
+  listed.)
 
 ## Estimated tax payments (Form 1040 line 26): found in the 2026-11-10 review, not changed
 
 - (The legacy "Prior Year Tax & Estimated Payments" component (prior-year-tax-taxpayer) and its columns are removed since
   2026-11-14 - V478, see "Refund and amount owed".)
-- One amount and one date per period: two payments in one period with different dates are entered as one (the help says to use
-  the last date, which can overstate the penalty).
+- (Payments beyond one per period are entered since 2026-11-16 - owner-approved field V489: Estimated tax payments has "Other
+  payments", each with the date paid and the amount (pf_estimated_tax_extra_payment); they count on line 26 and each on its own date
+  on Forms 2210 / 2210-F and Form 8379 line 20 (EstimatedTaxPaymentDates.extras). A row without a date counts on January 15, 2026.)
 - Last year's uploaded Form 1040 fills the 2024 refund applied only for uploads read after 2026-11-10 (Box36 added to the parser);
   older uploads need a new upload.
 

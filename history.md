@@ -1,3 +1,13 @@
+## 2026-11-16T06:30:00
+Estimated tax payments - more than one payment in a period (outstanding.md "Estimated tax payments", owner-approved field V489).
+- The screen has "Other payments": each payment beyond one per period with its date and amount (pf_estimated_tax_extra_payment). Before,
+  two payments in a period were added together on the last date, which counted the earlier one as late and could overstate the
+  Form 2210 penalty.
+- EstimatedTaxPaymentDates.extras: line 26 (each spouse on a joint return), Form 2210 by the payment dates and by column, Form 2210-F's
+  payments after January 15, Form 8379 line 20; a K-1 (Form 1041) credit on an otherwise empty form drops them as before.
+- Form 8862 lines 14-16 note in outstanding.md closed - the instructions say to answer Yes for a child who meets an exception.
+- Tests: EstimatedTaxPaymentDatesTest (two payments in one period: 4.89 less penalty than one on the later date), UI spec, e2e.
+
 ## 2026-11-16T05:30:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43782328773 on ba0509ac - revision ca-ustax-be--0000630 serving 100%

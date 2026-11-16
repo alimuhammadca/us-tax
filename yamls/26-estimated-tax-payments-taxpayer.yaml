@@ -70,6 +70,14 @@ sections:
         required: false
         label: "Date paid (leave blank if paid by the due date)"
         showIf: "installment4Amount > 0"
+      # V489 (owner-approved 2026-11-16): payments beyond one per period, each with its own date (pf_estimated_tax_extra_payment).
+      - name: additionalPayments
+        type: list
+        label: "Other payments - each with the date paid and the amount (line 26; Form 2210 counts each on its own date)"
+        required: false
+        fields:
+          - { name: paymentDate, type: date, label: "Date paid" }
+          - { name: amount, type: decimal, label: "Amount" }
 
   - name: priorYearCredits
     title: 2024 Refund Applied to 2025

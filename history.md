@@ -1,3 +1,22 @@
+## 2026-11-17T04:50:00
+Schedule A medical lodging - "$50 for each person", more than one companion (outstanding.md; owner sign-off 2026-11-16; no new field).
+- Problem: the "Who stayed" choice allowed only the patient or the patient and one companion, and the calculation stopped at 2 people;
+  Pub. 502 allows $50 a night for each person traveling with the patient (for example both parents with a sick child).
+- Backend: MedicalLodgingLimit takes the people as chosen, up to 5 (the patient and four companions) - MAX_PEOPLE.
+- UI (sd-medical): "Who stayed" offers the patient and 1-4 people who had to travel with them; the help says to count only those people.
+- YAML 12abcde-standard-deductions-taxpayer: medicalLodgingPeople options 1-5.
+- Tests: MedicalLodgingLimitTest (3 people -> $900 for 6 nights; more than 5 held at 5); e2e sales-tax-tables-and-medical-lodging.spec.ts
+  new test (3 people chosen on the screen -> line 1 9,000 + 900), with line12e-standard-deductions and
+  medical-excess-reimbursement-employer-share - 49 passed.
+
+## 2026-11-17T04:30:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43930995152 on c2f8040c - revision ca-ustax-be--0000641 serving 100%
+  traffic, image ustax-be:c2f8040; /q/health/ready UP (V496 applied). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43930999829 on 7ebb9bb - live at https://www.taxbeans.com
+  (bundle main-GIXP7KVS.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-17T04:10:00
 Additional deductions (Schedule 1-A) - the business tips limit business by business (outstanding.md; owner-approved fields, V496).
 - Problem: Schedule 1-A line 5 limits tips from a trade or business to that business's net income, business by business; with more than

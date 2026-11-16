@@ -90,7 +90,11 @@
 
 ## Earned income credit (line 27a): found in the 2026-11-10 review, not changed
 
-- "A social security number valid for work" is checked only as "not an ITIN"; a "Not Valid for Employment" SSN can't be told apart.
+- ("A social security number valid for work" is checked since 2026-11-16 - owner-approved fields V490: "Does the Social Security card
+  say 'Not valid for employment'?" next to each SSN - Identification (you / your spouse, the plain key ssnNotValidForEmployment),
+  Dependents and a child typed on Earned income credit. A Yes: no EIC for the filer (advisory EIC_SSN_NOT_VALID_FOR_EMPLOYMENT), the
+  child isn't an EIC qualifying child, the credit for other dependents instead of the child tax credit, the Schedule 8812 filer rule,
+  and no Schedule 1-A tips / overtime / senior deduction. SsnForWork.)
 - (The married child rule is applied to typed rows since 2026-11-15 - owner-approved fields V480: each typed child asks "married at
   the end of 2025?" and, if so, whether the only reason the child isn't your dependent is that the other parent claims the child
   (divorced or separated parents). No leaves the child out (EIC_MARRIED_CHILD_NOT_YOUR_DEPENDENT); blank blocks
@@ -154,7 +158,8 @@
   (statement structure - owner sign-off).
 - (Line 4c follows the Qualified Tips From More Than One Employer Worksheet - per employer the greater of Form W-2 box 7 and Form 4137
   column (c) - since 2026-11-12, TipsByEmployer; not with a typed Forms 4070 total, which is one figure for all employers.)
-- Form W-2 box 14 tips and overtime are not read (typed); an SSN marked "Not Valid for Employment" can't be told from a valid one.
+- Form W-2 box 14 tips and overtime are not read (typed). (An SSN marked "Not valid for employment" is told apart since 2026-11-16,
+  V490 - see "Earned income credit".)
 - With more than one business the tips limit is typed for the business the tips came from (one figure, not one per business).
 
 ## Standard or itemized deductions (lines 12a-12e, Schedule A): found in the 2026-11-10 review, not changed

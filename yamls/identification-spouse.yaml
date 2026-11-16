@@ -81,6 +81,11 @@ sections:
           appear on the return (paper and e-file) or the return will be rejected.
           All taxpayers are now eligible to apply for an IP PIN at IRS.gov/IPPIN.
 
+      # V490 (owner-approved 2026-11-16): an SSN not valid for work (Pub. 596) - the same plain key on both copies.
+      - name: ssnNotValidForEmployment
+        type: boolean
+        required: false
+        label: "Does your spouse's Social Security card say 'Not valid for employment'? (blank = No; Yes - no EIC, no Schedule 1-A tips / overtime / senior deduction)"
       - name: servedInCombatZone2025
         type: boolean
         required: false

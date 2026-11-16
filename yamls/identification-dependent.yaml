@@ -21,6 +21,7 @@ sections:
                    Niece, Nephew, Parent, Grandparent, Stepfather, Stepmother, Aunt, Uncle, Son-in-law, Daughter-in-law, Father-in-law,
                    Mother-in-law, Brother-in-law, Sister-in-law, Other household member]}
       - {name: citizenship, type: radio, label: "U.S. citizen, U.S. national or U.S. resident alien?", options: [us, canada_mexico, other]}
+      - {name: ssnNotValidForEmployment, type: boolean, label: "Social Security card says 'Not valid for employment' (V490 - the credit for other dependents, not an EIC child)"}
 
   - name: home
     title: Where the dependent lived

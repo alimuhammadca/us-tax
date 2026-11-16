@@ -1,3 +1,14 @@
+## 2026-11-16T15:00:00
+"A social security number valid for work" (outstanding.md "Earned income credit", owner-approved fields V490).
+- An SSN whose card says "Not valid for employment" (issued only to get federally funded benefits) isn't valid for work (Pub. 596); the
+  app checked only "not an ITIN". Now "Does the Social Security card say 'Not valid for employment'?" sits next to each SSN:
+  Identification (you and your spouse - pf_identification.ssn_not_valid_for_employment, the same plain key on both copies), Dependents
+  (dependent.ssn_not_valid_for_employment) and a child typed on Earned income credit (pf_eic_qualifying_child.child_...).
+- SsnForWork: a Yes means no EIC for you / your spouse (advisory EIC_SSN_NOT_VALID_FOR_EMPLOYMENT), the child isn't an EIC qualifying
+  child, a Dependents child gets the credit for other dependents (the screen's verdict, Form 1040 row 7, Schedule 8812), the Schedule
+  8812 filer rule, and no Schedule 1-A tips / overtime / senior deduction.
+- Tests: SsnForWorkTest (4), UI specs (dependent verdict, EIC child), e2e ssn-not-valid-for-employment (2) with the related specs.
+
 ## 2026-11-16T12:30:00
 outstanding.md "Estimated tax payments": the note about uploads read before 2026-11-10 not filling the 2024 refund applied (Form 1040
 line 36) closed by the owner - only test uploads are that old (the app isn't in production use); no change.

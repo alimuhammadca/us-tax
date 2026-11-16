@@ -172,7 +172,10 @@
   $25,000 cap. Tips1099.withTipAmounts.)
 - (Line 4c follows the Qualified Tips From More Than One Employer Worksheet - per employer the greater of Form W-2 box 7 and Form 4137
   column (c) - since 2026-11-12, TipsByEmployer; not with a typed Forms 4070 total, which is one figure for all employers.)
-- Form W-2 box 14 tips and overtime are not read (typed). (An SSN marked "Not valid for employment" is told apart since 2026-11-16,
+- (Form W-2 box 14 tips and overtime, since 2026-11-16, owner-approved field V495: the Additional deductions screen lists the person's
+  box 14 lines and asks "Is this qualified overtime?" and "Is this tips?"; the overtime lines are the W-2 qualified overtime when none
+  is typed (a typed amount wins, with SCHEDULE_1A_W2_BOX14_OVERTIME_TYPED_*), and a W-2's box 14 tips take the place of its box 7 for
+  Schedule 1-A (a typed Form 4070 total still wins) - W2Box14Answers.) (An SSN marked "Not valid for employment" is told apart since 2026-11-16,
   V490 - see "Earned income credit".)
 - With more than one business the tips limit is typed for the business the tips came from (one figure, not one per business).
 

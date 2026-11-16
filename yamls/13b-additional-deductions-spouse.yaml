@@ -50,6 +50,10 @@ sections:
         required: false
         label: I confirm the spouse's occupation is on the IRS tipped-occupations list
         help: The deduction applies only to tips in qualifying occupations. Shown only when spouseReceivedQualifiedTips is true.
+      - name: w2Box14Answers
+        type: list
+        required: false
+        label: "Per Form W-2 box 14 line (V495, owner-approved 2026-11-16): entryId; lineIdx; isOvertime - 'Is this qualified overtime?' (the marked lines are the W-2 qualified overtime when none is typed); isTips - 'Is this tips?' (that W-2's box 14 tips in place of box 7)"
       - name: tip1099Amounts
         type: list
         required: false

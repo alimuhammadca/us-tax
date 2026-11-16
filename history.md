@@ -1,3 +1,18 @@
+## 2026-11-17T03:20:00
+Additional deductions (Schedule 1-A) - Form W-2 box 14 overtime and tips (outstanding.md; owner-approved field, V495).
+- Problem: for 2025 employers may report qualified overtime (and tips) in Form W-2 box 14 under their own labels; the app never used
+  those lines - the overtime had to be typed, and box 14 tips typed into the Form 4070 box.
+- Backend: V495 pf_additional_deductions_w2_box14 (entry_id, line_idx, is_overtime, is_tips; child of pf_additional_deductions, ON DELETE
+  CASCADE); PfAdditionalDeductionsW2Box14; AdditionalDeductionsMapper saves / loads `w2Box14Answers` on both copies; W2Box14Answers:
+  the person's marked overtime lines become <prefix>OvertimeFromW2Box1Amount when neither it nor the total overtime pay is typed (else a
+  note), and a W-2 with lines marked tips has their total in place of box 7 in the Forms W-2 Schedule 1-A reads.
+- UI (form-additional-deductions): the box 14 lines listed in the Tips section ("Is this tips?") and the Overtime section ("Is this
+  qualified overtime?") with links and help; a note when overtime is also typed; a No to tips / overtime clears that answer; Reset clears.
+- YAMLs 13b-additional-deductions-taxpayer / -spouse: w2Box14Answers.
+- Tests: W2Box14AnswersTest (3); UI spec (7 passed); e2e additional-deductions-w2-box14.spec.ts (tips 500 -> 1,500, overtime 0 -> 3,200),
+  with additional-deductions-screen, line13b-additional-deductions and additional-deductions-1099-tips-part passing (one first-try flake
+  in the 1099 tips spec passed on retry and alone).
+
 ## 2026-11-17T02:50:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43916651088 on f51deb75 - revision ca-ustax-be--0000639 serving 100%

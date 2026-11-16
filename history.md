@@ -1,3 +1,10 @@
+## 2026-11-16T22:00:00
+Retirement savings credit (Form 8880) ABLE contributions - outstanding.md "Retirement savings credit" (UI only, no field change).
+- Form 5498-QA box 1 shows ABLE contributions by everyone; line 1 counts only the beneficiary's own, so the amount stays typed. The
+  screen now lists the person's Forms 5498-QA (matched by the beneficiary's TIN) by the ABLE box with links, and warns (save partial)
+  when the box is blank while a Form 5498-QA shows contributions, or more than the box 1 total.
+- Tests: the UI spec (7), e2e savings-credit-line4-answers (3) and savings-credit-screen (2) passed.
+
 ## 2026-11-16T21:30:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43860333227 on 06e3187c - revision ca-ustax-be--0000634 serving 100%

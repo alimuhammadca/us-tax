@@ -110,7 +110,9 @@
   state or local government?" - No leaves it out of line 2 (no answer = counted). Section 414(h)(2) contributions are reported in box
   14, which line 2 doesn't read; the "Other plan contributions" help now says not to type them. Form8880Inputs.nonGovernmental457b;
   pf_savings_credit_deferral.)
-- ABLE contributions are typed (Form 5498-QA shows everyone's contributions).
+- (ABLE contributions stay typed - Form 5498-QA box 1 is everyone's contributions, and only the beneficiary's own count. Since
+  2026-11-16 the screen lists the person's Forms 5498-QA by the box and warns on Save when the box is blank with contributions shown,
+  or more than the box 1 total. No field change.)
 
 ## Foreign tax credit (Form 1116): found in the 2026-11-10 review, not changed
 

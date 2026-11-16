@@ -1,3 +1,11 @@
+## 2026-11-17T01:40:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43910740633 on e2669624 - revision ca-ustax-be--0000638 serving 100%
+  traffic, image ustax-be:e266962; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43910747506 on 8783a70 - live at https://www.taxbeans.com
+  (bundle main-IVKVTX55.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-17T01:20:00
 Foreign tax credit (Form 1116) - the lump-sum distributions category (g) follows the Worksheet for Lump-Sum Distributions (outstanding.md;
 no new field).

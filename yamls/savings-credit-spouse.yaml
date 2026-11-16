@@ -65,6 +65,10 @@ sections:
         type: amount
         required: false
         label: "Own distributions in 2024 (V458)"
+      - name: deferralAnswers
+        type: list
+        required: false
+        label: "Per Form W-2 with box 12 code G (V492, owner-approved 2026-11-16): entryId; governmental457b - 'Is this 457(b) plan from a state or local government?' (No = not on line 2; no answer = counted)"
       - name: distributionAnswers
         type: list
         required: false

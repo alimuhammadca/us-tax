@@ -1,3 +1,22 @@
+## 2026-11-16T20:00:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43857636231 on 9938f9d5 - revision ca-ustax-be--0000633 serving 100%
+  traffic, image ustax-be:9938f9d; /q/health/ready UP (V491 applied). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43857640408 on 5b0525b - live at https://www.taxbeans.com
+  (bundle main-CGCGE2PO.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
+## 2026-11-16T20:30:00
+Retirement savings credit (Form 8880) line 2 - outstanding.md "Retirement savings credit", owner-approved field V492.
+- Form 8880 (2025) line 2 counts elective deferrals to a "governmental 457(b)" only; Form W-2 box 12 code G is used for a private
+  tax-exempt employer's 457(b) too, and every code G was counted. The screen now asks, per Form W-2 with code G (by statement entry id,
+  pf_savings_credit_deferral under pf_savings_credit, payload "deferralAnswers"): "Is this 457(b) plan from a state or local
+  government?" No leaves it out of line 2; no answer keeps it counted. Form8880Inputs.nonGovernmental457b.
+- Section 414(h)(2) contributions ("treated as employer contributions ... shouldn't be included on line 2") are reported in box 14,
+  which line 2 doesn't read; the "Other plan contributions" help now says not to type them.
+- Tests: Form8880Governmental457bTest (3), the UI spec, e2e savings-credit-line4-answers (2) with the Saver's credit specs (16
+  passed); unit suite 6014 passed.
+
 ## 2026-11-16T18:30:00
 Retirement savings credit (Form 8880) line 4 - outstanding.md "Retirement savings credit", owner-approved fields V491.
 - Form 8880 (2025) line 4 "Don't include ... Distributions from a military retirement plan (other than the federal TSP)" and "from an

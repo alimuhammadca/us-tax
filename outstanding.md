@@ -106,7 +106,10 @@
   Thrift Savings Plan)?" (Yes = left out) and, for an inherited IRA (code 4 with the IRA/SEP/SIMPLE box), "Did you inherit this IRA
   from your spouse?" (Yes = counted; No = a nonspousal beneficiary, left out); code E (EPCRS corrective) is left out by its code, as
   is D. Form8880Inputs.excluded; pf_savings_credit_distribution.)
-- Form W-2 box 12 code G counts a non-governmental 457(b) plan too; section 414(h)(2) contributions can't be told apart.
+- (Line 2 done 2026-11-16, owner-approved field V492: per Form W-2 with box 12 code G the screen asks "Is this 457(b) plan from a
+  state or local government?" - No leaves it out of line 2 (no answer = counted). Section 414(h)(2) contributions are reported in box
+  14, which line 2 doesn't read; the "Other plan contributions" help now says not to type them. Form8880Inputs.nonGovernmental457b;
+  pf_savings_credit_deferral.)
 - ABLE contributions are typed (Form 5498-QA shows everyone's contributions).
 
 ## Foreign tax credit (Form 1116): found in the 2026-11-10 review, not changed

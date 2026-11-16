@@ -1,3 +1,11 @@
+## 2026-11-17T10:20:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43979574393 on e3aed1fa - revision ca-ustax-be--0000647 serving 100%
+  traffic, image ustax-be:e3aed1f; /q/health/ready UP (V499 applied). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43979577461 on cb19f95 - live at https://www.taxbeans.com
+  (bundle main-APLXVCLS.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-17T09:50:00
 Mortgage interest credit (Form 8396) - a certificate reissued during the year at a different rate (outstanding.md; owner-approved fields,
 V499).

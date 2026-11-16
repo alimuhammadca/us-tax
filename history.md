@@ -1,3 +1,12 @@
+## 2026-11-17T02:50:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43916651088 on f51deb75 - revision ca-ustax-be--0000639 serving 100%
+  traffic, image ustax-be:f51deb7; /q/health/ready UP (V494 applied). The workflow's smoke-test step ran long (~13 min) but passed.
+  URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43916656218 on f80dfb4 - live at https://www.taxbeans.com
+  (bundle main-YRPWTQQJ.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-17T02:20:00
 Additional deductions (Schedule 1-A) - the tips part of a Form 1099 marked as tips (outstanding.md; owner-approved field, V494).
 - Problem: a Form 1099-NEC (box 1), 1099-MISC (box 3) or 1099-K (box 1a) marked as tips counted the whole box as tips; the Schedule 1-A

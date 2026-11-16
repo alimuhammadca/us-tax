@@ -1,3 +1,18 @@
+## 2026-11-17T09:50:00
+Mortgage interest credit (Form 8396) - a certificate reissued during the year at a different rate (outstanding.md; owner-approved fields,
+V499).
+- Problem: after a refinance with the certificate reissued at a different rate, line 3 must be figured for each part of the year on an
+  attached statement (Form 8396 instructions, Refinanced Mortgage); the screen took one rate and the help asked for a made-up interest.
+- Backend: V499 pf_mortgage_interest_credit.mcc_reissued / mcc_reissue_date / mcc_reissued_rate_percent / mortgage_interest_after_reissue;
+  MortgageInterestCreditMapper; Form8396Rules.reissue - line 3 = before x old rate + after (through the same line 1 limits) x new rate,
+  $2,000 cap when either rate is over 20% (co-owner share), line 1 the total, the statement text; used by computeForm8396 (the note) and
+  the Schedule A reduction (form8396Line3ForScheduleA).
+- UI (form-mortgage-interest-credit): the reissue question under the rate; on Yes the date, the new rate and the interest after it, and
+  the interest box reads "before the reissue"; help; cleared on No; still-to-answer when the new rate or interest is blank.
+- YAML 8396-mortgage-interest-credit-taxpayer: the four fields.
+- Tests: Form8396ReissueTest (3); UI spec (5 passed); e2e form8396-reissued-certificate.spec.ts (line 3 1,000 -> 1,600), with the 3 other
+  Form 8396 specs - 8 passed. Unit suite 6041 passed.
+
 ## 2026-11-17T09:10:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43966497605 on ab4269fc - revision ca-ustax-be--0000646 serving 100%

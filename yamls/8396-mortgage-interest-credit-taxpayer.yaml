@@ -31,6 +31,10 @@ sections:
       - { name: mccIssueDate, type: date, required: false, label: "Date the certificate was issued" }
       - { name: mccHomeAddress, type: string, required: false, label: "Address of the home, if not the address on the return" }
       - { name: certificateCreditRatePercent, type: percent, required: false, label: "Certificate credit rate (line 2)", note: "10%-50%; outside it no credit" }
+      - { name: mccReissued, type: boolean, required: false, label: "Was the certificate reissued during 2025 (after a refinance) at a different rate?", note: "V499, owner-approved 2026-11-16 - line 3 figured for each part of the year" }
+      - { name: mccReissueDate, type: date, required: false, label: "Date it was reissued", showIf: "mccReissued == true" }
+      - { name: mccReissuedRatePercent, type: percent, required: false, label: "New certificate credit rate", showIf: "mccReissued == true" }
+      - { name: mortgageInterestAfterReissue, type: amount, required: false, label: "Interest paid after the reissue", showIf: "mccReissued == true" }
   - name: interest
     title: Interest paid (line 1)
     multiplicity: single

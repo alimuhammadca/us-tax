@@ -228,8 +228,10 @@
 
 ## Mortgage interest credit (Form 8396): found in the 2026-11-09 review, not changed
 
-- A refinanced mortgage with a reissued certificate at a different rate during the year needs line 3 figured for each part of the year
-  on an attached statement; the screen takes one rate, so the user enters the interest that gives the combined amount (the help says so).
+- (A certificate reissued during the year at a different rate, since 2026-11-16, owner-approved fields V499: the screen asks "Was the
+  certificate reissued ... at a different rate?" and, on Yes, the date, the new rate and the interest paid after it; line 3 = the
+  interest before x the old rate + the interest after (the same line 1 limits) x the new rate, held at $2,000 when either rate is over
+  20%; line 1 is the total; the statement is in the form's note - Form8396Rules.reissue.)
 - (Recapture when the home is sold within 9 years is figured on Form 8828 - a mortgage credit certificate is one of its two subsidies;
   since 2026-11-12 a Form 1099-S for the certificate home within 9 years of its date asks for Form 8828 until it is filled in,
   FORM_8828_MCC_HOME_SOLD - Form 8396, Recapture of Credit.)

@@ -1,3 +1,11 @@
+## 2026-11-17T09:10:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43966497605 on ab4269fc - revision ca-ustax-be--0000646 serving 100%
+  traffic, image ustax-be:ab4269f; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43966501778 on 4e9dbe1 - live at https://www.taxbeans.com
+  (bundle main-4VSBRCZQ.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-17T08:40:00
 Premium tax credit (Form 8962) - the spouse's own dependents on a separate return (outstanding.md; no new field).
 - Problem: on separate returns the spouse's copy (a full standalone Form 8962 under the abuse / abandonment exception) had no dependents'

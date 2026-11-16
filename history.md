@@ -1,3 +1,12 @@
+## 2026-11-16T02:30:00
+Form 8862 line 8 - the date a child died (outstanding.md "Credits after disallowance", owner-approved field V488).
+- Dependents asks "Date of death, if [the child] died in 2025" next to the months lived with you (dependent.date_of_death); the help says
+  a child who died counts as living with you all year if your home was theirs for more than half the time alive.
+- Form8862Facts fills line 8's date-of-death boxes next to the date of birth; DependentQualification.flagDateOfDeath blocks a date
+  outside the year or before the birth (DEPENDENT_DATE_OF_DEATH_INVALID).
+- Tests: Form8862FactsTest (line 8 and the check), UI spec, e2e form8862 (2) and dependent-screen (1). The form8862 "EIC without a
+  child" test now waits for the save carrying its last entry (an earlier Enter save's reply was taken for it under load).
+
 ## 2026-11-16T01:30:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43774039796 on 2dae562f - revision ca-ustax-be--0000628 serving 100%

@@ -26,6 +26,7 @@ sections:
     title: Where the dependent lived
     fields:
       - {name: monthsLivedWithTaxpayer, type: integer, label: Months lived with you (0-12)}
+      - {name: dependentDateOfDeath, type: date, label: "Date of death, if the child died in the year (V488 - Form 8862 line 8)"}
       - {name: childLivedWithTaxpayerInUSA, type: boolean, label: In the United States for more than half the year (row 5b)}
       - {name: releasedByCustodialParent, type: boolean, label: "The other parent released the claim (Form 8332)",
          showIf: "monthsLivedWithTaxpayer < 7 and relationship is son / daughter / stepchild"}

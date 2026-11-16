@@ -61,7 +61,9 @@
 
 ## Credits after disallowance (Form 8862): found in the 2026-11-10 review, not changed
 
-- Line 8 date of death: no screen holds a child's date of death, so only births in the year are printed.
+- (Line 8 date of death is printed since 2026-11-16 - owner-approved field V488: Dependents asks "Date of death, if the child died in
+  2025" with the months; Form 8862 line 8 shows it next to the date of birth; a date outside the year or before the birth blocks
+  (DEPENDENT_DATE_OF_DEATH_INVALID). A child typed only on Earned income credit, not on Dependents, has no date of death to print.)
 - More than 3 EIC children, 4 CTC children / other dependents or 3 students: the form says to attach a statement; the app prints
   the first ones only.
 - Lines 14-16 are Yes for every dependent marked as qualifying on Dependents; a dependent who qualifies only through an exception

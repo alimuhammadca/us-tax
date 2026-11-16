@@ -1,3 +1,11 @@
+## 2026-11-16T21:30:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43860333227 on 06e3187c - revision ca-ustax-be--0000634 serving 100%
+  traffic, image ustax-be:06e3187; /q/health/ready UP (V492 applied). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43860337640 on d50d957 - live at https://www.taxbeans.com
+  (bundle main-FIZGHKBL.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-16T20:00:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43857636231 on 9938f9d5 - revision ca-ustax-be--0000633 serving 100%

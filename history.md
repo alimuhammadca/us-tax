@@ -1,3 +1,12 @@
+## 2026-11-16T03:30:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43779476484 on b5986a54 - revision ca-ustax-be--0000629 serving 100%
+  traffic, image ustax-be:b5986a5; /q/health/ready UP (V488 applied). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43779479132 on dce7ba7 - live at https://www.taxbeans.com
+  (bundle main-JPEEHJGJ.js).
+- Ships the Dependents date of death and Form 8862 line 8.
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-16T02:30:00
 Form 8862 line 8 - the date a child died (outstanding.md "Credits after disallowance", owner-approved field V488).
 - Dependents asks "Date of death, if [the child] died in 2025" next to the months lived with you (dependent.date_of_death); the help says

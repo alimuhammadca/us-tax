@@ -79,8 +79,9 @@
 - (Payments beyond one per period are entered since 2026-11-16 - owner-approved field V489: Estimated tax payments has "Other
   payments", each with the date paid and the amount (pf_estimated_tax_extra_payment); they count on line 26 and each on its own date
   on Forms 2210 / 2210-F and Form 8379 line 20 (EstimatedTaxPaymentDates.extras). A row without a date counts on January 15, 2026.)
-- Last year's uploaded Form 1040 fills the 2024 refund applied only for uploads read after 2026-11-10 (Box36 added to the parser);
-  older uploads need a new upload.
+- (Closed 2026-11-16, owner: an upload read before 2026-11-10 (before Box36 was added to the parser) doesn't fill the 2024 refund
+  applied to 2025 - only test uploads are that old, as the app isn't in production use; every upload since reads line 36, and the
+  answer can be typed on Estimated tax payments. No change.)
 
 ## Missing or wrong W-2 or 1099-R (Form 4852): found in the 2026-11-10 review, not changed
 

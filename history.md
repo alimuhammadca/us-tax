@@ -1,3 +1,7 @@
+## 2026-11-16T12:30:00
+outstanding.md "Estimated tax payments": the note about uploads read before 2026-11-10 not filling the 2024 refund applied (Form 1040
+line 36) closed by the owner - only test uploads are that old (the app isn't in production use); no change.
+
 ## 2026-11-16T12:00:00
 Full e2e regression (2026-11-16, 5.8 h): 2379 passed, 1 failed, 4 flaky, 0 skipped - all five fixed in the tests (no app change).
 - line8912-bond-credit (failed): under load the added bond's row rendered after the select helper's 1.5 s wait - the test waits for

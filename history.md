@@ -1,3 +1,18 @@
+## 2026-11-17T01:20:00
+Foreign tax credit (Form 1116) - the lump-sum distributions category (g) follows the Worksheet for Lump-Sum Distributions (outstanding.md;
+no new field).
+- Problem: a "Lump-sum distributions" row was figured like any other category - line 18 the return's taxable income and line 20 the
+  regular tax - though i1116 "g. Lump-Sum Distributions" gives a separate limit from Form 4972; and the category was allowed with no Form
+  4972.
+- Backend: Form1116LumpSum (FORM_4972 = Form 4972 lines 6 + 12 and line 30 of both spouses, set beside the K-1 lists);
+  buildFullForm1116 for category g: line 17 = the rows' foreign gross income (worksheet line 2), line 18 = lines 6 + 12, line 19 = line
+  17 / line 18 (1 when line 17 is at least line 18), line 20 = line 30, line 21 = line 20 x line 19 (whole dollars), line 24 = the smaller
+  of line 21 and line 14. Without a Form 4972: no credit, no carryover, FORM_1116_LUMP_SUM_WITHOUT_FORM_4972 (warning).
+- UI: the "Category of income" help says when to use lump-sum distributions and what income to enter.
+- Tests: Form1116LumpSumTest (3); e2e form1116-lump-sum-category.spec.ts (2: $25,000 foreign of $100,000 -> line 19 0.25, line 20 = Form
+  4972 line 30; no Form 4972 -> 0 and the warning), with foreign-tax-credit-screen, form1116-foreign-tax-credit,
+  line4972-lump-sum-distribution and form1116-ftc-carryforward-bridge passing.
+
 ## 2026-11-17T00:40:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43904072704 on 1d5cb4ab - revision ca-ustax-be--0000637 serving 100%

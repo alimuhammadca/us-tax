@@ -145,7 +145,10 @@
   shares) - and recaptured in later years on line 16 in the order listed: 4 up to 50% of foreign income, 5 the loss category's income
   moved to the other categories, 6 up to 50% of U.S. source income; FORM_1116_LOSS_ACCOUNTS_KEPT lists the balances. Not asked: the
   section 904(f)(3) disposition rule and the elections to recapture more than 50%; a category with no Form 1116 that year keeps its
-  balances.) Not done: the lump-sum category worksheet.
+  balances.) (The lump-sum category worksheet is done since 2026-11-16: a category g Form 1116 takes Part III from the Worksheet for
+  Lump-Sum Distributions - line 17 the rows' foreign-source part of Form 4972 lines 6 and 12, line 18 Form 4972 lines 6 and 12 (both
+  spouses' on a joint return), line 20 Form 4972 line 30, line 21 = line 20 x line 19; without a Form 4972 the category gets no credit
+  or carryover and FORM_1116_LUMP_SUM_WITHOUT_FORM_4972 warns - Form1116LumpSum. Part I is still figured for the rows but not used.)
 - The 1-year carryback isn't modelled. (The accrual choice is checked against last year's return since 2026-11-13: when last year's
   return here credited accrued taxes - last year's answer accrued and a Form 1116 claiming the credit - a blank answer is accrued with
   FORM_1116_ACCRUED_FROM_PRIOR_YEAR and "paid" blocks with FORM_1116_ACCRUAL_CHOICE_BINDING (i1116: "you must credit foreign taxes in

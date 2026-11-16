@@ -1,3 +1,13 @@
+## 2026-11-17T06:40:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43941154394 on ffaeac2f - revision ca-ustax-be--0000643 serving 100%
+  traffic, image ustax-be:ffaeac2; /q/health/ready UP (V497 applied). The "Ensure prod Postgres is running" step waited ~40 minutes:
+  the stop after the previous deploy was still finishing when this deploy started it. URL:
+  https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43941158675 on 570d054 - live at https://www.taxbeans.com
+  (bundle main-D2Q6JGBM.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-17T06:20:00
 Schedule A - "Were your home loans over the limit?" (outstanding.md: a blank average mortgage balance applied no debt limit; owner-approved
 field, V498).

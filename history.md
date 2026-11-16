@@ -1,3 +1,11 @@
+## 2026-11-16T23:50:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43892060549 on 83527679 - revision ca-ustax-be--0000636 serving 100%
+  traffic, image ustax-be:8352767; /q/health/ready UP (V493 applied). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43892065007 on 8291003 - live at https://www.taxbeans.com
+  (bundle main-CTEVBBJR.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-16T23:30:00
 Foreign tax credit (Form 1116) - a mutual fund's foreign-source dividends (outstanding.md; owner-approved field, V493).
 - Problem: Form 1116 line 1a took all of a fund's Form 1099-DIV box 1a as foreign income; a fund that also holds U.S. stocks paid only

@@ -125,8 +125,8 @@ sections:
       - name: medicalLodgingPeople
         type: select
         required: false
-        label: Who stayed (the patient alone / the patient and one person who had to travel with them)
-        options: ["1", "2"]
+        label: Who stayed (the patient alone / the patient and 1-4 people who had to travel with them; owner 2026-11-16)
+        options: ["1", "2", "3", "4", "5"]
         showIf: "medicalLodgingPaid > 0"
       # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
       - name: medicalHomeImprovementCost

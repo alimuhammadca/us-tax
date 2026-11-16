@@ -184,7 +184,8 @@
 
 ## Standard or itemized deductions (lines 12a-12e, Schedule A): found in the 2026-11-10 review, not changed
 
-- Medical lodging is capped at 2 people ($50 a night each); Pub. 502 allows $50 for each person who goes along with the patient.
+- (Medical lodging, since 2026-11-16 with the owner's sign-off: "Who stayed" offers the patient and up to 4 people who had to travel with
+  them, $50 a night for each - MedicalLodgingLimit.MAX_PEOPLE.)
 - W-2GU / W-2VI / W-2AS territory income tax withheld doesn't reach Schedule A line 5a. (Checked 2026-11-11: i1040sca line 6 - "include
   U.S. territory taxes on the appropriate state and local tax line" - but the same box 2 tax is usually credited through Form 5074 /
   8689 (TerritoryW2s' advisory), so deducting it is a choice like the foreign tax credit's: needs a question (field - owner sign-off).)
@@ -197,8 +198,6 @@
   instructions, "Claiming your deductible points".)
 - A blank average mortgage balance applies no debt limit when no Form 1098 shows the principal (since 2026-11-11 a Form 1098 box 2
   over the limit asks for it - SCHEDULE_A_MORTGAGE_AVERAGE_BALANCE_NEEDED).
-- Medical lodging people (owner decision): the field allows the patient and one companion (owner-approved 2026-10-23, Pub. 502's
-  parent-and-child example); "$50 for each person" may allow more than one companion - widen it only with the owner's sign-off.
 - (Gambling losses, the other line 16 deductions and an investment theft have their own "Who paid - separate returns" answers since
   2026-11-14 - owner-approved fields V477; blank = joint, 50/50, and the theft's recoveries and Ponzi amounts scale with its share -
   MfsScheduleAAllocator. Checked in the code: before this they were copied whole to both separate returns, not split 50/50 as noted.

@@ -1,3 +1,15 @@
+## 2026-11-17T07:50:00
+QBI deduction (line 13a) - a farm and a safe-harbor rental can be aggregated (outstanding.md; no new field).
+- Problem: aggregation (Treas. Reg. 1.199A-4) was offered for Schedule C businesses and Schedules K-1 only; a farm (Schedule F) or a
+  rental real estate enterprise under the Rev. Proc. 2019-38 safe harbor couldn't join a group, so a farm with no wages couldn't borrow
+  the wage limit of the business it operates with.
+- Backend: the farm's QBI component carries aggregationKey "farm-<side>-<index>" (FarmIntermediate.listIdx); the safe-harbor rental
+  activities carry "rental-taxpayer" / "rental-spouse"; computeLine13a maps them to the screen's group labels like the others.
+- UI (form-qbi-deduction): a card per farm ("Schedule F, <product>") and one for the safe-harbor rental, with the "Aggregation group"
+  box; the help lists which businesses can be aggregated.
+- Tests: QbiFarmAggregationTest (alone <= 4,000; grouped with a K-1 paying $200,000 of wages > 40,000); UI spec (4 passed); e2e
+  qbi-farm-aggregation.spec.ts, with the 16 other QBI specs - 37 passed. Unit suite 6037 passed.
+
 ## 2026-11-17T07:20:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43952902939 on c62d0bf7 - revision ca-ustax-be--0000644 serving 100%

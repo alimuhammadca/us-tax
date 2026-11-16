@@ -209,7 +209,9 @@
 
 ## Qualified business income deduction (line 13a): found in the 2026-11-10 review, not changed
 
-- Aggregation is offered for Schedule C businesses and K-1s, not for a farm or a safe-harbor rental.
+- (Aggregation for a farm and a safe-harbor rental, since 2026-11-16: the Qualified business income deduction screen has a card for each
+  farm (key "farm-<side>-<index>") and the section 199A safe-harbor rental enterprise (key "rental-taxpayer" / "rental-spouse") with
+  the "Aggregation group" box, and the calculation carries the same keys on the farm's and the rental's QBI activities - no new field.)
 
 ## Premium tax credit (Form 8962): found in the 2026-11-09 review, not changed
 

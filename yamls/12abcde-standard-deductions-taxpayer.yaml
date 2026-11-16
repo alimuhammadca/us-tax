@@ -269,6 +269,11 @@ sections:
         required: false
         label: Qualified home mortgage interest paid
       # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
+      - name: mortgageDebtOverLimit
+        type: boolean
+        required: false
+        label: "Were your home loans more than $750,000 ($1,000,000 for loans before December 16, 2017; half on a separate return) at any point in the year? (V498, owner-approved 2026-11-16) - Yes asks the average balance below"
+        showIf: "homeMortgageInterestPaid > 0"
       - name: homeAcquisitionDebtAverageBalance
         type: amount
         required: false

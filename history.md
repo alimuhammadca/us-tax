@@ -1,3 +1,18 @@
+## 2026-11-17T06:20:00
+Schedule A - "Were your home loans over the limit?" (outstanding.md: a blank average mortgage balance applied no debt limit; owner-approved
+field, V498).
+- Problem: with mortgage interest typed and no Form 1098 principal over the limit, a blank average balance deducted all the interest -
+  nothing asked whether the loans were over $750,000 ($375,000 MFS; $1,000,000 / $500,000 before December 16, 2017).
+- Backend: V498 pf_standard_deductions.mortgage_debt_over_limit; StandardDeductionsMapper; ScheduleAComputations adds the blocking
+  SCHEDULE_A_MORTGAGE_AVERAGE_BALANCE_NEEDED when the answer is Yes and the balance is blank (the Form 1098 rule unchanged).
+- UI (sd-interest / form-standard-deductions): the question under the mortgage interest, in the filing status's amounts, with help "Home
+  loans over the limit"; the average balance shows on Yes (or when already typed); No clears it; blank and a Yes without the balance are
+  listed as still to answer.
+- YAML 12abcde-standard-deductions-taxpayer: mortgageDebtOverLimit.
+- Tests: MortgageAverageBalanceNeededTest (+1: Yes asks, No / blank / a balance / standard don't); UI spec (12 passed); e2e
+  schedule-a-mortgage-over-limit.spec.ts (40,000 -> blocked -> 30,000 with a $1,000,000 balance), with the 11 other specs using mortgage
+  interest - 96 passed.
+
 ## 2026-11-17T05:30:00
 Schedule A - territory income tax (Form W-2GU / W-2VI / W-2AS box 2) deducted on line 5a when chosen (outstanding.md; owner-approved
 field, V497).

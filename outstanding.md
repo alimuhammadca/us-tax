@@ -198,8 +198,10 @@
 - (The private-foundation 30% limit subtracts the full 50%-org capital gain property since 2026-11-12 - Pub. 526 Worksheet 2 line 20.)
 - (Points go through the Pub. 936 Table 1 line 14 ratio when the debt is over the limit since 2026-11-12 - the Table 1 line 13
   instructions, "Claiming your deductible points".)
-- A blank average mortgage balance applies no debt limit when no Form 1098 shows the principal (since 2026-11-11 a Form 1098 box 2
-  over the limit asks for it - SCHEDULE_A_MORTGAGE_AVERAGE_BALANCE_NEEDED).
+- (A blank average mortgage balance with no Form 1098 principal, since 2026-11-16, owner-approved field V498: the screen asks "Were your
+  home loans more than $750,000 ($1,000,000 before December 16, 2017) at any point in the year?" when mortgage interest is entered; Yes
+  shows the average balance and a blank one blocks with SCHEDULE_A_MORTGAGE_AVERAGE_BALANCE_NEEDED; No hides and clears it; blank is
+  listed as still to answer. A Form 1098 box 2 over the limit still asks for the balance - since 2026-11-11.)
 - (Gambling losses, the other line 16 deductions and an investment theft have their own "Who paid - separate returns" answers since
   2026-11-14 - owner-approved fields V477; blank = joint, 50/50, and the theft's recoveries and Ponzi amounts scale with its share -
   MfsScheduleAAllocator. Checked in the code: before this they were copied whole to both separate returns, not split 50/50 as noted.

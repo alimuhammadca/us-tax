@@ -200,6 +200,11 @@ sections:
         required: false
         label: Other nontaxable income (veterans' benefits, workers' compensation, public assistance, nontaxable combat pay)
         showIf: "salesTaxLivedInStateAllYear == true"
+      - name: deductTerritoryIncomeTax
+        type: boolean
+        required: false
+        label: "Deduct this territory income tax on Schedule A instead of claiming it as a credit (Form 5074, 8689 or 1116)? (V497, owner-approved 2026-11-16) - shown with a Form W-2GU / W-2VI / W-2AS box 2; Yes adds box 2 to line 5a income taxes"
+        showIf: "stateLocalTaxChoice != 'Sales'"
       - name: stateLocalIncomeTaxesPaid
         type: number
         required: false

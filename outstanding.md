@@ -186,9 +186,11 @@
 
 - (Medical lodging, since 2026-11-16 with the owner's sign-off: "Who stayed" offers the patient and up to 4 people who had to travel with
   them, $50 a night for each - MedicalLodgingLimit.MAX_PEOPLE.)
-- W-2GU / W-2VI / W-2AS territory income tax withheld doesn't reach Schedule A line 5a. (Checked 2026-11-11: i1040sca line 6 - "include
-  U.S. territory taxes on the appropriate state and local tax line" - but the same box 2 tax is usually credited through Form 5074 /
-  8689 (TerritoryW2s' advisory), so deducting it is a choice like the foreign tax credit's: needs a question (field - owner sign-off).)
+- (W-2GU / W-2VI / W-2AS territory income tax withheld, since 2026-11-16, owner-approved field V497: the Standard or itemized deductions
+  screen lists the territory W-2s with box 2 tax and asks "Deduct this territory income tax on Schedule A instead of claiming it as a
+  credit?"; Yes adds box 2 to the line 5a income taxes (SALT cap) with TERRITORY_W2_TAX_DEDUCTED_SCHEDULE_A in place of the "not
+  credited" note; with sales tax chosen it isn't added (TERRITORY_W2_TAX_NOT_DEDUCTED_SALES_TAX) - TerritoryW2s.deductOnScheduleA. Not checked: how the
+  added tax is split between separate returns.)
 - ("Part" employer-paid coverage is taxed in proportion to the employer's share since 2026-11-14 - owner-approved fields V476: the year's
   premiums the employer paid (cafeteria-plan pre-tax premiums count as the employer's) and the premiums paid with after-tax money,
   shown only for "Part of them"; Schedule 1 line 8z = excess x employer / total, Pub. 502 "Excess reimbursement" - MedicalExcessShare.

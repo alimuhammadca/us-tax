@@ -1,3 +1,26 @@
+## 2026-11-17T05:30:00
+Schedule A - territory income tax (Form W-2GU / W-2VI / W-2AS box 2) deducted on line 5a when chosen (outstanding.md; owner-approved
+field, V497).
+- Problem: box 2 of a territory W-2 is territory income tax; the app left it off line 25a (right) and only pointed to Form 5074 / 8689 /
+  1116, never offering the Schedule A deduction the instructions allow ("include U.S. territory taxes on the appropriate state and local
+  tax line") - a choice, since the same tax can't be both credited and deducted.
+- Backend: V497 pf_standard_deductions.deduct_territory_income_tax; StandardDeductionsMapper; TerritoryW2s keeps box 2 on the line 1a
+  copy as territoryIncomeTaxWithheld and skips the "not credited" note when deducted; TerritoryW2s.deductOnScheduleA adds it to
+  stateLocalIncomeTaxesPaid (income taxes chosen) or notes it isn't added (sales taxes chosen).
+- UI (sd-taxes / form-standard-deductions): the territory W-2s with box 2 listed under Taxes paid and the Yes / No question with help
+  "Territory income tax"; cleared when sales taxes are chosen or no territory W-2 has box 2 tax.
+- YAML 12abcde-standard-deductions-taxpayer: deductTerritoryIncomeTax.
+- Tests: TerritoryTaxDeductionTest (2); UI spec (11 passed); e2e schedule-a-territory-income-tax.spec.ts (line 5a + 2,400), with
+  territory-income-screen, line12e-standard-deductions and sales-tax-tables-and-medical-lodging - 50 passed.
+
+## 2026-11-17T05:00:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43936907271 on 0f49ce68 - revision ca-ustax-be--0000642 serving 100%
+  traffic, image ustax-be:0f49ce6; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43936911050 on 09e022b - live at https://www.taxbeans.com
+  (bundle main-XV5PPOEV.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-17T04:50:00
 Schedule A medical lodging - "$50 for each person", more than one companion (outstanding.md; owner sign-off 2026-11-16; no new field).
 - Problem: the "Who stayed" choice allowed only the patient or the patient and one companion, and the calculation stopped at 2 people;

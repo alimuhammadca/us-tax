@@ -1,3 +1,12 @@
+## 2026-11-16T05:30:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43782328773 on ba0509ac - revision ca-ustax-be--0000630 serving 100%
+  traffic, image ustax-be:ba0509a; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43782331620 on 36591c7 - live at https://www.taxbeans.com
+  (bundle main-N5FSRPTX.js).
+- Ships the Form 8862 continuation statement.
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-16T04:30:00
 Form 8862 continuation statement (outstanding.md "Credits after disallowance", owner chose the statement over a second Form 8862).
 - Form 8862 (Rev. 12-2025) has room for four CTC children, four other dependents and three AOTC students and says to "attach a statement

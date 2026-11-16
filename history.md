@@ -1,3 +1,16 @@
+## 2026-11-16T18:30:00
+Retirement savings credit (Form 8880) line 4 - outstanding.md "Retirement savings credit", owner-approved fields V491.
+- Form 8880 (2025) line 4 "Don't include ... Distributions from a military retirement plan (other than the federal TSP)" and "from an
+  inherited IRA by a nonspousal beneficiary": a Form 1099-R can't tell either apart. The screen now asks per Form 1099-R (by its
+  statement entry id, child table pf_savings_credit_distribution under pf_savings_credit, payload "distributionAnswers" on both copies):
+  military retirement pay? (Yes = left out) and - only for code 4 with the IRA/SEP/SIMPLE box - inherited from your spouse? (Yes =
+  counted; before, every inherited IRA was left out). Code E (EPCRS corrective - "Distributions of excess contributions or deferrals")
+  is now left out by its code (it was counted). Each Form 1099-R's line shows whether it counts and why.
+- Form8880Inputs.excluded / answers (replaces inheritedIraOrNonqualified). The screen's code list now matches the calculation (D and E
+  left out; code 4 only for an inherited IRA; two-character codes split).
+- Tests: Form8880DistributionAnswersTest (4), the UI spec, e2e savings-credit-line4-answers with the Saver's credit specs (16 passed);
+  unit suite 6011 passed.
+
 ## 2026-11-16T17:30:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43852178165 on 02671b91 - revision ca-ustax-be--0000632 serving 100%

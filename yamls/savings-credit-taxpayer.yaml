@@ -78,6 +78,10 @@ sections:
         required: false
         showIf: filingStatus == "Married filing jointly"
         label: "Did you and your spouse file a joint return for 2024? (V458)"
+      - name: distributionAnswers
+        type: list
+        required: false
+        label: "Per Form 1099-R (V491, owner-approved 2026-11-16): entryId; militaryRetirement - 'Is this military retirement pay (not the Thrift Savings Plan)?' (Yes = not on line 4); inheritedFromSpouse - asked only for code 4 with the IRA/SEP/SIMPLE box, 'inherited this IRA from your spouse?' (Yes = counted on line 4; No = a nonspousal beneficiary, left out)"
       - name: ableContributions
         type: amount
         required: false

@@ -102,9 +102,10 @@
 
 ## Retirement savings credit (Form 8880): found in the 2026-11-10 review, not changed
 
-- Line 4 (2026-11-11): code 4 counts unless the IRA/SEP/SIMPLE box is checked, so a spouse beneficiary's inherited-IRA distribution
-  is still left out (no answer tells them apart); code D is left out. Code E and military retirement (other than the TSP) are still
-  counted - a military plan can't be told from the Form 1099-R.
+- (Line 4 done 2026-11-16, owner-approved fields V491: the screen asks per Form 1099-R "Is this military retirement pay (not the
+  Thrift Savings Plan)?" (Yes = left out) and, for an inherited IRA (code 4 with the IRA/SEP/SIMPLE box), "Did you inherit this IRA
+  from your spouse?" (Yes = counted; No = a nonspousal beneficiary, left out); code E (EPCRS corrective) is left out by its code, as
+  is D. Form8880Inputs.excluded; pf_savings_credit_distribution.)
 - Form W-2 box 12 code G counts a non-governmental 457(b) plan too; section 414(h)(2) contributions can't be told apart.
 - ABLE contributions are typed (Form 5498-QA shows everyone's contributions).
 

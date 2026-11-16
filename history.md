@@ -1,3 +1,11 @@
+## 2026-11-17T00:40:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43904072704 on 1d5cb4ab - revision ca-ustax-be--0000637 serving 100%
+  traffic, image ustax-be:1d5cb4a; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43904077513 on 77fb9ab - live at https://www.taxbeans.com
+  (bundle main-G6C5VKS2.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-17T00:20:00
 Foreign tax credit (Form 1116) - Schedule K-1 (Form 1120-S) and Schedule K-1 (Form 1041) foreign taxes read (outstanding.md; no new field).
 - Problem: only Schedule K-1 (Form 1065) box 21 foreign tax was added for you; an S corporation's K-1 (box 16 code F, "Foreign taxes paid

@@ -1,3 +1,18 @@
+## 2026-11-16T12:00:00
+Full e2e regression (2026-11-16, 5.8 h): 2379 passed, 1 failed, 4 flaky, 0 skipped - all five fixed in the tests (no app change).
+- line8912-bond-credit (failed): under load the added bond's row rendered after the select helper's 1.5 s wait - the test waits for
+  the row first.
+- clean-hydrogen-credit-screen (flaky): setNumberValue accepted -95.36984 for -95.369804 (a digit lost while typing) because of a 0.01
+  tolerance - the match is now to the decimals typed, else the helper sets the value directly.
+- fuel-tax-credit-screen (flaky): the number helper's Enter save answered the Save click without the last fuel cost - the test waits for
+  the save that carries it.
+- line1b-household (flaky): the dev server refused one connection - the request-context helper retries once on ECONNREFUSED.
+- line1e-dependent-care (flaky, 3 tests): switching to the Family Head tab re-opens that tab's last page a moment later, which re-created
+  the Identification screen after the name and SSN were typed; the W-2 for 111-11-1111 then didn't belong to the family and the
+  Compute button stopped on that non-overrideable item. The test lets the tab settle, waits out a second load, and saves until the
+  save carries the SSN; the file's timeout is 120 s; computeReturnViaUi waits 30 s for the compute request.
+- Re-run of the five specs with no retries: 44 passed.
+
 ## 2026-11-16T07:30:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43789717641 on 1591a292 - revision ca-ustax-be--0000631 serving 100%

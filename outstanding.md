@@ -166,9 +166,10 @@
 
 ## Additional deductions (line 13b, Schedule 1-A): found in the 2026-11-10 review, not changed
 
-- The "tips" box on Forms 1099-NEC / 1099-MISC / 1099-K counts the whole box as tips; a form with only part tips (the Instructions'
-  $55,000 Form 1099-K with $7,000 of tips) must be typed in "Tips in your own business" instead. Needs a tips amount on the statement
-  (statement structure - owner sign-off).
+- (A Form 1099-NEC / 1099-MISC / 1099-K marked as tips, since 2026-11-16, owner-approved field V494: the Additional deductions screen
+  lists each one with its box and asks "How much of it is tips?" - the Instructions' $55,000 Form 1099-K with $7,000 of tips counts
+  $7,000; blank = the whole box, as before; no more than the box (Save warns); still under the business net income limit and the
+  $25,000 cap. Tips1099.withTipAmounts.)
 - (Line 4c follows the Qualified Tips From More Than One Employer Worksheet - per employer the greater of Form W-2 box 7 and Form 4137
   column (c) - since 2026-11-12, TipsByEmployer; not with a typed Forms 4070 total, which is one figure for all employers.)
 - Form W-2 box 14 tips and overtime are not read (typed). (An SSN marked "Not valid for employment" is told apart since 2026-11-16,

@@ -50,6 +50,10 @@ sections:
         required: false
         label: I confirm the spouse's occupation is on the IRS tipped-occupations list
         help: The deduction applies only to tips in qualifying occupations. Shown only when spouseReceivedQualifiedTips is true.
+      - name: tip1099Amounts
+        type: list
+        required: false
+        label: "Per Form 1099-NEC / 1099-MISC / 1099-K marked as tips (V494, owner-approved 2026-11-16): entryId; tipAmount - 'How much of it is tips?' (blank = the whole box; no more than the box)"
       - name: spouseManualTipsFromNonStatementSources
         type: amount
         required: false

@@ -1,3 +1,16 @@
+## 2026-11-17T02:20:00
+Additional deductions (Schedule 1-A) - the tips part of a Form 1099 marked as tips (outstanding.md; owner-approved field, V494).
+- Problem: a Form 1099-NEC (box 1), 1099-MISC (box 3) or 1099-K (box 1a) marked as tips counted the whole box as tips; the Schedule 1-A
+  instructions' example is a $55,000 Form 1099-K with $7,000 of tips.
+- Backend: V494 pf_additional_deductions_tip1099 (entry_id, tip_amount; child of pf_additional_deductions, ON DELETE CASCADE);
+  PfAdditionalDeductionsTip1099; AdditionalDeductionsMapper saves / loads `tip1099Amounts` on both copies; Tips1099.withMiscAndK keeps
+  the entry id and Tips1099.withTipAmounts replaces the box with the typed part (no more than the box) before Schedule 1-A sums it.
+- UI (form-additional-deductions): the person's Forms 1099 marked as tips listed under Tips with the box and "How much of it is tips?"
+  (help "Tips on a Form 1099"); Save warns when it is more than the box; Reset and a No to tips clear it.
+- YAMLs 13b-additional-deductions-taxpayer / -spouse: tip1099Amounts.
+- Tests: Tips1099AmountsTest (3); UI spec (6 passed); e2e additional-deductions-1099-tips-part.spec.ts (25,000 -> 7,000), with
+  additional-deductions-screen and line13b-additional-deductions - 30 passed.
+
 ## 2026-11-17T01:40:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43910740633 on e2669624 - revision ca-ustax-be--0000638 serving 100%

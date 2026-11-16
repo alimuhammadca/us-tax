@@ -116,8 +116,10 @@
 
 ## Foreign tax credit (Form 1116): found in the 2026-11-10 review, not changed
 
-- A mutual fund's Form 1099-DIV: the whole box 1a is counted as foreign income on the statement row; the fund's year-end statement
-  usually shows a smaller foreign-source part (it overstates line 1a). Needs a foreign-source amount on the statement (structure).
+- (A mutual fund's Form 1099-DIV, since 2026-11-16, owner-approved field V493: the Foreign tax credit screen asks, per Form 1099-DIV with
+  foreign tax, for the foreign-source part of box 1a from the fund's year-end statement; line 1a uses it in place of box 1a (no more than
+  box 1a) and box 1b is cut by the same share for the qualified dividend adjustment; blank = all of box 1a, as before; Save warns when it
+  is more than box 1a. Form1116Inputs.withForeignSource.)
 - Schedule K-1 (Form 1120-S) and Schedule K-1 (Form 1041) foreign tax are not read (no box on those statements); K-1 / K-3 income by
   category and country is typed.
 - (The alternative minimum tax credit without the section 59(a)(4) election, since 2026-11-13: only the AMT-disallowed share of line 3g

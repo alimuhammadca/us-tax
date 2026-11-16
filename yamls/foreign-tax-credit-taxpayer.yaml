@@ -24,6 +24,10 @@ sections:
     title: Screening
     multiplicity: single
     fields:
+      - name: dividendForeignSource
+        type: list
+        required: false
+        label: "Per Form 1099-DIV with foreign tax (V493, owner-approved 2026-11-16): entryId; foreignSourceAmount - 'Foreign-source part of box 1a' from the fund's year-end statement (blank = all of box 1a; used on Form 1116 line 1a in place of box 1a, box 1b cut by the same share)"
       - name: hasForeignTaxCredit
         type: boolean
         required: false

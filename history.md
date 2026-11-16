@@ -1,3 +1,17 @@
+## 2026-11-16T23:30:00
+Foreign tax credit (Form 1116) - a mutual fund's foreign-source dividends (outstanding.md; owner-approved field, V493).
+- Problem: Form 1116 line 1a took all of a fund's Form 1099-DIV box 1a as foreign income; a fund that also holds U.S. stocks paid only
+  part of it from foreign sources (its year-end statement shows that part), so line 1a and the credit limit were overstated.
+- Backend: V493 pf_foreign_tax_credit_dividend (entry_id, foreign_source_amount; child of pf_foreign_tax_credit, ON DELETE CASCADE);
+  PfForeignTaxCreditDividend; ForeignTaxCreditMapper saves / loads `dividendForeignSource` on both copies;
+  Form1116Inputs.withForeignSource replaces box 1a with the typed amount (capped at box 1a) and cuts box 1b by the same share before
+  the statement rows and the qualified dividend adjustment (TaxReturnComputeService.computeForm1116). Blank = all of box 1a.
+- UI (form-foreign-tax-credit): each Form 1099-DIV with foreign tax gets "Foreign-source part of box 1a ($X)" with help
+  "Foreign-source dividends"; Save warns when it is more than box 1a; Reset clears it.
+- YAMLs foreign-tax-credit-taxpayer / -spouse: dividendForeignSource.
+- Tests: Form1116DividendForeignSourceTest (4); UI spec (5 passed); e2e form1116-fund-foreign-source.spec.ts (box 1a 5000 -> line 1a
+  2000), with foreign-tax-credit-screen and form1116-foreign-tax-credit passing.
+
 ## 2026-11-16T23:00:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43880460642 on 098c7bed - revision ca-ustax-be--0000635 serving 100%

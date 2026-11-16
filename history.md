@@ -1,3 +1,11 @@
+## 2026-11-16T17:30:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43852178165 on 02671b91 - revision ca-ustax-be--0000632 serving 100%
+  traffic, image ustax-be:02671b9; /q/health/ready UP (V490 applied). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43852181054 on e02584e - live at https://www.taxbeans.com
+  (bundle main-TCJ5CZ5H.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-16T15:00:00
 "A social security number valid for work" (outstanding.md "Earned income credit", owner-approved fields V490).
 - An SSN whose card says "Not valid for employment" (issued only to get federally funded benefits) isn't valid for work (Pub. 596); the

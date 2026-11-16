@@ -1,3 +1,12 @@
+## 2026-11-16T07:30:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43789717641 on 1591a292 - revision ca-ustax-be--0000631 serving 100%
+  traffic, image ustax-be:1591a29; /q/health/ready UP (V489 applied). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43789720153 on 67a1191 - live at https://www.taxbeans.com
+  (bundle main-6KBPH3AU.js).
+- Ships the estimated tax payments beyond one per period.
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-16T06:30:00
 Estimated tax payments - more than one payment in a period (outstanding.md "Estimated tax payments", owner-approved field V489).
 - The screen has "Other payments": each payment beyond one per period with its date and amount (pf_estimated_tax_extra_payment). Before,

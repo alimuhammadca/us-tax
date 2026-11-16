@@ -1,3 +1,23 @@
+## 2026-11-17T08:40:00
+Premium tax credit (Form 8962) - the spouse's own dependents on a separate return (outstanding.md; no new field).
+- Problem: on separate returns the spouse's copy (a full standalone Form 8962 under the abuse / abandonment exception) had no dependents'
+  income list, so a dependent she claims who must file never reached her line 2b; the Family Head's copy listed every dependent.
+- Backend: PremiumTaxCreditMapper saves / loads spousePtcDependentMagiEntries in pf_ptc_dependent_magi under the spouse row
+  (saveDependentChildren / loadDependentChildren); MfsFormScoper already un-prefixes it to dependentMagiEntries on her leg.
+- UI (form-premium-tax-credit): the "Dependents who must file a return (line 2b)" section on the spouse's copy on separate returns, listing
+  the dependents claimed by the spouse; the Family Head's copy then lists only his.
+- outstanding.md: Part V's absence on a separate return is correct (joint returns only) - the note is corrected.
+- Tests: Phase7bComputeScopingTest (+1); UI spec (4 passed); e2e ptc-spouse-separate-dependents.spec.ts (her leg line 2b = 14,000), with
+  the 4 other premium tax credit specs - 10 passed. Unit suite 6038 passed.
+
+## 2026-11-17T08:30:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43961659877 on 523764c3 - revision ca-ustax-be--0000645 serving 100%
+  traffic, image ustax-be:523764c; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43961666155 on 1650c3a - live at https://www.taxbeans.com
+  (bundle main-4W5WPPLK.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-17T07:50:00
 QBI deduction (line 13a) - a farm and a safe-harbor rental can be aggregated (outstanding.md; no new field).
 - Problem: aggregation (Treas. Reg. 1.199A-4) was offered for Schedule C businesses and Schedules K-1 only; a farm (Schedule F) or a

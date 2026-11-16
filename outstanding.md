@@ -220,7 +220,11 @@
   self-employment earnings must file too (Table 3), self-employment earnings count as earned income in Chart B, and the dependent's
   Form 2555 lines 45 + 50 are added back to the modified AGI.) A dependent with no return here is typed. (A dependent's own return
   has no personal screens, so a Form 2555 can't be on it yet - the add-back is ready for when one can.)
-- The spouse's copy on a separate return has no dependents' list and no Part V (the table has no spouse columns for them).
+- (The spouse's copy on a separate return lists the dependents she claims (claimedByMfs = spouse) with their modified AGI since
+  2026-11-16 - spousePtcDependentMagiEntries, saved in pf_ptc_dependent_magi under her row and un-prefixed onto line 2b on her leg; the
+  Family Head's copy on separate returns lists only the dependents he claims. No Part V on a separate return is correct: the alternative
+  calculation for year of marriage is for a joint return only (i8962 Part V). A blank list on a separate-return leg isn't filled from the
+  dependents' own returns - that is household-only.)
 
 ## Mortgage interest credit (Form 8396): found in the 2026-11-09 review, not changed
 

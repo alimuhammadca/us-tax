@@ -1,3 +1,11 @@
+## 2026-11-17T03:40:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43922530022 on ccec415b - revision ca-ustax-be--0000640 serving 100%
+  traffic, image ustax-be:ccec415; /q/health/ready UP (V495 applied). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43922535058 on 58679d3 - live at https://www.taxbeans.com
+  (bundle main-DUVRQQ7X.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-17T03:20:00
 Additional deductions (Schedule 1-A) - Form W-2 box 14 overtime and tips (outstanding.md; owner-approved field, V495).
 - Problem: for 2025 employers may report qualified overtime (and tips) in Form W-2 box 14 under their own labels; the app never used

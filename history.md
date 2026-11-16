@@ -1,3 +1,14 @@
+## 2026-11-16T04:30:00
+Form 8862 continuation statement (outstanding.md "Credits after disallowance", owner chose the statement over a second Form 8862).
+- Form 8862 (Rev. 12-2025) has room for four CTC children, four other dependents and three AOTC students and says to "attach a statement
+  also answering" the questions for the rest; the instructions: name and SSN, each entry numbered by the Form 8862 line. Part II isn't
+  affected (it lists Schedule EIC's three children).
+- Form8862Facts puts the people who don't fit on Form8862.statement (kind, label, name, answers by line - the same answers the form's
+  rows get); finish() keeps only the claimed credits' entries and raises the advisory FORM_8862_STATEMENT; saved with the form JSON
+  (Form8862OutputMapper, no column change). UI: "Form 8862 statement" under Tax Return (only when needed) - one table per Part, with
+  Print.
+- Tests: Form8862FactsTest, UI spec, e2e form8862 (the fifth child) - 10 passed.
+
 ## 2026-11-16T03:30:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43779476484 on b5986a54 - revision ca-ustax-be--0000629 serving 100%

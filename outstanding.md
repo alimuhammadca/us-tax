@@ -64,8 +64,10 @@
 - (Line 8 date of death is printed since 2026-11-16 - owner-approved field V488: Dependents asks "Date of death, if the child died in
   2025" with the months; Form 8862 line 8 shows it next to the date of birth; a date outside the year or before the birth blocks
   (DEPENDENT_DATE_OF_DEATH_INVALID). A child typed only on Earned income credit, not on Dependents, has no date of death to print.)
-- More than 3 EIC children, 4 CTC children / other dependents or 3 students: the form says to attach a statement; the app prints
-  the first ones only.
+- (More people than rows - since 2026-11-16, owner-approved: a 5th child for the CTC, a 5th other dependent or a 4th student goes on the
+  "Form 8862 statement" page under Tax Return - the form's questions 12 and 14-17, 13, 16 and 17, or 18 and 19, numbered by line, with
+  the name and SSN, as the instructions ask; advisory FORM_8862_STATEMENT. Part II isn't affected: it lists the Schedule EIC children,
+  three at most.)
 - Lines 14-16 are Yes for every dependent marked as qualifying on Dependents; a dependent who qualifies only through an exception
   is not told apart.
 

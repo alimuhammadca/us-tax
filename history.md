@@ -1,3 +1,17 @@
+## 2026-11-17T04:10:00
+Additional deductions (Schedule 1-A) - the business tips limit business by business (outstanding.md; owner-approved fields, V496).
+- Problem: Schedule 1-A line 5 limits tips from a trade or business to that business's net income, business by business; with more than
+  one business the screen asked one figure for all business tips.
+- Backend: V496 adds pf_additional_deductions_tip1099.business and pf_additional_deductions.taxpayer_/spouse_manual_tips_business ("C:i" /
+  "F:i"); BusinessTipsLimit records each Schedule C / F business's net profit and self-employment weight during the compute (listIdx on
+  BizIntermediate / FarmIntermediate) and caps each business's tips at its net profit less its share of Schedule 1 lines 15-17;
+  Schedule1AComputations uses it for both people; a typed limit, or no business named, is as before.
+- UI (form-additional-deductions): "Business the tips came from" per Form 1099 marked as tips and for the typed business tips (help);
+  the one typed limit is asked only while a tip has no business.
+- YAMLs 13b-additional-deductions-taxpayer / -spouse: <person>ManualTipsBusiness and tip1099Amounts.business.
+- Tests: BusinessTipsLimitTest (3); UI spec (8 passed); e2e additional-deductions-tips-per-business.spec.ts (2,200 under one typed limit ->
+  1,500 less half SE tax for the rides business, 0 for the salon's loss), with the other Additional deductions specs - 31 passed.
+
 ## 2026-11-17T03:40:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43922530022 on ccec415b - revision ca-ustax-be--0000640 serving 100%

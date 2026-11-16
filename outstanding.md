@@ -177,7 +177,10 @@
   is typed (a typed amount wins, with SCHEDULE_1A_W2_BOX14_OVERTIME_TYPED_*), and a W-2's box 14 tips take the place of its box 7 for
   Schedule 1-A (a typed Form 4070 total still wins) - W2Box14Answers.) (An SSN marked "Not valid for employment" is told apart since 2026-11-16,
   V490 - see "Earned income credit".)
-- With more than one business the tips limit is typed for the business the tips came from (one figure, not one per business).
+- (The business tips limit per business, since 2026-11-16, owner-approved fields V496: when the limit isn't figured from the return's
+  only business, each Form 1099 marked as tips and the typed business tips name the person's business; each business's tips are capped
+  at its own limit - its net profit less its share of the self-employment deductions (Schedule 1 lines 15-17, shared by each business's
+  self-employment income) - BusinessTipsLimit. The one typed limit is asked only while a tip has no business, and a typed limit still wins.)
 
 ## Standard or itemized deductions (lines 12a-12e, Schedule A): found in the 2026-11-10 review, not changed
 

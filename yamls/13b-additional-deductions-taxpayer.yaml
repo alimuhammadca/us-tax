@@ -58,7 +58,11 @@ sections:
       - name: tip1099Amounts
         type: list
         required: false
-        label: "Per Form 1099-NEC / 1099-MISC / 1099-K marked as tips (V494, owner-approved 2026-11-16): entryId; tipAmount - 'How much of it is tips?' (blank = the whole box; no more than the box)"
+        label: "Per Form 1099-NEC / 1099-MISC / 1099-K marked as tips (V494, owner-approved 2026-11-16): entryId; tipAmount - 'How much of it is tips?' (blank = the whole box; no more than the box); business (V496) - 'Business the tips came from' ('C:i' / 'F:i'), each business's tips capped at its own net income"
+      - name: taxpayerManualTipsBusiness
+        type: string
+        required: false
+        label: "Business those tips came from (V496, owner-approved 2026-11-16): 'C:i' Schedule C / 'F:i' Schedule F - asked when the limit isn't figured from the return's only business"
       - name: taxpayerManualTipsFromNonStatementSources
         type: amount
         required: false

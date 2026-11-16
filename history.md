@@ -1,3 +1,16 @@
+## 2026-11-17T00:20:00
+Foreign tax credit (Form 1116) - Schedule K-1 (Form 1120-S) and Schedule K-1 (Form 1041) foreign taxes read (outstanding.md; no new field).
+- Problem: only Schedule K-1 (Form 1065) box 21 foreign tax was added for you; an S corporation's K-1 (box 16 code F, "Foreign taxes paid
+  or accrued") and an estate's or trust's K-1 (box 14 code B, "Foreign taxes" - "Schedule 3 (Form 1040), line 1; or Schedule A, line 6")
+  were ignored, so the tax was lost unless typed again.
+- Backend: Form1116Inputs.K1120S / K1041 (set in TaxReturnComputeService beside K1065); statementSources adds the code F rows (box 16
+  rows 1-4) and code B rows (box 14 boxes 1-8) to the passive "Various (Schedule K-1)" row; a separate return counts only its filer's
+  K-1s (part2EShareholderIdentifyingNumber / part2FBeneficiaryIdentifyingNumber). Form1116Inputs.k1CodeTotal.
+- UI (form-foreign-tax-credit): both K-1s listed under "Added for you" with links and counted in the election total; help and the empty
+  message name them.
+- Tests: Form1116K1ForeignTaxTest (3); UI spec (6 passed); e2e form1116-k1-1120s-1041-foreign-tax.spec.ts (250 + 150 = 400 on the
+  passive Form 1116), with the related Form 1116 specs - 15 passed.
+
 ## 2026-11-16T23:50:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43892060549 on 83527679 - revision ca-ustax-be--0000636 serving 100%

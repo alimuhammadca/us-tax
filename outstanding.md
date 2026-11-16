@@ -120,8 +120,10 @@
   foreign tax, for the foreign-source part of box 1a from the fund's year-end statement; line 1a uses it in place of box 1a (no more than
   box 1a) and box 1b is cut by the same share for the qualified dividend adjustment; blank = all of box 1a, as before; Save warns when it
   is more than box 1a. Form1116Inputs.withForeignSource.)
-- Schedule K-1 (Form 1120-S) and Schedule K-1 (Form 1041) foreign tax are not read (no box on those statements); K-1 / K-3 income by
-  category and country is typed.
+- (Schedule K-1 (Form 1120-S) box 16 code F and Schedule K-1 (Form 1041) box 14 code B foreign taxes are read since 2026-11-16 - added to
+  the passive "Various (Schedule K-1)" row like Schedule K-1 (Form 1065) box 21, listed on the Foreign tax credit screen and counted for
+  the "no Form 1116" election; Form1116Inputs.statementSources. An earlier note said those statements had no box - they do.) K-1 / K-3
+  income by category and country is typed.
 - (The alternative minimum tax credit without the section 59(a)(4) election, since 2026-11-13: only the AMT-disallowed share of line 3g
   is added back - the standard deduction or Schedule A taxes, not medical or Part II adjustments - and each category keeps its own AMT
   carryforward with the return (V475), used next year in place of the regular carryover; Form6251AmtFtc.) (Since 2026-11-14 the AMT carryover

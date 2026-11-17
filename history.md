@@ -1,3 +1,12 @@
+## 2026-11-17T23:30:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44167273370 on 6ff79dbd - attempt 1 failed in the ACR build
+  (Maven Central "Connection reset" fetching testcontainers 1.21.3, transient); attempt 2 (rerun-failed-jobs) succeeded - revision
+  ca-ustax-be--0000663 serving 100% traffic, image ustax-be:6ff79db; /q/health/ready UP (V507 applied).
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 44167277872 on 1e1c1fb9 - live at https://www.taxbeans.com
+  (bundle main-UESFSGQS.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-17T23:00:00
 Investment interest (Form 4952) - the AMT Form 4952 carryforward (outstanding.md "Investment interest (Form 4952)"; owner-approved
 field, V507).

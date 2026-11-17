@@ -1,3 +1,19 @@
+## 2026-11-17T23:00:00
+Form 8911 - a business-only refueling property's basis is reduced (outstanding.md "Alternative fuel vehicle refueling credit (Form
+8911)").
+- Before: the depreciable cost was lowered by Schedule A lines 16 + 21 only when the personal part (line 21) was claimed; a property
+  with only a business part kept its full cost, though line 16 is now claimed on Form 3800 line 1s - credit and full depreciation.
+- Now: CreditBasisReduction lowers the matched asset's cost by lines 16 + 21 whenever either is claimed (i8911 Basis Reduction).
+- Tests: CreditBasisReductionTest updated; e2e refueling-credit-reduces-depreciation-basis.spec.ts with the Form 8911, clean vehicle
+  basis and asset-cost-carry specs - 13 passed.
+
+## 2026-11-17T22:30:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44117075927 on f6db3551 - revision ca-ustax-be--0000655 serving 100%
+  traffic, image ustax-be:f6db355; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): not redeployed - no UI change since 9be10d8 (bundle main-VIMNGH2P.js, live).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-17T21:30:00
 Form 8911 - the passive Schedule K-1 credit limited (outstanding.md "Alternative fuel vehicle refueling credit (Form 8911)").
 - Before: a code AO credit from an activity the owner didn't materially participate in was allowed in full as not passive, with a

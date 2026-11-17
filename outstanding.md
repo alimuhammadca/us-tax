@@ -281,8 +281,8 @@
   form); the combined owner column is dropped with no data copy - Form8911Business.ownerAndCoordinates.)
 - (Basis reduction, Schedule A lines 16 + 21, reaches depreciation since 2026-11-13 when the personal part is claimed and the property
   matches one depreciable asset placed in service this year by description: the return is figured again with that asset's cost
-  lowered - CreditBasisReduction, DEPRECIATION_BASIS_REDUCED_BY_CREDIT. A property with only a business part (line 16, not figured)
-  isn't reduced. Since 2026-11-14 the lower cost is kept with the return and used again in later years while the saved asset keeps
+  lowered - CreditBasisReduction, DEPRECIATION_BASIS_REDUCED_BY_CREDIT. A property with only a business part (line 16) is reduced too since
+  2026-11-17 - that part is claimed on Form 3800 line 1s - by the whole line 16, though some may carry forward. Since 2026-11-14 the lower cost is kept with the return and used again in later years while the saved asset keeps
   that cost - AssetCostCarry, DEPRECIATION_COST_FROM_PRIOR_YEAR_CHANGE; a cost the user lowered is used as typed.)
 
 ## Clean vehicle credit (Form 8936): found in the 2026-11-09 review, not changed

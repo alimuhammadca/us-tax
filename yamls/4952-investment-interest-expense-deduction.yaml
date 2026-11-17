@@ -27,6 +27,7 @@ sections:
     fields:
       - { name: investmentInterestExpensePaidOrAccruedLine1, type: amount, required: false, label: "Investment interest paid or accrued in the tax year (line 1)" }
       - { name: disallowedInvestmentInterestExpenseFrom2024Line2, type: amount, required: false, label: "Disallowed investment interest from the prior year (Form 4952 line 7) (line 2)", help: "Blank: last year's line 7 from a return done here." }
+      - { name: amtDisallowedInvestmentInterestFrom2024, type: amount, required: false, label: "Disallowed for the alternative minimum tax from 2024", note: "V507, 2026-11-17 - AMT Form 4952 line 2 (i6251 line 2c step 2); blank = line 2" }
   - name: income
     title: Investment income
     showIf: needsForm4952 == true

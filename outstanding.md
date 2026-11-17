@@ -342,8 +342,14 @@
   2026-11-17):** V455 (2026-11-10) already dropped the Standard or itemized deductions fields; its Interest section links here, and
   Schedule A line 9 comes only from Form 4952. The dead "You also entered ... on Standard or itemized deductions" message here (it
   read the dropped field) was removed.
-- The line 4e "Elec." choice (treating less of line 4g as net capital gain, for Form 1116 filers) and the AMT-side second Form 4952
-  (Form 6251 line 2c) are not figured; their questions were removed (owner 2026-11-09).
+- ~~The line 4e "Elec." choice (treating less of line 4g as net capital gain, for Form 1116 filers) and the AMT-side second Form 4952
+  (Form 6251 line 2c) are not figured; their questions were removed (owner 2026-11-09).~~ **CLOSED 2026-11-17 (owner-approved):**
+  - AMT Form 4952: line 2c already refigured the deduction with private activity bond interest (Form 6251 line 2g); since V507 it
+    also uses the AMT carryforward from 2024 as the AMT line 2 (i6251 line 2c step 2) - one optional field on the Investment
+    interest screen, blank = the regular line 2 (Form4952Amt).
+  - Line 4e "Elec.": not supported, by decision. It is an optional election that only "may" lower tax after credits for some Form
+    1116 filers; without it the instructions' default "results in the least tax being figured for Form 1040", so the tax is never
+    wrong.
 - The line 8 parts are taken off Schedule A and an advisory says where to deduct them; they are not carried onto Schedule E / C / F or
   Form 6198 automatically. (Checked 2026-11-12: the parts are amounts with no link to a business or property, so carrying them needs
   an activity choice per part - a field: owner sign-off.)

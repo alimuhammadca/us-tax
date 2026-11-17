@@ -1,3 +1,16 @@
+## 2026-11-17T23:00:00
+Investment interest (Form 4952) - the AMT Form 4952 carryforward (outstanding.md "Investment interest (Form 4952)"; owner-approved
+field, V507).
+- Before: Form 6251 line 2c refigured Form 4952 for the AMT with the private activity bond interest, but used the regular line 2 as the
+  AMT line 2. Instructions for Form 6251 (2025) line 2c, step 2: "Enter your AMT disallowed investment interest expense from 2024 on
+  line 2" - a filer whose 2024 AMT carryforward differed got a wrong line 2c.
+- V507: pf_investment_interest_expense amt_disallowed_investment_interest_from_2024. The Investment interest screen's Interest section
+  has an optional "Disallowed for the alternative minimum tax from 2024" box (placeholder "Same as carried over", help quoting the
+  rule). Form4952Amt.line2c: AMT line 3 = line 1 + that amount (blank = regular line 3), AMT line 6 = line 6 + bond interest, line 2c =
+  regular line 8 - AMT line 8. MFJ: each spouse's blank counts as their own line 2. Form 4952 and Form 6251 unchanged.
+- The line 4e "Elec." choice is closed as not supported (optional; the default gives the least Form 1040 tax).
+- Tests: Form4952AmtTest (3); e2e form4952-amt-carryforward.spec.ts with the Form 4952 and line 17 AMT specs (22 passed).
+
 ## 2026-11-17T22:30:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows) - frontend only (no backend change).
 - Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 44161921569 on f919a030 - live at https://www.taxbeans.com

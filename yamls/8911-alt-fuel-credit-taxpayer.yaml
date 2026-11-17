@@ -12,7 +12,7 @@ sections:
     multiplicity: single
     fields:
       - { name: claimsAltFuelCreditOnReturn, type: boolean, required: true, label: "Did you place an electric vehicle charger or other alternative fuel refueling property in service in the tax year?" }
-      - { name: passthroughRefuelingPropertyCredit, type: amount, required: false, showIf: claimsAltFuelCreditOnReturn == true, label: "Credit from a partnership or S corporation (Schedule K-1 code AO; Form 8911 line 2)" }
+      - { name: passthroughRefuelingPropertyCredit, type: amount, required: false, showIf: claimsAltFuelCreditOnReturn == true, label: "Credit from a partnership or S corporation (Schedule K-1 code AO; Form 8911 line 2)", note: "Used only when no Schedule K-1 entered under Statements has code AO (those are read, 2026-11-17); line 3 -> Form 3800 Part III line 1s -> Schedule 3 line 6a" }
   - name: properties
     title: Refueling property
     showIf: claimsAltFuelCreditOnReturn == true

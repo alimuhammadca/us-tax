@@ -265,8 +265,14 @@
 
 ## Alternative fuel vehicle refueling credit (Form 8911): found in the 2026-11-09 review, not changed
 
-- The business part (line 3) and the Schedule K-1 code AO credit (line 2) are general business credits (Form 3800 line 1s), not figured;
-  the K-1 code AO amount is typed, not read from the entered K-1.
+- (Since 2026-11-17, line 3 - the business part (line 1) plus the partnership / S corporation credit (line 2) - is Form 3800 Part III
+  line 1s, first of the credits figured there (the Instructions for Form 3800 "Order in which credits are used"), limited by Part II and
+  then Schedule 3 line 6a, the rest carried forward. Line 2 is read from the Schedules K-1 entered under Statements (1065 box 15 / 1120-S
+  box 13 code AO); the typed amount is used only when none has code AO (both: FORM_8911_K1_CREDIT_TYPED_IGNORED). A K-1-only credit goes
+  to line 1s with no Form 8911 (i8911: "aren't required to complete or file this form"), column (c) the entity's EIN when there is one -
+  Form8911Business.)
+- A code AO credit from an activity not materially participated in is a passive activity credit (Form 3800 column (d), Form 8582-CR),
+  not prepared here: it is figured as not passive with a warning (FORM_8911_K1_CREDIT_PASSIVE_NOT_LIMITED).
 - Schedule A line 3b (latitude / longitude) has no box; line 2b's owner name and TIN are one free-text box.
 - (Basis reduction, Schedule A lines 16 + 21, reaches depreciation since 2026-11-13 when the personal part is claimed and the property
   matches one depreciable asset placed in service this year by description: the return is figured again with that asset's cost
@@ -5784,10 +5790,12 @@ No further outstanding items beyond those captured in cross-cutting sections bel
 ## Form 8911 — Implemented (2026-03-25); Remaining Deferred Items
 
 - ~~[Form 8911 / Wire Schedule 3 line 6j → Form 1040 line 20]~~ **Resolved 2026-03-26** — Schedule 3 line 8 is now wired into Form 1040 line 20.
-- [Form 8911 / Form 3800] Downstream Form 3800 consumption for business/investment-use credit (line 3) is deferred.
+- ~~[Form 8911 / Form 3800] Downstream Form 3800 consumption for business/investment-use credit (line 3) is deferred.~~ **Resolved
+  2026-11-17** - line 3 is Form 3800 Part III line 1s (Form8911Business).
 - [Form 8911 / semantic PDF fill-export] The 2025 semantic assets are generated and published, but the Tax Return section renders structured summaries rather than filling/exporting the IRS PDF fields directly.
 - [Form 8911 / census-tract verification] Eligibility relies on user-entered eligibility plus optional GEOID; automated GIS/lookup support is deferred.
-- [Form 8911 / pass-through-only path] Released or K-1 credit without in-scope qualifying property does not generate the form (Form 3800 branch deferred).
+- ~~[Form 8911 / pass-through-only path] Released or K-1 credit without in-scope qualifying property does not generate the form (Form 3800 branch deferred).~~
+  **Resolved 2026-11-17** - no Form 8911 is needed then (i8911); the credit goes straight to Form 3800 Part III line 1s.
 
 ---
 

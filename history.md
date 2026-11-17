@@ -1,3 +1,17 @@
+## 2026-11-17T17:00:00
+Form 8911 Part I as a general business credit (outstanding.md "Alternative fuel vehicle refueling credit (Form 8911)"; no new field).
+- Before: line 3 (business part + K-1 credit) was figured but never reached Form 3800 (a "deferred" note), the K-1 code AO amount had to be
+  typed (the entered K-1's code AO only gave an advisory), and a K-1-only credit was dropped.
+- Backend: Form8911Business - line 2 from the entered Schedules K-1 (1065 box 15 / 1120-S box 13 code AO; the typed amount only when none,
+  else warning FORM_8911_K1_CREDIT_TYPED_IGNORED); Form 3800 Part III line 1s = Form 8911 line 3, or the K-1 / typed credit when there is
+  no Form 8911 ("aren't required to complete or file this form if their only source for this credit is a partnership or S corporation" -
+  i8911), column (c) the entity's EIN for one entity; first in the Instructions for Form 3800 order of use (item 27, before Forms 8933 /
+  7210 / 7207); Part II limit -> Schedule 3 line 6a, the rest carried forward. A passive K-1 credit warns
+  (FORM_8911_K1_CREDIT_PASSIVE_NOT_LIMITED - Form 8582-CR not prepared). Code AO left the K1_CREDIT_CODE_NOT_COMPUTED advisories.
+- UI: the credit screen's help (K-1 amount, business use) names Form 3800 line 1s / Schedule 3 line 6a.
+- Tests: Form8911BusinessTest (5); e2e form8911-business-credit-3800.spec.ts (2) with the Form 8911 / K-1 coded-box / MFS alt-fuel specs -
+  15 passed.
+
 ## 2026-11-17T22:10:00
 Full e2e regression (npm run test:regression, --workers=1): 2405 passed, 0 failed, 0 skipped, 1 flaky - 5.9 h.
 - Flaky: additional-deductions-1099-tips-part.spec.ts - on its first attempt (three runs so far) the PUT carried 60,000 though the box

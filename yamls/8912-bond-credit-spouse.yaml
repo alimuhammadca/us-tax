@@ -33,3 +33,5 @@ sections:
       - { name: creditRatePercent, type: percent, required: false, label: "Credit rate (line 18 (c))" }
       - { name: allocationPercentage, type: percent, required: false, label: "Percentage for the year (line 18 (e))" }
       - { name: line19BaseCreditAmount, type: amount, required: false, label: "Credit figured (line 18 (f))", help: "Blank: principal x rate x percentage." }
+      - { name: throughEntity, type: boolean, required: false, showIf: "bondType == CREB", label: "Did you hold this bond through a partnership, S corporation, estate or trust?", note: "V501, owner-approved 2026-11-16 - Form 8912 line 12 pass-through CREB limit" }
+      - { name: entityTaxableIncome, type: amount, required: false, showIf: "throughEntity == true", label: "Your taxable income this year from that entity" }

@@ -1,3 +1,17 @@
+## 2026-11-17T13:40:00
+Form 8912 - the pass-through CREB limit (outstanding.md; owner-approved fields, V501).
+- Problem: a CREB credit received through a partnership, S corporation, estate or trust is limited to the tax on the taxable income
+  from that interest (Instructions for Form 8912, line 12: line 11 x entity taxable income / taxable income, per interest); it wasn't.
+- Backend: V501 pf_bond_creb_pass_through (entry_id, through_entity, entity_taxable_income; child of pf_bond_credit) and
+  pf_bond_direct.through_entity / entity_taxable_income; BondCreditMapper (crebPassThroughAnswers + the direct-row fields);
+  Form8912Statements carries the statement entry id and box 3 code; Form8912PassThrough.line12 (flag FORM_8912_CREB_PASS_THROUGH_LIMITED);
+  Form8912Carryforward.isCreb.
+- UI (form-bond-credit): under each Form 1097-BTC CREB credit and each typed CREB bond, "through a partnership, S corporation, estate or
+  trust?" and, on Yes, "Your taxable income this year from that entity"; help "CREB credit through an entity".
+- YAMLs 8912-bond-credit-taxpayer / -spouse.
+- Tests: Form8912PassThroughTest (3); UI spec (4 passed); e2e form8912-creb-pass-through.spec.ts (line 12 3,000 -> line 11 x 5,000 /
+  taxable income), with the other Form 8912 specs and the statement round trip - 32 passed. Unit suite 6047 passed.
+
 ## 2026-11-17T13:00:00
 Deployed latest code to production (Azure, backend only - the UI was unchanged).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43995637660 on 951170a3 - revision ca-ustax-be--0000649 serving 100%

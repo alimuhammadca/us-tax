@@ -250,7 +250,11 @@
   instructions (line 12) say it can be deducted this year or next, but the 2025 Form 1040 has no line for an individual's deduction
   (Schedule 1 line 24z: "Leave line 24z blank") and H&R Block 2025 doesn't figure Form 8912 at all (only a typed Schedule 3 line 6k
   amount); the return names the amount in FORM_8912_UNUSED_CREB_QZAB_CREDIT_DEDUCTIBLE and doesn't deduct it - Form8912Carryforward.)
-- The pass-through CREB limit (line 12, taxable income from the entity / taxable income) is not applied.
+- (The pass-through CREB limit, since 2026-11-16, owner-approved fields V501: the screen asks per Form 1097-BTC CREB credit (box 3 code
+  101) and per typed CREB "through a partnership, S corporation, estate or trust?" and the taxable income from it; each such credit is
+  held at line 11 x that income / taxable income (none without income from it) and line 12 = the limited credits + the others, no more
+  than line 11 - Form8912PassThrough, FORM_8912_CREB_PASS_THROUGH_LIMITED. The cut part is CREB credit: it can't carry and falls under
+  the unused-CREB warning.)
 - Fiscal-year boxes 5a-5l of Form 1097-BTC are not used (calendar-year filers only).
 - Old typed Form 1097-BTC rows saved before 2026-11-09 stay in storage, unread; anyone who typed a credit without entering the Form
   1097-BTC on Statements must enter the statement.

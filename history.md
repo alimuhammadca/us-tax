@@ -1,3 +1,9 @@
+## 2026-11-17T22:30:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows) - frontend only (no backend change).
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 44161921569 on f919a030 - live at https://www.taxbeans.com
+  (bundle main-UQHWIGVM.js; the dead "You also entered" message is gone).
+- Backend unchanged: ca-ustax-be--0000662 (ecf74e4). Prod Postgres pg-ustax-9u14g was not started; state Stopped.
+
 ## 2026-11-17T22:00:00
 Investment interest (Form 4952) - "asked on two screens" closed (outstanding.md "Investment interest (Form 4952)"; owner-approved).
 - The note was stale: V455 (2026-11-10) had already removed investment interest from Standard or itemized deductions (its Interest

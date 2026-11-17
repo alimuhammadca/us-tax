@@ -1,3 +1,11 @@
+## 2026-11-18T03:00:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44185131377 on 861ec5f3 - revision ca-ustax-be--0000665 serving
+  100% traffic, image ustax-be:861ec5f; /q/health/ready UP (V509 applied).
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 44185136029 on a707bbb9 - live at https://www.taxbeans.com
+  (bundle main-6OS6V6O3.js; /irs/f1040sr_elements.json has the new field).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-18T02:30:00
 Schedule R Part II line 2 - the spouse first name(s) above the box (outstanding.md "Credit for the elderly or disabled (Schedule R)";
 owner-approved form field, V509).

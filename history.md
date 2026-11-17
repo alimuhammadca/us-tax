@@ -1,3 +1,11 @@
+## 2026-11-17T17:40:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44068741796 on f479d658 - revision ca-ustax-be--0000653 serving 100%
+  traffic, image ustax-be:f479d65; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 44068745859 on 8537491 - live at https://www.taxbeans.com
+  (bundle main-7PUPDTM3.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-17T17:00:00
 Form 8911 Part I as a general business credit (outstanding.md "Alternative fuel vehicle refueling credit (Form 8911)"; no new field).
 - Before: line 3 (business part + K-1 credit) was figured but never reached Form 3800 (a "deferred" note), the K-1 code AO amount had to be

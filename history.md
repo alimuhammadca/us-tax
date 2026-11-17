@@ -1,3 +1,11 @@
+## 2026-11-18T01:00:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44173578398 on a881dd6a - revision ca-ustax-be--0000664 serving
+  100% traffic, image ustax-be:a881dd6; /q/health/ready UP (V508 applied).
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 44173583720 on 660ca49c - live at https://www.taxbeans.com
+  (bundle main-VRQE55UB.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-18T00:30:00
 Investment interest (Form 4952) - the line 8 parts carried to their activity (outstanding.md "Investment interest (Form 4952)";
 owner-approved fields, V508).

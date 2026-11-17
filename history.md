@@ -1,3 +1,10 @@
+## 2026-11-18T05:30:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows) - backend only (no UI change).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44199410844 on 86b2e815 - revision ca-ustax-be--0000667 serving
+  100% traffic, image ustax-be:86b2e81; /q/health/ready UP.
+- Frontend unchanged (main-6NAWD7PJ.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-18T05:00:00
 General business credit (Form 3800) - Schedule K-1 credits on their Part III line 1 rows (outstanding.md "General business credit
 (Form 3800)", step 1; owner-approved, no fields, no migration).

@@ -1,3 +1,10 @@
+## 2026-11-17T15:40:00
+Deployed latest code to production (Azure, backend only - the UI was unchanged).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44008229757 on 11c7bb33 - revision ca-ustax-be--0000652 serving 100%
+  traffic, image ustax-be:11c7bb3; /q/health/ready UP (V502 applied - pf_bond_1097btc dropped). URL:
+  https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-17T15:20:00
 Form 8912 - the unread typed Form 1097-BTC rows removed (outstanding.md; owner-approved removal, V502).
 - V502 drops pf_bond_1097btc (no data copy - not in production use); PfBond1097btc removed; BondCreditMapper no longer writes, reads or

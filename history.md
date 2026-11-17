@@ -1,3 +1,11 @@
+## 2026-11-18T01:30:00
+Schedule R line 13a - the workers' compensation offset item closed, no change (outstanding.md "Credit for the elderly or disabled
+(Schedule R)"; owner-approved).
+- Instructions for Schedule R (2025) line 13a: benefits reduced because of workers' compensation - "treat the workers' compensation
+  benefits as social security benefits". Pub. 915 (2025) lists the workers' compensation offset among the amounts included in Form
+  SSA-1099 box 3, and box 5 (box 3 - box 4, Form 1040 line 6a) is not reduced by it, so line 13a (6a - 6b) already includes it.
+- No code change; the note's open question (whether box 3 includes the offset) is answered.
+
 ## 2026-11-18T01:00:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44173578398 on a881dd6a - revision ca-ustax-be--0000664 serving

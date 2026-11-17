@@ -362,9 +362,12 @@
 - (Since 2026-11-12 a blank claim answer is a claim when the Family Head, or the spouse on a joint return, is 65 or older -
   ScheduleRByAge; an answered No stays; a credit figured that way gets SCHEDULE_R_CLAIMED_BY_AGE asking to check line 13b's
   nontaxable pensions, which are only on the screen.)
-- Line 13a is Form 1040 line 6a minus 6b; workers' compensation that reduced Social Security benefits ("treat ... as social security
+- ~~Line 13a is Form 1040 line 6a minus 6b; workers' compensation that reduced Social Security benefits ("treat ... as social security
   benefits") isn't added. (Checked 2026-11-12: p17 / p525 call that part of workers' compensation social security benefits; whether the
-  SSA-1099 box 3 already includes it - so line 6a has it - needs Pub. 915 or the SSA-1099 text, neither readable locally.)
+  SSA-1099 box 3 already includes it - so line 6a has it - needs Pub. 915 or the SSA-1099 text, neither readable locally.)~~ **CLOSED
+  2026-11-17, no change (owner-approved):** Pub. 915 (2025, irs.gov) lists the workers' compensation offset among the amounts added in
+  Form SSA-1099 box 3 and says box 5 is not reduced by them; box 5 (= box 3 - box 4) is line 6a, so line 13a = 6a - 6b already treats
+  the offset as social security benefits. (The Pub. 915 box 3 section was read as a page summary, not verbatim.)
 - Part II line 2: the first name(s) of the spouse(s) for whom the box is checked (boxes 4, 5, 6) is not written on the form - the
   form's field map has no text field for it, so it needs a form-structure change (owner sign-off).
 

@@ -1,3 +1,11 @@
+## 2026-11-18T04:30:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44191256500 on a8c57eef - revision ca-ustax-be--0000666 serving
+  100% traffic, image ustax-be:a8c57ee; /q/health/ready UP (V510 applied).
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 44191261059 on cf104aac - live at https://www.taxbeans.com
+  (bundle main-6NAWD7PJ.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-18T04:00:00
 Schedule R - the saved copy keeps the whole form (outstanding.md "Credit for the elderly or disabled (Schedule R)"; owner-approved, V510).
 - Before: out_schedule_r kept the Part I box and lines 11-19 only (ScheduleROutputMapper "TODO: mismatch"); the Tax Return preview reads

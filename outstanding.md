@@ -383,6 +383,13 @@
   Part II lines 7-38, Part IV lines 6-7; form-3800-epe-plan.md stage 1.) Only a carryforward total is entered. Current-year business
   credits (Form 3800 Part III: Forms 6765, 8881, 8941, 5884, 8826 ..., and the credits on Schedule K-1 box 15 / 13) are not figured,
   so they never reach Schedule 3 line 6a. Part IV shows the one total on lines 6-7 only (advisory FORM_3800_PART_IV_ONE_TOTAL).
+  **Update 2026-11-17:** already figured - lines 1s (Form 8911 / K-1 AO), 1y and 1aa (Form 8936 / K-1 AY, AZ), 1x, 1g, 1b (Forms 8933,
+  7210, 7207). **Step 1 done 2026-11-17 (owner-approved, no fields):** the K-1 codes the instructions send to a Part III line 1 row go
+  there with the entity's EIN (K1PartIIICredits: A 1u, B 1cc, K 1e, M 1c, V 1b, W 1gg, X 1q, Y 1g, Z 1h, AA 1t, AB 1f, AD 1i, AE 1j,
+  AF 1dd, AG 1ee, AH 1k, AI 1m, AK 1bb, AL 1n, AM 1p, AV 1w, AW 1x), added to a line the return figures itself; passive ones limited by
+  the Form 8582-CR room after Form 8834, AO, AY, AZ. Still open: **step 2** - the line 4 specified credits (K-1 C/D 4d, I 4c, J 4b,
+  N 4f, AJ 4g, BA 4h, BB 4j, an eligible small business's research credit 4i) and line 3 (L), which need Part I line 4 / Part II
+  line 34; and the credit forms for the filer's own Schedule C business (Forms 8881, 8941, 8826, 6765 ...), each its own screen.
 - One total, not per credit and year: credits past their 20-year carryforward can't be dropped, specified credits (IRC 38(c)(4),
   allowed against the tentative minimum tax, Part II line 34) are treated as ordinary ones, and passive activity credits (Form
   8582-CR) have no entry.

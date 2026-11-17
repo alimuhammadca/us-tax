@@ -1,3 +1,17 @@
+## 2026-11-18T05:00:00
+General business credit (Form 3800) - Schedule K-1 credits on their Part III line 1 rows (outstanding.md "General business credit
+(Form 3800)", step 1; owner-approved, no fields, no migration).
+- Before: every K-1 box 15 / box 13 credit code except H, O, AO, AY, AZ was only an advisory (K1_CREDIT_CODE_NOT_COMPUTED_*); the credit
+  never reached Form 3800 or Schedule 3 line 6a. The K-1 instructions send each to its form "or Form 3800, Part III, line ...".
+- Now K1PartIIICredits carries 22 codes to their line 1 rows (A 1u, B 1cc, K 1e, M 1c, V 1b, W 1gg, X 1q, Y 1g, Z 1h, AA 1t, AB 1f,
+  AD 1i, AE 1j, AF 1dd, AG 1ee, AH 1k, AI 1m, AK 1bb, AL 1n, AM 1p, AV 1w, AW 1x) with column (c) the EIN (one entity); a line the return
+  figures itself (1x / 1g / 1b) gets the K-1 amount added, keeping its election and facilities (the K-1 share its own Part V row). A
+  credit not materially participated in is limited by the Form 8582-CR room after Form 8834 line 1 and codes AO, AY, AZ
+  (K1_CREDIT_PASSIVE_LIMITED). Code M gets a note that an eligible small business's research credit belongs on line 4i (not figured).
+  The line 4 specified credits and line 3 stay advisories (step 2).
+- Tests: K1PartIIICreditsTest (4); Form8911BusinessTest / K1CodedItemsTest controls moved from code A to code J; e2e
+  k1-credits-form3800-part3-lines.spec.ts with the K-1 AY/AZ and AO specs.
+
 ## 2026-11-18T04:30:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44191256500 on a8c57eef - revision ca-ustax-be--0000666 serving

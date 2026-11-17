@@ -1,3 +1,20 @@
+## 2026-11-17T14:30:00
+Form 1097-BTC boxes 5a-5l (outstanding.md "Fiscal-year boxes 5a-5l"; no new field).
+- Finding: the boxes split box 1 by month for holders whose tax year isn't the calendar year; the app prepares calendar-year Form 1040
+  returns only, so box 1 is the year's credit. Remaining gap: a statement with box 1 blank and the months typed gave no credit.
+- Backend: Form8912Statements.withMonthTotals (applied to the Forms 1097-BTC before Form 8912): box 1 blank -> the months' total, note
+  FORM_1097_BTC_BOX1_FROM_MONTHS; box 1 more than $1 from the months -> warning FORM_1097_BTC_BOX1_MONTHS_MISMATCH (box 1 used).
+- Tests: Form1097BtcMonthsTest (3); e2e form1097-btc-month-boxes.spec.ts (line 1 = 1,200 from the months + 500), with the other Form 8912
+  specs - 12 passed. Unit suite 6050 passed.
+
+## 2026-11-17T14:00:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43999322620 on 84d15d33 - revision ca-ustax-be--0000650 serving 100%
+  traffic, image ustax-be:84d15d3; /q/health/ready UP (V501 applied). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43999325478 on c747962 - live at https://www.taxbeans.com
+  (bundle main-7SZP62ZL.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-17T13:40:00
 Form 8912 - the pass-through CREB limit (outstanding.md; owner-approved fields, V501).
 - Problem: a CREB credit received through a partnership, S corporation, estate or trust is limited to the tax on the taxable income

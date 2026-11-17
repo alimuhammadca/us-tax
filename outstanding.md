@@ -255,7 +255,10 @@
   held at line 11 x that income / taxable income (none without income from it) and line 12 = the limited credits + the others, no more
   than line 11 - Form8912PassThrough, FORM_8912_CREB_PASS_THROUGH_LIMITED. The cut part is CREB credit: it can't carry and falls under
   the unused-CREB warning.)
-- Fiscal-year boxes 5a-5l of Form 1097-BTC are not used (calendar-year filers only).
+- (Form 1097-BTC boxes 5a-5l, since 2026-11-16: the app prepares calendar-year Form 1040 returns only, so box 1 (the year's total) is the
+  credit - no fiscal-year handling is needed. A statement with box 1 blank but months entered uses their total
+  (FORM_1097_BTC_BOX1_FROM_MONTHS), and box 1 more than $1 from the months' total is a warning (FORM_1097_BTC_BOX1_MONTHS_MISMATCH) -
+  Form8912Statements.withMonthTotals.)
 - Old typed Form 1097-BTC rows saved before 2026-11-09 stay in storage, unread; anyone who typed a credit without entering the Form
   1097-BTC on Statements must enter the statement.
 

@@ -1,3 +1,11 @@
+## 2026-11-18T01:00:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44125883918 on 6c14e6de - revision ca-ustax-be--0000657 serving 100%
+  traffic, image ustax-be:6c14e6d; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 44125889453 on ac58e2b - live at https://www.taxbeans.com
+  (bundle main-KJ7KM6ZQ.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-18T00:30:00
 Clean vehicle credit (Form 8936) - the business part to Form 3800 line 1y (outstanding.md "Clean vehicle credit (Form 8936)").
 - Before: Schedule A line 11 (the business/investment-use part of a new clean vehicle credit) was shown with "the Form 3800 path is still

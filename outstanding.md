@@ -350,9 +350,12 @@
   - Line 4e "Elec.": not supported, by decision. It is an optional election that only "may" lower tax after credits for some Form
     1116 filers; without it the instructions' default "results in the least tax being figured for Form 1040", so the tax is never
     wrong.
-- The line 8 parts are taken off Schedule A and an advisory says where to deduct them; they are not carried onto Schedule E / C / F or
+- ~~The line 8 parts are taken off Schedule A and an advisory says where to deduct them; they are not carried onto Schedule E / C / F or
   Form 6198 automatically. (Checked 2026-11-12: the parts are amounts with no link to a business or property, so carrying them needs
-  an activity choice per part - a field: owner sign-off.)
+  an activity choice per part - a field: owner sign-off.)~~ **FIXED 2026-11-17 (owner-approved fields, V508):** the screen asks which
+  royalty property / which business or farm each part belongs to; the return is figured once more with the part added to that
+  activity's other interest (Schedule E line 13, Schedule C line 16b, Schedule F line 21b) - Form4952ActivityInterest. No pick, or a
+  pick no longer found: the advisory as before. The at-risk part (Form 6198 line 4) stays advisory-only, by decision.
 
 ## Credit for the elderly or disabled (Schedule R): found in the 2026-11-09 review, not changed
 

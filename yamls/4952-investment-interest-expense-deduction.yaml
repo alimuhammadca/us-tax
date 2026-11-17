@@ -54,7 +54,9 @@ sections:
     fields:
       - { name: hasRoyaltiesInvestmentInterestPortion, type: boolean, required: false, label: "Is any of the deductible interest for royalties?" }
       - { name: royaltiesInvestmentInterestPortionAmount, type: amount, required: false, showIf: hasRoyaltiesInvestmentInterestPortion == true, label: "Part for royalties (Schedule E)" }
+      - { name: royaltiesInvestmentInterestProperty, type: select, required: false, showIf: hasRoyaltiesInvestmentInterestPortion == true, label: "Which royalty property", note: "V508, 2026-11-17 - a rental-income property description; the part goes to its Schedule E line 13 other interest" }
       - { name: hasNonPassiveBusinessInvestmentInterestPortion, type: boolean, required: false, label: "Is any of it for a trade or business that isn't a passive activity?" }
       - { name: nonPassiveBusinessInvestmentInterestPortionAmount, type: amount, required: false, showIf: hasNonPassiveBusinessInvestmentInterestPortion == true, label: "Part for the business" }
+      - { name: nonPassiveBusinessInvestmentInterestActivity, type: select, required: false, showIf: hasNonPassiveBusinessInvestmentInterestPortion == true, label: "Which business or farm", note: "V508 - schedule_c|name or schedule_f|principal product; the part goes to Schedule C line 16b / Schedule F line 21b" }
       - { name: hasAtRiskActivityInvestmentInterestPortion, type: boolean, required: false, label: "Is any of it for an activity you aren't at risk in?" }
       - { name: atRiskActivityInvestmentInterestPortionAmount, type: amount, required: false, showIf: hasAtRiskActivityInvestmentInterestPortion == true, label: "Part for that activity (Form 6198 line 4)" }

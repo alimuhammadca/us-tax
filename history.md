@@ -1,3 +1,19 @@
+## 2026-11-18T00:30:00
+Investment interest (Form 4952) - the line 8 parts carried to their activity (outstanding.md "Investment interest (Form 4952)";
+owner-approved fields, V508).
+- Before: Instructions for Form 4952 (2025) line 8 - the part for royalties goes "on Schedule E", the part for a nonpassive trade or
+  business "on the schedule where you report other expenses for that trade or business". The screen took the parts off Schedule A and
+  an advisory said where to deduct them; a filer who missed it lost that part of the deduction.
+- V508: pf_investment_interest_expense royalties_portion_property, non_passive_business_portion_activity. Under each part the screen
+  asks "Which royalty property" (the person's Rental & royalty income properties) / "Which business or farm" (Business income and
+  Farm income; saved as schedule_c|name or schedule_f|product). Form 4952 is figured after Schedules C, E and F, so
+  Form4952ActivityInterest figures the return once more with each part added to that activity's other interest (Schedule E line 13,
+  Schedule C line 16b, Schedule F line 21b); Form 4952's inputs don't change, so the parts are the same on that pass. A joint part is
+  split by what each spouse typed; a nested compute of another return is left alone. The advisory says "added for you" or, without a
+  pick, asks for one. The at-risk part (Form 6198) stays advisory-only. Form 4952 and the schedules' structure unchanged.
+- Tests: Form4952ActivityInterestTest (3); e2e form4952-line8-parts-to-activities.spec.ts with the Form 4952, Schedule E, royalty and
+  Schedule C specs.
+
 ## 2026-11-17T23:30:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44167273370 on 6ff79dbd - attempt 1 failed in the ACR build

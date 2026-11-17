@@ -287,8 +287,11 @@
 
 ## Clean vehicle credit (Form 8936): found in the 2026-11-09 review, not changed
 
-- The business/investment-use part of a new clean vehicle credit (Schedule A line 11) is a general business credit (Form 3800 line 1y)
-  and is not figured; the commercial clean vehicle credit (Part V, Form 8936 line 19+) neither.
+- (Since 2026-11-17 the business/investment-use part of a new clean vehicle credit (Schedule A line 11) is a general business credit,
+  Form 3800 Part III line 1y after line 1s in the order credits are used, limited by Part II, the rest carried forward - Form8936Business;
+  a vehicle failing a line 8 test or whose credit was transferred has none. A wholly business vehicle is filed and its basis reduced.)
+- The commercial clean vehicle credit (Part V, Form 8936 line 19+; Form 3800 line 1aa) is not figured. A clean vehicle credit from a
+  partnership or S corporation (Form 8936 Part II) has no entry.
 - (The 2024 MAGI fills a blank line 3a from a 2024 return done here since 2026-11-11: line 11 plus the exclusions - Schedule 1-A /
   Schedule 8812 lines 2a-2d, else Form 2555 lines 45 + 50. An uploaded 2024 Form 1040 doesn't fill it: it has no exclusion amounts.)
 - (The 2024 MAGI is tested against the 2024 filing status's limit - a 2024 return done here, else the uploaded 2024 Form 1040 - since
@@ -296,9 +299,8 @@
 - "Can someone claim you as a dependent?" is asked here; the household answer lives on several screens (EIC, Saver's credit), not one.
 - (Basis reduction, Schedule A line 9 / 17, reaches depreciation since 2026-11-13: a claimed or transferred credit lowers the cost
   of the one depreciable asset placed in service this year whose description has the VIN or model - i8936 "reduce the basis of each
-  vehicle by the amount entered on line 9", the whole line 9 though only the personal part is claimed here; CreditBasisReduction
-  figures the return a second time. Not when the credit isn't claimed - a 100% business vehicle, whose credit (Form 3800) isn't
-  figured. A current-year MAGI that moves over the limit in the second pass isn't re-checked. Later years use the lower cost too since
+  vehicle by the amount entered on line 9", the whole line 9; CreditBasisReduction
+  figures the return a second time. A 100% business vehicle too since 2026-11-17 (its credit is Form 3800 line 1y). A current-year MAGI that moves over the limit in the second pass isn't re-checked. Later years use the lower cost too since
   2026-11-14 - AssetCostCarry.)
 
 ## Prior-year minimum tax credit (Form 8801): found in the 2026-11-09 review, not changed
@@ -5654,7 +5656,7 @@ Knowledge: `C:\us-tax\knowledge\knowledge_line27abc.md` · Flowchart: `C:\us-tax
 
 - ~~[Schedule A (Form 8936) / Form 1040 line 20]~~ **Resolved 2026-03-26** — Schedule 3 line 8 is now wired into Form 1040 line 20.
 - [Schedule A (Form 8936) / business and commercial paths] Limited to personal-use new and previously owned clean vehicles. Part V (qualified commercial clean vehicle) and broader business-credit treatment are deferred.
-- [Schedule A (Form 8936) / Form 3800] General business credit consumption for business/investment-use and commercial vehicle amounts is deferred.
+- [Schedule A (Form 8936) / Form 3800] ~~General business credit consumption for business/investment-use~~ (done 2026-11-17, Form 3800 line 1y - Form8936Business) and commercial vehicle amounts is deferred.
 - [Schedule A (Form 8936) / Schedule 2 recapture] Point-of-sale transfer recapture routing to Schedule 2 line 1b or 1c is deferred.
 - [Schedule A (Form 8936) / semantic PDF fill-export] The 2025 semantic assets are generated and published, but the Tax Return section renders a structured UI summary instead of filling/exporting the IRS PDF fields directly.
 - ~~[Schedule A (Form 8936) / MFS spouse per-person MAGI inputs] **Added 2026-06-23 (MFS migration Form #33).**~~ **DONE 2026-07-13.** Added `spouseCurrentYearAdditionalMagiAddbacks` + `spousePriorYearMagi` (V126) + entity + `CleanCarCreditMapper` + `MfsFormScoper.normalizeCleanCarCreditSpouse` un-prefix onto the bare `currentYearAdditionalMagiAddbacks` / `priorYearMagi` keys + a MFS-only spouse MAGI section on `form-clean-car-credit`. Her leg now supports the foreign-income MAGI add-back + prior-year-MAGI election. Scoper unit test `mfsSpouseUnPrefixesCleanCarCreditMagiFields`. (Original note below.) The spouse's clean-car-credit form omits the MAGI add-back (`currentYearAdditionalMagiAddbacks`) and prior-year-MAGI (`priorYearMagi`) fields — by design the MAGI test is joint on MFJ, so those live only on the taxpayer form. On the spouse's MFS leg her vehicles now route correctly (scoper fix) and her MAGI uses her own per-leg AGI vs the MFS ceiling ($150k new / $75k previously owned), which is correct for the common case. But she cannot (a) enter foreign-earned-income / Puerto Rico / American Samoa MAGI add-backs (so her MAGI may be understated if she has excluded foreign income), nor (b) use the prior-year-MAGI election to qualify a vehicle when her current-year MAGI exceeds the ceiling. Both are rare edge cases (foreign income + clean vehicle + MFS; or current-MAGI-over-ceiling-but-prior-under on MFS) and consistent with the deferred prior-year automation. Fix when needed: surface the two MAGI fields on the spouse form MFS-only (mirrors the #32 Form 8801 MFS-only core pattern) + read them per-leg in `computeForm8936CurrentYearMagi` / the prior-year disqualification check.

@@ -42,7 +42,7 @@ sections:
       - { name: newVehicleType, type: radio, required: false, showIf: creditPath == 'New clean vehicle', options: [CAR, VAN_SUV_PICKUP], label: "Vehicle class (MSRP $55,000 / $80,000)" }
       - { name: newVehicleMsrp, type: amount, required: false, showIf: creditPath == 'New clean vehicle', label: "Manufacturer's suggested retail price" }
       - { name: newVehicleTentativeCreditAmount, type: amount, required: false, showIf: creditPath == 'New clean vehicle', label: "Tentative credit (seller's report; line 9)" }
-      - { name: businessUsePercentage, type: percent, required: false, showIf: creditPath == 'New clean vehicle', label: "Business or investment use % (line 10)" }
+      - { name: businessUsePercentage, type: percent, required: false, showIf: creditPath == 'New clean vehicle', label: "Business or investment use % (line 10)", note: "2026-11-17: line 11 -> Form 3800 line 1y -> Schedule 3 line 6a" }
       - { name: previouslyOwnedAcquiredForUseNotResale, type: boolean, required: false, showIf: creditPath == 'Previously owned clean vehicle', label: "Acquired for use, not for resale? (line 13f)" }
       - { name: previouslyOwnedSalesPrice, type: amount, required: false, showIf: creditPath == 'Previously owned clean vehicle', label: "Sales price (line 14; at most $25,000)" }
       - { name: previouslyOwnedClaimedInPrior3Years, type: boolean, required: false, showIf: creditPath == 'Previously owned clean vehicle', label: "Claimed the used credit for another vehicle bought in the 3 years before this one? (line 13d)" }

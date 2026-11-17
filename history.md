@@ -1,3 +1,15 @@
+## 2026-11-18T00:30:00
+Clean vehicle credit (Form 8936) - the business part to Form 3800 line 1y (outstanding.md "Clean vehicle credit (Form 8936)").
+- Before: Schedule A line 11 (the business/investment-use part of a new clean vehicle credit) was shown with "the Form 3800 path is still
+  deferred" and reached no tax; a 100% business vehicle got no credit and no basis reduction.
+- Now: Form8936Business - line 11 of every vehicle passing the line 8 tests (not transferred to the dealer) adds to Form 3800 Part III
+  line 1y (column (e)), after line 1s in the order credits are used; limited by Part II, the rest carried forward; Schedule 3 line 6a.
+  A wholly business vehicle is filed with the return and its depreciable basis is lowered by line 9 (CreditBasisReduction). The
+  personal part stays on Schedule 3 line 6f. Values only - no form, statement or field changes.
+- UI: the Business use help names Form 3800 Part III line 1y and Schedule 3 line 6a.
+- Tests: Form8936BusinessTest (4); e2e form8936-business-credit-3800.spec.ts (2) with the clean vehicle, Form 8911, Form 3800 and
+  asset-cost-carry specs - 20 passed; UI clean-car spec 5 passed.
+
 ## 2026-11-17T23:30:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44121431569 on 462e36cd - revision ca-ustax-be--0000656 serving 100%

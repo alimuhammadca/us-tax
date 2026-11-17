@@ -46,7 +46,8 @@ sections:
       - { name: previouslyOwnedAcquiredForUseNotResale, type: boolean, required: false, showIf: creditPath == 'Previously owned clean vehicle', label: "Acquired for use, not for resale? (line 13f)" }
       - { name: previouslyOwnedSalesPrice, type: amount, required: false, showIf: creditPath == 'Previously owned clean vehicle', label: "Sales price (line 14; at most $25,000)" }
       - { name: previouslyOwnedClaimedInPrior3Years, type: boolean, required: false, showIf: creditPath == 'Previously owned clean vehicle', label: "Claimed the used credit for another vehicle bought in the 3 years before this one? (line 13d)" }
-      - { name: previouslyOwnedCanBeClaimedAsDependent, type: boolean, required: false, showIf: creditPath == 'Previously owned clean vehicle', label: "Can someone claim you as a dependent? (line 13g)" }
+      # V505 (2026-11-17, owner-approved): previouslyOwnedCanBeClaimedAsDependent removed - Schedule A line 13g is the
+      # Standard deduction screen's someoneCanClaimYou (the household answer), shown as a note on a used vehicle.
       - { name: commercialSubjectToDepreciation, type: boolean, required: false, showIf: creditPath == 'Commercial clean vehicle', label: "Of a character subject to depreciation? (line 18b)", note: "V504, 2026-11-17" }
       - { name: commercialAcquiredForUseNotResale, type: boolean, required: false, showIf: creditPath == 'Commercial clean vehicle', label: "Acquired for use or to lease to others, not for resale? (line 18c)", note: "V504" }
       - { name: commercialAlsoPoweredByGasOrDiesel, type: boolean, required: false, showIf: creditPath == 'Commercial clean vehicle', label: "Also powered by a gasoline or diesel engine? (line 18d; 15% instead of 30%)", note: "V504" }

@@ -303,7 +303,9 @@
   Schedule 8812 lines 2a-2d, else Form 2555 lines 45 + 50. An uploaded 2024 Form 1040 doesn't fill it: it has no exclusion amounts.)
 - (The 2024 MAGI is tested against the 2024 filing status's limit - a 2024 return done here, else the uploaded 2024 Form 1040 - since
   2026-11-12, i8936 "Special rule for change in filing status"; CleanVehicleRules.PRIOR_STATUS. Unknown: the 2025 status.)
-- "Can someone claim you as a dependent?" is asked here; the household answer lives on several screens (EIC, Saver's credit), not one.
+- (Since 2026-11-17, V505, owner-approved removal: Schedule A line 13g is the Standard deduction screen's "Someone can claim you / your
+  spouse as a dependent" - the household answer the EIC screen already reads - shown as a note on a used vehicle; the per-vehicle
+  question is gone - CleanVehicleRules.withHouseholdDependent. The education credit screen (Form 8863) still asks its own.)
 - (Basis reduction, Schedule A line 9 / 17, reaches depreciation since 2026-11-13: a claimed or transferred credit lowers the cost
   of the one depreciable asset placed in service this year whose description has the VIN or model - i8936 "reduce the basis of each
   vehicle by the amount entered on line 9", the whole line 9; CreditBasisReduction

@@ -1,3 +1,16 @@
+## 2026-11-18T04:00:00
+Clean vehicle credit (Form 8936) - Schedule A line 13g from the household answer (outstanding.md "Clean vehicle credit (Form 8936)";
+owner-approved removal, V505).
+- Before: each used vehicle asked "Can someone claim you as a dependent?" again; the Standard deduction screen's "Someone can claim
+  you / your spouse as a dependent" (Form 1040's checkbox, read by the EIC screen and the standard deduction, HSA and Form 8862 rules)
+  could say otherwise.
+- Now: CleanVehicleRules.withHouseholdDependent fills line 13g for each vehicle from standard-deductions-taxpayer someoneCanClaimYou
+  (Family Head's vehicles) / standard-deductions-spouse someoneCanClaimSpouse (the spouse's; on a separate return the leg's own,
+  MfsFormScoper). V505 drops pf_clean_car_vehicle.previously_owned_can_be_claimed_as_dependent (no data copy). The screen shows the
+  answer and where it comes from on each used vehicle.
+- Tests: CleanVehicleHouseholdDependentTest (3); e2e clean-vehicle-household-dependent.spec.ts with the clean vehicle specs - 15
+  passed (line8936sa-clean-car-credit updated); UI clean-car spec passed.
+
 ## 2026-11-18T03:30:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44133901818 on 46849f52 - revision ca-ustax-be--0000659 serving 100%

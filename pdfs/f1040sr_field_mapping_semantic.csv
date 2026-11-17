@@ -26,3 +26,4 @@ page,old_full_name,new_full_name,new_leaf_name,tooltip_label,type,rect
 2,topmostSubform[0].Page2[0].f2_13[0],topmostSubform[0].Page2[0].line20_multiply_line19_by_15_percent,line20_multiply_line19_by_15_percent,Line20 Multiply Line19 By 15 Percent,Text,"(504, 203.969, 576, 215.968)"
 2,topmostSubform[0].Page2[0].f2_14[0],topmostSubform[0].Page2[0].line21_credit_limit_worksheet_amount,line21_credit_limit_worksheet_amount,Line21 Credit Limit Worksheet Amount,Text,"(504, 191.97, 576, 203.969)"
 2,topmostSubform[0].Page2[0].f2_15[0],topmostSubform[0].Page2[0].line22_credit_for_elderly_or_disabled,line22_credit_for_elderly_or_disabled,Line22 Credit For Elderly Or Disabled,Text,"(504, 167.969, 576, 179.968)"
+1,(added V509 - no IRS AcroForm field),topmostSubform[0].Page1[0].part2_line2_spouse_first_names,part2_line2_spouse_first_names,Part2 Line2 Spouse First Names,Text,"(480.0, 157.2, 576.0, 167.2)"

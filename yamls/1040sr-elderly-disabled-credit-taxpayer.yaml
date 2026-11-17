@@ -71,3 +71,12 @@ sections:
         required: false
         label: "Nontaxable veterans' and other pensions, annuities or disability benefits"
         help: "Schedule R line 13b (the spouse's amount on a joint return only)."
+
+  - name: computedOutputs
+    readOnly: true
+    computed: true
+    fields:
+      - name: part2SpouseFirstNames
+        type: text
+        label: "Schedule R Part II line 2 - first name(s) of the spouse(s) for whom box 4, 5 or 6 is checked"
+        note: "V509, 2026-11-17 - from the Identification screens; written in the space above the line 2 box (i1040sr Part II)"

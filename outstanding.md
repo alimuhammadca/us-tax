@@ -368,8 +368,13 @@
   2026-11-17, no change (owner-approved):** Pub. 915 (2025, irs.gov) lists the workers' compensation offset among the amounts added in
   Form SSA-1099 box 3 and says box 5 is not reduced by them; box 5 (= box 3 - box 4) is line 6a, so line 13a = 6a - 6b already treats
   the offset as social security benefits. (The Pub. 915 box 3 section was read as a page summary, not verbatim.)
-- Part II line 2: the first name(s) of the spouse(s) for whom the box is checked (boxes 4, 5, 6) is not written on the form - the
-  form's field map has no text field for it, so it needs a form-structure change (owner sign-off).
+- ~~Part II line 2: the first name(s) of the spouse(s) for whom the box is checked (boxes 4, 5, 6) is not written on the form - the
+  form's field map has no text field for it, so it needs a form-structure change (owner sign-off).~~ **FIXED 2026-11-17 (owner-approved
+  form field, V509):** a text field `part2_line2_spouse_first_names` in the blank space above the line 2 box (rect 480,157.2-576,167.2),
+  filled from the Identification first names of the spouse(s) under 65 and disabled (ScheduleRSpouseNames); out_schedule_r column.
+- **Found 2026-11-17:** the Schedule R preview loads the saved return, and out_schedule_r does not keep the Part II line 2 physician
+  statement answers (taxpayer/spouseExistingPhysicianStatement - ScheduleROutputMapper "TODO: mismatch"), so after a reload the line 2
+  box shows unchecked although the answer is Yes (the compute result has it). Lines 10, 13a, 13b, 20-22 are not kept either.
 
 ## General business credit (Form 3800): found in the 2026-11-09 review, not changed
 

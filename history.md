@@ -1,3 +1,16 @@
+## 2026-11-18T02:30:00
+Schedule R Part II line 2 - the spouse first name(s) above the box (outstanding.md "Credit for the elderly or disabled (Schedule R)";
+owner-approved form field, V509).
+- Instructions for Schedule R (2025), Part II: "If you checked box 4, 5, or 6 in Part I, enter in the space above the box on line 2 in
+  Part II the first name(s) of the spouse(s) for whom the box is checked." The IRS form has blank space there and no fillable field.
+- The owner approved a field there: part2_line2_spouse_first_names (f1040sr_elements.json + pdfs field map, 7 pt, in the gap above the
+  line 2 text by the box). ScheduleRSpouseNames fills it for box 4, 5 or 6 with the first name of each spouse under 65 who qualifies by
+  disability (Identification screens); ScheduleR.part2SpouseFirstNames, out_schedule_r part2_spouse_first_names (V509).
+- Found: the saved Schedule R does not keep the line 2 physician-statement answers, so the preview's line 2 box is unchecked after a
+  reload (outstanding.md).
+- Tests: ScheduleRSpouseNamesTest (3); e2e schedule-r-part2-spouse-first-name.spec.ts with the Schedule R specs (14 passed);
+  screenshot checked.
+
 ## 2026-11-18T01:30:00
 Schedule R line 13a - the workers' compensation offset item closed, no change (outstanding.md "Credit for the elderly or disabled
 (Schedule R)"; owner-approved).

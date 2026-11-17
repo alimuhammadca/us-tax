@@ -1,3 +1,23 @@
+## 2026-11-18T03:00:00
+Clean vehicle credits from Schedules K-1 (codes AY / AZ) to Form 3800 (outstanding.md "Clean vehicle credit (Form 8936)").
+- Before: box 15 (1065) / box 13 (1120-S) codes AY (new clean vehicle) and AZ (qualified commercial clean vehicle) were "not computed"
+  advisories (K1_CREDIT_CODE_NOT_COMPUTED_*); the credit reached no tax.
+- Now: K1VehicleCredits - code AY joins Form 3800 Part III line 1y and code AZ line 1aa (with the return's own vehicles), column (c)
+  the entity's EIN when one; Instructions for Form 8936 (2025): no Form 8936 needed for a K-1-only credit, and the partners' modified
+  AGI limit applies to code AY (2025 and 2024, as Schedule A lines 8c / 8d - K1_NEW_CLEAN_VEHICLE_CREDIT_MAGI_OVER). Not materially
+  participated in: passive, limited by the tax on the net passive income left after Form 8834 and code AO (columns (d) / (e), Part I
+  lines 2-3; K1_CLEAN_VEHICLE_CREDIT_PASSIVE_LIMITED). No field or form changes.
+- Tests: K1VehicleCreditsTest (4); e2e k1-clean-vehicle-credits-3800.spec.ts (2) with the K-1, Form 8911, Form 8936, Form 8834 and
+  Form 3800 specs - 22 passed.
+
+## 2026-11-18T02:30:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44130202389 on 9849ba28 - revision ca-ustax-be--0000658 serving 100%
+  traffic, image ustax-be:9849ba2; /q/health/ready UP (V504 applied). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 44130207044 on 5752eac - live at https://www.taxbeans.com
+  (bundle main-EQZIIUQ2.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-18T02:00:00
 Clean vehicle credit (Form 8936) - the qualified commercial clean vehicle credit (outstanding.md "Clean vehicle credit (Form 8936)";
 owner-approved fields, V504).

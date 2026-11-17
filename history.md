@@ -1,3 +1,18 @@
+## 2026-11-17T18:30:00
+Schedule A (Form 8911) - the owner's name and TIN and the coordinates (outstanding.md "Alternative fuel vehicle refueling credit (Form
+8911)"; owner-approved fields, V503).
+- Before: one free-text "Owner name and TIN" box printed whole in the owner's-name box (line 2b(ii) TIN blank, the number unchecked), and
+  no latitude / longitude (line 3b always blank).
+- V503: pf_alt_fuel_property owner_name, owner_tin, latitude NUMERIC(9,6), longitude NUMERIC(10,6); out_form_8911_schedule_a
+  line2b_owner_name, line2b_owner_tin, line3b_latitude, line3b_longitude; the combined columns dropped (no data copy - not in production
+  use).
+- Backend: Form8911Business.ownerAndCoordinates (TIN digits only; a latitude outside -90..90 / longitude outside -180..180 left off);
+  Form8911ScheduleA output line2bOwnerName / line2bOwnerTin / line3bLatitude / line3bLongitude.
+- UI: the credit screen asks Owner's name, Owner's TIN (appTin, a warning unless 9 digits) and Latitude / Longitude (decimal degrees, with
+  help); the Schedule A preview fills line 2b(ii) and line 3b - the sign, the degrees (2 / 3 digits) and six decimal digits.
+- Tests: Form8911OwnerCoordinatesTest (3); e2e alt-fuel-owner-coordinates.spec.ts with the other Form 8911 specs and tax-return-saved-pdf
+  - 18 passed; UI specs 145 passed.
+
 ## 2026-11-17T17:40:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44068741796 on f479d658 - revision ca-ustax-be--0000653 serving 100%

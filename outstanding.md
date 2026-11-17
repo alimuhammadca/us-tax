@@ -273,7 +273,9 @@
   Form8911Business.)
 - A code AO credit from an activity not materially participated in is a passive activity credit (Form 3800 column (d), Form 8582-CR),
   not prepared here: it is figured as not passive with a warning (FORM_8911_K1_CREDIT_PASSIVE_NOT_LIMITED).
-- Schedule A line 3b (latitude / longitude) has no box; line 2b's owner name and TIN are one free-text box.
+- (Since 2026-11-17, V503, owner-approved: the screen asks the owner's name and TIN in two boxes (Schedule A line 2b(i) / (ii); the TIN 9
+  digits, SSN or EIN) and the latitude and longitude in decimal degrees (line 3b - a sign, the degrees and six decimal places on the
+  form); the combined owner column is dropped with no data copy - Form8911Business.ownerAndCoordinates.)
 - (Basis reduction, Schedule A lines 16 + 21, reaches depreciation since 2026-11-13 when the personal part is claimed and the property
   matches one depreciable asset placed in service this year by description: the return is figured again with that asset's cost
   lowered - CreditBasisReduction, DEPRECIATION_BASIS_REDUCED_BY_CREDIT. A property with only a business part (line 16, not figured)

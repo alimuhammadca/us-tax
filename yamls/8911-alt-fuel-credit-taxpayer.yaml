@@ -21,6 +21,8 @@ sections:
     fields:
       - { name: propertyDescription, type: text, required: false, label: "Description (Schedule A line 2a)" }
       - { name: propertyLocation, type: text, required: false, label: "Address (line 3a)" }
+      - { name: latitude, type: decimal, required: false, min: -90, max: 90, label: "Latitude, decimal degrees (line 3b(i))", note: "V503, 2026-11-17" }
+      - { name: longitude, type: decimal, required: false, min: -180, max: 180, label: "Longitude, decimal degrees (line 3b(ii))", note: "V503, 2026-11-17" }
       - { name: propertyNickname, type: text, required: false, label: "Name for this property (not on the form)" }
       - { name: constructionBeganDate, type: date, required: false, label: "Date construction began (line 4)", help: "Before January 29, 2023: line 13 is Yes." }
       - { name: placedInServiceDate, type: date, required: false, label: "Date placed in service (line 5)", help: "No credit after June 30, 2026 (P.L. 119-21)." }
@@ -34,5 +36,6 @@ sections:
       - { name: section179Deduction, type: amount, required: false, showIf: businessInvestmentUsePercentage > 0, label: "Section 179 deduction (line 11)" }
       - { name: pwaRequirementsMet, type: boolean, required: false, showIf: businessInvestmentUsePercentage > 0 && constructionBeganDate >= 2023-01-29, label: "Meets the prevailing wage and apprenticeship requirements? (line 13)" }
       - { name: registrationNumber, type: text, required: false, showIf: businessInvestmentUsePercentage > 0, label: "IRS registration number - payment or transfer election only (line 1)" }
-      - { name: ownerNameTinIfDifferent, type: text, required: false, showIf: businessInvestmentUsePercentage > 0, label: "Owner name and TIN if not the filer (line 2b)" }
+      - { name: ownerName, type: text, required: false, showIf: businessInvestmentUsePercentage > 0, label: "Owner's name if not the filer (line 2b(i))", note: "V503, 2026-11-17 - was one owner name and TIN box" }
+      - { name: ownerTin, type: tin, required: false, showIf: businessInvestmentUsePercentage > 0, label: "Owner's TIN if not the filer (line 2b(ii))", note: "SSN or EIN, 9 digits" }
       - { name: installedAtMainHome, type: boolean, required: false, showIf: businessInvestmentUsePercentage < 100, label: "Installed at your main home? (line 17)" }

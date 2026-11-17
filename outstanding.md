@@ -259,8 +259,9 @@
   credit - no fiscal-year handling is needed. A statement with box 1 blank but months entered uses their total
   (FORM_1097_BTC_BOX1_FROM_MONTHS), and box 1 more than $1 from the months' total is a warning (FORM_1097_BTC_BOX1_MONTHS_MISMATCH) -
   Form8912Statements.withMonthTotals.)
-- Old typed Form 1097-BTC rows saved before 2026-11-09 stay in storage, unread; anyone who typed a credit without entering the Form
-  1097-BTC on Statements must enter the statement.
+- (The old typed Form 1097-BTC rows are gone since 2026-11-16, owner-approved removal V502: pf_bond_1097btc dropped with no data copy
+  (the app isn't in production use) and the mapper no longer writes or reads them; Part III comes only from the Forms 1097-BTC under
+  Statements.)
 
 ## Alternative fuel vehicle refueling credit (Form 8911): found in the 2026-11-09 review, not changed
 

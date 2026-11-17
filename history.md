@@ -1,3 +1,16 @@
+## 2026-11-17T15:20:00
+Form 8912 - the unread typed Form 1097-BTC rows removed (outstanding.md; owner-approved removal, V502).
+- V502 drops pf_bond_1097btc (no data copy - not in production use); PfBond1097btc removed; BondCreditMapper no longer writes, reads or
+  deletes taxpayer1097BtcEntries / spouse1097BtcEntries rows. No triggers or other code referenced the table. Part III still comes from
+  the Forms 1097-BTC under Statements (Form8912Statements).
+- Tests: the Form 8912 e2e specs - 14 passed (a first run failed while the dev backend was restarting, then passed). Unit suite 6050 passed.
+
+## 2026-11-17T15:00:00
+Deployed latest code to production (Azure, backend only - the UI was unchanged).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44005418124 on 873b2d31 - revision ca-ustax-be--0000651 serving 100%
+  traffic, image ustax-be:873b2d3; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-17T14:30:00
 Form 1097-BTC boxes 5a-5l (outstanding.md "Fiscal-year boxes 5a-5l"; no new field).
 - Finding: the boxes split box 1 by month for holders whose tax year isn't the calendar year; the app prepares calendar-year Form 1040

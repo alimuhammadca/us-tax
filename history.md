@@ -1,3 +1,10 @@
+## 2026-11-18T03:30:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44133901818 on 46849f52 - revision ca-ustax-be--0000659 serving 100%
+  traffic, image ustax-be:46849f5; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): not redeployed - no UI change since 5752eac (bundle main-EQZIIUQ2.js, live).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-18T03:00:00
 Clean vehicle credits from Schedules K-1 (codes AY / AZ) to Form 3800 (outstanding.md "Clean vehicle credit (Form 8936)").
 - Before: box 15 (1065) / box 13 (1120-S) codes AY (new clean vehicle) and AZ (qualified commercial clean vehicle) were "not computed"

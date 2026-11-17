@@ -294,8 +294,11 @@
   Schedule A lines 18b-18e, 19, 20 and 23; Part V figured (30% / 15% of cost less section 179, no more than the incremental cost -
   the $7,500 safe harbor under 14,000 lbs when blank - or the $7,500 / $40,000 limit; none after September 30, 2025 or with line 18b /
   18c No) -> Form 3800 Part III line 1aa after line 1y; basis reduced by line 26 - Form8936Commercial.)
-- A clean vehicle credit from a partnership or S corporation (Schedule K-1 box 15 / 13 code AY - new vehicles, Form 8936 Part II; code AZ - commercial, Part V line 20)
-  has no entry and isn't read from the entered K-1s.
+- (Since 2026-11-17 the clean vehicle credits on the entered Schedules K-1 are figured - box 15 / 13 code AY -> Form 3800 line 1y and
+  code AZ -> line 1aa (column (c) the EIN for one entity), with no Form 8936; code AY only when the modified AGI isn't over the limit
+  for both 2025 and 2024 (K1_NEW_CLEAN_VEHICLE_CREDIT_MAGI_OVER); a credit not materially participated in is passive, limited by the
+  tax on the net passive income left after Form 8834 and code AO (K1_CLEAN_VEHICLE_CREDIT_PASSIVE_LIMITED) - K1VehicleCredits. The
+  passive credits share that tax in Form 3800 order, not pro rata as Form 8582-CR's worksheets might.)
 - (The 2024 MAGI fills a blank line 3a from a 2024 return done here since 2026-11-11: line 11 plus the exclusions - Schedule 1-A /
   Schedule 8812 lines 2a-2d, else Form 2555 lines 45 + 50. An uploaded 2024 Form 1040 doesn't fill it: it has no exclusion amounts.)
 - (The 2024 MAGI is tested against the 2024 filing status's limit - a 2024 return done here, else the uploaded 2024 Form 1040 - since

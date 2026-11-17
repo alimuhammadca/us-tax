@@ -25,6 +25,8 @@ sections:
       - { name: priorYearMtftceOnExclusionItems, type: amount, required: false, label: "Minimum tax foreign tax credit on exclusion items (line 12)" }
       - { name: priorYearForm6251Line10, type: amount, required: false, label: "Prior-year Form 6251 line 10 - regular tax (Form 8801 line 14)" }
       - { name: priorYearForm6251Line11, type: amount, required: false, label: "Prior-year Form 6251 line 11 - AMT (Form 8801 line 16)" }
+      - { name: priorYearFiledForm1040Nr, type: boolean, required: false, label: "Filed Form 1040-NR for the prior year?", note: "V506, 2026-11-17 - Form 8801 line 10 floor" }
+      - { name: priorYearNrUsRealPropertyGain, type: amount, required: false, showIf: priorYearFiledForm1040Nr == true, label: "Net gain on U.S. real property interests on that Form 1040-NR (line 10 is at least the smaller of it or line 4)", note: "V506" }
   - name: carry
     title: Credit carried over
     showIf: claimsPriorMinTaxCredit == true

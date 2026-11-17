@@ -325,7 +325,8 @@
   MTFTCE (line 12) fills from last year's return here since 2026-11-13 - the election's Schedule 3 line 1, else each
   category's 2024 Form 1116 foreign taxes up to line 11 x its line 17 foreign income / line 10 (Form8801Mtftce; simplified: the regular
   line 17, no Step 2 qualified dividend / capital gain adjustment).
-- The Form 1040-NR line 10 rule (net gain on U.S. real property interests) is not applied.
+- (Since 2026-11-17, V506, owner-approved fields: the screen asks whether a 2024 Form 1040-NR was filed and its net gain on U.S. real
+  property interests; line 10 is then at least the smaller of that gain or line 4 - i8801 line 10, Form8801Rules.line10NrFloor.)
 - The bridge reads each return's own prior-year return since 2026-11-11 (a separate return its own separate return; a joint prior
   credit isn't divided - an advisory asks for the share).
 

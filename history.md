@@ -1,3 +1,22 @@
+## 2026-11-18T05:00:00
+Prior-year minimum tax credit (Form 8801) - the Form 1040-NR line 10 rule (outstanding.md "Prior-year minimum tax credit (Form 8801)";
+owner-approved fields, V506).
+- Before: Instructions for Form 8801 (2025) line 10 - "If you filed Form 1040-NR for 2024 and had a net gain on the disposition of
+  U.S. real property interests, line 10 can't be less than the smaller of that net gain or line 4" - was not applied; line 10 could be
+  too low and the credit too high.
+- V506: pf_prior_min_tax_credit prior_year_filed_form_1040nr, prior_year_nr_us_real_property_gain. The screen's "Capital gains and
+  foreign income" section asks "Did you file Form 1040-NR for 2024?" and, on Yes, the gain (with help quoting the rule); Form8801Rules.
+  line10NrFloor raises line 10 to the smaller of the gain or line 4. Form 8801 itself unchanged.
+- Tests: Form8801NrFloorTest (3); e2e form8801-1040nr-real-property-floor.spec.ts with the Form 8801 specs.
+
+## 2026-11-18T04:30:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44138065936 on 658610df - revision ca-ustax-be--0000660 serving 100%
+  traffic, image ustax-be:658610d; /q/health/ready UP (V505 applied). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 44138069778 on a1c0f45 - live at https://www.taxbeans.com
+  (bundle main-LJZ2JT4L.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-18T04:00:00
 Clean vehicle credit (Form 8936) - Schedule A line 13g from the household answer (outstanding.md "Clean vehicle credit (Form 8936)";
 owner-approved removal, V505).

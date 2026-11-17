@@ -1,3 +1,9 @@
+## 2026-11-17T13:00:00
+Deployed latest code to production (Azure, backend only - the UI was unchanged).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43995637660 on 951170a3 - revision ca-ustax-be--0000649 serving 100%
+  traffic, image ustax-be:951170a; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-17T12:30:00
 Form 8912 - the unused credit of a CREB / pre-October-4-2008 QZAB named in a warning (outstanding.md; owner: warning only; no new field).
 - Finding: the Form 8912 instructions (line 12) allow deducting that unused credit this year or next, but the 2025 Instructions for Form

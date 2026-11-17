@@ -1,3 +1,11 @@
+## 2026-11-17T11:50:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43985870951 on fc9a8032 - revision ca-ustax-be--0000648 serving 100%
+  traffic, image ustax-be:fc9a803; /q/health/ready UP (V500 applied). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 43985875243 on bff44ed - live at https://www.taxbeans.com
+  (bundle main-JHZ67BTS.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-17T11:20:00
 Electric vehicle credit (Form 8834) - line 1 released from last year's unallowed credit (outstanding.md; owner-approved fields, V500).
 - Problem: Form 8834 line 1 (the credit Form 8582-CR releases) was typed - Form 8582-CR isn't figured, though the net passive income is.

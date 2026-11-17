@@ -238,7 +238,11 @@
 
 ## Electric vehicle credit (Form 8834): found in the 2026-11-09 review, not changed
 
-- Line 1 is typed: Form 8582-CR (passive activity credits) is not figured, so the released credit can't come from it.
+- (Line 1 from the credit carried from last year, since 2026-11-16, owner-approved fields V500: the screen takes the credit not allowed
+  last year (last year's Form 8582-CR) and the release is the smaller of it and the regular tax on the net passive income (all passive
+  income less current and prior passive losses, figured with or without a Form 8582 - RentalScheduleEResult.netPassiveIncome); the rest
+  carries to next year (FORM_8834_RELEASED_FROM_CARRYOVER). A typed allowed credit still wins. Not done: other passive activity credits
+  sharing the same tax (the full Form 8582-CR) - the note says to figure it then; the tax is figured at the ordinary rates.)
 
 ## Credit for tax credit bonds (Form 8912): found in the 2026-11-09 review, not changed
 

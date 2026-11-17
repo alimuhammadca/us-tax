@@ -12,4 +12,5 @@ sections:
     multiplicity: single
     fields:
       - { name: claimsElectricVehicleCredit, type: boolean, required: true, label: "Does Form 8582-CR allow you a qualified electric vehicle passive activity credit for the tax year?" }
+      - { name: qevPriorYearUnallowedCredit, type: amount, required: false, showIf: claimsElectricVehicleCredit == true, label: "Credit not allowed last year (last year's Form 8582-CR)", note: "V500, owner-approved 2026-11-16 - released up to the tax on net passive income; the typed allowed credit wins" }
       - { name: releasedQevPassiveActivityCredit, type: amount, required: false, showIf: claimsElectricVehicleCredit == true, label: "Credit allowed for the year on Form 8582-CR (Form 8834 line 1)" }

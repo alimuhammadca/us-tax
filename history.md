@@ -1,3 +1,17 @@
+## 2026-11-17T11:20:00
+Electric vehicle credit (Form 8834) - line 1 released from last year's unallowed credit (outstanding.md; owner-approved fields, V500).
+- Problem: Form 8834 line 1 (the credit Form 8582-CR releases) was typed - Form 8582-CR isn't figured, though the net passive income is.
+- Backend: V500 pf_electric_vehicle_credit.qev_prior_year_unallowed_credit / spouse_qev_prior_year_unallowed_credit; mapper; MfsFormScoper
+  maps her amount on her leg; RentalScheduleEResult.netPassiveIncome (Form 8582 line 3 even without a Form 8582); Form8834Release - the
+  smaller of the carried credit and tax(taxable income) - tax(taxable income - net passive income), the rest carried (flag
+  FORM_8834_RELEASED_FROM_CARRYOVER); a typed released amount wins.
+- UI (form-electric-vehicle-credit): "Credit not allowed last year (last year's Form 8582-CR)" before "Or: credit allowed ... if figured
+  yourself"; help; still-to-answer needs either.
+- YAMLs 8834-electric-vehicle-credit-taxpayer / -spouse: the carried amount.
+- Tests: Form8834ReleaseTest (3); UI spec (3 passed, the old "credit allowed" wording updated); e2e form8834-release-from-carryover.spec.ts
+  ($50,000 carried, $12,000 of passive K-1 income -> about $2,640 released), with the EV screen and Form 8582 / Schedule E specs - 29
+  passed. Unit suite 6044 passed.
+
 ## 2026-11-17T10:20:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43979574393 on e3aed1fa - revision ca-ustax-be--0000647 serving 100%

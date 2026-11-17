@@ -1,3 +1,10 @@
+## 2026-11-17T23:30:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44121431569 on 462e36cd - revision ca-ustax-be--0000656 serving 100%
+  traffic, image ustax-be:462e36c; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): not redeployed - no UI change since 9be10d8 (bundle main-VIMNGH2P.js, live).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-17T23:00:00
 Form 8911 - a business-only refueling property's basis is reduced (outstanding.md "Alternative fuel vehicle refueling credit (Form
 8911)").

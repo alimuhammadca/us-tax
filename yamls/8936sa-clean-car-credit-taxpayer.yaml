@@ -27,7 +27,7 @@ sections:
     listKey: taxpayerVehicles
     fields:
       - { name: vehicleNickname, type: text, required: false, label: "Name for this vehicle (not on the form)" }
-      - { name: creditPath, type: select, required: false, options: ["New clean vehicle", "Previously owned clean vehicle"], label: "New or previously owned (Schedule A line 5 / 6)" }
+      - { name: creditPath, type: select, required: false, options: ["New clean vehicle", "Previously owned clean vehicle", "Commercial clean vehicle"], label: "New, previously owned or commercial (Schedule A line 5 / 6 / 7)", note: "Commercial added V504, 2026-11-17 - Part V -> Form 3800 line 1aa; the seller's report, dealer transfer and 30-day resale questions are not asked for it" }
       - { name: vehicleVin, type: text, required: false, label: "Vehicle identification number (line 2)" }
       - { name: vehicleYear, type: number, required: false, label: "Model year (line 1a)" }
       - { name: vehicleMake, type: text, required: false, label: "Make (line 1b)" }
@@ -47,3 +47,10 @@ sections:
       - { name: previouslyOwnedSalesPrice, type: amount, required: false, showIf: creditPath == 'Previously owned clean vehicle', label: "Sales price (line 14; at most $25,000)" }
       - { name: previouslyOwnedClaimedInPrior3Years, type: boolean, required: false, showIf: creditPath == 'Previously owned clean vehicle', label: "Claimed the used credit for another vehicle bought in the 3 years before this one? (line 13d)" }
       - { name: previouslyOwnedCanBeClaimedAsDependent, type: boolean, required: false, showIf: creditPath == 'Previously owned clean vehicle', label: "Can someone claim you as a dependent? (line 13g)" }
+      - { name: commercialSubjectToDepreciation, type: boolean, required: false, showIf: creditPath == 'Commercial clean vehicle', label: "Of a character subject to depreciation? (line 18b)", note: "V504, 2026-11-17" }
+      - { name: commercialAcquiredForUseNotResale, type: boolean, required: false, showIf: creditPath == 'Commercial clean vehicle', label: "Acquired for use or to lease to others, not for resale? (line 18c)", note: "V504" }
+      - { name: commercialAlsoPoweredByGasOrDiesel, type: boolean, required: false, showIf: creditPath == 'Commercial clean vehicle', label: "Also powered by a gasoline or diesel engine? (line 18d; 15% instead of 30%)", note: "V504" }
+      - { name: commercialGrossVehicleWeightRating, type: integer, required: false, showIf: creditPath == 'Commercial clean vehicle', label: "Gross vehicle weight rating, pounds (line 18e; under 14,000 lbs $7,500 limit, else $40,000)", note: "V504" }
+      - { name: commercialCostBasis, type: amount, required: false, showIf: creditPath == 'Commercial clean vehicle', label: "Cost or other basis (line 19)", note: "V504" }
+      - { name: commercialSection179Deduction, type: amount, required: false, showIf: creditPath == 'Commercial clean vehicle', label: "Section 179 deduction for the vehicle (line 20)", note: "V504" }
+      - { name: commercialIncrementalCost, type: amount, required: false, showIf: creditPath == 'Commercial clean vehicle', label: "Incremental cost (line 23; blank under 14,000 lbs = the $7,500 safe harbor)", note: "V504" }

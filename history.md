@@ -1,3 +1,20 @@
+## 2026-11-18T02:00:00
+Clean vehicle credit (Form 8936) - the qualified commercial clean vehicle credit (outstanding.md "Clean vehicle credit (Form 8936)";
+owner-approved fields, V504).
+- Before: the screen offered only new and previously owned vehicles; the backend's commercial path said "deferred" and Schedule A
+  Part V (lines 18-26) was always blank.
+- V504: pf_clean_car_vehicle commercial_subject_to_depreciation, _acquired_for_use_not_resale, _also_powered_by_gas_or_diesel,
+  _gross_vehicle_weight_rating, _cost_basis, _section_179_deduction, _incremental_cost; out_form_8936_schedule_a line7_commercial,
+  line18b-18e, line19-26 (kept with the return).
+- Backend: Form8936Commercial - line 21 = 19 - 20; line 22 = 30% (15% with a gas or diesel engine); line 23 the incremental cost (the
+  IRS's $7,500 safe harbor under 14,000 lbs when blank; required for heavier); line 24 = min(22, 23); line 25 = $7,500 / $40,000;
+  line 26 = min(24, 25). No credit after September 30, 2025 or with line 18b / 18c No ("stop", lines 19-26 blank). Line 26 -> Form
+  3800 Part III line 1aa (after 1y), limited by Part II, the rest carried forward; basis reduced by line 26 (CreditBasisReduction).
+- UI: a "Commercial (business vehicle)" kind on the clean vehicle screen with the Part V questions and help (the seller's report,
+  dealer transfer and 30-day resale questions hidden for it); the Schedule A preview fills lines 18b-26 (data-key test hook added).
+- Tests: Form8936CommercialTest (5); e2e commercial-clean-vehicle-credit.spec.ts (2) with the clean vehicle, Form 3800 and saved-PDF
+  specs - 22 passed (plus clean-vehicle-credit-screen 3); UI clean-car spec 5 passed.
+
 ## 2026-11-18T01:00:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44125883918 on 6c14e6de - revision ca-ustax-be--0000657 serving 100%

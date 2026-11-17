@@ -32,8 +32,8 @@ sections:
     showIf: needsForm4952 == true
     multiplicity: single
     fields:
-      - { name: grossIncomeFromPropertyHeldForInvestmentLine4a, type: amount, required: false, label: "Gross income from property held for investment (line 4a)" }
-      - { name: qualifiedDividendsIncludedInLine4aLine4b, type: amount, required: false, label: "Qualified dividends included above (line 4b)" }
+      - { name: grossIncomeFromPropertyHeldForInvestmentLine4a, type: amount, required: false, label: "Gross income from property held for investment (line 4a)", note: "2026-11-17 - blank: the person's Forms 1099-INT boxes 1 + 3 plus Forms 1099-DIV box 1a (Form4952StatementIncome); typed wins" }
+      - { name: qualifiedDividendsIncludedInLine4aLine4b, type: amount, required: false, label: "Qualified dividends included above (line 4b)", note: "2026-11-17 - blank: the person's Forms 1099-DIV box 1b, at most line 4a" }
       - { name: netGainFromDispositionOfInvestmentPropertyLine4d, type: amount, required: false, label: "Net gain from selling investment property (line 4d)" }
       - { name: netCapitalGainFromDispositionOfInvestmentPropertyLimit, type: amount, required: false, label: "Net capital gain part of that gain (line 4e cap)", help: "Blank: Schedule D line 15 less any line 7 loss." }
       - { name: investmentExpensesLine5, type: amount, required: false, label: "Investment expenses (line 5)" }

@@ -1,3 +1,15 @@
+## 2026-11-17T20:00:00
+Investment interest (Form 4952) - a blank line 4a / 4b is filled from the statements (outstanding.md "Investment interest (Form 4952)";
+owner-approved, no new fields, no migration).
+- Before: Instructions for Form 4952 (2025) line 4a ("income from interest, ordinary dividends ... from property held for investment")
+  and 4b ("the amount of qualified dividends included on line 4a") had to be typed; a blank line 4a counted as no investment income, so
+  all the investment interest carried forward to line 7. The screen only showed the Forms 1099-INT / 1099-DIV totals as a guide.
+- Now: Form4952StatementIncome fills a blank line 4a with the person's own Forms 1099-INT boxes 1 + 3 plus Forms 1099-DIV box 1a and a
+  blank line 4b with their Forms 1099-DIV box 1b (at most line 4a); a typed amount wins. On a joint return each spouse's screen takes
+  only their own statements (recipient TIN) before the inputs are combined. The screen's guide says blank boxes use these amounts, the
+  two boxes' placeholders show them, and the help says so. Form 4952 itself unchanged.
+- Tests: Form4952StatementIncomeTest (4); e2e form4952-line4a-from-statements.spec.ts with the Form 4952 specs (8 passed).
+
 ## 2026-11-18T05:30:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44142731839 on 36922fff - revision ca-ustax-be--0000661 serving 100%

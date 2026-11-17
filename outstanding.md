@@ -332,8 +332,11 @@
 
 ## Investment interest (Form 4952): found in the 2026-11-09 review, not changed
 
-- Gross investment income (line 4a) and qualified dividends (line 4b) are typed; since 2026-11-12 the screen shows the person's own
-  Forms 1099-INT (boxes 1 + 3) and 1099-DIV (1a, 1b) totals as a guide (`#statementIncomeGuide`), not copied.
+- ~~Gross investment income (line 4a) and qualified dividends (line 4b) are typed; since 2026-11-12 the screen shows the person's own
+  Forms 1099-INT (boxes 1 + 3) and 1099-DIV (1a, 1b) totals as a guide (`#statementIncomeGuide`), not copied.~~ **FIXED 2026-11-17
+  (owner-approved, no new fields):** a blank line 4a is the person's own Forms 1099-INT boxes 1 + 3 plus Forms 1099-DIV box 1a, a blank
+  line 4b their Forms 1099-DIV box 1b (at most line 4a); a typed amount wins; each spouse's screen is filled before the MFJ merge
+  (Form4952StatementIncome). The boxes' placeholders show the amount that will be used.
 - Investment interest is asked on two screens: Standard or itemized deductions (a simple interest / net investment income pair) and this
   one. With this screen Yes, the first is ignored (the screen says so). One place would be better.
 - The line 4e "Elec." choice (treating less of line 4g as net capital gain, for Form 1116 filers) and the AMT-side second Form 4952

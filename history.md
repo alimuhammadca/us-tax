@@ -1,3 +1,13 @@
+## 2026-11-18T04:00:00
+Schedule R - the saved copy keeps the whole form (outstanding.md "Credit for the elderly or disabled (Schedule R)"; owner-approved, V510).
+- Before: out_schedule_r kept the Part I box and lines 11-19 only (ScheduleROutputMapper "TODO: mismatch"); the Tax Return preview reads
+  the saved return, so after a reload the Part II line 2 box (physician's statement) showed unchecked and lines 10, 13a, 13b, 20-22
+  (line 22 is the credit) blank. The tax itself was right.
+- V510: out_schedule_r columns for the age / disability facts, Part II required, the physician-statement answers, qualified individual,
+  filed with return, note and lines 10, 13a, 13b, 20, 21, 22; ScheduleRRowFields copies them both ways. The preview's checkboxes carry
+  data-key. No user field, Schedule R unchanged.
+- Tests: ScheduleRRowFieldsTest; e2e schedule-r-saved-copy-preview.spec.ts with the Schedule R specs (15 passed).
+
 ## 2026-11-18T03:00:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44185131377 on 861ec5f3 - revision ca-ustax-be--0000665 serving

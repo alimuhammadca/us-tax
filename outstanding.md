@@ -372,9 +372,10 @@
   form's field map has no text field for it, so it needs a form-structure change (owner sign-off).~~ **FIXED 2026-11-17 (owner-approved
   form field, V509):** a text field `part2_line2_spouse_first_names` in the blank space above the line 2 box (rect 480,157.2-576,167.2),
   filled from the Identification first names of the spouse(s) under 65 and disabled (ScheduleRSpouseNames); out_schedule_r column.
-- **Found 2026-11-17:** the Schedule R preview loads the saved return, and out_schedule_r does not keep the Part II line 2 physician
+- ~~**Found 2026-11-17:** the Schedule R preview loads the saved return, and out_schedule_r does not keep the Part II line 2 physician
   statement answers (taxpayer/spouseExistingPhysicianStatement - ScheduleROutputMapper "TODO: mismatch"), so after a reload the line 2
-  box shows unchecked although the answer is Yes (the compute result has it). Lines 10, 13a, 13b, 20-22 are not kept either.
+  box shows unchecked although the answer is Yes (the compute result has it). Lines 10, 13a, 13b, 20-22 are not kept either.~~
+  **FIXED 2026-11-17 (owner-approved, V510):** out_schedule_r keeps the rest of the model (ScheduleRRowFields).
 
 ## General business credit (Form 3800): found in the 2026-11-09 review, not changed
 

@@ -337,8 +337,11 @@
   (owner-approved, no new fields):** a blank line 4a is the person's own Forms 1099-INT boxes 1 + 3 plus Forms 1099-DIV box 1a, a blank
   line 4b their Forms 1099-DIV box 1b (at most line 4a); a typed amount wins; each spouse's screen is filled before the MFJ merge
   (Form4952StatementIncome). The boxes' placeholders show the amount that will be used.
-- Investment interest is asked on two screens: Standard or itemized deductions (a simple interest / net investment income pair) and this
-  one. With this screen Yes, the first is ignored (the screen says so). One place would be better.
+- ~~Investment interest is asked on two screens: Standard or itemized deductions (a simple interest / net investment income pair) and this
+  one. With this screen Yes, the first is ignored (the screen says so). One place would be better.~~ **DONE (stale note, closed
+  2026-11-17):** V455 (2026-11-10) already dropped the Standard or itemized deductions fields; its Interest section links here, and
+  Schedule A line 9 comes only from Form 4952. The dead "You also entered ... on Standard or itemized deductions" message here (it
+  read the dropped field) was removed.
 - The line 4e "Elec." choice (treating less of line 4g as net capital gain, for Form 1116 filers) and the AMT-side second Form 4952
   (Form 6251 line 2c) are not figured; their questions were removed (owner 2026-11-09).
 - The line 8 parts are taken off Schedule A and an advisory says where to deduct them; they are not carried onto Schedule E / C / F or

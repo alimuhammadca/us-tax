@@ -1,3 +1,11 @@
+## 2026-11-17T22:00:00
+Investment interest (Form 4952) - "asked on two screens" closed (outstanding.md "Investment interest (Form 4952)"; owner-approved).
+- The note was stale: V455 (2026-11-10) had already removed investment interest from Standard or itemized deductions (its Interest
+  section links to the Investment interest screen), and Schedule A line 9 comes only from Form 4952.
+- Removed the Investment interest screen's dead "You also entered $X of investment interest on Standard or itemized deductions"
+  message, which read the dropped investmentInterestPaid field (and the extra form read behind it). No field, compute or form change.
+- Tests: form-interest-expense unit spec (3); e2e Form 4952 specs (7 passed).
+
 ## 2026-11-17T21:00:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44157751342 on ecf74e4d - revision ca-ustax-be--0000662 serving

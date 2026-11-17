@@ -1,3 +1,13 @@
+## 2026-11-17T12:30:00
+Form 8912 - the unused credit of a CREB / pre-October-4-2008 QZAB named in a warning (outstanding.md; owner: warning only; no new field).
+- Finding: the Form 8912 instructions (line 12) allow deducting that unused credit this year or next, but the 2025 Instructions for Form
+  1040 say "Leave line 24z blank" (the natural line) and name no other; H&R Block 2025 has no Form 8912 (only Schedule 3 line 6k typed,
+  checked in its TaxForms / Screens CXml); no published TurboTax or TaxSlayer path for the deduction. So no deduction is figured.
+- Backend: Form8912Carryforward.flagUnused - non-blocking FORM_8912_UNUSED_CREB_QZAB_CREDIT_DEDUCTIBLE with the amount and "ask a tax
+  professional how to report it"; the Form 8912 note says the 2025 Form 1040 has no line for it.
+- Tests: Form8912CarryforwardTest (CREB -> the warning; QSCB carried -> none); e2e form8912-creb-unused-warning.spec.ts, with the 4 other
+  Form 8912 specs - 12 passed. Unit suite 6044 passed.
+
 ## 2026-11-17T11:50:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 43985870951 on fc9a8032 - revision ca-ustax-be--0000648 serving 100%

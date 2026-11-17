@@ -246,7 +246,10 @@
 
 ## Credit for tax credit bonds (Form 8912): found in the 2026-11-09 review, not changed
 
-- The unused credit of a CREB or a QZAB issued before October 4, 2008 can be deducted (this year or next) instead of carried; not figured.
+- (The unused credit of a CREB or a QZAB issued before October 4, 2008, since 2026-11-16 - owner: warning only: the Form 8912
+  instructions (line 12) say it can be deducted this year or next, but the 2025 Form 1040 has no line for an individual's deduction
+  (Schedule 1 line 24z: "Leave line 24z blank") and H&R Block 2025 doesn't figure Form 8912 at all (only a typed Schedule 3 line 6k
+  amount); the return names the amount in FORM_8912_UNUSED_CREB_QZAB_CREDIT_DEDUCTIBLE and doesn't deduct it - Form8912Carryforward.)
 - The pass-through CREB limit (line 12, taxable income from the entity / taxable income) is not applied.
 - Fiscal-year boxes 5a-5l of Form 1097-BTC are not used (calendar-year filers only).
 - Old typed Form 1097-BTC rows saved before 2026-11-09 stay in storage, unread; anyone who typed a credit without entering the Form

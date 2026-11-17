@@ -271,8 +271,11 @@
   box 13 code AO); the typed amount is used only when none has code AO (both: FORM_8911_K1_CREDIT_TYPED_IGNORED). A K-1-only credit goes
   to line 1s with no Form 8911 (i8911: "aren't required to complete or file this form"), column (c) the entity's EIN when there is one -
   Form8911Business.)
-- A code AO credit from an activity not materially participated in is a passive activity credit (Form 3800 column (d), Form 8582-CR),
-  not prepared here: it is figured as not passive with a warning (FORM_8911_K1_CREDIT_PASSIVE_NOT_LIMITED).
+- (Since 2026-11-17: a code AO credit from an activity not materially participated in is a passive activity credit, allowed only up
+  to the tax on the net passive income less the Form 8834 credit released from it (Form 8582-CR) - Form 3800 Part III line 1s column
+  (d) before the limit, column (e) the rest, Part I lines 2 and 3; the rest carries to next year on Form 8582-CR, in a note
+  (FORM_8911_K1_CREDIT_PASSIVE_LIMITED) - Form8911Business.limitPassive. Not done: the passive credit not allowed last year has no
+  entry (it would need a new field); when none of it is allowed and there is no other business credit, no Form 3800 is shown.)
 - (Since 2026-11-17, V503, owner-approved: the screen asks the owner's name and TIN in two boxes (Schedule A line 2b(i) / (ii); the TIN 9
   digits, SSN or EIN) and the latitude and longitude in decimal degrees (line 3b - a sign, the degrees and six decimal places on the
   form); the combined owner column is dropped with no data copy - Form8911Business.ownerAndCoordinates.)

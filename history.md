@@ -1,3 +1,17 @@
+## 2026-11-17T21:30:00
+Form 8911 - the passive Schedule K-1 credit limited (outstanding.md "Alternative fuel vehicle refueling credit (Form 8911)").
+- Before: a code AO credit from an activity the owner didn't materially participate in was allowed in full as not passive, with a
+  warning (FORM_8911_K1_CREDIT_PASSIVE_NOT_LIMITED).
+- Now: it is a passive activity credit, allowed up to the tax on the net passive income (Form8834Release.taxOnNetPassiveIncome) less
+  the Form 8834 line 1 credit released from it (Form 8582-CR); the rest carries to next year on Form 8582-CR (note
+  FORM_8911_K1_CREDIT_PASSIVE_LIMITED). Form 3800: Part III line 1s / 2 / 6 column (d) the passive credit before the limit, column (e)
+  the rest, column (g) both allowed; Part I line 1 column (e), line 2 column (d), line 3 the part allowed. Values only - no form or
+  field changes.
+- Backend: Form8911Business.passiveFromK1s / limitPassive / line1s(..., Passive); Form3800Current.Credit passiveBefore / passiveAllowed;
+  Form3800Fields column (d) and Part I lines 2-3.
+- Tests: Form8911PassiveCreditTest (5), Form8911BusinessTest updated; e2e form8911-passive-k1-credit.spec.ts (2) with the Form 8911 /
+  3800 / K-1 / 8834 specs - 26 passed.
+
 ## 2026-11-17T20:30:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44090642574 on c60f3408 - revision ca-ustax-be--0000654 serving 100%

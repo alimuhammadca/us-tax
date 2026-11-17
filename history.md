@@ -1,3 +1,10 @@
+## 2026-11-17T22:10:00
+Full e2e regression (npm run test:regression, --workers=1): 2405 passed, 0 failed, 0 skipped, 1 flaky - 5.9 h.
+- Flaky: additional-deductions-1099-tips-part.spec.ts - on its first attempt (three runs so far) the PUT carried 60,000 though the box
+  was re-typed to 7,000 and the warning had gone: re-typing one PrimeNG number box under load could leave the model on the earlier value.
+  Test-only fix: the saved amount is typed into the empty box first, then 60,000 is typed after the reload just to check the warning.
+  Re-run 3x with --retries=0: 3/3 passed. No app bug.
+
 ## 2026-11-17T15:40:00
 Deployed latest code to production (Azure, backend only - the UI was unchanged).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44008229757 on 11c7bb33 - revision ca-ustax-be--0000652 serving 100%

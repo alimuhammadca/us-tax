@@ -1,3 +1,12 @@
+## 2026-11-18T18:10:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows) - Form 5695 joint occupants (V513), line 17e and the
+Form 5695 statement.
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44326724977 on 4618b825 - revision ca-ustax-be--0000672 serving
+  100% traffic, image ustax-be:4618b82; /q/health/ready UP (V513 applied). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 44326730554 on 73ea109 - live at https://www.taxbeans.com
+  (bundle main-CFCA2IZJ.js, "Form 5695 statement" found).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-18T17:00:00
 Form 5695 statement (outstanding.md "Home energy credits: the statement"; owner-approved new Tax Return page; no fields; Form 5695
 itself unchanged). The 2025 Form 5695 and its instructions say "attach a statement" for the items on each "all other" line ("listing
@@ -24,7 +33,7 @@ with a Yes on the form. Lines 22-30 are unchanged. Screen: "Are the improvements
 a Yes hides the insulation, door and window entries with a warning and clears them on save; help reworded. Form structure unchanged.
 - Tests: Form5695Line17eTest (3 - a Yes skips 18-20 and keeps the heat pump, a No claims them, the subsidy goes to line 29); e2e
   energy-credit-screen.spec.ts "line 17e Yes ..." (screen + compute). Energy e2e specs 13 passed; unit suite 6,122 passed, 0 failed.
-- Not deployed yet.
+- Deployed 2026-11-18T18:10 (see the deploy entry).
 
 ## 2026-11-18T09:30:00
 Full e2e regression (playwright --project=regression, 1 worker, no retries): 2,429 tests in 6.1 h - 2,426 passed, 3 failed, 0 skipped.

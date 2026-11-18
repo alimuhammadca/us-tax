@@ -1,3 +1,11 @@
+## 2026-11-18T22:30:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows) - Form 8863 eligibility answers.
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44341457379 on 75ed34fb - revision ca-ustax-be--0000674 serving
+  100% traffic, image ustax-be:75ed34f; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 44341462458 on 06aea5f - live at https://www.taxbeans.com
+  (bundle main-LEXYF6C4.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-18T21:30:00
 Education credits (Form 8863): the eligibility answers the screen never asked (outstanding.md "Education credits"; owner-approved -
 existing fields shown again, none added). 2025 Instructions for Form 8863, Who cannot claim a credit:

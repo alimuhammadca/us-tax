@@ -573,7 +573,12 @@
   the rest under the 30% limit; tangible property put to an unrelated use at its basis (50% limit); unanswered as before. The private
   foundation property's allowed share goes on Schedule A line 12, not line 11 (ScheduleAComputations). (Not changed: a typed private
   foundation capital gain amount reduced to basis still goes with the 30% bucket on line 11.)
-- Not asked: partial interests and restricted use (Section B Part II), qualified conservation contributions on the list, Part III items of
+- **Section B Part II FIXED 2026-11-19 (owner-approved fields, V521 - pf_form_8283_donation.section_b_part2_json):** a Section B gift
+  asks whether less than the entire interest was given (then lines 4b-4e: earlier years' deduction, an earlier charity, where it is
+  kept, who else has it) and the three line 5 conditions; Form8283PartII fills the existing Part II boxes for the first such gift on
+  each Form 8283 (4a = its row letter, 4b(1) = its claimed amount), with notices to attach the conditions statement
+  (FORM_8283_PART_II_STATEMENT) and a separate statement when more than one property on a form needs Part II.
+- Not asked: ~~partial interests and restricted use (Section B Part II),~~ qualified conservation contributions on the list, Part III items of
   $500 or less inside a Section B group, art of $20,000 or more needing the appraisal attached, a vehicle's 1098-C picked per gift (the
   Section A / B choice for a vehicle uses any Form 1098-C on file with box 5a or 5b).
 

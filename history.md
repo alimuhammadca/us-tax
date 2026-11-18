@@ -1,3 +1,17 @@
+## 2026-11-19T14:30:00
+Form 8283 Section B Part II - partial interests and restricted use (outstanding.md "Noncash charity"; owner-approved fields, V521 -
+pf_form_8283_donation.section_b_part2_json). Part II was always blank: "Complete lines 4a through 4e if you gave less than an entire
+interest in a property listed in Section B, Part I. Complete lines 5a through 5c if conditions were placed on a contribution ...; also
+attach the required statement."
+- Backend: Form8283PartII - fills the existing Part II boxes (4a its row letter, 4b(1) its claimed amount, 4b(2)-4e as answered, 5a-5c)
+  for the first such gift on each Form 8283; notices FORM_8283_PART_II_STATEMENT (conditions: attach the statement) and
+  FORM_8283_PART_II_MORE_THAN_ONE (attach a separate statement). Form 8283's layout is unchanged.
+- UI: Noncash charity - for a Section B gift, the partial interest question (with the line 4 details) and the three line 5 questions,
+  and a note to attach the statement with any Yes.
+- Tests: Form8283PartIITest (3); e2e noncash-charity-screen.spec.ts "Section B Part II ...". Noncash charity e2e specs 17 passed; unit
+  suite 6,168 passed, 0 failed; UI production build passes.
+- Not deployed yet.
+
 ## 2026-11-19T13:00:00
 Form 8283 list - a private foundation and an unrelated use (outstanding.md "Noncash charity"; owner-approved fields, V520 -
 pf_form_8283_donation donee_private_foundation / related_use). Pub. 526, Giving Property That Has Increased in Value: the list assumed

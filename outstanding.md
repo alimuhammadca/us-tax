@@ -413,9 +413,13 @@
   activity record (carry_N_partIv), seeded next year by name when every recorded K-1 is on this year's return and the Part V rows add
   up to the K-1 share (else the typed/household total as before); a sold K-1 then releases its own carried loss and the rest carries
   on. The AMT side takes the seeded priors from the K-1 pool only - the seed needs last year's AMT carryover equal to the regular one.
-  PTPs are left out.) Still open: a carryover TYPED by hand (first year on the app, or a record that can't be split) is
+  PTPs are left out.) ~~Still open: a carryover TYPED by hand (first year on the app, or a record that can't be split) is
   three totals, not per activity, so with several passive K-1s a sold one doesn't release its own share; the PTP box and the at-risk carryover are used only when exactly one
-  matching K-1 is on the return.
+  matching K-1 is on the return.~~ **FIXED 2026-11-17 (owner-approved fields, V512):** the screen asks each Schedule K-1's own loss
+  carried over and (partnerships) its at-risk carryover (k1Carryovers); K1TypedCarryovers puts each non-PTP K-1's into
+  K1PerActivity.PRIORS (released with it when sold), a PTP's on its own K-1 (any number of PTPs), an active box-2-only K-1's into Part
+  IV, and the at-risk carryover into its partnership's box 1 loss. The three totals and the one at-risk box were dropped. Known limit:
+  an active box-2-only K-1's carried loss goes to the Part IV pool (special allowance), so its sale doesn't release it separately.
 - The Part V share is one total (V469, 2026-11-11), not per activity: with every rental disposed of it is released with them only when no
   passive K-1 is on the return; a K-1 activity disposed of this year doesn't release its own share (see the per-activity item above).
 

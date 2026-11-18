@@ -1,3 +1,19 @@
+## 2026-11-18T10:30:00
+Suspended passive losses (Form 8582) - last year's losses per Schedule K-1 (outstanding.md "Suspended passive losses (Form 8582)";
+owner-approved fields, V512).
+- Before: a typed carryover was three totals (other passive K-1s, K-1 box 2 rental real estate actively participated in, a PTP) and one
+  at-risk carryover - with several passive K-1s a sold one couldn't release its own carried loss (IRC 469(g)), and the PTP / at-risk
+  amounts were used only with exactly one matching K-1.
+- V512: pf_passive_activity_carryforward.k1_carryovers_json [{k1Key, k1Name, priorYearUnallowedLoss, priorYearAtRiskLoss}]; the four
+  old columns dropped. The screen lists the person's Schedules K-1 (a saved amount whose K-1 is gone stays, marked) - the passive loss
+  under "Losses carried over", the at-risk carryover per partnership under "Amount at risk"; new help.
+- K1TypedCarryovers: the at-risk carryover joins its partnership's box 1 loss (i6198); a PTP's carried loss stays on its K-1
+  (K1PassiveClasses.ptpOverall); a non-PTP K-1's into K1PerActivity.PRIORS (its own Form 8582 row; released by K1Disposition when
+  sold); an active box-2-only K-1's into the Part IV total; unmatched rows -> K1_CARRYOVER_NOT_MATCHED. A typed amount replaces last
+  year's per-activity split.
+- Tests: K1TypedCarryoversTest (4); SuspendedPassiveLossesScreenReviewTest / PassiveActivityG1Test updated; e2e
+  k1-carryover-per-activity.spec.ts with the passive-loss / disposition / at-risk / basis specs (22 passed). Unit 6,112 / 0.
+
 ## 2026-11-18T09:00:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44218260171 on 3caca500 - revision ca-ustax-be--0000669 serving

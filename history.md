@@ -1,3 +1,12 @@
+## 2026-11-20T02:45:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44419261078 on b8fa99db - revision ca-ustax-be--0000684 serving
+  100% traffic, image ustax-be:b8fa99d; /q/health/ready UP (V525 Form 8814 No remembered, V526 Schedule H state disability payments).
+  URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 44419265617 on b6da485 - live at https://www.taxbeans.com
+  (bundle main-ZCWZOJEQ.js; includes the Schedule H Puerto Rico line 7 note).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-20T02:10:00
 Schedule H - Puerto Rico household employers (outstanding.md "Household employees (Schedule H)"). Instructions for Schedule H, line 7:
 "Household employers located in Puerto Rico, skip line 7" - references to federal income tax withholding don't apply to them unless an

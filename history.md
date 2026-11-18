@@ -6,6 +6,15 @@ Full e2e regression (playwright --project=regression, 1 worker, no retries): 2,4
   to the e-mail flow ("UI fallback needs E2E_SHARED_AUTH_EMAIL") / the shell's person tabs never rendered. Both pass on a re-run.
 - Re-run of the three spec files: 10 passed.
 
+## 2026-11-18T13:30:00
+Form 5695 joint occupants (outstanding.md "Home energy credits: joint occupants"; owner-approved fields, V513 - pf_energy_credit
+joint_occupant_totals_json + fuel_cell_all_occupants_costs). With a joint occupants Yes the Home energy credits screen asks the total paid
+by you and all other occupants - for the fuel cell and for each Part II line with a cost. Form5695JointOccupancy (i5695 Joint occupancy):
+line 8 = min(paid, $1,667 x half-kW units x paid / total) (the instructions' Ava example: 10,002); each Part II line's credit = the
+aggregate credit of all occupants x paid / total; line 28 = min(line 27, $1,200 x paid / total). A blank total keeps what was paid. No form
+structure change. Unit Form5695JointOccupancyTest (5); e2e energy-credit-screen.spec.ts (+1); energy specs 10 passed; unit suite 6,119
+passed, 0 failed. Backend 904219fa, UI de9a1cc. Not deployed yet.
+
 ## 2026-11-18T12:30:00
 Closed outstanding.md "Homebuyer credit repayment (Form 5405)" with no change (owner-approved): the missing Form 5405 preview and the joint
 2024 transfer entry apply only to 2024 returns - "2024 is the last year to file Form 5405" (Rev. November 2024), and 2025 Schedule 2

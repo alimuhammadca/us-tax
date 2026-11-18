@@ -78,6 +78,12 @@ sections:
         required: false
         placeholder: 0.00
         label: Spouse fuel cell property costs
+      - name: spouseLine8FuelCellAllOccupantsCosts
+        type: amount
+        required: false
+        placeholder: 0.00
+        showIf: spouseLine7cFuelCellJointOccupants == true
+        label: Fuel cell cost paid by you and all other occupants (V513 - shares the $1,667 per half kW, i5695 Joint occupancy)
       - name: spouseLine10FuelCellCapacityKw
         type: amount
         required: false
@@ -220,6 +226,11 @@ sections:
         type: boolean
         required: false
         label: Are spouse Part II costs being allocated among joint occupants?
+      - name: spouseJointOccupantTotals
+        type: object
+        required: false
+        showIf: spouseJointOccupants == true
+        label: Total paid by you and all other occupants, per Part II line with a cost - keys 18, 19, 20, 22, 23, 24, 25, 26, 29 (V513 - each limit shared, i5695 Joint occupancy)
       - name: spouseCondominiumOrCooperative
         type: boolean
         required: false

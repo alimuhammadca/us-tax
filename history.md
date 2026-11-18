@@ -1,3 +1,12 @@
+## 2026-11-19T17:00:00
+Form 8283 Section B Part III (outstanding.md "Noncash charity"; owner; no fields). "List each item included in Part I above that the
+appraisal identifies as having a value of $500 or less" - never filled.
+- Backend: Form8283Compute - each row of a Section B form valued at $500 or less goes in the existing Part III box ("Row C: Paperback
+  set, $400"); notice FORM_8283_PART_III_SIGN to sign the donor statement. Form 8283's layout is unchanged.
+- UI: Noncash charity - a note under such a Section B gift (and to split a row that covers several items).
+- Tests: Form8283PartIIITest (2); e2e noncash-charity-screen.spec.ts "Section B Part III ...". Noncash charity e2e 6 passed; unit suite
+  6,172 passed, 0 failed; UI production build passes.
+
 ## 2026-11-19T16:00:00
 Form 8283 - a qualified conservation contribution on the list (outstanding.md "Noncash charity"; owner; no fields). The list had no
 choice for it: Section B line 2b was never checked, Part II was asked, and the list filled Schedule A with it as 30% capital gain property.

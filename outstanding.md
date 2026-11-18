@@ -582,8 +582,11 @@
   "Qualified conservation contribution (conservation easement)" ticks Section B line 2b, completes only Part I (Part II not asked or
   filled), stands alone (not a similar-items group), fills the conservation amount when the list fills Schedule A, and raises
   FORM_8283_CONSERVATION_DOCUMENTS (attach the statement and documentation). (Certified historic structure, box 2b(1), not asked.)
-- Not asked: ~~partial interests and restricted use (Section B Part II), qualified conservation contributions on the list,~~ Part III items of
-  $500 or less inside a Section B group, art of $20,000 or more needing the appraisal attached, a vehicle's 1098-C picked per gift (the
+- **Part III FIXED 2026-11-19 (owner; no fields):** each row of a Section B form valued at $500 or less is listed in the existing
+  Part III box ("Row C: Paperback set, $400"), with a note on the screen and the notice FORM_8283_PART_III_SIGN (sign the donor
+  statement); a row covering several items should be entered as separate rows (the note says so).
+- Not asked: ~~partial interests and restricted use (Section B Part II), qualified conservation contributions on the list, Part III items of
+  $500 or less inside a Section B group,~~ art of $20,000 or more needing the appraisal attached, a vehicle's 1098-C picked per gift (the
   Section A / B choice for a vehicle uses any Form 1098-C on file with box 5a or 5b).
 
 ## Kiddie income (Form 8615): found in the 2026-11-07 review, not changed

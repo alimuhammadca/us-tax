@@ -1,3 +1,10 @@
+## 2026-11-18T11:00:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44223280290 on b68060c3 - revision ca-ustax-be--0000670 serving
+  100% traffic, image ustax-be:b68060c; /q/health/ready UP (V512 applied).
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 44223283118 on c96148f8 - live at https://www.taxbeans.com.
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-18T10:30:00
 Suspended passive losses (Form 8582) - last year's losses per Schedule K-1 (outstanding.md "Suspended passive losses (Form 8582)";
 owner-approved fields, V512).

@@ -1,3 +1,12 @@
+## 2026-11-19T23:55:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44409737662 on 6e93325d - revision ca-ustax-be--0000683 serving
+  100% traffic, image ustax-be:6e93325; /q/health/ready UP (V523 tips from a specified service, V524 car loan taken over at a death).
+  URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 44409743625 on caa932f - live at https://www.taxbeans.com
+  (bundle main-UIONEWUU.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-19T23:30:00
 Schedule 1-A car loan - taken over at the borrower's death (outstanding.md "Additional deductions"; owner-approved field, V524 -
 pf_additional_deductions_vehicle.vehicle_obligor_after_death). 2025 Instructions for Form 1040, Schedule 1-A Part IV: "you became the

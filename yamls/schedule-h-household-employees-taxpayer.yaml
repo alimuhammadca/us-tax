@@ -78,6 +78,27 @@ sections:
         required: false
         label: "Federal income tax withheld from all household employees in 2025, if any"
 
+  - name: stateDisability
+    title: State disability payments
+    multiplicity: single
+    showIf: hasHouseholdEmployees == true
+    note: "V526 (owner-approved 2026-11-20), Instructions for Schedule H, State Disability Payments: the payments are added to lines 1, 3
+      and 5; the taxes the state withheld come off the line 8 total; SCHEDULE_H_STATE_DISABILITY_PAYMENTS tells the filer to write
+      'disability' and the amount next to line 8 (the form has no box for it). Blank = No."
+    fields:
+      - name: hasStateDisabilityPayments
+        type: boolean
+        required: false
+        label: "Did a state notify you that its disability plan paid a household employee and withheld the employee's social security and Medicare taxes?"
+      - name: stateDisabilityPayments
+        type: amount
+        showIf: hasStateDisabilityPayments == true
+        label: "Payments the state disability plan made to the employee in 2025"
+      - name: stateDisabilityTaxesWithheld
+        type: amount
+        showIf: hasStateDisabilityPayments == true
+        label: "Social security and Medicare taxes the state withheld from them"
+
   - name: futa
     title: Federal unemployment (FUTA) tax
     multiplicity: single

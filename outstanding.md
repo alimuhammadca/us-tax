@@ -644,7 +644,10 @@
 - Schedule H on the return is done (`schedule-h-plan.md`); on separate returns the previews (and Form 4137's)
   read the tab's own figured return since 2026-11-12 (the household return until it is figured). Stage A differences left as drawn: line 13's dashed rule solid, the lines 10-12 Yes / No cells
   as checkboxes, the line 17 row shading.
-- State disability plan payments (subtracted on line 8 with "disability"), Puerto Rico employers (no line 7), a fiscal year, the
+- ~~State disability plan payments (subtracted on line 8 with "disability")~~ **FIXED 2026-11-20** (owner-approved fields, V526 -
+  pf_schedule_h.has_state_disability_payments / state_disability_payments / state_disability_taxes_withheld: the payments added to lines
+  1, 3 and 5, the state's withholding subtracted from line 8, SCHEDULE_H_STATE_DISABILITY_PAYMENTS for the "disability" write-in);
+  Puerto Rico employers (no line 7), a fiscal year, the
   quarters of the $1,000 test (asked as one answer) and an employee's Form W-2 are not handled; line 17 prints two states (more are
   counted in lines 18-19, with a message about the attached statement).
 - Worksheet 2 rates are the 2025 ones (ReferenceData); the FUTA wages of a credit reduction state are asked only with more than one state.

@@ -1,3 +1,14 @@
+## 2026-11-20T01:30:00
+Schedule H - state disability plan payments (outstanding.md "Household employees (Schedule H)"; owner-approved fields, V526 -
+pf_schedule_h.has_state_disability_payments, state_disability_payments, state_disability_taxes_withheld). Instructions for Schedule H,
+State Disability Payments: payments from a state plan that withheld the employee's share are wages on lines 1, 3 and 5; the taxes the
+state withheld come off the line 8 total, with "disability" and the amount on the dotted line next to line 8.
+- Backend: ScheduleHCompute - the payments added to lines 1, 3 (and 5 above $200,000); line 8 less the state's withholding (not below
+  zero); SCHEDULE_H_STATE_DISABILITY_PAYMENTS gives the write-in (Schedule H has no box for it, so its structure is unchanged).
+- UI: Household employees - a "State disability payments" section (the question, then the two amounts), help from the instructions.
+- Tests: ScheduleHStateDisabilityTest (2); e2e household-employees-screen.spec.ts "state disability payments ...". Schedule H e2e 10
+  passed; unit suite 6,191 passed, 0 failed; UI production build passes. Not deployed yet.
+
 ## 2026-11-20T00:40:00
 Form 8814 - the parents' No is remembered (outstanding.md "Child's int. & dividends (Form 8814)"; owner-approved field, V525 -
 se_child_interest_dividends.elects_form_8814). A No deleted the child's entry, so on reopening the election question was blank and

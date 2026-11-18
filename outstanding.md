@@ -578,7 +578,11 @@
   kept, who else has it) and the three line 5 conditions; Form8283PartII fills the existing Part II boxes for the first such gift on
   each Form 8283 (4a = its row letter, 4b(1) = its claimed amount), with notices to attach the conditions statement
   (FORM_8283_PART_II_STATEMENT) and a separate statement when more than one property on a form needs Part II.
-- Not asked: ~~partial interests and restricted use (Section B Part II),~~ qualified conservation contributions on the list, Part III items of
+- **Qualified conservation contributions on the list FIXED 2026-11-19 (owner; no fields - a new choice of the existing property type):**
+  "Qualified conservation contribution (conservation easement)" ticks Section B line 2b, completes only Part I (Part II not asked or
+  filled), stands alone (not a similar-items group), fills the conservation amount when the list fills Schedule A, and raises
+  FORM_8283_CONSERVATION_DOCUMENTS (attach the statement and documentation). (Certified historic structure, box 2b(1), not asked.)
+- Not asked: ~~partial interests and restricted use (Section B Part II), qualified conservation contributions on the list,~~ Part III items of
   $500 or less inside a Section B group, art of $20,000 or more needing the appraisal attached, a vehicle's 1098-C picked per gift (the
   Section A / B choice for a vehicle uses any Form 1098-C on file with box 5a or 5b).
 

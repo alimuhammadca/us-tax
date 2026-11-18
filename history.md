@@ -1,3 +1,14 @@
+## 2026-11-19T16:00:00
+Form 8283 - a qualified conservation contribution on the list (outstanding.md "Noncash charity"; owner; no fields). The list had no
+choice for it: Section B line 2b was never checked, Part II was asked, and the list filled Schedule A with it as 30% capital gain property.
+- "Qualified conservation contribution (conservation easement)" added to the existing property type: line 2b ("check box 'b' for
+  qualified conservation contributions"), only Part I of Section B (Form8283PartII skips it; the screen hides Part II), not grouped with
+  similar items, Form8283Deduction puts it in the conservation amount (section 170(b)(1)(E) limit and 15-year carryover), and the notice
+  FORM_8283_CONSERVATION_DOCUMENTS. Form 8283's layout is unchanged.
+- Tests: Form8283ConservationTest (2); e2e noncash-charity-screen.spec.ts "a qualified conservation contribution ...". Noncash and
+  conservation e2e specs 9 passed; unit suite 6,170 passed, 0 failed; UI production build passes.
+- Not deployed yet.
+
 ## 2026-11-19T14:30:00
 Form 8283 Section B Part II - partial interests and restricted use (outstanding.md "Noncash charity"; owner-approved fields, V521 -
 pf_form_8283_donation.section_b_part2_json). Part II was always blank: "Complete lines 4a through 4e if you gave less than an entire

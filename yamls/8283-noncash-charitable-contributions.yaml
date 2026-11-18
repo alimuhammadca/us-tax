@@ -82,6 +82,7 @@ sections:
         showIf: "doneePrivateFoundation != true and tangible personal property"
         label: Will the charity use the item for its own exempt purpose (not sell it or use it for something unrelated)?
         help: V520 - tangible personal property put to an unrelated use is deducted at its basis (Pub. 526).
+      # propertyCategory CONSERVATION (2026-11-19): a qualified conservation contribution - line 2b, Part I only, the conservation amount.
       - name: sectionBPartII
         type: object
         required: false

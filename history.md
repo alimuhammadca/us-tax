@@ -1,3 +1,12 @@
+## 2026-11-19T08:00:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows) - Form 8938 additional page 2 copies and line 36
+parties (V518).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44364211116 on 7c8d11ff - revision ca-ustax-be--0000677 serving
+  100% traffic, image ustax-be:7c8d11f; /q/health/ready UP (V518 applied). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 44364215385 on 45f797a - live at https://www.taxbeans.com
+  (bundle main-C5FBZKME.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-19T07:00:00
 Form 8938 - additional page 2 copies and more issuers or counterparties (outstanding.md "Foreign assets"; owner-approved, fields V518 -
 pf_form_8938_item.additional_parties_json).

@@ -467,9 +467,15 @@
 
 ## Education credits (Form 8863): found in the 2026-11-08 review, not changed
 
-- The "no Form 1098-T" exception is one return-level answer on the Family Head's screen; a spouse's student without a Form 1098-T is not
-  prompted there (the calculation flags it). The other screening fields the calculation reads (claimed as a dependent, nonresident alien, TIN
-  issued by the due date) are not asked on the screen; they are kept as loaded.
+- ~~The "no Form 1098-T" exception is one return-level answer on the Family Head's screen; a spouse's student without a Form 1098-T is not
+  prompted there (the calculation flags it).~~ **FIXED 2026-11-18 (no fields):** on a joint return the Family Head's screen reads the
+  spouse's students (education-credits-spouse) - the exception question shows when any student on the return has no Form 1098-T and
+  names them; the spouse's screen points to it (a link); "received a Form 1098-T" is figured from both. The calculation no longer stops
+  the return (AOTC_1098T_NOT_RECEIVED_NO_ALTERNATIVE) when only the spouse's student has one
+  (EducationCreditComputations.spouseStudentHas1098T); the per-student check is unchanged.
+- The other screening fields the calculation reads (claimed as a dependent, nonresident alien, TIN issued by the due date) are not asked on
+  the screen; they are kept as loaded. (Next: take them from Standard deduction "Someone can claim you" and Filing status; the TIN
+  question only for an ITIN - owner sign-off for showing that field.)
 - A third school (an extra page 2 through line 22) is not supported.
 
 ## Business interest limit (Form 8990): found in the 2026-11-08 review, not changed

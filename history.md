@@ -1,3 +1,15 @@
+## 2026-11-18T19:30:00
+Education credits (Form 8863): a spouse's student without a Form 1098-T (outstanding.md "Education credits"; no fields). The IRS-exception
+question is one return-level answer on the Family Head's screen and showed only for the Family Head's own students - a spouse's student
+without a Form 1098-T was never asked, so that student lost the credit with no way to answer.
+- UI: on a joint return the Family Head's screen reads education-credits-spouse; the "Students without a Form 1098-T" section shows when
+  any student on the return has none and names them; receivedAny1098TForClaimedStudents is figured from both. The spouse's screen shows
+  a note linking to the Family Head's screen.
+- Backend: EducationCreditComputations.spouseStudentHas1098T - a spouse's student with a Form 1098-T keeps the return from being stopped
+  (AOTC_1098T_NOT_RECEIVED_NO_ALTERNATIVE) when an older Family Head save figured "received" from the Family Head's students only.
+- Tests: Form8863SpouseStudent1098TTest (3); e2e education-credits-screen.spec.ts "joint return: a spouse student ...". Education e2e
+  specs 34 passed; unit suite 6,132 passed, 0 failed.
+
 ## 2026-11-18T18:10:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows) - Form 5695 joint occupants (V513), line 17e and the
 Form 5695 statement.

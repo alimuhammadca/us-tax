@@ -62,7 +62,7 @@ sections:
         type: boolean
         required: false
         label: Are you relying on non-1098-T documentation for any claimed student?
-        help: Select Yes if any claimed student did not receive a 1098-T and you are instead relying on other enrollment or payment support.
+        help: Select Yes if any claimed student did not receive a 1098-T and you are instead relying on other enrollment or payment support. 2026-11-18 - one answer for the return, asked on the Family Head's screen when any student (the spouse's too, on a joint return) has no Form 1098-T; the spouse's screen links to it.
       - name: confirmAllEducationSupportUploaded
         type: boolean
         required: true

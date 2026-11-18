@@ -207,6 +207,12 @@ sections:
         required: false
         label: Did this student attend a second school or institution in 2025?
         help: Select Yes only if you need to list a second institution for this student.
+      - name: additionalSchools
+        type: list
+        required: false
+        showIf: studentHasSecondInstitutionLine22 == true
+        label: Schools after the second (Add another school) - name, street, city, state, zip, foreignCountry, foreignProvince, foreignPostalCode, ein, received1098T, priorYear1098TBox7Checked
+        help: V514 (owner-approved 2026-11-18) - i8863 Line 22, "If the student attended more than two educational institutions, attach an additional page 2 completed only through line 22". A Form 1098-T from any school counts.
       - name: institution2NameLine22
         type: text
         required: false

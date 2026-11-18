@@ -480,7 +480,12 @@
   asked: Standard deduction dual-status, or on a joint return Filing status "spouse a nonresident alien", without the election to treat
   the spouse as a resident (EducationCreditsInputs.withNonresidentStatus); the saved answer is cleared on save. (5) The ITIN questions
   (taxpayerTinIssuedByDueDate, each student's studentTinIssuedByDueDate) only for a number starting with 9; cleared otherwise.
-- A third school (an extra page 2 through line 22) is not supported.
+- ~~A third school (an extra page 2 through line 22) is not supported.~~ **FIXED 2026-11-18 (owner-approved fields, V514 -
+  pf_education_student.additional_schools_json):** after a second school the screen has "Add another school" (school 3, 4, ... with the
+  line 22 questions: name, address US or foreign, EIN, the 2025 Form 1098-T, the 2024 Form 1098-T with box 7), each with Remove; a
+  Form 1098-T from any school counts (EducationSchools; the screen's "without a Form 1098-T" check too). Not changed (owner: no change
+  to a tax-return form's structure): the Form 8863 preview still prints page 2 once - the extra page 2 for schools 3+ (and a page 2 for
+  each student after the first, which the preview has never printed) is not produced.
 
 ## Business interest limit (Form 8990): found in the 2026-11-08 review, not changed
 

@@ -1,3 +1,18 @@
+## 2026-11-18T23:30:00
+Form 8863 - a third school (outstanding.md "Education credits: a third school"; owner-approved fields, V514 -
+pf_education_student.additional_schools_json). 2025 Instructions for Form 8863, Line 22: "If the student attended more than two
+educational institutions, attach an additional page 2 completed only through line 22." The screen had only two schools, so a student
+whose only Form 1098-T came from a third school lost the credit.
+- UI: after a second school, "Add another school" (school 3, 4, ...) with the line 22 questions and Remove; saved as the student's
+  additionalSchools; the "without a Form 1098-T" check counts them.
+- Backend: EducationSchools (encode/decode, any extra school's Form 1098-T); the per-student Form 1098-T check and the spouse-student
+  check count the extra schools.
+- Not changed (owner: no change to a tax-return form's structure): the Form 8863 preview prints page 2 once; the extra page 2 for
+  schools 3+ is not produced (noted in outstanding.md).
+- Tests: Form8863ThirdSchoolTest (3); e2e education-credits-screen.spec.ts "a third school ...". Education e2e specs 54 of 55 passed -
+  "no Form 1098-T: the exception question" failed at its first dropdown right after the dev backend restart and passed alone and in a
+  re-run of the whole spec file (6 passed); unit suite 6,139 passed, 0 failed; UI production build passes.
+
 ## 2026-11-18T22:30:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows) - Form 8863 eligibility answers.
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44341457379 on 75ed34fb - revision ca-ustax-be--0000674 serving

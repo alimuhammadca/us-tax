@@ -494,7 +494,16 @@
   regard to section 163(j)" - and that pass's taxable income (AGI less line 14, not floored) and QBI deduction fill them for the final
   pass - Form8990TwoPass, FORM_8990_LINES_6_10_FIGURED.) (A small business taxpayer with a carryforward from a year it was limited deducts it in full when the gate is No since 2026-11-12 -
   i8990 "Change from being subject to section 163(j) to being exempt"; Form8990Compute.releasedWhenExempt, Schedule 1 line 3.)
-- Schedules A and B (partners / S corporation shareholders), excepted-business allocation and the gross receipts test itself are not asked.
+- ~~Schedules A and B (partners / S corporation shareholders), excepted-business allocation and the gross receipts test itself are not asked.~~
+  **Schedules A and B FIXED 2026-11-18 (owner-approved fields, V515 - pf_form_8990 partnerships_163j_json / s_corporations_163j_json):**
+  the screen lists each partnership (name, EIN, columns c, d, f, g) and S corporation (name, EIN, columns c, d); Form8990Schedules
+  figures column (e) = c + d, (h) = the lesser of (e) or (f) + (g) from the same partnership, (i) = (e) - (h), fills page 3 (6 / 5 rows,
+  more flagged FORM_8990_SCHEDULE_ROWS_OVER_FORM and in the totals) and lines 3, 14, 15 and 24 from the totals (the typed boxes are
+  hidden with rows; without rows they stay). A joint return lists both copies' rows. Column (d) is typed (last year's column (i) is not
+  bridged). **The gross receipts test and the excepted-business allocation CLOSED 2026-11-18, no change (owner):** the test uses the 3
+  prior years' gross receipts, which are not on the return, and Form 8990 has no line for it - the screen asks "Are you limited?" with
+  the test in the help; the allocation applies only to a business with both excepted and non-excepted activities (by asset basis) - the
+  filer enters only the limited interest on line 1.
 
 ## Mortgage subsidy recapture (Form 8828): found in the 2026-11-08 review, not changed
 

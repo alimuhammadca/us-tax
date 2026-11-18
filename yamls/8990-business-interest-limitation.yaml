@@ -27,6 +27,16 @@ sections:
     multiplicity: single
     showIf: hasBusinessInterestExpense == true
     fields:
+      - name: partnerships163j
+        type: list
+        required: false
+        label: Partnerships (Schedule A, line 43) - name, ein, currentExcessInterest (c), priorCarryforward (d), excessTaxableIncome (f), excessInterestIncome (g)
+        help: V515 (owner-approved 2026-11-18). Column (h) = min(c + d, f + g of the same partnership), (i) = c + d - h; totals fill lines 3 (h), 14 (f) and 24 (g).
+      - name: sCorporations163j
+        type: list
+        required: false
+        label: S corporations (Schedule B, line 45) - name, ein, excessTaxableIncome (c), excessInterestIncome (d)
+        help: V515 - totals fill line 15 (c) and line 24 (d). With rows, lines 3, 14, 15 and 24 are not typed.
       - name: line1CurrentBizInterest
         type: amount
         required: false

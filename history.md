@@ -1,3 +1,16 @@
+## 2026-11-19T00:30:00
+Form 8990 Schedules A and B (outstanding.md "Business interest limit"; owner-approved fields, V515 - pf_form_8990
+partnerships_163j_json / s_corporations_163j_json). Page 3 was blank and lines 3, 14, 15 and 24 were typed totals; column (h) works per
+partnership ("the lesser of ... column (e), or ... column (f) plus ... column (g) from the same partnership" - Instructions for Form 8990,
+Rev. December 2025).
+- Backend: Form8990Schedules (rows, encode/decode, figure, totals, page 3 fill, overflow flag); Form8990Compute uses the totals for lines
+  3, 14, 15 and 24 when there are rows; Form8990Compute.intake lists both copies' rows on a joint return.
+- UI: Business interest limit - "Partnerships and S corporations (Schedules A and B)" first, Add / Remove, each partnership's columns
+  (h) and (i) shown; with rows the typed lines 3, 14, 15 and 24 are hidden and cleared; help from the instructions.
+- Closed with no change (owner): the gross receipts test (3 prior years, no Form 8990 line) and the excepted-business allocation.
+- Tests: Form8990SchedulesTest (4); e2e business-interest-screen.spec.ts "Schedules A and B ...". Form 8990 e2e specs 21 passed; unit
+  suite 6,143 passed, 0 failed; UI production build passes.
+
 ## 2026-11-18T23:30:00
 Form 8863 - a third school (outstanding.md "Education credits: a third school"; owner-approved fields, V514 -
 pf_education_student.additional_schools_json). 2025 Instructions for Form 8863, Line 22: "If the student attended more than two

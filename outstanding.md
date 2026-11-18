@@ -587,8 +587,10 @@
   statement); a row covering several items should be entered as separate rows (the note says so).
 - Not asked: ~~partial interests and restricted use (Section B Part II), qualified conservation contributions on the list, Part III items of
   $500 or less inside a Section B group, art of $20,000 or more needing the appraisal attached (FIXED 2026-11-19, no fields: the notice
-  FORM_8283_ART_APPRAISAL_ATTACH and a screen note when the art on the list totals $20,000 or more),~~ a vehicle's 1098-C picked per gift (the
-  Section A / B choice for a vehicle uses any Form 1098-C on file with box 5a or 5b).
+  FORM_8283_ART_APPRAISAL_ATTACH and a screen note when the art on the list totals $20,000 or more),~~ ~~a vehicle's 1098-C picked per gift (the
+  Section A / B choice for a vehicle uses any Form 1098-C on file with box 5a or 5b).~~ **FIXED 2026-11-19 (owner; no fields):** each
+  vehicle uses its own Form 1098-C, matched by the VIN (box 3 and the gift's VIN), or the only one on file; with several and no match,
+  any with box 5a / 5b as before and the notice FORM_8283_VEHICLE_1098C_NOT_MATCHED; the screen shows the match under each vehicle.
 
 ## Kiddie income (Form 8615): found in the 2026-11-07 review, not changed
 

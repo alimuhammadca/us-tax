@@ -1,3 +1,21 @@
+## 2026-11-19T19:30:00
+Form 8283 - each vehicle's own Form 1098-C (outstanding.md "Noncash charity"; owner; no fields). The Section A / B choice for every
+vehicle used any Form 1098-C on file with box 5a or 5b, so with two vehicles a sold one went to Section B.
+- Backend: Form8283Compute.matched1098C - the Form 1098-C with the gift's VIN (box 3), else the only one; that one decides (sold:
+  Section A; box 5a / 5b: Section B over $5,000); with several and no match, as before plus FORM_8283_VEHICLE_1098C_NOT_MATCHED.
+- UI: Noncash charity reads the Forms 1098-C and shows the match under each vehicle ("Form 1098-C from Cars for Kids, VIN ending 4821:
+  sold - ... Section A").
+- Tests: Form8283Vehicle1098CTest (3); e2e noncash-charity-screen.spec.ts "two vehicles, two Forms 1098-C ...". Noncash charity and
+  itemized deduction e2e 52 passed; unit suite 6,177 passed, 0 failed; UI production build passes.
+
+## 2026-11-19T19:00:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows) - Form 8283 art appraisal notice.
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44390846482 on b9b6975e - revision ca-ustax-be--0000680 serving
+  100% traffic, image ustax-be:b9b6975; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 44390851947 on ae2b23f - live at https://www.taxbeans.com
+  (bundle main-SLUWYR2N.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-19T18:00:00
 Form 8283 - art of $20,000 or more (outstanding.md "Noncash charity"; owner; no fields). Instructions for Form 8283: a deduction of
 $20,000 or more for art needs a complete copy of the signed appraisal attached (a photograph on request) - nothing told the filer.

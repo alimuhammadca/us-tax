@@ -196,7 +196,8 @@ sections:
       - name: partIIRelatedToConstruction
         type: boolean
         required: false
-        label: Were any of the claimed improvements related to construction of the home? (line 17e)
+        label: Are the improvements you are claiming related to building a new home? (line 17e)
+        help: Owner 2026-11-18, Instructions for Form 5695 (2025) Line 17e - No for an existing home or an addition or renovation; a Yes skips lines 18a-20d (insulation, doors and windows are hidden and cleared); lines 22-30 are not affected.
       - name: installedQualifiedEnergyProperty
         type: boolean
         required: false

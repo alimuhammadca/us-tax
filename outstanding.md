@@ -449,8 +449,13 @@
   (jointOccupantTotals). Line 8 = min(paid, $1,667 x half-kW units x paid / total); each Part II line's credit = the aggregate credit
   of all occupants (the line's limit on the total) x paid / total, and line 28 = min(line 27, $1,200 x paid / total) - Form5695JointOccupancy.
   A blank total keeps what was paid. Per line, not per item of property (one total per line); no form structure change.
-- Line 17e: the form says a Yes limits the credit to improvements not related to building the home; the instructions say skip lines
-  18a-20d. The calculation follows the form (the filer enters only the non-construction amounts).
+- ~~Line 17e: the form says a Yes limits the credit to improvements not related to building the home; the instructions say skip lines
+  18a-20d. The calculation follows the form (the filer enters only the non-construction amounts).~~ **FIXED 2026-11-18 (owner: follow
+  the instructions; no fields):** i5695 Line 17e - answer No when claiming only improvements to an existing home or an addition or
+  renovation; a Yes (the improvements claimed are related to building a new home) skips lines 18a through 20d. The person's lines
+  18a-20d amounts are dropped before the Part II subsidy (EnergyCreditInputs.withoutNewHomeConstruction, so a subsidy goes to the lines
+  that remain) and the lines stay blank on the form; lines 22-30 are unchanged. The screen asks "Are the improvements you are claiming
+  related to building a new home?" and with a Yes hides the insulation, door and window entries (cleared on save).
 - The "statement" the form asks for (other homes, the items on the "all other" lines with their QMIDs, a second main home for fuel
   cells) is not produced as an attachment.
 

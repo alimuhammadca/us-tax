@@ -1,3 +1,15 @@
+## 2026-11-18T15:00:00
+Form 5695 line 17e (outstanding.md "Home energy credits: line 17e"; owner: follow the instructions; no fields). The form and the
+instructions disagreed on a Yes; the calculation followed the form and counted whatever was typed on lines 18-20. Now per the 2025
+Instructions for Form 5695, Line 17e: a Yes means the improvements claimed are related to building a new home, so lines 18a through
+20d are skipped (Part II is only for an existing home) - EnergyCreditInputs.withoutNewHomeConstruction drops the person's lines 18a-20d
+amounts before the Part II subsidy (a subsidy goes to the lines that remain), and recomputeForm5695PartIILines leaves 18a-20d blank
+with a Yes on the form. Lines 22-30 are unchanged. Screen: "Are the improvements you are claiming related to building a new home?";
+a Yes hides the insulation, door and window entries with a warning and clears them on save; help reworded. Form structure unchanged.
+- Tests: Form5695Line17eTest (3 - a Yes skips 18-20 and keeps the heat pump, a No claims them, the subsidy goes to line 29); e2e
+  energy-credit-screen.spec.ts "line 17e Yes ..." (screen + compute). Energy e2e specs 13 passed; unit suite 6,122 passed, 0 failed.
+- Not deployed yet.
+
 ## 2026-11-18T09:30:00
 Full e2e regression (playwright --project=regression, 1 worker, no retries): 2,429 tests in 6.1 h - 2,426 passed, 3 failed, 0 skipped.
 - k1-coded-boxes-11-13-15 "credits" - a real test update: it used an S corporation K-1 credit code A as the "not computed" example, and

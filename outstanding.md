@@ -630,8 +630,10 @@
 
 ## Child's int. & dividends (Form 8814): found in the 2026-11-07 review, not changed
 
-- A No is not saved (the election is the entry): on reopening an unanswered question shows; FORM8814_CHILD_STATEMENTS_NOT_ELECTED reminds
-  when the child has statements.
+- ~~A No is not saved (the election is the entry): on reopening an unanswered question shows; FORM8814_CHILD_STATEMENTS_NOT_ELECTED reminds
+  when the child has statements.~~ **FIXED 2026-11-19** (owner-approved field, V525 - se_child_interest_dividends.elects_form_8814): a No
+  keeps the child's entry marked not elected - shown as No on reopening, left out of the calculation (Form8814Declined), no reminder;
+  a never-answered child with statements is still reminded.
 - (The child's Form 1099-OID interest and Schedule K-1 dividends are listed on the screen and in its totals since 2026-11-12, and a K-1
   with the child's number only in Part II item E / F counts - ChildInterest8814.k1sForChild.) The Alaska Permanent
   Fund dividend is read from the child's Form 1099-MISC box 3 since 2026-11-12 (payer "Alaska" + "Permanent Fund"); since 2026-11-12 a child with $1,350 or less (not required to file -

@@ -1,3 +1,13 @@
+## 2026-11-20T00:40:00
+Form 8814 - the parents' No is remembered (outstanding.md "Child's int. & dividends (Form 8814)"; owner-approved field, V525 -
+se_child_interest_dividends.elects_form_8814). A No deleted the child's entry, so on reopening the election question was blank and
+FORM8814_CHILD_STATEMENTS_NOT_ELECTED kept reminding.
+- Backend: Form8814Declined - an entry marked not elected is taken out of the Form 8814 list and its child gets no reminder.
+- UI: Child's int. & dividends - a No saves the entry (amounts cleared) with electsForm8814 false; a saved No shows on reopening; the remove
+  confirmation only when a saved Yes becomes No.
+- Tests: Form8814DeclinedTest (3); e2e child-interest-dividends-screen.spec.ts "a No removes the election, is remembered (V525) ...".
+  Form 8814 e2e 62 passed; unit suite 6,189 passed, 0 failed; UI production build passes. Not deployed yet.
+
 ## 2026-11-19T23:55:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44409737662 on 6e93325d - revision ca-ustax-be--0000683 serving

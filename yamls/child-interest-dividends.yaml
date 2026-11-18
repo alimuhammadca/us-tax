@@ -17,7 +17,8 @@ sections:
       - name: elects
         type: boolean
         label: "Do you elect to report the child's interest and dividends on your return for 2025?"
-        note: "Not a saved key - an entry exists for the child."
+        note: "Saved as electsForm8814 since V525 (owner-approved 2026-11-19): true = elected; false = the parents answered No (the entry is
+          kept so the answer is remembered; not used by the calculation, no reminder); an older entry without it is an election."
       - name: childFirstName
         type: text
         readOnly: true

@@ -394,9 +394,13 @@
   doesn't say), line 3 / Section B (code L, empowerment zone), lines 34-35 (the carryforward is one total, so an unused specified
   credit carries as an ordinary one), and the credit forms for the filer's own Schedule C business (Forms 8881, 8941, 8826, 6765 ...),
   each its own screen.
-- One total, not per credit and year: credits past their 20-year carryforward can't be dropped, specified credits (IRC 38(c)(4),
+- ~~One total, not per credit and year: credits past their 20-year carryforward can't be dropped, specified credits (IRC 38(c)(4),
   allowed against the tentative minimum tax, Part II line 34) are treated as ordinary ones, and passive activity credits (Form
-  8582-CR) have no entry.
+  8582-CR) have no entry.~~ **FIXED 2026-11-17 (owner-approved fields, V511):** the General business credit screen lists each carried
+  credit (Part IV line, year it arose, amount, passive); Form3800Carryforward drops rows older than 20 years, limits passive rows by
+  the Form 8582-CR room left after this year's passive credits, sends specified rows to Part II line 34 (Section C), fills Part IV per
+  line, and saves next year's rows with Schedule 1 (out_schedule_1.add_inc_gbc_carryforward_rows) for the bridge (one "Other" row of
+  the total when they don't add up, e.g. after a Form 8611 reduction). Line 3 (Form 8844) rows count as ordinary (Section B not figured).
 - (Line 7 leaves out education credit recapture, Form 8621 tax and section 965(i) tax since 2026-11-12 - i3800 line 7, Form3800Line7.
   Form 8912 line 7 has no such exclusion and keeps them.)
 

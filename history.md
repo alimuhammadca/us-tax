@@ -1,3 +1,20 @@
+## 2026-11-18T08:30:00
+General business credit (Form 3800) - the carryforward per credit and year (outstanding.md "General business credit (Form 3800)";
+owner-approved fields, V511).
+- Before: one carryforward total - an expired credit (IRC 39(a), 20 years) couldn't be dropped, a specified credit carried in was
+  treated as ordinary (no Part II line 34), a passive one had no limit, and Part IV showed one total (FORM_3800_PART_IV_ONE_TOTAL).
+- V511: pf_general_business_credit_carry (credit_line = Form 3800 Part IV line, origin_year, amount, passive); the
+  prior_year_general_business_credit_carryforward column dropped (not in production use); out_schedule_1.add_inc_gbc_carryforward_rows.
+  The screen lists the credits (pick-list of Part IV lines, year, amount, passive check box; Add / Remove; help per field).
+- Form3800Carryforward: expired rows dropped (FORM_3800_CARRYFORWARD_EXPIRED); passive rows limited by the Form 8582-CR room after
+  Form 8834 and this year's passive credits (FORM_3800_CARRYFORWARD_PASSIVE_LIMITED; Part IV (d)/(e), Part I lines 2-3, Part II
+  lines 32-33); ordinary rows -> Part I line 4 (Section A), specified rows -> Part II line 34 (Section C), each used before this
+  year's credits, oldest first; Part IV per line ((a) items, (b) year, (d)-(g), (i)) and lines 5-7; next year's rows (each row's
+  unused part, the disallowed passive part still passive, and this year's unused Part III credits) saved with Schedule 1 and seeded
+  by the prior-year bridge. The Part IV advisory now only when a carried credit has no year.
+- Tests: Form3800CarryforwardTest (5); unit / e2e fixtures moved to rows; e2e form3800-carryforward-by-credit-and-year.spec.ts,
+  general-business-credit-screen (3), the two-year bridge specs and the Form 3800 / K-1 credit specs (all passed). Unit 6,108 / 0.
+
 ## 2026-11-18T07:00:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows) - backend only (no UI change).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44207256130 on 68a39584 - revision ca-ustax-be--0000668 serving

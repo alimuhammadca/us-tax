@@ -20,9 +20,15 @@ sections:
         type: boolean
         required: true
         label: "Do you have general business credits from the prior year or earlier that haven't been used?"
-      - name: priorYearGeneralBusinessCreditCarryforward
-        type: amount
+      # V511 (owner-approved 2026-11-17): the one total became a list, one row per carried credit (Form 3800 Part IV).
+      - name: gbcCarryforwards
+        type: list
+        multiplicity: multiple
         required: false
-        label: Credit carried forward to this year
-        help: "Non-passive carryforwards (Form 3800 Part IV column (f) -> Part I line 4); passive credits limited by Form 8582-CR are left out."
         showIf: hasGeneralBusinessCreditCarryforward == true
+        label: Unused credits, one per credit and year
+        fields:
+          - { name: creditLine, type: select, label: "Credit (Form 3800 Part IV line - 4a-4z are specified credits)" }
+          - { name: originYear, type: year, label: "Tax year it arose (Part IV column (b)); 20 years or older has expired" }
+          - { name: amount, type: amount, label: "Amount still unused" }
+          - { name: passive, type: boolean, label: "A passive activity credit (Form 8582-CR) - Part IV columns (d) / (e)" }

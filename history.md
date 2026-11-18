@@ -1,3 +1,11 @@
+## 2026-11-18T09:30:00
+Full e2e regression (playwright --project=regression, 1 worker, no retries): 2,429 tests in 6.1 h - 2,426 passed, 3 failed, 0 skipped.
+- k1-coded-boxes-11-13-15 "credits" - a real test update: it used an S corporation K-1 credit code A as the "not computed" example, and
+  code A now goes to Form 3800 Part III line 1u (K1PartIIICredits, 2026-11-17). The example is code E (Form 3468, still an advisory).
+- fuel-tax-credit-screen (joint return) and general-business-credit-screen (Family Head) - environmental: the shared sign-in fell back
+  to the e-mail flow ("UI fallback needs E2E_SHARED_AUTH_EMAIL") / the shell's person tabs never rendered. Both pass on a re-run.
+- Re-run of the three spec files: 10 passed.
+
 ## 2026-11-18T11:00:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44223280290 on b68060c3 - revision ca-ustax-be--0000670 serving

@@ -586,7 +586,8 @@
   Part III box ("Row C: Paperback set, $400"), with a note on the screen and the notice FORM_8283_PART_III_SIGN (sign the donor
   statement); a row covering several items should be entered as separate rows (the note says so).
 - Not asked: ~~partial interests and restricted use (Section B Part II), qualified conservation contributions on the list, Part III items of
-  $500 or less inside a Section B group,~~ art of $20,000 or more needing the appraisal attached, a vehicle's 1098-C picked per gift (the
+  $500 or less inside a Section B group, art of $20,000 or more needing the appraisal attached (FIXED 2026-11-19, no fields: the notice
+  FORM_8283_ART_APPRAISAL_ATTACH and a screen note when the art on the list totals $20,000 or more),~~ a vehicle's 1098-C picked per gift (the
   Section A / B choice for a vehicle uses any Form 1098-C on file with box 5a or 5b).
 
 ## Kiddie income (Form 8615): found in the 2026-11-07 review, not changed

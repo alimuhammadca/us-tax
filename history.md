@@ -1,3 +1,20 @@
+## 2026-11-19T18:00:00
+Form 8283 - art of $20,000 or more (outstanding.md "Noncash charity"; owner; no fields). Instructions for Form 8283: a deduction of
+$20,000 or more for art needs a complete copy of the signed appraisal attached (a photograph on request) - nothing told the filer.
+- Backend: Form8283Compute - the art on the list, as claimed, adds up; at $20,000 or more the notice FORM_8283_ART_APPRAISAL_ATTACH.
+- UI: Noncash charity - the same note under each art gift once the art totals $20,000.
+- Tests: Form8283ArtAppraisalTest (2); e2e noncash-charity-screen.spec.ts "art of $20,000 or more ...". Noncash charity e2e 7 passed;
+  unit suite 6,174 passed, 0 failed; UI production build passes.
+
+## 2026-11-19T17:45:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows) - Form 8283: private foundation and unrelated use
+(V520), Section B Part II (V521), conservation contributions, Part III.
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44388335466 on b34262ff - revision ca-ustax-be--0000679 serving
+  100% traffic, image ustax-be:b34262f; /q/health/ready UP (V520, V521 applied). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 44388339925 on e6d4316 - live at https://www.taxbeans.com
+  (bundle main-EUGIBTVX.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-19T17:00:00
 Form 8283 Section B Part III (outstanding.md "Noncash charity"; owner; no fields). "List each item included in Part I above that the
 appraisal identifies as having a value of $500 or less" - never filled.
@@ -16,7 +33,7 @@ choice for it: Section B line 2b was never checked, Part II was asked, and the l
   FORM_8283_CONSERVATION_DOCUMENTS. Form 8283's layout is unchanged.
 - Tests: Form8283ConservationTest (2); e2e noncash-charity-screen.spec.ts "a qualified conservation contribution ...". Noncash and
   conservation e2e specs 9 passed; unit suite 6,170 passed, 0 failed; UI production build passes.
-- Not deployed yet.
+- Deployed 2026-11-19T17:45 (see the deploy entry).
 
 ## 2026-11-19T14:30:00
 Form 8283 Section B Part II - partial interests and restricted use (outstanding.md "Noncash charity"; owner-approved fields, V521 -
@@ -30,7 +47,7 @@ attach the required statement."
   and a note to attach the statement with any Yes.
 - Tests: Form8283PartIITest (3); e2e noncash-charity-screen.spec.ts "Section B Part II ...". Noncash charity e2e specs 17 passed; unit
   suite 6,168 passed, 0 failed; UI production build passes.
-- Not deployed yet.
+- Deployed 2026-11-19T17:45 (see the deploy entry).
 
 ## 2026-11-19T13:00:00
 Form 8283 list - a private foundation and an unrelated use (outstanding.md "Noncash charity"; owner-approved fields, V520 -
@@ -44,7 +61,7 @@ every charity a public charity and every tangible gift put to a related use.
   Pub. 526).
 - Tests: Form8283PrivateFoundationTest (6); e2e noncash-charity-screen.spec.ts "a private foundation and an unrelated use ...". Noncash
   charity and charitable e2e specs 67 passed; unit suite 6,165 passed, 0 failed; UI production build passes.
-- Not deployed yet.
+- Deployed 2026-11-19T17:45 (see the deploy entry).
 
 ## 2026-11-19T11:30:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows) - Form 8379 notices and the Form 8938 one-day total

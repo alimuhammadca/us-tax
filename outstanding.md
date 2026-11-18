@@ -546,7 +546,9 @@
 - The "any time" test (2026-11-13, i8938 Reporting Thresholds: the total on one day) adds only the maximum values of items held on the
   same day - by the opened / acquired and closed / disposed dates (Form8938Compute.anyTimeTotal); items held together still add their
   maximums, which may be on different days - FORM_8938_ANY_TIME_FROM_MAXIMUMS says so when only that sum crosses the threshold (the
-  daily totals aren't asked).
+  daily totals aren't asked). **FIXED 2026-11-19 (owner-approved field, V519 - pf_form_8938.any_time_one_day_total):** in exactly that
+  case the screen asks, optionally, "The highest total of all your foreign assets on any one day"; the "at any time" test then uses it
+  (never below one item's highest value nor above the sum); blank keeps the sum. Not on a separate return (a household figure).
 
 ## Injured spouse (Form 8379): found in the 2026-11-08 review, not changed
 

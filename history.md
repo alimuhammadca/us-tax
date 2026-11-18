@@ -1,3 +1,15 @@
+## 2026-11-19T09:00:00
+Form 8938 - the highest total on one day (outstanding.md "Foreign assets", the "any time" test; owner-approved field, V519 -
+pf_form_8938.any_time_one_day_total). The "at any time" threshold is the total on one day (Instructions for Form 8938, Reporting
+Thresholds); the app adds the highest values of the items held at the same time, which can be on different days, so Form 8938 could be
+required when it isn't.
+- Backend: Form8938Compute - with that sum the only thing over the "at any time" threshold (the last day and every single item under),
+  a typed one-day total (never below one item's highest value nor above the sum) decides; blank keeps the sum. Not on a separate return.
+- UI: Foreign assets - the optional box in exactly that case, the threshold note using it; cleared when it no longer applies.
+- Tests: Form8938OneDayTotalTest (4); e2e foreign-assets-screen.spec.ts "the highest total on one day ...". Form 8938 e2e specs 24
+  passed; unit suite 6,157 passed, 0 failed; UI production build passes.
+- Not deployed yet.
+
 ## 2026-11-19T08:00:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows) - Form 8938 additional page 2 copies and line 36
 parties (V518).

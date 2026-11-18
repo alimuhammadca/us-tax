@@ -521,7 +521,14 @@
 
 ## Low-income housing credit recapture (Form 8611): found in the 2026-11-08 review, not changed
 
-- Line 2 is typed; the Line 2 Worksheet (from Form 8609-A lines 10, 11, 14, 15, 16 for each year) is not asked. Line 11 interest is typed.
+- ~~Line 2 is typed; the Line 2 Worksheet (from Form 8609-A lines 10, 11, 14, 15, 16 for each year) is not asked. Line 11 interest is typed.~~
+  **Line 2 FIXED 2026-11-19 (owner-approved fields, V517 - pf_form_8611_building.line2_worksheets_json):** each building owned directly
+  has a "Line 2 Worksheet" list - one row per earlier year with Form 8609-A line 7 completed (year, Form 8609-A lines 10, 11, 15, 16 and
+  the line 14 step 1 decimal); Form8611Line2Worksheet figures step i = ((a x 2) - c) x (1 - e) x line 16 / line 15 and line 2 = the total
+  (halved with a jointly owned building on a separate return); with rows the typed line 2 is hidden, without rows it stays. **Line 11
+  interest CLOSED 2026-11-19, no change (owner):** it is figured per prior year at the quarterly section 6621(a)(1) overpayment rates
+  compounded daily (Rev. Proc. 95-17 tables, rates back up to 15 years) - typed, and a section 42(j)(5) partnership figures it for the
+  partners.
 
 ## Foreign assets (Form 8938): found in the 2026-11-08 review, not changed
 

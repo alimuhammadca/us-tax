@@ -1,3 +1,15 @@
+## 2026-11-19T04:00:00
+Form 8611 Line 2 Worksheet (outstanding.md "Low-income housing credit recapture"; owner-approved fields, V517 -
+pf_form_8611_building.line2_worksheets_json). Line 2 was one typed number; the form figures it with a separate Line 2 Worksheet for each
+prior year with Form 8609-A line 7 completed.
+- Backend: Form8611Line2Worksheet (step i per year, line 2 = the total, encode/decode); Form8611Compute uses it for line 2 and halves it
+  with a jointly owned building on a separate return.
+- UI: Low-income housing credit recapture - per building owned directly, "Line 2 Worksheet" rows (year, Form 8609-A lines 10, 11, 15, 16,
+  the line 14 decimal) with each step i and the total shown; the typed line 2 is hidden with rows.
+- Line 11 interest closed with no change (owner).
+- Tests: Form8611Line2WorksheetTest (4); e2e lihc-recapture-screen.spec.ts "the Line 2 Worksheet ...". Form 8611 e2e specs 21 passed;
+  unit suite 6,150 passed, 0 failed; UI production build passes.
+
 ## 2026-11-19T02:30:00
 Form 8828 line 13 - a QSML lender's share of the gain (outstanding.md "Mortgage subsidy recapture"; owner-approved fields, V516 -
 pf_form_8828 qsml_gain_shared / qsml_amount_paid / qsml_paid_date). Instructions for Form 8828, Line 13: with a share of the gain paid to

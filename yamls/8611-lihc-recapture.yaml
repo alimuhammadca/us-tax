@@ -55,6 +55,11 @@ sections:
         type: number
         required: false
         label: "2 Credits attributable to additions to qualified basis"
+      - name: line2Worksheets
+        type: list
+        required: false
+        label: Line 2 Worksheet - one row per earlier year with Form 8609-A line 7 completed (year, line10, line11, line14Decimal, line15, line16)
+        help: V517 (owner-approved 2026-11-19) - step i = ((line10 x 2) - line11) x (1 - line14Decimal) x line16 / line15; line 2 = the total of step i. With rows, line2AdditionsCredits is not typed.
       - name: line4RecapturePercentage
         type: number
         required: false

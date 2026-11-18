@@ -387,9 +387,13 @@
   7210, 7207). **Step 1 done 2026-11-17 (owner-approved, no fields):** the K-1 codes the instructions send to a Part III line 1 row go
   there with the entity's EIN (K1PartIIICredits: A 1u, B 1cc, K 1e, M 1c, V 1b, W 1gg, X 1q, Y 1g, Z 1h, AA 1t, AB 1f, AD 1i, AE 1j,
   AF 1dd, AG 1ee, AH 1k, AI 1m, AK 1bb, AL 1n, AM 1p, AV 1w, AW 1x), added to a line the return figures itself; passive ones limited by
-  the Form 8582-CR room after Form 8834, AO, AY, AZ. Still open: **step 2** - the line 4 specified credits (K-1 C/D 4d, I 4c, J 4b,
-  N 4f, AJ 4g, BA 4h, BB 4j, an eligible small business's research credit 4i) and line 3 (L), which need Part I line 4 / Part II
-  line 34; and the credit forms for the filer's own Schedule C business (Forms 8881, 8941, 8826, 6765 ...), each its own screen.
+  the Form 8582-CR room after Form 8834, AO, AY, AZ. **Step 2 done 2026-11-17 (owner-approved, no fields):** the line 4 specified
+  credits - K-1 J 4b, I 4c, C/D 4d (non-passive; a passive low-income housing credit stays an advisory - Form 8582-CR's special
+  allowance isn't figured), N 4f, AJ 4g, BA 4h, BB 4j - on their rows, line 5, and Part II Section C lines 27-37 (Form3800SectionC),
+  allowed against the TMT; line 38 = 28 + 37. Still open: line 4i (an eligible small business's research credit stays on 1c - the K-1
+  doesn't say), line 3 / Section B (code L, empowerment zone), lines 34-35 (the carryforward is one total, so an unused specified
+  credit carries as an ordinary one), and the credit forms for the filer's own Schedule C business (Forms 8881, 8941, 8826, 6765 ...),
+  each its own screen.
 - One total, not per credit and year: credits past their 20-year carryforward can't be dropped, specified credits (IRC 38(c)(4),
   allowed against the tentative minimum tax, Part II line 34) are treated as ordinary ones, and passive activity credits (Form
   8582-CR) have no entry.

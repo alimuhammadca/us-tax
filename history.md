@@ -1,3 +1,15 @@
+## 2026-11-18T06:30:00
+General business credit (Form 3800) - the specified credits and Part II Section C (outstanding.md "General business credit (Form
+3800)", step 2; owner-approved, no fields, no migration).
+- Before: K-1 specified credits (Part III line 4 rows) were advisories, and Section C (lines 27-37) was -0-.
+- Now K1PartIIICredits carries J 4b, I 4c, C/D 4d (non-passive only - a passive low-income housing credit gets
+  K1_LOW_INCOME_HOUSING_PASSIVE_NOT_FIGURED, since Form 8582-CR's rental real estate special allowance isn't figured), N 4f, AJ 4g, BA
+  4h, BB 4j with the entity's EIN. Form3800SectionC keeps them out of line 17 and allows them in Section C, against the tentative
+  minimum tax: line 27 = 11 - 13, line 28 = 17 (+ 26), line 29, lines 30 / 32 / 33, line 36, line 37 = the smaller of 29 or 36, line
+  38 = 28 + 37 -> Schedule 3 line 6a; the unused part joins the carryforward. Part III line 5 and line 6 (= 2 + 5) on the preview.
+- Tests: Form3800SectionCTest (3); controls in K1PartIIICreditsTest / Form8911BusinessTest / K1CodedItemsTest moved to code E (Form
+  3468); e2e form3800-specified-credits-section-c.spec.ts with the Form 3800 / K-1 credit specs (20 passed).
+
 ## 2026-11-18T05:30:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows) - backend only (no UI change).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44199410844 on 86b2e815 - revision ca-ustax-be--0000667 serving

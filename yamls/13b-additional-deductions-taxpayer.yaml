@@ -142,6 +142,10 @@ sections:
       - name: vehicleLoanOriginatedByYou
         type: boolean
         label: "Was the loan taken out by the buyer (in their name)? (V456)"
+      - name: vehicleObligorAfterDeath
+        type: boolean
+        showIf: vehicleLoanOriginatedByYou == false
+        label: "Did the buyer take over this loan because the person who took it out died? (V524, owner-approved 2026-11-19 - a Yes meets requirement 2)"
       - name: vehicleWasRefinanced
         type: boolean
         label: "Was the loan refinanced?"

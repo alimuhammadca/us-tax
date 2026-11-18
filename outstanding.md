@@ -615,9 +615,16 @@
   CLOSED, no change (the 2025 Schedule 1-A has no box for it; the occupation list question is asked); the
   business net income for tips (Schedule 1-A line 5) is figured from Schedule C / F when the return has exactly one business
   (Schedule1ATradeTipsLimit, since 2026-11-10); with more than one - including one each for two spouses - it is typed, one net
-  income per person (the Multiple Trades or Businesses Worksheet isn't built).
-- Overtime: the FLSA-eligible question isn't asked; the Forms W-2 box 14 overtime premium isn't read.
-- Car loan: the loan "originated by you", lemon-law replacements and the change of obligor at death aren't asked; existing vehicles must
+  income per person (the Multiple Trades or Businesses Worksheet isn't built). **(2026-11-19: out of date - since V496, 2026-11-16, tips
+  can name their business and each business's limit is figured from its own Schedule C / F (BusinessTipsLimit); only tips with no
+  business named stay under the typed limit.)**
+- ~~Overtime: the FLSA-eligible question isn't asked; the Forms W-2 box 14 overtime premium isn't read.~~ **(2026-11-19: out of date - the
+  overtime question asks for "overtime the FLSA requires" with the FLSA help, and Form W-2 box 14 lines are marked as qualified overtime
+  since V495.)**
+- Car loan: ~~the loan "originated by you", lemon-law replacements and the change of obligor at death aren't asked;~~ **(2026-11-19)**
+  "originated by you" was already asked (V456); the change of obligor at death FIXED (owner-approved field, V524 -
+  pf_additional_deductions_vehicle.vehicle_obligor_after_death: with the loan not taken out by the buyer, a Yes meets requirement 2);
+  lemon-law replacements: a note and help to enter the replacement vehicle's VIN; existing vehicles must
   answer the two new conditions (V437) before the return is figured.
 - The statements confirmation is asked on the Family Head's copy only (it covers both spouses' statements).
 

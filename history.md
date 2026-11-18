@@ -1,3 +1,15 @@
+## 2026-11-19T23:30:00
+Schedule 1-A car loan - taken over at the borrower's death (outstanding.md "Additional deductions"; owner-approved field, V524 -
+pf_additional_deductions_vehicle.vehicle_obligor_after_death). 2025 Instructions for Form 1040, Schedule 1-A Part IV: "you became the
+obligor by reason of a previous obligor's death" - the interest still qualifies; the help said so but a No on "taken out by the buyer"
+left it out. "Originated by you" was already asked (V456); the tips-from-several-businesses and overtime notes were out of date (V496,
+V495) and are marked so.
+- Backend: Schedule1AComputations - with the loan not taken out by the buyer, a Yes to vehicleObligorAfterDeath meets requirement 2.
+- UI: Additional deductions - the follow-up question under a No; a lemon-law note per vehicle and in the help (enter the replacement
+  vehicle's VIN).
+- Tests: CarLoanObligorAfterDeathTest (3); e2e additional-deductions-screen.spec.ts "car loan taken over at the borrower's death ...".
+  Additional deductions e2e 35 passed; unit suite 6,186 passed, 0 failed; UI production build passes.
+
 ## 2026-11-19T22:30:00
 Schedule 1-A tips - a specified service trade or business (outstanding.md "Additional deductions"; owner-approved fields, V523 -
 pf_additional_deductions taxpayer/spouse_tips_from_specified_service). Tips received in a specified service trade or business (health,
@@ -10,7 +22,7 @@ Schedule 1-A).
 - Tests: Schedule1ATipsSpecifiedServiceTest (2); e2e additional-deductions-screen.spec.ts "tips from a specified service business ..."
   (an existing test now answers the new question - its "Still to answer" text listed it). Additional deductions e2e 36 passed; unit
   suite 6,183 passed, 0 failed; UI production build passes.
-- Not deployed yet.
+- Deployed with V524 (see the next deploy entry).
 
 ## 2026-11-19T22:00:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows) - Form 8615 earned income rules (V522).

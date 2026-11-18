@@ -420,8 +420,13 @@
   K1PerActivity.PRIORS (released with it when sold), a PTP's on its own K-1 (any number of PTPs), an active box-2-only K-1's into Part
   IV, and the at-risk carryover into its partnership's box 1 loss. The three totals and the one at-risk box were dropped. Known limit:
   an active box-2-only K-1's carried loss goes to the Part IV pool (special allowance), so its sale doesn't release it separately.
-- The Part V share is one total (V469, 2026-11-11), not per activity: with every rental disposed of it is released with them only when no
-  passive K-1 is on the return; a K-1 activity disposed of this year doesn't release its own share (see the per-activity item above).
+- ~~The Part V share is one total (V469, 2026-11-11), not per activity: with every rental disposed of it is released with them only when no
+  passive K-1 is on the return; a K-1 activity disposed of this year doesn't release its own share (see the per-activity item above).~~
+  **FIXED 2026-11-18 (no fields):** with every rental sold and a Schedule K-1 on the return, last year's per-activity record is used
+  instead of the two totals (PassiveCarryforwardByActivity.seed): each sold property takes its own carried loss, freed with its sale
+  (IRC 469(g)), and each K-1 keeps its own (a sold K-1 frees its own since phase 2 / V512). Only when the record matches this year's
+  activities and adds up to last year's total and Part V share; otherwise the totals as before. With no K-1 the bridged release is
+  unchanged.
 
 ## Homebuyer credit repayment (Form 5405): found in the 2026-11-08 review, not changed
 

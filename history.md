@@ -6,6 +6,19 @@ Full e2e regression (playwright --project=regression, 1 worker, no retries): 2,4
   to the e-mail flow ("UI fallback needs E2E_SHARED_AUTH_EMAIL") / the shell's person tabs never rendered. Both pass on a re-run.
 - Re-run of the three spec files: 10 passed.
 
+## 2026-11-18T12:00:00
+Form 8582 - every rental sold with a Schedule K-1 on the return: last year's carried losses split by activity (outstanding.md "Suspended
+passive losses: the Part V share is one total"). PassiveCarryforwardByActivity.seed no longer falls back to the two totals when every
+rental is sold and a K-1 is on the return (the Part V total stayed suspended whole - it could be the K-1's): each sold property takes its
+own carried loss, freed with its sale (IRC 469(g)), each K-1 keeps its own. No fields. Unit K1PerActivityTest (+2); e2e
+k1-passive-by-activity-bridge.spec.ts (+1, two years); related passive specs 25 passed; unit suite 6,114 passed, 0 failed. Backend 901fba0b.
+
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44296128822 on 901fba0b - revision ca-ustax-be--0000671 serving 100%
+  traffic, image ustax-be:901fba0; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend: unchanged (no UI change).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-18T11:00:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44223280290 on b68060c3 - revision ca-ustax-be--0000670 serving

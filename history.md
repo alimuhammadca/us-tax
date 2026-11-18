@@ -1,3 +1,25 @@
+## 2026-11-19T22:30:00
+Schedule 1-A tips - a specified service trade or business (outstanding.md "Additional deductions"; owner-approved fields, V523 -
+pf_additional_deductions taxpayer/spouse_tips_from_specified_service). Tips received in a specified service trade or business (health,
+law, accounting, actuarial science, performing arts, consulting, athletics, financial or brokerage services) aren't qualified tips -
+never asked. The SSN "valid for employment" part of the note was already done (SsnForWork, V490); the TTOC closed (no box on the 2025
+Schedule 1-A).
+- Backend: Schedule1AComputations.specifiedService - a Yes leaves that person's tips out of Part II, with the notice
+  SCHEDULE_1A_TIPS_SPECIFIED_SERVICE.
+- UI: Additional deductions - the question after the occupation question, a warning with a Yes, help listing the fields.
+- Tests: Schedule1ATipsSpecifiedServiceTest (2); e2e additional-deductions-screen.spec.ts "tips from a specified service business ..."
+  (an existing test now answers the new question - its "Still to answer" text listed it). Additional deductions e2e 36 passed; unit
+  suite 6,183 passed, 0 failed; UI production build passes.
+- Not deployed yet.
+
+## 2026-11-19T22:00:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows) - Form 8615 earned income rules (V522).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44399368430 on 4f813637 - revision ca-ustax-be--0000682 serving
+  100% traffic, image ustax-be:4f81363; /q/health/ready UP (V522 applied). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 44399373351 on 03d5596 - live at https://www.taxbeans.com
+  (bundle main-47H5FTBI.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-19T21:00:00
 Form 8615 - two earned income rules (outstanding.md "Kiddie income"; owner-approved fields, V522). Instructions for Form 8615, Earned
 income: in a business where capital and services are both material, earned income is a reasonable allowance of at most 30% of the net

@@ -46,6 +46,11 @@ sections:
         required: false
         label: Did you receive qualified tips from a tipped occupation?
         help: Select Yes only for tips in occupations listed at IRS.gov/TippedOccupations.
+      - name: taxpayerTipsFromSpecifiedService
+        type: boolean
+        required: false
+        label: Were the tips earned in (or working for) a business in health, law, accounting, actuarial science, performing arts, consulting, athletics, financial services or brokerage?
+        help: V523 (owner-approved 2026-11-19) - a Yes means not qualified tips (Instructions for Schedule 1-A). Shown with taxpayerReceivedQualifiedTips true.
       - name: taxpayerTippedOccupationConfirmed
         type: boolean
         required: false

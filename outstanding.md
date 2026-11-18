@@ -608,7 +608,11 @@
 
 ## Additional deductions (Schedule 1-A): found in the 2026-11-07 review, not changed
 
-- Tips: the SSN "valid for employment", tips in a specified service trade or business, and the occupation code (TTOC) aren't asked; the
+- Tips: ~~the SSN "valid for employment", tips in a specified service trade or business, and the occupation code (TTOC) aren't asked~~
+  **(2026-11-19)** the SSN "valid for employment" was already asked on Identification and used (SsnForWork, V490 2026-11-16 - this note
+  was out of date); tips from a specified service trade or business FIXED (owner-approved fields, V523 - pf_additional_deductions
+  taxpayer/spouse_tips_from_specified_service: a Yes takes that person's tips out, with SCHEDULE_1A_TIPS_SPECIFIED_SERVICE); the TTOC
+  CLOSED, no change (the 2025 Schedule 1-A has no box for it; the occupation list question is asked); the
   business net income for tips (Schedule 1-A line 5) is figured from Schedule C / F when the return has exactly one business
   (Schedule1ATradeTipsLimit, since 2026-11-10); with more than one - including one each for two spouses - it is typed, one net
   income per person (the Multiple Trades or Businesses Worksheet isn't built).

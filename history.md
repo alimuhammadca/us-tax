@@ -1,3 +1,14 @@
+## 2026-11-19T10:30:00
+Form 8379 - what the filer writes by hand (outstanding.md "Injured spouse"; owner: no form change; no fields). Instructions for Form
+8379: "Enter 'Injured Spouse' in the upper left corner of page 1 of the joint return", and line 13b "Identify the type and amount".
+- Backend: Form8379Notes - line 13b's other income by type and amount (Form 1040 lines 1b-1h, 2b, 3b, 4b, 5b, 6b, 7, 8) on the Form 8379
+  output (line13bTypes, kept in fields_json under __line13bTypes) and the notices FORM_8379_WRITE_INJURED_SPOUSE and
+  FORM_8379_LINE_13B_TYPES, only when Form 8379 goes with the return.
+- UI: Injured spouse - the line 13b list and the "Injured Spouse" write-in note under Splitting the joint return. Form 1040 and Form 8379
+  are unchanged.
+- Tests: Form8379NotesTest (2); e2e injured-spouse-screen.spec.ts "line 13b by type and amount ...". Form 8379 e2e specs 6 passed;
+  unit suite 6,159 passed, 0 failed; UI production build passes.
+
 ## 2026-11-19T09:00:00
 Form 8938 - the highest total on one day (outstanding.md "Foreign assets", the "any time" test; owner-approved field, V519 -
 pf_form_8938.any_time_one_day_total). The "at any time" threshold is the total on one day (Instructions for Form 8938, Reporting

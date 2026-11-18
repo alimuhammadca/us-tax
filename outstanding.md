@@ -552,10 +552,13 @@
 
 ## Injured spouse (Form 8379): found in the 2026-11-08 review, not changed
 
-- "Injured Spouse" written in the upper left corner of Form 1040 page 1 when Form 8379 goes with the return (How To File) - the Form 1040
-  preview and export don't show it.
-- Line 13b's "Identify the type and amount" of the other income is not listed; Part IV (signature, only when filed by itself) is out of
-  scope (self-filing with the return).
+- ~~"Injured Spouse" written in the upper left corner of Form 1040 page 1 when Form 8379 goes with the return (How To File) - the Form 1040
+  preview and export don't show it.~~ **FIXED 2026-11-19 (owner: no form change, no fields):** a notice FORM_8379_WRITE_INJURED_SPOUSE
+  and a note on the Injured spouse screen tell the filer to write it in (Form 1040 has no box for it; the form is not changed).
+- ~~Line 13b's "Identify the type and amount" of the other income is not listed~~ **FIXED 2026-11-19 (no fields):** Form8379Notes lists the
+  other income by type and amount from the return (Form 1040 lines 1b-1h, 2b, 3b, 4b, 5b, 6b, 7, 8 - adding up to line 13b column (a)) on
+  the Injured spouse screen and in the notice FORM_8379_LINE_13B_TYPES (the form has only the amount columns). Part IV (signature, only
+  when filed by itself) is out of scope (self-filing with the return).
 
 ## Noncash charity (Form 8283): found in the 2026-11-08 review, not changed
 

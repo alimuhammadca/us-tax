@@ -42,3 +42,19 @@ sections:
         required: false
         label: "Only if the child itemizes: deductions directly connected with the unearned income"
         help: "Line 2: the larger of $2,700 or $1,350 plus this amount (passed to the child's return since 2026-11-07)."
+      # V522 (owner-approved 2026-11-19): Instructions for Form 8615, Earned income
+      - name: businessCapitalMaterial
+        type: boolean
+        required: false
+        label: "If the child has a business or farm: do both capital and the child's own work produce its income?"
+      - name: businessServicesAllowance
+        type: amount
+        required: false
+        showIf: businessCapitalMaterial == true
+        label: A reasonable amount to pay someone for the child's work in the business
+        help: Earned at most 30% of the net profit after half the self-employment tax (blank uses the 30%); the rest of the profit is unearned on line 1.
+      - name: qualifiedDisabilityTrustDistributions
+        type: amount
+        required: false
+        label: Taxable distributions from a qualified disability trust included in the child's income
+        help: Earned income for Form 8615 - taken off line 1.

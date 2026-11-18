@@ -1,3 +1,22 @@
+## 2026-11-19T21:00:00
+Form 8615 - two earned income rules (outstanding.md "Kiddie income"; owner-approved fields, V522). Instructions for Form 8615, Earned
+income: in a business where capital and services are both material, earned income is a reasonable allowance of at most 30% of the net
+profit (after half the SE tax) - all of it counted as earned, understating the kiddie tax; and "Earned income also includes any taxable
+distribution from a qualified disability trust" - counted as unearned, overstating it.
+- Backend: Form8615Line1.withEarnedIncomeRules on line 1 (the profit above the limit added, the trust distribution taken off);
+  DependentKiddieAnswers passes the answers to the child's own return (the first e2e run caught that they were not read there).
+- UI: Kiddie income - "Earned income rules": the capital question, the reasonable allowance (blank uses the 30%), the trust amount.
+- Tests: Form8615EarnedIncomeRulesTest (4); e2e kiddie-income-screen.spec.ts "earned income rules ...". Kiddie e2e specs 21 passed;
+  unit suite 6,181 passed, 0 failed; UI production build passes.
+
+## 2026-11-19T20:00:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows) - Form 8283 vehicle Form 1098-C by VIN.
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44394562206 on ccd89a3e - revision ca-ustax-be--0000681 serving
+  100% traffic, image ustax-be:ccd89a3; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 44394566566 on 38c99f9 - live at https://www.taxbeans.com
+  (bundle main-MVTL2TGL.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-19T19:30:00
 Form 8283 - each vehicle's own Form 1098-C (outstanding.md "Noncash charity"; owner; no fields). The Section A / B choice for every
 vehicle used any Form 1098-C on file with box 5a or 5b, so with two vehicles a sold one went to Section B.

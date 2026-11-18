@@ -595,8 +595,13 @@
 ## Kiddie income (Form 8615): found in the 2026-11-07 review, not changed
 
 - No Form 8615 preview or PDF: the form is figured on the child's own return but never shown (owner: defer; the Schedule H staged method).
-- The 30% rule for a child's business where capital is material (Form 8615 earned income), a qualified disability trust distribution, and
-  "the child is required to file a return" are not checked (checked 2026-11-13: the last needs no check - Form 8615 needs over $2,700 of
+- **The 30% rule and a qualified disability trust FIXED 2026-11-19 (owner-approved fields, V522 - pf_kiddie_income
+  business_capital_material / business_services_allowance / qualified_disability_trust_distributions):** the Kiddie income screen asks
+  whether capital and the child's work both produce the business's income (then a reasonable allowance; earned at most 30% of the net
+  profit after half the SE tax, the rest unearned) and the taxable qualified disability trust distributions (earned) -
+  Form8615Line1.withEarnedIncomeRules on line 1; the child's own return reads them (DependentKiddieAnswers).
+- ~~The 30% rule for a child's business where capital is material (Form 8615 earned income), a qualified disability trust distribution, and~~
+  "the child is required to file a return" ~~are~~ is not checked (checked 2026-11-13: the last needs no check - Form 8615 needs over $2,700 of
   unearned income and a dependent must file over $1,350 of it (2025 Form 1040 instructions, Chart B), so it is always met; only a blind
   dependent's $3,350 differs, and blindness isn't asked for a dependent); the legacy household copy (kiddie-income-taxpayer, not in the sidebar) still
   reads the typed amounts.

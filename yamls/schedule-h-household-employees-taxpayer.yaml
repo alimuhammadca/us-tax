@@ -77,6 +77,8 @@ sections:
         type: amount
         required: false
         label: "Federal income tax withheld from all household employees in 2025, if any"
+        note: "2026-11-20: with the Address screen's state Puerto Rico a note says employers located in Puerto Rico skip line 7 (only an
+          employee subject to U.S. income tax withholding)."
 
   - name: stateDisability
     title: State disability payments

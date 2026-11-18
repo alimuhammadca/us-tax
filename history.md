@@ -1,3 +1,12 @@
+## 2026-11-20T02:10:00
+Schedule H - Puerto Rico household employers (outstanding.md "Household employees (Schedule H)"). Instructions for Schedule H, line 7:
+"Household employers located in Puerto Rico, skip line 7" - references to federal income tax withholding don't apply to them unless an
+employee is subject to U.S. income tax withholding.
+- UI: Household employees - with the Address screen's state Puerto Rico (the spouse's own address on the spouse's copy), a note under
+  the line 7 question; the help says the same. No new field; the calculation unchanged (an amount entered is the filer's).
+- Tests: e2e household-employees-screen.spec.ts "Puerto Rico employer ..." (a Puerto Rico address shows the note, a New York one
+  doesn't). Schedule H e2e 11 passed; UI production build passes.
+
 ## 2026-11-20T01:30:00
 Schedule H - state disability plan payments (outstanding.md "Household employees (Schedule H)"; owner-approved fields, V526 -
 pf_schedule_h.has_state_disability_payments, state_disability_payments, state_disability_taxes_withheld). Instructions for Schedule H,
@@ -7,7 +16,7 @@ state withheld come off the line 8 total, with "disability" and the amount on th
   zero); SCHEDULE_H_STATE_DISABILITY_PAYMENTS gives the write-in (Schedule H has no box for it, so its structure is unchanged).
 - UI: Household employees - a "State disability payments" section (the question, then the two amounts), help from the instructions.
 - Tests: ScheduleHStateDisabilityTest (2); e2e household-employees-screen.spec.ts "state disability payments ...". Schedule H e2e 10
-  passed; unit suite 6,191 passed, 0 failed; UI production build passes. Not deployed yet.
+  passed; unit suite 6,191 passed, 0 failed; UI production build passes. Deployed with the next deploy entry.
 
 ## 2026-11-20T00:40:00
 Form 8814 - the parents' No is remembered (outstanding.md "Child's int. & dividends (Form 8814)"; owner-approved field, V525 -
@@ -17,7 +26,7 @@ FORM8814_CHILD_STATEMENTS_NOT_ELECTED kept reminding.
 - UI: Child's int. & dividends - a No saves the entry (amounts cleared) with electsForm8814 false; a saved No shows on reopening; the remove
   confirmation only when a saved Yes becomes No.
 - Tests: Form8814DeclinedTest (3); e2e child-interest-dividends-screen.spec.ts "a No removes the election, is remembered (V525) ...".
-  Form 8814 e2e 62 passed; unit suite 6,189 passed, 0 failed; UI production build passes. Not deployed yet.
+  Form 8814 e2e 62 passed; unit suite 6,189 passed, 0 failed; UI production build passes. Deployed with the next deploy entry.
 
 ## 2026-11-19T23:55:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).

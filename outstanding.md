@@ -564,9 +564,15 @@
 
 - (Since 2026-11-13, when every typed noncash amount is blank, the list fills them - Form8283Deduction, SCHEDULE_A_NONCASH_FROM_FORM_8283_LIST:
   property held over a year and worth more than its cost at value under the 30% limit, other property at the smaller of value and cost
-  under the 50% limit (Pub. 526); vehicles and bargain sales keep their own paths.) Assumed, as the note says: a public charity and a
+  under the 50% limit (Pub. 526); vehicles and bargain sales keep their own paths.) ~~Assumed, as the note says: a public charity and a
   related use - the list doesn't ask whether the charity is a private foundation or tangible property was put to an unrelated use
-  (asking would be two fields per gift: owner sign-off); for those the amounts stay typed.
+  (asking would be two fields per gift: owner sign-off); for those the amounts stay typed.~~ **FIXED 2026-11-19 (owner-approved fields,
+  V520 - pf_form_8283_donation donee_private_foundation / related_use):** each gift asks whether the charity is a private non-operating
+  foundation and, for tangible personal property given to another charity, whether it will use the item for its exempt purpose;
+  Form8283Deduction - to a private foundation, capital gain property at its basis unless publicly traded stock (at value, 20% limit),
+  the rest under the 30% limit; tangible property put to an unrelated use at its basis (50% limit); unanswered as before. The private
+  foundation property's allowed share goes on Schedule A line 12, not line 11 (ScheduleAComputations). (Not changed: a typed private
+  foundation capital gain amount reduced to basis still goes with the 30% bucket on line 11.)
 - Not asked: partial interests and restricted use (Section B Part II), qualified conservation contributions on the list, Part III items of
   $500 or less inside a Section B group, art of $20,000 or more needing the appraisal attached, a vehicle's 1098-C picked per gift (the
   Section A / B choice for a vehicle uses any Form 1098-C on file with box 5a or 5b).

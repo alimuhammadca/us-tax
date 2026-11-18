@@ -1,3 +1,17 @@
+## 2026-11-19T13:00:00
+Form 8283 list - a private foundation and an unrelated use (outstanding.md "Noncash charity"; owner-approved fields, V520 -
+pf_form_8283_donation donee_private_foundation / related_use). Pub. 526, Giving Property That Has Increased in Value: the list assumed
+every charity a public charity and every tangible gift put to a related use.
+- Backend: Form8283Deduction - to a private non-operating foundation, capital gain property at its basis unless publicly traded stock
+  (qualified appreciated stock, at value, 20% limit), everything else under the 30% limit; tangible personal property put to an
+  unrelated use at its basis (50% limit); unanswered as before. ScheduleAComputations puts the private foundation property's allowed
+  share on Schedule A line 12 (other than cash), not line 11.
+- UI: Noncash charity - each gift asks the private foundation question, and the related-use question for tangible property (help from
+  Pub. 526).
+- Tests: Form8283PrivateFoundationTest (6); e2e noncash-charity-screen.spec.ts "a private foundation and an unrelated use ...". Noncash
+  charity and charitable e2e specs 67 passed; unit suite 6,165 passed, 0 failed; UI production build passes.
+- Not deployed yet.
+
 ## 2026-11-19T11:30:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows) - Form 8379 notices and the Form 8938 one-day total
 (V519).

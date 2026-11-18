@@ -71,6 +71,17 @@ sections:
         type: text
         required: false
         label: "(i) Method used to determine fair market value"
+      - name: doneePrivateFoundation
+        type: boolean
+        required: false
+        label: Is the charity a private non-operating foundation (for example a family foundation)?
+        help: V520 (owner-approved 2026-11-19) - Pub. 526. Capital gain property at its basis unless publicly traded stock (at value, 20% limit); the rest under the 30% limit.
+      - name: relatedUse
+        type: boolean
+        required: false
+        showIf: "doneePrivateFoundation != true and tangible personal property"
+        label: Will the charity use the item for its own exempt purpose (not sell it or use it for something unrelated)?
+        help: V520 - tangible personal property put to an unrelated use is deducted at its basis (Pub. 526).
       - name: isPubliclyTradedSecurity
         type: boolean
         required: false

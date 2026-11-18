@@ -12,6 +12,7 @@ whose only Form 1098-T came from a third school lost the credit.
 - Tests: Form8863ThirdSchoolTest (3); e2e education-credits-screen.spec.ts "a third school ...". Education e2e specs 54 of 55 passed -
   "no Form 1098-T: the exception question" failed at its first dropdown right after the dev backend restart and passed alone and in a
   re-run of the whole spec file (6 passed); unit suite 6,139 passed, 0 failed; UI production build passes.
+- Not deployed yet.
 
 ## 2026-11-18T22:30:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows) - Form 8863 eligibility answers.

@@ -1,3 +1,12 @@
+## 2026-11-19T05:30:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows) - Form 8611 Line 2 Worksheet (V517) and Form 8828
+QSML (V516).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44359274754 on 36e6382d - revision ca-ustax-be--0000676 serving
+  100% traffic, image ustax-be:36e6382; /q/health/ready UP (V516, V517 applied). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 44359279891 on 764dc4d - live at https://www.taxbeans.com
+  (bundle main-CKHJYX6Y.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-19T04:00:00
 Form 8611 Line 2 Worksheet (outstanding.md "Low-income housing credit recapture"; owner-approved fields, V517 -
 pf_form_8611_building.line2_worksheets_json). Line 2 was one typed number; the form figures it with a separate Line 2 Worksheet for each
@@ -22,7 +31,7 @@ the recapture tax were too high.
   "One home per year" closed with no change.
 - Tests: Form8828QsmlTest (3); e2e mortgage-subsidy-screen.spec.ts "a QSML lender share ...". Form 8828 e2e specs 23 passed; unit suite
   6,146 passed, 0 failed; UI production build passes.
-- Not deployed yet.
+- Deployed 2026-11-19T05:30 (see the deploy entry).
 
 ## 2026-11-19T01:30:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows) - Form 8990 Schedules A and B (V515) and the Form

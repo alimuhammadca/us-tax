@@ -75,6 +75,7 @@ sections:
       - {name: partyRole, type: select, label: Issuer or counterparty (line 36a), options: [issuer, counterparty], showIf: entityInterest == false}
       - {name: partyType, type: select, label: Type of entity (35c) or issuer / counterparty (36b), options: [individual, partnership, corporation, trust, estate]}
       - {name: partyUsPerson, type: boolean, label: Issuer or counterparty is a U.S. person (line 36c), showIf: entityInterest == false}
+      - {name: additionalParties, type: list, label: "Other issuers or counterparties (name, partyRole, partyType, partyUsPerson, addressStreet, addressCity, country) - a page 2 copy each with line 36 (V518, owner-approved 2026-11-19)", showIf: entityInterest == false}
       - {name: giin, type: text, label: GIIN (optional; line 35b), showIf: entityInterest == true}
       - {name: addressStreet, type: text, label: Mailing address - number and street (35d / 36d)}
       - {name: addressCity, type: text, label: City, state or province, and postal code (35e / 36e)}

@@ -537,8 +537,12 @@
 - Who is a specified individual is not checked (a nonresident alien who is not electing resident status doesn't file), and on a separate
   return a joint asset counts in full when the spouse is a nonresident alien (not a specified individual - Instructions for Form 8938,
   Example 11) since 2026-11-12; otherwise at half.
-- An additional page 2 renders as a full form in the preview (page 1 blank); several issuers or counterparties for one asset (one line 36
-  each) are not asked.
+- ~~An additional page 2 renders as a full form in the preview (page 1 blank); several issuers or counterparties for one asset (one line 36
+  each) are not asked.~~ **FIXED 2026-11-19 (owner-approved; fields V518 - pf_form_8938_item.additional_parties_json):** the preview prints
+  page 1 once and only page 2 for each additional statement (pure-pdf-preview onlyPages; the pages unchanged); each other foreign asset
+  that is not a foreign entity interest has "Add another issuer or counterparty" (the line 36 questions), and each gets a page 2 copy with
+  lines 29, 30 and its line 36 (Form8938Parties), counted in the "additional statements" box on page 1 (Instructions for Form 8938, Lines
+  36a Through 36e).
 - The "any time" test (2026-11-13, i8938 Reporting Thresholds: the total on one day) adds only the maximum values of items held on the
   same day - by the opened / acquired and closed / disposed dates (Form8938Compute.anyTimeTotal); items held together still add their
   maximums, which may be on different days - FORM_8938_ANY_TIME_FROM_MAXIMUMS says so when only that sum crosses the threshold (the

@@ -1,3 +1,14 @@
+## 2026-11-19T07:00:00
+Form 8938 - additional page 2 copies and more issuers or counterparties (outstanding.md "Foreign assets"; owner-approved, fields V518 -
+pf_form_8938_item.additional_parties_json).
+- Preview: each additional statement printed a whole Form 8938 (a blank page 1 and page 2); now page 1 once and only page 2 for each copy
+  (pure-pdf-preview gained an optional onlyPages input - the pages themselves unchanged; other previews unaffected).
+- Line 36: an other foreign asset that is not a foreign entity interest can have more issuers or counterparties ("Add another issuer or
+  counterparty" with the line 36 questions); Form8938Parties gives each a page 2 copy with lines 29, 30 and its line 36, counted in the
+  "additional statements" box on page 1 (Instructions for Form 8938, Lines 36a Through 36e). No change to values or the threshold.
+- Tests: Form8938PartiesTest (3); e2e foreign-assets-screen.spec.ts "a second counterparty and a second account ...". Form 8938 and
+  preview e2e specs 32 passed; unit suite 6,153 passed, 0 failed; UI production build passes.
+
 ## 2026-11-19T05:30:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows) - Form 8611 Line 2 Worksheet (V517) and Form 8828
 QSML (V516).

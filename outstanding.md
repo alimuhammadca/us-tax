@@ -430,10 +430,14 @@
 
 ## Homebuyer credit repayment (Form 5405): found in the 2026-11-08 review, not changed
 
-- Form 5405 itself is not produced (no preview): a 2024 disposition repays through Schedule 2 line 10 but the form with Part I-III
-  is not attached.
-- On a joint 2024 return each spouse's half is entered on their own copy; a transfer from the spouse (line 4 "the total credit
-  claimed by both") is entered by hand.
+- ~~Form 5405 itself is not produced (no preview): a 2024 disposition repays through Schedule 2 line 10 but the form with Part I-III
+  is not attached.~~
+- ~~On a joint 2024 return each spouse's half is entered on their own copy; a transfer from the spouse (line 4 "the total credit
+  claimed by both") is entered by hand.~~
+  **CLOSED 2026-11-18, no change (owner-approved):** both are 2024-only. Form 5405 (Rev. November 2024): "2024 is the last year to
+  file Form 5405" - the 15-year repayment for 2008 homes ended with the 2024 return; 2025 Schedule 2 line 10 is "Reserved for Future
+  Use". The app files 2025 returns: the screen shows only for 2024 and earlier and nothing is figured after 2024
+  (Form5405Repayment.LAST_YEAR), so a 2025 return has no Form 5405 to attach.
 
 ## Home energy credits (Form 5695): found in the 2026-11-08 review, not changed
 

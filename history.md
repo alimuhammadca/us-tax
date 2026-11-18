@@ -6,6 +6,11 @@ Full e2e regression (playwright --project=regression, 1 worker, no retries): 2,4
   to the e-mail flow ("UI fallback needs E2E_SHARED_AUTH_EMAIL") / the shell's person tabs never rendered. Both pass on a re-run.
 - Re-run of the three spec files: 10 passed.
 
+## 2026-11-18T12:30:00
+Closed outstanding.md "Homebuyer credit repayment (Form 5405)" with no change (owner-approved): the missing Form 5405 preview and the joint
+2024 transfer entry apply only to 2024 returns - "2024 is the last year to file Form 5405" (Rev. November 2024), and 2025 Schedule 2
+line 10 is reserved. The screen is already hidden for 2025 and nothing is figured after 2024.
+
 ## 2026-11-18T12:00:00
 Form 8582 - every rental sold with a Schedule K-1 on the return: last year's carried losses split by activity (outstanding.md "Suspended
 passive losses: the Part V share is one total"). PassiveCarryforwardByActivity.seed no longer falls back to the two totals when every

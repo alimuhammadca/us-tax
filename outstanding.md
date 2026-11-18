@@ -510,8 +510,14 @@
 - (Since 2026-11-12 a blank sales price, sale date or address comes from the home's Form 1099-S - the only one with gross proceeds, or
   the one with the screen's address; FORM_8828_FILLED_FROM_1099S. Not on a separate return.) The expenses of sale and basis stay typed
   (not on Form 1099-S).
-- Line 13's qualifying subordinate mortgage loan (QSML) adjustment ("QSML" and the share of gain paid to the lender) is not supported; one
-  home per year only.
+- ~~Line 13's qualifying subordinate mortgage loan (QSML) adjustment ("QSML" and the share of gain paid to the lender) is not supported; one
+  home per year only.~~ **QSML FIXED 2026-11-19 (owner-approved fields, V516 - pf_form_8828 qsml_gain_shared / qsml_amount_paid /
+  qsml_paid_date):** the screen asks whether part of the gain was paid to a QSML governmental lender, the amount and the date; line 13 is
+  the gain less that share (never below zero; halved with the home on a separate return), lines 14-23 follow. The worksheet the
+  instructions ask for is shown on the screen and as the advisory FORM_8828_QSML_WORKSHEET (the gain, the share paid and the date, "write
+  QSML on the dotted line") - not as a new Tax Return page, and the "QSML" write-in is not printed: the form has no box on that dotted
+  line (owner: no change to a tax-return form's structure). **One home per year CLOSED, no change (owner):** the subsidy is for the main
+  home and there is one main home at a time.
 
 ## Low-income housing credit recapture (Form 8611): found in the 2026-11-08 review, not changed
 

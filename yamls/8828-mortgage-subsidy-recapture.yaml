@@ -89,3 +89,18 @@ sections:
         type: number
         required: false
         label: "20 Holding period percentage (whole %, e.g. 100)"
+      - name: qsmlGainShared
+        type: boolean
+        required: false
+        label: Did you pay part of the gain to a QSML government lender (a qualifying subordinate mortgage loan or grant)?
+        help: V516 (owner-approved 2026-11-19) - Instructions for Form 8828, Line 13. Line 13 = the gain less the share paid to the lender.
+      - name: qsmlAmountPaid
+        type: amount
+        required: false
+        showIf: qsmlGainShared == true
+        label: Share of the gain paid to the lender
+      - name: qsmlPaidDate
+        type: date
+        required: false
+        showIf: qsmlGainShared == true
+        label: Date you paid the lender

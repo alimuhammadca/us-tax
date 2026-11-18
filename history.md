@@ -1,3 +1,17 @@
+## 2026-11-19T02:30:00
+Form 8828 line 13 - a QSML lender's share of the gain (outstanding.md "Mortgage subsidy recapture"; owner-approved fields, V516 -
+pf_form_8828 qsml_gain_shared / qsml_amount_paid / qsml_paid_date). Instructions for Form 8828, Line 13: with a share of the gain paid to
+the QSML governmental lender, "In the amount column for line 13, enter your share of the gain" - the full gain was used, so line 14 and
+the recapture tax were too high.
+- Backend: Form8828Compute - line 13 = the gain less the share paid (never below zero; halved with a jointly owned home on a separate
+  return), lines 14-23 follow; advisory FORM_8828_QSML_WORKSHEET with the gain, the share, the date and "write QSML on the dotted line".
+- UI: Mortgage subsidy recapture - the QSML question, the amount and the date, and the worksheet as a note; the screen's tax follows.
+- Not changed (owner: no change to a tax-return form's structure): no new Tax Return page and no "QSML" write-in on the form (no box).
+  "One home per year" closed with no change.
+- Tests: Form8828QsmlTest (3); e2e mortgage-subsidy-screen.spec.ts "a QSML lender share ...". Form 8828 e2e specs 23 passed; unit suite
+  6,146 passed, 0 failed; UI production build passes.
+- Not deployed yet.
+
 ## 2026-11-19T01:30:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows) - Form 8990 Schedules A and B (V515) and the Form
 8863 third school (V514).

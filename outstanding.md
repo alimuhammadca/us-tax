@@ -456,8 +456,14 @@
   18a-20d amounts are dropped before the Part II subsidy (EnergyCreditInputs.withoutNewHomeConstruction, so a subsidy goes to the lines
   that remain) and the lines stay blank on the form; lines 22-30 are unchanged. The screen asks "Are the improvements you are claiming
   related to building a new home?" and with a Yes hides the insulation, door and window entries (cleared on save).
-- The "statement" the form asks for (other homes, the items on the "all other" lines with their QMIDs, a second main home for fuel
-  cells) is not produced as an attachment.
+- ~~The "statement" the form asks for (other homes, the items on the "all other" lines with their QMIDs, a second main home for fuel
+  cells) is not produced as an attachment.~~ **FIXED 2026-11-18 (owner-approved new Tax Return page; no fields):** Tax Return >
+  "Form 5695 statement" (shown only when needed, with Print), from form5695List[i].statement (Form5695Statement, rides in form_json):
+  the items on each "all other" line (19e, 20b, 22b, 23b, 24b, 29b, 29d, 29f) with description, QMID and cost - the ones after the
+  form's rows, in the preview's most-expensive-first split - and a typed "other" amount as "Amount entered without item details"; the
+  joint occupancy allocation (line 8 fuel cell, each shared Part II line, line 28: paid, paid by all occupants, for all occupants,
+  share, on this return); the Part I additional homes, a spouse's different main home for a fuel cell (line 7b), line 21c homes after
+  four. The screen asks for items instead of a typed "other" amount (a note under it).
 
 ## Education credits (Form 8863): found in the 2026-11-08 review, not changed
 

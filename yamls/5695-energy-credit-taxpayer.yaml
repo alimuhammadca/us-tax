@@ -256,6 +256,7 @@ sections:
         required: false
         placeholder: 0.00
         label: Other qualifying exterior door costs (line 19e)
+        help: 2026-11-18 - with an amount the screen notes that each item should be added above instead; the Form 5695 statement lists a typed amount without item details. The same note is under each "other" amount (20b, 22b, 23b, 24b, 29b, 29d, 29f).
       - name: otherWindowCosts
         type: amount
         required: false
@@ -496,6 +497,11 @@ sections:
     multiplicity: single
     showIf: claimsEnergyCreditOnReturn == true
     fields:
+      - name: statement
+        type: object
+        readOnly: true
+        computed: true
+        label: The statement attached to Form 5695 (Tax Return > Form 5695 statement) - otherItems (the "all other" lines' items with QMID and cost), jointOccupancy (the allocation, lines 7c / 32a), addresses (Part I other homes, line 7b spouse's main home, line 21c after four). Owner-approved 2026-11-18.
       - name: computedForm5695Count
         type: amount
         required: false

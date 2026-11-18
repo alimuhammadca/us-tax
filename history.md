@@ -1,3 +1,19 @@
+## 2026-11-18T17:00:00
+Form 5695 statement (outstanding.md "Home energy credits: the statement"; owner-approved new Tax Return page; no fields; Form 5695
+itself unchanged). The 2025 Form 5695 and its instructions say "attach a statement" for the items on each "all other" line ("listing
+the QMID and cost of each item included on line 19e" - also 20b, 22b, 23b, 24b, 29b, 29d, 29f), for joint occupants (lines 7c / 32a:
+"explaining how you allocated the credit") and for homes the form has no room for; nothing was produced.
+- Backend: Form5695Statement.build (per Form 5695 copy, Part I parts on the primary copy) -> Form5695.statement {otherItems,
+  jointOccupancy, addresses}, null when none is needed; saved with the form in form_json. The "all other" rows follow the preview's
+  split (most expensive first: 1 door on 19a + 2 on 19d, 4 windows, 1 central air, 2 water heaters, 1 furnace, 1 of each line 29 kind);
+  a typed amount is "Amount entered without item details". Joint occupancy: the fuel cell ($1,667 x half-kW units for all occupants),
+  each shared Part II line (Form5695JointOccupancy.aggregate) and line 28 ($1,200), with the share and the amount on the return.
+  Homes: Part I additional addresses, a spouse's different fuel cell main home on a joint return (line 7b), line 21c after four.
+- UI: Tax Return > "Form 5695 statement" (form-tax-return-5695-statement, Print), only when a copy has a statement; on the Home
+  energy credits screen a note under each typed "other" amount asks for the items instead; help updated.
+- Tests: Form5695StatementTest (7); e2e energy-credit-screen.spec.ts "the Form 5695 statement ..." (compute + the page + the note).
+  Energy e2e specs 12 passed; unit suite 6,129 passed, 0 failed; UI production build passes.
+
 ## 2026-11-18T15:00:00
 Form 5695 line 17e (outstanding.md "Home energy credits: line 17e"; owner: follow the instructions; no fields). The form and the
 instructions disagreed on a Yes; the calculation followed the form and counted whatever was typed on lines 18-20. Now per the 2025

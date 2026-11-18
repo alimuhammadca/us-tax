@@ -1,3 +1,12 @@
+## 2026-11-19T11:30:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows) - Form 8379 notices and the Form 8938 one-day total
+(V519).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44370979810 on f835a2c4 - revision ca-ustax-be--0000678 serving
+  100% traffic, image ustax-be:f835a2c; /q/health/ready UP (V519 applied). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 44370985549 on 2dfe5ab - live at https://www.taxbeans.com
+  (bundle main-5OBELKWB.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-19T10:30:00
 Form 8379 - what the filer writes by hand (outstanding.md "Injured spouse"; owner: no form change; no fields). Instructions for Form
 8379: "Enter 'Injured Spouse' in the upper left corner of page 1 of the joint return", and line 13b "Identify the type and amount".
@@ -19,7 +28,7 @@ required when it isn't.
 - UI: Foreign assets - the optional box in exactly that case, the threshold note using it; cleared when it no longer applies.
 - Tests: Form8938OneDayTotalTest (4); e2e foreign-assets-screen.spec.ts "the highest total on one day ...". Form 8938 e2e specs 24
   passed; unit suite 6,157 passed, 0 failed; UI production build passes.
-- Not deployed yet.
+- Deployed 2026-11-19T11:30 (see the deploy entry).
 
 ## 2026-11-19T08:00:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows) - Form 8938 additional page 2 copies and line 36

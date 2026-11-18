@@ -1,3 +1,16 @@
+## 2026-11-18T21:30:00
+Education credits (Form 8863): the eligibility answers the screen never asked (outstanding.md "Education credits"; owner-approved -
+existing fields shown again, none added). 2025 Instructions for Form 8863, Who cannot claim a credit:
+- 1 "You're claimed as a dependent on another person's tax return": with Standard deduction "Someone can claim you" Yes, the screen asks
+  "Will that person claim you as a dependent on their return?" (claimedAsDependentOnAnotherReturn, read by the calculation already).
+- 3 nonresident alien: EducationCreditsInputs.withNonresidentStatus - Standard deduction dual-status, or on a joint return Filing status
+  "spouse a nonresident alien", without the election to treat the spouse as a resident -> taxpayerOrSpouseDisqualifiedAsNonresidentAlien
+  (blocking flag EDUCATION_CREDITS_NONRESIDENT_ALIEN_INELIGIBLE, message now names the two screens). The joint-return election lifts it.
+- 5 the TIN issued by the due date: asked only for an ITIN (a number starting with 9) - yours and each student's.
+- Tests: Form8863NonresidentFromHouseholdTest (4); e2e education-credits-screen.spec.ts "who can claim ...". Education e2e specs 35
+  passed; unit suite 6,136 passed, 0 failed; UI production build passes. (A template quote error first left the dev server on the old
+  bundle - caught when the new e2e couldn't find the section; fixed before the final run.)
+
 ## 2026-11-18T20:00:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows) - Form 8863 spouse student without a Form 1098-T.
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44333575713 on ba4906da - revision ca-ustax-be--0000673 serving

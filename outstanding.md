@@ -473,9 +473,13 @@
   names them; the spouse's screen points to it (a link); "received a Form 1098-T" is figured from both. The calculation no longer stops
   the return (AOTC_1098T_NOT_RECEIVED_NO_ALTERNATIVE) when only the spouse's student has one
   (EducationCreditComputations.spouseStudentHas1098T); the per-student check is unchanged.
-- The other screening fields the calculation reads (claimed as a dependent, nonresident alien, TIN issued by the due date) are not asked on
-  the screen; they are kept as loaded. (Next: take them from Standard deduction "Someone can claim you" and Filing status; the TIN
-  question only for an ITIN - owner sign-off for showing that field.)
+- ~~The other screening fields the calculation reads (claimed as a dependent, nonresident alien, TIN issued by the due date) are not asked on
+  the screen; they are kept as loaded.~~ **FIXED 2026-11-18 (owner-approved; existing fields shown again, none added):** i8863 Who cannot
+  claim a credit 1, 3, 5. (1) With Standard deduction "Someone can claim you" Yes, the screen asks "Will that person claim you as a
+  dependent on their return?" (claimedAsDependentOnAnotherReturn; cleared otherwise - could be claimed is not claimed). (3) Figured, not
+  asked: Standard deduction dual-status, or on a joint return Filing status "spouse a nonresident alien", without the election to treat
+  the spouse as a resident (EducationCreditsInputs.withNonresidentStatus); the saved answer is cleared on save. (5) The ITIN questions
+  (taxpayerTinIssuedByDueDate, each student's studentTinIssuedByDueDate) only for a number starting with 9; cleared otherwise.
 - A third school (an extra page 2 through line 22) is not supported.
 
 ## Business interest limit (Form 8990): found in the 2026-11-08 review, not changed

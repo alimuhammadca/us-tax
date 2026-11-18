@@ -58,6 +58,18 @@ sections:
         required: false
         label: If so, did you upload all the 1098-T statements you received?
         help: Select Yes only if all received 1098-T statements for claimed students were uploaded.
+      - name: claimedAsDependentOnAnotherReturn
+        type: boolean
+        required: false
+        showIf: standard-deductions-taxpayer.someoneCanClaimYou == true
+        label: Will that person claim you as a dependent on their return?
+        help: 2026-11-18 (owner-approved) - i8863 Who cannot claim a credit 1. Yes = no education credit on this return.
+      - name: taxpayerTinIssuedByDueDate
+        type: boolean
+        required: false
+        showIf: identification-taxpayer.ssn starts with 9 (an ITIN)
+        label: Was your ITIN issued by the due date of your return (including extensions)?
+        help: 2026-11-18 (owner-approved) - i8863 Who cannot claim a credit 5. Each student's studentTinIssuedByDueDate is asked the same way for a student ITIN. Nonresident alien status (taxpayerOrSpouseDisqualifiedAsNonresidentAlien) is figured from Standard deduction and Filing status, not asked.
       - name: usingAlternativeEnrollmentDocumentationForAnyStudent
         type: boolean
         required: false

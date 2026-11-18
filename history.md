@@ -1,3 +1,12 @@
+## 2026-11-19T01:30:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows) - Form 8990 Schedules A and B (V515) and the Form
+8863 third school (V514).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44351864428 on 0ed3e606 - revision ca-ustax-be--0000675 serving
+  100% traffic, image ustax-be:0ed3e60; /q/health/ready UP (V514, V515 applied). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 44351870351 on 3f792ad - live at https://www.taxbeans.com
+  (bundle main-MFPDHKKF.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-19T00:30:00
 Form 8990 Schedules A and B (outstanding.md "Business interest limit"; owner-approved fields, V515 - pf_form_8990
 partnerships_163j_json / s_corporations_163j_json). Page 3 was blank and lines 3, 14, 15 and 24 were typed totals; column (h) works per
@@ -25,7 +34,7 @@ whose only Form 1098-T came from a third school lost the credit.
 - Tests: Form8863ThirdSchoolTest (3); e2e education-credits-screen.spec.ts "a third school ...". Education e2e specs 54 of 55 passed -
   "no Form 1098-T: the exception question" failed at its first dropdown right after the dev backend restart and passed alone and in a
   re-run of the whole spec file (6 passed); unit suite 6,139 passed, 0 failed; UI production build passes.
-- Not deployed yet.
+- Deployed 2026-11-19T01:30 (see the deploy entry).
 
 ## 2026-11-18T22:30:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows) - Form 8863 eligibility answers.

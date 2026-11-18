@@ -1,3 +1,11 @@
+## 2026-11-18T09:00:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44218260171 on 3caca500 - revision ca-ustax-be--0000669 serving
+  100% traffic, image ustax-be:3caca50; /q/health/ready UP (V511 applied).
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 44218263373 on 259dfb05 - live at https://www.taxbeans.com
+  (bundle main-5NY65PCM.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-18T08:30:00
 General business credit (Form 3800) - the carryforward per credit and year (outstanding.md "General business credit (Form 3800)";
 owner-approved fields, V511).

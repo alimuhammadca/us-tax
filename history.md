@@ -1,3 +1,13 @@
+## 2026-11-19T21:05:00Z
+Form 8824: which recourse and nonrecourse debt counts as "taken over" (outstanding.md "Like-kind exchanges (Form 8824)"; no field, no
+calculation or form change).
+- Like-kind exchanges help for "Debt the other party took over" and "Debt taken over": the Instructions for Form 8824 line 15 rules -
+  a recourse loan counts if the party agreed to pay it and is expected to, even without a release; a nonrecourse loan counts when the
+  property changes hands subject to it, even without a signed assumption, less a part another asset owner agreed to pay (up to that
+  asset's value). A recourse/nonrecourse question would change no figure, so none was added.
+- Tests: e2e farmland-1062-help.spec.ts "the debt help explains when a recourse and a nonrecourse loan count as taken over"; Like-kind
+  exchanges screen e2e pass; UI build passes. Not deployed.
+
 ## 2026-11-19T20:55:00Z
 Section 1062 farmland installment election: not available on a 2025 return (outstanding.md "Like-kind exchanges (Form 8824)"; no field,
 no calculation or form change).

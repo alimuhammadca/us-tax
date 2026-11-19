@@ -846,7 +846,11 @@
   (FORM_8824_SECTION_1043_PERMITTED_MISSING) - and shows the existing date box as "Date the replacement property was bought", which
   must fall in the 60 days starting on the sale date (FORM_8824_SECTION_1043_60_DAYS, section 1043(a)).
 - Not asked (field additions - owner sign-off): incidental personal property (proposed 2026-11-19: a Yes/No "personal property included"
-  question - not yet approved); recourse vs nonrecourse debt.
+  question - not yet approved).
+- ~~Recourse vs nonrecourse debt is not asked.~~ **FIXED 2026-11-19** (no field - the kind of debt changes no figure once the right
+  amount is entered): the "Debt the other party took over" and "Debt taken over" help now give the Instructions for Form 8824 line 15
+  rules - a recourse liability counts if the party agreed to and is expected to pay it (release doesn't matter); a nonrecourse one
+  counts when the property is taken subject to it, less a part another asset owner agreed to pay (up to that asset's value).
 - **Section 1062 farmland installment election: 2026 tax year, not 2025** (checked 2026-11-19). The 2025 Instructions for Form 1040,
   What's New: "If your tax year began after July 4, 2025, and you sold or exchanged qualified farmland to a qualified farmer after that
   date, you can elect to pay the net income tax liability on the sale or exchange in four equal installments" - a calendar 2025 year

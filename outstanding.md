@@ -812,8 +812,13 @@
   FORM_4684_PART_DISPOSED_NOT_SPLIT.) (Since 2026-11-14 the share kept is saved with the return and the rest is figured again in later years while the
   saved asset keeps its full cost - AssetCostCarry, DEPRECIATION_COST_FROM_PRIOR_YEAR_CHANGE; a lowered cost is used as typed.) An asset
   that can't be matched keeps the FORM_4684_STOP_DEPRECIATING message.
-- The section 1033 postponement is a message only (the user leaves the property out); no replacement-property record or Form 4684
-  statement is made.
+- ~~The section 1033 postponement is a message only (the user leaves the property out); no replacement-property record or Form 4684
+  statement is made.~~ **FIXED 2026-11-19** (owner-approved fields, V539 - pf_business_casualty_item.postpone_gain_section_1033,
+  replacement_property_cost): a property with a gain can postpone it; line 22 is the reimbursement received above the replacement's
+  cost (not more than the gain), recapture and Part II follow; all postponed (or a blank cost - still to buy) leaves the property off the
+  form. FORM_4684_SECTION_1033_GAIN_POSTPONED gives the postponed / reported amounts, the replacement's basis (cost less the postponed
+  gain, for Depreciable assets) or the amount still to buy, and the Pub. 547 statement to attach (Section1033Postponement). The
+  replacement asset is not added to Depreciable assets.
 
 ## Like-kind exchanges (Form 8824): found in the 2026-11-06 review, not changed
 

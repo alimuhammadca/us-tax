@@ -95,6 +95,16 @@ sections:
         required: false
         label: "Business-use percentage (more than 0, up to 100)"
         showIf: "usedPartlyPersonally === true"
+      - name: postponeGainSection1033
+        type: boolean
+        required: false
+        label: "The reimbursement is more than the basis - a gain. Postpone it by buying replacement property (section 1033)? (V539)"
+        showIf: "reimbursement received > (business) adjusted basis"
+      - name: replacementPropertyCost
+        type: amount
+        required: false
+        label: "Cost of the replacement property - blank if not bought yet (the whole gain is postponed)"
+        showIf: "postponeGainSection1033 === true"
       - name: dateAcquired
         type: date
         required: false

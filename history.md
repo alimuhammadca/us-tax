@@ -5,6 +5,19 @@ or a Yes with nothing entered yet came back blank. Older saves without it still 
 - Tests: e2e income-adjustments-screen.spec.ts "the less common adjustments answer is remembered ..." (No, then an empty Yes, each
   saved and reopened). Income adjustments e2e 30 passed; unit suite 6,219 passed, 0 failed; UI production build passes. Not deployed yet.
 
+## 2026-11-19T14:15:00-05:00
+Form 4684 Section B: a casualty gain postponed under section 1033 (owner-approved fields, V539; outstanding.md "Business casualties and
+thefts"). Instructions for Form 4684, Gain on Reimbursement: only the reimbursement above the replacement property's cost is recognized;
+the replacement's basis is its cost less the postponed gain.
+- V539 adds pf_business_casualty_item.postpone_gain_section_1033 and replacement_property_cost (entity, BusinessCasualtiesMapper).
+- Form4684SectionB.Property: realizedGain(), received(), and gain() = the recognized gain when a replacement cost is given (blank cost -
+  the reimbursement received: all postponed); a property with nothing recognized is left off the form. Section1033Postponement's
+  FORM_4684_SECTION_1033_GAIN_POSTPONED (not blocking): postponed / reported, the replacement basis or the amount still to buy (amend if
+  not), the Pub. 547 statement. FORM_4684_BUSINESS_CASUALTY_GAIN counts only gains not postponed; its text points to the new question.
+- UI: the question (shown when the reimbursement received is more than the business basis) and the cost, with help; flag link.
+- Tests: Section1033PostponementTest (4); e2e "a stolen van replaced for less" (screen save / reload, Schedule 1 line 4 5,000, AGI 65,000,
+  Form 4684 line 22 5,000). Casualty e2e 10 passed; unit suite 6,230 passed, 0 failed; UI build passes. Not deployed.
+
 ## 2026-11-19T13:30:00-05:00
 Form 4684 Section B: property used partly for business and partly personally is split by a business-use percentage (owner-approved
 fields, V538; outstanding.md "Business casualties and thefts"). Instructions for Form 4684, Section B: the personal part goes in

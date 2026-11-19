@@ -863,9 +863,14 @@
   exchange with QOF-eligible line 22 gain (capital, or section 1231 held over a year) and no code Z row gets the non-blocking
   FORM_8824_QOF_DEFERRAL_AVAILABLE note (Form8824Qof). The Form 8949 QOF advisories now count that gain and its dates, so a code Z row
   deferring it is no longer called QOF_DEFERRAL_MORE_THAN_GAIN / QOF_INVESTMENT_OUTSIDE_180_DAYS.
-- The property received is not added to Depreciable assets with its line 25 basis (the screen points there); since 2026-11-13 a business
-  exchange whose property received isn't on Depreciable assets, or is there with a cost above line 25, gets a note naming the basis
-  (Form8824AssetCheck).
+- ~~The property received is not added to Depreciable assets with its line 25 basis.~~ **FIXED 2026-11-19** (no new field): a business
+  exchange whose property received (received this year) isn't on Depreciable assets shows "Add the property received to Depreciable
+  assets" on the Like-kind exchanges screen. It saves a new asset there: the description, placed in service the date received, the
+  cost = line 25 of the last computed return less the line 25c intangible part (blank, with a note, before a compute), and the
+  activity and recovery period of the building given up when it is on Depreciable assets. The user picks the class and takes out land.
+  The Form8824AssetCheck notes (since 2026-11-13) stay, and the "not on Depreciable assets" one names the button. The saved return keeps
+  Form 8824's owner, property given up and line 25 (not the field map), so the screen matches on those. The screen's old "Not figured
+  here" note (reverse exchange, QOF) was corrected - only a QI default is left.
 - (The installment-note path, checked 2026-11-12: the line 21 recapture is reported in full now through Form 4797 (section 453(i)) and
   the line 22 gain only on Form 6252 - no double count. The straight-line depreciation in that gain - the unrecaptured section 1250
   gain - was lost (the Form 6252 row had no depreciation); it goes on Form 6252 line 9 now, with the basis raised to match.)

@@ -1,3 +1,19 @@
+## 2026-11-19T21:45:00Z
+Like-kind exchanges: the property received is added to Depreciable assets from the screen (outstanding.md "Like-kind exchanges (Form
+8824)"; no new field, no form change).
+- Each business exchange whose property received (received in 2025) isn't on Depreciable assets shows "Add the property received to
+  Depreciable assets". It saves a new asset on that person's Depreciable assets: description = the property received, placed in
+  service = the date received, cost = Form 8824 line 25 from the last computed return less the line 25c intangible part (line 25 x
+  intangible value / line 16), business use 100%, and the activity and recovery period of the building given up when it's there.
+  Not computed yet: the cost is left blank and the message says to compute first. The card then says what was added, with a link.
+- The screen loads all Depreciable assets and the saved return in the background (it doesn't wait on them).
+- Form8824AssetCheck: the "not on Depreciable assets" note names the button.
+- Also corrected the screen's stale "Not figured here" note: a reverse exchange (V543) and a QOF deferral (code Z) are handled now;
+  only a qualified intermediary's default is left.
+- Tests: e2e like-kind-exchanges-form-8824.spec.ts "the property received is added to Depreciable assets with its line 25 basis"
+  (170,000, rental and 27.5 years from the building given up, the button gone on reopening, both notes gone) and "... without its
+  line 25c intangible part" (136,000). Like-kind e2e (34) pass; unit suite 6,246 passed, 0 failed; UI build passes. Not deployed.
+
 ## 2026-11-19T21:05:00Z
 Form 8824: which recourse and nonrecourse debt counts as "taken over" (outstanding.md "Like-kind exchanges (Form 8824)"; no field, no
 calculation or form change).

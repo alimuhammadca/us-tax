@@ -5,6 +5,19 @@ or a Yes with nothing entered yet came back blank. Older saves without it still 
 - Tests: e2e income-adjustments-screen.spec.ts "the less common adjustments answer is remembered ..." (No, then an empty Yes, each
   saved and reopened). Income adjustments e2e 30 passed; unit suite 6,219 passed, 0 failed; UI production build passes. Not deployed yet.
 
+## 2026-11-19T15:00:00-05:00
+Form 8824: the section 1245 parts given up - their own gain caps the line 21 recapture (owner-approved fields, V540; outstanding.md
+"Like-kind exchanges (Form 8824)"). Section 1245(a)(1): the ordinary income can't be more than the section 1245 property's own gain.
+- V540 adds pf_like_kind_exchange_item.fmv_1245_given_up and basis_1245_given_up (entity, LikeKindExchangesMapper).
+- Section1245PartsGain.cap in Form8824Compute: with both, line 21's section 1245 part is also limited by value less basis (not below 0);
+  the section 1250 part, line 22, the deferred gain and line 25 follow. Blank: as before, with FORM_8824_SECTION_1245_PARTS_GAIN_NOT_GIVEN
+  (not blocking).
+- UI Like-kind exchanges: the two amounts (shown when section 1245 depreciation is entered), help with the fixtures example; flag link.
+- Tests: Form8824ComputeTest +3 (the cap: Taylor 50,000 depreciation, parts 10,000 / 5,000 -> line 21 5,000, line 22 35,000, line 24
+  80,000; blank -> note; a larger parts gain changes nothing) and the Taylor / Finley test now expects the note on its two blank runs;
+  e2e "the section 1245 parts given up" (screen save / reload, Schedule 1 line 4 5,000, Schedule D line 11 35,000, Form 8824 lines 21 /
+  22 / 24). Form 8824 e2e 12 passed; unit suite 6,233 passed, 0 failed; UI build passes. Not deployed.
+
 ## 2026-11-19T14:15:00-05:00
 Form 4684 Section B: a casualty gain postponed under section 1033 (owner-approved fields, V539; outstanding.md "Business casualties and
 thefts"). Instructions for Form 4684, Gain on Reimbursement: only the reimbursement above the replacement property's cost is recognized;

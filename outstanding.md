@@ -822,8 +822,11 @@
 
 ## Like-kind exchanges (Form 8824): found in the 2026-11-06 review, not changed
 
-- Not asked (field additions - owner sign-off): the value and basis of the section 1245 parts GIVEN UP (section 1245 recapture is the
-  lesser of the depreciation or the gain - Taylor example); section 1252 / 1254 / 1255 property (line 21, 25b); like-kind intangible real
+- ~~The value and basis of the section 1245 parts GIVEN UP are not asked (section 1245 recapture is the lesser of the depreciation or
+  the gain - Taylor example).~~ **FIXED 2026-11-19** (owner-approved fields, V540 - pf_like_kind_exchange_item.fmv_1245_given_up,
+  basis_1245_given_up): with both entered, the parts' own gain (value less basis) caps the section 1245 part of line 21
+  (Section1245PartsGain, section 1245(a)(1)); blank keeps the line 19 cap with FORM_8824_SECTION_1245_PARTS_GAIN_NOT_GIVEN.
+- Not asked (field additions - owner sign-off): section 1252 / 1254 / 1255 property (line 21, 25b); like-kind intangible real
   property received (line 25c); whether a QI was used, QI default (Rev. Proc. 2010-14), reverse / parking exchanges (Rev. Proc. 2000-37);
   incidental personal property; Part IV lines 27-29 descriptions (the Part I fields are reused) and whether the replacement is permitted
   property; QOF deferral (Form 8997) and the new section 1062 farmland election; recourse vs nonrecourse debt.

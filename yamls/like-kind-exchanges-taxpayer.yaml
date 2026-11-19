@@ -77,6 +77,16 @@ sections:
         type: amount
         required: false
         label: "Depreciation on parts that are section 1245 property (optional, line 21)"
+      - name: fmv1245GivenUp
+        type: amount
+        required: false
+        label: "Value of those section 1245 parts (V540 - with their basis, their own gain caps line 21)"
+        showIf: "section1245DepreciationAllowed > 0"
+      - name: basis1245GivenUp
+        type: amount
+        required: false
+        label: "Adjusted basis of those section 1245 parts (V540)"
+        showIf: "section1245DepreciationAllowed > 0"
       - name: fmvLikeKindReceived
         type: amount
         required: false

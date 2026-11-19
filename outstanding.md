@@ -692,7 +692,10 @@
   before the move) and the year-of-move tests are explained, not checked.
 - An ordinary Form W-2 for work in American Samoa or Puerto Rico stays on line 1a (the screen says so). (Since 2026-11-12 excluded
   wages equal to one of the person's Forms W-2, or all of them together, get FORM_4563_EXCLUDED_WAGES_ALSO_ON_W2.)
-- The 10-year rule for gains on property held before residence, and U.S. government pay entered as excluded wages are not flagged
+- ~~The 10-year rule for gains on property held before residence, and U.S. government pay entered as excluded wages are not flagged~~
+  **FIXED 2026-11-20**: U.S. government pay - FORM_4563_US_GOVERNMENT_WAGES_EXCLUDED when the employers listed are all (or include) the U.S.
+  government (TerritoryExclusion.flagUsGovernmentWages; the screen's per-employer warning was already there); the 10-year rule is in the
+  capital gain help (the screen has no acquisition dates to check it against)
   (income kept from an old save for Guam / CNMI / USVI is, since 2026-11-12 - TERRITORY_INCOME_NOT_EXCLUDED_ON_US_RETURN); Form 8898 is a separate notice (not produced).
 - Form 4563 line 6 prints the first four absences (no continuation statement); line 4b's rented / relationship answers are free text.
 - Additional deductions still has its own typed "American Samoa excluded income" and Puerto Rico boxes (FORM_4563_EXCLUSION_AMOUNT_MISMATCH).

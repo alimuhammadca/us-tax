@@ -1,3 +1,12 @@
+## 2026-11-20T07:10:00
+Form 4563 - U.S. government pay entered as excluded wages (outstanding.md "Income earned in a US territory (Form 4563)"). Pub. 570 /
+Instructions for Form 4563: wages from the U.S. government or its agencies (civilian or military) aren't excluded. The screen warned per
+employer, but the computed return didn't.
+- Backend: TerritoryExclusion.flagUsGovernmentWages - FORM_4563_US_GOVERNMENT_WAGES_EXCLUDED: all listed employers U.S. government ->
+  the wages can't be excluded; some -> check the excluded wages leave that pay out. The amount stays the filer's. No new field.
+- Tests: TerritoryUsGovernmentWagesTest (3); e2e territory-income-screen.spec.ts. Territory e2e 6 passed; unit suite 6,201 passed,
+  0 failed; UI production build passes.
+
 ## 2026-11-20T06:20:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44431220482 on ec171b21 - revision ca-ustax-be--0000686 serving

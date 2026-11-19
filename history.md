@@ -1,3 +1,12 @@
+## 2026-11-19T08:30:00
+Full e2e regression (owner): 2,459 tests, 6.1 h - 2,456 passed, 2 failed, 1 flaky, 0 skipped.
+- The three were one cause in the shared helper `selectOption` (e2e/tests/helpers/form-controls.ts): a select rendered by the click
+  just before it (education credits "Yes" opening Student 1; Form 8912 "Add a bond") was not yet in the DOM, every candidate counted 0
+  and it threw "Unable to locate select control" at once. It now looks again for up to 10 s before giving up (test helper only; no app
+  change).
+- Re-run: education-credits-screen + line8912-bond-credit 9 passed; the three tests x3 (--repeat-each=3) 9 passed; four other
+  selectOption-heavy specs 15 passed - all with retries off.
+
 ## 2026-11-20T13:20:00
 Form 8853 - Medicare Advantage MSA partial death / disability exception (outstanding.md "Archer MSA / LTC (Form 8853)"; owner-approved
 field, V530 - pf_form_8853.ma_msa_exception_exempt_amount). Instructions for Form 8853, lines 13a / 13b: the box for an exception to

@@ -22,29 +22,6 @@ sections:
         label: Did your spouse have income adjustments that belong on Schedule 1 and Form 1040 line 10?
         help: If No, stop here and do not continue this workflow.
 
-  - name: outOfScopeScreening
-    title: Out-of-scope screening
-    multiplicity: single
-    showIf: hadIncomeAdjustmentsForSchedule1 == true
-    instructions:
-      - Schedule 1 lines 15 through 17 are self-employment-only and out of scope for this product.
-    fields:
-      - name: hasDeductibleSelfEmploymentTaxLine15OutOfScope
-        type: boolean
-        required: false
-        label: Does your spouse have a deductible self-employment tax adjustment?
-        help: Select Yes if Schedule SE is required. This return will be blocked in this product.
-      - name: hasSelfEmployedRetirementPlanAdjustmentLine16OutOfScope
-        type: boolean
-        required: false
-        label: Does your spouse have a self-employed retirement plan adjustment?
-        help: Select Yes if this self-employment adjustment is required. This return will be blocked.
-      - name: hasSelfEmployedHealthInsuranceAdjustmentLine17OutOfScope
-        type: boolean
-        required: false
-        label: Does your spouse have a self-employed health insurance adjustment?
-        help: Select Yes if this self-employment adjustment is required. This return will be blocked.
-
   - name: schedule1Lines11to23
     title: Deductions and adjustments
     multiplicity: single

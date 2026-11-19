@@ -5,6 +5,16 @@ or a Yes with nothing entered yet came back blank. Older saves without it still 
 - Tests: e2e income-adjustments-screen.spec.ts "the less common adjustments answer is remembered ..." (No, then an empty Yes, each
   saved and reopened). Income adjustments e2e 30 passed; unit suite 6,219 passed, 0 failed; UI production build passes. Not deployed yet.
 
+## 2026-11-19T10:30:00-05:00
+Income adjustments: the old self-employment questions (Schedule 1 lines 15-17) are removed completely (owner-approved removal, V534;
+outstanding.md "Income adjustments").
+- V534 drops pf_income_adjustments.has_deductible_self_employment_tax_line15_out_of_scope, has_self_employed_retirement_plan_adjustment_line16_out_of_scop
+  and has_self_employed_health_insurance_adjustment_line17_out_of_sco (no trigger used them); entity and IncomeAdjustmentsMapper fields removed.
+- UI form-income-adjustments no longer passes the three keys through on save.
+- e2e GAP-K1/K2/K3 (the retired toggles don't block) removed; YAMLs 10-income-adjustments-taxpayer/-spouse lose the outOfScopeScreening section.
+- No calculation or form change. e2e line10-income-adjustments + income-adjustments-screen 23 passed, mfs-spouse-income-adjustments 4 passed;
+  unit suite 6,219 passed, 0 failed; UI build passes. Not deployed.
+
 ## 2026-11-19T11:40:00
 Income adjustments - the old "lived apart all year" copy removed (outstanding.md "Income adjustments (Schedule 1 Part II)"; owner-approved
 field removal, V532 - pf_income_adjustments.ira_deduction_mfs_lived_apart_line20 dropped). No screen asked it; its one read was a fallback

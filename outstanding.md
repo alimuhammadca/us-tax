@@ -777,7 +777,9 @@
 - ~~The "less common adjustments" Yes / No is not saved (derived on load from the amounts): a Yes with no amount comes back blank.~~
   **FIXED 2026-11-19** (owner-approved field, V533 - pf_income_adjustments.has_other_line24_adjustments): the answer is saved; a No
   and an empty Yes come back as answered (an older save still reads Yes from an amount).
-- The old self-employment questions (lines 15-17) are removed from the screen (owner); their columns keep any saved value, unread.
+- ~~The old self-employment questions (lines 15-17) are removed from the screen (owner); their columns keep any saved value, unread.~~
+  **FIXED 2026-11-19** (owner-approved removal, V534): the three columns are dropped, the screen no longer passes them through on save,
+  and the three e2e tests of the retired toggles are removed (lines 15-17 come from the business screens).
 - Line 24z rows can no longer be entered (owner); rows saved earlier are listed with "Remove them".
 
 ## Business casualties and thefts (Form 4684 Section B): found in the 2026-11-06 review, not changed

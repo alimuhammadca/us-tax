@@ -712,7 +712,9 @@
 - ~~No line 18 trip table (the 330 days are one typed number);~~ **FIXED 2026-11-20** (owner-approved field, V529 - pf_foreign_earned_income.pp_trips,
   out_form_2555.line18_trips): a trip list under the physical presence test fills line 18 rows 1-4 (Form2555Trips), trips 5+ in
   FORM_2555_LINE_18_MORE_THAN_FOUR_TRIPS, a days mismatch warned on the screen (the typed full days still decide);
-  `housingLocationCountry` duplicates the locality choice (only printed); (since 2026-11-13
+  ~~`housingLocationCountry` duplicates the locality choice (only printed);~~ **FIXED 2026-11-20**: the high-cost list offers the home
+  country's localities only, line 29a prints "city, country" (Form2555Locality), and a saved locality of another country isn't used -
+  the standard limit, with FORM_2555_LOCALITY_NOT_IN_HOUSING_COUNTRY; (since 2026-11-13
   the screen takes the $130,000 limit and the Notice 2025-16 locality table from GET /api/reference-data - FOREIGN_EARNED_INCOME_EXCLUSION_MAX,
   FOREIGN_HOUSING_LIMIT_FULL_YEAR, FOREIGN_HOUSING_HIGH_COST_LIMITS; data/foreign-housing-localities.ts stays as the fallback; since
   2026-11-14 the help text's figures follow it too - foreignIncomeHelp's limits, the base amount at 16% of the exclusion).

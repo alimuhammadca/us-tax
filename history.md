@@ -1,3 +1,13 @@
+## 2026-11-20T11:40:00
+Form 2555 lines 29a / 29b - the home country and the high-cost locality (outstanding.md "Foreign income (Form 2555)"). Two answers
+gave the location: the country (printed on line 29a) and the Notice 2025-16 locality (the line 29b limit); they could disagree.
+- Backend: Form2555Locality - a locality of another country than the home isn't used (standard limit) and gets
+  FORM_2555_LOCALITY_NOT_IN_HOUSING_COUNTRY; line 29a prints "Tokyo, Japan" for a high-cost locality, else the country; five Notice
+  names mapped to the country list's spelling (Bahamas, Congo, Holy See, Korea, Netherlands Antilles).
+- UI: Foreign income - the high-cost list follows the country; a warning for a saved mismatch; help. No field change.
+- Tests: Form2555LocalityTest (4, incl. every Notice locality resolving to its country); e2e foreign-income-screen.spec.ts. Foreign
+  income e2e 21 passed; unit suite 6,211 passed, 0 failed; UI production build passes.
+
 ## 2026-11-20T10:50:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44444717929 on c9864a7a - revision ca-ustax-be--0000689 serving

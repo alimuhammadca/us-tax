@@ -1,3 +1,12 @@
+## 2026-11-20T07:50:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44435884428 on 7468564a - revision ca-ustax-be--0000687 serving
+  100% traffic, image ustax-be:7468564; /q/health/ready UP (Form 4563 U.S. government wages notice).
+  URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 44435887770 on 90c81df - live at https://www.taxbeans.com
+  (bundle main-AORYAM3G.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-20T07:10:00
 Form 4563 - U.S. government pay entered as excluded wages (outstanding.md "Income earned in a US territory (Form 4563)"). Pub. 570 /
 Instructions for Form 4563: wages from the U.S. government or its agencies (civilian or military) aren't excluded. The screen warned per

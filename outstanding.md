@@ -846,7 +846,14 @@
   (FORM_8824_SECTION_1043_PERMITTED_MISSING) - and shows the existing date box as "Date the replacement property was bought", which
   must fall in the 60 days starting on the sale date (FORM_8824_SECTION_1043_60_DAYS, section 1043(a)).
 - Not asked (field additions - owner sign-off): incidental personal property (proposed 2026-11-19: a Yes/No "personal property included"
-  question - not yet approved); the new section 1062 farmland election; recourse vs nonrecourse debt.
+  question - not yet approved); recourse vs nonrecourse debt.
+- **Section 1062 farmland installment election: 2026 tax year, not 2025** (checked 2026-11-19). The 2025 Instructions for Form 1040,
+  What's New: "If your tax year began after July 4, 2025, and you sold or exchanged qualified farmland to a qualified farmer after that
+  date, you can elect to pay the net income tax liability on the sale or exchange in four equal installments" - a calendar 2025 year
+  began 2025-01-01, so no 2025 return here can make it (fiscal-year individual returns aren't prepared). The Like-kind exchanges
+  ("How it was used") and Business property sales ("Used in") help say so (e2e farmland-1062-help.spec.ts). To build with the 2026
+  return: Form 1062, Schedule 3 line 13z "1062NL" (75% of the Form 1062 line 14 applicable net tax liability) and the later
+  installments.
 - ~~QOF deferral (Form 8997) of the exchange gain is not asked.~~ **FIXED 2026-11-19** (no new field): the deferral is the existing
   Capital gain/loss code Z row (and the existing FORM_8997_REQUIRED_MANUAL_FILL safeguard). The Cash received help explains it; an
   exchange with QOF-eligible line 22 gain (capital, or section 1231 held over a year) and no code Z row gets the non-blocking

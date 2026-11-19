@@ -1,3 +1,13 @@
+## 2026-11-19T20:55:00Z
+Section 1062 farmland installment election: not available on a 2025 return (outstanding.md "Like-kind exchanges (Form 8824)"; no field,
+no calculation or form change).
+- The 2025 Instructions for Form 1040 (What's New) limit it to tax years beginning after July 4, 2025; a calendar 2025 year began
+  2025-01-01. The Like-kind exchanges "How it was used" help and the Business property sales "Used in" help now say the four-installment
+  choice (section 1062, Form 1062) isn't available on a 2025 return. outstanding.md keeps it as a 2026-tax-year item (Form 1062,
+  Schedule 3 line 13z "1062NL").
+- Tests: e2e farmland-1062-help.spec.ts (both help popups show the sentence); Business property sales and Like-kind exchanges screen
+  e2e pass; UI build passes. Not deployed.
+
 ## 2026-11-19T19:45:00Z
 Form 8824: postponing the exchange gain through a Qualified Opportunity Fund (outstanding.md "Like-kind exchanges (Form 8824)"; no new
 field, no change to Form 8824 or Form 8949).

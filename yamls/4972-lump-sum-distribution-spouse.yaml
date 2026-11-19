@@ -106,6 +106,12 @@ sections:
         required: true
         label: "5a. Did your spouse use Form 4972 after 1986 for an earlier distribution from your spouse's own plan?"
         help: Answer Yes if your spouse has previously elected special tax treatment under Form 4972 after 1986 for a distribution from this same participant. A Yes answer disqualifies the distribution.
+      - name: spouseNotQualifiedDistribution
+        type: boolean
+        required: false
+        label: "Is this distribution one of the kinds that can't use Form 4972 (listed on the screen)?"
+        help: "V528 (owner-approved 2026-11-20), Instructions for Form 4972, Distributions That Don't Qualify - Yes: no Form 4972
+          (FORM_4972_DISTRIBUTION_DOES_NOT_QUALIFY)."
 
   - name: partElections
     title: Part elections

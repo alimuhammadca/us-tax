@@ -679,10 +679,12 @@
 
 ## Lump-sum distributions (Form 4972): found in the 2026-11-07 review, not changed
 
-- 403(b) / 457 Forms 1099-R can't be told from the form's boxes and are still listed. (Since 2026-11-11 a chosen Form 1099-R with the
+- ~~403(b) / 457 Forms 1099-R can't be told from the form's boxes and are still listed.~~ **FIXED 2026-11-20** (owner-approved field, V528 -
+  pf_lump_sum_distribution.not_qualified_distribution): the screen lists the Instructions' "Distributions That Don't Qualify" and asks
+  whether one applies; Yes = no Form 4972 (Form4972NotQualified, FORM_4972_DISTRIBUTION_DOES_NOT_QUALIFY). (Since 2026-11-11 a chosen Form 1099-R with the
   IRA/SEP/SIMPLE box, or paid to the other person, isn't used and a message says so.)
-- An earlier rolled-over distribution from the same plan, a plan that received a rollover after 2001, and the 5% owner exclusion aren't
-  asked; the joint-return rule (a separate Form 4972 per spouse) is handled by the two copies.
+- ~~An earlier rolled-over distribution from the same plan, a plan that received a rollover after 2001, and the 5% owner exclusion aren't
+  asked;~~ **FIXED 2026-11-20** (in the same V528 question); the joint-return rule (a separate Form 4972 per spouse) is handled by the two copies.
 
 ## Income earned in a US territory (Form 4563): found in the 2026-11-07 review, not changed
 

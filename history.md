@@ -1,3 +1,13 @@
+## 2026-11-20T05:40:00
+Form 4972 - distributions that don't qualify (outstanding.md "Lump-sum distributions (Form 4972)"; owner-approved field, V528 -
+pf_lump_sum_distribution.not_qualified_distribution). Instructions for Form 4972, "Distributions That Don't Qualify": a 403(b) plan, a
+plan after an earlier rolled-over distribution, a plan that received a rollover after 2001, a 5% owner subject to section 72(m)(5)(A),
+a corrective distribution, U.S. Retirement Plan Bonds, a Civil Service lump-sum credit - none was asked.
+- Backend: Form4972NotQualified - a Yes: no Form 4972 (lines 5a / 5b), FORM_4972_DISTRIBUTION_DOES_NOT_QUALIFY.
+- UI: Lump-sum distributions - the list under Part I and the question (one of the Part I answers still needed when blank); help.
+- Tests: Form4972NotQualifiedTest (2); e2e lump-sum-screen.spec.ts. Form 4972 e2e 21 passed; unit suite 6,198 passed, 0 failed; UI
+  production build passes.
+
 ## 2026-11-20T04:40:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44426516839 on 1ea3ed65 - revision ca-ustax-be--0000685 serving

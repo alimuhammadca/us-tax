@@ -1,3 +1,12 @@
+## 2026-11-20T08:55:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44438464397 on cbbee490 - revision ca-ustax-be--0000688 serving
+  100% traffic, image ustax-be:cbbee49; /q/health/ready UP (Form 4563 more than four absences).
+  URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 44438468035 on 0ccb93d - live at https://www.taxbeans.com
+  (bundle main-NC3AQBI7.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-20T08:30:00
 Form 4563 line 6 - more than four absences (outstanding.md "Income earned in a US territory (Form 4563)"). The form has four rows; the
 rest were left off with no word.

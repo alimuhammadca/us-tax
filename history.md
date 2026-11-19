@@ -5,6 +5,17 @@ or a Yes with nothing entered yet came back blank. Older saves without it still 
 - Tests: e2e income-adjustments-screen.spec.ts "the less common adjustments answer is remembered ..." (No, then an empty Yes, each
   saved and reopened). Income adjustments e2e 30 passed; unit suite 6,219 passed, 0 failed; UI production build passes. Not deployed yet.
 
+## 2026-11-19T11:10:00-05:00
+Income adjustments: Schedule 1 line 24z rows are removed completely (owner-approved removal, V535; outstanding.md "Income adjustments").
+The 2025 instructions say "Leave line 24z blank" and the screen had stopped taking rows.
+- V535 drops pf_income_adjustment_item (no trigger used it); entity PfIncomeAdjustmentItem and IncomeAdjustmentsMapper's row save / load / delete removed.
+- Calculation: Schedule1Computations line 24z is always blank (buildSchedule1OtherAdjustmentItems, sumSchedule1OtherAdjustmentItems and
+  LowIrsFixesChunk2.line24zLeftBlank / SCHEDULE1_LINE24Z_NOT_ALLOWED_2025 removed). The Schedule 1 output (line 24z, item list) is unchanged in structure.
+- UI: the old-rows warning and "Remove them", the line 24z help item and the notice's form link are removed.
+- Tests: LowIrsFixesChunk2Test's two line 24z tests removed; TaxReturnComputeServiceTest and e2e GAP-I now check line 24z is blank and line 25
+  is 24a-24k only; the screen e2e checks line 24z is not saved. YAMLs 10-income-adjustments-taxpayer/-spouse lose the otherAdjustmentsItems24z section.
+- e2e Income adjustments specs 27 passed; unit suite 6,217 passed, 0 failed; UI build passes. Not deployed.
+
 ## 2026-11-19T10:30:00-05:00
 Income adjustments: the old self-employment questions (Schedule 1 lines 15-17) are removed completely (owner-approved removal, V534;
 outstanding.md "Income adjustments").

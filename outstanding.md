@@ -780,7 +780,9 @@
 - ~~The old self-employment questions (lines 15-17) are removed from the screen (owner); their columns keep any saved value, unread.~~
   **FIXED 2026-11-19** (owner-approved removal, V534): the three columns are dropped, the screen no longer passes them through on save,
   and the three e2e tests of the retired toggles are removed (lines 15-17 come from the business screens).
-- Line 24z rows can no longer be entered (owner); rows saved earlier are listed with "Remove them".
+- ~~Line 24z rows can no longer be entered (owner); rows saved earlier are listed with "Remove them".~~ **FIXED 2026-11-19**
+  (owner-approved removal, V535): the pf_income_adjustment_item table is dropped with its save / load code, the calculation's collection
+  of the rows and SCHEDULE1_LINE24Z_NOT_ALLOWED_2025, and the screen's old-rows warning; line 24z stays blank (i1040gi "Leave line 24z blank").
 
 ## Business casualties and thefts (Form 4684 Section B): found in the 2026-11-06 review, not changed
 

@@ -205,26 +205,6 @@ sections:
         placeholder: 0.00
         help: Enter the amount of section 67(e) excess deductions shown on Schedule K-1 (Form 1041).
 
-  - name: otherAdjustmentsItems24z
-    title: Other adjustments items (line 24z)
-    multiplicity: multiple
-    showIf: hadIncomeAdjustmentsForSchedule1 == true
-    instructions:
-      - Add one row for each additional line 24z adjustment item.
-    fields:
-      - name: description
-        type: text
-        required: true
-        label: Description
-        placeholder: Enter line 24z description
-        help: Enter a short description for this other adjustment item.
-      - name: amount
-        type: amount
-        required: true
-        label: Amount
-        placeholder: 0.00
-        help: Enter amount for this line 24z item.
-
   - name: educatorExpenseDetails
     title: "Educator expenses - eligibility and reductions (Schedule 1 line 11)"
     multiplicity: single

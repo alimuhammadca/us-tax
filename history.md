@@ -1,3 +1,12 @@
+## 2026-11-20T10:50:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44444717929 on c9864a7a - revision ca-ustax-be--0000689 serving
+  100% traffic, image ustax-be:c9864a7; /q/health/ready UP (V529 Form 2555 line 18 trips).
+  URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 44444721425 on 984c07f - live at https://www.taxbeans.com
+  (bundle main-QI4TOOL4.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-20T10:00:00
 Form 2555 line 18 - the physical presence trips (outstanding.md "Foreign income (Form 2555)"; owner-approved field, V529 -
 pf_foreign_earned_income.pp_trips and out_form_2555.line18_trips). The test was one typed number of days and line 18 printed blank.

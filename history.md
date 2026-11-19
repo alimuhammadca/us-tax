@@ -1,3 +1,12 @@
+## 2026-11-20T04:40:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44426516839 on 1ea3ed65 - revision ca-ustax-be--0000685 serving
+  100% traffic, image ustax-be:1ea3ed6; /q/health/ready UP (V527 section 962 one answer + the standard deductions trigger; Form 8621
+  Part V for each spouse). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 44426519997 on b8861b3 - live at https://www.taxbeans.com
+  (bundle main-6QZ3HTRT.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-20T04:00:00
 Two Other tax items fixes (outstanding.md "Other tax items").
 1. The section 962 election is one answer (owner-approved field removal, V527). It was asked on Other tax items (the tax), on Other

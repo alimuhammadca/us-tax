@@ -774,7 +774,9 @@
 - (The Social Security / IRA coordination notes open the spouse's copy when only the spouse claimed the IRA deduction since
   2026-11-12.) ALIMONY_MODIFICATION_ADOPTS_TCJA_* is shared by alimony paid and received, so it has no link. (Lines 18, 21, 23, 24b, 24c,
   24h and 24i open the spouse's copy when only the spouse entered the amount since 2026-11-11.)
-- The "less common adjustments" Yes / No is not saved (derived on load from the amounts): a Yes with no amount comes back blank.
+- ~~The "less common adjustments" Yes / No is not saved (derived on load from the amounts): a Yes with no amount comes back blank.~~
+  **FIXED 2026-11-19** (owner-approved field, V533 - pf_income_adjustments.has_other_line24_adjustments): the answer is saved; a No
+  and an empty Yes come back as answered (an older save still reads Yes from an amount).
 - The old self-employment questions (lines 15-17) are removed from the screen (owner); their columns keep any saved value, unread.
 - Line 24z rows can no longer be entered (owner); rows saved earlier are listed with "Remove them".
 

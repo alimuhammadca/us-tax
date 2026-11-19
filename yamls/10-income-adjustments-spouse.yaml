@@ -307,6 +307,12 @@ sections:
     multiplicity: single
     showIf: hadIncomeAdjustmentsForSchedule1 == true
     fields:
+      - name: hasOtherLine24Adjustments
+        type: boolean
+        required: false
+        label: "Do any of the less common adjustments apply?"
+        note: "V533 (owner-approved 2026-11-19): saved (it was derived from the amounts, so a No or an empty Yes came back blank); an older
+          save without it reads Yes when an amount is there."
       - name: otherAdjustmentJuryDutyPayLine24a
         type: amount
         required: false

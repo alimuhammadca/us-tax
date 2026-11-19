@@ -1,3 +1,10 @@
+## 2026-11-19T12:30:00
+Income adjustments - the "less common adjustments" answer is saved (outstanding.md "Income adjustments (Schedule 1 Part II)";
+owner-approved field, V533 - pf_income_adjustments.has_other_line24_adjustments). It was derived from the amounts on load, so a No
+or a Yes with nothing entered yet came back blank. Older saves without it still read Yes when an amount is there. No calculation change.
+- Tests: e2e income-adjustments-screen.spec.ts "the less common adjustments answer is remembered ..." (No, then an empty Yes, each
+  saved and reopened). Income adjustments e2e 30 passed; unit suite 6,219 passed, 0 failed; UI production build passes. Not deployed yet.
+
 ## 2026-11-19T11:40:00
 Income adjustments - the old "lived apart all year" copy removed (outstanding.md "Income adjustments (Schedule 1 Part II)"; owner-approved
 field removal, V532 - pf_income_adjustments.ira_deduction_mfs_lived_apart_line20 dropped). No screen asked it; its one read was a fallback

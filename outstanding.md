@@ -697,8 +697,12 @@
   government (TerritoryExclusion.flagUsGovernmentWages; the screen's per-employer warning was already there); the 10-year rule is in the
   capital gain help (the screen has no acquisition dates to check it against)
   (income kept from an old save for Guam / CNMI / USVI is, since 2026-11-12 - TERRITORY_INCOME_NOT_EXCLUDED_ON_US_RETURN); Form 8898 is a separate notice (not produced).
-- Form 4563 line 6 prints the first four absences (no continuation statement); line 4b's rented / relationship answers are free text.
-- Additional deductions still has its own typed "American Samoa excluded income" and Puerto Rico boxes (FORM_4563_EXCLUSION_AMOUNT_MISMATCH).
+- ~~Form 4563 line 6 prints the first four absences (no continuation statement); line 4b's rented / relationship answers are free text.~~
+  **FIXED 2026-11-20**: with five or more absences the screen says the rest go in an attached statement and the computed return lists
+  them (TerritoryExclusion.flagExtraAbsences, FORM_4563_LINE_6_MORE_THAN_FOUR_ABSENCES); line 4b is free text on the form itself (closed).
+- ~~Additional deductions still has its own typed "American Samoa excluded income" and Puerto Rico boxes (FORM_4563_EXCLUSION_AMOUNT_MISMATCH).~~
+  (2026-11-20: out of date - the boxes were dropped in the 2026-11-07 screen review; both amounts come from the territory screen,
+  AdditionalDeductionsInputs.withFiguredExclusions.)
 
 ## Foreign income (Form 2555): found in the 2026-11-06 review, not changed
 

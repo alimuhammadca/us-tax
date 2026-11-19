@@ -1,3 +1,14 @@
+## 2026-11-20T08:30:00
+Form 4563 line 6 - more than four absences (outstanding.md "Income earned in a US territory (Form 4563)"). The form has four rows; the
+rest were left off with no word.
+- Backend: TerritoryExclusion.flagExtraAbsences - FORM_4563_LINE_6_MORE_THAN_FOUR_ABSENCES lists absences 5 and later for the attached
+  statement. Form 4563 unchanged; no new field.
+- UI: Income earned in a US territory - a note under the absences with five or more.
+- Closed: line 4b free text (the form's own line is free text); the typed American Samoa / Puerto Rico boxes on Additional deductions
+  (already dropped 2026-11-07).
+- Tests: TerritoryExtraAbsencesTest (2); e2e territory-income-screen.spec.ts. Territory e2e 6 passed; unit suite 6,203 passed, 0 failed;
+  UI production build passes.
+
 ## 2026-11-20T07:50:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44435884428 on 7468564a - revision ca-ustax-be--0000687 serving

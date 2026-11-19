@@ -249,6 +249,11 @@ sections:
         required: false
         label: "Basis of the divested property"
         showIf: "specialCases includes 'section_1043'"
+      - name: section1043PermittedProperty
+        type: boolean
+        required: false
+        label: "Is the replacement permitted property - U.S. Treasury obligations or an OGE-approved diversified fund? (V544, section 1043(b)(2))"
+        showIf: "specialCases includes 'section_1043'"
       - name: section1043ReplacementCost
         type: number
         required: false

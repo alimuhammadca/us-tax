@@ -839,8 +839,14 @@
   (FORM_8824_PROCEEDS_RECEIVED) or an intermediary default (FORM_8824_QI_DEFAULT_OUT_OF_SCOPE) blocks; received before given up needs
   "reverse" (FORM_8824_REVERSE_WITHOUT_ACCOMMODATION) and then the 45 / 180 days run from the parking (FORM_8824_REVERSE_45_DAYS /
   _180_DAYS); a delayed exchange left unanswered gets FORM_8824_EXCHANGE_METHOD_MISSING (not blocking). ExchangeMethod.
-- Not asked (field additions - owner sign-off): incidental personal property; Part IV lines 27-29 descriptions (the Part I fields are reused) and whether the replacement is permitted
-  property; QOF deferral (Form 8997) and the new section 1062 farmland election; recourse vs nonrecourse debt.
+- ~~Part IV lines 27-29 descriptions and whether the replacement is permitted property are not asked.~~ **FIXED 2026-11-19**
+  (owner-approved field, V544 - pf_like_kind_exchange_item.section1043_permitted_property): lines 27-29 were already filled from the
+  Part I descriptions (relabelled for a section 1043 sale). The screen asks whether the replacement is permitted property (section
+  1043(b)(2)) - No blocks non-overrideably (FORM_8824_SECTION_1043_NOT_PERMITTED_PROPERTY), blank blocks
+  (FORM_8824_SECTION_1043_PERMITTED_MISSING) - and shows the existing date box as "Date the replacement property was bought", which
+  must fall in the 60 days starting on the sale date (FORM_8824_SECTION_1043_60_DAYS, section 1043(a)).
+- Not asked (field additions - owner sign-off): incidental personal property (proposed 2026-11-19: a Yes/No "personal property included"
+  question - not yet approved); QOF deferral (Form 8997) and the new section 1062 farmland election; recourse vs nonrecourse debt.
 - The property received is not added to Depreciable assets with its line 25 basis (the screen points there); since 2026-11-13 a business
   exchange whose property received isn't on Depreciable assets, or is there with a cost above line 25, gets a note naming the basis
   (Form8824AssetCheck).

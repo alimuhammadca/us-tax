@@ -1,3 +1,17 @@
+## 2026-11-19T19:30:00Z
+Form 8824 Part IV (section 1043 conflict-of-interest sale): the replacement must be permitted property bought within 60 days
+(outstanding.md "Like-kind exchanges (Form 8824)"; owner-approved field, V544 - pf_like_kind_exchange_item.section1043_permitted_property).
+- Like-kind exchanges screen, Section 1043 group: "Is the replacement permitted property - U.S. Treasury obligations or a diversified
+  fund approved by the Office of Government Ethics?" (help: section 1043(a), (b)(2)). The "Date the replacement property was
+  received" box now also shows for a section 1043 sale, labelled "Date the replacement property was bought" (no new column).
+- Form8824Compute.section1043: No -> FORM_8824_SECTION_1043_NOT_PERMITTED_PROPERTY (blocking, non-overrideable, in
+  NonOverrideableFlags.CODES); blank -> FORM_8824_SECTION_1043_PERMITTED_MISSING (blocking); a purchase date blank, before the sale or
+  past day 60 (the sale date is day 1) -> FORM_8824_SECTION_1043_60_DAYS (blocking). Otherwise Part IV is figured as before.
+- Tests: Form8824ComputeTest +2 (day 60 qualifies; not permitted / unanswered / day 61 / before the sale / no date block);
+  OwnerApprovedFieldsW4Test.section1043SaleFillsPartIv now answers Yes and buys on day 41; e2e "a section 1043 sale: blocked until the
+  replacement is permitted property bought within 60 days" (screen Yes answer and relabelled date, saved and figured). Unit suite
+  6,243 passed, 0 failed; the like-kind e2e specs (16) pass; UI build passes. Not deployed.
+
 ## 2026-11-19T12:30:00
 Income adjustments - the "less common adjustments" answer is saved (outstanding.md "Income adjustments (Schedule 1 Part II)";
 owner-approved field, V533 - pf_income_adjustments.has_other_line24_adjustments). It was derived from the amounts on load, so a No

@@ -874,7 +874,10 @@
 - (The installment-note path, checked 2026-11-12: the line 21 recapture is reported in full now through Form 4797 (section 453(i)) and
   the line 22 gain only on Form 6252 - no double count. The straight-line depreciation in that gain - the unrecaptured section 1250
   gain - was lost (the Form 6252 row had no depreciation); it goes on Form 6252 line 9 now, with the basis raised to match.)
-- `propertyUse` has no "held mainly for sale" or "personal residence only" choice (would be disqualifiers) - covered in help only.
+- ~~`propertyUse` has no "held mainly for sale" or "personal residence only" choice.~~ **FIXED 2026-11-19** (no new field - two new
+  values of the existing select): "Held mainly to sell" (section 1031(a)(2)) -> FORM_8824_HELD_FOR_SALE and "Only a personal home"
+  (section 1031(a)(1)) -> FORM_8824_PERSONAL_HOME_ONLY, both blocking and non-overrideable, naming where to report the trade. The
+  exchange's other questions are hidden and a note shows; a section 1043 sale still offers only the two original answers.
 
 ## Business property sales (Form 4797): found in the 2026-11-06 review, not changed
 

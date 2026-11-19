@@ -37,6 +37,8 @@ sections:
         options:
           - "investment"
           - "business"
+          - "for_sale"        # 2026-11-19: held mainly to sell - not an exchange (FORM_8824_HELD_FOR_SALE, non-overrideable)
+          - "personal_home"   # 2026-11-19: only a personal home - not an exchange (FORM_8824_PERSONAL_HOME_ONLY, non-overrideable)
       - name: bothRealProperty
         type: boolean
         required: false

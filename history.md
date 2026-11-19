@@ -1,3 +1,17 @@
+## 2026-11-19T22:00:00Z
+Like-kind exchanges: "Held mainly to sell" and "Only a personal home" answers (outstanding.md "Like-kind exchanges (Form 8824)"; no new
+field - two new values of propertyUse; no form change).
+- "How was the property given up used?" adds "Held mainly to sell (a flip, or lots or homes held by a developer or dealer)" and
+  "Only a personal home (never rented or used in a business)". Either hides the exchange's other questions and shows where to report
+  the trade; a section 1043 sale still offers only business / investment. Help updated.
+- Form8824Compute.supported: FORM_8824_HELD_FOR_SALE (section 1031(a)(2): report as a sale - usually business income, else Capital
+  gain/loss) and FORM_8824_PERSONAL_HOME_ONLY (section 1031(a)(1): report as a home sale on Capital gain/loss, home-sale exclusion;
+  a main home also rented uses that use and the main-home case) - blocking, non-overrideable (NonOverrideableFlags.CODES).
+- YAMLs: like-kind-exchanges-taxpayer/-spouse propertyUse options.
+- Tests: Form8824ComputeTest +1 (both block non-overrideably with the right message; investment and business still figure); e2e
+  "property held mainly to sell, or only a personal home, is not a like-kind exchange" (picked on the screen, questions hidden, saved
+  and reloaded, both blocked with override). Like-kind e2e (41) pass; unit suite 6,247 passed, 0 failed; UI build passes. Not deployed.
+
 ## 2026-11-19T21:45:00Z
 Like-kind exchanges: the property received is added to Depreciable assets from the screen (outstanding.md "Like-kind exchanges (Form
 8824)"; no new field, no form change).

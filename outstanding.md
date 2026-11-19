@@ -896,7 +896,14 @@
   allowed on a whole-asset sale - or a totally destroyed / stolen casualty - of a building or equipment is the matching asset's
   earlier depreciation plus this year's disposal-year depreciation, when the earlier part is known - DepreciationAllowedFill,
   DEPRECIATION_ALLOWED_FROM_ASSET.)
-- Not asked (field additions - owner sign-off): section 1254, section 1239 related-party sales, timber (631), unharvested crops, K-1 section
+- ~~Section 1254 (oil, gas, geothermal, mineral property) is not asked.~~ **FIXED 2026-11-19** (owner-approved field, V545 -
+  pf_business_property_sale_item.section1254_recapture_amount; new propertyType value mineral_1254): line 28a = the drilling,
+  exploration, development and depletion deductions; line 28b = the smaller of it and line 24 less any other recapture, ordinary
+  income before section 1231 (and before line 29); no line 25 on it (the Part III loop takes no section 1245 recapture, so the
+  depletion isn't counted twice). Held for investment: 28b ordinary, the rest on Form 8949. Blank amount ->
+  FORM_4797_SECTION_1254_AMOUNT_MISSING (blocking); a partial disposition -> FORM_4797_SECTION_1254_PARTIAL_INTEREST (note,
+  section 1254(a)(2)).
+- Not asked (field additions - owner sign-off): section 1239 related-party sales, timber (631), unharvested crops, K-1 section
   1231 amounts, the condemnation (section 1033) path, line 1a 1099 reconciliation, section 1245 real property types (single-purpose
   agricultural structures) beyond "Equipment".
 

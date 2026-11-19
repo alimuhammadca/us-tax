@@ -1,3 +1,19 @@
+## 2026-11-19T22:30:00Z
+Form 4797 line 28 - section 1254 oil, gas, geothermal or other mineral property (outstanding.md "Business property sales (Form 4797)";
+owner-approved field, V545 - pf_business_property_sale_item.section1254_recapture_amount; Form 4797 unchanged, lines 28a / 28b filled).
+- Business property sales: "What kind of property?" adds "Oil, gas, geothermal or other mineral property - a well or mine interest
+  (section 1254)", with "Drilling, exploration, development and depletion deductions to recapture" under Special rules (help from
+  i4797 line 28: after 1986 sections 263 / 616 / 617 plus the depletion; before 1987 the drilling costs after 1975; depletion also in
+  Depreciation allowed).
+- Compute (Wave2FieldsW4.line28 / isSection1254 / section1254Notes; Form4797SalesCompute; TaxReturnComputeService Part III loop;
+  Form4797Fields): line 28b = min(line 28a, line 24 less recapture already taken) is ordinary, before section 1231 and line 29; the loop
+  takes no section 1245 recapture on it and line 25 isn't printed; line 31 / 13 include it. Held for investment: 28b ordinary, the rest
+  on Form 8949. Blank amount -> FORM_4797_SECTION_1254_AMOUNT_MISSING (blocking); partial disposition -> _PARTIAL_INTEREST (note).
+- Tests: Form4797SalesComputeTest +4 (70,000 of 90,000 ordinary and 20,000 section 1231 with lines 28a/28b/31/32/13 and no line 25;
+  capped at the gain; a loss has none; blank blocked and partial noted; investment use); e2e business-property-sales-form-4797.spec.ts
+  "a well interest ..." (type and amount entered on the screen, saved, reloaded, figured). Form 4797 e2e (28) pass; unit suite 6,251
+  passed, 0 failed; UI build passes. Not deployed.
+
 ## 2026-11-19T22:00:00Z
 Like-kind exchanges: "Held mainly to sell" and "Only a personal home" answers (outstanding.md "Like-kind exchanges (Form 8824)"; no new
 field - two new values of propertyUse; no form change).

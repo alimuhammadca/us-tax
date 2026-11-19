@@ -34,6 +34,7 @@ sections:
           - "building"
           - "equipment"
           - "land"
+          - "mineral_1254"   # V545: oil, gas, geothermal or other mineral property (section 1254, Form 4797 line 28)
       - name: usedFor
         type: select
         required: false
@@ -83,4 +84,9 @@ sections:
         required: false
         label: "AMT depreciation, if different (optional)"
         showIf: "propertyType != land"
+      - name: section1254RecaptureAmount
+        type: amount
+        required: false
+        label: "Drilling, exploration, development and depletion deductions to recapture (V545, Form 4797 line 28a)"
+        showIf: "propertyType == mineral_1254"
 # 2026-11-06 screen review: atRiskActivity is saved as "rental:<address>" / "farm:<crop>" / "business:<name>" (old "rental:0" positions still read).

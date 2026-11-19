@@ -111,11 +111,6 @@ sections:
         required: false
         label: Do you have Schedule F farm income or loss for Schedule 1 line 6?
         help: Select Yes if Schedule F is required. This return will be blocked in this product.
-      - name: hasSection962CfcElection
-        type: boolean
-        required: false
-        label: Have you made a Section 962 election to be taxed at corporate rates on CFC income (Section 951 / 951A inclusions)?
-        help: Select Yes if you made a Section 962 election for controlled foreign corporation income. This product does not support Section 962 elections; please consult a tax professional.
 
   - name: schedule1Lines1to7
     title: Schedule 1 lines 1 through 7

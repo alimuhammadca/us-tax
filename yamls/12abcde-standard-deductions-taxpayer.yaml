@@ -560,10 +560,6 @@ sections:
         type: boolean
         required: false
         label: Elect to increase the standard deduction using the net qualified disaster loss
-      - name: hasSection962Election
-        type: boolean
-        required: false
-        label: You made a section 962 election (taxed as a domestic corporation on section 951A inclusions)
       - name: section250DeductionAmount
         type: number
         required: false

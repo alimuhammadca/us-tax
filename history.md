@@ -1,3 +1,21 @@
+## 2026-11-20T04:00:00
+Two Other tax items fixes (outstanding.md "Other tax items").
+1. The section 962 election is one answer (owner-approved field removal, V527). It was asked on Other tax items (the tax), on Other
+   incomes (only for the lines 8n / 8o double-count block) and kept backend-only on standard deductions; Yes on Other tax items with
+   Other incomes blank and the inclusion on line 8n taxed the income twice with no block.
+   - Backend: Section962Answer gives the Other tax items answer to the double-count check and the Schedule K-1 codes; the
+     pf_other_incomes.has_section_962_cfc_election and pf_standard_deductions.has_section_962_election columns dropped, the
+     standard deductions decompose trigger redefined without the dropped column (527.2, NOW() per V467).
+   - UI: Other incomes - the question replaced by a note pointing to Other tax items (worded by that answer).
+   - Tests: Section962OneAnswerTest (2); Sc00240 / Sc00322 / TaxReturnComputeServiceTest moved to the Other tax items answer; e2e
+     line8-other-incomes.spec.ts GAP-A4-B and the double-count test.
+2. Form 8621 Part V on a joint return: the merge kept only the Family Head's distribution facts, so the spouse's PFIC was lost.
+   - Backend: Form8621Spouses - each copy figured on its own and added (1291TAX, line 8z, the dividend correction); the same
+     distribution on both copies counted once with FORM_8621_PART_V_SAME_ON_BOTH_SPOUSES (Instructions for Form 8621, joint return).
+   - Tests: Form8621SpousesTest (3); e2e other-tax-items-screen.spec.ts "Form 8621 Part V on a joint return ...".
+- Schedule H notes closed with no change (owner): the quarter test, fiscal year, the employee's Form W-2, line 17's two states.
+- e2e 107 + 105 passed; unit suite 6,196 passed, 0 failed; UI production build passes.
+
 ## 2026-11-20T02:45:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44419261078 on b8fa99db - revision ca-ustax-be--0000684 serving

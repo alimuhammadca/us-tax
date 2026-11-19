@@ -641,6 +641,8 @@
 
 ## Household employees (Schedule H): found in the 2026-11-07 review, not changed
 
+- (2026-11-20, owner: closed with no change - the $1,000 quarter test is line 9's one Yes/No; returns are calendar-year; the employee's
+  Form W-2 goes to the SSA, not with the return; line 17 has room for two states and the rest are counted with a statement message.)
 - Schedule H on the return is done (`schedule-h-plan.md`); on separate returns the previews (and Form 4137's)
   read the tab's own figured return since 2026-11-12 (the household return until it is figured). Stage A differences left as drawn: line 13's dashed rule solid, the lines 10-12 Yes / No cells
   as checkboxes, the line 17 row shading.
@@ -657,10 +659,13 @@
 
 - Foreign Earned Income Tax Worksheet line 2b (`feitwLine2bDisallowedDeductions`) is read by the calculation but asked nowhere; it belongs on
   Foreign income (owner: keep as saved).
-- The section 962 election is also asked on Other incomes (`hasSection962CfcElection`, only for the 8n/8o blocker) and exists backend-only on
-  standard deductions - three copies of one fact (removing the extra two is a field removal: owner sign-off); since 2026-11-12
+- ~~The section 962 election is also asked on Other incomes (`hasSection962CfcElection`, only for the 8n/8o blocker) and exists backend-only on
+  standard deductions - three copies of one fact (removing the extra two is a field removal: owner sign-off);~~ **FIXED 2026-11-20**
+  (owner-approved removal, V527): one answer on Other tax items; Other incomes points there and the 8n/8o double count reads it
+  (Section962Answer); the two columns dropped; since 2026-11-12
   SECTION_962_DEDUCTION_NOT_ON_LINE_12E comes with the figured section 962 tax on Other tax items, not from the hidden copy.
-- On a joint return the PFIC Part V facts are first-entry while line 16e is summed; section 453A interest (line 15) is figured for the year of
+- ~~On a joint return the PFIC Part V facts are first-entry while line 16e is summed;~~ **FIXED 2026-11-20**: each spouse's copy figured on
+  its own and added (Form8621Spouses); the same distribution on both counted once with FORM_8621_PART_V_SAME_ON_BOTH_SPOUSES; section 453A interest (line 15) is figured for the year of
   sale since 2026-11-12 (Pub. 537: deferred tax liability at 20% long-term / 37% otherwise x applicable percentage x the 7% December 2025
   underpayment rate; a typed line 15 wins); since 2026-11-14 the year of sale keeps each sale's applicable percentage with the return
   (AttachedForms.carryovers, kind s453a - IRC 453A(c)(4) fixes it for that year's obligations) and a later year still owing figures its

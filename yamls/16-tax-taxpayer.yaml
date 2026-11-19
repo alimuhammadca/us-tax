@@ -65,6 +65,8 @@ sections:
         type: boolean
         required: false
         label: "Are you making a Section 962 election (to be taxed at corporate rates on income from a foreign company you control)?"
+        note: "V527 (owner-approved 2026-11-20): the one section 962 answer - Other incomes no longer asks it (it points here) and the
+          standard deductions copy is gone; the lines 8n / 8o double count reads this answer."
       - name: section962SubpartFInclusion
         type: amount
         required: false
@@ -119,6 +121,8 @@ sections:
         type: date
         required: false
         label: Date you acquired the PFIC shares (YYYY-MM-DD)
+        note: "2026-11-20: on a joint return each spouse's copy (one PFIC distribution each) is figured on its own and added; the same
+          distribution on both copies is counted once (FORM_8621_PART_V_SAME_ON_BOTH_SPOUSES)."
         showIf: hasForm8621PficTax == true
       - name: pficDistributionDate
         type: date

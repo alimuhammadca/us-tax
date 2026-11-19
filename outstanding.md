@@ -834,8 +834,12 @@
 - ~~Like-kind intangible real property received (line 25c) is not asked.~~ **FIXED 2026-11-19** (owner-approved field, V542 -
   pf_like_kind_exchange_item.fmv_intangible_received): line 25c = line 25 x its value / line 16, 25a the rest after 25b and 25c; the
   Depreciable assets notes name the 25c part as not building depreciation.
-- Not asked (field additions - owner sign-off): whether a QI was used, QI default (Rev. Proc. 2010-14), reverse / parking exchanges (Rev. Proc. 2000-37);
-  incidental personal property; Part IV lines 27-29 descriptions (the Part I fields are reused) and whether the replacement is permitted
+- ~~Whether a QI was used, QI default (Rev. Proc. 2010-14), reverse / parking exchanges (Rev. Proc. 2000-37) are not asked.~~ **FIXED
+  2026-11-19** (owner-approved field, V543 - pf_like_kind_exchange_item.exchange_method, asked when the dates differ): the money received
+  (FORM_8824_PROCEEDS_RECEIVED) or an intermediary default (FORM_8824_QI_DEFAULT_OUT_OF_SCOPE) blocks; received before given up needs
+  "reverse" (FORM_8824_REVERSE_WITHOUT_ACCOMMODATION) and then the 45 / 180 days run from the parking (FORM_8824_REVERSE_45_DAYS /
+  _180_DAYS); a delayed exchange left unanswered gets FORM_8824_EXCHANGE_METHOD_MISSING (not blocking). ExchangeMethod.
+- Not asked (field additions - owner sign-off): incidental personal property; Part IV lines 27-29 descriptions (the Part I fields are reused) and whether the replacement is permitted
   property; QOF deferral (Form 8997) and the new section 1062 farmland election; recourse vs nonrecourse debt.
 - The property received is not added to Depreciable assets with its line 25 basis (the screen points there); since 2026-11-13 a business
   exchange whose property received isn't on Depreciable assets, or is there with a cost above line 25, gets a note naming the basis

@@ -65,6 +65,12 @@ sections:
         type: date
         required: false
         label: "Date the replacement property was received (line 6)"
+      - name: exchangeMethod
+        type: select
+        required: false
+        label: "How was the exchange done? (V543 - shown when the dates differ)"
+        options: [swap, qi, reverse_eat, own_proceeds, qi_default]
+        showIf: "dateReceived !== dateTransferred"
       - name: adjustedBasisGivenUp
         type: amount
         required: false

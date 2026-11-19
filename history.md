@@ -5,6 +5,19 @@ or a Yes with nothing entered yet came back blank. Older saves without it still 
 - Tests: e2e income-adjustments-screen.spec.ts "the less common adjustments answer is remembered ..." (No, then an empty Yes, each
   saved and reopened). Income adjustments e2e 30 passed; unit suite 6,219 passed, 0 failed; UI production build passes. Not deployed yet.
 
+## 2026-11-19T17:15:00-05:00
+Form 8824: how a delayed or reverse exchange was done (owner-approved field, V543; outstanding.md "Like-kind exchanges (Form 8824)").
+Regs. 1.1031(k)-1(f) / (g)(4) (actual or constructive receipt, the qualified intermediary safe harbor), Rev. Proc. 2000-37 (reverse
+exchanges through an exchange accommodation titleholder), Rev. Proc. 2010-14 (intermediary default).
+- V543 adds pf_like_kind_exchange_item.exchange_method (swap / qi / reverse_eat / own_proceeds / qi_default; entity, mapper).
+- ExchangeMethod.check in Form8824Compute.valid (dates differ): own_proceeds and qi_default block; received before given up blocks
+  unless reverse_eat, which checks identification within 45 and the transfer within 180 days after the parking instead of the forward
+  test; unanswered forward-delayed -> FORM_8824_EXCHANGE_METHOD_MISSING (not blocking). Blocks match the screen's 45 / 180-day ones.
+- UI Like-kind exchanges: "How was the exchange done?" (shown when the dates differ), help. No change to Form 8824 itself.
+- Tests: Form8824ComputeTest +3 (QI / unanswered note; the money received and a default block; reverse without and with a titleholder,
+  past 180 and 45 days); the land() fixture now says "qi" (three exact-flag tests); e2e "a reverse exchange" (409 without, screen
+  choice saved / reloaded, then figured). Form 8824 e2e 15 passed; unit suite 6,241 passed, 0 failed; UI build passes. Not deployed.
+
 ## 2026-11-19T16:30:00-05:00
 Form 8824 line 25c: like-kind intangible real property received (owner-approved field, V542; outstanding.md "Like-kind exchanges (Form
 8824)"). Instructions for Form 8824, lines 25a-25c: the line 25 basis is split proportionately to the values.

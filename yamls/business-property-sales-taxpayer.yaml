@@ -35,6 +35,7 @@ sections:
           - "equipment"
           - "land"
           - "mineral_1254"   # V545: oil, gas, geothermal or other mineral property (section 1254, Form 4797 line 28)
+          - "timber"         # V547: standing timber (section 631) - depletion not recaptured; reforestation amortization is
       - name: usedFor
         type: select
         required: false
@@ -89,6 +90,11 @@ sections:
         required: false
         label: "AMT depreciation, if different (optional)"
         showIf: "propertyType != land"
+      - name: reforestationAmortization
+        type: amount
+        required: false
+        label: "Reforestation costs amortized (section 194) - timber only (V547, section 1245 recapture on Form 4797 line 25)"
+        showIf: "propertyType == timber"
       - name: section1254RecaptureAmount
         type: amount
         required: false

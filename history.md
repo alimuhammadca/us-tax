@@ -1,3 +1,18 @@
+## 2026-11-19T23:30:00Z
+Form 4797 - timber (section 631) (outstanding.md "Business property sales (Form 4797)"; owner-approved field, V547 -
+pf_business_property_sale_item.reforestation_amortization; Form 4797 unchanged).
+- Business property sales: "What kind of property?" adds "Timber (standing trees) - sold outright, cut under a contract, or cut under
+  the section 631(a) election"; for it "Depletion taken on the timber" (the depreciationAllowed field) and the new "Reforestation costs
+  amortized (section 194)". Help: section 1231 timber (i4797, Section 1231 transactions), the 631(a) first-day value, Form T.
+- Compute: line 22 = depletion + amortization; only the amortization is section 1245 recapture (Wave2FieldsW4.timberRecapture,
+  a timber branch in the Part III loop, line 25a = the amortization in Form4797Fields); no amortization -> line 2; a year or less ->
+  line 10. FORM_4797_TIMBER_FORM_T note on every timber sale (Form T isn't prepared here).
+- Tests: Form4797SalesComputeTest +3 (depletion not recaptured, all section 1231 on line 2, Form T note; amortization recaptured
+  and capped at the gain; a year or less ordinary); e2e "timber: the depletion is not recaptured, the reforestation amortization is"
+  (entered on the screen, saved, reloaded, figured). Found on the way: a second screen field bound to depreciationAllowed (for the
+  timber label) was cleared as hidden on every save and blanked the depreciation of all sales - replaced by one field with a label
+  that depends on the kind (labelFor). Form 4797 e2e (30) pass; unit suite 6,258 passed, 0 failed; UI build passes. Not deployed.
+
 ## 2026-11-19T22:50:00Z
 Form 4797 - section 1239: a sale to a related person who will depreciate the property is all ordinary income (outstanding.md "Business
 property sales (Form 4797)"; owner-approved field, V546 - pf_business_property_sale_item.sold_to_related_1239; Form 4797 unchanged).

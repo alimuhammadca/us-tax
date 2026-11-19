@@ -909,7 +909,13 @@
   III / section 1231, so no section 1231 netting or unrecaptured section 1250 gain; held for investment, no Form 8949 part. A loss
   and land are unaffected. The same sale also on Installment sales -> FORM_4797_RELATED_1239_NO_INSTALLMENT (non-overrideable,
   section 453(g)). (The Installment sales screen itself doesn't ask section 1239 - a sale entered only there isn't checked.)
-- Not asked (field additions - owner sign-off): timber (631), unharvested crops, K-1 section
+- ~~Timber (section 631) is not asked.~~ **FIXED 2026-11-19** (owner-approved field, V547 -
+  pf_business_property_sale_item.reforestation_amortization; new propertyType value timber): line 22 = the depletion plus the section
+  194 reforestation amortization; only the amortization is section 1245 recapture (line 25a / 25b, up to the gain), the rest section
+  1231 (line 2 when there is no amortization, Part III when there is); held a year or less, ordinary. Every timber sale gets
+  FORM_4797_TIMBER_FORM_T (note: Form T, Forest Activities Schedule, is attached by the filer - not prepared here). The section 631(a)
+  cutting election uses the timber's value on the first day of the year as the sales price (help).
+- Not asked (field additions - owner sign-off): unharvested crops, K-1 section
   1231 amounts, the condemnation (section 1033) path, line 1a 1099 reconciliation, section 1245 real property types (single-purpose
   agricultural structures) beyond "Equipment".
 

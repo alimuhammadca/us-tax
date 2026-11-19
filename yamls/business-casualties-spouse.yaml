@@ -69,6 +69,16 @@ sections:
         required: false
         label: "Do casualties or thefts like this one, similar in cause and severity, happen regularly in this business or rental? (V537; Yes blocks - not figured)"
         showIf: "usedIn === 'schedule_c' || usedIn === 'schedule_f' || usedIn === 'rental'"
+      - name: usedPartlyPersonally
+        type: boolean
+        required: false
+        label: "Was this property also used personally? (V538: enter the whole property's figures; Section B takes the business part)"
+        showIf: "usedIn !== 'employee'"
+      - name: businessUsePercent
+        type: percent
+        required: false
+        label: "Business-use percentage (more than 0, up to 100)"
+        showIf: "usedPartlyPersonally === true"
       - name: dateAcquired
         type: date
         required: false

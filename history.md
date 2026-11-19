@@ -5,6 +5,20 @@ or a Yes with nothing entered yet came back blank. Older saves without it still 
 - Tests: e2e income-adjustments-screen.spec.ts "the less common adjustments answer is remembered ..." (No, then an empty Yes, each
   saved and reopened). Income adjustments e2e 30 passed; unit suite 6,219 passed, 0 failed; UI production build passes. Not deployed yet.
 
+## 2026-11-19T13:30:00-05:00
+Form 4684 Section B: property used partly for business and partly personally is split by a business-use percentage (owner-approved
+fields, V538; outstanding.md "Business casualties and thefts"). Instructions for Form 4684, Section B: the personal part goes in
+Section A, the business part in Section B.
+- V538 adds pf_business_casualty_item.used_partly_personally and business_use_percent (entity, BusinessCasualtiesMapper).
+- MixedUseSplit / Form4684SectionB.property: the whole property's cost basis x % less the business depreciation; insurance, amount not
+  received and values before / after x %. FORM_4684_MIXED_USE_PERSONAL_PART (not blocking) lists the personal share for Section A
+  (Standard or itemized deductions - its disaster / $100 / 10% rules apply there); a Yes without a valid percentage blocks the row
+  (FORM_4684_BUSINESS_CASUALTY_INCOMPLETE). CasualtyDisposedAssets takes the portion's business cost as the whole cost x %.
+- UI: the question, a percent input, the basis label "Cost basis of the whole property, before depreciation", note and help; flag link.
+- Tests: MixedUseSplitTest (4); e2e "a car also used personally" (60% business car stolen: screen save / reload, Schedule 1 line 4
+  -3,000, the 40% personal part listed, Form 4684 line 27 3,000). Casualty e2e 9 passed; unit suite 6,226 passed, 0 failed; UI build
+  passes. Not deployed.
+
 ## 2026-11-19T12:45:00-05:00
 Form 4684 Section B: casualties that recur regularly in a passive activity (owner-approved field, V537; outstanding.md "Business
 casualties and thefts"). Instructions for Form 4684, Property Used in a Passive Activity: a casualty gain or loss isn't part of the

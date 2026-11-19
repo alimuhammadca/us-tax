@@ -1,3 +1,12 @@
+## 2026-11-20T06:20:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44431220482 on ec171b21 - revision ca-ustax-be--0000686 serving
+  100% traffic, image ustax-be:ec171b2; /q/health/ready UP (V528 Form 4972 distributions that don't qualify).
+  URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 44431223804 on 6bae4ed - live at https://www.taxbeans.com
+  (bundle main-UMANB3ZM.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-20T05:40:00
 Form 4972 - distributions that don't qualify (outstanding.md "Lump-sum distributions (Form 4972)"; owner-approved field, V528 -
 pf_lump_sum_distribution.not_qualified_distribution). Instructions for Form 4972, "Distributions That Don't Qualify": a 403(b) plan, a

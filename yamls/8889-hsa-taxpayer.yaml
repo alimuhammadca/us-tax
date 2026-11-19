@@ -29,6 +29,13 @@ sections:
         type: boolean
         required: false
         label: "Were you an eligible individual with this coverage for all 12 months of 2025?"
+      - name: coverageTypeChanged
+        type: boolean
+        required: false
+        showIf: eligibleAllTwelveMonths == true
+        label: "Did the coverage change between self-only and family during 2025?"
+        note: "V531 (owner-approved 2026-11-19), i8889 line 3 rule 4: Yes shows the monthly chart; line 3 = the greater of the December 1
+          coverage's limit and the chart total (Wave2FieldsW5.monthlyLine3)."
       - name: monthsEligibleCount
         type: number
         required: false

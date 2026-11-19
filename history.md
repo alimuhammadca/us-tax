@@ -1,3 +1,13 @@
+## 2026-11-19T10:40:00
+Form 8889 line 3 rule 4 - eligible all year, coverage changed (outstanding.md "HSA (Form 8889)"; owner-approved field, V531 -
+pf_form_8889_hsa.coverage_type_changed). Instructions for Form 8889, line 3 rule 4: the greater of the December 1 coverage's limit and
+the Line 3 Limitation Chart - the chart showed only for part-year eligibility, so family-then-self-only lost (6,425 vs 4,300).
+- Backend: Wave2FieldsW5.monthlyLine3 - with the change answered Yes, the chart is figured and used when greater.
+- UI: HSA - the question under "eligible every month", the month chart with a rule 4 note; help.
+- Closed: Form 8853 "no line 6a / 10 override" (the Forms 1099-SA on Statements are editable).
+- Tests: HsaCoverageChangedTest (3); e2e hsa-screen.spec.ts. HSA e2e 11 passed; unit suite 6,218 passed, 0 failed; UI production build
+  passes. Not deployed yet.
+
 ## 2026-11-19T08:30:00
 Full e2e regression (owner): 2,459 tests, 6.1 h - 2,456 passed, 2 failed, 1 flaky, 0 skipped.
 - The three were one cause in the shared helper `selectOption` (e2e/tests/helpers/form-controls.ts): a select rendered by the click

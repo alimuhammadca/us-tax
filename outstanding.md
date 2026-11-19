@@ -736,7 +736,8 @@
   (owner-approved field, V530 - pf_form_8853.ma_msa_exception_exempt_amount): the part paid on or after the death / disability is
   typed (or comes from Forms 1099-SA coded 3, 4 or 6); line 13a is checked for any part and the worksheet taxes only the rest
   (MaMsaException).
-- No line 6a / 10 override (Form 1099-SA code 2 has been added to Archer line 6b since 2026-11-11).
+- ~~No line 6a / 10 override (Form 1099-SA code 2 has been added to Archer line 6b since 2026-11-11).~~ (2026-11-19, owner: closed with
+  no change - lines 6a / 10 come from box 1 of the person's Forms 1099-SA, which are entered and editable on Statements.)
 - (Since 2026-11-13 a blank line 2 is box 1 of the person's Form 5498-SA marked Archer MSA - Form5498SaChecks,
   FORM_8853_LINE2_FROM_5498SA.) Medicare months are not derived from the date of birth (enrollment isn't automatic at 65); since
   2026-11-14 someone 65 or older with Archer MSA contributions and more eligible months than the months before Medicare could start
@@ -747,8 +748,9 @@
 - (Line 6 on a separate return: since 2026-11-12 each leg carries the other spouse's HSA copy - MfsFormScoper.OTHER_SPOUSE_HSA_KEY -
   for the family split and the catch-up family test.) (On the household return a single typed share leaves the other spouse the rest, and two shares over the family limit block,
   since 2026-11-11.)
-- Line 3 rule 4 (eligible all year but the coverage type changed): the chart only shows for part-year eligibility, so that case can't be
-  entered month by month. (Checked 2026-11-13, i8889 line 3 rule 4: line 3 is the greater of the chart and the December 1 coverage's
+- ~~Line 3 rule 4 (eligible all year but the coverage type changed): the chart only shows for part-year eligibility, so that case can't be
+  entered month by month.~~ **FIXED 2026-11-19** (owner-approved field, V531 - pf_form_8889_hsa.coverage_type_changed): eligible all
+  year, "Did the coverage change?" Yes shows the chart and line 3 is the greater of the December 1 limit and the chart. (Checked 2026-11-13, i8889 line 3 rule 4: line 3 is the greater of the chart and the December 1 coverage's
   limit, so only family coverage earlier in the year and self-only on December 1 can lose; no saved answer tells a change of coverage
   apart - showing the chart then needs a "did the coverage type change?" question: owner sign-off.)
 - Line 14b adds 1099-SA code 2 amounts to the typed amount (help says not to include them). (Checked 2026-11-12: no double count in

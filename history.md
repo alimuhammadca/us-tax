@@ -5,6 +5,19 @@ or a Yes with nothing entered yet came back blank. Older saves without it still 
 - Tests: e2e income-adjustments-screen.spec.ts "the less common adjustments answer is remembered ..." (No, then an empty Yes, each
   saved and reopened). Income adjustments e2e 30 passed; unit suite 6,219 passed, 0 failed; UI production build passes. Not deployed yet.
 
+## 2026-11-19T15:45:00-05:00
+Form 8824: section 1252 / 1254 / 1255 recapture on line 21 (owner-approved fields, V541; outstanding.md "Like-kind exchanges (Form
+8824)"). Instructions for Form 8824, line 21: the rules for these are similar to section 1245 property.
+- V541 adds pf_like_kind_exchange_item.recapture_125x_amount and fmv_125x_received (entity, LikeKindExchangesMapper).
+- Form8824Compute (business exchanges): line 21 += the smaller of the recapture (up to line 19 less the 1245 / 1250 part) and line 20 +
+  the like-kind FMV received that isn't the same kind; line 25b's share includes the same-kind property. Lines 22-25, Form 4797 line 16
+  and Schedule 1 follow. A note plus this recapture blocks with FORM_8824_125X_INSTALLMENT_OUT_OF_SCOPE (non-overrideable; i8824 line
+  21 - reported on Form 6252 as paid).
+- UI Like-kind exchanges: the two amounts (business exchanges), help for each section; flag link. No change to Form 8824 itself.
+- Tests: Form8824ComputeTest +3 (farmland: all same kind -> line 21 20,000, line 24 60,000, line 25b 100,000; none same kind -> 30,000;
+  the note block); e2e "a farmland exchange with section 1252 recapture" (screen save / reload, Schedule 1 line 4 20,000, AGI 80,000,
+  Form 8824 lines 21 / 24). Form 8824 e2e 13 passed; unit suite 6,236 passed, 0 failed; UI build passes. Not deployed.
+
 ## 2026-11-19T15:00:00-05:00
 Form 8824: the section 1245 parts given up - their own gain caps the line 21 recapture (owner-approved fields, V540; outstanding.md
 "Like-kind exchanges (Form 8824)"). Section 1245(a)(1): the ordinary income can't be more than the section 1245 property's own gain.

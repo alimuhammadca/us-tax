@@ -87,6 +87,11 @@ sections:
         required: false
         label: "Adjusted basis of those section 1245 parts (V540)"
         showIf: "section1245DepreciationAllowed > 0"
+      - name: recapture125xAmount
+        type: amount
+        required: false
+        label: "Section 1252, 1254 or 1255 recapture if the property were sold (V541, line 21; business exchanges)"
+        showIf: "propertyUse === 'business'"
       - name: fmvLikeKindReceived
         type: amount
         required: false
@@ -95,6 +100,11 @@ sections:
         type: amount
         required: false
         label: "Fair market value of section 1245 parts of the property received (optional, line 25b)"
+      - name: fmv125xReceived
+        type: amount
+        required: false
+        label: "Value of the like-kind property received that is the same kind of section 1252 / 1254 / 1255 property (V541)"
+        showIf: "propertyUse === 'business' && recapture125xAmount > 0"
       - name: cashReceived
         type: amount
         required: false

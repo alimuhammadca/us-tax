@@ -826,7 +826,12 @@
   the gain - Taylor example).~~ **FIXED 2026-11-19** (owner-approved fields, V540 - pf_like_kind_exchange_item.fmv_1245_given_up,
   basis_1245_given_up): with both entered, the parts' own gain (value less basis) caps the section 1245 part of line 21
   (Section1245PartsGain, section 1245(a)(1)); blank keeps the line 19 cap with FORM_8824_SECTION_1245_PARTS_GAIN_NOT_GIVEN.
-- Not asked (field additions - owner sign-off): section 1252 / 1254 / 1255 property (line 21, 25b); like-kind intangible real
+- ~~Section 1252 / 1254 / 1255 property (line 21, 25b) is not asked.~~ **FIXED 2026-11-19** (owner-approved fields, V541 -
+  pf_like_kind_exchange_item.recapture_125x_amount, fmv_125x_received): on a business exchange line 21 adds the smaller of the recapture
+  if sold (up to the gain left on line 19) and line 20 plus the like-kind property received that isn't the same kind; line 25b includes
+  the same-kind property's share. With an installment note it is blocked (FORM_8824_125X_INSTALLMENT_OUT_OF_SCOPE, non-overrideable -
+  that recapture goes on Form 6252 as paid).
+- Not asked (field additions - owner sign-off): like-kind intangible real
   property received (line 25c); whether a QI was used, QI default (Rev. Proc. 2010-14), reverse / parking exchanges (Rev. Proc. 2000-37);
   incidental personal property; Part IV lines 27-29 descriptions (the Part I fields are reused) and whether the replacement is permitted
   property; QOF deferral (Form 8997) and the new section 1062 farmland election; recourse vs nonrecourse debt.

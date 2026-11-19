@@ -1,3 +1,12 @@
+## 2026-11-20T12:20:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44447211095 on d5e6fab7 - revision ca-ustax-be--0000690 serving
+  100% traffic, image ustax-be:d5e6fab; /q/health/ready UP (Form 2555 home country and locality).
+  URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 44447214758 on 08dec54 - live at https://www.taxbeans.com
+  (bundle main-BTVW4OZT.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-20T11:40:00
 Form 2555 lines 29a / 29b - the home country and the high-cost locality (outstanding.md "Foreign income (Form 2555)"). Two answers
 gave the location: the country (printed on line 29a) and the Notice 2025-16 locality (the line 29b limit); they could disagree.

@@ -753,7 +753,8 @@
   year, "Did the coverage change?" Yes shows the chart and line 3 is the greater of the December 1 limit and the chart. (Checked 2026-11-13, i8889 line 3 rule 4: line 3 is the greater of the chart and the December 1 coverage's
   limit, so only family coverage earlier in the year and self-only on December 1 can lose; no saved answer tells a change of coverage
   apart - showing the chart then needs a "did the coverage type change?" question: owner sign-off.)
-- Line 14b adds 1099-SA code 2 amounts to the typed amount (help says not to include them). (Checked 2026-11-12: no double count in
+- ~~Line 14b adds 1099-SA code 2 amounts to the typed amount (help says not to include them).~~ (2026-11-19, owner: closed with no
+  change - no double count.) (Checked 2026-11-12: no double count in
   the calculation - line 14a takes each code 2 box 1 and line 14b takes it back, the earnings go to line 8z; hsaExcessWithdrawnAmount
   only reduces the Form 5329 excess and blocks when a code 2 form is on file.)
 - (Line 18, last-month rule testing period, is figured since 2026-11-13 when both answers are Yes, line 18 is blank and last year's
@@ -767,8 +768,9 @@
 
 ## Income adjustments (Schedule 1 Part II): found in the 2026-11-06 review, not changed
 
-- The mapper-only `iraDeductionMfsLivedApartLine20` (LowIrsFixesChunk2:203) has a column nothing reads - removing it is a field removal
-  (owner sign-off). (The dead `imported*Total` / `...OutOfScopeAmount` reads and the upload check were removed 2026-11-11.)
+- ~~The mapper-only `iraDeductionMfsLivedApartLine20` (LowIrsFixesChunk2:203) has a column nothing reads - removing it is a field removal
+  (owner sign-off).~~ **FIXED 2026-11-19** (owner-approved removal, V532): the column is dropped; its one read (a fallback for the
+  Schedule 1 line 20 box) is gone - the Filing status answer is the one source. (The dead `imported*Total` / `...OutOfScopeAmount` reads and the upload check were removed 2026-11-11.)
 - (The Social Security / IRA coordination notes open the spouse's copy when only the spouse claimed the IRA deduction since
   2026-11-12.) ALIMONY_MODIFICATION_ADOPTS_TCJA_* is shared by alimony paid and received, so it has no link. (Lines 18, 21, 23, 24b, 24c,
   24h and 24i open the spouse's copy when only the spouse entered the amount since 2026-11-11.)

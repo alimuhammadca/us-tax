@@ -1,3 +1,12 @@
+## 2026-11-19T11:40:00
+Income adjustments - the old "lived apart all year" copy removed (outstanding.md "Income adjustments (Schedule 1 Part II)"; owner-approved
+field removal, V532 - pf_income_adjustments.ira_deduction_mfs_lived_apart_line20 dropped). No screen asked it; its one read was a fallback
+that could check Schedule 1 line 20's box against the Filing status answer. The IRA rules and the box now follow Filing status only (no
+trigger used the column). HSA line 14b note closed (no double count).
+- Tests: MfsSpouseIraCoverageScopeTest (+1: lived apart on Filing status -> single IRA rules, full 7,000, the box checked);
+  LowIrsFixesChunk2Test (an old copy no longer checks the box). Income adjustments e2e 32 passed; unit suite 6,219 passed, 0 failed;
+  UI production build passes. Not deployed yet.
+
 ## 2026-11-19T10:40:00
 Form 8889 line 3 rule 4 - eligible all year, coverage changed (outstanding.md "HSA (Form 8889)"; owner-approved field, V531 -
 pf_form_8889_hsa.coverage_type_changed). Instructions for Form 8889, line 3 rule 4: the greater of the December 1 coverage's limit and

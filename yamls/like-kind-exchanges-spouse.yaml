@@ -105,6 +105,10 @@ sections:
         required: false
         label: "Value of the like-kind property received that is the same kind of section 1252 / 1254 / 1255 property (V541)"
         showIf: "propertyUse === 'business' && recapture125xAmount > 0"
+      - name: fmvIntangibleReceived
+        type: amount
+        required: false
+        label: "Value of intangible real property received - a long lease, easement, development or water rights (V542, line 25c)"
       - name: cashReceived
         type: amount
         required: false

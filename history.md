@@ -5,6 +5,19 @@ or a Yes with nothing entered yet came back blank. Older saves without it still 
 - Tests: e2e income-adjustments-screen.spec.ts "the less common adjustments answer is remembered ..." (No, then an empty Yes, each
   saved and reopened). Income adjustments e2e 30 passed; unit suite 6,219 passed, 0 failed; UI production build passes. Not deployed yet.
 
+## 2026-11-19T16:30:00-05:00
+Form 8824 line 25c: like-kind intangible real property received (owner-approved field, V542; outstanding.md "Like-kind exchanges (Form
+8824)"). Instructions for Form 8824, lines 25a-25c: the line 25 basis is split proportionately to the values.
+- V542 adds pf_like_kind_exchange_item.fmv_intangible_received (entity, LikeKindExchangesMapper). (The migration's comment was reworded:
+  a line starting "-- property" is read by Liquibase as a --property directive and stopped the start.)
+- Form8824Compute: line 25c = line 25 x the intangible value / line 16 (capped by line 16 less the 25b property); 25a = line 25 - 25b -
+  25c; 25c is printed on the existing box and kept in fields_json. Form8824AssetCheck's notes name the 25c part (not building or
+  equipment depreciation).
+- UI Like-kind exchanges: the amount under "Property received" with help (Regs. 1.1031(a)-3). No change to Form 8824 itself.
+- Tests: Form8824ComputeTest +2 (25a / 25b / 25c 119,000 / 34,000 / 17,000; 25c alone 34,000 with 25a 136,000); e2e "intangible real
+  property received" (screen save / reload, lines 25 / 25a / 25c, the filed form's 25c box). Form 8824 e2e 14 passed; unit suite 6,238
+  passed, 0 failed; UI build passes. Not deployed.
+
 ## 2026-11-19T15:45:00-05:00
 Form 8824: section 1252 / 1254 / 1255 recapture on line 21 (owner-approved fields, V541; outstanding.md "Like-kind exchanges (Form
 8824)"). Instructions for Form 8824, line 21: the rules for these are similar to section 1245 property.

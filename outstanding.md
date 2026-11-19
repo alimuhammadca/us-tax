@@ -831,8 +831,10 @@
   if sold (up to the gain left on line 19) and line 20 plus the like-kind property received that isn't the same kind; line 25b includes
   the same-kind property's share. With an installment note it is blocked (FORM_8824_125X_INSTALLMENT_OUT_OF_SCOPE, non-overrideable -
   that recapture goes on Form 6252 as paid).
-- Not asked (field additions - owner sign-off): like-kind intangible real
-  property received (line 25c); whether a QI was used, QI default (Rev. Proc. 2010-14), reverse / parking exchanges (Rev. Proc. 2000-37);
+- ~~Like-kind intangible real property received (line 25c) is not asked.~~ **FIXED 2026-11-19** (owner-approved field, V542 -
+  pf_like_kind_exchange_item.fmv_intangible_received): line 25c = line 25 x its value / line 16, 25a the rest after 25b and 25c; the
+  Depreciable assets notes name the 25c part as not building depreciation.
+- Not asked (field additions - owner sign-off): whether a QI was used, QI default (Rev. Proc. 2010-14), reverse / parking exchanges (Rev. Proc. 2000-37);
   incidental personal property; Part IV lines 27-29 descriptions (the Part I fields are reused) and whether the replacement is permitted
   property; QOF deferral (Form 8997) and the new section 1062 farmland election; recourse vs nonrecourse debt.
 - The property received is not added to Depreciable assets with its line 25 basis (the screen points there); since 2026-11-13 a business

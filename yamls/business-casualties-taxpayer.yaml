@@ -80,6 +80,11 @@ sections:
         required: false
         label: "Deductible loss under section 280A(c)(5) - Form 4684 line 27 for this property (not more than the full loss)"
         showIf: "propertyType === 'building' && (usedIn === 'rental' || usedIn === 'schedule_f') && usedPersonallyAsHome === true"
+      - name: recurringCasualtyInActivity
+        type: boolean
+        required: false
+        label: "Do casualties or thefts like this one, similar in cause and severity, happen regularly in this business or rental? (V537; Yes blocks - not figured)"
+        showIf: "usedIn === 'schedule_c' || usedIn === 'schedule_f' || usedIn === 'rental'"
       - name: dateAcquired
         type: date
         required: false

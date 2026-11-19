@@ -792,8 +792,12 @@
   loss on line 27 (not more than the full loss; HomeUsedPersonally), with FORM_4684_HOME_SECTION_280A_LOSS_USED asking for the
   attached statement (the form has no box for the words) or FORM_4684_HOME_SECTION_280A_LOSS_MISSING while it is blank. The limit
   itself is not figured (the user types the Pub. 527 / Pub. 587 worksheet result).
-- Not asked (field additions - owner sign-off): property used in a passive activity (a casualty gain or loss isn't counted in the passive loss
-  unless such losses recur regularly - Form 8582); the business part of mixed-use property is entered by the user (no split helper).
+- ~~Property used in a passive activity is not asked (a casualty gain or loss isn't counted in the passive loss unless such losses recur
+  regularly - Form 8582).~~ **FIXED 2026-11-19** (owner-approved field, V537 - pf_business_casualty_item.recurring_casualty_in_activity):
+  every Section B casualty is left out of Form 8582, which is the rule; the "Used in" help says so. A Yes to "casualties like this recur
+  regularly" on a business, farm or rental property blocks with FORM_4684_PASSIVE_RECURRING_CASUALTY_OUT_OF_SCOPE (non-overrideable:
+  that case - a passive gain or loss - is not figured).
+- Not asked (field additions - owner sign-off): the business part of mixed-use property is entered by the user (no split helper).
 - (Since 2026-11-13 a casualty row marked totally destroyed or stolen in the year, matched by description to exactly one of the
   person's depreciable assets not already disposed of, dates that asset disposed of on the casualty date in the calculation - the
   disposal-year convention applies and FORM_4684_ASSET_DEPRECIATION_STOPPED replaces FORM_4684_STOP_DEPRECIATING; the saved asset

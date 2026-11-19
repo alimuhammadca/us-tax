@@ -5,6 +5,18 @@ or a Yes with nothing entered yet came back blank. Older saves without it still 
 - Tests: e2e income-adjustments-screen.spec.ts "the less common adjustments answer is remembered ..." (No, then an empty Yes, each
   saved and reopened). Income adjustments e2e 30 passed; unit suite 6,219 passed, 0 failed; UI production build passes. Not deployed yet.
 
+## 2026-11-19T12:45:00-05:00
+Form 4684 Section B: casualties that recur regularly in a passive activity (owner-approved field, V537; outstanding.md "Business
+casualties and thefts"). Instructions for Form 4684, Property Used in a Passive Activity: a casualty gain or loss isn't part of the
+passive loss rules unless losses similar in cause and severity recur regularly in the activity.
+- Form 8582 already leaves every Section B casualty out (the normal rule) - unchanged; the "Used in" help now says so.
+- V537 adds pf_business_casualty_item.recurring_casualty_in_activity (entity, BusinessCasualtiesMapper); asked for a business, farm or
+  rental property. Yes -> FORM_4684_PASSIVE_RECURRING_CASUALTY_OUT_OF_SCOPE, blocking and in NonOverrideableFlags (the passive case is
+  not figured); screen note and help; flag link.
+- Tests: HomeUsedPersonallyTest aRecurringCasualty... (rental / Schedule C / Schedule F block, No and investment don't); e2e "a casualty
+  that recurs regularly in the rental blocks the return, even with override" (screen Yes saved / reloaded, 409 with override; No ->
+  Schedule 1 line 4 -30,000). Casualty e2e 8 passed; unit suite 6,222 passed, 0 failed; UI build passes. Not deployed.
+
 ## 2026-11-19T12:00:00-05:00
 Form 4684 Section B: a rental or farm building that was also a home used personally (owner-approved fields, V536; outstanding.md
 "Business casualties and thefts"). Instructions for Form 4684, Home Used for Business or Rented Out: figure the deductible loss under

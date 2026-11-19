@@ -1,3 +1,18 @@
+## 2026-11-19T19:45:00Z
+Form 8824: postponing the exchange gain through a Qualified Opportunity Fund (outstanding.md "Like-kind exchanges (Form 8824)"; no new
+field, no change to Form 8824 or Form 8949).
+- Like-kind exchanges screen, Cash received help: the gain taxed this year (line 22) can be postponed by investing it in a QOF within
+  180 days - a Capital gain/loss row "Deferral of gain from Form 8824", code Z, the amount as a negative adjustment, and Form 8997
+  (Instructions for Schedule D, Investment in a QOF; section 1400Z-2).
+- New Form8824Qof: an exchange with QOF-eligible line 22 gain (capital gain, or section 1231 gain on business property held over a
+  year) and no code Z row on Form 8949 gets FORM_8824_QOF_DEFERRAL_AVAILABLE (non-blocking).
+- Fix found on the way: the Form 8949 QOF advisories (addQofDeferralAdvisories, B32) saw only Form 8949 gains, so a code Z row
+  deferring an exchange gain (on Schedule D line 11, not Form 8949) was called QOF_DEFERRAL_MORE_THAN_GAIN. They now count the
+  exchange gain by term, and its transfer and receipt dates for the 180 days.
+- Tests: Form8824QofTest (3: the note and no note with a code Z row; no gain / short-held business property; the advisories with the
+  exchange gain - within, late, more than); e2e "an exchange gain taxed this year: the QOF note, and a code Z row that defers it".
+  Unit suite 6,246 passed, 0 failed; like-kind / QOF e2e (38) pass; UI build passes. Not deployed.
+
 ## 2026-11-19T19:30:00Z
 Form 8824 Part IV (section 1043 conflict-of-interest sale): the replacement must be permitted property bought within 60 days
 (outstanding.md "Like-kind exchanges (Form 8824)"; owner-approved field, V544 - pf_like_kind_exchange_item.section1043_permitted_property).

@@ -846,7 +846,12 @@
   (FORM_8824_SECTION_1043_PERMITTED_MISSING) - and shows the existing date box as "Date the replacement property was bought", which
   must fall in the 60 days starting on the sale date (FORM_8824_SECTION_1043_60_DAYS, section 1043(a)).
 - Not asked (field additions - owner sign-off): incidental personal property (proposed 2026-11-19: a Yes/No "personal property included"
-  question - not yet approved); QOF deferral (Form 8997) and the new section 1062 farmland election; recourse vs nonrecourse debt.
+  question - not yet approved); the new section 1062 farmland election; recourse vs nonrecourse debt.
+- ~~QOF deferral (Form 8997) of the exchange gain is not asked.~~ **FIXED 2026-11-19** (no new field): the deferral is the existing
+  Capital gain/loss code Z row (and the existing FORM_8997_REQUIRED_MANUAL_FILL safeguard). The Cash received help explains it; an
+  exchange with QOF-eligible line 22 gain (capital, or section 1231 held over a year) and no code Z row gets the non-blocking
+  FORM_8824_QOF_DEFERRAL_AVAILABLE note (Form8824Qof). The Form 8949 QOF advisories now count that gain and its dates, so a code Z row
+  deferring it is no longer called QOF_DEFERRAL_MORE_THAN_GAIN / QOF_INVESTMENT_OUTSIDE_180_DAYS.
 - The property received is not added to Depreciable assets with its line 25 basis (the screen points there); since 2026-11-13 a business
   exchange whose property received isn't on Depreciable assets, or is there with a cost above line 25, gets a note naming the basis
   (Form8824AssetCheck).

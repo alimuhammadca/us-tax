@@ -112,6 +112,13 @@ sections:
         required: false
         label: "If you are receiving this distribution as a beneficiary of a deceased plan participant, have you ever used Form 4972 for a previous distribution received for that same participant (any year after 1986)?"
         help: "Form 4972 Part I question 6 - Yes disqualifies."
+      - name: notQualifiedDistribution
+        type: boolean
+        required: false
+        label: "Is this distribution one of the kinds that can't use Form 4972 (listed on the screen)?"
+        help: "V528 (owner-approved 2026-11-20), Instructions for Form 4972, Distributions That Don't Qualify (403(b), an earlier
+          rolled-over distribution from the plan, a plan that received a rollover after 2001, a 5% owner, a corrective distribution,
+          U.S. Retirement Plan Bonds, a Civil Service lump-sum credit) - Yes: no Form 4972 (FORM_4972_DISTRIBUTION_DOES_NOT_QUALIFY)."
       - name: isQdroAlternatePayee
         type: boolean
         required: false

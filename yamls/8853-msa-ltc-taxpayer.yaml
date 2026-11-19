@@ -105,7 +105,14 @@ sections:
       - name: maMsaExceptionApplies
         type: boolean
         required: false
-        label: "Do taxable MA MSA distributions qualify for an exception to the 50% tax?"
+        label: "Was any of the money not used for medical costs paid out on or after the date the account holder died or became disabled?"
+      - name: maMsaExceptionExemptAmount
+        type: amount
+        required: false
+        showIf: maMsaExceptionApplies == true
+        label: "Part paid out on or after that date - blank if all of it"
+        note: "V530 (owner-approved 2026-11-20): Additional 50% Tax Worksheet line 1 = line 12 less this (or less the Medicare Advantage MSA
+          Forms 1099-SA coded 3, 4 or 6, the larger) - MaMsaException."
       - name: maMsaHeldOn20241231
         type: boolean
         required: false

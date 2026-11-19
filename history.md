@@ -1,3 +1,14 @@
+## 2026-11-20T13:20:00
+Form 8853 - Medicare Advantage MSA partial death / disability exception (outstanding.md "Archer MSA / LTC (Form 8853)"; owner-approved
+field, V530 - pf_form_8853.ma_msa_exception_exempt_amount). Instructions for Form 8853, lines 13a / 13b: the box for an exception to
+any of the distributions, -0- only when it covers all, otherwise the Additional 50% Tax Worksheet on the rest - the screen's one Yes /
+No made it all or nothing.
+- Backend: MaMsaException - the excepted part is the typed amount (all with Yes and none typed) or the Medicare Advantage MSA Forms
+  1099-SA coded 3 / 4 / 6, the larger; line 13a for any part; worksheet line 1 = line 12 less it.
+- UI: Archer MSA / LTC - the question reworded ("any of the money") and the amount under a Yes; help.
+- Tests: MaMsaExceptionTest (4); e2e msa-ltc-screen.spec.ts. MSA e2e 6 passed; unit suite 6,215 passed, 0 failed; UI production build
+  passes. Not deployed yet.
+
 ## 2026-11-20T12:20:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44447211095 on d5e6fab7 - revision ca-ustax-be--0000690 serving

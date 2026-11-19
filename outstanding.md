@@ -732,7 +732,10 @@
   filing status reaches Wave2FieldsW5.form8853Rules - its key was set by nothing, so the married lowest-deductible rule and the
   separate-return 37.5% had never run: HsaMsaRules.forArcherRules.) (The joint-return doubled family limit was fixed
   2026-11-11: both spouses' Archer MSAs share one limit, divided equally unless a line 3 is typed - HsaMsaRules.jointArcherFamilyLimit.)
-- Medicare Advantage MSA: no partial amount for the death / disability exception (Archer has one) - a field addition.
+- ~~Medicare Advantage MSA: no partial amount for the death / disability exception (Archer has one) - a field addition.~~ **FIXED 2026-11-20**
+  (owner-approved field, V530 - pf_form_8853.ma_msa_exception_exempt_amount): the part paid on or after the death / disability is
+  typed (or comes from Forms 1099-SA coded 3, 4 or 6); line 13a is checked for any part and the worksheet taxes only the rest
+  (MaMsaException).
 - No line 6a / 10 override (Form 1099-SA code 2 has been added to Archer line 6b since 2026-11-11).
 - (Since 2026-11-13 a blank line 2 is box 1 of the person's Form 5498-SA marked Archer MSA - Form5498SaChecks,
   FORM_8853_LINE2_FROM_5498SA.) Medicare months are not derived from the date of birth (enrollment isn't automatic at 65); since

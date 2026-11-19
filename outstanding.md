@@ -786,8 +786,13 @@
 
 ## Business casualties and thefts (Form 4684 Section B): found in the 2026-11-06 review, not changed
 
-- Not asked (field additions - owner sign-off): a home rented out or used for a business not on Schedule C (section 280A(c)(5) limit,
-  "See attached statement" on line 27); property used in a passive activity (a casualty gain or loss isn't counted in the passive loss
+- ~~A home rented out or used for a business not on Schedule C (section 280A(c)(5) limit, "See attached statement" on line 27) is not
+  asked.~~ **FIXED 2026-11-19** (owner-approved fields, V536 - pf_business_casualty_item.used_personally_as_home,
+  section_280a_deductible_loss): a rental or farm building answered as also a home used personally takes the typed section 280A(c)(5)
+  loss on line 27 (not more than the full loss; HomeUsedPersonally), with FORM_4684_HOME_SECTION_280A_LOSS_USED asking for the
+  attached statement (the form has no box for the words) or FORM_4684_HOME_SECTION_280A_LOSS_MISSING while it is blank. The limit
+  itself is not figured (the user types the Pub. 527 / Pub. 587 worksheet result).
+- Not asked (field additions - owner sign-off): property used in a passive activity (a casualty gain or loss isn't counted in the passive loss
   unless such losses recur regularly - Form 8582); the business part of mixed-use property is entered by the user (no split helper).
 - (Since 2026-11-13 a casualty row marked totally destroyed or stolen in the year, matched by description to exactly one of the
   person's depreciable assets not already disposed of, dates that asset disposed of on the casualty date in the calculation - the

@@ -5,6 +5,18 @@ or a Yes with nothing entered yet came back blank. Older saves without it still 
 - Tests: e2e income-adjustments-screen.spec.ts "the less common adjustments answer is remembered ..." (No, then an empty Yes, each
   saved and reopened). Income adjustments e2e 30 passed; unit suite 6,219 passed, 0 failed; UI production build passes. Not deployed yet.
 
+## 2026-11-19T12:00:00-05:00
+Form 4684 Section B: a rental or farm building that was also a home used personally (owner-approved fields, V536; outstanding.md
+"Business casualties and thefts"). Instructions for Form 4684, Home Used for Business or Rented Out: figure the deductible loss under
+section 280A(c)(5), enter it on line 27 and attach a statement.
+- V536 adds pf_business_casualty_item.used_personally_as_home and section_280a_deductible_loss (entity, BusinessCasualtiesMapper).
+- HomeUsedPersonally: for a building used in a rental or a farm answered Yes, Form4684SectionB.Property line 27 is the typed amount, not
+  more than the full loss (Part II, Form 4797 and Schedule 1 follow); FORM_4684_HOME_SECTION_280A_LOSS_USED (attach the statement - the
+  form has no box for "See attached statement") or FORM_4684_HOME_SECTION_280A_LOSS_MISSING (full loss kept while blank). Not blocking.
+- UI Business casualties: the Yes/No and the amount on each property, with help (Pub. 527 Worksheet 5-1 / Pub. 587); flag links.
+- Tests: HomeUsedPersonallyTest (4); e2e "a rental home also used personally" (screen save / reload, Schedule 1 line 4 -12,000, AGI
+  48,000, Form 4684 line 27 12,000). Casualty e2e specs 7 passed; unit suite 6,221 passed, 0 failed; UI build passes. Not deployed.
+
 ## 2026-11-19T11:10:00-05:00
 Income adjustments: Schedule 1 line 24z rows are removed completely (owner-approved removal, V535; outstanding.md "Income adjustments").
 The 2025 instructions say "Leave line 24z blank" and the screen had stopped taking rows.

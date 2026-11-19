@@ -70,6 +70,16 @@ sections:
           - "rental"
           - "investment"
           - "employee"
+      - name: usedPersonallyAsHome
+        type: boolean
+        required: false
+        label: "Is this building a home that you or your family also used personally in 2025? (V536; section 280A(c)(5))"
+        showIf: "propertyType === 'building' && (usedIn === 'rental' || usedIn === 'schedule_f')"
+      - name: section280aDeductibleLoss
+        type: amount
+        required: false
+        label: "Deductible loss under section 280A(c)(5) - Form 4684 line 27 for this property (not more than the full loss)"
+        showIf: "propertyType === 'building' && (usedIn === 'rental' || usedIn === 'schedule_f') && usedPersonallyAsHome === true"
       - name: dateAcquired
         type: date
         required: false

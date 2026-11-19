@@ -903,7 +903,13 @@
   depletion isn't counted twice). Held for investment: 28b ordinary, the rest on Form 8949. Blank amount ->
   FORM_4797_SECTION_1254_AMOUNT_MISSING (blocking); a partial disposition -> FORM_4797_SECTION_1254_PARTIAL_INTEREST (note,
   section 1254(a)(2)).
-- Not asked (field additions - owner sign-off): section 1239 related-party sales, timber (631), unharvested crops, K-1 section
+- ~~Section 1239 related-party sales are not asked.~~ **FIXED 2026-11-19** (owner-approved field, V546 -
+  pf_business_property_sale_item.sold_to_related_1239, asked for property the buyer can depreciate): Yes on a gain makes the whole gain
+  ordinary - the sale goes on Part II line 10 (i4797 line 10, "ordinary gains ... not included on lines 11 through 16") instead of Part
+  III / section 1231, so no section 1231 netting or unrecaptured section 1250 gain; held for investment, no Form 8949 part. A loss
+  and land are unaffected. The same sale also on Installment sales -> FORM_4797_RELATED_1239_NO_INSTALLMENT (non-overrideable,
+  section 453(g)). (The Installment sales screen itself doesn't ask section 1239 - a sale entered only there isn't checked.)
+- Not asked (field additions - owner sign-off): timber (631), unharvested crops, K-1 section
   1231 amounts, the condemnation (section 1033) path, line 1a 1099 reconciliation, section 1245 real property types (single-purpose
   agricultural structures) beyond "Equipment".
 

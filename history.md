@@ -1,3 +1,17 @@
+## 2026-11-19T22:50:00Z
+Form 4797 - section 1239: a sale to a related person who will depreciate the property is all ordinary income (outstanding.md "Business
+property sales (Form 4797)"; owner-approved field, V546 - pf_business_property_sale_item.sold_to_related_1239; Form 4797 unchanged).
+- Business property sales: "Was it sold to a related company, trust or estate that will depreciate it ...?" for a building, equipment,
+  livestock or section 1255 property (help: the section 1239(b) related persons from Pub. 544 - more than 50% corporation or
+  partnership with family counted, trust beneficiary, executor and beneficiary, employer welfare benefit fund).
+- Wave2FieldsW4.markRelated1239: Yes on a gain marks the entry ordinary-only, so the whole gain is on Part II line 10 (i4797 line 10)
+  and Schedule 1 line 4 - no Part III, section 1231 or unrecaptured section 1250 gain; investment use has no Form 8949 part. A loss
+  and land are unaffected. Form4797SalesCompute: the same sale on Installment sales -> FORM_4797_RELATED_1239_NO_INSTALLMENT
+  (blocking, non-overrideable, section 453(g)).
+- Tests: Form4797SalesComputeTest +4 (the duplex all ordinary on line 10 with no 1231 / line 19; loss and land unchanged; investment
+  equipment with no capital part; the installment block); e2e "a building sold to a related company ..." (Yes on the screen, saved,
+  reloaded, figured). Form 4797 e2e (29) pass; unit suite 6,255 passed, 0 failed; UI build passes. Not deployed.
+
 ## 2026-11-19T22:30:00Z
 Form 4797 line 28 - section 1254 oil, gas, geothermal or other mineral property (outstanding.md "Business property sales (Form 4797)";
 owner-approved field, V545 - pf_business_property_sale_item.section1254_recapture_amount; Form 4797 unchanged, lines 28a / 28b filled).

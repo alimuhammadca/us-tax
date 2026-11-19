@@ -44,6 +44,11 @@ sections:
           - "schedule_f"
           - "rental"
           - "other"
+      - name: soldToRelated1239
+        type: boolean
+        required: false
+        label: "Sold to a related company, trust or estate that will depreciate it? (V546, section 1239 - the whole gain is ordinary, Form 4797 line 10)"
+        showIf: "propertyType in [building, equipment, cattle_horses, livestock_other, cost_sharing_1255]"
       - name: inherited
         type: boolean
         required: false

@@ -93,6 +93,15 @@ sections:
         required: false
         label: "Full days spent in foreign countries during the 12-month period"
         showIf: "hadForeignEarnedIncome === true && qualifyingTest === 'physical_presence'"
+      - name: ppTrips
+        type: list
+        required: false
+        label: "Trips during the 12-month period (Form 2555 line 18)"
+        showIf: "hadForeignEarnedIncome === true && qualifyingTest === 'physical_presence'"
+        itemFields: [country, dateArrived, dateLeft, fullDays, usBusinessDays, usBusinessIncome]
+        note: "V529 (owner-approved 2026-11-20): saved as JSON (pf_foreign_earned_income.pp_trips); the first four fill line 18, the rest
+          are listed in FORM_2555_LINE_18_MORE_THAN_FOUR_TRIPS for an attached statement; a days total different from the typed full days
+          is warned on the screen."
       - name: bfResidenceStartDate
         type: date
         required: false

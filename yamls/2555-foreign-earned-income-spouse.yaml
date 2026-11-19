@@ -72,6 +72,15 @@ sections:
             label: Spouse lived as a bona fide resident of a foreign country for an uninterrupted period that includes all of 2025
           - value: physical_presence
             label: Spouse was physically present in a foreign country or countries for at least 330 full days during a 12-month period
+      - name: spousePpTrips
+        type: list
+        required: false
+        label: "Trips during the 12-month period (Form 2555 line 18)"
+        showIf: "spouseQualifyingTest === 'physical_presence'"
+        itemFields: [country, dateArrived, dateLeft, fullDays, usBusinessDays, usBusinessIncome]
+        note: "V529 (owner-approved 2026-11-20): saved as JSON (pf_foreign_earned_income.pp_trips); the first four fill line 18, the rest
+          are listed in FORM_2555_LINE_18_MORE_THAN_FOUR_TRIPS for an attached statement; a days total different from the typed full days
+          is warned on the screen."
       - name: spouseBfResidenceStartDate
         type: date
         required: false

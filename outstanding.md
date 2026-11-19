@@ -709,7 +709,10 @@
 - MFS: (fixed 2026-11-11 - the checklist adds the spouse leg's messages, SpouseLegFlags); the married-couples
   housing rule (no duplicated expenses) is checked on separate returns too since 2026-11-12 (the scoper carries the other spouse's
   Form 2555 copy); an unanswered household question passes.
-- No line 18 trip table (the 330 days are one typed number); `housingLocationCountry` duplicates the locality choice (only printed); (since 2026-11-13
+- ~~No line 18 trip table (the 330 days are one typed number);~~ **FIXED 2026-11-20** (owner-approved field, V529 - pf_foreign_earned_income.pp_trips,
+  out_form_2555.line18_trips): a trip list under the physical presence test fills line 18 rows 1-4 (Form2555Trips), trips 5+ in
+  FORM_2555_LINE_18_MORE_THAN_FOUR_TRIPS, a days mismatch warned on the screen (the typed full days still decide);
+  `housingLocationCountry` duplicates the locality choice (only printed); (since 2026-11-13
   the screen takes the $130,000 limit and the Notice 2025-16 locality table from GET /api/reference-data - FOREIGN_EARNED_INCOME_EXCLUSION_MAX,
   FOREIGN_HOUSING_LIMIT_FULL_YEAR, FOREIGN_HOUSING_HIGH_COST_LIMITS; data/foreign-housing-localities.ts stays as the fallback; since
   2026-11-14 the help text's figures follow it too - foreignIncomeHelp's limits, the base amount at 16% of the exclusion).

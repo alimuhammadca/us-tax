@@ -1,3 +1,14 @@
+## 2026-11-20T10:00:00
+Form 2555 line 18 - the physical presence trips (outstanding.md "Foreign income (Form 2555)"; owner-approved field, V529 -
+pf_foreign_earned_income.pp_trips and out_form_2555.line18_trips). The test was one typed number of days and line 18 printed blank.
+- Backend: Form2555Trips - the trips saved with the person's Foreign income copy and carried onto the computed Form 2555
+  (line18Trips); trips 5 and later in FORM_2555_LINE_18_MORE_THAN_FOUR_TRIPS for an attached statement.
+- UI: Foreign income - a trip list under the physical presence test (country, dates, full days, U.S. business days and income),
+  a warning when the trips' days differ from the typed full days, the four-trip note, help; the Form 2555 preview fills line 18
+  rows 1-4 (its existing boxes).
+- Tests: Form2555TripsTest (4); e2e foreign-income-screen.spec.ts "Form 2555 line 18 ...". Foreign income e2e 19 passed (the new test
+  re-run after a help-label fix in the test); unit suite 6,207 passed, 0 failed; UI production build passes.
+
 ## 2026-11-20T08:55:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44438464397 on cbbee490 - revision ca-ustax-be--0000688 serving

@@ -1,3 +1,15 @@
+## 2026-11-20T18:30:00Z
+The at-risk limit covers a passive K-1's section 1231 / box 11 L-R loss (outstanding.md "K-1 section 1231 amounts", left (b)) - no
+new field, no form change.
+- K1AtRisk.passiveCap tested only boxes 1-3 of a passive K-1; the section 1231 (1065 box 10 / 1120-S box 9) and code L / R amounts
+  were added afterwards and went straight to Form 8582. Now they join the activity's net (i6198 lines 2a / 2b, 4) - K1Passive1231.pool
+  runs before the test - and a cut is shared over the activity's losses by size (i6198 "divide each deduction or loss ... by the
+  total loss"): the item part comes off the pooled loss (K1Passive1231.Item.loss), the rest off box 1-3 as before. A section 1231
+  gain from the same K-1 raises what is allowed.
+- Example: A box 1 -4,000, box 10 -8,000, amount at risk 5,000; B box 1 +20,000: 7,000 carried, Form 4797 line 2 -3,333, AGI 115,000
+  (was 108,000).
+- Tests: K1Passive1231Test +3, e2e k1-passive-section-1231.spec.ts +1.
+
 ## 2026-11-20T17:00:00Z
 Form 8582 lines 2a / 2b show each passive K-1 (outstanding.md "K-1 section 1231 amounts", left (c)) - no new field, no form change.
 - Lines 2a / 2b netted the passive K-1s (A +10,000, B -6,000 printed 2a 4,000, 2b blank). i8582: line 2a is the activities with net

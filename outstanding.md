@@ -930,8 +930,12 @@
   Schedule E / the NIIT passive net. PTP K-1s keep the per-PTP note. Found on the way: Schedule E put a passive K-1's income on
   line 26 instead of Part II when another passive K-1 had a loss (Form8582Notes.k1PassiveNet netted the K-1s) - fixed.
   Left: (a) a K-1's carried unallowed loss comes back next year as that K-1's prior loss and, when allowed, goes to Schedule E even
-  for the part that was a section 1231 loss (Part IX by form not kept across years); (b) the at-risk limit isn't applied to a passive
-  section 1231 / L-R loss before Form 8582; ~~(c) Form 8582 lines 2a / 2b print the passive K-1s netted~~ **FIXED 2026-11-20** (no
+  for the part that was a section 1231 loss (Part IX by form not kept across years); ~~(b) the at-risk limit isn't applied to a passive
+  section 1231 / L-R loss before Form 8582~~ **FIXED 2026-11-20** (no new field): a passive K-1's section 1231 and code L / R amounts
+  join its activity's at-risk test (i6198 lines 2a / 2b, 4 - K1AtRisk.passiveCap, own items K / L or the typed amount at risk); a cut
+  is shared over the activity's losses by size, the section 1231 / L-R part coming off its pooled loss before Form 8582 (Form 4797
+  gets only what both limits allow); the cut carries with the existing K1_PASSIVE_AT_RISK_LOSS_CARRIED_FORWARD note (next year it
+  is typed as an at-risk carryover and joins box 1 - its section 1231 character isn't kept); ~~(c) Form 8582 lines 2a / 2b print the passive K-1s netted~~ **FIXED 2026-11-20** (no
   new field): line 2a is the K-1 activities with net income, line 2b those with a net loss (each K-1's own net, the Part V rows -
   Form8582Notes.k1Gross; one combined row when the K-1s don't add up per activity); Form 8582 is now made when a passive K-1 has a
   loss another K-1's income covers (it wasn't made at all), and lines 10 / 11 are left blank when line 3 isn't a loss ("stop here")

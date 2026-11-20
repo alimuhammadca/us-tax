@@ -1,3 +1,14 @@
+## 2026-11-20T20:00:00Z
+A passive K-1's carried section 1231 / L-R loss keeps its form next year (outstanding.md "K-1 section 1231 amounts", left (a)) - no
+new field, no form change.
+- i8582 Part IX / Worksheet 5: a prior-year unallowed loss is reported, when allowed, on the form it came from. The app carried one
+  figure per K-1, so a carried section 1231 loss came back on Schedule E. Now PassiveCarryforwardByActivity.record keeps each K-1
+  row's section 1231 and L / R parts (carry_n_s1231 / carry_n_lr, from K1Passive1231.unallowedSplit); the seed passes them on
+  (K1Passive1231.PRIOR_SPLIT); K1Passive1231.pool adds them as carried items (in the K-1's column (c), not its net, not at-risk
+  tested); their allowed part (Part IX share) goes on Form 4797 line 2 / line 10 (K1PassThroughAmounts.addCarried, "... 2024
+  unallowed passive loss") and is taken out of Schedule E.
+- Tests: K1Passive1231Test +3 (and the year-1 record pin), new two-year e2e k1-carried-section-1231-bridge.spec.ts.
+
 ## 2026-11-20T18:30:00Z
 The at-risk limit covers a passive K-1's section 1231 / box 11 L-R loss (outstanding.md "K-1 section 1231 amounts", left (b)) - no
 new field, no form change.

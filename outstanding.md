@@ -929,8 +929,13 @@
   before Form 8582, so the return is figured once more (K1Passive1231.ALLOWED) and that pass takes the moved amount back out of
   Schedule E / the NIIT passive net. PTP K-1s keep the per-PTP note. Found on the way: Schedule E put a passive K-1's income on
   line 26 instead of Part II when another passive K-1 had a loss (Form8582Notes.k1PassiveNet netted the K-1s) - fixed.
-  Left: (a) a K-1's carried unallowed loss comes back next year as that K-1's prior loss and, when allowed, goes to Schedule E even
-  for the part that was a section 1231 loss (Part IX by form not kept across years); ~~(b) the at-risk limit isn't applied to a passive
+  Left: ~~(a) a K-1's carried unallowed loss comes back next year as that K-1's prior loss and, when allowed, goes to Schedule E even
+  for the part that was a section 1231 loss (Part IX by form not kept across years)~~ **FIXED 2026-11-20** (no new field): the
+  per-activity record kept with the return gives each K-1's unallowed loss its section 1231 and code L / R parts (carry_n_s1231 /
+  carry_n_lr - each pooled item's loss less its allowed part, K1Passive1231.unallowedSplit); next year the seed passes them on with the
+  K-1's carried loss (K1Passive1231.PRIOR_SPLIT) and the allowed part of each goes on Form 4797 line 2 / line 10 ("... 2024 unallowed
+  passive loss"), the rest on Schedule E, in the Part IX proportion; what stays carried is recorded by form again. A typed per-K-1
+  carryover, a return saved before this change, a disposed K-1's release and the AMT side keep the whole loss on Schedule E; ~~(b) the at-risk limit isn't applied to a passive
   section 1231 / L-R loss before Form 8582~~ **FIXED 2026-11-20** (no new field): a passive K-1's section 1231 and code L / R amounts
   join its activity's at-risk test (i6198 lines 2a / 2b, 4 - K1AtRisk.passiveCap, own items K / L or the typed amount at risk); a cut
   is shared over the activity's losses by size, the section 1231 / L-R part coming off its pooled loss before Form 8582 (Form 4797

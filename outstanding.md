@@ -1143,8 +1143,11 @@ checked on the return too (PersonDates, DATE_OF_BIRTH_AFTER_TAX_YEAR / DATE_OF_D
 year. Item 5, checked 2026-11-12: the server did check - TinValidator refuses an invalid 9-digit SSN / ITIN at save, and V76's CHECK
 constraints allow only a whole SSN and a 6-digit IP PIN - but a half-typed SSN or PIN (the screens save partial data) failed the whole
 Identification save with a 500 and lost every change; IdentificationMapper now leaves a partial number blank. The return blocks an
-invalid SSN / ITIN / ATIN or IP PIN that is on file (IdNumbers - e.g. saved before the checks). Still open: the "Deceased" box the
-help says the date checks - the Form 1040 preview prints no such box (a tax-return form change: owner sign-off).)
+invalid SSN / ITIN / ATIN or IP PIN that is on file (IdNumbers - e.g. saved before the checks). ~~Still open: the "Deceased" box the
+help says the date checks - the Form 1040 preview prints no such box (a tax-return form change: owner sign-off).~~ **FIXED
+2026-11-20** (V550, no input field; not a form change - the preview's IRS field map has the box and dates, they were only never
+filled): out_form_1040.filer_date_of_death / spouse_date_of_death keep each person's date of death, and the Form 1040 preview checks
+the top "Deceased" box and fills the "You" / "Spouse" month, day and year.)
 
 The Identification screens now check dates as they are typed (real calendar date, date of birth 1900 to
 Dec 31 2025, taxpayer date of death within 2025, spouse date of death on or before Dec 31 2025, death not before

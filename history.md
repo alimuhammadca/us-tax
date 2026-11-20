@@ -1,3 +1,12 @@
+## 2026-11-20T23:30:00Z
+Form 1040 - the top "Deceased" box and dates are filled (outstanding.md "Revise the date of birth / date of death logic", the last
+open part) - V550, no input field, no form change.
+- The saved Form 1040 kept the filer's / spouse's date of birth but not the date of death, so the preview (whose IRS field map has
+  top_deceased and the six date boxes) never filled them. V550 adds out_form_1040.filer_date_of_death / spouse_date_of_death (Filer /
+  Spouse dateOfDeath, Form1040OutputMapper both ways); TaxReturnComputeService.buildFiler / buildSpouse set them (a valid date only).
+- UI form-tax-return-1040: top_deceased checked when either died; top_deceased_you_* / top_deceased_spouse_* MM / DD / YYYY.
+- Tests: DateOfDeathRangeTest +1; e2e form1040-deceased-box.spec.ts (new).
+
 ## 2026-11-20T22:30:00Z
 Depreciable assets - a farm rental (Form 4835) activity (outstanding.md "Farm rental (Form 4835)") - no new field (a new "Used for"
 value), no form change.

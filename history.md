@@ -1,3 +1,12 @@
+## 2026-11-20T17:00:00Z
+Form 8582 lines 2a / 2b show each passive K-1 (outstanding.md "K-1 section 1231 amounts", left (c)) - no new field, no form change.
+- Lines 2a / 2b netted the passive K-1s (A +10,000, B -6,000 printed 2a 4,000, 2b blank). i8582: line 2a is the activities with net
+  income, 2b those with a net loss - now each K-1's own net from the Part V worksheet rows (Form8582Notes.k1Gross). Line 2d / 3 and
+  the allowed loss are unchanged.
+- Form 8582 wasn't made when a passive K-1's loss was covered by another K-1's income; it is now (a passive loss to report). Such a
+  form stops at line 3 (lines 10 / 11 blank) since line 3 isn't a loss.
+- Tests: K1Passive1231Test +1 (and the netted-2b pin updated to 2a 4,000 / 2b -10,000), e2e k1-passive-section-1231.spec.ts +1.
+
 ## 2026-11-20T15:00:00Z
 Form 4797 - section 1245 real property (outstanding.md "Business property sales (Form 4797)"; owner-approved field V549; no form change).
 - Business property sales: a new "What kind of property?" choice, "Farm or horticultural structure used for one purpose (livestock

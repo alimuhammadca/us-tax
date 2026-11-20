@@ -931,8 +931,11 @@
   line 26 instead of Part II when another passive K-1 had a loss (Form8582Notes.k1PassiveNet netted the K-1s) - fixed.
   Left: (a) a K-1's carried unallowed loss comes back next year as that K-1's prior loss and, when allowed, goes to Schedule E even
   for the part that was a section 1231 loss (Part IX by form not kept across years); (b) the at-risk limit isn't applied to a passive
-  section 1231 / L-R loss before Form 8582; (c) Form 8582 lines 2a / 2b print the passive K-1s netted (the Part V worksheet has
-  each one's income and loss) - i8582 line 2a is the activities with net income, 2b those with a net loss.
+  section 1231 / L-R loss before Form 8582; ~~(c) Form 8582 lines 2a / 2b print the passive K-1s netted~~ **FIXED 2026-11-20** (no
+  new field): line 2a is the K-1 activities with net income, line 2b those with a net loss (each K-1's own net, the Part V rows -
+  Form8582Notes.k1Gross; one combined row when the K-1s don't add up per activity); Form 8582 is now made when a passive K-1 has a
+  loss another K-1's income covers (it wasn't made at all), and lines 10 / 11 are left blank when line 3 isn't a loss ("stop here")
+  on such a form.
 - ~~The condemnation (section 1033) path was not asked.~~ **FIXED 2026-11-20** (V548, owner-approved fields): the Business property
   sales screen asks whether the property was condemned (or sold under threat of it), whether the gain is postponed by buying
   replacement property, and the replacement's cost. Form4797Condemnation: line 24 is the recognized gain (the smaller of the gain and

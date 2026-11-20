@@ -65,10 +65,6 @@ sections:
     multiplicity: single
     showIf: hasSeTaxOptions == true
     fields:
-      - name: medicaidWaiverIncludeInSe
-        type: boolean
-        required: false
-        label: Elect to include Medicaid-waiver payments (Notice 2014-7) in SE earnings
       - name: priorYearUnreportedTips
         type: amount
         required: false

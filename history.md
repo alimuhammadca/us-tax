@@ -1,3 +1,16 @@
+## 2026-11-21T09:30:00Z
+Self-employment tax options - the unused Medicaid-waiver "include in SE earnings" field dropped (owner-approved removal V555;
+outstanding.md note D-sch-se-5); no screen, statement or tax-return form change.
+- The 2025 Schedule SE instructions have no election to add Medicaid-waiver payments to SE earnings (the Form 1040 choice counts them as
+  earned income for the EIC / ACTC only); the calculation stopped adding them on 2026-10-27 and no screen asked the question, so the
+  column was saved by nothing and its advisory could not fire.
+- V555 drops pf_se_tax_options.medicaid_waiver_include_in_se (no trigger reads it; not in production - nothing copied); the entity field,
+  the SeTaxOptionsMapper lines, HeldTriage3Fixes.medicaidSeElectionNotApplied / SE_MEDICAID_WAIVER_ELECTION_NOT_APPLIED and the YAML
+  entries (se-tax-options-taxpayer / -spouse) are removed. The note "UI says employer EIN optional; compute blocks without it"
+  (Form 4137) is closed - checked, already fixed.
+- Tests: HeldTriage3FixesTest (an old key is ignored, SE tax 2,826, no advisory; the entity has no such field); e2e
+  schedule-se-line2-additions.spec.ts (3 passed - the key isn't saved, SE tax 7,065); unit suite 6,297 passed, 0 failed.
+
 ## 2026-11-21T08:30:00Z
 Interest income - the spouse's copy asks the Schedule B line 7b countries and the three bond premium questions on a separate return
 (owner-approved; outstanding.md "Interest income spouse copy"); no statement or tax-return form change, no migration.

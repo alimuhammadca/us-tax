@@ -1308,7 +1308,9 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 | D-1c-4 | ~~low~~ **FIXED 2026-10-26** (low batch V392-V399) | silent omission | dependent's own return has no Tips form — i1040gi p.24, p.11 / DependentOwnFormScoper.java:148-215 | `new_knowledge/1c.md` |
 | D-1c-5 | ~~low~~ **FIXED 2026-10-26** (low batch V392-V399) | silent | MFS community property never splits 1c; advisory text implies it does — i1040gi p.23 / CommunityProperty.java | `new_knowledge/1c.md` |
 
-- Note: (note) UI says employer EIN optional; compute blocks without it (MISSING_EMPLOYER_EIN_FORM_4137_*) — form-tip-income-taxpayer.component.ts:1230
+- ~~Note: (note) UI says employer EIN optional; compute blocks without it (MISSING_EMPLOYER_EIN_FORM_4137_*) — form-tip-income-taxpayer.component.ts:1230~~
+  **CLOSED 2026-11-20** (checked, already fixed): the Tips screen marks the EIN required (*) on a row that needs Form 4137 and says the
+  return won't compute without it; saving without it is allowed (save partial).
 
 #### 1b
 
@@ -1350,7 +1352,10 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 | D-1d-6 | ~~low~~ **FIXED 2026-10-26** (low batch V392-V399) | understated if mistyped | typed "qualified amount in W-2 box 1" backed out without matching W-2 / box 1 cap — i1040gi p.92 / TRCS:40633-40654, :40867 | `new_knowledge/1d.md` |
 | D-1d-7 | ~~low~~ **FIXED 2026-10-26** (low batch V392-V399) | not supported | dependent's own return has no Medicaid waiver form / DependentOwnFormScoper | `new_knowledge/1d.md` |
 
-- Note: (unverified) se-tax-options.medicaidWaiverIncludeInSe adds whole 1d to Sch SE line 2 (TRCS:29210-29212) — not found in 2025 books
+- ~~Note: (unverified) se-tax-options.medicaidWaiverIncludeInSe adds whole 1d to Sch SE line 2 (TRCS:29210-29212) — not found in 2025 books~~
+  **FIXED 2026-11-20** (owner-approved removal, V555): it had stopped being added on 2026-10-27 (D-sch-se-5 - the 2025 Schedule SE
+  instructions have no such election) and no screen asked it; the column pf_se_tax_options.medicaid_waiver_include_in_se is dropped
+  with its entity field, mapper lines and the advisory SE_MEDICAID_WAIVER_ELECTION_NOT_APPLIED that could no longer fire.
 
 #### 1f
 

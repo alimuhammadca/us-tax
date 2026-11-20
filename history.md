@@ -1,3 +1,15 @@
+## 2026-11-21T12:30:00Z
+Schedule 1 line 18 - a separate return deducts only the filer's own early-withdrawal penalty (owner-approved; outstanding.md note "Sch 1
+line 18 ... no person filter"); no field, statement or tax-return form change.
+- On a separate return the Form 1099-INT / 1099-OID lists keep the other spouse's statements for the community-property split; the
+  interest is figured per person, but line 18 summed box 2 of every statement in the list - each spouse's return deducted both
+  penalties (Family Head 40 + spouse 100 = 140 on each return; it should be 40 and 100). Joint returns and dependents were right.
+- Schedule1Computations.withoutOtherSpouse leaves the other spouse's statements (recipient TIN = mfsOtherSpouseSsn) out of the line 18
+  sum on a separate return; a community-property share copied to the filer carries the filer's TIN and stays. CommunityProperty
+  .split1099Int now splits box 2 (earlyWithdrawalPenaltyAmount) with the interest, as split1099Oid already did - 100% community: 70 each.
+- Tests: Line18PenaltyOwnerTest (3 - joint 140; separate 40, and the spouse's side keeps only hers; community property 70); e2e
+  income-adjustments-screen, line10-income-adjustments, open-questions-batch47 - 32 passed; unit suite 6,303 passed, 0 failed.
+
 ## 2026-11-21T11:30:00Z
 Form 8814 - a child's tax-exempt interest (line 1b) is no longer added to the parent's Form 1040 line 2a (owner-approved; outstanding.md
 note "Form 8814 line 1b added to parent's 2a"); no field, statement or tax-return form change.

@@ -1460,7 +1460,12 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 | D-2b-7 | ~~low~~ **FIXED 2026-10-26** (low batch V392-V399) | wrong amount | MFS community property split covers only INT boxes 1/3/8 — p17 p.60 / TRCS:3114-3118 | `new_knowledge/2b.md` |
 | D-2b-8 | ~~low~~ **FIXED 2026-10-26** (low batch V392-V399) | $1 cosmetic | per-person rounding before total — i1040gi p.23 / TRCS:19514, :19144, :18450 | `new_knowledge/2b.md` |
 
-- Note: (side, for line 10) Sch 1 line 18 early-withdrawal penalty sums box 2 of every 1099-INT/OID in household, no person filter / TRCS:32887-32890
+- ~~Note: (side, for line 10) Sch 1 line 18 early-withdrawal penalty sums box 2 of every 1099-INT/OID in household, no person filter / TRCS:32887-32890~~
+  **FIXED 2026-11-20** (owner-approved, no field change): a dependent's statements were already off the parent's return (the person
+  filter, ReturnStatementOwners); on a separate return the lists still held the other spouse's statements (kept for the
+  community-property split), so each spouse's line 18 deducted both penalties (probe: 40 + 100 = 140 on each). Line 18 now leaves out
+  the other spouse's Forms 1099-INT / 1099-OID (Schedule1Computations.withoutOtherSpouse, by mfsOtherSpouseSsn); in a community-property
+  state box 2 is split with the interest (CommunityProperty.split1099Int - the 1099-OID split already had it). Line18PenaltyOwnerTest.
 
 #### 3a/3b/3c (3a: no own deviations)
 

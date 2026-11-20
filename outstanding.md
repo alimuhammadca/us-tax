@@ -1063,8 +1063,9 @@
 
 ## Capital gain/loss: found in the 2026-11-06 review, not changed
 
-- The column `pf_capital_gain_loss.imported_1099div_box2a_capital_gain_distributions_total` (`imported1099divBox2aCapitalGainDistributionsTotal`) is saved by no screen
-  and read by nothing since 2026-11-11 (the compute's misspelled reads were removed); dropping it is a field removal (owner sign-off).
+- ~~The column `pf_capital_gain_loss.imported_1099div_box2a_capital_gain_distributions_total` (`imported1099divBox2aCapitalGainDistributionsTotal`) is saved by no screen
+  and read by nothing since 2026-11-11 (the compute's misspelled reads were removed); dropping it is a field removal (owner sign-off).~~
+  **FIXED 2026-11-20** (owner-approved removal, V551): the column is dropped with its entity field and mapper lines; no trigger wrote it.
 - (Form 2439 is in `utils/statement-recipient.ts` STATEMENT_PERSON_TIN since 2026-11-12 - `shareholderTIN`. Forms 6252, 4797, 4684,
   6781 and 8824 have no person number - their screens record `ownerRole` - so they stay out of it.)
 - The reduced home sale exclusion is figured per return, not per spouse as Pub. 523 Worksheet 3 does on a joint return.

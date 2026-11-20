@@ -1,3 +1,9 @@
+## 2026-11-21T00:15:00Z
+Capital gain/loss - the unused pf_capital_gain_loss.imported_1099div_box2a_capital_gain_distributions_total column dropped
+(owner-approved removal, V551; outstanding.md "Capital gain/loss"). No screen saved it and nothing read it since 2026-11-11; capital
+gain distributions come from each Form 1099-DIV. Removed from PfCapitalGainLoss and CapitalGainLossMapper; no trigger or YAML named it.
+No screen, form or figure changes. Unit suite 6,286 passed.
+
 ## 2026-11-20T23:30:00Z
 Form 1040 - the top "Deceased" box and dates are filled (outstanding.md "Revise the date of birth / date of death logic", the last
 open part) - V550, no input field, no form change.

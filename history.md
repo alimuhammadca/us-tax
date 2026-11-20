@@ -1,3 +1,19 @@
+## 2026-11-20T13:00:00Z
+Form 4797 - a condemnation gain postponed under section 1033 (outstanding.md "Business property sales (Form 4797)"; owner-approved
+fields, V548; no tax-form change).
+- Business property sales screen: new "Condemnation" group - condemned (or sold under threat of condemnation)?, postpone the gain by
+  buying replacement property?, the replacement's cost (blank = not bought yet); help from i4797 (Involuntary Conversion of Property)
+  and Pub. 544 / section 1033. V548 adds condemned, postpone_gain_section_1033, replacement_property_cost to
+  pf_business_property_sale_item (entity, BusinessPropertySalesMapper, YAMLs).
+- New Form4797Condemnation: recognized gain = min(realized gain, award less expenses - replacement cost); the Part III line 24 (and the
+  preview's line 2 / 10 row) is the recognized gain, so the recapture follows it (sections 1245(b)(4) / 1250(d)(4)); all postponed ->
+  the sale is left off Form 4797. Non-blocking FORM_4797_SECTION_1033_GAIN_POSTPONED notice: postponed amount, the replacement's basis
+  (cost less the postponed gain), the 2-year (3 for condemned real property) replacement period, the statement to attach, amend if not
+  replaced. A condemned sale skips the section 1239 related-buyer rule.
+- Tests: Form4797SalesComputeTest +3 (5,000 of 40,000 recognized, recapture 5,000; land with no cost yet all postponed, with a 100,000
+  replacement 20,000 section 1231; not postponed / a loss unchanged); e2e business-property-sales-form-4797.spec.ts +1 (7 passed). Unit
+  suite 6,269 passed, 0 failed; UI build OK. Not deployed.
+
 ## 2026-11-20T12:00:00Z
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44727436254 on 16d0e021 - revision ca-ustax-be--0000691 serving

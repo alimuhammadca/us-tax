@@ -933,7 +933,15 @@
   for the part that was a section 1231 loss (Part IX by form not kept across years); (b) the at-risk limit isn't applied to a passive
   section 1231 / L-R loss before Form 8582; (c) Form 8582 lines 2a / 2b print the passive K-1s netted (the Part V worksheet has
   each one's income and loss) - i8582 line 2a is the activities with net income, 2b those with a net loss.
-- Not asked (field additions - owner sign-off): the condemnation (section 1033) path, line 1a 1099 reconciliation, section 1245 real property types (single-purpose
+- ~~The condemnation (section 1033) path was not asked.~~ **FIXED 2026-11-20** (V548, owner-approved fields): the Business property
+  sales screen asks whether the property was condemned (or sold under threat of it), whether the gain is postponed by buying
+  replacement property, and the replacement's cost. Form4797Condemnation: line 24 is the recognized gain (the smaller of the gain and
+  the award less expenses above the replacement's cost), so the line 25 / 26 / 28 recapture is limited to it (sections 1245(b)(4),
+  1250(d)(4)); a sale whose whole gain is postponed (or no cost entered yet) is left off the form; a notice gives the postponed gain,
+  the replacement's basis, the 2- / 3-year replacement period and the statement to attach. Left: the section 1245(b)(4) "plus the
+  value of replacement property that isn't section 1245 property" part of the recapture limit, and the section 1033(g) like-kind
+  standard for real property are explained in help only.
+- Not asked (field additions - owner sign-off): line 1a 1099 reconciliation, section 1245 real property types (single-purpose
   agricultural structures) beyond "Equipment".
 
 ## Depreciable assets (Form 4562): found in the 2026-11-06 review, not changed

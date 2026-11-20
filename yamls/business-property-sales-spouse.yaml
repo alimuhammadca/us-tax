@@ -101,4 +101,18 @@ sections:
         required: false
         label: "Drilling, exploration, development and depletion deductions to recapture (V545, Form 4797 line 28a)"
         showIf: "propertyType == mineral_1254"
+      - name: condemned
+        type: boolean
+        required: false
+        label: "Was it condemned - taken by a government or other authority for public use (or sold under threat of that)? (V548, section 1033)"
+      - name: postponeGainSection1033
+        type: boolean
+        required: false
+        label: "Do you choose to postpone the gain by buying replacement property similar or related in use? (V548, section 1033(a)(2))"
+        showIf: "condemned == true"
+      - name: replacementPropertyCost
+        type: amount
+        required: false
+        label: "Cost of the replacement property - blank if not bought yet (V548; gain recognized = min(gain, award - cost), recapture limited to it)"
+        showIf: "condemned == true && postponeGainSection1033 == true"
 # 2026-11-06 screen review: atRiskActivity is saved as "rental:<address>" / "farm:<crop>" / "business:<name>" (old "rental:0" positions still read).

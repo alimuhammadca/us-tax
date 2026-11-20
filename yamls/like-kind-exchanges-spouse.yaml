@@ -125,6 +125,7 @@ sections:
         type: amount
         required: false
         label: "FMV of other (not like-kind) property received (line 15)"
+        help: "Includes furniture, appliances and other items that came with the building (not like-kind). Through a QI, over 15% of the real property received -> FORM_8824_INCIDENTAL_PROPERTY_OVER_15_PERCENT note (Regs. 1.1031(k)-1(g)(7))."
       - name: otherPropertyReceivedDescription
         type: text
         required: false
@@ -146,6 +147,7 @@ sections:
         type: amount
         required: false
         label: "FMV of other (not like-kind) property given up (line 12)"
+        help: "Includes furniture, appliances and other items that went with the building (kind: business property)."
       - name: otherPropertyGivenUpBasis
         type: amount
         required: false

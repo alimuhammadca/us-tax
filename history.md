@@ -1,3 +1,14 @@
+## 2026-11-20T21:00:00Z
+Like-kind exchanges - incidental personal property (outstanding.md "Like-kind exchanges (Form 8824)") - the proposed Yes / No question
+withdrawn, no new field, no form change.
+- Furniture and appliances are never like-kind; the existing other-property boxes (line 15 received, lines 12-14 given up) already
+  figure them. The help for both now says so (and "business property" as the kind given up).
+- i8824 Incidental personal property / Regs. 1.1031(k)-1(g)(7): through a QI, such property is disregarded for the safe harbor only up
+  to 15% of the replacement real property's value. ExchangeMethod.incidental: a delayed exchange through a QI with other property
+  received over 15% gets the non-blocking FORM_8824_INCIDENTAL_PROPERTY_OVER_15_PERCENT note; the figures are unchanged.
+- YAMLs like-kind-exchanges-taxpayer / -spouse: help on the two boxes.
+- Tests: Form8824ComputeTest +2 (20% note; 15% exactly and a direct swap - none), e2e like-kind-exchanges-form-8824.spec.ts +1.
+
 ## 2026-11-20T20:00:00Z
 A passive K-1's carried section 1231 / L-R loss keeps its form next year (outstanding.md "K-1 section 1231 amounts", left (a)) - no
 new field, no form change.

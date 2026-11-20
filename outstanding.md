@@ -845,8 +845,13 @@
   1043(b)(2)) - No blocks non-overrideably (FORM_8824_SECTION_1043_NOT_PERMITTED_PROPERTY), blank blocks
   (FORM_8824_SECTION_1043_PERMITTED_MISSING) - and shows the existing date box as "Date the replacement property was bought", which
   must fall in the 60 days starting on the sale date (FORM_8824_SECTION_1043_60_DAYS, section 1043(a)).
-- Not asked (field additions - owner sign-off): incidental personal property (proposed 2026-11-19: a Yes/No "personal property included"
-  question - not yet approved).
+- ~~Not asked (field additions - owner sign-off): incidental personal property (proposed 2026-11-19: a Yes/No "personal property included"
+  question - not yet approved).~~ **DONE 2026-11-20 - the question withdrawn, no new field**: personal property is never like-kind, and
+  the screen already has "other property received" (line 15) and "other property given up" (lines 12-14), so the question would change
+  no figure. i8824's incidental personal property rule (Regs. 1.1031(k)-1(g)(7)) only concerns the qualified intermediary safe harbor:
+  the help now says furniture and appliances go in those boxes, not the building's value, and a delayed exchange through a QI whose
+  other property received is over 15% of the real property received gets the non-blocking FORM_8824_INCIDENTAL_PROPERTY_OVER_15_PERCENT
+  note (ExchangeMethod.incidental).
 - ~~Recourse vs nonrecourse debt is not asked.~~ **FIXED 2026-11-19** (no field - the kind of debt changes no figure once the right
   amount is entered): the "Debt the other party took over" and "Debt taken over" help now give the Instructions for Form 8824 line 15
   rules - a recourse liability counts if the party agreed to and is expected to pay it (release doesn't matter); a nonrecourse one

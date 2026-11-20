@@ -37,6 +37,7 @@ sections:
           - "mineral_1254"   # V545: oil, gas, geothermal or other mineral property (section 1254, Form 4797 line 28)
           - "timber"         # V547: standing timber (section 631) - depletion not recaptured; reforestation amortization is
           - "unharvested_crop"   # 2026-11-19: a growing crop sold with the farmland (section 1231(b)(4)) - takes the land's dates; costOrBasis = growing costs (section 268)
+          - "real_1245"   # V549: a single-purpose agricultural / horticultural structure or petroleum storage facility - section 1245 (line 25)
       - name: usedFor
         type: select
         required: false
@@ -81,6 +82,11 @@ sections:
         required: false
         label: "Depreciation allowed or allowable, incl. section 179 and bonus"
         showIf: "propertyType != land"
+      - name: section179Or179dDeduction
+        type: amount
+        required: false
+        label: "Section 179 or 179D deduction taken on the building, included in depreciationAllowed (V549, section 1245 recapture on Form 4797 line 25 first; the rest section 1250)"
+        showIf: "propertyType == building"
       - name: additionalDepreciation1250
         type: amount
         required: false

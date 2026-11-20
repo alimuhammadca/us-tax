@@ -946,8 +946,13 @@
   left off. Now (Form4797Fields.line1a) it counts at its box 2 amount, once, over every row naming that address (a building and its
   land), with a non-blocking FORM_4797_1099S_PROCEEDS_DIFFER note when box 2 differs from the sale price(s). Left: Form 1099-B
   proceeds for business property sold through a broker aren't in line 1a.
-- Not asked (field additions - owner sign-off): section 1245 real property types (single-purpose
-  agricultural structures) beyond "Equipment".
+- ~~Section 1245 real property types (single-purpose agricultural structures) beyond "Equipment" were not asked.~~ **FIXED
+  2026-11-20** (V549, owner-approved field): a new property type "real_1245" (a single-purpose agricultural or horticultural structure,
+  a petroleum storage facility) is figured like equipment (line 25, no FORM_4797_POSSIBLE_SECTION_1250_REAL_PROPERTY note, real
+  property for the condemnation period); a building's section 179 / 179D deduction (new optional amount) is line 25 section 1245
+  recapture first, the rest section 1250, and the unrecaptured section 1250 gain excludes it (Section1245RealProperty). Left: the other
+  i4797 line 25 real property adjustments (pollution control amortization, clean-fuel, mine safety, tertiary injectants, ...) and
+  elevators / escalators placed in service before 1987 aren't asked.
 
 ## Depreciable assets (Form 4562): found in the 2026-11-06 review, not changed
 

@@ -1,3 +1,17 @@
+## 2026-11-20T15:00:00Z
+Form 4797 - section 1245 real property (outstanding.md "Business property sales (Form 4797)"; owner-approved field V549; no form change).
+- Business property sales: a new "What kind of property?" choice, "Farm or horticultural structure used for one purpose (livestock
+  barn, greenhouse) or a petroleum storage facility (section 1245)" (real_1245) - figured like equipment (i4797 line 25: single
+  purpose agricultural or horticultural structures, petroleum storage facilities); and, for a Building, an optional "Section 179 or
+  179D deduction taken on the building" (V549 section179_or_179d_deduction).
+- New Section1245RealProperty: a building's 179 / 179D part is line 25a / 25b (the smaller of it and the gain), the section 1250 figures
+  (26g, the section 1231 residual, Schedule D line 19 unrecaptured gain) on the rest; the preview prints line 25 for it and adds it to
+  line 31. real_1245 skips the "looks like real property" note, is depreciable for section 1239, the Depreciable assets fill and the
+  3-year condemnation replacement period.
+- Tests: Form4797SalesComputeTest +2 (greenhouse 120,000 line 25b / 50,000 line 7a; building 30,000 line 25b, line 7a 170,000, line 19
+  90,000, capped at a 10,000 gain); e2e business-property-sales-form-4797.spec.ts +1 (11 passed with the screen spec). Unit suite
+  6,273 passed, 0 failed; UI build OK. Not deployed.
+
 ## 2026-11-20T14:00:00Z
 Form 4797 line 1a - a Form 1099-S matched to the sale by its address (outstanding.md "Business property sales (Form 4797)", line 1a
 1099 reconciliation; no new field, no form change).

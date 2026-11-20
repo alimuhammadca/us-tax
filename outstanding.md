@@ -920,8 +920,20 @@
   gain is section 1231 (line 2, section 1231(b)(4)); its "cost or other basis" is the growing costs (section 268), with the
   FORM_4797_CROP_COSTS_NOT_DEDUCTIBLE note to take them off Schedule F. No such land, or land held a year or less ->
   FORM_4797_CROP_WITHOUT_LAND (blocking: farm income on Schedule F). UnharvestedCrop. ("Same buyer" is asked in the label only.)
-- Not asked (field additions - owner sign-off): K-1 section
-  1231 amounts, the condemnation (section 1033) path, line 1a 1099 reconciliation, section 1245 real property types (single-purpose
+- ~~K-1 section 1231 amounts are not asked.~~ **Stale - checked 2026-11-19:** the K-1 (1065 box 10, 1120-S box 9) net section 1231
+  amount has gone to Form 4797 line 2 since 2026-10-25 (D-4797-1, K1PassThroughAmounts), box 11 L / R to line 10. What was left -
+  **FIXED 2026-11-19** (no new field): a PASSIVE K-1's amounts skipped Form 8582 - the loss was left off with a note, the gain wasn't
+  passive income. Now (K1Passive1231): a passive gain is Form 8582 other passive income; a passive loss joins that K-1's own Form
+  8582 row (limited, carried by name, released on a full disposition - section 469(g) allows it in full) and its allowed part goes on
+  Form 4797 (line 2 / line 10, the activity's unallowed loss shared over its loss items, Part IX method) - Form 4797 is figured
+  before Form 8582, so the return is figured once more (K1Passive1231.ALLOWED) and that pass takes the moved amount back out of
+  Schedule E / the NIIT passive net. PTP K-1s keep the per-PTP note. Found on the way: Schedule E put a passive K-1's income on
+  line 26 instead of Part II when another passive K-1 had a loss (Form8582Notes.k1PassiveNet netted the K-1s) - fixed.
+  Left: (a) a K-1's carried unallowed loss comes back next year as that K-1's prior loss and, when allowed, goes to Schedule E even
+  for the part that was a section 1231 loss (Part IX by form not kept across years); (b) the at-risk limit isn't applied to a passive
+  section 1231 / L-R loss before Form 8582; (c) Form 8582 lines 2a / 2b print the passive K-1s netted (the Part V worksheet has
+  each one's income and loss) - i8582 line 2a is the activities with net income, 2b those with a net loss.
+- Not asked (field additions - owner sign-off): the condemnation (section 1033) path, line 1a 1099 reconciliation, section 1245 real property types (single-purpose
   agricultural structures) beyond "Equipment".
 
 ## Depreciable assets (Form 4562): found in the 2026-11-06 review, not changed

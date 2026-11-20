@@ -1,3 +1,25 @@
+## 2026-11-20T01:30:00Z
+Passive Schedule K-1 section 1231 and box 11 L / R amounts go through Form 8582 (outstanding.md "Business property sales (Form 4797)",
+K-1 section 1231 amounts - the entry was stale; this was the part left; no new field, no form change).
+- New K1Passive1231: a passive (not materially participated, non-PTP) K-1's net section 1231 gain (1065 box 10 / 1120-S box 9) or box
+  11 L / R gain is Form 8582 other passive income (the engine's other passive income, on a run with the K-1 pool); a loss joins the
+  K-1's own Form 8582 row (K1PerActivity.rows) and the K-1 pool. End of the first pass: each loss's allowed part (its loss less its
+  share of the activity's unallowed loss, shared over the activity's Schedule E loss, these items and its prior loss); a K-1 disposed
+  of in full (V471) allows it in full. Form 4797 is figured before Form 8582, so prepare() re-runs once with the allowed amounts
+  (K1Passive1231.ALLOWED): K1PassThroughAmounts puts them on Form 4797 line 2 / line 10 (no second at-risk pass on an L / R row), and
+  the engine takes them back out of Schedule E (netIncome, k1PassiveNet) and the NIIT passive net. The FORM_4797_K1_PASSIVE_* notes
+  remain for PTPs only.
+- Fix found on the way (Form8582Notes.k1PassiveNet): with per-K-1 rows, Schedule E Part II used max(netted K-1 total, 0) as the
+  passive K-1 income, so a K-1 with income next to one with a loss put that income on line 26; it now uses each K-1 activity's
+  income.
+- Tests: K1Passive1231Test (6: offset by the K-1's own income -> all on Form 4797; limited 4,000 of 10,000 with 6,000 unallowed on
+  Part VIII; a passive gain frees another K-1's loss; code R offset by the K-1's income -> line 10; nonpassive unchanged; disposed in
+  full -> allowed); K1CodedItemsTest.aPassiveCodeRLossIsNotDeducted now checks Form 8582 instead of the note; e2e
+  k1-passive-section-1231.spec.ts (2). Unit suite 6,266 passed, 0 failed. Not deployed.
+- Full e2e regression on this tree: 2,477 passed, 0 failed, 0 skipped, 2 flaky (fixed: ensureStatementSelected looked for
+  "Select statements" in the Statements section - it is in Get started now, opened by its id statements-select, and waits 3 s for
+  the link after a reload; personal-per-person-forms waits for the Identification load GET before typing).
+
 ## 2026-11-20T00:05:00Z
 Form 4797 - a growing crop sold with the farmland (outstanding.md "Business property sales (Form 4797)", unharvested crops; no new
 field, Form 4797 unchanged).

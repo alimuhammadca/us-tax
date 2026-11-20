@@ -1077,9 +1077,11 @@
 ## Screens with their own Save button instead of the shared bar (checklist item 17 audit, 2026-11-05)
 
 - (Re-audited 2026-11-12: every personal screen in the sidebar has the shared `<form-actions>` bar.) Left: `form-dependents`
-  (registered as 'dependents' with no sidebar item - a legacy screen like the four under Refund; Save is disabled until valid),
-  and two components nothing uses, `form-filing-status.component.ts` and `form-employment.component.ts` (dead files - remove
-  with the legacy screens, owner sign-off). Form 1042-S is a statement (statement toolbar, not this bar).
+  (registered as 'dependents' with no sidebar item, its own Save disabled until valid). **Not dead (checked 2026-11-20):** Child Tax
+  Credit settings, Earned income credit, Credits after disallowance and Education credits (a dependent student) link to it - whether
+  those links should open the Dependent screen instead is open. ~~Two components nothing uses, `form-filing-status.component.ts` and
+  `form-employment.component.ts` (dead files - remove with the legacy screens, owner sign-off).~~ **REMOVED 2026-11-20**
+  (owner-approved): both files and the old Filing status spec deleted, their all-components.spec entries removed. Form 1042-S is a statement (statement toolbar, not this bar).
 - (The UI spec `form-filing-status-taxpayer.component.spec.ts` passes since 2026-11-12: its two save tests ran `onSubmit` while the
   second, un-awaited `ngOnInit` from `fixture.detectChanges()` was still loading (so nothing was saved), and pinned a key list that
   later fields outgrew - they now wait for the load and check the values and that no legacy key is sent.)

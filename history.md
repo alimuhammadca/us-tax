@@ -1,3 +1,10 @@
+## 2026-11-21T01:30:00Z
+UI - two dead screen components removed (owner-approved; outstanding.md "Screens with their own Save button"):
+form-filing-status.component.ts (+ its spec) and form-employment.component.ts - no sidebar item, shell entry or link used them;
+all-components.spec.ts entries removed. form-dependents is kept: four screens link to it (the outstanding note is corrected). UI build
+OK; ng test 783 passed, 2 failed - FormAdditionalDeductionsComponent's two specs, failing before this change too (not fixed here); e2e
+Filing status / Employment specs 43 passed.
+
 ## 2026-11-21T00:15:00Z
 Capital gain/loss - the unused pf_capital_gain_loss.imported_1099div_box2a_capital_gain_distributions_total column dropped
 (owner-approved removal, V551; outstanding.md "Capital gain/loss"). No screen saved it and nothing read it since 2026-11-11; capital

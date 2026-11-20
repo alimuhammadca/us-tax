@@ -1,3 +1,12 @@
+## 2026-11-20T12:00:00Z
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44727436254 on 16d0e021 - revision ca-ustax-be--0000691 serving
+  100% traffic, image ustax-be:16d0e02; /q/health/ready UP (migrations through V547 applied). URL:
+  https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 44729343532 on ea8b3a0 - live at https://www.taxbeans.com
+  (bundle main-J6AW43FA.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-20T01:30:00Z
 Passive Schedule K-1 section 1231 and box 11 L / R amounts go through Form 8582 (outstanding.md "Business property sales (Form 4797)",
 K-1 section 1231 amounts - the entry was stale; this was the part left; no new field, no form change).

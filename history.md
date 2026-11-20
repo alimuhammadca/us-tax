@@ -1,3 +1,10 @@
+## 2026-11-21T02:30:00Z
+Dependents (the screen four links open) is a list now (owner-approved; outstanding.md "Screens with their own Save button"). The
+old bulk editor - name, SSN, relationship and the two credit checkboxes the return has worked out from each dependent's facts since
+V465, its own Save - is replaced by one line per dependent with "Open" (their tab's Dependent screen) and "Add a dependent"
+(FormNavigationService.openNewDependent, handled in the shell like the "+" tab). No data removed, no figure changes. e2e
+dependents-list-links.spec.ts (2) and the dependent / credit screen specs (24) pass; UI build OK.
+
 ## 2026-11-21T01:30:00Z
 UI - two dead screen components removed (owner-approved; outstanding.md "Screens with their own Save button"):
 form-filing-status.component.ts (+ its spec) and form-employment.component.ts - no sidebar item, shell entry or link used them;

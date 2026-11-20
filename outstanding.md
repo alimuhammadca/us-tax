@@ -1078,8 +1078,11 @@
 
 - (Re-audited 2026-11-12: every personal screen in the sidebar has the shared `<form-actions>` bar.) Left: `form-dependents`
   (registered as 'dependents' with no sidebar item, its own Save disabled until valid). **Not dead (checked 2026-11-20):** Child Tax
-  Credit settings, Earned income credit, Credits after disallowance and Education credits (a dependent student) link to it - whether
-  those links should open the Dependent screen instead is open. ~~Two components nothing uses, `form-filing-status.component.ts` and
+  Credit settings, Earned income credit, Credits after disallowance and Education credits (a dependent student) link to it. **DONE
+  2026-11-20** (owner-approved): it was an old bulk editor (name, SSN, relationship and the two credit checkboxes worked out from the
+  facts since V465, with its own Save); it is now a list of the dependents - "Open" switches to the dependent's tab and Dependent
+  screen (FormNavigationService.openForDependent), "Add a dependent" starts one as the "+" tab does (openNewDependent). Nothing is saved
+  there; no data removed. e2e dependents-list-links.spec.ts. ~~Two components nothing uses, `form-filing-status.component.ts` and
   `form-employment.component.ts` (dead files - remove with the legacy screens, owner sign-off).~~ **REMOVED 2026-11-20**
   (owner-approved): both files and the old Filing status spec deleted, their all-components.spec entries removed. Form 1042-S is a statement (statement toolbar, not this bar).
 - (The UI spec `form-filing-status-taxpayer.component.spec.ts` passes since 2026-11-12: its two save tests ran `onSubmit` while the

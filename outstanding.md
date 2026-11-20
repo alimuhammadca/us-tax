@@ -1075,10 +1075,15 @@
   **FIXED 2026-11-20** (owner-approved removal, V551): the column is dropped with its entity field and mapper lines; no trigger wrote it.
 - (Form 2439 is in `utils/statement-recipient.ts` STATEMENT_PERSON_TIN since 2026-11-12 - `shareholderTIN`. Forms 6252, 4797, 4684,
   6781 and 8824 have no person number - their screens record `ownerRole` - so they stay out of it.)
-- The reduced home sale exclusion is figured per return, not per spouse as Pub. 523 Worksheet 3 does on a joint return.
+- ~~The reduced home sale exclusion is figured per return, not per spouse as Pub. 523 Worksheet 3 does on a joint return.
   (Checked 2026-11-12: Worksheet 3 adds the qualifying spouse's $250,000 to the other spouse's reduced share, which needs that
   spouse's own days of use - the screen asks only whether the spouse lived there 2 of 5 years. A spouse "days used as main home"
-  field is a field addition: owner sign-off.)
+  field is a field addition: owner sign-off.)~~ **FIXED 2026-11-20** (owner-approved field, V554 -
+  pf_property_1099s_disposition.pr_spouse_days_used_as_main_home): the home sale asks, on a joint return with a qualifying reason,
+  the days the spouse lived there; when a spouse fails the tests each spouse's maximum is figured and added - $250,000 for one who
+  meets them, $250,000 x the shortest of the days owned, days lived there and days since the last excluded sale / 730 for one who
+  doesn't (JointHomeSaleMaximum). Blank days: only the other spouse's share, advisory SECTION_121_SPOUSE_DAYS_UNANSWERED. A typed
+  reduced limit with a reason still wins (up to $500,000). No statement or tax-return form change.
 
 
 ## Screens with their own Save button instead of the shared bar (checklist item 17 audit, 2026-11-05)

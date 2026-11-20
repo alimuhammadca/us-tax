@@ -541,6 +541,19 @@ sections:
         label: Cost or other basis as adjusted
 
   # Backend-only statement imports. Not rendered in form component.
+  - name: property1099SDispositions
+    title: Home and land sales (Form 1099-S)
+    multiplicity: multiple
+    showIf: hadCapitalGainOrLoss == true
+    help: "Each home or land sale; the full field list is in us-tax-ui utils/capital-gain-loss-screen.ts (property1099SDispositions). Only the V554 field is listed here."
+    fields:
+      - name: prSpouseDaysUsedAsMainHome
+        type: integer
+        required: false
+        showIf: propertyType == PRINCIPAL_RESIDENCE && prPartialExclusionReason != '' && (prSpouseUsed2Of5Years == false || prOwnedAndUsed2Of5Years == false || prClaimedSection121InLast2Years == true)
+        label: "On a joint return: days the spouse lived there as a main home in the 5 years before the sale"
+        help: "V554 (owner-approved 2026-11-20): Pub. 523 Married Homeowners - when one spouse fails the 2-of-5-year test, each spouse's maximum is figured separately and added ($250,000 for a spouse who meets the tests; $250,000 x the shortest of days owned, days lived there and days since the last excluded sale / 730 for one with a qualifying reason). Blank: only the other spouse's share, advisory SECTION_121_SPOUSE_DAYS_UNANSWERED."
+
   - name: importedStatementFields
     title: Imported statement fields (backend only)
     multiplicity: single

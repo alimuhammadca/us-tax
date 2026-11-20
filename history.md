@@ -1,3 +1,21 @@
+## 2026-11-21T07:00:00Z
+Home sale - a joint return's exclusion figured spouse by spouse (owner-approved field V554; outstanding.md "Capital gain/loss"); no
+statement or tax-return form change.
+- Pub. 523 Married Homeowners: when either spouse fails the 2-of-5-year use test (or the 2-year rule), each spouse's maximum is figured
+  as though unmarried and the two are added. Before, a spouse who failed the use test dropped the joint return to $250,000 flat, and a
+  Family Head who failed it got a reduced share of the whole $500,000 / $250,000 from one person's days.
+- New JointHomeSaleMaximum.cap: $250,000 for a spouse who meets the tests (the spouse is treated as owning the home as long as it was
+  owned); $250,000 x the shortest of the days owned, days lived there and days since the last excluded sale (within 5 years) / 730 for a
+  spouse with a qualifying reason; else 0. Wired into buildPrincipalResidenceTransaction (DispositionRow gains mfj and
+  prSpouseDaysUsedAsMainHome). A typed reduced limit with a reason still wins (up to $500,000); blank spouse days use only the other
+  share, advisory SECTION_121_SPOUSE_DAYS_UNANSWERED ("Open the Capital gain/loss screen ...").
+- V554: pf_property_1099s_disposition.pr_spouse_days_used_as_main_home (entity, CapitalGainLossMapper both directions). UI: the home
+  sale's "On a joint return: days the spouse lived there as a main home ..." (id prSpouseDays, shown with a reason when a test fails)
+  with help; both capital gain/loss YAMLs list it.
+- Tests: JointHomeSaleMaximumTest (6 - you qualify + spouse share 375,000; spouse qualifies + your share; neither owned 2 years; blank
+  days; not applicable; full compute line 7 125,000 / 250,000); e2e section121-joint-spouse-days.spec.ts (2) with the existing home
+  sale specs - 7 passed; unit suite 6,297 passed, 0 failed; UI 785 passed; npm run build OK.
+
 ## 2026-11-20T18:30:00Z
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44789866927 on 416b33af - revision ca-ustax-be--0000692 serving 100%

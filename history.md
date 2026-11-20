@@ -1,3 +1,18 @@
+## 2026-11-21T11:30:00Z
+Form 8814 - a child's tax-exempt interest (line 1b) is no longer added to the parent's Form 1040 line 2a (owner-approved; outstanding.md
+note "Form 8814 line 1b added to parent's 2a"); no field, statement or tax-return form change.
+- The code added every elected child's Form 8814 line 1b to the parent's line 2a, quoting "Also enter this on line 2a of your Form
+  1040" - a sentence in neither the 2025 Instructions for Form 8814 nor the Form 1040 instructions (line 2a is the tax-exempt interest
+  "you" received; Form 8814 line 1b says only "Do not include this amount on line 1a"). Line 2a feeds the Social Security benefits
+  worksheet, so a parent with benefits could have more of them taxed.
+- TaxReturnComputeService: the form8814TaxExemptInterestTotal sum and its add to line 2a are removed (the parameter now carries only
+  the K-1 tax-exempt interest); the AMT path (the child's private activity bond interest -> the parent's Form 6251 line 2g,
+  ChildInterest8814) is unchanged.
+- Tests pinning the old rule updated: TaxReturnComputeServiceTest (form8814Line1bChildTaxExemptInterestStaysOffParentLine2a),
+  LowIrsFixesChunk5Test (exemptInterestDividendsAreOnLine1b - Form 8814 line 1b 500, line 2a blank; its AMT neighbour passes),
+  Hrb2025Sc00166Test run C (line 2a blank; the scenario's 2,000 had no H&R Block actual); e2e line8814-child-interest-dividends.spec.ts
+  (3 tests - line 1b stays on each Form 8814, parent line 2a blank) - 39 passed; unit suite 6,300 passed, 0 failed.
+
 ## 2026-11-21T10:30:00Z
 Form 8919 - the "Do you have the IRS letter?" answer is saved, and No blocks (owner-approved field V556; outstanding.md note "8919
 ... IRS-letter confirmation have no backend column"); no statement or tax-return form change.

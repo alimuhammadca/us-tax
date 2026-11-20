@@ -1439,7 +1439,13 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 | D-2a-3 | ~~medium~~ **FIXED 2026-10-26** | double count | blank-TIN statement counted as taxpayer's on both MFS returns and every dependent-own return (D-1a-1 root) — p17 p.57-58 / TRCS:36036-36039, :18910, :18949 | `new_knowledge/2a.md` - closed by the person filter (ReturnStatementOwners, 2026-10-25) - re-verified by mutation |
 | D-2a-4 | ~~low~~ **FIXED 2026-10-26** (low batch V392-V399) | wrong amount | MFS community property splits only INT box 8 — p17 p.60 / TRCS:3114-3126, :3250 | `new_knowledge/2a.md` |
 
-- Note: (unverified) Form 8814 line 1b added to parent's 2a — no 2025 source in books / TRCS:3690-3694, :18998
+- ~~Note: (unverified) Form 8814 line 1b added to parent's 2a — no 2025 source in books / TRCS:3690-3694, :18998~~
+  **FIXED 2026-11-20** (owner-approved, no field change): checked - the 2025 Instructions for Form 8814 (line 1b: report it there, "Do not
+  include this amount on line 1a") and for Form 1040 (line 2a: tax-exempt interest "you" received) don't put a child's line 1b on the
+  parent's line 2a; the sentence the code quoted isn't in them. The child's tax-exempt interest now stays on Form 8814 line 1b (the
+  parent's line 2a - and so the Social Security benefits worksheet - no longer includes it); its private activity bond part still
+  reaches the parent's Form 6251 line 2g (ChildInterest8814). The QA scenario sc_00166 run C (c:/us-tax-hrb2025) expected 2a 2,000
+  on the same unsourced claim, with no H&R Block actual recorded - its expected line 2a is now blank.
 
 #### 2b
 

@@ -685,11 +685,6 @@ sections:
         required: false
         readOnly: true
         label: Imported other Schedule D source net total
-      - name: importedPriorYearCapitalLossCarryoverTotal
-        type: amount
-        required: false
-        readOnly: true
-        label: Imported prior-year capital loss carryover total
       # Auto-derived from statement store (Phase 3 — backend injects these; never ask user)
       - name: derivedHadCapitalAssetSalesOrExchanges
         type: boolean

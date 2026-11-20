@@ -1,3 +1,13 @@
+## 2026-11-21T13:30:00Z
+Housekeeping - four IRS-deviation notes checked (owner-approved); no tax change, no field, statement or tax-return form change.
+- Closed, already fixed: a child's Form 1099-DIV withholding is not on the parent's line 25b (person filter since 2026-10-25 - lock-in
+  ChildWithholdingOffParentTest); Form 8960 line 3 is filled from code D Forms 1099-R (Form8960Defaults, 2026-10-26).
+- The dividend "legacy mode" comment said every 1099-DIV was counted regardless of the recipient; the code keeps each person's own in
+  both modes - comment corrected.
+- Dead read removed: importedPriorYearCapitalLossCarryoverTotal (no column, screen or bridge writes it) and its fallback in the Schedule
+  D carryover; the key is out of 7ab-capital-gain-loss-taxpayer / -spouse YAMLs.
+- Tests: ChildWithholdingOffParentTest (new); unit suite 6,304 passed, 0 failed; e2e capital-loss-carryover-bridge.spec.ts passed.
+
 ## 2026-11-21T12:30:00Z
 Schedule 1 line 18 - a separate return deducts only the filer's own early-withdrawal penalty (owner-approved; outstanding.md note "Sch 1
 line 18 ... no person filter"); no field, statement or tax-return form change.

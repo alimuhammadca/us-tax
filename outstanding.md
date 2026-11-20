@@ -1480,9 +1480,12 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 | D-3b-4 | ~~low~~ **FIXED 2026-10-26** (low batch V392-V399) | cosmetic | Sch B line 5 lacks "Form 8814" / PFIC items so it doesn't foot to line 6 — i8814 p.4, i1040sb p.2 / TRCS:36163-36179 | `new_knowledge/3b.md` |
 | D-3b-5 | ~~low~~ **FIXED 2026-10-27** (wave 2, V401) | rare overstatement | no input to exclude PTEP part of K-1 box 6a/5a — i1065sk1 p.15, i1120ssk p.7 / TRCS:36094-36102 | `new_knowledge/3b.md` - **wave 2:** Dividend income asks the PTEP part of K-1 (1065 box 6a / 1120-S box 5a) ordinary and qualified dividends; excluded from lines 3a / 3b |
 
-- Note: (side, unverified, for line 25b) child's 1099-DIV box 4 withholding may be credited on parent's 25b on non-MFS / TRCS:49762-49799
+- ~~Note: (side, unverified, for line 25b) child's 1099-DIV box 4 withholding may be credited on parent's 25b on non-MFS / TRCS:49762-49799~~
+  **CLOSED 2026-11-20** (checked, already fixed by the person filter, ReturnStatementOwners 2026-10-25): a dependent's Form 1099-DIV
+  withholding stays off the parent's line 25b (child 700 withheld, parent W-2: 25b blank). Lock-in ChildWithholdingOffParentTest.
 
-- Note: (note) stale comment TRCS:19924 says legacy mode ignores recipient TIN; code filters
+- ~~Note: (note) stale comment TRCS:19924 says legacy mode ignores recipient TIN; code filters~~
+  **FIXED 2026-11-20**: the comment now says the entries are kept to the person's own (belongsToPerson) in both modes.
 
 #### 4a/4b/4c
 
@@ -1533,7 +1536,9 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 | D-5c-1 | ~~low~~ **FIXED 2026-10-26** (low batch V392-V399) | cosmetic | box 1 only from rollover answer; direct rollover (G/H) can leave it unchecked — i1040gi p.30-31 | `new_knowledge/5c.md` |
 | D-5c-2 | ~~low~~ **FIXED 2026-10-26** (low batch V392-V399) | cosmetic | PSO box checked with blank premiums — i1040gi p.31 | `new_knowledge/5c.md` |
 
-- Note: (side, for Form 8960) code D annuity income never reaches 8960 line 3 except typed override / Form8960.java:27
+- ~~Note: (side, for Form 8960) code D annuity income never reaches 8960 line 3 except typed override / Form8960.java:27~~
+  **CLOSED 2026-11-20** (checked, already fixed 2026-10-26, D-1099-r-4): Form8960Defaults fills line 3 from box 2a of each Form
+  1099-R with code D (not an IRA, not the other spouse's on a separate return); a typed amount still wins.
 
 #### 6a/6b/6c/6d
 
@@ -1569,7 +1574,9 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 | D-7a-9 | ~~low~~ **FIXED 2026-10-26** (low batch V392-V399) | not supported | K-1 (1041) box 11 C/D stored, never read — i1041sk1 p.3 / ScheduleK1Form1041Mapper.java:169-174 | `new_knowledge/7a.md` |
 | D-7a-10 | ~~low~~ **FIXED 2026-10-27** (wave 2, V401) | ST casualty gain as LT | Form 4684 line 15 all to Sch D line 11 — i4684 p.9 / TRCS:25410-25414 | `new_knowledge/7a.md` - **wave 2:** casualty held more than 1 year (casualty 1 and each extra casualty) sets the Form 4684 short / long-term side |
 
-- Note: (dead code) compute reads imported1099DivBox2aCapitalGainDistributionsTotal, mapper stores imported1099divBox2a…; importedPriorYearCapitalLossCarryoverTotal never written
+- ~~Note: (dead code) compute reads imported1099DivBox2aCapitalGainDistributionsTotal, mapper stores imported1099divBox2a…; importedPriorYearCapitalLossCarryoverTotal never written~~
+  **FIXED 2026-11-20**: the box 2a column was dropped earlier (V551); the read of importedPriorYearCapitalLossCarryoverTotal (written
+  by nothing - no column, screen or bridge) and its fallback are removed, and the key is out of both capital gain/loss YAMLs.
 
 #### 8 (Schedule 1 Part I)
 

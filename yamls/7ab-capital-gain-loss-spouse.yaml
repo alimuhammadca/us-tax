@@ -619,11 +619,6 @@ sections:
         required: false
         readOnly: true
         label: Imported spouse other Schedule D source net total
-      - name: importedPriorYearCapitalLossCarryoverTotal
-        type: amount
-        required: false
-        readOnly: true
-        label: Imported spouse prior-year capital loss carryover total
 
   # Backend-only computed values. Not rendered in form component.
   - name: computedOutputs

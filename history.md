@@ -1,3 +1,18 @@
+## 2026-11-20T00:05:00Z
+Form 4797 - a growing crop sold with the farmland (outstanding.md "Business property sales (Form 4797)", unharvested crops; no new
+field, Form 4797 unchanged).
+- Business property sales: "What kind of property?" adds "A growing crop sold with the farmland, to the same buyer at the same time
+  (section 1231(b)(4))"; for it the dates acquired / inherited aren't asked, "Cost or other basis" reads "Costs of growing the crop
+  (seed, fertilizer, labor ...)" (labelFor), no depreciation. Help on Cost or other basis.
+- New UnharvestedCrop (Form4797SalesCompute.withSales): the crop takes the dates of the land / farmland sale with the same date sold
+  on the same screen; held over a year its gain is section 1231 on line 2, with FORM_4797_CROP_COSTS_NOT_DEDUCTIBLE (note: take the
+  growing costs off Schedule F, section 268). No such land, or land held a year or less -> FORM_4797_CROP_WITHOUT_LAND (blocking:
+  report it on Farm income).
+- Tests: Form4797SalesComputeTest +2 (land 150,000 + crop 18,000 = 168,000 section 1231, crop row with the land's date, the $12,000
+  note; no land / another day / land held under a year blocked); e2e "a growing crop sold with the farmland ..." (picked on the
+  screen, dates hidden, cost relabelled, saved, reloaded, figured). Form 4797 e2e (31) pass; unit suite 6,260 passed, 0 failed; UI
+  build passes. Not deployed.
+
 ## 2026-11-19T23:30:00Z
 Form 4797 - timber (section 631) (outstanding.md "Business property sales (Form 4797)"; owner-approved field, V547 -
 pf_business_property_sale_item.reforestation_amortization; Form 4797 unchanged).

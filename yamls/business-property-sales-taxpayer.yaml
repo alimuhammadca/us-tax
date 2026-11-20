@@ -36,6 +36,7 @@ sections:
           - "land"
           - "mineral_1254"   # V545: oil, gas, geothermal or other mineral property (section 1254, Form 4797 line 28)
           - "timber"         # V547: standing timber (section 631) - depletion not recaptured; reforestation amortization is
+          - "unharvested_crop"   # 2026-11-19: a growing crop sold with the farmland (section 1231(b)(4)) - takes the land's dates; costOrBasis = growing costs (section 268)
       - name: usedFor
         type: select
         required: false

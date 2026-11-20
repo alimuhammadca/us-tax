@@ -915,7 +915,12 @@
   1231 (line 2 when there is no amortization, Part III when there is); held a year or less, ordinary. Every timber sale gets
   FORM_4797_TIMBER_FORM_T (note: Form T, Forest Activities Schedule, is attached by the filer - not prepared here). The section 631(a)
   cutting election uses the timber's value on the first day of the year as the sales price (help).
-- Not asked (field additions - owner sign-off): unharvested crops, K-1 section
+- ~~Unharvested crops are not asked.~~ **FIXED 2026-11-19** (no new field - a new propertyType value unharvested_crop): a growing
+  crop sold with the farmland takes the land's dates (the land or farmland sale on the same screen with the same date sold) and its
+  gain is section 1231 (line 2, section 1231(b)(4)); its "cost or other basis" is the growing costs (section 268), with the
+  FORM_4797_CROP_COSTS_NOT_DEDUCTIBLE note to take them off Schedule F. No such land, or land held a year or less ->
+  FORM_4797_CROP_WITHOUT_LAND (blocking: farm income on Schedule F). UnharvestedCrop. ("Same buyer" is asked in the label only.)
+- Not asked (field additions - owner sign-off): K-1 section
   1231 amounts, the condemnation (section 1033) path, line 1a 1099 reconciliation, section 1245 real property types (single-purpose
   agricultural structures) beyond "Equipment".
 

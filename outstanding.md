@@ -1027,8 +1027,11 @@
 
 - Not asked (field additions - owner sign-off): line D (EIN); the election to report weather-related livestock sales next year;
   Schedule J farm income averaging; the farm NOL 2-year carryback; the preproductive-period election; line 34 prior-year passive loss.
-- QJV: the split reads only the Family Head's line E - the spouse's material participation is never asked (both must participate,
-  Schedule F instructions). (The QJV split is read from the farm's own figured row since
+- ~~QJV: the split reads only the Family Head's line E - the spouse's material participation is never asked (both must participate,
+  Schedule F instructions).~~ **FIXED 2026-11-20** (owner-approved field, V553 - pf_farm_activity.qjv_spouse_materially_participated):
+  a QJV farm asks "Did your spouse also materially participate in running this farm?" (the QJV question no longer bundles it); No ->
+  not a QJV, the Family Head's farm alone (SCHEDULE_F_QJV_SPOUSE_NOT_PARTICIPATING - a co-owned farm is generally a partnership, not
+  prepared); blank -> split as before with SCHEDULE_F_QJV_SPOUSE_PARTICIPATION_UNANSWERED (Wave2FieldsW4.markFarmQjv). (The QJV split is read from the farm's own figured row since
   2026-11-12, not matched by list position - Wave2FieldsW4.markFarmQjv.)
 - (Statement matching: the line 4a / 5b / 6a fill takes an exact or last-4 SSN, and since 2026-11-11 a blank TIN as the Family Head's,
   as the 1099-PATR fill does - not on the spouse's copy or where blank statements are dropped.)

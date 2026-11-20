@@ -293,7 +293,13 @@ sections:
       - name: qualifiedJointVenture
         type: boolean
         required: false
-        label: "Do you and your spouse own and run this farm together, both materially participating, and elect to be a qualified joint venture?"
+        label: "Do you and your spouse own this farm together (the only owners) and choose to report it as a qualified joint venture?"
+      - name: qjvSpouseMateriallyParticipated
+        type: boolean
+        required: false
+        showIf: qualifiedJointVenture == true
+        label: "Did your spouse also materially participate in running this farm in 2025?"
+        help: "V553 - No: not a QJV, the Family Head's farm alone (SCHEDULE_F_QJV_SPOUSE_NOT_PARTICIPATING)."
       - name: qjvTaxpayerSharePercent
         type: number
         required: false

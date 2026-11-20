@@ -1,3 +1,14 @@
+## 2026-11-21T05:30:00Z
+Schedule F - a qualified joint venture's spouse material participation (owner-approved field V553; outstanding.md "Farm income
+(Schedule F)"); no statement or tax-return form change.
+- Farm income, Family Head's copy: the QJV question is "Do you and your spouse own this farm together (the only owners) and choose to
+  report it as a qualified joint venture?"; Yes asks "Did your spouse also materially participate in running this farm in 2025?"
+  (qjvSpouseMateriallyParticipated), with help on the material participation tests.
+- Wave2FieldsW4.markFarmQjv: No -> not split, SCHEDULE_F_QJV_SPOUSE_NOT_PARTICIPATING; blank -> split with
+  SCHEDULE_F_QJV_SPOUSE_PARTICIPATION_UNANSWERED.
+- YAMLs farm-income-taxpayer. Tests: FarmQjvOwnRowTest +1; e2e farm-income-screen.spec.ts +1 (and the QJV screen test checks the
+  question and its help).
+
 ## 2026-11-21T04:30:00Z
 Farm rental (Form 4835) - the disposition of the whole activity (owner-approved field V552; outstanding.md "Farm rental (Form 4835)");
 no statement or tax-return form change.

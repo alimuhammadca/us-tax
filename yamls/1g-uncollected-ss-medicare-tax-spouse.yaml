@@ -46,7 +46,9 @@ sections:
       - name: hasIrsLetter
         type: boolean
         required: false
-        label: "hasIrsLetter"
+        showIf: "reasonCode == 'A' || reasonCode == 'C'"
+        label: "Do you have the IRS letter (code A determination letter / code C correspondence)?"
+        help: "V556 (owner-approved 2026-11-20): saved (pf_uncollected_firm.has_irs_letter). No blocks the return - FORM8919_IRS_LETTER_MISSING_SPOUSE (non-overrideable): without the letter the code doesn't apply."
       - name: received1099MiscOrNec
         type: boolean
         required: false

@@ -1386,7 +1386,11 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 | D-1g-8 | ~~low~~ **FIXED 2026-10-27** (wave 2, V400) | cosmetic | preview prints only firms 1–5 — f8919 p.2 / form-tax-return-8919.base.ts:181 | `new_knowledge/1g.md` - **wave 2:** no structure change: firms 5 and later are summed into the printed row 5 ("see attached statement") and an advisory lists each firm's lines 1-5 |
 | D-1g-9 | ~~low~~ **FIXED 2026-10-26** (low batch V392-V399) | cosmetic ($1 footing) | line 6 / 13 rounded from unrounded sums — f8919 p.1 / TRCS:40470-40516 | `new_knowledge/1g.md` |
 
-- Note: (UI, no id) 8919 screening + IRS-letter confirmation have no backend column (not persisted); code H message names wrong form ("Employment")
+- ~~Note: (UI, no id) 8919 screening + IRS-letter confirmation have no backend column (not persisted); code H message names wrong form ("Employment")~~
+  **FIXED 2026-11-20** (owner-approved field, V556 - pf_uncollected_firm.has_irs_letter): the screening answer was already saved; the
+  "Do you have the IRS letter?" answer for codes A / C is now saved and shown on reopening (both copies), and a No blocks the return
+  (FORM8919_IRS_LETTER_MISSING_TAXPAYER / _SPOUSE, non-overrideable - the code doesn't apply without the letter; Form8919Letter); blank
+  keeps the old behaviour. The code H message now says "Open the Uncollected Social Security screen". e2e form8919-irs-letter.spec.ts.
 
 #### 1h
 

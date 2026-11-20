@@ -1,3 +1,17 @@
+## 2026-11-21T10:30:00Z
+Form 8919 - the "Do you have the IRS letter?" answer is saved, and No blocks (owner-approved field V556; outstanding.md note "8919
+... IRS-letter confirmation have no backend column"); no statement or tax-return form change.
+- The Uncollected Social Security screen asks, for reason code A (determination letter) or C (other IRS correspondence), whether the
+  user has the letter; the answer had no column, so it was blank on every reopening (the screen re-asked it) and the return never saw
+  it - a row answered No still went on Form 8919.
+- V556 adds pf_uncollected_firm.has_irs_letter (entity, UncollectedSsMedicareMapper both directions - both copies). New Form8919Letter:
+  code A / C answered No adds the blocking, non-overrideable FORM8919_IRS_LETTER_MISSING_TAXPAYER / _SPOUSE (NonOverrideableFlags; use
+  code G, answer Yes once you have the letter, or remove the row - "Open the Uncollected Social Security screen"); blank or Yes, or
+  another code, changes nothing. The FORM8919_CODE_H_1099 message said "Open the Employment form" - now the Uncollected Social Security
+  screen. The screening answer the note also named was already saved. YAMLs 1g-uncollected-ss-medicare-tax(-spouse).yaml updated.
+- Tests: Form8919LetterTest (3); e2e form8919-irs-letter.spec.ts (the answer reads back and is checked on reopening; No blocks) with
+  line1g-uncollected-ss-medicare - 17 passed; unit suite 6,300 passed, 0 failed (NonOverrideableFlagMessagesTest included).
+
 ## 2026-11-21T09:30:00Z
 Self-employment tax options - the unused Medicaid-waiver "include in SE earnings" field dropped (owner-approved removal V555;
 outstanding.md note D-sch-se-5); no screen, statement or tax-return form change.

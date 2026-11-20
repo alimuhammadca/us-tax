@@ -1,3 +1,8 @@
+## 2026-11-21T03:00:00Z
+UI unit tests green again: two FormAdditionalDeductionsComponent specs expected "Saved" but the screen (since the 2026-11-19
+specified-service tips question) says "Saved. Still to answer: whether the tips came from a specified service business." The specs
+now answer it (No) and one checks the still-to-answer message when it is blank. Test file only. ng test: 785 passed, 0 failed.
+
 ## 2026-11-21T02:30:00Z
 Dependents (the screen four links open) is a list now (owner-approved; outstanding.md "Screens with their own Save button"). The
 old bulk editor - name, SSN, relationship and the two credit checkboxes the return has worked out from each dependent's facts since

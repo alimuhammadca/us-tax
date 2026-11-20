@@ -1,3 +1,12 @@
+## 2026-11-20T18:30:00Z
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44789866927 on 416b33af - revision ca-ustax-be--0000692 serving 100%
+  traffic, image ustax-be:416b33a; /q/health/ready UP (migrations through V553). URL:
+  https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 44791813352 on 38d193f - live at https://www.taxbeans.com
+  (bundle main-AHF4YELH.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-21T05:30:00Z
 Schedule F - a qualified joint venture's spouse material participation (owner-approved field V553; outstanding.md "Farm income
 (Schedule F)"); no statement or tax-return form change.

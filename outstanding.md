@@ -941,7 +941,12 @@
   the replacement's basis, the 2- / 3-year replacement period and the statement to attach. Left: the section 1245(b)(4) "plus the
   value of replacement property that isn't section 1245 property" part of the recapture limit, and the section 1033(g) like-kind
   standard for real property are explained in help only.
-- Not asked (field additions - owner sign-off): line 1a 1099 reconciliation, section 1245 real property types (single-purpose
+- ~~Line 1a 1099 reconciliation.~~ **FIXED 2026-11-20** (no new field): line 1a counted a Form 1099-S only when a sale's price was
+  exactly box 2; one matched to the sale by its street address (as Form1099SExtras already did for the "not reported" check) was
+  left off. Now (Form4797Fields.line1a) it counts at its box 2 amount, once, over every row naming that address (a building and its
+  land), with a non-blocking FORM_4797_1099S_PROCEEDS_DIFFER note when box 2 differs from the sale price(s). Left: Form 1099-B
+  proceeds for business property sold through a broker aren't in line 1a.
+- Not asked (field additions - owner sign-off): section 1245 real property types (single-purpose
   agricultural structures) beyond "Equipment".
 
 ## Depreciable assets (Form 4562): found in the 2026-11-06 review, not changed

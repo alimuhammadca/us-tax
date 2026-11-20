@@ -1,3 +1,14 @@
+## 2026-11-20T14:00:00Z
+Form 4797 line 1a - a Form 1099-S matched to the sale by its address (outstanding.md "Business property sales (Form 4797)", line 1a
+1099 reconciliation; no new field, no form change).
+- Form4797Fields.line1a: a 1099-S whose box 2 is no row's price is matched by its street address in the row descriptions (each
+  statement once; one 1099-S can cover several rows, e.g. a building and its land) and counted at its box 2 amount (i4797 line 1a).
+  When box 2 differs from the row price(s): non-blocking FORM_4797_1099S_PROCEEDS_DIFFER ("Open the Business property sales screen
+  and check the gross sales price ...").
+- Tests: Form4797SalesComputeTest +2 (box 2 400,000 vs 395,000 -> line 1a 400,000 with the note, once; one 1099-S for a building and
+  its land -> 400,000, no note; a same-price match unchanged); e2e business-property-sales-form-4797.spec.ts +1 (8 passed) and
+  business-property-sales-screen.spec.ts passed. Unit suite 6,271 passed, 0 failed. Not deployed.
+
 ## 2026-11-20T13:00:00Z
 Form 4797 - a condemnation gain postponed under section 1033 (outstanding.md "Business property sales (Form 4797)"; owner-approved
 fields, V548; no tax-form change).

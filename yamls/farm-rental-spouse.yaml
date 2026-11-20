@@ -32,6 +32,11 @@ sections:
         type: boolean
         required: false
         label: Did you actively participate in the operation of this farm in 2025?  # Form 4835 line A; Yes / No since 2026-11-06
+      - name: fullyDisposedInCurrentYear
+        type: boolean
+        required: false
+        label: "Did your spouse sell or otherwise dispose of their entire interest in this farm rental in 2025, in a fully taxable sale to an unrelated buyer?"
+        help: "V552 - Yes releases this farm rental's loss and its carried passive losses in full (section 469(g); FarmRentalDisposition)."
       - name: incomeFromProduction
         type: amount
         required: false

@@ -45,6 +45,11 @@ sections:
         required: false
         label: "Is this farm rental a trade or business for the qualified business income deduction (section 162, or the Rev. Proc. 2019-38 safe harbor)?"
         help: "If Yes, its net income or loss counts toward the 20% qualified business income deduction (Form 8995)."
+      - name: fullyDisposedInCurrentYear
+        type: boolean
+        required: false
+        label: "Did you sell or otherwise dispose of your entire interest in this farm rental in 2025, in a fully taxable sale to an unrelated buyer?"
+        help: "V552 - Yes releases this farm rental's loss and its carried passive losses in full (section 469(g); FarmRentalDisposition)."
       - name: incomeFromProduction
         type: amount
         required: false

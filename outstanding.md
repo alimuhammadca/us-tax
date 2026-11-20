@@ -1005,9 +1005,13 @@
 
 ## Farm rental (Form 4835): found in the 2026-11-06 review, not changed
 
-- Not asked (field additions - owner sign-off): the EIN; the qualified joint venture election (spouses each filing a Form 4835); the
-  disposition of the whole activity (frees suspended losses); a "some investment not at risk" answer (34a / 34b come from whether the
-  amount at risk is blank).
+- Not asked (field additions - owner sign-off): the EIN; the qualified joint venture election (spouses each filing a Form 4835);
+  ~~the disposition of the whole activity (frees suspended losses);~~ **FIXED 2026-11-20** (owner-approved field, V552 -
+  pf_farm_rental_activity.fully_disposed_in_current_year): "sold or disposed of the entire interest, fully taxable, to an unrelated
+  buyer?" - Yes with an overall loss (this year's net less its own carried loss) releases it in full on Schedule E line 40, off
+  Form 8582, nothing carried, still net investment income (section 469(g); FarmRentalDisposition); an overall gain stays in the pool;
+  no own carried loss while last year's carryover came as one household total -> FARM_RENTAL_SOLD_PRIOR_LOSS_NOT_SPLIT (enter it);
+  a "some investment not at risk" answer (34a / 34b come from whether the amount at risk is blank).
 - ~~Depreciable assets has no farm rental activity type: line 12 is typed, with no Form 4562 asset detail.~~ **FIXED 2026-11-20** (no
   new field - a new "Used for" value farm_rental, "A farm rental (Form 4835)", the farm rental picked from the person's Farm rental
   screen): the asset is figured as a rental asset (no section 179 - FARM_RENTAL_ASSET_SECTION179_NOT_APPLIED, i4562 line 11 "A mere

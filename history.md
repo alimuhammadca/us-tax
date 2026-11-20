@@ -1,3 +1,14 @@
+## 2026-11-21T04:30:00Z
+Farm rental (Form 4835) - the disposition of the whole activity (owner-approved field V552; outstanding.md "Farm rental (Form 4835)");
+no statement or tax-return form change.
+- Farm rental screen, Loss limits: "Did you sell or otherwise dispose of your entire interest in this farm rental in 2025, in a fully
+  taxable sale to an unrelated buyer?" (fullyDisposedInCurrentYear; pf_farm_rental_activity.fully_disposed_in_current_year), with
+  help (469(g), related buyers / part sales / gifts answer No, the sale itself on Business property sales).
+- FarmRentalDisposition: with an overall loss the farm rental's loss and its own carried loss are allowed in full - Schedule E line 40,
+  not on Form 8582, not carried, still in the Form 8960 rental net; an overall gain stays in the pool; no own carried loss with a
+  household bridged total -> FARM_RENTAL_SOLD_PRIOR_LOSS_NOT_SPLIT.
+- YAMLs farm-rental-taxpayer / -spouse. Tests: FarmRentalDispositionTest (4), e2e farm-rental-screen.spec.ts +1.
+
 ## 2026-11-21T03:00:00Z
 UI unit tests green again: two FormAdditionalDeductionsComponent specs expected "Saved" but the screen (since the 2026-11-19
 specified-service tips question) says "Saved. Still to answer: whether the tips came from a specified service business." The specs

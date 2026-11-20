@@ -1,3 +1,12 @@
+## 2026-11-21T07:30:00Z
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44817510815 on 6de084db - revision ca-ustax-be--0000693 serving 100%
+  traffic, image ustax-be:6de084d; /q/health/ready UP (migrations through V554). URL:
+  https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 44819141168 on 9862a2a - live at https://www.taxbeans.com
+  (bundle main-CBU3JQNB.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-21T07:00:00Z
 Home sale - a joint return's exclusion figured spouse by spouse (owner-approved field V554; outstanding.md "Capital gain/loss"); no
 statement or tax-return form change.

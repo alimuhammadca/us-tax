@@ -36,6 +36,7 @@ sections:
           - schedule_c
           - schedule_f
           - rental
+          - farm_rental   # 2026-11-20: Form 4835 line 12 (FarmRentalAssets)
           - other
       - name: activityDescription
         type: text

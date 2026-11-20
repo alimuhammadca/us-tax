@@ -1,3 +1,15 @@
+## 2026-11-20T22:30:00Z
+Depreciable assets - a farm rental (Form 4835) activity (outstanding.md "Farm rental (Form 4835)") - no new field (a new "Used for"
+value), no form change.
+- UI: "Used for" offers "A farm rental (Form 4835)" (farm_rental); "Which business, farm or rental" lists the person's Farm rental
+  descriptions (loadActivityNames). Amortization's "Used for" leaves it out. Help on Used for and on Farm rental line 12 updated.
+- Backend: FarmRentalAssets.apply (before the Farm rental forms are read) sets each farm rental's line 12 to its assets' depreciation,
+  figured as rental assets (TaxReturnComputeService.rentalAssetDepreciation - no section 179, i4562 line 11 active conduct); a typed
+  line 12 is replaced with FARM_RENTAL_DEPRECIATION_ASSETS_OVERRIDE_ENTERED_AMOUNT. Form4562Builder files a "Form 4835 - ..." Form 4562
+  for it (rental rules, FARM_RENTAL_ASSET_SECTION179_NOT_APPLIED for a 179 election); DepreciationAssetClaims and DepreciationAllowedFill
+  know the type.
+- Tests: FarmRentalAssetsTest (3), e2e depreciation-asset-screen.spec.ts +1.
+
 ## 2026-11-20T21:00:00Z
 Like-kind exchanges - incidental personal property (outstanding.md "Like-kind exchanges (Form 8824)") - the proposed Yes / No question
 withdrawn, no new field, no form change.

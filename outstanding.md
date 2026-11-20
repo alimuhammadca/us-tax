@@ -1008,7 +1008,14 @@
 - Not asked (field additions - owner sign-off): the EIN; the qualified joint venture election (spouses each filing a Form 4835); the
   disposition of the whole activity (frees suspended losses); a "some investment not at risk" answer (34a / 34b come from whether the
   amount at risk is blank).
-- Depreciable assets has no farm rental activity type: line 12 is typed, with no Form 4562 asset detail.
+- ~~Depreciable assets has no farm rental activity type: line 12 is typed, with no Form 4562 asset detail.~~ **FIXED 2026-11-20** (no
+  new field - a new "Used for" value farm_rental, "A farm rental (Form 4835)", the farm rental picked from the person's Farm rental
+  screen): the asset is figured as a rental asset (no section 179 - FARM_RENTAL_ASSET_SECTION179_NOT_APPLIED, i4562 line 11 "A mere
+  passive investor ..."; no bonus on real property) on its own Form 4562 ("Form 4835 - ..."), and its total is Form 4835 line 12;
+  assets win over a typed line 12 (FARM_RENTAL_DEPRECIATION_ASSETS_OVERRIDE_ENTERED_AMOUNT) - FarmRentalAssets. The earlier-depreciation
+  carry and the depreciation-allowed fill on a sale cover it. Left: Part VI amortization isn't offered for a farm rental; a farm rental
+  asset's AMT depreciation (Form 6251 line 2m) and a listed farm rental asset's Form 4797 Part IV recapture aren't figured; a landowner
+  who meaningfully participates in management (section 179 allowed) isn't asked.
 - (Since 2026-11-12 the conservation carryover note is raised for farm rentals too, and the Form 1099-G box 9 market gain check counts
   Form 4835 line 3a program payments as well as Schedule F's.)
 

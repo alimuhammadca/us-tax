@@ -1101,11 +1101,16 @@
   second, un-awaited `ngOnInit` from `fixture.detectChanges()` was still loading (so nothing was saved), and pinned a key list that
   later fields outgrew - they now wait for the load and check the values and that no legacy key is sent.)
 
-## Interest income spouse copy: three fields the Family Head copy has (found 2026-11-05, screen review)
+## ~~Interest income spouse copy: three fields the Family Head copy has (found 2026-11-05, screen review)~~ **DONE 2026-11-20**
 
-- The spouse's Interest income has no "Country or countries where the foreign accounts are" (Schedule B line 7b) for the
+- ~~The spouse's Interest income has no "Country or countries where the foreign accounts are" (Schedule B line 7b) for the
   spouse's own separate return, and no "payer already reduced the amount", "reducing interest by bond premium" or
-  "reducing OID by acquisition premium" questions. Adding them is a field addition: needs the owner's sign-off.
+  "reducing OID by acquisition premium" questions. Adding them is a field addition: needs the owner's sign-off.~~ **FIXED
+  2026-11-20** (owner-approved; no migration - the pf_interest_income columns and the mapper already served both copies): the
+  spouse's copy asks the four on a separate return only (the countries after the FBAR Yes, the three under the less common
+  adjustments); the spouse's own return already read them from her copy (the filer slot), so her line 2b no longer subtracts a
+  typed premium the payer already netted, the "reducing" answers trigger her Schedule B, and line 7b prints her countries. On a
+  joint return they stay on the Family Head's copy (return-level). e2e interest-income-spouse-separate-return.spec.ts.
 
 ## ~~Sort the statements and forms in each sidebar section (opened 2026-11-05, owner)~~ **DONE 2026-11-14**
 

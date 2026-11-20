@@ -1,3 +1,18 @@
+## 2026-11-21T08:30:00Z
+Interest income - the spouse's copy asks the Schedule B line 7b countries and the three bond premium questions on a separate return
+(owner-approved; outstanding.md "Interest income spouse copy"); no statement or tax-return form change, no migration.
+- The spouse's own separate return reads her Interest income copy (the filer slot is "-taxpayer"), but that copy never asked
+  foreignAccountCountries, payerAlreadyReportedNetInterestOrOid, reducingInterestBelow1099ByBondPremium or
+  reducingOidBelow1099ByAcquisitionPremium - so her line 7b came only from Form 8938, a premium the payer already netted was
+  subtracted again from a typed amount, and the "reducing" answers couldn't trigger her Schedule B.
+- UI form-interest-income-spouse.component.ts: the three Yes / No questions under the less common adjustments and the countries after
+  the FBAR Yes, shown only on a separate return (isSeparateReturn) with the existing help; cleared on save on a joint return or when
+  the adjustments answer isn't Yes; the countries kept only with the FBAR Yes (partIIIAnswers). The columns and InterestIncomeMapper
+  already handled both copies. YAML 2ab-interest-income-spouse.yaml lists them.
+- Tests: e2e interest-income-spouse-separate-return.spec.ts (2 - her separate return: line 2b 3,000 with the netted premium, 2,500
+  when the payer didn't net it, line 7b Canada, the screen keeps the answers; joint return: not asked) with interest-income-screen
+  and line2ab-interest-income - 19 passed; UI 785 passed; npm run build OK. No backend change.
+
 ## 2026-11-21T07:30:00Z
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44817510815 on 6de084db - revision ca-ustax-be--0000693 serving 100%

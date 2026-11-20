@@ -108,6 +108,23 @@ sections:
         required: false
         label: Do any of these less common interest adjustments apply to your spouse?
         help: "Check this if the spouse paid accrued interest to a seller when buying a bond, is a nominee recipient of interest belonging to someone else, or is reducing interest or OID below the 1099-reported amount due to bond premium or acquisition premium not already reflected on their statements."
+      # 2026-11-20 (owner-approved): asked on the spouse's own separate return only - on a joint return the Family Head's copy answers them.
+      - name: payerAlreadyReportedNetInterestOrOid
+        type: boolean
+        required: false
+        showIf: "hasInterestAdjustments == true && filingStatus == 'Married filing separately'"
+        label: Did the payer already reduce the interest on the statement for bond premium?
+        help: "If Yes, the typed premium amounts below are not subtracted again (they would be subtracted twice)."
+      - name: reducingInterestBelow1099ByBondPremium
+        type: boolean
+        required: false
+        showIf: "hasInterestAdjustments == true && filingStatus == 'Married filing separately'"
+        label: Did your spouse buy a taxable bond for more than its face amount, and is your spouse reducing its interest by the premium?
+      - name: reducingOidBelow1099ByAcquisitionPremium
+        type: boolean
+        required: false
+        showIf: "hasInterestAdjustments == true && filingStatus == 'Married filing separately'"
+        label: Did your spouse buy an original issue discount bond for more than its adjusted issue price, and is your spouse reducing the OID by the premium?
       - name: accruedInterestPaidAdjustment
         type: amount
         required: false
@@ -209,6 +226,12 @@ sections:
         required: false
         label: "Is your spouse required to file FinCEN Form 114 (FBAR) for 2025? (Generally yes if the foreign accounts together exceeded $10,000 at any time in 2025 - see the FinCEN instructions for exceptions.)"
         showIf: "hasForeignAccountForScheduleBPartIII == true"
+      # 2026-11-20 (owner-approved): Schedule B line 7b on the spouse's own separate return.
+      - name: foreignAccountCountries
+        type: text
+        required: false
+        showIf: "hasFbarRequirement == true"
+        label: Country or countries where the foreign accounts are
       - name: hasForeignTrustDistributionOrTransfer
         type: boolean
         required: false

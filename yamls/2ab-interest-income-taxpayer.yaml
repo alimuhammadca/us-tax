@@ -59,6 +59,13 @@ sections:
         label: Tax-exempt interest not reported on statements
         placeholder: 0.00
         help: "Enter tax-exempt interest not shown on uploaded statements (e.g., direct holdings of municipal bonds). This flows to Form 1040 line 2a. Do NOT include market discount on a tax-exempt bond — that is taxable interest (line 2b), not tax-exempt interest."
+      - name: tipsPriorYearInflationIncome
+        type: amount
+        required: false
+        label: TIPS inflation income reported in earlier years (not already offset)
+        placeholder: 0.00
+        help: "2026-11-21 (V558, owner-approved): shown only when a Form 1099-OID box 8 is negative (TIPS deflation) by more than the security's OID and box 2 interest. The deflation first offsets that interest (Pub. 1212; Schedule B 'OID Adjustment'); the rest is an ordinary loss up to this amount (Schedule 1 line 8z, negative; Treas. Reg. 1.1275-7(f)); anything left carries forward (advisory TIPS_DEFLATION_CARRYFORWARD). Blank = no loss."
+        showIf: a 1099-OID with box 8 < 0 larger than its OID + box 2
       - name: privateActivityBondPremiumBox13
         type: amount
         required: false

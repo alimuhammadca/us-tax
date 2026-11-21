@@ -1,3 +1,20 @@
+## 2026-11-21T18:40:00Z
+A negative Form 1099-OID box 8 (TIPS deflation) offsets the security's interest; the rest is an ordinary loss (owner-approved,
+option b; outstanding.md note "negative OID box 8 floored"). V558 adds one Interest income field; no statement or tax-return form change.
+- i1099int box 8: "may be a negative number (for example, if a Treasury Inflation Protected Security has a deflation adjustment)".
+  Pub. 1212: the deflation "is generally used to offset interest income from the debt instrument for the tax year", shown on Schedule B
+  "in the same way you would show an OID adjustment". The app added box 8 to box 1 and floored at zero - the deflation was lost and
+  box 2 taxed in full.
+- New TipsDeflation: the deflation reduces the statement's OID, then its box 2 (Schedule B "OID Adjustment" rows); the excess is an
+  ordinary loss up to tipsPriorYearInflationIncome (Schedule 1 line 8z, negative item "TIPS deflation adjustment - ordinary loss");
+  the rest -> advisory TIPS_DEFLATION_CARRYFORWARD (Treas. Reg. 1.1275-7(f)). A negative box 8 no longer marks a bond tax-exempt.
+  ChildInterest8814 nets a child's box 8 deflation against the same statement's interest (no loss).
+- V558: pf_interest_income.tips_prior_year_inflation_income (entity, InterestIncomeMapper). UI: Interest income (Family Head and
+  spouse) shows the question only when such a deflation exceeds the interest; help text; cleared with the other answers. YAMLs noted.
+- Tests: TipsDeflationTest (5 - offset order, box 2 cap, child, full compute line 2b 1,200 + "OID Adjustment" -300, excess 300 ->
+  line 8z -200 + carryforward 100); e2e tips-deflation.spec.ts with line2ab-interest-income + private-activity-bond-premium - 16 passed;
+  unit suite 6,324 passed, 0 failed; UI 785 passed; npm run build OK.
+
 ## 2026-11-21T11:10:00Z
 Full e2e regression (local dev, 2,501 tests, 6.3 h): 2,499 passed, 2 failed, 0 skipped, 0 flaky. Both failures were test expectations
 left behind by this session's owner-approved changes, not app defects; fixed and re-run (16/16 passed in the two spec files):

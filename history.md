@@ -1,3 +1,10 @@
+## 2026-11-21T11:10:00Z
+Full e2e regression (local dev, 2,501 tests, 6.3 h): 2,499 passed, 2 failed, 0 skipped, 0 flaky. Both failures were test expectations
+left behind by this session's owner-approved changes, not app defects; fixed and re-run (16/16 passed in the two spec files):
+- line2ab-interest-income.spec.ts: Form 6251 line 2g now 24, not 30 - box 9 30 less its share of the box 13 premium (10 x 30/50 = 6),
+  V557 (i6251 line 2g).
+- se-tax-options-save-load.spec.ts: no longer saves / asserts medicaidWaiverIncludeInSe, the column V555 dropped.
+
 ## 2026-11-21T04:25:00Z
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44864355839 on 8769617c - revision ca-ustax-be--0000694 serving 100%

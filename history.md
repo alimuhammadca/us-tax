@@ -1,3 +1,11 @@
+## 2026-11-21T04:25:00Z
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44864355839 on 8769617c - revision ca-ustax-be--0000694 serving 100%
+  traffic, image ustax-be:8769617; /q/health/ready UP (V555-V557 applied). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 44865548180 on 78e80ef - live at https://www.taxbeans.com
+  (bundle main-5OHTQFNX.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-21T03:30:00Z
 Form 6251 line 2g takes the bond premium off private activity bond interest (owner-approved, option b; outstanding.md note "INT box 9
 not reduced by box 13"). V557 adds one Interest income field; no statement or tax-return form change.

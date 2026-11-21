@@ -1643,7 +1643,9 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 | D-10-15 | ~~low~~ **FIXED 2026-10-26** (low batch V392-V399) | misleading | Income adjustments form says lines 15–17 "not supported" with three inert questions — component.ts:1090-1165 | `new_knowledge/10.md` |
 | D-10-16 | ~~low~~ **FIXED 2026-10-27** (wave 2, V402) | trusted entry | line 24j typed; 2555 Part IX not computed — i2555 p.7 | `new_knowledge/10.md` - **wave 2:** Form 2555 line 34 employer-provided amounts, Part IX lines 46-50 with the 2024 carryover (line 49) -> Schedule 1 line 24j |
 
-- Note: (note) INCOME_ADJUSTMENTS_MISSING_UPLOADED_* flags never fire (mapper doesn't save answers); 3 imported… keys never written; line 26 rounding
+- ~~Note: (note) INCOME_ADJUSTMENTS_MISSING_UPLOADED_* flags never fire (mapper doesn't save answers); 3 imported… keys never written; line 26 rounding~~
+  **CLOSED 2026-11-20** (checked): the flags and the three unused keys were removed 2026-11-11; line 26 is the sum of the lines it
+  prints, rounded to cents.
 
 #### Schedule D / 8949
 
@@ -1738,9 +1740,11 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 | D-4835-9 | ~~low~~ **FIXED 2026-10-27** (wave 2, V403) | not supported | line 30g §263A capitalized costs — f4835 p.3 / TRCS:31315-31326 | `new_knowledge/forms/4835.md` - **wave 2:** line 30g section 263A capitalized costs |
 | D-4835-10 | ~~low~~ **FIXED 2026-10-27** (wave 2, V403) | not supported | farm rental as §162 business for QBI — i8995 p.1-2 | `new_knowledge/forms/4835.md` - **wave 2:** "trade or business for QBI" answer drives the QBI inclusion |
 
-- Note: (side) RENTAL_MFS_LIVED_APART_ALL_YEAR_UNANSWERED checks only rental properties, not farm rental
+- ~~Note: (side) RENTAL_MFS_LIVED_APART_ALL_YEAR_UNANSWERED checks only rental properties, not farm rental~~
+  **CLOSED 2026-11-20** (checked, fixed 2026-10-26 D-8582-15): MfsRentalActiveParticipation also checks Form 4835 farm rentals.
 
-- Note: (side, for Sch E) Sch E line 41 excludes K-1 royalties while Sch 1 line 5 includes them / TRCS:31451, :4394
+- ~~Note: (side, for Sch E) Sch E line 41 excludes K-1 royalties while Sch 1 line 5 includes them / TRCS:31451, :4394~~
+  **CLOSED 2026-11-20** (checked, fixed D-sch-e-1): ScheduleEParts puts K-1 royalties in line 26, so in line 41.
 
 #### 6252 (statement mapper Form6252Mapper disabled: formIds() empty — only intake form works)
 
@@ -1879,7 +1883,9 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 | D-8606-8 | ~~low~~ **FIXED 2026-10-26** (low batch V392-V399) | cosmetic | MFJ form shows "Filer & Spouse"; address always filled — i8606 p.8 / TRCS:5220, :52571-52590 | `new_knowledge/forms/8606.md` |
 | D-8606-10 | ~~low~~ **FIXED 2026-10-27** (wave 2, V406) | missing attachments | recharacterization / returned contribution / divorce transfer statements — i8606 p.6-8,10 | `new_knowledge/forms/8606.md` - **wave 2:** recharacterization / returned-contribution statement facts and a divorce transfer that changed basis |
 
-- Note: (test defect) e2e open-questions-b3-b33-b38.spec.ts ~118 reads f8606?.line7 — wrong key, assertion can never fail
+- ~~Note: (test defect) e2e open-questions-b3-b33-b38.spec.ts ~118 reads f8606?.line7 — wrong key, assertion can never fail~~
+  **FIXED 2026-11-20**: B38 reads part1Line7DistributionsExcludingRolloversAndOtherExclusions (0 - the conversion and the rollover
+  stay off line 7) and checks Form 8606 is produced.
 
 - Note: (note) sidebar lists Form 8606 taxpayer + spouse for every return incl. Single (TEMP toggle shell.component.ts:1609-1614)
 
@@ -1930,7 +1936,10 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 | D-2441-7 | ~~low~~ **FIXED 2026-10-26** (low batch V392-V399) | advisory | line 9b Worksheet A fallback doesn't subtract 2024 base — i2441 p.7 / TRCS:39188-39201, 44451-44454 | `new_knowledge/forms/2441.md` |
 | D-2441-9 | ~~low~~ **FIXED 2026-10-26** (low batch V392-V399) | under-credit | MFJ merge drops spouse row with same child SSN and its amount — i2441 p.4 / TRCS:38451-38455 | `new_knowledge/forms/2441.md` |
 
-- Note: (test defect) Sc00384SqaScenarioTest / Hrb2025Sc00384Test seed personSsn/personName but compute reads qualifyingSSN — family check never exercised
+- ~~Note: (test defect) Sc00384SqaScenarioTest / Hrb2025Sc00384Test seed personSsn/personName but compute reads qualifyingSSN — family check never exercised~~
+  **FIXED 2026-11-20**: both seed qualifyingFirstName / qualifyingLastName / qualifyingSSN. With the check running, Hrb2025Sc00384Test
+  run A (a Form 8332 release - Owen isn't on her Dependents list) needed the custodial-parent answer the screen already asks
+  (custodialParentChild + the child's date of birth, D-2441-4); no app change - all runs give the same figures.
 
 #### 8839 (credit side)
 

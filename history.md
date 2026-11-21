@@ -1,3 +1,15 @@
+## 2026-11-21T15:30:00Z
+Test defects and stale notes (owner-approved); no app code, field, statement or tax-return form change.
+- e2e open-questions-b3-b33-b38.spec.ts B38 read f8606.line7 - a key the output doesn't have, so it read 0 whatever the form said; it
+  now reads part1Line7DistributionsExcludingRolloversAndOtherExclusions (0) and checks Form 8606 is produced. 6 passed.
+- Sc00384SqaScenarioTest / Hrb2025Sc00384Test seeded the child-care qualifying person as personName / personSsn, which the app doesn't
+  read, so the family check never ran; they now seed qualifyingFirstName / qualifyingLastName / qualifyingSSN. Hrb2025 run A (the
+  custodial mother after a Form 8332 release - the child isn't on her Dependents list) then blocked with
+  DEPENDENT_CARE_QUALIFYING_PERSON_NOT_IN_FAMILY until the row gave the custodial-parent answer the screen asks (custodialParentChild,
+  the date of birth - D-2441-4); same figures in every run. Not an app bug.
+- Closed as already fixed: the INCOME_ADJUSTMENTS_MISSING_UPLOADED_* note (removed 2026-11-11), farm rentals in the separate-return
+  "lived apart" check (D-8582-15), K-1 royalties in Schedule E line 41 (D-sch-e-1). Unit suite 6,308 passed, 0 failed.
+
 ## 2026-11-21T14:30:00Z
 Qualifying-relative gross income test - a dependent's own return gives gross income, not Form 1040 line 9 (owner-approved; outstanding.md
 note "KiddieTaxParentReader ... another return's line 9 as gross income"); no field, statement or tax-return form change.

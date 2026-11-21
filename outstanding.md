@@ -1612,9 +1612,15 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 | D-11a-7 | ~~low~~ **CLOSED 2026-10-26** (not a defect / already fixed - low triage) | 8815 exclusion too large | 8815 MAGI omits adoption exclusion add-back; student loan interest — f8815 p.4 / TRCS:8883-8892, 7238-7248 | `new_knowledge/11a.md` |
 | D-11a-8 | ~~low~~ **FIXED 2026-10-27** (wave 2, V402) | MAGI slightly high | NIIT MAGI adds gross FEIE not net of disallowed deductions (code comment admits) — i8960 p.22 / TRCS:43566-43575 | `new_knowledge/11a.md` - **wave 2:** Form 2555 line 44 (deductions allocable to excluded income) -> line 45 and Form 8960 MAGI worksheet line 2(b) |
 
-- Note: D-9-1: DUPLICATE of D-8-9 (manualOtherIncomeLine8)
+- ~~Note: D-9-1: DUPLICATE of D-8-9 (manualOtherIncomeLine8)~~
+  **CLOSED 2026-11-20** (bookkeeping - a duplicate id; D-8-9 carries it).
 
-- Note: (side, unverified) KiddieTaxParentReader.java:285-290 uses another return's line 9 as "gross income" for qualifying-relative test
+- ~~Note: (side, unverified) KiddieTaxParentReader.java:285-290 uses another return's line 9 as "gross income" for qualifying-relative test~~
+  **FIXED 2026-11-20** (owner-approved, no field change): Pub. 17 (2025) Gross Income Test counts gross income - rents before expenses,
+  a business's sales less cost of goods sold, a farm's gross income; losses don't reduce it. DependentGrossIncome builds it from the
+  dependent's own return: line 9 with Schedule C line 7, Schedule F line 9, Schedule E rents + royalties (lines 23a/23b) and Form
+  4835 line 7 in place of their nets, and a capital loss, a Form 4797 loss and a net operating loss added back. A partner's gross
+  partnership income isn't on Schedule K-1, so K-1 amounts stay as reported; a typed gross income on Dependents still wins.
 
 #### 10 (Schedule 1 Part II)
 

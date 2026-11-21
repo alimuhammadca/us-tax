@@ -1,3 +1,20 @@
+## 2026-11-21T14:30:00Z
+Qualifying-relative gross income test - a dependent's own return gives gross income, not Form 1040 line 9 (owner-approved; outstanding.md
+note "KiddieTaxParentReader ... another return's line 9 as gross income"); no field, statement or tax-return form change.
+- When the parent hasn't typed a relative's gross income and the relative files their own return in the app, the parent's return
+  read that return's line 9 (total income) for the $5,200 test. Line 9 nets rental and business expenses and subtracts capital and
+  other losses; Pub. 17 (2025) Gross Income Test counts gross receipts ("Don't deduct taxes, repairs, or other expenses") and losses
+  don't reduce it - a relative over the limit could be claimed.
+- New multireturn.DependentGrossIncome (used by KiddieTaxParentReader.dependentOwnGrossIncomeBySsn): line 9 with Schedule C line 7,
+  Schedule F line 9, Schedule E lines 23a + 23b (rents, royalties) and Form 4835 line 7 swapped in for their nets; a capital loss
+  (line 7a below 0), a Form 4797 loss (Schedule 1 line 4) and a net operating loss (line 8a) added back. K-1 amounts stay as reported
+  (a partner's gross partnership income isn't on Schedule K-1); a typed gross income on Dependents still wins. D-9-1 (a duplicate id)
+  closed.
+- Tests: DependentGrossIncomeTest (4 - rents 12,000 less 10,000 of expenses: line 9 2,000, gross 12,000; a business loss: line 9
+  1,000, gross 7,000; a capital loss: gross 5,000; wages only = line 9); e2e dependent-gross-income-auto-from-own-return.spec.ts +1
+  (wages 6,000 and a 3,000 Form 1099-B loss on the child's own return: line 9 3,000 kept the child, gross 6,000 drops them) with
+  dependent-own-basic / -self-employment - 6 passed; unit suite 6,308 passed, 0 failed.
+
 ## 2026-11-21T13:30:00Z
 Housekeeping - four IRS-deviation notes checked (owner-approved); no tax change, no field, statement or tax-return form change.
 - Closed, already fixed: a child's Form 1099-DIV withholding is not on the parent's line 25b (person filter since 2026-10-25 - lock-in

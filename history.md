@@ -1,3 +1,17 @@
+## 2026-11-21T17:00:00Z
+Statements - a CORRECTED copy replaces the original (owner-approved; outstanding.md note "corrected 1099 next to original double-counted");
+no field, statement or tax-return form change.
+- About 40 statement types save the CORRECTED box, but only Form 1095-A used it: an original and its corrected copy were both counted
+  (a 1099-INT of 1,000 corrected to 1,200 gave line 2b 2,200; a corrected 1099-R doubled the income and the withholding).
+- New CorrectedStatements.supersede in ownEntries / ownEntriesBeforeSplit: an entry marked CORRECTED replaces each uncorrected entry of
+  the same form from the same payer (payer TIN, else the first line of the payer name) to the same person (recipient TIN), with the same
+  account number when either copy has one; the originals are kept in the return's statement scope and named by the non-blocking
+  STATEMENT_CORRECTED_COPY_REPLACES_ORIGINAL. Different account numbers both count; Form 1095-A keeps Form1095ARules.
+- Closed: the territory W-2 note (fixed, probe: W-2GU alone -> line 1a 40,000, no block) and the D-2b-3 wording correction.
+- Tests: CorrectedStatementsTest (4 - 1099-INT 1,200 not 2,200 with the advisory; different accounts 2,200; no CORRECTED box 2,200; a
+  corrected 1099-R: line 5b 18,000 and line 25b 1,800); e2e corrected-statement-replaces-original.spec.ts with line2ab-interest-income
+  and interest-income-screen - 18 passed; line3ab-dividend-income, line5abc-pension-withdrawals, line4abc-ira-income - 72 passed; unit suite 6,312 passed, 0 failed.
+
 ## 2026-11-21T16:00:00Z
 outstanding.md: the note "sidebar lists Form 8606 taxpayer + spouse for every return incl. Single" closed (owner: leave as is) - it is the
 deliberate development TEMP switch in shell.component.ts that lists every tax-return form; turning it off is a later owner decision.

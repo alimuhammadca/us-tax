@@ -2066,7 +2066,8 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 | D-w-2g-1 | ~~low~~ **FIXED 2026-10-26** (low batch V392-V399) | edit discarded | W-2G box 13 not parsed back — form-w-2g.component.ts:1006,1014-1080 | `new_mappings/w-2g.md` |
 | D-w-2-gu-1 / D-w-2-vi-1 | ~~low~~ **CLOSED 2026-10-26** (not a defect / already fixed - low triage) | cosmetic | VOID bound in UI, no mapper field | `new_mappings/w-2-gu.md` |
 
-- Note: (confirmed) D-1a-3 extended: territory W-2 boxes never read (wages, box 2 tax, excess SS, box 12); blocking MISSING_W2_EMPLOYMENT_INCOME fires if only territory W-2
+- ~~Note: (confirmed) D-1a-3 extended: territory W-2 boxes never read (wages, box 2 tax, excess SS, box 12); blocking MISSING_W2_EMPLOYMENT_INCOME fires if only territory W-2~~
+  **CLOSED 2026-11-20** (checked, fixed - TerritoryW2s, D-1a-3 / V497): a W-2GU alone gives line 1a 40,000 and no MISSING_W2 block.
 
 #### mappings: 1099-INT / OID / DIV
 
@@ -2079,9 +2080,16 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 | D-1099-int-3 | ~~low~~ **CLOSED 2026-10-26** (not a defect / already fixed - low triage) | silent (D-1a-1 root) | Sch A line 5a state withholding filtered only on MFS (blank TIN still counts) — every STATE_WITHHOLDING_FORMS form — i1040sca_2025 p.3 / TRCS:4324-4325, 8560-8573 | `new_mappings/1099-int.md` |
 | D-1099-div-1 | ~~low~~ **FIXED 2026-10-27** (wave 2, V407) | capital gain understated | DIV boxes 3, 9, 10 never used — f1099div p.5, i8949 p.5, i1040sd p.4 / Form1099DivMapper.java:143,155,157 | `new_mappings/1099-div.md` - **wave 2:** return-of-capital / liquidating distribution rows with the shares' basis on the Capital gain/loss form |
 
-- Note: (correction) D-2b-3 narrower: TIN belonging to nobody in household → blocking STATEMENT_DOES_NOT_BELONG_TO_FAMILY (TRCS:13891-13910); silent only for a household member not on this return
+- ~~Note: (correction) D-2b-3 narrower: TIN belonging to nobody in household → blocking STATEMENT_DOES_NOT_BELONG_TO_FAMILY (TRCS:13891-13910); silent only for a household member not on this return~~
+  **CLOSED 2026-11-20** (a correction to D-2b-3's wording, nothing to fix; a household member not on the return is left off by
+  ReturnStatementOwners).
 
 - Note: (minor) VOID not used; corrected 1099 next to original double-counted (no duplicate check); INT box 9 not reduced by box 13; negative OID box 8 floored
+  **Partly FIXED 2026-11-20** (owner-approved, no field change): a statement marked CORRECTED now replaces the uncorrected one of the same
+  form from the same payer (payer TIN, else name) to the same person, with the same account number when either has one - the original is
+  left out, with the advisory STATEMENT_CORRECTED_COPY_REPLACES_ORIGINAL (CorrectedStatements, in ownEntries; Form 1095-A keeps its own
+  rule; a W-2 correction is a Form W-2c). Still open: VOID (a recipient copy rarely carries it), the 1099-INT box 9 / box 13 interaction
+  and a negative OID box 8.
 
 #### mappings: 1099-B / DA / S
 

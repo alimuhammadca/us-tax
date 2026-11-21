@@ -2119,9 +2119,17 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 | D-ssa-1099-1 | ~~low-medium~~ **FIXED 2026-10-28** | refund too high (same root as D-1099-int-1) | dependent's SSA-1099 box 6 on parent's 25b on non-MFS while box 5 correctly excluded; MFS blank box 2 reverse — i1040gi p.39, p17 p.65 / TRCS:49811-49812, 51808-51813, :35901-35907 | `new_mappings/ssa-1099.md` - **fixed:** line 25b takes withholding only from statements whose box 5 is on line 6a (SsaRrbWithholding) |
 | D-rrb-1099-1 | ~~low-medium~~ **FIXED 2026-10-28** | as D-ssa-1099-1 (box 10); filer's own RRB with claim number loses income but keeps withholding | TRCS:49806, 51808-51813 | `new_mappings/rrb-1099.md` - **fixed:** same rule as D-ssa-1099-1 for RRB-1099 |
 
-- Note: (confirmed) D-6a-3 reachable: SSA box 2 not required (form-ssa-1099.component.ts:228)
+- ~~Note: (confirmed) D-6a-3 reachable: SSA box 2 not required (form-ssa-1099.component.ts:228)~~
+  **CLOSED 2026-11-20** (checked, D-6a-3 fixed 2026-10-26): a Form SSA-1099 with box 2 blank goes to the person named in box 1
+  (PersonNameMatch), with an advisory - not to the Family Head on every return.
 
 - Note: (no id) Medicare premiums never carried from SSA-1099/RRB-1099 box 11 (user must retype); blank year stored "2019"; RRB duplicate entry doubles 6a
+  **Partly FIXED 2026-11-20** (owner-approved, option a - added automatically; no field, statement or tax-return form change): Medicare
+  premiums withheld from benefits - the SSA-1099 box 3 description lines "Medicare Part B / prescription drug premiums deducted from your
+  benefits" (the screen keeps box 3's description as one text, as printed; the separate Part B box was commented out 2026-10-03 and isn't
+  put back - a statement form's layout) and RRB-1099 box 11 - join Schedule A line 1 (Pub. 502), less any Medicare premiums typed on the
+  self-employed health insurance screen; Standard or itemized deductions shows them ("don't type them in"). MedicarePremiumsFromStatements.
+  Still open: the "2019" year labels of the SSA-1099 screen (an old form layout) and a duplicate RRB-1099 entry doubling line 6a.
 
 #### CROSS-CUTTING (coordinator)
 

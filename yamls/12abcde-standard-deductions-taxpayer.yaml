@@ -84,6 +84,7 @@ sections:
         type: number
         required: false
         label: Medical and dental expenses paid
+        help: "2026-11-20 (owner-approved): Medicare premiums withheld from benefits - the Form SSA-1099 box 3 description lines ('Medicare Part B / prescription drug premiums deducted from your benefits') and Form RRB-1099 box 11 - are added to Schedule A line 1 automatically (MedicarePremiumsFromStatements; less any Medicare premiums on the self-employed health insurance screen); the screen shows them (id medicarePremiumsFromStatements) and says not to type them in."
       # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
       - name: medicalMilesDriven
         type: number

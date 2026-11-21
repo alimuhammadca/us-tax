@@ -1,3 +1,19 @@
+## 2026-11-21T18:30:00Z
+Medicare premiums withheld from Social Security / railroad benefits join Schedule A medical expenses (owner-approved, option a;
+outstanding.md note "Medicare premiums never carried from SSA-1099/RRB-1099 box 11"); no field, statement or tax-return form change.
+- The proposal was a new SSA-1099 column for a Part B box; on checking, that box was commented out of the SSA-1099 screen on 2026-10-03
+  (the printed box 3 description is one free-text block) and putting it back would change the statement form, so no column was added:
+  the amount is read from the saved box 3 description (benefitsPaidGrossNotes) - "Medicare Part B premiums deducted from your benefits
+  $X" and the prescription drug (Part D) line.
+- New MedicarePremiumsFromStatements: those SSA-1099 lines and RRB-1099 box 11 (medicarePremiumsTotalAmount) of this return's people
+  are added to Schedule A line 1 (Pub. 502, Insurance Premiums), less any Medicare premiums on the self-employed health insurance
+  screen (Schedule 1 line 17). UI: Standard or itemized deductions shows "Medicare premiums from your statements: $X ... added
+  automatically - don't include them" (sd-medical, id medicarePremiumsFromStatements; both people on a joint return). YAML noted.
+- Closed: the SSA-1099 box 2 note (D-6a-3 fixed). Still open in note 2091: the SSA-1099 screen's "2019" labels, a duplicate RRB-1099.
+- Tests: MedicarePremiumsFromStatementsTest (3 - the description lines read, 2,220 + 312; SSA + RRB 7,220, less 1,000 on line 17 6,220;
+  full compute Schedule A line 1 6,220); e2e medicare-premiums-from-statements.spec.ts with standard-deductions-screen - 3 passed;
+  unit suite 6,315 passed, 0 failed; UI 785 passed; npm run build OK.
+
 ## 2026-11-21T17:00:00Z
 Statements - a CORRECTED copy replaces the original (owner-approved; outstanding.md note "corrected 1099 next to original double-counted");
 no field, statement or tax-return form change.

@@ -1,3 +1,8 @@
+## 2026-11-21T16:00:00Z
+outstanding.md: the note "sidebar lists Form 8606 taxpayer + spouse for every return incl. Single" closed (owner: leave as is) - it is the
+deliberate development TEMP switch in shell.component.ts that lists every tax-return form; turning it off is a later owner decision.
+No code change.
+
 ## 2026-11-21T15:30:00Z
 Test defects and stale notes (owner-approved); no app code, field, statement or tax-return form change.
 - e2e open-questions-b3-b33-b38.spec.ts B38 read f8606.line7 - a key the output doesn't have, so it read 0 whatever the form said; it

@@ -1887,7 +1887,10 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
   **FIXED 2026-11-20**: B38 reads part1Line7DistributionsExcludingRolloversAndOtherExclusions (0 - the conversion and the rollover
   stay off line 7) and checks Form 8606 is produced.
 
-- Note: (note) sidebar lists Form 8606 taxpayer + spouse for every return incl. Single (TEMP toggle shell.component.ts:1609-1614)
+- ~~Note: (note) sidebar lists Form 8606 taxpayer + spouse for every return incl. Single (TEMP toggle shell.component.ts:1609-1614)~~
+  **CLOSED 2026-11-20** (owner: leave as is): intentional - the TEMP switch in shell.component.ts (2026-05-18 / 2026-06-02) lists every
+  tax-return form so the full output is visible during development; each form's real condition is kept beside it as a comment.
+  Turning it off (and un-skipping the 9 e2e toBeHaveCount(0) checks) stays a later owner decision.
 
 #### 4972
 

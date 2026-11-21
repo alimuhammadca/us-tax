@@ -59,6 +59,13 @@ sections:
         label: Tax-exempt interest not reported on statements
         placeholder: 0.00
         help: "Enter tax-exempt interest not shown on uploaded statements (e.g., direct holdings of municipal bonds). This flows to Form 1040 line 2a. Do NOT include market discount on a tax-exempt bond — that is taxable interest (line 2b), not tax-exempt interest."
+      - name: privateActivityBondPremiumBox13
+        type: amount
+        required: false
+        label: Of the box 13 bond premium, how much is for private activity bonds (box 9)?
+        placeholder: 0.00
+        help: "2026-11-20 (V557, owner-approved): shown only when a Form 1099-INT has a box 13 premium and box 9 is only part of box 8. Form 6251 line 2g = box 9 less this premium (i6251 line 2g; i1099int box 13); blank = the box 9 share of box 8 (advisory PRIVATE_ACTIVITY_BOND_PREMIUM_ESTIMATED). Box 9 = box 8: all of box 13 reduces box 9, no question."
+        showIf: a 1099-INT with box 13 > 0 and 0 < box 9 < box 8
       - name: taxExemptStatedInterestFrom1099OidBox2
         type: amount
         required: false

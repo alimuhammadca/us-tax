@@ -2088,8 +2088,12 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
   **Partly FIXED 2026-11-20** (owner-approved, no field change): a statement marked CORRECTED now replaces the uncorrected one of the same
   form from the same payer (payer TIN, else name) to the same person, with the same account number when either has one - the original is
   left out, with the advisory STATEMENT_CORRECTED_COPY_REPLACES_ORIGINAL (CorrectedStatements, in ownEntries; Form 1095-A keeps its own
-  rule; a W-2 correction is a Form W-2c). Still open: VOID (a recipient copy rarely carries it), the 1099-INT box 9 / box 13 interaction
-  and a negative OID box 8.
+  rule; a W-2 correction is a Form W-2c). Still open: VOID (a recipient copy rarely carries it) and a negative OID box 8.
+  **Box 9 / box 13 FIXED 2026-11-20** (owner-approved option b, V557 - one new Interest income field; no statement or tax-return form
+  change): Form 6251 line 2g is box 9 less the box 13 bond premium for the private activity bonds (i6251 line 2g; i1099int box 13 "box 8
+  or 9, whichever is applicable"). Box 9 = box 8: all of box 13. Box 9 < box 8: the Interest income screen asks how much of box 13 is for
+  them (privateActivityBondPremiumBox13); blank = the box 9 share of box 8 + advisory PRIVATE_ACTIVITY_BOND_PREMIUM_ESTIMATED. A child's
+  box 9 on Form 8814 is netted the same way (share). PrivateActivityBondPremium.
 
 #### mappings: 1099-B / DA / S
 

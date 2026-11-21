@@ -1,3 +1,18 @@
+## 2026-11-21T03:30:00Z
+Form 6251 line 2g takes the bond premium off private activity bond interest (owner-approved, option b; outstanding.md note "INT box 9
+not reduced by box 13"). V557 adds one Interest income field; no statement or tax-return form change.
+- i6251 line 2g: box 9 interest "reduced (but not below zero) by any deduction that would have been allowable"; i1099int box 13 nets the
+  premium against "box 8 or 9, whichever is applicable". The app subtracted box 13 from box 8 (line 2a) but never from box 9.
+- New PrivateActivityBondPremium: box 9 = box 8 -> all of box 13 reduces box 9; box 9 < box 8 -> the screen's answer
+  (privateActivityBondPremiumBox13, capped at box 13), blank -> the box 9 share of box 8 with the advisory
+  PRIVATE_ACTIVITY_BOND_PREMIUM_ESTIMATED. A child's box 9 on Form 8814 (ChildInterest8814) is netted by the share.
+- V557: pf_interest_income.private_activity_bond_premium_box13 (entity, InterestIncomeMapper). UI: Interest income (Family Head and
+  spouse copies) shows "Of the box 13 bond premium ($X), how much is for private activity bonds (box 9)?" only when such a 1099-INT
+  exists; help text added; cleared with the other interest answers. YAMLs 2ab-interest-income-taxpayer/spouse noted.
+- Tests: PrivateActivityBondPremiumTest (4 - all-PAB 4,600; mixed 3,700 typed / 3,500 capped / 3,800 estimated + flag; full compute);
+  TaxReturnComputeServiceTest's interest test now expects line 2g 36 (40 less 20 x 40/200); e2e private-activity-bond-premium.spec.ts
+  with interest-income-spouse-separate-return - 3 passed; unit suite 6,319 passed, 0 failed; UI 785 passed; npm run build OK.
+
 ## 2026-11-21T18:30:00Z
 Medicare premiums withheld from Social Security / railroad benefits join Schedule A medical expenses (owner-approved, option a;
 outstanding.md note "Medicare premiums never carried from SSA-1099/RRB-1099 box 11"); no field, statement or tax-return form change.

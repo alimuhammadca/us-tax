@@ -2141,7 +2141,11 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
   benefits" (the screen keeps box 3's description as one text, as printed; the separate Part B box was commented out 2026-10-03 and isn't
   put back - a statement form's layout) and RRB-1099 box 11 - join Schedule A line 1 (Pub. 502), less any Medicare premiums typed on the
   self-employed health insurance screen; Standard or itemized deductions shows them ("don't type them in"). MedicarePremiumsFromStatements.
-  Still open: the "2019" year labels of the SSA-1099 screen (an old form layout) and a duplicate RRB-1099 entry doubling line 6a.
+  **"2019" year FIXED 2026-11-22** (owner decision): the Form SSA-1099 screen no longer fills in "2019" - the year stays blank until the
+  user types it (box 3/4/5 captions show the typed year). A blank year is taken as the tax year and advisory SSA_1099_YEAR_BLANK asks
+  the user to enter it (SsaStatementYear). The printed "Draft as of June 21, 2019" / "(6-2019)" footer is form layout and is kept; the
+  owner will later move this screen to the same tax-year pattern as the other forms.
+  Still open: a duplicate RRB-1099 entry doubling line 6a.
 
 #### CROSS-CUTTING (coordinator)
 

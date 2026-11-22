@@ -1,3 +1,12 @@
+## 2026-11-22T18:30:00Z
+Form SSA-1099 year no longer defaults to "2019" (owner decision; outstanding.md note "blank year stored 2019").
+- UI form-ssa-1099: the year box stays blank until the user types it; a blank year is saved blank (was saved as "2019"); the box 3/4/5
+  captions show the typed year. The printed 2019-draft footer is form layout and unchanged.
+- Backend: SsaStatementYear - a blank year is taken as the tax year (compute already did) and advisory SSA_1099_YEAR_BLANK
+  ("Open the Form SSA-1099 statement and enter the year printed on it") is raised per statement.
+- Tests: SsaStatementYearTest (2); e2e ssa-1099-year-blank.spec.ts. Unit 6,322 / 0 failed; UI 785 passed; build OK; e2e 29/29.
+- YAMLs: 6abcd-social-security-benefits-taxpayer/spouse instructions note the advisory.
+
 ## 2026-11-22T17:20:00Z
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 45020278876 on c3952798 - revision ca-ustax-be--0000696 serving 100%

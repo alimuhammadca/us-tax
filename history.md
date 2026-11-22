@@ -1,3 +1,11 @@
+## 2026-11-22T17:20:00Z
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 45020278876 on c3952798 - revision ca-ustax-be--0000696 serving 100%
+  traffic, image ustax-be:c395279; /q/health/ready UP (V559 applied). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): not redeployed - no UI change since bb495c2, already live at https://www.taxbeans.com
+  (bundle main-6C7NOFUD.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-22T15:00:00Z
 VOID is not saved; a statement is always taken as the correct, latest copy (owner decision; outstanding.md note "VOID not used;
 corrected 1099 next to original double-counted"). No statement or tax-return form structure change.

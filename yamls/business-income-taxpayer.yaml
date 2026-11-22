@@ -2,7 +2,7 @@
 # Self-employment Phase SE-1 (Stage 1 capture). One entry per business; each business
 # nests per-vehicle (Part IV) and per-other-expense (Part V) repeatable rows.
 # Computed: net profit -> Schedule 1 line 3, Schedule SE. 2026-11-06 screen review: lines I / J, 34, 43, 45, 46, 47a / 47b are shown;
-# the person's own Forms 1099-NEC / 1099-K / 1099-MISC 5-6 / 1099-B bartering fill blank gross receipts (one business).
+# the person's own Forms 1099-NEC / 1099-K / 1099-MISC 5-6-11 / 1099-B bartering fill blank gross receipts (one business; box 11 added 2026-11-22).
 name: business-income-taxpayer
 title: Business income (Schedule C, taxpayer/family head)
 multiplicity: single
@@ -475,7 +475,7 @@ sections:
       - name: imported1099MiscBusinessBoxes
         type: amount
         readOnly: true
-        label: 1099-MISC business boxes (3/5/6/etc.)
+        label: 1099-MISC business boxes (3/5/6/11/etc.)
 
   - name: computedOutputs
     title: Computed outputs

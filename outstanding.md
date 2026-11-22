@@ -2196,7 +2196,13 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
   NOT_ON_SCHEDULE_E_*). Those messages now add "The $X of federal income tax withheld (box 4) on these statements is still credited on
   Form 1040 line 25b, so the income must be reported too." when the statements carry withholding (ScheduleCStatements.withheldSentence).
 
-- Note: (no id) 1099-MISC box 10 attorney proceeds / box 11 fish purchases not read
+- ~~Note: (no id) 1099-MISC box 10 attorney proceeds / box 11 fish purchases not read~~
+  **CLOSED 2026-11-22** (owner-approved; no field, statement or tax-return form change): box 11 (cash received for fish "if you are
+  in the trade or business of catching fish", f1099msc Instructions for Recipient) joins boxes 5 / 6 on the Schedule C row
+  (LowIrsFixesChunk2.withMiscBoxes5And6) - blank gross receipts auto-fill, the receipts check, and the no-business advisory (now
+  naming "1099-MISC (boxes 5, 6, 11)"). Box 10 (gross proceeds paid to an attorney - "Report only the taxable part") adds nothing; the
+  advisory FORM_1099_MISC_BOX10_ATTORNEY_PROCEEDS says the attorney's own fee goes in Schedule C gross receipts and the client's part is
+  not income (Misc1099Income.flagAttorneyProceeds).
 
 #### mappings: 1099-R / RRB-1099-R / 5498 (no compute path reads any 5498 box)
 

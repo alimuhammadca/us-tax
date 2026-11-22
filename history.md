@@ -1,3 +1,11 @@
+## 2026-11-22T23:00:00Z
+1099-MISC box 10 / box 11 are read (owner-approved; outstanding.md note "1099-MISC box 10 attorney proceeds / box 11 fish purchases not read").
+- Box 11 fish purchased for resale -> Schedule C like boxes 5 / 6 (gross-receipts auto-fill, receipts check, no-business advisory;
+  its message now names "1099-MISC (boxes 5, 6, 11)").
+- Box 10 gross proceeds paid to an attorney: no income added (only the taxable part is income); advisory
+  FORM_1099_MISC_BOX10_ATTORNEY_PROCEEDS.
+- Tests: MiscBoxes10And11Test (4); e2e misc-box10-box11.spec.ts (+ schedule-c-compute, withheld-income-not-reported: 8/8).
+
 ## 2026-11-22T22:00:00Z
 1099-MISC / NEC / K box 4 withholding note closed (owner-approved a + b; outstanding.md note "box 4 of 1099-MISC/NEC/K -> 25b").
 - (a) Already handled: the person filter (2026-10-25) limits income and withholding to this return's people; box 4 stays on line 25b

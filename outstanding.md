@@ -2189,7 +2189,12 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
 | D-1099-misc-2 | ~~low~~ **FIXED 2026-10-26** (low batch V392-V399) | income understated | box 8 substitute payments never read — f1099msc p.5 / Form1099MiscMapper.java:142 | `new_mappings/1099-misc.md` |
 | D-1099-misc-3 | ~~low~~ **FIXED 2026-10-26** (low batch V392-V399) | silent | box 15 §409A income + 20% tax never read; 17h typed only — f1099msc p.5, i1040gi p.114 / TRCS:43256, 43316-43317 | `new_mappings/1099-misc.md` |
 
-- Note: (extends D-1099-int-1) box 4 of 1099-MISC/NEC/K → 25b, person-filtered only on MFS/dependent-own; credited even when the income is never read / TRCS:49803-49805, 51808-51823, Form1099KMapper.java:260-262
+- ~~Note: (extends D-1099-int-1) box 4 of 1099-MISC/NEC/K → 25b, person-filtered only on MFS/dependent-own; credited even when the income is never read / TRCS:49803-49805, 51808-51823, Form1099KMapper.java:260-262~~
+  **CLOSED 2026-11-22** (owner-approved a + b): the person filter part was closed 2026-10-25 (ReturnStatementOwners - this return's
+  people only, same fix as D-1099-int-1). Box 4 withholding stays on line 25b - it is tax paid (i1040gi line 25b); income left off is
+  what is wrong, and that already raises advisories (FORM_1099_NEC_K_WITHOUT_BUSINESS_*, D-1099-nec-1; FORM_1099_MISC_RENTS_ROYALTIES_
+  NOT_ON_SCHEDULE_E_*). Those messages now add "The $X of federal income tax withheld (box 4) on these statements is still credited on
+  Form 1040 line 25b, so the income must be reported too." when the statements carry withholding (ScheduleCStatements.withheldSentence).
 
 - Note: (no id) 1099-MISC box 10 attorney proceeds / box 11 fish purchases not read
 

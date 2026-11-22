@@ -1,3 +1,11 @@
+## 2026-11-22T22:00:00Z
+1099-MISC / NEC / K box 4 withholding note closed (owner-approved a + b; outstanding.md note "box 4 of 1099-MISC/NEC/K -> 25b").
+- (a) Already handled: the person filter (2026-10-25) limits income and withholding to this return's people; box 4 stays on line 25b
+  (tax paid) and income left off the return already raises advisories.
+- (b) The no-business (1099-NEC / 1099-K) and rents-without-Schedule-E (1099-MISC) messages now say the box 4 withholding is still
+  credited on line 25b, so the income must be reported too (ScheduleCStatements.withheldSentence / addWithheld). Wording only.
+- Tests: WithheldIncomeNotReportedTest (3); e2e withheld-income-not-reported.spec.ts (+ line25abcd-withholding: 23/23).
+
 ## 2026-11-22T21:05:00Z
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 45051534203 on e18c3efb - revision ca-ustax-be--0000698 serving 100%

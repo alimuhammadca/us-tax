@@ -2085,10 +2085,12 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
   ReturnStatementOwners).
 
 - Note: (minor) VOID not used; corrected 1099 next to original double-counted (no duplicate check); INT box 9 not reduced by box 13; negative OID box 8 floored
-  **Partly FIXED 2026-11-20** (owner-approved, no field change): a statement marked CORRECTED now replaces the uncorrected one of the same
-  form from the same payer (payer TIN, else name) to the same person, with the same account number when either has one - the original is
-  left out, with the advisory STATEMENT_CORRECTED_COPY_REPLACES_ORIGINAL (CorrectedStatements, in ownEntries; Form 1095-A keeps its own
-  rule; a W-2 correction is a Form W-2c). Still open: VOID (a recipient copy rarely carries it).
+  ~~**Partly FIXED 2026-11-20**: a statement marked CORRECTED replaced the uncorrected one from the same payer (CorrectedStatements).~~
+  **CLOSED 2026-11-22 (owner decision)**: a user uploads or enters only the last corrected copy; the app takes every statement as correct
+  and complete - the CORRECTED replacement rule (CorrectedStatements, STATEMENT_CORRECTED_COPY_REPLACES_ORIGINAL) and Form 1095-A's
+  corrected/VOID rule (Form1095ARules) were removed. VOID: no one uploads or enters a VOID statement, so it is not saved - V559 drops
+  void_flag from 24 statement tables and void_checkbox from se_1099_da (entities + mappers). The VOID and CORRECTED checkboxes stay on the
+  statement screens until the owner removes them from the UI (the CORRECTED tick is still saved, unused).
   **Negative OID box 8 FIXED 2026-11-21** (owner-approved option b, V558 - one new Interest income field; no statement or tax-return
   form change): a negative 1099-OID box 8 is a TIPS deflation adjustment (i1099int box 8). It offsets the statement's OID, then its box 2
   interest (Pub. 1212 "Deflation adjustments"), listed on Schedule B as an "OID Adjustment"; the rest is an ordinary loss up to the

@@ -1,3 +1,17 @@
+## 2026-11-22T15:00:00Z
+VOID is not saved; a statement is always taken as the correct, latest copy (owner decision; outstanding.md note "VOID not used;
+corrected 1099 next to original double-counted"). No statement or tax-return form structure change.
+- V559 drops void_flag from se_1095_a/b/c, se_1099_a/b/c/cap/div/g/int/k/misc/nec/oid/ptr/q/qa/r/s/sa, se_form_2439/3921/5498 and
+  se_w2g, and void_checkbox from se_1099_da (no trigger or view reads them; not in production - dropped outright). The 25 entities and
+  mappers no longer carry it; a screen that still sends the tick is ignored.
+- "A user should only upload or define the last corrected copy": removed CorrectedStatements (the CORRECTED copy replacing the original
+  from the same payer, advisory STATEMENT_CORRECTED_COPY_REPLACES_ORIGINAL) with its unit test and e2e spec, and Form1095ARules' VOID /
+  corrected-policy rule. Every statement on file counts.
+- The VOID and CORRECTED checkboxes stay on the statement screens until they are removed from the UI.
+- Tests: LowIrsFixesChunk7Test.voidIsNotSaved (1099-SA/Q/QA: void not reloaded, corrected kept); MediumIrsFixesHelpersTest
+  everyForm1095AOnFileIsUsedAsIs; e2e statement-void-not-saved.spec.ts (1099-DIV + 1099-DA VOID not reloaded; two 1099-INTs from one
+  payer, one CORRECTED, both count - line 2b 2,200).
+
 ## 2026-11-21T20:10:00Z
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44973155337 on 3de2e860 - revision ca-ustax-be--0000695 serving 100%

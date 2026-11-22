@@ -1,3 +1,11 @@
+## 2026-11-22T21:05:00Z
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 45051534203 on e18c3efb - revision ca-ustax-be--0000698 serving 100%
+  traffic, image ustax-be:e18c3ef; /q/health/ready UP (V560 applied). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): not redeployed - no UI change since d53fd70, already live at https://www.taxbeans.com
+  (bundle main-D4RMMSLL.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-22T20:00:00Z
 RRB-1099 / RRB-1099-R DUPLICATE is not saved (owner-approved option a; outstanding.md note "RRB duplicate entry doubles 6a").
 - V560 drops se_rrb_1099.duplicate and se_rrb_1099_r.duplicate; entities and mappers no longer carry it (screens keep the printed box).

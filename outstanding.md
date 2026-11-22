@@ -2135,7 +2135,7 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
   **CLOSED 2026-11-20** (checked, D-6a-3 fixed 2026-10-26): a Form SSA-1099 with box 2 blank goes to the person named in box 1
   (PersonNameMatch), with an advisory - not to the Family Head on every return.
 
-- Note: (no id) Medicare premiums never carried from SSA-1099/RRB-1099 box 11 (user must retype); blank year stored "2019"; RRB duplicate entry doubles 6a
+- ~~Note: (no id) Medicare premiums never carried from SSA-1099/RRB-1099 box 11 (user must retype); blank year stored "2019"; RRB duplicate entry doubles 6a~~ **CLOSED 2026-11-22**
   **Partly FIXED 2026-11-20** (owner-approved, option a - added automatically; no field, statement or tax-return form change): Medicare
   premiums withheld from benefits - the SSA-1099 box 3 description lines "Medicare Part B / prescription drug premiums deducted from your
   benefits" (the screen keeps box 3's description as one text, as printed; the separate Part B box was commented out 2026-10-03 and isn't
@@ -2145,7 +2145,10 @@ D-1099-r-4 ≈ the 5b Form 8960 note.
   user types it (box 3/4/5 captions show the typed year). A blank year is taken as the tax year and advisory SSA_1099_YEAR_BLANK asks
   the user to enter it (SsaStatementYear). The printed "Draft as of June 21, 2019" / "(6-2019)" footer is form layout and is kept; the
   owner will later move this screen to the same tax-year pattern as the other forms.
-  Still open: a duplicate RRB-1099 entry doubling line 6a.
+  **Duplicate RRB FIXED 2026-11-22** (owner-approved option a, V560): the DUPLICATE checkbox of Form RRB-1099 / RRB-1099-R is not
+  saved (columns dropped, as VOID in V559) - the user enters each statement once and every saved statement counts. Two statements of
+  the same kind for the same person with exactly the same amounts raise advisory RRB_STATEMENT_ENTERED_TWICE ("Open the Form RRB-1099
+  statement and delete the extra one"; recipient number shown by its last 4 only) - RrbStatementsEnteredTwice. Note CLOSED.
 
 #### CROSS-CUTTING (coordinator)
 

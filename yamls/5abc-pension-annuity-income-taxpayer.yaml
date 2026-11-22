@@ -10,6 +10,7 @@ instructions:
   - Start here only if the taxpayer had pension or annuity distributions for Form 1040 lines 5a/5b/5c.
   - Upload validation is mandatory before entering supplemental details.
   - At least one non-IRA Form 1099-R or Form RRB-1099-R must be uploaded before continue.
+  - The DUPLICATE checkbox of Form RRB-1099-R is not saved (V560); two RRB-1099-Rs with the same amounts for one person raise advisory RRB_STATEMENT_ENTERED_TWICE (owner 2026-11-22).
   - This taxpayer form owns return-level line 5c and Form 4972/Form 5329 gating to avoid spouse conflicts.
   - Self-employment income is out of scope and excluded.
   - "UI renders as a sub-interview wizard; section order below matches wizard screen flow:

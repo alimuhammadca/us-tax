@@ -1,3 +1,12 @@
+## 2026-11-22T20:00:00Z
+RRB-1099 / RRB-1099-R DUPLICATE is not saved (owner-approved option a; outstanding.md note "RRB duplicate entry doubles 6a").
+- V560 drops se_rrb_1099.duplicate and se_rrb_1099_r.duplicate; entities and mappers no longer carry it (screens keep the printed box).
+- RrbStatementsEnteredTwice: two statements of the same kind for the same person (recipient id / claim number) with exactly the same
+  amounts raise advisory RRB_STATEMENT_ENTERED_TWICE (Form 1040 line 6a / 5a would count them twice); nothing is dropped automatically.
+- Tests: RrbStatementsEnteredTwiceTest (3); e2e rrb-duplicate-not-saved.spec.ts (+ rrb-box3, statement-mapper-roundtrip, medicare
+  premiums: 24/24).
+- YAMLs: 6abcd-social-security-benefits-taxpayer/spouse instructions note it.
+
 ## 2026-11-22T19:15:00Z
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 45047012435 on 37bd9cf9 - revision ca-ustax-be--0000697 serving 100%

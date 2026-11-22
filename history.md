@@ -1,3 +1,11 @@
+## 2026-11-21T20:10:00Z
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 44973155337 on 3de2e860 - revision ca-ustax-be--0000695 serving 100%
+  traffic, image ustax-be:3de2e86; /q/health/ready UP (V558 applied). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 44973880184 on bb495c2 - live at https://www.taxbeans.com
+  (bundle main-6C7NOFUD.js, contains tipsPriorYearInflationIncome).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-21T18:40:00Z
 A negative Form 1099-OID box 8 (TIPS deflation) offsets the security's interest; the rest is an ordinary loss (owner-approved,
 option b; outstanding.md note "negative OID box 8 floored"). V558 adds one Interest income field; no statement or tax-return form change.

@@ -1,3 +1,11 @@
+## 2026-11-22T19:15:00Z
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 45047012435 on 37bd9cf9 - revision ca-ustax-be--0000697 serving 100%
+  traffic, image ustax-be:37bd9cf; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 45047015034 on d53fd70 - live at https://www.taxbeans.com
+  (bundle main-D4RMMSLL.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-22T18:30:00Z
 Form SSA-1099 year no longer defaults to "2019" (owner decision; outstanding.md note "blank year stored 2019").
 - UI form-ssa-1099: the year box stays blank until the user types it; a blank year is saved blank (was saved as "2019"); the box 3/4/5

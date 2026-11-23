@@ -1,3 +1,13 @@
+## 2026-11-22T23:30:00Z
+outstanding.md reorganized. All 1,103 entries of the old file were checked against the current code and history.md, then sorted into
+four parts: 1. TODO (45 true outstanding items, grouped: wrong amounts / missing features / forms and previews / tests / docs),
+2. Parked (25 items waiting on the owner or something outside the app), 3. No action (146 decisions, accepted limits, out of scope,
+obsolete), 4. Completed (854, one line each with evidence). Duplicates were merged (clergy line 27b, MFS blank-TIN, refund under $1,
+refund-form OnPush, Form 2210 rate refresh, 2025 Schedule SE template). The old file is kept unchanged as outstanding-history.md;
+every new line points to it with "(hist L<line>)". Stale entries found: "Preserved legacy components (DO NOT DELETE)" (components
+removed V478), D-k1-1041-11b-cp (fixed 2026-11-13), the 1099-R box 4 / RRB-1099-R box 9 note (ReturnStatementOwners), Form 8938
+Parts III/IV and the nonresident-spouse rule.
+
 ## 2026-11-22T23:00:00Z
 1099-MISC box 10 / box 11 are read (owner-approved; outstanding.md note "1099-MISC box 10 attorney proceeds / box 11 fish purchases not read").
 - Box 11 fish purchased for resale -> Schedule C like boxes 5 / 6 (gross-receipts auto-fill, receipts check, no-business advisory;

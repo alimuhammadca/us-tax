@@ -1,3 +1,13 @@
+## 2026-11-23T10:30:00
+Full e2e regression (659 spec files, --workers=1, 6.4 h): 2,509 passed, 2 failed, 0 skipped, 0 flaky; no "Compilation Failed" in the dev log.
+Both failures passed on their own re-run - timing under the long run's load, not wrong amounts:
+- w2-document-extraction.spec.ts "Verify & Save clears extraction banner": the wait for the upload ("the first outlined button doesn't
+  say Extracting") matched before the upload started, leaving 10 s for the Azure read. The three upload tests now wait for the
+  extraction banner (120 s), as the E2E test in the same file has done since 2026-11-13.
+- open-questions-b109-2024-farmer-test.spec.ts: the PUT saved [120000, null] - the second amount missed the model before Save. The
+  type-and-save step now retries (toPass, 60 s) until the PUT carries both amounts.
+Re-run of both specs: 11/11 passed. Commit e2e (us-tax-be) 239c128d.
+
 ## 2026-11-23T02:00:00Z
 EIC investment income: the royalty and passive tiers are floored separately (owner-approved option a; outstanding.md item 1A-3).
 - Pub. 596 Worksheet 1 line 10 (royalties + rental of personal property, less their expenses; if less than zero, enter -0-) and line 13

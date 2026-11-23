@@ -1,3 +1,18 @@
+## 2026-11-23T02:00:00Z
+EIC investment income: the royalty and passive tiers are floored separately (owner-approved option a; outstanding.md item 1A-3).
+- Pub. 596 Worksheet 1 line 10 (royalties + rental of personal property, less their expenses; if less than zero, enter -0-) and line 13
+  (net passive income; if less than zero, enter -0-). The compute floored one combined figure (the Form 8960 passive net, royalties
+  included), so a passive loss hid royalty income (and a royalty loss hid passive income), and Schedule 1 line 8l (rental of personal
+  property) was not counted - a filer over the $11,950 limit could get the EIC.
+- New EicInvestmentIncomeTiers (ThreadLocal, entered/restored with prepare): the royalty net (Schedule E royalty properties + K-1
+  royalties, RentalScheduleEResult.royaltyNet) and the line 8l - 24b net are recorded after the Form 8960 passive net is figured;
+  computeInvestmentIncomeForEic adds max(0, royalties + personal property) + max(0, combined - royalties). No fields; no layout change.
+- Tests: EicInvestmentIncomeTiersTest (4); e2e eic-investment-income-tiers.spec.ts (3: passive loss vs royalties, royalty loss vs
+  passive rental, line 8l) + eic-investment-income-passive-rental.spec.ts: 5/5.
+- Found while testing, added as outstanding.md item 46: the automatic 15% percentage depletion is taken on every royalty when the
+  depletion amount is blank, book / copyright royalties included.
+- lines/27abc.md investment-income section updated.
+
 ## 2026-11-23T01:00:00Z
 outstanding.md item 1A-2 (kiddie-tax child AMT exemption limit, §59(j)) closed as no action (owner). The 2025 Instructions for
 Form 6251 (line 5 Exemption Worksheet) and for Form 8615 (AMT paragraph) give no child limit, so a child's own return correctly uses

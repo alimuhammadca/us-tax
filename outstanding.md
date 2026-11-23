@@ -20,8 +20,6 @@ the remaining items keep their numbers.
 
 ### 1A. Wrong or possibly wrong tax amounts (do these first)
 
-3. **Earned income credit: royalty and passive income floored together.** One combined floor lets a passive loss hide royalty income,
-   so a filer over the investment-income limit can still get the EIC; floor them separately (Pub 596 Worksheet 1). (hist L2982)
 4. **MFS: a statement with a blank recipient TIN goes to the taxpayer's return.** `belongsToPerson` defaults blank-TIN 1099-INT/DIV/B to
    the taxpayer leg, which can inflate interest, dividends, NIIT and QBI there. One MFS attribution fix. (hist L2876, L3016)
 5. **Form 8959: a blank SSN pulls every household W-2.** The Medicare wage/withholding sums take all W-2s when the SSN is blank;
@@ -42,6 +40,10 @@ the remaining items keep their numbers.
 15. **Form 2441 MFS: a blank spouse earned income only advises** and falls back to the filer's own income; make it blocking. (hist L3004)
 16. **A refund under $1 is not withheld** (IRS rule; very low impact). (hist L6611, L6695)
 17. **Territory filers: tips and overtime deductions need a territory-source split** so only U.S.-included amounts qualify. (hist L7609)
+46. **Royalties: 15% percentage depletion is taken automatically on every royalty** when the depletion amount is left blank
+    (`TaxReturnComputeService` ~29133, `ROYALTY_PERCENTAGE_DEPLETION_RATE`) - including book / copyright / patent royalties, which
+    are not depletable (only mines, oil and gas wells, timber and other natural deposits - IRC 611-613). Found 2026-11-23 while
+    testing 1A-3 (a $15,000 book royalty showed $2,250 depletion on Schedule E line 18).
 
 ### 1B. Missing features (not supported today)
 
@@ -519,6 +521,8 @@ One line per finished entry, with the evidence (class, migration, date). Grouped
 
 - 1A-1 AMT: Form 6251 line 10 now adds all of Schedule 2 line 1z - the clean vehicle credit repayments (lines 1b/1c) figured after
   the AMT join line 10 and lower the AMT, line 17 and line 18 (AmtLine10Schedule2; 2026-11-22). (hist L2842)
+- 1A-3 EIC investment income: the royalty tier (royalties + rental of personal property, Schedule 1 line 8l - 24b) and the
+  passive tier are floored at $0 separately per Pub. 596 Worksheet 1 lines 10 / 13 (EicInvestmentIncomeTiers; 2026-11-23). (hist L2982)
 
 
 **Refund and amount owed**

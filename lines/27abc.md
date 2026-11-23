@@ -62,7 +62,9 @@ if earnedIncome <= 0: return null
 
 // Step 3: Investment income gate
 investmentIncome = taxExemptInterest (2a) + taxableInterest (2b)
-                 + ordinaryDividends (3b) + max(0, capitalGainLoss (7a))
+                 + ordinaryDividends (3b) + max(0, capitalGainLoss (7a)) + Form 8814 line 12
+                 + max(0, royalties + rental of personal property (Sch 1 line 8l - line 24b))   // Pub 596 Wks 1 line 10
+                 + max(0, net passive income)                                               // Pub 596 Wks 1 line 13
 if investmentIncome > INVESTMENT_INCOME_CEILING_EIC_2025 (= $11,950): return null
 
 // Step 4: Qualifying children count (using younger-than threshold per Pub 596 Rule 8)
@@ -625,7 +627,12 @@ Investment income for the EIC ceiling test is computed in `computeInvestmentInco
 | Ordinary dividends | line 3b | always |
 | Net capital gain | line 7a | only when positive (losses treated as $0) |
 
-★ **G1 deferred OOS** — Schedule E passive / rental / royalty income is **not** included; Schedule E is out of scope.
+| Form 8814 child's income | Schedule 1 line 8z (Form 8814 line 12) | when positive |
+| Royalties + rental of personal property | Schedule E royalty properties, K-1 royalties, Schedule 1 line 8l less line 24b | Pub. 596 Worksheet 1 line 10 - one tier, floored at $0 |
+| Net passive income | Form 8960 passive net less the royalties above (rental real estate, passive K-1s, Form 4835, ...) | Worksheet 1 line 13 - its own tier, floored at $0 |
+
+(G1 closed: Schedule E is in scope. 2026-11-23, outstanding.md 1A-3: the royalty and passive tiers are floored separately -
+`EicInvestmentIncomeTiers` - so a loss in one doesn't hide income in the other, and line 8l counts.)
 
 Losses in any category are treated as $0, not netted against gains in others.
 

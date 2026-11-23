@@ -5,7 +5,7 @@ sorted into four parts:
 
 | Part | What it holds | Count |
 |---|---|---|
-| [1. TODO](#1-todo--true-outstanding-work) | Real work still to do, true in today's code | **40** |
+| [1. TODO](#1-todo--true-outstanding-work) | Real work still to do, true in today's code | **38** |
 | [2. Parked](#2-parked--waiting-on-the-owner-or-something-outside-the-app) | Deferred by the owner, or waiting on something outside the app (2026 figures, a 2025 PDF, a field sign-off, the H&R Block tester) | 25 items (54 entries) |
 | [3. No action](#3-no-action--decisions-accepted-limits-out-of-scope-obsolete) | Decision records, accepted limits, out of scope by design, obsolete | 147 |
 | [4. Completed](#4-completed) | Already fixed or built | 854 |
@@ -20,12 +20,9 @@ the remaining items keep their numbers.
 
 ### 1A. Wrong or possibly wrong tax amounts (do these first)
 
-7. **Form 8960 line 5b: a nonpassive K-1 §1231 gain is charged NIIT.** Line 5b is typed-override only; back the gain out automatically.
-   (hist L1255)
 8. **SE health insurance / premium tax credit solver ignores K-1-only partners.** The Pub. 974 solver takes SE earnings only from
    Schedule C/F; feed in K-1 SE earnings. (hist L1256)
 9. **Form 8936: no $7,500 ceiling on the new clean-vehicle credit** (the used-vehicle $4,000 cap exists). (hist L2857)
-10. **Form 5695: the "other doors" amount has no $250-per-door cap** (only the $500 total). Cap it or drop the lump field. (hist L2858)
 11. **QBI: the §461(l)-disallowed loss is counted in this year's QBI.** Confirm under Reg. 1.199A-3(b)(1)(iv); if confirmed, leave it
     out of this year's Schedule C QBI. (hist L2872)
 12. **Form 8962: monthly columns E/F are summed unrounded into line 24** - round each month first. (hist L2977)
@@ -126,6 +123,10 @@ Kept so the reasoning isn't lost; nothing to build. Grouped by the old file's se
 - 1A-2 Kiddie-tax child AMT exemption limit (old §59(j)) - not a 2025 rule: the 2025 Instructions for Form 6251 (line 5 Exemption
   Worksheet: $88,100 / $137,000 / $68,500, phase-out above $626,350) and Instructions for Form 8615 (AMT paragraph) give no child limit,
   so a child's own return correctly uses the normal exemption. Closed 2026-11-23 (owner). (hist L2844)
+- 1A-10 Form 5695 "other doors" $250-per-door cap - not a defect: the 2025 Form 5695 line 19 caps only the most expensive door
+  (19c, $250) and the total (19h, $500); line 19e (all other doors, one amount) takes 30% with no per-door cap, as the app does.
+  The result always equals §25C(b)(2)'s $250 per door / $500 total: if the top door is under the $250 cap every other door is too,
+  and if it reaches $250 the $500 total leaves at most $250 for the rest. Closed 2026-11-23 (owner). (hist L2858)
 
 
 **Credits after disallowance (8862)**
@@ -525,6 +526,9 @@ One line per finished entry, with the evidence (class, migration, date). Grouped
 - 1A-6 K-1 participation blank: a 1065 / 1120-S / 1041 K-1 with Part III amounts and no "materially participate" answer is a
   BLOCKING, overrideable K1_<form>_MATERIAL_PARTICIPATION_BLANK; an overridden blank stays nonpassive (K1ParticipationBlank;
   2026-11-23). (hist L3013)
+- 1A-7 Form 8960 line 5b: with nothing typed, line 5b = -(the net section 1231 gains on K-1s answered "materially participated: Yes",
+  1065 box 10 / 1120-S box 9, PTPs and other people's K-1s skipped), capped at Schedule D line 11 and line 7a (Form8960Line5bK1;
+  2026-11-23). Known limit: a trading partnership's gain is backed out too - the help text tells the user to type line 5b. (hist L1255)
 
 
 **Refund and amount owed**

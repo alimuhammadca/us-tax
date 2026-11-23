@@ -1,3 +1,10 @@
+## 2026-11-23T20:30:00
+outstanding.md 1A-10 closed as no action (owner-approved option a): Form 5695 "other doors" has no $250-per-door cap - and needs none.
+The 2025 Form 5695 line 19 caps the most expensive door (19c <= $250) and the total (19h <= $500); line 19e (all other exterior doors,
+one amount) gets 30% with no per-door cap. That always equals §25C(b)(2) ($250 per door, $500 for all doors): a top door under the
+$250 cap means every cheaper door is under it too, and a top door at $250 leaves at most $250 of the $500 for the rest. The app's
+computeDoorCredit (each listed door capped at $250, the lump at 30%, total <= $500) gives the same figure. No code change.
+
 ## 2026-11-23T19:40:00
 outstanding.md 1A-5 and 1A-6 (owner-approved option a for both): be d5f1bc18, ui b4a923f.
 - 1A-5 Form 8959, blank filer SSN: on a return that is not joint, lines 1 (box 5), 14 (RRTA) and 19 (box 6) picked the filer's

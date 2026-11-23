@@ -1,3 +1,30 @@
+## 2026-11-23T23:30:00
+outstanding.md 1A-7, 1A-8, 1A-9, 1A-11 (option b), 1A-12 (all owner-approved option a unless noted) - one commit (be d65933bb, ui 96c8110).
+- 1A-7 Form 8960 line 5b: with nothing typed, line 5b = -(net section 1231 gains on K-1s answered "materially participated: Yes",
+  1065 box 10 / 1120-S box 9; PTPs and other people's K-1s skipped), capped at Schedule D line 11 and line 7a (Form8960Line5bK1;
+  IRC 1411(c)(1)(A)(iii), i8960 line 5b). A typed line 5b wins. UI help on Other tax items explains it and the trading-partnership
+  exception (type line 5b yourself). e2e: active partner 5b -100,000, NIIT 380; passive NIIT 4,180.
+- 1A-8 Pub. 974 solver: reads SeDeductionsResult.earnedIncome (the same Schedule C/F + K-1 SE earnings line 17 used, Form 7206
+  adjusted), so a K-1-only partner with a Marketplace plan is coordinated - e2e: deduction 2,675 / PTC 3,325 (was the full 6,000
+  deduction and the full credit).
+- 1A-9 Form 8936: the new clean vehicle tentative credit is capped at $7,500 per vehicle (IRC 30D(b)) with advisory
+  FORM_8936_NEW_VEHICLE_CREDIT_OVER_7500 (NewCleanVehicleCap). e2e: typed 9,500 -> 7,500; 3,750 unchanged.
+- 1A-11 QBI and section 461(l) (option b): the disallowed excess business loss is added back on the QBI-loss activities pro rata
+  (i8995 p.5) and carried into next year's QBI loss carryforward from last year's Form 172 (QbiExcessBusinessLoss). The narrow Form
+  172 loader did not load excessBusinessLoss461lThisYear - found by the two-year e2e, now loaded. e2e: QBI -313,000 (was -400,000);
+  2025 carryforward 313,000 + 87,000 = 400,000.
+- 1A-12 Form 8962: on the monthly path each month is figured from its printed whole-dollar (a)/(b), and lines 24 / 25 add the printed
+  (e)/(f). The annual path (line 10 Yes) keeps line 11(f) = the 1095-A annual total - the first cut also rounded that per month and
+  Sc00241SqaScenarioTest caught it (4,000 APTC read 3,996); fixed before commit.
+- Also: the local Docker test Postgres died mid-run (395 setup failures, "Unable to clear user data"); recovered by killing the
+  backend JVMs, removing the postgres:16-alpine containers and starting one backend. Editing a UI file during an e2e run made the UI
+  dev server rebuild and refuse connections for a moment - no more UI or backend edits during runs.
+- New item 47 (Form 8995 not produced in a year with no income - a QBI loss carryforward may not chain).
+- Tests: unit NewCleanVehicleCapTest (2), QbiExcessBusinessLossTest (2), SeDeductionsEarnedIncomeTest (1), Form8960Line5bK1Test (4);
+  e2e form8960-line5b-nonpassive-k1-1231 (2), pub974-k1-only-partner-se-health-ptc (1), form8936-new-vehicle-7500-cap (2),
+  qbi-section461l-excess-business-loss (1), qbi-section461l-carry-to-next-year (1), form8962-monthly-whole-dollar-rounding (1).
+  Regression: 217 affected spec files (802 tests) passed, 1 flaky passed on retry; unit suite 6,356 / 0 failed; UI build OK.
+
 ## 2026-11-23T22:00:00
 outstanding.md 1A-16 closed as no action (owner-approved option a): a refund under $1 cannot occur - with whole-dollar rounding line 34
 (roundMoney(line 33 - line 24)) and line 35a (roundMoney(line 34 - line 36)) are $0 or at least $1; the 2025 Form 1040 instructions

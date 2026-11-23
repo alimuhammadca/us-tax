@@ -5,7 +5,7 @@ sorted into four parts:
 
 | Part | What it holds | Count |
 |---|---|---|
-| [1. TODO](#1-todo--true-outstanding-work) | Real work still to do, true in today's code | **38** |
+| [1. TODO](#1-todo--true-outstanding-work) | Real work still to do, true in today's code | **35** |
 | [2. Parked](#2-parked--waiting-on-the-owner-or-something-outside-the-app) | Deferred by the owner, or waiting on something outside the app (2026 figures, a 2025 PDF, a field sign-off, the H&R Block tester) | 25 items (54 entries) |
 | [3. No action](#3-no-action--decisions-accepted-limits-out-of-scope-obsolete) | Decision records, accepted limits, out of scope by design, obsolete | 147 |
 | [4. Completed](#4-completed) | Already fixed or built | 854 |
@@ -20,21 +20,17 @@ the remaining items keep their numbers.
 
 ### 1A. Wrong or possibly wrong tax amounts (do these first)
 
-8. **SE health insurance / premium tax credit solver ignores K-1-only partners.** The Pub. 974 solver takes SE earnings only from
-   Schedule C/F; feed in K-1 SE earnings. (hist L1256)
-9. **Form 8936: no $7,500 ceiling on the new clean-vehicle credit** (the used-vehicle $4,000 cap exists). (hist L2857)
-11. **QBI: the §461(l)-disallowed loss is counted in this year's QBI.** Confirm under Reg. 1.199A-3(b)(1)(iv); if confirmed, leave it
-    out of this year's Schedule C QBI. (hist L2872)
-12. **Form 8962: monthly columns E/F are summed unrounded into line 24** - round each month first. (hist L2977)
 13. **Form 8615: siblings' 28%-rate and §1250 gain are left out of line 7** (the "rare-rare deferral" in `KiddieTaxParentReader`). (hist L5855)
 14. **Percentage depletion: the 65%-of-taxable-income limit and the year-end mineral basis carry are not modelled.** (hist L2490)
 15. **Form 2441 MFS: a blank spouse earned income only advises** and falls back to the filer's own income; make it blocking. (hist L3004)
-16. **A refund under $1 is not withheld** (IRS rule; very low impact). (hist L6611, L6695)
 17. **Territory filers: tips and overtime deductions need a territory-source split** so only U.S.-included amounts qualify. (hist L7609)
 46. **Royalties: 15% percentage depletion is taken automatically on every royalty** when the depletion amount is left blank
     (`TaxReturnComputeService` ~29133, `ROYALTY_PERCENTAGE_DEPLETION_RATE`) - including book / copyright / patent royalties, which
     are not depletable (only mines, oil and gas wells, timber and other natural deposits - IRC 611-613). Found 2026-11-23 while
     testing 1A-3 (a $15,000 book royalty showed $2,250 depletion on Schedule E line 18).
+47. **QBI loss carryforward in a year with no income: no Form 8995 is produced.** Found 2026-11-23 testing 1A-11: 2025 with no
+    income at all (only a 2024 QBI loss carrying in) gave form8995 = null, so the carryforward may not chain to 2026 (§199A(c)(2)).
+    The 2026-07-30 "gap year" fix covers a year with no QBI activity but some income. Verify and fix.
 
 ### 1B. Missing features (not supported today)
 
@@ -127,6 +123,9 @@ Kept so the reasoning isn't lost; nothing to build. Grouped by the old file's se
   (19c, $250) and the total (19h, $500); line 19e (all other doors, one amount) takes 30% with no per-door cap, as the app does.
   The result always equals §25C(b)(2)'s $250 per door / $500 total: if the top door is under the $250 cap every other door is too,
   and if it reaches $250 the $500 total leaves at most $250 for the rest. Closed 2026-11-23 (owner). (hist L2858)
+- 1A-16 Refund under $1 - cannot occur: the app rounds to whole dollars (roundMoney, WHOLE_DOLLAR), so line 34 =
+  roundMoney(line 33 - line 24) and line 35a = roundMoney(line 34 - line 36) is $0 (no refund) or at least $1; the 2025 i1040 states
+  no sub-$1 rule. Closed 2026-11-23 (owner). (hist L6611, L6695)
 
 
 **Credits after disallowance (8862)**
@@ -529,6 +528,15 @@ One line per finished entry, with the evidence (class, migration, date). Grouped
 - 1A-7 Form 8960 line 5b: with nothing typed, line 5b = -(the net section 1231 gains on K-1s answered "materially participated: Yes",
   1065 box 10 / 1120-S box 9, PTPs and other people's K-1s skipped), capped at Schedule D line 11 and line 7a (Form8960Line5bK1;
   2026-11-23). Known limit: a trading partnership's gain is backed out too - the help text tells the user to type line 5b. (hist L1255)
+- 1A-8 Pub. 974 SE health / PTC solver: reads the same earned income as line 17 (Schedule C/F + K-1 SE earnings, Form 7206
+  adjusted; SeDeductionsResult.earnedIncome), so a K-1-only partner with a Marketplace plan is coordinated (2026-11-23). (hist L1256)
+- 1A-9 Form 8936: the new clean vehicle tentative credit is capped at $7,500 per vehicle with advisory
+  FORM_8936_NEW_VEHICLE_CREDIT_OVER_7500 (NewCleanVehicleCap; 2026-11-23). (hist L2857)
+- 1A-11 QBI §461(l) (option b): the disallowed excess business loss is added back on the QBI-loss activities pro rata (i8995 p.5),
+  and carried into next year's QBI loss carryforward from last year's Form 172 (QbiExcessBusinessLoss; the Form 172 loader now
+  loads excessBusinessLoss461lThisYear; 2026-11-23). Approximation: all of it enters next year's QBI. (hist L2872)
+- 1A-12 Form 8962: each month is figured from its printed whole-dollar (a) / (b), and lines 24 / 25 add the printed (e) / (f)
+  (2026-11-23). (hist L2977)
 
 
 **Refund and amount owed**

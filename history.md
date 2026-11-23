@@ -1,3 +1,17 @@
+## 2026-11-23T19:40:00
+outstanding.md 1A-5 and 1A-6 (owner-approved option a for both): be d5f1bc18, ui b4a923f.
+- 1A-5 Form 8959, blank filer SSN: on a return that is not joint, lines 1 (box 5), 14 (RRTA) and 19 (box 6) picked the filer's
+  W-2s by SSN and, with no SSN, summed every W-2 in the list - on MFS that list still holds the spouse's (kept for the
+  community-property split): head 90,000 + spouse 150,000 = 240,000 -> $1,035 of Additional Medicare Tax on the head. W-2s carrying
+  another household person's SSN are now left out; W-2s with no SSN still count (Form8959OwnW2s). Verified: with the fix toggled
+  off the new e2e read line 1 = 240,000.
+- 1A-6 K-1 material participation blank: a 1065 / 1120-S / 1041 K-1 with a non-zero Part III amount and no answer raises a
+  BLOCKING, overrideable K1_1065 / K1_1120S / K1_1041_MATERIAL_PARTICIPATION_BLANK naming the business (K1ParticipationBlank); the
+  K-1 does not report it (§469; i8582). An overridden blank stays nonpassive; another household person's K-1 and text boxes are
+  ignored. UI flag-form-links point each code to its K-1 screen.
+- Tests: Form8959OwnW2sTest (2), K1ParticipationBlankTest (3); e2e form8959-mfs-blank-filer-ssn (1), k1-material-participation-
+  blank-blocks (2); every K-1 / Form 8959 spec (64 files, 264 tests) passed; unit suite 6,347 / 0 failed; UI build OK.
+
 ## 2026-11-23T17:10:00
 outstanding.md 1A-4 (owner-approved option a): MFS statement with no recipient SSN now blocks (be ba793c7b).
 - ReturnStatementOwners.flagBlank: on a married-filing-separately return (either leg) STATEMENT_RECIPIENT_SSN_BLANK is BLOCKING and

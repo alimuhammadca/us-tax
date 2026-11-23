@@ -5,7 +5,7 @@ sorted into four parts:
 
 | Part | What it holds | Count |
 |---|---|---|
-| [1. TODO](#1-todo--true-outstanding-work) | Real work still to do, true in today's code | **42** |
+| [1. TODO](#1-todo--true-outstanding-work) | Real work still to do, true in today's code | **40** |
 | [2. Parked](#2-parked--waiting-on-the-owner-or-something-outside-the-app) | Deferred by the owner, or waiting on something outside the app (2026 figures, a 2025 PDF, a field sign-off, the H&R Block tester) | 25 items (54 entries) |
 | [3. No action](#3-no-action--decisions-accepted-limits-out-of-scope-obsolete) | Decision records, accepted limits, out of scope by design, obsolete | 147 |
 | [4. Completed](#4-completed) | Already fixed or built | 854 |
@@ -20,10 +20,6 @@ the remaining items keep their numbers.
 
 ### 1A. Wrong or possibly wrong tax amounts (do these first)
 
-5. **Form 8959: a blank SSN pulls every household W-2.** The Medicare wage/withholding sums take all W-2s when the SSN is blank;
-   restrict this on MFS. (hist L2887)
-6. **K-1 with the "materially participated" answer blank is treated as nonpassive.** NIIT comes out too low; decide the default or make
-   a blank answer blocking (needs an owner decision). (hist L3013)
 7. **Form 8960 line 5b: a nonpassive K-1 §1231 gain is charged NIIT.** Line 5b is typed-override only; back the gain out automatically.
    (hist L1255)
 8. **SE health insurance / premium tax credit solver ignores K-1-only partners.** The Pub. 974 solver takes SE earnings only from
@@ -524,6 +520,11 @@ One line per finished entry, with the evidence (class, migration, date). Grouped
 - 1A-4 MFS blank recipient SSN: on a married-filing-separately return a one-person statement with no recipient SSN (and no name that
   settles its owner) is now a BLOCKING, overrideable STATEMENT_RECIPIENT_SSN_BLANK; other returns keep the advisory; each statement is
   counted once (ReturnStatementOwners; 2026-11-23). (hist L2876, L3016)
+- 1A-5 Form 8959 blank filer SSN: on a return that is not joint, lines 1 / 14 / 19 leave out W-2s carrying another household
+  person's SSN (the MFS list still holds the spouse's) and still count W-2s with no SSN (Form8959OwnW2s; 2026-11-23). (hist L2887)
+- 1A-6 K-1 participation blank: a 1065 / 1120-S / 1041 K-1 with Part III amounts and no "materially participate" answer is a
+  BLOCKING, overrideable K1_<form>_MATERIAL_PARTICIPATION_BLANK; an overridden blank stays nonpassive (K1ParticipationBlank;
+  2026-11-23). (hist L3013)
 
 
 **Refund and amount owed**

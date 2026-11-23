@@ -1,3 +1,11 @@
+## 2026-11-24T01:00:00
+outstanding.md 1A-15 (owner-approved option a), be d0c84eb5: on a separate return (not considered unmarried) the IRC 129(b)
+dependent-care exclusion is limited to the smaller of both spouses' earned income; with the spouse's earned income blank and no spouse
+W-2 on file it fell back to the filer's own income with an advisory. DEPENDENT_CARE_MFS_SPOUSE_EARNED_INCOME_LIMIT is now blocking
+(overrideable; message says enter 0 if none). The UI already links it to Child and dependent care. The e2e "MFS statutory limit caps
+exclusion at 2500" now types the spouse's income. Tests: DependentCareMfsSpouseEarnedIncomeTest (1); e2e form2441-mfs-spouse-earned-
+income-blocks (2); all 14 dependent-care spec files (89 tests) passed.
+
 ## 2026-11-24T00:30:00
 outstanding.md 46, 47 and 1A-13 (owner-approved option a each): be 6d1acadb, ui 439f423.
 - 46 Royalty kind (V561 pf_rental_property.royalty_kind): only natural deposits are depletable (IRC 611-613) and the automatic 15% is the

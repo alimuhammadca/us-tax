@@ -5,7 +5,7 @@ sorted into four parts:
 
 | Part | What it holds | Count |
 |---|---|---|
-| [1. TODO](#1-todo--true-outstanding-work) | Real work still to do, true in today's code | **32** |
+| [1. TODO](#1-todo--true-outstanding-work) | Real work still to do, true in today's code | **31** |
 | [2. Parked](#2-parked--waiting-on-the-owner-or-something-outside-the-app) | Deferred by the owner, or waiting on something outside the app (2026 figures, a 2025 PDF, a field sign-off, the H&R Block tester) | 25 items (54 entries) |
 | [3. No action](#3-no-action--decisions-accepted-limits-out-of-scope-obsolete) | Decision records, accepted limits, out of scope by design, obsolete | 147 |
 | [4. Completed](#4-completed) | Already fixed or built | 854 |
@@ -21,7 +21,6 @@ the remaining items keep their numbers.
 ### 1A. Wrong or possibly wrong tax amounts (do these first)
 
 14. **Percentage depletion: the 65%-of-taxable-income limit and the year-end mineral basis carry are not modelled.** (hist L2490)
-15. **Form 2441 MFS: a blank spouse earned income only advises** and falls back to the filer's own income; make it blocking. (hist L3004)
 17. **Territory filers: tips and overtime deductions need a territory-source split** so only U.S.-included amounts qualify. (hist L7609)
 
 ### 1B. Missing features (not supported today)
@@ -536,6 +535,8 @@ One line per finished entry, with the evidence (class, migration, date). Grouped
   with ROYALTY_KIND_UNANSWERED (RoyaltyKind; 2026-11-23).
 - 47 Form 8995 in a year with no income: a QBI loss carrying in now makes the form (taxable income before QBI null -> $0), so the
   loss carries on (2026-11-23).
+- 1A-15 Form 2441 MFS: the spouse's earned income left blank with no spouse W-2 now blocks (overrideable)
+  DEPENDENT_CARE_MFS_SPOUSE_EARNED_INCOME_LIMIT; 0 = nothing excluded (2026-11-23). (hist L3004)
 
 
 **Refund and amount owed**

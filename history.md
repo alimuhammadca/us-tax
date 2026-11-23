@@ -1,3 +1,8 @@
+## 2026-11-23T22:00:00
+outstanding.md 1A-16 closed as no action (owner-approved option a): a refund under $1 cannot occur - with whole-dollar rounding line 34
+(roundMoney(line 33 - line 24)) and line 35a (roundMoney(line 34 - line 36)) are $0 or at least $1; the 2025 Form 1040 instructions
+state no sub-$1 refund rule. No code change.
+
 ## 2026-11-23T20:30:00
 outstanding.md 1A-10 closed as no action (owner-approved option a): Form 5695 "other doors" has no $250-per-door cap - and needs none.
 The 2025 Form 5695 line 19 caps the most expensive door (19c <= $250) and the total (19h <= $500); line 19e (all other exterior doors,

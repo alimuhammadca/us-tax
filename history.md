@@ -1,3 +1,13 @@
+## 2026-11-23T00:30:00Z
+AMT: Form 6251 line 10 now includes all of Schedule 2 line 1z (owner-approved option a; outstanding.md item 1A-1).
+- 2025 Form 6251 line 10: "Add Form 1040 ... line 16 (minus any tax from Form 4972), and Schedule 2 (Form 1040), line 1z". Line 10
+  held only line 1a (excess APTC repayment); the clean vehicle credit repayments (Schedule 2 lines 1b / 1c) are figured after the AMT,
+  so a filer with AMT and a repayment paid the repayment and the same dollars again as AMT.
+- New AmtLine10Schedule2.apply (called right after CleanVehicleRules.wireRepayments): adds lines 1b-1y to line 10, refigures line 11,
+  lowers Form 1040 line 17 / Schedule 2 line 2 by the drop and refreshes line 18. No fields added; no form layout change.
+- Tests: AmtLine10Schedule2Test (3); e2e amt-line10-clean-vehicle-repayment.spec.ts (W-2 100,000 + PAB interest 50,000 gives AMT;
+  a $7,500 repayment then gives line 10 + 7,500, AMT 0, line 17 = 7,500). With line17-amt-gaps and clean-vehicle-credit-screen: 14/14.
+
 ## 2026-11-22T23:30:00Z
 outstanding.md reorganized. All 1,103 entries of the old file were checked against the current code and history.md, then sorted into
 four parts: 1. TODO (45 true outstanding items, grouped: wrong amounts / missing features / forms and previews / tests / docs),

@@ -5,13 +5,14 @@ sorted into four parts:
 
 | Part | What it holds | Count |
 |---|---|---|
-| [1. TODO](#1-todo--true-outstanding-work) | Real work still to do, true in today's code | **45** |
+| [1. TODO](#1-todo--true-outstanding-work) | Real work still to do, true in today's code | **44** |
 | [2. Parked](#2-parked--waiting-on-the-owner-or-something-outside-the-app) | Deferred by the owner, or waiting on something outside the app (2026 figures, a 2025 PDF, a field sign-off, the H&R Block tester) | 25 items (54 entries) |
 | [3. No action](#3-no-action--decisions-accepted-limits-out-of-scope-obsolete) | Decision records, accepted limits, out of scope by design, obsolete | 146 |
 | [4. Completed](#4-completed) | Already fixed or built | 854 |
 
 The full original text of every entry is kept unchanged in [outstanding-history.md](outstanding-history.md); `(hist L123)` points
-to its line there. **New items go in Part 1.** When an item is finished, move it to Part 4 as one line with the date and commit.
+to its line there. **New items go in Part 1.** When an item is finished, move it to Part 4 ("Finished since the reorganization") as one line with the date and commit;
+the remaining items keep their numbers.
 
 ---
 
@@ -19,8 +20,6 @@ to its line there. **New items go in Part 1.** When an item is finished, move it
 
 ### 1A. Wrong or possibly wrong tax amounts (do these first)
 
-1. **AMT: Form 6251 line 10 leaves out Schedule 2 recaptures.** Line 10 adds only the premium-tax-credit repayment; the clean-vehicle
-   credit repayments (Schedule 2 lines 1b/1c, now computed) and the other line 1z additions are missing, so AMT can come out too high. (hist L2842)
 2. **AMT: kiddie-tax child exemption limit (§59(j)) not applied.** A child's own return can get the full $88,100 AMT exemption instead of
    earned income + $9,550. (hist L2844)
 3. **Earned income credit: royalty and passive income floored together.** One combined floor lets a passive loss hide royalty income,
@@ -511,6 +510,11 @@ Kept so the reasoning isn't lost; nothing to build. Grouped by the old file's se
 ## 4. Completed
 
 One line per finished entry, with the evidence (class, migration, date). Grouped by the old file's section.
+
+**Finished since the reorganization**
+
+- 1A-1 AMT: Form 6251 line 10 now adds all of Schedule 2 line 1z - the clean vehicle credit repayments (lines 1b/1c) figured after
+  the AMT join line 10 and lower the AMT, line 17 and line 18 (AmtLine10Schedule2; 2026-11-22). (hist L2842)
 
 
 **Refund and amount owed**

@@ -47,6 +47,13 @@ sections:
         required: false
         label: "Type"
         options: ["RENTAL_REAL_ESTATE", "ROYALTY"]
+      - name: royaltyKind
+        type: select
+        required: false
+        label: "What kind of royalty? (2026-11-23, V561, item 46: only oil and gas gets the automatic 15% depletion; book, music,
+          copyright, patent and other royalties are not depletable - IRC 611-613)"
+        options: ["OIL_GAS", "OTHER_MINERAL", "INTELLECTUAL_PROPERTY", "OTHER"]
+        showIf: "propertyType == 'ROYALTY'"
       - name: propertyDescription
         type: text
         required: false
@@ -70,7 +77,7 @@ sections:
         type: number
         required: false
         label: "Of that, lease bonuses and advance royalties (amounts paid whether or not anything is produced)"
-        showIf: "propertyType == 'ROYALTY'"
+        showIf: "propertyType == 'ROYALTY' && royaltyKind in ('OIL_GAS', 'OTHER_MINERAL')"
       - name: advanceRoyalties
         type: number
         required: false

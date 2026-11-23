@@ -1,3 +1,24 @@
+## 2026-11-24T00:30:00
+outstanding.md 46, 47 and 1A-13 (owner-approved option a each): be 6d1acadb, ui 439f423.
+- 46 Royalty kind (V561 pf_rental_property.royalty_kind): only natural deposits are depletable (IRC 611-613) and the automatic 15% is the
+  oil and gas rate (613A(c)). OIL_GAS keeps it; OTHER_MINERAL is typed (ROYALTY_MINERAL_DEPLETION_NOT_FIGURED); INTELLECTUAL_PROPERTY
+  / OTHER get none (a typed amount is left off, ROYALTY_DEPLETION_NOT_ALLOWED); unanswered = none (ROYALTY_KIND_UNANSWERED). Rental
+  screen asks "What kind of royalty?"; the depletion / cost depletion / lease parts show for mineral royalties only (one depletion
+  field with a label by kind - two fields on one key would have been cleared on save by the hidden one). Existing oil-royalty tests
+  marked OIL_GAS; EIC tiers book-royalty pin 2,750 -> 5,000. YAMLs updated.
+- 47 Form 8995 with no income: computeLine13a returned null when taxable income before QBI was null (no AGI at all), so a QBI loss
+  carrying in was dropped; it is now $0 there and the form carries the loss (two-year e2e: 2024 typed 40,000, no income -> -40,000
+  carried; 2025 imports it).
+- 1A-13 Form 8615: siblings' 28%-rate / section 1250 gain on line 7 joins line 9's 28% / 25% columns (Form8615SiblingSlices records
+  each sibling's line 5 split; KiddieTaxParentReader reads it; SiblingKiddieInfo gains the two slices). e2e: child A's line 9 rises by
+  B's line 5 x 13% when B's gain is collectibles (old code: no rise).
+- Backend failed to start after V561 (missing column) - a new migration needs a full restart, not a live reload; restarted.
+- Also fetched the 2025 Form 499R-2/W-2PR (Rev. 05.25, informational, with instructions) from hacienda.pr.gov into
+  docs/IRS-Forms/f499r2w2pr--2025.pdf for 1B-21.
+- Tests: RoyaltyKindTest (2), Form8615SiblingSlicesTest (2), QbiCarryforwardNoIncomeYearTest (1); e2e royalty-kind-depletion (2),
+  form8615-sibling-28-rate-gain (1), qbi-loss-carryforward-no-income-year (1); 99 royalty / rental / kiddie / QBI spec files (391 tests)
+  passed; unit suite 6,361 / 0 failed; UI build OK.
+
 ## 2026-11-23T23:30:00
 outstanding.md 1A-7, 1A-8, 1A-9, 1A-11 (option b), 1A-12 (all owner-approved option a unless noted) - one commit (be d65933bb, ui 96c8110).
 - 1A-7 Form 8960 line 5b: with nothing typed, line 5b = -(net section 1231 gains on K-1s answered "materially participated: Yes",

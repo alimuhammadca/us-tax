@@ -5,7 +5,7 @@ sorted into four parts:
 
 | Part | What it holds | Count |
 |---|---|---|
-| [1. TODO](#1-todo--true-outstanding-work) | Real work still to do, true in today's code | **35** |
+| [1. TODO](#1-todo--true-outstanding-work) | Real work still to do, true in today's code | **32** |
 | [2. Parked](#2-parked--waiting-on-the-owner-or-something-outside-the-app) | Deferred by the owner, or waiting on something outside the app (2026 figures, a 2025 PDF, a field sign-off, the H&R Block tester) | 25 items (54 entries) |
 | [3. No action](#3-no-action--decisions-accepted-limits-out-of-scope-obsolete) | Decision records, accepted limits, out of scope by design, obsolete | 147 |
 | [4. Completed](#4-completed) | Already fixed or built | 854 |
@@ -20,17 +20,9 @@ the remaining items keep their numbers.
 
 ### 1A. Wrong or possibly wrong tax amounts (do these first)
 
-13. **Form 8615: siblings' 28%-rate and §1250 gain are left out of line 7** (the "rare-rare deferral" in `KiddieTaxParentReader`). (hist L5855)
 14. **Percentage depletion: the 65%-of-taxable-income limit and the year-end mineral basis carry are not modelled.** (hist L2490)
 15. **Form 2441 MFS: a blank spouse earned income only advises** and falls back to the filer's own income; make it blocking. (hist L3004)
 17. **Territory filers: tips and overtime deductions need a territory-source split** so only U.S.-included amounts qualify. (hist L7609)
-46. **Royalties: 15% percentage depletion is taken automatically on every royalty** when the depletion amount is left blank
-    (`TaxReturnComputeService` ~29133, `ROYALTY_PERCENTAGE_DEPLETION_RATE`) - including book / copyright / patent royalties, which
-    are not depletable (only mines, oil and gas wells, timber and other natural deposits - IRC 611-613). Found 2026-11-23 while
-    testing 1A-3 (a $15,000 book royalty showed $2,250 depletion on Schedule E line 18).
-47. **QBI loss carryforward in a year with no income: no Form 8995 is produced.** Found 2026-11-23 testing 1A-11: 2025 with no
-    income at all (only a 2024 QBI loss carrying in) gave form8995 = null, so the carryforward may not chain to 2026 (§199A(c)(2)).
-    The 2026-07-30 "gap year" fix covers a year with no QBI activity but some income. Verify and fix.
 
 ### 1B. Missing features (not supported today)
 
@@ -537,6 +529,13 @@ One line per finished entry, with the evidence (class, migration, date). Grouped
   loads excessBusinessLoss461lThisYear; 2026-11-23). Approximation: all of it enters next year's QBI. (hist L2872)
 - 1A-12 Form 8962: each month is figured from its printed whole-dollar (a) / (b), and lines 24 / 25 add the printed (e) / (f)
   (2026-11-23). (hist L2977)
+- 1A-13 Form 8615 line 9: the other children's 28%-rate / section 1250 gain on line 7 is taxed at 28% / 25% (each sibling's line 5
+  split recorded by Form8615SiblingSlices, read by KiddieTaxParentReader; 2026-11-23). (hist L5855)
+- 46 Royalty kind (V561, owner-approved field): automatic 15% percentage depletion for oil and gas only; other minerals typed (advisory);
+  book / music / copyright / patent / other royalties get no depletion (a typed amount is left off, advisory); unanswered = none
+  with ROYALTY_KIND_UNANSWERED (RoyaltyKind; 2026-11-23).
+- 47 Form 8995 in a year with no income: a QBI loss carrying in now makes the form (taxable income before QBI null -> $0), so the
+  loss carries on (2026-11-23).
 
 
 **Refund and amount owed**

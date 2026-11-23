@@ -5,9 +5,9 @@ sorted into four parts:
 
 | Part | What it holds | Count |
 |---|---|---|
-| [1. TODO](#1-todo--true-outstanding-work) | Real work still to do, true in today's code | **44** |
+| [1. TODO](#1-todo--true-outstanding-work) | Real work still to do, true in today's code | **43** |
 | [2. Parked](#2-parked--waiting-on-the-owner-or-something-outside-the-app) | Deferred by the owner, or waiting on something outside the app (2026 figures, a 2025 PDF, a field sign-off, the H&R Block tester) | 25 items (54 entries) |
-| [3. No action](#3-no-action--decisions-accepted-limits-out-of-scope-obsolete) | Decision records, accepted limits, out of scope by design, obsolete | 146 |
+| [3. No action](#3-no-action--decisions-accepted-limits-out-of-scope-obsolete) | Decision records, accepted limits, out of scope by design, obsolete | 147 |
 | [4. Completed](#4-completed) | Already fixed or built | 854 |
 
 The full original text of every entry is kept unchanged in [outstanding-history.md](outstanding-history.md); `(hist L123)` points
@@ -20,8 +20,6 @@ the remaining items keep their numbers.
 
 ### 1A. Wrong or possibly wrong tax amounts (do these first)
 
-2. **AMT: kiddie-tax child exemption limit (§59(j)) not applied.** A child's own return can get the full $88,100 AMT exemption instead of
-   earned income + $9,550. (hist L2844)
 3. **Earned income credit: royalty and passive income floored together.** One combined floor lets a passive loss hide royalty income,
    so a filer over the investment-income limit can still get the EIC; floor them separately (Pub 596 Worksheet 1). (hist L2982)
 4. **MFS: a statement with a blank recipient TIN goes to the taxpayer's return.** `belongsToPerson` defaults blank-TIN 1099-INT/DIV/B to
@@ -126,6 +124,12 @@ the remaining items keep their numbers.
 ## 3. No action — decisions, accepted limits, out of scope, obsolete
 
 Kept so the reasoning isn't lost; nothing to build. Grouped by the old file's section.
+
+**Closed since the reorganization**
+
+- 1A-2 Kiddie-tax child AMT exemption limit (old §59(j)) - not a 2025 rule: the 2025 Instructions for Form 6251 (line 5 Exemption
+  Worksheet: $88,100 / $137,000 / $68,500, phase-out above $626,350) and Instructions for Form 8615 (AMT paragraph) give no child limit,
+  so a child's own return correctly uses the normal exemption. Closed 2026-11-23 (owner). (hist L2844)
 
 
 **Credits after disallowance (8862)**

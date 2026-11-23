@@ -1,3 +1,8 @@
+## 2026-11-23T01:00:00Z
+outstanding.md item 1A-2 (kiddie-tax child AMT exemption limit, §59(j)) closed as no action (owner). The 2025 Instructions for
+Form 6251 (line 5 Exemption Worksheet) and for Form 8615 (AMT paragraph) give no child limit, so a child's own return correctly uses
+the normal $88,100 exemption. Noted in lines/17.md. TODO count 44 -> 43. No code change.
+
 ## 2026-11-23T00:30:00Z
 AMT: Form 6251 line 10 now includes all of Schedule 2 line 1z (owner-approved option a; outstanding.md item 1A-1).
 - 2025 Form 6251 line 10: "Add Form 1040 ... line 16 (minus any tax from Form 4972), and Schedule 2 (Form 1040), line 1z". Line 10

@@ -1,3 +1,13 @@
+## 2026-11-23T12:10:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 45168996814 on 239c128d - revision ca-ustax-be--0000699 serving
+  100% traffic, image ustax-be:239c128; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+  Ships 078a0be3 (box 4 withholding advisories), 0ca39aac (1099-MISC boxes 10/11), 68b3d1b1 (Form 6251 line 10 + Schedule 2 line 1z),
+  41ef3c99 (EIC investment-income tiers).
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 45170515357 on d53fd70 - live at https://www.taxbeans.com
+  (bundle main-D4RMMSLL.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-23T10:30:00
 Full e2e regression (659 spec files, --workers=1, 6.4 h): 2,509 passed, 2 failed, 0 skipped, 0 flaky; no "Compilation Failed" in the dev log.
 Both failures passed on their own re-run - timing under the long run's load, not wrong amounts:

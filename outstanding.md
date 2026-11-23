@@ -5,7 +5,7 @@ sorted into four parts:
 
 | Part | What it holds | Count |
 |---|---|---|
-| [1. TODO](#1-todo--true-outstanding-work) | Real work still to do, true in today's code | **43** |
+| [1. TODO](#1-todo--true-outstanding-work) | Real work still to do, true in today's code | **42** |
 | [2. Parked](#2-parked--waiting-on-the-owner-or-something-outside-the-app) | Deferred by the owner, or waiting on something outside the app (2026 figures, a 2025 PDF, a field sign-off, the H&R Block tester) | 25 items (54 entries) |
 | [3. No action](#3-no-action--decisions-accepted-limits-out-of-scope-obsolete) | Decision records, accepted limits, out of scope by design, obsolete | 147 |
 | [4. Completed](#4-completed) | Already fixed or built | 854 |
@@ -20,8 +20,6 @@ the remaining items keep their numbers.
 
 ### 1A. Wrong or possibly wrong tax amounts (do these first)
 
-4. **MFS: a statement with a blank recipient TIN goes to the taxpayer's return.** `belongsToPerson` defaults blank-TIN 1099-INT/DIV/B to
-   the taxpayer leg, which can inflate interest, dividends, NIIT and QBI there. One MFS attribution fix. (hist L2876, L3016)
 5. **Form 8959: a blank SSN pulls every household W-2.** The Medicare wage/withholding sums take all W-2s when the SSN is blank;
    restrict this on MFS. (hist L2887)
 6. **K-1 with the "materially participated" answer blank is treated as nonpassive.** NIIT comes out too low; decide the default or make
@@ -523,6 +521,9 @@ One line per finished entry, with the evidence (class, migration, date). Grouped
   the AMT join line 10 and lower the AMT, line 17 and line 18 (AmtLine10Schedule2; 2026-11-22). (hist L2842)
 - 1A-3 EIC investment income: the royalty tier (royalties + rental of personal property, Schedule 1 line 8l - 24b) and the
   passive tier are floored at $0 separately per Pub. 596 Worksheet 1 lines 10 / 13 (EicInvestmentIncomeTiers; 2026-11-23). (hist L2982)
+- 1A-4 MFS blank recipient SSN: on a married-filing-separately return a one-person statement with no recipient SSN (and no name that
+  settles its owner) is now a BLOCKING, overrideable STATEMENT_RECIPIENT_SSN_BLANK; other returns keep the advisory; each statement is
+  counted once (ReturnStatementOwners; 2026-11-23). (hist L2876, L3016)
 
 
 **Refund and amount owed**

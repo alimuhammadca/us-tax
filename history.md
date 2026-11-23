@@ -1,3 +1,12 @@
+## 2026-11-23T17:10:00
+outstanding.md 1A-4 (owner-approved option a): MFS statement with no recipient SSN now blocks (be ba793c7b).
+- ReturnStatementOwners.flagBlank: on a married-filing-separately return (either leg) STATEMENT_RECIPIENT_SSN_BLANK is BLOCKING and
+  overrideable - Pub. 17 (2025) p.24, separate returns report only each spouse's own income, and a blank statement sits on the Family
+  Head's return by default. Single / HOH / QSS / dependent returns keep the advisory; a joint return has no flag (both spouses own it).
+- Each statement is counted once (by entryId): one compute filters a form's list several times, so one 1099-INT read "1099-INT x3".
+- Tests: ReturnStatementOwnersBlankFlagTest (3); e2e mfs-blank-recipient-ssn-blocks.spec.ts (2/2); all 128 MFS-related spec files
+  (906 tests) pass - 5 that failed on a test-session sign-in error at the end of the run passed on re-run (7/7).
+
 ## 2026-11-23T12:10:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 45168996814 on 239c128d - revision ca-ustax-be--0000699 serving

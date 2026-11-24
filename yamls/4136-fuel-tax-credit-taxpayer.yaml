@@ -3,7 +3,10 @@
 # On a joint return this copy holds the return's claim (the spouse copy only points here); filing separately each spouse has their
 # own (fuel-tax-credit-spouse, renamed by MfsFormScoper). Compute: Form4136Compute (rates and brackets from the 2025 form; the type
 # of use codes each line allows from the 2025 instructions). Lines 5, 11 and 14 added 2026-11-24 (1B-19, owner-approved option a,
-# no new column - more rows); lines 6-8, 13, 15, 16, the bus rate (type 5) on lines 11 / 14 and Schedule A (Form 4136) are not asked.
+# no new column - more rows); lines 6-8, 13, 15, 16 and the bus rate (type 5) on lines 11 / 14 are not asked. Schedule A (Form 4136) 2026-11-25
+# (1B-19 Stage B, owner-approved, V571): with line B over 1 an activity selector on the screen; the first activity is this form's own
+# fields and lines, the others are otherActivities (pf_fuel_tax_credit.other_activities_json); each gets its own Schedule A and Form
+# 4136 is their total, Part I lines C-F from the activity with the most gallons.
 name: fuel-tax-credit-taxpayer
 title: Fuel tax credit (Form 4136)
 multiplicity: single
@@ -22,7 +25,7 @@ sections:
     multiplicity: single
     showIf: hasQualifyingBusiness == true
     fields:
-      - { name: businessActivitiesCount, type: integer, required: true, label: "Number of qualifying business activities (line B; more than 1 needs Schedule A (Form 4136) - blocks)" }
+      - { name: businessActivitiesCount, type: integer, required: true, label: "Number of qualifying business activities (line B; more than 1 - each activity entered on its own, a Schedule A (Form 4136) each)" }
       - { name: businessName, type: string, required: false, label: "Business name (line C)" }
       - { name: businessEin, type: ein, required: false, label: "EIN (line D) - digits only" }
       - { name: principalBusinessCode, type: string, required: true, label: "Principal business activity code (line E, six digits)" }
@@ -47,6 +50,21 @@ sections:
       - { name: typeOfUse, type: integer, required: false, label: "Type of use, where the form leaves it blank (1c: 4,5,7,11,13,14,15; 2b: 1,2,9,10,11,13,14,15; 3a/4a: 2,6,7,8,11,13,14,15; 4e/4f: 2; 5c/5d: 1,9,10,11,13,15,16; 11: 1,2,4,6,7,11,13,14,15; 14a: 1,2,6,7,8,11,13,14,15)" }
       - { name: gallons, type: decimal, required: true, label: "Qualified gallons (column (c))" }
       - { name: fuelCost, type: amount, required: true, label: "Actual fuel cost from your records (column (d))" }
+  - name: otherActivities
+    title: The second and later business activities - Schedule A (Form 4136) each (V571, pf_fuel_tax_credit.other_activities_json)
+    multiplicity: multiple
+    showIf: businessActivitiesCount > 1
+    note: Entered through the activity selector (Activity 1 = the fields above); at most line B less one are read.
+    fields:
+      - { name: businessName, type: string, required: false, label: "Business name (Schedule A)" }
+      - { name: businessEin, type: string, required: false, label: "EIN (Schedule A)" }
+      - { name: principalBusinessCode, type: string, required: true, label: "Principal business activity code (Schedule A)" }
+      - { name: equipmentMake, type: string, required: true, label: "Equipment that used most of the fuel: make" }
+      - { name: equipmentModel, type: string, required: true, label: "Model" }
+      - { name: equipmentType, type: string, required: true, label: "Type of equipment" }
+      - { name: dieselDyeException, type: boolean, required: false, label: "Did any of the diesel fuel contain visible evidence of dye? (line 3 box)" }
+      - { name: keroseneDyeException, type: boolean, required: false, label: "Did any of the kerosene contain visible evidence of dye? (line 4 box)" }
+      - { name: lines, type: list, required: true, label: "The activity's Part II lines - same shape as lines below" }
   - name: computedOutputs
     readOnly: true
     computed: true

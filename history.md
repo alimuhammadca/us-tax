@@ -1,3 +1,19 @@
+## 2026-11-25T11:00:00
+1B-19 Stage B (owner: "go ahead with stage B"): Schedule A (Form 4136), one per business activity (V571).
+- Instructions for Form 4136 (2025): "complete and file a separate Schedule A (Form 4136) for each EIN. Combine the totals from all
+  Schedule(s) A (Form 4136) on Form 4136, Part II and enter information about the business activity ... generating the most
+  qualifying fuel usage on Form 4136, Part I, lines (C) through (F)."
+- Fuel tax credit screen: with line B over 1 an activity selector - the business, equipment, dye boxes and fuel lines swap to the
+  chosen activity; each activity's and the total line 17 shown. The first activity stays in the form's own fields;
+  the others are otherActivities (pf_fuel_tax_credit.other_activities_json, V571; FuelTaxCreditMapper.otherActivities).
+- Form4136Compute: each activity figured on its own (its Schedule A, each (e) rounded on its own); Form 4136 Part II = (c), (d), (e)
+  added, the type of use shown only where every activity agrees; Part I lines C-F from the activity with the most gallons; the dye
+  boxes when any activity has them; the checks per activity, named. FUEL_TAX_CREDIT_SCHEDULE_A_NOT_SUPPORTED replaced by
+  FUEL_TAX_CREDIT_SCHEDULE_A_ACTIVITY_MISSING (line B more than the activities entered). AttachedForms.form4136saList, labelled by
+  business name; the preview's selector picks the copy.
+- Tests: Form4136ComputeTest.twoActivitiesTwoSchedulesA; e2e fuel-tax-credit-schedule-a (2) + fuel-tax-credit-screen + the preview
+  (5 passed); unit 6,403 / 0; UI build OK.
+
 ## 2026-11-25T09:00:00
 1B-19 (owner: work on it - adding Schedule A (Form 4136) as a new tax-return form) - Stage A: Schedule A (Form 4136) (December 2025),
 Business Activity Report for Credit for Federal Tax Paid on Fuels, as a blank preview, one copy per business activity with a selector.

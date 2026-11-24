@@ -1,3 +1,13 @@
+## 2026-11-24T10:20:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 45421152836 on 0e82a60f - revision ca-ustax-be--0000700 serving 100%
+  traffic, image ustax-be:0e82a60; /q/health/ready UP (V561-V565 applied). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+  The image build (ACR run cjp1) took about 6 minutes; the two earlier attempts today hung at Maven dependency:go-offline and were cancelled.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 45421159090 on ed82982 - live at https://www.taxbeans.com
+  (bundle main-YNKLXPNI.js).
+- Ships 1B-24, 1B-27, 1C-28 (line 27b clergy) and Form 8881 (1B-18, Stages A-B).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-24T17:00:00
 Form 8881 (Rev. December 2025) Stage B - outstanding.md 1B-18, the first own-business credit form (owner: "go ahead with stage B";
 form-8881-plan.md, V565). The credits a filer's own Schedule C / F business earns for its retirement plan now reach Form 3800 and

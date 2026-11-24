@@ -263,3 +263,14 @@ sections:
         required: false
         readOnly: true
         label: Line 30 — Total Form 4972 tax (line 7 + line 29) — pending Form 1040 line 16
+
+# V568 (2026-11-24, outstanding.md 1B-25, owner-approved option a): a beneficiary of more than one participant - "File a separate Form
+# 4972 for each participant's distribution" (Instructions for Form 4972). Each entry holds the same keys as above (unprefixed, also on
+# the spouse copy's list) plus participantName; each is its own Form 4972 (Form4972Participants), the taxes added on Form 1040 line 16
+# box 2, a Form 1099-R chosen for two participants blocks. pf_lump_sum_distribution.other_participants_json.
+otherParticipants:
+  multiplicity: multiple
+  showIf: electsForm4972 == true
+  fields:
+    - { name: participantName, type: string, required: false, label: "Participant's name" }
+    - { name: "(the questions above)", type: sameAs, label: "selectedStatementId / selectedStatementIds, Part I lines 1-5b, Parts II and III, death benefit, estate tax, NUA" }

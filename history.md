@@ -1,3 +1,20 @@
+## 2026-11-25T02:00:00
+outstanding.md 1B-25 (owner-approved option a, "as long as you are not adding or deleting fields for a statement or tax return form",
+V568): Form 4972 for a beneficiary of more than one participant. Instructions for Form 4972 (2025): "You can also make an election as
+the beneficiary of more than one qualifying person ... File a separate Form 4972 for each participant's distribution." Only one
+election per person was possible, so a second participant's 1099-R was pooled into the same Form 4972 or left on lines 5a / 5b.
+- Form4972Participants: each other participant's distribution (otherParticipants - the screen's keys plus participantName;
+  pf_lump_sum_distribution.other_participants_json, V568) is figured on its own Form 4972 by the same calculation
+  (computeForm4972); the taxes join Form 1040 line 16 box 2, the amounts leave lines 5a / 5b like the first one's, a Form 1099-R chosen
+  for two participants blocks (FORM4972_STATEMENT_FOR_TWO_PARTICIPANTS), and the first copy's "other lump sum not selected" note leaves
+  out the other participants' 1099-Rs. The copies are kept with the return (AttachedForms.form4972OtherList - each the whole Form 4972
+  view, with its header).
+- Lump-sum distributions screen: "Each participant's distribution" - a participant switcher over the same questions, Add / Remove, the
+  participant's name; a Form 1099-R used for one participant isn't offered for another. Form 4972 preview: a copy selector (First /
+  each participant), the same layout. No form or statement field changed. Not done: Form 1116 category g reads the first copies only.
+- Tests: Form4972ParticipantsTest (3); e2e form4972-more-than-one-participant (2) with the Form 4972 / lump-sum specs (25 passed); unit
+  6,393 / 0; UI build OK.
+
 ## 2026-11-25T00:30:00
 outstanding.md 1B-23 (owner-approved, "as long as you are not adding or deleting fields for a statement or tax return form", V567): Form
 8396 with more than one mortgage credit certificate in a year (a new main home after a move, a second certified loan).

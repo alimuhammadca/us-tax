@@ -1,3 +1,13 @@
+## 2026-11-25T22:00:00
+1C-29 Stage B (owner: "go ahead with stage B"): Schedule EIC (2025) filled - no new input fields.
+- ScheduleEicCompute: produced when Form 1040 line 27a is more than zero and the return has a qualifying child (Form 1040
+  instructions: "complete and attach Schedule EIC, even if that child doesn't have a valid SSN"). The children the EIC counted
+  (countEicQualifyingChildren now hands them over), the first three; with none that has a valid SSN (the self-only EIC), Child 1 of
+  the children meeting the conditions, line 2 its ITIN / ATIN or blank (Schedule EIC page 2).
+- Lines: 1 name, 2 SSN, 3 year (a digit per box), 4a / 4b skipped when born after 2006 and younger than you (or your spouse on a
+  joint return), 4a Yes goes to line 5, 4b Yes / No, 5 relationship, 6 months (at most 12); header name and SSN as on the other forms.
+- Tests: ScheduleEicTest (3); e2e tax-return-schedule-eic-preview (2) + EIC specs (8 passed); unit 6,411 / 0.
+
 ## 2026-11-25T21:00:00
 1C-29 (owner: "go ahead with option (a)") - Stage A: Schedule EIC (Form 1040) (2025), Earned Income Credit Qualifying Child Information,
 as a new tax-return form - blank preview.

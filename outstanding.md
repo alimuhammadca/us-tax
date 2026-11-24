@@ -38,9 +38,8 @@ the remaining items keep their numbers.
 
 ### 1C. Tax-return forms and previews
 
-29. **Schedule EIC is not produced** for an EIC claim with qualifying children (no model, preview or semantic asset). (hist L5980)
-    **2026-11-25:** owner-approved option (a). Stage A done (2025 PDF, field map, blank preview); Stage B (fill from the EIC children)
-    after the owner's visual review.
+29. **Schedule EIC** - **DONE 2026-11-25** (owner-approved option a): the 2025 schedule produced from the EIC's qualifying children
+    (ScheduleEicCompute; AttachedForms.scheduleEicList), the self-only EIC's Child 1 without a valid SSN. (hist L5980)
 30. **Form 8960 preview is blank** - the form is computed but the preview passes no values. (hist L3272)
 31. **No Form 4562 in a year with only a §179 carryover** and no new property. (hist L2441)
 32. **Form 8962 line 4 a/b/c poverty-table box is not ticked** (only the amount is filled). (hist L2970)

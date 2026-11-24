@@ -1,3 +1,15 @@
+## 2026-11-26T00:00:00
+1C-31 (owner: "go ahead"): Form 4562 in a year with only a section 179 carryover and no property.
+- 2025 Instructions for Form 4562: file it when claiming "a section 179 deduction for the current year or a section 179 carryover
+  from a prior year". The carryover was already deducted (on the first business, else the first farm) but Form4562Builder built a form
+  only for an activity with property, amortization or a first-year home office - and skipped an all-zero activity before the
+  carryover was added.
+- computeScheduleC records the carry-holder business (Form4562Builder.CARRY_ACTIVITY); the builder adds that business's form when no
+  business or farm form exists, and keeps the form that shows line 10 even when its property depreciates to nothing. Part I lines
+  1-11, 12, 13 and line 22 as before. No business or farm: nothing is claimed, the carryover carries whole, no form (unchanged).
+- Tests: Form4562CarryoverOnlyTest (3); e2e V346 now checks the form (75,000 / 60,000 / 60,000 / 15,000 / 60,000) + Form 4562 /
+  section 179 specs (11 passed); unit 6,415 / 0.
+
 ## 2026-11-25T23:00:00
 1C-30 (owner: "go ahead with option (a)"): the Form 8960 preview filled from the computed form - values only, no layout change.
 - Form8960Fields: lines 1-17 into the preview's boxes (f8960_field_map_semantic.csv; the auto-named line 12 and 17 boxes matched by

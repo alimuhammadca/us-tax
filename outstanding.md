@@ -38,7 +38,6 @@ the remaining items keep their numbers.
 
 ### 1C. Tax-return forms and previews
 
-28. **Form 1040 line 27b (clergy filing Schedule SE) is never ticked** - hard-coded false in compute and in the 1040 preview. (hist L3086, L5979)
 29. **Schedule EIC is not produced** for an EIC claim with qualifying children (no model, preview or semantic asset). (hist L5980)
 30. **Form 8960 preview is blank** - the form is computed but the preview passes no values. (hist L3272)
 31. **No Form 4562 in a year with only a §179 carryover** and no new property. (hist L2441)
@@ -499,6 +498,8 @@ One line per finished entry, with the evidence (class, migration, date). Grouped
 
 **Finished since the reorganization**
 
+- 1C-28 Form 1040 line 27b is ticked for clergy filing Schedule SE whose line 2 includes ministerial W-2 wages or a housing allowance
+  over the limit (both also on line 1z); not under an approved Form 4361 (ClergyLine27b, V564; 2026-11-24). (hist L3086, L5979)
 - 1B-24 Form 8859: when last year was a joint return and this year is married filing separately, last year's joint line 4 is no longer
   imported onto one return (the instructions give no split); advisory FORM_8859_JOINT_CARRYFORWARD_SPLIT on both returns asks each
   spouse to enter their own share (Form8859Rules.bridged / flag; 2026-11-24). (hist L6237)

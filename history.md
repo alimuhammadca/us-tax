@@ -1,3 +1,16 @@
+## 2026-11-24T12:30:00
+outstanding.md 1C-28 (owner-approved option a): Form 1040 line 27b "Clergy filing Schedule SE" was hard-coded unchecked in compute and
+the preview. 2025 Instructions for Form 1040, line 27b: check it if you are a minister, a member of a religious order without a vow of
+poverty or a Christian Science practitioner, and filing Schedule SE whose line 2 includes an amount also on line 1z.
+- ClergyLine27b.applies: called for each person whose Schedule SE is filed - isClergy, a ministerial base on line 2 (zero under Form
+  4361), and ministerial W-2 wages or the housing allowance over the limit (line 1h) in it. Either spouse on a joint return.
+- Payments.clergyFilingScheduleSe, persisted as out_form_1040.pay_clergy_schedule_se_27b (V564, an output column - no new input field);
+  the 1040 preview ticks line27b_clergy_schedule_se from it.
+- lines/27abc.md section 4 corrected against the instructions: the test is Schedule SE line 2 (not 4c) and clergy only - church
+  employees are handled under "Church employees" and do not check 27b.
+- Tests: ClergyLine27bTest (5); e2e form1040-line27b-clergy (2: checked with ministerial wages; not checked under Form 4361) plus the
+  clergy / SE / preview specs (13 passed); unit 6,372 / 0; UI build OK.
+
 ## 2026-11-24T09:45:00
 outstanding.md 1B-24 and 1B-27 (owner-approved option a each), and the full e2e regression.
 - 1B-24 Form 8859: a joint carryforward from last year (prior Form 1040 filed jointly, read from the persisted Form 1040 because

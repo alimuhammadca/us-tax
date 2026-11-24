@@ -9,19 +9,19 @@
 | Line | Form 1040 label | Type | Notes |
 |---|---|---|---|
 | **27a** | Earned income credit (EIC) | Dollar amount | Refundable credit; 1st addend of line 32 → line 33 |
-| **27b** | Clergy filing Schedule SE | **Checkbox** | Always **unchecked** in current scope (SE is out of scope) |
+| **27b** | Clergy filing Schedule SE | **Checkbox** | Checked when clergy file Schedule SE with a line 2 amount also on line 1z (1C-28) |
 | **27c** | If you do not want to claim the EIC, check here | **Checkbox** | Auto-derived from EIC state (G12 — not yet wired in frontend) |
 
 **Important 2025 structural note**: Lines 27b and 27c are **checkboxes only** — they carry no dollar amounts. They are different from earlier tax years where similar lines sometimes carried amounts.
 
 - Line 27a flows to **line 32** (refundable credits subtotal), and line 32 flows into **line 33** (total payments).
-- Line 27b applies only when the taxpayer is a minister / clergy / church-employee filing Schedule SE — always **unchecked** in current app scope (SE is out of scope).
+- Line 27b applies only to clergy filing Schedule SE whose line 2 includes an amount also on line 1z (section 4; computed since 2026-11-24).
 - Line 27c is checked when EIC is not being claimed (user opt-out or disqualification); if checked, line 27a = 0.
 
 ### Practical rule
 
 ```text
-line27b = false   # always — Schedule SE is out of current scope
+line27b = ClergyLine27b (section 4)
 
 if taxpayer_disqualified_for_EIC or taxpayer_declines_EIC:
     line27c = true
@@ -175,33 +175,31 @@ The phaseout start threshold is higher for MFJ in every category. All other fili
 
 ### What it is
 
-Line 27b is a **checkbox** — not a dollar amount. Check it when **all three** of the following are true (the first is satisfied by EITHER category):
+Line 27b is a **checkbox** — not a dollar amount. 2025 Instructions for Form 1040, line 27b: "Check the box on line 27b if you are
+(1) a minister, member of a religious order who has not taken a vow of poverty, or a Christian Science practitioner; and (2) filing
+Schedule SE and the amount on line 2 of that schedule includes an amount that was also reported on Form 1040 or 1040-SR, line 1z."
 
-1. The taxpayer is either:
-   - **Category A — Member of clergy:** a minister, a member of a religious order who has not taken a vow of poverty, or a Christian Science practitioner, **OR**
-   - **Category B — Church employee income:** a lay employee of a church or qualified church-controlled organization that has elected exemption from Social Security and Medicare taxes under IRC §3121(w).
-2. Filing Schedule SE, **and**
-3. The amount on Schedule SE line 4c includes an amount also reported on Form 1040 line 1z.
-
-The on-form short label is just "Clergy filing Schedule SE." The full 2025 instructions add the church-employee path (Category B); both categories produce the same line-1z-vs-Schedule-SE-line-4c overlap, which is what the checkbox signals. **Updated 2026-06-11** — earlier versions of this section only listed Category A.
+**Corrected 2026-11-24 (1C-28) against the instructions' own text:** the test is Schedule SE **line 2** (not line 4c), and it is for
+clergy only. Church employees (IRC 3121(w)) are handled separately under "Church employees" (line 1a less Schedule SE line 5a, answer
+"Yes" to Step 5 question 2) and do **not** check line 27b. The 2026-06-11 "Category B" addition was wrong and is withdrawn.
 
 ### Why it exists
 
-The checkbox tells the EIC computation that special clergy / church-employee earned-income rules apply so that income is not double-counted in the EIC earned-income worksheet.
+It signals that the clergy earned-income rule applies (instructions, "Clergy"): the line 1z amount also on Schedule SE line 2 is
+subtracted from line 1z in the EIC worksheet and counted through Worksheet B instead, so it is not counted twice.
 
-### In current app scope
-
-Schedule SE / self-employment is **out of scope**. Line 27b is always **unchecked**:
+### Implementation (1C-28, 2026-11-24, owner-approved option a; V564)
 
 ```text
-Form1040.line27b = false   // always, until Schedule SE support is added
+Form1040.line27b = any person whose Schedule SE is filed, with
+                   isClergy (se-tax-options) and Schedule SE line 2's ministerial base > 0 (zero under an approved Form 4361),
+                   and that base includes an amount also on line 1z: ministerial W-2 wages (box 1) or the housing
+                   allowance over the limit (line 1h). The excluded housing allowance and a ministerial Schedule C are not on line 1z.
 ```
 
-Implementation: there is no field, no helper, and no PDF-fill mapping. The only reference in the codebase is the inline comment at `TaxReturnComputeService.java:27223`:
-
-```java
-// 27b (clergy SE checkbox) = always false in current scope (SE out of scope).
-```
+`ClergyLine27b.applies(...)`, called from the Schedule SE loop (`ScheduleSEResult.clergyLine27b`, either spouse on a joint return);
+`Payments.clergyFilingScheduleSe` (Boolean, null = unchecked), persisted as `out_form_1040.pay_clergy_schedule_se_27b` (V564) so the
+preview (which reads the persisted return) ticks the box. Tests: `ClergyLine27bTest`; e2e `form1040-line27b-clergy`.
 
 The AcroForm field is `line27b_clergy_schedule_se` (semantic name). **Field rename history**: from 2025 form release until 2026-06-11, the project's PDF semantic field map mislabeled this checkbox as `line27a_from_schedule_eic` — that name was a misreading of the printed form's left-side "attach Sch. EIC." instruction text and is no longer used anywhere in the codebase. See `XLS/Computations/27b.md §13` and `XLS/Computations/36.xlsx` for the rename closure trail.
 
@@ -645,11 +643,11 @@ Losses in any category are treated as $0, not netted against gains in others.
 private BigDecimal earnedIncomeCredit;               // line 27a
 ```
 
-> **Do NOT add** `nontaxableCombatPayElection` or `priorYearEarnedIncomeElection` as separate `Payments` fields. In 2025, 27b is a checkbox (always false in current scope), the prior year election has expired, and the nontaxable combat pay election is the single source of truth at Form 1040 line 1i.
+> **Do NOT add** `nontaxableCombatPayElection` or `priorYearEarnedIncomeElection` as separate `Payments` fields. In 2025, 27b is a checkbox (computed, section 4), the prior year election has expired, and the nontaxable combat pay election is the single source of truth at Form 1040 line 1i.
 
 Lines 27b and 27c are **not stored** on `Payments` or any output model:
 
-- `27b` is derived as the constant `false` at PDF-fill time;
+- `27b` is stored since 2026-11-24 as `Payments.clergyFilingScheduleSe` (V564; section 4);
 - `27c` is intended to be derived as `payments.earnedIncomeCredit == null` at PDF-fill time (G12 OPEN).
 
 Schedule EIC qualifying children are counted inline and the count is used for the table lookup only; no `ScheduleEIC` model is currently produced (G10 deferred OOS).
@@ -735,7 +733,6 @@ EIC claims (and ACTC claims) on returns filed before February 15 are subject to 
 | Item | Reason |
 |---|---|
 | Self-employment net earnings (Schedule C/F/SE) | SE computation not yet implemented (G11) |
-| Line 27b clergy checkbox (checking it) | Schedule SE is out of scope (G9) |
 | Schedule EIC PDF attachment | Qualifying child count is used inline; printable Schedule EIC PDF not generated (G10) |
 | Schedule E passive/rental/royalty in investment income test | Schedule E is out of scope (G1) |
 | Full Form 8862 Part II processing | Only the gate is in scope |

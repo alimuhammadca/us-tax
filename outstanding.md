@@ -32,7 +32,10 @@ the remaining items keep their numbers.
     activity selector on the Fuel tax credit screen, a Schedule A (Form 4136) per activity, Form 4136 their total. Still not prepared:
     lines 6-8, 13, 15, 16 (registered vendors, card issuers, blenders, exporters) and the bus rate (type of use 5) on lines 11 and 14 -
     its rate goes in column (b), whose box on the form is a hidden 1-point field. (hist L47)
-21. **Puerto Rico Form 499R-2/W-2PR statement.** No statement type exists, so Puerto Rico wages can only be typed. (hist L691)
+21. **Puerto Rico Form 499R-2/W-2PR statement.** **2026-11-25 Stage A done** (box list owner-approved; V572 se_w2_pr, W2PrMapper,
+    form-w-2-pr screen laid out as Hacienda's 2025 copy, Rev. 05.25 - saves and reloads). Waiting for the owner's visual review and the
+    wage-formula decision; Stage B = compute (line 1a / the Puerto Rico exclusion, box 13 to Form 1116, boxes 20-26 like a W-2).
+    Not done: upload extraction (no field-mappings.json entry - Azure has no 499R-2 model). (hist L691)
 
 ### 1C. Tax-return forms and previews
 

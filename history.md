@@ -1,3 +1,15 @@
+## 2026-11-25T13:00:00
+1B-21 Stage A (owner: "go ahead with ... the box list"): Form 499R-2/W-2PR, Puerto Rico Withholding Statement (Comprobante de
+Retencion), as a statement type (w-2-pr) - storage and screen; compute after the owner's review.
+- Source: Hacienda's 2025 informational copy (comprobante_de_retencion_2025_rev._05.25_informativo.pdf; the 2026 copy, Rev. 05.26,
+  has the same boxes). The printed form also has an Employer's E-mail box, not on the approved list - added, flagged for the review.
+- V572 se_w2_pr (47 columns: employee, employer, boxes 3-26, payment types A-G, exempt salaries 16-18 code + amount, dates as
+  YYYY-MM-DD; amounts only, no notes), SeW2Pr, W2PrMapper; StatementFormCatalog, StatementSsnRules, ReturnStatementOwners,
+  PersonNameMatch, UserDataBulkDelete.
+- UI form-w-2-pr: each box placed where Hacienda prints it (red rules, Spanish - English labels); statement picker,
+  recipient-TIN / name-match maps, the shell. No upload extraction (Azure has no 499R-2 model).
+- Tests: e2e statement-w-2-pr (1 passed - every box present, save, reload); UI build OK.
+
 ## 2026-11-25T11:00:00
 1B-19 Stage B (owner: "go ahead with stage B"): Schedule A (Form 4136), one per business activity (V571).
 - Instructions for Form 4136 (2025): "complete and file a separate Schedule A (Form 4136) for each EIN. Combine the totals from all

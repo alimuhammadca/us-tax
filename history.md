@@ -1,3 +1,12 @@
+## 2026-11-24T14:00:00
+Form 8881 (Rev. December 2025), Credits for Small Employer Pension Plan Startup Costs, Contributions, Auto-Enrollment, and Military
+Spouse Participation - outstanding.md 1B-18, the first own-business credit form (owner-approved option a; form-8881-plan.md). Stage A.
+- docs/IRS-Forms/f8881.pdf replaced by the Rev. 12-2025 form (the $105,000 wage limit on line 6b; the 2023 form said $100,000); the
+  Rev. 12-2025 instructions saved as docs/books/i8881.pdf.
+- generate-semantic-8881.js (29 fields by printed line, geometry-checked), generate-f8881-elements.py; pure-HTML form-tax-return-8881,
+  one copy per person in the Tax Return sidebar (blank until Stage B). Waiting for the owner's visual review.
+- Tests: e2e tax-return-8881-preview.spec.ts (1 passed); UI build OK.
+
 ## 2026-11-24T12:30:00
 outstanding.md 1C-28 (owner-approved option a): Form 1040 line 27b "Clergy filing Schedule SE" was hard-coded unchecked in compute and
 the preview. 2025 Instructions for Form 1040, line 27b: check it if you are a minister, a member of a religious order without a vow of

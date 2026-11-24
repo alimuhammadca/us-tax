@@ -2,7 +2,8 @@
 # (form-4136-plan.md): lines 1-4 of Part II and Part I; Schedule 3 line 12 is line 17 (the typed total on Other payments was removed).
 # On a joint return this copy holds the return's claim (the spouse copy only points here); filing separately each spouse has their
 # own (fuel-tax-credit-spouse, renamed by MfsFormScoper). Compute: Form4136Compute (rates and brackets from the 2025 form; the type
-# of use codes each line allows from the 2025 instructions). Lines 5-16 and Schedule A (Form 4136) are not asked (outstanding.md).
+# of use codes each line allows from the 2025 instructions). Lines 5, 11 and 14 added 2026-11-24 (1B-19, owner-approved option a,
+# no new column - more rows); lines 6-8, 13, 15, 16, the bus rate (type 5) on lines 11 / 14 and Schedule A (Form 4136) are not asked.
 name: fuel-tax-credit-taxpayer
 title: Fuel tax credit (Form 4136)
 multiplicity: single
@@ -36,13 +37,14 @@ sections:
       - { name: dieselDyeException, type: boolean, required: false, label: "Did any of the diesel fuel contain visible evidence of dye? (line 3 box - attach an explanation)" }
       - { name: keroseneDyeException, type: boolean, required: false, label: "Did any of the kerosene contain visible evidence of dye? (line 4 box - attach an explanation)" }
   - name: lines
-    title: Part II lines 1-4 (pf_fuel_tax_credit_line)
+    title: Part II lines 1-5, 11 and 14 (pf_fuel_tax_credit_line)
     multiplicity: multiple
-    note: One row per line asked - 1a-1d gasoline, 2a-2d aviation gasoline, 3a-3e undyed diesel, 4a-4f undyed kerosene. The rate,
+    note: One row per line asked - 1a-1d gasoline, 2a-2d aviation gasoline, 3a-3e undyed diesel, 4a-4f undyed kerosene, 5a-5e kerosene used in
+      aviation, 11a-11h alternative fuel (gallons or GGE / DGE), 14a-14b diesel-water fuel emulsion. The rate,
       the credit (rate x gallons; one amount for the brackets 1a-1c, 3a-3b, 4a-4b) and the CRN are shown, not entered.
     fields:
-      - { name: line, type: string, required: true, label: "The line (1a ... 4f)" }
-      - { name: typeOfUse, type: integer, required: false, label: "Type of use, where the form leaves it blank (1c: 4,5,7,11,13,14,15; 2b: 1,2,9,10,11,13,14,15; 3a/4a: 2,6,7,8,11,13,14,15; 4e/4f: 2)" }
+      - { name: line, type: string, required: true, label: "The line (1a ... 4f, 5a ... 5e, 11a ... 11h, 14a, 14b)" }
+      - { name: typeOfUse, type: integer, required: false, label: "Type of use, where the form leaves it blank (1c: 4,5,7,11,13,14,15; 2b: 1,2,9,10,11,13,14,15; 3a/4a: 2,6,7,8,11,13,14,15; 4e/4f: 2; 5c/5d: 1,9,10,11,13,15,16; 11: 1,2,4,6,7,11,13,14,15; 14a: 1,2,6,7,8,11,13,14,15)" }
       - { name: gallons, type: decimal, required: true, label: "Qualified gallons (column (c))" }
       - { name: fuelCost, type: amount, required: true, label: "Actual fuel cost from your records (column (d))" }
   - name: computedOutputs

@@ -1,3 +1,20 @@
+## 2026-11-24T19:00:00
+outstanding.md 1B-19 (owner-approved option a, "as long as you are not adding or deleting fields for a statement or tax return form"):
+Form 4136 (2025) lines 5, 11 and 14 - the fuel a filer uses themselves - on the Fuel tax credit screen and the return.
+- Line 5 kerosene used in aviation (5a / 5b commercial aviation $.200 / $.175; 5c / 5d nontaxable use $.243 / $.218, types 1, 9, 10,
+  11, 13, 15, 16; 5e LUST tax $.001, type 9), line 11 nontaxable use of alternative fuel (11a-11h, $.183 / $.243, gallons or gasoline /
+  diesel gallon equivalents, types 1, 2, 4, 6, 7, 11, 13, 14, 15), line 14 diesel-water fuel emulsion (14a $.197 nontaxable use, 14b
+  $.198 exported). Each row its own amount; line 17 adds them -> Schedule 3 line 12. Line 5e needs the same gallons on 5c / 5d with type
+  of use 9 (blocking FUEL_TAX_CREDIT_LINE_5E_WITHOUT_5CD).
+- No migration and no new field: the lines are more rows of pf_fuel_tax_credit_line (FuelTaxCreditMapper.LINES); the Form 4136 preview
+  only gets values in boxes it already has.
+- Not done, by the owner's condition: Schedule A (Form 4136) is a separate form the application doesn't have - more than one business
+  activity still blocks. The bus rate (type of use 5) on lines 11 / 14 isn't offered: it goes in column (b), a hidden 1-point box on the
+  preview. Lines 6-8, 13, 15, 16 (registration-number claims) stay out; the screen says so.
+- form-4136-plan.md corrected: line 11 didn't expire after 2024 (the alternative fuel credit, line 12, did).
+- Tests: Form4136ComputeTest (+2, 7); e2e fuel-tax-credit-lines-5-11-14 (2) with the fuel tax credit / 4136 preview specs (5 passed)
+  and the other payments / line 20 / line 31 / saved PDF specs (30 passed); unit 6,382 / 0; UI build OK.
+
 ## 2026-11-24T10:20:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 45421152836 on 0e82a60f - revision ca-ustax-be--0000700 serving 100%

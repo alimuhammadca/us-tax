@@ -27,7 +27,11 @@ the remaining items keep their numbers.
     (eligible small business research credit) and line 3 / Section B (K-1 code L). (hist L382)
     **2026-11-24:** Form 8881 done (form-8881-plan.md, V565) - screen, compute, Form 3800 lines 1j / 1dd / 1ee, deduction cut, preview.
     Still open: Forms 6765, 8941, 8826, 8844, line 4i, line 3 / Section B.
-19. **Form 4136 lines 5-16 and Schedule A (more than one business)** - these block the return today; lines 1-4 are done. (hist L47)
+19. **Form 4136 Schedule A (more than one business)** - still blocks the return. Lines 1-5, 11 and 14 are done (2026-11-24). Schedule A
+    (Form 4136) is a separate IRS form the application doesn't have; the owner's condition on option (a) was no field added to a
+    statement or tax-return form, so it waits for a decision. Also not prepared: lines 6-8, 13, 15, 16 (registered vendors, card
+    issuers, blenders, exporters) and the bus rate (type of use 5) on lines 11 and 14 - its rate goes in column (b), whose box on the
+    form is a hidden 1-point field. (hist L47)
 20. **Foreign tax credit one-year carryback.** Reduce the carryforward by what last year's excess limit would absorb (amending last
     year stays out of scope). (hist L152)
 21. **Puerto Rico Form 499R-2/W-2PR statement.** No statement type exists, so Puerto Rico wages can only be typed. (hist L691)

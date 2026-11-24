@@ -50,7 +50,9 @@ were built. A tax return form must be implemented pure html/css form rather than
   2); actual fuel cost per amount row (one per bracket); the dye exception boxes for lines 3 and 4 (an explanation must be attached -
   advisory). The rate, the credit and the CRN are shown, not typed.
 - Lines 5-16 aren't offered (registered vendors / credit card issuers / aviation kerosene / emulsions / exported dyed fuels; 9, 10, 12
-  reserved; 11 expired after 2024) - noted on the screen and in outstanding.md.
+  reserved) - noted on the screen and in outstanding.md. **Corrected 2026-11-24:** line 11 (nontaxable use of alternative fuel) did NOT
+  expire - the 2025 instructions still give it; what expired after 2024 is the alternative fuel credit (line 12, reserved). Lines 5,
+  11 and 14 were added that day (outstanding.md 1B-19).
 - Other payments: the typed "Form 4136 line 17 total" is removed (the app isn't in production - dropped outright); line 12 shows the
   figured amount with a link to the new screen.
 - Screen Review Checklist applied; screenshot-compared with a fixed Credits screen.

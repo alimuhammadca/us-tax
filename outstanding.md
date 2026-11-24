@@ -32,12 +32,9 @@ the remaining items keep their numbers.
 22. **K-1 at-risk suspended loss is not carried to next year automatically.** Each K-1 has a typed carryover (V512); add a cross-year
     bridge like the rental one. (hist L1257)
 23. **Form 8396: only one mortgage credit certificate per return** (only a reissued certificate is handled, V499). (hist L6103)
-24. **Form 8859: a joint carryforward is not split between spouses when the filing status changes to MFS.** (hist L6237)
 25. **Form 4972: a beneficiary of more than one deceased participant** - still one election per spouse. (hist L6329)
 26. **Territory filers: itemized deductions tied to one kind of income.** Needs a per-item "definitely related" field (owner sign-off on
     the field) instead of prorating every item. (hist L7601)
-27. **Foreign Earned Income Tax Worksheet line 2b is asked on no screen** - compute reads it, so it is always 0; add the question to
-    the Foreign income screen (owner said keep the field). (hist L660)
 
 ### 1C. Tax-return forms and previews
 
@@ -502,6 +499,11 @@ One line per finished entry, with the evidence (class, migration, date). Grouped
 
 **Finished since the reorganization**
 
+- 1B-24 Form 8859: when last year was a joint return and this year is married filing separately, last year's joint line 4 is no longer
+  imported onto one return (the instructions give no split); advisory FORM_8859_JOINT_CARRYFORWARD_SPLIT on both returns asks each
+  spouse to enter their own share (Form8859Rules.bridged / flag; 2026-11-24). (hist L6237)
+- 1B-27 Foreign Earned Income Tax Worksheet line 2b is asked on the Foreign income screen (Family Head's copy, when the exclusion is
+  claimed) and saved on Other tax items (feitwLine2bDisallowedDeductions, no new field; 2026-11-24). (hist L660)
 - 1A-1 AMT: Form 6251 line 10 now adds all of Schedule 2 line 1z - the clean vehicle credit repayments (lines 1b/1c) figured after
   the AMT join line 10 and lower the AMT, line 17 and line 18 (AmtLine10Schedule2; 2026-11-22). (hist L2842)
 - 1A-3 EIC investment income: the royalty tier (royalties + rental of personal property, Schedule 1 line 8l - 24b) and the

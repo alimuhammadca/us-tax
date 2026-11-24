@@ -1,3 +1,18 @@
+## 2026-11-24T09:45:00
+outstanding.md 1B-24 and 1B-27 (owner-approved option a each), and the full e2e regression.
+- 1B-24 Form 8859: a joint carryforward from last year (prior Form 1040 filed jointly, read from the persisted Form 1040 because
+  tax_return_v2.filing_status is not filled in) is not bridged onto a married-filing-separately return - only the spouses know their
+  shares. Advisory FORM_8859_JOINT_CARRYFORWARD_SPLIT shows last year's amount and asks each spouse to type their own share.
+  Tests: Form8859JointToSeparateTest; e2e form8859-joint-to-separate.
+- 1B-27 Foreign Earned Income Tax Worksheet line 2b: asked on the Foreign income screen (Family Head, when the exclusion is claimed),
+  saved on Other tax items (16-tax-taxpayer, feitwLine2bDisallowedDeductions - the key compute already read); help text; YAML
+  2555-foreign-earned-income-taxpayer. e2e foreign-income-feitw-line2b.
+- Full e2e regression (6.4 h): 2,532 passed, 0 failed, 0 skipped, 2 flaky - business-interest-screen "single" and foreign-assets-screen
+  "Part III tax items". Cause: setNumberValue presses Enter, which submits the form; under load that save's late response was the one
+  the spec's save() caught (a body without the next field typed), and the real Save click was skipped while it was still saving. Both
+  save() helpers now wait for network idle before clicking Save; both specs passed 3 times each with retries off (27/27).
+- Unit 6,367 / 0; UI build OK.
+
 ## 2026-11-24T02:00:00
 outstanding.md 1A-14 and 1A-17 (owner-approved option a each): be c13a9ea9, ui 2f6668c.
 - 1A-14 (V562): IRC 613A(d)(1) - oil and gas percentage depletion over 65% of taxable income figured without it is cut and the rest

@@ -217,6 +217,14 @@ sections:
         required: false
         label: "Do you claim the foreign earned income exclusion (Form 2555)?"
         showIf: "hadForeignEarnedIncome === true && (foreignEarnedIncomeType === 'wages' || foreignEarnedIncomeType === 'self_employed')"
+      - name: feitwLine2bDisallowedDeductions
+        type: amount
+        required: false
+        label: "Deductions or exclusions you could not take because they relate to the excluded income - optional"
+        help: "2026-11-23 (1B-27): Foreign Earned Income Tax Worksheet line 2b (Form 1040 line 16). Asked here, SAVED on Other tax items
+          (16-tax-taxpayer.feitwLine2bDisallowedDeductions - the key the compute reads). Family Head's copy only; shown when the
+          exclusion is claimed. Not the Form 2555 line 44 amount."
+        showIf: "claimsForeignEarnedIncomeExclusion === true"
 
   - name: housingExclusion
     title: Foreign housing exclusion (optional)

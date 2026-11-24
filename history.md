@@ -1,3 +1,19 @@
+## 2026-11-24T02:00:00
+outstanding.md 1A-14 and 1A-17 (owner-approved option a each): be c13a9ea9, ui 2f6668c.
+- 1A-14 (V562): IRC 613A(d)(1) - oil and gas percentage depletion over 65% of taxable income figured without it is cut and the rest
+  carries to next year (under the same limit). Each pass records what it took; RoyaltyDepletionLimit.needed() decides a re-run
+  (like the Pub. 974 one) that scales each property's figure plus its share of last year's carryover. Two new Schedule 1 carryforwards
+  (royaltyDepletionCarryforward; royaltyMineralBasisCarryforward - each property's year-end basis) registered in the save, full load,
+  narrow loader and the hasAnySchedule1Input gate; RoyaltyDepletionBridge imports them (a typed basis wins). Advisory
+  ROYALTY_DEPLETION_65_PERCENT_LIMIT. The test's first run failed only on its own data (a 1960 DOB added the 65+ and senior deductions,
+  so the 65% base was $0) - fixed to 1980; the code read AGI from the wrong getter at first, also fixed.
+- 1A-17 (V563, 4 columns): Pub. 570 - only tips / overtime NOT excluded as territory income qualify. Asked per person on the Schedule
+  1-A screen only when that person's Income earned in a US territory form excludes Puerto Rico / American Samoa income; taken off before
+  the caps, only when the return has a territory exclusion (TerritoryTipsOvertime). YAMLs updated.
+- Tests: RoyaltyDepletionLimitTest (3), TerritoryTipsOvertimeTest (1); e2e royalty-depletion-65-percent-limit (two-year: 2024 2,763
+  allowed / 3,237 carried; 2025 9,237 depleted, basis 47,237 -> 38,000), schedule1a-territory-excluded-tips-overtime (10,000 -> 4,000;
+  3,000 -> 2,000); 99 royalty / rental / Schedule 1-A / territory / bridge spec files (381 tests) passed; unit 6,366 / 0; UI build OK.
+
 ## 2026-11-24T01:00:00
 outstanding.md 1A-15 (owner-approved option a), be d0c84eb5: on a separate return (not considered unmarried) the IRC 129(b)
 dependent-care exclusion is limited to the smaller of both spouses' earned income; with the spouse's earned income blank and no spouse

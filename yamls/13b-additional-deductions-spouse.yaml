@@ -73,6 +73,11 @@ sections:
         placeholder: 0.00
         label: Spouse tips from 1099-NEC, 1099-MISC, or 1099-K not already in uploaded statements
         help: Enter any tip amounts for the spouse from non-W-2/non-4137 sources not already reflected in uploaded statements. Shown only when spouseReceivedQualifiedTips is true.
+      - name: spouseTipsExcludedTerritory
+        type: amount
+        required: false
+        label: "Of these tips, the part excluded as Puerto Rico or American Samoa income (2026-11-23, V563, 1A-17: Pub. 570 - only
+          tips not excluded qualify; asked only when Income earned in a US territory excludes PR / AS income)"
       - name: spouseForm4070TipsTotal
         type: number
         required: false
@@ -109,6 +114,10 @@ sections:
         placeholder: 0.00
         label: Spouse overtime from non-W-2 sources not in uploaded statements
         help: Enter spouse qualified overtime from 1099-NEC, 1099-MISC box 3, or similar sources not already in uploaded statements. Shown only when spouseReceivedQualifiedOvertime is true.
+      - name: spouseOvertimeExcludedTerritory
+        type: amount
+        required: false
+        label: "Of this overtime, the part excluded as Puerto Rico or American Samoa income (2026-11-23, V563, 1A-17)"
       - name: spouseOvertimeTotalPay
         type: number
         required: false

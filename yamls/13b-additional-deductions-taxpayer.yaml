@@ -74,6 +74,11 @@ sections:
         placeholder: 0.00
         label: Tips from 1099-NEC, 1099-MISC, or 1099-K not already in uploaded statements
         help: Enter tip amounts from non-W-2/non-4137 sources not already reflected in uploaded statements. Shown only when taxpayerReceivedQualifiedTips is true.
+      - name: taxpayerTipsExcludedTerritory
+        type: amount
+        required: false
+        label: "Of these tips, the part excluded as Puerto Rico or American Samoa income (2026-11-23, V563, 1A-17: Pub. 570 - only
+          tips not excluded qualify; asked only when Income earned in a US territory excludes PR / AS income)"
 
   - name: qualifiedOvertimeDeduction
     title: Overtime deduction (taxpayer)
@@ -101,6 +106,10 @@ sections:
         placeholder: 0.00
         label: Overtime from non-W-2 sources not in uploaded statements
         help: Enter qualified overtime from 1099-NEC, 1099-MISC box 3, or other non-W-2 sources not already in uploaded statements. Shown only when taxpayerReceivedQualifiedOvertime is true.
+      - name: taxpayerOvertimeExcludedTerritory
+        type: amount
+        required: false
+        label: "Of this overtime, the part excluded as Puerto Rico or American Samoa income (2026-11-23, V563, 1A-17)"
 
   - name: carLoanInterestDeduction
     title: Car loan interest deduction

@@ -33,8 +33,6 @@ the remaining items keep their numbers.
     issuers, blenders, exporters) and the bus rate (type of use 5) on lines 11 and 14 - its rate goes in column (b), whose box on the
     form is a hidden 1-point field. (hist L47)
 21. **Puerto Rico Form 499R-2/W-2PR statement.** No statement type exists, so Puerto Rico wages can only be typed. (hist L691)
-22. **K-1 at-risk suspended loss is not carried to next year automatically.** Each K-1 has a typed carryover (V512); add a cross-year
-    bridge like the rental one. (hist L1257)
 23. **Form 8396: only one mortgage credit certificate per return** (only a reissued certificate is handled, V499). (hist L6103)
 25. **Form 4972: a beneficiary of more than one deceased participant** - still one election per spouse. (hist L6329)
 26. **Territory filers: itemized deductions tied to one kind of income.** Needs a per-item "definitely related" field (owner sign-off on
@@ -502,6 +500,9 @@ One line per finished entry, with the evidence (class, migration, date). Grouped
 
 **Finished since the reorganization**
 
+- 1B-22 K-1 at-risk suspended loss carried to next year automatically (2026-11-24, owner-approved option b, no form field):
+  each partnership K-1's loss over its amount at risk is recorded and fills that K-1's blank box next year; the Suspended passive
+  losses screen shows last year's amount read-only. K1AtRiskCarry.
 - 1B-20 Foreign tax credit one-year carryback (2026-11-24, owner-approved option b, V566): this year's unused foreign tax goes to
   last year's excess limit first (typed, else last year's return here) and out of the carryforward, with a Form 1040-X advisory.
   Form1116Carryback.

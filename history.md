@@ -1,3 +1,21 @@
+## 2026-11-24T23:00:00
+outstanding.md 1B-22 (owner-approved option b, "as long as you are not adding or deleting fields for a statement or tax return form"):
+a Schedule K-1 loss limited by the at-risk rules is carried to next year automatically. Instructions for Form 6198 (2025): a loss not
+allowed "because of the at-risk rules ... is treated as a deduction from the activity in the following tax year". It used to be a note
+asking the filer to type it next year.
+- K1AtRiskCarry: each partnership K-1's suspended amount (a nonpassive box 1 loss over its amount at risk; a passive K-1's over its own,
+  or its share of the typed group amount - K1AtRisk.passiveCap) is a record on the return's carry-to-next-year list
+  (AttachedForms.carryovers, kind k1AtRisk: the K-1's EIN key, name, amount). Next year a K-1 row on the Suspended passive losses form
+  with a blank "loss not allowed under the at-risk rules" takes it (a row is added when there is none); a typed amount, even 0, wins.
+  Advisory K1_AT_RISK_CARRYOVER_FROM_PRIOR_YEAR; a record with no K-1 on the return is noted as not matched (K1TypedCarryovers). Household
+  return only. S corporation / trust K-1s aren't recorded - their carryover can't be entered on the screen today.
+- Read-only on the Suspended passive losses screen: GET /api/passive-carryforward/prior-year (PassiveCarryforwardPriorYearResource);
+  under each partnership's box, last year's amount and whether it is used (box blank) or replaced (amount entered).
+- No migration, no form or statement field.
+- Tests: K1AtRiskCarryTest (3); e2e k1-at-risk-carryover-bridge (two years: -$10,000 with $6,000 at risk -> $4,000 carried, 2025 line 5
+  $1,000, the screen's note, a typed amount wins) with the passive / at-risk specs (27 passed; suspended-passive-losses-screen "spouse
+  copy" flaky once, then 3/3); unit 6,388 / 0; UI build OK.
+
 ## 2026-11-24T21:30:00
 outstanding.md 1B-20 (owner-approved option b, V566): the foreign tax credit one-year carryback. IRC 904(c): unused foreign tax "shall
 be deemed paid or accrued in the first preceding taxable year and in any of the first 10 succeeding taxable years, in that order";

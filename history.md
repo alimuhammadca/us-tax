@@ -1,3 +1,28 @@
+## 2026-11-24T17:00:00
+Form 8881 (Rev. December 2025) Stage B - outstanding.md 1B-18, the first own-business credit form (owner: "go ahead with stage B";
+form-8881-plan.md, V565). The credits a filer's own Schedule C / F business earns for its retirement plan now reach Form 3800 and
+Schedule 3 line 6a.
+- Screen "Small employer retirement plan credits (Form 8881)" in Deductions, one per person (small-employer-plan-credit-taxpayer /
+  -spouse; pf_small_employer_plan_credit, person_id trigger): the gate, the business (Schedule C / F, picked from the person's businesses),
+  employees paid $5,000+ last year, then each credit - startup costs (credit year, line A, line 1, line 3), employer contributions
+  (defined benefit plan, plan year, lines 6b / 6c), automatic enrollment (year), military spouse employees (line 12, line 13). The
+  screen shows lines 8 / 11 / 15 as figured.
+- Form8881Compute: lines 1-15 as printed (100% / 50% of the costs by line A, $500-$5,000 limit; 6e's 2% per employee over 50; 6g by plan
+  year 100 / 100 / 75 / 50 / 25%; $500 auto-enrollment for 3 years; $200 + up to $300 per military spouse); no credit for more than 100
+  employees, after the credit years, or (contributions) a defined benefit plan - advisory FORM_8881_CREDIT_NOT_ALLOWED; missing answers
+  block (FORM_8881_INPUTS_MISSING). Lines 8 / 11 / 15 go to Form 3800 Part III lines 1j / 1dd / 1ee (Form3800Current, before 1x); the
+  K-1 codes AE / AF / AG still merge into those lines and show on Form 8881 lines 7 / 10 / 14.
+- No double benefit (Instructions for Form 8881, "No Deduction Allowed for Credit Amount"): Form8881Compute.cutDeductions takes line 5
+  off the chosen business's other expenses (a negative Part V row, at most the other expenses entered) and line 6g off its pension and
+  profit-sharing plans (Schedule C line 19 / Schedule F line 23), before Schedules C / F, SE and QBI are figured; advisory
+  FORM_8881_DEDUCTION_REDUCED, blocking FORM_8881_BUSINESS_NOT_FOUND when the named business isn't entered.
+- Form 8881 preview filled from the finished copy (AttachedForms.form8881List, per person).
+- Plan change: the screen is listed in Deductions like the other credit screens (Forms 7210 / 8933 / 7207), not hidden without a
+  business; with none entered it links to the Business income / Farm income screen.
+- Tests: Form8881ComputeTest (8); e2e small-employer-plan-credit-screen (2) and tax-return-8881-preview with the Form 3800 / K-1 credit /
+  Schedule C specs (41 passed, 1 flaky first try - the spec's dropdown pick re-tried after the Enter-started save re-renders the card,
+  then 6/6); unit 6,380 / 0; UI build OK.
+
 ## 2026-11-24T14:00:00
 Form 8881 (Rev. December 2025), Credits for Small Employer Pension Plan Startup Costs, Contributions, Auto-Enrollment, and Military
 Spouse Participation - outstanding.md 1B-18, the first own-business credit form (owner-approved option a; form-8881-plan.md). Stage A.

@@ -1,0 +1,54 @@
+# Form 8881 (Rev. December 2025) - Small employer retirement plan credits (Family Head). Component:
+# form-small-employer-plan-credit.component.ts. V565, owner-approved 2026-11-24 (form-8881-plan.md, outstanding.md 1B-18). One per
+# person (each spouse's own businesses are the employer); on a joint return both copies are on the return. Compute: Form8881Compute ->
+# Form 3800 Part III line 1j (line 8), 1dd (line 11), 1ee (line 15); Schedule K-1 codes AE / AF / AG on lines 7 / 10 / 14. The credited
+# amounts aren't deductible: line 5 comes off the business's other expenses (Schedule C line 27a / Schedule F line 32), line 6g off its
+# pension and profit-sharing plans (Schedule C line 19 / Schedule F line 23).
+name: small-employer-plan-credit-taxpayer
+title: Small employer retirement plan credits (Form 8881)
+multiplicity: single
+formName: Form 8881
+category: credits
+sections:
+  - name: claim
+    title: The credits
+    fields:
+      - { name: hasPlanCredit, type: boolean, required: true, label: "Did your business start or keep a retirement plan for its employees that qualifies for these credits?" }
+  - name: business
+    title: The business with the plan
+    showIf: hasPlanCredit == true
+    fields:
+      - { name: businessType, type: enum, options: [schedule_c, schedule_f], required: true, label: "Kind of business" }
+      - { name: businessName, type: string, required: true, label: "Which business (Schedule C business name or profession / Schedule F principal product)" }
+      - { name: employeesLastYear, type: integer, required: true, label: "Employees paid $5,000 or more in the prior year (line 6a; Part III: over 100 = no credit)" }
+  - name: startup
+    title: Startup costs (Part I, section 1)
+    showIf: hasPlanCredit == true
+    fields:
+      - { name: claimsStartupCredit, type: boolean, required: true, label: "Did the business pay costs in the year to set up or run the plan?" }
+      - { name: startupCreditYear, type: integer, required: true, showIf: claimsStartupCredit == true, label: "Year of the credit: 1, 2, 3, or 4 = later (no credit)" }
+      - { name: employeesBeforeFirstCreditYear, type: integer, required: true, showIf: claimsStartupCredit == true, label: "Employees paid $5,000+ the year before the first credit year (line A: 1-50 100%, 51-100 50%, over 100 none)" }
+      - { name: qualifiedStartupCosts, type: amount, required: true, showIf: claimsStartupCredit == true, label: "Qualified startup costs (line 1)" }
+      - { name: eligibleEmployees, type: integer, required: true, showIf: claimsStartupCredit == true, label: "Eligible non-highly-compensated employees (line 3, x $250)" }
+  - name: contributions
+    title: Employer contributions (Part I, section 2)
+    showIf: hasPlanCredit == true
+    fields:
+      - { name: claimsContributionsCredit, type: boolean, required: true, label: "Did the business contribute to the employees' plan accounts?" }
+      - { name: definedBenefitPlan, type: boolean, required: true, showIf: claimsContributionsCredit == true, label: "Defined benefit plan (no contributions credit)" }
+      - { name: contributionsPlanYear, type: integer, required: true, showIf: claimsContributionsCredit == true, label: "Plan year: 1-5 (100/100/75/50/25%), or 6 = later (no credit)" }
+      - { name: contributionsUpTo1000, type: amount, required: false, showIf: claimsContributionsCredit == true, label: "Contributions for employees who got $1,000 or less (line 6b)" }
+      - { name: contributionsOver1000, type: amount, required: false, showIf: claimsContributionsCredit == true, label: "Contributions for employees who got more than $1,000, as limited by plan year (line 6c)" }
+  - name: autoEnrollment
+    title: Automatic enrollment (Part II)
+    showIf: hasPlanCredit == true
+    fields:
+      - { name: claimsAutoEnrollmentCredit, type: boolean, required: true, label: "Does the plan automatically enroll employees?" }
+      - { name: autoEnrollmentYear, type: integer, required: true, showIf: claimsAutoEnrollmentCredit == true, label: "Year of the arrangement: 1-3 ($500), or 4 = later (no credit)" }
+  - name: militarySpouse
+    title: Military spouse employees (Part III)
+    showIf: hasPlanCredit == true
+    fields:
+      - { name: claimsMilitarySpouseCredit, type: boolean, required: true, label: "Military spouse employees in the plan, in their first 3 years in it?" }
+      - { name: militarySpouseEmployees, type: integer, required: true, showIf: claimsMilitarySpouseCredit == true, label: "Military spouse employees (line 12, x $200)" }
+      - { name: militarySpouseContributions, type: amount, required: false, showIf: claimsMilitarySpouseCredit == true, label: "Employer contributions for them (line 13, at most $300 each)" }

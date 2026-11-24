@@ -3,7 +3,7 @@
 Owner-approved 2026-11-24 (option a: screen, compute, Form 3800 lines, deduction cut, Form 8881 preview). Sources: Form 8881 (Rev.
 December 2025, replaced the Rev. 12-2023 PDF in docs/IRS-Forms) and its instructions (Rev. December 2025, docs/books/i8881.pdf).
 
-## Stage A - blank preview (done, waiting for the owner's visual review)
+## Stage A - blank preview (done, owner-reviewed 2026-11-24)
 
 - `scripts/generate-semantic-8881.js` - 29 fields named by printed line (line A, 1-5, 6a-6g, 7-15; the line 3 and line 12 counts
   before "x $250" / "x $200"); geometry-checked (right column descends; the counts on their amount's row).
@@ -12,7 +12,7 @@ December 2025, replaced the Rev. 12-2023 PDF in docs/IRS-Forms) and its instruct
   reading `attachedForms.form8881List` by `ownerRole` (blank until Stage B).
 - e2e `tax-return-8881-preview.spec.ts`.
 
-## Stage B - screen, compute, Form 3800, deduction cut (after the review)
+## Stage B - screen, compute, Form 3800, deduction cut (done 2026-11-24; the screen is listed like the other credit screens, not hidden without a business)
 
 **One Form 8881 per person.** The employer is the person's own businesses (sole proprietorships under common control are one employer,
 IRC 414(c)); on a joint return each spouse with a plan gets a copy.

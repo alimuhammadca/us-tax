@@ -1,0 +1,9 @@
+# Form 8881 (Rev. December 2025) - Small employer retirement plan credits (spouse). Component:
+# form-small-employer-plan-credit.component.ts (person="spouse"). V565 (form-8881-plan.md). The spouse's own businesses: on a joint
+# return the copy is on the return with the Family Head's; filing separately, on the spouse's own return.
+name: small-employer-plan-credit-spouse
+title: Small employer retirement plan credits (Form 8881)
+multiplicity: single
+formName: Form 8881
+category: credits
+sameFieldsAs: 8881-small-employer-plan-credit-taxpayer.yaml

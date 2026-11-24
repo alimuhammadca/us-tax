@@ -25,7 +25,8 @@ the remaining items keep their numbers.
 
 18. **Form 3800 credits for the filer's own business.** No Form 6765 / 8881 / 8941 / 8826 / 8844 screens or compute; also line 4i
     (eligible small business research credit) and line 3 / Section B (K-1 code L). (hist L382)
-    **In progress 2026-11-24:** Form 8881 first (form-8881-plan.md) - Stage A done (blank preview), Stage B after the owner's review.
+    **2026-11-24:** Form 8881 done (form-8881-plan.md, V565) - screen, compute, Form 3800 lines 1j / 1dd / 1ee, deduction cut, preview.
+    Still open: Forms 6765, 8941, 8826, 8844, line 4i, line 3 / Section B.
 19. **Form 4136 lines 5-16 and Schedule A (more than one business)** - these block the return today; lines 1-4 are done. (hist L47)
 20. **Foreign tax credit one-year carryback.** Reduce the carryforward by what last year's excess limit would absorb (amending last
     year stays out of scope). (hist L152)

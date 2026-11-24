@@ -32,8 +32,6 @@ the remaining items keep their numbers.
     statement or tax-return form, so it waits for a decision. Also not prepared: lines 6-8, 13, 15, 16 (registered vendors, card
     issuers, blenders, exporters) and the bus rate (type of use 5) on lines 11 and 14 - its rate goes in column (b), whose box on the
     form is a hidden 1-point field. (hist L47)
-20. **Foreign tax credit one-year carryback.** Reduce the carryforward by what last year's excess limit would absorb (amending last
-    year stays out of scope). (hist L152)
 21. **Puerto Rico Form 499R-2/W-2PR statement.** No statement type exists, so Puerto Rico wages can only be typed. (hist L691)
 22. **K-1 at-risk suspended loss is not carried to next year automatically.** Each K-1 has a typed carryover (V512); add a cross-year
     bridge like the rental one. (hist L1257)
@@ -504,6 +502,9 @@ One line per finished entry, with the evidence (class, migration, date). Grouped
 
 **Finished since the reorganization**
 
+- 1B-20 Foreign tax credit one-year carryback (2026-11-24, owner-approved option b, V566): this year's unused foreign tax goes to
+  last year's excess limit first (typed, else last year's return here) and out of the carryforward, with a Form 1040-X advisory.
+  Form1116Carryback.
 - 1C-28 Form 1040 line 27b is ticked for clergy filing Schedule SE whose line 2 includes ministerial W-2 wages or a housing allowance
   over the limit (both also on line 1z); not under an approved Form 4361 (ClergyLine27b, V564; 2026-11-24). (hist L3086, L5979)
 - 1B-24 Form 8859: when last year was a joint return and this year is married filing separately, last year's joint line 4 is no longer

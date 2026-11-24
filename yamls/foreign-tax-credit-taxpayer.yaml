@@ -212,6 +212,16 @@ sections:
         required: false
         label: Year that carryover arose
 
+      # V566 (2026-11-24, outstanding.md 1B-20, owner-approved option b): the one-year carryback.
+      - name: priorYearExcessLimit
+        type: currency
+        required: false
+        label: 2024 excess limit for this category (if that return wasn't prepared here)
+        help: >
+          Last year's Form 1116 line 21 less line 14 for this category. This year's unused foreign tax goes back to it first
+          (IRC 904(c); Pub. 514) and only the rest carries forward; claiming it means amending 2024 (Form 1040-X). Blank = read from
+          last year's return here, if any; added for the category's sources.
+
   - name: amtForeignTaxCredit
     title: AMT foreign tax credit - simplified limitation election
     multiplicity: single

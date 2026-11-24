@@ -1,3 +1,27 @@
+## 2026-11-24T21:30:00
+outstanding.md 1B-20 (owner-approved option b, V566): the foreign tax credit one-year carryback. IRC 904(c): unused foreign tax "shall
+be deemed paid or accrued in the first preceding taxable year and in any of the first 10 succeeding taxable years, in that order";
+Pub. 514, Carryback and Carryover. The whole unused amount was carried forward.
+- Form1116Carryback: this year's own unused tax (line 9 over line 21 - the current year's tax is credited first) goes back to last
+  year's excess limit for the category (its line 21 less line 14, not below zero; zero for every category when last year used the
+  simplified election); only the rest carries forward (Form 1116 carryforward and the vintage detail next year imports). Older
+  carryovers aren't carried back. Advisory FORM_1116_CARRIED_BACK_TO_PRIOR_YEAR (amend last year on Form 1040-X - not prepared here).
+- Last year's excess limit: typed on the Foreign tax credit screen per income (priorYearExcessLimit, pf_ftc_income_source V566,
+  added for the category), else last year's Form 1116 rows saved here (primary return), else nothing carried back with advisory
+  FORM_1116_CARRYBACK_NOT_CHECKED.
+- Tests: Form1116CarrybackTest (3); e2e form1116-ftc-carryback (two years: carried back up to the excess limit; a typed 0 wins) and
+  the Form 1116 / foreign tax credit specs (34 passed after two test fixes: the carryback spec's second 2025 seed added a second W-2,
+  and foreign-tax-credit-screen's save helper caught the Enter-started save - now waits for network idle); unit 6,385 / 0; UI build OK.
+
+## 2026-11-24T16:25:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 45434072979 on eaf6faba - revision ca-ustax-be--0000701 serving 100%
+  traffic, image ustax-be:eaf6fab; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 45434080561 on 7f03a96 - live at https://www.taxbeans.com
+  (bundle main-QPP5ZRWI.js).
+- Ships 1B-19 (Form 4136 lines 5, 11, 14). 1B-20 was still in test and is not in it.
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-24T19:00:00
 outstanding.md 1B-19 (owner-approved option a, "as long as you are not adding or deleting fields for a statement or tax return form"):
 Form 4136 (2025) lines 5, 11 and 14 - the fuel a filer uses themselves - on the Fuel tax credit screen and the return.

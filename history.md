@@ -1,3 +1,11 @@
+## 2026-11-25T09:00:00
+1B-19 (owner: work on it - adding Schedule A (Form 4136) as a new tax-return form) - Stage A: Schedule A (Form 4136) (December 2025),
+Business Activity Report for Credit for Federal Tax Paid on Fuels, as a blank preview, one copy per business activity with a selector.
+- map-4136sa.py: the schedule repeats Form 4136 Part II - each box named line<row>_<column> from its IRS row name and position, the same
+  names and bracket groups as Form 4136 (generate-semantic-4136.js); header, dye boxes, registration numbers and line 17 by hand. 482
+  fields; generate-semantic-from-map.js / generate-elements-from-csv.py; form-tax-return-4136sa in the Tax Return sidebar.
+- Waiting for the owner's visual review. Tests: e2e tax-return-4136sa-preview (1 passed); UI build OK.
+
 ## 2026-11-25T08:00:00
 1B-18 Stage B (owner: "go ahead with stage B"; form-1b18-credits-plan.md, V570): the own-business credit forms 6765, 8826, 8844 and 8941
 - screens, compute, Form 3800, the deduction cuts, the previews filled.

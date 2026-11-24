@@ -1,7 +1,7 @@
 # 1B-18 plan - own-business credit forms 6765, 8941, 8826, 8844
 
 Owner-approved 2026-11-25 (option b: all four in full). Sources in docs/IRS-Forms (Form 6765 Rev. 12-2024, Form 8941 2025, Form 8826
-Rev. 9-2017, Form 8844 Rev. 3-2020) and docs/books (Instructions for Forms 6765 Rev. 12-2025, 8941 2025, 8826, 8844 Rev. 12-2021).
+Rev. 9-2017, Form 8844 Rev. 3-2020) and docs/books (Instructions for Forms 6765 Rev. 12-2025, 8941 2025, 8844 Rev. 12-2021; Form 8826 has its instructions on the form).
 Form 8881 (form-8881-plan.md) is the model: one copy per person (each spouse's own businesses), Form 3800 Part III lines, the
 deduction cut where the law requires it.
 

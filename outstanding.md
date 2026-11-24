@@ -33,8 +33,6 @@ the remaining items keep their numbers.
     issuers, blenders, exporters) and the bus rate (type of use 5) on lines 11 and 14 - its rate goes in column (b), whose box on the
     form is a hidden 1-point field. (hist L47)
 21. **Puerto Rico Form 499R-2/W-2PR statement.** No statement type exists, so Puerto Rico wages can only be typed. (hist L691)
-26. **Territory filers: itemized deductions tied to one kind of income.** Needs a per-item "definitely related" field (owner sign-off on
-    the field) instead of prorating every item. (hist L7601)
 
 ### 1C. Tax-return forms and previews
 
@@ -498,6 +496,9 @@ One line per finished entry, with the evidence (class, migration, date). Grouped
 
 **Finished since the reorganization**
 
+- 1B-26 Territory filers' itemized deductions tied to one kind of income (2026-11-25, owner-approved option b, V569): per Schedule A
+  line, the part tied to the excluded income isn't deducted, the part tied to U.S.-taxed income is in full, the rest is prorated
+  (Pub. 570). TerritoryRelatedDeductions.
 - 1B-25 Form 4972 for a beneficiary of more than one participant (2026-11-24, owner-approved option a, V568): one Form 4972 per
   participant's distribution, the taxes added on line 16 box 2; the screen switches between participants, the preview between copies.
   Form4972Participants.

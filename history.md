@@ -1,3 +1,21 @@
+## 2026-11-25T03:30:00
+outstanding.md 1B-26 (owner-approved option b, "as long as you are not adding or deleting fields for a statement or tax return form",
+V569): a territory filer's itemized deductions tied to one kind of income. Pub. 570 (2025), chapter 4, Itemized Deductions: "Those that
+apply specifically to excluded income are not deductible. Those that apply specifically to income subject to U.S. income tax are fully
+allowable ... Those that do not apply to specific income must be allocated." Every line was allocated.
+- TerritoryRelatedDeductions: per Schedule A line (medical, state and local income / sales tax, real estate tax, personal property tax,
+  home mortgage interest, investment interest, cash and noncash gifts, casualty, other itemized) the part that applies only to the
+  excluded territory income is taken out (not deducted), the part that applies only to U.S.-taxed income is kept in full (each at most
+  what is left), and the rest is allocated by the Pub. 570 fraction. Used where each line is allocated: at the inputs (medical, the
+  taxes, the cash / noncash gift buckets - ScheduleAComputations) and for the lines allocated with the total (mortgage interest,
+  investment interest, casualty, other - the line 12 remainder).
+- Screen: "Deductions tied to one kind of income" on Standard or itemized deductions, for a bona fide resident of American Samoa / Puerto
+  Rico (Possession residence exclusion) who itemizes - two amounts per line, help from Pub. 570.
+  pf_standard_deductions.territory_related_deductions_json (V569). No form or statement field changed.
+- Tests: TerritoryRelatedDeductionsTest (3); e2e territory-related-itemized-deductions (2: $10,000 state income tax with $3,000 on the
+  excluded wages and $2,000 on U.S. wages -> $6,000 instead of $8,000; no section for a non-resident) with the territory / Schedule A /
+  deductions specs (79 passed); unit 6,396 / 0; UI build OK.
+
 ## 2026-11-25T02:00:00
 outstanding.md 1B-25 (owner-approved option a, "as long as you are not adding or deleting fields for a statement or tax return form",
 V568): Form 4972 for a beneficiary of more than one participant. Instructions for Form 4972 (2025): "You can also make an election as

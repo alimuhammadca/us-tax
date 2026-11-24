@@ -851,3 +851,15 @@ sections:
             label: "Taxpayer only"
           - value: "spouse"
             label: "Spouse only"
+
+# V569 (2026-11-25, outstanding.md 1B-26, owner-approved option b): a territory filer's itemized deductions tied to one kind of income
+# (Pub. 570, Itemized Deductions). Shown to a bona fide resident of American Samoa / Puerto Rico who itemizes. Per Schedule A line:
+# the part that applies only to the excluded territory income (not deducted), the part that applies only to U.S.-taxed income
+# (deducted in full); the rest is prorated. TerritoryRelatedDeductions. pf_standard_deductions.territory_related_deductions_json.
+territoryRelatedDeductions:
+  multiplicity: multiple
+  showIf: itemizing && territoryResident
+  fields:
+    - { name: line, type: enum, options: [medical, stateLocalTax, realEstateTax, personalPropertyTax, mortgageInterest, investmentInterest, charityCash, charityNonCash, casualty, otherItemized], required: true, label: "The Schedule A line" }
+    - { name: excludedOnly, type: amount, required: false, label: "Part that applies only to the excluded territory income (not deducted)" }
+    - { name: usOnly, type: amount, required: false, label: "Part that applies only to income the U.S. taxes (deducted in full)" }

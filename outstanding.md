@@ -23,11 +23,9 @@ the remaining items keep their numbers.
 
 ### 1B. Missing features (not supported today)
 
-18. **Form 3800 credits for the filer's own business.** No Form 6765 / 8881 / 8941 / 8826 / 8844 screens or compute; also line 4i
-    (eligible small business research credit) and line 3 / Section B (K-1 code L). (hist L382)
-    **2026-11-24:** Form 8881 done (form-8881-plan.md, V565). **2026-11-25:** Forms 6765, 8826, 8844 and 8941 done
-    (form-1b18-credits-plan.md, V570), with Form 3800 Part II Section B (line 3 - Form 8844 and K-1 code L). Still open: K-1 code M
-    research credit of an eligible small business on line 4i (the K-1 doesn't say; it stays on 1c).
+18. **Form 3800 credits for the filer's own business** - **DONE 2026-11-25**: Forms 8881 (V565), 6765 / 8826 / 8844 / 8941 (V570),
+    Form 3800 Part II Section B, and K-1 code M on line 4i for an eligible small business (the Research credit screen's question,
+    owner-approved option b). (hist L382)
 19. **Form 4136 Schedule A (more than one business)** - **DONE 2026-11-25** (Stage A preview, Stage B screen + compute, V571): an
     activity selector on the Fuel tax credit screen, a Schedule A (Form 4136) per activity, Form 4136 their total. Still not prepared:
     lines 6-8, 13, 15, 16 (registered vendors, card issuers, blenders, exporters) and the bus rate (type of use 5) on lines 11 and 14 -

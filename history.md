@@ -1,3 +1,15 @@
+## 2026-11-25T20:00:00
+1B-18 remainder (owner: "go ahead with option (b)"): a Schedule K-1 research credit (Form 1065 box 15 / Form 1120-S box 13 code M) on
+Form 3800 line 4i for an eligible small business.
+- Instructions for Form 6765: "A partner or S corporation shareholder can't be treated as an eligible small business unless both the
+  partnership or S corporation and the partner or S corporation shareholder meet the gross receipts test" ($50 million 3-year average).
+- Research credit screen (Family Head's copy): a "Research credit from partnerships and S corporations" section, shown only when a
+  K-1 has code M and whether or not the screen's own credit is claimed - passThroughEligibleSmallBusiness (in the screen's JSON, no
+  migration). Form6765Compute.passThroughEsb -> K1PartIIICredits.withK1: Yes = line 4i (specified, Section C), No = line 1c;
+  unanswered = line 1c with K1_RESEARCH_CREDIT_LINE_1C pointing to the question.
+- Tests: K1PartIIICreditsTest.theResearchCreditOfAnEligibleSmallBusinessGoesToLine4i; e2e own-business-credit-forms (3) +
+  Form 3800 Section C / passive K-1 specs (5 passed); unit 6,408 / 0; UI build OK.
+
 ## 2026-11-25T18:00:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows) - 1B-20, 1B-22, 1B-23, 1B-25, 1B-26, 1B-18, 1B-19,
 1B-21 (V566-V572).

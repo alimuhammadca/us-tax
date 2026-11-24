@@ -37,3 +37,7 @@ sections:
       - { name: businessComponents, label: "integer (line 37)" }
       - { name: acquiredDisposed, label: "boolean (line 39)" }
       - { name: newCategories, label: "boolean (line 40)" }
+  - name: passThrough
+    note: "Asked on the Family Head's copy whether or not the screen's own credit is claimed, only when a Schedule K-1 (Form 1065 box 15 / Form 1120-S box 13) shows code M (1B-18 remainder, owner-approved option b, 2026-11-25). Yes - the K-1 research credit on Form 3800 line 4i; No - line 1c."
+    fields:
+      - { name: passThroughEligibleSmallBusiness, type: boolean, label: "Did each partnership or S corporation that passed you the research credit, and you, average $50 million or less of gross receipts over the 3 prior years?" }

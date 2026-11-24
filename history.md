@@ -1,3 +1,20 @@
+## 2026-11-25T00:30:00
+outstanding.md 1B-23 (owner-approved, "as long as you are not adding or deleting fields for a statement or tax return form", V567): Form
+8396 with more than one mortgage credit certificate in a year (a new main home after a move, a second certified loan).
+- Plan changed from the option offered: one Form 8396, not one per certificate. Pub. 530 (2025), Refinancing - Year of refinancing: with
+  two certificates in a year "add the applicable amount of interest ... and enter the total on Form 8396, line 1", attach a statement
+  showing lines 1, 2 and 3 for each, "combine the amounts ... for line 3" and enter "See attached" next to line 2; the carryforwards
+  (lines 4-6) read one prior-year Form 8396. This is also how the reissued certificate (V499) already works.
+- Form8396Rules.additional: each other certificate's line 1 (its certified loan over the whole mortgage), its rate and its own $2,000
+  limit over 20% (IRC 25(a)(2), per certificate); a rate outside 10%-50% isn't qualified (noted, nothing added). Added into lines 1 and
+  3 - and so the Schedule A mortgage interest reduction - with the statement in the form's note. Both line 3 paths (Form 8396 and the
+  Schedule A reduction) use it.
+- Screen: "Other mortgage credit certificates" on Mortgage interest credit - a row per certificate (number, rate, interest, loan on the
+  certificate, whole loan), Add / Remove, help from Pub. 530. pf_mortgage_interest_credit.additional_certificates_json (V567). No form or
+  statement field changed.
+- Tests: Form8396AdditionalCertificatesTest (2); e2e form8396-more-than-one-certificate with the Form 8396 / MCC specs (11 passed); unit
+  6,390 / 0; UI build OK.
+
 ## 2026-11-24T23:00:00
 outstanding.md 1B-22 (owner-approved option b, "as long as you are not adding or deleting fields for a statement or tax return form"):
 a Schedule K-1 loss limited by the at-risk rules is carried to next year automatically. Instructions for Form 6198 (2025): a loss not

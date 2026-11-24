@@ -35,6 +35,18 @@ sections:
       - { name: mccReissueDate, type: date, required: false, label: "Date it was reissued", showIf: "mccReissued == true" }
       - { name: mccReissuedRatePercent, type: percent, required: false, label: "New certificate credit rate", showIf: "mccReissued == true" }
       - { name: mortgageInterestAfterReissue, type: amount, required: false, label: "Interest paid after the reissue", showIf: "mccReissued == true" }
+  # V567 (2026-11-24, outstanding.md 1B-23): the year's other certificates - each figured on its own and added into lines 1 and 3,
+  # with the attached statement (Pub. 530, Refinancing - Year of refinancing). additional_certificates_json.
+  - name: additionalCertificates
+    title: Other mortgage credit certificates in the year
+    multiplicity: multiple
+    showIf: eligible
+    fields:
+      - { name: certificateNumber, type: string, required: false, label: "Certificate number" }
+      - { name: creditRatePercent, type: percent, required: true, label: "Certificate credit rate (10%-50%; over 20% = at most $2,000)" }
+      - { name: interestPaid, type: amount, required: true, label: "Interest paid on its certified mortgage" }
+      - { name: certifiedIndebtednessAmount, type: amount, required: false, label: "Loan amount on the certificate" }
+      - { name: originalMortgageAmount, type: amount, required: false, label: "Whole mortgage loan amount" }
   - name: interest
     title: Interest paid (line 1)
     multiplicity: single

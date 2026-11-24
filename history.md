@@ -1,3 +1,12 @@
+## 2026-11-25T18:00:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows) - 1B-20, 1B-22, 1B-23, 1B-25, 1B-26, 1B-18, 1B-19,
+1B-21 (V566-V572).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 45490907724 on 6e05166a - revision ca-ustax-be--0000702 serving
+  100% traffic, image ustax-be:6e05166; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 45490913802 on e42a512 - live at https://www.taxbeans.com
+  (bundle main-TN7H2AQ2.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-25T16:00:00
 1B-21 Stage B (owner: "keep the email box, go ahead with stage B as you recommend"): Form 499R-2/W-2PR on the return.
 - TerritoryW2s.withPuertoRicoWages: each statement joins the W-2s - box 1 = box 11 (or 7 + 8 + 9 + 10) + boxes 16-18 (salaries exempt

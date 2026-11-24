@@ -1,3 +1,13 @@
+## 2026-11-25T21:00:00
+1C-29 (owner: "go ahead with option (a)") - Stage A: Schedule EIC (Form 1040) (2025), Earned Income Credit Qualifying Child Information,
+as a new tax-return form - blank preview.
+- 2025 PDF from irs.gov/pub/irs-prior (f1040sei--2025.pdf; the current irs-pdf copy is already 2026; the local "Schedule EIC.pdf"
+  was 2024). The 2025 schedule has no separated-spouse box (now Form 1040 line 27b). 38 fields: the header, and per child line 1
+  name, line 2 SSN, line 3 year (4 digits), lines 4a / 4b Yes / No, line 5 relationship, line 6 months - form-maps/f1040sei.json.
+- generate-semantic-from-map.js: a map key may be a full field name where two fields share a leaf (the Yes / No boxes).
+- form-tax-return-schedule-eic in the Tax Return sidebar (after Schedule 8812). Tests: e2e tax-return-schedule-eic-preview (1 passed);
+  UI build OK. Waiting for the owner's visual review.
+
 ## 2026-11-25T20:00:00
 1B-18 remainder (owner: "go ahead with option (b)"): a Schedule K-1 research credit (Form 1065 box 15 / Form 1120-S box 13 code M) on
 Form 3800 line 4i for an eligible small business.

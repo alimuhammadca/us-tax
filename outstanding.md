@@ -44,7 +44,8 @@ the remaining items keep their numbers.
     form (Form8960Fields, AttachedForms.form8960List). (hist L3272)
 31. **No Form 4562 in a year with only a §179 carryover** - **DONE 2026-11-25**: the form of the business the carryover is deducted
     on (Part I lines 1-13, line 22). (hist L2441)
-32. **Form 8962 line 4 a/b/c poverty-table box is not ticked** (only the amount is filled). (hist L2970)
+32. **Form 8962 line 4 a/b/c poverty-table box is not ticked** - **DONE 2026-11-26** (V573 line4_poverty_table; the 2024 line 4
+    check columns dropped). (hist L2970)
 33. **Form 8863 student view shows gross, not net, education expenses.** (hist L2881)
 34. **Territory filers: Schedule A lines print unprorated** (totals right; presentation only). (hist L7588)
 35. **A partly taxable recovery is not split between Schedule 1 line 1 and line 8z** (total right; placement only). (hist L2382)

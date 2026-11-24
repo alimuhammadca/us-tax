@@ -1,3 +1,14 @@
+## 2026-11-26T01:00:00
+1C-32 (owner: "go ahead"): Form 8962 line 4 - the box for the federal poverty table used (a Alaska, b Hawaii, c Other 48 states and
+DC) is ticked; only the amount was filled.
+- Form8962Computations records the table on the computed form (line4PovertyTable: alaska / hawaii / continental) from the same
+  region the line 4 amount is looked up for (the Premium tax credit screen's poverty table, the 48 states and DC when unanswered).
+- V573: out_form_8962.line4_poverty_table; the 2024-layout line 4 columns (line4a_check_below_fpl_exception, line4b_check_line_zero -
+  nothing on the 2025 line 4, nothing read them) dropped outright (not in production). Form8962 / OutForm8962 / Form8962OutputMapper.
+- The Form 8962 preview ticks box a, b or c. No input field added; the preview's layout unchanged.
+- Tests: Form8962PovertyTableTest (1); e2e form8962-monthly-whole-dollar-rounding (2, Alaska box a 18,810 / the 48 states box c
+  15,060 after a reload) + Form 8962 / premium tax credit specs (10 passed); unit 6,416 / 0; UI build OK.
+
 ## 2026-11-26T00:00:00
 1C-31 (owner: "go ahead"): Form 4562 in a year with only a section 179 carryover and no property.
 - 2025 Instructions for Form 4562: file it when claiming "a section 179 deduction for the current year or a section 179 carryover

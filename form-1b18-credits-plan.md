@@ -21,8 +21,8 @@ or less last year, or no more than 30 full-time employees. Screen: the business 
 year, full-time employees), eligible access expenditures. Line 3 = line 1 - $250; line 5 = min(line 3, $10,000); line 6 = 50%; line 7
 K-1 code K; line 8 at most $5,000. The credit reduces the basis / deduction of the expenditures (IRC 44(d)(7)).
 
-**Form 8844 - Empowerment zone employment credit (IRC 1396)** -> Form 3800 Part III line 3 (Section B; specified credit for the
-AMT? no - line 3 is Section B, allowed against regular tax only as 3800 directs). Screen: the business, qualified zone wages (at most
+**Form 8844 - Empowerment zone employment credit (IRC 1396)** -> Form 3800 Part III line 3 (Part II Section B - the
+empowerment zone credit's own limit; still open for K-1 code L, this closes it for the filer's own wages). Screen: the business, qualified zone wages (at most
 $15,000 per employee), number of qualified employees. Line 2 = 20%; line 3 K-1 code L. The wage deduction is reduced by line 2 (IRC
 280C(a)).
 

@@ -1,3 +1,19 @@
+## 2026-11-25T16:00:00
+1B-21 Stage B (owner: "keep the email box, go ahead with stage B as you recommend"): Form 499R-2/W-2PR on the return.
+- TerritoryW2s.withPuertoRicoWages: each statement joins the W-2s - box 1 = box 11 (or 7 + 8 + 9 + 10) + boxes 16-18 (salaries exempt
+  under Puerto Rico law, not U.S. law) + box 19 (Hacienda's instructions: boxes 7 and 8 are net of boxes 14-19); boxes 14 / 15
+  (retirement contributions) left out with an advisory (W2PR_RETIREMENT_CONTRIBUTIONS_LEFT_OUT); boxes 20-24 as W-2 boxes 3-7, boxes
+  25 / 26 as box 12 codes A / B (Form 8959 instructions name boxes 22 / 23).
+- A bona fide resident of Puerto Rico for the whole year (Income earned in a US territory): box 1 = 0 (IRC 933), the social security
+  and Medicare boxes kept; the wages fill a blank "wages from Puerto Rico sources" so the exclusion, MAGI add-backs and Pub. 570
+  allocation see them (W2PR_BONA_FIDE_RESIDENT_WAGES_EXCLUDED).
+- A non-resident's box 13 (Puerto Rico income tax): never federal withholding; a Form 1116 general category row for Puerto Rico
+  (Form1116Inputs.puertoRicoSources - gross the wages, tax box 13), unless deducted on Schedule A (the V497 territory tax choice, now
+  listing 499R-2 box 13 too) or a typed Puerto Rico row covers it; the "no Form 1116" election fails with it
+  (W2PR_TAX_WITHHELD_FOREIGN_TAX_CREDIT explains the routing).
+- V572 timestamp defaults fixed to NOW() (the V467 guard). Tests: PuertoRicoW2Test (4); e2e statement-w-2-pr (3) + territory / FTC /
+  CTC specs (77 passed); unit 6,407 / 0; UI build OK.
+
 ## 2026-11-25T13:00:00
 1B-21 Stage A (owner: "go ahead with ... the box list"): Form 499R-2/W-2PR, Puerto Rico Withholding Statement (Comprobante de
 Retencion), as a statement type (w-2-pr) - storage and screen; compute after the owner's review.

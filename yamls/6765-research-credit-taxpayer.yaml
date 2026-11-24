@@ -1,0 +1,39 @@
+# Credit for increasing research activities (Form 6765) - 1B-18 (owner-approved option b, 2026-11-25, V570; form-1b18-credits-plan.md). Component: form-own-business-credit.component.ts
+# (base="research-credit"), fields in data/own-business-credit-config.ts. Storage: pf_own_business_credit (one row per person and form, the answers as
+# JSON). Compute: Form6765Compute -> Form 3800 Part III line 1c (4i for an eligible small business). One per person (each spouse's own businesses); the spouse's copy (research-credit-spouse) has the same fields.
+name: research-credit-taxpayer
+title: Credit for increasing research activities (Form 6765)
+multiplicity: single
+category: credits
+sections:
+  - name: claim
+    fields:
+      - { name: hasCredit, type: boolean, required: true }
+  - name: business
+    showIf: hasCredit == true
+    fields:
+      - { name: businessType, type: enum, options: [schedule_c, schedule_f], required: true }
+      - { name: businessName, type: string, required: true, label: "Schedule C business name or profession / Schedule F principal product" }
+  - name: form
+    showIf: hasCredit == true
+    fields:
+      - { name: electReducedCredit, label: "boolean (item A, section 280C)" }
+      - { name: controlledGroup, label: "boolean (item B)" }
+      - { name: eligibleSmallBusiness, label: "boolean (-> line 4i)" }
+      - { name: qualifiedWages, label: "amount (line 42)" }
+      - { name: officersWages, label: "amount (line 38)" }
+      - { name: supplies, label: "amount (line 43)" }
+      - { name: computerRental, label: "amount (line 44)" }
+      - { name: contractResearchPaid, label: "amount (65% -> line 45)" }
+      - { name: basicResearchApplicable, label: "amount (line 46)" }
+      - { name: method, label: "enum [asc, regular]" }
+      - { name: energyConsortia, label: "amount (line 1 / 14)" }
+      - { name: basicResearchPayments, label: "amount (line 2 / 15)" }
+      - { name: qualifiedOrgBasePeriod, label: "amount (line 3 / 16)" }
+      - { name: fixedBasePercentage, label: "percent (line 6, regular)" }
+      - { name: avgAnnualGrossReceipts, label: "amount (line 7, regular)" }
+      - { name: hadQresEachPriorYear, label: "boolean (asc)" }
+      - { name: priorThreeYearsQres, label: "amount (line 21, asc)" }
+      - { name: businessComponents, label: "integer (line 37)" }
+      - { name: acquiredDisposed, label: "boolean (line 39)" }
+      - { name: newCategories, label: "boolean (line 40)" }

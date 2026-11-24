@@ -5,7 +5,7 @@ Rev. 9-2017, Form 8844 Rev. 3-2020) and docs/books (Instructions for Forms 6765 
 Form 8881 (form-8881-plan.md) is the model: one copy per person (each spouse's own businesses), Form 3800 Part III lines, the
 deduction cut where the law requires it.
 
-## Stage A - blank previews (done 2026-11-25, waiting for the owner's visual review)
+## Stage A - blank previews (done 2026-11-25, owner-reviewed)
 
 - Field names: auto-name-form-fields.py (the printed line number beside each field) + fix-form-maps-1b18.py (header, yes/no items,
   Form 6765 Section G by business component 1-15 / totals and column 49(a)-56), checked with check-form-map.py. Maps in
@@ -14,7 +14,7 @@ deduction cut where the law requires it.
   attachedForms.form<n>List by ownerRole; e2e tax-return-1b18-credit-previews.spec.ts.
 - Form 8826 lines 2 and 4 print "$250 00" and "$10,000 00" as field values on the IRS PDF; the preview fills them with the computation.
 
-## Stage B - screens and compute (after the review)
+## Stage B - screens and compute (done 2026-11-25)
 
 **Form 8826 - Disabled access credit (IRC 44)** -> Form 3800 Part III line 1e. Eligible small business: gross receipts of $1 million
 or less last year, or no more than 30 full-time employees. Screen: the business (Schedule C / F), eligibility (gross receipts last

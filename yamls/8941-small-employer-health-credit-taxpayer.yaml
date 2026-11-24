@@ -1,0 +1,31 @@
+# Small employer health insurance premiums credit (Form 8941) - 1B-18 (owner-approved option b, 2026-11-25, V570; form-1b18-credits-plan.md). Component: form-own-business-credit.component.ts
+# (base="small-employer-health-credit"), fields in data/own-business-credit-config.ts. Storage: pf_own_business_credit (one row per person and form, the answers as
+# JSON). Compute: Form8941Compute -> Form 3800 Part III line 4h. One per person (each spouse's own businesses); the spouse's copy (small-employer-health-credit-spouse) has the same fields.
+name: small-employer-health-credit-taxpayer
+title: Small employer health insurance premiums credit (Form 8941)
+multiplicity: single
+category: credits
+sections:
+  - name: claim
+    fields:
+      - { name: hasCredit, type: boolean, required: true }
+  - name: business
+    showIf: hasCredit == true
+    fields:
+      - { name: businessType, type: enum, options: [schedule_c, schedule_f], required: true }
+      - { name: businessName, type: string, required: true, label: "Schedule C business name or profession / Schedule F principal product" }
+  - name: form
+    showIf: hasCredit == true
+    fields:
+      - { name: shopMarketplace, label: "boolean (line A)" }
+      - { name: marketplaceIdentifier, label: "string (line A)" }
+      - { name: employmentTaxEin, label: "string (line B)" }
+      - { name: priorCreditClaimed, label: "boolean (line C)" }
+      - { name: employeesCount, label: "integer (line 1)" }
+      - { name: totalHoursOfService, label: "integer (-> FTEs, line 2)" }
+      - { name: totalWages, label: "amount (-> average wages, line 3)" }
+      - { name: premiumsPaid, label: "amount (line 4)" }
+      - { name: premiumsAtAveragePremium, label: "amount (line 5)" }
+      - { name: stateSubsidies, label: "amount (line 10)" }
+      - { name: employeesCovered, label: "integer (line 13)" }
+      - { name: coveredHoursOfService, label: "integer (-> line 14)" }

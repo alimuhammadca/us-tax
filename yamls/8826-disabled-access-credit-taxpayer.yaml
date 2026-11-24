@@ -1,0 +1,22 @@
+# Disabled access credit (Form 8826) - 1B-18 (owner-approved option b, 2026-11-25, V570; form-1b18-credits-plan.md). Component: form-own-business-credit.component.ts
+# (base="disabled-access-credit"), fields in data/own-business-credit-config.ts. Storage: pf_own_business_credit (one row per person and form, the answers as
+# JSON). Compute: Form8826Compute -> Form 3800 Part III line 1e. One per person (each spouse's own businesses); the spouse's copy (disabled-access-credit-spouse) has the same fields.
+name: disabled-access-credit-taxpayer
+title: Disabled access credit (Form 8826)
+multiplicity: single
+category: credits
+sections:
+  - name: claim
+    fields:
+      - { name: hasCredit, type: boolean, required: true }
+  - name: business
+    showIf: hasCredit == true
+    fields:
+      - { name: businessType, type: enum, options: [schedule_c, schedule_f], required: true }
+      - { name: businessName, type: string, required: true, label: "Schedule C business name or profession / Schedule F principal product" }
+  - name: form
+    showIf: hasCredit == true
+    fields:
+      - { name: grossReceiptsPriorYear, label: "amount" }
+      - { name: fullTimeEmployeesPriorYear, label: "integer" }
+      - { name: eligibleAccessExpenditures, label: "amount (line 1)" }

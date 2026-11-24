@@ -1,3 +1,26 @@
+## 2026-11-25T08:00:00
+1B-18 Stage B (owner: "go ahead with stage B"; form-1b18-credits-plan.md, V570): the own-business credit forms 6765, 8826, 8844 and 8941
+- screens, compute, Form 3800, the deduction cuts, the previews filled.
+- Screens (Deductions, one per person): one component, form-own-business-credit, driven by data/own-business-credit-config.ts - the
+  business (Schedule C / F) and each form's questions with help from its form and instructions. pf_own_business_credit (one row per
+  person and form, the answers as JSON; OwnBusinessCreditMapper).
+- Form8826Compute: an eligible small business ($1,000,000 or less of gross receipts or 30 or fewer full-time employees); 50% of the
+  expenditures over $250 up to $10,000 more, at most $5,000 -> Form 3800 line 1e; other expenses cut by it (IRC 44(d)(7)).
+- Form8844Compute: 20% of qualified zone wages, at most $15,000 per employee -> Form 3800 line 3; wages cut by it (IRC 280C(a)).
+- Form8941Compute: line A (SHOP) and line C (the 2-year period) stops; FTEs (hours / 2,080), average wages (multiple of $1,000), the
+  phase-downs over 10 FTEs and $33,000 (zero at 25 / $67,000), state subsidies -> Form 3800 line 4h (specified); employee benefit
+  programs cut by it (IRC 280C(h)).
+- Form6765Compute: Section F (wages, supplies, computers, 65% of contract research, basic research), Section A (regular - fixed-base
+  percentage, 50% floor, 20% / 15.8%) or Section B (alternative simplified - 14% over half the 3-year average, 6% without prior QREs, 79%
+  with the 280C election), Section C, Section E; -> line 1c, or 4i for an eligible small business. Without the election the research
+  expenses are cut by the credit (IRC 280C(c)). Section D (payroll tax election) isn't for an individual; Section G is optional for 2025.
+- Form 3800 Part II Section B (Form3800SectionB): lines 18-26 - the empowerment zone credit allowed against 75% of the tentative
+  minimum tax, added to line 17 on line 28; Part III line 3 filled. K-1 code L now goes to line 3 too (it was an advisory).
+- K-1 codes K / L / BA / M on the forms' "from partnerships and S corporations" lines (7 / 3 / 15 / 29); OwnBusinessCredits (shared:
+  sides, the business, the cuts); the four previews filled (AttachedForms.form6765List / 8826 / 8844 / 8941).
+- Tests: OwnBusinessCreditFormsTest (6); e2e own-business-credit-forms (2) with the Form 3800 / K-1 credit / 8881 / Schedule C /
+  preview specs (23 passed); unit 6,402 / 0; UI build OK.
+
 ## 2026-11-25T05:00:00
 1B-18 (owner-approved option b, the four remaining own-business credit forms in full) - Stage A, form-1b18-credits-plan.md.
 - The IRS PDFs: Form 6765 (Rev. 12-2024), Form 8941 (2025, replaced an older copy), Form 8826 (Rev. 9-2017), Form 8844 (Rev. 3-2020);

@@ -1,0 +1,21 @@
+# Empowerment zone employment credit (Form 8844) - 1B-18 (owner-approved option b, 2026-11-25, V570; form-1b18-credits-plan.md). Component: form-own-business-credit.component.ts
+# (base="empowerment-zone-credit"), fields in data/own-business-credit-config.ts. Storage: pf_own_business_credit (one row per person and form, the answers as
+# JSON). Compute: Form8844Compute -> Form 3800 Part III line 3 (Part II Section B). One per person (each spouse's own businesses); the spouse's copy (empowerment-zone-credit-spouse) has the same fields.
+name: empowerment-zone-credit-taxpayer
+title: Empowerment zone employment credit (Form 8844)
+multiplicity: single
+category: credits
+sections:
+  - name: claim
+    fields:
+      - { name: hasCredit, type: boolean, required: true }
+  - name: business
+    showIf: hasCredit == true
+    fields:
+      - { name: businessType, type: enum, options: [schedule_c, schedule_f], required: true }
+      - { name: businessName, type: string, required: true, label: "Schedule C business name or profession / Schedule F principal product" }
+  - name: form
+    showIf: hasCredit == true
+    fields:
+      - { name: qualifiedZoneWages, label: "amount (line 1, at most $15,000 per employee)" }
+      - { name: qualifiedEmployees, label: "integer" }

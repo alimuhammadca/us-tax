@@ -25,9 +25,9 @@ the remaining items keep their numbers.
 
 18. **Form 3800 credits for the filer's own business.** No Form 6765 / 8881 / 8941 / 8826 / 8844 screens or compute; also line 4i
     (eligible small business research credit) and line 3 / Section B (K-1 code L). (hist L382)
-    **2026-11-24:** Form 8881 done (form-8881-plan.md, V565) - screen, compute, Form 3800 lines 1j / 1dd / 1ee, deduction cut, preview.
-    Still open: Forms 6765, 8941, 8826, 8844 (owner-approved option b 2026-11-25, form-1b18-credits-plan.md - Stage A done, waiting for
-    the visual review), line 4i, line 3 / Section B.
+    **2026-11-24:** Form 8881 done (form-8881-plan.md, V565). **2026-11-25:** Forms 6765, 8826, 8844 and 8941 done
+    (form-1b18-credits-plan.md, V570), with Form 3800 Part II Section B (line 3 - Form 8844 and K-1 code L). Still open: K-1 code M
+    research credit of an eligible small business on line 4i (the K-1 doesn't say; it stays on 1c).
 19. **Form 4136 Schedule A (more than one business)** - still blocks the return. Lines 1-5, 11 and 14 are done (2026-11-24). Schedule A
     (Form 4136) is a separate IRS form the application doesn't have; the owner's condition on option (a) was no field added to a
     statement or tax-return form, so it waits for a decision. Also not prepared: lines 6-8, 13, 15, 16 (registered vendors, card

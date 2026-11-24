@@ -1,3 +1,12 @@
+## 2026-11-25T23:00:00
+1C-30 (owner: "go ahead with option (a)"): the Form 8960 preview filled from the computed form - values only, no layout change.
+- Form8960Fields: lines 1-17 into the preview's boxes (f8960_field_map_semantic.csv; the auto-named line 12 and 17 boxes matched by
+  position), a blank line left blank, totals (8, 11-17) shown at -0-, a loss in parentheses; lines 18a-21 (estates and trusts) and
+  the 6013(g) / 6013(h) / 1.1411-10(g) election boxes blank. AttachedForms.form8960List with the header name and SSN; the preview
+  reads it (and the tab's own return on separate returns).
+- Tests: Form8960FieldsTest (1); e2e form8960-niit + the NIIT specs (13 passed; one rerun after a sign-in timeout); unit 6,412 / 0;
+  UI build OK.
+
 ## 2026-11-25T22:00:00
 1C-29 Stage B (owner: "go ahead with stage B"): Schedule EIC (2025) filled - no new input fields.
 - ScheduleEicCompute: produced when Form 1040 line 27a is more than zero and the return has a qualifying child (Form 1040

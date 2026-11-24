@@ -40,7 +40,8 @@ the remaining items keep their numbers.
 
 29. **Schedule EIC** - **DONE 2026-11-25** (owner-approved option a): the 2025 schedule produced from the EIC's qualifying children
     (ScheduleEicCompute; AttachedForms.scheduleEicList), the self-only EIC's Child 1 without a valid SSN. (hist L5980)
-30. **Form 8960 preview is blank** - the form is computed but the preview passes no values. (hist L3272)
+30. **Form 8960 preview is blank** - **DONE 2026-11-25** (owner-approved option a): lines 1-17 and the header filled from the computed
+    form (Form8960Fields, AttachedForms.form8960List). (hist L3272)
 31. **No Form 4562 in a year with only a §179 carryover** and no new property. (hist L2441)
 32. **Form 8962 line 4 a/b/c poverty-table box is not ticked** (only the amount is filled). (hist L2970)
 33. **Form 8863 student view shows gross, not net, education expenses.** (hist L2881)

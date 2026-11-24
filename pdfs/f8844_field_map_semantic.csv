@@ -1,0 +1,9 @@
+old_field_name,old_full_name,semantic_field_name,field_type,pages_0_indexed,rect_first_occurrence
+f1_1[0],topmostSubform[0].Page1[0].f1_1[0],name_shown_on_return,text,0,"[36.000, 683.968, 452.850, 697.969]"
+f1_2[0],topmostSubform[0].Page1[0].f1_2[0],identifying_number,text,0,"[453.600, 683.968, 576.000, 697.969]"
+f1_3[0],topmostSubform[0].Page1[0].f1_3[0],line1,text,0,"[504.000, 659.970, 576.000, 671.969]"
+f1_4[0],topmostSubform[0].Page1[0].f1_4[0],line2,text,0,"[504.000, 623.970, 576.000, 635.969]"
+f1_5[0],topmostSubform[0].Page1[0].f1_5[0],line3,text,0,"[504.000, 587.970, 576.000, 599.969]"
+f1_6[0],topmostSubform[0].Page1[0].f1_6[0],line4,text,0,"[504.000, 539.968, 576.000, 551.967]"
+f1_7[0],topmostSubform[0].Page1[0].f1_7[0],line5,text,0,"[504.000, 503.968, 576.000, 515.967]"
+f1_8[0],topmostSubform[0].Page1[0].f1_8[0],line6,text,0,"[504.000, 467.968, 576.000, 479.967]"

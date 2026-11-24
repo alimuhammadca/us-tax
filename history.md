@@ -1,3 +1,13 @@
+## 2026-11-25T05:00:00
+1B-18 (owner-approved option b, the four remaining own-business credit forms in full) - Stage A, form-1b18-credits-plan.md.
+- The IRS PDFs: Form 6765 (Rev. 12-2024), Form 8941 (2025, replaced an older copy), Form 8826 (Rev. 9-2017), Form 8844 (Rev. 3-2020);
+  instructions in docs/books.
+- New reusable tooling: auto-name-form-fields.py (names each field from the printed line number beside it), check-form-map.py (each
+  name with its row's printed text), fix-form-maps-1b18.py (hand corrections; Form 6765 Section G by business component and column),
+  generate-semantic-from-map.js and generate-elements-from-csv.py (any form from its map). 270 / 28 / 18 / 8 fields.
+- Pure-HTML previews form-tax-return-6765 / 8941 / 8826 / 8844, one per person in the Tax Return sidebar (blank until Stage B).
+  Waiting for the owner's visual review. Tests: e2e tax-return-1b18-credit-previews (1 passed); UI build OK.
+
 ## 2026-11-25T03:30:00
 outstanding.md 1B-26 (owner-approved option b, "as long as you are not adding or deleting fields for a statement or tax return form",
 V569): a territory filer's itemized deductions tied to one kind of income. Pub. 570 (2025), chapter 4, Itemized Deductions: "Those that

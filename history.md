@@ -1,3 +1,14 @@
+## 2026-11-26T08:30:00
+1D-39 (owner: "go ahead"): e2e unrecaptured-1250-with-capital-losses - a Form 4797 section 1250 sale (gain 50,000, unrecaptured 30,000)
+with separate capital losses; single, wages 210,000 (32% bracket); 2025 Schedule D instructions' Unrecaptured Section 1250 Gain
+Worksheet and Schedule D Tax Worksheet, worked line by line.
+- A, a 40,000 long-term stock loss: line 16 10,000, line 19 stays 30,000 (not on the worksheet), tax 41,937 (25% on 6,950 after line 38).
+- B, a 12,000 short-term loss: line 19 18,000 (worksheet line 15), tax 46,937.
+- C, a 5,000 collectibles gain + the 12,000 short-term loss: line 18 0, line 19 23,000 (worksheet lines 14-17), tax 48,187.
+- Every Schedule D line matched the first run; my tax figures were 30 too high - I had used $103,350 for the worksheet's line 19
+  threshold (it is $197,300 single, the top of the 24% bracket), which moves 3,050 of the gain into line 21. The app was right; no
+  compute change.
+
 ## 2026-11-26T07:30:00
 1D-38 (owner: "go ahead"): already covered - e2e line32-total-other-payments.spec.ts "all five sources (EIC + ACTC + AOTC + Adoption +
 Schedule 3) sum correctly" (added 2026-06-12, 4f697c22) pins each line (4,328 / 1,700 / 1,000 / 5,000 / 400) and line 32 12,428; the spec

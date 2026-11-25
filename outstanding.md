@@ -63,7 +63,8 @@ the remaining items keep their numbers.
     (ctc-credit-limit-worksheet-a-energy.spec.ts; Form 8936 / line 6f not covered - same worksheet line 2). (hist L6356)
 38. Test: EIC, ACTC, AOTC, adoption and a Schedule 3 credit all feeding line 32 in one compute - **ALREADY COVERED** (found
     2026-11-26): line32-total-other-payments.spec.ts "all five sources ... sum correctly" (4f697c22, 2026-06-12), 7/7 pass. (hist L6563)
-39. e2e: Form 4797 §1250 recapture plus a separate long-term loss (full §1250 / 28% path). (hist L2891)
+39. e2e: Form 4797 §1250 recapture plus a separate long-term loss (full §1250 / 28% path) - **DONE 2026-11-26**
+    (unrecaptured-1250-with-capital-losses.spec.ts). (hist L2891)
 40. Unit: hand-verified Form 8815 strip in the with-Social-Security Pub 590-A MAGI. (hist L2989)
 41. e2e: MFS spouse leg for the depreciation-asset and home-office screens; SE data on the optimizer `prepare()` path. (hist L3139)
 

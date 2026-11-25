@@ -1,3 +1,13 @@
+## 2026-11-26T09:45:00
+1D-41 (owner: "go ahead"): e2e mfs-depreciation-home-office-and-optimizer-se, figures hand-computed.
+- Married filing separately: each spouse's depreciation asset and home office only on their own return - Form 4562 of their own
+  business (MACRS year 2: 960 / 2,449), Form 8829 line 36 (360 / 480), Schedule C net 58,680 / 47,071.
+- The joint-vs-separate optimizer with self-employment (Schedule C 60,000 + W-2 40,000): SE tax 8,478; joint 14,376, separate 12,083 +
+  2,675 = 14,758, savings -382 (the API's joint minus separate), recommendation MFJ.
+- No compute change. The first run's misses were the test's: the asset detail isn't in the API response (checked the form's business
+  instead), the savings sign is joint minus separate, and the business needs homeOfficeMethod form8829 for Form 8829.
+- Section 1D (tests to add) is now done (36, 37, 39, 40, 41; 38 was already covered).
+
 ## 2026-11-26T09:00:00
 1D-40 (owner: "go ahead"): unit Pub590aForm8815WithSocialSecurityTest - the Form 8815 exclusion counted once in the Pub. 590-A (2025)
 Appendix B modified AGI of a Social Security recipient covered by a workplace plan. Single, wages 70,000, 3,000 of EE interest all

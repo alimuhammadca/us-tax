@@ -67,7 +67,8 @@ the remaining items keep their numbers.
     (unrecaptured-1250-with-capital-losses.spec.ts). (hist L2891)
 40. Unit: hand-verified Form 8815 strip in the with-Social-Security Pub 590-A MAGI - **DONE 2026-11-26**
     (Pub590aForm8815WithSocialSecurityTest; mutation-checked). (hist L2989)
-41. e2e: MFS spouse leg for the depreciation-asset and home-office screens; SE data on the optimizer `prepare()` path. (hist L3139)
+41. e2e: MFS spouse leg for the depreciation-asset and home-office screens; SE data on the optimizer `prepare()` path - **DONE
+    2026-11-26** (mfs-depreciation-home-office-and-optimizer-se.spec.ts). (hist L3139)
 
 ### 1E. Docs and code housekeeping
 

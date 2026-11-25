@@ -20,10 +20,7 @@ the remaining items keep their numbers.
 
 ### 1A. Wrong or possibly wrong tax amounts (do these first)
 
-46. **Form 8960 line 5b for installment sales, like-kind exchanges and casualties of business property** (owner-approved option a,
-    2026-11-27; in progress): one question per Form 6252 / 8824 / 4684 item - used in a materially participated business or farm,
-    or a safe-harbor rental - and its recognized gain or loss comes off line 5b. §1.1411-4(d)(4)(i)(C) Ex. 2: the character is fixed
-    in the year of the sale ("section 453 governs the timing ... does not alter the character").
+46. **Form 8960 line 5b for installment sales, like-kind exchanges and casualties** - **DONE 2026-11-27**, see Part 4.
 47. **Real estate professional safe harbor for K-1 box 2 and Form 4835 farm rentals** (owner-approved option a, 2026-11-27; queued):
     the 500-hour question inside the material participation box of the K-1 (Form 1065 / 1120-S) screens and on the farm rental
     screen (§1.1411-4(g)(7)); also a rental partnership's K-1 section 1231 gain (1A-7) needs it.
@@ -531,6 +528,9 @@ One line per finished entry, with the evidence (class, migration, date). Grouped
 
 **Finished since the reorganization**
 
+- 1A-46 Form 8960 line 5b for installment sales, like-kind exchanges and business casualties (2026-11-27, owner-approved option a,
+  V578; be 9f95c730, UI 7e0de60): one business-use question per item; the recognized gain or loss of an actively run business's
+  (or a safe-harbor rental's) property comes off line 5b. Form8960OtherDispositions. Not covered: the section 1043 sale.
 - K-1 blank material participation is passive (2026-11-27, owner-approved option a, follows 1A-6; be 7946c1eb): one rule,
   K1ParticipationBlank.passive (passive unless Yes), in isPassiveK1, K1PassThroughAmounts, K1Passive1231, Form8911Business; the 1A-6
   blocking flag stays.

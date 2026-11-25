@@ -1,3 +1,20 @@
+## 2026-11-27T09:00:00
+1A-46 (owner: option a) - Form 8960 line 5b for installment sales, like-kind exchanges and business casualties, V578
+(niit_business_use on pf_installment_sale_item / pf_like_kind_exchange_item / pf_business_casualty_item).
+- Rule: Instructions for Form 8960, line 5b ("gain or loss from the sale of property held in a non-section 1411 trade or business")
+  and §1.1411-4(g)(7)(i)(B) for a real estate professional's safe-harbor rental. An installment sale's character is set in the
+  year of the sale - §1.1411-4(d)(4)(i)(C) Ex. 2: "section 453 governs the timing of the gain recognition, but does not alter the
+  character of the gain" - so the question asks about the year of the sale and covers an earlier year's sale too.
+- One question per item, shown for business / rental property: no / a business or farm with material participation / a rental
+  meeting the 500-hour safe harbor (counted only with "real estate professional" Yes). Amounts recognized this year: installment
+  line 26 + 37 (+ line 12 recapture in the year of sale); exchange sale gain + recapture; casualty gain, or loss as a positive line
+  5b. Added to the P17 / real estate professional line 5b. Form8960OtherDispositions; wording neutral on the spouse copies.
+- Tests: unit Form8960OtherDispositionsTest 4 (press 34,000 / 2023 sale 4,000; Taylor 40,000; van loss 4,000; mutation-checked).
+  e2e form8960-line5b-installment-exchange-casualty.spec.ts 3 (W-2 250,000 + interest 10,000: NIIT 380 active vs 1,672 / 1,900
+  / 228). 42 related specs: 215 passed, 1 failed - my new label said "you" on the spouse copy (business-casualties-screen); fixed
+  to neutral wording, the three screens' specs + new spec re-run 27/27. Suite 6,445 / 0. UI build passes. lines/23.md; 6 YAMLs.
+- be 9f95c730, UI 7e0de60.
+
 ## 2026-11-27T06:30:00
 K-1 blank material participation is passive (owner: option a; changes the 1A-6 decision that an overridden blank stays nonpassive).
 - Pub. 925: an activity is passive unless the taxpayer materially participates. Five places treated only an explicit No as passive

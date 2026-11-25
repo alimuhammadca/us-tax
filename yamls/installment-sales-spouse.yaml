@@ -44,6 +44,12 @@ sections:
           - "capital"
           - "business_real"
           - "business_other"
+      # 1A-46 (V578, 2026-11-27): Form 8960 line 5b (Instructions for Form 8960; §1.1411-4(d)(4), (g)(7)).
+      - name: niitBusinessUse
+        type: choice
+        required: false
+        options: [no, active_business, safe_harbor_rental]
+        label: "Was it used in a business you actively ran (a business or farm you materially participated in, or a rental meeting the real estate professional 500-hour safe harbor)?"
       - name: dateAcquired
         type: date
         required: false

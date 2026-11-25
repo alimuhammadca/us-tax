@@ -1,3 +1,13 @@
+## 2026-11-26T05:30:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows) - 1B-18 code M line 4i, 1C-29 Schedule EIC, 1C-30
+Form 8960 preview, 1C-31 Form 4562 carryover, 1C-32 Form 8962 line 4 (V573), 1C-33 Form 8863, 1C-34 territory Schedule A lines.
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 45524088551 on 86de57d7 - revision ca-ustax-be--0000703 serving 100%
+  traffic, image ustax-be:86de57d; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 45524092092 on 0e6d2d2 - live at https://www.taxbeans.com
+  (bundle main-YML3VKV4.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+- Not in this deploy (committed after): 1C-34a / 1C-35 (V574).
+
 ## 2026-11-26T05:00:00
 1C-34a and 1C-35 (owner: "go ahead with 1C-34a and 1C-35").
 - 1C-34a, the Schedule A preview (values only, every itemizer): line 6 foreign income taxes deducted ("Foreign income taxes"), line 7

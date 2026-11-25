@@ -1,5 +1,5 @@
 # 2026-11-06 (owner, Screen Review Checklist): the screen was rebuilt; this file predates it. No longer asked (columns kept, saved blank):
-# hasUploadedAtLeastOneOtherIncomeStatement, hasScheduleCBusinessIncomeOutOfScope, hasScheduleFFarmIncomeOutOfScope. The "every
+# hasUploadedAtLeastOneOtherIncomeStatement (the two Schedule C / F "out of scope" toggles were dropped in V575). The "every
 # statement entered" question is always asked after a Yes. See history.md 2026-11-06.
 # Form 1040 line 8 (Schedule 1 line 10) workflow for taxpayer/family head.
 # Approach: keep user questions + imported statement fields + computed outputs in one YAML.
@@ -93,24 +93,6 @@ sections:
         required: true
         label: I confirm all received statements for these Schedule 1 items are uploaded
         help: You must confirm this before saving.
-
-  - name: outOfScopeScreening
-    title: Retired screening (no longer asked)
-    multiplicity: single
-    showIf: hadAdditionalIncomeForSchedule1 == true
-    instructions:
-      - "Retired 2026-11-06 (OI_RETIRED_KEYS): no longer asked or used - Schedule C and F come from their own screens. The two columns are kept in pf_other_incomes and saved blank."
-    fields:
-      - name: hasScheduleCBusinessIncomeOutOfScope
-        type: boolean
-        required: false
-        label: Do you have Schedule C business income or loss for Schedule 1 line 3?
-        help: Select Yes if Schedule C is required. Retired - not asked; nothing is blocked.
-      - name: hasScheduleFFarmIncomeOutOfScope
-        type: boolean
-        required: false
-        label: Do you have Schedule F farm income or loss for Schedule 1 line 6?
-        help: Select Yes if Schedule F is required. Retired - not asked; nothing is blocked.
 
   - name: schedule1Lines1to7
     title: Schedule 1 lines 1 through 7

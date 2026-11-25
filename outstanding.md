@@ -74,8 +74,7 @@ the remaining items keep their numbers.
 
 42. **Intake YAMLs that said self-employment is out of scope** - **DONE 2026-11-26**: 17 YAMLs checked against the screens and
     compute and rewritten (10, 13b, 2555, 2ab, 4abc, 5abc, 6abcd, 7ab, 8 - each person); the Schedule C preview's stale comment fixed.
-    Left: the retired pf_other_incomes columns has_schedule_c_business_income_out_of_scope / has_schedule_f_farm_income_out_of_scope
-    (not asked since 2026-11-06, saved blank, read by nothing) could be dropped. (hist L3198)
+    Follow-up DONE 2026-11-26: the two retired pf_other_incomes toggles dropped (V575, owner-approved). (hist L3198)
 43. **`lines/6abcd.md` is out of date** - **DONE 2026-11-26**: re-verified against the code and the 2025 Form 1040 instructions,
     Pub. 915, Pub. 590-A Appendix B and the Form 8815 instructions; 26 corrections (IRA coordination computed, Form 8839 line 30,
     Form 8815 at worksheet line 3, no SSI subtraction, excess repayments, line 6d / lump-sum blockers, flag table, method citations).

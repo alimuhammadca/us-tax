@@ -1,3 +1,10 @@
+## 2026-11-26T14:20:00
+1E-42 follow-up (owner: option (a)): V575 drops pf_other_incomes.has_schedule_c_business_income_out_of_scope and
+has_schedule_f_farm_income_out_of_scope (the retired "Schedule C / F out of scope" questions; not asked since 2026-11-06, read by
+nothing). No trigger reads them (V66 sets person_id only). Removed from PfOtherIncomes, OtherIncomesMapper, the UI's OI_RETIRED_KEYS,
+the 8-other-incomes YAMLs (the retired screening section) and a Schedule1Computations comment; the two unit tests and two e2e tests
+that set the inert toggles were removed (the field no longer exists). Unit 6,421 / 0 failed; e2e line8-other-incomes 31/31; UI build.
+
 ## 2026-11-26T13:30:00
 1E-45 (owner: option (a)): form-refund-and-amount-owed uses ChangeDetectionStrategy.OnPush. Checked first: its figures come from
 signals (the computed return, owner names), every async step (load, save, status auto-clear, clear, reset, help) already calls

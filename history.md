@@ -1,3 +1,21 @@
+## 2026-11-27T12:00:00
+1A-47 (owner: option a) - real estate professional 500-hour NIIT safe harbor for a K-1's box 2 and for Form 4835 farm rentals, V579.
+- §1.1411-4(g)(7)(ii)(B): the safe harbor's "rental real estate activity is a rental activity within the meaning of § 1.469-1T(e)(3)";
+  (g)(7)(ii)(A): "any participation in the activity that would count towards establishing material participation under section
+  469 shall be considered" - so it applies to a rental held through a partnership or S corporation. Farm rentals: not named by the
+  regulation; treated as a rental of real property.
+- A professional's nonpassive K-1 box 2 and nonpassive farm rental were left out of NII with no test; now they stay in Form 8960
+  line 4a unless the 500-hour question is Yes (blank blocks only over the threshold; No gets the line 7 advisory). The question:
+  inside the material participation box on the K-1 (Form 1065 / 1120-S) statement screens, shown for a real estate professional
+  who answered Yes (the K-1 copy itself unchanged, owner-approved placement); on the farm rental, shown with "materially
+  participated as a real estate professional". Also 1A-7 tightened: a rental K-1's (box 2, no box 1) section 1231 gain is backed
+  out on line 5b only for a professional with the safe harbor - a rental is passive under §469(c)(2) otherwise.
+- Tests: unit ReProSafeHarborK1FarmTest 3 (K-1 box 2 30,000 + W-2 250,000: NIIT 0 / 1,140 / 1,140 + blocker; farm 12,000; box 10
+  rule; mutation-checked). OwnerApprovedFieldsW3aTest's farm NII figure updated to the new rule (without the safe harbor the farm
+  rental stays in NII; with it, as before). e2e k1-re-professional-niit-safe-harbor.spec.ts 2 (K-1 screen UI + farm rental); 81
+  K-1 / farm rental / NIIT specs 302/302. Suite 6,448 / 0. UI build passes. lines/23.md; farm-rental-taxpayer.yaml.
+- be dedaa475, UI 4461ae1.
+
 ## 2026-11-27T09:00:00
 1A-46 (owner: option a) - Form 8960 line 5b for installment sales, like-kind exchanges and business casualties, V578
 (niit_business_use on pf_installment_sale_item / pf_like_kind_exchange_item / pf_business_casualty_item).

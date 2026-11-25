@@ -21,10 +21,7 @@ the remaining items keep their numbers.
 ### 1A. Wrong or possibly wrong tax amounts (do these first)
 
 46. **Form 8960 line 5b for installment sales, like-kind exchanges and casualties** - **DONE 2026-11-27**, see Part 4.
-47. **Real estate professional safe harbor for K-1 box 2 and Form 4835 farm rentals** (owner-approved option a, 2026-11-27; queued):
-    the 500-hour question inside the material participation box of the K-1 (Form 1065 / 1120-S) screens and on the farm rental
-    screen (§1.1411-4(g)(7)); also a rental partnership's K-1 section 1231 gain (1A-7) needs it.
-
+47. **Real estate professional safe harbor for K-1 box 2 and Form 4835 farm rentals** - **DONE 2026-11-27**, see Part 4.
 
 ### 1B. Missing features (not supported today)
 
@@ -528,6 +525,10 @@ One line per finished entry, with the evidence (class, migration, date). Grouped
 
 **Finished since the reorganization**
 
+- 1A-47 Real estate professional 500-hour NIIT safe harbor for K-1 box 2 and Form 4835 farm rentals (2026-11-27, owner-approved
+  option a, V579; be dedaa475, UI 4461ae1): the question inside the K-1 (1065 / 1120-S) material participation box and on the farm
+  rental; without Yes the nonpassive box 2 / farm rental stays in NII; a rental K-1's section 1231 gain needs it for line 5b too.
+  Not covered: K-1 (Form 1041).
 - 1A-46 Form 8960 line 5b for installment sales, like-kind exchanges and business casualties (2026-11-27, owner-approved option a,
   V578; be 9f95c730, UI 7e0de60): one business-use question per item; the recognized gain or loss of an actively run business's
   (or a safe-harbor rental's) property comes off line 5b. Form8960OtherDispositions. Not covered: the section 1043 sale.

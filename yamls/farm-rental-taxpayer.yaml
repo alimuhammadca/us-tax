@@ -39,6 +39,12 @@ sections:
         label: "Did you materially participate in the operation of this farm rental (as a real estate professional)?"
         showIf: isRealEstateProfessional == true (Rental income form)
         help: "If you also materially participated, a loss is not limited by the passive activity rules (Form 4835 line 32)."
+      # 1A-47 (V579, 2026-11-27): real estate professional 500-hour NIIT safe harbor (Instructions for Form 8960; §1.1411-4(g)(7)).
+      - name: reProNiitSafeHarbor500Hours
+        type: boolean
+        required: false
+        showIf: "materiallyParticipatedAsReProfessional == true"
+        label: "More than 500 hours on this farm rental in 2025, or in each of any 5 of the 10 years before 2025?"
 
       - name: qbiTradeOrBusiness
         type: boolean

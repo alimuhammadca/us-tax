@@ -1,3 +1,12 @@
+## 2026-11-27T19:30:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 45695257388 on 08aa7174 - revision ca-ustax-be--0000707 serving
+  100% traffic, image ustax-be:08aa717; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 45695261121 on f70780d - live at https://www.taxbeans.com
+  (bundle main-XOU57E6N.js unchanged; the live /irs/f1040sse_elements.json carries the 2025 text: $176,100, no $168,600).
+- Ships P12 (Schedule SE preview on the 2025 printing; the 2024-text note removed).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-27T19:00:00
 P23 corrected and closed as obsolete. My explanation (statement screens = an IRS picture with typing boxes on top) came from the
 2026-04-03 note, not the code - the owner pointed out the statements are pure HTML/CSS. Checked: every statement screen draws the

@@ -1,3 +1,10 @@
+## 2026-11-27T19:00:00
+P23 corrected and closed as obsolete. My explanation (statement screens = an IRS picture with typing boxes on top) came from the
+2026-04-03 note, not the code - the owner pointed out the statements are pure HTML/CSS. Checked: every statement screen draws the
+form with HTML/CSS (1099-INT a CSS grid, K-1s k1-html-statement); the old <img> overlay markup is only inside *ngIf="false" blocks
+(SSA-1099, 5498, 3921, 8606) and 2026-04-29 .bak copies, never rendered. Nothing can be misaligned; P23 moved to Part 3 (obsolete),
+and its earlier "not possible at this time" mark replaced.
+
 ## 2026-11-27T18:40:00
 P13 (VOID / CORRECTED checkboxes on statement screens): owner decision - "we will remove these checkboxes from all statement later
 when upgrading to tax year 2026". outstanding.md P13 now reads PLANNED FOR THE TAX YEAR 2026 UPGRADE (all statement screens).

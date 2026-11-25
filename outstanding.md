@@ -103,7 +103,7 @@ the remaining items keep their numbers.
 20. **Spatial OCR using word polygons** (OCR extraction) - Build only if the current fallback fails on real W-2s; none reported. (hist L5000-5014)
 21. **Account phone-change save e2e** (Header dialogs e2e) - Blocked from outside the code: needs a second Firebase test phone. (hist L5066)
 22. **Real card processor for the payment dialog** (Payments) - Waits for monetization go-live (the text says "High once monetization goes live; Low today"); still a demo UI. (hist L5115-5127)
-23. **Visual check of statement PDF overlay alignment** (Statements) - **NOT POSSIBLE AT THIS TIME** (owner 2026-11-27: tax-return forms and statements can't be modified) - any alignment fix would move boxes on statement screens (a look-only check is still allowed). Was: The Statements subsystem is still under active development (owner); a visual check only. (hist L5669-5686)
+23. **Visual check of statement PDF overlay alignment** - **OBSOLETE 2026-11-27, moved to Part 3** (owner: the statements are pure HTML/CSS). The April 2026 note described image overlays; today every statement screen draws the form in HTML/CSS (e.g. 1099-INT `irs-statement form-1099int-html`, K-1 `k1-html-statement`) with real inputs in the cells - no picture behind them, so nothing can be misaligned. The old `<img>` overlay markup survives only inside `*ngIf="false"` blocks (SSA-1099, 5498, 3921, 8606) and in the 2026-04-29 `.bak` copies; never rendered. (hist L5669-5686)
 24. **Shared FE/BE statement catalog** (Deep-pass) - Owner deferred: the Statements section is under active development; drift-guard pins added. (hist L6454)
 25. **PDF vs PNG extraction differences in 18 fixtures** (Statement render differences) - Owner parked 2026-10-05 (statement upload feature on hold). (hist L7970-8039)
 
@@ -111,6 +111,7 @@ the remaining items keep their numbers.
 
 ## 3. No action — decisions, accepted limits, out of scope, obsolete
 
+- **P23 Visual check of statement PDF overlay alignment** (moved from Part 2, 2026-11-27) - obsolete: the statement screens are pure HTML/CSS, not image overlays; the overlay code left in `*ngIf="false"` blocks and `.bak` files is never rendered.
 Kept so the reasoning isn't lost; nothing to build. Grouped by the old file's section.
 
 **Closed since the reorganization**

@@ -1,3 +1,12 @@
+## 2026-11-27T13:30:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 45677890861 on dedaa475 - revision ca-ustax-be--0000706 serving
+  100% traffic, image ustax-be:dedaa47; /q/health/ready UP (V577, V578, V579 applied). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 45677894359 on 4461ae1 - live at https://www.taxbeans.com
+  (bundle main-XOU57E6N.js, carries the 1A-46 question).
+- Ships the real estate professional rental fix, K-1 blank participation passive, 1A-46 and 1A-47.
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-27T12:00:00
 1A-47 (owner: option a) - real estate professional 500-hour NIIT safe harbor for a K-1's box 2 and for Form 4835 farm rentals, V579.
 - §1.1411-4(g)(7)(ii)(B): the safe harbor's "rental real estate activity is a rental activity within the meaning of § 1.469-1T(e)(3)";

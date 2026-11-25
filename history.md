@@ -1,3 +1,11 @@
+## 2026-11-27T15:30:00
+Parked-item review (owner: "we cannot modify a tax return form or a statement ... mark them not possible at this time"). outstanding.md
+Part 2 marked **NOT POSSIBLE AT THIS TIME**: P12 2025 Schedule SE template (replacing the preview's 2024 printing changes a tax-return
+form); P13 removing the VOID / CORRECTED checkboxes from statement screens; P23 statement PDF overlay alignment fixes (a look-only
+check still allowed); P11 only its "label the Form 1040-X preview" option (keep, or remove from the sidebar, stays open). Not
+marked: P2 Form 8615 preview (a new tax-return form the app never had - owner-approved new forms have been allowed, 2026-11-15) and
+the field-addition items P4-P9 (input screens; any preview gets values in boxes it already has).
+
 ## 2026-11-27T15:00:00
 1D-48 - unreliable e2e tests.
 - Correction: the Form 8859 preview (wired-form-previews-render) and withheld-income-not-reported were never flaky. The 2026-11-26

@@ -1,3 +1,12 @@
+## 2026-11-26T21:45:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 45595495933 on 75b66b25 - revision ca-ustax-be--0000704 serving
+  100% traffic, image ustax-be:75b66b2; /q/health/ready UP (V574, V575 applied). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 45595501151 on e345e12 - live at https://www.taxbeans.com
+  (bundle main-BIFU4FVM.js, carries the 1E-44 compute flow).
+- Ships 1C-34a/1C-35 (V574), 1E-44, 1E-45, V575.
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-26T21:10:00
 Full e2e regression (2,573 tests, 6.6 h): 2,571 passed, 2 failed, 0 skipped; 2 passed on retry (wired-form-previews-render Form 8859,
 withheld-income-not-reported). Both failures were rule-17-non-overrideable-ui.spec.ts asserting zero compute POSTs - stale since

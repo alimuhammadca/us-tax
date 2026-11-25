@@ -1,3 +1,18 @@
+## 2026-11-26T05:00:00
+1C-34a and 1C-35 (owner: "go ahead with 1C-34a and 1C-35").
+- 1C-34a, the Schedule A preview (values only, every itemizer): line 6 foreign income taxes deducted ("Foreign income taxes"), line 7
+  = 5e + 6; line 9 = Form 4952 line 8 (deductible investment interest, was the interest paid); line 15 = Form 4684 line 18 (was the
+  net qualified disaster loss, a line 16 item); line 16 = the other itemized deductions the total counts (other allowed, the net
+  qualified disaster loss, impairment-related work expenses, estate tax on IRD, claim of right, Form 4684 Section B, gambling
+  losses) with the line 16 description. V574 out_schedule_a.deductible_gambling_losses_16 (they were only in the total); the
+  territory proration (1C-34) covers them too. Line 13 stays blank (the carryover is inside lines 11 / 12).
+- 1C-35, Pub. 525 "Allocating the included part": a partly taxable 2024 state refund (Schedule 1 line 1) and Form 1098 box 4 mortgage
+  interest refund (line 8z) share the taxable total in proportion to the amounts recovered (RecoveryAllocation); before, the state
+  refund took its taxable part first. Pub. 525's example: 500 of 2,500 recovered, 1,500 taxable -> line 1 300, line 8z 1,200 (was
+  500 / 1,000). The total is unchanged; another year's refund stays on line 1 in full.
+- Tests: RecoveryAllocationTest (3); e2e recovery-allocation-and-schedule-a-lines (2) + Schedule A / refund / territory specs (63
+  passed); unit 6,422 / 0; UI build OK.
+
 ## 2026-11-26T03:00:00
 1C-34 (owner: "go ahead"): a territory excluder's (section 931 / 933) Schedule A lines carry the allowed share (Pub. 570 ch. 4).
 - Medical (line 4), taxes (5e) and gifts (14) were already prorated at their inputs; the rest was prorated only as a lump in the total.

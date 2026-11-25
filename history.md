@@ -1,3 +1,9 @@
+## 2026-11-26T13:30:00
+1E-45 (owner: option (a)): form-refund-and-amount-owed uses ChangeDetectionStrategy.OnPush. Checked first: its figures come from
+signals (the computed return, owner names), every async step (load, save, status auto-clear, clear, reset, help) already calls
+markForCheck, the rest are template events. The 2026 deferral ("no other form uses OnPush") no longer held - 44 form screens do.
+Tests: its unit spec 8/8; e2e refund-and-amount-owed, prior-year-tax-worksheet, open-questions-b60 - 20/20; UI build. UI b1e8c14.
+
 ## 2026-11-26T13:10:00
 1E-43a closed, not a defect: the Social Security worksheet line 5 already leaves out Guam / USVI / CNMI (their residents file with the
 territory) - TerritoryExclusion.excludesOnUsReturn passes only American Samoa and Puerto Rico since 2026-11-07. The 1E-43 spec

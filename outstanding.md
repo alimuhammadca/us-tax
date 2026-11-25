@@ -83,7 +83,8 @@ the remaining items keep their numbers.
 43a. **Social Security worksheet line 5 adds Guam / USVI / CNMI mirror-code exclusions** - **CLOSED 2026-11-26, not a defect**: the
     code already adds only American Samoa and Puerto Rico (TerritoryExclusion.excludesOnUsReturn, 2026-11-07); the 1E-43 refresh misread
     the old spec text. lines/6abcd.md corrected.
-45. **Refund and amount owed screen lacks OnPush change detection** - add it, or retire the rule. (hist L6677, L6689)
+45. **Refund and amount owed screen lacks OnPush change detection** - **DONE 2026-11-26**: OnPush added (the screen already read the
+    return through signals and called markForCheck after every async step); unit 8/8, e2e 20/20, build. UI b1e8c14.
 
 ---
 

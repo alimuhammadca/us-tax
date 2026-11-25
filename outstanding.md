@@ -60,20 +60,7 @@ the remaining items keep their numbers.
 
 ### 1D. Tests to add
 
-48. **Unreliable e2e tests (failed once, passed on retry):** wired-form-previews-render Form 8859 preview and
-    withheld-income-not-reported (full regression 2026-11-26); attached-statement-advisories D-6198-6 (K-1 specs 2026-11-27). Find
-    the cause (timing / shared-account state) rather than relying on the retry.
-36. e2e: several Schedule 3 nonrefundable credits summing into line 20 - **DONE 2026-11-26** (schedule3-credits-sum-line20.spec.ts). (hist L5801)
-37. e2e: a Form 5695 credit lowering the child tax credit through Credit Limit Worksheets A / B - **DONE 2026-11-26**
-    (ctc-credit-limit-worksheet-a-energy.spec.ts; Form 8936 / line 6f not covered - same worksheet line 2). (hist L6356)
-38. Test: EIC, ACTC, AOTC, adoption and a Schedule 3 credit all feeding line 32 in one compute - **ALREADY COVERED** (found
-    2026-11-26): line32-total-other-payments.spec.ts "all five sources ... sum correctly" (4f697c22, 2026-06-12), 7/7 pass. (hist L6563)
-39. e2e: Form 4797 §1250 recapture plus a separate long-term loss (full §1250 / 28% path) - **DONE 2026-11-26**
-    (unrecaptured-1250-with-capital-losses.spec.ts). (hist L2891)
-40. Unit: hand-verified Form 8815 strip in the with-Social-Security Pub 590-A MAGI - **DONE 2026-11-26**
-    (Pub590aForm8815WithSocialSecurityTest; mutation-checked). (hist L2989)
-41. e2e: MFS spouse leg for the depreciation-asset and home-office screens; SE data on the optimizer `prepare()` path - **DONE
-    2026-11-26** (mfs-depreciation-home-office-and-optimizer-se.spec.ts). (hist L3139)
+48. **Unreliable e2e tests** - **DONE 2026-11-27**, see Part 4.
 
 ### 1E. Docs and code housekeeping
 
@@ -525,6 +512,10 @@ One line per finished entry, with the evidence (class, migration, date). Grouped
 
 **Finished since the reorganization**
 
+- 1D-48 Unreliable e2e tests (2026-11-27; be 8bd27fed): only D-6198-6 was flaky - the Form 8859 preview and
+  withheld-income-not-reported never failed (the full regression's summary had no flaky count; their "(retries)" progress lines were
+  misread). D-6198-6 failed in setup as the first test after a Maven build (dev-mode restart); reproduced; fixed in the helpers
+  (globalSetup waits for /q/health/ready, clearUserData retries after waiting). 30/30 with no retries.
 - 1A-47 Real estate professional 500-hour NIIT safe harbor for K-1 box 2 and Form 4835 farm rentals (2026-11-27, owner-approved
   option a, V579; be dedaa475, UI 4461ae1): the question inside the K-1 (1065 / 1120-S) material participation box and on the farm
   rental; without Yes the nonpassive box 2 / farm rental stays in NII; a rental K-1's section 1231 gain needs it for line 5b too.

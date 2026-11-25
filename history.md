@@ -1,3 +1,17 @@
+## 2026-11-27T15:00:00
+1D-48 - unreliable e2e tests.
+- Correction: the Form 8859 preview (wired-form-previews-render) and withheld-income-not-reported were never flaky. The 2026-11-26
+  regression summary was "2 failed, 2571 passed" with no flaky count; the two only appeared as the final "(retries)" progress lines,
+  which were misread as failed-then-passed (in the 2026-11-26 history entry and outstanding.md).
+- The real one: attached-statement-advisories D-6198-6 failed once in setup ("Unable to clear user data via API") as the first test
+  of a run started right after a full ./mvnw test - dev mode restarts on the first request after classes change ("Restarting
+  quarkus due to changes in ... .class"). Reproduced with ./mvnw -q compile then the spec with --retries=0.
+- Fix, e2e helpers only: playwright globalSetup (global-setup.ts) waits for /q/health/ready, which rides out a pending restart;
+  clearUserData retries the reset 3x, waiting for ready before each retry (tests/helpers/backend-ready.ts, local runs only). The
+  reproduction now passes (the first test waits ~5 min for the restart); D-6198-6 + rule-17-non-overrideable-ui x10, no retries:
+  30/30. Memory feedback_no_compile_during_e2e extended.
+- be 8bd27fed.
+
 ## 2026-11-27T13:30:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 45677890861 on dedaa475 - revision ca-ustax-be--0000706 serving

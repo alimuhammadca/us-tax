@@ -1,3 +1,8 @@
+## 2026-11-26T07:30:00
+1D-38 (owner: "go ahead"): already covered - e2e line32-total-other-payments.spec.ts "all five sources (EIC + ACTC + AOTC + Adoption +
+Schedule 3) sum correctly" (added 2026-06-12, 4f697c22) pins each line (4,328 / 1,700 / 1,000 / 5,000 / 400) and line 32 12,428; the spec
+passes 7/7 today. The outstanding.md entry was stale; closed without a new test.
+
 ## 2026-11-26T07:00:00
 1D-37 (owner: "go ahead"): e2e ctc-credit-limit-worksheet-a-energy - joint, one child, tax 2,466, child tax credit 2,200 (2025
 Instructions for Schedule 8812, Credit Limit Worksheets A and B; Instructions for Form 5695, line 14).

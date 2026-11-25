@@ -1,3 +1,7 @@
+## 2026-11-27T18:40:00
+P13 (VOID / CORRECTED checkboxes on statement screens): owner decision - "we will remove these checkboxes from all statement later
+when upgrading to tax year 2026". outstanding.md P13 now reads PLANNED FOR THE TAX YEAR 2026 UPGRADE (all statement screens).
+
 ## 2026-11-27T18:00:00
 P12 - Schedule SE preview on the 2025 printing (owner asked for it, an exception to the no-form-change rule; Stage A screenshots
 reviewed and approved).

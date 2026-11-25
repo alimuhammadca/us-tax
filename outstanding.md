@@ -48,7 +48,14 @@ the remaining items keep their numbers.
     check columns dropped). (hist L2970)
 33. **Form 8863 student view shows gross, not net, education expenses** - **DONE 2026-11-26**: the student record's adjusted expenses
     are net of the tax-free assistance (lines 27 / 31 already were). (hist L2881)
-34. **Territory filers: Schedule A lines print unprorated** (totals right; presentation only). (hist L7588)
+34. **Territory filers: Schedule A lines print unprorated** - **DONE 2026-11-26**: lines 8a / 8c / 9 / 10, 6, 15 and the parts of 16 carry
+    their allowed share; line 17 is their sum (TerritoryRelatedDeductions.prorateLines). (hist L7588)
+34a. **Schedule A preview: lines 6, 9, 15 and 16 (found 2026-11-26, 1C-34).** For every itemizer, not only territory filers: line 6
+    (foreign income taxes, deductibleForeignTaxes) is blank and line 7 shows line 5e only; line 9 shows the investment interest paid,
+    not Form 4952 line 8 (deductibleInvestmentInterest); line 15 shows the net qualified disaster loss (a line 16 item) instead of
+    personalCasualtyAndTheftLoss; line 16 is blank (otherAllowedItemizedDeductions, impairment-related work expenses, estate tax on
+    IRD, claim of right, Form 4684 Section B, the disaster loss, gambling losses - which the schedule doesn't carry apart). The total
+    (line 17) is right; the printed lines don't add up to it. Values only - needs the owner's go-ahead.
 35. **A partly taxable recovery is not split between Schedule 1 line 1 and line 8z** (total right; placement only). (hist L2382)
 
 ### 1D. Tests to add

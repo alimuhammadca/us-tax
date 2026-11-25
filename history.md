@@ -1,3 +1,16 @@
+## 2026-11-26T03:00:00
+1C-34 (owner: "go ahead"): a territory excluder's (section 931 / 933) Schedule A lines carry the allowed share (Pub. 570 ch. 4).
+- Medical (line 4), taxes (5e) and gifts (14) were already prorated at their inputs; the rest was prorated only as a lump in the total.
+  TerritoryRelatedDeductions.prorateLines now writes each line back at its allowed share - 8a / 8c (their part of 8e), 9, 10 = 8e + 9,
+  6 (foreign income taxes), 15 and the parts of 16 the schedule carries - with the 1B-26 parts per line (excluded-only dropped,
+  U.S.-only in full, the rest prorated); line 17 = those lines; anything the schedule doesn't carry apart (gambling losses) prorated
+  as before. Line by line instead of as a lump: the total can move by a dollar of rounding. The advisory now says Schedule A shows the
+  allowable share.
+- Found: the Schedule A preview itself leaves lines 6 and 16 blank, shows line 9 as interest paid and puts the disaster loss on line 15
+  - for every itemizer; recorded as outstanding 1C-34a for the owner (preview edits made and reverted - outside the approved scope).
+- Tests: TerritoryScheduleALinesTest (2); e2e territory-related-itemized-deductions (new: 16,250 x 80% = 13,000 on lines 8a / 10, the
+  lines add up) + territory specs (8 passed, one retried after a sign-in timeout); unit 6,419 / 0.
+
 ## 2026-11-26T02:00:00
 1C-33 (owner: "go ahead with option (a)"): Form 8863 - the computed student record's "adjusted qualified education expenses" held the
 gross tuition; now net of the tax-free educational assistance (scholarships, grants, tax-free 529 / Coverdell, employer assistance),

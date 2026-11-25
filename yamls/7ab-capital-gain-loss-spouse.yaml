@@ -22,7 +22,7 @@ instructions:
   - Return-level upload checks, Exception 1 determination, and line 7b checkbox decisions stay on capital-gain-loss-taxpayer.
   - Upload spouse statements first — the application auto-detects most details from them.
   - Use the direct-entry and supplemental sections only for spouse items not already captured by uploaded statements.
-  - Self-employment income is out of scope and excluded.
+  - "Self-employment income isn't entered here; it goes on Business income (Schedule C) or Farm income (Schedule F)."
 sections:
   - name: screening
     title: Screening

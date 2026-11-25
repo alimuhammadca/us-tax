@@ -72,8 +72,10 @@ the remaining items keep their numbers.
 
 ### 1E. Docs and code housekeeping
 
-42. **18 intake YAMLs still say self-employment is out of scope** (10-income-adjustments, 13b, 2ab, 4abc, 5abc, 6abcd, 7ab,
-    8-other-incomes, 2555, ...), plus stale UI comments. (hist L3198)
+42. **Intake YAMLs that said self-employment is out of scope** - **DONE 2026-11-26**: 17 YAMLs checked against the screens and
+    compute and rewritten (10, 13b, 2555, 2ab, 4abc, 5abc, 6abcd, 7ab, 8 - each person); the Schedule C preview's stale comment fixed.
+    Left: the retired pf_other_incomes columns has_schedule_c_business_income_out_of_scope / has_schedule_f_farm_income_out_of_scope
+    (not asked since 2026-11-06, saved blank, read by nothing) could be dropped. (hist L3198)
 43. **`lines/6abcd.md` is out of date** (says the IRA coordination is advisory, cites "line 1f" and old line numbers). (hist L2990)
 44. **Compute runs `prepare()` twice per click** (`/flags` preview then `/compute`); drive the flag dialog from the 409 (low priority). (hist L6451)
 45. **Refund and amount owed screen lacks OnPush change detection** - add it, or retire the rule. (hist L6677, L6689)

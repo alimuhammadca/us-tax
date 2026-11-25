@@ -11,7 +11,7 @@ instructions:
   - Form 1040 line 10 is computed from Schedule 1 line 26.
   - Schedule 1 line 26 is lines 11 through 23 plus line 25.
   - Return-level statement upload confirmations are handled on this taxpayer form.
-  - Self-employment adjustments (lines 15 to 17) are out of scope and must be blocked.
+  - "Self-employment adjustments (Schedule 1 lines 15 to 17 - half of self-employment tax, self-employed retirement plans, self-employed health insurance) aren't entered here: they're figured from Schedule SE and the Self-employed health insurance and retirement plans screen (se-deductions)."
 sections:
   - name: screening
     title: Screening

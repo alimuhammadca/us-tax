@@ -13,7 +13,7 @@ category: income
 instructions:
   - Use this form for spouse-specific Schedule 1 Part I amounts that contribute to Form 1040 line 8.
   - Return-level statement upload confirmations remain on the taxpayer Other incomes form.
-  - Self-employment/business and farm income are out of scope and must be blocked.
+  - "Business and farm income (Schedule 1 lines 3 and 6) aren't entered here: they come from Business income (Schedule C) and Farm income (Schedule F)."
 sections:
   - name: screening
     title: Screening
@@ -26,22 +26,22 @@ sections:
         help: If No, stop here and do not continue this workflow.
 
   - name: outOfScopeScreening
-    title: Out-of-scope screening
+    title: Retired screening (no longer asked)
     multiplicity: single
     showIf: hadAdditionalIncomeForSchedule1 == true
     instructions:
-      - Schedule C and Schedule F paths are out of scope for this product.
+      - "Retired 2026-11-06 (OI_RETIRED_KEYS): no longer asked or used - Schedule C and F come from their own screens. The two columns are kept in pf_other_incomes and saved blank."
     fields:
       - name: hasScheduleCBusinessIncomeOutOfScope
         type: boolean
         required: false
         label: Does spouse have Schedule C business income or loss for Schedule 1 line 3?
-        help: Select Yes if Schedule C is required. This return will be blocked in this product.
+        help: Select Yes if Schedule C is required. Retired - not asked; nothing is blocked.
       - name: hasScheduleFFarmIncomeOutOfScope
         type: boolean
         required: false
         label: Does spouse have Schedule F farm income or loss for Schedule 1 line 6?
-        help: Select Yes if Schedule F is required. This return will be blocked in this product.
+        help: Select Yes if Schedule F is required. Retired - not asked; nothing is blocked.
 
   - name: schedule1Lines1to7
     title: Spouse Schedule 1 lines 1 through 7

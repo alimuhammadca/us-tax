@@ -11,7 +11,7 @@ instructions:
   - Upload validation is mandatory before entering supplemental details.
   - At least one IRA-related 1099-R statement must be uploaded before continue.
   - This taxpayer form owns return-level line 4c statement-gating to avoid spouse conflicts.
-  - Self-employment income is out of scope and excluded.
+  - "Self-employment income isn't entered here; it goes on Business income (Schedule C) or Farm income (Schedule F)."
 # driftIgnore (YAML drift sync 2026-10-28): birthAdoption / emergencyExpense / domesticAbuse / terminalIllness are the component's
 # repayableTypes key PREFIXES, not model fields; the saved keys are <prefix>DistTraditional / RepaidTraditional / DistRoth /
 # RepaidRoth, documented as fields below.

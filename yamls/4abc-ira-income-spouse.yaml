@@ -10,7 +10,7 @@ category: income
 instructions:
   - Use this only for spouse-specific IRA distribution inputs for Form 1040 lines 4a/4b/4c.
   - Return-level upload and line 4c statement gating stay on ira-income-taxpayer.
-  - Self-employment income is out of scope and excluded.
+  - "Self-employment income isn't entered here; it goes on Business income (Schedule C) or Farm income (Schedule F)."
 # driftIgnore (YAML drift sync 2026-10-28): birthAdoption / emergencyExpense / domesticAbuse / terminalIllness are the component's
 # repayableTypes key PREFIXES, not model fields; the saved keys are <prefix>DistTraditional / RepaidTraditional / DistRoth /
 # RepaidRoth, documented as fields below.

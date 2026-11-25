@@ -11,7 +11,7 @@ instructions:
   - Use this only for spouse-specific pension/annuity inputs for Form 1040 lines 5a/5b/5c.
   - Return-level upload checks and line 5c/Form 4972/Form 5329 gating stay on pension-annuity-income-taxpayer.
   - The DUPLICATE checkbox of Form RRB-1099-R is not saved (V560); two RRB-1099-Rs with the same amounts for one person raise advisory RRB_STATEMENT_ENTERED_TWICE (owner 2026-11-22).
-  - Self-employment income is out of scope and excluded.
+  - "Self-employment income isn't entered here; it goes on Business income (Schedule C) or Farm income (Schedule F)."
   - "UI renders as a sub-interview wizard; section order below matches wizard screen flow:
     screening → classificationAndRouting → pensionDetails → exceptionAmounts (conditional) →
     uncommonGate → psoInputs → taxableComputationInputsSimplifiedMethod →

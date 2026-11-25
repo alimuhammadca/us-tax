@@ -19,7 +19,7 @@ instructions:
   - This taxpayer/family-head form owns all return-level questions (MAGI exclusions, car loan interest, filing-status gates).
   - Spouse-specific tip, overtime, and senior amounts are captured in the spouse form.
   - If married, you must file jointly (MFJ) to claim the tips, overtime, and enhanced senior deductions (Parts II, III, V).
-  - Self-employment income is out of scope; do not enter Schedule C or Schedule F amounts here.
+  - "Tips and overtime from a business are claimed here too: each business's tips are limited to that business's net income (V496, BusinessTipsLimit - from Business income (Schedule C) / Farm income (Schedule F)). The business income itself is entered on those screens, not here."
 sections:
   - name: screening
     title: Screening

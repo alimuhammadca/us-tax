@@ -1,3 +1,17 @@
+## 2026-11-26T10:15:00
+1E-42 (owner: "go ahead"): the intake YAMLs that still said self-employment is out of scope - docs only, no behaviour change. Each note
+checked against the screen and compute first:
+- 10 (income adjustments): Schedule 1 lines 15-17 are figured from Schedule SE and the se-deductions screen, not entered here.
+- 13b: business tips / overtime are claimed here, each business's tips limited to its net income (V496 BusinessTipsLimit).
+- 2555: wages or a business abroad's net profit are both supported (the screen asks the net profit and reasonable-pay shares), and with
+  self-employment the housing amount is the Part IX deduction (Form2555Housing) - "not supported" notes, option label and help fixed.
+- 2ab / 4abc / 5abc / 6abcd / 7ab: "self-employment income is entered on Schedule C / F", not "out of scope".
+- 8 (other incomes): business / farm income come from Schedule C / F; the "Out-of-scope screening" section marked retired (its two
+  fields are not asked since 2026-11-06, saved blank, read by nothing).
+- UI: the Schedule C preview's comment said the backend makes no Schedule C (it does - attachedForms.scheduleCList). The interest
+  screens' business-interest alert is right (points to Schedule C); only its CSS class is named out-of-scope-alert.
+- The first rewrite broke 5 YAMLs (wrapped lines with ':'); every new note is a single quoted line; all YAMLs parse.
+
 ## 2026-11-26T09:45:00
 1D-41 (owner: "go ahead"): e2e mfs-depreciation-home-office-and-optimizer-se, figures hand-computed.
 - Married filing separately: each spouse's depreciation asset and home office only on their own return - Form 4562 of their own

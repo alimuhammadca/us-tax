@@ -12,7 +12,7 @@ category: income
 instructions:
   - Start here only if you had additional income that belongs on Schedule 1 Part I and Form 1040 line 8.
   - Line 8 is computed as Schedule 1 line 10, and Schedule 1 line 10 is lines 1-7 plus line 9.
-  - Self-employment/business and farm income are out of scope and must be blocked.
+  - "Business and farm income (Schedule 1 lines 3 and 6) aren't entered here: they come from Business income (Schedule C) and Farm income (Schedule F)."
   - Return-level statement upload confirmations are handled on this taxpayer form.
 sections:
   - name: screening
@@ -95,22 +95,22 @@ sections:
         help: You must confirm this before saving.
 
   - name: outOfScopeScreening
-    title: Out-of-scope screening
+    title: Retired screening (no longer asked)
     multiplicity: single
     showIf: hadAdditionalIncomeForSchedule1 == true
     instructions:
-      - Schedule C and Schedule F paths are out of scope for this product.
+      - "Retired 2026-11-06 (OI_RETIRED_KEYS): no longer asked or used - Schedule C and F come from their own screens. The two columns are kept in pf_other_incomes and saved blank."
     fields:
       - name: hasScheduleCBusinessIncomeOutOfScope
         type: boolean
         required: false
         label: Do you have Schedule C business income or loss for Schedule 1 line 3?
-        help: Select Yes if Schedule C is required. This return will be blocked in this product.
+        help: Select Yes if Schedule C is required. Retired - not asked; nothing is blocked.
       - name: hasScheduleFFarmIncomeOutOfScope
         type: boolean
         required: false
         label: Do you have Schedule F farm income or loss for Schedule 1 line 6?
-        help: Select Yes if Schedule F is required. This return will be blocked in this product.
+        help: Select Yes if Schedule F is required. Retired - not asked; nothing is blocked.
 
   - name: schedule1Lines1to7
     title: Schedule 1 lines 1 through 7

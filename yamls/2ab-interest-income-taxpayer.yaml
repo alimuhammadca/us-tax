@@ -11,7 +11,7 @@ instructions:
   - Upload validation is mandatory before entering supplemental details.
   - At least one of 1099-INT, 1099-DIV, or 1099-OID must be uploaded before continue.
   - This taxpayer form owns return-level Schedule B gating questions to avoid spouse conflicts.
-  - Self-employment income is out of scope and excluded.
+  - "Self-employment income isn't entered here; it goes on Business income (Schedule C) or Farm income (Schedule F)."
 sections:
   - name: screening
     title: Screening

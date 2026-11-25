@@ -3,7 +3,7 @@
 # income, and housing facts. Qualification answers may legitimately differ
 # from the taxpayer form (see 2555.md in lines folder).
 # Return-level gating is on the taxpayer form only.
-# Self-employment foreign income is out of scope; wages/salary only.
+# Foreign earned income: wages, or the net profit of a business abroad (self-employment) - both supported.
 name: foreign-earned-income-spouse
 title: Form 2555 - Foreign Earned Income (spouse)
 multiplicity: single
@@ -13,7 +13,7 @@ instructions:
   - Complete this form if your spouse earned wages or salary from work performed in a foreign country in 2025.
   - The spouse must complete their own Form 2555 independently — qualification answers may differ from the taxpayer form.
   - Shared household facts (same foreign household) must be consistent with the taxpayer form; expenses cannot be duplicated.
-  - Self-employment foreign income is not supported; only wages and salary income can be entered here.
+  - "Foreign earned income can be wages or the net profit of a business abroad; self-employment tax still applies (Schedule SE)."
 
 sections:
   - name: screening
@@ -113,7 +113,7 @@ sections:
     instructions:
       - Enter details about your spouse's employer and the income they earned in the foreign country.
       - Report income in US dollars using the IRS yearly average exchange rate.
-      - Self-employment income from foreign sources is not supported.
+      - "For self-employment income, enter the business's net profit abroad in U.S. dollars (and the reasonable-pay share if capital is a material factor)."
     fields:
       - name: spouseForeignEarnedIncomeType
         type: select
@@ -125,7 +125,7 @@ sections:
           - value: wages
             label: Wages and salary (W-2 or foreign employer equivalent)
           - value: self_employed
-            label: Self-employment income (not supported — contact a tax professional)
+            label: Self-employment income from a business abroad
       - name: spouseEmployerName
         type: text
         required: false

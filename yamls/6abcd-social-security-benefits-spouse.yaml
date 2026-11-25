@@ -13,7 +13,7 @@ instructions:
   - Supplemental Security Income (SSI) is not taxable and not on Form SSA-1099; nothing is asked about it (owner 2026-11-05).
   - A Form SSA-1099 with the year at the top left blank is taken as the tax year (2025); advisory SSA_1099_YEAR_BLANK asks the user to enter it (owner 2026-11-22).
   - The DUPLICATE checkbox of Form RRB-1099 is not saved (V560); two RRB-1099s with the same amounts for one person raise advisory RRB_STATEMENT_ENTERED_TWICE (owner 2026-11-22).
-  - Self-employment income is out of scope and excluded.
+  - "Self-employment income isn't entered here; it goes on Business income (Schedule C) or Farm income (Schedule F)."
 sections:
   - name: screening
     title: Screening

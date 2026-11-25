@@ -1,7 +1,7 @@
 # Form 2555 — Foreign Earned Income intake for taxpayer/family head.
 # If both spouses have foreign earned income and both wish to claim exclusions,
 # each must complete a separate Form 2555 (see 2555.md in lines folder).
-# Self-employment foreign income is out of scope; wages/salary only.
+# Foreign earned income: wages, or the net profit of a business abroad (self-employment) - both supported.
 name: foreign-earned-income-taxpayer
 title: Form 2555 - Foreign Earned Income (taxpayer)
 multiplicity: single
@@ -11,7 +11,7 @@ instructions:
   - Complete this form if you earned wages or salary from work performed in a foreign country in 2025.
   - You may qualify to exclude foreign earned income, a foreign housing amount, or both from US taxation.
   - If your spouse also has foreign earned income and wishes to claim exclusions, they must complete a separate Form 2555 under their own tab.
-  - Self-employment foreign income is not supported; only wages and salary income can be entered here.
+  - "Foreign earned income can be wages or the net profit of a business abroad; self-employment tax still applies (Schedule SE)."
 
 sections:
   - name: screening
@@ -134,19 +134,19 @@ sections:
     instructions:
       - Enter details about your employer and the income you earned in the foreign country.
       - Report income in US dollars using the IRS yearly average exchange rate unless you use the actual exchange rate method.
-      - Self-employment income from foreign sources is not supported; contact a tax professional if this applies to you.
+      - "For self-employment income, enter the business's net profit abroad in U.S. dollars (and the reasonable-pay share if capital is a material factor)."
     fields:
       - name: foreignEarnedIncomeType
         type: select
         required: true
         placeholder: Select income type
         label: Type of foreign earned income
-        help: Select the type of foreign income you received. Only wages and salary are supported in this application.
+        help: Select the type of foreign income you received. Wages, or self-employment income from a business abroad.
         options:
           - value: wages
             label: Wages and salary (W-2 or foreign employer equivalent)
           - value: self_employed
-            label: Self-employment income (not supported — contact a tax professional)
+            label: Self-employment income from a business abroad
       # Added 2026-10-28 (YAML drift sync): field(s) the Angular component binds that this YAML did not document.
       - name: foreignSelfEmploymentNetIncome
         type: amount
@@ -232,7 +232,7 @@ sections:
     showIf: hadForeignEarnedIncome == true
     instructions:
       - Complete this section only if your employer paid or reimbursed your foreign housing costs and you want to exclude those amounts.
-      - The housing deduction (for self-employment income) is not supported here.
+      - "With self-employment income the housing amount is a deduction (Form 2555 Part IX, line 50) rather than an exclusion (Form2555Housing)."
       - Qualified housing expenses include rent, utilities, insurance, occupancy taxes, and non-deductible leasehold improvements. Do not include deductible mortgage interest or taxes.
     fields:
       - name: claimsHousingExclusion

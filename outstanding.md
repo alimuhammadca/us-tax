@@ -91,7 +91,7 @@ the remaining items keep their numbers.
 8. **Line 1 explanation, notary, meals, mileage, Part V** (Business income (Sch C)) - Field additions waiting for owner sign-off. (hist L1048-1051)
 9. **Schedule E Part I lines A/B, address, codes, QJV, line 43** (Rental & royalty income) - Field additions waiting for owner sign-off. (hist L1057-1060)
 10. **Spouse's own 2024 Form 1040 upload** (Last year 1040 on Spouse tab) - Owner "skip for now, keep for later"; pf_prior_year_1040 still has no person column. (hist L1140-1158)
-11. **Keep, remove or label Form 1040-X preview** (DECIDE LATER - Form 1040-X) - the "label" option is **NOT POSSIBLE AT THIS TIME** (owner 2026-11-27: tax-return forms and statements can't be modified); keeping it, or removing it from the sidebar, doesn't change the form and stays open. Was: Owner "decide later"; still in sidebar (shell.component.ts:1090). (hist L1197-1205)
+11. **Keep, remove or label Form 1040-X preview** - **DONE 2026-11-27** (owner: "remove it from the sidebar"), see Part 4.
 12. **2025 Schedule SE template** - **DONE 2026-11-27** (owner-approved exception to the no-form-change rule), see Part 4.
 13. **VOID and CORRECTED checkboxes still shown on statement screens** - **PLANNED FOR THE TAX YEAR 2026 UPGRADE** (owner 2026-11-27: "we will remove these checkboxes from all statement later when upgrading to tax year 2026") - remove them from every statement screen then, with the 2026 statement layouts; not possible before (statement forms can't be modified). Today they are harmless: nothing on the return uses them (the CORRECTED tick is saved but unused; VOID is referenced in 16 UI files). (hist L2087-2093)
 14. **H&R Block tester: confirm screen routes** for the round-2 QA scenarios (27 entries: route guesses for sc_00161-00390, Forms-mode routes, beneficiary-age and medical-exception screens, returned excess IRA contribution, K-1 box 14/20 field ids) - waits on the tester; each scenario md already gives a fallback. (hist L2561-2587)
@@ -513,6 +513,10 @@ One line per finished entry, with the evidence (class, migration, date). Grouped
 
 **Finished since the reorganization**
 
+- P11 Form 1040-X preview (2026-11-27, owner decision; UI 7d09f6c): removed from the Tax Return sidebar - the app doesn't
+  amend filed returns (owner 2026-11-02). The blank preview component is kept unchanged, just not listed.
+- Statement-screen cleanup (2026-11-27, owner-approved; UI 9f96342): 24 unused .bak copies (21,727 lines) and the never-shown
+  *ngIf="false" overlay blocks (628 lines in 8606, 5498, 3921, RRB-1099-R, SSA-1099) removed; nothing on screen changed.
 - P12 2025 Schedule SE template (2026-11-27, owner-approved exception; be 08aa7174, UI f70780d): the preview is drawn on the 2025
   IRS printing (docs/IRS-Forms/Schedule SE 2025.pdf) - only printed text changed (2025, $176,100, $7,240, $10,860 / $7,840); same
   fields and boxes; the 2024-text note removed. Owner reviewed the Stage A screenshots.

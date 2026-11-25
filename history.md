@@ -1,3 +1,12 @@
+## 2026-11-27T20:30:00
+- Statement-screen cleanup (owner: "go ahead with the cleanup"): deleted the 24 2026-04-29 .bak copies (21,727 lines, nothing imported
+  them) and the five never-shown *ngIf="false" picture-overlay blocks (628 lines: Form 8606 214, 5498 169, 3921 100, RRB-1099-R 77,
+  SSA-1099 68); RRB-1099-R's box12 copy that only fed its hidden replica removed. The SSA-1099 box 3 comment kept (on purpose,
+  2026-10-03). No commented-out TypeScript found. Build passes; the 31 specs for the five screens 189/189. UI 9f96342.
+- P11 (owner: "remove it from the sidebar"): Form 1040-X is no longer in the Tax Return sidebar (entry, render line and import removed
+  from the shell); the blank preview component kept unchanged. Build passes; sidebar check (Form 1040 / Schedule SE listed, Form
+  1040-X not) passed.
+
 ## 2026-11-27T19:30:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 45695257388 on 08aa7174 - revision ca-ustax-be--0000707 serving

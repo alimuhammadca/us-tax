@@ -92,7 +92,7 @@ the remaining items keep their numbers.
 9. **Schedule E Part I lines A/B, address, codes, QJV, line 43** (Rental & royalty income) - Field additions waiting for owner sign-off. (hist L1057-1060)
 10. **Spouse's own 2024 Form 1040 upload** (Last year 1040 on Spouse tab) - Owner "skip for now, keep for later"; pf_prior_year_1040 still has no person column. (hist L1140-1158)
 11. **Keep, remove or label Form 1040-X preview** (DECIDE LATER - Form 1040-X) - the "label" option is **NOT POSSIBLE AT THIS TIME** (owner 2026-11-27: tax-return forms and statements can't be modified); keeping it, or removing it from the sidebar, doesn't change the form and stays open. Was: Owner "decide later"; still in sidebar (shell.component.ts:1090). (hist L1197-1205)
-12. **2025 Schedule SE template** (D-sch-se-7, D-sch-se-7b, irs_text fschse.txt) - **NOT POSSIBLE AT THIS TIME** (owner 2026-11-27: tax-return forms and statements can't be modified) - replacing the preview's 2024 printing changes a tax-return form. Was: the Schedule SE preview and the IRS text are the 2024 printing; waits for the 2025 Schedule SE PDF and owner sign-off on the tax-return template. (hist L1832, hist L2180, hist L2653)
+12. **2025 Schedule SE template** - **DONE 2026-11-27** (owner-approved exception to the no-form-change rule), see Part 4.
 13. **VOID and CORRECTED checkboxes still shown on statement screens** (IRS dev mappings 1099-INT/OID/DIV) - **NOT POSSIBLE AT THIS TIME** (owner 2026-11-27: tax-return forms and statements can't be modified) - removing them changes statement forms. Was: owner will remove them from the UI later (VOID refs still in 16 UI files; CORRECTED tick saved but unused) (hist L2087-2093)
 14. **H&R Block tester: confirm screen routes** for the round-2 QA scenarios (27 entries: route guesses for sc_00161-00390, Forms-mode routes, beneficiary-age and medical-exception screens, returned excess IRA contribution, K-1 box 14/20 field ids) - waits on the tester; each scenario md already gives a fallback. (hist L2561-2587)
 15. **Suite-shape questions from sc_00001 never answered** (Round-2 QA E housekeeping) - waits on the owner to answer the two suite-shape questions (hist L2629)
@@ -512,6 +512,9 @@ One line per finished entry, with the evidence (class, migration, date). Grouped
 
 **Finished since the reorganization**
 
+- P12 2025 Schedule SE template (2026-11-27, owner-approved exception; be 08aa7174, UI f70780d): the preview is drawn on the 2025
+  IRS printing (docs/IRS-Forms/Schedule SE 2025.pdf) - only printed text changed (2025, $176,100, $7,240, $10,860 / $7,840); same
+  fields and boxes; the 2024-text note removed. Owner reviewed the Stage A screenshots.
 - 1D-48 Unreliable e2e tests (2026-11-27; be 8bd27fed): only D-6198-6 was flaky - the Form 8859 preview and
   withheld-income-not-reported never failed (the full regression's summary had no flaky count; their "(retries)" progress lines were
   misread). D-6198-6 failed in setup as the first test after a Maven build (dev-mode restart); reproduced; fixed in the helpers

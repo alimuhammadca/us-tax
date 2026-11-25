@@ -1,3 +1,17 @@
+## 2026-11-27T18:00:00
+P12 - Schedule SE preview on the 2025 printing (owner asked for it, an exception to the no-form-change rule; Stage A screenshots
+reviewed and approved).
+- Source: the IRS prior-year archive f1040sse--2025.pdf (irs.gov's current f1040sse.pdf is already 2026), saved as
+  docs/IRS-Forms/Schedule SE 2025.pdf beside the 2024 one.
+- 2024 vs 2025: text only - the year, line 7 / 8a $176,100 (was $168,600), line 14 / 15 $7,240 (was $6,920), the farm / nonfarm
+  optional-method tests $10,860 / $7,840 (was $10,380 / $7,493), footers ("Created 5/7/25" print mark). Same 32 fields; none of
+  the 27 boxes moved; pdfs/f1040sse_field_map_semantic.csv regenerated identical.
+- generate-f1040sse-fieldmap.py / generate-f1040sse-elements.py point at the 2025 PDF; us-tax-ui public/irs/f1040sse_elements.json
+  regenerated. Sample return (W-2 50,000, Schedule C 60,000): line 4a 55,410, 9 126,100, 10 6,871, 11 1,607, 12 8,478, 13 4,239.
+- The SCHEDULE_SE_PREVIEW_SHOWS_2024_PRINTED_TEXT note removed (unit + e2e updated). 45 Schedule SE / self-employment specs
+  160/160; suite 6,448 / 0. Noted, not changed: the three Schedule K-1 statement screens are 2024 printings too (statements).
+- be 08aa7174, UI f70780d.
+
 ## 2026-11-27T15:30:00
 Parked-item review (owner: "we cannot modify a tax return form or a statement ... mark them not possible at this time"). outstanding.md
 Part 2 marked **NOT POSSIBLE AT THIS TIME**: P12 2025 Schedule SE template (replacing the preview's 2024 printing changes a tax-return

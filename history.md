@@ -1,3 +1,10 @@
+## 2026-11-26T21:10:00
+Full e2e regression (2,573 tests, 6.6 h): 2,571 passed, 2 failed, 0 skipped; 2 passed on retry (wired-form-previews-render Form 8859,
+withheld-income-not-reported). Both failures were rule-17-non-overrideable-ui.spec.ts asserting zero compute POSTs - stale since
+1E-44 (the click is one compute?overrideFlags=false the backend refuses with 409, nothing computed). The alerts themselves were right.
+Test now expects exactly that one refused POST (status 409) and no overrideFlags=true; renamed "... no overriding compute". Re-run
+2/2 passed. be 75b66b25.
+
 ## 2026-11-26T14:20:00
 1E-42 follow-up (owner: option (a)): V575 drops pf_other_incomes.has_schedule_c_business_income_out_of_scope and
 has_schedule_f_farm_income_out_of_scope (the retired "Schedule C / F out of scope" questions; not asked since 2026-11-06, read by

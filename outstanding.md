@@ -65,7 +65,8 @@ the remaining items keep their numbers.
     2026-11-26): line32-total-other-payments.spec.ts "all five sources ... sum correctly" (4f697c22, 2026-06-12), 7/7 pass. (hist L6563)
 39. e2e: Form 4797 §1250 recapture plus a separate long-term loss (full §1250 / 28% path) - **DONE 2026-11-26**
     (unrecaptured-1250-with-capital-losses.spec.ts). (hist L2891)
-40. Unit: hand-verified Form 8815 strip in the with-Social-Security Pub 590-A MAGI. (hist L2989)
+40. Unit: hand-verified Form 8815 strip in the with-Social-Security Pub 590-A MAGI - **DONE 2026-11-26**
+    (Pub590aForm8815WithSocialSecurityTest; mutation-checked). (hist L2989)
 41. e2e: MFS spouse leg for the depreciation-asset and home-office screens; SE data on the optimizer `prepare()` path. (hist L3139)
 
 ### 1E. Docs and code housekeeping

@@ -1,3 +1,10 @@
+## 2026-11-26T09:00:00
+1D-40 (owner: "go ahead"): unit Pub590aForm8815WithSocialSecurityTest - the Form 8815 exclusion counted once in the Pub. 590-A (2025)
+Appendix B modified AGI of a Social Security recipient covered by a workplace plan. Single, wages 70,000, 3,000 of EE interest all
+excluded, Social Security 12,000, IRA 7,000: Worksheet 1 line 19 = 83,200 (line 1 = AGI without the exclusion, 73,000; line 17 =
+10,200), Worksheet 2 -> IRA deduction 4,060; line 6b 10,200. Passed first run (the app matches). Mutation check: with the "Finding C"
+strip removed the deduction is 1,960 (the exclusion counted twice) and the test fails; restored unchanged.
+
 ## 2026-11-26T08:30:00
 1D-39 (owner: "go ahead"): e2e unrecaptured-1250-with-capital-losses - a Form 4797 section 1250 sale (gain 50,000, unrecaptured 30,000)
 with separate capital losses; single, wages 210,000 (32% bracket); 2025 Schedule D instructions' Unrecaptured Section 1250 Gain

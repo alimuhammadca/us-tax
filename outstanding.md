@@ -105,7 +105,7 @@ the remaining items keep their numbers.
 14. **H&R Block tester: confirm screen routes** for the round-2 QA scenarios (27 entries: route guesses for sc_00161-00390, Forms-mode routes, beneficiary-age and medical-exception screens, returned excess IRA contribution, K-1 box 14/20 field ids) - waits on the tester; each scenario md already gives a fallback. (hist L2561-2587)
 15. **Suite-shape questions from sc_00001 never answered** (Round-2 QA E housekeeping) - waits on the owner to answer the two suite-shape questions (hist L2629)
 16. **Canada/Germany treaty Social Security has no input** - **DONE 2026-11-26**, see Part 4. (hist L2993)
-17. **Active-business disposition gains only removable by override** (NIIT audit) - Line 5b is still override-only (TRCS:38319); needs a new designation field with owner sign-off. (hist L3010)
+17. **Active-business disposition gains only removable by override** - **DONE 2026-11-26**, see Part 4. (hist L3010)
 18. **Form 2210 underpayment interest rate - yearly refresh** - 7% is right for TY2025; refresh with the TY2026 rates (owner 2026-07-14). (hist L3646-3664, hist L7245-7266)
 19. **OCR-content fallback for other statement types** (OCR extraction) - The text says to wait for user reports; still W-2 only (OcrContentFallback.extractMissingW2Fields); statements area on hold. (hist L4984-4998)
 20. **Spatial OCR using word polygons** (OCR extraction) - Build only if the current fallback fails on real W-2s; none reported. (hist L5000-5014)
@@ -520,6 +520,10 @@ One line per finished entry, with the evidence (class, migration, date). Grouped
 
 **Finished since the reorganization**
 
+- P17 Form 8960 active-business sales (2026-11-26, owner-approved option a; be 5bb387e3, UI 7ad3e5a): line 5a = Form 1040 line
+  7a + Schedule 1 line 4 (the Form 4797 ordinary part was missing); line 5b backs out a Business property sale used in a materially
+  participated Schedule C business or farm (with the 1A-7 K-1 amount). Not covered (typed line 5b): Form 6252 / 8824 / 4684
+  dispositions of business property; rentals (the real estate professional fix, next). Form8960Line5bBusinessSales.
 - P16 Social Security tax treaties (2026-11-26, owner-approved option b, V576; be 5937e059, UI 1f6e269): both Pub. 915 rules -
   Canadian / German social security of a U.S. resident is added to line 6a (Worksheet 1 line 1); a U.S. citizen living in Canada,
   Egypt, Germany, Ireland, Israel, Italy (also Italian), Romania or the UK has their benefits left out of lines 6a / 6b (all year, or

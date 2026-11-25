@@ -1,3 +1,17 @@
+## 2026-11-27T01:30:00
+P17 (owner: option a) - Form 8960 lines 5a / 5b.
+- Line 5a: "Form 1040 or 1040-SR, line 7a, and Schedule 1 (Form 1040), line 4" (Instructions for Form 8960) - the app took line
+  7a only, so Form 4797 ordinary gain / loss (e.g. recapture on a passive rental's equipment) never reached NIIT.
+- Line 5b (not typed): "gain or loss from the sale of property held in a non-section 1411 trade or business" - each Business
+  property sale used in a Schedule C business or farm, linked to it, with materially participated: Yes; added to the 1A-7 K-1
+  section 1231 amount; gains backed out capped at line 5a; losses enter positive. Advisories FORM_8960_LINE5B_ACTIVE_BUSINESS_SALES /
+  FORM_8960_BUSINESS_SALE_PARTICIPATION_UNANSWERED. No new fields. Helper Form8960Line5bBusinessSales; Other tax items help updated;
+  lines/23.md.
+- Tests: unit Form8960Line5bBusinessSalesTest 4 (hand-worked: rental recapture 10,000 + Schedule C van 30,000 -> 5a 40,000, 5b
+  -30,000, NIIT 380; not participated 1,520; mutation-checked both changes); suite 6,434 / 0. e2e new spec 2/2; 33 Form 8960 /
+  4797 / sale specs 137/137. UI build passes.
+- be 5bb387e3, UI 7ad3e5a.
+
 ## 2026-11-26T23:30:00
 P16 (owner: option b) - the Social Security treaty rules of Pub. 915 (2025), V576 (8 columns on pf_social_security_benefits).
 - Rule 1: "social security benefits paid by [Canada and Germany] to U.S. residents are treated ... as if they were paid under the

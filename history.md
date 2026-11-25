@@ -1,3 +1,12 @@
+## 2026-11-27T02:15:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 45630374281 on 5bb387e3 - revision ca-ustax-be--0000705 serving
+  100% traffic, image ustax-be:5bb387e; /q/health/ready UP (V576 applied). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 45630378395 on 7ad3e5a - live at https://www.taxbeans.com
+  (bundle main-2AWO4F4L.js, carries the P16 treaty questions).
+- Ships P16 (Social Security treaty rules, V576) and P17 (Form 8960 lines 5a / 5b), plus the §17 UI test fix.
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-27T01:30:00
 P17 (owner: option a) - Form 8960 lines 5a / 5b.
 - Line 5a: "Form 1040 or 1040-SR, line 7a, and Schedule 1 (Form 1040), line 4" (Instructions for Form 8960) - the app took line

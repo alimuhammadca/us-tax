@@ -1,3 +1,11 @@
+## 2026-11-26T02:00:00
+1C-33 (owner: "go ahead with option (a)"): Form 8863 - the computed student record's "adjusted qualified education expenses" held the
+gross tuition; now net of the tax-free educational assistance (scholarships, grants, tax-free 529 / Coverdell, employer assistance),
+as lines 27 / 31 and the credit already used it since the 2026-08-02 audit fix. Nothing displayed the field; the preview and the
+credit are unchanged.
+- Tests: Form8863AdjustedExpensesTest (6,000 - 2,500 = 3,500, line 31 the same; none = 6,000); e2e education specs (41 passed, one
+  retried after a setup reset); unit 6,417 / 0.
+
 ## 2026-11-26T01:00:00
 1C-32 (owner: "go ahead"): Form 8962 line 4 - the box for the federal poverty table used (a Alaska, b Hawaii, c Other 48 states and
 DC) is ticked; only the amount was filled.

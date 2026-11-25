@@ -20,6 +20,14 @@ the remaining items keep their numbers.
 
 ### 1A. Wrong or possibly wrong tax amounts (do these first)
 
+46. **Form 8960 line 5b for installment sales, like-kind exchanges and casualties of business property** (owner-approved option a,
+    2026-11-27; in progress): one question per Form 6252 / 8824 / 4684 item - used in a materially participated business or farm,
+    or a safe-harbor rental - and its recognized gain or loss comes off line 5b. §1.1411-4(d)(4)(i)(C) Ex. 2: the character is fixed
+    in the year of the sale ("section 453 governs the timing ... does not alter the character").
+47. **Real estate professional safe harbor for K-1 box 2 and Form 4835 farm rentals** (owner-approved option a, 2026-11-27; queued):
+    the 500-hour question inside the material participation box of the K-1 (Form 1065 / 1120-S) screens and on the farm rental
+    screen (§1.1411-4(g)(7)); also a rental partnership's K-1 section 1231 gain (1A-7) needs it.
+
 
 ### 1B. Missing features (not supported today)
 
@@ -58,6 +66,9 @@ the remaining items keep their numbers.
 
 ### 1D. Tests to add
 
+48. **Unreliable e2e tests (failed once, passed on retry):** wired-form-previews-render Form 8859 preview and
+    withheld-income-not-reported (full regression 2026-11-26); attached-statement-advisories D-6198-6 (K-1 specs 2026-11-27). Find
+    the cause (timing / shared-account state) rather than relying on the retry.
 36. e2e: several Schedule 3 nonrefundable credits summing into line 20 - **DONE 2026-11-26** (schedule3-credits-sum-line20.spec.ts). (hist L5801)
 37. e2e: a Form 5695 credit lowering the child tax credit through Credit Limit Worksheets A / B - **DONE 2026-11-26**
     (ctc-credit-limit-worksheet-a-energy.spec.ts; Form 8936 / line 6f not covered - same worksheet line 2). (hist L6356)
@@ -520,6 +531,9 @@ One line per finished entry, with the evidence (class, migration, date). Grouped
 
 **Finished since the reorganization**
 
+- K-1 blank material participation is passive (2026-11-27, owner-approved option a, follows 1A-6; be 7946c1eb): one rule,
+  K1ParticipationBlank.passive (passive unless Yes), in isPassiveK1, K1PassThroughAmounts, K1Passive1231, Form8911Business; the 1A-6
+  blocking flag stays.
 - Real estate professional rentals (2026-11-27, owner-approved option a, V577; be cdf34905, UI 0c7b784): material participation
   must be answered Yes (a blank counted as Yes); NIIT excludes a nonpassive professional's rental only with the 500-hour safe harbor
   (new per-property question); a safe-harbor rental's sale comes off Form 8960 line 5b. RentalReProNiit. Not covered: K-1 rental

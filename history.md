@@ -1,3 +1,16 @@
+## 2026-11-27T06:30:00
+K-1 blank material participation is passive (owner: option a; changes the 1A-6 decision that an overridden blank stays nonpassive).
+- Pub. 925: an activity is passive unless the taxpayer materially participates. Five places treated only an explicit No as passive
+  (isPassiveK1, K1PassThroughAmounts x2, K1Passive1231, Form8911Business); now one rule, K1ParticipationBlank.passive. The 1A-6
+  blocking flag stays; its message says the K-1 is treated as passive until answered. Same as the real estate professional fix.
+- Tests: unit K1BlankParticipationPassiveTest 2 (W-2 60,000 + K-1 loss 10,000: blank / No 60,000, Yes 50,000; mutation-checked).
+  Fixtures that meant Yes now answer it (LowIrsFixesChunk3Test, LowIrsFixesChunk7Test, MediumIrsFixesHelpersTest);
+  Form8911PassiveCreditTest (blank K-1 now passive: 2,900) and e2e k1-material-participation-blank-blocks (overridden blank: AGI
+  150,000) updated to the new rule. Suite 6,441 / 0; 59 K-1 specs 210 passed, 1 flaky (D-6198-6, unrelated - outstanding 1D-48).
+- outstanding.md: new 1A-46 (installment / exchange / casualty line 5b, approved), 1A-47 (K-1 box 2 / 4835 safe harbor, approved),
+  1D-48 (unreliable e2e tests).
+- be 7946c1eb.
+
 ## 2026-11-27T05:00:00
 Real estate professional rentals (owner: option a), V577 (pf_rental_property.re_pro_niit_safe_harbor_500_hours).
 - §469(c)(7) / Pub. 925 ("rental real estate activities in which you materially participated aren't passive"): a professional's

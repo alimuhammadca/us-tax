@@ -149,8 +149,7 @@ Do **not** rely only on the printed 1040 worksheet when one of these applies:
    - exclusion of interest from qualified U.S. savings bonds (**Form 8815**),
    - adoption benefits (**Form 8839**),
    - foreign earned income or housing (**Form 2555**),
-   - certain income of bona fide residents of **American Samoa** or **Puerto Rico** (Form 4563 / Pub. 570), or
-   - mirror-code exclusions (Guam / USVI / CNMI per Pub. 570).
+   - certain income of bona fide residents of **American Samoa** or **Puerto Rico** (Form 4563 / Pub. 570). (Not Guam / USVI / CNMI: their residents file with the territory - §6.2.)
    - In that case, use **Worksheet 1 in Pub. 915**. Forms 8839 / 2555 / 4563 / Puerto Rico populate worksheet line 5 (§6.2).
      **Form 8815 is not a line-5 item**: Pub. 915 says to use Schedule B line 2 (the interest *before* the exclusion) in place of
      Form 1040 line 2b on worksheet line 3 - the engine adds `form8815ExclusionAppliedThisPass()` back to line 2b there.

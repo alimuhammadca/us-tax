@@ -1,3 +1,17 @@
+## 2026-11-26T12:30:00
+1E-44 (owner: "go ahead"): "Compute return" no longer figures the return twice per click.
+- Before: GET /api/tax-return/flags ran a full prepare() (and the spouse's leg on separate returns) only to fill the "Items to review"
+  dialog, then POST /compute ran it again.
+- Now (us-tax-ui TaxReturnService.computeAllCollectingBlocks / computeOverriding / runOptimizer; topbar blockingFlagsOf): every
+  return - household, then each separate / dependent return - is computed once WITHOUT overriding; a return the backend refuses
+  (409) gives its flags, and those drive the same two dialogs ("Fix these items first" when any is non-overrideable, else "Items to
+  review" / "Compute anyway"). Other returns' messages are labelled (e.g. "Your spouse's separate return: ") and a message an earlier
+  return already raised isn't repeated. "Compute anyway" re-computes only the refused returns; the optimizer runs after. The refusal's
+  error banner is cleared (the dialog explains it). A license-required account now gets the payment dialog straight away.
+- Unchanged: backend; GET /flags (the checklist); computeAllAndOptimize (the optimizer panel).
+- e2e: dob-required / w2-required-employment assert the 409 and no override; the shared computeReturnViaUi helper and 18 line specs'
+  own compute waits now wait for the 200 (a blocked return's first response is the 409). 8 specs, 59 tests pass; UI build passes.
+
 ## 2026-11-26T11:05:00
 1E-43 (owner: "go ahead"): `lines/6abcd.md` brought up to date - docs only. Every claim re-checked against the code and the 2025
 Form 1040 instructions, Pub. 915 (Worksheet 1; irs.gov now serves the 2026 edition, same rules), Pub. 590-A Appendix B and the

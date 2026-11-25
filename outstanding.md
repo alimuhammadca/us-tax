@@ -83,7 +83,9 @@ the remaining items keep their numbers.
 43a. **Social Security worksheet line 5 adds Guam / USVI / CNMI mirror-code exclusions** (low) - Pub. 915 Worksheet 1 line 5 lists
     only Forms 8839 / 2555 / 4563 and Puerto Rico. Bona fide residents of those three file with their territory (mirror code), so a
     Form 1040 rarely has the exclusion at all; check whether the add-back can ever apply, and drop it if not.
-44. **Compute runs `prepare()` twice per click** (`/flags` preview then `/compute`); drive the flag dialog from the 409 (low priority). (hist L6451)
+44. **Compute runs `prepare()` twice per click** - **DONE 2026-11-26**: the Compute button computes every return once without
+    overriding; a refused return's 409 flags drive the same two dialogs (the spouse's / dependent's labelled, repeats dropped), and
+    "Compute anyway" re-runs only the refused returns. GET /flags stays for the checklist. UI abbbc2f, e2e 447d4476. (hist L3230)
 45. **Refund and amount owed screen lacks OnPush change detection** - add it, or retire the rule. (hist L6677, L6689)
 
 ---

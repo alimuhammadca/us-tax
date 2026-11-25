@@ -248,6 +248,12 @@ sections:
         required: false
         label: "Did you materially participate in this rental (e.g. more than 500 hours in 2025)?"
         showIf: "propertyType == 'RENTAL_REAL_ESTATE'"
+      # 2026-11-27 (V577, owner-approved): Instructions for Form 8960 - real estate professional safe harbor (NIIT only).
+      - name: reProNiitSafeHarbor500Hours
+        type: boolean
+        required: false
+        label: "Did you spend more than 500 hours on this rental in 2025, or more than 500 hours in each of any 5 of the 10 years before 2025?"
+        showIf: "isRealEstateProfessional == true && materialParticipation == true && (rentalActivityType == null || rentalActivityType == 'LONG_TERM')"
       - name: rentedToYourOwnBusiness
         type: boolean
         required: false

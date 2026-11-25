@@ -520,6 +520,10 @@ One line per finished entry, with the evidence (class, migration, date). Grouped
 
 **Finished since the reorganization**
 
+- Real estate professional rentals (2026-11-27, owner-approved option a, V577; be cdf34905, UI 0c7b784): material participation
+  must be answered Yes (a blank counted as Yes); NIIT excludes a nonpassive professional's rental only with the 500-hour safe harbor
+  (new per-property question); a safe-harbor rental's sale comes off Form 8960 line 5b. RentalReProNiit. Not covered: K-1 rental
+  real estate, Form 4835 farm rentals, the §1.469-9(g) grouping election.
 - P17 Form 8960 active-business sales (2026-11-26, owner-approved option a; be 5bb387e3, UI 7ad3e5a): line 5a = Form 1040 line
   7a + Schedule 1 line 4 (the Form 4797 ordinary part was missing); line 5b backs out a Business property sale used in a materially
   participated Schedule C business or farm (with the 1A-7 K-1 amount). Not covered (typed line 5b): Form 6252 / 8824 / 4684

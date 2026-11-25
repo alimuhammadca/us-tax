@@ -1,3 +1,22 @@
+## 2026-11-27T05:00:00
+Real estate professional rentals (owner: option a), V577 (pf_rental_property.re_pro_niit_safe_harbor_500_hours).
+- §469(c)(7) / Pub. 925 ("rental real estate activities in which you materially participated aren't passive"): a professional's
+  long-term rental was nonpassive unless material participation was answered No - a blank counted as Yes (loss deducted in full,
+  income out of NIIT). Now an explicit Yes is required; a blank is passive with RENTAL_RE_PROFESSIONAL_MATERIAL_PARTICIPATION_UNANSWERED
+  (blocking, overridable). Matches the K-1 and farm-rental paths.
+- Instructions for Form 8960 (2025): "Qualifying as a real estate professional doesn't necessarily mean you're engaged in a trade or
+  business"; the safe harbor (more than 500 hours this year, or in any 5 of the 10 prior years) keeps rental income - and the
+  gain or loss on its disposition - out of NII. New per-property question (shown for a professional who materially participated
+  in a long-term rental). No: the rental's net stays in line 4a/4c (advisory RENTAL_RE_PROFESSIONAL_NIIT_INCLUDED; Form 8960 line 7
+  for a facts-and-circumstances trade or business). Blank: in NII, blocking only when line 15 is over the threshold. Passive-loss
+  result unchanged. A Business property sale linked to a safe-harbor rental comes off line 5b.
+- RentalReProNiit (constant-pool rule); rental screen question + help; YAMLs rental-income taxpayer / spouse; lines/23.md.
+- Tests: unit RentalReProNiitTest 5 (hand-worked: W-2 250,000 + rental 30,000 -> NIIT 0 / 1,140; mutation-checked both rules).
+  Fixtures that left material participation blank but meant Yes now answer it (TRCS sc_00078; e2e form8960-niit C6b with the safe
+  harbor, schedule-e-rental-income sc_00078). Suite 6,439 / 0; new e2e 1/1; 69 rental / 8582 / NIIT specs 223 passed after the
+  fixture fix (2 failed first, both the blank-means-Yes fixtures). UI build passes.
+- be cdf34905, UI 0c7b784.
+
 ## 2026-11-27T02:15:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 45630374281 on 5bb387e3 - revision ca-ustax-be--0000705 serving

@@ -58,7 +58,7 @@ the remaining items keep their numbers.
 
 ### 1D. Tests to add
 
-36. e2e: several Schedule 3 nonrefundable credits (1116, 2441, 8880, 5695) summing into line 20. (hist L5801)
+36. e2e: several Schedule 3 nonrefundable credits summing into line 20 - **DONE 2026-11-26** (schedule3-credits-sum-line20.spec.ts). (hist L5801)
 37. e2e: a Form 5695 or 8936 credit lowering the child tax credit through Credit Limit Worksheet A. (hist L6356)
 38. Test: EIC, ACTC, AOTC, adoption and a Schedule 3 credit all feeding line 32 in one compute. (hist L6563)
 39. e2e: Form 4797 §1250 recapture plus a separate long-term loss (full §1250 / 28% path). (hist L2891)

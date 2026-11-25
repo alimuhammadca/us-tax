@@ -1,3 +1,11 @@
+## 2026-11-26T06:00:00
+1D-36 (owner: "go ahead with option (a)"): e2e schedule3-credits-sum-line20 - four Schedule 3 nonrefundable credits in one joint return
+(foreign tax credit by the no-Form-1116 election, Form 2441, Form 8880, Form 5695 Part II), values hand-computed from the 2025 forms.
+- Enough tax: 200 + 600 (20% x 3,000) + 200 (10% x 2,000) + 300 (30% x 1,000) = 1,300 on Schedule 3 line 8 and Form 1040 line 20.
+- Too little tax (taxable 6,500, tax 653): FTC 200; Form 2441 23% x 3,000 = 690 cut to 653 - 200 = 453; Form 8880 50% = 1,000 cut to
+  0; Form 5695 0; line 20 653 - the credit limit worksheets in order. Both pass; no compute change (the first run's misses were the
+  test's own seed: the IRA deduction amount and the Form 5695 Part II answers).
+
 ## 2026-11-26T05:30:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows) - 1B-18 code M line 4i, 1C-29 Schedule EIC, 1C-30
 Form 8960 preview, 1C-31 Form 4562 carryover, 1C-32 Form 8962 line 4 (V573), 1C-33 Form 8863, 1C-34 territory Schedule A lines.

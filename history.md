@@ -1,3 +1,22 @@
+## 2026-11-27T23:00:00
+P2 - Form 8615 preview (owner: plan approved, Stage A screenshots approved, then Stage B).
+- Stage A: layout from docs/IRS-Forms/f8615.pdf (2025) by the new us-tax-be/scripts/generate-f8615-elements.py; the 32 fields of
+  f8615_field_map_semantic.csv all sit on the 2025 boxes (0 mismatches) and were paired with their printed lines by position (readable
+  labels in the layout only). New form-tax-return-8615 (pure-pdf-preview) in the Tax Return section, reading the active tab's return.
+- Stage B: Form8615Fields -> AttachedForms.form8615List: child's name / SSN (the return header), A / B parent's name / SSN and C the
+  parent's filing status (KiddieTaxParentReader.ParentReturnInfo now carries the chosen parent return's first filer), lines 1-18; lines
+  12a / 12b only when line 7 has an amount (Instructions for Form 8615: "If line 7 is blank, skip lines 12a and 12b and enter the amount
+  from line 11 on line 13"); the line 9 / 10 / 15 / 17 boxes when that tax used preferential-rate income. No new fields, no migration
+  (attached forms are one JSON document).
+- Sample (parent Single, wages 200,000; child 5,000 interest, own return): 1 5,000, 4 3,650, 6 184,250, 9 37,619, 10 37,067, 11 552,
+  13 552, 15 136, 17 368, 18 688 - hand-checked.
+- Tests: unit Form8615FieldsTest 3; e2e tax-return-8615-preview.spec.ts (computes, reloads, Compute return, Riley's tab shows the
+  filled form); kiddie-tax / dependent-return specs 117 passed, multi-return-full-household timed out at 240 s in the batch and passes
+  alone in 3.4 min (near its limit; not P2). Suite 6,451 / 0. lines/8615.md (preview section).
+- Found: a separate return's previews are empty after a reload until Compute return (only the primary is re-fetched) - new 1E-49,
+  owner-approved, next.
+- be 698f0462, UI 4f70cf8.
+
 ## 2026-11-27T20:30:00
 - Statement-screen cleanup (owner: "go ahead with the cleanup"): deleted the 24 2026-04-29 .bak copies (21,727 lines, nothing imported
   them) and the five never-shown *ngIf="false" picture-overlay blocks (628 lines: Form 8606 214, 5498 169, 3921 100, RRB-1099-R 77,

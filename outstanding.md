@@ -64,6 +64,10 @@ the remaining items keep their numbers.
 
 ### 1E. Docs and code housekeeping
 
+49. **Previews on a separate return's tab are empty after a reload** (owner-approved 2026-11-27; in progress): a dependent's own
+    return and an MFS / HOH-split spouse's return are saved on the server (computeForReturn) but the page only keeps them in memory, so
+    their tab's previews (Form 1040, 8615, 4136 ...) stay blank until Compute return. Add GET /api/tax-return/{taxReturnId} (reads that
+    return's saved rows via OutputAnchorResolver) and load it when the tab opens.
 42. **Intake YAMLs that said self-employment is out of scope** - **DONE 2026-11-26**: 17 YAMLs checked against the screens and
     compute and rewritten (10, 13b, 2555, 2ab, 4abc, 5abc, 6abcd, 7ab, 8 - each person); the Schedule C preview's stale comment fixed.
     Follow-up DONE 2026-11-26: the two retired pf_other_incomes toggles dropped (V575, owner-approved). (hist L3198)
@@ -82,7 +86,7 @@ the remaining items keep their numbers.
 ## 2. Parked — waiting on the owner or something outside the app
 
 1. **Optional section 965 exclusion on Form 2210 line 8** (Refund and amount owed) - Owner 2026-11-15 "skipped for now"; the 110% AGI test after separate 2024 returns uses the Family Head's AGI pending IRS clarity. (hist L15-18)
-2. **No Form 8615 preview or PDF** (Kiddie income (8615)) - Owner said defer; no 8615 preview component exists in us-tax-ui forms. (hist L597)
+2. **No Form 8615 preview or PDF** - **DONE 2026-11-27** (owner-approved, staged), see Part 4.
 3. **Section 1062 farmland installment election (Form 1062)** (Like-kind exchanges (8824)) - Applies to tax years beginning after July 4, 2025 - build with the 2026 return. (hist L859-865)
 4. **Class-wide elections, GAA, aircraft, 5% owner, Section C** (Depreciable assets (4562)) - Field additions waiting for owner sign-off (credit basis reduction since done via CreditBasisReduction). (hist L982-984)
 5. **Clergy parsonage, Form 2031, community income, chapter 11** (Self-employment tax options) - Field additions waiting for owner sign-off. (hist L996-998)
@@ -513,6 +517,9 @@ One line per finished entry, with the evidence (class, migration, date). Grouped
 
 **Finished since the reorganization**
 
+- P2 Form 8615 preview (2026-11-27, owner-approved Stage A / B; be 698f0462, UI 4f70cf8): pure HTML/CSS from the 2025 IRS PDF, on the
+  child's own return (the dependent's tab), filled by Form8615Fields - header incl. the parent's name / SSN / filing status, lines
+  1-18 (12a / 12b only with line 7), the worksheet boxes. Note: multi-return-full-household runs near its 240 s limit (3.4 min alone).
 - P11 Form 1040-X preview (2026-11-27, owner decision; UI 7d09f6c): removed from the Tax Return sidebar - the app doesn't
   amend filed returns (owner 2026-11-02). The blank preview component is kept unchanged, just not listed.
 - Statement-screen cleanup (2026-11-27, owner-approved; UI 9f96342): 24 unused .bak copies (21,727 lines) and the never-shown

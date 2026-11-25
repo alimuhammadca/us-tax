@@ -1,3 +1,13 @@
+## 2026-11-26T07:00:00
+1D-37 (owner: "go ahead"): e2e ctc-credit-limit-worksheet-a-energy - joint, one child, tax 2,466, child tax credit 2,200 (2025
+Instructions for Schedule 8812, Credit Limit Worksheets A and B; Instructions for Form 5695, line 14).
+- Control: line 19 2,200, line 28 0.
+- A, Form 5695 Part II (line 5b, on Worksheet A line 2): 1,200 -> line 13 1,266, line 19 1,266, line 28 934, line 22 0.
+- B, Form 5695 Part I (line 5a): Worksheet B line 15 (Schedule 3 lines 5a / 6c / 6g / 6h) is Worksheet A line 4, and the Form 5695 line
+  14 limit uses Worksheet B line 14 (500) in place of line 19 -> line 14 1,966, line 5a 1,200, line 19 1,266, line 28 934. My first
+  expectation (5a after the child tax credit, 266 / 934 carried) was wrong - the 2025 worksheets put line 5a before it; the app was right.
+- No compute change. Form 8936 (line 6f) not covered - the same Worksheet A line 2 path as line 5b.
+
 ## 2026-11-26T06:00:00
 1D-36 (owner: "go ahead with option (a)"): e2e schedule3-credits-sum-line20 - four Schedule 3 nonrefundable credits in one joint return
 (foreign tax credit by the no-Form-1116 election, Form 2441, Form 8880, Form 5695 Part II), values hand-computed from the 2025 forms.

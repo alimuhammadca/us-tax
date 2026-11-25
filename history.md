@@ -1,3 +1,8 @@
+## 2026-11-26T13:10:00
+1E-43a closed, not a defect: the Social Security worksheet line 5 already leaves out Guam / USVI / CNMI (their residents file with the
+territory) - TerritoryExclusion.excludesOnUsReturn passes only American Samoa and Puerto Rico since 2026-11-07. The 1E-43 spec
+refresh had misread the old spec text as current; lines/6abcd.md corrected. Docs only.
+
 ## 2026-11-26T12:30:00
 1E-44 (owner: "go ahead"): "Compute return" no longer figures the return twice per click.
 - Before: GET /api/tax-return/flags ran a full prepare() (and the spouse's leg on separate returns) only to fill the "Items to review"

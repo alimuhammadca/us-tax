@@ -80,12 +80,9 @@ the remaining items keep their numbers.
     Pub. 915, Pub. 590-A Appendix B and the Form 8815 instructions; 26 corrections (IRA coordination computed, Form 8839 line 30,
     Form 8815 at worksheet line 3, no SSI subtraction, excess repayments, line 6d / lump-sum blockers, flag table, method citations).
     No code change found wrong. (hist L3210)
-43a. **Social Security worksheet line 5 adds Guam / USVI / CNMI mirror-code exclusions** (low) - Pub. 915 Worksheet 1 line 5 lists
-    only Forms 8839 / 2555 / 4563 and Puerto Rico. Bona fide residents of those three file with their territory (mirror code), so a
-    Form 1040 rarely has the exclusion at all; check whether the add-back can ever apply, and drop it if not.
-44. **Compute runs `prepare()` twice per click** - **DONE 2026-11-26**: the Compute button computes every return once without
-    overriding; a refused return's 409 flags drive the same two dialogs (the spouse's / dependent's labelled, repeats dropped), and
-    "Compute anyway" re-runs only the refused returns. GET /flags stays for the checklist. UI abbbc2f, e2e 447d4476. (hist L3230)
+43a. **Social Security worksheet line 5 adds Guam / USVI / CNMI mirror-code exclusions** - **CLOSED 2026-11-26, not a defect**: the
+    code already adds only American Samoa and Puerto Rico (TerritoryExclusion.excludesOnUsReturn, 2026-11-07); the 1E-43 refresh misread
+    the old spec text. lines/6abcd.md corrected.
 45. **Refund and amount owed screen lacks OnPush change detection** - add it, or retire the rule. (hist L6677, L6689)
 
 ---

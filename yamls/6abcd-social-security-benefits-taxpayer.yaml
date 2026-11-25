@@ -250,6 +250,62 @@ sections:
         required: false
         label: SSDI received for injuries from a terrorist attack (part of SSA-1099 box 5 to exclude)
 
+  # P16 (V576, 2026-11-26): Pub. 915 (2025) - Canadian / German social security paid to a U.S. resident is treated as U.S. Social Security (Worksheet 1 line 1).
+  - name: canadaGermanySocialSecurity
+    title: Social security from Canada or Germany
+    multiplicity: single
+    showIf: hadSocialSecurityBenefits == true && !(usCitizenLivingInTreatyCountry == true && livedInTreatyCountryAllYear == true)
+    help: "Benefits from the Canadian or German social security system (CPP, QPP, OAS; Deutsche Rentenversicherung) are added to line 6a and the taxable-benefits worksheet."
+    fields:
+      - name: receivedCanadaGermanySocialSecurity
+        type: boolean
+        required: false
+        label: "Did you get social security benefits from Canada or Germany in 2025?"
+      - name: canadaGermanySocialSecurityCountry
+        type: choice
+        required: false
+        showIf: receivedCanadaGermanySocialSecurity == true
+        options: [CANADA, GERMANY]
+        label: "Which country paid them?"
+      - name: canadaGermanySocialSecurityAmount
+        type: amount
+        required: false
+        showIf: receivedCanadaGermanySocialSecurity == true
+        label: "2025 benefits in U.S. dollars, after repayments"
+
+  # P16 (V576): Pub. 915 (2025) "U.S. citizens residing abroad" - exempt from U.S. tax on their benefits (no Form 8833: its instructions waive social security positions).
+  - name: treatyResidenceAbroad
+    title: Living abroad as a U.S. citizen
+    multiplicity: single
+    showIf: hadSocialSecurityBenefits == true
+    help: "A U.S. citizen living in Canada, Egypt, Germany, Ireland, Israel, Italy (also an Italian citizen), Romania or the United Kingdom is exempt; the exempt SSA-1099 / RRB-1099 benefits are left out of lines 6a and 6b."
+    fields:
+      - name: usCitizenLivingInTreatyCountry
+        type: boolean
+        required: false
+        label: "Are you a U.S. citizen who lived outside the United States in 2025?"
+      - name: treatyResidenceCountry
+        type: choice
+        required: false
+        showIf: usCitizenLivingInTreatyCountry == true
+        options: [CANADA, EGYPT, GERMANY, IRELAND, ISRAEL, ITALY, ROMANIA, UNITED_KINGDOM, OTHER]
+        label: "Which country did you live in?"
+      - name: alsoItalianCitizen
+        type: boolean
+        required: false
+        showIf: treatyResidenceCountry == ITALY
+        label: "Are you also a citizen of Italy?"
+      - name: livedInTreatyCountryAllYear
+        type: boolean
+        required: false
+        showIf: usCitizenLivingInTreatyCountry == true
+        label: "Did you live there all of 2025?"
+      - name: treatyExemptBenefitsAmount
+        type: amount
+        required: false
+        showIf: livedInTreatyCountryAllYear == false && treatyResidenceCountry != OTHER
+        label: "Benefits received while you lived there (part of box 5)"
+
   # Backend-only statement imports. Not rendered in form component.
   - name: importedStatementFields
     title: Imported statement fields (backend only)

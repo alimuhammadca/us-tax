@@ -1,3 +1,21 @@
+## 2026-11-26T23:30:00
+P16 (owner: option b) - the Social Security treaty rules of Pub. 915 (2025), V576 (8 columns on pf_social_security_benefits).
+- Rule 1: "social security benefits paid by [Canada and Germany] to U.S. residents are treated ... as if they were paid under the
+  social security legislation of the United States ... include them on line 1 of Worksheet 1." Country + amount in U.S. dollars per
+  person; added to line 6a, so lines 6a / 6b, the lump-sum election and the Pub. 590-A coordination use it. Not added for someone
+  abroad all year. The statement-upload blocker is waived when the only benefits are Canadian / German.
+- Rule 2: "U.S. citizens who are residents of [Canada, Egypt, Germany, Ireland, Israel, Italy (also a citizen of Italy), Romania,
+  United Kingdom] are exempt from U.S. tax on their benefits." Citizenship + country + Italy citizenship + all year / part-year
+  amount; the exempt SSA-1099 / RRB-1099 benefits are left out of lines 6a / 6b. Japan / India / Switzerland are for nonresident
+  aliens only (1040-NR, out of scope).
+- No Form 8833: its instructions waive a treaty position on "social security, and other public pensions".
+- Backend SocialSecurityTreaty (constant-pool rule), wired in computeSocialSecurityForPerson; 7 flags (3 blocking for blank answers).
+  UI: two sections on both Social Security screens (utils/social-security-treaty.ts), hidden answers cleared on save, help quoting
+  Pub. 915. YAMLs 6abcd taxpayer / spouse; lines/6abcd.md §2.5, §4.1, Step 2, flag table, code citations.
+- Tests: unit SocialSecurityTreatyTest 9 (hand-worked Worksheet 1: 10,000 SSA + 50,000 Canada -> 6a 60,000 / 6b 2,500;
+  mutation-checked); suite 6,430 / 0 failures. e2e social-security-treaty.spec.ts 2/2; Social Security specs 45/45. UI build passes.
+- be 5937e059, UI 1f6e269.
+
 ## 2026-11-26T21:45:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 45595495933 on 75b66b25 - revision ca-ustax-be--0000704 serving

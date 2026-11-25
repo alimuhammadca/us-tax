@@ -71,6 +71,28 @@ Social Security disability benefits are still **Social Security benefits** for t
 6b (2025 Form 1040 instructions, lines 6a and 6b; D-6a-6). Because Form SSA-1099 still reports it, the advisory
 `SOCIAL_SECURITY_TERRORIST_ATTACK_SSDI_EXCLUDED` warns that the IRS may send a notice.
 
+## 2.5 Tax treaties (P16, V576, 2026-11-26)
+
+Pub. 915 (2025) has two treaty rules that reach a Form 1040 (`SocialSecurityTreaty`):
+
+- **Rule 1 — Canadian or German benefits of a U.S. resident.** "Under income tax treaties with Canada and Germany, social security
+  benefits paid by those countries to U.S. residents are treated for U.S. income tax purposes as if they were paid under the social
+  security legislation of the United States. If you receive social security benefits from Canada or Germany, include them on
+  line 1 of Worksheet 1." Inputs (per person, bare keys): `receivedCanadaGermanySocialSecurity`,
+  `canadaGermanySocialSecurityCountry` (CANADA / GERMANY), `canadaGermanySocialSecurityAmount` (U.S. dollars, after repayments).
+  Added to the person's line 6a total, so it reaches lines 6a / 6b, the lump-sum election and the Pub. 590-A coordination. Not added
+  for someone who lived abroad all year (not a U.S. resident). With only these benefits (no SSA-1099) the statement-upload blocker
+  is waived.
+- **Rule 2 — U.S. citizens residing abroad.** "U.S. citizens who are residents of the following countries are exempt from U.S. tax
+  on their benefits": Canada, Egypt, Germany, Ireland, Israel, Italy ("You must also be a citizen of Italy"), Romania, United
+  Kingdom. Inputs: `usCitizenLivingInTreatyCountry`, `treatyResidenceCountry` (the eight + OTHER), `alsoItalianCitizen`,
+  `livedInTreatyCountryAllYear`, `treatyExemptBenefitsAmount` (part-year: box 5 received while living there, capped at the
+  person's benefits). The exempt U.S. benefits (box 5 + SSEB, after the D-6a-6 SSDI) are left out of lines 6a and 6b; all of them
+  when the person lived there all year. Japan, India and Switzerland are listed only for nonresident aliens (Form 1040-NR — out of
+  scope). A green card holder is a resident alien and does not qualify.
+- **No Form 8833.** Its instructions waive the disclosure of a treaty position that "reduces or modifies the taxation of income
+  derived by an individual from ... social security, and other public pensions".
+
 ---
 
 # 3) Primary outputs
@@ -105,6 +127,8 @@ These are recordkeeping worksheets, not separately filed IRS forms.
 
 ```text
 person.grossBenefits = sum(SSA1099.box5_for_person) + sum(RRB1099.box5_sseb_for_person)    // no SSI subtraction (§2.3)
+                      - terrorAttackSsdi                                                 // §2.4, D-6a-6
+                      - treatyExemptUsBenefits + canadaGermanyBenefits                   // §2.5, P16
 
 line6a = roundMoney(addNonNull(taxpayer.grossBenefits, spouse.grossBenefits))
 ```
@@ -430,7 +454,8 @@ This single guard protects line 6a / 6b / 6d. Part of the 12-orchestrator MFS-ca
 ## Step 2 — Validate gating
 
 `validateSocialSecurityStatementGating` emits **BLOCKING** flags:
-- `SOCIAL_SECURITY_STATEMENT_UPLOAD_REQUIRED` (hadSocialSecurityBenefits = true; no statements);
+- `SOCIAL_SECURITY_STATEMENT_UPLOAD_REQUIRED` (hadSocialSecurityBenefits = true; no statements; waived when the only benefits are
+  Canadian / German, §2.5);
 - `MISSING_UPLOADED_SSA_1099` / `MISSING_UPLOADED_RRB_1099` (statement-specific).
 
 ## Step 3 — Compute line 6a
@@ -507,6 +532,13 @@ Keep for records:
 | `SOCIAL_SECURITY_IRA_COORDINATION_VERIFIED_NO_PHASEOUT` | ADVISORY | Pub. 590-A coordination verified the claimed IRA deduction |
 | `SOCIAL_SECURITY_WORKSHEET_MANUAL_INCOME_NOT_USED` | ADVISORY | a typed worksheet override isn't used (`HeldTriage3Fixes`) |
 | `SOCIAL_SECURITY_TERRORIST_ATTACK_SSDI_EXCLUDED` | ADVISORY | SSDI excluded as a terrorist-attack / military-action disability payment (`Wave2FieldsW1`) |
+| `SOCIAL_SECURITY_CANADA_GERMANY_BENEFITS_INCLUDED_{TAXPAYER,SPOUSE}` | ADVISORY | Canadian / German benefits added to line 6a (§2.5, `SocialSecurityTreaty`) |
+| `SOCIAL_SECURITY_CANADA_GERMANY_AMOUNT_MISSING_{..}` | BLOCKING | Yes to Canadian / German benefits, amount blank |
+| `SOCIAL_SECURITY_CANADA_GERMANY_NOT_US_RESIDENT_{..}` | ADVISORY | abroad all year: the Canadian / German benefits are not added |
+| `SOCIAL_SECURITY_TREATY_EXEMPT_{..}` | ADVISORY | a treaty-country U.S. citizen's benefits left out of lines 6a / 6b |
+| `SOCIAL_SECURITY_TREATY_ITALY_NOT_ITALIAN_CITIZEN_{..}` | ADVISORY | Italy without Italian citizenship: no exemption |
+| `SOCIAL_SECURITY_TREATY_RESIDENCE_INCOMPLETE_{..}` | BLOCKING | Yes to living abroad, country or all-year answer blank |
+| `SOCIAL_SECURITY_TREATY_EXEMPT_AMOUNT_MISSING_{..}` | BLOCKING | part-year in a treaty country, amount received there blank |
 
 ---
 
@@ -594,6 +626,7 @@ All hard-coded inline; not inflation-indexed since 1983 / 1993.
 | Pub. 590-A coordination | `runPub590aCoordination` |
 | Line 6d consistency blocker | the `SOCIAL_SECURITY_LINE6D_MFS_RESIDENCE_INCONSISTENT` emitter in `TaxReturnComputeService` |
 | Advisories | `SocialSecurityAdvisories` |
+| Treaty rules (§2.5) | `SocialSecurityTreaty.adjustPersonBenefits` / `.flags` (called from `computeSocialSecurityForPerson`); `.anyForeignBenefits` in `validateSocialSecurityStatementGating` |
 
 ---|---|
 | Orchestrator entry — `computeSocialSecurityBenefits` | 14560 |

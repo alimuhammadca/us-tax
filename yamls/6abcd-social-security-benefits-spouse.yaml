@@ -66,6 +66,41 @@ sections:
         type: amount
         required: false
         label: "Spouse SSDI received for injuries from a terrorist attack (part of SSA-1099 box 5 to exclude)"
+      # P16 (V576, 2026-11-26): Pub. 915 treaty rules (bare keys, as on the Family Head form; see that YAML for the showIf rules).
+      - name: receivedCanadaGermanySocialSecurity
+        type: boolean
+        required: false
+        label: "Did your spouse get social security benefits from Canada or Germany in 2025?"
+      - name: canadaGermanySocialSecurityCountry
+        type: choice
+        required: false
+        options: [CANADA, GERMANY]
+        label: "Which country paid them?"
+      - name: canadaGermanySocialSecurityAmount
+        type: amount
+        required: false
+        label: "2025 benefits in U.S. dollars, after repayments"
+      - name: usCitizenLivingInTreatyCountry
+        type: boolean
+        required: false
+        label: "Is your spouse a U.S. citizen who lived outside the United States in 2025?"
+      - name: treatyResidenceCountry
+        type: choice
+        required: false
+        options: [CANADA, EGYPT, GERMANY, IRELAND, ISRAEL, ITALY, ROMANIA, UNITED_KINGDOM, OTHER]
+        label: "Which country did your spouse live in?"
+      - name: alsoItalianCitizen
+        type: boolean
+        required: false
+        label: "Is your spouse also a citizen of Italy?"
+      - name: livedInTreatyCountryAllYear
+        type: boolean
+        required: false
+        label: "Did your spouse live there all of 2025?"
+      - name: treatyExemptBenefitsAmount
+        type: amount
+        required: false
+        label: "Benefits received while your spouse lived there (part of box 5)"
       - name: livedWithSpouseAnyTimeDuringTaxYear
         type: boolean
         required: false

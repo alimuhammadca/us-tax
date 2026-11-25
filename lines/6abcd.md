@@ -5,7 +5,8 @@ Reviewed against:
 - **Publication 915 (2025), Social Security and Equivalent Railroad Retirement Benefits**
 - **IRC §86** (taxation of Social Security benefits — bases stable since 1983 enactment / second tier since 1993)
 - Local cross-checks in `C:\us-tax\docs\books\i1040gi_2025.txt` and `J.K. Lasser's Your Income Tax 2025`
-- Implementation verified against `TaxReturnComputeService.java` (2026-06-14)
+- **Publication 590-A (2025), Appendix B** (IRA deduction with Social Security) and the **2025 Form 8815 instructions** (line 9)
+- Implementation re-verified against the code on 2026-11-26 (1E-43). Code is cited by method name, not line number.
 
 This version corrects a material issue from earlier drafts:
 - the 2025 worksheet does **not** jump directly from one-half benefits plus other income and tax-exempt interest to Schedule 1 reductions; it has a separate **line-5 exclusions/additions** block that must be included before subtracting Schedule 1 lines 11–20, 23, and 25; and
@@ -55,14 +56,20 @@ Those belong on **lines 5a/5b/5c** (see `5abc.md` §8), via the **RRB-1099-R** (
 
 ## 2.3 SSI exclusion
 
-**Supplemental Security Income (SSI)** is **not taxable** under IRC §86(d)(1)(D) and must never be included in lines 6a or 6b. Three protections in code:
-1. Boolean gate (`hasSupplementalSecurityIncome`) prevents accidental subtraction when SSI absent;
-2. `subtractNonNegative(grossBenefits, supplementalSecurityIncomeAmount)` zero-floors;
-3. null-preserve semantics keep the field absent when no SS activity exists.
+**Supplemental Security Income (SSI)** is **not taxable** and is never part of lines 6a or 6b. SSI is not reported on Form
+SSA-1099 (Pub. 17; 2025 Form 1040 instructions, line 6), so box 5 never contains it and **nothing is subtracted** for it:
+- the screen no longer asks for an SSI amount (removed 2026-11-05; the `SOCIAL_SECURITY_SSI_AMOUNT_REQUIRED_*` flags went with it);
+- the old subtraction of a typed SSI amount from box 5 was removed (D-6a-1, 2026-10-26): it understated line 6a
+  (e.g. 18,000 box 5 − 700 SSI = 17,300). The `hasSupplementalSecurityIncome` / `supplementalSecurityIncomeAmount` columns are still
+  mapped but feed no computation.
 
 ## 2.4 Disability benefits included here
 
 Social Security disability benefits are still **Social Security benefits** for this line family. They are not re-routed out of line 6 merely because they are disability-based. (This contrasts with **pension** disability before minimum retirement age, which re-routes to line 1h — see `5abc.md` §2.2.)
+
+**Exception:** SSDI received for injuries from a terrorist attack or military action is not taxable and is left out of lines 6a and
+6b (2025 Form 1040 instructions, lines 6a and 6b; D-6a-6). Because Form SSA-1099 still reports it, the advisory
+`SOCIAL_SECURITY_TERRORIST_ATTACK_SSDI_EXCLUDED` warns that the IRS may send a notice.
 
 ---
 
@@ -97,9 +104,7 @@ These are recordkeeping worksheets, not separately filed IRS forms.
 ## 4.1 Core formula
 
 ```text
-person.grossBenefits = sum(SSA1099.box5_for_person) + sum(RRB1099.box5_sseb_for_person)
-if hasSupplementalSecurityIncome:
-    person.grossBenefits = subtractNonNegative(person.grossBenefits, supplementalSecurityIncomeAmount)
+person.grossBenefits = sum(SSA1099.box5_for_person) + sum(RRB1099.box5_sseb_for_person)    // no SSI subtraction (§2.3)
 
 line6a = roundMoney(addNonNull(taxpayer.grossBenefits, spouse.grossBenefits))
 ```
@@ -137,7 +142,8 @@ Normally, use the **Social Security Benefits Worksheet** in the **2025 Instructi
 Do **not** rely only on the printed 1040 worksheet when one of these applies:
 
 1. The taxpayer contributed to a **traditional IRA**, and the taxpayer or spouse is covered by a retirement plan at work.
-   - In that case, special worksheets in **Pub. 590-A** are needed to coordinate the IRA deduction and taxable benefits. The implementation emits an advisory `SOCIAL_SECURITY_IRA_COORDINATION_MANUAL_REVIEW` flag.
+   - In that case, the **Pub. 590-A Appendix B** worksheets figure both the IRA deduction and the taxable benefits. The engine
+     **computes** them (§9.3) - it no longer just flags the case.
 
 2. Situation 1 does not apply, but the taxpayer claims any of these:
    - exclusion of interest from qualified U.S. savings bonds (**Form 8815**),
@@ -145,7 +151,9 @@ Do **not** rely only on the printed 1040 worksheet when one of these applies:
    - foreign earned income or housing (**Form 2555**),
    - certain income of bona fide residents of **American Samoa** or **Puerto Rico** (Form 4563 / Pub. 570), or
    - mirror-code exclusions (Guam / USVI / CNMI per Pub. 570).
-   - In that case, use **Worksheet 1 in Pub. 915**. These exclusions populate worksheet line 5 (see §6.2).
+   - In that case, use **Worksheet 1 in Pub. 915**. Forms 8839 / 2555 / 4563 / Puerto Rico populate worksheet line 5 (§6.2).
+     **Form 8815 is not a line-5 item**: Pub. 915 says to use Schedule B line 2 (the interest *before* the exclusion) in place of
+     Form 1040 line 2b on worksheet line 3 - the engine adds `form8815ExclusionAppliedThisPass()` back to line 2b there.
 
 3. The taxpayer received a **lump-sum payment for an earlier year**.
    - Also complete the applicable **Pub. 915 lump-sum worksheets** (Worksheet 3 — see §7).
@@ -174,21 +182,31 @@ The result is then compared to the filing-status thresholds (IRC §86(c)).
 w1  = line6a                                                                   // net benefits
 w2  = 0.50 × w1                                                                // half-benefits
 w3  = line1z + line2b + line3b + line4b + line5b + line7a + line8              // other income (line 6 self-excluded)
+        • Form 8815 filer: line 2b + the Form 8815 exclusion (= Schedule B line 2)  — WIRED
 w4  = line2a                                                                   // tax-exempt interest
 w5  = exclusions/additions:
-        • adoption benefits (line 1f / Form 8839)                              — WIRED
-        • foreign earned income / housing exclusion (Form 2555 lines 45 + 50)  — WIRED per-spouse
+        • EXCLUDED employer adoption benefits (Form 8839 line 30)              — WIRED (not line 1f: that is the
+                                                                                   taxable part, already in w3; fixed 2026-08-01)
+        • foreign earned income / housing exclusion (Form 2555 lines 45 + 50)  — WIRED per-spouse; the line 50 housing
+                                                                                   DEDUCTION (Schedule 1 line 24j, inside w7) is
+                                                                                   added back too (D-6b-3, 2026-10-26)
         • bona-fide-resident Samoa exclusion (Form 4563 line 15)               — WIRED 2026-06-05
         • bona-fide-resident Puerto Rico exclusion (Pub. 570)                  — WIRED 2026-06-05
-        • mirror-code Guam / USVI / CNMI exclusions (Pub. 570)                 — WIRED 2026-06-05
+        • mirror-code Guam / USVI / CNMI exclusions (Pub. 570)                 — WIRED 2026-06-05 (beyond Pub. 915's
+                                                                                   printed list - see outstanding 1E-43a)
+        • MFS: only the filer's own Form 2555 / possession exclusions (spouse side nulled, 2026-08-04)
 w6  = w2 + w3 + w4 + w5                                                        // modified AGI
 w7  = Schedule 1 lines 11 through 20, and 23 and 25                            // SUBSET, NOT full line 26
 w8  = max(0, w6 − w7)                                                          // adjusted modified AGI
 ```
 
+**Line numbers:** `w1`–`w8` are **Pub. 915 Worksheet 1** numbering. The **2025 Form 1040 Social Security Benefits Worksheet** has no
+exclusions line, so from line 5 it runs one lower: its line 5 = w2 + w3 + w4, its line 6 = the Schedule 1 subset (w7), its line 7 =
+the difference (w8), its line 8 = the base amount.
+
 Worksheet line 5 is captured via the unified per-spouse `possession-residence-exclusion-{taxpayer,spouse}` personal form (V47 Liquibase migration; `PossessionResidenceExclusionMapper`). The line-5 contribution is computed by `computePossessionExclusionForSsWorksheet` (sum of the eight Part III income items per spouse, or `totalExcludedIncomeOverride` when provided). For American Samoa users the data also populates the Form 4563 PDF output. This closes `XLS/Computations/6b.md` Gap 1.
 
-Worksheet line 7 was historically wired against Schedule 1 line 26 (full adjustments). The Pub. 915-correct subset is now wired via `line10FromSchedule1Pub915Subset` (consumed at `TaxReturnComputeService.java` ~7713 and ~14178). The bug had under-stated taxable benefits — under-by-$1,600 in the lock-in test scenario (Single $20k SS + $25k wages + $2,500 student loan → line 6b = $5,350 post-fix vs $3,750 pre-fix).
+Worksheet line 7 was historically wired against Schedule 1 line 26 (full adjustments). The Pub. 915-correct subset is now wired via `line10FromSchedule1Pub915Subset`. The bug had under-stated taxable benefits — under-by-$1,600 in the lock-in test scenario (Single $20k SS + $25k wages + $2,500 student loan → line 6b = $5,350 post-fix vs $3,750 pre-fix).
 
 ## 6.3 Thresholds (IRC §86(c))
 
@@ -209,7 +227,7 @@ Intermediate plateau amount (worksheet line 13):
 - = **$6,000** for MFJ (= 0.50 × ($44,000 − $32,000));
 - = **$4,500** for the $25,000-base group (= 0.50 × ($34,000 − $25,000)).
 
-All four amounts are **hard-coded inline** at `TaxReturnComputeService.java` lines 8689–8690 (current xlsx line citations) — stable since 1983 / 1993 IRC §86 enactment; NOT inflation-indexed.
+All four amounts are **hard-coded inline** in `computeTaxableSocialSecurityNormal` — stable since the 1983 / 1993 IRC §86 enactments; NOT inflation-indexed.
 
 ## 6.4 Married filing separately and lived with spouse at any time — restrictive branch
 
@@ -222,7 +240,9 @@ if isMfs AND livedWithSpouseAnyTime:
     return min(0.85 × w1, 0.85 × w8)         // 85% cap AND 85% of full provisional income
 ```
 
-In this case, the taxpayer does **not** get the $25,000 base amount. This is IRC §86(c)(1)(D) anti-loophole (1983 enactment). It is the **logical inverse** of line 6d on MFS returns; the two flags `livedApartFromSpouseEntireTaxYear` and `livedWithSpouseAnyTimeDuringTaxYear` are read independently and mutual exclusion is **not** enforced by the engine — that's a soft validation gap tracked in `outstanding.md`.
+In this case, the taxpayer does **not** get the $25,000 base amount. This is IRC §86(c)(1)(D) anti-loophole (1983 enactment). It is the **logical inverse** of line 6d on MFS returns; the two answers `livedApartFromSpouseEntireTaxYear` and `livedWithSpouseAnyTimeDuringTaxYear` are read independently, and an
+inconsistent pair (both Yes / both No on an MFS return) raises the **blocking, non-overrideable**
+`SOCIAL_SECURITY_LINE6D_MFS_RESIDENCE_INCONSISTENT` flag.
 
 ## 6.5 Tier computation (50% / 85%)
 
@@ -278,9 +298,14 @@ Per prior-year row in `lumpSumDetails[]`:
 - `priorYearTaxableBenefitsPreviouslyReported` — prior-year taxable SS;
 - `priorYearOtherIncomeForRecompute` — prior-year worksheet line 3;
 - `priorYearTaxExemptInterestForRecompute` — prior-year worksheet line 4;
-- `priorYearAdjustmentsForRecompute` — prior-year worksheet line 7 subset.
+- `priorYearAdjustmentsForRecompute` — prior-year worksheet line 7 subset;
+- `priorYearFilingStatus`, `priorYearMfsLivedWithSpouseAnyTime`, `priorYearWorksheetLine5ExclusionsForRecompute` — the V48
+  prior-year overrides (the earlier year's base amount and line-5 exclusions).
 
-If `electsLumpSumElection = true` but `lumpSumDetails` is empty, `computeTaxableSocialSecurityLumpSum` returns null → election not applied → an **advisory** `SOCIAL_SECURITY_LUMP_SUM_ALLOCATION_REQUIRED` flag fires.
+If `electsLumpSumElection = true` but `lumpSumDetails` is empty, `computeTaxableSocialSecurityLumpSum` returns null → election not
+applied → the **blocking, non-overrideable** `SOCIAL_SECURITY_LUMP_SUM_ALLOCATION_REQUIRED` flag fires. A row missing the
+previously-reported taxable amount raises `SOCIAL_SECURITY_LUMP_SUM_PRIOR_YEAR_REPORTED_REQUIRED`, and a row missing any of the three V48
+overrides raises `SOCIAL_SECURITY_LUMP_SUM_PRIOR_YEAR_DEFAULTS_APPLIED` (both blocking, non-overrideable; only while electing).
 
 ## 7.4 Three-condition AND gate (silent-best-of-two)
 
@@ -296,18 +321,21 @@ else:
     line6b = taxableNormal             // normal computation stands
 ```
 
-**Asymmetry**: even when the user has `electsLumpSumElection = true`, line 6c is FALSE if the election does not produce a lower amount. The user's election intent is silently dropped when not beneficial. This is consistent with how most consumer tax software handles the election (strict IRS reading vs. user-intent-honoring).
+**Asymmetry**: even when the user has `electsLumpSumElection = true`, line 6c is FALSE if the election does not produce a lower
+amount; the advisory `SOCIAL_SECURITY_LUMP_SUM_ELECTION_NOT_BENEFICIAL` says so. The reverse case - a lump sum whose election would
+lower line 6b but isn't chosen - raises the advisory `SOCIAL_SECURITY_LUMP_SUM_ELECTION_WOULD_LOWER`
+(`SocialSecurityAdvisories.lumpSumElectionWouldLower`); the election is the taxpayer's choice, so it is never applied unasked.
 
 ## 7.5 Important exclusion
 
 Do **not** confuse a taxable retroactive benefit payment with the one-time **SSA / RRB lump-sum death benefit**. The lump-sum death benefit is **not** taxed as line-6 benefit income.
 
-## 7.6 Known fidelity gaps (deferred)
+## 7.6 Former fidelity gaps (closed)
 
-`computeTaxableSocialSecurityLumpSum` has three fidelity gaps tracked in `outstanding.md` (~2-3 hours scope, Low priority):
-- prior-year `worksheetLine5` (exclusions add-backs) is hardcoded to null;
-- prior-year filing status is assumed same as current year;
-- initial fallback returns `taxableNormal` (correct behavior, but worth documenting).
+The three gaps once listed here are closed (6c.md Gaps 2–3, 2026-06-06, V48): the prior-year worksheet line 5 comes from
+`priorYearWorksheetLine5ExclusionsForRecompute`, and the prior-year filing status / MFS cohabitation from `priorYearFilingStatus` /
+`priorYearMfsLivedWithSpouseAnyTime` (the current year's are used only as a default, and a missing override blocks while electing -
+§7.3). When the election can't be figured, `taxableNormal` stands.
 
 ---
 
@@ -338,7 +366,8 @@ If the taxpayer is MFS and **did** live with spouse at any time during 2025:
 
 **2025 form change**: line 6d as a checkbox is **NEW for 2025**; it replaces the handwritten "D" notation that was previously written next to line 6a/6b amounts (per spec §1). The underlying IRC §86(c)(1)(C) rule has been stable since 1983.
 
-**Soft validation gap (deferred)**: The engine does not enforce mutual exclusion between `livedApartFromSpouseEntireTaxYear` and `livedWithSpouseAnyTimeDuringTaxYear`. Two pathological cases possible (both true / both false). UI mutual-exclusion enforcement is the recommended fix (`outstanding.md` ~1-2 hours, Low priority).
+**Consistency (enforced):** an MFS return whose two residence answers are both Yes or both No is blocked by
+`SOCIAL_SECURITY_LINE6D_MFS_RESIDENCE_INCONSISTENT` (non-overrideable) - formerly a deferred soft-validation gap.
 
 ---
 
@@ -346,7 +375,14 @@ If the taxpayer is MFS and **did** live with spouse at any time during 2025:
 
 ## 9.1 Repayments more than gross benefits
 
-If benefits were repaid in 2025 and total repayments exceed gross benefits for 2025, the ordinary worksheet should not be used as though this were a normal taxable-benefits case. The engine emits an **advisory** `SOCIAL_SECURITY_NEGATIVE_NET_BENEFITS_MANUAL_REVIEW` flag when `line6a < 0`. Repayment deductions / credits are handled outside line 6.
+If 2025 repayments (box 4) exceed 2025 gross benefits (box 3), none of the benefits are taxable (Pub. 915, Repayments More Than
+Gross Benefits). The engine clamps **line 6a to $0** (line 6b = $0) and carries the excess repayment outside line 6:
+- **over $3,000:** an itemized deduction on Schedule A line 16 (`buildScheduleA` adds it when no §1341 credit was entered on the Other
+  payments screen) **or** the IRC §1341 credit - one remedy, not both. Over $3,000 with the standard deduction and no §1341 credit is
+  blocked: `SOCIAL_SECURITY_EXCESS_REPAYMENT_REQUIRES_MANUAL_HANDLING` (non-overrideable);
+- **$3,000 or less:** no deduction is allowed for 2025 (a miscellaneous itemized deduction, suspended) - the advisory
+  `SOCIAL_SECURITY_EXCESS_REPAYMENT_NO_IN_RETURN_REMEDY` explains it.
+(The `SOCIAL_SECURITY_NEGATIVE_NET_BENEFITS_MANUAL_REVIEW` flag earlier drafts named does not exist.)
 
 ## 9.2 Benefits paid on behalf of a child or incompetent person
 
@@ -354,7 +390,16 @@ Taxability belongs to the person with the legal right to receive the benefits. D
 
 ## 9.3 IRA-deduction coordination (Pub. 590-A)
 
-When the taxpayer or spouse made a traditional IRA contribution AND is covered by a retirement plan at work, the taxable SS calculation must be coordinated with the IRA deduction (Pub. 590-A). The engine emits an **advisory** `SOCIAL_SECURITY_IRA_COORDINATION_MANUAL_REVIEW` flag.
+When the taxpayer or spouse made a traditional IRA contribution AND is covered by a retirement plan at work, the IRA deduction and
+taxable benefits depend on each other. The engine **computes** the Pub. 590-A (2025) Appendix B worksheets (`runPub590aCoordination`):
+- **Worksheet 1** figures taxable benefits from a modified AGI that leaves out the IRA deduction; **Worksheet 2** figures the IRA
+  deduction (the active-participant phaseout) from it; **Worksheet 3** gives the final taxable benefits with that deduction.
+- It iterates until the IRA deduction settles (at most `IRA_COORDINATION_MAX_ITERATIONS` = 10 passes, within $1).
+- A Form 8815 exclusion is counted **once**: Worksheet 1 line 1 is AGI figured without it, so no second add-back (pinned by
+  `Pub590aForm8815WithSocialSecurityTest`, 1D-40).
+- Advisories: `SOCIAL_SECURITY_IRA_COORDINATION_DEDUCTION_REDUCED_BY_PHASEOUT` (the claimed deduction was reduced) or
+  `SOCIAL_SECURITY_IRA_COORDINATION_VERIFIED_NO_PHASEOUT` (verified, unchanged). The former
+  `SOCIAL_SECURITY_IRA_COORDINATION_MANUAL_REVIEW` flag no longer exists.
 
 ---
 
@@ -391,12 +436,11 @@ This single guard protects line 6a / 6b / 6d. Part of the 12-orchestrator MFS-ca
 ## Step 3 — Compute line 6a
 
 ```text
-line6a = sum(all SSA-1099 box 5) + sum(all qualifying RRB-1099 SSEB)
-       − SSI if hasSupplementalSecurityIncome
+line6a = sum(all SSA-1099 box 5) + sum(all qualifying RRB-1099 SSEB)      // floor 0; excess repayment → §9.1
 ```
 
-Exclude:
-- SSI;
+Exclude (none of these are in box 5 of the statements used):
+- SSI (never on Form SSA-1099);
 - non-SSEB railroad amounts;
 - Tier 2 / VDB / Supplemental railroad amounts.
 
@@ -404,9 +448,9 @@ Exclude:
 
 ```text
 if IRA-deduction coordination case:
-    use Pub. 590-A coordinated method + emit advisory flag
+    Pub. 590-A Appendix B worksheets, computed and iterated (§9.3)
 elif Form 8815 / 8839 / 2555 / 4563 / Pub. 570 case:
-    use Pub. 915 Worksheet 1 (add-backs at w5)
+    Pub. 915 Worksheet 1 (8815 at w3 via Schedule B line 2; the others at w5)
 else:
     use standard 2025 Form 1040 worksheet
 ```
@@ -450,9 +494,19 @@ Keep for records:
 | `SOCIAL_SECURITY_STATEMENT_UPLOAD_REQUIRED` | BLOCKING | `hadSocialSecurityBenefits = true` AND no SSA-1099 / RRB-1099 uploaded |
 | `MISSING_UPLOADED_SSA_1099` | BLOCKING | `receivedSsa1099 = true` AND not uploaded |
 | `MISSING_UPLOADED_RRB_1099` | BLOCKING | `receivedRrb1099 = true` AND not uploaded |
-| `SOCIAL_SECURITY_LUMP_SUM_ALLOCATION_REQUIRED` | ADVISORY | `electsLumpSumElection = true` AND `lumpSumDetails` empty |
-| `SOCIAL_SECURITY_NEGATIVE_NET_BENEFITS_MANUAL_REVIEW` | ADVISORY | `line6a < 0` (repayments > gross) |
-| `SOCIAL_SECURITY_IRA_COORDINATION_MANUAL_REVIEW` | ADVISORY | IRA deduction non-zero AND taxable SS non-zero (Pub. 590-A) |
+| `SOCIAL_SECURITY_STATEMENTS_WITHOUT_BENEFITS_ANSWER_{TAXPAYER,SPOUSE}` | ADVISORY | a non-zero SSA-1099 / RRB-1099 for the person, but the benefits screen doesn't say Yes |
+| `SOCIAL_SECURITY_LINE6D_MFS_RESIDENCE_INCONSISTENT` | BLOCKING (non-overrideable) | MFS, and the lived-apart / lived-with answers are both Yes or both No |
+| `SOCIAL_SECURITY_LUMP_SUM_ALLOCATION_REQUIRED` | BLOCKING (non-overrideable) | `electsLumpSumElection = true` AND `lumpSumDetails` empty |
+| `SOCIAL_SECURITY_LUMP_SUM_PRIOR_YEAR_REPORTED_REQUIRED` | BLOCKING (non-overrideable) | electing; a row lacks the previously-reported taxable benefits |
+| `SOCIAL_SECURITY_LUMP_SUM_PRIOR_YEAR_DEFAULTS_APPLIED` | BLOCKING (non-overrideable) | electing; a row lacks a V48 prior-year override (§7.3) |
+| `SOCIAL_SECURITY_LUMP_SUM_ELECTION_NOT_BENEFICIAL` | ADVISORY | elected, but the election doesn't lower line 6b (line 6c left unchecked) |
+| `SOCIAL_SECURITY_LUMP_SUM_ELECTION_WOULD_LOWER` | ADVISORY | not elected, but the election would lower line 6b |
+| `SOCIAL_SECURITY_EXCESS_REPAYMENT_REQUIRES_MANUAL_HANDLING` | BLOCKING (non-overrideable) | repayments exceed gross by over $3,000, standard deduction, no §1341 credit |
+| `SOCIAL_SECURITY_EXCESS_REPAYMENT_NO_IN_RETURN_REMEDY` | ADVISORY | repayments exceed gross by $3,000 or less (no 2025 deduction) |
+| `SOCIAL_SECURITY_IRA_COORDINATION_DEDUCTION_REDUCED_BY_PHASEOUT` | ADVISORY | Pub. 590-A coordination reduced the claimed IRA deduction |
+| `SOCIAL_SECURITY_IRA_COORDINATION_VERIFIED_NO_PHASEOUT` | ADVISORY | Pub. 590-A coordination verified the claimed IRA deduction |
+| `SOCIAL_SECURITY_WORKSHEET_MANUAL_INCOME_NOT_USED` | ADVISORY | a typed worksheet override isn't used (`HeldTriage3Fixes`) |
+| `SOCIAL_SECURITY_TERRORIST_ATTACK_SSDI_EXCLUDED` | ADVISORY | SSDI excluded as a terrorist-attack / military-action disability payment (`Wave2FieldsW1`) |
 
 ---
 
@@ -483,14 +537,15 @@ Keep for records:
 
 # 15) Practical developer cheat sheet
 
-- **line 6a** = total **box 5** net benefits from SSA-1099 + RRB-1099 (SSEB only) − SSI. Always populated when SS activity exists.
+- **line 6a** = total **box 5** net benefits from SSA-1099 + RRB-1099 (SSEB only), floor 0 (excess repayment → §9.1). SSI is never in box 5. Always populated when SS activity exists.
 - **line 6b** = worksheet result, capped at **85%** of line 6a. Zero (not null) when no benefits are taxable but SS activity exists.
 - **line 6c** = check only when the **lump-sum election** is BOTH made AND beneficial.
 - **line 6d** = check only for **MFS + lived apart all year**. NEW checkbox for 2025 (replaces handwritten "D").
 - **MFS + lived with spouse any time** = no $25,000 base; restrictive 85% branch (IRC §86(c)(1)(D)).
 - **SSI** = never included.
 - **RRB Tier 2 / NSSEB / VDB / Supplemental** = not line 6; route to lines 5a/5b/5c.
-- **Provisional income** = ½(line 6a) + line 1z + 2a + 2b + 3b + 4b + 5b + 7a + 8 + 8839/2555/4563/Pub-570 add-backs − Schedule 1 lines 11–20 + 23 + 25.
+- **Provisional income** = ½(line 6a) + line 1z + 2a + 2b (+ the Form 8815 exclusion) + 3b + 4b + 5b + 7a + 8 + 8839 line 30 / 2555 lines 45 + 50 / 4563 / Pub-570 add-backs − Schedule 1 lines 11–20 + 23 + 25.
+- **IRA + workplace plan** = Pub. 590-A Appendix B, computed (§9.3).
 
 ---
 
@@ -527,10 +582,20 @@ All hard-coded inline; not inflation-indexed since 1983 / 1993.
 
 ---
 
-# 18) Current code citations (TaxReturnComputeService.java, 2026-06-14)
+# 18) Current code citations (by method - line numbers drift)
 
-| Concern | Method / line |
+| Concern | Where |
 |---|---|
+| Orchestrator | `TaxReturnComputeService.computeSocialSecurityBenefits` (MFS guard at its top) |
+| Per-person aggregator (line 6a) | `computeSocialSecurityForPerson` |
+| Worksheet line 3 (incl. the Form 8815 add-back) / line 5 exclusions | in `computeSocialSecurityBenefits`; `computeForm2555ExclusionForSsWorksheet`, `computePossessionExclusionForSsWorksheet` |
+| Worksheet line 7 subset | `line10FromSchedule1Pub915Subset` |
+| Taxable benefits | `computeTaxableSocialSecurityNormal`, `computeTaxableSocialSecurityLumpSum` |
+| Pub. 590-A coordination | `runPub590aCoordination` |
+| Line 6d consistency blocker | the `SOCIAL_SECURITY_LINE6D_MFS_RESIDENCE_INCONSISTENT` emitter in `TaxReturnComputeService` |
+| Advisories | `SocialSecurityAdvisories` |
+
+---|---|
 | Orchestrator entry — `computeSocialSecurityBenefits` | 14560 |
 | Call site (from main pipeline) | 577 |
 | Per-person aggregator — `computeSocialSecurityForPerson` | 15152 |
@@ -552,3 +617,4 @@ All hard-coded inline; not inflation-indexed since 1983 / 1993.
 | 2026-05-12 | 6c.xlsx Code Validation walkthrough | Line 6c verification (10 issues) | COMPLETE — 10/10 closed. **PDF export bug fixed**: CSV mapping `c1_41[0]` from `unmapped_c1_41_0` → `line6c_lump_sum_election`; three-condition AND gate documented; silent-best-of-two convention (user-intent-vs-IRS-correctness asymmetry) documented; line 6c structurally NOT in line 9 (boolean type). Backend regression: 755/755 pass. |
 | 2026-05-12 | 6d.xlsx Code Validation walkthrough | Line 6d verification (10 issues) | COMPLETE — 10/10 closed. **Parallel PDF export bug fixed**: CSV mapping `c1_42[0]` from `unmapped_c1_42_0` → `line6d_mfs_lived_apart_all_year`; two-condition AND gate documented (IRC §86(c)(1)(C) + NEW-FOR-2025 cosmetic redesign); soft validation gap on `livedApartAllYear` vs `livedWithSpouseAnyTime` mutual exclusion deferred to `outstanding.md`. 6abcd cluster complete (4th shared-aggregator cluster after 3abc + 4abc + 5abc). Backend regression: 755/755 pass. |
 | 2026-06-14 | Specification re-author | Lines 6a + 6b + 6c + 6d | Re-authored against current code state (orchestrator at line 14560; `computeSocialSecurityForPerson` at line 15152; possession-exclusion helper at line 14868); preserved IRS prose and statutory citations (IRC §86, Pub. 915, Pub. 939, Pub. 570, Pub. 590-A); documented `line10FromSchedule1Pub915Subset` Pub. 915 subset fix; documented 2025-NEW line 6d checkbox (replaces handwritten "D"); documented blank-when-fully-taxable asymmetry vs 4a/5a (line 6a does NOT blank); documented possession-residence-exclusion V47 migration. |
+| 2026-11-26 | 1E-43 spec refresh | Lines 6a–6d | Re-verified against the code and the 2025 Form 1040 instructions, Pub. 915, Pub. 590-A Appendix B and the Form 8815 instructions. Corrected: Pub. 590-A coordination is computed (not an advisory; the MANUAL_REVIEW flag no longer exists); adoption add-back is Form 8839 line 30, not line 1f; Form 8815 enters at worksheet line 3 (Schedule B line 2); SSI is not subtracted (not on SSA-1099); the 2555 housing-deduction add-back; excess repayments (line 6a floor 0 → Schedule A line 16 / §1341; the NEGATIVE_NET_BENEFITS flag never existed); the line 6d inconsistency and the lump-sum prior-year gaps are now enforced / closed (V48); flag table rebuilt from the code; code citations by method name; Pub. 915 vs Form 1040 worksheet line numbering. No code change. |

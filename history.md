@@ -1,3 +1,19 @@
+## 2026-11-26T11:05:00
+1E-43 (owner: "go ahead"): `lines/6abcd.md` brought up to date - docs only. Every claim re-checked against the code and the 2025
+Form 1040 instructions, Pub. 915 (Worksheet 1; irs.gov now serves the 2026 edition, same rules), Pub. 590-A Appendix B and the
+Form 8815 line 9 instructions. Corrected:
+- IRA + workplace plan: the Pub. 590-A Appendix B worksheets are COMPUTED (`runPub590aCoordination`, up to 10 passes within $1,
+  Form 8815 counted once); the advisory MANUAL_REVIEW flag it named no longer exists.
+- Adoption add-back = Form 8839 line 30 (excluded benefits), not line 1f; the Form 2555 line 50 housing-deduction add-back.
+- Form 8815 enters at worksheet line 3 (Schedule B line 2 in place of line 2b), not line 5 - the code already does this; its comment
+  that called it "deferred (out of scope)" was fixed (comment only).
+- SSI: not on Form SSA-1099, so nothing is subtracted (removed 2026-10-26 / 2026-11-05); terrorist-attack SSDI is excluded.
+- Excess repayments: line 6a floor $0, over $3,000 -> Schedule A line 16 or §1341, else no 2025 remedy; the
+  NEGATIVE_NET_BENEFITS flag it named never existed.
+- Line 6d inconsistency and the lump-sum prior-year inputs are now blocking (V48) - the "deferred gaps" were closed.
+- Flag table rebuilt from the code (13 flags); code cited by method, not line number; Pub. 915 vs Form 1040 worksheet numbering.
+New item 1E-43a (low): the worksheet line 5 also adds Guam / USVI / CNMI exclusions, which Pub. 915 doesn't list.
+
 ## 2026-11-26T10:15:00
 1E-42 (owner: "go ahead"): the intake YAMLs that still said self-employment is out of scope - docs only, no behaviour change. Each note
 checked against the screen and compute first:

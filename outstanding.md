@@ -76,7 +76,13 @@ the remaining items keep their numbers.
     compute and rewritten (10, 13b, 2555, 2ab, 4abc, 5abc, 6abcd, 7ab, 8 - each person); the Schedule C preview's stale comment fixed.
     Left: the retired pf_other_incomes columns has_schedule_c_business_income_out_of_scope / has_schedule_f_farm_income_out_of_scope
     (not asked since 2026-11-06, saved blank, read by nothing) could be dropped. (hist L3198)
-43. **`lines/6abcd.md` is out of date** (says the IRA coordination is advisory, cites "line 1f" and old line numbers). (hist L2990)
+43. **`lines/6abcd.md` is out of date** - **DONE 2026-11-26**: re-verified against the code and the 2025 Form 1040 instructions,
+    Pub. 915, Pub. 590-A Appendix B and the Form 8815 instructions; 26 corrections (IRA coordination computed, Form 8839 line 30,
+    Form 8815 at worksheet line 3, no SSI subtraction, excess repayments, line 6d / lump-sum blockers, flag table, method citations).
+    No code change found wrong. (hist L3210)
+43a. **Social Security worksheet line 5 adds Guam / USVI / CNMI mirror-code exclusions** (low) - Pub. 915 Worksheet 1 line 5 lists
+    only Forms 8839 / 2555 / 4563 and Puerto Rico. Bona fide residents of those three file with their territory (mirror code), so a
+    Form 1040 rarely has the exclusion at all; check whether the add-back can ever apply, and drop it if not.
 44. **Compute runs `prepare()` twice per click** (`/flags` preview then `/compute`); drive the flag dialog from the 409 (low priority). (hist L6451)
 45. **Refund and amount owed screen lacks OnPush change detection** - add it, or retire the rule. (hist L6677, L6689)
 

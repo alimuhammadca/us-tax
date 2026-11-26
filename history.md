@@ -1,3 +1,11 @@
+## 2026-11-26T16:20:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 45831378232 on e9634db1 - revision ca-ustax-be--0000710 serving
+  100% traffic, image ustax-be:e9634db; /q/health/ready UP (V581 applied). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 45831382710 on 4ae2e7f - live at https://www.taxbeans.com
+  (bundle main-DVQ3WULY.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-26T15:30:00
 Parked item 8 (owner-approved option a): the Schedule C questions Business income was missing (V581).
 - Backend e9634db1: V581 adds 8 pf_business_activity and 3 pf_business_vehicle columns; BusinessIncomeMapper saves/loads them;

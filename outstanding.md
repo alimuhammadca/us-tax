@@ -90,7 +90,7 @@ the remaining items keep their numbers.
 6. **EIN and QJV election not asked** (Farm rental (4835)) - Disposition FIXED V552 (FarmRentalDisposition); EIN and QJV election are field additions waiting for owner sign-off. (hist L1008-1014)
 7. **EIN, weather livestock election, Schedule J, NOL carryback** (Farm income (Sch F)) - Field additions waiting for owner sign-off. (hist L1028-1029)
 8. **Line 1 explanation, notary, meals, mileage, Part V** (Business income (Sch C)) - **DONE 2026-11-26** (owner-approved option a, V581), see Part 4.
-9. **Schedule E Part I lines A/B, address, codes, QJV, line 43** (Rental & royalty income) - Field additions waiting for owner sign-off. (hist L1057-1060)
+9. **Schedule E Part I lines A/B, address, codes, QJV, line 43** (Rental & royalty income) - **DONE 2026-11-26** (owner-approved option a, V582), see Part 4.
 10. **Spouse's own 2024 Form 1040 upload** - **DONE 2026-11-28** (owner-approved), see Part 4.
 11. **Keep, remove or label Form 1040-X preview** - **DONE 2026-11-27** (owner: "remove it from the sidebar"), see Part 4.
 12. **2025 Schedule SE template** - **DONE 2026-11-27** (owner-approved exception to the no-form-change rule), see Part 4.
@@ -514,6 +514,13 @@ One line per finished entry, with the evidence (class, migration, date). Grouped
 
 **Finished since the reorganization**
 
+- P9 Schedule E gaps on Rental & royalty income (2026-11-26, owner-approved option a, V582; be 8d2ddb79, UI 3bf9df5): lines A / B
+  (Forms 1099; one answer per return - a joint return's line A is Yes when either spouse's is, line B No when either's is; No ->
+  advisory SCHEDULE_E_FORMS_1099_NOT_FILED), line 1b type of property (1 single-family, 2 multi-family, 3 vacation / short-term,
+  4 commercial, 8 other with its description -> advisory SCHEDULE_E_OTHER_PROPERTY_STATEMENT; land 5 and self-rental 7 keep priority),
+  line 2 QJV box (joint return), line 43 now adds the K-1 box 2 rental real estate of a materially participating real estate
+  professional (K1PassiveClasses repBox2). The address needed nothing (one line 1a box). ScheduleEQuestionsTest (10), e2e
+  schedule-e-questions.spec.ts; 46 rental / Schedule E specs 143/143. Not included on line 43: Form 1041 K-1 rental real estate.
 - P8 Schedule C gaps on Business income (2026-11-26, owner-approved option a, V581; be e9634db1, UI 4ae2e7f): 11 new questions,
   each shown only when it applies - line 1 Forms 1099-NEC explanation (box 1 > receipts; listed as the statement to attach), line 6 /
   Part V accounting-method change + section 481(a) adjustment (signed), line 24b fully deductible meals, line 9 five-or-more vehicles

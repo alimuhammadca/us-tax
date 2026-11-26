@@ -31,6 +31,17 @@ sections:
         type: boolean
         required: false
         label: "Do your rentals meet the safe harbor for the qualified business income deduction (250 hours of rental services, separate books)?"  # Yes / No; Rev. Proc. 2019-38
+      - name: paymentsRequiring1099   # V582 (owner-approved 2026-11-26, parked item 9): Schedule E line A
+        type: boolean
+        required: false
+        label: "Did you make any payments in 2025 for these rentals that would require filing Forms 1099 (for example $600 or more to a contractor)?"
+        help: "2025 Schedule E instructions, Line A. Joint return: line A is Yes when either spouse answers Yes."
+      - name: filedRequired1099   # V582: Schedule E line B
+        type: boolean
+        required: false
+        label: "Did you file, or will you file, all the required Forms 1099?"
+        showIf: "paymentsRequiring1099 == true"
+        help: "Line B. Joint return: No when either spouse answers No. No -> advisory SCHEDULE_E_FORMS_1099_NOT_FILED."
       - name: otherPassiveIncome
         type: number
         required: false
@@ -54,6 +65,18 @@ sections:
           copyright, patent and other royalties are not depletable - IRC 611-613)"
         options: ["OIL_GAS", "OTHER_MINERAL", "INTELLECTUAL_PROPERTY", "OTHER"]
         showIf: "propertyType == 'ROYALTY'"
+      - name: propertyKind   # V582: Schedule E line 1b Type of Property (5 Land / 7 Self-Rental come from mostlyLand / rentedToYourOwnBusiness and win)
+        type: enum
+        required: false
+        label: "What type of property is it?"
+        options: ["SINGLE_FAMILY", "MULTI_FAMILY", "VACATION_SHORT_TERM", "COMMERCIAL", "OTHER"]   # codes 1, 2, 3, 4, 8; blank -> 1
+        showIf: "propertyType != 'ROYALTY'"
+      - name: otherPropertyDescription   # V582
+        type: text
+        required: false
+        label: "Describe the property"
+        showIf: "propertyKind == 'OTHER'"
+        help: "Line 1b Other - the statement to attach (advisory SCHEDULE_E_OTHER_PROPERTY_STATEMENT)."
       - name: propertyDescription
         type: text
         required: false
@@ -63,6 +86,12 @@ sections:
         required: false
         label: "Community share of this property (%)"
         showIf: "filing-status filingStatus = Married filing separately and communityPropertyState = true"
+      - name: qualifiedJointVenture   # V582: Schedule E line 2 QJV box
+        type: boolean
+        required: false
+        label: "Do you and your spouse own and run this rental together (just the two of you, not through an LLC) and choose to report it as a qualified joint venture?"
+        showIf: "filing-status filingStatus = Married filing jointly and propertyType != 'ROYALTY'"
+        help: "Each spouse enters only their own share of the property on their own tab; the QJV box is checked for it."
       - name: rentsReceived
         type: number
         required: false

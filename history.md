@@ -1,3 +1,15 @@
+## 2026-11-26T18:30:00
+Parked item 9 (owner-approved option a): the Schedule E questions Rental & royalty income was missing (V582).
+- Backend 8d2ddb79: V582 adds pf_rental_income payments_requiring_1099 / filed_required_1099 and pf_rental_property property_kind /
+  other_property_description / qualified_joint_venture; RentalIncomeMapper saves / loads them. ScheduleEParts: typeCode prints the
+  screen's type (2025 Schedule E "Type of Property" 1-8), line2 ticks the QJV box, linesAB fills lines A / B once per return
+  (Instructions for Schedule E, Line A: "answer lines A and B ... on only one Schedule E"), otherStatements asks for the type 8
+  statement, and line 43 adds the K-1 box 2 rental real estate that is nonpassive for a real estate professional (f1040se line 43:
+  "from all rental real estate activities in which you materially participated"). ScheduleEQuestionsTest 10; full suite 6,483 / 0.
+- UI 3bf9df5: form-rental-income asks lines A / B (B after a Yes on A), the type of property with the Other description, and the QJV
+  question on a joint return; help from the 2025 Schedule E instructions.
+- YAMLs rental-income-taxpayer / spouse updated. e2e schedule-e-questions.spec.ts 2/2; 46 rental / Schedule E specs 143 passed.
+
 ## 2026-11-26T16:20:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 45831378232 on e9634db1 - revision ca-ustax-be--0000710 serving

@@ -1,3 +1,13 @@
+## 2026-11-28T02:30:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 45728783384 on d9e868b1 - revision ca-ustax-be--0000708 serving
+  100% traffic, image ustax-be:d9e868b; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 45728787041 on 37742bc - live at https://www.taxbeans.com
+  (bundle main-DSD7E3WL.js: the Form 8615 preview present, tax-return-1040x gone; /irs/f8615_elements.json 200).
+- Ships P2 (Form 8615 preview), P11 (Form 1040-X off the sidebar), the statement-screen cleanup, 1E-49 (separate return previews
+  after a reload; GET /api/tax-return/{id}).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-28T01:00:00
 1E-49 (owner: go ahead) - a separate return's previews after a reload.
 - Found while building P2: a dependent's own return and an MFS / HOH-split leg are saved under their own id (computeForReturn ->

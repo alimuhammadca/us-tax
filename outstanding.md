@@ -85,7 +85,7 @@ the remaining items keep their numbers.
 1. **Optional section 965 exclusion on Form 2210 line 8** (Refund and amount owed) - Owner 2026-11-15 "skipped for now"; the 110% AGI test after separate 2024 returns uses the Family Head's AGI pending IRS clarity. (hist L15-18)
 2. **No Form 8615 preview or PDF** - **DONE 2026-11-27** (owner-approved, staged), see Part 4.
 3. **Section 1062 farmland installment election (Form 1062)** (Like-kind exchanges (8824)) - Applies to tax years beginning after July 4, 2025 - build with the 2026 return. (hist L859-865)
-4. **Class-wide elections, GAA, aircraft, 5% owner, Section C** (Depreciable assets (4562)) - Field additions waiting for owner sign-off (credit basis reduction since done via CreditBasisReduction). (hist L982-984)
+4. **Class-wide elections, GAA, aircraft, 5% owner, Section C** (Depreciable assets (4562)) - **DONE 2026-11-26** (owner-approved option a, V583), see Part 4.
 5. **Clergy parsonage, Form 2031, community income, chapter 11** (Self-employment tax options) - Field additions waiting for owner sign-off. (hist L996-998)
 6. **EIN and QJV election not asked** (Farm rental (4835)) - Disposition FIXED V552 (FarmRentalDisposition); EIN and QJV election are field additions waiting for owner sign-off. (hist L1008-1014)
 7. **EIN, weather livestock election, Schedule J, NOL carryback** (Farm income (Sch F)) - Field additions waiting for owner sign-off. (hist L1028-1029)
@@ -514,6 +514,14 @@ One line per finished entry, with the evidence (class, migration, date). Grouped
 
 **Finished since the reorganization**
 
+- P4 Form 4562 elections on Depreciable assets (2026-11-26, owner-approved option a, V583; be 287ea8e0, UI e9b3a9c): line 18 general asset
+  accounts (one answer per person, asked with a 2025 asset; ticks line 18 on each Form 4562 with an eligible 2025 MACRS asset; an asset
+  placed in service and disposed of the same year stays out - Reg. 1.168(i)-1(c)(1)(i); a records advisory), the part of a listed asset's
+  use that is leasing or pay to a more-than-5% owner or related person (a percent, not the planned Yes / No - the 50% test needs the
+  amount) taken out of qualified business use for the more-than-50% test only, with the aircraft exception (Pub. 946 ch. 5; "Is it an
+  aircraft?" - the 25% is figured, not asked), a class-wide method election advisory (IRC 168(b)(2)(D), (b)(5), (g)(7); bonus already
+  had one), a note that Part V Section C (employer-provided vehicles) isn't supported. DepreciationElections (9 unit tests), e2e
+  form-4562-elections.spec.ts; 49 depreciation specs 152/152. Later: selling an asset out of a general asset account (TY2026+).
 - P9 Schedule E gaps on Rental & royalty income (2026-11-26, owner-approved option a, V582; be 8d2ddb79, UI 3bf9df5): lines A / B
   (Forms 1099; one answer per return - a joint return's line A is Yes when either spouse's is, line B No when either's is; No ->
   advisory SCHEDULE_E_FORMS_1099_NOT_FILED), line 1b type of property (1 single-family, 2 multi-family, 3 vacation / short-term,

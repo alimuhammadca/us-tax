@@ -1,3 +1,17 @@
+## 2026-11-26T20:00:00
+Parked item 4 (owner-approved option a): Form 4562 elections and the listed-property use rules on Depreciable assets (V583).
+- Backend 287ea8e0: V583 adds pf_depreciation general_asset_account_election and pf_depreciation_asset five_percent_owner_use_percent /
+  is_aircraft. New DepreciationElections: qualifiedUse (Pub. 946 ch. 5 - "Qualified business use ... doesn't include ... leasing property
+  to any 5% owner or related person ... [or] compensation ... by a 5% owner or related person"; the aircraft exception at 25%) used by the
+  280F listed-property 50% test and its later-year recapture test, and by Form 4562 Part V line 26 / 27; methodFlags (the 150% DB,
+  straight-line and ADS elections are by class - IRC 168(b)(2)(D), 168(b)(5), 168(g)(7)); line18 / gaaFlags (Form 4562 line 18;
+  Reg. 1.168(i)-1(c)(1)(i)). 9 unit tests; full suite 6,492 / 0.
+- UI e9b3a9c: the line 18 question at the top (with a 2025 asset), the 5% owner use percent and "Is it an aircraft?" for listed
+  property, a note that Part V Section C isn't supported; help from the 2025 Form 4562 instructions and Pub. 946.
+- Changed from the plan: the 5% owner question is a percent, not Yes / No (the more-than-50% test needs how much of the use it is), and
+  the aircraft question is "Is it an aircraft?" with the 25% test figured from the answers. Same 3 fields.
+- YAMLs depreciation-asset-taxpayer / spouse updated. e2e form-4562-elections.spec.ts 2/2; 49 depreciation specs 152 passed.
+
 ## 2026-11-26T18:30:00
 Parked item 9 (owner-approved option a): the Schedule E questions Rental & royalty income was missing (V582).
 - Backend 8d2ddb79: V582 adds pf_rental_income payments_requiring_1099 / filed_required_1099 and pf_rental_property property_kind /

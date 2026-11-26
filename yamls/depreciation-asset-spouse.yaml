@@ -18,6 +18,12 @@ sections:
         type: boolean
         required: true
         label: Does your spouse have depreciable business assets?
+      - name: generalAssetAccountElection   # V583 (owner-approved 2026-11-26, parked item 4): Form 4562 line 18
+        type: boolean
+        required: false
+        showIf: hasDepreciableAssets == true and an asset is placed in service in 2025
+        label: Elect to group the assets placed in service in 2025 into general asset accounts?
+        help: "Section 168(i)(4); ticks line 18 on each Form 4562 with an eligible 2025 MACRS asset (not one disposed of in 2025 - Reg. 1.168(i)-1(c)(1)(i), advisory GAA_SAME_YEAR_DISPOSAL_EXCLUDED); advisory GAA_ELECTION_RECORDS."
 
   - name: asset
     title: Asset
@@ -135,6 +141,18 @@ sections:
         required: false
         showIf: listedEvidenceSupportsUse == true
         label: Is the evidence written? (line 24b)
+      - name: fivePercentOwnerUsePercent   # V583: Pub. 946 ch. 5, Qualified business use
+        type: number
+        required: false
+        showIf: isListedProperty == true
+        label: Part of its use that is leasing it to, or providing it as pay to, someone who owns more than 5% of the business or a relative of theirs (%)
+        help: "Taken out of the qualified business use for the more-than-50% test only (IRC 280F(b)); 50% or less -> ADS straight line, Form 4562 line 27, advisory LISTED_OWNER_USE_NOT_QUALIFIED."
+      - name: isAircraft   # V583
+        type: boolean
+        required: false
+        showIf: isListedProperty == true and fivePercentOwnerUsePercent > 0 and not a passenger automobile or heavy SUV
+        label: Is it an aircraft?
+        help: "Pub. 946 ch. 5 exception: with at least 25% other qualified business use, the 5% owner use counts as qualified business use."
       - name: vehicleBusinessMiles
         type: integer
         required: false

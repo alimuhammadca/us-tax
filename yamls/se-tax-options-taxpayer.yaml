@@ -50,6 +50,20 @@ sections:
         label: "Your home's fair rental value for the year (furnished, plus utilities)"
         showIf: isClergy == true
 
+      - name: clergyParsonageProvided   # V584 (owner-approved 2026-11-26, parked item 5): Schedule SE line 2
+        type: boolean
+        required: false
+        label: Does the church provide the home itself (a parsonage)?
+        showIf: isClergy == true
+        help: "Yes adds clergyHomeFairRentalValue to Schedule SE line 2 (not with an approved Form 4361)."
+
+      - name: clergyMealsLodgingValue   # V584
+        type: amount
+        required: false
+        label: "Value of meals and lodging provided for the employer's convenience"
+        showIf: isClergy == true
+        help: "Schedule SE line 2 (not with an approved Form 4361)."
+
       - name: clergyReasonablePayForServices
         type: amount
         required: false

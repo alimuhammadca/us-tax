@@ -86,7 +86,7 @@ the remaining items keep their numbers.
 2. **No Form 8615 preview or PDF** - **DONE 2026-11-27** (owner-approved, staged), see Part 4.
 3. **Section 1062 farmland installment election (Form 1062)** (Like-kind exchanges (8824)) - Applies to tax years beginning after July 4, 2025 - build with the 2026 return. (hist L859-865)
 4. **Class-wide elections, GAA, aircraft, 5% owner, Section C** (Depreciable assets (4562)) - **DONE 2026-11-26** (owner-approved option a, V583), see Part 4.
-5. **Clergy parsonage, Form 2031, community income, chapter 11** (Self-employment tax options) - Field additions waiting for owner sign-off. (hist L996-998)
+5. **Clergy parsonage, Form 2031, community income, chapter 11** (Self-employment tax options) - **DONE 2026-11-26** (owner-approved option a, V584), see Part 4.
 6. **EIN and QJV election not asked** (Farm rental (4835)) - Disposition FIXED V552 (FarmRentalDisposition); EIN and QJV election are field additions waiting for owner sign-off. (hist L1008-1014)
 7. **EIN, weather livestock election, Schedule J, NOL carryback** (Farm income (Sch F)) - Field additions waiting for owner sign-off. (hist L1028-1029)
 8. **Line 1 explanation, notary, meals, mileage, Part V** (Business income (Sch C)) - **DONE 2026-11-26** (owner-approved option a, V581), see Part 4.
@@ -514,6 +514,12 @@ One line per finished entry, with the evidence (class, migration, date). Grouped
 
 **Finished since the reorganization**
 
+- P5 Schedule SE special situations on Self-employment tax options (2026-11-26, owner-approved option a, V584; be aa9a4949, UI d874c43):
+  "Does the church provide the home itself (a parsonage)?" (Yes adds the home's fair rental value to Schedule SE line 2) and the value of
+  meals and lodging for the employer's convenience (line 2) - 2025 Schedule SE instructions, Ministers; both left off with Form 4361, like
+  the allowance. Form 2031: help only (an earlier election can't be revoked - answer No to Form 4361). Community income was already done
+  (CommunityProperty). Chapter 11: a debtor with Schedule C / F income gets the blocking CHAPTER11_BUSINESS_INCOME_NOT_SUPPORTED_* (the
+  estate's share of the business isn't split). ClergySeLine2 (5 unit tests), e2e schedule-se-clergy-line2.spec.ts; 29 SE specs 98/98.
 - P4 Form 4562 elections on Depreciable assets (2026-11-26, owner-approved option a, V583; be 287ea8e0, UI e9b3a9c): line 18 general asset
   accounts (one answer per person, asked with a 2025 asset; ticks line 18 on each Form 4562 with an eligible 2025 MACRS asset; an asset
   placed in service and disposed of the same year stays out - Reg. 1.168(i)-1(c)(1)(i); a records advisory), the part of a listed asset's

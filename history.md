@@ -1,3 +1,15 @@
+## 2026-11-26T21:00:00
+Parked item 5 (owner-approved option a): Schedule SE line 2 clergy items and the chapter 11 business block (V584).
+- Backend aa9a4949: V584 adds pf_se_tax_options clergy_parsonage_provided / clergy_meals_lodging_value. ClergySeLine2.housing - the line 2
+  clergy housing is the allowance + the parsonage's fair rental value (when provided) + meals and lodging (2025 Instructions for Schedule SE:
+  "include on line 2: The rental value of a home or an allowance for a home furnished to you ... and The value of meals and lodging
+  provided ... for your employer's convenience"); ClergySeLine2.chapter11 - a blocking flag for a chapter 11 debtor with Schedule C / F
+  income (Chapter 11 Bankruptcy Cases: the business income goes on the estate's Form 1041, SE tax stays with the debtor - not split here).
+  5 unit tests; full suite 6,497 / 0.
+- UI d874c43: the two clergy questions in Church and clergy; the Form 2031 sentence on the Form 4361 help; the chapter 11 flag links to
+  the Employment screen.
+- YAMLs se-tax-options-taxpayer / spouse updated. e2e schedule-se-clergy-line2.spec.ts 2/2 (line 2 50,000 -> 70,000); 29 SE specs 98 passed.
+
 ## 2026-11-26T20:00:00
 Parked item 4 (owner-approved option a): Form 4562 elections and the listed-property use rules on Depreciable assets (V583).
 - Backend 287ea8e0: V583 adds pf_depreciation general_asset_account_election and pf_depreciation_asset five_percent_owner_use_percent /

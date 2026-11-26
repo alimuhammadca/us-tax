@@ -1,3 +1,9 @@
+## 2026-11-27T03:00:00
+Parked item 15 DONE: the owner answered the two round-2 QA suite-shape questions from sc_00001.
+- (1) Round-2 scenarios reuse round 1's facts (the same people and statements), so the rounds can be compared side by side.
+- (2) The Form 8621 / 8978 / 8986 scenarios are kept; those forms stay marked as not comparable in H&R Block, the rest of each return is graded.
+- Both answers match how the suite was built - no scenario, app or test changes.
+
 ## 2026-11-27T02:00:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 45875793490 on cad977f3 - revision ca-ustax-be--0000711 serving 100%

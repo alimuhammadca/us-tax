@@ -1,3 +1,15 @@
+## 2026-11-27T01:00:00
+Parked item 7 DONE (owner-approved option b): Schedule J Stages B and C - farm income averaging (V587).
+- Backend cad977f3: V587 pf_schedule_j (16 fields, owner-approved), PfScheduleJ + ScheduleJMapper (farm-income-averaging-taxpayer, allow-list
+  + bulk delete); ScheduleJCompute - the 2022/2023/2024 Tax Rate Schedules, lines 1-23, line 23 replaces the regular tax on Form 1040
+  line 16 only when lower (SCHEDULE_J_USED / SCHEDULE_J_NOT_LOWER; computationMethod SCHEDULE_J); blocking SCHEDULE_J_NOT_SUPPORTED for
+  an elected capital gain, a base-year worksheet, the Schedule D Tax Worksheet or a missing base-year status; attachedForms.scheduleJList;
+  prior-year figures endpoint adds regularTax16 / computationMethod16 for the 2024 pre-fill. ScheduleJComputeTest 8/8.
+- UI 769efc5: Farm income averaging (Schedule J) screen on Incomes (Family Head), help; the Schedule J preview fills from scheduleJList and
+  is listed only when the return uses it.
+- Tests: unit 6,516 / 0; new e2e schedule-j-farm-income-averaging 2/2; line 16 + farm regression 422 passed.
+- Stage D (capital gain / base-year worksheets) left as an optional follow-up in outstanding.md item 7.
+
 ## 2026-11-26T23:00:00
 Parked item 7 part 1 (owner-approved option b): Schedule F line D EIN and weather-related livestock sales (V586).
 - Backend 0d7f7d50: V586 adds pf_farm_activity ein / weather_livestock_deferred / weather_livestock_prior_year_deferred; FarmIncomeMapper

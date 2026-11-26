@@ -18,14 +18,14 @@ Base-year amounts come from the earlier returns: line 5 / 9 / 13 is that year's 
 base year, a line of that Schedule J); lines 19-21 that year's tax (section 1 tax only). A base year with taxable income of zero or less
 uses the instructions' Taxable Income Worksheet (taxable income without the NOL and capital loss limits).
 
-## Stage A - blank preview (done 2026-11-26; waiting for the owner's visual review)
+## Stage A - blank preview (done 2026-11-26; owner-approved with the fields)
 
 - `scripts/generate-semantic-1040sj.js` - fields named by printed line (header, 1, 2a-2c, 3-23), geometry-checked (amounts descend).
 - `scripts/generate-f1040sj-elements.py` (copy of the 8881 extractor) -> `us-tax-ui/public/irs/f1040sj_elements.json`.
 - `form-tax-return-schedule-j` (pure HTML/CSS) in the Tax Return sidebar, Family Head tab (one per return), blank until Stage C.
 - e2e `tax-return-schedule-j-preview.spec.ts`.
 
-## Stage B - the screen (needs owner sign-off on the exact fields below)
+## Stage B - the screen (done 2026-11-26, V587; the 16 fields owner-approved)
 
 New screen **"Farm income averaging (Schedule J)"** in Incomes on the Family Head tab (one per return), listed when the household has a
 Schedule F farm (`pf_schedule_j`, new table, uid-cascade registered in UserDataBulkDelete, PersonalResource allow-list):
@@ -45,7 +45,7 @@ Schedule F farm (`pf_schedule_j`, new table, uid-cascade registered in UserDataB
 
 That is 16 fields, more than the "about 4-7" first estimated - the base years each need taxable income, tax and filing status.
 
-## Stage C - compute (Schedule J lines 1-23 -> Form 1040 line 16)
+## Stage C - compute (done 2026-11-26: ScheduleJCompute, attachedForms.scheduleJList - no out_ table needed)
 
 - `ScheduleJCompute` (outside TaxReturnComputeService): line 1 = Form 1040 line 15; 2a capped at line 1; line 3; line 4 = the 2025 tax
   on line 3 with the return's own regular-tax path (Tax Table / Tax Computation Worksheet / QDCG worksheet on the smaller taxable
@@ -59,3 +59,12 @@ That is 16 fields, more than the "about 4-7" first estimated - the base years ea
 
 The instructions' 2022 / 2023 / 2024 Qualified Dividends and Capital Gain Tax Worksheets and the Schedule D Tax Worksheet path for
 line 2b - each base year's qualified dividends and capital gain amounts as more inputs.
+
+## As built (2026-11-26)
+
+- The screen is listed on the Family Head tab always (not only with a farm): the shell's income list has no per-household gate; the screen
+  points to Farm income first.
+- Schedule J is kept in attachedForms.scheduleJList (the V387 JSON holder), so no out_schedule_j table; the preview and its sidebar item
+  appear when the return uses Schedule J.
+- 2024 is filled from the 2024 return computed here (GET /api/estimated-tax/prior-year now returns regularTax16 / computationMethod16)
+  unless it used Schedule J.

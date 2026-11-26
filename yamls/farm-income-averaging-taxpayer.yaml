@@ -1,0 +1,89 @@
+# Farm income averaging (Schedule J, Form 1040, 2025) - Family Head only, one per return.
+# schedule-j-plan.md Stage B (outstanding.md parked item 7, owner-approved option b and the 16 fields, 2026-11-26); V587 pf_schedule_j.
+# Sources: 2025 Schedule J and its instructions (docs/IRS-Forms/f1040sj.pdf, docs/books/i1040sj.pdf).
+name: farm-income-averaging-taxpayer
+title: Farm income averaging (Schedule J)
+person: taxpayer
+sections:
+  - name: screening
+    fields:
+      - name: electIncomeAveraging
+        type: boolean
+        required: true
+        label: Figure the tax with farm income averaging (Schedule J)?
+        help: "The tax is figured both ways; Schedule J line 23 is Form 1040 line 16 only when lower (advisories SCHEDULE_J_USED / SCHEDULE_J_NOT_LOWER)."
+
+  - name: electedFarmIncome
+    showIf: electIncomeAveraging == true
+    fields:
+      - name: electedFarmIncome
+        type: amount
+        required: false
+        label: Elected farm income (line 2a)
+        help: "Filled with the last computed Schedule 1 line 6 (farm profit) when blank; capped at line 1 (taxable income)."
+      - name: electedNetCapitalGain
+        type: amount
+        required: false
+        label: Of that, net capital gain (line 2b)
+        help: "An amount here blocks (SCHEDULE_J_NOT_SUPPORTED) - the base years' Schedule D Tax Worksheets are Stage D."
+      - name: electedUnrecaptured1250Gain
+        type: amount
+        required: false
+        label: Of that, unrecaptured section 1250 gain (line 2c)
+        showIf: electedNetCapitalGain > 0
+
+  # One section per base year (2022 / 2023 / 2024 -> lines 5 / 9 / 13, 19 / 20 / 21; the Tax Rate Schedule of that year's status).
+  - name: baseYears
+    showIf: electIncomeAveraging == true
+    multiplicity: single
+    fields:
+      - name: base2022FilingStatus
+        type: select
+        options: [Single, Married filing jointly, Married filing separately, Head of household, Qualifying surviving spouse]
+        label: 2022 filing status
+        help: "Filled with this year's filing status when blank."
+      - name: base2022Amount
+        type: amount
+        signed: true
+        label: 2022 taxable income, or the Schedule J line named (line 5)
+      - name: base2022Tax
+        type: amount
+        label: 2022 tax from Form 1040 line 16 (section 1 tax), or the Schedule J line named (line 19)
+      - name: base2022UsedWorksheet
+        type: boolean
+        label: Did your 2022 tax use the Qualified Dividends and Capital Gain, Schedule D, or Foreign Earned Income Tax Worksheet?
+        help: "Yes blocks (Stage D)."
+      - name: base2023FilingStatus
+        type: select
+        label: 2023 filing status
+      - name: base2023Amount
+        type: amount
+        signed: true
+        label: 2023 taxable income, or the Schedule J line named (line 9)
+      - name: base2023Tax
+        type: amount
+        label: 2023 tax (line 20)
+      - name: base2023UsedWorksheet
+        type: boolean
+        label: Did your 2023 tax use one of those worksheets?
+      - name: base2024FilingStatus
+        type: select
+        label: 2024 filing status
+        help: "2024 fields are filled from the 2024 return computed here (taxable income, regular tax, status, method) unless it used Schedule J."
+      - name: base2024Amount
+        type: amount
+        signed: true
+        label: 2024 taxable income, or 2024 Schedule J line 3 (line 13)
+      - name: base2024Tax
+        type: amount
+        label: 2024 tax, or 2024 Schedule J line 4 (line 21)
+      - name: base2024UsedWorksheet
+        type: boolean
+        label: Did your 2024 tax use one of those worksheets?
+
+  - name: computedOutputs
+    readOnly: true
+    computed: true
+    fields:
+      - name: scheduleJ
+        label: Schedule J lines 1-23 (attachedForms.scheduleJList; ScheduleJCompute)

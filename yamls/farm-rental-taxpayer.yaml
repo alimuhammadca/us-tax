@@ -28,6 +28,21 @@ sections:
         type: text
         required: false
         label: Property description
+      - name: ein   # V585 (owner-approved 2026-11-26, parked item 6): Form 4835 "Employer ID number (EIN), if any"
+        type: ein
+        required: false
+        label: Employer ID number (EIN), if the farm rental has one
+      - name: qualifiedJointVenture   # V585: Form 4835 instructions, Qualified joint ventures - Family Head's screen only
+        type: boolean
+        required: false
+        label: Do you and your spouse own this farm rental together (the only owners, not through an LLC) and choose to report it as a qualified joint venture?
+        showIf: "filing-status filingStatus = Married filing jointly"
+        help: "Entered once; the compute divides every amount into two Forms 4835 (FarmRentalQjv), the spouse's share added to the spouse's farm rentals."
+      - name: qjvTaxpayerSharePercent   # V585
+        type: number
+        required: false
+        label: Your share of the farm rental (%) - blank for 50/50
+        showIf: qualifiedJointVenture == true
       - name: activeParticipation
         type: boolean
         required: false

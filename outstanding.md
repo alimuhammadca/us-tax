@@ -87,7 +87,7 @@ the remaining items keep their numbers.
 3. **Section 1062 farmland installment election (Form 1062)** (Like-kind exchanges (8824)) - Applies to tax years beginning after July 4, 2025 - build with the 2026 return. (hist L859-865)
 4. **Class-wide elections, GAA, aircraft, 5% owner, Section C** (Depreciable assets (4562)) - **DONE 2026-11-26** (owner-approved option a, V583), see Part 4.
 5. **Clergy parsonage, Form 2031, community income, chapter 11** (Self-employment tax options) - **DONE 2026-11-26** (owner-approved option a, V584), see Part 4.
-6. **EIN and QJV election not asked** (Farm rental (4835)) - Disposition FIXED V552 (FarmRentalDisposition); EIN and QJV election are field additions waiting for owner sign-off. (hist L1008-1014)
+6. **EIN and QJV election not asked** (Farm rental (4835)) - **DONE 2026-11-26** (owner-approved option b, V585), see Part 4.
 7. **EIN, weather livestock election, Schedule J, NOL carryback** (Farm income (Sch F)) - Field additions waiting for owner sign-off. (hist L1028-1029)
 8. **Line 1 explanation, notary, meals, mileage, Part V** (Business income (Sch C)) - **DONE 2026-11-26** (owner-approved option a, V581), see Part 4.
 9. **Schedule E Part I lines A/B, address, codes, QJV, line 43** (Rental & royalty income) - **DONE 2026-11-26** (owner-approved option a, V582), see Part 4.
@@ -514,6 +514,12 @@ One line per finished entry, with the evidence (class, migration, date). Grouped
 
 **Finished since the reorganization**
 
+- P6 Farm rental EIN and QJV (2026-11-26, owner-approved option b, V585; be 3705ec69, UI 1fabc04): the EIN per farm rental (Form 4835
+  "Employer ID number (EIN), if any", printed at the top); on a joint return the Family Head's farm rental asks whether it is the
+  spouses' qualified joint venture and the Family Head's share (blank 50/50) - FarmRentalQjv divides every amount before the compute, so
+  each spouse gets a Form 4835 (Form 4835 instructions, Qualified joint ventures) and Schedule E line 40 / Form 8582 are unchanged in
+  total; the spouse's screen names the QJV farm rental. FarmRentalQjv (5 unit tests), e2e form4835-ein-qjv.spec.ts; 14 farm rental
+  specs 55/55.
 - P5 Schedule SE special situations on Self-employment tax options (2026-11-26, owner-approved option a, V584; be aa9a4949, UI d874c43):
   "Does the church provide the home itself (a parsonage)?" (Yes adds the home's fair rental value to Schedule SE line 2) and the value of
   meals and lodging for the employer's convenience (line 2) - 2025 Schedule SE instructions, Ministers; both left off with Form 4361, like

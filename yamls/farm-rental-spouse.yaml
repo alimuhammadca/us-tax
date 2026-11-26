@@ -28,6 +28,11 @@ sections:
         type: text
         required: false
         label: Property description
+      - name: ein   # V585 (owner-approved 2026-11-26, parked item 6): Form 4835 "Employer ID number (EIN), if any"
+        type: ein
+        required: false
+        label: Employer ID number (EIN), if the farm rental has one
+      # V585: no QJV question here - a QJV farm rental is entered on the Family Head's screen; this screen shows a note naming it.
       - name: activeParticipation
         type: boolean
         required: false

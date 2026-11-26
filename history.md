@@ -1,3 +1,15 @@
+## 2026-11-26T22:00:00
+Parked item 6 (owner-approved option b): Farm rental (Form 4835) EIN and the spouses' qualified joint venture (V585).
+- Backend 3705ec69: V585 adds pf_farm_rental_activity ein / qualified_joint_venture / qjv_taxpayer_share_percent; FarmRentalMapper saves /
+  loads them; Form4835FormFields prints the EIN; new FarmRentalQjv - a pre-pass (after ScheduleCElections.apply) that, on a joint return,
+  splits each QJV farm rental on the Family Head's screen into the Family Head's share and the spouse's (added to the spouse's farm
+  rentals): "you each can file a separate Form 4835 to report your share of farm rental income" (Form 4835 instructions). 5 unit tests;
+  full suite 6,502 / 0.
+- UI 1fabc04: the EIN box (shared EIN input) on each farm rental, the QJV question and share on the Family Head's screen of a joint
+  return, a note on the spouse's screen naming the QJV farm rental; help from the 2025 Form 4835 instructions.
+- YAMLs farm-rental-taxpayer / spouse updated. e2e form4835-ein-qjv.spec.ts 2/2 (60% -> line 1 18,000 / 12,000; line 40 20,000);
+  14 farm rental specs 55 passed.
+
 ## 2026-11-26T21:00:00
 Parked item 5 (owner-approved option a): Schedule SE line 2 clergy items and the chapter 11 business block (V584).
 - Backend aa9a4949: V584 adds pf_se_tax_options clergy_parsonage_provided / clergy_meals_lodging_value. ClergySeLine2.housing - the line 2

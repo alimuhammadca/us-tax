@@ -1,3 +1,13 @@
+## 2026-11-26T10:40:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 45796880036 on 7c5ce228 - revision ca-ustax-be--0000709 serving
+  100% traffic, image ustax-be:7c5ce22; /q/health/ready UP (V580 applied). URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 45796884472 on 29f8198 - live at https://www.taxbeans.com
+  (bundle main-ODQLI2QT.js: the six code boxes and the spouse's Last year 1040 question present).
+- Ships P10 (the spouse's own 2024 Form 1040 upload), the six-box verification code (sign-in + account dialog) and the start-page
+  race fix - after the full regression (2,587 / 2,588; the one failure was that race, fixed and re-run).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-26T09:50:00
 Full e2e regression (owner: "run full regression and then fix the failed and skipped tests and then re-run them") - covers P10 and the
 six-box verification code. 2,588 tests in 6.7 h: 2,587 passed, 1 failed, 0 skipped.

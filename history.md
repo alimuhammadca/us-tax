@@ -1,3 +1,14 @@
+## 2026-11-26T09:50:00
+Full e2e regression (owner: "run full regression and then fix the failed and skipped tests and then re-run them") - covers P10 and the
+six-box verification code. 2,588 tests in 6.7 h: 2,587 passed, 1 failed, 0 skipped.
+- The failure was a real app race: personal-form-actions "Save with required fields missing" (1 in 5 runs alone). On a new account the
+  shell's restoreStartPage checked "did the user move?" only before its awaited Last-year-1040 state request, and by comparing page
+  keys - a click on Identification (already the default page) left the key unchanged - so the first-session jump to Last year 1040
+  overrode the click. Fix (UI): a sidebar pick during startup is recorded (pickFromSidebar) and wins, checked before and after the
+  request. Re-run: that test 10/10 with no retries; 11 start-page / Get started specs 57/57.
+- Code boxes: the e2e sign-in uses a minted token, so no e2e exercises the code screen; its unit tests cover it (6).
+- UI 29f8198.
+
 ## 2026-11-28T06:00:00
 P10 (owner: go ahead) - the spouse's own 2024 Form 1040 upload. V580: pf_prior_year_1040.owner_role (taxpayer | spouse), unique per
 (uid, tax_year, owner_role).

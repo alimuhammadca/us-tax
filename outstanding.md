@@ -88,7 +88,7 @@ the remaining items keep their numbers.
 4. **Class-wide elections, GAA, aircraft, 5% owner, Section C** (Depreciable assets (4562)) - **DONE 2026-11-26** (owner-approved option a, V583), see Part 4.
 5. **Clergy parsonage, Form 2031, community income, chapter 11** (Self-employment tax options) - **DONE 2026-11-26** (owner-approved option a, V584), see Part 4.
 6. **EIN and QJV election not asked** (Farm rental (4835)) - **DONE 2026-11-26** (owner-approved option b, V585), see Part 4.
-7. **EIN, weather livestock election, Schedule J, NOL carryback** (Farm income (Sch F)) - Field additions waiting for owner sign-off. (hist L1028-1029)
+7. **EIN, weather livestock election, Schedule J, NOL carryback** (Farm income (Sch F)) - **IN PROGRESS** (owner-approved option b, 2026-11-26): part 1 DONE (V586 - line D EIN, weather-related livestock sales; be 0d7f7d50, UI 168f91a); the NOL carryback was already done (V389, FarmingLossCarryback); Schedule J staged in `C:\us-tax\schedule-j-plan.md` (Stage A blank preview next, then owner review).
 8. **Line 1 explanation, notary, meals, mileage, Part V** (Business income (Sch C)) - **DONE 2026-11-26** (owner-approved option a, V581), see Part 4.
 9. **Schedule E Part I lines A/B, address, codes, QJV, line 43** (Rental & royalty income) - **DONE 2026-11-26** (owner-approved option a, V582), see Part 4.
 10. **Spouse's own 2024 Form 1040 upload** - **DONE 2026-11-28** (owner-approved), see Part 4.

@@ -1,3 +1,17 @@
+## 2026-11-26T23:00:00
+Parked item 7 part 1 (owner-approved option b): Schedule F line D EIN and weather-related livestock sales (V586).
+- Backend 0d7f7d50: V586 adds pf_farm_activity ein / weather_livestock_deferred / weather_livestock_prior_year_deferred; FarmIncomeMapper
+  saves / loads them; ScheduleFFormFields prints line D; new FarmWeatherLivestock - a pre-pass (after FarmRentalQjv) setting a cash-method
+  farm's line 2 to the sales less the income postponed to 2026 (capped at the sales) plus the income postponed from 2024 (2025 Schedule F
+  instructions, line 2, "Sales of livestock because of weather-related conditions"; Pub. 225 (2025) ch. 3, section 451(g)), and an advisory
+  listing the statement Pub. 225 requires. 6 unit tests (Pub. 225's 31,500 example); full suite 6,508 / 0.
+- UI 168f91a: the EIN on each farm (line D), the two weather-related livestock amounts after line 2 (cash method), last year's postponed
+  income carried to next year's screen; help from the Schedule F instructions and Pub. 225.
+- Already done: the farming loss carryback (V389). Schedule J is staged in schedule-j-plan.md (16 fields proposed - more than the first
+  estimate; Stage A blank preview, then owner review). Sources added: docs/books/i1040sj.pdf, docs/IRS-Forms/f1040sj.pdf, docs/books/p225.pdf
+  (2025 editions from irs.gov).
+- YAMLs farm-income-taxpayer / spouse updated. e2e schedule-f-ein-weather-livestock.spec.ts 1/1; 27 farm income specs 117 passed.
+
 ## 2026-11-26T22:00:00
 Parked item 6 (owner-approved option b): Farm rental (Form 4835) EIN and the spouses' qualified joint venture (V585).
 - Backend 3705ec69: V585 adds pf_farm_rental_activity ein / qualified_joint_venture / qjv_taxpayer_share_percent; FarmRentalMapper saves /

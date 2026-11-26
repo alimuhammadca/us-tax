@@ -45,6 +45,10 @@ sections:
         options:
           - cash
           - accrual
+      - name: ein   # V586 (owner-approved 2026-11-26, parked item 7): Schedule F line D
+        type: ein
+        required: false
+        label: Employer ID number (EIN), if you have one (line D)
       - name: materiallyParticipated
         type: boolean
         required: true
@@ -82,6 +86,18 @@ sections:
         type: amount
         required: false
         label: Sales of raised livestock, produce, grains (line 2)
+      - name: weatherLivestockDeferred   # V586: section 451(g), Pub. 225 ch. 3 - cash method only
+        type: amount
+        required: false
+        label: Of those sales, livestock income from sales made only because of weather-related conditions that you choose to report in 2026
+        showIf: accountingMethod == cash
+        help: "Taken off line 2 (capped at the sales); advisory SCHEDULE_F_WEATHER_LIVESTOCK_DEFERRED_* lists the election statement; carried to next year's screen."
+      - name: weatherLivestockPriorYearDeferred   # V586
+        type: amount
+        required: false
+        label: Weather-related livestock income deferred from 2024
+        showIf: accountingMethod == cash
+        help: "Added to line 2; filled from last year's farm when it was entered here."
       - name: coopDistributions
         type: amount
         required: false

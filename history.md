@@ -1,3 +1,11 @@
+## 2026-11-27T02:00:00
+Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
+- Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 45875793490 on cad977f3 - revision ca-ustax-be--0000711 serving 100%
+  traffic, image ustax-be:cad977f; /q/health/ready UP. URL: https://ca-ustax-be.ashydesert-7408eba4.centralus.azurecontainerapps.io.
+- Frontend (Azure Static Web App swa-ustax-ui): azure-static-web-apps.yml run 45875797798 on 769efc5 - live at https://www.taxbeans.com
+  (bundle main-JAXC7ZDA.js).
+- Prod Postgres pg-ustax-9u14g stopped after the deploy (state Stopped).
+
 ## 2026-11-27T01:00:00
 Parked item 7 DONE (owner-approved option b): Schedule J Stages B and C - farm income averaging (V587).
 - Backend cad977f3: V587 pf_schedule_j (16 fields, owner-approved), PfScheduleJ + ScheduleJMapper (farm-income-averaging-taxpayer, allow-list

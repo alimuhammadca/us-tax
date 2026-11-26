@@ -115,6 +115,12 @@ sections:
         placeholder: 0.00
         label: Gross receipts or sales (line 1)
         help: Total business income before expenses. Imported 1099-NEC/1099-K/1099-MISC amounts can pre-fill this.
+      - name: form1099NecExplanation   # V581 (owner-approved 2026-11-26, parked item 8)
+        type: text
+        required: false
+        label: Your Forms 1099-NEC show more than the gross receipts - explain the difference (line 1 statement)
+        showIf: "Forms 1099-NEC box 1 total > gross receipts of all this person's businesses"
+        help: 2025 Schedule C instructions, line 1 - attach a statement explaining the difference. The return lists the text as the statement to attach.
       - name: returnsAndAllowances
         type: amount
         required: false
@@ -125,6 +131,17 @@ sections:
         required: false
         placeholder: 0.00
         label: Other income, including fuel tax credit or refund (line 6)
+      - name: accountingMethodChanged   # V581
+        type: boolean
+        required: false
+        label: Did this business change its accounting method (Form 3115)?
+      - name: section481aAdjustment   # V581
+        type: amount
+        signed: true
+        required: false
+        label: Section 481(a) adjustment taken into account in 2025 (negative if it lowers income)
+        showIf: "accountingMethodChanged == true"
+        help: Positive -> line 6 other income; negative -> Part V other expense "Section 481(a) adjustment (Form 3115)".
 
       # Part III cost of goods sold (lines 33-41)
       - name: inventoryMethod
@@ -290,6 +307,12 @@ sections:
         placeholder: 0.00
         label: Business meals - the full cost (the return applies the 50% / 80% limit for line 24b)
         help: Enter the full meal cost; the 50% limit is applied when the return is computed.
+      - name: fullyDeductibleMeals   # V581
+        type: amount
+        required: false
+        label: Of those meals, the part that is 100% deductible
+        showIf: "meals > 0"
+        help: Meals treated as wages to an employee, or reported in a nonemployee's income on Form 1099-NEC - deducted in full; the rest at 50% / 80%.
       - name: utilities
         type: amount
         required: false
@@ -332,6 +355,12 @@ sections:
         help: Simplified method only; deduction is $5 per square foot up to 300.
 
       # Part IV shared vehicle questions (lines 46-47)
+      - name: fiveOrMoreVehiclesAtOnce   # V581
+        type: boolean
+        required: false
+        label: Do you use five or more vehicles in this business at the same time?
+        showIf: "vehicles.length > 0"
+        help: Line 9 - Yes rules out the standard mileage rate (a blocking flag asks for actual car and truck expenses).
       - name: anotherVehicleAvailablePersonalUse
         type: boolean
         required: false
@@ -372,6 +401,22 @@ sections:
         required: false
         label: Prior-year suspended at-risk loss for this business (Form 6198)
         help: First year filing with us — the §465 disallowed loss carried into this business from last year, released against this year's amount at risk.
+      - name: priorYearUnallowedPassiveLoss   # V581
+        type: amount
+        required: false
+        label: Passive loss from this business not allowed in 2024 (Form 8582)
+        showIf: "materiallyParticipated == false"
+        help: Line 31 - joins this year's passive losses; what passive income doesn't absorb carries to 2026.
+      - name: deMinimisSafeHarbor   # V581
+        type: boolean
+        required: false
+        label: Write off items costing $2,500 or less at once instead of depreciating them (de minimis safe harbor)?
+        help: Part V - the 2025 items on Depreciable assets at or under the limit (not buildings or land) are deducted as "De minimis safe harbor (Reg. 1.263(a)-1(f))" and not depreciated.
+      - name: deMinimisApplicableFinancialStatement   # V581
+        type: boolean
+        required: false
+        label: Does the business have an applicable financial statement (audited, or filed with the SEC) - a $5,000 limit?
+        showIf: "deMinimisSafeHarbor == true"
       - name: isSpecifiedServiceTradeOrBusiness
         type: boolean
         required: false
@@ -439,6 +484,22 @@ sections:
         label: Vehicle identification number (VIN)
         showIf: "carLoanInterest > 0"
         help: "Needed if this car's loan interest is also claimed under 'No tax on car loan interest' (Schedule 1-A)."
+
+      - name: leased   # V581: line 9 - asked only with the standard mileage rate (car and truck expenses blank, business miles)
+        type: boolean
+        required: false
+        label: Is this vehicle leased?
+      - name: standardRateEntireLease   # V581
+        type: boolean
+        required: false
+        label: Has the standard mileage rate been used for this vehicle since the lease began?
+        showIf: "leased == true"
+      - name: usedStandardRateFirstYear   # V581
+        type: boolean
+        required: false
+        label: Was the standard mileage rate used in the first year this vehicle was used in the business?
+        showIf: "leased != true and placed in service before 2025"
+        help: Pub. 463 ch. 4 - the rate must be chosen in an owned car's first year; No (or a leased car without the rate for the whole lease) blocks the rate.
 
   - name: otherExpenses
     title: Other expenses (Part V)

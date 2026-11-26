@@ -89,7 +89,7 @@ the remaining items keep their numbers.
 5. **Clergy parsonage, Form 2031, community income, chapter 11** (Self-employment tax options) - Field additions waiting for owner sign-off. (hist L996-998)
 6. **EIN and QJV election not asked** (Farm rental (4835)) - Disposition FIXED V552 (FarmRentalDisposition); EIN and QJV election are field additions waiting for owner sign-off. (hist L1008-1014)
 7. **EIN, weather livestock election, Schedule J, NOL carryback** (Farm income (Sch F)) - Field additions waiting for owner sign-off. (hist L1028-1029)
-8. **Line 1 explanation, notary, meals, mileage, Part V** (Business income (Sch C)) - Field additions waiting for owner sign-off. (hist L1048-1051)
+8. **Line 1 explanation, notary, meals, mileage, Part V** (Business income (Sch C)) - **DONE 2026-11-26** (owner-approved option a, V581), see Part 4.
 9. **Schedule E Part I lines A/B, address, codes, QJV, line 43** (Rental & royalty income) - Field additions waiting for owner sign-off. (hist L1057-1060)
 10. **Spouse's own 2024 Form 1040 upload** - **DONE 2026-11-28** (owner-approved), see Part 4.
 11. **Keep, remove or label Form 1040-X preview** - **DONE 2026-11-27** (owner: "remove it from the sidebar"), see Part 4.
@@ -514,6 +514,14 @@ One line per finished entry, with the evidence (class, migration, date). Grouped
 
 **Finished since the reorganization**
 
+- P8 Schedule C gaps on Business income (2026-11-26, owner-approved option a, V581; be e9634db1, UI 4ae2e7f): 11 new questions,
+  each shown only when it applies - line 1 Forms 1099-NEC explanation (box 1 > receipts; listed as the statement to attach), line 6 /
+  Part V accounting-method change + section 481(a) adjustment (signed), line 24b fully deductible meals, line 9 five-or-more vehicles
+  and per-vehicle leased / whole-lease / first-year standard mileage (No -> blocking SCHEDULE_C_STANDARD_MILEAGE_NOT_ALLOWED_*),
+  Part V de minimis safe harbor ($2,500, $5,000 with an AFS; 2025 assets moved off Form 4562), line 31 prior-year unallowed
+  passive loss (Form 8582, via PassiveBusinessLimit). Helper ScheduleCElections (19 unit tests), e2e schedule-c-elections.spec.ts;
+  120 Business-income specs 404/404. Not added: notary income (already on Self-employment tax options), startup costs (already on
+  Depreciable assets -> Amortization code 195; a note now says so), the section 174A research-costs rule.
 - P10 Spouse's own 2024 Form 1040 upload (2026-11-28, owner-approved, V580; be 7c5ce228, UI 879c042): Last year 1040 on the Spouse
   tab - "How did your spouse file for 2024?" (jointly: a note + link to the Family Head's upload; their own return: the upload,
   filling only the spouse's blanks); the spouse's 2024 tax feeds Form 2210 line 8 (joint 2025: both added, JointPriorYearTax).

@@ -1,3 +1,14 @@
+## 2026-11-26T15:30:00
+Parked item 8 (owner-approved option a): the Schedule C questions Business income was missing (V581).
+- Backend e9634db1: V581 adds 8 pf_business_activity and 3 pf_business_vehicle columns; BusinessIncomeMapper saves/loads them;
+  new ScheduleCElections - deductibleMeals (fully deductible part in full, the rest at 50%/80%), mileageRateNotAllowed (blocking flag,
+  Pub. 463 ch. 4), form1099NecStatement (line 1 statement flag), section 481(a) (positive -> line 6, negative -> Part V), de minimis
+  safe harbor (Reg. 1.263(a)-1(f): 2025 assets <= $2,500 / $5,000 AFS expensed in Part V, not depreciated; advisory for next year),
+  priorPassiveLoss (line G No -> PassiveBusinessLimit, Form 8582). 19 unit tests; full suite 6,473 / 0.
+- UI 4ae2e7f: form-business-income asks the questions (with help text citing the Schedule C instructions, Pub. 463/334/15, Form 3115
+  and Form 8582 instructions), a startup-costs note pointing at Amortization code 195; fixed ngOnInit dropping the ctx receipts function.
+- YAMLs business-income-taxpayer/spouse updated. e2e schedule-c-elections.spec.ts 2/2; 120 Business-income specs 404 passed.
+
 ## 2026-11-26T10:40:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 45796880036 on 7c5ce228 - revision ca-ustax-be--0000709 serving

@@ -64,10 +64,7 @@ the remaining items keep their numbers.
 
 ### 1E. Docs and code housekeeping
 
-49. **Previews on a separate return's tab are empty after a reload** (owner-approved 2026-11-27; in progress): a dependent's own
-    return and an MFS / HOH-split spouse's return are saved on the server (computeForReturn) but the page only keeps them in memory, so
-    their tab's previews (Form 1040, 8615, 4136 ...) stay blank until Compute return. Add GET /api/tax-return/{taxReturnId} (reads that
-    return's saved rows via OutputAnchorResolver) and load it when the tab opens.
+49. **Previews on a separate return's tab are empty after a reload** - **DONE 2026-11-27**, see Part 4.
 42. **Intake YAMLs that said self-employment is out of scope** - **DONE 2026-11-26**: 17 YAMLs checked against the screens and
     compute and rewritten (10, 13b, 2555, 2ab, 4abc, 5abc, 6abcd, 7ab, 8 - each person); the Schedule C preview's stale comment fixed.
     Follow-up DONE 2026-11-26: the two retired pf_other_incomes toggles dropped (V575, owner-approved). (hist L3198)
@@ -517,6 +514,8 @@ One line per finished entry, with the evidence (class, migration, date). Grouped
 
 **Finished since the reorganization**
 
+- 1E-49 Separate return previews after a reload (2026-11-27, owner-approved; be d9e868b1, UI 37742bc): GET /api/tax-return/{id}
+  reads a dependent's own / MFS / HOH-split return's saved rows; the page loads it the first time a preview asks. Read-only.
 - P2 Form 8615 preview (2026-11-27, owner-approved Stage A / B; be 698f0462, UI 4f70cf8): pure HTML/CSS from the 2025 IRS PDF, on the
   child's own return (the dependent's tab), filled by Form8615Fields - header incl. the parent's name / SSN / filing status, lines
   1-18 (12a / 12b only with line 7), the worksheet boxes. Note: multi-return-full-household runs near its 240 s limit (3.4 min alone).

@@ -1,3 +1,19 @@
+## 2026-11-28T01:00:00
+1E-49 (owner: go ahead) - a separate return's previews after a reload.
+- Found while building P2: a dependent's own return and an MFS / HOH-split leg are saved under their own id (computeForReturn ->
+  saveComputationForReturn) but only GET /api/tax-return (the primary) existed, and the page kept the others in memory only - so
+  their tab's previews (Form 1040, 8615, 4136 ...) were empty after a reload until Compute return.
+- Backend: GET /api/tax-return/{taxReturnId} (regex-bound so /flags still resolves) - ownership check (404 otherwise), the same
+  loader as getLatest with OutputAnchorResolver.SAVE_RETURN_OVERRIDE set to the id (every output mapper reads that return's rows);
+  404 when never computed. Read-only. Leak check: dependent-own (tax 688), mfs_head (17,867), mfs_spouse (9,055) read back with the
+  same amounts as a fresh compute (only empty sub-objects vs null, and flags / two Form 2210 working fields not saved - as the primary).
+- UI: TaxReturnService.computationForReturn fetches a missing return once (loadReturnForReturn), the store written only after the
+  request finishes; reset on a year switch. Compute return unchanged.
+- Tests: e2e separate-return-previews-after-reload.spec.ts (Riley's Form 8615 / 1040 and Sam's MFS Form 1040 after a reload, no
+  Compute return; another id 404). 88 multi-return specs 194/194 (a first batch never started: my spec had an unescaped
+  apostrophe - fixed). Suite 6,451 / 0.
+- be d9e868b1, UI 37742bc.
+
 ## 2026-11-27T23:00:00
 P2 - Form 8615 preview (owner: plan approved, Stage A screenshots approved, then Stage B).
 - Stage A: layout from docs/IRS-Forms/f8615.pdf (2025) by the new us-tax-be/scripts/generate-f8615-elements.py; the 32 fields of

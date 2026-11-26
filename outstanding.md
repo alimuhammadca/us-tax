@@ -91,7 +91,7 @@ the remaining items keep their numbers.
 7. **EIN, weather livestock election, Schedule J, NOL carryback** (Farm income (Sch F)) - Field additions waiting for owner sign-off. (hist L1028-1029)
 8. **Line 1 explanation, notary, meals, mileage, Part V** (Business income (Sch C)) - Field additions waiting for owner sign-off. (hist L1048-1051)
 9. **Schedule E Part I lines A/B, address, codes, QJV, line 43** (Rental & royalty income) - Field additions waiting for owner sign-off. (hist L1057-1060)
-10. **Spouse's own 2024 Form 1040 upload** (Last year 1040 on Spouse tab) - Owner "skip for now, keep for later"; pf_prior_year_1040 still has no person column. (hist L1140-1158)
+10. **Spouse's own 2024 Form 1040 upload** - **DONE 2026-11-28** (owner-approved), see Part 4.
 11. **Keep, remove or label Form 1040-X preview** - **DONE 2026-11-27** (owner: "remove it from the sidebar"), see Part 4.
 12. **2025 Schedule SE template** - **DONE 2026-11-27** (owner-approved exception to the no-form-change rule), see Part 4.
 13. **VOID and CORRECTED checkboxes still shown on statement screens** - **PLANNED FOR THE TAX YEAR 2026 UPGRADE** (owner 2026-11-27: "we will remove these checkboxes from all statement later when upgrading to tax year 2026") - remove them from every statement screen then, with the 2026 statement layouts; not possible before (statement forms can't be modified). Today they are harmless: nothing on the return uses them (the CORRECTED tick is saved but unused; VOID is referenced in 16 UI files). (hist L2087-2093)
@@ -514,6 +514,9 @@ One line per finished entry, with the evidence (class, migration, date). Grouped
 
 **Finished since the reorganization**
 
+- P10 Spouse's own 2024 Form 1040 upload (2026-11-28, owner-approved, V580; be 7c5ce228, UI 879c042): Last year 1040 on the Spouse
+  tab - "How did your spouse file for 2024?" (jointly: a note + link to the Family Head's upload; their own return: the upload,
+  filling only the spouse's blanks); the spouse's 2024 tax feeds Form 2210 line 8 (joint 2025: both added, JointPriorYearTax).
 - 1E-49 Separate return previews after a reload (2026-11-27, owner-approved; be d9e868b1, UI 37742bc): GET /api/tax-return/{id}
   reads a dependent's own / MFS / HOH-split return's saved rows; the page loads it the first time a preview asks. Read-only.
 - P2 Form 8615 preview (2026-11-27, owner-approved Stage A / B; be 698f0462, UI 4f70cf8): pure HTML/CSS from the 2025 IRS PDF, on the

@@ -1,3 +1,21 @@
+## 2026-11-28T06:00:00
+P10 (owner: go ahead) - the spouse's own 2024 Form 1040 upload. V580: pf_prior_year_1040.owner_role (taxpayer | spouse), unique per
+(uid, tax_year, owner_role).
+- Rule check: Instructions for Form 2210 (2025), line 8 - "If you are filing a joint return for 2025, but you didn't file a joint
+  return for 2024, add your 2024 tax ... to your spouse's 2024 tax ... and enter the total on line 8." Already computed by
+  JointPriorYearTax (2026-11-15) from the two worksheets; the spouse's worksheet now fills from the spouse's upload.
+- Backend: the upload endpoints take ?person=spouse; PriorYear1040Prefill.applySpouse fills only the spouse's blanks
+  (identification-spouse prefixed keys, address-spouse incl. phone / email - only phone / email when "same as your address" -,
+  third-party-designee-spouse); never filing status or dependents. EstimatedTaxPriorYearResource (figures + priorYearFilingStatus)
+  reads the spouse's upload when last year's return here wasn't joint; PriorYearDeduction / SocialSecurityPriorYearResource stay on
+  the Family Head's row.
+- UI: Get started on the Spouse tab starts with Last year 1040: "How did your spouse file for 2024?" - Jointly with you (a note and
+  "Go to your Last year 1040" switching to the Family Head's) / Their own return (the upload). One screen instance per person.
+- Tests: unit PriorYear1040SpousePrefillTest 3; e2e prior-year-1040-spouse.spec.ts 2 (live Azure; typed values kept - one
+  expectation fixed: the seeded spouse already had an occupation) + prior-year-1040 4; 96 related specs 313 passed, 2 failed - both
+  pinned the old Spouse Get started list (get-started, personal-form-actions), updated and re-run 10/10. Suite 6,454 / 0.
+- be 7c5ce228, UI 879c042. Not deployed yet (owner: one deploy with the six-box verification code field).
+
 ## 2026-11-28T02:30:00
 Deployed latest code to production (Azure, via the manual GitHub Actions workflows).
 - Backend (Azure Container App ca-ustax-be): backend-deploy.yml run 45728783384 on d9e868b1 - revision ca-ustax-be--0000708 serving

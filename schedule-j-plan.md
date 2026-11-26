@@ -18,7 +18,7 @@ Base-year amounts come from the earlier returns: line 5 / 9 / 13 is that year's 
 base year, a line of that Schedule J); lines 19-21 that year's tax (section 1 tax only). A base year with taxable income of zero or less
 uses the instructions' Taxable Income Worksheet (taxable income without the NOL and capital loss limits).
 
-## Stage A - blank preview (stop for owner visual review)
+## Stage A - blank preview (done 2026-11-26; waiting for the owner's visual review)
 
 - `scripts/generate-semantic-1040sj.js` - fields named by printed line (header, 1, 2a-2c, 3-23), geometry-checked (amounts descend).
 - `scripts/generate-f1040sj-elements.py` (copy of the 8881 extractor) -> `us-tax-ui/public/irs/f1040sj_elements.json`.

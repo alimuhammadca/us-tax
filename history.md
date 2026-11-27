@@ -1,3 +1,12 @@
+## 2026-11-27T06:00:00
+Form 8959 preview filled (owner-approved; the sidebar item stays always listed for now).
+- Before: the preview was blank - the component passed no values ("blank until a backend f8959 semantic mapping is wired"), though Form
+  8959 is figured in full (lines 1-24, persisted line by line in out_form_8959) and feeds Schedule 2 line 11.
+- UI 7d10a0c: form-tax-return-8959 maps computation().form8959 lines 1-24 to the f8959 boxes (whole dollars, commas), the header from the
+  filer (both names on a joint return), and reads a separate return's own computation. The form itself is unchanged.
+- Tests: e2e form8959-preview.spec.ts (be cff4b4ed; single, 250,000 Medicare wages: lines 1/4/5/6/7/18 250,000/250,000/200,000/50,000/450/450,
+  Part V 4,075/3,625/450, name and SSN) with the Form 8959, line 23 and line 25 specs - 30 passed; UI build OK.
+
 ## 2026-11-27T05:00:00
 Schedule J Stage E (owner-approved option b, no new fields): line 4 with Form 2555; a child's Form 8615 with the parent's Schedule J.
 - Before: Schedule J was blocked when the 2025 tax used the Foreign Earned Income Tax Worksheet; and a child's Form 8615 line 9 never

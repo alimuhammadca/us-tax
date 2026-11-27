@@ -1,3 +1,18 @@
+## 2026-11-27T05:00:00
+Schedule J Stage E (owner-approved option b, no new fields): line 4 with Form 2555; a child's Form 8615 with the parent's Schedule J.
+- Before: Schedule J was blocked when the 2025 tax used the Foreign Earned Income Tax Worksheet; and a child's Form 8615 line 9 never
+  used the parent's Schedule J, while line 10 recomputed the parent's tax without it - wrong for any child whose parent averaged farm
+  income (Instructions for Form 8615, "Using Schedule J (Form 1040) for line 9 tax"; Line 10: the parent's Form 1040 line 16 tax).
+- Line 4 on Form 2555 returns: the return's own Foreign Earned Income Tax Worksheet on line 3; with line 2b, ScheduleJWorksheets.baseYear(2025)
+  around the Schedule D Tax Worksheet with the gain less 2b / 2c.
+- Form 8615: KiddieTaxParentReader.ParentReturnInfo carries the parent's Schedule J (read off its attachedForms copy); ScheduleJCompute.form8615
+  figures the worksheet Schedule J - line 1 = Form 8615 line 8, the parent's 2a-2c / 5-16 / 19-22, line 4 the tax line 9 already uses on
+  line 3 (the parent's 2b / 2c out of the preferential amounts - interpretation); line 23 -> line 9, the parent's line 23 -> line 10; both
+  boxes ticked on the preview. ScheduleJCompute.enter / exit keep the outer pass's answers around a nested compute.
+- Tests: ScheduleJWorksheetsTest +3 (9), ScheduleJComputeTest updated; unit 6,525 / 0; e2e schedule-j-farm-income-averaging 4/4 (new: a
+  farming parent averaging, a daughter with 8,000 of interest - line 9 / 10 and both boxes).
+- Regression (Form 8615, kiddie tax, dependent-own, Form 2555, Form 8814, line 16; 27 specs): 145 passed.
+
 ## 2026-11-27T04:00:00
 Schedule J Stage D (owner-approved option b; 27 new fields, 3 changed): the base years' capital gain and foreign income worksheets (V588).
 - Before: an elected net capital gain (line 2b), a base year whose tax used the Qualified Dividends and Capital Gain, Schedule D or

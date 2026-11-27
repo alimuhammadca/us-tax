@@ -259,6 +259,7 @@ sections:
         label: Prior-year tax-free recovery amount
         placeholder: 0.00
         help: Enter cumulative prior-year tax-free recovery used to cap remaining basis.
+        carryNote: "Batch C1: when blank, the cost recovered through last year on last year's return here (Simplified Method line 10, or the General Rule)."
 
   - name: taxableComputationInputsGeneralRule
     title: General Rule inputs

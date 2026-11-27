@@ -211,3 +211,10 @@ farm rentals count for "every rental sold". Open: the same for a sold rental pro
 Sold rental property (2026-11-27): built - its own carried loss comes off last year's total like a farm rental's; an activity sold at a gain
 hands its part back (fixes the farm rental change).
 
+## Stage 2 batch C1 (2026-11-27, owner-approved)
+
+Built (no fields): #23/#24 Roth basis and conversion rows, #25 post-70 1/2 contributions (carried part; this year's deduction still
+typed), #22 RMD balance from last year's Forms 5498, #80 General Rule / stream cost recovered, #84 Schedule J after a Schedule J year,
+#98 exchange note offered on Installment sales. Left: #72 education credit recapture (C2, a refigured 2024 credit - planned
+separately). us-tax-be 26041d7c, us-tax-ui 54d0b7a.
+

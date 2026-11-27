@@ -155,6 +155,7 @@ sections:
         label: Deductible IRA contributions made after age 70½ (reduces QCD exclusion)
         placeholder: 0.00
         help: IRS Pub. 590-B requires reducing the QCD exclusion dollar-for-dollar by any deductible IRA contributions made after age 70½. Enter the deductible amount here if applicable.
+        carryNote: "Batch C1: when blank, the amount not yet used to reduce a QCD on last year's return here (IRC 408(d)(8)(A)); add any deducted for this year."
       - name: totalHfdAmount
         type: amount
         required: false
@@ -422,12 +423,14 @@ sections:
         label: Roth contribution basis for Form 8606 line 22
         placeholder: 0.00
         help: Enter basis in Roth IRA contributions.
+        carryNote: "Batch C1 (2026-11-27): when blank, last year's return here fills it - the basis left at the end of last year plus this year's Roth contributions (Income adjustments)."
       - name: rothConversionBasisFor8606Line24
         type: amount
         required: false
         label: Roth conversion/rollover basis for Form 8606 line 24
         placeholder: 0.00
         help: Enter basis in Roth conversions and rollovers.
+        carryNote: "Batch C1: when blank, the conversion basis left from last year's return here plus this year's line 16."
       - name: qualifiedDisasterRepaymentsRothFor8606Line25b
         type: amount
         required: false
@@ -494,6 +497,7 @@ sections:
         required: false
         label: "Total value of your traditional IRAs on December 31, 2024 (not inherited IRAs)"
         showIf: "rmdApplies()"
+        carryNote: "Batch C1: when blank and age 73+, box 5 of last year's Forms 5498 entered here (traditional, SEP, SIMPLE)."
       - name: rmdQlacValue
         type: amount
         required: false

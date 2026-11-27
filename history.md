@@ -1,3 +1,24 @@
+## 2026-11-27T22:50
+Stage 2 batch C1 of "nothing calculated by hand" (owner-approved, no fields): IRA, pension, Schedule J and exchange-note figures from
+last year's return here fill this year's blank answers (a typed answer wins; a "From your 2024 return here" notice opens the screen).
+- Roth basis (PriorYearCarryC): each year keeps, per person, the contribution basis left (Form 8606 line 22 less what it covered of line
+  21) and the conversion basis left (line 24 less line 23) - also when no Form 8606 was needed. Next year line 22 = the contributions
+  left + that year's Roth contributions (Income adjustments, less any withdrawn), line 24 = the conversions left + that year's line 16
+  (i8606 Line 22 worksheet, Line 24). The conversion rows (5-year rule) carry within the window, with last year's own conversion added.
+  The first year still needs the typed figure (history before the app isn't known).
+- Post-70 1/2 deductible IRA contributions not yet used to reduce a QCD carry (IRC 408(d)(8)(A)); this year's own deduction must
+  still be added (it depends on the IRA income it would reduce).
+- RMD prior year-end balance: box 5 of last year's Forms 5498 (traditional, SEP or SIMPLE, not Roth) for the person, at 73 or older.
+- Pension cost recovered: the General Rule and each annuity stream (by its label) now carry like the Simplified Method (Pub. 939).
+- Schedule J after a Schedule J year: the screen fills lines 5, 9, 13 and 19-21 from 2024 Schedule J lines 11, 15, 3, 12, 16 and 4
+  (2025 Instructions for Schedule J), and moves the earlier base years' status, worksheet and gain answers up a year; the prior-year
+  endpoint returns the 2024 lines.
+- Form 8824 exchange note: its Form 6252 sale is kept; next year's Installment sales screen offers it with its own sales still being
+  paid (the prior-year endpoint returns it).
+- Tests: unit 6,552 / 0 (PriorYearCarryCTest 3); e2e stage2c-ira-pension-carries.spec.ts 4/4 (Roth line 22 18,000; General Rule 5b
+  11,000; the note offered on Installment sales; Schedule J line 5 from 2024 line 11); 34 related specs 149/149. No full regression.
+  us-tax-be 26041d7c, us-tax-ui 54d0b7a.
+
 ## 2026-11-27T21:50
 Sold rental property gap (owner-approved, no fields), and a fix to the B5 follow-up.
 - SoldActivityPrior (renamed from SoldFarmRentalPrior): a RENTAL PROPERTY disposed of in full (not to a related party) now takes its

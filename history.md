@@ -1,3 +1,23 @@
+## 2026-11-27T04:00:00
+Schedule J Stage D (owner-approved option b; 27 new fields, 3 changed): the base years' capital gain and foreign income worksheets (V588).
+- Before: an elected net capital gain (line 2b), a base year whose tax used the Qualified Dividends and Capital Gain, Schedule D or
+  Foreign Earned Income Tax Worksheet, and a 2025 return on the Schedule D Tax Worksheet were blocked (SCHEDULE_J_NOT_SUPPORTED).
+- V588 pf_schedule_j: per base year the worksheet (none / qdcg / scheduleD - replaces the Yes/No base<y>_used_worksheet, dropped), Form
+  2555 Yes/No, qualified dividends, net capital gain, Form 4952 4g / 4e, Schedule D 18 / 19, Form 2555 exclusions and disallowed deductions.
+- New ScheduleJWorksheets: the 2022-2024 QDCG worksheets (Schedule J instructions), the 2022-2025 Schedule D Tax Worksheets
+  (docs/books/i1040sd--2022/2023/2024.pdf, downloaded from irs.gov), the Foreign Earned Income Tax Worksheet with the capital gain excess.
+  Line 2b forces each base year's Schedule D Tax Worksheet with a third of 2b / 2c; line 4 is the 2025 Schedule D Tax Worksheet with the
+  return's gain less 2b / 2c (Reg. 1.1301-1(a)(2)(i) - an interpretation, the instructions don't spell it out). Blocks: 2b more than 2a
+  or the return's net capital gain, 2c more than 2b or Schedule D line 19, a 2025 tax on the Foreign Earned Income worksheet or Form 8615.
+- Deviation: Schedule J line 8 says "lines 34 and 36" of the Schedule D Tax Worksheet - an older numbering; the 2022-2024 tax lines are 44 / 46.
+- UI: the screen's base-year sections ask the worksheet (select) and Form 2555, then the amounts each needs; 2024 pre-filled from the 2024
+  return figured here (GET /api/estimated-tax/prior-year scheduleJGains). The preview prints lines 2b / 2c.
+- Tests: ScheduleJWorksheetsTest (6, hand-figured), ScheduleJComputeTest updated (8); unit 6,522 / 0; e2e schedule-j-farm-income-averaging
+  3/3 (new: an elected 30,000 gain - lines 8 / 12 / 16 = 5,843 / 5,386 / 5,014); the test's line 4 first used the exact tax, the engine
+  rightly uses the Tax Table row midpoint (worksheet line 44 under $100,000) - test fixed.
+- Regression (line 16, farm, capital gain, Form 4952, prior-year figures; 92 specs): 513 passed, 1 flaky, 1 failed - the failed
+  other-tax-items-screen and the flaky mortgage-subsidy-screen (typed values lost on unrelated screens) both pass alone (6/6).
+
 ## 2026-11-27T03:00:00
 Parked item 15 DONE: the owner answered the two round-2 QA suite-shape questions from sc_00001.
 - (1) Round-2 scenarios reuse round 1's facts (the same people and statements), so the rounds can be compared side by side.

@@ -1,5 +1,6 @@
 # Farm income averaging (Schedule J, Form 1040, 2025) - Family Head only, one per return.
 # schedule-j-plan.md Stage B (outstanding.md parked item 7, owner-approved option b and the 16 fields, 2026-11-26); V587 pf_schedule_j.
+# Stage D (owner-approved option b, 2026-11-26: 27 new fields, 3 changed); V588 - base-year worksheets, capital gain and Form 2555 amounts.
 # Sources: 2025 Schedule J and its instructions (docs/IRS-Forms/f1040sj.pdf, docs/books/i1040sj.pdf).
 name: farm-income-averaging-taxpayer
 title: Farm income averaging (Schedule J)
@@ -25,7 +26,7 @@ sections:
         type: amount
         required: false
         label: Of that, net capital gain (line 2b)
-        help: "An amount here blocks (SCHEDULE_J_NOT_SUPPORTED) - the base years' Schedule D Tax Worksheets are Stage D."
+        help: "With an amount every base year uses its Schedule D Tax Worksheet with a third of 2b / 2c; line 4 uses the 2025 Schedule D Tax Worksheet with the return's net capital gain less 2b (Reg. 1.1301-1(a)(2)(i)). Blocks when more than 2a or the return's net capital gain."
       - name: electedUnrecaptured1250Gain
         type: amount
         required: false
@@ -49,10 +50,47 @@ sections:
       - name: base2022Tax
         type: amount
         label: 2022 tax from Form 1040 line 16 (section 1 tax), or the Schedule J line named (line 19)
-      - name: base2022UsedWorksheet
+      - name: base2022Worksheet
+        type: select
+        options: [none, qdcg, scheduleD]
+        label: Which worksheet figured your 2022 tax?
+        help: "none = Tax Table / Tax Computation Worksheet; qdcg = Qualified Dividends and Capital Gain Tax Worksheet (Schedule J instructions); scheduleD = the 2022 Schedule D Tax Worksheet. Line 2b forces scheduleD."
+      - name: base2022FiledForm2555
         type: boolean
-        label: Did your 2022 tax use the Qualified Dividends and Capital Gain, Schedule D, or Foreign Earned Income Tax Worksheet?
-        help: "Yes blocks (Stage D)."
+        label: Did you file Form 2555 (Foreign Earned Income) for 2022?
+        help: "Yes adds the 2022 Foreign Earned Income Tax Worksheet (with the capital gain excess)."
+      - name: base2022QualifiedDividends
+        type: amount
+        label: 2022 qualified dividends (Form 1040 line 3a)
+        showIf: base2022Worksheet in [qdcg, scheduleD] or electedNetCapitalGain > 0
+      - name: base2022NetCapitalGain
+        type: amount
+        label: 2022 net capital gain (smaller of Schedule D lines 15 and 16, or Form 1040 line 7 without Schedule D)
+        showIf: base2022Worksheet in [qdcg, scheduleD] or electedNetCapitalGain > 0
+      - name: base2022Form4952Line4g
+        type: amount
+        label: 2022 Form 4952 line 4g
+        showIf: base2022Worksheet in [qdcg, scheduleD] or electedNetCapitalGain > 0
+      - name: base2022Form4952Line4e
+        type: amount
+        label: 2022 Form 4952 line 4e
+        showIf: base2022Worksheet == scheduleD or electedNetCapitalGain > 0
+      - name: base2022Gain28Rate
+        type: amount
+        label: 2022 28% rate gain (Schedule D line 18)
+        showIf: base2022Worksheet == scheduleD or electedNetCapitalGain > 0
+      - name: base2022Unrecaptured1250
+        type: amount
+        label: 2022 unrecaptured section 1250 gain (Schedule D line 19)
+        showIf: base2022Worksheet == scheduleD or electedNetCapitalGain > 0
+      - name: base2022Form2555Exclusions
+        type: amount
+        label: 2022 excluded foreign income and housing (Form 2555 lines 45 and 50)
+        showIf: base2022FiledForm2555 == true
+      - name: base2022Form2555Disallowed
+        type: amount
+        label: 2022 deductions you couldn't claim because they related to the excluded income
+        showIf: base2022FiledForm2555 == true
       - name: base2023FilingStatus
         type: select
         label: 2023 filing status
@@ -63,13 +101,51 @@ sections:
       - name: base2023Tax
         type: amount
         label: 2023 tax (line 20)
-      - name: base2023UsedWorksheet
+      - name: base2023Worksheet
+        type: select
+        options: [none, qdcg, scheduleD]
+        label: Which worksheet figured your 2023 tax?
+        help: "none = Tax Table / Tax Computation Worksheet; qdcg = Qualified Dividends and Capital Gain Tax Worksheet (Schedule J instructions); scheduleD = the 2023 Schedule D Tax Worksheet. Line 2b forces scheduleD."
+      - name: base2023FiledForm2555
         type: boolean
-        label: Did your 2023 tax use one of those worksheets?
+        label: Did you file Form 2555 (Foreign Earned Income) for 2023?
+        help: "Yes adds the 2023 Foreign Earned Income Tax Worksheet (with the capital gain excess)."
+      - name: base2023QualifiedDividends
+        type: amount
+        label: 2023 qualified dividends (Form 1040 line 3a)
+        showIf: base2023Worksheet in [qdcg, scheduleD] or electedNetCapitalGain > 0
+      - name: base2023NetCapitalGain
+        type: amount
+        label: 2023 net capital gain (smaller of Schedule D lines 15 and 16, or Form 1040 line 7 without Schedule D)
+        showIf: base2023Worksheet in [qdcg, scheduleD] or electedNetCapitalGain > 0
+      - name: base2023Form4952Line4g
+        type: amount
+        label: 2023 Form 4952 line 4g
+        showIf: base2023Worksheet in [qdcg, scheduleD] or electedNetCapitalGain > 0
+      - name: base2023Form4952Line4e
+        type: amount
+        label: 2023 Form 4952 line 4e
+        showIf: base2023Worksheet == scheduleD or electedNetCapitalGain > 0
+      - name: base2023Gain28Rate
+        type: amount
+        label: 2023 28% rate gain (Schedule D line 18)
+        showIf: base2023Worksheet == scheduleD or electedNetCapitalGain > 0
+      - name: base2023Unrecaptured1250
+        type: amount
+        label: 2023 unrecaptured section 1250 gain (Schedule D line 19)
+        showIf: base2023Worksheet == scheduleD or electedNetCapitalGain > 0
+      - name: base2023Form2555Exclusions
+        type: amount
+        label: 2023 excluded foreign income and housing (Form 2555 lines 45 and 50)
+        showIf: base2023FiledForm2555 == true
+      - name: base2023Form2555Disallowed
+        type: amount
+        label: 2023 deductions you couldn't claim because they related to the excluded income
+        showIf: base2023FiledForm2555 == true
       - name: base2024FilingStatus
         type: select
         label: 2024 filing status
-        help: "2024 fields are filled from the 2024 return computed here (taxable income, regular tax, status, method) unless it used Schedule J."
+        help: "2024 fields are filled from the 2024 return computed here (taxable income, regular tax, status, worksheet, Form 2555, capital gain / Form 4952 / Form 2555 amounts) unless it used Schedule J."
       - name: base2024Amount
         type: amount
         signed: true
@@ -77,10 +153,47 @@ sections:
       - name: base2024Tax
         type: amount
         label: 2024 tax, or 2024 Schedule J line 4 (line 21)
-      - name: base2024UsedWorksheet
+      - name: base2024Worksheet
+        type: select
+        options: [none, qdcg, scheduleD]
+        label: Which worksheet figured your 2024 tax?
+        help: "none = Tax Table / Tax Computation Worksheet; qdcg = Qualified Dividends and Capital Gain Tax Worksheet (Schedule J instructions); scheduleD = the 2024 Schedule D Tax Worksheet. Line 2b forces scheduleD."
+      - name: base2024FiledForm2555
         type: boolean
-        label: Did your 2024 tax use one of those worksheets?
-
+        label: Did you file Form 2555 (Foreign Earned Income) for 2024?
+        help: "Yes adds the 2024 Foreign Earned Income Tax Worksheet (with the capital gain excess)."
+      - name: base2024QualifiedDividends
+        type: amount
+        label: 2024 qualified dividends (Form 1040 line 3a)
+        showIf: base2024Worksheet in [qdcg, scheduleD] or electedNetCapitalGain > 0
+      - name: base2024NetCapitalGain
+        type: amount
+        label: 2024 net capital gain (smaller of Schedule D lines 15 and 16, or Form 1040 line 7 without Schedule D)
+        showIf: base2024Worksheet in [qdcg, scheduleD] or electedNetCapitalGain > 0
+      - name: base2024Form4952Line4g
+        type: amount
+        label: 2024 Form 4952 line 4g
+        showIf: base2024Worksheet in [qdcg, scheduleD] or electedNetCapitalGain > 0
+      - name: base2024Form4952Line4e
+        type: amount
+        label: 2024 Form 4952 line 4e
+        showIf: base2024Worksheet == scheduleD or electedNetCapitalGain > 0
+      - name: base2024Gain28Rate
+        type: amount
+        label: 2024 28% rate gain (Schedule D line 18)
+        showIf: base2024Worksheet == scheduleD or electedNetCapitalGain > 0
+      - name: base2024Unrecaptured1250
+        type: amount
+        label: 2024 unrecaptured section 1250 gain (Schedule D line 19)
+        showIf: base2024Worksheet == scheduleD or electedNetCapitalGain > 0
+      - name: base2024Form2555Exclusions
+        type: amount
+        label: 2024 excluded foreign income and housing (Form 2555 lines 45 and 50)
+        showIf: base2024FiledForm2555 == true
+      - name: base2024Form2555Disallowed
+        type: amount
+        label: 2024 deductions you couldn't claim because they related to the excluded income
+        showIf: base2024FiledForm2555 == true
   - name: computedOutputs
     readOnly: true
     computed: true

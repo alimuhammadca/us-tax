@@ -1,3 +1,17 @@
+## 2026-11-27T19:00
+Stage 2 batch A of "nothing calculated by hand" (owner-approved): last year's figures fill this year's blank answers (PriorYearCarryFill;
+a typed amount, even 0, wins; a notice "From your 2024 return here" opens the screen).
+- From last year's computed return here: Form 2555 Housing Deduction Carryover Worksheet line 3 = 2024 line 46 - line 48 (per person;
+  Instructions for Form 2555); Form 8826's prior-year gross receipts = last year's Schedule C line 1 of the same business; a dependent's
+  prior-year AGI from the dependent's own 2024 return (only with prior-year tax answers); Form 8801 line 12 now also uses last year's
+  Schedule 3 line 1 when the 2024 credit had no Form 1116 at all (Form8801Mtftce).
+- New carry-to-next-year records (from now on): the bond premium not deducted (Reg. 1.171-2(a)(4)(i)(C)); the Form 2210 farmer test's
+  gross farm income and gross income (IRC 6654(i)(2), this or the preceding year); each person's own Form 8880 distributions (the
+  screen's fixed "year before" / "two years before" slots, so TY2026 keeps working).
+- Tests: unit 6,539 / 0 (PriorYearCarryFillTest); e2e stage2-prior-year-carries.spec.ts 2/2 (Form 8880 line 4 $1,500 from 2024; Form
+  8826 receipts $812,500 -> credit $3,875); the 33 related specs pass after three of them answer Schedule B Part III (a gap from the
+  advisory-vs-blocked change, not batch A). us-tax-be c1e55ad7.
+
 ## 2026-11-27T18:20
 Form 8844 over-credit fixed (owner-approved: 3 fields per row added, 2 removed). Line 1 capped the total zone wages at $15,000 x the
 number of employees - one employee at $25,000 and one at $5,000 gave $30,000 (credit $6,000) instead of $15,000 + $5,000 = $20,000

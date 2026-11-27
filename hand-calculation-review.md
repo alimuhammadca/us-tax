@@ -193,3 +193,9 @@ No field added or removed; every fill is used only when the field is blank, a ty
 #7 built: one row per qualified zone employee (employeeName, wagesPaid, wotcWages); line 1 = sum of min(wagesPaid, $15,000 - wotcWages).
 qualifiedZoneWages and qualifiedEmployees removed. us-tax-be eec72b43, us-tax-ui 7eca7f5.
 
+## Stage 2 batch A (2026-11-27, owner-approved)
+
+Built (no fields): #27 Form 2555 housing carryover, #10 Form 8826 prior-year receipts (Schedule C only - a farm's Schedule F line 9 is
+not yet read), #31 a dependent's prior-year AGI, #71 Form 8801 line 12 (the no-Form-1116 gap), #15 bond premium carryforward, #83 Form
+2210 farmer test, #110 Form 8880 earlier distributions. us-tax-be c1e55ad7.
+

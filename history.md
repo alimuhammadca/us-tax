@@ -1,3 +1,11 @@
+## 2026-11-27T06:00
+Full e2e regression (714 spec files, 1 worker, 6.7 h): 2,608 passed, 0 failed, 0 skipped, 1 flaky.
+- Flaky: prior-min-tax-credit-screen.spec.ts "Family Head: the title, labels, help, save partial, Reset" - the first attempt's save body
+  lacked priorYearMtcnold (null, not 1200). Cause: setNumberValue presses Enter, which submits the form; under load that earlier save was
+  still in flight, the screen ignored the Save click (it guards on `saving`) and the test's response wait caught the earlier PUT. Test fix
+  (the app is right): the spec's save() waits for networkidle before clicking Save. Re-run 3x with no retries: 9/9 passed.
+- us-tax-be 67b5c00d.
+
 ## 2026-11-27T08:00:00
 Flag audit (owner-approved; things to fix.txt "check all the warning and flags to make sure that the user sees them").
 - Inventory: 1,003 places raise a flag (~1,076 codes; literals, constants, PREFIX + role, helper parameters). The checklist's

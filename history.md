@@ -1,3 +1,18 @@
+## 2026-11-27T07:00:00
+App version number and refresh after a deploy (owner-approved; things to fix.txt "add version number, auto clear cache and reload").
+- Before: scripts/set-build-info.js existed but no build ran it (build-info.ts still said 1.0.0 / 2026-04-05) and nothing showed it; an
+  open browser kept running the old app after a deploy until reloaded.
+- UI b664627 + cb85970: azure-static-web-apps.yml runs set-build-info.js before the build - it writes the version (package.json, now 1.0.0),
+  the commit (GITHUB_SHA, 7 characters) and the build time into src/environments/build-info.ts and public/version.json (committed copies
+  are the local 'dev' placeholders). staticwebapp.config.json: Cache-Control no-cache on /index.html and /version.json. The profile menu
+  shows "Version 1.0.0 · <commit> · <day>". VersionService (fetch, not HttpClient - no loading overlay) reads /version.json at start,
+  every 10 minutes and when the tab is visible again; another commit shows a banner "A new version of TaxBeans is available. Save what
+  you're working on, then reload." with Reload (dismissed, it returns at the next check). No forced reload - screens hold their own
+  unsaved answers. A 'dev' build never compares (localStorage versionCheck.devCommit stands one in for the e2e, local builds only).
+- Tests: e2e app-version-refresh.spec.ts (be 941c0d30) 3/3 - the menu label, a newer build's banner and Reload, no banner for the same /
+  a dev stamp; header-dialogs and admin-support-dashboard-ui 12/12; UI build OK. Check after the next deploy: the live /version.json
+  and the menu name the deployed commit.
+
 ## 2026-11-27T06:00:00
 Form 8959 preview filled (owner-approved; the sidebar item stays always listed for now).
 - Before: the preview was blank - the component passed no values ("blank until a backend f8959 semantic mapping is wired"), though Form

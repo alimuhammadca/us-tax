@@ -1,3 +1,21 @@
+## 2026-11-27T20:30
+Stage 2 batch B of "nothing calculated by hand" (owner-approved): each passive activity's carried loss fills next year's answer.
+- B1: a passive Schedule C business's / Schedule F farm's unallowed loss (PassiveBusinessLimit) is split by each activity's loss -
+  this year's loss plus its own prior-year unallowed loss (Instructions for Form 8582, Worksheets 5-6) - kept per activity and filled
+  into that business's / farm's "prior-year unallowed passive loss" next year (matched by owner and name; typed wins). New field
+  (1, owner-approved): Farm income row priorYearUnallowedPassiveLoss (V590, pf_farm_activity), joining the farm's passive losses
+  like Schedule C's (V581). YAML farm-income-taxpayer/-spouse updated.
+- B2: a PTP's unallowed loss (IRC 469(k)) kept by EIN; next year fills ptpPriorYearUnallowedLoss when last year had exactly one
+  loss-making PTP, otherwise a notice lists each PTP's amount (the screen holds one amount).
+- B3: a partnership loss suspended by the basis limit (IRC 704(d)) kept by EIN; next year fills that partnership's basis row (or adds
+  one); the basis itself is still entered.
+- B4: K1_PASSIVE_AT_RISK_LOSS_CARRIED_FORWARD no longer asks to type the carryover (already carried by K1AtRiskCarry).
+- B5 (sold farm rental's own loss): mostly already covered by PassiveCarryforwardByActivity; the remaining case (last year's rows
+  include a combined K-1 / other row) is a follow-up.
+- Tests: unit 6,541 / 0 (PriorYearCarryFillTest +2); e2e stage2-prior-year-carries.spec.ts 4/4 (C: line 3 11,000 - 8,000 = 3,000,
+  line 6 5,000 - 4,000 = 1,000; D: box 1 25,000 - 18,000 = 7,000); 44 related specs 136/136. No full regression.
+  us-tax-be 366e69e7, us-tax-ui e6c237d.
+
 ## 2026-11-27T19:00
 Stage 2 batch A of "nothing calculated by hand" (owner-approved): last year's figures fill this year's blank answers (PriorYearCarryFill;
 a typed amount, even 0, wins; a notice "From your 2024 return here" opens the screen).

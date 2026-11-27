@@ -199,3 +199,9 @@ Built (no fields): #27 Form 2555 housing carryover, #10 Form 8826 prior-year rec
 not yet read), #31 a dependent's prior-year AGI, #71 Form 8801 line 12 (the no-Form-1116 gap), #15 bond premium carryforward, #83 Form
 2210 farmer test, #110 Form 8880 earlier distributions. us-tax-be c1e55ad7.
 
+## Stage 2 batch B (2026-11-27, owner-approved)
+
+Built: passive business / farm unallowed loss per activity (+1 field, V590 farm box), PTP unallowed loss (one PTP filled; several
+listed), partnership basis-suspended loss (basis row filled), K-1 at-risk message reworded. Follow-up: a sold farm rental's own loss when
+last year's Form 8582 rows can't be split. us-tax-be 366e69e7, us-tax-ui e6c237d.
+

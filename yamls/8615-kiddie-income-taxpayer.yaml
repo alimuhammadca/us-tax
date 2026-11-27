@@ -21,6 +21,28 @@ sections:
         label: "Was at least one of the child's parents alive at the end of 2025?"
         help: "Form 8615 Who Must File condition 4 (V436). No: no Form 8615."
 
+  - name: scheduleBPartIII
+    title: Foreign accounts and trusts
+    multiplicity: single
+    note: "V589 (2026-11-27, owner-approved): Schedule B Part III for the child's own return - required once the child's interest or ordinary dividends are over $1,500, and an unanswered Part III can't be overridden. The dependent's tab has no Interest income screen."
+    fields:
+      - name: hasForeignAccountForScheduleBPartIII
+        type: boolean
+        required: false
+        label: "At any time during 2025, did the child have a financial interest in, or signature authority over, a financial account in a foreign country?"
+        help: "Schedule B line 7a."
+      - name: hasFbarRequirement
+        type: boolean
+        required: false
+        showIf: hasForeignAccountForScheduleBPartIII == true
+        label: "Is the child required to file FinCEN Form 114 (FBAR) to report that account?"
+        help: "Schedule B line 7a, second question (more than $10,000 in foreign accounts at any time in 2025)."
+      - name: hasForeignTrustDistributionOrTransfer
+        type: boolean
+        required: false
+        label: "During 2025, did the child receive a distribution from, or was the child the grantor of, or transferor to, a foreign trust?"
+        help: "Schedule B line 8."
+
   - name: support
     title: Support
     multiplicity: single

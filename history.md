@@ -1,3 +1,13 @@
+## 2026-11-27T17:55
+A dependent's own return: Schedule B Part III on the dependent's Kiddie income screen (owner-approved option 1, 3 fields, V589). The
+full regression (stopped at 200 of 2,611 - owner: "Never run full regression until I ask for it. Only run related tests only") found
+that the advisory-vs-blocked review made an unanswered Part III non-overrideable while a dependent's tab has no Interest income
+screen - a child with over $1,500 of interest could never compute. Now the dependent's Kiddie income screen asks line 7a, its FBAR
+follow-up (shown only on Yes) and line 8 (pf_kiddie_income sch_b_foreign_account / sch_b_fbar_required / sch_b_foreign_trust); the
+child's return reads them (DependentKiddieAnswers.putScheduleBPartIII) and the message names that screen; the checklist's Fix button
+opens it. Tests: unit 6,537 / 0; the 18 specs that compute a dependent's own return pass (one new test of the section). Intake YAML
+8615-kiddie-income-taxpayer.yaml updated. us-tax-be 136bf5bb.
+
 ## 2026-11-27T16:40
 "Nothing calculated by hand" - review and Stage 1 (owner-approved). Six read-only agents read 84 personal screens and 70 backend
 messages against the code and the 2025 instructions: 136 proposals, 114 after merging duplicates, grouped in

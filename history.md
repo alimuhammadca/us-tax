@@ -1,3 +1,15 @@
+## 2026-11-27T21:50
+Sold rental property gap (owner-approved, no fields), and a fix to the B5 follow-up.
+- SoldActivityPrior (renamed from SoldFarmRentalPrior): a RENTAL PROPERTY disposed of in full (not to a related party) now takes its
+  own prior-year unallowed loss from its row of last year's Form 8582 record (by name, in its own table) or from its typed amount
+  (with its own typed AMT figure, else the regular one), when last year's carryover came as one total; that part comes off the total
+  (regular, AMT, Part V) and the rest keeps carrying - before, the sold house's own loss was not released (IRC 469(g)(1)(A)).
+- Bug in the farm rental change (21:10), fixed: a marked activity that is not released - sold at an overall gain (it stays on Form
+  8582), nonpassive (real estate professional), or a royalty - set the "typed prior loss" switch and cancelled the reduced total,
+  dropping every other activity's carried loss. It now hands its part back to the total for that pass and is treated as before.
+- Tests: unit 6,549 / 0 (SoldActivityPriorTest 8); e2e sold-farm-rental-prior-loss.spec.ts 4/4 (3: Elm sold, 6,000 released, 7,000
+  carries; 4: North Field sold at a 2,000 gain, 5,000 absorbed, 8,000 carries); 32 related specs 79/79. No full regression.
+
 ## 2026-11-27T21:10
 B5 follow-up of Stage 2 (owner-approved, no fields): a farm rental disposed of in full releases its own prior-year unallowed passive
 loss (IRC 469(g)(1)(A); Instructions for Form 8582, Disposition of an Entire Interest) without losing everyone else's.

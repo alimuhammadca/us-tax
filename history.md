@@ -1,3 +1,13 @@
+## 2026-11-27T18:20
+Form 8844 over-credit fixed (owner-approved: 3 fields per row added, 2 removed). Line 1 capped the total zone wages at $15,000 x the
+number of employees - one employee at $25,000 and one at $5,000 gave $30,000 (credit $6,000) instead of $15,000 + $5,000 = $20,000
+($4,000) - and couldn't reduce each employee's $15,000 by that employee's work opportunity credit wages (Instructions for Form 8844,
+line 1). The Empowerment zone screen now takes one row per qualified zone employee (name, wages paid, work opportunity wages) and shows
+each row's counted wages and line 1; Form8844Compute sums min(wages, 15,000 - work opportunity wages). The credit screens gained a
+'rows' field kind (Form 8941's per-employee rows can reuse it). Old fields dropped (stored as JSON; not in production). Tests: unit
+6,537 / 0; own-business-credit-forms.spec.ts 4/4 (new screen test: $20,000 -> $4,000, with $6,000 work opportunity wages $14,000 ->
+$2,800). us-tax-be eec72b43, us-tax-ui 7eca7f5.
+
 ## 2026-11-27T17:55
 A dependent's own return: Schedule B Part III on the dependent's Kiddie income screen (owner-approved option 1, 3 fields, V589). The
 full regression (stopped at 200 of 2,611 - owner: "Never run full regression until I ask for it. Only run related tests only") found

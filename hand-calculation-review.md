@@ -187,3 +187,9 @@ No field added or removed; every fill is used only when the field is blank, a ty
   wave-D computations #30, #35, #36, #50, #65, #70, #108, #116, #118, #129 - each a separate engine change, for a later decision.
 - Tests: Stage1StatementFillTest (9), LowIrsFixesChunk7Test updated (one farm is now filled); e2e stage1-statement-fills.spec.ts
   (pension 5b 10,800; Schedule A 8a 18,000). Unit 6,537 / 0.
+
+## Form 8844 per employee (2026-11-27, owner-approved)
+
+#7 built: one row per qualified zone employee (employeeName, wagesPaid, wotcWages); line 1 = sum of min(wagesPaid, $15,000 - wotcWages).
+qualifiedZoneWages and qualifiedEmployees removed. us-tax-be eec72b43, us-tax-ui 7eca7f5.
+

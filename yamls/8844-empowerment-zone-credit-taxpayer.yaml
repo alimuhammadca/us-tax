@@ -17,5 +17,10 @@ sections:
   - name: form
     showIf: hasCredit == true
     fields:
-      - { name: qualifiedZoneWages, label: "amount (line 1, at most $15,000 per employee)" }
-      - { name: qualifiedEmployees, label: "integer" }
+      # 2026-11-27 (owner-approved): one row per qualified zone employee; line 1 = sum of min(wagesPaid, 15,000 - wotcWages) (i8844 line 1).
+      - name: zoneEmployees
+        multiplicity: multiple
+        fields:
+          - { name: employeeName, label: "text, optional (for reference)" }
+          - { name: wagesPaid, label: "amount - qualified zone wages paid in the year" }
+          - { name: wotcWages, label: "amount, optional - this employee's wages used for the work opportunity credit (Form 5884)" }

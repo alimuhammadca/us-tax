@@ -1,3 +1,23 @@
+## 2026-11-27T08:00:00
+Flag audit (owner-approved; things to fix.txt "check all the warning and flags to make sure that the user sees them").
+- Inventory: 1,003 places raise a flag (~1,076 codes; literals, constants, PREFIX + role, helper parameters). The checklist's
+  FLAG_FORM_LINKS (built 2026-10-13, 394 + 175 prefix entries) had fallen behind: 464 codes in 521 places had no button - 104 of them
+  blocking (the message names the screen in words, nothing opens it). Only 3 entries were stale; 2 pointed to a screen that doesn't
+  exist (the V584 chapter 11 links: employment-income-* -> employment-*). Messages: none empty or a raw code.
+- Surfaces: GET /api/tax-return/flags covered the household return and the spouse's separate return only - a dependent's own return's
+  messages (its advisories) reached no screen; on a dependent's tab the checklist gave no button at all.
+- Fixes: UI 440f4b8 - each code mapped to the screen holding the answer its check reads (checked against the raising line; five batches
+  read in parallel, then a sample re-checked) - 387 + 25 exact entries, 143 prefix entries (role families; _YOU / _YOUR_SPOUSE for two
+  dividend codes), null where nothing can be changed; the 3 stale entries out; the chapter 11 links fixed. Table now 803 exact + 314
+  prefix, every target a real sidebar / statement id. Backend 63afb0a0 - DependentLegFlags: GET /flags adds each dependent's own
+  return's messages ("<Name>'s own return: ", owner 'dependent', the dependent's id); the checklist opens the dependent's copy of the
+  screen (DEPENDENT_COPY) and gives buttons on a dependent's tab for messages about a dependent.
+- Drift guard: FlagFormLinksDriftTest fails when a raised code has neither its own form nor a table entry (reads ../us-tax-ui; skips
+  when the UI repo isn't checked out). It caught 23 constant-raised codes the first inventory had missed.
+- Tests: unit 6,526 / 0; e2e checklist-flag-links 2/2 (1099-MISC rents with no property: Must fix -> Fix opens Rental & royalty income;
+  a dependent's own-return messages listed with her name); checklist / compute-dialog / separate-return / dependent-own specs 46 passed;
+  UI build OK. Not changed: whether a flag blocks (the advisory-vs-blocked review is next on the list).
+
 ## 2026-11-27T07:00:00
 App version number and refresh after a deploy (owner-approved; things to fix.txt "add version number, auto clear cache and reload").
 - Before: scripts/set-build-info.js existed but no build ran it (build-info.ts still said 1.0.0 / 2026-04-05) and nothing showed it; an

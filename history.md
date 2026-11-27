@@ -1,3 +1,23 @@
+## 2026-11-27T15:30
+Advisory vs blocked review (owner-approved: "go ahead with all 116"). Every TaxReturnFlag site (1,004) was read by six review
+agents against the code and the 2025 IRS instructions, then re-checked; the table is `flag-severity-review.md`, the sorting test
+is in rules.md. 128 proposed, 116 approved, 12 rejected on re-check (10 messages that can't clear, one that would block a correct
+return, one owner decision kept).
+- As built: 60 advisory sites now block (54 with override, 6 can't be overridden); 65 codes added to NonOverrideableFlags; the
+  3 LINE13B_CAR_LOAN_* codes taken off it (the vehicle is left off Schedule 1-A, so the return can only under-claim). New codes
+  FORM_4797_SALE_DATE_NOT_IN_YEAR (overridable) and FORM_4563_US_GOVERNMENT_WAGES_ONLY (can't override). 40 messages reworded to
+  name their screen; 12 sites given literal codes (NonOverrideableFlagMessagesTest).
+- Kept overridable against the table: MEDICAID_WAIVER_SCHEDULE_C_* (owner decision D-1d-4, 2026-10-26, not shown in the table)
+  and MISSING_SS_W2_DATA_* (found by the e2e run: a W-2 with box 3 blank is right for an employee not covered by social security,
+  and the Medicare-only Form 4137 is then correct). Four approved items were already non-overrideable.
+- Tests: unit 6,529 / 0 failures (shared test data service answers Schedule B Part III No / No; sc_00040 / 00157 / 00168 moved out
+  of community property states; tests pinning the old levels updated; new FlagSeverityReviewTest). e2e: the 51 specs naming a
+  changed code - 216/252 first run, the 36 failures fixed in the tests (missing Form 8919 firm IDs, Part III answers, a spouse HSA
+  form, Form 8938 account details, registration numbers; intentional blocks now assert the 409), then 126/126. New e2e helper
+  answerScheduleBPartIIIApi. A full regression has not been run yet - other specs with over $1,500 of interest or dividends and
+  no Part III answers may now block.
+- us-tax-be a5b5a1dd, us-tax-ui 0d04e98.
+
 ## 2026-11-27T06:00
 Full e2e regression (714 spec files, 1 worker, 6.7 h): 2,608 passed, 0 failed, 0 skipped, 1 flaky.
 - Flaky: prior-min-tax-credit-screen.spec.ts "Family Head: the title, labels, help, save partial, Reset" - the first attempt's save body

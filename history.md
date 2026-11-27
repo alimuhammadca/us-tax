@@ -1,3 +1,23 @@
+## 2026-11-27T16:40
+"Nothing calculated by hand" - review and Stage 1 (owner-approved). Six read-only agents read 84 personal screens and 70 backend
+messages against the code and the 2025 instructions: 136 proposals, 114 after merging duplicates, grouped in
+`hand-calculation-review.md` (themes: wrong amount 1, fill from statements 18, carry from last year 25, figure from the return 22,
+ask the raw facts 41, wording 7). Eight of the largest claims were verified against the code (all held).
+- Stage 1 as built (no fields added or removed; blank only, typed wins, a notice names the source): pension cost from 1099-R box
+  9b and the payment count from the starting date; Form 8606 lines 6 / 8 and the recharacterized amount from Form 5498 boxes 5 / 3 /
+  4, inherited IRA distributions from code-4 1099-Rs; Schedule R disability income from code-3 1099-Rs; Schedule A line 8a from the
+  unlinked Forms 1098; Form 4972 box 8; Schedule F 4a / 4b from Form 1099-G box 9; 529 tax-free assistance from the education
+  students; Form 8606 line 1 from the undeducted contribution; like-kind exchange depreciation and basis from the asset; Form 8912
+  column (f). Help says how to work out bond premium, OID acquisition premium, the farm rental amount at risk, Form 8978 line 14,
+  timeshare interest and Form 8844 wages (each employee only up to $15,000); three messages reworded (K-1 at-risk carry is
+  automatic; IRA box 2b; Form 982 line 10a).
+- Found: Form 8844 caps zone wages at $15,000 x employees, not per employee - over-credits; the help now says to cap per employee,
+  the per-employee rows (fields) are Stage 3.
+- Left for later with reasons in the review file: Form 8815 lines 2-3, Form 5329 exception 05, Form 2555 full days, 200% DB for
+  other periods, and ten larger computations (wave D).
+- Tests: unit 6,537 / 0 (Stage1StatementFillTest); e2e stage1-statement-fills.spec.ts 2/2. us-tax-be 4327a254, us-tax-ui 9b4f392.
+  The full regression (covering this and the advisory-vs-blocked change) is running.
+
 ## 2026-11-27T15:30
 Advisory vs blocked review (owner-approved: "go ahead with all 116"). Every TaxReturnFlag site (1,004) was read by six review
 agents against the code and the 2025 IRS instructions, then re-checked; the table is `flag-severity-review.md`, the sorting test

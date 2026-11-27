@@ -1,3 +1,20 @@
+## 2026-11-27T21:10
+B5 follow-up of Stage 2 (owner-approved, no fields): a farm rental disposed of in full releases its own prior-year unallowed passive
+loss (IRC 469(g)(1)(A); Instructions for Form 8582, Disposition of an Entire Interest) without losing everyone else's.
+- SoldFarmRentalPrior: when last year's carryover comes over as one total (the per-activity split can't be made, e.g. a K-1 row with
+  no K-1 this year), the sold farm rental's own row of last year's Form 8582 record (by name) is its carried loss; an amount typed only
+  on sold farm rentals is treated the same. That part comes off the bridged total (regular, AMT, and the Part V share when not
+  actively participated in) instead of stopping it - typing the part, as the app's own note asked, used to drop every other
+  activity's carried loss.
+- Farm rentals now count in the "every rental disposed of" test: an unsold farm rental keeps the total suspended (selling the other
+  rentals used to release all of it, the farm rental's part a year early), and selling them all releases it; the "part not known"
+  note (FARM_RENTAL_SOLD_PRIOR_LOSS_NOT_SPLIT) is then not raised.
+- Checked and not a bug: the note does name the farm rental (its activity map carries "description").
+- Remaining gap (not built): a sold RENTAL PROPERTY with no own carried loss while the total can't be split still releases nothing
+  of its own part (the same rule could take its row of last year's record).
+- Tests: unit 6,545 / 0 (SoldFarmRentalPriorTest 4); e2e sold-farm-rental-prior-loss.spec.ts 3/3 (released 3,000, 10,000 carries;
+  typed 3,000 the same; farm rental still rented keeps 13,000); 31 related specs 75/75. No full regression. us-tax-be 2a1ddb82.
+
 ## 2026-11-27T20:30
 Stage 2 batch B of "nothing calculated by hand" (owner-approved): each passive activity's carried loss fills next year's answer.
 - B1: a passive Schedule C business's / Schedule F farm's unallowed loss (PassiveBusinessLimit) is split by each activity's loss -

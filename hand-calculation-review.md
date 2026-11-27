@@ -205,3 +205,6 @@ Built: passive business / farm unallowed loss per activity (+1 field, V590 farm 
 listed), partnership basis-suspended loss (basis row filled), K-1 at-risk message reworded. Follow-up: a sold farm rental's own loss when
 last year's Form 8582 rows can't be split. us-tax-be 366e69e7, us-tax-ui e6c237d.
 
+B5 follow-up (2026-11-27): built - a sold farm rental's own carried loss comes off last year's total (record row by name, or typed);
+farm rentals count for "every rental sold". Open: the same for a sold rental property. us-tax-be 2a1ddb82.
+

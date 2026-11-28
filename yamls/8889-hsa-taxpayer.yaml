@@ -83,6 +83,7 @@ sections:
         type: number
         required: false
         label: "Year-end HSA value (fair market value on Dec 31)"
+        carryNote: "Batch D (2026-11-28): when blank, box 5 + box 3 of the person's Forms 5498-SA with the HSA box checked (Form 5329 line 49: value on Dec 31 including 2025 contributions made in 2026). A typed amount wins."
 
   - name: partIIDistributions
     title: "Part II - HSA distributions"

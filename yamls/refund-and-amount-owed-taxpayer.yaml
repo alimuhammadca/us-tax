@@ -68,7 +68,7 @@ sections:
       - {name: waivePartialPenalty, type: boolean, label: box B}
       - {name: boxBWaiverAmount, type: amount, showIf: waivePartialPenalty}
       - {name: annualizedMethodElected, type: boolean, label: "box C (Schedule AI)"}
-      - {name: "annualizedIncome1-4", type: amount, showIf: annualizedMethodElected}
+      - {name: "annualizedIncome1-4", type: amount, showIf: annualizedMethodElected, carryNote: "Batch D (2026-11-28): a blank annualizedIncome4 (Schedule AI line 1 column (d), the whole year) is the return's AGI, Form 1040 line 11; with a partial period blank the regular method is used and a note says so."}
   - name: farmFishing
     title: Farming or fishing income (Form 2210-F)
     fields:

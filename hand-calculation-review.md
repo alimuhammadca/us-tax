@@ -228,3 +228,14 @@ part lost + nonrefundable part lost, capped at last year's limit) fills a blank 
 received this year for last year's tuition (no box shows it), and the effect on other credits that were cut short last year (the note
 says to check when last year's credits used all its tax).
 
+
+## Stage 2 batch D (2026-11-28, owner-approved)
+
+Built (no fields): #73 / #86 the HSA and Archer MSA December 31, 2025 value = box 5 + box 3 of the person's Forms 5498-SA (Form 5329
+lines 41 / 49 "including 2025 contributions made in 2026"; the note only when the 6% tax is figured), and the Medicare Advantage MSA
+12/31/2024 value from last year's Forms 5498-SA box 5; #85 Form 8853 line 4 = box 1 of the person's only Form W-2 when the household has
+no other W-2 and no business or farm (revised: a W-2 with code R means an employer contributed, so no deduction is allowed and line 4
+does not matter) - otherwise a new note says a blank line 4 makes the deduction $0; #82 Schedule AI column (d) = AGI, and a note when a
+partial period is blank (the regular method was used silently); #10 farm leftover - Form 8826 prior-year receipts from last year's
+Schedule F line 9 + line 1b (accrual line 49), matched by principal product. Left: line 4 for a self-employed owner (Form 8853 is figured
+before Schedule C / SE, so the business's net earnings aren't known yet - the note asks for it).

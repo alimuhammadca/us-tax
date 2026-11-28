@@ -54,6 +54,7 @@ sections:
         type: amount
         required: false
         label: Compensation from the HDHP employer (line 4)
+        carryNote: "Batch D (2026-11-28): when blank, no employer contributed and line 2 is more than 0, filled with box 1 of the person's only Form W-2 when the household has no other W-2 and no business or farm; otherwise a note says line 4 is needed (blank makes the deduction $0). A typed amount wins."
       - name: unreimbursedMedicalLine7
         type: amount
         required: false
@@ -74,6 +75,7 @@ sections:
         type: amount
         required: false
         label: "Value of your Archer MSAs on December 31, 2025"
+        carryNote: "Batch D (2026-11-28): when blank, box 5 + box 3 of the person's Forms 5498-SA with the Archer MSA box checked (Form 5329 line 41: value on Dec 31 including 2025 contributions made in 2026). A typed amount wins."
       - name: eligibleAllTwelveMonths
         type: boolean
         required: false
@@ -121,6 +123,7 @@ sections:
         type: amount
         required: false
         label: "Value of your Medicare Advantage MSA on December 31, 2024"
+        carryNote: "Batch D (2026-11-28): when blank (and held on 12/31/2024), box 5 of last year's Forms 5498-SA with the MA MSA box checked, entered here for 2024. A typed amount wins."
         showIf: maMsaHeldOn20241231 == true
       - name: maMsaHdhpDeductibleJan2025
         type: amount

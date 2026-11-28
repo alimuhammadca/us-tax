@@ -1,3 +1,20 @@
+## 2026-11-28T06:40
+Stage 2 batch D of "nothing calculated by hand" (owner-approved, no fields; statement and tax return form structure unchanged).
+- MsaHsaFills: a blank HSA / Archer MSA December 31, 2025 value = box 5 + box 3 of the person's Forms 5498-SA with that box checked
+  (Form 5329 lines 41 / 49: "the value ... on December 31, 2025 (including 2025 contributions made in 2026)"; i1099sa 2025 box 5 = FMV on
+  Dec 31). Left blank the 6% applied to the whole excess. The note shows only when the 6% tax is figured.
+- Form 8853 line 4 (blank read as 0, so the Archer deduction was 0): box 1 of the person's only W-2 when the household has no other W-2
+  and no business or farm; not when an employer contributed (line 1 / code R - no deduction then). Otherwise a new note
+  (FORM_8853_LINE4_COMPENSATION_MISSING_*) says line 4 is needed. Self-employed owners stay typed (8853 is figured before Schedule SE).
+- Medicare Advantage MSA 12/31/2024 value: box 5 of last year's Forms 5498-SA (MA MSA box) - PriorYearCarryC.fillMaMsaValue.
+- Form2210ScheduleAiFill: a blank Schedule AI column (d) = Form 1040 line 11; a note when a partial period is blank (the regular method).
+  UI help on Refund and amount owed says the whole-year amount can be left blank.
+- Form 8826 prior-year gross receipts for a farm: last year's Schedule F line 9 + line 1b (accrual line 49) of the same principal
+  product (gross receipts aren't reduced by cost of goods sold, Reg. 1.448-1T(f)(2)(iv)).
+- Tests: unit 6,566 / 0 (Stage2dFillsTest 9); e2e stage2d-statement-and-return-fills.spec.ts 4/4 (HSA line 49 $36 not $60; Archer line
+  23 $950 not $0; Schedule AI annualized; farm receipts $140,000); 30 related specs 91/93, the 2 failures msa-ltc-screen.spec.ts tests seeding a spouse Archer MSA Form 1099-SA with no spouse Form 8853 (blocking since a5b5a1dd; the app is right) - seed moved to the spouse test, 3/3. No full regression.
+  us-tax-be 077d9e46, us-tax-ui 083eb17.
+
 ## 2026-11-28T03:15
 Stage 2 batch C2 of "nothing calculated by hand" (owner-approved, no fields): education credit recapture refigured from last year's
 return here (2025 Instructions for Form 8863, "Credit recapture"; Form 1040 line 16 code ECR).

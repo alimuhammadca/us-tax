@@ -194,7 +194,7 @@ Line 16 = `regular_tax + Form8814.tax + Form4972.tax + section962_tax + ECR + Fo
 | MFS | 24% over $103,350 | 32% over $197,300 | 35% over $250,525 | 37% over $375,800 | — |
 | HOH | 24% over $103,350 | 32% over $197,300 | 35% over $250,500 | 37% over $626,350 | — |
 
-**Box 3 write-ins**: `962` (Section 962 CFC), `ECR` (excess capital reconversion), `1291TAX` (Form 8621 PFIC), `Form 8978` (BBA partnership pushout), `965INC` (Section 965(i) triggered deferred tax).
+**Box 3 write-ins**: `962` (Section 962 CFC), `ECR` (education credit recapture - figured from last year's return when a Form 1098-T box 4 shows a refund, EducationRecapture), `1291TAX` (Form 8621 PFIC), `Form 8978` (BBA partnership pushout), `965INC` (Section 965(i) triggered deferred tax).
 
 **QDCG 0% thresholds**: Single $48,350 / MFJ $96,700. **20% thresholds**: Single $533,400 / MFJ $600,050.
 

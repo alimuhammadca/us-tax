@@ -218,3 +218,13 @@ typed), #22 RMD balance from last year's Forms 5498, #80 General Rule / stream c
 #98 exchange note offered on Installment sales. Left: #72 education credit recapture (C2, a refigured 2024 credit - planned
 separately). us-tax-be 26041d7c, us-tax-ui 54d0b7a.
 
+## Stage 2 batch C2 (2026-11-28, owner-approved)
+
+Built (no fields): #72 / #43 education credit recapture. Each year keeps what refiguring the credit needs (students, credit type,
+adjusted expenses, phaseout fraction, under-24 rule, credit limit, Form 8863 lines 8 and 19). Next year a Form 1098-T box 4 (refunds
+for a prior year) matched to that student by SSN or a unique name refigures last year's credit; the rise in last year's tax (refundable
+part lost + nonrefundable part lost, capped at last year's limit) fills a blank ECR. Box 6 is not used: it is a scholarship REDUCTION
+(i1098et 2025), which can only raise last year's credit (Form 1040-X). Left typed: a refund for a year before last, a scholarship
+received this year for last year's tuition (no box shows it), and the effect on other credits that were cut short last year (the note
+says to check when last year's credits used all its tax).
+

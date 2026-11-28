@@ -56,6 +56,7 @@ sections:
         placeholder: 0.00
         label: Amount to add to this year's tax
         help: This amount will be added directly to the tax on this year's Form 1040 line 16.
+        carryNote: "Batch C2 (2026-11-28): when this question and amount are blank and a 2025 Form 1098-T box 4 shows a refund for a student on last year's education credit here, the app refigures that credit (Instructions for Form 8863, Credit recapture) and uses the rise in last year's tax; a typed answer (or No) wins."
 
   - name: section962
     title: "Section 962 election (line 16 box 3 '962')"

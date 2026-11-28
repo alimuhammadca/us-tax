@@ -1,3 +1,22 @@
+## 2026-11-28T03:15
+Stage 2 batch C2 of "nothing calculated by hand" (owner-approved, no fields): education credit recapture refigured from last year's
+return here (2025 Instructions for Form 8863, "Credit recapture"; Form 1040 line 16 code ECR).
+- EducationRecapture: each year the return keeps what refiguring the credit needs - each student's SSN, name, credit type as figured
+  (American opportunity, or lifetime learning incl. a fallback) and adjusted expenses, the phaseout fraction, the under-24 rule, the
+  credit limit, Form 8863 lines 8 and 19. Next year a 2025 Form 1098-T box 4 (refunds / reduced charges for a prior year) matched to
+  that student by SSN or a unique name lowers the expenses; the credit is figured again; the rise in last year's tax (refundable part
+  lost + nonrefundable part lost, capped at last year's limit) fills a blank ECR answer, with a "From your 2024 return here" notice. A
+  typed amount or "No" wins; with no match or no credit last year the box 4 notice stays.
+- Box 6 not used: it is a scholarship REDUCTION (i1098et 2025), which can only raise last year's credit (Form 1040-X).
+- Limits (in the notice): assumes the refund is for last year and wasn't already counted there; other credits that were cut short last
+  year aren't refigured (the note says to check when last year's credits used all its tax); a scholarship received this year for last
+  year's tuition stays typed.
+- other-tax-items-screen.spec.ts Form 8621 joint test: now answers Schedule B Part III ($40,000 of dividends; blocking since a5b5a1dd).
+- CLAUDE.md: ECR means education credit recapture (was "excess capital reconversion").
+- Tests: unit 6,557 / 0 (EducationRecaptureTest 5, incl. the i8863 $280 example); e2e stage2c2-education-credit-recapture.spec.ts 3/3
+  (ECR $250; "No" wins; no prior credit keeps the notice); 19 related specs 124/124 after the seed fix. No full regression.
+  us-tax-be 891ab5c4.
+
 ## 2026-11-27T22:50
 Stage 2 batch C1 of "nothing calculated by hand" (owner-approved, no fields): IRA, pension, Schedule J and exchange-note figures from
 last year's return here fill this year's blank answers (a typed answer wins; a "From your 2024 return here" notice opens the screen).
